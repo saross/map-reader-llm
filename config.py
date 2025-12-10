@@ -20,4 +20,4 @@ OVERLAP = 64  # Overlap in pixels. 20-30px mounds -> 64px is safe.
 
 # Gemini Settings
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-MODEL_NAME = "gemini-1.5-flash" # Cost effective for high volume
+MODEL_NAME = "gemini-flash-latest" # Stable alias
