@@ -79,26 +79,50 @@ def tile_raster(input_path: Path):
             tile_path = map_output_dir / tile_filename
             img.save(tile_path)
             
-            # Calculate Lower Left Coordinate
-            # Affine Transform: (x_off, a, b, y_off, d, e)
-            # x_coord = x_off + a * col + b * row
-            # y_coord = y_off + d * col + e * row
-            # Lower Left pixel of the tile is (0, height) in local image coordinates? 
-            # OR (0, TILE_SIZE) depending on if we consider outside or edge.
-            # Usually strict lower-left corner of the image extent.
-            w, s, e, n = rasterio.windows.bounds(window, src.transform)
-            # rasterio bounds returns (left, bottom, right, top)
-            # This is exactly what we need. left = min x, bottom = min y
+            # --- SPATIAL METADATA REFACTOR ---
+            # 1. Get Transform for this specific window
+            # Rasterio returns transform for the window corner
+            window_transform = rasterio.windows.transform(window, src.transform)
             
-            # Store [LowerLeftX, LowerLeftY, ResolutionX, ResolutionY]
-            # using src.res which returns (res_x, res_y) - usually positive values
-            metadata[tile_filename] = [w, s, src.res[0], src.res[1]]
+            # 2. Write World File (.pgw)
+            # Format: A, D, B, E, C, F
+            # A: x-res, D: y-rot (0), B: x-rot (0), E: y-res (neg), C: x-center, F: y-center
+            # window_transform gives Top-Left CORNER.
+            # World File expects Center of Top-Left Pixel.
+            # CenterX = CornerX + (ResX / 2)
+            # CenterY = CornerY + (ResY / 2)
+            
+            res_x = window_transform.a
+            res_y = window_transform.e # usually negative
+            
+            center_x = window_transform.c + (res_x / 2.0)
+            center_y = window_transform.f + (res_y / 2.0)
+            
+            pgw_content = f"{res_x}\n0.0\n0.0\n{res_y}\n{center_x}\n{center_y}"
+            pgw_path = tile_path.with_suffix(".pgw")
+            with open(pgw_path, "w") as f:
+                f.write(pgw_content)
+                
+            # 3. Write CRS to .aux.xml (PAMDataset format) for complete compatibility
+            # This allows QGIS/GDAL to recognize the CRS automatically.
+            aux_xml_path = tile_path.with_suffix(".png.aux.xml")
+            crs_wkt = src.crs.to_wkt()
+            # Minimal PAM XML
+            xml_content = f"""<PAMDataset>
+  <SRS>{crs_wkt}</SRS>
+</PAMDataset>"""
+            with open(aux_xml_path, "w") as f:
+                f.write(xml_content)
 
-    # Save metadata
+            # Store legacy metadata just in case, but rely on sidecars now
+            w, s, e, n = rasterio.windows.bounds(window, src.transform)
+            metadata[tile_filename] = [w, s, src.res[0], src.res[1]]
+ 
+    # Save legacy metadata as backup
     with open(map_output_dir / "metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
         
-    print(f"Finished tiling {map_name}. Saved to {map_output_dir}")
+    print(f"Finished tiling {map_name}. Saved {len(windows)*3} files (png+pgw+aux) to {map_output_dir}")
 
 def main():
     # Process all TIFs in inputs
