@@ -12,6 +12,8 @@ TILES_DIR = OUTPUTS_DIR / "tiles"
 
 # Ensure directories exist
 OUTPUTS_DIR.mkdir(exist_ok=True)
+RESULTS_DIR = OUTPUTS_DIR / "results"
+RESULTS_DIR.mkdir(exist_ok=True)
 TILES_DIR.mkdir(exist_ok=True)
 
 # Tiling settings
