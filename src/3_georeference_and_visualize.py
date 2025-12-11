@@ -43,11 +43,28 @@ def deduplicate_detections(gdf, distance_threshold=20.0):
     print(f"Reduced by {len(gdf) - len(deduplicated_gdf)} detections (Final: {len(deduplicated_gdf)})")
     return deduplicated_gdf
 
+def get_latest_detection_file():
+    """Finds the most recent detections GeoJSON file in outputs/results/"""
+    if not RESULTS_DIR.exists():
+        return None
+        
+    files = list(RESULTS_DIR.glob("detections-*.geojson"))
+    if not files:
+        # Fallback to legacy path for backward compatibility
+        legacy = OUTPUTS_DIR / "all_detections.geojson"
+        if legacy.exists():
+            return legacy
+        return None
+        
+    # Sort by modification time
+    files.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+    return files[0]
+
 def process_results():
-    input_file = OUTPUTS_DIR / "all_detections.geojson"
+    input_file = get_latest_detection_file()
     
-    if not input_file.exists():
-        print(f"File not found: {input_file}")
+    if not input_file:
+        print(f"No detection files found in {RESULTS_DIR}")
         return
 
     print(f"Reading {input_file}...")
@@ -72,7 +89,9 @@ def process_results():
     deduped_gdf = deduplicate_detections(gdf)
     
     # Export
-    output_gpkg = OUTPUTS_DIR / "mounds.gpkg"
+    # Output name matches input name but with .gpkg extension
+    output_filename = input_file.stem.replace("detections-", "mounds-") + ".gpkg"
+    output_gpkg = RESULTS_DIR / output_filename
     
     # Save Layers
     gdf.to_file(output_gpkg, layer="raw_boxes", driver="GPKG")

@@ -12,8 +12,9 @@ import rasterio
 
 # Adjust python path
 import sys
+from datetime import datetime
 sys.path.append(str(Path(__file__).parent.parent))
-from config import GOOGLE_API_KEY, MODEL_NAME, TILES_DIR, OUTPUTS_DIR, TILE_SIZE, TEST_LIMIT
+from config import GOOGLE_API_KEY, MODEL_NAME, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT
 
 def detect_mounds():
     # Configure Gemini
@@ -49,8 +50,15 @@ def detect_mounds():
         """
     )
 
-    # Output file (GeoJSON)
-    output_file = OUTPUTS_DIR / "all_detections.geojson"
+    # Output file (GeoJSON) with dynamic naming
+    # Pattern: detections-YYYY-MM-DD-ModelName.geojson
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    sanitized_model = MODEL_NAME.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
+    if not sanitized_model: sanitized_model = "model"
+    
+    filename = f"detections-{current_date}-{sanitized_model}.geojson"
+    output_file = RESULTS_DIR / filename
+    print(f"Output will be saved to: {output_file}")
     
     # Load existing results if any to resume
     features = []
