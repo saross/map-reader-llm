@@ -5,7 +5,7 @@ import sys
 
 # Adjust python path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import OUTPUTS_DIR
+from config import OUTPUTS_DIR, RESULTS_DIR
 
 def deduplicate_detections(gdf, distance_threshold=20.0):
     """
