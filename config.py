@@ -12,6 +12,8 @@ TILES_DIR = OUTPUTS_DIR / "tiles"
 
 # Ensure directories exist
 OUTPUTS_DIR.mkdir(exist_ok=True)
+RESULTS_DIR = OUTPUTS_DIR / "results"
+RESULTS_DIR.mkdir(exist_ok=True)
 TILES_DIR.mkdir(exist_ok=True)
 
 # Tiling settings
@@ -20,4 +22,5 @@ OVERLAP = 64  # Overlap in pixels. 20-30px mounds -> 64px is safe.
 
 # Gemini Settings
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-MODEL_NAME = "gemini-2.0-flash-exp" # Experimental model with better limits
+MODEL_NAME = "gemini-3-pro-preview" # User requested Gemini 3 Pro
+TEST_LIMIT = 5 # Limit number of tiles to process for cost control
