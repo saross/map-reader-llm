@@ -12,8 +12,9 @@ import rasterio
 
 # Adjust python path
 import sys
+from datetime import datetime
 sys.path.append(str(Path(__file__).parent.parent))
-from config import GOOGLE_API_KEY, MODEL_NAME, TILES_DIR, OUTPUTS_DIR, TILE_SIZE
+from config import GOOGLE_API_KEY, MODEL_NAME, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT
 
 def detect_mounds():
     # Configure Gemini
@@ -49,8 +50,15 @@ def detect_mounds():
         """
     )
 
-    # Output file (GeoJSON)
-    output_file = OUTPUTS_DIR / "all_detections.geojson"
+    # Output file (GeoJSON) with dynamic naming
+    # Pattern: detections-YYYY-MM-DD-ModelName.geojson
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    sanitized_model = MODEL_NAME.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
+    if not sanitized_model: sanitized_model = "model"
+    
+    filename = f"detections-{current_date}-{sanitized_model}.geojson"
+    output_file = RESULTS_DIR / filename
+    print(f"Output will be saved to: {output_file}")
     
     # Load existing results if any to resume
     features = []
@@ -78,8 +86,14 @@ def detect_mounds():
     all_tiles = sorted(all_tiles)
     print(f"Found {len(all_tiles)} tiles total.")
     
-    # Filter out already processed
+    # Filter out already processed tiles
     tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
+    
+    # Cost Control: Limit processing
+    if TEST_LIMIT and TEST_LIMIT > 0:
+        print(f"Applying TEST_LIMIT: Only processing {TEST_LIMIT} tiles.")
+        tiles_to_process = tiles_to_process[:TEST_LIMIT]
+
     print(f"Processing {len(tiles_to_process)} new tiles...")
 
     prompt = """
