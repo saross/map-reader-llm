@@ -88,16 +88,15 @@ def process_results():
     # Deduplicate
     deduped_gdf = deduplicate_detections(gdf)
     
-    # Export
-    # Output name matches input name but with .gpkg extension
-    output_filename = input_file.stem.replace("detections-", "mounds-") + ".gpkg"
-    output_gpkg = RESULTS_DIR / output_filename
+    # Export to GeoJSON
+    # Output name matches input name but with .geojson extension and 'mounds-' prefix
+    output_filename = input_file.stem.replace("detections-", "mounds-") + ".geojson"
+    output_path = RESULTS_DIR / output_filename
     
-    # Save Layers
-    gdf.to_file(output_gpkg, layer="raw_boxes", driver="GPKG")
-    deduped_gdf.to_file(output_gpkg, layer="deduped_points", driver="GPKG")
+    # Save Deduplicated Points only (Raw boxes are already in the input GeoJSON)
+    deduped_gdf.to_file(output_path, driver="GeoJSON")
     
-    print(f"Saved results to {output_gpkg}")
+    print(f"Saved deduplicated results to {output_path}")
 
 if __name__ == "__main__":
     process_results()

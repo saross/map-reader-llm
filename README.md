@@ -10,7 +10,7 @@ The system seamlessly handles large GeoTIFF maps by tiling them, running VLM inf
 - **VLM Inference**: Uses Google's Gemini models (e.g., Gemini 3 Pro, Flash) to visually identify symbols.
 - **Geospatial Awareness**: Outputs valid GeoJSON with correct CRS (EPSG:32635) derived immediately from tile metadata.
 - **Cost Control**: Built-in limits (`TEST_LIMIT`) to prevent runaway API costs during testing.
-- **Post-Processing**: Deduplicates overlapping detections and exports final results to OGC GeoPackage (`.gpkg`).
+- **Post-Processing**: Deduplicates overlapping detections and exports final results to GeoJSON.
 
 ## Setup
 
@@ -59,7 +59,7 @@ Deduplicates overlapping detections and creates a GIS-ready layer.
 ```bash
 python scripts/3_georeference_and_visualize.py
 ```
-*Output*: `outputs/results/mounds-YYYY-MM-DD-Model.gpkg`
+*Output*: `outputs/results/mounds-YYYY-MM-DD-Model.geojson`
 
 ## Configuration (`config.py`)
 
