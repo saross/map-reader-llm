@@ -16,7 +16,7 @@ from datetime import datetime
 sys.path.append(str(Path(__file__).parent.parent))
 from config import GOOGLE_API_KEY, MODEL_NAME, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT
 
-def detect_mounds():
+def detect_mounds(tile_list=None, output_name=None, export_bounds=False):
     # Configure Gemini
     if not GOOGLE_API_KEY:
         print("Error: GOOGLE_API_KEY not found.")
@@ -51,12 +51,15 @@ def detect_mounds():
     )
 
     # Output file (GeoJSON) with dynamic naming
-    # Pattern: detections-YYYY-MM-DD-ModelName.geojson
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    sanitized_model = MODEL_NAME.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
-    if not sanitized_model: sanitized_model = "model"
+    if output_name:
+        filename = output_name
+    else:
+        # Pattern: detections-YYYY-MM-DD-ModelName.geojson
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        sanitized_model = MODEL_NAME.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
+        if not sanitized_model: sanitized_model = "model"
+        filename = f"detections-{current_date}-{sanitized_model}.geojson"
     
-    filename = f"detections-{current_date}-{sanitized_model}.geojson"
     output_file = RESULTS_DIR / filename
     print(f"Output will be saved to: {output_file}")
     
@@ -76,23 +79,27 @@ def detect_mounds():
             print("Could not read existing GeoJSON, starting fresh.")
             features = []
 
-    # Gather all tiles
-    # We rely on spatial metadata in the files now, so we just look for PNGs
-    all_tiles = []
-    for map_dir in TILES_DIR.iterdir():
-        if map_dir.is_dir():
-            all_tiles.extend(list(map_dir.glob("*.png")))
-    
-    all_tiles = sorted(all_tiles)
-    print(f"Found {len(all_tiles)} tiles total.")
-    
-    # Filter out already processed tiles
-    tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
-    
-    # Cost Control: Limit processing
-    if TEST_LIMIT and TEST_LIMIT > 0:
-        print(f"Applying TEST_LIMIT: Only processing {TEST_LIMIT} tiles.")
-        tiles_to_process = tiles_to_process[:TEST_LIMIT]
+    # Gather tiles
+    if tile_list:
+        tiles_to_process = [t for t in tile_list if t.name not in processed_tiles]
+        print(f"Using provided list of {len(tile_list)} tiles. {len(tiles_to_process)} remaining to process.")
+    else:
+        # Gather all tiles
+        all_tiles = []
+        for map_dir in TILES_DIR.iterdir():
+            if map_dir.is_dir():
+                all_tiles.extend(list(map_dir.glob("*.png")))
+        
+        all_tiles = sorted(all_tiles)
+        print(f"Found {len(all_tiles)} tiles total.")
+        
+        # Filter out already processed tiles
+        tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
+        
+        # Cost Control: Limit processing
+        if TEST_LIMIT and TEST_LIMIT > 0:
+            print(f"Applying TEST_LIMIT: Only processing {TEST_LIMIT} tiles.")
+            tiles_to_process = tiles_to_process[:TEST_LIMIT]
 
     print(f"Processing {len(tiles_to_process)} new tiles...")
 
@@ -113,6 +120,7 @@ def detect_mounds():
     """
 
     save_frequency = 5 
+    tile_features = [] # For export_bounds
     
     for i, tile_path in enumerate(tqdm(tiles_to_process)):
         filename = tile_path.name
@@ -122,7 +130,11 @@ def detect_mounds():
             
             # API Call
             try:
-                response = model.generate_content([prompt, img])
+                # Gemini 3 Pro can be slow, explicit timeout required
+                response = model.generate_content(
+                    [prompt, img],
+                    request_options={'timeout': 600}
+                )
             except Exception as e:
                 print(f"API Error for {filename}: {e}")
                 time.sleep(20) # Backoff
@@ -141,31 +153,31 @@ def detect_mounds():
             with rasterio.open(tile_path) as src:
                 transform = src.transform
                 crs = src.crs
+                
+                # If export_bounds is True, capture tile geometry
+                if export_bounds:
+                    bounds = src.bounds
+                    geom = box(bounds.left, bounds.bottom, bounds.right, bounds.top)
+                    tile_feat = geojson.Feature(
+                        geometry=mapping(geom),
+                        properties={"tile_name": filename, "type": "processed_tile_bbox"}
+                    )
+                    tile_features.append(tile_feat)
             
             # Convert to GeoJSON Features
             for det in detections:
                 ymin_n, xmin_n, ymax_n, xmax_n = det["box_2d"]
                 
                 # Convert Normalized (0-1000) to Pixel Coords
-                # Note: TILE_SIZE is used, assuming tile is TILE_SIZE x TILE_SIZE
-                # We can also get width/height from 'src' if we wanted to be perfectly safe,
-                # but TILE_SIZE is constant.
-                
                 px_min_x = (xmin_n / 1000.0) * TILE_SIZE
                 px_max_x = (xmax_n / 1000.0) * TILE_SIZE
                 px_min_y = (ymin_n / 1000.0) * TILE_SIZE
                 px_max_y = (ymax_n / 1000.0) * TILE_SIZE
                 
                 # Convert Pixel to Geo using Affine Transform
-                # transform * (col, row) -> (x, y)
-                # Box corners:
-                # Top-Left Pixel (min_x, min_y) -> Geo (min_gx, max_gy) usually?
-                # Let's just transform all 4 corners or min/max.
-                
                 geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
                 geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
                 
-                # Since Y axis is inverted in pixels vs geo usually:
                 min_geo_x = min(geo_x1, geo_x2)
                 max_geo_x = max(geo_x1, geo_x2)
                 min_geo_y = min(geo_y1, geo_y2)
@@ -217,6 +229,22 @@ def detect_mounds():
         geojson.dump(collection, f)
         
     print(f"Finished. Saved {len(features)} detections to {output_file}")
+    
+    # Export bounds if requested
+    if export_bounds:
+        bounds_filename = Path(filename).stem + "_bounds.geojson"
+        bounds_file = RESULTS_DIR / bounds_filename
+        
+        bounds_collection = geojson.FeatureCollection(tile_features)
+        bounds_collection["crs"] = {
+            "type": "name",
+            "properties": {
+                "name": "urn:ogc:def:crs:EPSG::32635" 
+            }
+        }
+        with open(bounds_file, "w") as f:
+            geojson.dump(bounds_collection, f)
+        print(f"Saved {len(tile_features)} tile bounding boxes to {bounds_file}")
 
 if __name__ == "__main__":
     detect_mounds()
