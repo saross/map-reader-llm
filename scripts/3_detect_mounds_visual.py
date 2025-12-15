@@ -39,15 +39,37 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
         print(f"Error: Prompt file not found at {prompt_path}")
         return
 
-    # Load Reference Images
+    # Load Reference Images & Build Few-Shot Prompt Context
     refs_dir = BASE_DIR / "references"
-    ref_images = {}
-    for ref_name in ["burial_mound", "settlement_mound", "triangulation_mound", "benchmark_mound"]:
-        img_path = refs_dir / f"{ref_name}.png"
-        if img_path.exists():
-            ref_images[ref_name] = Image.open(img_path)
+    reference_content = []
+    
+    # Helper to add ref if exists
+    def add_ref(path, label):
+        if path.exists():
+            reference_content.append(label)
+            reference_content.append(Image.open(path))
         else:
-            print(f"Warning: Reference image {ref_name} not found.")
+            print(f"Warning: Reference image {path.name} not found.")
+
+    # 1. Burial Mounds
+    reference_content.append("--- Class 1: Burial Mounds (Kurgan) ---")
+    add_ref(refs_dir / "burial_mound.png", "Example 1A: Standard Legend Symbol (Sunburst)")
+    add_ref(refs_dir / "ref_variant_2.png", "Example 1B: Real Map Variant (Simpler/Degraded)")
+
+    # 2. Settlement Mounds
+    reference_content.append("--- Class 2: Settlement Mounds ---")
+    add_ref(refs_dir / "settlement_mound.png", "Example 2A: Standard Legend Symbol (Irregular/Ticks)")
+
+    # 3. Triangulation/Benchmark Mounds
+    reference_content.append("--- Class 3: Triangulation/Benchmark on Mound ---")
+    add_ref(refs_dir / "triangulation_mound.png", "Example 3A: Triangulation Point (Triangle + Spikes)")
+    add_ref(refs_dir / "benchmark_mound.png", "Example 3B: Benchmark (Square + Spikes)")
+    add_ref(refs_dir / "ref_variant_1.png", "Example 3C: Real Map Variant (Benchmark)")
+
+    # 4. Negative Examples (False Positives)
+    reference_content.append("--- NEGATIVE EXAMPLES (DO NOT DETECT) ---")
+    reference_content.append("The following images are confirmed False Positives (noise/labels). Absolute rule: If a symbol detects as a visual match to these, IGNORE IT.")
+    add_ref(refs_dir / "ref_negative_1.png", "Negative Example 1: Degraded Label/Noise")
 
     model = genai.GenerativeModel(
         model_name=MODEL_NAME,
@@ -100,7 +122,7 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
 
     print(f"Processing {len(tiles_to_process)} new tiles...")
 
-    save_frequency = 5 
+    save_frequency = 1 
     tile_features = []
     
     for i, tile_path in enumerate(tqdm(tiles_to_process)):
@@ -114,20 +136,9 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
             content_parts = [
                 "Here are the Reference Symbols you must find:",
             ]
+            content_parts.extend(reference_content)
             
-            if "burial_mound" in ref_images:
-                content_parts.append("Reference 1: Burial Mound (Kurgan)")
-                content_parts.append(ref_images["burial_mound"])
-            
-            if "settlement_mound" in ref_images:
-                content_parts.append("Reference 2: Settlement Mound")
-                content_parts.append(ref_images["settlement_mound"])
-                
-            if "triangulation_mound" in ref_images:
-                content_parts.append("Reference 3: Triangulation Point on Mound")
-                content_parts.append(ref_images["triangulation_mound"])
-            
-            content_parts.append("Now, find these symbols in the Target Map Tile below:")
+            content_parts.append("Now, find detection instances that visually match ANY of the above Reference Examples in the Target Map Tile below:")
             content_parts.append(img)
             
             # API Call
@@ -213,6 +224,22 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
         geojson.dump(collection, f)
         
     print(f"Finished. Saved {len(features)} detections to {output_file}")
+    
+    # Export bounds if requested
+    if export_bounds:
+        bounds_filename = Path(filename).stem + "_bounds.geojson"
+        bounds_file = RESULTS_DIR / bounds_filename
+        
+        bounds_collection = geojson.FeatureCollection(tile_features)
+        bounds_collection["crs"] = {
+            "type": "name",
+            "properties": {
+                "name": "urn:ogc:def:crs:EPSG::32635" 
+            }
+        }
+        with open(bounds_file, "w") as f:
+            geojson.dump(bounds_collection, f)
+        print(f"Saved {len(tile_features)} tile bounding boxes to {bounds_file}")
 
 if __name__ == "__main__":
     detect_mounds_visual()

@@ -56,3 +56,10 @@ Switching to a "Visual Few-Shot" approach (Prompt V3 + Reference Images) yielded
 - **Trade-off:** We observed a drop in recall for simple "Burial Mounds" (simple orange circles) while complex "Triangulation Mounds" (matching the legend reference perfectly) were detected.
 - **Hypothesis:** The model is now over-fitting to the *exact visual style* of the Legend crop.
 - **Next Step:** To recover recall, we need to supply "Real World" reference crops (valid detections from previous runs) alongside the idealized Legend crop.
+
+## Observation 10: The Few-Shot Success (Phase 4)
+Building on the visual breakthrough, we moved from "One-Shot" (Legend only) to "Few-Shot" by adding just **two** real-world positive examples (one simple mound, one benchmark variant).
+- **Result:** Dramatic restoration of recall. The model went from finding ~50% of mounds (mostly complex ones) to **100% recall** across 5 random tiles (18 detections vs 10 previously).
+- **Efficiency:** The correction was extremely efficient. We didn't need hundreds of examples; just providing *one* alternative view for each sub-class was enough to bridge the "Legend-to-Reality" gap.
+- **Precision (Phase 5):** To handle the single remaining false positive type (degraded labels resembling mounds), we introduced a "Negative Example" class. Instead of describing "don't detect noise," we simply showed the model an image of said noise with the instruction "IGNORE". This proved far more effective than text constraints.
+- **Conclusion:** Visual Few-Shot Prompting is definitively superior to Text-Only prompting for this task. It bypasses the difficulty of describing "sunburst shape" in words and robustly ignores numbers without "anti-number" paradoxes.
