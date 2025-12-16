@@ -50,7 +50,37 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
         print(f"Error: Prompt file not found at {prompt_path}")
         return
 
-    # ... (Reference loading omitted for brevity, logic remains same) ...
+    # Load Reference Images & Build Few-Shot Prompt Context
+    refs_dir = BASE_DIR / "references"
+    reference_content = []
+    
+    # Helper to add ref if exists
+    def add_ref(path, label):
+        if path.exists():
+            reference_content.append(label)
+            reference_content.append(Image.open(path))
+        else:
+            print(f"Warning: Reference image {path.name} not found.")
+
+    # 1. Burial Mounds
+    reference_content.append("--- Class 1: Burial Mounds (Kurgan) ---")
+    add_ref(refs_dir / "burial_mound.png", "Example 1A: Standard Legend Symbol (Sunburst)")
+    add_ref(refs_dir / "ref_variant_2.png", "Example 1B: Real Map Variant (Simpler/Degraded)")
+
+    # 2. Settlement Mounds
+    reference_content.append("--- Class 2: Settlement Mounds ---")
+    add_ref(refs_dir / "settlement_mound.png", "Example 2A: Standard Legend Symbol (Irregular/Ticks)")
+
+    # 3. Triangulation/Benchmark Mounds
+    reference_content.append("--- Class 3: Triangulation/Benchmark on Mound ---")
+    add_ref(refs_dir / "triangulation_mound.png", "Example 3A: Triangulation Point (Triangle + Spikes)")
+    add_ref(refs_dir / "benchmark_mound.png", "Example 3B: Benchmark (Square + Spikes)")
+    add_ref(refs_dir / "ref_variant_1.png", "Example 3C: Real Map Variant (Benchmark)")
+
+    # 4. Negative Examples (False Positives)
+    reference_content.append("--- NEGATIVE EXAMPLES (DO NOT DETECT) ---")
+    reference_content.append("The following images are confirmed False Positives (noise/labels). Absolute rule: If a symbol detects as a visual match to these, IGNORE IT.")
+    add_ref(refs_dir / "ref_negative_1.png", "Negative Example 1: Degraded Label/Noise")
     
     # Initialize Model with Safety Settings
     model = genai.GenerativeModel(
@@ -109,7 +139,7 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
     tile_features = []
     
     for i, tile_path in enumerate(tqdm(tiles_to_process)):
-        filename = tile_path.name
+        tile_filename = tile_path.name
         
         try:
             img = Image.open(tile_path)
@@ -142,30 +172,30 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
                     error_str = str(e)
                     if "429" in error_str or "ResourceExhausted" in error_str:
                         wait = base_wait * (2 ** attempt) # Exponential backoff: 30, 60, 120...
-                        print(f"\n[Warning] Rate Limit (429) hit for {filename}. Waiting {wait}s before retry {attempt+1}/{max_retries}...")
+                        print(f"\n[Warning] Rate Limit (429) hit for {tile_filename}. Waiting {wait}s before retry {attempt+1}/{max_retries}...")
                         time.sleep(wait)
                     elif "503" in error_str or "ServiceUnavailable" in error_str:
-                        print(f"\n[Warning] Service Unavailable (503) for {filename}. Waiting 30s...")
+                        print(f"\n[Warning] Service Unavailable (503) for {tile_filename}. Waiting 30s...")
                         time.sleep(30)
                     elif "DeadlineExceeded" in error_str:
-                        print(f"\n[Warning] Timeout (DeadlineExceeded) for {filename}. Retrying...")
+                        print(f"\n[Warning] Timeout (DeadlineExceeded) for {tile_filename}. Retrying...")
                         time.sleep(30)
                     elif "404" in error_str and "models/" in error_str:
                          # Strict Requirement: Report failure if model not found, DO NOT FALLBACK.
                          print(f"\n[CRITICAL] Model '{MODEL_NAME}' not found or not available. Terminating.")
                          return
                     else:
-                        print(f"\n[Error] Unexpected API Error for {filename}: {e}")
+                        print(f"\n[Error] Unexpected API Error for {tile_filename}: {e}")
                         # For unhandled errors, we might want to skip the tile or retry?
                         # Given "robustness", we'll retry once or twice then skip.
                         if attempt < 2: 
                             time.sleep(20)
                         else:
-                            print(f"Skipping tile {filename} after repeated errors.")
+                            print(f"Skipping tile {tile_filename} after repeated errors.")
                             break
             
             if not response:
-                print(f"Failed to get response for {filename} after retries.")
+                print(f"Failed to get response for {tile_filename} after retries.")
                 continue
 
             # Parse Response
@@ -174,7 +204,7 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
                 json_response = json.loads(response.text)
                 detections = json_response.get("detections", [])
             except Exception as e:
-                print(f"Failed to parse response for {filename}: {e}")
+                print(f"Failed to parse response for {tile_filename}: {e}")
                 continue
 
             # Geotransform
@@ -186,7 +216,7 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
                     geom = box(bounds.left, bounds.bottom, bounds.right, bounds.top)
                     tile_feat = geojson.Feature(
                         geometry=mapping(geom),
-                        properties={"tile_name": filename, "type": "processed_tile_bbox"}
+                        properties={"tile_name": tile_filename, "type": "processed_tile_bbox"}
                     )
                     tile_features.append(tile_feat)
             
@@ -210,7 +240,7 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
                 feature = geojson.Feature(
                     geometry=mapping(geom),
                     properties={
-                        "source_tile": filename,
+                        "source_tile": tile_filename,
                         "label": det.get("label", "mound"),
                         "subtype": det.get("subtype", "unknown"),
                         "reasoning": det.get("reasoning", ""),
@@ -230,7 +260,7 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
                     geojson.dump(collection, f)
 
         except Exception as e:
-            print(f"Error processing {filename}: {e}")
+            print(f"Error processing {tile_filename}: {e}")
             time.sleep(20)
 
     # Final Save

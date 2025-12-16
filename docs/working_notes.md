@@ -63,3 +63,28 @@ Building on the visual breakthrough, we moved from "One-Shot" (Legend only) to "
 - **Efficiency:** The correction was extremely efficient. We didn't need hundreds of examples; just providing *one* alternative view for each sub-class was enough to bridge the "Legend-to-Reality" gap.
 - **Precision (Phase 5):** To handle the single remaining false positive type (degraded labels resembling mounds), we introduced a "Negative Example" class. Instead of describing "don't detect noise," we simply showed the model an image of said noise with the instruction "IGNORE". This proved far more effective than text constraints.
 - **Conclusion:** Visual Few-Shot Prompting is definitively superior to Text-Only prompting for this task. It bypasses the difficulty of describing "sunburst shape" in words and robustly ignores numbers without "anti-number" paradoxes.
+
+## Observation 11: The Power of Buffered Evaluation (Phase 7)
+We established a rigorous automated evaluation pipeline using a **20-meter buffer** around ground truth centroids.
+- **Why 20m?** This accounts for symbol size and manual digitization variance. This metric resolved the ambiguity of "near misses" where the model correctly boxed a mound but the box didn't perfectly overlap the single pixel center point.
+- **Result (Rakovski Full Run):**
+  - **F1 Score:** 0.8676
+  - **Recall:** 0.9031 (177/196 mounds found)
+  - **Precision:** 0.8349 (35 False Positives)
+- **Significance:** We achieved >90% recall on a full map run with a purely visual prompt. The primary error mode is now False Positives (over-sensitivity), which is preferable in archaeology to missing sites.
+
+## Observation 12: Stratified Calibration & Generalization (Phase 8)
+To prepare for publication, we moved from a "Single-Map Train/Test" split to a **Stratified Calibration** strategy.
+- **Hypothesis:** Training on just one map (Rakovski) risks overfitting to that specific print quality/style.
+- **Method:** We selected a stratified sample of 20 tiles (5 from each of 4 maps).
+- **Result (Zero-Shot Transfer):**
+  - **Global F1:** 0.8764
+  - **Transfer Success:** The model generalized immediately to 'Elenovo' (F1 0.92) and '32635' (F1 0.86) without seeing any training examples from them.
+  - **Weakness Identified:** 'Lesovo' (F1 0.67) revealed a weakness on "sparse" maps with few targets, tending towards false positives.
+- **Strategic Decision:** This validated the "Few-Shot Visual Prompting" approach as highly robust and generalizable. We will proceed with a full multi-map production run, confident that the core prompt works across the dataset.
+
+## Observation 13: The "White Void" Hallucination (Edge Tiles)
+During stratified calibration, 4 tiles failed with `MAX_TOKENS` errors.
+- **Root Cause:** These were "Edge Tiles" containing >90% white padding or "nodata" values.
+- **Mechanism:** When presented with featureless white space, the model lacks "grounding" and begins to hallucinate features from paper grain or compression artifacts, entering a repetitive loop that consumes the entire token window.
+- **Fix:** We implemented a **"Information Density Check"** in the tile selection step. We now mathematically verify that a tile contains sufficient map data (pixel variance > threshold) before selecting it for calibration. This ensures we calibrate on *maps*, not *margins*.
