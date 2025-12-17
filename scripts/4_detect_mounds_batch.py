@@ -1,0 +1,347 @@
+
+import json
+import time
+import os
+import argparse
+from pathlib import Path
+from tqdm import tqdm
+import google.generativeai as genai
+from PIL import Image
+import geojson
+from shapely.geometry import box, mapping
+import rasterio
+import sys
+from datetime import datetime, timezone
+import uuid
+import subprocess
+import hashlib
+
+# Add parent directory to path
+sys.path.append(str(Path(__file__).parent.parent))
+from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR
+
+
+# Script Version
+__version__ = "4.0.0"
+
+class MetadataTracker:
+    def __init__(self, config, system_instruction):
+        self.run_id = str(uuid.uuid4())
+        self.start_time = datetime.now(timezone.utc)
+        self.config = config
+        self.system_instruction_hash = hashlib.sha256(system_instruction.encode('utf-8')).hexdigest()
+        
+        self.stats = {
+            "tiles_processed": 0,
+            "tiles_failed": 0,
+            "retries_total": 0,
+            "retries_429_ratelimit": 0,
+            "retries_500_server": 0,
+            "timeouts": 0
+        }
+        
+        self.usage = {
+            "total_input_tokens": 0,
+            "total_output_tokens": 0
+        }
+        
+        self.results_summary = {
+            "total_detections": 0,
+            "class_counts": {}
+        }
+
+    def get_git_revision(self):
+        try:
+            return subprocess.check_output(['git', 'rev-parse', 'HEAD'], stderr=subprocess.DEVNULL).decode('ascii').strip()
+        except:
+            return "unknown"
+
+    def update_usage(self, response):
+        if hasattr(response, 'usage_metadata'):
+            self.usage["total_input_tokens"] += response.usage_metadata.prompt_token_count
+            self.usage["total_output_tokens"] += response.usage_metadata.candidates_token_count
+
+    def update_results(self, detections):
+        self.results_summary["total_detections"] += len(detections)
+        for det in detections:
+            subtype = det.get("subtype", "unknown")
+            self.results_summary["class_counts"][subtype] = self.results_summary["class_counts"].get(subtype, 0) + 1
+
+    def finalize(self):
+        end_time = datetime.now(timezone.utc)
+        duration = (end_time - self.start_time).total_seconds()
+        
+        return {
+            "run_id": self.run_id,
+            "timestamp": {
+                "start": self.start_time.isoformat(),
+                "end": end_time.isoformat(),
+                "duration_seconds": duration
+            },
+            "environment": {
+                "git_commit": self.get_git_revision(),
+                "script": "4_detect_mounds_batch.py",
+                "script_version": __version__
+            },
+            "configuration": {
+                "version": self.config.get("version"),
+                "model": self.config.get("model"),
+                "prompt_hash": self.system_instruction_hash,
+                "temperature": self.config.get("temperature", 0.1),
+                "full_config_snapshot": self.config
+            },
+            "execution_stats": self.stats,
+            "usage_stats": self.usage,
+            "results_summary": self.results_summary
+        }
+
+def detect_mounds_versioned(config_path, tile_list=None, output_name=None, export_bounds=False):
+    # Load Config
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+    except Exception as e:
+        print(f"Error loading config: {e}")
+        return
+
+    print(f"Loaded Version: {config.get('version', 'unknown')}")
+    print(f"Model: {config.get('model', 'unknown')}")
+
+    model_name_cfg = config.get("model")
+    
+    # Configure Gemini
+    if not GOOGLE_API_KEY:
+        print("Error: GOOGLE_API_KEY not found.")
+        return
+
+    genai.configure(api_key=GOOGLE_API_KEY)
+    
+    # Load Prompt Text
+    prompt_path = Path(BASE_DIR) / "prompts" / "text" / "v3_system_instruction.md"
+    try:
+        with open(prompt_path, "r") as f:
+            v3_prompt_text = f.read()
+    except FileNotFoundError:
+        print(f"Error: Prompt text not found at {prompt_path}")
+        return
+
+    tracker = MetadataTracker(config, v3_prompt_text)
+
+    # Build Few-Shot Context from Config
+    refs_dir = BASE_DIR / "references"
+    reference_content = []
+    
+    examples = config.get("examples", [])
+    for ex in examples:
+        label = ex.get("label", "Example")
+        path_str = ex.get("path", "")
+        img_path = refs_dir / path_str
+        
+        if img_path.exists():
+            reference_content.append(label)
+            reference_content.append(Image.open(img_path))
+        else:
+            print(f"Warning: Reference image {path_str} not found.")
+
+    # Initialize Model
+    generation_config = {
+        "temperature": config.get("temperature", 0.1),
+        "top_p": 0.95,
+        "top_k": 40,
+        "max_output_tokens": 8192,
+        "response_mime_type": "application/json",
+    }
+    
+    safety_settings = [
+        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+    ]
+
+    try:
+        model = genai.GenerativeModel(
+            model_name=model_name_cfg,
+            generation_config=generation_config,
+            system_instruction=v3_prompt_text,
+            safety_settings=safety_settings
+        )
+    except Exception as e:
+        print(f"Error initializing model {model_name_cfg}: {e}")
+        return
+
+    # Output file setup
+    if output_name:
+        filename = output_name
+    else:
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        version_tag = config.get("version", "vX")
+        sanitized_model = model_name_cfg.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
+        filename = f"detections-{version_tag}-{sanitized_model}-{current_date}.geojson"
+    
+    # Versioned Output Directory
+    version_out_dir = RESULTS_DIR / config.get("version", "unknown")
+    version_out_dir.mkdir(parents=True, exist_ok=True)
+    
+    output_file = version_out_dir / filename
+    meta_file = output_file.with_suffix('.meta.json')
+    print(f"Output: {output_file}")
+    print(f"Metadata: {meta_file}")
+    
+    # Load existing results (Resume capability)
+    features = []
+    processed_tiles = set()
+    if output_file.exists():
+        try:
+            with open(output_file, 'r') as f:
+                data = geojson.load(f)
+                features = data.get("features", [])
+                for feat in features:
+                    if "source_tile" in feat["properties"]:
+                        processed_tiles.add(feat["properties"]["source_tile"])
+        except Exception:
+            features = []
+
+    # Gather tiles
+    if tile_list:
+        tiles_to_process = [t for t in tile_list if t.name not in processed_tiles]
+        print(f"Using provided list. {len(tiles_to_process)} remaining.")
+    else:
+        all_tiles = []
+        for map_dir in TILES_DIR.iterdir():
+            if map_dir.is_dir():
+                all_tiles.extend(list(map_dir.glob("*.png")))
+        all_tiles = sorted(all_tiles)
+        tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
+        if TEST_LIMIT and TEST_LIMIT > 0:
+            tiles_to_process = tiles_to_process[:TEST_LIMIT]
+
+    print(f"Processing {len(tiles_to_process)} new tiles...")
+    save_frequency = 1 
+
+    for i, tile_path in enumerate(tqdm(tiles_to_process)):
+        tile_filename = tile_path.name
+        
+        try:
+            img = Image.open(tile_path)
+            
+            content_parts = [
+                "Here are the Reference Symbols you must find:",
+            ]
+            content_parts.extend(reference_content)
+            content_parts.append("Now, find detection instances that visually match ANY of the above Reference Examples in the Target Map Tile below:")
+            content_parts.append(img)
+            
+            max_retries = 5
+            base_wait = 30
+            response = None
+            
+            for attempt in range(max_retries):
+                try:
+                    response = model.generate_content(
+                        content_parts,
+                        request_options={'timeout': 900} 
+                    )
+                    tracker.update_usage(response)
+                    break 
+                except Exception as e:
+                    error_str = str(e)
+                    tracker.stats["retries_total"] += 1
+                    
+                    if "429" in error_str or "ResourceExhausted" in error_str:
+                        tracker.stats["retries_429_ratelimit"] += 1
+                        wait = base_wait * (2 ** attempt)
+                        print(f"\n[Warning] Rate Limit (429). Waiting {wait}s...")
+                        time.sleep(wait)
+                    elif "503" in error_str:
+                        tracker.stats["retries_500_server"] += 1
+                        time.sleep(30)
+                    elif "DeadlineExceeded" in error_str:
+                        tracker.stats["timeouts"] += 1
+                        time.sleep(30)
+                    elif "404" in error_str and "models/" in error_str:
+                         print(f"\n[CRITICAL] Model '{model_name_cfg}' not found. Terminating.")
+                         return
+                    else:
+                        print(f"\n[Error] {e}")
+                        if attempt < 2: time.sleep(20)
+                        else: break
+            
+            if not response:
+                tracker.stats["tiles_failed"] += 1
+                continue
+
+            tracker.stats["tiles_processed"] += 1
+            
+            detections = []
+            try:
+                json_response = json.loads(response.text)
+                detections = json_response.get("detections", [])
+                tracker.update_results(detections)
+            except Exception as e:
+                print(f"Failed to parse response: {e}")
+                continue
+
+            with rasterio.open(tile_path) as src:
+                transform = src.transform
+                crs = src.crs
+
+            for det in detections:
+                ymin_n, xmin_n, ymax_n, xmax_n = det["box_2d"]
+                px_min_x = (xmin_n / 1000.0) * TILE_SIZE
+                px_max_x = (xmax_n / 1000.0) * TILE_SIZE
+                px_min_y = (ymin_n / 1000.0) * TILE_SIZE
+                px_max_y = (ymax_n / 1000.0) * TILE_SIZE
+                
+                geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
+                geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
+                
+                min_geo_x = min(geo_x1, geo_x2)
+                max_geo_x = max(geo_x1, geo_x2)
+                min_geo_y = min(geo_y1, geo_y2)
+                max_geo_y = max(geo_y1, geo_y2)
+                
+                geom = box(min_geo_x, min_geo_y, max_geo_x, max_geo_y)
+                feature = geojson.Feature(
+                    geometry=mapping(geom),
+                    properties={
+                        "source_tile": tile_filename,
+                        "label": det.get("label", "mound"),
+                        "subtype": det.get("subtype", "unknown"),
+                        "confidence": "high",
+                        "method": config.get("version", "vX"),
+                        "model": model_name_cfg
+                    }
+                )
+                features.append(feature)
+
+            if (i + 1) % save_frequency == 0:
+                collection = geojson.FeatureCollection(features)
+                if crs: collection["crs"] = {"type": "name", "properties": {"name": f"urn:ogc:def:crs:EPSG::{crs.to_epsg()}"}}
+                with open(output_file, "w") as f:
+                    geojson.dump(collection, f)
+                    
+        except Exception as e:
+            print(f"Error processing {tile_filename}: {e}")
+            tracker.stats["tiles_failed"] += 1
+
+    # Final Save
+    collection = geojson.FeatureCollection(features)
+    collection["crs"] = {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::32635"}}
+    with open(output_file, "w") as f:
+        geojson.dump(collection, f)
+    
+    # Save Metadata
+    meta = tracker.finalize()
+    with open(meta_file, "w") as f:
+        json.dump(meta, f, indent=2)
+        
+    print(f"Finished. Saved to {output_file}")
+    print(f"Metadata saved to {meta_file}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=True, help="Path to JSON prompt config")
+    args = parser.parse_args()
+    
+    detect_mounds_versioned(args.config)

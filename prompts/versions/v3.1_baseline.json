@@ -1,0 +1,36 @@
+{
+    "version": "v3.1_baseline",
+    "description": "Balanced 6-Shot (Phase 9). High Accuracy Benchmark.",
+    "model": "gemini-3-pro-preview",
+    "temperature": 0.1,
+    "examples": [
+        {
+            "path": "burial_mound.png",
+            "label": "Example 1A: Standard Legend Symbol (Sunburst)"
+        },
+        {
+            "path": "settlement_mound.png",
+            "label": "Example 2A: Standard Legend Symbol (Irregular/Ticks)"
+        },
+        {
+            "path": "benchmark_mound.png",
+            "label": "Example 3B: Benchmark (Square + Spikes)"
+        },
+        {
+            "path": "ref_negative_1.png",
+            "label": "Negative Example 1: Degraded Label/Noise"
+        },
+        {
+            "path": "neg_sparse.png",
+            "label": "Negative Example 2: Sparse Area (Contours + Roads only). NO MOUNDS."
+        },
+        {
+            "path": "neg_topo.png",
+            "label": "Negative Example 3: Complex Topography/River. NO MOUNDS."
+        },
+        {
+            "path": "neg_urban.png",
+            "label": "Negative Example 4: Urban/Cluttered Area. Buildings are not mounds. NO MOUNDS."
+        }
+    ]
+}

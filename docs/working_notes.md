@@ -121,3 +121,51 @@ Final evaluation of the 20-tile stratified set (5 tiles/map) with **50m Edge Exc
   - **Overlap:** Our tiling configuration uses `OVERLAP = 64px` (~320m).
   - **Safety Margin:** 320m (Physical Overlap) - 100m (Exclusion x2) = **220m** safe, redundant coverage per seam.
 - **Outcome:** Rakovski performance jumped to 100% F1. This confirms that edge artifacts were the only limiting factor for that map. We can proceed to production with high confidence.
+
+## Observation 17: Refined Few-Shot Library (Phase 10)
+Following the calibration error analysis (4 FPs, 7 FNs), we refined the few-shot library to create a robust 13-shot "dialectical" prompt.
+- **Strategy:** Target specific failure modes ("Hard Negatives" and "Corner Case Positives").
+- **New Negative Examples (Stopping Hallucinations):**
+  1.  **Embankment (Inward Rays):** Addressed `errors_fp.geojson` where an embankment with inward rays was mistaken for a mound.
+  2.  **Benchmark (Square):** Addressed a specific FP where a square benchmark was detected.
+  3.  **Triangulation (Triangle):** Prophylactic negative to prevent confusion with "Mound + Triangulation".
+- **New Positive Examples (Boosting Recall/Robustness):**
+  1.  **Green Background + Clutter:** Selected the "Mound + 3" example to teach that background color (vegetation) and label text do not invalidate the symbol.
+  2.  **Intersected Mound:** Selected a complex example (River Bend + Vertical Line) to teach "Object Persistence" despite heavy occlusion.
+  3.  **Compound Symbol:** "Mound + Triangulation Point" to teach that geometric modifiers are acceptable.
+- **Final Composition:** 7 Original (Standard/Topography) + 6 Refined = 13 Examples. This library is designed to stabilize the decision boundary against the specific "visual near-misses" found in the dataset.
+
+## Observation 18: The Gemini 3 Pro Regression (Phase 12)
+We attempted a full production run using the **Gemini 3 Pro** model with the expanded 13-shot library.
+- **Hypothesis:** A stronger model + more examples would yield better performance.
+- **Outcome:** Catastrophic Regression.
+  - **F1 Score:** Dropped from ~0.89 (Gemini 1.5 Flash/Calibration) to **~0.40**.
+  - **False Positives:** Exploded (100+ per map vs ~5 previously).
+  - **Recall:** Collapsed (~35-47% vs ~90%).
+  - **Efficiency:** The larger model triggered severe API Rate Limits, making the run unviable (>24h).
+- **Calibration Benchmark (Subset):** We extracted results for **13/20** calibration tiles. The remaining 7 (mostly Rakovski/Lesovo) failed due to persistent API Rate Limits (>20m wait per tile), further confirming the efficiency blocker.
+  - **Global F1 (13 Tiles):** 0.73 (vs 0.89 Baseline).
+  - **Elenovo:** 0.60 (vs 0.85). Recall collapsed to 0.46.
+  - **Lesovo:** 0.00 (vs 0.80). Missed all mounds.
+- **Analysis:** "More is not always better." The "Pro" model appears significantly more creative/sensitive, leading to massive hallucinations (pareidolia) on map noise that the smaller, "dumber" Flash model correctly ignored. The 13-shot prompt might also have over-complicated the context window.
+- **Corrective Action:** Immediate reversion to the **Gemini 1.5 Flash** baseline and the simpler (balanced 6-shot) prompt structure that was proven in Phase 9. Simplicity and speed >> parameter count for this specific visual extraction task.
+
+## Observation 19: Forensic Analysis of Phase 12 Failures
+We inspected 8 specific False Positive crops from the calibration set to diagnose the Gemini 3 Pro hallucinations.
+- **Diagnosis: Pareidolia (Finding Patterns in Noise).**
+- **Failure Types:**
+  1.  **Text Hallucination:** Confusing the curly shape of the number "3" or Cyrillic letters for the curved edge of a mound (Examples `FP_3`, `FP_1`).
+  2.  **Symbol Confusion:** Identifying a 6-pointed star/asterisk (likely a mill or landmark) as a "Mound with splayed rays" (`FP_5`).
+  3.  **Over-Interpretation:** Seeing "Intersected Mounds" where a road simply crosses a contour line (`FP_4`).
+- **Root Cause:** The 13-shot library explicitly taught the model to look for "hard cases" (intersected mounds, etc.). The highly sensitive Pro model over-generalized this instruction, interpreting any messy intersection as a "hard positive" rather than noise.
+- **Conclusion:** The model is "trying too hard". A simpler prompt with fewer edge cases (or a less imaginative model like Flash) is superior for this specific task where "boring consistency" is key.
+
+## Observation 20: User Override - Strict Gemini 3 Pro Requirement (Phase 12b)
+The User has **rejected** the proposal to revert to Gemini 1.5 Flash.
+- **Directive:** "I DO NOT want you to revert to earlier models, we require *gemini 3 pro*."
+- **Implication:** We must solve the rate limiting and hallucination issues *within* the Gemini 3 Pro architecture, or report that the task is impossible with current constraints.
+- **Current Status:**
+  - **Model:** `gemini-3-pro-preview` (Restored).
+  - **Performance:** F1 ~0.73 (Regression).
+  - **Blocker:** Severe Rate Limits preventing full runs.
+- **Next Steps:** We are currently blocked by the model's availability/efficiency. We will hold here until the model stabilizes or an architectural workaround (e.g., massive sharding/delays) is approved.
