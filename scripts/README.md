@@ -20,5 +20,7 @@ This directory contains the Python code for the map processing pipeline.
 *   **Output**: `outputs/results/mounds-*.geojson` (Final points)
 
 ## Utilities
-*   `evaluate_*.py`: Various tools for calculating Precision/Recall against ground truth.
-*   `extract_*.py`: Tools for mining legend crops or managing the reference library.
+*   `evaluate_*.py`: (Future) Tools for precision/recall calculation.
+*   `extract_*.py`: (Legacy) Tools for mining legend crops.
+
+*Note: Older scripts have been moved to `archive/scripts/`.*

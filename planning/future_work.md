@@ -8,7 +8,7 @@ This document tracks long-term maintenance and methodological tasks for the Map 
     - Action: Set up a cron job or script to copy relevant `*.pb` and `*.md` files into a dedicated `methodology/logs/` directory in this repository.
 
 ## Open Science Standards
-- [ ] **FAIR4RS Compliance**: Upgrade the repository to fully meet FAIR (Findable, Accessible, Interoperable, Reusable) principles for Research Software.
-    - [ ] Add `CITATION.cff`
-    - [ ] Ensure comprehensive license coverage
-    - [ ] Improve documentation for reusability (containerization, etc.)
+- [x] **FAIR4RS Compliance**: Upgrade the repository to fully meet FAIR (Findable, Accessible, Interoperable, Reusable) principles for Research Software.
+    - [x] Add `CITATION.cff`
+    - [x] Ensure comprehensive license coverage
+    - [x] Improve documentation for reusability (containerization, etc.)

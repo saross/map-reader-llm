@@ -30,7 +30,7 @@ import sys
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import INPUTS_DIR, TILES_DIR, TILE_SIZE, OVERLAP
+from config import INPUTS_DIR, RASTERS_DIR, TILES_DIR, TILE_SIZE, OVERLAP
 
 def tile_raster(input_path: Path):
     """
@@ -156,11 +156,11 @@ def tile_raster(input_path: Path):
     print(f"Finished tiling {map_name}. Saved {len(windows)*3} files (png+pgw+aux) to {map_output_dir}")
 
 def main():
-    # Process all TIFs in inputs
-    tif_files = list(INPUTS_DIR.glob("*.tif"))
+    # Process all TIFs in inputs/rasters
+    tif_files = list(RASTERS_DIR.glob("*.tif"))
     
     if not tif_files:
-        print(f"No .tif files found in {INPUTS_DIR}")
+        print(f"No .tif files found in {RASTERS_DIR}")
         return
 
     for tif_path in tif_files:

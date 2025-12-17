@@ -55,6 +55,7 @@ GOOGLE_API_KEY=your_key_here
 
 ### 3. Running the Pipeline
 **Step 1: Tiling**
+To tile maps from `inputs/rasters/`:
 ```bash
 python scripts/preprocess_tiling.py
 ```

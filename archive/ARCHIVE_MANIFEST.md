@@ -70,3 +70,9 @@ This document maps historical result files to the specific prompt versions used 
 ### Utilities
 *   `util_*.py`: Various helper scripts (legend analysis, geojson conversion, debugging).
 
+## Prompt Development Assets
+**Location**: `archive/prompt_example_images/`
+
+Collection of screenshots and crops used for tuning the V3 prompt (False Positives, False Negatives, Benchmarks).
+
+

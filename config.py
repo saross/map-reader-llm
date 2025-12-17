@@ -7,6 +7,8 @@ load_dotenv()
 # Base paths
 BASE_DIR = Path(__file__).parent
 INPUTS_DIR = BASE_DIR / "inputs"
+RASTERS_DIR = INPUTS_DIR / "rasters"
+VECTORS_DIR = INPUTS_DIR / "vectors"
 OUTPUTS_DIR = BASE_DIR / "outputs"
 TILES_DIR = OUTPUTS_DIR / "tiles"
 
