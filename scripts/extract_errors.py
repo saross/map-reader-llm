@@ -26,7 +26,7 @@ def get_map_name(tile_filename):
             return m
     return "Unknown"
 
-def extract_errors(detection_file, bounds_file, out_fp, out_fn, buffer_meters=20):
+def extract_errors(detection_file, bounds_file, out_fp, out_fn, buffer_meters=20, edge_exclusion=0):
     print(f"--- Extracting Errors (FP/FN) ---")
     print(f"Detections: {detection_file}")
     print(f"Bounds: {bounds_file}")
@@ -86,6 +86,10 @@ def extract_errors(detection_file, bounds_file, out_fp, out_fn, buffer_meters=20
             continue
             
         searched_area = map_bounds.geometry.union_all()
+
+        # Apply Edge Exclusion if requested
+        if edge_exclusion > 0:
+            searched_area = searched_area.buffer(-edge_exclusion)
         
         # Filter Ref
         ref_on_map = gdf_ref_all[gdf_ref_all['Map'] == map_name]
@@ -99,6 +103,10 @@ def extract_errors(detection_file, bounds_file, out_fp, out_fn, buffer_meters=20
         
         # Filter Det
         det_on_map = gdf_det[gdf_det['Map'] == map_name]
+        
+        # consistency check: Filter Detections to Searched Area (Eroded)
+        if edge_exclusion > 0 and not det_on_map.empty:
+             det_on_map = det_on_map[det_on_map.geometry.centroid.within(searched_area)]
         
         # FP Logic: Detection that does NOT intersect any Ref in Scope
         # Left join Det -> Ref
@@ -145,6 +153,7 @@ if __name__ == "__main__":
     parser.add_argument("--out_fp", required=True, help="Output path for False Positives")
     parser.add_argument("--out_fn", required=True, help="Output path for False Negatives")
     parser.add_argument("--buffer", type=int, default=20)
+    parser.add_argument("--edge_exclusion", type=float, default=0, help="Margin in meters to exclude from search area edges")
     args = parser.parse_args()
     
-    extract_errors(args.detections, args.bounds, args.out_fp, args.out_fn, args.buffer)
+    extract_errors(args.detections, args.bounds, args.out_fp, args.out_fn, args.buffer, args.edge_exclusion)

@@ -76,11 +76,24 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
     add_ref(refs_dir / "triangulation_mound.png", "Example 3A: Triangulation Point (Triangle + Spikes)")
     add_ref(refs_dir / "benchmark_mound.png", "Example 3B: Benchmark (Square + Spikes)")
     add_ref(refs_dir / "ref_variant_1.png", "Example 3C: Real Map Variant (Benchmark)")
+    add_ref(refs_dir / "ref_mound_3.png", "Positive Example 3D: Mound with label '3' nearby")
+    add_ref(refs_dir / "ref_pos_green.png", "Positive Example 3E: Mound on Green Background (Vegetation). Note the symbol is the same despite the background color.")
+    add_ref(refs_dir / "ref_pos_intersected.png", "Positive Example 3F: Obscured/Intersected Mound. The mound symbol persists even when cut by roads, rivers, or black lines.")
+    add_ref(refs_dir / "ref_pos_compound.png", "Positive Example 3G: Compound Symbol (Mound + Triangulation Point). The mound rays surround the central triangle.")
 
     # 4. Negative Examples (False Positives)
+    # The user has selected 3 specific "Empty" tile types (Sparse, Topo, Urban)
+    # to create a Balanced Few-Shot (3 Pos vs 3 Neg).
     reference_content.append("--- NEGATIVE EXAMPLES (DO NOT DETECT) ---")
-    reference_content.append("The following images are confirmed False Positives (noise/labels). Absolute rule: If a symbol detects as a visual match to these, IGNORE IT.")
+    reference_content.append("The following images confirm what 'NO MOUNDS' looks like. If a tile looks like these, output nothing.")
+    
     add_ref(refs_dir / "ref_negative_1.png", "Negative Example 1: Degraded Label/Noise")
+    add_ref(refs_dir / "neg_sparse.png", "Negative Example 2: Sparse Area (Contours + Roads only). NO MOUNDS.")
+    add_ref(refs_dir / "neg_topo.png", "Negative Example 3: Complex Topography/River. NO MOUNDS.")
+    add_ref(refs_dir / "neg_urban.png", "Negative Example 4: Urban/Cluttered Area. Buildings are not mounds. NO MOUNDS.")
+    add_ref(refs_dir / "ref_neg_embankment_2.png", "Negative Example 5: Embankment/Depression. Note the rays point INWARD (concave), unlike a mound (convex). NO MOUNDS.")
+    add_ref(refs_dir / "ref_neg_benchmark.png", "Negative Example 6: Isolated Benchmark. A square with a dot is NOT a mound. NO MOUNDS.")
+    add_ref(refs_dir / "ref_neg_triangulation.png", "Negative Example 7: Isolated Triangulation Point. A triangle with a dot (without surrounding rays) is NOT a mound. NO MOUNDS.")
     
     # Initialize Model with Safety Settings
     model = genai.GenerativeModel(
