@@ -4,6 +4,7 @@ library(mapview)
 
 # Load detected mound bboxes
 detected <- read_sf("../outputs/results/detections-2025-12-11-3-pro.geojson") 
+detected <- read_sf("../outputs/results/detections-calibration-stratified.geojson")
 
 # Check if metadata is present?
 detected
@@ -27,12 +28,27 @@ tiles <- unique(detected$source_tile)
 
 # Get tiles directory path
 tile_dir <- "../outputs/tiles/K-35-052-4_32635"
+tile_dirs <- unique(file.path(
+  "../outputs/tiles",
+  sub("_x.*$", "", tiles)
+))
+
+tile_dirs
 
 # Load rasters from tiles dir using filepaths
-rasters <- map(
-  tiles,
-  ~ rast(file.path(tile_dir, .x))
+# rasters <- map(
+#   tiles,
+#   ~ rast(file.path(tile_dir, .x))
+# )
+
+rasters <- lapply(tiles, \(t)
+                  rast(file.path(
+                    "../outputs/tiles",
+                    sub("_x.*$", "", t),
+                    t
+                  ))
 )
+
 
 # Check all is working
 names(rasters) <- tiles
@@ -57,9 +73,15 @@ poly_r1 <- detected[detected$source_tile == tile_name, ]
 views <- imap(
   rasters,
   ~ mapview(.x) + 
-    mapview(detected[detected$source_tile == .y, ], col.regions = "blue")
+    mapview(detected[detected$source_tile == .y, ], zcol = "confidence")
 )
 
 # Change the number in parentheses from 1- n to view the relevant tile 
 # and associated mound bboxes
-views[[5]]
+views[[3]]
+
+# image 2,3 have difficulty with bbox in benchmarks and one sunburst (offset)
+plot(r1)
+
+library(tidyverse)
+glimpse(detected )
