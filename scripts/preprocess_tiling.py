@@ -1,3 +1,23 @@
+"""
+Preprocess Tiling Script
+========================
+Description:
+    Splits large GeoTIFF input maps into smaller, manageable tiles (default 512x512) 
+    for processing by the VLM. Critically, it preserves geospatial metadata for each 
+    tile by generating accompanying World Files (.pgw) and Aux XML (.aux.xml) files.
+
+Usage:
+    python scripts/preprocess_tiling.py
+
+Inputs:
+    - scans from `inputs/*.tif`
+
+Outputs:
+    - tiles in `outputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}`
+
+Author: Shawn Ross, Adela Sobotkova
+License: Apache 2.0
+"""
 
 import json
 import rasterio
@@ -6,15 +26,26 @@ from PIL import Image
 from tqdm import tqdm
 from pathlib import Path
 import numpy as np
-
-# Adjust python path if run as script, though standard import is better
 import sys
+
+# Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
 from config import INPUTS_DIR, TILES_DIR, TILE_SIZE, OVERLAP
 
 def tile_raster(input_path: Path):
     """
-    Tiles a GeoTIFF into smaller PNGs and saves metadata.
+    Splits a single GeoTIFF into tiles with geospatial sidecar files.
+
+    Process:
+        1. Reads the source GeoTIFF.
+        2. Iterates through the raster in sliding windows (default 512px with 64px overlap).
+        3. Extracts the RGB pixel data (converting 1-band to RGB if necessary).
+        4. Saves the tile as a PNG.
+        5. Calculates the specific geotransform for that tile's top-left corner.
+        6. Writes a World File (.pgw) and Aux XML (.png.aux.xml) to preserve CRS/Transform.
+
+    Args:
+        input_path (Path): Path to the source .tif file.
     """
     input_path = Path(input_path)
     map_name = input_path.stem

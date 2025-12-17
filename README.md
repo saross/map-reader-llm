@@ -1,76 +1,79 @@
-# Map Reader LLM
+# Map Reader LLM: Archaeological Feature Extraction
 
-**Map Reader LLM** is an automated pipeline for extracting archaeological features (specifically "Burial Mounds" or *Tumuli*) from historical Soviet 1:50,000 topographic maps using Multimodal Large Language Models (Google Gemini).
+**Automated Pipeline for Extracting Burial Mounds from Soviet Topographic Maps using Multimodal LLMs.**
 
-The system seamlessly handles large GeoTIFF maps by tiling them, running VLM inference, and re-assembling the results into geospatial data formats ready for GIS analysis.
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![DOI](https://img.shields.io/badge/DOI-Pending-orange.svg)](CITATION.cff)
 
-## Features
+**Authors**: Shawn Ross, Adela Sobotkova (Tundzha Regional Archaeology Project)  
+**Funding**: Supported by the Australian Research Council (ARC) Linkage scheme, The America for Bulgaria Foundation, UNSW, University of Michigan, and Macquarie University.
 
-- **Automated Tiling**: Splits massive GeoTIFFs into manageable 512x512 tiles while preserving spatial metadata (World Files & Aux XML).
-- **VLM Inference**: Uses Google's Gemini models (e.g., Gemini 3 Pro, Flash) to visually identify symbols.
-- **Geospatial Awareness**: Outputs valid GeoJSON with correct CRS (EPSG:32635) derived immediately from tile metadata.
-- **Cost Control**: Built-in limits (`TEST_LIMIT`) to prevent runaway API costs during testing.
-- **Post-Processing**: Deduplicates overlapping detections and exports final results to GeoJSON.
+---
 
-## Setup
+## Overview
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/saross/map-reader-llm.git
-    cd map-reader-llm
-    ```
+Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify archaeological feature symbols (specifically "Burial Mounds" or *Tumuli*) on historical maps. It leverages **Google Gemini 3 Pro** (Multimodal LLM) to visually scan map tiles and extract features as geospatial data.
 
-2.  **Install Dependencies:**
-    It is recommended to use a virtual environment.
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    ```
+### Key Capabilities
+*   **Visual Few-Shot Learning**: Does not require fine-tuning. Uses a "Reference Library" of cropped symbols to teach the model what to look for at runtime.
+*   **Geospatial Awareness**: Automatically preserves spatial reference systems (EPSG:32635) from input GeoTIFFs to output GeoJSONs.
+*   **Reproducibility**: Features a rigorous configuration versioning system (`prompts/versions/*.json`) to ensure every experiment is traceable.
 
-3.  **Environment Configuration:**
-    Create a `.env` file in the root directory and add your Google Gemini API key:
-    ```bash
-    GOOGLE_API_KEY=your_api_key_here
-    ```
+---
 
-## Usage
+## Repository Structure
 
-The pipeline consists of three sequential scripts located in `scripts/`.
+*   **`scripts/`**: The Python source code.
+    *   `preprocess_tiling.py`: Tiles large maps + generates World Files.
+    *   `4_detect_mounds_batch.py`: The V3 Inference Engine.
+    *   `3_georeference_and_visualize.py`: Post-processing & deduplication.
+*   **`prompts/`**: Configuration and System Instructions.
+    *   `versions/`: JSON configs for specific experiments.
+    *   `text/`: Static system instruction files.
+*   **`inputs/`**: Place source GeoTIFFs here.
+*   **`outputs/`**: Generated tiles and results.
+*   **`archive/`**: Legacy code and results from previous project phases.
 
-### 1. Preprocessing (Tiling)
-Splits source maps (`inputs/*.tif`) into tiles.
+---
+
+## Setup & Usage
+
+### 1. Installation
+```bash
+git clone https://github.com/saross/map-reader-llm.git
+cd map-reader-llm
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2. Configuration
+Create a `.env` file in the root:
+```bash
+GOOGLE_API_KEY=your_key_here
+```
+
+### 3. Running the Pipeline
+**Step 1: Tiling**
 ```bash
 python scripts/preprocess_tiling.py
 ```
-*Output*: `outputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}`
 
-### 2. Inference (Detection)
-Runs the Gemini model on the tiles to detect mounds.
+**Step 2: Detection (Using V3.1 Baseline)**
 ```bash
-python scripts/2_detect_mounds.py
+python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.1_baseline.json
 ```
-*Output*: `outputs/results/detections-YYYY-MM-DD-Model.geojson`
+*   *Note: This creates results in `outputs/results/v3.1_baseline/`*
+*   *Note: Results include a `.meta.json` sidecar for full traceability.*
 
-> **Note**: This script respects the `TEST_LIMIT` in `config.py`. Set it to `MO` (or Remove) to process all tiles.
-
-### 3. Post-Processing
-Deduplicates overlapping detections and creates a GIS-ready layer.
+**Step 3: Post-Processing**
 ```bash
 python scripts/3_georeference_and_visualize.py
 ```
-*Output*: `outputs/results/mounds-YYYY-MM-DD-Model.geojson`
 
-## Configuration (`config.py`)
+---
 
-You can adjust the pipeline settings in `config.py`:
-
-- **`MODEL_NAME`**: Switch between Gemini versions (e.g., `gemini-3-pro-preview`, `gemini-flash-latest`).
-- **`TEST_LIMIT`**: Number of tiles to process (set to `5` for testing, or set to `0`/`None` for full runs).
-- **`TILE_SIZE`** & **`OVERLAP`**: Adjust tiling parameters (default 512px / 64px overlap).
-
-## Outputs
-
-All results are saved in the `outputs/` directory:
-- `outputs/tiles/`: Generated map tiles.
-- `outputs/results/`: Final GeoJSON and GeoPackage files, timestamped for version control.
+## License & Citation
+*   **Code**: Apache 2.0 License
+*   **Documentation**: CC-BY 4.0 International
+*   **Citation**: Please refer to `CITATION.cff` for citing this software.

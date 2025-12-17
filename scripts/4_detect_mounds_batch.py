@@ -1,3 +1,27 @@
+"""
+Batch Mound Detection Script
+============================
+Description:
+    The core inference engine. Orchestrates the loading of map tiles, construction of 
+    multimodal prompts (visual + text), and interaction with the Google Gemini API.
+    Designed for reproducibility, it uses a versioned configuration system and tracks 
+    comprehensive metadata (prompt hashes, model versions) for every run.
+
+Usage:
+    python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.0_basic.json
+
+Inputs:
+    - Tiles from `outputs/tiles/`
+    - Prompt Config from `prompts/versions/*.json`
+    - System Instructions from `prompts/text/*.md`
+
+Outputs:
+    - Raw GeoJSON detections in `outputs/results/vX.X/`
+    - Processing Metadata (.meta.json)
+
+Author: Shawn Ross, Adela Sobotkova
+License: Apache 2.0
+"""
 
 import json
 import time
@@ -97,6 +121,26 @@ class MetadataTracker:
         }
 
 def detect_mounds_versioned(config_path, tile_list=None, output_name=None, export_bounds=False):
+    """
+    Executes the detection pipeline using a specific versioned configuration.
+
+    Args:
+        config_path (str): Path to the JSON configuration file defining the experiment properties.
+        tile_list (list, optional): List of specific Path objects to process. If None, scans TILES_DIR.
+        output_name (str, optional): Custom filename for the output GeoJSON.
+        export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles (debug feature).
+
+    Process:
+        1. Loads the Configuration JSON.
+        2. Resolves and loads the linked System Instruction Markdown file.
+        3. Initializes the MetadataTracker to record runtime environment/hashes.
+        4. Initializes the Gemini Model (with safety settings 'BLOCK_NONE' for scientific data).
+        5. Iterates through tiles, sending [System Instruction, Examples, Target Tile] to the API.
+        6. Handles 429 Rate Limits and 503 Service Errors with exponential backoff.
+        7. Converts normalized API coordinates (0-1000) to projected geospatial coordinates (EPSG:32635)
+           using the tile's geospatial transform from rasterio.
+        8. Saves incremental results and a final metadata sidecar file.
+    """
     # Load Config
     try:
         with open(config_path, 'r') as f:

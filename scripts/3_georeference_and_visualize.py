@@ -1,3 +1,24 @@
+"""
+Post-Processing & Deduplication Script
+======================================
+Description:
+    Processes the raw detection outputs (GeoJSON) to create production-ready datasets.
+    Its primary function is to DEDUPLICATE overlapping detections that occur due to 
+    the sliding window (overlap) during inference. It merges nearby points (centroids) 
+    that fall within a specified threshold (default 20m) into a single detection.
+
+Usage:
+    python scripts/3_georeference_and_visualize.py
+
+Inputs:
+    - Latest `detections-*.geojson` from `outputs/results/` (or specific file)
+
+Outputs:
+    - Deduplicated `mounds-*.geojson` in `outputs/results/`
+
+Author: Shawn Ross, Adela Sobotkova
+License: Apache 2.0
+"""
 
 import geopandas as gpd
 from pathlib import Path
@@ -9,7 +30,20 @@ from config import OUTPUTS_DIR, RESULTS_DIR
 
 def deduplicate_detections(gdf, distance_threshold=20.0):
     """
-    Deduplicates points by buffering and merging.
+    Consolidates overlapping or nearby detections into single points.
+
+    Algorithm:
+        1. Calculates the centroid of each detection box.
+        2. Buffers each centroid by `distance_threshold / 2`.
+        3. Merges overlapping buffers (Unary Union).
+        4. Calculates the centroid of the merged polygons to get the final point.
+
+    Args:
+        gdf (GeoDataFrame): Raw detections.
+        distance_threshold (float): Distance in meters. Points closer than this will be merged.
+
+    Returns:
+        GeoDataFrame: A new GDF containing only the unique, deduplicated points.
     """
     if gdf.empty:
         return gdf
