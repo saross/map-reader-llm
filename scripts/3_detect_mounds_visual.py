@@ -76,7 +76,6 @@ def detect_mounds_visual(tile_list=None, output_name=None, export_bounds=False):
     add_ref(refs_dir / "triangulation_mound.png", "Example 3A: Triangulation Point (Triangle + Spikes)")
     add_ref(refs_dir / "benchmark_mound.png", "Example 3B: Benchmark (Square + Spikes)")
     add_ref(refs_dir / "ref_variant_1.png", "Example 3C: Real Map Variant (Benchmark)")
-    add_ref(refs_dir / "ref_mound_3.png", "Positive Example 3D: Mound with label '3' nearby")
     add_ref(refs_dir / "ref_pos_green.png", "Positive Example 3E: Mound on Green Background (Vegetation). Note the symbol is the same despite the background color.")
     add_ref(refs_dir / "ref_pos_intersected.png", "Positive Example 3F: Obscured/Intersected Mound. The mound symbol persists even when cut by roads, rivers, or black lines.")
     add_ref(refs_dir / "ref_pos_compound.png", "Positive Example 3G: Compound Symbol (Mound + Triangulation Point). The mound rays surround the central triangle.")
