@@ -86,6 +86,7 @@ class MetadataTracker:
             "configuration": {
                 "version": self.config.get("version"),
                 "model": self.config.get("model"),
+                "instruction_file": self.config.get("instruction_file", "unknown"),
                 "prompt_hash": self.system_instruction_hash,
                 "temperature": self.config.get("temperature", 0.1),
                 "full_config_snapshot": self.config
@@ -117,7 +118,11 @@ def detect_mounds_versioned(config_path, tile_list=None, output_name=None, expor
     genai.configure(api_key=GOOGLE_API_KEY)
     
     # Load Prompt Text
-    prompt_path = Path(BASE_DIR) / "prompts" / "text" / "v3_system_instruction.md"
+    instruction_file = config.get("instruction_file", "v3.0_system_instruction.md")
+    prompt_path = Path(BASE_DIR) / "prompts" / "text" / instruction_file
+    
+    print(f"System Instruction: {instruction_file}") # Feedback to user
+
     try:
         with open(prompt_path, "r") as f:
             v3_prompt_text = f.read()

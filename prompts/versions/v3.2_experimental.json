@@ -2,7 +2,8 @@
     "version": "v3.2_experimental",
     "description": "Refined 13-Shot (Phase 10/12). Low Recall / High Hallucination.",
     "model": "gemini-3-pro-preview",
-    "temperature": 0.1,
+    "instruction_file": "v3.0_system_instruction.md",
+    "temperature": 0.3,
     "examples": [
         {
             "path": "burial_mound.png",
