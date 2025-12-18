@@ -1,8 +1,8 @@
 {
-    "version": "v3.2_experimental",
-    "description": "Refined 13-Shot (Phase 10/12). Baseline for Flash (F1~0.75). Use gemini-3-pro-preview for Production (F1~0.85).",
+    "version": "v3.4_tightbox",
+    "description": "Precision Tuning (Phase 15). Uses 13-Shot examples + Tight Boxing constraint ONLY (Geometric Rule removed).",
     "model": "gemini-3-flash-preview",
-    "instruction_file": "v3.0_system_instruction.md",
+    "instruction_file": "v3.2_system_instruction_tightbox.md",
     "temperature": 0.3,
     "examples": [
         {

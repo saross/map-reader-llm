@@ -235,4 +235,71 @@ To satisfy rigorous publication standards without "metric hacking," we have defi
     *   Ironically, it *increased* FPs (23 vs 16) by hallucinating geometric shapes in random noise on sparse maps.
     *   **Bright Spot**: `triangulation_mound` (a truly geometric symbol) achieved **100% Precision/Recall**.
 *   **Conclusion**: Restricting the Flash model with abstract "Negative Constraints" (what *not* to do) is risky. It tends to over-rotate.
-*   **Next Step**: Try v3.4 (v3.2 + ONLY "Tight Boxing", dropping the geometric rule).
+
+### Observation 26: Failed Precision Tuning (v3.4) - The "Tight Boxing" Collapse
+*   **Experiment**: v3.4 (v3.2 + "Tight Boxing" rule ONLY).
+*   **Hypothesis**: Removing the "Geometric Regularity" rule would restore Recall while keeping "Tight Boxing" gains.
+*   **Result (Flash)**: **Severe Regression**.
+    *   **F1**: **0.54** (Lowest yet).
+    *   **Precision**: **0.45** (Huge increase in FPs: 42!).
+*   **Analysis**:
+    *   The "Tight Boxing" instruction seems to make the model hyper-sensitive to *any* small feature, causing it to hallucinate mounds everywhere (42 False Positives vs 16 in baseline).
+    *   It seems the Flash model interprets "Tight Boxing" as "Find many small things".
+*   **Conclusion**: Both v3.3 and v3.4 represent over-optimization. The v3.2 prompt, while slightly verbose, is in a "sweet spot" of stability.
+
+### Observation 27: Research Review (Claude Opus 4.5 Report)
+*   **Source**: `methodology/research/few-shot-multimodal-prompting.md`
+*   **Key Insight 1: Text Interference**: The report confirms exactly what happened in v3.3/v3.4. "Text instructions created modality interference... causing the model to reject valid detections." The solution is **Visual Counter-Examples**, not negative text constraints.
+*   **Key Insight 2: Optimal Few-Shot Size**: Suggests 15-20 examples (we have ~13-16, so we are in the zone), but emphasizes **Hard Positives** at the end of the list to boost recall.
+*   **Proposed Roadmap (Post-v3.2)**:
+    1.  **Immediate (v3.5 - Visual Negatives)**: Remove text rules like "No Spikes = No Mound". Instead, add 3-4 visual examples of *what not to detect* (e.g., specific images of embankments, random blobs) labeled as "Negative Example".
+
+### Observation 28: The Model Grade Impact (Breakthrough)
+*   **Event**: Accidental run of Overnight Variability Study (N=10) on `gemini-3-pro-preview` (default config) instead of Flash.
+*   **Result**:
+    *   **Mean F1**: **0.850** (Target Hit!) 🎯
+    *   **Precision**: **0.865**
+    *   **Recall**: **0.834**
+*   **Analysis**:
+    *   The v3.2 prompt, which stabilized Flash at F1 ~0.75, pushes Pro to F1 0.85.
+    *   This confirms that the "Benchmark Confusion" and "Hallucinations" were largely model capacity issues, not just prompt issues.
+*   **Decision**:
+    *   **Production**: Use `gemini-3-pro-preview` + v3.2 config (F1 0.85).
+    *   **Development**: Use `gemini-3-flash-preview` + v3.2 config (F1 ~0.75) for speed/cost.
+    *   **Optimization**: To get Flash closer to Pro's performance, we will implement the "Many-Shot" strategy from the Research Report (Observation 27).
+
+
+## Observation 29: Variability Deep Dive (Phase 14)
+*   **Context**: Analyzed 10 runs of `gemini-3-pro-preview` (v3.2).
+*   **Individual Performance**: 
+    *   **Mean F1**: 0.850 (Std: 0.027)
+    *   **Best Run**: F1 0.89 (Run 04)
+    *   **Worst Run**: F1 0.79 (Run 10)
+    *   **Insight**: The model is generally robust (Mean 0.85 > Flash 0.75), but "bad seeds" exist.
+*   **Ensemble Analysis (3 runs, 2 votes)**:
+    *   Simulated 10 random ensembles.
+    *   **Best Ensemble**: F1 0.866 (Precision 0.95, Recall 0.79).
+    *   **Stability**: Ensembling reduces the variance. It pushes the floor up.
+    *   **Trade-off**: Ensembling is 3x cost/time.
+*   **Consensus Thresholds (N=10)**:
+    *   **Unanimous (10/10)**: F1 0.26 (Recall collapse).
+    *   **Super-Majority (7/10)**: F1 0.52.
+    *   **Conclusion**: Do NOT use high consensus thresholds. The model is stochastic enough that valid mounds are often missed by 1-2 runs.
+*   **Final Decision**:
+    *   **Development**: Continue with `gemini-3-flash-preview` (F1 ~0.75).
+    *   **Production**: Use Single Run `gemini-3-pro-preview` (Mean F1 0.85) for standard tasks.
+    *   **High-Value Targets**: Use "3-Run, 2-Vote" Ensemble (F1 ~0.86, High Precision) only if budget permits.
+
+## Observation 30: The "Drop-Off" Curve & Strategy Selection
+*   **Context**: Phase 14b Exhaustive Simulation (N=3, 5, 10).
+*   **The "Bell Curve" of Strictness**:
+    *   F1 performance follows a clear bell curve as voting requirements increase.
+    *   **Peak**: T=4 (40% agreement) yields the global maximum (F1 0.918).
+    *   **Collapse**: Performance degrades strictly after T=5.
+*   **Discussion: 2/5 vs 4/10**:
+    *   We identified two optimal strategies on the Pareto Frontier.
+    *   **Strategy A (2 of 5)**: F1 0.898. Cost: 5x. **(Selected as "Daily Driver")**.
+        *   Rationale: It captures ~98% of the peak performance for 50% of the cost. The CI [0.87, 0.92] is extremely stable. Used for standard processing.
+    *   **Strategy B (4 of 10)**: F1 0.918. Cost: 10x. **(Selected for "Dispute Resolution")**.
+        *   Rationale: The absolute peak. Use this for **Tactical Escalation**: if a 2/5 run is ambiguous, escalate that specific tile to 4/10 for a definitive answer.
+*   **Conclusion**: There is no benefit to "super-majority" voting (e.g. 7/10). The stochastic nature of the model means ~60% of runs will agree on hard targets, but requiring 70%+ discards valid detections.

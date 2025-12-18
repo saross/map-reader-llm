@@ -207,7 +207,7 @@ def error_taxonomy(gdf_det, gdf_ref, gdf_bounds):
         
     return taxonomy
 
-def generate_report(detection_path, bounds_path, output_path=None):
+def generate_report(detection_path, bounds_path, output_path=None, bootstrap_iterations=1000):
     print("Generating Advanced Metrics Report...")
     gdf_det, gdf_bounds, gdf_ref = load_data(detection_path, bounds_path)
     
@@ -216,7 +216,7 @@ def generate_report(detection_path, bounds_path, output_path=None):
     report = {}
     
     # 1. Bootstrap
-    report["bootstrap_ci"] = bootstrap_ci(gdf_det, gdf_ref, gdf_bounds)
+    report["bootstrap_ci"] = bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=bootstrap_iterations)
     
     # 2. Spatial
     report["spatial_tolerance"] = spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds)
