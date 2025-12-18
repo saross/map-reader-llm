@@ -9,14 +9,15 @@ BASE_DIR = Path(__file__).parent
 INPUTS_DIR = BASE_DIR / "inputs"
 RASTERS_DIR = INPUTS_DIR / "rasters"
 VECTORS_DIR = INPUTS_DIR / "vectors"
+TILES_DIR = INPUTS_DIR / "tiles"
+REFERENCES_DIR = INPUTS_DIR / "references"
+
 OUTPUTS_DIR = BASE_DIR / "outputs"
-TILES_DIR = OUTPUTS_DIR / "tiles"
 
 # Ensure directories exist
 OUTPUTS_DIR.mkdir(exist_ok=True)
 RESULTS_DIR = OUTPUTS_DIR / "results"
 RESULTS_DIR.mkdir(exist_ok=True)
-TILES_DIR.mkdir(exist_ok=True)
 
 # Tiling settings
 TILE_SIZE = 512

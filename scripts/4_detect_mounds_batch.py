@@ -42,7 +42,7 @@ import hashlib
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR
+from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, REFERENCES_DIR
 
 
 # Script Version
@@ -113,33 +113,24 @@ class MetadataTracker:
                 "instruction_file": self.config.get("instruction_file", "unknown"),
                 "prompt_hash": self.system_instruction_hash,
                 "temperature": self.config.get("temperature", 0.1),
-                "full_config_snapshot": self.config
+                "full_config_snapshot": self.config,
+                "target_manifest": self.config.get("manifest_path", "none")
             },
             "execution_stats": self.stats,
             "usage_stats": self.usage,
             "results_summary": self.results_summary
         }
 
-def detect_mounds_versioned(config_path, tile_list=None, output_name=None, export_bounds=False):
+def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False):
     """
     Executes the detection pipeline using a specific versioned configuration.
 
     Args:
         config_path (str): Path to the JSON configuration file defining the experiment properties.
-        tile_list (list, optional): List of specific Path objects to process. If None, scans TILES_DIR.
+        manifest_path (str, optional): Path to a JSON list of filenames to process (Target Set).
+        tile_list (list, optional): List of specific Path objects to process (Manual override).
         output_name (str, optional): Custom filename for the output GeoJSON.
         export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles (debug feature).
-
-    Process:
-        1. Loads the Configuration JSON.
-        2. Resolves and loads the linked System Instruction Markdown file.
-        3. Initializes the MetadataTracker to record runtime environment/hashes.
-        4. Initializes the Gemini Model (with safety settings 'BLOCK_NONE' for scientific data).
-        5. Iterates through tiles, sending [System Instruction, Examples, Target Tile] to the API.
-        6. Handles 429 Rate Limits and 503 Service Errors with exponential backoff.
-        7. Converts normalized API coordinates (0-1000) to projected geospatial coordinates (EPSG:32635)
-           using the tile's geospatial transform from rasterio.
-        8. Saves incremental results and a final metadata sidecar file.
     """
     # Load Config
     try:
@@ -148,6 +139,10 @@ def detect_mounds_versioned(config_path, tile_list=None, output_name=None, expor
     except Exception as e:
         print(f"Error loading config: {e}")
         return
+
+    # Add manifest to config for tracking
+    if manifest_path:
+        config["manifest_path"] = str(manifest_path)
 
     print(f"Loaded Version: {config.get('version', 'unknown')}")
     print(f"Model: {config.get('model', 'unknown')}")
@@ -177,7 +172,7 @@ def detect_mounds_versioned(config_path, tile_list=None, output_name=None, expor
     tracker = MetadataTracker(config, v3_prompt_text)
 
     # Build Few-Shot Context from Config
-    refs_dir = BASE_DIR / "references"
+    refs_dir = REFERENCES_DIR
     reference_content = []
     
     examples = config.get("examples", [])
@@ -252,9 +247,46 @@ def detect_mounds_versioned(config_path, tile_list=None, output_name=None, expor
             features = []
 
     # Gather tiles
+    tiles_to_process = []
+    
+    # Priority 1: Manual List (e.g. from code call)
     if tile_list:
         tiles_to_process = [t for t in tile_list if t.name not in processed_tiles]
-        print(f"Using provided list. {len(tiles_to_process)} remaining.")
+        print(f"Using provided tile list. {len(tiles_to_process)} remaining.")
+        
+    # Priority 2: Manifest File (Target Set)
+    elif manifest_path:
+        print(f"Using Manifest: {manifest_path}")
+        try:
+            with open(manifest_path, 'r') as f:
+                target_filenames = json.load(f)
+                # Convert filenames to full paths in TILES_DIR
+                # We need to find where they live. 
+                # TILES_DIR structure is TILES_DIR / map_name / tile.png
+                # Since we only have filenames, we might need to search or assume unique names.
+                # Optimized approach: Scan TILES_DIR once and map filenames to paths.
+                
+                # Build lookup
+                all_tiles_map = {}
+                for map_dir in TILES_DIR.iterdir():
+                    if map_dir.is_dir():
+                        for t in map_dir.glob("*.png"):
+                            all_tiles_map[t.name] = t
+                            
+                # Match
+                found_count = 0
+                for fname in target_filenames:
+                    if fname in all_tiles_map and fname not in processed_tiles:
+                        tiles_to_process.append(all_tiles_map[fname])
+                        found_count += 1
+                        
+                print(f"Manifest loaded. Found {found_count} of {len(target_filenames)} tiles ({len(tiles_to_process)} remaining to process).")
+                
+        except Exception as e:
+            print(f"Error reading manifest: {e}")
+            return
+            
+    # Priority 3: Scan All (Default)
     else:
         all_tiles = []
         for map_dir in TILES_DIR.iterdir():
@@ -262,7 +294,10 @@ def detect_mounds_versioned(config_path, tile_list=None, output_name=None, expor
                 all_tiles.extend(list(map_dir.glob("*.png")))
         all_tiles = sorted(all_tiles)
         tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
+        print(f"Scanning all tiles. {len(tiles_to_process)} remaining.")
+        
         if TEST_LIMIT and TEST_LIMIT > 0:
+            print(f"Applying TEST_LIMIT: {TEST_LIMIT}")
             tiles_to_process = tiles_to_process[:TEST_LIMIT]
 
     print(f"Processing {len(tiles_to_process)} new tiles...")
@@ -391,6 +426,7 @@ def detect_mounds_versioned(config_path, tile_list=None, output_name=None, expor
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True, help="Path to JSON prompt config")
+    parser.add_argument("--manifest", required=False, help="Path to JSON manifest of target tiles")
     args = parser.parse_args()
     
-    detect_mounds_versioned(args.config)
+    detect_mounds_versioned(args.config, manifest_path=args.manifest)

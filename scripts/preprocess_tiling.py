@@ -13,7 +13,7 @@ Inputs:
     - scans from `inputs/*.tif`
 
 Outputs:
-    - tiles in `outputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}`
+    - tiles in `inputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}`
 
 Author: Shawn Ross, Adela Sobotkova
 License: Apache 2.0

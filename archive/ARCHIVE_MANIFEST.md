@@ -27,7 +27,38 @@ This document maps historical result files to the specific prompt versions used 
 | :--- | :--- |
 | `v3.0_analysis_errors_fn.geojson` | False Negatives analysis file. |
 | `v3.0_analysis_errors_fp.geojson` | False Positives analysis file. |
-| `v3.0_analysis_tile-index.geojson` | Geospatial index of used tiles. |
+| `v3.0_analysis_error-analysis_initial_fn.geojson` | False Negatives (FN) from initial V3.0 run |
+| `v3.0_analysis_error-analysis_initial_fp.geojson` | False Positives (FP) from initial V3.0 run |
+| `v3.0_analysis_tile-index.geojson` | Tile Grid index |
+
+
+
+## Scripts
+| Script Name | Description |
+| :--- | :--- |
+| **V3 Era (Visual)** | |
+| `v3.0_prototype_detect_mounds_visual.py` | Early V3 inference script (Visual Prompting). |
+| `v3.0_benchmark_calibration.py` | Calibration benchmark runner. |
+| `v3.0_run_calibration_legacy.py` | Legacy calibration runner. |
+| `v3.0_run_rakovski-full.py` | Full tiled run script for Rakovski map. |
+| `v3.0_run_robust-checks.py` | Robustness testing script (re-tries). |
+| `v3.0_test_fixed-set.py` | Testing on a fixed set of tiles. |
+| `v3.0_test_random5.py` | Testing on a random 5 tiles. |
+| `v3.0_run_random-extraction.py` | Random extraction logic. |
+| **V2 Era (Text-Based)** | |
+| `v2_runner_generic.py` | Generic runner for V2 prompts. |
+| `v2.5_runner_baseline.py` | Baseline runner for V2.5. |
+| `v2_test_detection.py` | Detection test script. |
+| `v2_test_validation-tiles.py` | Validation script. |
+| **Utilities** | |
+| `util_evaluate_results.py` | FP/FN/Precision/Recall Calculator. |
+| `util_extract_errors.py` | Extract FP/FN GeoJSONs from results. |
+| `util_generate_tile_index.py` | Create tile grid GeoJSON. |
+| `util_analyze_partial.py` | Partial result analysis. |
+| `util_debug_*.py` | Various debug scripts. |
+| `util_evaluate_*.py` | Various evaluation scripts. |
+| `util_extract_*.py` | Various extraction scripts. |
+
 | `v3.0_debug_detections_single-tile.geojson` | Single tile debug output. |
 | `v3.x_debug_detections_rakovski-random1.geojson` | Debug: 1 random tile. |
 | `v3.x_debug_detections_verification-green.geojson` | Debug: Verification of "green tile" issue. |
@@ -51,24 +82,7 @@ This document maps historical result files to the specific prompt versions used 
 | `v1.0_manifest_calibration.json` | `V1_mound_detection_prompt.md` | Early experimentation file list. |
 | `v1.x_results_gemini25-flash_experimental/` | `V1_mound_detection_prompt.md` | Experimental run using Gemini Flash 2.5 with V1 logic. |
 
-## Legacy Scripts
-**Location**: `archive/scripts/`
 
-### V3 Era (Visual)
-*   `v3.0_run_rakovski-full.py`: Full tiled run script for Rakovski map.
-*   `v3.0_run_robust-checks.py`: Robustness testing script (re-tries).
-*   `v3.0_test_fixed-set.py`: Testing on a fixed set of tiles.
-*   `v3.0_test_random5.py`: Testing on a random 5 tiles.
-*   `v3.0_run_random-extraction.py`: Random extraction logic.
-
-### V2 Era (Text-Based)
-*   `v2_runner_generic.py`: Generic runner for V2 prompts.
-*   `v2.5_runner_baseline.py`: Baseline runner for V2.5.
-*   `v2_test_detection.py`: Detection test script.
-*   `v2_test_validation-tiles.py`: Validation script.
-
-### Utilities
-*   `util_*.py`: Various helper scripts (legend analysis, geojson conversion, debugging).
 
 ## Prompt Development Assets
 **Location**: `archive/prompt_example_images/`

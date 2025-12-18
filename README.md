@@ -30,9 +30,23 @@ Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify arc
 *   **`prompts/`**: Configuration and System Instructions.
     *   `versions/`: JSON configs for specific experiments.
     *   `text/`: Static system instruction files.
-*   **`inputs/`**: Place source GeoTIFFs here.
-*   **`outputs/`**: Generated tiles and results.
+*   **`inputs/`**: Analysis inputs.
+    *   `rasters/`: Source GeoTIFFs.
+    *   `vectors/`: Source Vector overlays.
+    *   `tiles/`: Pre-processed png tiles.
+    *   `references/`: Few-shot example images.
+*   **`outputs/`**: Generated results vs metadata.
 *   **`archive/`**: Legacy code and results from previous project phases.
+*   **`methodology/`**: Open Science methodological records (Project Logs).
+
+---
+
+## Methodological Records (Open Science)
+To ensure transparency, this project archives AI interaction logs (`conversations/*.pb`) and planning artifacts (`task.md`, `implementation_plan.md`).
+To update the archive:
+```bash
+python scripts/archive_methodology.py
+```
 
 ---
 

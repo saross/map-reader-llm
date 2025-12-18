@@ -7,7 +7,7 @@ This directory contains the Python code for the map processing pipeline.
 ### 1. `preprocess_tiling.py`
 *   **Purpose**: Splits large GeoTIFF maps into small tiles (e.g., 512x512) for the LLM.
 *   **Key Feature**: Generates geospatial sidecar files (`.pgw`, `.aux.xml`) so each little tile knows exactly where it belongs on Earth.
-*   **Output**: `outputs/tiles/`
+*   **Output**: `inputs/tiles/`
 
 ### 2. `4_detect_mounds_batch.py`
 *   **Purpose**: The main inference engine.
@@ -19,8 +19,4 @@ This directory contains the Python code for the map processing pipeline.
 *   **Key Feature**: Deduplicates overlapping detections (merges nearby points) and ensures the final file is a valid, clean GeoJSON layer for GIS usage.
 *   **Output**: `outputs/results/mounds-*.geojson` (Final points)
 
-## Utilities
-*   `evaluate_*.py`: (Future) Tools for precision/recall calculation.
-*   `extract_*.py`: (Legacy) Tools for mining legend crops.
-
-*Note: Older scripts have been moved to `archive/scripts/`.*
+*Note: Older scripts and utilities have been moved to `archive/scripts/`.*
