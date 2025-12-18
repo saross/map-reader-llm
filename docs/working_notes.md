@@ -212,3 +212,13 @@ We successfully stabilized the "Elaborate" v3.2 Prompt (16 examples) on **Gemini
   - **Recall:** **0.8043** (High recall maintained).
   - **Precision:** **0.7115** (Solid start).
 - **Conclusion:** The "Elaborate" prompt is viable on Flash *if* the inference harness is robust. We achieved this stability without degrading the prompt (i.e. without removing examples).
+
+## Observation 24: Statistical Strategy for Publication (Metrics)
+To satisfy rigorous publication standards without "metric hacking," we have defined the following reporting strategy:
+- **Primary Metric:** **F1 Score with Bootstrap Confidence Intervals** (e.g., *"F1=0.75 (95% CI: 0.71-0.79)"*). This addresses the stochastic nature of the model and small dataset size.
+- **Spatial Tolerance Curve:** We will plot Recall vs. Buffer Size (10m, 20m, 30m) to demonstrate the model's "near-miss" behavior (drift towards labels) versus true misses.
+- **Error Taxonomy:** We will explicitly table the error types (Label Confusion vs. Hallucination).
+- **Justification for Rejecting Standard CV Metrics:**
+  - **PR Curves:** Rejected because the prompt provides binary decisions, not scalar confidence scores required for thresholding.
+  - **Object-Level MCC:** Rejected because "True Negatives" are undefined in continuous raster space.
+  - **Tile-Level MCC:** **Retained as an option** for evaluating the specific sub-task of "Empty Tile Filtering" (where True Negatives *are* defined).
