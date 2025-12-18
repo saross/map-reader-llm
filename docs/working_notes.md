@@ -169,3 +169,33 @@ The User has **rejected** the proposal to revert to Gemini 1.5 Flash.
   - **Performance:** F1 ~0.73 (Regression).
   - **Blocker:** Severe Rate Limits preventing full runs.
 - **Next Steps:** We are currently blocked by the model's availability/efficiency. We will hold here until the model stabilizes or an architectural workaround (e.g., massive sharding/delays) is approved.
+
+## Observation 21: Model Selection Strategy (Dec 2025)
+During Phase 2 Benchmarking, we encountered severe rate limits on `gemini-3-pro-preview` (Tier 1 plan, ~250 RPD limit), causing 8+ minute delays per tile.
+- **Comparison**: `gemini-3-flash-preview` offers ~10k RPD.
+- **Strategy ("Develop on Flash, Deploy on Pro")**:
+  1.  **Development**: Usage of Flash for daily prompt engineering. Flash's lower reasoning capability forces the prompt to be explicit and robust (The "Strict Teacher" effect).
+  2.  **Production**: Migration of the "Flash-proven" prompt to Pro for final high-accuracy runs.
+  3.  **Calibration**: A mandatory check on Pro is required to ensure it doesn't "over-think" or hallucinate details that Flash ignored.
+
+## Observation 22: The Definitive Flash Victory (Phase 2 Benchmark)
+We ran a controlled head-to-head benchmark on the Target Set (14 tiles).
+
+### 1. Gemini 3 Pro (The "Pro" Attempt)
+- **Status:** **FAILED**.
+- **Performance:** 13/14 tiles timed out despite 65 retries.
+- **Result:** F1 0.38 (on the single successful tile).
+- **Conclusion:** The model is effectively unusable for batch processing due to severe Rate Limits (429) and high latency.
+
+### 2. Gemini 3 Flash Preview (The "Flash" Attempt)
+- **Status:** **SUCCESS** (~5 minutes total).
+- **Performance:** 13/13 tiles processed successfully (0 failures).
+- **Result:**
+  - **F1 Score:** **0.75** (High)
+  - **Recall:** **0.83** (Solved the "missing mounds" problem).
+  - **Precision:** 0.69 (Acceptable start).
+
+### Strategic Pivot: The "Flash Transferability" Hypothesis
+The definitive speed and Recall of Flash make it the only viable engine for development.
+- **Hypothesis:** Optimizing for Flash (making the prompt clearer to a "dumber" model) will inherently improve the prompt for Pro. If Flash can understand it, Pro certainly will.
+- **Workflow:** We will optimize Precision on Flash (currently 0.69) until it hits >0.85. This optimized prompt should then be transferable to Pro for final verification if needed, potentially unlocking even higher accuracy without the development iteration cost.

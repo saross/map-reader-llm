@@ -15,15 +15,61 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Add parent to path to import scripts
 sys.path.append(os.getcwd())
-try:
-    from scripts.4_detect_mounds_batch import detect_mounds_versioned
-    from config import BASE_DIR, TILES_DIR, INPUTS_DIR, RESULTS_DIR
-except ImportError:
-    # Fallback if run from scripts/ dir
-    sys.path.append(str(Path(__file__).parent.parent))
-    from scripts.4_detect_mounds_batch import detect_mounds_versioned
-    from config import BASE_DIR, TILES_DIR, INPUTS_DIR, RESULTS_DIR
+import importlib.util
 
+# Dynamic import for scripts starting with numbers
+spec = importlib.util.spec_from_file_location("detect_mounds_batch", str(Path("scripts/4_detect_mounds_batch.py").absolute()))
+detect_mounds_module = importlib.util.module_from_spec(spec)
+sys.modules["detect_mounds_batch"] = detect_mounds_module
+spec.loader.exec_module(detect_mounds_module)
+from detect_mounds_batch import detect_mounds_versioned
+
+from config import BASE_DIR, TILES_DIR, INPUTS_DIR, RESULTS_DIR
+import rasterio
+from shapely.geometry import box
+
+def generate_bounds(manifest_path, output_path):
+    print(f"Generating bounds from {manifest_path}...")
+    with open(manifest_path, 'r') as f:
+        manifest = json.load(f)
+    
+    features = []
+    crs = None
+    
+    for item in manifest:
+        # Item is a string filename
+        tile_path = Path(item)
+        if (INPUTS_DIR / "tiles" / tile_path).exists():
+             tile_path = INPUTS_DIR / "tiles" / tile_path
+        else:
+             # Search recursively
+             found = list((INPUTS_DIR / "tiles").rglob(tile_path.name))
+             if found:
+                 tile_path = found[0]
+             else:
+                 print(f"Warning: Tile {tile_path} not found.")
+                 continue
+
+        try:
+            with rasterio.open(tile_path) as src:
+                b = src.bounds
+                geom = box(b.left, b.bottom, b.right, b.top)
+                features.append({
+                    "geometry": geom,
+                    "properties": {"tile_name": tile_path.name}
+                })
+                if crs is None:
+                    crs = src.crs
+        except Exception as e:
+            print(f"Error reading {tile_path}: {e}")
+
+    if not features:
+        print("No bounds features generated.")
+        return
+
+    gdf = gpd.GeoDataFrame.from_features(features, crs=crs)
+    gdf.to_file(output_path, driver="GeoJSON")
+    print(f"Saved bounds to {output_path}")
 
 def get_map_name(tile_filename):
     """Infers map name from tile filename."""
@@ -249,9 +295,11 @@ def evaluate_performance(detection_file, bounds_file, output_prefix, buffer_mete
     print(f"Saved Metrics to {metrics_file}")
 
 
-def run_benchmark():
+def run_benchmark(model_override=None, config_path=None):
     # 1. Config
-    config_path = "prompts/versions/v3.1_baseline.json"
+    if not config_path:
+        config_path = "prompts/versions/v3.1_baseline.json"
+        
     manifest_path = INPUTS_DIR / "target_tiles_manifest.json"
     
     if not manifest_path.exists():
@@ -260,31 +308,54 @@ def run_benchmark():
 
     print(f"Starting Benchmark using Manifest: {manifest_path}")
     print(f"Config: {config_path}")
+    if model_override:
+        print(f"Model Override: {model_override}")
     
+    # Load config to get version for naming
+    try:
+        with open(config_path, 'r') as f:
+            cfg_data = json.load(f)
+            version_tag = cfg_data.get("version", "vX")
+    except Exception as e:
+        print(f"Error reading config for version tag: {e}")
+        return
+
     # 2. Run Detection (with Bounds Export)
-    output_name = "benchmark_v3.1_baseline.geojson"
+    # Output name derived from version: benchmark_{version}.geojson
+    output_name = f"benchmark_{version_tag}.geojson"
     
     # Note: detect_mounds_versioned returns None, but we know the paths
     detect_mounds_versioned(
         config_path, 
         manifest_path=manifest_path, 
         output_name=output_name,
-        export_bounds=True # Crucial forFN calculation
+        export_bounds=True, # Crucial forFN calculation
+        model_override=model_override
     )
     
     # 3. Paths for Evaluation
-    results_dir = RESULTS_DIR / "v3.1_baseline" # Batch script creates subdir based on config name
+    results_dir = RESULTS_DIR / version_tag # Batch script creates subdir based on config name
     detection_file = results_dir / output_name
     bounds_file = results_dir / (Path(output_name).stem + "_bounds.geojson")
     
+    # Generate bounds if missing
+    if not bounds_file.exists():
+        generate_bounds(manifest_path, bounds_file)
+
     if not detection_file.exists():
         print("Error: Detection file creation failed. Aborting evaluation.")
         return
         
     # 4. Run Evaluation
-    output_prefix = str(results_dir / "benchmark_errors")
+    output_prefix = str(results_dir / f"benchmark_{version_tag}")
     evaluate_performance(detection_file, bounds_file, output_prefix)
 
 
 if __name__ == "__main__":
-    run_benchmark()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=False, help="Path to JSON prompt config")
+    parser.add_argument("--model", required=False, help="Override model name (e.g. gemini-1.5-flash)")
+    args = parser.parse_args()
+    
+    run_benchmark(model_override=args.model, config_path=args.config)

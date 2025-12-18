@@ -121,7 +121,7 @@ class MetadataTracker:
             "results_summary": self.results_summary
         }
 
-def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False):
+def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False, model_override=None):
     """
     Executes the detection pipeline using a specific versioned configuration.
 
@@ -131,6 +131,7 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         tile_list (list, optional): List of specific Path objects to process (Manual override).
         output_name (str, optional): Custom filename for the output GeoJSON.
         export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles (debug feature).
+        model_override (str, optional): Overrides the model defined in the JSON config.
     """
     # Load Config
     try:
@@ -143,6 +144,12 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     # Add manifest to config for tracking
     if manifest_path:
         config["manifest_path"] = str(manifest_path)
+
+    # Apply Model Override
+    if model_override:
+        print(f"Overriding Config Model ({config.get('model')}) with CLI Argument: {model_override}")
+        config["model"] = model_override
+        # Note: MetadataTracker uses 'config' object, so this change will be automatically recorded in metadata.
 
     print(f"Loaded Version: {config.get('version', 'unknown')}")
     print(f"Model: {config.get('model', 'unknown')}")
@@ -427,6 +434,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True, help="Path to JSON prompt config")
     parser.add_argument("--manifest", required=False, help="Path to JSON manifest of target tiles")
+    parser.add_argument("--model", required=False, help="Override model name (e.g. gemini-1.5-flash)")
     args = parser.parse_args()
     
-    detect_mounds_versioned(args.config, manifest_path=args.manifest)
+    detect_mounds_versioned(args.config, manifest_path=args.manifest, model_override=args.model)
