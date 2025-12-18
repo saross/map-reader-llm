@@ -222,3 +222,17 @@ To satisfy rigorous publication standards without "metric hacking," we have defi
   - **PR Curves:** Rejected because the prompt provides binary decisions, not scalar confidence scores required for thresholding.
   - **Object-Level MCC:** Rejected because "True Negatives" are undefined in continuous raster space.
   - **Tile-Level MCC:** **Retained as an option** for evaluating the specific sub-task of "Empty Tile Filtering" (where True Negatives *are* defined).
+
+### Observation 25: Failed Precision Tuning (v3.3) - The "Geometric" Trap
+*   **Experiment**: v3.3 (v3.2 + "Tight Boxing" + "Geometric Regularity" rules).
+*   **Hypothesis**: Adding strict shape rules would reduce "Blob" False Positives.
+*   **Result (Flash)**: **Regression**.
+    *   **F1**: Dropped from **0.75** (v3.2) to **0.64** (v3.3).
+    *   **Precision**: Dropped from 0.71 to 0.61.
+    *   **Recall**: Dropped from 0.80 to 0.67.
+*   **Analysis**:
+    *   The "Geometric Regularity" rule backfired on `burial_mound` (the organic class). The model rejected valid, rough mounds (~16 FNs).
+    *   Ironically, it *increased* FPs (23 vs 16) by hallucinating geometric shapes in random noise on sparse maps.
+    *   **Bright Spot**: `triangulation_mound` (a truly geometric symbol) achieved **100% Precision/Recall**.
+*   **Conclusion**: Restricting the Flash model with abstract "Negative Constraints" (what *not* to do) is risky. It tends to over-rotate.
+*   **Next Step**: Try v3.4 (v3.2 + ONLY "Tight Boxing", dropping the geometric rule).

@@ -405,7 +405,11 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
             try:
                 json_response = json.loads(response.text)
                 if isinstance(json_response, list):
-                    detections = json_response
+                    # Handle case where model returns [ { "detections": [...] } ]
+                    if len(json_response) > 0 and isinstance(json_response[0], dict) and "detections" in json_response[0]:
+                        detections = json_response[0]["detections"]
+                    else:
+                        detections = json_response
                 else:
                     detections = json_response.get("detections", [])
                 tracker.update_results(detections)

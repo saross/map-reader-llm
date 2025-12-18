@@ -294,6 +294,14 @@ def evaluate_performance(detection_file, bounds_file, output_prefix, buffer_mete
         json.dump(metrics_data, f, indent=2)
     print(f"Saved Metrics to {metrics_file}")
 
+    # 8. Advanced Metrics (Added Dec 18)
+    try:
+        from scripts import lib_advanced_metrics
+        adv_metrics_file = Path(output_prefix + "_advanced_metrics.json")
+        lib_advanced_metrics.generate_report(detection_file, bounds_file, output_path=adv_metrics_file)
+    except Exception as e:
+        print(f"Warning: Failed to generate advanced metrics: {e}")
+
 
 def run_benchmark(model_override=None, config_path=None):
     # 1. Config
