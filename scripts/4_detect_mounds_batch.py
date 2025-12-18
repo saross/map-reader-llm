@@ -61,7 +61,9 @@ class MetadataTracker:
             "retries_total": 0,
             "retries_429_ratelimit": 0,
             "retries_500_server": 0,
-            "timeouts": 0
+            "timeouts": 0,
+            "failed_tiles_details": [],
+            "retry_details": []
         }
         
         self.usage = {
@@ -334,17 +336,46 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
                         request_options={'timeout': 900} 
                     )
                     tracker.update_usage(response)
-                    break 
+                    
+                    # Check Finish Reason
+                    if hasattr(response, 'candidates') and response.candidates:
+                        reason = response.candidates[0].finish_reason
+                        if reason == 2: # MAX_TOKENS
+                            print(f"\n[Warning] Attempt {attempt+1}: Max Tokens (Finish Reason 2). Retrying...")
+                            tracker.stats["retry_details"].append({
+                                "tile": tile_filename,
+                                "attempt": attempt + 1,
+                                "reason": "MAX_TOKENS (Finish Reason 2)"
+                            })
+                            time.sleep(5) # Small buffer
+                            continue # Trigger retry
+                        elif reason != 1: # Not STOP (Success)
+                             print(f"\n[Warning] Attempt {attempt+1}: Unexpected Finish Reason {reason}")
+                             
+                    # If we got here and reason is 1 (or we accepted the response), check content
+                    if response.candidates and response.candidates[0].content.parts:
+                        break # Success
+                    else:
+                        if attempt < max_retries - 1:
+                            print(f"\n[Warning] Attempt {attempt+1}: Empty response content. Retrying...")
+                            time.sleep(5)
+                            continue
+
                 except Exception as e:
                     error_str = str(e)
                     tracker.stats["retries_total"] += 1
+                    tracker.stats["retry_details"].append({
+                        "tile": tile_filename,
+                        "attempt": attempt + 1,
+                        "error": error_str
+                    })
                     
                     if "429" in error_str or "ResourceExhausted" in error_str:
                         tracker.stats["retries_429_ratelimit"] += 1
                         wait = base_wait * (2 ** attempt)
                         print(f"\n[Warning] Rate Limit (429). Waiting {wait}s...")
                         time.sleep(wait)
-                    elif "503" in error_str:
+                    elif "503" in error_str or "InternalServerError" in error_str:
                         tracker.stats["retries_500_server"] += 1
                         time.sleep(30)
                     elif "DeadlineExceeded" in error_str:
@@ -358,16 +389,25 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
                         if attempt < 2: time.sleep(20)
                         else: break
             
-            if not response:
+            if not response or not (hasattr(response, 'candidates') and response.candidates and response.candidates[0].finish_reason == 1):
+                print(f"Failed to get valid response for {tile_filename} after retries.")
                 tracker.stats["tiles_failed"] += 1
+                tracker.stats["failed_tiles_details"].append({
+                    "tile": tile_filename,
+                    "reason": "Retries Exhausted / Invalid Finish Reason"
+                })
                 continue
 
             tracker.stats["tiles_processed"] += 1
             
             detections = []
+            detections = []
             try:
                 json_response = json.loads(response.text)
-                detections = json_response.get("detections", [])
+                if isinstance(json_response, list):
+                    detections = json_response
+                else:
+                    detections = json_response.get("detections", [])
                 tracker.update_results(detections)
             except Exception as e:
                 print(f"Failed to parse response: {e}")
@@ -378,6 +418,9 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
                 crs = src.crs
 
             for det in detections:
+                if "box_2d" not in det:
+                    print(f"[Warning] Detection missing 'box_2d', skipping: {det}")
+                    continue
                 ymin_n, xmin_n, ymax_n, xmax_n = det["box_2d"]
                 px_min_x = (xmin_n / 1000.0) * TILE_SIZE
                 px_max_x = (xmax_n / 1000.0) * TILE_SIZE

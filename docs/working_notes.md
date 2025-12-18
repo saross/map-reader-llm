@@ -199,3 +199,16 @@ We ran a controlled head-to-head benchmark on the Target Set (14 tiles).
 The definitive speed and Recall of Flash make it the only viable engine for development.
 - **Hypothesis:** Optimizing for Flash (making the prompt clearer to a "dumber" model) will inherently improve the prompt for Pro. If Flash can understand it, Pro certainly will.
 - **Workflow:** We will optimize Precision on Flash (currently 0.69) until it hits >0.85. This optimized prompt should then be transferable to Pro for final verification if needed, potentially unlocking even higher accuracy without the development iteration cost.
+
+## Observation 23: Stabilization of Gemini 3 Flash & v3.2 Prompt (Phase 13)
+We successfully stabilized the "Elaborate" v3.2 Prompt (16 examples) on **Gemini 3 Flash Preview**.
+- **The Problem:** The verbose prompt caused the model to occasionally enter infinite generation loops on dense tiles, hitting the 8k `MAX_TOKENS` limit (`finish_reason: 2`).
+- **The Fix:**
+  1.  **Retry Logic:** We implemented a specific retry loop for `finish_reason: 2` (up to 3 attempts), which resolved **86%** of these failures.
+  2.  **Defensive Parsing:** Patched the JSON parser to handle "List-wrapped" responses (`[{...}]` vs `{...}`).
+  3.  **Observability:** Enhanced metadata to log specific `failed_tiles_details` and `retry_details`.
+- **The Result (Target Set - 20 Tiles):**
+  - **F1 Score:** **0.7551** (Promising, improved from 0.70 baseline).
+  - **Recall:** **0.8043** (High recall maintained).
+  - **Precision:** **0.7115** (Solid start).
+- **Conclusion:** The "Elaborate" prompt is viable on Flash *if* the inference harness is robust. We achieved this stability without degrading the prompt (i.e. without removing examples).

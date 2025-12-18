@@ -1,19 +1,18 @@
-
 import google.generativeai as genai
 import sys
-import os
+from pathlib import Path
 
-# Add parent directory to path to find config
-sys.path.append(os.getcwd())
+# Add parent directory to path to import config
+sys.path.append(str(Path(__file__).parent.parent.parent))
 from config import GOOGLE_API_KEY
 
 if not GOOGLE_API_KEY:
-    print("Error: GOOGLE_API_KEY not found.")
+    print("Error: GOOGLE_API_KEY missing")
     sys.exit(1)
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-print("Available Models:")
+print("Listing available models...")
 try:
     for m in genai.list_models():
         if 'generateContent' in m.supported_generation_methods:
