@@ -54,8 +54,18 @@
 - [x] Standardize `target_tiles_manifest.json` (was `calibration_manifest.json`) <!-- id: 32 -->
 - [x] Update `4_detect_mounds_batch.py` to support `--manifest` and save metadata <!-- id: 33 -->
 - [x] Generate manifest from V3 baseline <!-- id: 24 -->
-- [ ] Run benchmark on target set <!-- id: 25 -->
-- [ ] Analyze results (FP/FN) <!-- id: 26 -->
+- [ ] Update `run_v3.1_benchmark.py` to include Evaluation <!-- id: 50 -->
+- [x] Run benchmark on target set (Pro - Completed) <!-- id: 25 -->
+- [x] Analyze results (FP/FN) <!-- id: 26 -->
+
+# Phase 3: Prompt Optimization (Flash)
+- [x] Run "Maximal" Benchmark (v3.2 on Flash) <!-- id: 55 -->
+- [x] Implement CLI config selection (`--config`) <!-- id: 56 -->
+- [x] Compare Baseline vs Maximal performance <!-- id: 57 -->
+- [x] Implement `--model` override in `4_detect_mounds_batch.py` <!-- id: 53 -->
+- [x] Implement `--model` pass-through in `run_v3.1_benchmark.py` <!-- id: 54 -->
+- [x] Create `v3.3_flash_experimental.json` <!-- id: 51 -->
+- [x] Verify Flash performance <!-- id: 52 -->
 
 # Refactor Input Directory Structure
 - [x] Move `outputs/tiles/` to `inputs/tiles/` <!-- id: 34 -->
@@ -76,10 +86,10 @@
 - [x] Update `ARCHIVE_MANIFEST.md` <!-- id: 45 -->
 
 # Implement Methodological Records
-- [ ] Inspect `~/.gemini` structure <!-- id: 46 -->
-- [ ] Create `methodology/logs/` <!-- id: 47 -->
-- [ ] Write `scripts/archive_methodology.py` <!-- id: 48 -->
-- [ ] Verify archiving process <!-- id: 49 -->
+- [x] Inspect `~/.gemini` structure <!-- id: 46 -->
+- [x] Create `methodology/logs/` <!-- id: 47 -->
+- [x] Write `scripts/archive_methodology.py` <!-- id: 48 -->
+- [x] Verify archiving process <!-- id: 49 -->
 
 
 

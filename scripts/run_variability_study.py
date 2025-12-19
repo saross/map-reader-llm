@@ -34,13 +34,14 @@ if "RESULTS_DIR" not in globals():
 if "INPUTS_DIR" not in globals():
     INPUTS_DIR = Path("inputs")
 
-def run_study(config_path, iterations, model_override=None):
+def run_study(config_path, iterations, study_id, model_override=None):
     print(f"--- Starting Variability Study ---")
     print(f"Config: {config_path}")
+    print(f"Model: {model_override if model_override else 'Default'}")
     print(f"Iterations: {iterations}")
+    print(f"Study ID: {study_id}")
     
     # Setup Output Directory
-    study_id = "variability_study_v3.2" 
     study_dir = RESULTS_DIR / study_id
     study_dir.mkdir(parents=True, exist_ok=True)
     
@@ -70,17 +71,10 @@ def run_study(config_path, iterations, model_override=None):
             continue
             
         # 3. Paths
-        # detect_mounds saves to RESULTS_DIR / version_tag / output_name. 
-        # We need to find where it went.
-        # Based on 4_detect_mounds_batch.py:
-        # version_out_dir = RESULTS_DIR / config.get("version")
-        
         with open(config_path, 'r') as f:
             v_tag = json.load(f).get("version", "unknown")
             
-        # We might need to MOVE the file to our study dir to keep things clean?
-        # Or just reference it in place.
-        # Let's reference in place.
+        # Reference in place
         res_dir = RESULTS_DIR / v_tag
         det_file = res_dir / output_geojson
         bounds_file = res_dir / (Path(output_geojson).stem + "_bounds.geojson")
@@ -91,8 +85,6 @@ def run_study(config_path, iterations, model_override=None):
         # 4. Evaluate
         output_prefix = str(study_dir / f"{run_name}")
         
-        # Capture stdout to silence the evaluation print spam? 
-        # Or just let it print. Let's let it print but maybe minimal.
         try:
             evaluate_performance(det_file, bounds_file, output_prefix)
             
@@ -132,8 +124,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="prompts/versions/v3.2_experimental.json", help="Config to test")
     parser.add_argument("--iterations", type=int, default=10, help="Number of runs")
-    parser.add_argument("--model", help="Model override")
+    parser.add_argument("--study_id", required=True, help="Unique ID for this study output folder")
+    parser.add_argument("--model", help="Model override (e.g., gemini-3-flash-preview)")
     
     args = parser.parse_args()
     
-    run_study(args.config, args.iterations, args.model)
+    run_study(args.config, args.iterations, args.study_id, args.model)

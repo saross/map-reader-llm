@@ -303,3 +303,47 @@ To satisfy rigorous publication standards without "metric hacking," we have defi
     *   **Strategy B (4 of 10)**: F1 0.918. Cost: 10x. **(Selected for "Dispute Resolution")**.
         *   Rationale: The absolute peak. Use this for **Tactical Escalation**: if a 2/5 run is ambiguous, escalate that specific tile to 4/10 for a definitive answer.
 *   **Conclusion**: There is no benefit to "super-majority" voting (e.g. 7/10). The stochastic nature of the model means ~60% of runs will agree on hard targets, but requiring 70%+ discards valid detections.
+
+## Observation 31: The "Flash Swarm" Strategy (N=30)
+*   **Context**: Variability Study on `gemini-3-flash-preview` (N=30 independent runs).
+*   **Result**: F1 0.920 at Agreement 10/30 (33%).
+*   **Comparison**: This **matches** the peak performance of Gemini 3 Pro (0.918 at 4/10).
+*   **Economic Implication**: 
+    *   Since Flash is ~20x cheaper than Pro, running it 30 times is roughly 1.5x the cost of *one* Pro run.
+    *   Running Pro 10 times (Gold Standard) costs ~10x.
+    *   Therefore, the **Flash Swarm** is significantly cheaper than the Pro Gold Standard for equal quality.
+*   **Recommendation Review**:
+    *   **Daily Driver**: Pro N=1 (F1 0.86) or Pro 2/5 (F1 0.89).
+    *   **Gold Standard**: Flash Swarm 10/30 (F1 0.92). **New Champion for heavy compute tasks.**
+
+## Observation 32: The Definitive 'n of x' Strategy Menu (Phase 15 Synthesis)
+We have identified **5 Strategies** across the Cost/Quality spectrum. By adjusting Pool Size ($N$) and Voting Threshold ($T$), we can tune the system for Budget, Reliability, or Peak Accuracy.
+
+| Strategy (Model N/T) | F1 Score | Est. Cost | Role | Verdict |
+| :--- | :--- | :--- | :--- | :--- |
+| **Flash 2/5** | **0.855** | **$** | **Budget Saver** | Matches the quality of a *Single Pro Run* (0.86) but is ~75% cheaper. Use this when budget is tight. |
+| **Flash 4/10** | 0.886 | $$ | Middle Ground | Good, but awkward. If you can afford this, you should probably just use Pro 2/5 for better reliability. |
+| **Pro 2/5** | **0.898** | **$$$** | **Daily Driver** | **The Recommendation**. Eliminates "bad run" risk. High reliability (CI [0.87, 0.92]) with manageable cost/complexity. |
+| **Pro 4/10** | **0.918** | $$$$$$ | Luxury Peak | The absolute limit of Pro. Use only for **Dispute Resolution** on specific tiles. |
+| **Flash 10/30** | **0.920** | **$$** | **The Swarm** | **The New Champion**. Matches Pro Peak Accuracy (0.918) at a fraction of the cost (~15% of Pro 4/10). Requires managing 30 concurrent requests. |
+
+**Summary Recommendation**:
+1.  **Standard**: Use **Pro 2/5** for simplicity and reliability.
+2.  **High-Scale**: Use **Flash 10/30 (Swarm)** to get "Gold Standard" quality at "Standard" prices, if you have the engineering capacity to handle the volume.
+3.  **Low-Budget**: Use **Flash 2/5**. Never use N=1.
+
+## Observation 33: Variability Analysis by Map Symbol (Flash N=1)
+Your request for a "Map Symbol" breakdown reveals interesting distinct behaviors for each mound subtype.
+*   **Context**: Base performance of a single Flash run (N=1), averaged over 60 iterations.
+
+| Symbol Type | Mean F1 | Stability (Std Dev) | Insight |
+| :--- | :--- | :--- | :--- |
+| **Triangulation Mound** | **0.8167** | ± 0.18 | **Easiest**. The distinct geometric triangle/dot symbol is highly recognizable, though the high std dev suggests occasional misses are "all or nothing". |
+| **Burial Mound** | **0.7634** | ± 0.04 | **Most Stable**. As the primary target, the model is consistent. The low standard deviation (±0.04) confirms that the "Swarm" strategy works best here because the errors are random noise, not systematic blindness. |
+| **Benchmark Mound** | **0.7241** | ± 0.13 | **Hardest**. These symbols likely confused with other topographic markers. |
+
+*   **Overall Base Variability (The Risk of N=1)**:
+    *   **F1 Score**: Mean **0.74** ± 0.07. **Critical**: Range observed was **[0.56 - 0.87]**.
+    *   **Precision**: Mean **0.69** (Range: 0.45 - 0.90).
+    *   **Recall**: Mean **0.81** (Range: 0.60 - 0.87).
+    *   **Takeaway**: Running N=1 is gambling. You might get a 0.87 run, or you might get a 0.56 run. N=30 "Swarm" guarantees ~0.92.

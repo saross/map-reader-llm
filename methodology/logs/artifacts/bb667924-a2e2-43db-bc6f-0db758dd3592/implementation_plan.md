@@ -101,6 +101,14 @@ We will add a "Scripts" section to `ARCHIVE_MANIFEST.md` to map these.
     *   Add `target_manifest` field to `.meta.json`.
     *   Store the *filename* of the manifest (if used) and key characteristics (length, hash).
 
+### 2. Update Benchmark Script
+*   **Target**: `scripts/run_v3.1_benchmark.py`
+*   **Changes**:
+    *   Update inputs to use `inputs/target_tiles_manifest.json`.
+    *   Incorporate `evaluate_performance` logic (ported from `util_evaluate_results` and `util_extract_errors`).
+    *   Calculate Precision/Recall/F1.
+    *   Generate `outputs/results/v3.1_baseline/benchmark_errors_fp.geojson` and `_fn.geojson`.
+
 ### 3. Generate Manifest
 *   Create `inputs/target_tiles_manifest.json` from the verified V3 Baseline (20 stratified tiles).
 
@@ -215,3 +223,10 @@ We will add a "Scripts" section to `ARCHIVE_MANIFEST.md` to map these.
 
 
 
+
+## 14. Robust Model Selection
+**Goal**: Allow runtime model selection without editing JSON configs, enabling robust A/B testing.
+
+### Updates
+1.  **`scripts/4_detect_mounds_batch.py`**: Add `--model` optional argument. Use it to override `config["model"]` if present.
+2.  **`scripts/run_v3.1_benchmark.py`**: Add optional `--model` argument and propagate it to the batch detector.
