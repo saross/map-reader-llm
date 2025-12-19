@@ -347,3 +347,43 @@ Your request for a "Map Symbol" breakdown reveals interesting distinct behaviors
     *   **Precision**: Mean **0.69** (Range: 0.45 - 0.90).
     *   **Recall**: Mean **0.81** (Range: 0.60 - 0.87).
     *   **Takeaway**: Running N=1 is gambling. You might get a 0.87 run, or you might get a 0.56 run. N=30 "Swarm" guarantees ~0.92.
+
+## Observation 34: The "Clean Base" Consensus Trade-off (v3.5 Verification)
+We tested the "Permissive Detection" hypothesis (Prompt v3.5) by removing all negative text constraints ("No Spikes", "No Numbers").
+*   **Single-Shot (N=1) Result**: **Regression**. F1 0.68 (±0.06). Precision collapsed to 0.59.
+    *   *Why*: Without text rails, the model hallucinated ~29 "mounds" per run (random blobs, buildings).
+*   **Consensus (N=5) Result**: **SOTA Success**.
+    *   **3-of-5 ("Super-Majority")**: F1 **0.85**. The consensus strategy perfectly filtered the random hallucinations while preserving the high recall.
+    *   **vs v3.2 Baseline**: v3.2 (Constrained) degrades under 3-of-5 consensus (F1 0.78) because it is too conservative. However, v3.2 achieves **F1 0.90** with a loose 2-of-5 consensus.
+*   **Takeaway**:
+    *   **Clean Prompts (v3.5)** need **Strict Consensus** (3-of-5).
+    *   **Constrained Prompts (v3.2)** need **Loose Consensus** (2-of-5).
+
+## Observation 35: Stabilizing via Visual CoT & Hard Negatives (v3.6 Design)
+To improve the Single-Shot stability of the "Clean Base" (and potentially beat the v3.2 Peak), we are introducing two non-textual constraints in v3.6:
+1.  **Visual Chain-of-Thought**: New JSON schema forcing the model to `describe` the feature first.
+    *   *Correction*: Explicitly defining Mounds as having **OUTWARD** hachures and Depressions as having **INWARD** hachures.
+2.  **Hard Negative Mining**: We extracted the top 2 recurrent False Positives from v3.5 (a "Black Blob" building and a "Triangulation Point" with noise) and added them as explicit negative visual examples.
+*   **Hypothesis**: This will reduce N=1 hallucinations (improving Precision) without the recall penalty of broad text rules.
+
+## Observation 36: Text Instructions harmful even in CoT (v3.6 Result)
+We attempted to fix the "Depression vs Mound" confusion by adding explicit text rules ("Outward vs Inward hachures") and a Visual Chain-of-Thought (CoT) step.
+*   **Result**: **Regression**. Single-shot F1 dropped from 0.68 (v3.5) to 0.62 (v3.6). The model became over-cautious on standard mounds.
+*   **Success**: The **Visual Hard Negatives** (images of "Blobs" and "Triangulations") worked perfectly, raising Benchmark F1 to 0.85.
+*   **Guideline**: **AVOID TEXT INSTRUCTIONS**. Even "helpful" reasoning steps can interfere with visual pattern matching.
+*   **Next Step (v3.7)**: Combine the **Clean Instruction** of v3.5 (No text) with the **Hard Negative Examples** of v3.6.
+
+## Observation 37: The Precision-Recall Trap & The Two-Stage Pivot
+We attempted to combine the best of both worlds in **v3.7** (Clean Instruction + Hard Negative Images).
+*   **Result**: Mixed.
+    *   **Recall** recovered to **0.80+** (v3.5 levels).
+    *   **Precision** remained low (**0.53**), similar to v3.5.
+    *   **Consensus (3-of-5)**: FAILED (**0.78**). Without text constraints, the hard negative images alone were insufficient to filter benchmarks effectively in a swarm vote.
+*   **The Dilemma**: 
+    *   Text instructions (v3.6) increase Precision but kill Recall (Modality Interference).
+    *   Removing text (v3.7) restores Recall but kills Precision (Hallucinations).
+*   **The Solution (Research-Backed)**: **Two-Stage Architecture ("Propose-and-Verify")**.
+    *   Literature (Claude & Gemini reports) explicitly recommends splitting the task to avoid this trade-off.
+    *   **Stage 1 (Proposer)**: Use **v3.7 (Clean)** to maximize Recall (find all candidates).
+    *   **Stage 2 (Verifier)**: Use a specialized "Judge" agent on cropped detections to filter False Positives (maximize Precision).
+*   **Decision**: We are abandoning the search for a "Single Perfect Prompt" and moving to implement this pipeline.
