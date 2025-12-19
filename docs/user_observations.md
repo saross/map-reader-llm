@@ -4,3 +4,6 @@ Observation 2:
 Antigravity is really growing on me as harness. The fact that chats are saved and can be re-accessed makes recovery from crashes easier, and the availability of logs / interactions is great for transparency.
 
 Observation 3: 
+Forgets what it has done, keeps re-running things that it should already have at hand, even when I gesture towards the right file (enough that Claude would have found it)
+
+Observation 4:

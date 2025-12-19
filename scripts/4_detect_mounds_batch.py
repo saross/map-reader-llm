@@ -39,6 +39,8 @@ from datetime import datetime, timezone
 import uuid
 import subprocess
 import hashlib
+import concurrent.futures
+import threading
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -46,7 +48,7 @@ from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZ
 
 
 # Script Version
-__version__ = "4.0.0"
+__version__ = "4.1.0" # Parallelization Update
 
 class MetadataTracker:
     def __init__(self, config, system_instruction):
@@ -54,6 +56,7 @@ class MetadataTracker:
         self.start_time = datetime.now(timezone.utc)
         self.config = config
         self.system_instruction_hash = hashlib.sha256(system_instruction.encode('utf-8')).hexdigest()
+        self.lock = threading.Lock()
         
         self.stats = {
             "tiles_processed": 0,
@@ -83,15 +86,42 @@ class MetadataTracker:
             return "unknown"
 
     def update_usage(self, response):
-        if hasattr(response, 'usage_metadata'):
-            self.usage["total_input_tokens"] += response.usage_metadata.prompt_token_count
-            self.usage["total_output_tokens"] += response.usage_metadata.candidates_token_count
+        with self.lock:
+            if hasattr(response, 'usage_metadata'):
+                self.usage["total_input_tokens"] += response.usage_metadata.prompt_token_count
+                self.usage["total_output_tokens"] += response.usage_metadata.candidates_token_count
 
     def update_results(self, detections):
-        self.results_summary["total_detections"] += len(detections)
-        for det in detections:
-            subtype = det.get("subtype", "unknown")
-            self.results_summary["class_counts"][subtype] = self.results_summary["class_counts"].get(subtype, 0) + 1
+        with self.lock:
+            self.results_summary["total_detections"] += len(detections)
+            for det in detections:
+                subtype = det.get("subtype", "unknown")
+                self.results_summary["class_counts"][subtype] = self.results_summary["class_counts"].get(subtype, 0) + 1
+    
+    def log_retry(self, tile, attempt, reason):
+        with self.lock:
+             self.stats["retries_total"] += 1
+             self.stats["retry_details"].append({
+                 "tile": tile,
+                 "attempt": attempt,
+                 "reason": reason
+             })
+
+    def log_failure(self, tile, reason):
+        with self.lock:
+            self.stats["tiles_failed"] += 1
+            self.stats["failed_tiles_details"].append({
+                "tile": tile,
+                "reason": reason
+            })
+            
+    def increment_success(self):
+        with self.lock:
+            self.stats["tiles_processed"] += 1
+            
+    def increment_stat(self, key):
+        with self.lock:
+            self.stats[key] = self.stats.get(key, 0) + 1
 
     def finalize(self):
         end_time = datetime.now(timezone.utc)
@@ -123,7 +153,145 @@ class MetadataTracker:
             "results_summary": self.results_summary
         }
 
-def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False, model_override=None):
+def process_single_tile(tile_path, model, tracker, reference_content, base_wait, max_retries, config_version, model_name_cfg):
+    """
+    Worker function to process a single tile.
+    """
+    tile_filename = tile_path.name
+    features = []
+    
+    try:
+        img = Image.open(tile_path)
+        
+        content_parts = [
+            "Here are the Reference Symbols you must find:",
+        ]
+        content_parts.extend(reference_content)
+        content_parts.append("Now, find detection instances that visually match ANY of the above Reference Examples in the Target Map Tile below:")
+        content_parts.append(img)
+        
+        response = None
+        
+        for attempt in range(max_retries):
+            try:
+                # Use a new helper to avoid potential thread sharing issues with client if any exist, 
+                # though genai.GenerativeModel should be thread-safe for generate_content.
+                response = model.generate_content(
+                    content_parts,
+                    request_options={'timeout': 900} 
+                )
+                tracker.update_usage(response)
+                
+                # Check Finish Reason
+                if hasattr(response, 'candidates') and response.candidates:
+                    reason = response.candidates[0].finish_reason
+                    if reason == 2: # MAX_TOKENS
+                        # print(f"\n[Warning] {tile_filename} Attempt {attempt+1}: Max Tokens. Retrying...")
+                        tracker.log_retry(tile_filename, attempt + 1, "MAX_TOKENS (Finish Reason 2)")
+                        time.sleep(5) # Small buffer
+                        continue # Trigger retry
+                    elif reason != 1: # Not STOP (Success)
+                         # print(f"\n[Warning] {tile_filename} Attempt {attempt+1}: Unexpected Finish Reason {reason}")
+                         pass
+                         
+                # If we got here and reason is 1 (or we accepted the response), check content
+                if response.candidates and response.candidates[0].content.parts:
+                    break # Success
+                else:
+                    if attempt < max_retries - 1:
+                        # print(f"\n[Warning] {tile_filename} Attempt {attempt+1}: Empty response content. Retrying...")
+                        time.sleep(5)
+                        continue
+
+            except Exception as e:
+                error_str = str(e)
+                tracker.log_retry(tile_filename, attempt + 1, error_str)
+                
+                if "429" in error_str or "ResourceExhausted" in error_str:
+                    tracker.increment_stat("retries_429_ratelimit")
+                    wait = base_wait * (2 ** attempt) + (attempt * 2) # Jitter/Backoff
+                    # print(f"\n[Warning] {tile_filename} Rate Limit (429). Waiting {wait}s...")
+                    time.sleep(wait)
+                elif "503" in error_str or "InternalServerError" in error_str:
+                    tracker.increment_stat("retries_500_server")
+                    time.sleep(30)
+                elif "DeadlineExceeded" in error_str:
+                    tracker.increment_stat("timeouts")
+                    time.sleep(30)
+                elif "404" in error_str and "models/" in error_str:
+                     print(f"\n[CRITICAL] Model '{model_name_cfg}' not found. Terminating.")
+                     return [] # Fatal
+                else:
+                    print(f"\n[Error] {tile_filename}: {e}")
+                    if attempt < 2: time.sleep(20)
+                    else: break
+        
+        if not response or not (hasattr(response, 'candidates') and response.candidates and response.candidates[0].finish_reason == 1):
+            tracker.log_failure(tile_filename, "Retries Exhausted / Invalid Finish Reason")
+            return []
+
+        tracker.increment_success()
+        
+        detections = []
+        try:
+            json_response = json.loads(response.text)
+            if isinstance(json_response, list):
+                # Handle case where model returns [ { "detections": [...] } ]
+                if len(json_response) > 0 and isinstance(json_response[0], dict) and "detections" in json_response[0]:
+                    detections = json_response[0]["detections"]
+                else:
+                    detections = json_response
+            else:
+                detections = json_response.get("detections", [])
+            tracker.update_results(detections)
+        except Exception as e:
+            print(f"Failed to parse response for {tile_filename}: {e}")
+            tracker.log_failure(tile_filename, f"JSON Parse Error: {e}")
+            return []
+
+        with rasterio.open(tile_path) as src:
+            transform = src.transform
+            crs = src.crs
+
+        for det in detections:
+            if "box_2d" not in det:
+                continue
+            ymin_n, xmin_n, ymax_n, xmax_n = det["box_2d"]
+            px_min_x = (xmin_n / 1000.0) * TILE_SIZE
+            px_max_x = (xmax_n / 1000.0) * TILE_SIZE
+            px_min_y = (ymin_n / 1000.0) * TILE_SIZE
+            px_max_y = (ymax_n / 1000.0) * TILE_SIZE
+            
+            geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
+            geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
+            
+            min_geo_x = min(geo_x1, geo_x2)
+            max_geo_x = max(geo_x1, geo_x2)
+            min_geo_y = min(geo_y1, geo_y2)
+            max_geo_y = max(geo_y1, geo_y2)
+            
+            geom = box(min_geo_x, min_geo_y, max_geo_x, max_geo_y)
+            feature = geojson.Feature(
+                geometry=mapping(geom),
+                properties={
+                    "source_tile": tile_filename,
+                    "label": det.get("label", "mound"),
+                    "subtype": det.get("subtype", "unknown"),
+                    "confidence": "high",
+                    "method": config_version,
+                    "model": model_name_cfg
+                }
+            )
+            features.append(feature)
+            
+        return features
+
+    except Exception as e:
+        print(f"Error processing {tile_filename}: {e}")
+        tracker.log_failure(tile_filename, str(e))
+        return []
+
+def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False, model_override=None, workers=1):
     """
     Executes the detection pipeline using a specific versioned configuration.
 
@@ -134,6 +302,7 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         output_name (str, optional): Custom filename for the output GeoJSON.
         export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles (debug feature).
         model_override (str, optional): Overrides the model defined in the JSON config.
+        workers (int, optional): Number of parallel workers. Defaults to 1.
     """
     # Load Config
     try:
@@ -155,6 +324,7 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
 
     print(f"Loaded Version: {config.get('version', 'unknown')}")
     print(f"Model: {config.get('model', 'unknown')}")
+    print(f"Workers: {workers}")
 
     model_name_cfg = config.get("model")
     
@@ -196,7 +366,7 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         else:
             print(f"Warning: Reference image {path_str} not found.")
 
-    # Initialize Model
+    # Initialize Model Configuration (Shared)
     generation_config = {
         "temperature": config.get("temperature", 0.1),
         "top_p": 0.95,
@@ -269,20 +439,12 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         try:
             with open(manifest_path, 'r') as f:
                 target_filenames = json.load(f)
-                # Convert filenames to full paths in TILES_DIR
-                # We need to find where they live. 
-                # TILES_DIR structure is TILES_DIR / map_name / tile.png
-                # Since we only have filenames, we might need to search or assume unique names.
-                # Optimized approach: Scan TILES_DIR once and map filenames to paths.
-                
-                # Build lookup
                 all_tiles_map = {}
                 for map_dir in TILES_DIR.iterdir():
                     if map_dir.is_dir():
                         for t in map_dir.glob("*.png"):
                             all_tiles_map[t.name] = t
                             
-                # Match
                 found_count = 0
                 for fname in target_filenames:
                     if fname in all_tiles_map and fname not in processed_tiles:
@@ -310,158 +472,40 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
             tiles_to_process = tiles_to_process[:TEST_LIMIT]
 
     print(f"Processing {len(tiles_to_process)} new tiles...")
-    save_frequency = 1 
+    
+    if len(tiles_to_process) == 0:
+        print("No tiles to process.")
+        return
 
-    for i, tile_path in enumerate(tqdm(tiles_to_process)):
-        tile_filename = tile_path.name
+    # --- PARALLEL EXECUTION ---
+    # Prepare Arguments
+    max_retries = 5
+    base_wait = 30
+    config_version = config.get("version", "vX")
+    
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+        # Submit all tasks
+        futures = {
+            executor.submit(
+                process_single_tile, 
+                tile, 
+                model, 
+                tracker, 
+                reference_content, 
+                base_wait, 
+                max_retries, 
+                config_version, 
+                model_name_cfg
+            ): tile.name for tile in tiles_to_process
+        }
         
-        try:
-            img = Image.open(tile_path)
-            
-            content_parts = [
-                "Here are the Reference Symbols you must find:",
-            ]
-            content_parts.extend(reference_content)
-            content_parts.append("Now, find detection instances that visually match ANY of the above Reference Examples in the Target Map Tile below:")
-            content_parts.append(img)
-            
-            max_retries = 5
-            base_wait = 30
-            response = None
-            
-            for attempt in range(max_retries):
-                try:
-                    response = model.generate_content(
-                        content_parts,
-                        request_options={'timeout': 900} 
-                    )
-                    tracker.update_usage(response)
-                    
-                    # Check Finish Reason
-                    if hasattr(response, 'candidates') and response.candidates:
-                        reason = response.candidates[0].finish_reason
-                        if reason == 2: # MAX_TOKENS
-                            print(f"\n[Warning] Attempt {attempt+1}: Max Tokens (Finish Reason 2). Retrying...")
-                            tracker.stats["retry_details"].append({
-                                "tile": tile_filename,
-                                "attempt": attempt + 1,
-                                "reason": "MAX_TOKENS (Finish Reason 2)"
-                            })
-                            time.sleep(5) # Small buffer
-                            continue # Trigger retry
-                        elif reason != 1: # Not STOP (Success)
-                             print(f"\n[Warning] Attempt {attempt+1}: Unexpected Finish Reason {reason}")
-                             
-                    # If we got here and reason is 1 (or we accepted the response), check content
-                    if response.candidates and response.candidates[0].content.parts:
-                        break # Success
-                    else:
-                        if attempt < max_retries - 1:
-                            print(f"\n[Warning] Attempt {attempt+1}: Empty response content. Retrying...")
-                            time.sleep(5)
-                            continue
-
-                except Exception as e:
-                    error_str = str(e)
-                    tracker.stats["retries_total"] += 1
-                    tracker.stats["retry_details"].append({
-                        "tile": tile_filename,
-                        "attempt": attempt + 1,
-                        "error": error_str
-                    })
-                    
-                    if "429" in error_str or "ResourceExhausted" in error_str:
-                        tracker.stats["retries_429_ratelimit"] += 1
-                        wait = base_wait * (2 ** attempt)
-                        print(f"\n[Warning] Rate Limit (429). Waiting {wait}s...")
-                        time.sleep(wait)
-                    elif "503" in error_str or "InternalServerError" in error_str:
-                        tracker.stats["retries_500_server"] += 1
-                        time.sleep(30)
-                    elif "DeadlineExceeded" in error_str:
-                        tracker.stats["timeouts"] += 1
-                        time.sleep(30)
-                    elif "404" in error_str and "models/" in error_str:
-                         print(f"\n[CRITICAL] Model '{model_name_cfg}' not found. Terminating.")
-                         return
-                    else:
-                        print(f"\n[Error] {e}")
-                        if attempt < 2: time.sleep(20)
-                        else: break
-            
-            if not response or not (hasattr(response, 'candidates') and response.candidates and response.candidates[0].finish_reason == 1):
-                print(f"Failed to get valid response for {tile_filename} after retries.")
-                tracker.stats["tiles_failed"] += 1
-                tracker.stats["failed_tiles_details"].append({
-                    "tile": tile_filename,
-                    "reason": "Retries Exhausted / Invalid Finish Reason"
-                })
-                continue
-
-            tracker.stats["tiles_processed"] += 1
-            
-            detections = []
-            detections = []
+        for future in tqdm(concurrent.futures.as_completed(futures), total=len(tiles_to_process)):
+            tile_name = futures[future]
             try:
-                json_response = json.loads(response.text)
-                if isinstance(json_response, list):
-                    # Handle case where model returns [ { "detections": [...] } ]
-                    if len(json_response) > 0 and isinstance(json_response[0], dict) and "detections" in json_response[0]:
-                        detections = json_response[0]["detections"]
-                    else:
-                        detections = json_response
-                else:
-                    detections = json_response.get("detections", [])
-                tracker.update_results(detections)
+                new_features = future.result()
+                features.extend(new_features)
             except Exception as e:
-                print(f"Failed to parse response: {e}")
-                continue
-
-            with rasterio.open(tile_path) as src:
-                transform = src.transform
-                crs = src.crs
-
-            for det in detections:
-                if "box_2d" not in det:
-                    print(f"[Warning] Detection missing 'box_2d', skipping: {det}")
-                    continue
-                ymin_n, xmin_n, ymax_n, xmax_n = det["box_2d"]
-                px_min_x = (xmin_n / 1000.0) * TILE_SIZE
-                px_max_x = (xmax_n / 1000.0) * TILE_SIZE
-                px_min_y = (ymin_n / 1000.0) * TILE_SIZE
-                px_max_y = (ymax_n / 1000.0) * TILE_SIZE
-                
-                geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
-                geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
-                
-                min_geo_x = min(geo_x1, geo_x2)
-                max_geo_x = max(geo_x1, geo_x2)
-                min_geo_y = min(geo_y1, geo_y2)
-                max_geo_y = max(geo_y1, geo_y2)
-                
-                geom = box(min_geo_x, min_geo_y, max_geo_x, max_geo_y)
-                feature = geojson.Feature(
-                    geometry=mapping(geom),
-                    properties={
-                        "source_tile": tile_filename,
-                        "label": det.get("label", "mound"),
-                        "subtype": det.get("subtype", "unknown"),
-                        "confidence": "high",
-                        "method": config.get("version", "vX"),
-                        "model": model_name_cfg
-                    }
-                )
-                features.append(feature)
-
-            if (i + 1) % save_frequency == 0:
-                collection = geojson.FeatureCollection(features)
-                if crs: collection["crs"] = {"type": "name", "properties": {"name": f"urn:ogc:def:crs:EPSG::{crs.to_epsg()}"}}
-                with open(output_file, "w") as f:
-                    geojson.dump(collection, f)
-                    
-        except Exception as e:
-            print(f"Error processing {tile_filename}: {e}")
-            tracker.stats["tiles_failed"] += 1
+                print(f"Exception in worker for {tile_name}: {e}")
 
     # Final Save
     collection = geojson.FeatureCollection(features)
@@ -482,6 +526,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", required=True, help="Path to JSON prompt config")
     parser.add_argument("--manifest", required=False, help="Path to JSON manifest of target tiles")
     parser.add_argument("--model", required=False, help="Override model name (e.g. gemini-1.5-flash)")
+    parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers")
     args = parser.parse_args()
     
-    detect_mounds_versioned(args.config, manifest_path=args.manifest, model_override=args.model)
+    detect_mounds_versioned(args.config, manifest_path=args.manifest, model_override=args.model, workers=args.workers)

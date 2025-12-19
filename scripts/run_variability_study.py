@@ -34,11 +34,12 @@ if "RESULTS_DIR" not in globals():
 if "INPUTS_DIR" not in globals():
     INPUTS_DIR = Path("inputs")
 
-def run_study(config_path, iterations, study_id, model_override=None):
+def run_study(config_path, iterations, study_id, model_override=None, workers=1):
     print(f"--- Starting Variability Study ---")
     print(f"Config: {config_path}")
     print(f"Model: {model_override if model_override else 'Default'}")
     print(f"Iterations: {iterations}")
+    print(f"Workers: {workers}")
     print(f"Study ID: {study_id}")
     
     # Setup Output Directory
@@ -64,7 +65,8 @@ def run_study(config_path, iterations, study_id, model_override=None):
                 manifest_path=manifest_path, 
                 output_name=output_geojson,
                 export_bounds=True, # We need bounds for accurate FNs
-                model_override=model_override
+                model_override=model_override,
+                workers=workers
             )
         except Exception as e:
             print(f"Error in Iteration {i}: {e}")
@@ -126,7 +128,8 @@ if __name__ == "__main__":
     parser.add_argument("--iterations", type=int, default=10, help="Number of runs")
     parser.add_argument("--study_id", required=True, help="Unique ID for this study output folder")
     parser.add_argument("--model", help="Model override (e.g., gemini-3-flash-preview)")
+    parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers")
     
     args = parser.parse_args()
     
-    run_study(args.config, args.iterations, args.study_id, args.model)
+    run_study(args.config, args.iterations, args.study_id, args.model, args.workers)

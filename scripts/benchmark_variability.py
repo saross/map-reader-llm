@@ -60,6 +60,7 @@ simulated strategy (Pool size, Vote threshold):
 
 """
 
+
 import json
 import numpy as np
 import pandas as pd
@@ -77,7 +78,7 @@ import traceback
 # Import project modules
 sys.path.append(os.getcwd())
 try:
-    from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
+    from scripts.lib_advanced_metrics import calculate_f1_internal, load_data, calculate_per_class_f1
 except ImportError:
     print("Error importing scripts.lib_advanced_metrics. Ensure you are running from the project root.")
     sys.exit(1)
@@ -354,6 +355,7 @@ def simulate_strategy(pool_size, vote_threshold, all_run_ids, clusters, ref_data
         combos = combos[:limit]
     
     f1_scores = []
+    per_class_scores = {} # "burial_mound": [f1, f1, ...], ...
     
     for combo in combos:
         combo_set = set(combo)
@@ -375,9 +377,26 @@ def simulate_strategy(pool_size, vote_threshold, all_run_ids, clusters, ref_data
              
              _, _, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds)
              f1_scores.append(f1)
+             
+             # Calculate Per-Class
+             pc_res = calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds)
+             for item in pc_res:
+                 c_name = item["class"]
+                 if c_name not in per_class_scores: per_class_scores[c_name] = []
+                 per_class_scores[c_name].append(item["f1"])
+                 
         except Exception as e:
              print(f"Warning: Error calculating F1 for combo {combo}: {e}")
              f1_scores.append(0.0) # Append 0.0 on error to avoid breaking simulation
+             
+    # Aggregate Per-Class
+    per_class_aggregated = {}
+    for c_name, scores in per_class_scores.items():
+        if scores:
+            per_class_aggregated[c_name] = {
+                "mean_f1": np.mean(scores),
+                "std_f1": np.std(scores)
+            }
              
     # Return Stats
     return {
@@ -389,7 +408,8 @@ def simulate_strategy(pool_size, vote_threshold, all_run_ids, clusters, ref_data
         "min_f1": np.min(f1_scores),
         "max_f1": np.max(f1_scores),
         "ci_lower": np.percentile(f1_scores, 2.5),
-        "ci_upper": np.percentile(f1_scores, 97.5)
+        "ci_upper": np.percentile(f1_scores, 97.5),
+        "per_class": per_class_aggregated
     }
 
 
@@ -498,7 +518,7 @@ def generate_markdown_report(output_dir, strategy_results):
         # 2. Per-Class Variability
         class_csv = output_dir / "base_variability_by_class.csv"
         if class_csv.exists():
-            f.write("### Per-Class Breakdown\n")
+            f.write("### Per-Class Breakdown (N=1)\n")
             df_c = pd.read_csv(class_csv)
             f.write("| Symbol Class | F1 Score | Precision | Recall |\n")
             f.write("| :--- | :--- | :--- | :--- |\n")
@@ -529,6 +549,25 @@ def generate_markdown_report(output_dir, strategy_results):
                 if res == sorted_res[0]: name += " 🏆"
                 
                 f.write(f"| {name} | **{res['mean_f1']:.4f}** | {ci} | {res['min_f1']:.3f} | {res['max_f1']:.3f} |\n")
+            f.write("\n")
+
+            # 4. Per-Class Consensus (New)
+            f.write("### Per-Class Consensus Breakdown\n")
+            f.write("_Impact of consensus strategies on specific symbol types._\n\n")
+            
+            for res in sorted_res:
+                 pool = res['pool']
+                 vote = res['vote']
+                 pc = res.get('per_class', {})
+                 
+                 if pc:
+                     f.write(f"#### Strategy: {pool}/{vote}\n")
+                     f.write("| Symbol | Mean F1 | Std Dev |\n")
+                     f.write("| :--- | :--- | :--- |\n")
+                     for c_name, scores in pc.items():
+                         f.write(f"| {c_name} | {scores['mean_f1']:.4f} | ±{scores['std_f1']:.4f} |\n")
+                     f.write("\n")
+
         else:
             f.write("> No strategy results available.\n")
             
