@@ -27,6 +27,7 @@ for i in {1..5}; do
     python3 scripts/4_detect_mounds_batch.py \
         --config prompts/versions/v3.5_clean_pro.json \
         --manifest inputs/target_tiles_manifest.json \
+        --output "run_${i}" \
         --workers 5
 done
 
@@ -42,6 +43,7 @@ for i in {1..30}; do
     python3 scripts/4_detect_mounds_batch.py \
         --config prompts/versions/v3.5_clean.json \
         --manifest inputs/target_tiles_manifest.json \
+        --output "run_${i}" \
         --workers 5
 done
 

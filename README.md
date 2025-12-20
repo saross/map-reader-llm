@@ -22,23 +22,23 @@ Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify arc
 ---
 
 ## Repository Structure
-
+ 
 *   **`scripts/`**: The Python source code.
     *   `preprocess_tiling.py`: Tiles large maps + generates World Files.
-    *   `4_detect_mounds_batch.py`: The V3 Inference Engine.
+    *   `4_detect_mounds_batch.py`: The V3/V4 Inference Engine.
+    *   `5_verify_crops.py`: Stage 2 Verifier (Pipeline).
     *   `3_georeference_and_visualize.py`: Post-processing & deduplication.
 *   **`prompts/`**: Configuration and System Instructions.
-    *   `versions/`: JSON configs for specific experiments.
+    *   `versions/`: JSON configs for specific experiments (Active).
     *   `text/`: Static system instruction files.
 *   **`inputs/`**: Analysis inputs.
     *   `rasters/`: Source GeoTIFFs.
-    *   `vectors/`: Source Vector overlays.
-    *   `tiles/`: Pre-processed png tiles.
+    *   `manifests/`: JSON tile lists (e.g. `training_manifest.json`, `target_tiles_manifest.json`).
     *   `references/`: Few-shot example images.
 *   **`outputs/`**: Generated results vs metadata.
-*   **`archive/`**: Legacy code and results from previous project phases.
-*   **`methodology/`**: Open Science methodological records (Project Logs).
-
+*   **`docs/`**: Project Documentation, Reports, and Methodology.
+*   **`archive/`**: Consolidated history of all prompts, scripts, and results.
+ 
 ---
 
 ## Methodological Records (Open Science)
@@ -52,7 +52,7 @@ python scripts/archive_methodology.py
 ---
 
 ## Setup & Usage
-
+ 
 ### 1. Installation
 ```bash
 git clone https://github.com/saross/map-reader-llm.git
@@ -61,32 +61,31 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-
+ 
 ### 2. Configuration
 Create a `.env` file in the root:
 ```bash
 GOOGLE_API_KEY=your_key_here
 ```
-
+ 
 ### 3. Running the Pipeline
 **Step 1: Tiling**
 To tile maps from `inputs/rasters/`:
 ```bash
 python scripts/preprocess_tiling.py
 ```
-
-**Step 2: Detection (Using V3.1 Baseline)**
+ 
+**Step 2: Detection (Standard: v3.2 Experimental)**
 ```bash
-python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.1_baseline.json
+python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.2_experimental.json
 ```
-*   *Note: This creates results in `outputs/results/v3.1_baseline/`*
-*   *Note: Results include a `.meta.json` sidecar for full traceability.*
-
-**Step 3: Post-Processing**
+*   *Note: This creates results in `outputs/results/v3.2_experimental/`*
+ 
+**Step 3: Verification (Optional Stage 2)**
 ```bash
-python scripts/3_georeference_and_visualize.py
+python scripts/5_verify_crops.py --config prompts/versions/v4.6_verifier.json
 ```
-
+ 
 ---
 
 ## License & Citation

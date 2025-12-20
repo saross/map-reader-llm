@@ -8,7 +8,7 @@ Description:
     comprehensive metadata (prompt hashes, model versions) for every run.
 
 Usage:
-    python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.0_basic.json
+    python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.2_experimental.json
 
 Inputs:
     - Tiles from `outputs/tiles/`
@@ -525,8 +525,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True, help="Path to JSON prompt config")
     parser.add_argument("--manifest", required=False, help="Path to JSON manifest of target tiles")
+    parser.add_argument("--output", required=False, help="Custom output filename (without extension)")
     parser.add_argument("--model", required=False, help="Override model name (e.g. gemini-1.5-flash)")
     parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers")
     args = parser.parse_args()
     
-    detect_mounds_versioned(args.config, manifest_path=args.manifest, model_override=args.model, workers=args.workers)
+    detect_mounds_versioned(args.config, manifest_path=args.manifest, output_name=args.output, model_override=args.model, workers=args.workers)
