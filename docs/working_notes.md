@@ -562,3 +562,35 @@ We tested `v4.1_recall_augmented` on the new `holdout_manifest.json` (20 unseen 
 2.  **Precision Drop:** Precision dropped from ~0.55 to ~0.33. This is expected as the "Mined Hard Positives" were tuned to the training set's background noise. The model is slightly more "trigger happy" on new terrains, but this is the *desired behavior* for a Proposer (don't miss anything). Stage 2 will fix precision.
 3.  **Conclusion:** `v4.1` is robust and ready for Stage 2 development.
 
+## Observation 44: Two-Stage Pipeline vs Consensus (Final Verdict)
+**Date:** 2025-12-20
+**Context:**
+We hypothesized that a **Two-Stage Pipeline** (Run Proposer for Recall -> Run Verifier for Precision) would solve the "Precision/Recall Trap" where text prompts hurt recall but help precision. We implemented:
+1.  **Stage 1**: `v4.2` Proposer (Union of 5 runs, Temp 0.7). Recall ~0.94.
+2.  **Stage 2**: `v4.5` Verifier (Image-Only CoT + Hard Negative Examples).
+
+**Results (Two-Stage Pipeline):**
+- **F1 Score**: **0.80**
+- **Precision**: 0.77 (Better than Proposer's 0.36, but still noisy).
+- **Recall**: 0.84 (Lost ~10% of candidates).
+- **Consensus**: Adding consensus to the Verifier (N=5) degraded F1 to 0.75.
+
+**Strategy Comparison (The Final Table):**
+We compared this result against our best "Single Prompt" strategies (using Consensus Voting).
+
+| Strategy | Prompt Type | F1 Score | Recall | Precision | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Flash 10/30 (Swarm)** | Text + Image (v3.2) | **0.92** | 0.92 | 0.92 | **The Ceiling** 🏆 |
+| **Pro 2/5 (Consensus)** | Text + Image (v3.2) | **0.90** | 0.92 | 0.88 | **SOTA** (Expensive) |
+| **Flash 2/5 (Consensus)** | Text + Image (v3.2) | **0.86** | 0.90 | 0.82 | **Best Balance** (Cheap/Good) |
+| **Flash 3/5 (Consensus)** | Image-Only (v3.5) | **0.85** | ~0.90 | ~0.80 | Good, but complex. |
+| **Two-Stage Pipeline** | Image-Only + Verifier | 0.80 | 0.84 | 0.77 | **Underperforming** |
+
+**Conclusion**:
+The ancient wisdom holds: **"Simple prompts with consensus are better than complex pipelines."**
+The Two-Stage architecture adds complexity (2 sets of prompts, intermediate files) and actually performs *worse* than simply running the original v3.2 Prompt 5 times and taking a vote (F1 0.86 vs 0.80).
+
+**Strategic Decision**:
+We will **ABANDON** the Two-Stage Architecture.
+We will **ADOPT** the **Flash 2/5 Consensus Strategy** (using Prompt v3.2) as the Production Default.
+
