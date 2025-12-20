@@ -1,0 +1,56 @@
+{
+    "version": "v4.3_recall_max_temp",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.7_visual_instruction.md",
+    "temperature": 1.0,
+    "examples": [
+        {
+            "label": "Positive Example: Burial Mound",
+            "path": "burial_mound.png"
+        },
+        {
+            "label": "Positive Example: Burial Mound (Compound)",
+            "path": "ref_pos_compound.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_1_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_2_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_3_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_4_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_5_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_8_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_9_K-35-052-4_32635.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_10_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_11_K-35-052-4_32635.png"
+        },
+        {
+            "label": "Positive Example: Hard Case (Mined)",
+            "path": "hard_positive_12_K-35-062-2_Rakovski.png"
+        }
+    ]
+}
