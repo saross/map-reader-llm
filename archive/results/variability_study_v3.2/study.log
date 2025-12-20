@@ -1,0 +1,769 @@
+--- Starting Variability Study ---
+Config: prompts/versions/v3.2_experimental.json
+Iterations: 30
+
+[Iteration 1/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_01.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_01.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 19 of 20 tiles (19 remaining to process).
+Processing 19 new tiles...
+  0%|          | 0/19 [00:00<?, ?it/s]  5%|▌         | 1/19 [00:37<11:20, 37.83s/it] 11%|█         | 2/19 [01:15<10:39, 37.63s/it] 16%|█▌        | 3/19 [02:35<15:13, 57.06s/it] 21%|██        | 4/19 [03:03<11:25, 45.69s/it] 26%|██▋       | 5/19 [09:05<37:14, 159.60s/it] 32%|███▏      | 6/19 [10:13<27:49, 128.42s/it] 37%|███▋      | 7/19 [11:08<20:53, 104.42s/it] 42%|████▏     | 8/19 [18:35<39:09, 213.62s/it] 47%|████▋     | 9/19 [19:16<26:35, 159.57s/it] 53%|█████▎    | 10/19 [19:53<18:16, 121.78s/it] 58%|█████▊    | 11/19 [20:26<12:36, 94.59s/it]  63%|██████▎   | 12/19 [21:11<09:16, 79.52s/it] 68%|██████▊   | 13/19 [21:37<06:20, 63.41s/it] 74%|███████▎  | 14/19 [22:14<04:36, 55.29s/it] 79%|███████▉  | 15/19 [22:47<03:14, 48.74s/it] 84%|████████▍ | 16/19 [23:53<02:41, 53.69s/it] 89%|████████▉ | 17/19 [26:26<02:47, 83.80s/it] 95%|█████████▍| 18/19 [27:10<01:11, 71.78s/it]100%|██████████| 19/19 [28:12<00:00, 68.68s/it]100%|██████████| 19/19 [28:12<00:00, 89.06s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_01.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_01.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_01_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_01.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_01_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 10, FP: 1, FN: 1
+[K-35-052-4_32635] TP: 16, FP: 3, FN: 5
+[K-35-078-1_Lesovo] TP: 1, FP: 1, FN: 2
+[K-35-062-2_Rakovski] TP: 16, FP: 1, FN: 2
+
+=== BENCHMARK RESULTS ===
+True Positives:  43
+False Positives: 6
+False Negatives: 10
+-------------------------
+Precision:       0.8776
+Recall:          0.8113
+F1 Score:        0.8431
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_01_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_01_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_01_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_01_advanced_metrics.json
+
+[Iteration 2/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_02.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_02.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:54<17:12, 54.36s/it] 10%|█         | 2/20 [01:42<15:16, 50.90s/it] 15%|█▌        | 3/20 [02:16<12:14, 43.18s/it] 20%|██        | 4/20 [03:05<12:02, 45.18s/it] 25%|██▌       | 5/20 [03:31<09:37, 38.51s/it] 30%|███       | 6/20 [04:46<11:50, 50.72s/it] 35%|███▌      | 7/20 [05:52<12:03, 55.67s/it] 40%|████      | 8/20 [06:43<10:53, 54.48s/it] 45%|████▌     | 9/20 [07:31<09:35, 52.36s/it] 50%|█████     | 10/20 [08:02<07:36, 45.61s/it] 55%|█████▌    | 11/20 [08:37<06:21, 42.38s/it] 60%|██████    | 12/20 [09:12<05:22, 40.32s/it] 65%|██████▌   | 13/20 [10:15<05:28, 47.00s/it] 70%|███████   | 14/20 [10:45<04:11, 41.91s/it] 75%|███████▌  | 15/20 [11:47<04:00, 48.08s/it] 80%|████████  | 16/20 [12:30<03:05, 46.41s/it] 85%|████████▌ | 17/20 [13:33<02:34, 51.61s/it] 90%|█████████ | 18/20 [14:19<01:39, 49.73s/it] 95%|█████████▌| 19/20 [15:05<00:48, 48.57s/it]100%|██████████| 20/20 [17:58<00:00, 85.87s/it]100%|██████████| 20/20 [17:58<00:00, 53.90s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_02.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_02.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_02_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_02.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_02_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 10, FP: 4, FN: 1
+[K-35-052-4_32635] TP: 16, FP: 4, FN: 5
+[K-35-078-1_Lesovo] TP: 2, FP: 1, FN: 1
+[K-35-062-2_Rakovski] TP: 17, FP: 0, FN: 1
+
+=== BENCHMARK RESULTS ===
+True Positives:  45
+False Positives: 9
+False Negatives: 8
+-------------------------
+Precision:       0.8333
+Recall:          0.8491
+F1 Score:        0.8411
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_02_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_02_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_02_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_02_advanced_metrics.json
+
+[Iteration 3/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_03.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_03.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:53<16:52, 53.31s/it] 10%|█         | 2/20 [01:19<11:12, 37.38s/it] 15%|█▌        | 3/20 [01:49<09:37, 33.95s/it] 20%|██        | 4/20 [02:30<09:51, 36.94s/it] 25%|██▌       | 5/20 [03:11<09:35, 38.34s/it] 30%|███       | 6/20 [04:21<11:26, 49.01s/it] 35%|███▌      | 7/20 [05:08<10:27, 48.25s/it] 40%|████      | 8/20 [05:58<09:48, 49.02s/it] 45%|████▌     | 9/20 [07:12<10:22, 56.60s/it] 50%|█████     | 10/20 [07:59<08:56, 53.67s/it] 55%|█████▌    | 11/20 [08:40<07:28, 49.82s/it] 60%|██████    | 12/20 [09:04<05:36, 42.08s/it] 65%|██████▌   | 13/20 [09:59<05:21, 45.90s/it] 70%|███████   | 14/20 [10:32<04:12, 42.07s/it] 75%|███████▌  | 15/20 [11:03<03:14, 38.81s/it] 80%|████████  | 16/20 [11:32<02:23, 35.88s/it] 85%|████████▌ | 17/20 [11:58<01:37, 32.66s/it] 90%|█████████ | 18/20 [12:59<01:22, 41.34s/it] 95%|█████████▌| 19/20 [13:49<00:43, 43.97s/it]100%|██████████| 20/20 [14:50<00:00, 49.16s/it]100%|██████████| 20/20 [14:50<00:00, 44.55s/it]
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_03.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_03.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_03_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_03.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_03_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 10, FP: 1, FN: 1
+[K-35-052-4_32635] TP: 17, FP: 3, FN: 4
+[K-35-078-1_Lesovo] TP: 1, FP: 2, FN: 2
+[K-35-062-2_Rakovski] TP: 16, FP: 2, FN: 2
+
+=== BENCHMARK RESULTS ===
+True Positives:  44
+False Positives: 8
+False Negatives: 9
+-------------------------
+Precision:       0.8462
+Recall:          0.8302
+F1 Score:        0.8381
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_03_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_03_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_03_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_03_advanced_metrics.json
+
+[Iteration 4/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_04.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_04.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:53<16:47, 53.04s/it] 10%|█         | 2/20 [01:34<13:54, 46.37s/it] 15%|█▌        | 3/20 [02:21<13:07, 46.34s/it] 20%|██        | 4/20 [03:12<12:56, 48.53s/it] 25%|██▌       | 5/20 [03:38<10:01, 40.10s/it] 30%|███       | 6/20 [11:03<41:30, 177.91s/it] 35%|███▌      | 7/20 [12:02<30:06, 138.93s/it] 40%|████      | 8/20 [13:13<23:29, 117.48s/it] 45%|████▌     | 9/20 [20:59<41:29, 226.30s/it] 50%|█████     | 10/20 [21:41<28:14, 169.43s/it] 55%|█████▌    | 11/20 [22:13<19:06, 127.42s/it] 60%|██████    | 12/20 [22:52<13:22, 100.35s/it] 65%|██████▌   | 13/20 [23:40<09:51, 84.55s/it]  70%|███████   | 14/20 [24:21<07:08, 71.49s/it] 75%|███████▌  | 15/20 [24:58<05:05, 61.15s/it] 80%|████████  | 16/20 [25:43<03:44, 56.11s/it] 85%|████████▌ | 17/20 [26:36<02:45, 55.32s/it] 90%|█████████ | 18/20 [27:20<01:43, 51.89s/it] 95%|█████████▌| 19/20 [28:26<00:56, 56.21s/it]100%|██████████| 20/20 [29:24<00:00, 56.82s/it]100%|██████████| 20/20 [29:24<00:00, 88.25s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_04.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_04.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_04_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_04.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_04_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 11, FP: 0, FN: 0
+[K-35-052-4_32635] TP: 17, FP: 3, FN: 4
+[K-35-078-1_Lesovo] TP: 1, FP: 1, FN: 2
+[K-35-062-2_Rakovski] TP: 17, FP: 0, FN: 1
+
+=== BENCHMARK RESULTS ===
+True Positives:  46
+False Positives: 4
+False Negatives: 7
+-------------------------
+Precision:       0.9200
+Recall:          0.8679
+F1 Score:        0.8932
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_04_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_04_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_04_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_04_advanced_metrics.json
+
+[Iteration 5/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_05.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_05.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [01:16<24:21, 76.94s/it] 10%|█         | 2/20 [01:54<16:05, 53.62s/it] 15%|█▌        | 3/20 [02:48<15:17, 53.99s/it] 20%|██        | 4/20 [03:28<12:53, 48.36s/it] 25%|██▌       | 5/20 [03:58<10:24, 41.62s/it] 30%|███       | 6/20 [08:30<28:02, 120.20s/it] 35%|███▌      | 7/20 [09:34<22:01, 101.69s/it] 40%|████      | 8/20 [10:19<16:42, 83.57s/it]  45%|████▌     | 9/20 [18:11<37:36, 205.13s/it] 50%|█████     | 10/20 [18:49<25:36, 153.65s/it] 55%|█████▌    | 11/20 [19:27<17:43, 118.14s/it] 60%|██████    | 12/20 [19:56<12:09, 91.15s/it]  65%|██████▌   | 13/20 [20:35<08:45, 75.06s/it] 70%|███████   | 14/20 [21:25<06:45, 67.54s/it] 75%|███████▌  | 15/20 [22:37<05:45, 69.11s/it] 80%|████████  | 16/20 [23:17<04:01, 60.29s/it] 85%|████████▌ | 17/20 [24:18<03:01, 60.47s/it] 90%|█████████ | 18/20 [25:26<02:05, 62.64s/it] 95%|█████████▌| 19/20 [26:04<00:55, 55.17s/it]100%|██████████| 20/20 [27:18<00:00, 60.96s/it]100%|██████████| 20/20 [27:18<00:00, 81.93s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_05.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_05.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_05_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_05.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_05_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 11, FP: 2, FN: 0
+[K-35-052-4_32635] TP: 16, FP: 4, FN: 5
+[K-35-078-1_Lesovo] TP: 1, FP: 1, FN: 2
+[K-35-062-2_Rakovski] TP: 16, FP: 2, FN: 2
+
+=== BENCHMARK RESULTS ===
+True Positives:  44
+False Positives: 9
+False Negatives: 9
+-------------------------
+Precision:       0.8302
+Recall:          0.8302
+F1 Score:        0.8302
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_05_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_05_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_05_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_05_advanced_metrics.json
+
+[Iteration 6/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_06.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_06.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:57<18:08, 57.29s/it] 10%|█         | 2/20 [01:38<14:15, 47.55s/it] 15%|█▌        | 3/20 [02:35<14:42, 51.91s/it] 20%|██        | 4/20 [03:30<14:13, 53.35s/it] 25%|██▌       | 5/20 [04:09<12:00, 48.01s/it] 30%|███       | 6/20 [04:49<10:36, 45.44s/it] 35%|███▌      | 7/20 [05:46<10:37, 49.02s/it] 40%|████      | 8/20 [07:23<12:54, 64.52s/it] 45%|████▌     | 9/20 [08:23<11:32, 62.91s/it] 50%|█████     | 10/20 [09:04<09:22, 56.23s/it] 55%|█████▌    | 11/20 [09:54<08:08, 54.30s/it] 60%|██████    | 12/20 [10:28<06:24, 48.06s/it] 65%|██████▌   | 13/20 [11:26<05:59, 51.29s/it] 70%|███████   | 14/20 [12:03<04:40, 46.77s/it] 75%|███████▌  | 15/20 [12:59<04:08, 49.67s/it] 80%|████████  | 16/20 [13:54<03:25, 51.37s/it] 85%|████████▌ | 17/20 [15:09<02:54, 58.25s/it] 90%|█████████ | 18/20 [17:22<02:41, 80.91s/it] 95%|█████████▌| 19/20 [18:22<01:14, 74.61s/it]100%|██████████| 20/20 [19:13<00:00, 67.50s/it]100%|██████████| 20/20 [19:13<00:00, 57.68s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_06.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_06.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_06_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_06.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_06_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 10, FP: 2, FN: 1
+[K-35-052-4_32635] TP: 17, FP: 3, FN: 4
+[K-35-078-1_Lesovo] TP: 1, FP: 1, FN: 2
+[K-35-062-2_Rakovski] TP: 16, FP: 0, FN: 2
+
+=== BENCHMARK RESULTS ===
+True Positives:  44
+False Positives: 6
+False Negatives: 9
+-------------------------
+Precision:       0.8800
+Recall:          0.8302
+F1 Score:        0.8544
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_06_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_06_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_06_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_06_advanced_metrics.json
+
+[Iteration 7/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_07.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_07.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:49<15:32, 49.06s/it] 10%|█         | 2/20 [01:52<17:13, 57.40s/it] 15%|█▌        | 3/20 [02:36<14:35, 51.49s/it] 20%|██        | 4/20 [03:41<15:08, 56.81s/it] 25%|██▌       | 5/20 [04:12<11:49, 47.27s/it] 30%|███       | 6/20 [05:44<14:36, 62.60s/it] 35%|███▌      | 7/20 [06:59<14:27, 66.77s/it] 40%|████      | 8/20 [07:50<12:19, 61.66s/it] 45%|████▌     | 9/20 [16:03<36:03, 196.65s/it] 50%|█████     | 10/20 [16:47<24:53, 149.37s/it] 55%|█████▌    | 11/20 [17:31<17:35, 117.27s/it] 60%|██████    | 12/20 [18:06<12:16, 92.04s/it]  65%|██████▌   | 13/20 [19:03<09:30, 81.45s/it] 70%|███████   | 14/20 [19:34<06:38, 66.38s/it] 75%|███████▌  | 15/20 [20:19<04:59, 59.85s/it] 80%|████████  | 16/20 [20:48<03:21, 50.47s/it] 85%|████████▌ | 17/20 [22:03<02:54, 58.01s/it] 90%|█████████ | 18/20 [22:41<01:43, 51.97s/it] 95%|█████████▌| 19/20 [23:38<00:53, 53.37s/it]100%|██████████| 20/20 [26:51<00:00, 95.44s/it]100%|██████████| 20/20 [26:51<00:00, 80.60s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_07.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_07.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_07_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_07.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_07_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 11, FP: 2, FN: 0
+[K-35-052-4_32635] TP: 16, FP: 3, FN: 5
+[K-35-078-1_Lesovo] TP: 2, FP: 1, FN: 1
+[K-35-062-2_Rakovski] TP: 17, FP: 1, FN: 1
+
+=== BENCHMARK RESULTS ===
+True Positives:  46
+False Positives: 7
+False Negatives: 7
+-------------------------
+Precision:       0.8679
+Recall:          0.8679
+F1 Score:        0.8679
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_07_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_07_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_07_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_07_advanced_metrics.json
+
+[Iteration 8/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_08.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_08.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:53<17:01, 53.75s/it] 10%|█         | 2/20 [01:44<15:36, 52.01s/it] 15%|█▌        | 3/20 [02:26<13:27, 47.52s/it] 20%|██        | 4/20 [03:07<11:59, 44.95s/it] 25%|██▌       | 5/20 [03:33<09:29, 37.98s/it] 30%|███       | 6/20 [12:11<46:57, 201.22s/it] 35%|███▌      | 7/20 [13:12<33:39, 155.31s/it] 40%|████      | 8/20 [14:04<24:28, 122.37s/it] 45%|████▌     | 9/20 [22:21<43:57, 239.75s/it] 50%|█████     | 10/20 [23:20<30:38, 183.84s/it] 55%|█████▌    | 11/20 [24:24<22:03, 147.11s/it] 60%|██████    | 12/20 [24:57<14:58, 112.36s/it] 65%|██████▌   | 13/20 [26:05<11:33, 99.09s/it]  70%|███████   | 14/20 [26:41<07:59, 79.85s/it] 75%|███████▌  | 15/20 [27:41<06:09, 73.87s/it] 80%|████████  | 16/20 [28:19<04:12, 63.16s/it] 85%|████████▌ | 17/20 [29:04<02:53, 57.80s/it] 90%|█████████ | 18/20 [30:07<01:58, 59.18s/it] 95%|█████████▌| 19/20 [31:04<00:58, 58.53s/it]100%|██████████| 20/20 [37:04<00:00, 149.26s/it]100%|██████████| 20/20 [37:04<00:00, 111.25s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-052-4_32635_x448_y3136.png after retries.
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_08.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_08.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_08_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_08.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_08_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 10, FP: 1, FN: 1
+[K-35-052-4_32635] TP: 17, FP: 4, FN: 4
+[K-35-078-1_Lesovo] TP: 1, FP: 1, FN: 2
+[K-35-062-2_Rakovski] TP: 17, FP: 0, FN: 1
+
+=== BENCHMARK RESULTS ===
+True Positives:  45
+False Positives: 6
+False Negatives: 8
+-------------------------
+Precision:       0.8824
+Recall:          0.8491
+F1 Score:        0.8654
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_08_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_08_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_08_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_08_advanced_metrics.json
+
+[Iteration 9/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_09.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_09.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [01:09<22:05, 69.75s/it] 10%|█         | 2/20 [02:08<18:59, 63.29s/it] 15%|█▌        | 3/20 [02:43<14:16, 50.38s/it] 20%|██        | 4/20 [03:34<13:29, 50.58s/it] 25%|██▌       | 5/20 [04:03<10:40, 42.68s/it] 30%|███       | 6/20 [06:22<17:38, 75.63s/it] 35%|███▌      | 7/20 [06:58<13:35, 62.71s/it] 40%|████      | 8/20 [08:05<12:48, 64.02s/it] 45%|████▌     | 9/20 [10:52<17:38, 96.21s/it] 50%|█████     | 10/20 [11:33<13:12, 79.27s/it] 55%|█████▌    | 11/20 [12:08<09:49, 65.48s/it] 60%|██████    | 12/20 [12:46<07:37, 57.19s/it] 65%|██████▌   | 13/20 [13:36<06:26, 55.17s/it] 70%|███████   | 14/20 [14:14<04:58, 49.77s/it] 75%|███████▌  | 15/20 [15:04<04:09, 49.81s/it] 80%|████████  | 16/20 [15:29<02:49, 42.37s/it] 85%|████████▌ | 17/20 [16:39<02:32, 50.76s/it] 90%|█████████ | 18/20 [18:08<02:04, 62.33s/it] 95%|█████████▌| 19/20 [19:08<01:01, 61.46s/it]100%|██████████| 20/20 [19:49<00:00, 55.43s/it]100%|██████████| 20/20 [19:49<00:00, 59.48s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_09.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_09.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_09_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_09.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_09_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 11, FP: 0, FN: 0
+[K-35-052-4_32635] TP: 16, FP: 3, FN: 5
+[K-35-078-1_Lesovo] TP: 1, FP: 0, FN: 2
+[K-35-062-2_Rakovski] TP: 16, FP: 1, FN: 2
+
+=== BENCHMARK RESULTS ===
+True Positives:  44
+False Positives: 4
+False Negatives: 9
+-------------------------
+Precision:       0.9167
+Recall:          0.8302
+F1 Score:        0.8713
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_09_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_09_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_09_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_09_advanced_metrics.json
+
+[Iteration 10/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_10.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_10.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:58<18:25, 58.18s/it] 10%|█         | 2/20 [01:34<13:36, 45.35s/it] 15%|█▌        | 3/20 [02:17<12:32, 44.29s/it] 20%|██        | 4/20 [03:33<15:07, 56.70s/it] 25%|██▌       | 5/20 [04:02<11:39, 46.67s/it] 30%|███       | 6/20 [08:55<30:26, 130.50s/it] 35%|███▌      | 7/20 [09:58<23:28, 108.32s/it] 40%|████      | 8/20 [11:04<19:01, 95.13s/it]  45%|████▌     | 9/20 [18:54<38:52, 212.03s/it] 50%|█████     | 10/20 [19:23<25:57, 155.71s/it] 55%|█████▌    | 11/20 [20:04<18:04, 120.55s/it] 60%|██████    | 12/20 [20:36<12:27, 93.50s/it]  65%|██████▌   | 13/20 [21:39<09:49, 84.28s/it] 70%|███████   | 14/20 [22:11<06:51, 68.61s/it] 75%|███████▌  | 15/20 [23:02<05:16, 63.31s/it] 80%|████████  | 16/20 [23:35<03:36, 54.18s/it] 85%|████████▌ | 17/20 [24:33<02:45, 55.19s/it] 90%|█████████ | 18/20 [26:49<02:39, 79.67s/it] 95%|█████████▌| 19/20 [27:35<01:09, 69.46s/it]100%|██████████| 20/20 [44:20<00:00, 350.34s/it]100%|██████████| 20/20 [44:20<00:00, 133.02s/it]
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 2: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 3: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 4: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 5: Max Tokens (Finish Reason 2). Retrying...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Attempt 1: Max Tokens (Finish Reason 2). Retrying...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-078-1_Lesovo_x2240_y2240.png after retries.
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_10.geojson
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_10.meta.json
+Generating bounds from inputs/target_tiles_manifest.json...
+Saved bounds to outputs/results/v3.2_experimental/variability_study_v3.2_run_10_bounds.geojson
+
+--- Starting Evaluation ---
+Detections: outputs/results/v3.2_experimental/variability_study_v3.2_run_10.geojson
+Bounds: outputs/results/v3.2_experimental/variability_study_v3.2_run_10_bounds.geojson
+Loading 4 reference maps...
+Evaluating on maps: {'K-35-053-3_Elenovo', 'K-35-052-4_32635', 'K-35-078-1_Lesovo', 'K-35-062-2_Rakovski'}
+[K-35-053-3_Elenovo] TP: 8, FP: 4, FN: 3
+[K-35-052-4_32635] TP: 16, FP: 2, FN: 5
+[K-35-078-1_Lesovo] TP: 1, FP: 1, FN: 2
+[K-35-062-2_Rakovski] TP: 16, FP: 2, FN: 2
+
+=== BENCHMARK RESULTS ===
+True Positives:  41
+False Positives: 9
+False Negatives: 12
+-------------------------
+Precision:       0.8200
+Recall:          0.7736
+F1 Score:        0.7961
+=========================
+Saved False Positives to outputs/results/variability_study_v3.2/run_10_fp.geojson
+Saved False Negatives to outputs/results/variability_study_v3.2/run_10_fn.geojson
+Saved Metrics to outputs/results/variability_study_v3.2/run_10_metrics.json
+Generating Advanced Metrics Report...
+Advanced metrics saved to outputs/results/variability_study_v3.2/run_10_advanced_metrics.json
+
+[Iteration 11/30]
+Loaded Version: v3.2_experimental
+Model: gemini-3-pro-preview
+System Instruction: v3.0_system_instruction.md
+Output: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_11.geojson
+Metadata: /home/shawn/Code/map-reader-llm/outputs/results/v3.2_experimental/variability_study_v3.2_run_11.meta.json
+Using Manifest: inputs/target_tiles_manifest.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [15:36<4:56:32, 936.47s/it] 10%|█         | 2/20 [31:12<4:40:53, 936.29s/it] 15%|█▌        | 3/20 [46:48<4:25:16, 936.26s/it] 20%|██        | 4/20 [1:02:24<4:09:39, 936.20s/it] 25%|██▌       | 5/20 [1:18:00<3:54:01, 936.11s/it] 30%|███       | 6/20 [1:33:36<3:38:25, 936.07s/it] 35%|███▌      | 7/20 [1:49:13<3:22:50, 936.16s/it] 40%|████      | 8/20 [2:04:49<3:07:13, 936.16s/it] 45%|████▌     | 9/20 [2:20:25<2:51:37, 936.13s/it] 50%|█████     | 10/20 [2:36:01<2:36:01, 936.20s/it] 55%|█████▌    | 11/20 [2:51:37<2:20:25, 936.14s/it] 60%|██████    | 12/20 [3:07:13<2:04:48, 936.09s/it] 65%|██████▌   | 13/20 [3:22:49<1:49:12, 936.01s/it] 70%|███████   | 14/20 [3:38:25<1:33:36, 936.03s/it] 75%|███████▌  | 15/20 [3:54:01<1:18:00, 936.04s/it] 75%|███████▌  | 15/20 [4:06:50<1:22:16, 987.33s/it]
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-052-4_32635_x0_y2240.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-052-4_32635_x2240_y2688.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-052-4_32635_x2240_y896.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-052-4_32635_x896_y0.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-052-4_32635_x3584_y1344.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-052-4_32635_x448_y3136.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-053-3_Elenovo_x1344_y2688.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-053-3_Elenovo_x1344_y896.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-053-3_Elenovo_x2240_y1344.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-053-3_Elenovo_x896_y3136.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-053-3_Elenovo_x448_y448.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-053-3_Elenovo_x3136_y1344.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-062-2_Rakovski_x0_y2240.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-062-2_Rakovski_x1792_y1792.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Failed to get valid response for K-35-062-2_Rakovski_x2240_y1344.png after retries.
+
+[Warning] Rate Limit (429). Waiting 30s...
+
+[Warning] Rate Limit (429). Waiting 60s...
+
+[Warning] Rate Limit (429). Waiting 120s...
+
+[Warning] Rate Limit (429). Waiting 240s...
+
+[Warning] Rate Limit (429). Waiting 480s...
+Traceback (most recent call last):
+  File "/home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py", line 334, in detect_mounds_versioned
+    response = model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model_per_day, limit: 0 [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_requests_per_model_per_day"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel"
+}
+]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/shawn/Code/map-reader-llm/scripts/6_variability_study.py", line 139, in <module>
+    run_study(args.config, args.iterations, args.model)
+  File "/home/shawn/Code/map-reader-llm/scripts/6_variability_study.py", line 61, in run_study
+    detect_mounds_versioned(
+  File "/home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py", line 377, in detect_mounds_versioned
+    time.sleep(wait)
+KeyboardInterrupt

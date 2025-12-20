@@ -1,0 +1,79 @@
+{
+  "run_id": "98a427cb-30ee-48e0-ad33-f2a5f10158b7",
+  "timestamp": {
+    "start": "2025-12-18T06:26:49.376045+00:00",
+    "end": "2025-12-18T06:27:59.411944+00:00",
+    "duration_seconds": 70.035899
+  },
+  "environment": {
+    "git_commit": "aea3a6ef86a89c4c4ac13db61bf925a44f0a6049",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.0.0"
+  },
+  "configuration": {
+    "version": "v3.1_baseline",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.0_system_instruction.md",
+    "prompt_hash": "80209e4e4bc410d903794401eac14678ba9c9706d0c07deedc1858a89e9725ea",
+    "temperature": 0.1,
+    "full_config_snapshot": {
+      "version": "v3.1_baseline",
+      "description": "Balanced 6-Shot (Phase 9). High Accuracy Benchmark.",
+      "model": "gemini-3-flash-preview",
+      "instruction_file": "v3.0_system_instruction.md",
+      "temperature": 0.1,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Example 1A: Standard Legend Symbol (Sunburst)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Example 2A: Standard Legend Symbol (Irregular/Ticks)"
+        },
+        {
+          "path": "benchmark_mound.png",
+          "label": "Example 3B: Benchmark (Square + Spikes)"
+        },
+        {
+          "path": "ref_negative_1.png",
+          "label": "Negative Example 1: Degraded Label/Noise"
+        },
+        {
+          "path": "neg_sparse.png",
+          "label": "Negative Example 2: Sparse Area (Contours + Roads only). NO MOUNDS."
+        },
+        {
+          "path": "neg_topo.png",
+          "label": "Negative Example 3: Complex Topography/River. NO MOUNDS."
+        },
+        {
+          "path": "neg_urban.png",
+          "label": "Negative Example 4: Urban/Cluttered Area. Buildings are not mounds. NO MOUNDS."
+        }
+      ],
+      "manifest_path": "/home/shawn/Code/map-reader-llm/inputs/target_tiles_manifest.json"
+    },
+    "target_manifest": "/home/shawn/Code/map-reader-llm/inputs/target_tiles_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 6,
+    "tiles_failed": 0,
+    "retries_total": 0,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0
+  },
+  "usage_stats": {
+    "total_input_tokens": 55530,
+    "total_output_tokens": 1036
+  },
+  "results_summary": {
+    "total_detections": 8,
+    "class_counts": {
+      "burial_mound": 4,
+      "triangulation_mound": 2,
+      "benchmark_mound": 2
+    }
+  }
+}

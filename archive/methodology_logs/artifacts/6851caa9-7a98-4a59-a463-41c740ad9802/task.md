@@ -1,0 +1,57 @@
+# Task: Refine Prompt on Flash (Precision Focus)
+
+**Goal**: Optimize the prompt using Gemini 1.5 Flash to achieve Precision > 0.85 while maintaining Recall (v3.2 baseline F1=0.80), then (eventually) transfer to Pro.
+
+- [x] **Establish Baseline (v3.1)** <!-- id: 0 -->
+    - [x] Create v3.1_baseline prompt
+    - [x] Benchmark on Flash (Result: Precision=0.60, F1=0.70)
+- [x] **Experimental Run (v3.2)** <!-- id: 1 -->
+    - [x] Create v3.2_experimental prompt (Maximal instruction)
+    - [x] Benchmark on Flash (Result: Precision=0.80, F1=0.80)
+    - [x] **Pivot**: v3.2 is superior but unstable (Max Tokens).
+- [x] **Retry Experiment (v3.2)** <!-- id: 5 -->
+    - [x] Script: Retry failed tiles 3x to quantify "intermittency"
+    - [x] Analyze: Result 13/15 successes (86%).
+    - [x] Decision: **Keep v3.2**, Implement Retry Logic.
+- [x] **Implement Robust Retry Logic** <!-- id: 6 -->
+    - [x] Modify `scripts/4_detect_mounds_batch.py`
+    - [x] Add specific handling for `finish_reason: 2` (Max Tokens)
+    - [x] Retry up to 3 times on this specific error
+- [x] **Final Verification (v3.2 + Retry)** <!-- id: 7 -->
+    - [x] Run full benchmark on Flash
+    - [x] Confirm 100% completion rate without crashes
+- [x] **Documentation & Handover** <!-- id: 8 -->
+    - [x] Update `working_notes.md` with "Observation 23"
+    - [x] Commit and Push changes
+- [x] **Publication Metrics Strategy** <!-- id: 9 -->
+    - [x] Research PR Curve feasibility (Prompt analysis)
+    - [x] Create `metrics_strategy.md` recommendation
+    - [x] Update `working_notes.md` with "Observation 24" (Metrics)
+- [x] **Implementation: Advanced Metrics** <!-- id: 10 -->
+    - [x] Create/Run `scripts/util_advanced_metrics.py` (Ad-hoc)
+    - [x] Create `scripts/lib_advanced_metrics.py` (Module)
+    - [x] Integrate into `run_v3_1_benchmark.py` (Automated generation)
+- [x] **Precision Tuning (v3.3 & v3.4)** <!-- id: 11 -->
+    - [x] Benchmark v3.3 (Tight Box + Geometric): **Regression (F1 0.64)**
+    - [x] Benchmark v3.4 (Tight Box Only): **REGRESSION (F1 0.54)**. FPs -> 42.
+    - [x] **Decision**: ABORT TUNING. Revert to v3.2 Baseline (F1 ~0.75).
+- [x] **Variability Study (v3.2)** <!-- id: 12 -->
+    - [x] Create `scripts/6_variability_study.py`
+    - [x] Run N=2 Test Loop
+    - [x] **Deep Dive Analysis**: Investigated per-run variability and Consensus Strategies.
+        - **Result**: "3/10 Consensus" Strategy yields **F1 0.89** (beats best single run).
+        - **Refuted**: Claude's "2/3 Vote" strategy degrades Recall.
+- [x] **Statistical & Strategy Upgrade** <!-- id: 13 -->
+    - [x] Create `metrics_strategy.md` to define the "Core Analysis" wrapper structure.
+    - [x] Create `scripts/benchmark_variability.py` (Refactored Deep Dive)
+        - [x] Implement Exhaustive Simulation (N=3, 5, 10 for all Thresholds)
+        - [x] Integrate Confidence Intervals (Bootstrap) for Consensus Results
+        - [x] Integrate Spatial Tolerance Curve for Consensus Results
+        - [x] **New**: Added Automatic Markdown Reporting
+    - [x] Run Analysis on existing N=10 Data
+    - [x] Create `scripts/benchmark_single_wrapper.py` (Standardized access)
+- [x] **Flash Variability Study (N=30)** <!-- id: 14 -->
+    - [x] Run 30 iterations with Gemini 3 Flash
+    - [x] Calculate "Flash Drop-off Curve"
+    - [x] Compare Stability vs Pro (Found "Swarm" Strategy)
+    - [x] Document Per-Class Variability (Observation 33)

@@ -1,0 +1,53 @@
+{
+  "run_id": "deb33593-e534-426d-ba70-5393dfb31bd4",
+  "timestamp": {
+    "start": "2025-12-17T22:03:04.134900+00:00",
+    "end": "2025-12-17T22:03:13.792643+00:00",
+    "duration_seconds": 9.657743
+  },
+  "environment": {
+    "git_commit": "4355c3f90517b86425dd4f19ad5c456c9b5611ce",
+    "script": "detect_mounds_v3.py"
+  },
+  "configuration": {
+    "version": "v3.0_basic",
+    "model": "gemini-flash-latest",
+    "prompt_hash": "80209e4e4bc410d903794401eac14678ba9c9706d0c07deedc1858a89e9725ea",
+    "temperature": 0.1,
+    "full_config_snapshot": {
+      "version": "v3.0_basic",
+      "description": "Initial Proof of Concept. Legend shots only.",
+      "model": "gemini-flash-latest",
+      "temperature": 0.1,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Example 1A: Standard Legend Symbol (Sunburst)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Example 2A: Standard Legend Symbol (Irregular/Ticks)"
+        }
+      ]
+    }
+  },
+  "execution_stats": {
+    "tiles_processed": 1,
+    "tiles_failed": 0,
+    "retries_total": 0,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0
+  },
+  "usage_stats": {
+    "total_input_tokens": 1262,
+    "total_output_tokens": 741
+  },
+  "results_summary": {
+    "total_detections": 8,
+    "class_counts": {
+      "burial_mound": 6,
+      "settlement_mound": 2
+    }
+  }
+}

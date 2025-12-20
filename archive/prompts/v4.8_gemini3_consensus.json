@@ -1,0 +1,203 @@
+{
+    "version": "v4.8_gemini3_consensus",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v4.6_verifier_instructions.md",
+    "temperature": 0.7,
+    "visual_cot": true,
+    "confidence_rubric": true,
+    "grid_overlay": false,
+    "examples": [
+        {
+            "label": "Positive Example: Canonical",
+            "path": "burial_mound.png"
+        },
+        {
+            "label": "Negative Example: Hard Benchmark",
+            "path": "benchmark_mound.png"
+        },
+        {
+            "label": "Positive Example: Canonical",
+            "path": "settlement_mound.png"
+        },
+        {
+            "label": "Negative Example: Hard Triangulation",
+            "path": "triangulation_mound.png"
+        },
+        {
+            "label": "Positive Example: Canonical",
+            "path": "ref_variant_1.png"
+        },
+        {
+            "label": "Negative Example: Urban",
+            "path": "neg_urban.png"
+        },
+        {
+            "label": "Positive Example: Canonical",
+            "path": "ref_variant_2.png"
+        },
+        {
+            "label": "Negative Example: Sparse",
+            "path": "neg_sparse.png"
+        },
+        {
+            "label": "Positive Example: Canonical",
+            "path": "ref_pos_green.png"
+        },
+        {
+            "label": "Negative Example: Topo",
+            "path": "neg_topo.png"
+        },
+        {
+            "label": "Positive Example: Compound",
+            "path": "ref_pos_compound.png"
+        },
+        {
+            "label": "Negative Example: Embankment",
+            "path": "ref_neg_embankment_2.png"
+        },
+        {
+            "label": "Positive Example: Intersected",
+            "path": "ref_pos_intersected.png"
+        },
+        {
+            "label": "Negative Example: Hard Blob",
+            "path": "ref_neg_hard_benchmark_blob.png"
+        },
+        {
+            "label": "Negative Example: Hard Blob",
+            "path": "ref_neg_hard_triangulation_blob.png"
+        },
+        {
+            "label": "Negative Example: Hard Negative",
+            "path": "ref_neg_benchmark.png"
+        },
+        {
+            "label": "Negative Example: Hard Negative",
+            "path": "ref_neg_triangulation.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_1_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_2_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_3_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_4_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_5_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_8_K-35-053-3_Elenovo.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_9_K-35-052-4_32635.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_10_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_11_K-35-052-4_32635.png"
+        },
+        {
+            "label": "Positive Example: Hard (Mined)",
+            "path": "hard_positive_12_K-35-062-2_Rakovski.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_1_K-35-078-1_Lesovo_x3584_y0.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_3_K-35-078-1_Lesovo_x0_y2688.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_12_K-35-062-2_Rakovski_x3136_y2240.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_4_K-35-062-2_Rakovski_x0_y2240.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_5_K-35-052-4_32635_x896_y0.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_9_K-35-053-3_Elenovo_x1344_y2688.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_11_K-35-052-4_32635_x2240_y896.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_10_K-35-078-1_Lesovo_x2240_y2240.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_7_K-35-052-4_32635_x0_y2240.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_8_K-35-062-2_Rakovski_x0_y2240.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_6_K-35-052-4_32635_x0_y2240.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_0_K-35-078-1_Lesovo_x0_y2688.png.png"
+        },
+        {
+            "label": "Negative Example: Hard Mined (False Positive)",
+            "path": "hard_negative_fp_2_K-35-078-1_Lesovo_x3584_y0.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_9_K-35-053-3_Elenovo_x1344_y2688.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_7_K-35-053-3_Elenovo_x1344_y896.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_5_K-35-053-3_Elenovo_x448_y448.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_1_K-35-052-4_32635_x0_y2240.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_8_K-35-053-3_Elenovo_x1344_y2688.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_4_K-35-062-2_Rakovski_x3584_y3584.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_6_K-35-053-3_Elenovo_x448_y448.png.png"
+        },
+        {
+            "label": "Positive Example: Hard Mined (False Negative)",
+            "path": "hard_positive_fn_3_K-35-062-2_Rakovski_x0_y2240.png.png"
+        }
+    ]
+}

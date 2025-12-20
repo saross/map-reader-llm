@@ -1,0 +1,146 @@
+{
+  "run_id": "9107e20e-c255-4955-a54c-43fd26bc460f",
+  "timestamp": {
+    "start": "2025-12-19T21:31:31.719588+00:00",
+    "end": "2025-12-19T21:34:29.870046+00:00",
+    "duration_seconds": 178.150458
+  },
+  "environment": {
+    "git_commit": "24e147cabfd4257d5d5495dd4eb52c304fbcf644",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.1.0"
+  },
+  "configuration": {
+    "version": "v3.7_hard_neg",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.7_visual_instruction.md",
+    "prompt_hash": "d458ab6697506d59ddb596fcd23944cd719156d7641a9a32b79f585d68d96c83",
+    "temperature": 0.3,
+    "full_config_snapshot": {
+      "version": "v3.7_hard_neg",
+      "description": "Clean Instruction (No Text Rules) + 2 Hard Negative Examples. Best of v3.5 and v3.6.",
+      "model": "gemini-3-flash-preview",
+      "instruction_file": "v3.7_visual_instruction.md",
+      "temperature": 0.3,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Positive Example: Burial Mound (Standard)"
+        },
+        {
+          "path": "ref_variant_2.png",
+          "label": "Positive Example: Burial Mound (Simple/Degraded)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Positive Example: Settlement Mound (Irregular)"
+        },
+        {
+          "path": "triangulation_mound.png",
+          "label": "Positive Example: Triangulation Point on Mound"
+        },
+        {
+          "path": "benchmark_mound.png",
+          "label": "Positive Example: Benchmark on Mound"
+        },
+        {
+          "path": "ref_variant_1.png",
+          "label": "Positive Example: Benchmark on Mound (Variant)"
+        },
+        {
+          "path": "ref_pos_green.png",
+          "label": "Positive Example: Mound on Vegetation (Green Background)"
+        },
+        {
+          "path": "ref_pos_intersected.png",
+          "label": "Positive Example: Intersected Mound (Obscured by Lines)"
+        },
+        {
+          "path": "ref_pos_compound.png",
+          "label": "Positive Example: Compound Symbol"
+        },
+        {
+          "path": "ref_negative_1.png",
+          "label": "Negative Example: Noise (Ignore)"
+        },
+        {
+          "path": "neg_sparse.png",
+          "label": "Negative Example: Sparse Area (No Mounds)"
+        },
+        {
+          "path": "neg_topo.png",
+          "label": "Negative Example: Topography / River (No Mounds)"
+        },
+        {
+          "path": "neg_urban.png",
+          "label": "Negative Example: Urban Area (No Mounds)"
+        },
+        {
+          "path": "ref_neg_embankment_2.png",
+          "label": "Negative Example: Embankment (Ignore)"
+        },
+        {
+          "path": "ref_neg_benchmark.png",
+          "label": "Negative Example: Benchmark Symbol (Ignore)"
+        },
+        {
+          "path": "ref_neg_triangulation.png",
+          "label": "Negative Example: Triangulation Point (Ignore)"
+        },
+        {
+          "path": "ref_neg_hard_benchmark_blob.png",
+          "label": "Negative Example: Benchmark (Square + Dot) WITHOUT outward hachures. NOT a mound."
+        },
+        {
+          "path": "ref_neg_hard_triangulation_blob.png",
+          "label": "Negative Example: Triangulation Point (Triangle + Dot) overlaid by noise. Lacks outward hachures. NOT a mound."
+        }
+      ],
+      "manifest_path": "inputs/target_tiles_manifest.json"
+    },
+    "target_manifest": "inputs/target_tiles_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 20,
+    "tiles_failed": 0,
+    "retries_total": 4,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [],
+    "retry_details": [
+      {
+        "tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      },
+      {
+        "tile": "K-35-062-2_Rakovski_x2240_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      },
+      {
+        "tile": "K-35-062-2_Rakovski_x2240_y1344.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 506808,
+    "total_output_tokens": 10403
+  },
+  "results_summary": {
+    "total_detections": 87,
+    "class_counts": {
+      "burial_mound": 73,
+      "triangulation_mound": 5,
+      "benchmark_mound": 9
+    }
+  }
+}

@@ -122,7 +122,7 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
 
 def process_single_candidate(args_tuple: Tuple) -> Feature:
     """Helper for parallel processing."""
-    feat, base_prompt, model_name, iterations = args_tuple
+    feat, base_prompt, model_name, iterations, prompt_config = args_tuple
     
     # Reload model inside thread/process? No, client is thread safe usually. But GenAI python client? 
     # Better to instantiate standard client.
@@ -142,9 +142,20 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
     crop_img = crop_candidate(tile_path, feat["geometry"])
     if not crop_img:
         return None
+
+    # v4.7 Grid Overlay
+    if prompt_config.get("grid_overlay", False):
+        try:
+            from src.grid_utils import apply_grid
+            crop_img = apply_grid(crop_img)
+        except ImportError:
+            logging.warning("Outputting grid failed: grid_utils not found.")
+        except Exception as e:
+#            logging.warning(f"Grid application failed: {e}")
+            pass
         
     try:
-        full_content = base_prompt + ["**Target Candidate:**", crop_img]
+        full_content = base_prompt + ["**Target Candidate (with 100m Grid):**" if prompt_config.get("grid_overlay") else "**Target Candidate:**", crop_img]
         
         iteration_results = []
         votes = 0
@@ -170,7 +181,7 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
                     "verified": is_verified
                 })
             except Exception as e:
-                print(f"DEBUG Error: {e} | Raw: {response.text if 'response' in locals() else 'No response'}")
+                # print(f"DEBUG Error: {e} | Raw: {response.text if 'response' in locals() else 'No response'}")
                 continue
 
         if not iteration_results: return None
@@ -205,8 +216,8 @@ def run_verification(candidates_path: str, output_path: str, config_path: str, w
     
     verified_features = []
     
-    # Prepare args
-    process_args = [(c, base_prompt, model_name, iterations) for c in candidates]
+    # Prepare args - PASS prompt_cfg
+    process_args = [(c, base_prompt, model_name, iterations, prompt_cfg) for c in candidates]
     
     completed = 0
     total = len(candidates)

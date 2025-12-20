@@ -1,0 +1,129 @@
+{
+  "run_id": "6c9d06b7-25f0-43b1-a3ad-15842785af06",
+  "timestamp": {
+    "start": "2025-12-20T05:35:42.147377+00:00",
+    "end": "2025-12-20T05:36:46.879606+00:00",
+    "duration_seconds": 64.732229
+  },
+  "environment": {
+    "git_commit": "2e3b6efe167e157a131e836cf841e1edee99739f",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.1.0"
+  },
+  "configuration": {
+    "version": "v4.1_recall_augmented",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.7_visual_instruction.md",
+    "prompt_hash": "d458ab6697506d59ddb596fcd23944cd719156d7641a9a32b79f585d68d96c83",
+    "temperature": 1.0,
+    "full_config_snapshot": {
+      "version": "v4.1_recall_augmented",
+      "description": "v4.1 Recall Proposer Augmented (Stage 1). Same as v4.0 but adds Mined Hard Positives.",
+      "model": "gemini-3-flash-preview",
+      "instruction_file": "v3.7_visual_instruction.md",
+      "temperature": 1.0,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Positive Example: Burial Mound (Standard)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Positive Example: Settlement Mound (Irregular)"
+        },
+        {
+          "path": "ref_variant_2.png",
+          "label": "Positive Example: Degraded Mound"
+        },
+        {
+          "path": "triangulation_mound.png",
+          "label": "Positive Example: Triangulation Point ON Mound"
+        },
+        {
+          "path": "benchmark_mound.png",
+          "label": "Positive Example: Benchmark ON Mound"
+        },
+        {
+          "path": "ref_variant_1.png",
+          "label": "Positive Example: Variant Benchmark"
+        },
+        {
+          "path": "ref_pos_green.png",
+          "label": "Positive Example: Green Background Mound"
+        },
+        {
+          "path": "ref_pos_intersected.png",
+          "label": "Positive Example: Obscured/Intersected Mound"
+        },
+        {
+          "path": "ref_pos_compound.png",
+          "label": "Positive Example: Compound Mound"
+        },
+        {
+          "path": "hard_positive_1_K-35-053-3_Elenovo.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "hard_positive_2_K-35-053-3_Elenovo.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "hard_positive_3_K-35-053-3_Elenovo.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "hard_positive_4_K-35-062-2_Rakovski.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "hard_positive_5_K-35-062-2_Rakovski.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "hard_positive_10_K-35-062-2_Rakovski.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "hard_positive_11_K-35-052-4_32635.png",
+          "label": "Positive Example: Hard Case (Mined)"
+        },
+        {
+          "path": "neg_sparse.png",
+          "label": "Negative Example: Background (Sparse)"
+        },
+        {
+          "path": "neg_topo.png",
+          "label": "Negative Example: Background (Topo Lines)"
+        },
+        {
+          "path": "neg_urban.png",
+          "label": "Negative Example: Background (Urban)"
+        }
+      ],
+      "manifest_path": "inputs/holdout_manifest.json"
+    },
+    "target_manifest": "inputs/holdout_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 20,
+    "tiles_failed": 0,
+    "retries_total": 0,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 443480,
+    "total_output_tokens": 7056
+  },
+  "results_summary": {
+    "total_detections": 77,
+    "class_counts": {
+      "burial_mound": 60,
+      "benchmark_mound": 10,
+      "triangulation_mound": 7
+    }
+  }
+}

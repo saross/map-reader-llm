@@ -225,7 +225,71 @@ I conducted a head-to-head comparison of the `v4.6` pipeline (Text-Free, Many-Sh
 2.  **Prompt Sensitivity**: The `v4.6` prompt was mined and optimized iteratively; perhaps Gemini 2.0 aligned better with the specific hard negatives chosen.
 3.  **Visual Engine Differences**: While Gemini 3 has a "better" vision encoder generally, for this specific low-resolution, high-noise cartographic task, Gemini 2.0's behavior proved more robust.
 
-**Decision**: We will proceed with **Gemini 2.0 Flash** for the final validation to maximize F1.
+
+
+### Feature Comparison: Grid Overlay (v4.7 - Negative Result)
+To test the "Visual Scaffolding" / "Set-of-Mark" hypothesis found in recent literature, I implemented a **100-meter Grid Overlay** on the candidate images.
+*   **Technique**: A semi-transparent Cyan grid (`RGBA: (0, 255, 255, 128)`) was drawn on the 512x512px crops.
+*   **Spacing**: 20 pixels (approx. 100m real-world scale based on 5m/px resolution).
+*   **Prompt Strategy**: Construct v4.7 explicitly instructed Gemini 3 Flash to "Use the grid to judge SCALE. Burial mounds are typically 20-50m (20-50% of a grid cell). If an object fills the cell (>100m), reject it."
+*   **Hypothesis**: This would provide a "visual ruler" to prevent the model from hallucinating mounds in large hills or small ant-hills.
+
+**Results**:
+*   **Precision**: 0.8438 (Worse than baseline v4.6)
+*   **Recall**: **0.5294** (Catastrophic Drop from 0.88)
+*   **F1**: 0.6506
+
+**Analysis for Paper**:
+The intervention failed significantly. The grid likely introduced two failure modes:
+1.  **Feature Occlusion**: Burial mounds on these maps are small (20-30px). A 1px grid line traversing a 20px mound obscures 5-10% of its features, potentially breaking the visual signature.
+2.  **Rigid Reasoning**: The model likely interpreted the "20-50%" rule too strictly or hallucinated alignment issues, leading it to reject nearly half of the valid True Positives.
+
+### Feature Comparison: Consensus (v4.8 - Negative Result)
+I tested **Self-Consistency Ensembling** (3-Pass Majority Vote) on Gemini 3 Flash (Temp 1.0).
+*   **Prompt**: v4.6 (Text-Free).
+*   **Config**: Iterations=3 means only candidates with 2+ votes survive.
+*   **Result**: 0 Verified Candidates. **Total Failure**.
+*   **Analysis**: At Temperature 1.0, Gemini 3 Flash is highly unstable on this task. The probability of getting 2 detections in 3 runs dropped to near zero.
+
+### Feature Comparison: Consensus Retry (v4.8 - Temp 0.7)
+I re-ran the above experiment with **Temperature 0.7**, matching our successful Proposer configuration.
+*   **Result**: 0 Verified Candidates.
+*   **Conclusion**: Even at moderate temperature, Gemini 3 Flash's internal variance on this task is too high for strict majority voting. The model does not consistently "see" the mounds across seeds.
+
+
+### Feature Comparison: Pipeline Consensus (v4.9 - "Outer Loop")
+I ran the full pipeline (Verifier N=1) **5 times** using **Gemini 3 Flash** at **Temperature 0.7** (Standard), then aggregated the results.
+*   **Total Unique Detections**: 9 (out of 70 candidates).
+*   **Vote Distribution**:
+    *   1 Vote: 5 candidates
+    *   2 Votes: 3 candidates
+    *   3 Votes: 1 candidate
+    *   4-5 Votes: 0 candidates
+*   **Analysis**: Even with "Outer Loop" aggregation (Union of 5 runs), the model only found 9 candidates total. The base detection rate of Gemini 3 Flash at Temp 0.7 is simply too low for this task (Recall < 20%). It is "blind" to the mounds that Gemini 2.0 Flash easily sees.
+
+
+### Feature Comparison: Pipeline Consensus Retry (v4.9 - Temp 0.2)
+I re-ran the "Outer Loop" experiment with **Temperature 0.2** to test if lower temperature would reduce hallucinations and improve agreement.
+*   **Total Unique Detections**: 9 (Identical to Temp 0.7).
+*   **Vote Distribution**:
+    *   1 Vote: 5 candidates
+    *   2 Votes: 4 candidates
+    *   3+ Votes: 0 candidates
+*   **Analysis**: Temperature had **zero effect** on the total recall pool. The model is consistently blind to the standard mound features in this setup.
+
+**Conclusion**: The "Frontier" model (Gemini 3 Flash) in its current preview state is regression on this specific noisy-raster task compared to Gemini 2.0 Flash.
+
+**Final Decision**: **Gemini 2.0 Flash (v4.6)** single-pass is the SOTA (F1 0.874).
+
+## Planned Overnight Experiments (Dec 20)
+To exhaustively verify model capabilities, we are queuing:
+1.  **Job A**: Gemini 3 Pro (v3.5 Prompt) - Single Stage, N=5.
+    *   *Hypothesis*: The larger model might succeed where Flash failed.
+2.  **Job B**: Gemini 3 Flash (v3.5 Prompt) - "Swarm" N=30.
+    *   *Hypothesis*: Massive sampling might recover the missing recall.
+3.  **Job C**: Gemini 3 Pro (v4.6 Prompt) - Two-Stage Verifier.
+    *   *Hypothesis*: The Pro model might be a better "Judge" than Flash.
+
 
 
 ## Observation 23: Stabilization of Gemini 3 Flash & v3.2 Prompt (Phase 13)

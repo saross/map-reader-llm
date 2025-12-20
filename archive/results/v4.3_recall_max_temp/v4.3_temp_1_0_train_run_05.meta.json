@@ -1,0 +1,101 @@
+{
+  "run_id": "7f33e183-0d9d-4438-8282-8944d0d26b21",
+  "timestamp": {
+    "start": "2025-12-20T06:16:43.782803+00:00",
+    "end": "2025-12-20T06:17:44.098710+00:00",
+    "duration_seconds": 60.315907
+  },
+  "environment": {
+    "git_commit": "df09e0e67f6bcd4e02f980b13d671a8631acc760",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.1.0"
+  },
+  "configuration": {
+    "version": "v4.3_recall_max_temp",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.7_visual_instruction.md",
+    "prompt_hash": "d458ab6697506d59ddb596fcd23944cd719156d7641a9a32b79f585d68d96c83",
+    "temperature": 1.0,
+    "full_config_snapshot": {
+      "version": "v4.3_recall_max_temp",
+      "model": "gemini-3-flash-preview",
+      "instruction_file": "v3.7_visual_instruction.md",
+      "temperature": 1.0,
+      "examples": [
+        {
+          "label": "Positive Example: Burial Mound",
+          "path": "burial_mound.png"
+        },
+        {
+          "label": "Positive Example: Burial Mound (Compound)",
+          "path": "ref_pos_compound.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_1_K-35-053-3_Elenovo.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_2_K-35-053-3_Elenovo.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_3_K-35-053-3_Elenovo.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_4_K-35-062-2_Rakovski.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_5_K-35-062-2_Rakovski.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_8_K-35-053-3_Elenovo.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_9_K-35-052-4_32635.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_10_K-35-062-2_Rakovski.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_11_K-35-052-4_32635.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_12_K-35-062-2_Rakovski.png"
+        }
+      ],
+      "manifest_path": "inputs/target_tiles_manifest.json"
+    },
+    "target_manifest": "inputs/target_tiles_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 20,
+    "tiles_failed": 0,
+    "retries_total": 0,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 289700,
+    "total_output_tokens": 7429
+  },
+  "results_summary": {
+    "total_detections": 85,
+    "class_counts": {
+      "burial_mound": 68,
+      "triangulation_mound": 10,
+      "benchmark_mound": 6,
+      "settlement_mound": 1
+    }
+  }
+}
