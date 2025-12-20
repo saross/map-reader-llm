@@ -14,7 +14,7 @@ def archive_methodology():
     gemini_base = home_dir / ".gemini" / "antigravity"
     
     repo_root = Path(__file__).parent.parent
-    dest_base = repo_root / "methodology" / "logs"
+    dest_base = repo_root / "archive" / "methodology_logs"
     dest_convs = dest_base / "conversations"
     dest_artifacts = dest_base / "artifacts"
     
