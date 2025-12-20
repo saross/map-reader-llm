@@ -355,6 +355,7 @@ def simulate_strategy(pool_size, vote_threshold, all_run_ids, clusters, ref_data
         combos = combos[:limit]
     
     f1_scores = []
+    f1_scores_full = []
     per_class_scores = {} # "burial_mound": [f1, f1, ...], ...
     
     for combo in combos:
@@ -375,7 +376,8 @@ def simulate_strategy(pool_size, vote_threshold, all_run_ids, clusters, ref_data
              # Ensure CRS match
              if gdf_det.crs != gdf_ref.crs: gdf_det = gdf_det.to_crs(gdf_ref.crs)
              
-             _, _, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds)
+             p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds)
+             f1_scores_full.append((p, r, f1))
              f1_scores.append(f1)
              
              # Calculate Per-Class
@@ -403,12 +405,14 @@ def simulate_strategy(pool_size, vote_threshold, all_run_ids, clusters, ref_data
         "pool": pool_size,
         "vote": vote_threshold,
         "n_combos": len(combos),
-        "mean_f1": np.mean(f1_scores),
-        "std_f1": np.std(f1_scores),
-        "min_f1": np.min(f1_scores),
-        "max_f1": np.max(f1_scores),
-        "ci_lower": np.percentile(f1_scores, 2.5),
-        "ci_upper": np.percentile(f1_scores, 97.5),
+        "mean_recall": np.mean([x[1] for x in f1_scores_full]), # Tuple (prec, rec, f1)
+        "mean_precision": np.mean([x[0] for x in f1_scores_full]),
+        "mean_f1": np.mean([x[2] for x in f1_scores_full]),
+        "std_f1": np.std([x[2] for x in f1_scores_full]),
+        "min_f1": np.min([x[2] for x in f1_scores_full]),
+        "max_f1": np.max([x[2] for x in f1_scores_full]),
+        "ci_lower": np.percentile([x[2] for x in f1_scores_full], 2.5),
+        "ci_upper": np.percentile([x[2] for x in f1_scores_full], 97.5),
         "per_class": per_class_aggregated
     }
 
@@ -532,8 +536,8 @@ def generate_markdown_report(output_dir, strategy_results):
         f.write("_Simulation of voting strategies to improve stability and performance._\n\n")
         
         if strategy_results:
-            f.write("| Strategy (N/Votes) | Mean F1 | 95% CI | Min | Max |\n")
-            f.write("| :--- | :--- | :--- | :--- | :--- |\n")
+            f.write("| Strategy (N/Votes) | Mean F1 | Mean Recall | Mean Prec | 95% CI | Min | Max |\n")
+            f.write("| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n")
             
             # Sort by F1 descending
             sorted_res = sorted(strategy_results, key=lambda x: x['mean_f1'], reverse=True)
@@ -542,13 +546,15 @@ def generate_markdown_report(output_dir, strategy_results):
                 pool = res['pool']
                 vote = res['vote']
                 ci = f"[{res['ci_lower']:.3f}, {res['ci_upper']:.3f}]"
+                rec = res.get('mean_recall', 0.0)
+                prec = res.get('mean_precision', 0.0)
                 
                 # Highlight "Super-Majority" vs "Plurality" roughly
                 # format: Pool=30 Vote=10
                 name = f"**{pool}/{vote}**"
                 if res == sorted_res[0]: name += " 🏆"
                 
-                f.write(f"| {name} | **{res['mean_f1']:.4f}** | {ci} | {res['min_f1']:.3f} | {res['max_f1']:.3f} |\n")
+                f.write(f"| {name} | **{res['mean_f1']:.4f}** | {rec:.4f} | {prec:.4f} | {ci} | {res['min_f1']:.3f} | {res['max_f1']:.3f} |\n")
             f.write("\n")
 
             # 4. Per-Class Consensus (New)

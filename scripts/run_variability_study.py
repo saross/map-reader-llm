@@ -34,19 +34,20 @@ if "RESULTS_DIR" not in globals():
 if "INPUTS_DIR" not in globals():
     INPUTS_DIR = Path("inputs")
 
-def run_study(config_path, iterations, study_id, model_override=None, workers=1):
+def run_study(config_path, iterations, study_id, model_override=None, workers=1, manifest_path="inputs/target_tiles_manifest.json"):
     print(f"--- Starting Variability Study ---")
     print(f"Config: {config_path}")
     print(f"Model: {model_override if model_override else 'Default'}")
     print(f"Iterations: {iterations}")
     print(f"Workers: {workers}")
     print(f"Study ID: {study_id}")
+    print(f"Manifest: {manifest_path}")
     
     # Setup Output Directory
     study_dir = RESULTS_DIR / study_id
     study_dir.mkdir(parents=True, exist_ok=True)
     
-    manifest_path = INPUTS_DIR / "target_tiles_manifest.json"
+    manifest_path = Path(manifest_path)
     
     # Storage for metrics
     all_metrics = []
@@ -129,7 +130,8 @@ if __name__ == "__main__":
     parser.add_argument("--study_id", required=True, help="Unique ID for this study output folder")
     parser.add_argument("--model", help="Model override (e.g., gemini-3-flash-preview)")
     parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers")
+    parser.add_argument("--manifest", default="inputs/target_tiles_manifest.json", help="Path to manifest file")
     
     args = parser.parse_args()
     
-    run_study(args.config, args.iterations, args.study_id, args.model, args.workers)
+    run_study(args.config, args.iterations, args.study_id, args.model, args.workers, args.manifest)
