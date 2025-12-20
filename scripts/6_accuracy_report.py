@@ -79,6 +79,48 @@ def validate_file(pred_path, bounds_path, template_det_path):
     print(f"F1 Score:  {f1:.4f}")
     print("==========================")
     
+    # Save FP and FN files for Mining
+    print("\nGenerating FP/FN files...")
+    # Buffer Refs for matching
+    gdf_ref_buf = gdf_ref.copy()
+    gdf_ref_buf['geometry'] = gdf_ref_buf.geometry.buffer(20)
+    
+    # Identify FPs (Verified candidates not hitting any Ref)
+    join_fp = gpd.sjoin(gdf_verified, gdf_ref_buf, how='left', predicate='intersects')
+    fps = join_fp[join_fp.index_right.isna()].copy()
+    
+    # Identify FNs (Refs not hit by any Verified candidate)
+    # Filter refs to bounds first
+    processed_geometry = gdf_bounds.geometry.union_all()
+    refs_in_scope = gdf_ref_buf[gdf_ref_buf.intersects(processed_geometry)].copy()
+    
+    join_fn = gpd.sjoin(refs_in_scope, gdf_verified, how='left', predicate='intersects')
+    fns = join_fn[join_fn.index_right.isna()].copy()
+    # Recover original geometry (unbuffered) for FNs
+    fns = fns.merge(gdf_ref[['geometry']], left_index=True, right_index=True, how='left', suffixes=('_buf', ''))
+    fns.set_geometry('geometry', inplace=True)
+    if 'geometry_buf' in fns.columns: fns.drop(columns=['geometry_buf'], inplace=True)
+
+    base_name = Path(pred_path).stem
+    parent_dir = Path(pred_path).parent
+    
+    fp_path = parent_dir / f"{base_name}_fp.geojson"
+    fn_path = parent_dir / f"{base_name}_fn.geojson"
+    
+    if not fps.empty:
+        # Drop columns that cause save errors
+        for col in ['index_right', 'Map_left', 'Map_right']: 
+            if col in fps.columns: fps.drop(columns=[col], inplace=True)
+        fps.to_file(fp_path, driver='GeoJSON')
+        print(f"Saved {len(fps)} False Positives to {fp_path}")
+        
+    if not fns.empty:
+        # Drop columns
+        for col in ['index_right', 'Map_left', 'Map_right']:
+             if col in fns.columns: fns.drop(columns=[col], inplace=True)
+        fns.to_file(fn_path, driver='GeoJSON')
+        print(f"Saved {len(fns)} False Negatives to {fn_path}")
+
     # Compare with Unfiltered (Base)
     print("\n--- Comparison (Unfiltered Input) ---")
     gdf_all = gpd.read_file(pred_path) # Reload full

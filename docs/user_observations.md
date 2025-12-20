@@ -17,3 +17,15 @@ Why: This acts as a "speed bump," forcing the model to ground its decision in vi
 
 Observation 5:
 It has taken *me* a while to learn and exploit the way that Antigravity works, e.g., conversatons in workspaces.
+
+Observation 6:
+In line with the 'technoscholasticism' thesis, judgement is sometimes lacking, as when we decided to move to a two-stage classifier but Gemini proposed using an existing prompt rather than revising to to focus on maximum recall.
+
+Observation 7:
+Gemini *really* wants to 'continue to the next phase', constantly tapping the breaks to discuss results and plan carefully.
+
+Observation 8:
+Gemini makes some good choices (was able to reconstruct an outcome from existing runs instead of doing a new run), but wow, I'm not happy with taste / judgement. It immediately wants to abandon the two-stage pipeline and go back to a single prompt, when we've done almost no optimisation of the two-phase pipeline to explore its potential.
+
+Observation 9:
+Gemini keeps putting text back into the prompt even though we've decided to use image-focused prompts. I'll have to start reviewing each prompt manually, including system instructions.

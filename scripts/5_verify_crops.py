@@ -83,23 +83,40 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
         else:
             logging.warning(f"Missing reference: {img_path}")
 
-    # 2. Instructions (Minimal Text)
-    instructions = """
-    **Task:** Verification.
-    **Process:**
-    1. **SCAN**: List visual features of the candidate object in the center.
-    2. **DISCRIMINATE**: Check for Hard Negatives (Is it a Benchmark? Triangulation Point? Text?).
-    3. **FACTORS**: List 3 specific factors that REDUCE your confidence.
-    4. **SCORE**: Assign a Probability Score (0.0 to 1.0) that this is a BURIAL MOUND.
+    # 2. Instructions 
+    # v4.6 Optimization: Load from external file if specified
+    instruction_file = prompt_config.get("instruction_file")
+    if instruction_file:
+        instr_path = Path("prompts") / instruction_file
+        if instr_path.exists():
+            with open(instr_path) as f:
+                instructions = f.read()
+            # logging.info(f"Loaded instructions from {instr_path}")
+        else:
+            logging.warning(f"Instruction file not found: {instr_path}. Using default.")
+            instructions = None
+    else:
+        instructions = None
+
+    if not instructions:
+        # Fallback Default (v4.5 style)
+        instructions = """
+        **Task:** Verification.
+        **Process:**
+        1. **SCAN**: List visual features of the candidate object in the center.
+        2. **DISCRIMINATE**: Check for Hard Negatives (Is it a Benchmark? Triangulation Point? Text?).
+        3. **FACTORS**: List 3 specific factors that REDUCE your confidence.
+        4. **SCORE**: Assign a Probability Score (0.0 to 1.0) that this is a BURIAL MOUND.
+        
+        **Rubric**:
+        * 0.9-1.0: Clear, circular, 3D relief. Verified.
+        * 0.6-0.8: Likely mound, fuzziness/intersection present.
+        * 0.2-0.5: Ambiguous, random blob, or competing symbol.
+        * 0.0-0.1: Rejection (Text, Box, Line).
+        
+        Output JSON: {"reasoning": "...", "mound_probability": 0.X}
+        """
     
-    **Rubric**:
-    * 0.9-1.0: Clear, circular, 3D relief. Verified.
-    * 0.6-0.8: Likely mound, fuzziness/intersection present.
-    * 0.2-0.5: Ambiguous, random blob, or competing symbol.
-    * 0.0-0.1: Rejection (Text, Box, Line).
-    
-    Output JSON: {"reasoning": "...", "mound_probability": 0.X}
-    """
     prompt_parts.append(instructions)
     return prompt_parts
 
@@ -137,6 +154,7 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
             try:
                 response = model.generate_content(full_content)
                 txt = response.text.replace("```json", "").replace("```", "").strip()
+                # print(f"DEBUG Response: {txt}") 
                 result = json.loads(txt)
                 
                 score = result.get("mound_probability", 0.0)
@@ -151,7 +169,8 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
                     "reason": reason,
                     "verified": is_verified
                 })
-            except:
+            except Exception as e:
+                print(f"DEBUG Error: {e} | Raw: {response.text if 'response' in locals() else 'No response'}")
                 continue
 
         if not iteration_results: return None

@@ -47,6 +47,42 @@ def analyze_consensus(pred_path, bounds_path, template_path, iterations=5):
     print(f"\n{'Prop Votes':<10} | {'Verif Votes':<10} | {'Recall':<10} | {'Precision':<10} | {'F1 Score':<10} | {'Count':<10}")
     print("-" * 80)
     
+    # NEW: First, Analyze "Proposer Consensus" against "Single-Pass Verifier" (Simulated)
+    # This answers: "Does Proposer 2-of-5 -> Standard Verifier improve results?"
+    print("\n--- Experiment: Proposer Consensus + Single-Pass Verifier (v4.5) ---")
+    print(f"{'Prop Votes':<10} | {'Strategy':<15} | {'Recall':<10} | {'Precision':<10} | {'F1 Score':<10} | {'Count':<10}")
+    
+    for p_thresh in range(1, 6):
+        # 1. Filter by Proposer Votes
+        subset_p = gdf_pred[gdf_pred['proposer_votes'] >= p_thresh].copy()
+        if subset_p.empty: continue
+        
+        # 2. Simulate Single-Pass Verifier
+        # logic: verified=True in result[0]
+        # We need to parse 'verifier_results' which is a list of dicts or a string
+        # It's likely a list of dicts if loaded from GeoJSON
+        
+        # Helper to check first result
+        def check_first_pass(row):
+            res = row.get('verifier_results')
+            if not res or not isinstance(res, list) or len(res) == 0: return False
+            return res[0].get('verified', False)
+
+        subset_verified = subset_p[subset_p.apply(check_first_pass, axis=1)].copy()
+        
+        count = len(subset_verified)
+        p, r, f1 = 0.0, 0.0, 0.0
+        if count > 0:
+            p, r, f1 = calculate_f1_internal(subset_verified, gdf_ref, gdf_bounds)
+            
+        label = "1-Pass Verifier"
+        best_mark = "🏆" if f1 > 0.7 else ""
+        print(f"{p_thresh:<10} | {label:<15} | {r:.4f}     | {p:.4f}     | {f1:.4f} {best_mark}   | {count}")
+
+    print("\n--- Experiment: Full Consensus Matrix (Proposer x Verifier Votes) ---")
+    print(f"{'Prop Votes':<10} | {'Verif Votes':<10} | {'Recall':<10} | {'Precision':<10} | {'F1 Score':<10} | {'Count':<10}")
+    print("-" * 80)
+    
     best_overall = {"f1": 0, "desc": ""}
     
     for p_thresh in range(1, 6):

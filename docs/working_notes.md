@@ -200,6 +200,34 @@ The definitive speed and Recall of Flash make it the only viable engine for deve
 - **Hypothesis:** Optimizing for Flash (making the prompt clearer to a "dumber" model) will inherently improve the prompt for Pro. If Flash can understand it, Pro certainly will.
 - **Workflow:** We will optimize Precision on Flash (currently 0.69) until it hits >0.85. This optimized prompt should then be transferable to Pro for final verification if needed, potentially unlocking even higher accuracy without the development iteration cost.
 
+## Observation 45: Two-Stage Redemption (v4.6)
+I successfully optimized the Stage 2 Verifier using the "Research-Driven" approach (Text-Free, Many-Shot, Federated Library).
+Run `verified_run_01_v4_6` (Gemini 2.0 Flash, 48 examples, 1-pass) yielded:
+*   **Precision**: 0.8654 (vs 0.77 Baseline)
+*   **Recall**: 0.8824 (vs 0.92 Baseline)
+*   **F1 Score**: **0.8738**
+This **beats** the previous best Single-Stage Consensus (Flash 2/5, F1 0.86).
+This **beats** the previous best Single-Stage Consensus (Flash 2/5, F1 0.86).
+The "Modality Interference" hypothesis was correct: removing text instructions and relying on a rich visual library (including 21 mined hard cases) drastically improved discrimination power. The Two-Stage pipeline is now the SOTA candidate.
+
+
+### Feature Comparison: Gemini 2.0 Flash vs Gemini 3 Flash (v4.6 Prompt)
+I conducted a head-to-head comparison of the `v4.6` pipeline (Text-Free, Many-Shot) using both models on the `run_01` candidate set (70 items).
+
+| Model | Precision | Recall | F1 Score | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Gemini 2.0 Flash** | **0.8654** | **0.8824** | **0.8738** | Superior precision. Efficient rejection of false positives. |
+| **Gemini 3 Flash** | 0.8491 | **0.8824** | 0.8654 | Identical recall, but slightly more "trigger happy" (more False Positives). |
+| *Baseline (Consensus)* | *0.85* | *0.86* | *0.86* | Single-Stage approach. |
+
+**Observation**: Contrary to expectations, the newer **Gemini 3 Flash** slightly underperformed Gemini 2.0 Flash in this specific visual discrimination task (lower Precision). This might be due to:
+1.  **Over-reasoning**: The newer model might be "thinking" too much about ambiguous edges, leading to false positives, whereas Gemini 2.0 is more "brittle" but precise when given a strong few-shot library.
+2.  **Prompt Sensitivity**: The `v4.6` prompt was mined and optimized iteratively; perhaps Gemini 2.0 aligned better with the specific hard negatives chosen.
+3.  **Visual Engine Differences**: While Gemini 3 has a "better" vision encoder generally, for this specific low-resolution, high-noise cartographic task, Gemini 2.0's behavior proved more robust.
+
+**Decision**: We will proceed with **Gemini 2.0 Flash** for the final validation to maximize F1.
+
+
 ## Observation 23: Stabilization of Gemini 3 Flash & v3.2 Prompt (Phase 13)
 We successfully stabilized the "Elaborate" v3.2 Prompt (16 examples) on **Gemini 3 Flash Preview**.
 - **The Problem:** The verbose prompt caused the model to occasionally enter infinite generation loops on dense tiles, hitting the 8k `MAX_TOKENS` limit (`finish_reason: 2`).
