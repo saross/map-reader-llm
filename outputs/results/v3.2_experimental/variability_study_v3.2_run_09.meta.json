@@ -1,0 +1,128 @@
+{
+  "run_id": "a4f8cae1-b15e-4f1f-8815-8b6114adb2a0",
+  "timestamp": {
+    "start": "2025-12-18T14:58:17.111341+00:00",
+    "end": "2025-12-18T15:18:06.637503+00:00",
+    "duration_seconds": 1189.526162
+  },
+  "environment": {
+    "git_commit": "62777d8779ca218c665efa0355636847ca69a13e",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.0.0"
+  },
+  "configuration": {
+    "version": "v3.2_experimental",
+    "model": "gemini-3-pro-preview",
+    "instruction_file": "v3.0_system_instruction.md",
+    "prompt_hash": "80209e4e4bc410d903794401eac14678ba9c9706d0c07deedc1858a89e9725ea",
+    "temperature": 0.3,
+    "full_config_snapshot": {
+      "version": "v3.2_experimental",
+      "description": "Refined 13-Shot (Phase 10/12). Low Recall / High Hallucination.",
+      "model": "gemini-3-pro-preview",
+      "instruction_file": "v3.0_system_instruction.md",
+      "temperature": 0.3,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Example 1A: Standard Legend Symbol (Sunburst)"
+        },
+        {
+          "path": "ref_variant_2.png",
+          "label": "Example 1B: Real Map Variant (Simpler/Degraded)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Example 2A: Standard Legend Symbol (Irregular/Ticks)"
+        },
+        {
+          "path": "triangulation_mound.png",
+          "label": "Example 3A: Triangulation Point (Triangle + Spikes)"
+        },
+        {
+          "path": "benchmark_mound.png",
+          "label": "Example 3B: Benchmark (Square + Spikes)"
+        },
+        {
+          "path": "ref_variant_1.png",
+          "label": "Example 3C: Real Map Variant (Benchmark)"
+        },
+        {
+          "path": "ref_pos_green.png",
+          "label": "Positive Example 3E: Mound on Green Background (Vegetation). Note the symbol is the same despite the background color."
+        },
+        {
+          "path": "ref_pos_intersected.png",
+          "label": "Positive Example 3F: Obscured/Intersected Mound. The mound symbol persists even when cut by roads, rivers, or black lines."
+        },
+        {
+          "path": "ref_pos_compound.png",
+          "label": "Positive Example 3G: Compound Symbol (Mound + Triangulation Point). The mound rays surround the central triangle."
+        },
+        {
+          "path": "ref_negative_1.png",
+          "label": "Negative Example 1: Degraded Label/Noise"
+        },
+        {
+          "path": "neg_sparse.png",
+          "label": "Negative Example 2: Sparse Area (Contours + Roads only). NO MOUNDS."
+        },
+        {
+          "path": "neg_topo.png",
+          "label": "Negative Example 3: Complex Topography/River. NO MOUNDS."
+        },
+        {
+          "path": "neg_urban.png",
+          "label": "Negative Example 4: Urban/Cluttered Area. Buildings are not mounds. NO MOUNDS."
+        },
+        {
+          "path": "ref_neg_embankment_2.png",
+          "label": "Negative Example 5: Embankment/Depression. Note the rays point INWARD (concave), unlike a mound (convex). NO MOUNDS."
+        },
+        {
+          "path": "ref_neg_benchmark.png",
+          "label": "Negative Example 6: Isolated Benchmark. A square with a dot is NOT a mound. NO MOUNDS."
+        },
+        {
+          "path": "ref_neg_triangulation.png",
+          "label": "Negative Example 7: Isolated Triangulation Point. A triangle with a dot (without surrounding rays) is NOT a mound. NO MOUNDS."
+        }
+      ],
+      "manifest_path": "inputs/target_tiles_manifest.json"
+    },
+    "target_manifest": "inputs/target_tiles_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 20,
+    "tiles_failed": 0,
+    "retries_total": 0,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [],
+    "retry_details": [
+      {
+        "tile": "K-35-052-4_32635_x448_y3136.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 423566,
+    "total_output_tokens": 4716
+  },
+  "results_summary": {
+    "total_detections": 49,
+    "class_counts": {
+      "triangulation_mound": 3,
+      "burial_mound": 40,
+      "benchmark_mound": 6
+    }
+  }
+}

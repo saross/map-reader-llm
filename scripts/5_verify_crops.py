@@ -146,7 +146,7 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
     # v4.7 Grid Overlay
     if prompt_config.get("grid_overlay", False):
         try:
-            from src.grid_utils import apply_grid
+            from scripts.lib_grid_utils import apply_grid
             crop_img = apply_grid(crop_img)
         except ImportError:
             logging.warning("Outputting grid failed: grid_utils not found.")

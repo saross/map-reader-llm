@@ -1,0 +1,64 @@
+{
+  "bootstrap_ci": {
+    "mean": 0.8209963103387836,
+    "ci_lower": 0.7316838649155722,
+    "ci_upper": 0.9333333333333333,
+    "n_iterations": 1000
+  },
+  "spatial_tolerance": [
+    {
+      "buffer": 10,
+      "precision": 0.9459,
+      "recall": 0.6863,
+      "f1": 0.7955
+    },
+    {
+      "buffer": 20,
+      "precision": 0.973,
+      "recall": 0.7059,
+      "f1": 0.8182
+    },
+    {
+      "buffer": 30,
+      "precision": 0.973,
+      "recall": 0.7059,
+      "f1": 0.8182
+    },
+    {
+      "buffer": 50,
+      "precision": 0.973,
+      "recall": 0.7059,
+      "f1": 0.8182
+    }
+  ],
+  "per_class_performance": [
+    {
+      "class": "burial_mound",
+      "precision": 0.8966,
+      "recall": 0.6842,
+      "f1": 0.7761
+    },
+    {
+      "class": "benchmark_mound",
+      "precision": 1.0,
+      "recall": 0.7778,
+      "f1": 0.875
+    },
+    {
+      "class": "triangulation_mound",
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+    }
+  ],
+  "error_taxonomy": {
+    "false_positives": {
+      "burial_mound": 1
+    },
+    "false_negatives": {
+      "burial_mound": 14,
+      "triangulation_mound": 2,
+      "benchmark_mound": 1
+    }
+  }
+}
