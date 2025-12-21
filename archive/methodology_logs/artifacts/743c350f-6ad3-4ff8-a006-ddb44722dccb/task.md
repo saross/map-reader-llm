@@ -1,0 +1,21 @@
+# Task: Document Map Reader LLM Repository
+
+- [x] **Research & Planning** <!-- id: 0 -->
+    - [x] Audit existing documentation (README, docs/, manifests) <!-- id: 1 -->
+    - [x] Analyze active pipelines (v3.2, v3.5, v4.1/4.2 + v4.5) to understand their components <!-- id: 2 -->
+    - [x] Create detailed implementation plan <!-- id: 3 -->
+- [x] **Documentation Updates** <!-- id: 4 -->
+    - [x] Update root `README.md` (Project overview, quick start, active pipeline summary) <!-- id: 5 -->
+    - [x] Create `docs/ARCHITECTURE.md` (High-level data flow, component interaction) <!-- id: 6 -->
+    - [x] Create `docs/USER_GUIDE.md` (Detailed usage for scripts, prompts, and wrappers) <!-- id: 7 -->
+    - [x] Create/Update `docs/PIPELINES.md` (Specifics of v3.2, v3.5, v4.1/v4.2+v4.5) <!-- id: 8 -->
+    - [x] Update sub-directory READMEs (`inputs`, `scripts`, `prompts`) <!-- id: 16 -->
+- [x] **Code & Metadata Formatting** <!-- id: 9 -->
+    - [x] Review and update `CITATION.cff` and `LICENSE` if needed for FAIR4RS <!-- id: 10 -->
+    - [x] Add/Update docstrings in key scripts (`4_detect...`, `5_verify...`, `7_analyze...`) <!-- id: 11 -->
+    - [x] Ensure manifests are up to date and described <!-- id: 12 -->
+- [x] **Verification** <!-- id: 13 -->
+    - [x] Verify all links and commands in new documentation <!-- id: 14 -->
+    - [x] Check FAIR4RS compliance checklist <!-- id: 15 -->
+- [x] **Finalization** <!-- id: 17 -->
+    - [x] Commit and push changes <!-- id: 18 -->

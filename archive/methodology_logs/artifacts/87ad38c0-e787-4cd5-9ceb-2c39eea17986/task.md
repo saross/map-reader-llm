@@ -1,0 +1,27 @@
+# Overnight Experiments Checklist
+
+- [x] Finish Job A (Gemini 3 Pro N=5) <!-- id: 0 -->
+    - [x] Run Iteration 5: `scripts/4_detect_mounds_batch.py` with `v3.5_clean_pro` <!-- id: 1 -->
+- [x] Resume Job C (Pro Verifier) <!-- id: 2 -->
+    - [x] Uncomment Job C section in `scripts/overnight_experiments.sh` <!-- id: 3 -->
+    - [x] Run Job C <!-- id: 4 -->
+- [/] Re-run Job A Runs 4-5 (Temp 0.3) <!-- id: 5 -->
+    - [x] Verify `v3.5_clean_pro.json` is Temp 0.3 <!-- id: 6 -->
+- [x] Re-run Job A Runs 4-5 (Temp 0.3) <!-- id: 5 -->
+    - [x] Verify `v3.5_clean_pro.json` is Temp 0.3 <!-- id: 6 -->
+    - [x] Run `4_detect_mounds_batch.py` for runs 4 and 5 <!-- id: 7 -->
+- [x] Consensus Analysis (N-of-5) <!-- id: 8 -->
+    - [x] Check/Update `scripts/benchmark_variability.py` for N=5 consensus <!-- id: 9 -->
+- [x] Consensus Analysis (N-of-5) <!-- id: 8 -->
+    - [x] Check/Update `scripts/benchmark_variability.py` for N=5 consensus <!-- id: 9 -->
+    - [x] Run analysis and report best F1 consensus threshold (Best: 2/5 -> F1 0.914) <!-- id: 10 -->
+- [x] Documentation & Commit <!-- id: 11 -->
+    - [x] Update `docs/working_notes.md` with Consensus vs Two-Stage findings <!-- id: 12 -->
+    - [x] Commit and Push changes <!-- id: 13 -->
+- [x] Stock-Taking (Prompts v3.0+) <!-- id: 14 -->
+    - [x] Create `scripts/compile_stock_taking.py` to aggregate results <!-- id: 15 -->
+    - [x] Generate `stock_taking.csv` <!-- id: 16 -->
+    - [x] Write `reports/stock_taking_report.md` <!-- id: 17 -->
+- [x] Final Commit <!-- id: 18 -->
+    - [x] Update `docs/working_notes.md` with Stock-Taking synopsis <!-- id: 19 -->
+    - [x] Commit and Push (`reports/`, `scripts/`, `docs/`) <!-- id: 20 -->
