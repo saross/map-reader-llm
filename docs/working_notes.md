@@ -740,3 +740,20 @@ We used a "Proposer" (v4.2) followed by a specialized "Verifier" (v4.6, N=1).
 Running a simple, robust prompt multiple times and taking a low-bar vote (2-of-5) significantly outperforms building a complex, specialized "Judge" agent. The stochastic agreement of multiple runs is a better signal of truth than the logical deduction of a single Verifier run.
 
 **Production Decision**: **Gemini 3 Pro (v3.5 Clean) with 2-of-5 Consensus** is our new Gold Standard.
+
+## Observation 47: Comprehensive Stock-Taking (v3.0+)
+**Date**: 2025-12-22
+**Report**: `reports/stock_taking_report.md`
+
+We conducted a comprehensive review of all experiments using prompt versions v3.0 and later.
+**Key Findings**:
+*   **Top Accuracy**:
+    *   **Flash Swarm 10/30 (v3.2)**: F1 **0.920**. (The "Ceiling").
+    *   **Pro Consensus 2/5 (v3.5 Clean)**: F1 **0.914**. (The "SOTA").
+*   **Best Efficiency**:
+    *   **Flash Consensus 2/5 (v3.2)**: F1 **0.86**. Matches single-shot Pro performance at a fraction of the cost.
+*   **Critical Failure**:
+    *   **Flash Image-Only Swarm (v3.5)**: F1 **0.00**. Confirmed that Flash requires text scaffolding to maintain coherence at high temperatures.
+*   **Architecture Decision**:
+    *   Abandoned "Two-Stage Verifier" (F1 0.72) due to excessive conservatism.
+    *   Standardizing on **Pro 2/5 Consensus** for Production and **Flash 2/5** for Development.
