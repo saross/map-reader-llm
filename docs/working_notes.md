@@ -686,3 +686,31 @@ The Two-Stage architecture adds complexity (2 sets of prompts, intermediate file
 We will **ABANDON** the Two-Stage Architecture.
 We will **ADOPT** the **Flash 2/5 Consensus Strategy** (using Prompt v3.2) as the Production Default.
 
+
+## Observation 45: The Flash Swarm Paradox (Image-Only Collapse)
+**Date**: 2025-12-21
+**Experiment**: Replicating the "Flash Swarm" success (N=30) using the modern `v3.5` (Image-Only) prompt at High Temperature (1.0).
+
+**Context**: 
+History (Observation 31) suggested **Gemini 3 Flash (N=30)** achieved F1 0.92 using the verbose `v3.2` (Text + Image) prompt. We hypothesized that removing the text ("Image-Only") would improve this further by reducing text-induced bias.
+
+**Result**: **Catastrophic Failure**.
+-   **Prompt**: `v3.5_clean` (Image-Only).
+-   **Temperature**: 1.0.
+-   **Iterations**: 30.
+-   **Total Detections**: 2,327 (Massive Hallucination).
+-   **Consensus**:
+    -   Votes = 1: 2,324 candidates.
+    -   Votes >= 3: **0 candidates**.
+    -   **F1 Score**: 0.00.
+
+**Analysis**:
+Unlike `v3.2` (which contained detailed text definitions of mounds), the Image-Only `v3.5` prompt caused Gemini 3 Flash to "detach" from reality at high temperatures. Instead of converging on true mounds, it hallucinated unique, non-repeating objects on every pass. This suggests the **Text Instructions** in v3.2 acted as necessary "rails" or "anchors" to constrain the high-temperature randomness.
+
+**Skepticism & Future Investigation**:
+**Crucial Note**: We view this result with extreme skepticism. It is counter-intuitive that removing text constraints would cause *total* collapse (F1 0.92 -> 0.00). 
+-   Is it possible the `v3.2` success was a fluke or misreported?
+-   Is there a subtle configuration bug (e.g., image resolution, resizing) in the `v3.5` runner?
+-   Does Flash *require* text to ground its visual reasoning?
+
+**Next Step**: The "Failure" is flagged for rigorous forensic diagnosis. We will not accept it as final until `v3.2` is replicated and `v3.5` is debugged side-by-side.

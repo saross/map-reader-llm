@@ -10,29 +10,30 @@ import os
 # Import project modules
 sys.path.append(os.getcwd())
 try:
-    from scripts.run_v3_1_benchmark import evaluate_performance, generate_bounds, get_map_name
-    from scripts.detect_mounds_batch import detect_mounds_versioned
-    from scripts.config import RESULTS_DIR, INPUTS_DIR
-except ImportError:
-    # Handle dynamic import if needed, assuming running from root
+    # from scripts.run_v3_1_benchmark import evaluate_performance, generate_bounds, get_map_name
+    from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
+    # from scripts.detect_mounds_batch import detect_mounds_versioned
     import importlib.util
     spec = importlib.util.spec_from_file_location("detect_mounds_batch", "scripts/4_detect_mounds_batch.py")
     dmb = importlib.util.module_from_spec(spec)
     sys.modules["detect_mounds_batch"] = dmb
     spec.loader.exec_module(dmb)
     from detect_mounds_batch import detect_mounds_versioned
-    
-    spec2 = importlib.util.spec_from_file_location("run_benchmark", "scripts/run_v3_1_benchmark.py")
-    rb = importlib.util.module_from_spec(spec2)
-    sys.modules["run_benchmark"] = rb
-    spec2.loader.exec_module(rb)
-    from run_benchmark import evaluate_performance, generate_bounds
+
+    # from scripts.config import RESULTS_DIR, INPUTS_DIR
+except ImportError as e:
+    print(f"Import Error: {e}")
+    sys.exit(1)
 
 # Fallback / Ensure definitions
 if "RESULTS_DIR" not in globals():
     RESULTS_DIR = Path("outputs/results")
 if "INPUTS_DIR" not in globals():
     INPUTS_DIR = Path("inputs")
+
+# Stub for generate_bounds if missing (It should be produced by detect_mounds_versioned usually)
+def generate_bounds(manifest_path, output_path):
+    pass # Assumes detection script handles it or we rely on pre-existing
 
 def run_study(config_path, iterations, study_id, model_override=None, workers=1, manifest_path="inputs/target_tiles_manifest.json"):
     print(f"--- Starting Variability Study ---")
@@ -80,26 +81,45 @@ def run_study(config_path, iterations, study_id, model_override=None, workers=1,
         # Reference in place
         res_dir = RESULTS_DIR / v_tag
         det_file = res_dir / output_geojson
-        bounds_file = res_dir / (Path(output_geojson).stem + "_bounds.geojson")
+        # Bounds file is typically named {output_name}_bounds.geojson by the detection script
+        # Check standard naming pattern
+        bounds_file_name = f"{Path(output_geojson).stem}_bounds.geojson"
+        bounds_file = res_dir / bounds_file_name
         
         if not bounds_file.exists():
-            generate_bounds(manifest_path, bounds_file)
+            print(f"Warning: Bounds file not found at {bounds_file}")
+            # generate_bounds(manifest_path, bounds_file)
 
         # 4. Evaluate
         output_prefix = str(study_dir / f"{run_name}")
         
         try:
-            evaluate_performance(det_file, bounds_file, output_prefix)
-            
-            # 5. Read Metrics
-            metrics_file = Path(output_prefix + "_metrics.json")
-            if metrics_file.exists():
-                with open(metrics_file, 'r') as f:
-                    m = json.load(f)
-                    m['iteration'] = i
-                    all_metrics.append(m)
+            # evaluate_performance(det_file, bounds_file, output_prefix)
+            # Replacement logic:
+            if det_file.exists() and bounds_file.exists():
+                 gdf_det, gdf_bounds, gdf_ref = load_data(det_file, bounds_file, INPUTS_DIR)
+                 if gdf_det is not None:
+                     p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds)
+                     
+                     metrics = {
+                         "precision": p,
+                         "recall": r,
+                         "f1": f1
+                     }
+                     # Save
+                     with open(output_prefix + "_metrics.json", 'w') as f:
+                         json.dump(metrics, f, indent=2)
+                         
+                     metrics['iteration'] = i
+                     all_metrics.append(metrics)
+                     print(f"  Result: F1 {f1:.4f} P {p:.4f} R {r:.4f}")
+            else:
+                 print("  Missing detection or bounds file. Skipping eval.")
+
         except Exception as e:
              print(f"Evaluation Failed for {i}: {e}")
+             import traceback
+             traceback.print_exc()
 
     # --- Analysis ---
     if not all_metrics:
