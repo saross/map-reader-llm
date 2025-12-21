@@ -5,9 +5,9 @@ Place your source Soviet Topographic Maps and vector data here.
 ## Directory Structure
 *   `rasters/`: Place source GeoTIFFs (`.tif`) here.
 *   `vectors/`: Place vector overlays (e.g., GeoJSON, Shapefiles) here.
-*   `manifests/`: JSON tile lists (e.g. `training_manifest.json`) for defining batch jobs.
 *   `tiles/`: Pre-processed PNG map tiles.
 *   `references/`: Few-shot example images for prompts.
+*   `*.json`: Manifest files (e.g. `training_manifest.json`) defining lists of tiles for specific experiments.
 
 ## Requirements (Rasters)
 *   **Format**: GeoTIFF (`.tif`)

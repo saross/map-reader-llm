@@ -10,35 +10,80 @@
 
 ---
 
-## Overview
+## 🚀 Overview
 
-Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify archaeological feature symbols (specifically "Burial Mounds" or *Tumuli*) on historical maps. It leverages **Google Gemini 3 Pro** (Multimodal LLM) to visually scan map tiles and extract features as geospatial data.
+Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify archaeological feature symbols (specifically "Burial Mounds" or *Tumuli*) on historical maps. It leverages **Google Gemini 3 Flash** (Multimodal LLM) to visually scan map tiles and extract features as geospatial data.
 
 ### Key Capabilities
 *   **Visual Few-Shot Learning**: Does not require fine-tuning. Uses a "Reference Library" of cropped symbols to teach the model what to look for at runtime.
 *   **Geospatial Awareness**: Automatically preserves spatial reference systems (EPSG:32635) from input GeoTIFFs to output GeoJSONs.
 *   **Reproducibility**: Features a rigorous configuration versioning system (`prompts/versions/*.json`) to ensure every experiment is traceable.
+*   **Active Pipelines**: diverse strategies for detection, from high-speed single-stage (v3.5) to rigorous two-stage Recall+Verification (v4.1 + v4.6).
 
 ---
 
-## Repository Structure
- 
-*   **`scripts/`**: The Python source code.
+## 📚 Documentation
+
+Detailed documentation is available in the `docs/` directory:
+
+*   **[Pipelines Guide](docs/PIPELINES.md)**: Detailed breakdown of the active analysis pipelines (v3.2, v3.5, v4.1/4.6). **Start here to understand the methodology.**
+*   **[User Guide](docs/USER_GUIDE.md)**: Step-by-step instructions for running scripts, configuring prompts, and managing data.
+*   **[Architecture](docs/ARCHITECTURE.md)**: High-level system architecture, data flow diagrams, and component descriptions.
+
+---
+
+## ⚡ Quick Start
+
+### 1. Installation
+```bash
+git clone https://github.com/saross/map-reader-llm.git
+cd map-reader-llm
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2. Configuration
+Create a `.env` file in the root directory with your Google API Key:
+```bash
+GOOGLE_API_KEY=your_key_here
+```
+
+### 3. Run the "Clean" Pipeline (v3.5)
+This is the recommended baseline for general detection (high speed, balanced accuracy).
+
+**Step 1: Tile Input Maps**
+Tiles maps located in `inputs/rasters/`.
+```bash
+python scripts/preprocess_tiling.py
+```
+
+**Step 2: Run Detection**
+```bash
+python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.5_clean.json
+```
+Results will be saved to `outputs/results/v3.5_clean/`.
+
+---
+
+## 📂 Repository Structure
+
+*   **`scripts/`**: Python source code.
     *   `preprocess_tiling.py`: Tiles large maps + generates World Files.
-    *   `4_detect_mounds_batch.py`: The V3/V4 Inference Engine.
-    *   `5_verify_crops.py`: Stage 2 Verifier (Pipeline).
-    *   `3_georeference_and_visualize.py`: Post-processing & deduplication.
+    *   `4_detect_mounds_batch.py`: Main Inference Engine (Stage 1).
+    *   `5_verify_crops.py`: Verification Engine (Stage 2).
+    *   `7_analyze_consensus.py`: Analysis & Scoring tools.
+    *   `benchmark_variability.py`: Stability & Variability analysis.
 *   **`prompts/`**: Configuration and System Instructions.
-    *   `versions/`: JSON configs for specific experiments (Active).
-    *   `text/`: Static system instruction files.
+    *   `versions/`: **Active Pipeline Configs** (JSON).
+    *   `text/`: Static system instruction text files.
 *   **`inputs/`**: Analysis inputs.
-    *   `rasters/`: Source GeoTIFFs.
-    *   `manifests/`: JSON tile lists (e.g. `training_manifest.json`, `target_tiles_manifest.json`).
-    *   `references/`: Few-shot example images.
-*   **`outputs/`**: Generated results vs metadata.
-*   **`docs/`**: Project Documentation, Reports, and Methodology.
-*   **`archive/`**: Consolidated history of all prompts, scripts, and results.
- 
+    *   `rasters/`: Source GeoTIFF maps.
+    *   `manifests/`: JSON lists defining tile sets for experiments.
+    *   `references/`: The few-shot image library.
+*   **`outputs/`**: Generated results, logs, and run metadata.
+*   **`docs/`**: Project Documentation.
+
 ---
 
 ## Methodological Records (Open Science)
@@ -48,44 +93,6 @@ To update the archive:
 python scripts/archive_methodology.py
 ```
 
-
----
-
-## Setup & Usage
- 
-### 1. Installation
-```bash
-git clone https://github.com/saross/map-reader-llm.git
-cd map-reader-llm
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
- 
-### 2. Configuration
-Create a `.env` file in the root:
-```bash
-GOOGLE_API_KEY=your_key_here
-```
- 
-### 3. Running the Pipeline
-**Step 1: Tiling**
-To tile maps from `inputs/rasters/`:
-```bash
-python scripts/preprocess_tiling.py
-```
- 
-**Step 2: Detection (Standard: v3.2 Experimental)**
-```bash
-python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.2_experimental.json
-```
-*   *Note: This creates results in `outputs/results/v3.2_experimental/`*
- 
-**Step 3: Verification (Optional Stage 2)**
-```bash
-python scripts/5_verify_crops.py --config prompts/versions/v4.6_verifier.json
-```
- 
 ---
 
 ## License & Citation

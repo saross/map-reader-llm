@@ -1,3 +1,32 @@
+"""
+Consensus Analysis & Scoring Script
+===================================
+Description:
+    This script is the analytical engine for the Two-Stage Pipeline (Proposer + Verifier).
+    It calculates performance metrics (Precision, Recall, F1) by comparing the pipeline's 
+    GeoJSON output against a "Gold Standard" Ground Truth dataset.
+
+    It performs a grid search simulation to find the optimal voting threshold:
+    - Proposer Vote Threshold (v4.1): How many times must Stage 1 flag it?
+    - Verifier Vote Threshold (v4.6): How many times must Stage 2 confirm it?
+
+Usage:
+    python scripts/7_analyze_consensus.py \\
+        --pred outputs/results/v4.1/verified.geojson \\
+        --bounds inputs/vectors/region_bounds.geojson \\
+        --template inputs/vectors/ground_truth.geojson \\
+        --iterations 5
+
+Arguments:
+    --pred: Path to the predicted GeoJSON (containing 'proposer_votes' and 'verifier_votes').
+    --bounds: GeoJSON defining the valid study area (to ignore out-of-bounds GT).
+    --template: Ground Truth GeoJSON.
+    --iterations: Max number of verifier iterations to simulate.
+
+Methodology:
+    Uses 'lib_advanced_metrics' to calculate Intersection over Union (IoU) with a standard 
+    threshold (usually IoU >= 0.1 for object detection in this domain).
+"""
 
 import sys
 import os
