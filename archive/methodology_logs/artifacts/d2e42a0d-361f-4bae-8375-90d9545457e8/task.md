@@ -45,7 +45,8 @@
 - [ ] **Overnight Experiment Suite** (Running in Background):
     - [x] **Setup**: Created `scripts/overnight_experiments.sh`.
     - [/] **Job A**: Gemini 3 Pro | v3.5 (Single Stage) | N=5.
-    - [ ] **Job B**: Gemini 3 Flash | v3.5 (Single Stage) | N=30 (Swarm).
+    - [x] **Job B**: Gemini 3 Flash | v3.5 (Single Stage) | N=30 (Swarm) - **FAILED** (Temp 0.3 & 1.0).
+    - [ ] **Job B Retry**: Replicate v3.2 Swarm (Text+Image). (Added to Future Work).
     - [ ] **Job C**: Gemini 3 Pro | v4.6 (Verifier) | N=1.
 - [ ] **Validate on Holdout Set**: Run Final Consensus Configuration (Flash 2/5) on Holdout Data.
 - [ ] **End-to-End Test**: Verify final pipeline Recall/Precision.
