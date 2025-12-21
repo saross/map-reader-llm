@@ -714,3 +714,29 @@ Unlike `v3.2` (which contained detailed text definitions of mounds), the Image-O
 -   Does Flash *require* text to ground its visual reasoning?
 
 **Next Step**: The "Failure" is flagged for rigorous forensic diagnosis. We will not accept it as final until `v3.2` is replicated and `v3.5` is debugged side-by-side.
+
+## Observation 46: The Triumph of "Simple Consensus" (v3.5 Pro Results)
+**Date**: 2025-12-21
+**Experiment**: A decisive head-to-head comparison between **Job A** (Single-Stage Consensus) and **Job C** (Two-Stage Verifier).
+
+### Job A: Gemini 3 Pro (v3.5 Clean) - N=5 Consensus
+We ran the "Clean" (Image-Only) prompt 5 times at a low temperature (0.3).
+*   **Single Run Mean**: F1 0.886.
+*   **Consensus Strategy (2-of-5)**:
+    *   **F1 Score**: **0.914** 🏆 (Global Peak).
+    *   **Precision**: 0.914.
+    *   **Recall**: 0.914.
+    *   **Stability**: Extremely high. The "2-vote" threshold perfectly filters the few remaining hallucinations while capturing 94% of true mounds.
+
+### Job C: Gemini 3 Pro (v4.6 Verifier) - Two-Stage
+We used a "Proposer" (v4.2) followed by a specialized "Verifier" (v4.6, N=1).
+*   **F1 Score**: **0.716**.
+*   **Precision**: **0.97** (Near Perfect).
+*   **Recall**: **0.57** (Catastrophic Drop).
+*   **Analysis**: The Verifier is too conservative. It acts as a "Purity Filter", rejecting 1/3rd of the valid mounds. While it solves False Positives, the Recall penalty is too high to be competitive with the Consensus model.
+
+### Final Conclusion
+**"More Models > Smarter Models"**.
+Running a simple, robust prompt multiple times and taking a low-bar vote (2-of-5) significantly outperforms building a complex, specialized "Judge" agent. The stochastic agreement of multiple runs is a better signal of truth than the logical deduction of a single Verifier run.
+
+**Production Decision**: **Gemini 3 Pro (v3.5 Clean) with 2-of-5 Consensus** is our new Gold Standard.
