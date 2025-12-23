@@ -31,9 +31,8 @@ from pathlib import Path
 from typing import List, Dict, Any, Tuple
 import time
 import geojson
-from geojson import FeatureCollection, Feature, Point
-from shapely.geometry import shape, box, mapping
-from shapely.ops import unary_union
+from geojson import FeatureCollection, Feature
+from shapely.geometry import shape, box
 import rasterio
 from rasterio.windows import Window
 import google.generativeai as genai
@@ -146,6 +145,10 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
 def process_single_candidate(args_tuple: Tuple) -> Feature:
     """Helper for parallel processing."""
     feat, base_prompt, model_name, iterations, prompt_config = args_tuple
+
+    # Configurable thresholds (with backwards-compatible defaults)
+    verification_threshold = prompt_config.get("verification_threshold", 0.5)
+    majority_vote_fraction = prompt_config.get("majority_vote_fraction", 0.5)
     
     # Reload model inside thread/process? No, client is thread safe usually. But GenAI python client? 
     # Better to instantiate standard client.
@@ -193,8 +196,8 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
                 
                 score = result.get("mound_probability", 0.0)
                 reason = result.get("reasoning", "")
-                
-                is_verified = score >= 0.5
+
+                is_verified = score >= verification_threshold
                 if is_verified: votes += 1
                 total_score_sum += score
                 
@@ -214,8 +217,10 @@ def process_single_candidate(args_tuple: Tuple) -> Feature:
         feat["properties"]["verifier_votes"] = votes
         feat["properties"]["verifier_avg_score"] = total_score_sum / len(iteration_results)
         feat["properties"]["iterations"] = iterations
-        # Verified if Majority Vote
-        feat["properties"]["verified"] = votes >= (iterations / 2)
+        feat["properties"]["verification_threshold"] = verification_threshold
+        feat["properties"]["majority_vote_fraction"] = majority_vote_fraction
+        # Verified if majority vote threshold met
+        feat["properties"]["verified"] = votes >= (iterations * majority_vote_fraction)
         
         return feat
     except Exception as e:

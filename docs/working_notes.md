@@ -757,3 +757,211 @@ We conducted a comprehensive review of all experiments using prompt versions v3.
 *   **Architecture Decision**:
     *   Abandoned "Two-Stage Verifier" (F1 0.72) due to excessive conservatism.
     *   Standardizing on **Pro 2/5 Consensus** for Production and **Flash 2/5** for Development.
+
+## Observation 48: Confounded Variables in Flash Swarm Comparison
+**Date**: 2025-12-22
+**Context**: Deep investigation into the v3.5 Flash Swarm collapse (Observation 45).
+
+**The Original Claim (Observation 45)**:
+> "Flash requires text scaffolding to maintain coherence at high temperatures."
+
+**Investigation Finding**: The original comparison was **not controlled**. Two variables differed simultaneously:
+
+| Parameter | v3.2 Swarm (F1 0.92) | v3.5 Swarm (F1 0.00) |
+|-----------|----------------------|----------------------|
+| **Temperature** | **0.3** | **1.0** |
+| Text scaffolding | "No Spikes = No Mound" rules | Minimal (27 lines) |
+| Verbose neg labels | "NO MOUNDS." (emphatic) | "No Mounds" (passive) |
+| Detections/run | ~59 | ~86 (more hallucinations) |
+
+**Source Evidence**:
+- `outputs/results/v3.2_experimental/variability_study_v3.2_flash_30_run_01.meta.json` (temp 0.3)
+- `outputs/results/v3.5_clean/flash_swarm_replay_temp1_run_01.meta.json` (temp 1.0)
+
+**Revised Hypothesis**: The collapse was caused by **both** factors simultaneously:
+1. Temperature 1.0 introduces excessive stochasticity
+2. No text rails means Flash has no anchor to suppress hallucinations
+
+**Required Experiments**:
+To isolate the true cause, we need controlled experiments:
+- v3.5 at temperature **0.3** (isolate text effect)
+- v3.2 at temperature **1.0** (isolate temperature effect)
+
+**Implications**:
+- If v3.5 @ 0.3 succeeds: Text is unnecessary; use lower temperature
+- If v3.5 @ 0.3 fails: Text scaffolding is essential for Flash stability
+- If v3.2 @ 1.0 fails: Temperature is the dominant factor (text insufficient alone)
+
+## Observation 50: Evidence Review — Why Research Recommendations Failed
+**Date**: 2025-12-22
+**Source**: `docs/methodology/research/claude-vlm-evidence-review.md`
+
+### Context
+Two research synthesis documents (`claude-few-shot-multimodal-prompting.md` and `gemini-few-shot-multimodel-prompting.md`) recommended strategies based on VLM literature:
+1. **Minimise text** to avoid "modality interference"
+2. **Two-stage propose-and-verify** for +5-8% F1
+3. **Consensus voting** to reduce errors
+
+Empirical testing on Gemini 3 for burial mound detection showed:
+- (1) Text minimisation had **little or negative effect** (v3.5 < v3.2)
+- (2) Two-stage pipelines were **actively harmful** (Observations 44, 46)
+- (3) Consensus voting **worked well** (confirmed)
+
+A follow-up evidence review traced these recommendations to their source papers and found critical limitations.
+
+### Finding 1: Text-Image Interference Requires Conflicting Priors
+
+**The Claim**: "State-of-the-art VLMs achieve only 17% accuracy on visual tasks when images conflict with textual priors."
+
+**The Source**: Vo et al. (2025), "Vision Language Models are Biased" (arXiv:2505.23941)
+
+**What the Research Actually Tested**:
+- **Counterfactual images** — images modified to contradict common knowledge
+- Adidas logos with 4 stripes instead of 3
+- Dogs with 5 legs instead of 4
+- Flags with altered star counts
+
+**Why This Doesn't Apply to Burial Mounds**:
+- VLMs have **no prior knowledge** about Soviet cartographic symbols
+- There's no memorised expectation to conflict with visual evidence
+- The task is pure visual pattern matching against **novel domain content**
+
+**Implication**: Text instructions in v3.2 ("No Spikes = No Mound", "Ignore Numbers") provide useful guidance rather than conflicting priors. Stripping this text in v3.5/v3.7 removed essential scaffolding without eliminating interference (because there was none to eliminate).
+
+### Finding 2: Two-Stage +5-8% F1 Claim Was Unsupported
+
+**The Claim**: "A two-stage pipeline... Expected improvement: +5-8% F1 based on comparable studies."
+
+**Evidence Review Finding**: **No peer-reviewed VLM study could be located** showing this improvement for VLM→VLM two-stage object detection.
+
+**What Exists in Literature**:
+- **DINO-GPT4-V**: Uses traditional CV (Grounding DINO) + VLM — hybrid architecture, not VLM→VLM
+- **VLM-R1**: Two-step reasoning emerged from **reinforcement learning training**, not prompting
+- **F-VLM**: Frozen VLM features with trained detector head — architectural, not prompting
+
+**The Apparent Source**: The +5-8% figure was extrapolated from general ML intuitions about cascaded classifiers. But:
+- Traditional cascaded classifiers use **trained components** optimised end-to-end
+- Prompting a VLM twice is not equivalent to architectural cascading
+- Each VLM call introduces its own error modes (compounding, not correcting)
+
+**Why Two-Stage Hurt Performance**:
+1. **Compounding errors**: If Stage 1 misses a target, Stage 2 never sees it
+2. **Context loss**: Verifier sees cropped regions without full map context
+3. **Systematic failures**: Two-stage failures are systematic (unfixable by voting); single-stage failures are stochastic (fixable by voting)
+
+### Finding 3: Voting Works Because It's Task-Agnostic
+
+**Why Voting Succeeded Where Other Strategies Failed**:
+- Voting addresses **stochastic variation** in VLM outputs
+- It's **model-agnostic** (works regardless of architecture)
+- It's **task-agnostic** (works regardless of domain)
+- Doesn't depend on assumptions about priors or text-image interaction
+
+The other strategies made assumptions about VLM behaviour that were:
+- **Model-specific** (tested on Gemini 2.5, not Gemini 3)
+- **Task-specific** (tested on counterfactual images, not novel domain detection)
+
+### Summary: Strategy Transfer Failure
+
+| Strategy | Literature Basis | Assumption | Burial Mound Result | Explanation |
+|----------|------------------|------------|---------------------|-------------|
+| Text minimisation | Counterfactual image studies | VLM has conflicting priors | **Failed** (v3.5 < v3.2) | No priors exist for novel domain |
+| Two-stage pipeline | ML intuition extrapolation | Cascaded filtering improves | **Failed** (F1 0.72 vs 0.86) | Claim unsupported for VLM prompting |
+| Consensus voting | Self-consistency research | Stochastic errors can be filtered | **Succeeded** (F1 0.92) | Task-agnostic mechanism |
+
+### Implications for Future Work
+
+1. **Don't assume text hurts** — for novel domain tasks, descriptive text may help more than hinder
+2. **Test single-stage first** — two-stage adds complexity without demonstrated VLM-specific benefit
+3. **Cross-model testing required** — strategies that work on Gemini 2.5 may not transfer to Gemini 3
+4. **Voting is the reliable optimisation** — prioritise robust n-of-x aggregation over architectural complexity
+5. **Evaluate research claims critically** — check whether the source studies used comparable tasks and models
+
+### Connection to Earlier Observations
+
+This evidence review explains:
+- **Observation 27**: Why "Text Interference" advice led to v3.3/v3.4 regression
+- **Observation 36**: Why even "helpful" text reasoning (CoT) sometimes works
+- **Observation 44, 46**: Why two-stage underperformed consensus
+- **Observation 48**: Why v3.2 (text + low temp) succeeded where v3.5 (no text + high temp) collapsed
+- **Observation 49**: Why v3.2's detailed rules improved holdout performance
+
+---
+
+## Observation 49: The Train/Holdout Confusion (Critical Clarification)
+**Date**: 2025-12-22
+**Context**: Investigation into apparent "universal regression" in recent experiments.
+
+### The Problem
+We observed F1 scores of ~0.73 on recent holdout runs and initially believed this represented a significant regression from historical performance (F1 0.85-0.92). This caused confusion about whether prompts or configurations had degraded.
+
+### The Root Cause: Comparing Apples to Oranges
+Historical high-performance metrics were reported on **different tile sets** with **different ground truth counts**:
+
+| Tile Set | Tiles | GT Mounds | Purpose | Historical F1 |
+|----------|-------|-----------|---------|---------------|
+| **Target/Benchmark** | 14 | 44 | Training/Development | 0.75-0.92 |
+| **Holdout** | 20 | 26 | Unseen Validation | ~0.46 (not reported!) |
+
+The F1 scores of 0.85-0.92 cited throughout the working notes (Observations 28, 29, 30, 31, 46) were achieved on the **Target set**, which had been iteratively optimised through prompt engineering and example mining. These results were likely overfit.
+
+### The Actual Historical Holdout Performance
+Re-evaluating the archived v4.1 holdout runs (referenced in Observation 41) with consistent methodology reveals:
+
+```
+ARCHIVED v4.1 HOLDOUT RUNS (20m buffer, 26 GT mounds)
+================================================================================
+Run                                    Det   TP   FP   FN   Prec    Rec     F1
+--------------------------------------------------------------------------------
+archive v4.1 holdout run 01             84   22   61    4   26.5%  84.6%  0.404
+archive v4.1 holdout run 02             64   23   40    3   36.5%  88.5%  0.517
+archive v4.1 holdout run 03             70   22   47    4   31.9%  84.6%  0.463
+archive v4.1 holdout run 04             50   19   30    7   38.8%  73.1%  0.507
+archive v4.1 holdout run 05             77   22   54    4   28.9%  84.6%  0.431
+--------------------------------------------------------------------------------
+MEAN                                    69   22   46    4   32.5%  83.1%  0.464
+================================================================================
+```
+
+Observation 41 correctly reported Recall (~0.81) and Precision (~0.33), but **F1 was never calculated or reported**. The actual mean F1 on holdout was **0.46**, not the 0.85 from training.
+
+### Current Performance: Actually the Best Ever
+Running v3.2, v3.5, v4.1, and v4.2 on holdout at temperature=0.3:
+
+```
+CURRENT HOLDOUT RUNS (20m buffer, 26 GT mounds)
+================================================================================
+Version      Det   TP   FP   FN   Precision   Recall      F1
+--------------------------------------------------------------------------------
+v3.2          38   23   14    3      62.2%    88.5%   0.730  ← BEST EVER
+v3.5          70   18   51    8      26.1%    69.2%   0.379
+v4.1          77   19   56    7      25.3%    73.1%   0.376
+v4.2          59   20   38    6      34.5%    76.9%   0.476
+================================================================================
+```
+
+**v3.2 at temperature=0.3 achieves the best holdout F1 ever recorded:**
+- **F1**: 0.730 (vs 0.46 historical mean — **58% improvement**)
+- **Precision**: 62.2% (vs 32% — **nearly double**)
+- **Recall**: 88.5% (vs 83% — slight improvement)
+
+### Why v3.2 Outperforms v3.5/v4.x
+The key differences in v3.2:
+1. **Instruction file**: Uses `v3.0_system_instruction.md` (37 lines with detailed rules) vs `v3.7_visual_instruction.md` (27 lines, stripped down)
+2. **Example labels**: Descriptive labels explaining what to look for (e.g., "Note the rays point INWARD (concave), unlike a mound (convex)")
+3. **Explicit rules**: "No Spikes = No Mound", "Ignore Numbers", "Separate Clusters"
+
+The v3.5 "clean" instruction removed too much guidance, leading to both lower precision (no rules on what to ignore) and lower recall (no guidance on handling difficult cases).
+
+### Lessons Learned
+1. **Always report which tile set** (Target vs Holdout) when citing metrics
+2. **Always calculate and report F1**, not just Precision/Recall separately
+3. **Holdout performance is the true measure** — Target set results are likely overfit
+4. **The v3.0 instruction file is superior** — "cleaning" it removed essential guidance
+5. **Temperature 0.3 is critical** — matches historical v3.2 benchmark conditions
+
+### Corrective Actions
+1. Future reports must specify: `[TARGET]` or `[HOLDOUT]` after F1 scores
+2. The v3.2 prompt (with v3.0 instruction) should be the baseline for all future work
+3. Temperature 0.3 should be the default for single-run evaluations
+4. Consensus strategies (2/5 or 10/30) should only be compared against holdout baselines

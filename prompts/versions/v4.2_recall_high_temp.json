@@ -1,56 +1,57 @@
 {
     "version": "v4.2_recall_high_temp",
+    "description": "v4.2 Liberal Proposer (Stage 1). All v3.5 positives + null tiles only (no symbol negatives) for high recall.",
     "model": "gemini-3-flash-preview",
     "instruction_file": "v3.7_visual_instruction.md",
-    "temperature": 0.7,
+    "temperature": 0.3,
     "examples": [
         {
-            "label": "Positive Example: Burial Mound",
-            "path": "burial_mound.png"
+            "path": "burial_mound.png",
+            "label": "Positive Example: Burial Mound (Standard)"
         },
         {
-            "label": "Positive Example: Burial Mound (Compound)",
-            "path": "ref_pos_compound.png"
+            "path": "ref_variant_2.png",
+            "label": "Positive Example: Burial Mound (Simple/Degraded)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_1_K-35-053-3_Elenovo.png"
+            "path": "settlement_mound.png",
+            "label": "Positive Example: Settlement Mound (Irregular)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_2_K-35-053-3_Elenovo.png"
+            "path": "triangulation_mound.png",
+            "label": "Positive Example: Triangulation Point on Mound"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_3_K-35-053-3_Elenovo.png"
+            "path": "benchmark_mound.png",
+            "label": "Positive Example: Benchmark on Mound"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_4_K-35-062-2_Rakovski.png"
+            "path": "ref_variant_1.png",
+            "label": "Positive Example: Benchmark on Mound (Variant)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_5_K-35-062-2_Rakovski.png"
+            "path": "ref_pos_green.png",
+            "label": "Positive Example: Mound on Vegetation (Green Background)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_8_K-35-053-3_Elenovo.png"
+            "path": "ref_pos_intersected.png",
+            "label": "Positive Example: Intersected Mound (Obscured by Lines)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_9_K-35-052-4_32635.png"
+            "path": "ref_pos_compound.png",
+            "label": "Positive Example: Compound Symbol"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_10_K-35-062-2_Rakovski.png"
+            "path": "neg_sparse.png",
+            "label": "Null Tile: Sparse Area (No Mounds)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_11_K-35-052-4_32635.png"
+            "path": "neg_topo.png",
+            "label": "Null Tile: Topography / River (No Mounds)"
         },
         {
-            "label": "Positive Example: Hard Case (Mined)",
-            "path": "hard_positive_12_K-35-062-2_Rakovski.png"
+            "path": "neg_urban.png",
+            "label": "Null Tile: Urban Area (No Mounds)"
         }
     ]
 }

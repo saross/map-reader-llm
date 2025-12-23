@@ -3,15 +3,15 @@
     "model": "gemini-3-flash-preview",
     "instruction_file": "v4.6_verifier_instructions.md",
     "temperature": 0.0,
-    "visual_cot": true,
-    "confidence_rubric": true,
+    "verification_threshold": 0.51,
+    "majority_vote_fraction": 0.5,
     "examples": [
         {
             "label": "Positive Example: Canonical",
             "path": "burial_mound.png"
         },
         {
-            "label": "Negative Example: Hard Benchmark",
+            "label": "Positive Example: Benchmark ON Mound",
             "path": "benchmark_mound.png"
         },
         {
@@ -19,7 +19,7 @@
             "path": "settlement_mound.png"
         },
         {
-            "label": "Negative Example: Hard Triangulation",
+            "label": "Positive Example: Triangulation ON Mound",
             "path": "triangulation_mound.png"
         },
         {
@@ -128,10 +128,6 @@
         },
         {
             "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_4_K-35-062-2_Rakovski_x0_y2240.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
             "path": "hard_negative_fp_5_K-35-052-4_32635_x896_y0.png.png"
         },
         {
@@ -140,23 +136,7 @@
         },
         {
             "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_11_K-35-052-4_32635_x2240_y896.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
             "path": "hard_negative_fp_10_K-35-078-1_Lesovo_x2240_y2240.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_7_K-35-052-4_32635_x0_y2240.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_8_K-35-062-2_Rakovski_x0_y2240.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_6_K-35-052-4_32635_x0_y2240.png.png"
         },
         {
             "label": "Negative Example: Hard Mined (False Positive)",

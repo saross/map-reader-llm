@@ -369,8 +369,8 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     # Initialize Model Configuration (Shared)
     generation_config = {
         "temperature": config.get("temperature", 0.1),
-        "top_p": 0.95,
-        "top_k": 40,
+        "top_p": config.get("top_p", 0.95),
+        "top_k": config.get("top_k", 40),
         "max_output_tokens": 8192,
         "response_mime_type": "application/json",
     }

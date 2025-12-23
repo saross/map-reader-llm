@@ -8,7 +8,7 @@ from pathlib import Path
 # Extend path to import sibling scripts
 sys.path.append(os.getcwd())
 from scripts.run_v3_1_benchmark import run_benchmark
-from scripts.lib_advanced_metrics import generate_report
+from scripts.lib_advanced_metrics import generate_report, print_report_summary
 
 def main():
     parser = argparse.ArgumentParser(description="Standardized Benchmark Wrapper (Single Run)")
@@ -48,11 +48,8 @@ def main():
     # 3. Print Summary
     if adv_metrics_path.exists():
         with open(adv_metrics_path) as f:
-            d = json.load(f)
-            ci = d.get("bootstrap_ci", {})
-            print(f"\n=== Statistical Summary (N={args.bootstrap}) ===")
-            print(f"Mean F1: {ci.get('mean', 0):.4f}")
-            print(f"95% CI:  [{ci.get('ci_lower', 0):.4f}, {ci.get('ci_upper', 0):.4f}]")
+            report = json.load(f)
+        print_report_summary(report, title=f"Benchmark: {version}")
 
 if __name__ == "__main__":
     main()

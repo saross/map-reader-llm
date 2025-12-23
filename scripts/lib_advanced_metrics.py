@@ -210,26 +210,92 @@ def error_taxonomy(gdf_det, gdf_ref, gdf_bounds):
 def generate_report(detection_path, bounds_path, output_path=None, bootstrap_iterations=1000):
     print("Generating Advanced Metrics Report...")
     gdf_det, gdf_bounds, gdf_ref = load_data(detection_path, bounds_path)
-    
+
     if gdf_det is None: return {}
-    
+
     report = {}
-    
-    # 1. Bootstrap
+
+    # 1. Global metrics (at standard 20m buffer)
+    p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20)
+    report["global_metrics"] = {
+        "precision": round(p, 4),
+        "recall": round(r, 4),
+        "f1": round(f1, 4)
+    }
+
+    # 2. Bootstrap
     report["bootstrap_ci"] = bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=bootstrap_iterations)
-    
-    # 2. Spatial
+
+    # 3. Spatial
     report["spatial_tolerance"] = spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds)
-    
-    # 3. Per Class
+
+    # 4. Per Class
     report["per_class_performance"] = calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds)
-    
-    # 4. Taxonomy
+
+    # 5. Taxonomy
     report["error_taxonomy"] = error_taxonomy(gdf_det, gdf_ref, gdf_bounds)
-    
+
     if output_path:
         with open(output_path, 'w') as f:
             json.dump(report, f, indent=2)
         print(f"Advanced metrics saved to {output_path}")
-        
+
     return report
+
+
+def print_report_summary(report, title="Metrics Summary"):
+    """
+    Prints a formatted summary of the metrics report to console.
+
+    Args:
+        report (dict): The report dictionary from generate_report().
+        title (str): Header title for the summary.
+    """
+    print(f"\n{'='*60}")
+    print(f" {title}")
+    print(f"{'='*60}")
+
+    # Global metrics
+    gm = report.get("global_metrics", {})
+    print(f"\n[Global Performance @ 20m buffer]")
+    print(f"  F1:        {gm.get('f1', 0):.4f}")
+    print(f"  Precision: {gm.get('precision', 0):.4f}")
+    print(f"  Recall:    {gm.get('recall', 0):.4f}")
+
+    # Bootstrap CI
+    ci = report.get("bootstrap_ci", {})
+    if ci:
+        print(f"\n[Bootstrap Confidence Interval (N={ci.get('n_iterations', 0)})]")
+        print(f"  Mean F1:   {ci.get('mean', 0):.4f}")
+        print(f"  95% CI:    [{ci.get('ci_lower', 0):.4f}, {ci.get('ci_upper', 0):.4f}]")
+
+    # Per-class performance
+    pcp = report.get("per_class_performance", [])
+    if pcp:
+        print(f"\n[Per-Class Performance]")
+        print(f"  {'Class':<22} {'F1':>8} {'Prec':>8} {'Rec':>8}")
+        print(f"  {'-'*22} {'-'*8} {'-'*8} {'-'*8}")
+        for cls in pcp:
+            print(f"  {cls['class']:<22} {cls['f1']:>8.4f} {cls['precision']:>8.4f} {cls['recall']:>8.4f}")
+
+    # Spatial tolerance
+    st = report.get("spatial_tolerance", [])
+    if st:
+        print(f"\n[Spatial Tolerance Curve]")
+        print(f"  {'Buffer (m)':<12} {'F1':>8} {'Prec':>8} {'Rec':>8}")
+        print(f"  {'-'*12} {'-'*8} {'-'*8} {'-'*8}")
+        for row in st:
+            print(f"  {row['buffer']:<12} {row['f1']:>8.4f} {row['precision']:>8.4f} {row['recall']:>8.4f}")
+
+    # Error taxonomy
+    et = report.get("error_taxonomy", {})
+    fps = et.get("false_positives", {})
+    fns = et.get("false_negatives", {})
+    if fps or fns:
+        print(f"\n[Error Taxonomy]")
+        if fps:
+            print(f"  False Positives: {dict(fps)}")
+        if fns:
+            print(f"  False Negatives: {dict(fns)}")
+
+    print(f"\n{'='*60}\n")
