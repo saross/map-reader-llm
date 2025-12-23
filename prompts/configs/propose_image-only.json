@@ -1,0 +1,57 @@
+{
+    "version": "propose_image-only",
+    "description": "Two-Stage Proposer (Stage 1). Positives + null tiles only for maximum recall. Use with verify_image-only.",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "propose_image-only.md",
+    "temperature": 0.3,
+    "examples": [
+        {
+            "path": "burial_mound.png",
+            "label": "Positive Example: Burial Mound (Standard)"
+        },
+        {
+            "path": "ref_variant_2.png",
+            "label": "Positive Example: Burial Mound (Simple/Degraded)"
+        },
+        {
+            "path": "settlement_mound.png",
+            "label": "Positive Example: Settlement Mound (Irregular)"
+        },
+        {
+            "path": "triangulation_mound.png",
+            "label": "Positive Example: Triangulation Point on Mound"
+        },
+        {
+            "path": "benchmark_mound.png",
+            "label": "Positive Example: Benchmark on Mound"
+        },
+        {
+            "path": "ref_variant_1.png",
+            "label": "Positive Example: Benchmark on Mound (Variant)"
+        },
+        {
+            "path": "ref_pos_green.png",
+            "label": "Positive Example: Mound on Vegetation (Green Background)"
+        },
+        {
+            "path": "ref_pos_intersected.png",
+            "label": "Positive Example: Intersected Mound (Obscured by Lines)"
+        },
+        {
+            "path": "ref_pos_compound.png",
+            "label": "Positive Example: Compound Symbol"
+        },
+        {
+            "path": "neg_sparse.png",
+            "label": "Null Tile: Sparse Area (No Mounds)"
+        },
+        {
+            "path": "neg_topo.png",
+            "label": "Null Tile: Topography / River (No Mounds)"
+        },
+        {
+            "path": "neg_urban.png",
+            "label": "Null Tile: Urban Area (No Mounds)"
+        }
+    ]
+}

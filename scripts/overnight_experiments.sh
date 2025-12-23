@@ -25,7 +25,7 @@ python3 scripts/generate_overnight_configs.py # Ensure configs exist
 for i in 5; do
     echo "Job A Run $i/5"
     python3 scripts/4_detect_mounds_batch.py \
-        --config prompts/versions/v3.5_clean_pro.json \
+        --config prompts/configs/detect_image-only.json \
         --manifest inputs/target_tiles_manifest.json \
         --output "run_${i}" \
         --workers 5
@@ -41,7 +41,7 @@ echo ">>> Job A Complete."
 # for i in {1..30}; do
 #     echo "Job B Run $i/30"
 #     python3 scripts/4_detect_mounds_batch.py \
-#         --config prompts/versions/v3.5_clean.json \
+#         --config prompts/configs/detect_image-only.json \
 #         --manifest inputs/target_tiles_manifest.json \
 #         --output "run_${i}" \
 #         --workers 5
@@ -59,7 +59,7 @@ mkdir -p outputs/overnight/job_c_pro_verifier
 python3 scripts/5_verify_crops.py \
     --candidates outputs/results/v4.2_temp_0_7_train/run_01.geojson \
     --output outputs/overnight/job_c_pro_verifier/verified_v4.6_pro.geojson \
-    --config prompts/versions/v4.6_verifier_pro.json \
+    --config prompts/configs/verify_image-only.json \
     --workers 5 \
     --iterations 1
 

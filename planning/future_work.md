@@ -18,20 +18,20 @@ The v4.x two-stage pipeline (F1 0.716, P=0.97, R=0.57) underperforms due to impl
 
 **Critical bugs identified:**
 
-1. **Missing instruction file** (`prompts/versions/v4.6_verifier.json:4`)
-   - Config references `"instruction_file": "v4.6_verifier_instructions.md"`
-   - File does not exist in `prompts/text/`
-   - Causes fallback to basic 12-line default prompt in `scripts/5_verify_crops.py:126-141`
-   - **Fix**: Create `prompts/text/v4.6_verifier_instructions.md` with proper visual chain-of-thought instructions
+1. **Missing instruction file** (`prompts/configs/verify_image-only.json`)
+   - Config references `"instruction_file": "verify_image-only.md"`
+   - File must exist in `prompts/system-instructions/`
+   - Missing file causes fallback to basic default prompt in `scripts/5_verify_crops.py`
+   - **Fix**: Ensure `prompts/system-instructions/verify_image-only.md` exists with proper visual chain-of-thought instructions
 
-2. **Contradictory example labels** (`prompts/versions/v4.6_verifier.json:13-24`)
+2. **Contradictory example labels** (`prompts/configs/verify_image-only.json`)
    - `benchmark_mound.png` labelled as "Negative Example: Hard Benchmark"
    - `triangulation_mound.png` labelled as "Negative Example: Hard Triangulation"
    - These ARE positive examples (mounds with survey markers)
    - This teaches the verifier to reject valid detections, explaining the 0.57 recall
    - **Fix**: Change labels to "Positive Example: Benchmark on Mound" etc.
 
-3. **Unused config flags** (`prompts/versions/v4.6_verifier.json`)
+3. **Unused config flags** (`prompts/configs/verify_image-only.json`)
    - `"visual_cot": true` and `"confidence_rubric": "explicit"` are defined but never read by `5_verify_crops.py`
    - **Fix**: Either implement flag handling or remove dead config
 

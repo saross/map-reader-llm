@@ -17,8 +17,8 @@ Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify arc
 ### Key Capabilities
 *   **Visual Few-Shot Learning**: Does not require fine-tuning. Uses a "Reference Library" of cropped symbols to teach the model what to look for at runtime.
 *   **Geospatial Awareness**: Automatically preserves spatial reference systems (EPSG:32635) from input GeoTIFFs to output GeoJSONs.
-*   **Reproducibility**: Features a rigorous configuration versioning system (`prompts/versions/*.json`) to ensure every experiment is traceable.
-*   **Active Pipelines**: diverse strategies for detection, from high-speed single-stage (v3.5) to rigorous two-stage Recall+Verification (v4.1 + v4.6).
+*   **Reproducibility**: Features a rigorous configuration system (`prompts/configs/*.json`) to ensure every experiment is traceable.
+*   **Active Pipelines**: Diverse strategies from single-stage detection to rigorous two-stage Propose+Verify.
 
 ---
 
@@ -26,7 +26,7 @@ Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify arc
 
 Detailed documentation is available in the `docs/` directory:
 
-*   **[Pipelines Guide](docs/PIPELINES.md)**: Detailed breakdown of the active analysis pipelines (v3.2, v3.5, v4.1/4.6). **Start here to understand the methodology.**
+*   **[Pipelines Guide](docs/PIPELINES.md)**: Detailed breakdown of the active analysis pipelines. **Start here to understand the methodology.**
 *   **[User Guide](docs/USER_GUIDE.md)**: Step-by-step instructions for running scripts, configuring prompts, and managing data.
 *   **[Architecture](docs/ARCHITECTURE.md)**: High-level system architecture, data flow diagrams, and component descriptions.
 
@@ -49,7 +49,7 @@ Create a `.env` file in the root directory with your Google API Key:
 GOOGLE_API_KEY=your_key_here
 ```
 
-### 3. Run the "Clean" Pipeline (v3.5)
+### 3. Run Detection
 This is the recommended baseline for general detection (high speed, balanced accuracy).
 
 **Step 1: Tile Input Maps**
@@ -60,9 +60,9 @@ python scripts/preprocess_tiling.py
 
 **Step 2: Run Detection**
 ```bash
-python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.5_clean.json
+python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
 ```
-Results will be saved to `outputs/results/v3.5_clean/`.
+Results will be saved to `outputs/results/detect_image-only/`.
 
 ---
 
@@ -75,8 +75,8 @@ Results will be saved to `outputs/results/v3.5_clean/`.
     *   `7_analyze_consensus.py`: Analysis & Scoring tools.
     *   `benchmark_variability.py`: Stability & Variability analysis.
 *   **`prompts/`**: Configuration and System Instructions.
-    *   `versions/`: **Active Pipeline Configs** (JSON).
-    *   `text/`: Static system instruction text files.
+    *   `configs/`: **Active Pipeline Configs** (JSON).
+    *   `system-instructions/`: Static system instruction text files.
 *   **`inputs/`**: Analysis inputs.
     *   `rasters/`: Source GeoTIFF maps.
     *   `manifests/`: JSON lists defining tile sets for experiments.

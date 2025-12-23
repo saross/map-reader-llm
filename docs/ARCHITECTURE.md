@@ -40,5 +40,5 @@ graph TD
 *   **Function**: Calculates Intersection over Union (IoU) against "Gold Standard" human labels (if available) or computes consensus between multiple AI runs to determine stability.
 
 ## Directory Structure Strategy
-*   **`prompts/versions/`**: Enables "Time Travel". Any past experiment can be reproduced by loading its specific JSON config.
+*   **`prompts/configs/`**: Enables "Time Travel". Any past experiment can be reproduced by loading its specific JSON config.
 *   **`inputs/manifests/`**: Defines the "Scope" of a run. Instead of running on absolute paths, scripts take a manifest (list of tile IDs) to ensure consistent data subsets (e.g., "Training Set" vs "Test Set").

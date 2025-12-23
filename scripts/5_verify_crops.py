@@ -12,7 +12,7 @@ Usage:
     python scripts/5_verify_crops.py \\
         --candidates outputs/results/v4.1/candidates.geojson \\
         --output outputs/results/v4.1/verified.geojson \\
-        --config prompts/versions/v4.6_verifier.json \\
+        --config prompts/configs/verify_image-only.json \\
         --workers 10
 
 Key Features:
@@ -109,7 +109,7 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
     # v4.6 Optimization: Load from external file if specified
     instruction_file = prompt_config.get("instruction_file")
     if instruction_file:
-        instr_path = Path("prompts") / instruction_file
+        instr_path = Path("prompts") / "system-instructions" / instruction_file
         if instr_path.exists():
             with open(instr_path) as f:
                 instructions = f.read()

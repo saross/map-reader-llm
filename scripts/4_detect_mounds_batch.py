@@ -8,12 +8,12 @@ Description:
     comprehensive metadata (prompt hashes, model versions) for every run.
 
 Usage:
-    python scripts/4_detect_mounds_batch.py --config prompts/versions/v3.2_experimental.json
+    python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
 
 Inputs:
     - Tiles from `outputs/tiles/`
-    - Prompt Config from `prompts/versions/*.json`
-    - System Instructions from `prompts/text/*.md`
+    - Prompt Config from `prompts/configs/*.json`
+    - System Instructions from `prompts/system-instructions/*.md`
 
 Outputs:
     - Raw GeoJSON detections in `outputs/results/vX.X/`
@@ -337,7 +337,7 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     
     # Load Prompt Text
     instruction_file = config.get("instruction_file", "v3.0_system_instruction.md")
-    prompt_path = Path(BASE_DIR) / "prompts" / "text" / instruction_file
+    prompt_path = Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
     
     print(f"System Instruction: {instruction_file}") # Feedback to user
 

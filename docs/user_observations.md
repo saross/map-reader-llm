@@ -29,3 +29,6 @@ Gemini makes some good choices (was able to reconstruct an outcome from existing
 
 Observation 9:
 Gemini keeps putting text back into the prompt even though we've decided to use image-focused prompts. I'll have to start reviewing each prompt manually, including system instructions.
+
+Obervation 10:
+We used $57.20 of API credits in the initial, exploratory phase, as I learned how to approach this research and use LLM APIs (in general and Google in particular).

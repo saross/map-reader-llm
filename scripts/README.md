@@ -11,7 +11,7 @@ This directory contains the Python code for the map processing pipeline.
 
 ### 2. `4_detect_mounds_batch.py`
 *   **Purpose**: The main **Stage 1** inference engine.
-*   **Key Feature**: Reads a **Versioned Config** (from `prompts/versions/`), builds a multimodal prompt (System Text + Example Images + Target Map Tile), and queries Gemini.
+*   **Key Feature**: Reads a **Run Config** (from `prompts/configs/`), builds a multimodal prompt (System Text + Example Images + Target Map Tile), and queries Gemini.
 *   **Output**: `outputs/results/vX.X/detections-*.geojson` (Raw boxes) + `.meta.json`
 
 ### 3. `5_verify_crops.py`

@@ -1,0 +1,73 @@
+{
+    "version": "detect_image-only",
+    "description": "Image-Only Detection. Minimal text, relies on 16 reference images (visual few-shot). Recommended baseline.",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "detect_image-only.md",
+    "temperature": 0.3,
+    "examples": [
+        {
+            "path": "burial_mound.png",
+            "label": "Positive Example: Burial Mound (Standard)"
+        },
+        {
+            "path": "ref_variant_2.png",
+            "label": "Positive Example: Burial Mound (Simple/Degraded)"
+        },
+        {
+            "path": "settlement_mound.png",
+            "label": "Positive Example: Settlement Mound (Irregular)"
+        },
+        {
+            "path": "triangulation_mound.png",
+            "label": "Positive Example: Triangulation Point on Mound"
+        },
+        {
+            "path": "benchmark_mound.png",
+            "label": "Positive Example: Benchmark on Mound"
+        },
+        {
+            "path": "ref_variant_1.png",
+            "label": "Positive Example: Benchmark on Mound (Variant)"
+        },
+        {
+            "path": "ref_pos_green.png",
+            "label": "Positive Example: Mound on Vegetation (Green Background)"
+        },
+        {
+            "path": "ref_pos_intersected.png",
+            "label": "Positive Example: Intersected Mound (Obscured by Lines)"
+        },
+        {
+            "path": "ref_pos_compound.png",
+            "label": "Positive Example: Compound Symbol"
+        },
+        {
+            "path": "ref_negative_1.png",
+            "label": "Negative Example: Noise (Ignore)"
+        },
+        {
+            "path": "neg_sparse.png",
+            "label": "Negative Example: Sparse Area (No Mounds)"
+        },
+        {
+            "path": "neg_topo.png",
+            "label": "Negative Example: Topography / River (No Mounds)"
+        },
+        {
+            "path": "neg_urban.png",
+            "label": "Negative Example: Urban Area (No Mounds)"
+        },
+        {
+            "path": "ref_neg_embankment_2.png",
+            "label": "Negative Example: Embankment (Ignore)"
+        },
+        {
+            "path": "ref_neg_benchmark.png",
+            "label": "Negative Example: Benchmark Symbol (Ignore)"
+        },
+        {
+            "path": "ref_neg_triangulation.png",
+            "label": "Negative Example: Triangulation Point (Ignore)"
+        }
+    ]
+}

@@ -145,7 +145,7 @@ def run_study(config_path, iterations, study_id, model_override=None, workers=1,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default="prompts/versions/v3.2_experimental.json", help="Config to test")
+    parser.add_argument("--config", default="prompts/configs/detect_image-only.json", help="Config to test")
     parser.add_argument("--iterations", type=int, default=10, help="Number of runs")
     parser.add_argument("--study_id", required=True, help="Unique ID for this study output folder")
     parser.add_argument("--model", help="Model override (e.g., gemini-3-flash-preview)")

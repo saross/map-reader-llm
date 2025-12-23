@@ -12,7 +12,7 @@ from scripts.lib_advanced_metrics import generate_report, print_report_summary
 
 def main():
     parser = argparse.ArgumentParser(description="Standardized Benchmark Wrapper (Single Run)")
-    parser.add_argument("--config", required=True, help="Path to config JSON (e.g., prompts/versions/v3.4_tightbox.json)")
+    parser.add_argument("--config", required=True, help="Path to config JSON (e.g., prompts/configs/detect_image-only.json)")
     parser.add_argument("--model", required=False, help="Override model (e.g., gemini-3-flash-preview)")
     parser.add_argument("--bootstrap", type=int, default=1000, help="Number of bootstrap iterations for CI (default: 1000)")
     
