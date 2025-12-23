@@ -1,182 +1,47 @@
 {
     "version": "verify_image-only",
-    "model": "gemini-3-flash-preview",
+    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification of proposals.",
+    "model": "gemini-3-flash",
     "instruction_file": "verify_image-only.md",
-    "temperature": 0.0,
+    "temperature": 1.0,
     "verification_threshold": 0.51,
     "majority_vote_fraction": 0.5,
     "examples": [
         {
-            "label": "Positive Example: Canonical",
-            "path": "burial_mound.png"
+            "path": "neutral/example_01.png",
+            "label": "Positive: Burial Mound (Kurgan)"
         },
         {
-            "label": "Positive Example: Benchmark ON Mound",
-            "path": "benchmark_mound.png"
+            "path": "neutral/example_02.png",
+            "label": "Positive: Settlement Mound"
         },
         {
-            "label": "Positive Example: Canonical",
-            "path": "settlement_mound.png"
+            "path": "neutral/example_03.png",
+            "label": "Positive: Triangulation Point ON Mound"
         },
         {
-            "label": "Positive Example: Triangulation ON Mound",
-            "path": "triangulation_mound.png"
+            "path": "neutral/example_04.png",
+            "label": "Positive: Benchmark ON Mound"
         },
         {
-            "label": "Positive Example: Canonical",
-            "path": "ref_variant_1.png"
+            "path": "neutral/example_05.png",
+            "label": "Negative: Empty tile (no mounds)"
         },
         {
-            "label": "Negative Example: Urban",
-            "path": "neg_urban.png"
+            "path": "neutral/example_06.png",
+            "label": "Negative: Empty tile (no mounds)"
         },
         {
-            "label": "Positive Example: Canonical",
-            "path": "ref_variant_2.png"
+            "path": "neutral/example_07.png",
+            "label": "Negative: Empty tile (no mounds)"
         },
         {
-            "label": "Negative Example: Sparse",
-            "path": "neg_sparse.png"
+            "path": "neutral/example_08.png",
+            "label": "Negative: Benchmark ALONE (no mound)"
         },
         {
-            "label": "Positive Example: Canonical",
-            "path": "ref_pos_green.png"
-        },
-        {
-            "label": "Negative Example: Topo",
-            "path": "neg_topo.png"
-        },
-        {
-            "label": "Positive Example: Compound",
-            "path": "ref_pos_compound.png"
-        },
-        {
-            "label": "Negative Example: Embankment",
-            "path": "ref_neg_embankment_2.png"
-        },
-        {
-            "label": "Positive Example: Intersected",
-            "path": "ref_pos_intersected.png"
-        },
-        {
-            "label": "Negative Example: Hard Blob",
-            "path": "ref_neg_hard_benchmark_blob.png"
-        },
-        {
-            "label": "Negative Example: Hard Blob",
-            "path": "ref_neg_hard_triangulation_blob.png"
-        },
-        {
-            "label": "Negative Example: Hard Negative",
-            "path": "ref_neg_benchmark.png"
-        },
-        {
-            "label": "Negative Example: Hard Negative",
-            "path": "ref_neg_triangulation.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_1_K-35-053-3_Elenovo.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_2_K-35-053-3_Elenovo.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_3_K-35-053-3_Elenovo.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_4_K-35-062-2_Rakovski.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_5_K-35-062-2_Rakovski.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_8_K-35-053-3_Elenovo.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_9_K-35-052-4_32635.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_10_K-35-062-2_Rakovski.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_11_K-35-052-4_32635.png"
-        },
-        {
-            "label": "Positive Example: Hard (Mined)",
-            "path": "hard_positive_12_K-35-062-2_Rakovski.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_1_K-35-078-1_Lesovo_x3584_y0.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_3_K-35-078-1_Lesovo_x0_y2688.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_12_K-35-062-2_Rakovski_x3136_y2240.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_5_K-35-052-4_32635_x896_y0.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_9_K-35-053-3_Elenovo_x1344_y2688.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_10_K-35-078-1_Lesovo_x2240_y2240.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_0_K-35-078-1_Lesovo_x0_y2688.png.png"
-        },
-        {
-            "label": "Negative Example: Hard Mined (False Positive)",
-            "path": "hard_negative_fp_2_K-35-078-1_Lesovo_x3584_y0.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_9_K-35-053-3_Elenovo_x1344_y2688.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_7_K-35-053-3_Elenovo_x1344_y896.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_5_K-35-053-3_Elenovo_x448_y448.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_1_K-35-052-4_32635_x0_y2240.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_8_K-35-053-3_Elenovo_x1344_y2688.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_4_K-35-062-2_Rakovski_x3584_y3584.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_6_K-35-053-3_Elenovo_x448_y448.png.png"
-        },
-        {
-            "label": "Positive Example: Hard Mined (False Negative)",
-            "path": "hard_positive_fn_3_K-35-062-2_Rakovski_x0_y2240.png.png"
+            "path": "neutral/example_09.png",
+            "label": "Negative: Triangulation Point ALONE (no mound)"
         }
     ]
 }

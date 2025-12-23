@@ -1,4 +1,4 @@
-# Detection Prompt: Text-Only Baseline
+# Detection Prompt: Text-Only with Hard Negatives
 
 You are an expert analyst of Soviet Topographic Maps. Your goal is to identify archaeological mound symbols.
 
@@ -34,6 +34,37 @@ Symbols may be partially obscured by lines (roads, contours, grid lines) or text
 ## Separating Clusters
 
 Symbols may appear close together. Each distinct "sunburst" centre represents a separate mound. Provide individual bounding boxes for each.
+
+## False Positives (CRITICAL)
+
+The following symbols are easily confused with mounds. **DO NOT mark these:**
+
+### Triangulation Point (without mound)
+
+- **Visual:** A hollow black triangle with a central dot, but **NO radiating rays**.
+- **Why it's confusing:** Similar shape to triangulation point ON a mound, but lacks the mound's characteristic spikes.
+
+### Benchmark (without mound)
+
+- **Visual:** A hollow black square/circle with crosshairs or central dot, but **NO radiating rays**.
+- **Why it's confusing:** Similar to benchmark ON a mound, but lacks the mound's characteristic spikes.
+
+### Bridge/Culvert Dots
+
+- **Visual:** Simple black dots located on roads, rivers, or canals.
+- **Why it's confusing:** Can appear as small circular shapes, but have NO radiating rays.
+
+### Spot Heights
+
+- **Visual:** Simple dots (black or brown) accompanied by elevation numbers.
+- **Why it's confusing:** The number nearby might suggest a mound's elevation label, but the symbol lacks rays.
+
+## Negative Constraints
+
+- **IGNORE** contour lines that do not form a distinct sunburst or circle-with-rays.
+- **IGNORE** black elevation points (simple dots) unless surrounded by the mound's radiating rays.
+- **IGNORE** blue wells (circles with blue filling).
+- **IGNORE** vegetation symbols (marshland tufts) without the central mound structure.
 
 ## Output Format
 

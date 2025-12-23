@@ -1,8 +1,8 @@
 {
     "version": "detect_text-only",
-    "description": "Text-Only Detection (V2.3 Revival). Pure text instruction without reference images. Baseline for measuring image contribution.",
-    "model": "gemini-3-flash-preview",
+    "description": "Text-only baseline. No reference images, no hard negative guidance.",
+    "model": "gemini-3-flash",
     "instruction_file": "detect_text-only.md",
-    "temperature": 0.3,
+    "temperature": 1.0,
     "examples": []
 }

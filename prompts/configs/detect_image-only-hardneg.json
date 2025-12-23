@@ -1,6 +1,6 @@
 {
-    "version": "detect_image-only",
-    "description": "True image-only baseline. Minimal text, neutral filenames, no hard negatives.",
+    "version": "detect_image-only-hardneg",
+    "description": "Image-only with hard negatives. Minimal text, neutral filenames.",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
@@ -31,6 +31,14 @@
         },
         {
             "path": "neutral/example_07.png",
+            "label": "Negative"
+        },
+        {
+            "path": "neutral/example_08.png",
+            "label": "Negative"
+        },
+        {
+            "path": "neutral/example_09.png",
             "label": "Negative"
         }
     ]

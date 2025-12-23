@@ -1,8 +1,8 @@
 {
-    "version": "detect_text-image",
-    "description": "Text + Image baseline. Neutral filenames, descriptive labels, no hard negatives.",
+    "version": "detect-text-image-hardneg",
+    "description": "Text + Image with hard negatives. Neutral filenames, descriptive labels.",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_text-image.md",
+    "instruction_file": "detect_text-image-hardneg.md",
     "temperature": 1.0,
     "examples": [
         {
@@ -32,6 +32,14 @@
         {
             "path": "neutral/example_07.png",
             "label": "Negative: Empty tile. No mounds present."
+        },
+        {
+            "path": "neutral/example_08.png",
+            "label": "Negative: Benchmark ALONE (no mound). Square with dot but NO radiating rays. NOT a mound."
+        },
+        {
+            "path": "neutral/example_09.png",
+            "label": "Negative: Triangulation Point ALONE (no mound). Triangle with dot but NO radiating rays. NOT a mound."
         }
     ]
 }
