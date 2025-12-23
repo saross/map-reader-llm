@@ -22,7 +22,7 @@ This methodology establishes a clean separation between training and holdout til
   - ~360 tiles total
 
 - **Ground Truth**: `inputs/vectors/mounds-reference.geojson`
-  - 70 annotated mound symbols across all maps
+  - 569 annotated mound symbols across all maps
   - Annotated by primary researcher (Shawn Ross) and student collaborators
 
 ## Selection Criteria
