@@ -1,0 +1,30 @@
+{
+  "description": "Null tiles for few-shot library - empty tiles to calibrate model expectations",
+  "created": "2025-12-23",
+  "selection_methodology": {
+    "pool": "Training tiles with density=empty (mound_count=0)",
+    "content_threshold": "≤75% background pixels",
+    "stratification": "One per map, Lesovo required",
+    "random_seed": 20251223
+  },
+  "tiles": [
+    {
+      "filename": "K-35-078-1_Lesovo_x2240_y2688.png",
+      "map": "K-35-078-1_Lesovo",
+      "background_percent": 0.1,
+      "selection_note": "Lesovo required for distinct terrain"
+    },
+    {
+      "filename": "K-35-053-3_Elenovo_x3584_y1344.png",
+      "map": "K-35-053-3_Elenovo",
+      "background_percent": 0.3,
+      "selection_note": "Stratified random"
+    },
+    {
+      "filename": "K-35-052-4_32635_x896_y1792.png",
+      "map": "K-35-052-4_32635",
+      "background_percent": 0.1,
+      "selection_note": "Stratified random"
+    }
+  ]
+}

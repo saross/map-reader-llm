@@ -71,6 +71,7 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 - `inputs/training_manifest.json` — list of training tile filenames
 - `inputs/holdout_manifest.json` — list of holdout tile filenames
+- `inputs/null_tiles_manifest.json` — null tiles for few-shot library
 - `inputs/tile_selection_metadata.json` — full metadata including:
   - Random seed used
   - Per-tile mound counts
@@ -101,15 +102,27 @@ From `inputs/references/`:
 - `ref_neg_benchmark.png` — benchmark symbol (no mound)
 - `ref_neg_triangulation.png` — triangulation point (no mound)
 
-### Background Negatives (From Training Tiles)
+### Null Tiles (From Training Tiles)
 
-To be manually selected by researcher from training tiles after selection:
+Full empty tiles included in few-shot library to calibrate model expectations and reduce hallucinations. These demonstrate "some tiles contain no mounds."
 
-- Sparse area (no mounds)
-- Topographic features / rivers (no mounds)
-- Urban area (no mounds)
+**Selection methodology**:
 
-**Provenance requirement**: Each negative must document source tile ID and pixel coordinates.
+1. Pool: All training tiles with `density: empty` (mound_count = 0)
+2. Filter: Must meet content threshold (≤75% background)
+3. Stratification: One tile required from Lesovo (distinct terrain), remainder from other maps
+4. Selection: Stratified random (one per map until target reached)
+5. Random seed: 20251223 (date-based for reproducibility)
+
+**Selected null tiles**:
+
+| Tile                                  | Map               | Background % |
+| ------------------------------------- | ----------------- | ------------ |
+| `K-35-078-1_Lesovo_x2240_y2688.png`   | Lesovo (required) | 0.1%         |
+| `K-35-053-3_Elenovo_x3584_y1344.png`  | Elenovo           | 0.3%         |
+| `K-35-052-4_32635_x896_y1792.png`     | 32635             | 0.1%         |
+
+**Manifest**: `inputs/null_tiles_manifest.json`
 
 ## Constraints
 
