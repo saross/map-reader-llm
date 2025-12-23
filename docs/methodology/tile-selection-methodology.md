@@ -132,6 +132,50 @@ Full empty tiles included in few-shot library to calibrate model expectations an
 
 ---
 
+## Evaluation Metrics
+
+### Per-Symbol Metrics (Primary)
+
+Standard object detection metrics calculated against ground truth mound locations:
+
+- **F1 Score**: Primary metric; harmonic mean of precision and recall
+- **Precision**: Proportion of detections that are true mounds
+- **Recall**: Proportion of true mounds that are detected
+- **Spatial Tolerance Curve**: F1 at varying match distances (10m, 25m, 50m)
+
+**Limitation**: True Negatives are undefined in continuous raster space (cannot count all locations where mounds *don't* exist), so metrics like MCC and accuracy are not applicable at the symbol level.
+
+### Tile-Level Metrics (Secondary)
+
+Binary classification metrics for the sub-task of "empty tile filtering." Unlike per-symbol metrics, True Negatives are well-defined at the tile level:
+
+| Tile State | Model Output     | Classification                  |
+| ---------- | ---------------- | ------------------------------- |
+| Has mounds | Detected mounds  | True Positive (TP)              |
+| Empty      | Detected nothing | True Negative (TN)              |
+| Empty      | Detected mounds  | False Positive (FP/hallucination) |
+| Has mounds | Detected nothing | False Negative (FN)             |
+
+**Applicable metrics**:
+
+- **Tile Classification Accuracy**: (TP + TN) / Total tiles
+- **Sensitivity (Recall)**: TP / (TP + FN) — proportion of mound-containing tiles correctly identified
+- **Specificity**: TN / (TN + FP) — proportion of empty tiles correctly identified as empty
+- **MCC (Matthews Correlation Coefficient)**: Balanced measure accounting for all four quadrants; ranges from -1 to +1
+
+**Rationale**: Tile-level metrics are useful for:
+
+1. Evaluating hallucination rate on empty tiles
+2. Practical deployment messaging ("X% of tiles processed without false alarms")
+3. Assessing model calibration with null tile examples
+
+### Uncertainty Quantification
+
+- **Bootstrap 95% CIs**: Resample tiles with replacement (N=1000) for confidence intervals
+- **Per-symbol-type sample sizes**: Reported alongside class-specific metrics
+
+---
+
 ## Implementation
 
 Script: `scripts/select_tiles_phase2.py`
