@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""
+Generate GeoJSON bounds files for training and holdout tile sets.
+
+Creates polygon features for each tile showing its geographic extent,
+useful for visualisation and spatial analysis of tile coverage.
+
+Created: 2025-12-23
+"""
+
+import json
+from pathlib import Path
+
+
+# Constants
+TILE_SIZE = 448  # pixels
+TILE_DIRS = [
+    "K-35-052-4_32635",
+    "K-35-053-3_Elenovo",
+    "K-35-062-2_Rakovski",
+    "K-35-078-1_Lesovo"
+]
+
+# CRS mapping based on map sheet names
+MAP_CRS = {
+    "K-35-052-4_32635": "EPSG:32635",
+    "K-35-053-3_Elenovo": "EPSG:32635",
+    "K-35-062-2_Rakovski": "EPSG:32635",
+    "K-35-078-1_Lesovo": "EPSG:32635"
+}
+
+
+def get_map_from_filename(filename: str) -> str:
+    """
+    Extract map name from tile filename.
+
+    Args:
+        filename: Tile filename like 'K-35-052-4_32635_x1344_y2240.png'
+
+    Returns:
+        Map name like 'K-35-052-4_32635'
+    """
+    parts = filename.rsplit('_x', 1)
+    return parts[0]
+
+
+def load_metadata(tiles_dir: Path) -> dict:
+    """
+    Load all tile metadata from map directories.
+
+    Args:
+        tiles_dir: Path to tiles directory
+
+    Returns:
+        Dictionary mapping tile filenames to [minX, maxY, pixel_size_x, pixel_size_y]
+    """
+    all_metadata = {}
+    for map_name in TILE_DIRS:
+        metadata_path = tiles_dir / map_name / "metadata.json"
+        if metadata_path.exists():
+            with open(metadata_path) as f:
+                metadata = json.load(f)
+                all_metadata.update(metadata)
+    return all_metadata
+
+
+def tile_to_polygon(filename: str, metadata: dict) -> dict | None:
+    """
+    Convert tile metadata to a GeoJSON polygon feature.
+
+    Args:
+        filename: Tile filename
+        metadata: All tile metadata
+
+    Returns:
+        GeoJSON feature dict or None if tile not found in metadata
+    """
+    if filename not in metadata:
+        print(f"  Warning: {filename} not found in metadata")
+        return None
+
+    # Metadata format: [minX, maxY, pixel_size_x, pixel_size_y]
+    meta = metadata[filename]
+    min_x = meta[0]
+    max_y = meta[1]
+    pixel_size = meta[2]
+
+    # Calculate tile extent
+    max_x = min_x + (TILE_SIZE * pixel_size)
+    min_y = max_y - (TILE_SIZE * pixel_size)
+
+    # Extract mound info from the selection metadata if available
+    map_name = get_map_from_filename(filename)
+
+    return {
+        "type": "Feature",
+        "properties": {
+            "tile": filename,
+            "map": map_name
+        },
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [[
+                [min_x, max_y],
+                [max_x, max_y],
+                [max_x, min_y],
+                [min_x, min_y],
+                [min_x, max_y]
+            ]]
+        }
+    }
+
+
+def create_bounds_geojson(
+    tile_filenames: list,
+    metadata: dict,
+    selection_metadata: dict,
+    set_type: str
+) -> dict:
+    """
+    Create a GeoJSON FeatureCollection for a set of tiles.
+
+    Args:
+        tile_filenames: List of tile filenames
+        metadata: Tile georeferencing metadata
+        selection_metadata: Tile selection metadata with mound counts
+        set_type: 'training' or 'holdout'
+
+    Returns:
+        GeoJSON FeatureCollection dict
+    """
+    # Build lookup from selection metadata
+    tile_info = {}
+    if set_type in selection_metadata:
+        for tile in selection_metadata[set_type].get("tiles", []):
+            tile_info[tile["filename"]] = {
+                "mound_count": tile.get("mound_count", 0),
+                "density": tile.get("density", "unknown")
+            }
+
+    features = []
+    for filename in tile_filenames:
+        feature = tile_to_polygon(filename, metadata)
+        if feature:
+            # Add selection metadata to properties
+            if filename in tile_info:
+                feature["properties"]["mound_count"] = tile_info[filename]["mound_count"]
+                feature["properties"]["density"] = tile_info[filename]["density"]
+            features.append(feature)
+
+    return {
+        "type": "FeatureCollection",
+        "name": f"{set_type}_tile_bounds",
+        "crs": {
+            "type": "name",
+            "properties": {
+                "name": "urn:ogc:def:crs:EPSG::32635"
+            }
+        },
+        "features": features
+    }
+
+
+def main():
+    """Generate bounds GeoJSONs for training and holdout tile sets."""
+    base_dir = Path(__file__).parent.parent
+    inputs_dir = base_dir / "inputs"
+    tiles_dir = inputs_dir / "tiles"
+    outputs_dir = base_dir / "outputs" / "results"
+
+    # Ensure output directory exists
+    outputs_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load manifests
+    print("Loading manifests...")
+    training_path = inputs_dir / "training_manifest.json"
+    holdout_path = inputs_dir / "holdout_manifest.json"
+    selection_path = inputs_dir / "tile_selection_metadata.json"
+
+    with open(training_path) as f:
+        training_tiles = json.load(f)
+    print(f"  Training tiles: {len(training_tiles)}")
+
+    with open(holdout_path) as f:
+        holdout_tiles = json.load(f)
+    print(f"  Holdout tiles: {len(holdout_tiles)}")
+
+    with open(selection_path) as f:
+        selection_metadata = json.load(f)
+
+    # Load tile georeferencing metadata
+    print("\nLoading tile metadata...")
+    metadata = load_metadata(tiles_dir)
+    print(f"  Total tiles with metadata: {len(metadata)}")
+
+    # Generate training bounds
+    print("\nGenerating training bounds GeoJSON...")
+    training_geojson = create_bounds_geojson(
+        training_tiles, metadata, selection_metadata, "training"
+    )
+    training_output = outputs_dir / "training_bounds.geojson"
+    with open(training_output, 'w') as f:
+        json.dump(training_geojson, f, indent=2)
+    print(f"  Saved: {training_output}")
+    print(f"  Features: {len(training_geojson['features'])}")
+
+    # Generate holdout bounds
+    print("\nGenerating holdout bounds GeoJSON...")
+    holdout_geojson = create_bounds_geojson(
+        holdout_tiles, metadata, selection_metadata, "holdout"
+    )
+    holdout_output = outputs_dir / "holdout_bounds.geojson"
+    with open(holdout_output, 'w') as f:
+        json.dump(holdout_geojson, f, indent=2)
+    print(f"  Saved: {holdout_output}")
+    print(f"  Features: {len(holdout_geojson['features'])}")
+
+    print("\nDone!")
+
+
+if __name__ == "__main__":
+    main()

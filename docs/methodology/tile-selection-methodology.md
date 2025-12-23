@@ -135,9 +135,11 @@ python scripts/select_tiles_phase2.py
 
 ## Verification Checklist
 
-- [ ] Training and holdout sets are mutually exclusive
-- [ ] All selected tiles meet content threshold
-- [ ] Spatial separation applied to holdout tiles
-- [ ] Density distribution approximately matched
-- [ ] Random seed documented
-- [ ] All file paths verified
+Executed: 2025-12-23 | Seed: 1766464625
+
+- [x] Training and holdout sets are mutually exclusive (verified: 0 overlap)
+- [x] All selected tiles meet content threshold (≤75% background)
+- [x] Spatial separation applied to holdout tiles (not relaxed)
+- [x] Density distribution approximately matched (training: 8 empty, 7 sparse, 5 dense; holdout: identical)
+- [x] Random seed documented (1766464625)
+- [x] All file paths verified (40/40 tiles exist)
