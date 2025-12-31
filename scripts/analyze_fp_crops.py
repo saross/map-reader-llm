@@ -1,17 +1,38 @@
 
+"""
+Analyse False Positives/Negatives and Extract Crops for Hard Example Library
+=============================================================================
+
+Clusters FP/FN detections from multiple runs using distance-based matching (20m)
+to align with F1 evaluation spatial tolerance, then extracts image crops for
+the most recurrent errors to build a hard example library.
+"""
+
 import json
 import geopandas as gpd
 import pandas as pd
+import math
 from pathlib import Path
 from shapely.geometry import box
 from PIL import Image
 import argparse
 
-def calculate_iou(boxA, boxB):
-    b1 = box(boxA[0], boxA[1], boxA[2], boxA[3])
-    b2 = box(boxB[0], boxB[1], boxB[2], boxB[3])
-    if not b1.intersects(b2): return 0.0
-    return b1.intersection(b2).area / b1.union(b2).area
+
+def get_centroid(geom_bounds):
+    """Get centroid coordinates from geometry bounds [minx, miny, maxx, maxy]."""
+    minx, miny, maxx, maxy = geom_bounds
+    return ((minx + maxx) / 2, (miny + maxy) / 2)
+
+
+def centroid_distance(bounds_a, bounds_b):
+    """
+    Calculate Euclidean distance between centroids of two bounding boxes.
+
+    Returns distance in coordinate units (metres for EPSG:32635).
+    """
+    cx_a, cy_a = get_centroid(bounds_a)
+    cx_b, cy_b = get_centroid(bounds_b)
+    return math.sqrt((cx_a - cx_b) ** 2 + (cy_a - cy_b) ** 2)
 
 def geo_to_pixel(geo_bounds, tile_bounds, img_size):
     g_minx, g_miny, g_maxx, g_maxy = geo_bounds
@@ -80,18 +101,25 @@ def extract_crops(args):
             
     print(f"Total entries loaded: {len(all_dets)}")
     
-    # 3. Cluster
+    # 3. Cluster using distance-based matching (20m threshold)
+    # Aligns with F1 evaluation spatial tolerance for consistency
+    distance_thresh = 20.0
     clusters = []
     used_indices = set()
-    
+
     for i, det in enumerate(all_dets):
-        if i in used_indices: continue
+        if i in used_indices:
+            continue
         current_cluster = [det]
         used_indices.add(i)
         for j, candidate in enumerate(all_dets):
-            if j in used_indices: continue
-            if candidate["source_tile"] != det["source_tile"]: continue
-            if calculate_iou(det["geo_bounds"], candidate["geo_bounds"]) > 0.5:
+            if j in used_indices:
+                continue
+            if candidate["source_tile"] != det["source_tile"]:
+                continue
+            # Use centroid distance for consistency with F1 evaluation
+            dist = centroid_distance(det["geo_bounds"], candidate["geo_bounds"])
+            if dist <= distance_thresh:
                 current_cluster.append(candidate)
                 used_indices.add(j)
         clusters.append(current_cluster)

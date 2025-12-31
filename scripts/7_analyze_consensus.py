@@ -24,8 +24,8 @@ Arguments:
     --iterations: Max number of verifier iterations to simulate.
 
 Methodology:
-    Uses 'lib_advanced_metrics' to calculate Intersection over Union (IoU) with a standard 
-    threshold (usually IoU >= 0.1 for object detection in this domain).
+    Uses 'lib_advanced_metrics' for one-to-one detection matching via the Hungarian algorithm
+    with a 20m spatial tolerance (centroid distance), ensuring consistency with F1 evaluation.
 """
 
 import sys

@@ -93,24 +93,6 @@ RESULTS_DIR.mkdir(exist_ok=True, parents=True)
 # Ideally this should be dynamic, but for now we look for *any* valid run to get ground truth.
 TEMPLATE_FILENAME_PATTERN = "variability_study_v3.2_run_01"
 
-def calculate_iou(boxA, boxB):
-    """
-    Calculates Intersection over Union (IoU) between two bounding boxes.
-
-    Args:
-        boxA (list): A list representing the first bounding box in YX format
-                     [ymin, xmin, ymax, xmax].
-        boxB (list): A list representing the second bounding box in YX format
-                     [ymin, xmin, ymax, xmax].
-
-    Returns:
-        float: The IoU value, ranging from 0.0 to 1.0. Returns 0.0 if boxes do not intersect.
-    """
-    b1 = box(boxA[1], boxA[0], boxA[3], boxA[2]) # Convert YX to XY for shapely: (minx, miny, maxx, maxy)
-    b2 = box(boxB[1], boxB[0], boxB[3], boxB[2])
-    if not b1.intersects(b2): return 0.0
-    return b1.intersection(b2).area / b1.union(b2).area
-
 def get_crs(dname):
     """
     Extracts the Coordinate Reference System (CRS) from a GeoJSON file.
@@ -196,16 +178,50 @@ def load_runs(run_dir, det_dir):
 
     return runs
 
-def cluster_detections(all_detections, iou_thresh=0.5):
+def get_centroid(geom_bounds):
+    """
+    Get centroid coordinates from geometry bounds [minx, miny, maxx, maxy].
+
+    Args:
+        geom_bounds (tuple): Bounding box as (minx, miny, maxx, maxy).
+
+    Returns:
+        tuple: Centroid coordinates (x, y).
+    """
+    minx, miny, maxx, maxy = geom_bounds
+    return ((minx + maxx) / 2, (miny + maxy) / 2)
+
+
+def centroid_distance(bounds_a, bounds_b):
+    """
+    Calculate Euclidean distance between centroids of two bounding boxes.
+
+    Args:
+        bounds_a (tuple): First bounding box as (minx, miny, maxx, maxy).
+        bounds_b (tuple): Second bounding box as (minx, miny, maxx, maxy).
+
+    Returns:
+        float: Distance in coordinate units (metres for EPSG:32635).
+    """
+    cx_a, cy_a = get_centroid(bounds_a)
+    cx_b, cy_b = get_centroid(bounds_b)
+    return math.sqrt((cx_a - cx_b) ** 2 + (cy_a - cy_b) ** 2)
+
+
+def cluster_detections(all_detections, distance_thresh=20.0):
     """
     Groups detections from ALL runs into clusters representing unique physical objects.
-    Uses greedy clustering based on IoU > `iou_thresh`.
+    Uses greedy clustering based on centroid distance < `distance_thresh`.
+
+    This distance-based approach aligns with the F1 evaluation spatial tolerance (20m),
+    ensuring consistency between voting aggregation and metric calculation.
 
     Args:
         all_detections (dict): A dictionary where keys are run IDs (str) and values
                                are lists of GeoJSON feature dictionaries for detections.
-        iou_thresh (float): The Intersection over Union threshold to consider two
-                            detections as belonging to the same cluster.
+        distance_thresh (float): Maximum distance in metres between detection centroids
+                                 to consider them the same cluster. Default 20m matches
+                                 the F1 evaluation spatial tolerance.
 
     Returns:
         list: A list of clusters. Each cluster is a list of dictionaries, where each
@@ -213,50 +229,55 @@ def cluster_detections(all_detections, iou_thresh=0.5):
               'source_tile', 'run_id', and 'original' GeoJSON feature.
     """
     pool = []
-    
+
     # 1. Flatten all detections into a single pool
     for run_id, feats in all_detections.items():
         for f in feats:
             props = f.get("properties", {})
             try:
-                # We prioritize geometry bounds for accuracy [minx, miny, maxx, maxy]
-                geom_box = shape(f["geometry"]).bounds 
-                # Legacy box for IOU (YX format: [ymin, xmin, ymax, xmax])
+                # Geometry bounds for distance calculation [minx, miny, maxx, maxy]
+                geom_box = shape(f["geometry"]).bounds
+                # Legacy box for backward compatibility (YX format)
                 legacy_box = [geom_box[1], geom_box[0], geom_box[3], geom_box[2]]
             except:
                 # Skip detections with invalid geometry
                 continue
 
             pool.append({
-                "box": legacy_box, 
+                "box": legacy_box,
                 "geom_bounds": geom_box,
                 "label": props.get("subtype", "mound"),
-                "source_tile": props.get("source_tile", ""), # Critical for per-tile evaluation
+                "source_tile": props.get("source_tile", ""),
                 "run_id": run_id,
                 "original": f
             })
-            
-    # 2. Cluster
+
+    # 2. Cluster using distance-based matching (aligned with F1 evaluation tolerance)
     clusters = []
     used_indices = set()
-    
+
     for i, det in enumerate(pool):
-        if i in used_indices: continue
-        
+        if i in used_indices:
+            continue
+
         current_cluster = [det]
         used_indices.add(i)
-        ref_box = det["box"]
-        
+        ref_bounds = det["geom_bounds"]
+
         for j, candidate in enumerate(pool):
-            if j in used_indices: continue
-            if candidate["label"] != det["label"]: continue 
-            
-            if calculate_iou(ref_box, candidate["box"]) > iou_thresh:
+            if j in used_indices:
+                continue
+            if candidate["label"] != det["label"]:
+                continue
+
+            # Use centroid distance instead of IoU for consistency with F1 evaluation
+            dist = centroid_distance(ref_bounds, candidate["geom_bounds"])
+            if dist <= distance_thresh:
                 current_cluster.append(candidate)
                 used_indices.add(j)
-                
+
         clusters.append(current_cluster)
-        
+
     return clusters
 
 def create_consensus_prediction(clusters, min_votes, subset_run_ids=None):
@@ -649,7 +670,7 @@ def main():
     # 3. Cluster ALL detections once (Efficiency)
     print("Clustering all detections...")
     all_dets = {r["id"]: r["detections"]["features"] for r in runs}
-    clusters = cluster_detections(all_dets, iou_thresh=0.5)
+    clusters = cluster_detections(all_dets, distance_thresh=20.0)
     print(f"Total Clusters in Pool (N={len(runs)}): {len(clusters)}")
     
     # 4. Base Variability Analysis

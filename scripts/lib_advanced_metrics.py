@@ -1,10 +1,18 @@
 
+"""
+Advanced metrics library for mound detection evaluation.
+
+Provides F1, precision, recall calculations with one-to-one matching
+using the Hungarian algorithm for optimal detection-to-reference assignment.
+"""
+
 import geopandas as gpd
 import pandas as pd
 import numpy as np
 import json
 from pathlib import Path
 from shapely.geometry import box
+from scipy.optimize import linear_sum_assignment
 import sys
 
 # Constants for project structure
@@ -55,59 +63,133 @@ def get_map_name(tile_name):
     return "Unknown"
 
 def normalize_ref_class(symbol):
-    s = "{0}".format(symbol).lower() # Handle None/NaN safety
-    if "bench mark" in s: return "benchmark_mound"
-    if "triangulation" in s: return "triangulation_mound"
-    if "burial mound" in s or "kurgan" in s: return "burial_mound"
-    if "settlement" in s: return "settlement_mound"
+    """Normalise reference symbol class names to standard categories."""
+    s = "{0}".format(symbol).lower()  # Handle None/NaN safety
+    if "bench mark" in s:
+        return "benchmark_mound"
+    if "triangulation" in s:
+        return "triangulation_mound"
+    if "burial mound" in s or "kurgan" in s:
+        return "burial_mound"
+    if "settlement" in s:
+        return "settlement_mound"
     return "unknown"
+
+
+def match_detections_to_references(det_geoms, ref_geoms, max_distance):
+    """
+    Perform one-to-one matching between detections and references using
+    the Hungarian algorithm.
+
+    Each detection can match at most one reference, and vice versa.
+    Matches are only valid if within max_distance metres.
+
+    Args:
+        det_geoms: List/array of detection geometries (points or centroids)
+        ref_geoms: List/array of reference geometries (points or centroids)
+        max_distance: Maximum distance in metres for a valid match
+
+    Returns:
+        tuple: (matched_det_indices, matched_ref_indices, unmatched_det_indices,
+                unmatched_ref_indices)
+    """
+    n_det = len(det_geoms)
+    n_ref = len(ref_geoms)
+
+    if n_det == 0 or n_ref == 0:
+        return ([], [], list(range(n_det)), list(range(n_ref)))
+
+    # Build distance matrix
+    # Use a large value for "no match possible" to ensure Hungarian algorithm
+    # doesn't assign pairs beyond max_distance
+    inf_cost = max_distance * 1000  # Effectively infinite
+
+    cost_matrix = np.full((n_det, n_ref), inf_cost)
+
+    for i, det_geom in enumerate(det_geoms):
+        det_point = det_geom.centroid if det_geom.geom_type != 'Point' else det_geom
+        for j, ref_geom in enumerate(ref_geoms):
+            ref_point = ref_geom.centroid if ref_geom.geom_type != 'Point' else ref_geom
+            dist = det_point.distance(ref_point)
+            if dist <= max_distance:
+                cost_matrix[i, j] = dist
+
+    # Hungarian algorithm finds optimal assignment minimising total cost
+    det_indices, ref_indices = linear_sum_assignment(cost_matrix)
+
+    # Filter out assignments that exceed max_distance
+    matched_det = []
+    matched_ref = []
+    for d_idx, r_idx in zip(det_indices, ref_indices):
+        if cost_matrix[d_idx, r_idx] <= max_distance:
+            matched_det.append(d_idx)
+            matched_ref.append(r_idx)
+
+    unmatched_det = [i for i in range(n_det) if i not in matched_det]
+    unmatched_ref = [i for i in range(n_ref) if i not in matched_ref]
+
+    return (matched_det, matched_ref, unmatched_det, unmatched_ref)
 
 def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     """
-    Internal helper to calc global F1 for a given set of dataframes.
-    Assumes geodataframes are already filtered/prepared if needed.
+    Calculate global F1 using one-to-one matching via Hungarian algorithm.
+
+    Each detection can match at most one reference, and vice versa.
+    This ensures accurate mound counts: if one detection covers two mounds,
+    it counts as 1 TP + 1 FN.
+
+    Args:
+        gdf_det: GeoDataFrame of detections
+        gdf_ref: GeoDataFrame of ground truth references
+        gdf_bounds: GeoDataFrame of tile boundaries (defines evaluation scope)
+        buffer_meters: Maximum distance for a valid match (default 20m)
+
+    Returns:
+        tuple: (precision, recall, f1)
     """
     tp = 0
     fp = 0
     fn = 0
-    
-    # 1. Scope
+
+    # Scope by processed maps
     processed_maps = set([get_map_name(n) for n in gdf_bounds['tile_name'].unique()])
-    
+
     for map_name in processed_maps:
-        if map_name == "Unknown": continue
-        
+        if map_name == "Unknown":
+            continue
+
         map_bounds = gdf_bounds[gdf_bounds['tile_name'].str.startswith(map_name)]
         search_area = map_bounds.geometry.union_all()
-        
+
         ref_scope = gdf_ref[gdf_ref['Map'] == map_name]
         if not ref_scope.empty:
             ref_scope = ref_scope[ref_scope.intersects(search_area)].copy()
-        
+
         det_scope = gdf_det[gdf_det['source_tile'].str.startswith(map_name)]
-        
-        # Buffer Refs
-        ref_buffered = ref_scope.copy()
-        ref_buffered['geometry'] = ref_buffered.geometry.buffer(buffer_meters)
-        
-        if det_scope.empty and ref_buffered.empty: continue
-        
+
+        if det_scope.empty and ref_scope.empty:
+            continue
+
         if det_scope.empty:
-            fn += len(ref_buffered)
-        elif ref_buffered.empty:
+            fn += len(ref_scope)
+        elif ref_scope.empty:
             fp += len(det_scope)
         else:
-             join_tp = gpd.sjoin(ref_buffered, det_scope, how='inner', predicate='intersects')
-             tp += len(join_tp.index.unique())
-             fn += len(ref_buffered) - len(join_tp.index.unique())
-             
-             join_fp = gpd.sjoin(det_scope, ref_buffered, how='left', predicate='intersects')
-             fp += len(join_fp[join_fp.index_right.isna()])
+            # One-to-one matching using Hungarian algorithm
+            det_geoms = list(det_scope.geometry)
+            ref_geoms = list(ref_scope.geometry)
+
+            matched_det, matched_ref, unmatched_det, unmatched_ref = \
+                match_detections_to_references(det_geoms, ref_geoms, buffer_meters)
+
+            tp += len(matched_det)
+            fp += len(unmatched_det)
+            fn += len(unmatched_ref)
 
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
     f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
-    
+
     return precision, recall, f1
 
 def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000):
@@ -183,28 +265,49 @@ def calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
         })
     return results
 
-def error_taxonomy(gdf_det, gdf_ref, gdf_bounds):
+def error_taxonomy(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
+    """
+    Categorise false positives and false negatives by symbol type.
+
+    Uses one-to-one matching to ensure consistent error attribution.
+
+    Args:
+        gdf_det: GeoDataFrame of detections
+        gdf_ref: GeoDataFrame of ground truth references
+        gdf_bounds: GeoDataFrame of tile boundaries
+        buffer_meters: Maximum distance for a valid match (default 20m)
+
+    Returns:
+        dict: {'false_positives': {subtype: count}, 'false_negatives': {class: count}}
+    """
     taxonomy = {"false_positives": {}, "false_negatives": {}}
-    
-    gdf_ref_buf = gdf_ref.copy()
-    gdf_ref_buf['geometry'] = gdf_ref_buf.geometry.buffer(20)
-    
-    # FPs
-    join_fp = gpd.sjoin(gdf_det, gdf_ref_buf, how='left', predicate='intersects')
-    fps = join_fp[join_fp.index_right.isna()]
-    if not fps.empty:
-        taxonomy["false_positives"] = fps['subtype'].value_counts().to_dict()
-    
-    # FNs
+
+    # Scope references to processed area
     processed_geometry = gdf_bounds.geometry.union_all()
-    refs_in_scope = gdf_ref_buf[gdf_ref_buf.intersects(processed_geometry)].copy()
-    
-    join_fn = gpd.sjoin(refs_in_scope, gdf_det, how='left', predicate='intersects')
-    fns = join_fn[join_fn.index_right.isna()].copy()
-    if not fns.empty:
-        fns['normalized_class'] = fns['Symbol'].apply(normalize_ref_class)
-        taxonomy["false_negatives"] = fns['normalized_class'].value_counts().to_dict()
-        
+    refs_in_scope = gdf_ref[gdf_ref.intersects(processed_geometry)].copy()
+
+    if gdf_det.empty and refs_in_scope.empty:
+        return taxonomy
+
+    # Perform one-to-one matching
+    det_geoms = list(gdf_det.geometry) if not gdf_det.empty else []
+    ref_geoms = list(refs_in_scope.geometry) if not refs_in_scope.empty else []
+
+    matched_det, matched_ref, unmatched_det, unmatched_ref = \
+        match_detections_to_references(det_geoms, ref_geoms, buffer_meters)
+
+    # Categorise false positives by detection subtype
+    if unmatched_det and not gdf_det.empty:
+        fp_detections = gdf_det.iloc[unmatched_det]
+        if 'subtype' in fp_detections.columns:
+            taxonomy["false_positives"] = fp_detections['subtype'].value_counts().to_dict()
+
+    # Categorise false negatives by reference class
+    if unmatched_ref and not refs_in_scope.empty:
+        fn_refs = refs_in_scope.iloc[unmatched_ref].copy()
+        fn_refs['normalized_class'] = fn_refs['Symbol'].apply(normalize_ref_class)
+        taxonomy["false_negatives"] = fn_refs['normalized_class'].value_counts().to_dict()
+
     return taxonomy
 
 def generate_report(detection_path, bounds_path, output_path=None, bootstrap_iterations=1000):
