@@ -10,18 +10,18 @@ Prompts follow this pattern: `{workflow}_{modality}[_{variant}].json`
 |-----------|--------|---------|
 | **workflow** | `detect`, `propose`, `verify` | Single-shot, Two-stage S1, Two-stage S2 |
 | **modality** | `text-only`, `text-image`, `image-only` | What drives the prompt |
-| **variant** | `_pro`, `_liberal` | Optional model/parameter variants |
+| **variant** | `-hardneg`, `_liberal` | Hard negatives, parameter variants |
 
 ---
 
 ## Summary Table
 
-| Pipeline | Scripts Used | Config | Instruction | Focus |
-|----------|--------------|--------|-------------|-------|
-| **Text-Only** | `4_detect_mounds_batch.py` | `detect_text-only.json` | `detect_text-only.md` | Baseline (no images) |
-| **Text + Image** | `4_detect_mounds_batch.py` | `detect_text-image.json` | `detect_text-image.md` | Verbose text + images |
-| **Image-Only** | `4_detect_mounds_batch.py` | `detect_image-only.json` | `detect_image-only.md` | **Recommended** |
-| **Two-Stage** | `4_detect_mounds_batch.py` + `5_verify_crops.py` | S1: `propose_image-only.json` S2: `verify_image-only.json` | S1: `propose_image-only.md` S2: `verify_image-only.md` | Maximum rigour |
+| Pipeline | Config | Hard Neg Variant | Focus |
+|----------|--------|------------------|-------|
+| **Text-Only** | `detect_text-only.json` | `detect_text-only-hardneg.json` | Baseline (no images) |
+| **Text + Image** | `detect_text-image.json` | `detect_text-image-hardneg.json` | Text + images |
+| **Image-Only** | `detect_image-only.json` | `detect_image-only-hardneg.json` | Minimal text |
+| **Two-Stage** | `propose_image-only.json` + `verify_image-only.json` | *(includes hard neg)* | Maximum rigour |
 
 ---
 
@@ -42,18 +42,18 @@ Prompts follow this pattern: `{workflow}_{modality}[_{variant}].json`
 
 - **Config**: `prompts/configs/detect_text-image.json`
 - **Instructions**: `prompts/system-instructions/detect_text-image.md`
-- **Description**: Verbose text instructions (detailed visual descriptions, constraints, negative rules) combined with 16 reference images. F1~0.75 Flash, F1~0.85 Pro.
+- **Description**: Descriptive text instructions combined with 7 reference images (4 positive, 3 null). Use `-hardneg` variant to add hard negative examples.
 - **Usage**:
 
   ```bash
   python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_text-image.json
   ```
 
-### Image-Only (`detect_image-only`) — RECOMMENDED
+### Image-Only (`detect_image-only`)
 
 - **Config**: `prompts/configs/detect_image-only.json`
 - **Instructions**: `prompts/system-instructions/detect_image-only.md`
-- **Description**: Minimal text instructions, relies primarily on 16 reference images (visual few-shot learning). Streamlined and effective.
+- **Description**: Minimal text instructions with 7 reference images (4 positive, 3 null). Neutral filenames to prevent semantic leakage. Use `-hardneg` variant to add hard negative examples.
 - **Usage**:
 
   ```bash
@@ -71,7 +71,7 @@ This is the most rigorous pipeline, designed to mimic a "Proposer-Reviewer" huma
 - **Config**: `prompts/configs/propose_image-only.json`
 - **Instructions**: `prompts/system-instructions/propose_image-only.md`
 - **Goal**: **Recall at all costs.** Flag anything that *might* be a mound.
-- **Strategy**: Positives + null tiles only (no hard negative symbols) — simpler examples yield better recall.
+- **Strategy**: 9 reference images (4 positive, 3 null, 2 hard negatives).
 - **Output**: GeoJSON with many candidates (including False Positives).
 - **Command**:
 
@@ -104,9 +104,21 @@ This is the most rigorous pipeline, designed to mimic a "Proposer-Reviewer" huma
 
 All pipeline configurations are stored in `prompts/configs/`. These JSON files control:
 
-- **Model**: Which Gemini model to use
-- **Temperature**: Stochasticity (0.0 for precision, higher for diversity/recall)
-- **Examples**: Reference images loaded into context window
+- **model**: Which model to use (e.g., `gemini-3-flash`)
+- **temperature**: Sampling temperature (1.0 for experiments)
+- **max_output_tokens**: Maximum output tokens (8192)
+- **examples**: Reference images loaded into context window
 - **instruction_file**: Path to system instruction markdown
 
 System instructions are stored in `prompts/system-instructions/`.
+
+## Baseline vs Hard Negative Variants
+
+Each single-shot pipeline has two variants:
+
+| Variant | Examples | Instruction | Purpose |
+|---------|----------|-------------|---------|
+| Baseline | Positives + null tiles | What to find | Measure baseline performance |
+| `-hardneg` | + hard negatives | + exclusion guidance | Test if hard negatives improve precision |
+
+Two-stage pipelines include hard negatives by default (no baseline variant).
