@@ -1,0 +1,48 @@
+{
+    "version": "detect_image-only_random-order",
+    "description": "H5-C: Random ordering. Examples randomly permuted with documented seed. Average of 3 permutations reported.",
+    "hypothesis": "H5-C",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_image-only.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "random_seed": 42,
+    "examples": [
+        {
+            "path": "neutral/example_03.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_06.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_01.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_05.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_04.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_07.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_02.png",
+            "label": "Positive",
+            "category": "canonical"
+        }
+    ],
+    "ordering_note": "Permutation generated with seed 42. Two additional seeds (43, 44) will be tested; results averaged."
+}

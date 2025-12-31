@@ -1,37 +1,47 @@
 {
     "version": "detect_image-only",
-    "description": "True image-only baseline. Minimal text, neutral filenames, no hard negatives.",
+    "description": "H5-A: Canonical-first ordering. Legend positives first, then nulls. Hard examples (when added) follow legend positives/negatives respectively.",
+    "hypothesis": "H5-A",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
+    "max_output_tokens": 8192,
     "examples": [
         {
             "path": "neutral/example_01.png",
-            "label": "Positive"
+            "label": "Positive",
+            "category": "canonical"
         },
         {
             "path": "neutral/example_02.png",
-            "label": "Positive"
+            "label": "Positive",
+            "category": "canonical"
         },
         {
             "path": "neutral/example_03.png",
-            "label": "Positive"
+            "label": "Positive",
+            "category": "canonical"
         },
         {
             "path": "neutral/example_04.png",
-            "label": "Positive"
+            "label": "Positive",
+            "category": "canonical"
         },
         {
             "path": "neutral/example_05.png",
-            "label": "Negative"
+            "label": "Negative",
+            "category": "null"
         },
         {
             "path": "neutral/example_06.png",
-            "label": "Negative"
+            "label": "Negative",
+            "category": "null"
         },
         {
             "path": "neutral/example_07.png",
-            "label": "Negative"
+            "label": "Negative",
+            "category": "null"
         }
-    ]
+    ],
+    "ordering_note": "Canonical-first: legend positives, then nulls. Hard examples (when added) inserted after legend items of same polarity."
 }

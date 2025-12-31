@@ -16,19 +16,85 @@ Prompts follow this pattern: `{workflow}_{modality}.json`
 | **workflow** | `detect`, `propose`, `verify` | Single-shot, Two-stage S1, Two-stage S2 |
 | **modality** | `text-only`, `text-image`, `image-only` | What drives the prompt |
 
-Optional variant suffixes (e.g., `_liberal`) indicate parameter variations within the same workflow/modality.
+Optional variant suffixes:
+
+- `-hardneg`: Includes hard negative examples and exclusion guidance
+- `_canonical-last`: H5-B ordering (hard examples first, legend last)
+- `_random-order`: H5-C ordering (random permutation with documented seed)
+- `_temp-X.X`: Temperature variant for H9 testing
 
 **Note:** Model selection (Flash vs Pro) is a runtime parameter passed to the script, not encoded in the prompt config.
 
+## Config Schema
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `version` | string | Unique identifier for this config |
+| `description` | string | Human-readable description |
+| `hypothesis` | string | (Optional) Hypothesis condition this config tests (e.g., "H5-A") |
+| `model` | string | Default model (e.g., `gemini-3-flash`) |
+| `instruction_file` | string | System instruction filename |
+| `temperature` | float | Sampling temperature (default: 1.0) |
+| `max_output_tokens` | int | Maximum output tokens (default: 8192) |
+| `examples` | array | Few-shot examples with `path`, `label`, and optional `category` |
+| `random_seed` | int | (Optional) Seed used for random ordering (H5-C) |
+| `ordering_note` | string | (Optional) Documents the ordering logic for this config |
+
 ## Active Configs
 
-| Config | Instruction | Workflow | Modality |
-|--------|-------------|----------|----------|
-| `detect_text-only.json` | `detect_text-only.md` | Single-shot | Text only |
-| `detect_text-image.json` | `detect_text-image.md` | Single-shot | Text + Image |
-| `detect_image-only.json` | `detect_image-only.md` | Single-shot | Image only |
-| `propose_image-only.json` | `propose_image-only.md` | Two-stage S1 | Image only |
-| `verify_image-only.json` | `verify_image-only.md` | Two-stage S2 | Image only |
+| Config | Instruction | Workflow | Modality | Hard Neg |
+|--------|-------------|----------|----------|----------|
+| `detect_text-only.json` | `detect_text-only.md` | Single-shot | Text only | ✗ |
+| `detect_text-only-hardneg.json` | `detect_text-only-hardneg.md` | Single-shot | Text only | ✓ |
+| `detect_text-image.json` | `detect_text-image.md` | Single-shot | Text + Image | ✗ |
+| `detect_text-image-hardneg.json` | `detect_text-image-hardneg.md` | Single-shot | Text + Image | ✓ |
+| `detect_image-only.json` | `detect_image-only.md` | Single-shot | Image only | ✗ |
+| `detect_image-only_canonical-last.json` | `detect_image-only.md` | Single-shot | Image only | ✗ |
+| `detect_image-only_random-order.json` | `detect_image-only.md` | Single-shot | Image only | ✗ |
+| `detect_image-only-hardneg.json` | `detect_image-only.md` | Single-shot | Image only | ✓ |
+| `propose_image-only.json` | `propose_image-only.md` | Two-stage S1 | Image only | ✓ |
+| `verify_image-only.json` | `verify_image-only.md` | Two-stage S2 | Image only | ✓ |
+
+## Hypothesis-Specific Configs
+
+### H5: Example Ordering
+
+Tests whether the order of few-shot examples affects detection performance.
+
+| Config | Hypothesis | Ordering | Description |
+|--------|------------|----------|-------------|
+| `detect_image-only.json` | H5-A | Canonical-first | Legend positives → nulls (baseline) |
+| `detect_image-only_canonical-last.json` | H5-B | Canonical-last | Hard examples first → legend last |
+| `detect_image-only_random-order.json` | H5-C | Random | Random permutation (seed 42; seeds 43, 44 also tested) |
+
+**Example categories:**
+
+- `canonical`: Legend-derived symbol examples (burial mound, settlement mound, etc.)
+- `hard_positive`: False negatives from training evaluation (added post-selection)
+- `hard_negative`: False positives from training evaluation (added post-selection)
+- `null`: Tiles with no mounds (always included)
+
+**Current status**: Skeleton configs with canonical + null examples only. Hard examples to be added after training tile evaluation.
+
+### H9: Temperature
+
+Temperature is a **runtime parameter**, not a config variant. The 48-condition factorial design (preregistration Section 8.4.6) tests T ∈ {0.0, 0.3, 0.7, 1.0} across all config combinations. No separate config files needed.
+
+### H6: Prompt Diversity
+
+Methodology documented in preregistration Section 8.3.2. Five semantically equivalent instruction variants will be created before holdout evaluation:
+
+| Variant | Example Task Framing |
+|---------|---------------------|
+| V1 | "Identify burial mound symbols in this map section" |
+| V2 | "Detect tumuli markers on this topographic map" |
+| V3 | "Find kurgan indicators in this image" |
+| V4 | "Locate ancient burial mound cartographic symbols" |
+| V5 | "Mark all mound features shown on this Soviet map" |
+
+**Status**: Methodology specified; final instruction files to be created before holdout evaluation.
+
+---
 
 ## Migration from Old Names (2025-12-23)
 
