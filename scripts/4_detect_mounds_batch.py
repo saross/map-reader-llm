@@ -36,9 +36,6 @@ from shapely.geometry import box, mapping
 import rasterio
 import sys
 from datetime import datetime, timezone
-import uuid
-import subprocess
-import hashlib
 import concurrent.futures
 import threading
 
@@ -46,207 +43,221 @@ import threading
 sys.path.append(str(Path(__file__).parent.parent))
 from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, REFERENCES_DIR
 
+# Import comprehensive metadata tracking
+from scripts.lib_llm_metadata import (
+    LLMMetadataTracker,
+    LLMResponseMetadata,
+    extract_gemini_metadata,
+    create_error_metadata,
+    estimate_cost,
+    LLMProvider
+)
+
 
 # Script Version
-__version__ = "4.1.0" # Parallelization Update
+__version__ = "4.2.0"  # Comprehensive metadata tracking
 
-class MetadataTracker:
-    def __init__(self, config, system_instruction):
-        self.run_id = str(uuid.uuid4())
-        self.start_time = datetime.now(timezone.utc)
-        self.config = config
-        self.system_instruction_hash = hashlib.sha256(system_instruction.encode('utf-8')).hexdigest()
-        self.lock = threading.Lock()
-        
-        self.stats = {
-            "tiles_processed": 0,
-            "tiles_failed": 0,
-            "retries_total": 0,
-            "retries_429_ratelimit": 0,
-            "retries_500_server": 0,
-            "timeouts": 0,
-            "failed_tiles_details": [],
-            "retry_details": []
-        }
-        
-        self.usage = {
-            "total_input_tokens": 0,
-            "total_output_tokens": 0
-        }
-        
-        self.results_summary = {
-            "total_detections": 0,
-            "class_counts": {}
-        }
+class ResultsTracker:
+    """
+    Lightweight thread-safe tracker for detection results.
 
-    def get_git_revision(self):
-        try:
-            return subprocess.check_output(['git', 'rev-parse', 'HEAD'], stderr=subprocess.DEVNULL).decode('ascii').strip()
-        except:
-            return "unknown"
+    Works alongside LLMMetadataTracker to aggregate task-specific results.
+    """
 
-    def update_usage(self, response):
-        with self.lock:
-            if hasattr(response, 'usage_metadata'):
-                self.usage["total_input_tokens"] += response.usage_metadata.prompt_token_count
-                self.usage["total_output_tokens"] += response.usage_metadata.candidates_token_count
+    def __init__(self):
+        self._lock = threading.Lock()
+        self.total_detections = 0
+        self.class_counts = {}
 
-    def update_results(self, detections):
-        with self.lock:
-            self.results_summary["total_detections"] += len(detections)
+    def update(self, detections):
+        """Update results with new detections."""
+        with self._lock:
+            self.total_detections += len(detections)
             for det in detections:
                 subtype = det.get("subtype", "unknown")
-                self.results_summary["class_counts"][subtype] = self.results_summary["class_counts"].get(subtype, 0) + 1
-    
-    def log_retry(self, tile, attempt, reason):
-        with self.lock:
-             self.stats["retries_total"] += 1
-             self.stats["retry_details"].append({
-                 "tile": tile,
-                 "attempt": attempt,
-                 "reason": reason
-             })
+                self.class_counts[subtype] = self.class_counts.get(subtype, 0) + 1
 
-    def log_failure(self, tile, reason):
-        with self.lock:
-            self.stats["tiles_failed"] += 1
-            self.stats["failed_tiles_details"].append({
-                "tile": tile,
-                "reason": reason
-            })
-            
-    def increment_success(self):
-        with self.lock:
-            self.stats["tiles_processed"] += 1
-            
-    def increment_stat(self, key):
-        with self.lock:
-            self.stats[key] = self.stats.get(key, 0) + 1
+    def get_summary(self):
+        """Return results summary dict."""
+        with self._lock:
+            return {
+                "total_detections": self.total_detections,
+                "class_counts": dict(self.class_counts)
+            }
 
-    def finalize(self):
-        end_time = datetime.now(timezone.utc)
-        duration = (end_time - self.start_time).total_seconds()
-        
-        return {
-            "run_id": self.run_id,
-            "timestamp": {
-                "start": self.start_time.isoformat(),
-                "end": end_time.isoformat(),
-                "duration_seconds": duration
-            },
-            "environment": {
-                "git_commit": self.get_git_revision(),
-                "script": "4_detect_mounds_batch.py",
-                "script_version": __version__
-            },
-            "configuration": {
-                "version": self.config.get("version"),
-                "model": self.config.get("model"),
-                "instruction_file": self.config.get("instruction_file", "unknown"),
-                "prompt_hash": self.system_instruction_hash,
-                "temperature": self.config.get("temperature", 0.1),
-                "full_config_snapshot": self.config,
-                "target_manifest": self.config.get("manifest_path", "none")
-            },
-            "execution_stats": self.stats,
-            "usage_stats": self.usage,
-            "results_summary": self.results_summary
-        }
-
-def process_single_tile(tile_path, model, tracker, reference_content, base_wait, max_retries, config_version, model_name_cfg):
+def process_single_tile(
+    tile_path,
+    model,
+    metadata_tracker,
+    results_tracker,
+    reference_content,
+    base_wait,
+    max_retries,
+    config_version,
+    model_name_cfg
+):
     """
-    Worker function to process a single tile.
+    Worker function to process a single tile with comprehensive metadata capture.
+
+    Args:
+        tile_path: Path to the tile image
+        model: The Gemini model instance
+        metadata_tracker: LLMMetadataTracker for API metadata
+        results_tracker: ResultsTracker for detection counts
+        reference_content: List of reference images and labels
+        base_wait: Base wait time for rate limit retries
+        max_retries: Maximum retry attempts
+        config_version: Version string from config
+        model_name_cfg: Model name from config
+
+    Returns:
+        List of GeoJSON features for detected mounds
     """
     tile_filename = tile_path.name
     features = []
-    
+
     try:
         img = Image.open(tile_path)
-        
+
         content_parts = [
             "Here are the Reference Symbols you must find:",
         ]
         content_parts.extend(reference_content)
-        content_parts.append("Now, find detection instances that visually match ANY of the above Reference Examples in the Target Map Tile below:")
+        content_parts.append(
+            "Now, find detection instances that visually match ANY of the "
+            "above Reference Examples in the Target Map Tile below:"
+        )
         content_parts.append(img)
-        
+
         response = None
-        
+        response_metadata = None
+
         for attempt in range(max_retries):
+            request_start = datetime.now(timezone.utc)
+
             try:
-                # Use a new helper to avoid potential thread sharing issues with client if any exist, 
-                # though genai.GenerativeModel should be thread-safe for generate_content.
                 response = model.generate_content(
                     content_parts,
-                    request_options={'timeout': 900} 
+                    request_options={'timeout': 900}
                 )
-                tracker.update_usage(response)
-                
+
+                # Extract comprehensive metadata from response
+                response_metadata = extract_gemini_metadata(
+                    response=response,
+                    request_start=request_start,
+                    model_requested=model_name_cfg,
+                    item_id=tile_filename,
+                    attempt=attempt + 1
+                )
+
                 # Check Finish Reason
                 if hasattr(response, 'candidates') and response.candidates:
                     reason = response.candidates[0].finish_reason
-                    if reason == 2: # MAX_TOKENS
-                        # print(f"\n[Warning] {tile_filename} Attempt {attempt+1}: Max Tokens. Retrying...")
-                        tracker.log_retry(tile_filename, attempt + 1, "MAX_TOKENS (Finish Reason 2)")
-                        time.sleep(5) # Small buffer
-                        continue # Trigger retry
-                    elif reason != 1: # Not STOP (Success)
-                         # print(f"\n[Warning] {tile_filename} Attempt {attempt+1}: Unexpected Finish Reason {reason}")
-                         pass
-                         
-                # If we got here and reason is 1 (or we accepted the response), check content
+                    if reason == 2:  # MAX_TOKENS
+                        metadata_tracker.log_retry(
+                            tile_filename,
+                            attempt + 1,
+                            "MAX_TOKENS (Finish Reason 2)",
+                            error_type="other"
+                        )
+                        time.sleep(5)
+                        continue
+                    elif reason != 1:  # Not STOP (Success)
+                        pass  # Log but continue
+
+                # Check content validity
                 if response.candidates and response.candidates[0].content.parts:
-                    break # Success
+                    break  # Success
                 else:
                     if attempt < max_retries - 1:
-                        # print(f"\n[Warning] {tile_filename} Attempt {attempt+1}: Empty response content. Retrying...")
                         time.sleep(5)
                         continue
 
             except Exception as e:
                 error_str = str(e)
-                tracker.log_retry(tile_filename, attempt + 1, error_str)
-                
+
+                # Create error metadata
+                response_metadata = create_error_metadata(
+                    error=e,
+                    request_start=request_start,
+                    provider=LLMProvider.GEMINI.value,
+                    model_requested=model_name_cfg,
+                    item_id=tile_filename,
+                    attempt=attempt + 1
+                )
+
+                # Categorise and log retry
                 if "429" in error_str or "ResourceExhausted" in error_str:
-                    tracker.increment_stat("retries_429_ratelimit")
-                    wait = base_wait * (2 ** attempt) + (attempt * 2) # Jitter/Backoff
-                    # print(f"\n[Warning] {tile_filename} Rate Limit (429). Waiting {wait}s...")
+                    metadata_tracker.log_retry(
+                        tile_filename, attempt + 1, error_str, error_type="rate_limit"
+                    )
+                    wait = base_wait * (2 ** attempt) + (attempt * 2)
                     time.sleep(wait)
                 elif "503" in error_str or "InternalServerError" in error_str:
-                    tracker.increment_stat("retries_500_server")
+                    metadata_tracker.log_retry(
+                        tile_filename, attempt + 1, error_str, error_type="server_error"
+                    )
                     time.sleep(30)
                 elif "DeadlineExceeded" in error_str:
-                    tracker.increment_stat("timeouts")
+                    metadata_tracker.log_retry(
+                        tile_filename, attempt + 1, error_str, error_type="timeout"
+                    )
                     time.sleep(30)
                 elif "404" in error_str and "models/" in error_str:
-                     print(f"\n[CRITICAL] Model '{model_name_cfg}' not found. Terminating.")
-                     return [] # Fatal
+                    print(f"\n[CRITICAL] Model '{model_name_cfg}' not found. Terminating.")
+                    return []  # Fatal
                 else:
+                    metadata_tracker.log_retry(
+                        tile_filename, attempt + 1, error_str, error_type="other"
+                    )
                     print(f"\n[Error] {tile_filename}: {e}")
-                    if attempt < 2: time.sleep(20)
-                    else: break
-        
-        if not response or not (hasattr(response, 'candidates') and response.candidates and response.candidates[0].finish_reason == 1):
-            tracker.log_failure(tile_filename, "Retries Exhausted / Invalid Finish Reason")
+                    if attempt < 2:
+                        time.sleep(20)
+                    else:
+                        break
+
+        # Check for valid response
+        valid_response = (
+            response and
+            hasattr(response, 'candidates') and
+            response.candidates and
+            response.candidates[0].finish_reason == 1
+        )
+
+        if not valid_response:
+            if response_metadata:
+                response_metadata.parse_success = False
+            metadata_tracker.log_failure(tile_filename, "Retries Exhausted / Invalid Finish Reason")
+            if response_metadata:
+                metadata_tracker.log_response(tile_filename, response_metadata)
             return []
 
-        tracker.increment_success()
-        
+        # Log successful response metadata
+        if response_metadata:
+            metadata_tracker.log_response(tile_filename, response_metadata)
+
+        metadata_tracker.log_success(tile_filename)
+
+        # Parse detections
         detections = []
         try:
             json_response = json.loads(response.text)
             if isinstance(json_response, list):
                 # Handle case where model returns [ { "detections": [...] } ]
-                if len(json_response) > 0 and isinstance(json_response[0], dict) and "detections" in json_response[0]:
+                if (
+                    len(json_response) > 0 and
+                    isinstance(json_response[0], dict) and
+                    "detections" in json_response[0]
+                ):
                     detections = json_response[0]["detections"]
                 else:
                     detections = json_response
             else:
                 detections = json_response.get("detections", [])
-            tracker.update_results(detections)
+            results_tracker.update(detections)
         except Exception as e:
             print(f"Failed to parse response for {tile_filename}: {e}")
-            tracker.log_failure(tile_filename, f"JSON Parse Error: {e}")
+            metadata_tracker.log_failure(tile_filename, f"JSON Parse Error: {e}")
             return []
 
         with rasterio.open(tile_path) as src:
@@ -348,7 +359,16 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         print(f"Error: Prompt text not found at {prompt_path}")
         return
 
-    tracker = MetadataTracker(config, v3_prompt_text)
+    # Initialise metadata tracker for comprehensive API logging
+    metadata_tracker = LLMMetadataTracker(
+        config=config,
+        system_instruction=v3_prompt_text,
+        script_name="4_detect_mounds_batch.py",
+        script_version=__version__
+    )
+
+    # Initialise results tracker for detection counts
+    results_tracker = ResultsTracker()
 
     # Build Few-Shot Context from Config
     refs_dir = REFERENCES_DIR
@@ -487,14 +507,15 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         # Submit all tasks
         futures = {
             executor.submit(
-                process_single_tile, 
-                tile, 
-                model, 
-                tracker, 
-                reference_content, 
-                base_wait, 
-                max_retries, 
-                config_version, 
+                process_single_tile,
+                tile,
+                model,
+                metadata_tracker,
+                results_tracker,
+                reference_content,
+                base_wait,
+                max_retries,
+                config_version,
                 model_name_cfg
             ): tile.name for tile in tiles_to_process
         }
@@ -512,14 +533,31 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     collection["crs"] = {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::32635"}}
     with open(output_file, "w") as f:
         geojson.dump(collection, f)
-    
-    # Save Metadata
-    meta = tracker.finalize()
+
+    # Add results summary to metadata tracker
+    metadata_tracker.update_results_summary(results_tracker.get_summary())
+
+    # Estimate costs
+    cost_estimate = estimate_cost(
+        usage=metadata_tracker.usage,
+        provider=LLMProvider.GEMINI.value,
+        model=model_name_cfg
+    )
+
+    # Finalise and save metadata
+    meta = metadata_tracker.finalise(include_per_item=True)
+    meta["cost_estimate"] = cost_estimate
+
     with open(meta_file, "w") as f:
         json.dump(meta, f, indent=2)
-        
-    print(f"Finished. Saved to {output_file}")
+
+    # Print summary
+    print(f"\nFinished. Saved to {output_file}")
     print(f"Metadata saved to {meta_file}")
+    print(f"Tiles processed: {meta['execution_stats']['items_processed']}")
+    print(f"Total detections: {results_tracker.get_summary()['total_detections']}")
+    print(f"Tokens used: {meta['usage_stats']['total_tokens']:,}")
+    print(f"Estimated cost: ${cost_estimate['total_cost_usd']:.4f}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
