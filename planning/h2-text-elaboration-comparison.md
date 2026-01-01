@@ -18,13 +18,13 @@
 | Config | Modality | Elaboration | Hard Neg | New? |
 | :--- | :--- | :--- | :--- | :--- |
 | `detect_text-only.json` | text-only | brief | no | exists |
-| `detect_text-only-hardneg.json` | text-only | brief | yes | exists |
-| `detect_text-only-elaborate.json` | text-only | elaborate | no | **create** |
-| `detect_text-only-elaborate-hardneg.json` | text-only | elaborate | yes | **create** |
+| `detect_text-only_hardneg.json` | text-only | brief | yes | exists |
+| `detect_text-only_elaborate.json` | text-only | elaborate | no | **create** |
+| `detect_text-only_elaborate_hardneg.json` | text-only | elaborate | yes | **create** |
 | `detect_text-image.json` | text+image | brief | no | exists |
-| `detect_text-image-hardneg.json` | text+image | brief | yes | exists |
-| `detect_text-image-elaborate.json` | text+image | elaborate | no | **create** |
-| `detect_text-image-elaborate-hardneg.json` | text+image | elaborate | yes | **create** |
+| `detect_text-image_hardneg.json` | text+image | brief | yes | exists |
+| `detect_text-image_elaborate.json` | text+image | elaborate | no | **create** |
+| `detect_text-image_elaborate_hardneg.json` | text+image | elaborate | yes | **create** |
 
 ---
 
@@ -99,7 +99,7 @@ missing genuine mounds.
 Return JSON with normalised coords (0-1000).
 ```
 
-### Elaborate: `detect_text-only-elaborate.md` (~950 words)
+### Elaborate: `detect_text-only_elaborate.md` (~950 words)
 
 ```markdown
 # Detection Prompt: Text-Only Elaborate
@@ -331,7 +331,7 @@ Ratio: 3.0×
 
 ## 2. Text-Only (With Hard Negatives)
 
-### Brief: `detect_text-only-hardneg.md` (~420 words)
+### Brief: `detect_text-only_hardneg.md` (~420 words)
 
 ```markdown
 # Detection Prompt: Text-Only with Hard Negatives
@@ -431,7 +431,7 @@ missing genuine mounds.
 Return JSON with normalised coords (0-1000).
 ```
 
-### Elaborate: `detect_text-only-elaborate-hardneg.md` (~1400 words)
+### Elaborate: `detect_text-only_elaborate_hardneg.md` (~1400 words)
 
 ```markdown
 # Detection Prompt: Text-Only Elaborate with Hard Negatives
@@ -832,7 +832,7 @@ symbols.
 Return JSON with normalised coords (0-1000).
 ```
 
-### Elaborate: `detect_text-image-elaborate.md` (~420 words)
+### Elaborate: `detect_text-image_elaborate.md` (~420 words)
 
 ```markdown
 # Detection Prompt: Text+Image Elaborate
@@ -962,7 +962,7 @@ Ratio: 2.2×
 
 ## 4. Text+Image (With Hard Negatives)
 
-### Brief: `detect_text-image-hardneg.md` (~220 words)
+### Brief: `detect_text-image_hardneg.md` (~220 words)
 
 ```markdown
 # Detection Prompt: Text+Image with Hard Negatives
@@ -1016,7 +1016,7 @@ excluding.
 Return JSON with normalised coords (0-1000).
 ```
 
-### Elaborate: `detect_text-image-elaborate-hardneg.md` (~680 words)
+### Elaborate: `detect_text-image_elaborate_hardneg.md` (~680 words)
 
 ```markdown
 # Detection Prompt: Text+Image Elaborate with Hard Negatives
@@ -1282,17 +1282,17 @@ If 88 conditions is too many, H2 can be tested as a focused comparison:
 | File | Status |
 | :--- | :--- |
 | `prompts/system-instructions/detect_text-only.md` | ✅ updated (2026-01-01) |
-| `prompts/system-instructions/detect_text-only-hardneg.md` | ✅ updated (2026-01-01) |
+| `prompts/system-instructions/detect_text-only_hardneg.md` | ✅ updated (2026-01-01) |
 | `prompts/system-instructions/detect_text-image.md` | ✅ updated (2026-01-01) |
-| `prompts/system-instructions/detect_text-image-hardneg.md` | ✅ updated (2026-01-01) |
-| `prompts/system-instructions/detect_text-only-elaborate.md` | ✅ created (2026-01-01) |
-| `prompts/system-instructions/detect_text-only-elaborate-hardneg.md` | ✅ created (2026-01-01) |
-| `prompts/system-instructions/detect_text-image-elaborate.md` | ✅ created (2026-01-01) |
-| `prompts/system-instructions/detect_text-image-elaborate-hardneg.md` | ✅ created (2026-01-01) |
-| `prompts/configs/detect_text-only-elaborate.json` | ✅ created (2026-01-01) |
-| `prompts/configs/detect_text-only-elaborate-hardneg.json` | ✅ created (2026-01-01) |
-| `prompts/configs/detect_text-image-elaborate.json` | ✅ created (2026-01-01) |
-| `prompts/configs/detect_text-image-elaborate-hardneg.json` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-image_hardneg.md` | ✅ updated (2026-01-01) |
+| `prompts/system-instructions/detect_text-only_elaborate.md` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-only_elaborate_hardneg.md` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-image_elaborate.md` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-image_elaborate_hardneg.md` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-only_elaborate.json` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-only_elaborate_hardneg.json` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-image_elaborate.json` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-image_elaborate_hardneg.json` | ✅ created (2026-01-01) |
 
 ---
 

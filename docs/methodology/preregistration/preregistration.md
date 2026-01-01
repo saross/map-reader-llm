@@ -1179,6 +1179,8 @@ After individual hypothesis tests, exploratory analyses will examine:
 
 #### 8.4.6 Pairwise Interaction Testing Methodology
 
+**Rationale**: Individual hypothesis tests (H1, H5, H7, H9) examine main effects in isolation. However, factor effects may not be additive — a technique that improves performance in one condition may degrade it in another. To detect such positive or negative interactions, we test all two-way (pairwise) combinations of experimental factors. This enables us to identify synergistic effects (e.g., hard negatives help more with text+image than image-only) or antagonistic effects (e.g., low temperature helps with canonical-first but hurts with random ordering).
+
 To systematically detect two-way interactions between experimental factors, we employ a full factorial design on core factors, with pre-specified escalation triggers for higher-order interactions.
 
 **Core experimental factors:**
@@ -1365,12 +1367,12 @@ This section maps each hypothesis to the specific configuration files, system in
 | Hypothesis | Config Files | System Instructions |
 | :--- | :--- | :--- |
 | H1 | `detect_image-only*.json` vs `detect_text-image*.json` | `detect_image-only.md` vs `detect_text-image.md` |
-| H2 | `detect_*-elaborate*.json` variants | `detect_*-elaborate*.md` variants |
+| H2 | `detect_*_elaborate*.json` variants | `detect_*_elaborate*.md` variants |
 | H3 | `propose_image-only.json` + `verify_image-only.json` | `propose_image-only.md`, `verify_image-only.md` |
 | H4 | Any detect config (passes parameter) | Any detect instruction |
 | H5 | `*_canonical-last.json`, `*_random-order.json` | Same instruction file per modality |
 | H6 | 5 text variants (to create before holdout) | 5 instruction variants |
-| H7 | `*-hardneg.json` variants | `*-hardneg.md` variants |
+| H7 | `*_hardneg.json` variants | `*_hardneg.md` variants |
 | H8 | All configs (model runtime override) | All instructions |
 | H9 | All configs (temperature runtime override) | All instructions |
 
@@ -1394,15 +1396,15 @@ The 48-condition factorial experiment (`studies/phase2-factorial.yaml`) tests H1
 | `detect_image-only.json` | image-only | canonical-first | baseline |
 | `detect_image-only_canonical-last.json` | image-only | canonical-last | baseline |
 | `detect_image-only_random-order.json` | image-only | random | baseline |
-| `detect_image-only-hardneg.json` | image-only | canonical-first | hardneg |
-| `detect_image-only_canonical-last-hardneg.json` | image-only | canonical-last | hardneg |
-| `detect_image-only_random-order-hardneg.json` | image-only | random | hardneg |
+| `detect_image-only_hardneg.json` | image-only | canonical-first | hardneg |
+| `detect_image-only_canonical-last_hardneg.json` | image-only | canonical-last | hardneg |
+| `detect_image-only_random-order_hardneg.json` | image-only | random | hardneg |
 | `detect_text-image.json` | text+image | canonical-first | baseline |
 | `detect_text-image_canonical-last.json` | text+image | canonical-last | baseline |
 | `detect_text-image_random-order.json` | text+image | random | baseline |
-| `detect_text-image-hardneg.json` | text+image | canonical-first | hardneg |
-| `detect_text-image_canonical-last-hardneg.json` | text+image | canonical-last | hardneg |
-| `detect_text-image_random-order-hardneg.json` | text+image | random | hardneg |
+| `detect_text-image_hardneg.json` | text+image | canonical-first | hardneg |
+| `detect_text-image_canonical-last_hardneg.json` | text+image | canonical-last | hardneg |
+| `detect_text-image_random-order_hardneg.json` | text+image | random | hardneg |
 
 Each of the 12 configs is tested at 4 temperatures (0.0, 0.3, 0.7, 1.0) for H9, yielding 48 total conditions.
 

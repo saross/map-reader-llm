@@ -32,3 +32,6 @@ Gemini keeps putting text back into the prompt even though we've decided to use 
 
 Obervation 10:
 We used $57.20 of API credits in the initial, exploratory phase, as I learned how to approach this research and use LLM APIs (in general and Google in particular).
+
+Observation 11:
+Neither Opus in the web app nor CC have great judgement about descriptions of symbols and inclusion / exclusion rules - expert guidance required.
