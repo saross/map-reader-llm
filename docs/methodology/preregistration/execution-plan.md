@@ -40,17 +40,18 @@ H4 Voting       H6 Diversity    H3 Two-Stage    H2 Elaboration
 
 ### Checklist
 
-- [ ] **Prompts**: Finalise all instruction files
-  - [ ] `detect_image-only.md` (baseline)
-  - [ ] `detect_image-only-hardneg.md` (H7)
-  - [ ] `detect_text-image.md` and `-hardneg` variant
-  - [ ] `detect_text-only.md` and `-hardneg` variant
+- [x] **Prompts**: Finalise all instruction files (2026-01-01)
+  - [x] `detect_image-only.md` (baseline, also used by hardneg configs)
+  - [x] `detect_text-image.md` and `detect_text-image_hardneg.md`
+  - [x] `detect_text-only.md` and `detect_text-only_hardneg.md`
+  - [x] `detect_*_elaborate.md` and `detect_*_elaborate_hardneg.md` (H2)
   - [ ] H6 text variants (5 semantically equivalent instructions)
-  - [ ] `propose_image-only.md` and `verify_image-only.md` (H3)
+  - [x] `propose_image-only.md` and `verify_image-only.md` (H3)
 
-- [ ] **Configs**: Create all JSON config files
-  - [ ] H5 ordering variants (canonical-first, canonical-last, random ×3)
-  - [ ] H9 temperature variants (T=0.0, 0.3, 0.7, 1.0)
+- [x] **Configs**: Create all JSON config files (2026-01-01)
+  - [x] H1/H5/H7 baseline and ordering variants (`detect_image-only*.json`, `detect_text-image*.json`)
+  - [x] H2 elaboration variants (`detect_*_elaborate*.json`)
+  - [ ] H9 temperature (runtime parameter, no separate configs needed)
   - [ ] H6 diversity configs
 
 - [ ] **Scripts**: Verify/create analysis code
@@ -282,21 +283,32 @@ Compare:
 
 ### Phase 3d: H2 Text Elaboration
 
-**Duration**: 0.5 days
-**Estimated cost**: ~$2-3 (Flash)
+**Duration**: 0.5-1 day
+**Estimated cost**: ~$3-5 (Flash)
 **Trigger**: Run if Phase 2 shows modality matters (M main effect significant)
 
 #### Design
 
-Compare within text+image modality:
-- Condition A: Minimal text ("Detect burial mound symbols")
-- Condition B: Elaborate text (detailed criteria, explicit rules)
+2×2×2 factorial within text-containing conditions:
 
-**API calls**: 2 × 5 passes × 20 tiles = 200 calls
+| Factor | Levels |
+|--------|--------|
+| Modality | text-only, text+image |
+| Elaboration | brief (~200-400 words), elaborate (~700-1400 words) |
+| Hard negatives | baseline, hardneg |
+
+**Configs**: 8 total (see `planning/h2-text-elaboration-comparison.md`)
+- `detect_text-only.json`, `detect_text-only_hardneg.json`
+- `detect_text-only_elaborate.json`, `detect_text-only_elaborate_hardneg.json`
+- `detect_text-image.json`, `detect_text-image_hardneg.json`
+- `detect_text-image_elaborate.json`, `detect_text-image_elaborate_hardneg.json`
+
+**API calls**: 8 × 5 passes × 20 tiles = 800 calls
 
 #### Outputs
 
-- [ ] F1 comparison
+- [ ] 2×2×2 ANOVA (modality × elaboration × hardneg)
+- [ ] F1 comparison: brief vs elaborate within each modality
 - [ ] Qualitative analysis of error patterns
 
 ---
@@ -373,13 +385,13 @@ If triggered → Secondary analysis (bracketing, expanded testing)
 | Phase 3a: H4 Voting | ~800 | $3-5 |
 | Phase 3b: H6 Diversity | ~800 | $5-8 |
 | Phase 3c: H3 Two-Stage | ~400 | $3-5 |
-| Phase 3d: H2 Elaboration | ~200 | $2-3 |
+| Phase 3d: H2 Elaboration | ~800 | $3-5 |
 | Phase 4: H8 Transfer | ~1,400 | $40-70 |
-| **Confirmatory Total** | **~8,500** | **$60-103** |
+| **Confirmatory Total** | **~9,100** | **$62-108** |
 | Phase 5: Exploratory | ~2,000-5,000 | $20-50 |
-| **Grand Total** | **~10,500-13,500** | **$80-153** |
+| **Grand Total** | **~11,100-14,100** | **$82-158** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$185**
+**Contingency**: 20% buffer → **Budget ceiling: ~$190**
 
 ---
 
@@ -435,5 +447,6 @@ Before submitting results:
 
 ---
 
-*Document version: 1.0*
+*Document version: 1.1*
 *Created: 2025-12-31*
+*Updated: 2026-01-01 (standardised naming, updated H2 design)*
