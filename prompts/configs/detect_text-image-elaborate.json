@@ -1,0 +1,38 @@
+{
+    "version": "detect_text-image-elaborate",
+    "description": "Text + Image elaborate. Neutral filenames, descriptive labels, detailed instructions.",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_text-image-elaborate.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {
+            "path": "neutral/example_01.png",
+            "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes."
+        },
+        {
+            "path": "neutral/example_02.png",
+            "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks."
+        },
+        {
+            "path": "neutral/example_03.png",
+            "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays."
+        },
+        {
+            "path": "neutral/example_04.png",
+            "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays."
+        },
+        {
+            "path": "neutral/example_05.png",
+            "label": "Negative: Empty tile. No mounds present."
+        },
+        {
+            "path": "neutral/example_06.png",
+            "label": "Negative: Empty tile. No mounds present."
+        },
+        {
+            "path": "neutral/example_07.png",
+            "label": "Negative: Empty tile. No mounds present."
+        }
+    ]
+}
