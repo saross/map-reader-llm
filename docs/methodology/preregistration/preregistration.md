@@ -7,7 +7,7 @@
 **Affiliations**: (1) Macquarie University, Sydney, Australia; (2) Aarhus University, Denmark
 
 **Document version**: 3.0
-**Last updated**: 2025-12-31
+**Last updated**: 2026-01-01
 **Status**: Ready for Registration
 
 ---
@@ -1342,6 +1342,72 @@ Tiles are excluded from analysis (after selection) if:
 
 ---
 
+### 8.7 Hypothesis-to-Implementation Mapping
+
+This section maps each hypothesis to the specific configuration files, system instructions, and scripts that implement it.
+
+#### 8.7.1 Implementation Status
+
+| Hypothesis | Description | Status | Implementation |
+| :--- | :--- | :--- | :--- |
+| H1 | Text modality effect | ✅ Ready | Factorial factor (modality) |
+| H2 | Text elaboration | ⚠️ Pending | Requires elaborate text config |
+| H3 | Coarse-to-fine two-stage | ✅ Ready | Separate pipeline (propose→verify) |
+| H4 | Consensus voting | ✅ Ready | Voting grid search |
+| H5 | Example ordering | ✅ Ready | Factorial factor (ordering) |
+| H6 | Prompt/example diversity | 📋 Deferred | Methodology specified; files created before holdout |
+| H7 | Hard negatives | ✅ Ready | Factorial factor (hard_negatives) |
+| H8 | Flash→Pro transfer | ✅ Ready | Runtime model parameter |
+| H9 | Temperature | ✅ Ready | Factorial factor (temperature) |
+
+#### 8.7.2 Configuration File Mapping
+
+| Hypothesis | Config Files | System Instructions |
+| :--- | :--- | :--- |
+| H1 | `detect_image-only*.json` vs `detect_text-image*.json` | `detect_image-only.md` vs `detect_text-image.md` |
+| H2 | `detect_text-image.json` (minimal) vs elaborate variant (to create) | `detect_text-image.md` vs elaborate variant |
+| H3 | `propose_image-only.json` + `verify_image-only.json` | `propose_image-only.md`, `verify_image-only.md` |
+| H4 | Any detect config (passes parameter) | Any detect instruction |
+| H5 | `*_canonical-last.json`, `*_random-order.json` | Same instruction file per modality |
+| H6 | 5 text variants (to create before holdout) | 5 instruction variants |
+| H7 | `*-hardneg.json` variants | `*-hardneg.md` variants |
+| H8 | All configs (model runtime override) | All instructions |
+| H9 | All configs (temperature runtime override) | All instructions |
+
+#### 8.7.3 Script Mapping
+
+| Hypothesis | Primary Scripts | Analysis Scripts |
+| :--- | :--- | :--- |
+| H1, H5, H7, H9 | `run_study.py`, `4_detect_mounds_batch.py` | `lib_advanced_metrics.py` |
+| H2 | `4_detect_mounds_batch.py` | `lib_advanced_metrics.py` |
+| H3 | `4_detect_mounds_batch.py` (2× sequential) | `7_analyze_consensus.py`, `8_analyze_proposer_consensus.py` |
+| H4 | `run_study.py` (passes parameter) | `7_analyze_consensus.py` |
+| H6 | `run_study.py` (extended for diversity) | `lib_advanced_metrics.py` |
+| H8 | `run_study.py` (model parameter) | `lib_advanced_metrics.py` |
+
+#### 8.7.4 Factorial Design Coverage (Phase 2)
+
+The 48-condition factorial experiment (`studies/phase2-factorial.yaml`) tests H1, H5, H7, and H9 simultaneously:
+
+| Config Pattern | H1 (Modality) | H5 (Ordering) | H7 (Hard Neg) |
+| :--- | :--- | :--- | :--- |
+| `detect_image-only.json` | image-only | canonical-first | baseline |
+| `detect_image-only_canonical-last.json` | image-only | canonical-last | baseline |
+| `detect_image-only_random-order.json` | image-only | random | baseline |
+| `detect_image-only-hardneg.json` | image-only | canonical-first | hardneg |
+| `detect_image-only_canonical-last-hardneg.json` | image-only | canonical-last | hardneg |
+| `detect_image-only_random-order-hardneg.json` | image-only | random | hardneg |
+| `detect_text-image.json` | text+image | canonical-first | baseline |
+| `detect_text-image_canonical-last.json` | text+image | canonical-last | baseline |
+| `detect_text-image_random-order.json` | text+image | random | baseline |
+| `detect_text-image-hardneg.json` | text+image | canonical-first | hardneg |
+| `detect_text-image_canonical-last-hardneg.json` | text+image | canonical-last | hardneg |
+| `detect_text-image_random-order-hardneg.json` | text+image | random | hardneg |
+
+Each of the 12 configs is tested at 4 temperatures (0.0, 0.3, 0.7, 1.0) for H9, yielding 48 total conditions.
+
+---
+
 ## 9\. Implementation Priority
 
 ### Tier 1: Must Test (Core Confirmatory)
@@ -1435,11 +1501,12 @@ The following items need to be specified before preregistration can be finalised
 
 ---
 
-*Document version: 2.11*
+*Document version: 3.0*
 *Created: 2025-12-22*
-*Updated: 2025-12-31*
+*Updated: 2026-01-01*
 
 **Changelog:**
+- v3.0: Added Section 8.7 hypothesis-to-implementation mapping; status set to Ready for Registration
 - v2.11: Section 8.3 prompt variants documentation; H6 text diversity methodology with example variants; runtime parameters specification
 - v2.10: Section 8.4.6 pairwise interaction testing methodology; full 48-condition factorial design; text-image ordering constraint; escalation triggers for 3-way interactions; cost estimation (~$60-100 total)
 - v2.9: H4 full grid search specification (N ∈ {5, 10, 30}); Sections 8.4.1-8.4.5 (library composition, cross-pass sampling methodology, example-level effectiveness analysis, hypothesis interactions); Section 8.2 cross-model comparability and cost-performance analysis; H8 adaptive testing framework with trigger conditions
