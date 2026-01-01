@@ -1,10 +1,15 @@
 # Tile Selection for Pre-Registration
 
+**Document version**: 1.0
+**Last updated**: 2025-12-31
+
 This document records the training and holdout tile sets selected for the study.
+
+---
 
 ## Selection Methodology
 
-- **Selection date**: 2024-12-23
+- **Selection date**: 2025-12-23
 - **Random seed**: 1766464625
 - **Samples per map**: 5 (balanced across 4 maps)
 - **Maximum background**: 75% (tiles with >75% empty space excluded)

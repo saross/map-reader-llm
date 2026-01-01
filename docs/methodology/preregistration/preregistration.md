@@ -6,9 +6,9 @@
 
 **Affiliations**: (1) Macquarie University, Sydney, Australia; (2) Aarhus University, Denmark
 
-**Document version**: 2.11
+**Document version**: 3.0
 **Last updated**: 2025-12-31
-**Status**: Draft
+**Status**: Ready for Registration
 
 ---
 

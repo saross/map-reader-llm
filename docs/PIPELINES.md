@@ -1,5 +1,10 @@
 # Active Pipelines
 
+**Document version**: 1.0
+**Last updated**: 2025-12-31
+
+---
+
 This document details the analysis pipelines currently active in the Map Reader LLM project. Pipelines represent different strategies for balancing **Recall** (finding all mounds) vs. **Precision** (avoiding false positives) and **Cost/Speed**.
 
 ## Naming Convention
