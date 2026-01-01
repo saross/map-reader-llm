@@ -28,7 +28,7 @@ Standard ML practice is to divide data into three distinct buckets.
 *   **Role**: **Final Deployment**.
 *   **Publication Usage**: 
     1.  **Global Metrics**: Since we have Ground Truth for the whole area, we can report the *true* accuracy of the method (n=321). This is the gold standard.
-    2.  **Discovery**: We analyze the False Positives to see if we found *new* unmapped mounds (the archeological goal).
+    2.  **Discovery**: We analyse the False Positives to see if we found *new* unmapped mounds (the archaeological goal).
     3.  **Spatial Analysis**: We map the distribution of mounds across the landscape.
 
 **Summary**: 

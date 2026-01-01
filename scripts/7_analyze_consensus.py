@@ -76,7 +76,7 @@ def analyze_consensus(pred_path, bounds_path, template_path, iterations=5):
     print(f"\n{'Prop Votes':<10} | {'Verif Votes':<10} | {'Recall':<10} | {'Precision':<10} | {'F1 Score':<10} | {'Count':<10}")
     print("-" * 80)
     
-    # NEW: First, Analyze "Proposer Consensus" against "Single-Pass Verifier" (Simulated)
+    # NEW: First, Analyse "Proposer Consensus" against "Single-Pass Verifier" (Simulated)
     # This answers: "Does Proposer 2-of-5 -> Standard Verifier improve results?"
     print("\n--- Experiment: Proposer Consensus + Single-Pass Verifier (v4.5) ---")
     print(f"{'Prop Votes':<10} | {'Strategy':<15} | {'Recall':<10} | {'Precision':<10} | {'F1 Score':<10} | {'Count':<10}")

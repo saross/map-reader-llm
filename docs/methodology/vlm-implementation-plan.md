@@ -130,7 +130,7 @@ Use best configuration from Phase 2. Likely `image_minimal_text_ordered_hardneg`
 
 Take existing `image_minimal_text` and add:
 
-```
+```text
 [Existing few-shot examples]
 
 [ADD THE FOLLOWING TEXT:]
@@ -189,25 +189,29 @@ Same few-shot library as baseline, but reorder examples:
 Add 4 hard negative examples to existing few-shot library:
 
 **Hard negative 1: Spot height**
-```
+
+```text
 [Image of spot height symbol]
 "This is NOT a burial mound. Note the elevation number (e.g., '247') adjacent to the dot, indicating a spot height measurement point."
 ```
 
 **Hard negative 2: Quarry/pit symbol**
-```
+
+```text
 [Image of quarry symbol]
 "This is NOT a burial mound. This circular shape represents a quarry or excavation pit. Note [distinguishing feature]."
 ```
 
 **Hard negative 3: Well symbol**
-```
+
+```text
 [Image of well symbol]
 "This is NOT a burial mound. This is a well symbol, indicated by [distinguishing feature]."
 ```
 
 **Hard negative 4: Other confusable feature**
-```
+
+```text
 [Image of commonly confused symbol from your false positive analysis]
 "This is NOT a burial mound. This represents [feature type]. Note [distinguishing characteristic]."
 ```
@@ -221,27 +225,32 @@ Add 4 hard negative examples to existing few-shot library:
 All variants use identical few-shot examples; only the task instruction text changes.
 
 **Variant 1** (baseline phrasing):
-```
+
+```text
 "Identify burial mound symbols in this map section"
 ```
 
 **Variant 2** (alternative terminology):
-```
+
+```text
 "Detect tumuli markers on this topographic map"
 ```
 
 **Variant 3** (regional terminology):
-```
+
+```text
 "Find kurgan indicators in this image"
 ```
 
 **Variant 4** (formal phrasing):
-```
+
+```text
 "Locate ancient burial mound cartographic symbols"
 ```
 
 **Variant 5** (contextual phrasing):
-```
+
+```text
 "Mark all mound features shown on this Soviet military topographic map"
 ```
 
@@ -328,7 +337,7 @@ For H10 (cross-model), multiply by number of models tested.
 4. [ ] Specify spatial matching threshold for voting
 5. [ ] Implement voting aggregation logic
 6. [ ] Run Phase 1 on holdout set
-7. [ ] Analyze Phase 1 results before proceeding to Phase 2
+7. [ ] Analyse Phase 1 results before proceeding to Phase 2
 
 ---
 

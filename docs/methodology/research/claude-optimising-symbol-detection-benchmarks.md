@@ -1,4 +1,4 @@
-# Optimizing VLM-Based Burial Mound Detection: From F1 0.75 to 0.85
+# Optimising VLM-Based Burial Mound Detection: From F1 0.75 to 0.85
 
 Reaching your F1=0.85 target from the current 0.75 is achievable through a combination of **expanded consensus voting with prompt diversity**, **optimized few-shot example selection**, and **systematic error analysis**—without abandoning your working single-stage approach. Your current VLM-based pipeline at F1=0.75 is already competitive with traditional CV methods for archaeological symbol detection, which typically require 500+ annotated training examples to match this performance. The two-stage detection failure you experienced is explained by documented VLM limitations in precise localization and context loss when cropping symbol regions.
 
@@ -99,7 +99,7 @@ Temperature scaling on verbalized probabilities effectively improves calibration
 
 **Expand consensus voting with diversity**: Increase from your current pass count to 5-7 passes, varying temperature (0.7, 0.9, 1.0) and using 2-3 prompt variants. Expected improvement: **3-5 percentage points**.
 
-**Optimize example ordering**: Place your clearest, most representative burial mound examples last in the prompt to exploit recency bias. Randomize middle examples across queries. Expected improvement: **1-2 percentage points**.
+**Optimise example ordering**: Place your clearest, most representative burial mound examples last in the prompt to exploit recency bias. Randomise middle examples across queries. Expected improvement: **1-2 percentage points**.
 
 **Add explicit negative examples**: Include similar-looking symbols that are NOT burial mounds (quarries, wells, elevation points) with clear explanations of distinguishing features. Research on hard negative mining shows **up to 3.3% gains** in few-shot settings.
 

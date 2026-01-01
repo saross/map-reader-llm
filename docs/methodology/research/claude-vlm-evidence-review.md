@@ -9,7 +9,7 @@
 
 A research synthesis document recommended several "best practices" for VLM-based detection tasks:
 1. Minimize text in prompts to avoid text-image interference
-2. Use two-stage proposer-verifier pipelines to optimize precision-recall
+2. Use two-stage proposer-verifier pipelines to optimise precision-recall
 3. Consensus voting to reduce errors
 
 When implementing these on **Gemini 3 Flash and Pro** for cartographic symbol detection (burial mounds on Soviet topographic maps):
@@ -157,7 +157,7 @@ Voting addresses **stochastic variation** in VLM outputs - the randomness inhere
 - Task-agnostic (works regardless of domain)
 - Doesn't depend on assumptions about priors or text-image interaction
 
-The other strategies made assumptions about VLM behavior that may be:
+The other strategies made assumptions about VLM behaviour that may be:
 - Model-specific (Gemini 2.5 vs 3)
 - Task-specific (counterfactual images vs novel domain detection)
 

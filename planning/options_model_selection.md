@@ -42,7 +42,7 @@ Use a YAML file to define a "Batch" of multiple runs.
 *   **Usage**: `python run_queue.py queue.yaml`
 *   **Pros**:
     *   **Automation**: "Set and Forget". Run 5 experiments overnight perfectly.
-    *   **Organization**: logical grouping of related runs.
+    *   **Organisation**: logical grouping of related runs.
 *   **Cons**:
     *   **Complexity**: Requires building a new `run_queue.py` orchestrator.
 

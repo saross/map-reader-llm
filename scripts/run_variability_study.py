@@ -123,7 +123,7 @@ def run_study(config_path, iterations, study_id, model_override=None, workers=1,
 
     # --- Analysis ---
     if not all_metrics:
-        print("No successful runs to analyze.")
+        print("No successful runs to analyse.")
         return
 
     df = pd.DataFrame(all_metrics)

@@ -24,7 +24,7 @@ The most impactful improvement available is **kNN-based example selection**. Rat
 
 The REPRE (representativeness) method offers an alternative: cluster your example pool via K-means, then select cluster centroids as representative samples. This ensures coverage across the full distribution of visual variations in burial mound symbols. Gaussian Monte Carlo selection—adding noise to images and selecting those with stable predictions—identifies robust, informative examples.
 
-**Hard negative mining is non-negotiable.** Analyze your current false positives to identify common confounders—likely spot heights, trigonometric points, degraded map areas, and small circles from other feature classes. Add 3-5 explicit examples showing "This is NOT a burial mound because [specific visual distinction]." Run your current model on unlabeled tiles, collect false positives, and iteratively add these as hard negatives. One to two iterations typically suffice for convergence.
+**Hard negative mining is non-negotiable.** Analyse your current false positives to identify common confounders—likely spot heights, trigonometric points, degraded map areas, and small circles from other feature classes. Add 3-5 explicit examples showing "This is NOT a burial mound because [specific visual distinction]." Run your current model on unlabeled tiles, collect false positives, and iteratively add these as hard negatives. One to two iterations typically suffice for convergence.
 
 ## Text-image interference explains your recall collapse
 
@@ -116,7 +116,7 @@ For output formatting, Gemini's `responseSchema` parameter enables strict JSON e
 6. **Implement two-stage detection**: broad candidate identification → targeted verification
 7. **Add kNN-based example retrieval** using CLIP embeddings to dynamically select relevant examples per tile
 8. **Deploy multi-pass voting** (3 passes, 2/3 agreement threshold)
-9. **Analyze false positives** from current pipeline to mine hard negatives iteratively
+9. **Analyse false positives** from current pipeline to mine hard negatives iteratively
 
 **High-impact architectural change:**
 
