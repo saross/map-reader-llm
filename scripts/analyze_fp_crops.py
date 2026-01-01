@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 """
 Analyse False Positives/Negatives and Extract Crops for Hard Example Library
 =============================================================================
@@ -6,16 +6,33 @@ Analyse False Positives/Negatives and Extract Crops for Hard Example Library
 Clusters FP/FN detections from multiple runs using distance-based matching (20m)
 to align with F1 evaluation spatial tolerance, then extracts image crops for
 the most recurrent errors to build a hard example library.
+
+Usage:
+    python scripts/analyze_fp_crops.py \\
+        --input outputs/results/v4.2_temp_0_7_train/run_01_fn.geojson \\
+        --output_dir outputs/hard-examples \\
+        --mode fn \\
+        --manifest inputs/training_manifest.json
+
+Author: Shawn Ross, Claude Code
+License: Apache 2.0
 """
 
 import json
 import geopandas as gpd
-import pandas as pd
 import math
+import sys
 from pathlib import Path
 from shapely.geometry import box
 from PIL import Image
 import argparse
+
+# Add project root to path for config import
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+# Import project config for consistent paths
+import config
 
 
 def get_centroid(geom_bounds):
@@ -146,12 +163,29 @@ def extract_crops(args):
 
     with open(manifest_path) as f:
         manifest = json.load(f)
-        # Map tile name (w/o ext) to file path
-        # Actually manifest is list of filenames?
-        # Let's assume input tiles dir
-        pass
 
-    tiles_dir = Path("inputs/tiles") # Hardcoded for now based on project struct
+    # Build tile lookup: tile stem (without extension) -> full path in TILES_DIR
+    # Manifest contains filenames like "K-35-052-4_32635_x1344_y2240.png"
+    # Files are stored in subdirectories: TILES_DIR/{map_name}/{tile_name}.png
+    tiles_dir = config.TILES_DIR
+    tile_lookup = {}
+    for tile_filename in manifest:
+        tile_stem = Path(tile_filename).stem
+        # Extract map name from tile filename (everything before _x{N}_y{N})
+        # e.g., "K-35-052-4_32635_x1344_y2240" -> "K-35-052-4_32635"
+        parts = tile_stem.rsplit("_x", 1)
+        if len(parts) == 2:
+            map_name = parts[0]
+            tile_path = tiles_dir / map_name / tile_filename
+            if tile_path.exists():
+                tile_lookup[tile_stem] = tile_path
+            else:
+                # Try alternative locations
+                found = list(tiles_dir.rglob(tile_filename))
+                if found:
+                    tile_lookup[tile_stem] = found[0]
+
+    print(f"Built tile lookup with {len(tile_lookup)} entries from manifest")
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
@@ -169,20 +203,26 @@ def extract_crops(args):
         rank = i + 1
         tile_name = item["tile"]
         print(f"Processing Rank {rank}: {tile_name} (Count: {item['count']})")
-        
-        # Find image
-        # Priority: tile_name.png, recurisve search for tile_name.png
-        tile_path = next(tiles_dir.rglob(f"{tile_name}.png"), None)
-        
+
+        # Normalise tile name (remove .png if present for lookup)
+        tile_stem = tile_name.replace(".png", "")
+
+        # Find image using manifest lookup first, then fallback to search
+        tile_path = tile_lookup.get(tile_stem)
+
         if not tile_path:
-             # Try exact match but ensure file
-             candidate = next(tiles_dir.rglob(f"{tile_name}"), None)
-             if candidate and candidate.is_file():
-                 tile_path = candidate
-        
+            # Fallback: search in tiles_dir by exact filename
+            tile_path = next(tiles_dir.rglob(f"{tile_stem}.png"), None)
+
         if not tile_path:
-            # Try appending suffix if not present
-             tile_path = next(tiles_dir.rglob(f"{tile_name}*.png"), None)
+            # Try constructing path from tile name pattern
+            # Tile name format: {map_name}_x{N}_y{N}
+            parts = tile_stem.rsplit("_x", 1)
+            if len(parts) == 2:
+                map_name = parts[0]
+                tile_path = tiles_dir / map_name / f"{tile_stem}.png"
+                if not tile_path.exists():
+                    tile_path = None
 
         if not tile_path:
             print(f"Tile image not found for {tile_name}")
@@ -195,9 +235,12 @@ def extract_crops(args):
             
             geo_b = item["geo_bounds"]
             
-            # Check if exact match exists
-            if tile_name in tile_bounds_map:
-                t_bounds = tile_bounds_map[tile_name]
+            # Check if exact match exists (try with and without .png extension)
+            if tile_stem in tile_bounds_map:
+                t_bounds = tile_bounds_map[tile_stem]
+                img_path_resolved = tile_path
+            elif f"{tile_stem}.png" in tile_bounds_map:
+                t_bounds = tile_bounds_map[f"{tile_stem}.png"]
                 img_path_resolved = tile_path
             else:
                 # Search for any tile in bounds map that starts with tile_name (prefix match)
@@ -243,7 +286,7 @@ def extract_crops(args):
                 # Save with informative name
                 # hard_positive_rank_tile.png
                 type_prefix = "hard_positive" if args.mode == "fn" else "hard_negative"
-                out_name = f"{type_prefix}_{rank}_{tile_name}.png"
+                out_name = f"{type_prefix}_{rank}_{tile_stem}.png"
                 crop.save(output_dir / out_name)
                 print(f"Saved {out_name}")
                 extracted_count += 1

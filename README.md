@@ -35,12 +35,19 @@ Detailed documentation is available in the `docs/` directory:
 ## ⚡ Quick Start
 
 ### 1. Installation
+
 ```bash
 git clone https://github.com/saross/map-reader-llm.git
 cd map-reader-llm
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+For exact reproducibility (pinned versions), use:
+
+```bash
+pip install -r requirements-lock.txt
 ```
 
 ### 2. Configuration
