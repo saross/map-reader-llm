@@ -119,8 +119,10 @@ avoid marking these features:
   rivers, or canals.
 - **Critical difference:** Located on
   linear features; no rays.
-- **Key test:** On a road/river line?
-  Yes → infrastructure, exclude.
+- **Key test:** Dot only on a road/river line?
+  → infrastructure, exclude. Dot within a
+  square or triangle that has rays
+  (hachures; spikes) → mound, include.
 
 ## Decision Procedure
 

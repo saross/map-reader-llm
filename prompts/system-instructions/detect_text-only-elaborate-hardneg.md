@@ -177,11 +177,10 @@ carefully. **DO NOT mark these as mounds:**
 - **Why it's confusing:** Small circular
   shapes can catch the eye during
   scanning and be conflated with mounds.
-- **Key test:** Is the dot located on a
-  road or waterway line? If YES →
-  infrastructure marker, exclude. Mounds
-  are landscape features, not located
-  precisely on transport routes.
+- **Key test:** Dot only on a road/river
+  line? → infrastructure, exclude. Dot
+  within a square or triangle that has
+  rays (hachures; spikes) → mound, include.
 
 ### 6. Contour Line Artefacts
 
