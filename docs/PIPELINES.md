@@ -1,7 +1,7 @@
 # Active Pipelines
 
-**Document version**: 1.0
-**Last updated**: 2025-12-31
+**Document version**: 1.1
+**Last updated**: 2026-01-02
 
 ---
 
@@ -116,6 +116,112 @@ All pipeline configurations are stored in `prompts/configs/`. These JSON files c
 - **instruction_file**: Path to system instruction markdown
 
 System instructions are stored in `prompts/system-instructions/`.
+
+---
+
+## Metadata Tracking
+
+All pipeline scripts capture comprehensive metadata for reproducibility and cost analysis. Each run produces a `.meta.json` file alongside the output GeoJSON.
+
+### Metadata Output Structure
+
+```json
+{
+  "run_id": "uuid-v4-identifier",
+  "timestamp": {
+    "start": "2026-01-02T10:30:00+00:00",
+    "end": "2026-01-02T10:45:23+00:00",
+    "duration_seconds": 923.4
+  },
+  "environment": {
+    "git_commit": "f6b88c0abc123...",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.2.0"
+  },
+  "configuration": {
+    "version": "detect_image-only",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_image-only.md",
+    "prompt_hash": "sha256-of-system-instruction",
+    "temperature": 1.0,
+    "full_config_snapshot": { ... }
+  },
+  "execution_stats": {
+    "items_processed": 20,
+    "items_failed": 0,
+    "retries_total": 2,
+    "retries_rate_limit": 1,
+    "retries_server_error": 1,
+    "retries_timeout": 0,
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "finish_reason_counts": { "success": 20 }
+  },
+  "usage_stats": {
+    "total_input_tokens": 125000,
+    "total_output_tokens": 4500,
+    "total_cached_tokens": 0,
+    "total_tokens": 129500,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 125000,
+        "output_tokens": 4500,
+        "request_count": 20
+      }
+    }
+  },
+  "results_summary": {
+    "total_detections": 47,
+    "class_counts": { "burial_mound": 35, "settlement_mound": 12 }
+  },
+  "cost_estimate": {
+    "input_cost_usd": 0.0125,
+    "output_cost_usd": 0.0018,
+    "total_cost_usd": 0.0143,
+    "pricing_used": {
+      "model": "gemini-3-flash",
+      "input_per_1m": 0.10,
+      "output_per_1m": 0.40
+    }
+  },
+  "per_item_metadata": [
+    {
+      "item_id": "tile_0001.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash",
+      "tokens": { "input_tokens": 6250, "output_tokens": 225 },
+      "finish_reason": "success",
+      "latency_ms": 2340,
+      "attempt_number": 1,
+      "parse_success": true
+    }
+  ]
+}
+```
+
+### Key Metadata Fields
+
+| Field | Description |
+|-------|-------------|
+| `run_id` | Unique identifier for this execution |
+| `prompt_hash` | SHA-256 hash of system instruction (for reproducibility) |
+| `git_commit` | Repository state at execution time |
+| `finish_reason_counts` | Distribution of API completion statuses |
+| `retries_*` | Breakdown by error category (rate limit, server, timeout) |
+| `cost_estimate` | Calculated from token usage and current pricing |
+| `per_item_metadata` | Detailed per-tile/per-candidate response data |
+
+### Shared Metadata Module
+
+The metadata tracking logic is centralised in `scripts/lib_llm_metadata.py`, which provides:
+
+- **`LLMMetadataTracker`**: Thread-safe aggregation class
+- **`extract_gemini_metadata()`**: Gemini API response parser
+- **`extract_claude_metadata()`**: Claude API response parser (for future use)
+- **`extract_openai_metadata()`**: OpenAI API response parser (for future use)
+- **`estimate_cost()`**: Cost calculation from token usage
+
+This design ensures consistent metadata capture across all scripts and supports future multi-provider experiments.
 
 ## Baseline vs Hard Negative Variants
 

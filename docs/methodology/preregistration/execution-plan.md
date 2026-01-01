@@ -54,8 +54,9 @@ H4 Voting       H6 Diversity    H3 Two-Stage    H2 Elaboration
   - [ ] H9 temperature (runtime parameter, no separate configs needed)
   - [ ] H6 diversity configs
 
-- [ ] **Scripts**: Verify/create analysis code
-  - [ ] Batch detection script handles all config variants
+- [x] **Scripts**: Verify/create analysis code (2026-01-02)
+  - [x] Batch detection script handles all config variants
+  - [x] Comprehensive metadata tracking (`lib_llm_metadata.py`)
   - [ ] F1 evaluation with Hungarian matching
   - [ ] Voting aggregation at multiple thresholds
   - [ ] Results collation and statistical tests
@@ -63,7 +64,7 @@ H4 Voting       H6 Diversity    H3 Two-Stage    H2 Elaboration
 - [ ] **Data management**:
   - [ ] Create output directory structure (see below)
   - [ ] Set up results tracking spreadsheet
-  - [ ] Document API pricing at experiment start
+  - [x] API pricing documented in `lib_llm_metadata.py` (2026-01-02)
 
 ### Output Directory Structure
 
@@ -71,19 +72,41 @@ H4 Voting       H6 Diversity    H3 Two-Stage    H2 Elaboration
 outputs/
 ├── phase1-library/
 │   ├── baseline-runs/
+│   │   ├── detections-*.geojson
+│   │   └── detections-*.meta.json    # Run metadata
 │   └── hard-example-analysis/
 ├── phase2-factorial/
 │   ├── raw-responses/
+│   │   ├── {condition_id}/
+│   │   │   ├── detections.geojson
+│   │   │   └── detections.meta.json  # Per-condition metadata
 │   └── aggregated/
 ├── phase3-followup/
 │   ├── h4-voting/
 │   ├── h6-diversity/
 │   ├── h3-twostage/
+│   │   ├── candidates.geojson        # Proposer output
+│   │   ├── candidates.meta.json
+│   │   ├── verified.geojson          # Verifier output
+│   │   └── verified.meta.json
 │   └── h2-elaboration/
 ├── phase4-transfer/
 │   └── pro-replication/
 └── phase5-exploratory/
 ```
+
+### Metadata Output Format
+
+Each script run produces a `.meta.json` file containing:
+
+- **Run identification**: UUID, timestamps, git commit
+- **Configuration snapshot**: Full config including prompt hash
+- **Execution stats**: Items processed, retries, failures
+- **Token usage**: Input/output/cached tokens by provider
+- **Cost estimate**: Calculated from current pricing
+- **Per-item metadata**: Detailed per-tile/per-candidate data
+
+See `docs/PIPELINES.md` for full schema documentation.
 
 ---
 
@@ -437,16 +460,18 @@ If triggered → Secondary analysis (bracketing, expanded testing)
 Before submitting results:
 
 - [ ] All raw API responses archived
+- [ ] All `.meta.json` metadata files archived
 - [ ] Aggregated results in CSV format
 - [ ] Analysis scripts committed to repository
 - [ ] Few-shot library uploaded to OSF
 - [ ] Statistical analysis complete with FDR correction
 - [ ] Effect sizes and confidence intervals computed
 - [ ] Figures: threshold curves, factorial interaction plots
+- [ ] Cost summary from metadata files
 - [ ] Deviations from preregistration documented
 
 ---
 
-*Document version: 1.1*
+*Document version: 1.2*
 *Created: 2025-12-31*
-*Updated: 2026-01-01 (standardised naming, updated H2 design)*
+*Updated: 2026-01-02 (added metadata tracking documentation)*
