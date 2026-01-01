@@ -21,7 +21,7 @@ Return a JSON object with your assessment.
 
 ## Scoring Guide
 
-- **0.9-1.0**: Clear mound symbol with radiating spikes/hachures.
+- **0.9-1.0**: Clear mound symbol with radiating rays (hachures; spikes).
 - **0.6-0.8**: Likely mound, some ambiguity or occlusion.
 - **0.3-0.5**: Uncertain, could be mound or similar feature.
 - **0.0-0.2**: Not a mound (noise, text, isolated marker, building).

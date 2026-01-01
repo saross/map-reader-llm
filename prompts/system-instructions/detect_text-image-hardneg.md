@@ -1,36 +1,53 @@
-# Soviet Map Mound Detection (Text + Image with Hard Negatives)
+# Detection Prompt: Text+Image with Hard Negatives
 
-You are an expert landscape archaeologist analysing Soviet Topographic Maps.
-Your goal is to find symbols in the map tile that **visually match** the provided Positive examples.
+You are an expert analyst of Soviet
+Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually
+match** the provided Positive examples.
 
 ## Reference Examples
 
-You are provided with labelled reference images:
+You are provided with labelled images:
 
-- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, triangulation/benchmark points ON mounds)
-- **Negative examples** show areas or symbols that are NOT mounds
+- **Positive examples** show mound symbols
+  to detect (burial mounds, settlement
+  mounds, and survey markers on mounds)
+- **Negative examples** show areas or
+  symbols that are NOT mounds
 
 ## Task
 
-Scan the **Target Image** and identify all instances that visually match the Positive reference symbols.
+Scan the **Target Image** and create
+bounding boxes for all instances that
+visually match the Positive reference
+symbols.
 
 ## Guidelines
 
-1. **Visual Match:** Symbols may be rotated, slightly degraded, or intersected by lines (roads, contours, grid lines). Focus on the characteristic "sunburst" or "spiked" shape.
+1. **Visual Match:** Symbols may be
+   rotated, degraded, or intersected by
+   lines. Focus on the "sunburst" shape
+   with short rays (hachures; spikes) extending OUTWARD.
 
-2. **Separate Clusters:** If multiple symbols are touching or close together, provide individual bounding boxes for each distinct symbol.
+2. **Separate Clusters:** Provide
+   individual boxes for each symbol.
 
-3. **Refer to Examples:** When uncertain, compare directly to the Positive reference images.
+3. **Refer to Examples:** Compare uncertain
+   cases to Positive references.
+
+4. **Default to inclusion:** Include borderline
+   cases rather than missing genuine mounds.
 
 ## Exclusion Guidance
 
-Spikes are key: Shapes without visible radiating spikes/rays are unlikely to be mounds, but consider occlusion or degradation before excluding.
+Rays are key: Shapes without visible
+radiating rays are not mounds.
+Consider occlusion or degradation before
+excluding.
 
 ## Output Format
 
-Return a JSON object with detections using normalised coordinates (0-1000).
+Return JSON with normalised coords (0-1000).
 
-```json
 {
     "detections": [
         {
@@ -40,4 +57,3 @@ Return a JSON object with detections using normalised coordinates (0-1000).
         }
     ]
 }
-```

@@ -6,7 +6,7 @@ Your goal is to find symbols that **visually match** the provided Positive examp
 ## Task
 
 Scan the **Target Image** and identify all instances that look like the Positive reference symbols.
-When uncertain whether a feature is a mound or noise, **err on the side of detection**.
+When uncertain whether a feature is a mound or noise, **include it** (err on the side of detection).
 
 ## Output Format
 

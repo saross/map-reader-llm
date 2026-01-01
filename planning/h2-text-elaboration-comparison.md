@@ -1277,19 +1277,23 @@ If 88 conditions is too many, H2 can be tested as a focused comparison:
 
 ---
 
-## Files to Create
+## Files Created/Updated
 
 | File | Status |
 | :--- | :--- |
-| `prompts/system-instructions/detect_text-only-elaborate.md` | **create** |
-| `prompts/system-instructions/detect_text-only-elaborate-hardneg.md` | **create** |
-| `prompts/system-instructions/detect_text-image-elaborate.md` | **create** |
-| `prompts/system-instructions/detect_text-image-elaborate-hardneg.md` | **create** |
-| `prompts/configs/detect_text-only-elaborate.json` | **create** |
-| `prompts/configs/detect_text-only-elaborate-hardneg.json` | **create** |
-| `prompts/configs/detect_text-image-elaborate.json` | **create** |
-| `prompts/configs/detect_text-image-elaborate-hardneg.json` | **create** |
+| `prompts/system-instructions/detect_text-only.md` | ✅ updated (2026-01-01) |
+| `prompts/system-instructions/detect_text-only-hardneg.md` | ✅ updated (2026-01-01) |
+| `prompts/system-instructions/detect_text-image.md` | ✅ updated (2026-01-01) |
+| `prompts/system-instructions/detect_text-image-hardneg.md` | ✅ updated (2026-01-01) |
+| `prompts/system-instructions/detect_text-only-elaborate.md` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-only-elaborate-hardneg.md` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-image-elaborate.md` | ✅ created (2026-01-01) |
+| `prompts/system-instructions/detect_text-image-elaborate-hardneg.md` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-only-elaborate.json` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-only-elaborate-hardneg.json` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-image-elaborate.json` | ✅ created (2026-01-01) |
+| `prompts/configs/detect_text-image-elaborate-hardneg.json` | ✅ created (2026-01-01) |
 
 ---
 
-*Edit the brief and elaborate versions above before placement in prompts/system-instructions/.*
+*This document serves as the master reference for all detection prompt content.*

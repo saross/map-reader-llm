@@ -1351,7 +1351,7 @@ This section maps each hypothesis to the specific configuration files, system in
 | Hypothesis | Description | Status | Implementation |
 | :--- | :--- | :--- | :--- |
 | H1 | Text modality effect | ✅ Ready | Factorial factor (modality) |
-| H2 | Text elaboration | ⚠️ Pending | Requires elaborate text config |
+| H2 | Text elaboration | ✅ Ready | Factorial factor (elaboration) |
 | H3 | Coarse-to-fine two-stage | ✅ Ready | Separate pipeline (propose→verify) |
 | H4 | Consensus voting | ✅ Ready | Voting grid search |
 | H5 | Example ordering | ✅ Ready | Factorial factor (ordering) |
@@ -1365,7 +1365,7 @@ This section maps each hypothesis to the specific configuration files, system in
 | Hypothesis | Config Files | System Instructions |
 | :--- | :--- | :--- |
 | H1 | `detect_image-only*.json` vs `detect_text-image*.json` | `detect_image-only.md` vs `detect_text-image.md` |
-| H2 | `detect_text-image.json` (minimal) vs elaborate variant (to create) | `detect_text-image.md` vs elaborate variant |
+| H2 | `detect_*-elaborate*.json` variants | `detect_*-elaborate*.md` variants |
 | H3 | `propose_image-only.json` + `verify_image-only.json` | `propose_image-only.md`, `verify_image-only.md` |
 | H4 | Any detect config (passes parameter) | Any detect instruction |
 | H5 | `*_canonical-last.json`, `*_random-order.json` | Same instruction file per modality |
