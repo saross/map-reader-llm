@@ -822,10 +822,10 @@ symbols.
 2. **Separate Clusters:** Provide
    individual boxes for each symbol.
 
-3. **Refer to Examples:** When uncertain,
-   compare to Positive references.
+3. **Refer to Examples:** Compare uncertain
+   cases to Positive references.
 
-4. **When uncertain:** Include borderline
+4. **Default to inclusion:** Include borderline
    cases rather than missing genuine mounds.
 
 ## Output Format
@@ -999,10 +999,10 @@ symbols.
 2. **Separate Clusters:** Provide
    individual boxes for each symbol.
 
-3. **Refer to Examples:** When uncertain,
-   compare to Positive references.
+3. **Refer to Examples:** Compare uncertain
+   cases to Positive references.
 
-4. **When uncertain:** Include borderline
+4. **Default to inclusion:** Include borderline
    cases rather than missing genuine mounds.
 
 ## Exclusion Guidance
