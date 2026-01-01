@@ -1,10 +1,40 @@
+# Map Reader LLM - Python Dependencies
+# =====================================
+# Install: pip install -r requirements.txt
+# For exact versions: pip install -r requirements-lock.txt
+
+# Core VLM / API
 google-generativeai
+
+# Geospatial processing
 rasterio
 geopandas
 shapely
+pyproj
+
+# Image processing
 Pillow
+
+# Data formats
 geojson
+pyyaml
+
+# Utilities
 tqdm
 python-dotenv
+
+# Data analysis
 numpy
 pandas
+
+# Statistical analysis (Phase 2 factorial experiment)
+statsmodels
+scipy
+pingouin
+
+# Visualisation
+matplotlib
+seaborn
+
+# Jupyter notebooks
+jupyter
