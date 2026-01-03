@@ -6,13 +6,13 @@
 
 **Affiliations**: (1) Macquarie University, Sydney, Australia; (2) Aarhus University, Denmark
 
-**Document version**: 3.0
+**Document version**: 3.1
 **Last updated**: 2026-01-01
 **Status**: Ready for Registration
 
 ---
 
-## 1\. Study Overview
+## 1. Study Overview
 
 ### 1.1 Background
 
@@ -20,17 +20,17 @@ This study evaluates prompting strategies for vision-language model (VLM) based 
 
 During preliminary development, we discovered that several "best practice" prompting strategies derived from the VLM literature did not transfer to this task:
 
-1. **Text minimization had little effect**: Contrary to text-image interference literature (Vo et al., 2025), removing text from prompts didn't improve performance.  
+1. **Text minimisation had little effect**: Contrary to text-image interference literature (Vo et al., 2025), removing text from prompts didn't improve performance.  
 2. **Two-stage proposer-verifier was actively harmful**: This architecture degraded performance rather than improving precision-recall tradeoffs.  
 3. **Consensus voting worked well**: n-of-x voting schemes substantially improved F1.
 
-These findings suggest that prompting strategies derived from general VLM benchmarks may not generalise to specialised detection tasks on frontier models', a finding with implications for practitioners.
+These findings suggest that prompting strategies derived from general VLM benchmarks may not generalise to specialised detection tasks on frontier models, a finding with implications for practitioners.
 
 ### 1.2 Research Questions
 
 1. Does text content affect VLM detection performance on novel domain tasks, as opposed to image-only prompting?  
 2. Do two-stage proposer-verifier pipelines improve precision-recall tradeoffs for VLM detection?  
-3. What voting and ensemble strategies optimize detection F1, precision, and recall?  
+3. What voting and ensemble strategies optimise detection F1, precision, and recall?  
 4. Do these effects generalise across frontier VLM providers (Gemini, Claude, GPT)?
 
 ### 1.3 Two-Stage Trial Framework
@@ -49,19 +49,21 @@ This framing acknowledges the power limitations of small-sample evaluation while
 
 ---
 
-## 2\. Data Resources
+## 2. Data Resources
 
 ### 2.1 Map Tile Corpus
 
 | Dataset | Tiles | Purpose | Status |
 | :---- | :---- | :---- | :---- |
 | Development set (‘training tiles’) | 20 | Prompt engineering, iteration | Used \- contaminated |
-| Exploratory test set(‘holdout tiles’) | 20 | Generalization checks (no feedback to prompts) | Used for evaluation only |
+| Exploratory test set(‘holdout tiles’) | 20 | Generalisation checks (no feedback to prompts) | Used for evaluation only |
 | Reserve set | 321 | Confirmatory testing | **Untouched** |
 
 **Total**: 361 tiles from 4 annotated Soviet topographic map sheets. Maps were hand-annotated by students with comprehensive expert review.
 
 **Note**: The 20 exploratory test tiles were used ONLY for final generalisation checks on prompts, with NO feedback into prompt development.
+
+**Analysis scope**: Training tiles are excluded from all reported performance metrics. F1, precision, recall, and MCC are computed on holdout tiles only.
 
 ### 2.2 Selection Methodology
 
@@ -120,7 +122,7 @@ Tiles used for prompt development and few-shot examples.
 | K-35-078-1\_Lesovo\_x2688\_y1344.png | 0 | empty |
 | K-35-078-1\_Lesovo\_x448\_y0.png | 0 | empty |
 
-**Training set summary**: 20 tiles, 22 mounds total
+**Training set summary**: 20 tiles, 27 mounds total
 
 ---
 
@@ -182,6 +184,8 @@ Tiles were stratified by mound density (see Section 8.6 for category definitions
 | Sparse (1-2 mounds) | 7 | 7 |
 | Dense (3+ mounds) | 5 | 5 |
 
+**Terrain representation**: Lesovo represents mountainous terrain with characteristically low mound density, consistent with similar regions near the Bulgarian-Turkish border and Stara Planina. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in unfamiliar terrain types.
+
 ### 2.6 Map Annotation
 
 Soviet-era maps were initially annotated by students using the FAIMS v2.6 mobile data capture application (customised as a participatory GIS). Annotation consisted of identifying all symbols representing:
@@ -192,21 +196,21 @@ Soviet-era maps were initially annotated by students using the FAIMS v2.6 mobile
 * Benchmarks (no burial mound)  
 * Triangulation points (no burial mound)
 
-These four tiles were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023\. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). 
+These four tiles were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). 
 
 ---
 
-## 3\. Statistical Analysis Plan
+## 3. Statistical Analysis Plan
 
 ### 3.1 Significance Testing
 
-* **Per-hypothesis α**: 0.05  
-* **Direction**: One-tailed for directional predictions; two-tailed for equivalence tests (H1)  
-* **Multiple comparison correction**: Benjamini-Hochberg FDR at q \= 0.05 across confirmatory hypotheses
+* **Per-hypothesis α**: 0.05
+* **Direction**: One-tailed for directional predictions; two-tailed for equivalence tests (H1)
+* **Multiple comparison correction**: Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses
 
 ### 3.2 Rationale for FDR
 
-With 6 confirmatory hypotheses tested on 20 tiles (28 mound symbols), statistical power is limited. Bonferroni correction (α \= 0.008) would be overly conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
+With 9 confirmatory hypotheses tested on 20 tiles (28 mound symbols), statistical power is limited. Bonferroni correction (α = 0.008) would be overly conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
 
 * The goal is identifying promising techniques for further validation  
 * Some false positives are acceptable if balanced by discovery of true effects  
@@ -214,24 +218,40 @@ With 6 confirmatory hypotheses tested on 20 tiles (28 mound symbols), statistica
 
 ### 3.3 Interpretation Guidelines
 
-* **Statistically significant (FDR-corrected p \< 0.05)**: Technique shows promise; advance to Stage 2 validation  
-* **Nominally significant (uncorrected p \< 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority  
+* **Statistically significant (FDR-corrected p < 0.05)**: Technique shows promise; advance to Stage 2 validation
+* **Nominally significant (uncorrected p < 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority
 * **Non-significant (uncorrected p ≥ 0.05)**: No evidence of benefit; do not advance unless strong theoretical rationale
 
 ### 3.4 Practical Significance Caveat
 
-Results will be interpreted in light of practical significance. A statistically significant but trivially small improvement (e.g., F1 \+0.01) will be reported but not treated as actionable. Techniques advanced to Stage 2 should show both statistical significance and a meaningful effect direction.
+Results will be interpreted in light of practical significance. A statistically significant but trivially small improvement (e.g., F1 +0.01) will be reported but not treated as actionable. Techniques advanced to Stage 2 should show both statistical significance and a meaningful effect direction.
 
 ### 3.5 Reporting
 
-* All preregistered analyses reported regardless of outcome  
-* Report both uncorrected and FDR-corrected p-values  
-* Report effect sizes (F1 difference, precision difference, recall difference) with 95% bootstrapped CIs  
+* All preregistered analyses reported regardless of outcome
+* Report both uncorrected and FDR-corrected p-values
+* Report effect sizes (F1 difference, precision difference, recall difference) with 95% bootstrapped CIs
 * Exploratory analyses clearly labelled and interpreted cautiously
+* **Spatial tolerance sensitivity**: All primary results reported at 20m; robustness checks at 10m, 30m, and 50m included in supplementary materials
+
+### 3.6 Power Considerations
+
+With 20 holdout tiles containing 28 mound symbols, statistical power is limited. Approximate detectable effect sizes (80% power, α = 0.05, two-tailed):
+
+- **Symbol-level F1**: Minimum detectable difference ≈ 0.12-0.15
+- **Tile-level MCC**: Minimum detectable difference ≈ 0.30
+
+These estimates are approximate and assume moderate correlation between tiles. The two-stage trial framework addresses power limitations by treating Stage 1 as a screening study; techniques showing directional improvement will be validated with larger samples in Stage 2.
+
+**Implication**: Small but practically meaningful effects (e.g., F1 +0.05) may not reach statistical significance in Stage 1. Such effects will be flagged for Stage 2 investigation if directionally consistent.
+
+### 3.7 Blinding
+
+All API calls and metric computations are automated via scripts committed before holdout evaluation. The analysis pipeline runs without manual intervention between data collection and statistical output, eliminating opportunities for analyst degrees of freedom during evaluation.
 
 ---
 
-## 4\. Outcome Measures
+## 4. Outcome Measures
 
 ### 4.1 Primary Outcome: Symbol-level F1
 
@@ -269,6 +289,7 @@ Detection matching uses **one-to-one matching** via the Hungarian algorithm:
 7. **False Positive**: Each unmatched detection (not assigned to any reference)
 
 This approach ensures:
+
 - **Strict one-to-one matching**: Each detection matches at most one reference, and vice versa
 - **Accurate mound counting**: A detection spanning two nearby mounds counts as 1 TP + 1 FN (important for answering "how many mounds are here?")
 - **Optimal assignment**: The Hungarian algorithm guarantees the globally optimal matching that minimises total distance
@@ -287,26 +308,26 @@ In addition to symbol-level F1, we report tile-level Matthews Correlation Coeffi
 | Empty | Detected ≥1 mound | False Positive (hallucination) |
 | Has mounds | Detected nothing | False Negative |
 
-MCC is preferred over accuracy given class imbalance in the holdout set (8 empty tiles, 12 non-empty tiles). MCC ranges from \-1 (perfect inverse classification) through 0 (random) to \+1 (perfect classification), and appropriately penalises both false positives and false negatives.
+MCC is preferred over accuracy given class imbalance in the holdout set (8 empty tiles, 12 non-empty tiles). MCC ranges from -1 (perfect inverse classification) through 0 (random) to +1 (perfect classification), and appropriately penalises both false positives and false negatives.
 
-**Rationale**: A method that simply predicts "mounds present" for every tile would achieve \~60% accuracy but MCC ≈ 0\. Tile-level MCC directly addresses the practical question: "Can this method correctly identify when there is nothing to find?"
+**Rationale**: A method that simply predicts "mounds present" for every tile would achieve ~60% accuracy but MCC ≈ 0. Tile-level MCC directly addresses the practical question: "Can this method correctly identify when there is nothing to find?"
 
 We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and specificity (P(detect 0 | tile is empty)) for interpretability.
 
 ---
 
-## 5\. Confirmatory Hypotheses
+## 5. Confirmatory Hypotheses
 
 ### H1: Text Modality Has No Significant Effect
 
-**Background**: The text-image interference literature (Vo et al., 2025\) found VLMs override visual analysis with textual priors. This effect, however, applies to domains where VLMs have strong priors (e.g., "Adidas logos have 3 stripes"). Burial mound symbols are novel domain content with no conflicting prior knowledge.
+**Background**: The text-image interference literature (Vo et al., 2025) found VLMs override visual analysis with textual priors. This effect, however, applies to domains where VLMs have strong priors (e.g., "Adidas logos have 3 stripes"). Burial mound symbols are novel domain content with no conflicting prior knowledge.
 
-**Prediction**: Image+text prompts will perform as well as text-only prompts.
+**Prediction**: Text+image prompts will perform equivalently to image-only prompts.
 
 **Test**: Compare detection performance with:
 
-- Condition A: Few-shot image library examples only (no text descriptions)  
-- Condition B: Few-shot examples \+ text descriptions of symbol characteristics
+- Condition A: Image-only (few-shot visual examples with minimal task instruction)
+- Condition B: Text+image (few-shot visual examples + detailed text descriptions)
 
 H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboration vs. hard negatives.
 
@@ -327,7 +348,7 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 * Condition A: Minimal text ("Detect burial mound symbols")
 * Condition B: Elaborate text (detailed criteria, explicit inclusion/exclusion rules)
 
-**Analysis**: One-tailed test; H0: elaborate ≤ minimal; H1: elaborate \> minimal. Prediction is that H0 will not be rejected (elaborate does not help).
+**Analysis**: One-tailed test; H0: elaborate ≤ minimal; H1: elaborate > minimal. Prediction is that H0 will not be rejected (elaborate does not help).
 
 **Advance to Stage 2 if**: Elaborate text shows significant improvement (would contradict preliminary findings and warrant investigation).
 
@@ -341,10 +362,18 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 
 **Test**: Compare detection performance with:
 
-* Condition A: Single-stage detection (baseline prompt)  
+* Condition A: Single-stage detection (baseline prompt)
 * Condition B: Two-stage proposer-verifier pipeline (liberal proposer → strict verifier)
 
-**Analysis**: One-tailed test; H0: two-stage ≥ single-stage; H1: two-stage \< single-stage. Prediction is that H0 will be rejected (two-stage performs worse).
+**Testing approach**: The two-stage pipeline will be tested using the optimal single-stage configuration identified from H1, H5, H7, H9 (modality, ordering, hard negatives, temperature). This ensures a fair comparison where any performance difference reflects architectural rather than configurational factors.
+
+**Stopping rule**: If two-stage F1 is ≥0.10 lower than single-stage F1 at the same configuration, we will conclude the architecture is unsuitable for this task and will not pursue further optimisation. This threshold accounts for the inherent cost (~2× API calls) and complexity overhead of two-stage pipelines — marginal performance parity would not justify the additional operational burden.
+
+**Scope limitation**: Exhaustive optimisation of proposer-verifier configurations (e.g., varying proposer/verifier thresholds, prompt variants for each stage) is beyond the scope of this study. Such investigation would be warranted only if initial testing shows the architecture is competitive (within 0.10 F1 of single-stage baseline).
+
+**Applicability to other two-stage approaches**: The same stopping rule (F1 ≥0.10 below single-stage baseline) applies to H10 (fine-to-coarse validation) and any other multi-stage architecture tested. Two-stage approaches must demonstrate near-parity to justify their overhead.
+
+**Analysis**: One-tailed test; H0: two-stage ≥ single-stage; H1: two-stage < single-stage. Prediction is that H0 will be rejected (two-stage performs worse).
 
 **Advance to Stage 2 if**: Two-stage shows equivalent or superior performance (would contradict preliminary findings and suggest the architecture merits further optimisation).
 
@@ -368,6 +397,12 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 * Full grid (all N × T combinations): Gemini 3 Flash (cost-efficient exploration)
 * Representative subset: Claude and GPT models (validate key findings transfer)
 
+**Primary confirmatory test**: Single-pass (N=1) vs optimal voting configuration (single comparison). The optimal configuration is determined by maximum F1 across the full grid search.
+
+**Exploratory/descriptive analysis**: Full threshold curves (all T for each N) reported as descriptive visualisations characterising the precision-recall tradeoff. Preliminary testing suggests optimal thresholds cluster around 30-40% (e.g., 2-of-5, 4-of-10, 10-of-30).
+
+**Single-configuration rationale**: Voting threshold is determined at the optimal base prompt configuration. Preliminary work suggests the ~30-40% optimum is consistent across configurations; however, if main factorial results reveal substantial precision/recall shifts between conditions, targeted voting threshold testing at contrasting configurations may be warranted (see preregistration-coverage.md, Section 4).
+
 **Analysis**: One-tailed test; H0: voting ≤ single-pass; H1: voting > single-pass. Primary comparison uses optimal (N, T) from Flash grid search.
 
 **Secondary analyses**:
@@ -378,7 +413,7 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 * Identify diminishing returns point (where additional passes yield marginal gains)
 * Cross-model consistency: Do optimal thresholds transfer across providers?
 
-**Advance to Stage 2 if**: Significant improvement confirmed. Optimize voting parameters (N, threshold) in Stage 2\.
+**Advance to Stage 2 if**: Significant improvement confirmed. Optimise voting parameters (N, threshold) in Stage 2.
 
 ---
 
@@ -400,9 +435,9 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 * Secondary: One-tailed test comparing Condition B (canonical-last) vs Condition C (random)  
 * Exploratory: Direct comparison of Condition A vs Condition B
 
-**Implementation**: Canonical examples are legend-derived symbols (burial mound, settlement mound, triangulation on mound, benchmark on mound). Hard examples are selected via the procedure in Section 2.2 (frequent false positives/negatives from training tile evaluation). Within each block (canonical or hard), internal ordering is randomized with documented seed.
+**Implementation**: Canonical examples are legend-derived symbols (burial mound, settlement mound, triangulation on mound, benchmark on mound). Hard examples are selected via the procedure in Section 8.4.2 (frequent false positives/negatives from training tile evaluation). Within each block (canonical or hard), internal ordering is randomized with documented seed.
 
-**Advance to Stage 2 if**: Either canonical-first or canonical-last significantly outperforms random. Would establish example ordering as a low-cost optimization strategy.
+**Advance to Stage 2 if**: Either canonical-first or canonical-last significantly outperforms random. Would establish example ordering as a low-cost optimisation strategy.
 
 ---
 
@@ -423,20 +458,29 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 
 **Text variants** (semantically equivalent task instructions):
 
-1. "Identify burial mound symbols in this map section"  
-2. "Detect tumuli markers on this topographic map"  
-3. "Find kurgan indicators in this image"  
-4. "Locate ancient burial mound cartographic symbols"  
+Task framing examples (opening lines):
+
+1. "Identify burial mound symbols in this map section"
+2. "Detect tumuli markers on this topographic map"
+3. "Find kurgan indicators in this image"
+4. "Locate ancient burial mound cartographic symbols"
 5. "Mark all mound features shown on this Soviet map"
+
+**Variation approach**: Content diversity with fixed structure (Level 3). All variants maintain identical prompt structure while varying task framing, instruction phrasing, and guideline wording. See Section 8.3.3 for full specification.
 
 **Image diversity implementation**:
 
-* Pool construction: All false negatives (≥1 occurrence) and all false positives (≥1 occurrence) during training tile evaluation (per Section 2.2 procedure)
+* Pool construction: All false negatives (≥1 occurrence) and all false positives (≥1 occurrence) during training tile evaluation (per Section 8.4.2 procedure)
 * Hard example count: K hard positives and M hard negatives per pass, where K and M are set based on pool size (preregistered once pool is constructed; target K=4, M=3 if pool allows)
 * Fixed conditions (A, B): Sample K hard positives and M hard negatives once from pool; use same selection for all 5 passes
 * Varied conditions (C, D): Resample hard examples for each pass using frequency-capped random sampling (see Section 8.4.3 for methodology)
 * Canonical examples (legend-derived symbols) and null tiles remain fixed across all conditions and passes
-* Condition A runs: To control for specific image selection effects, Condition A is run 5 times with different randomly-sampled fixed libraries (documented seeds); results averaged across runs
+
+**Text vs structure variation**: H6 tests content diversity (varied wording) not structural diversity (varied organisation). This isolates the effect of semantic variation from potential confounds introduced by prompt restructuring.
+
+**Replication**: Each condition (A, B, C, D) is run 5 times to provide symmetric variance estimates and adequate power for detecting diversity effects. For Conditions A and B (fixed images), each run uses a different randomly-sampled fixed library (documented seeds). Analysis compares condition means with appropriate variance pooling.
+
+**Single-configuration rationale**: Diversity effects are tested at the optimal base prompt configuration identified from the main factorial. Generalisation to other configurations is assumed based on the general mechanism of reducing error correlation across passes — this mechanism should operate similarly regardless of base configuration.
 
 **Cross-reference**: Full sampling methodology, constraints, and example-level analysis framework documented in Sections 8.4.3–8.4.4.
 
@@ -468,7 +512,7 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 **Hard negative image sources**:
 
 1. **Legend-derived negatives**: Visually confusable symbols that lack burial mound characteristics. Confirmed: benchmark (standalone), triangulation point (standalone). Additional symbols will be documented if full Soviet topographic map legend is acquired prior to holdout evaluation.  
-2. **Procedure-derived negatives**: False positives with ≥1 occurrence during training tile evaluation (per Section 2.2).
+2. **Procedure-derived negatives**: False positives with ≥1 occurrence during training tile evaluation (per Section 8.4.2).
 
 **Text implementation**:
 
@@ -491,11 +535,15 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 
 ---
 
-### H8: Optimizations Transfer from Gemini 3 Flash to Pro
+### H8: Optimisations Transfer from Gemini 3 Flash to Pro
 
-**Background**: Development and optimization is conducted on Gemini 3 Flash for cost efficiency. For this approach to be valid, effects observed on Flash must replicate on Pro. This hypothesis uses an adaptive testing framework: primary analysis tests boundary conditions efficiently, with pre-specified triggers for more comprehensive secondary analysis if interactions are detected.
+**Background**: Development and optimisation is conducted on Gemini 3 Flash for cost efficiency. For this approach to be valid, effects observed on Flash must replicate on Pro. This hypothesis uses an adaptive testing framework: primary analysis tests boundary conditions efficiently, with pre-specified triggers for more comprehensive secondary analysis if interactions are detected.
 
 **Prediction**: Significant effects identified in H4–H7 on Gemini 3 Flash will replicate directionally on Gemini 3 Pro, with no significant condition × model interactions.
+
+**Transfer testing approach**: Cross-model testing uses stepwise adjustment from Flash-optimal configuration rather than independent optimisation. If a factor shows different behaviour on Pro (e.g., different optimal ordering), that factor is adjusted while holding others constant.
+
+**Scope limitation**: Full per-model optimisation is beyond the scope of this study unless a model demonstrates substantially superior cost-effectiveness (operationalised as: ≥20% higher F1 at comparable cost, OR comparable F1 at ≤50% cost). Such a finding would warrant model-specific optimisation as a separate investigation.
 
 #### Primary Analysis: Factorial Corners
 
@@ -535,7 +583,7 @@ If Flash optimal = X-of-N and trigger conditions are met:
 2. **Monotonicity check**: If bracket shows monotonic trend (e.g., higher thresholds consistently better), run full threshold sweep for that N
 3. **Scale check**: If N=5 optimal differs from Flash, test same threshold ratio at N=10 to determine if pattern generalises
 
-```
+```text
 Example decision tree for H4:
 
 PRIMARY: Test single-pass, 3-of-5, 5-of-5 on Pro
@@ -562,6 +610,7 @@ Primary analysis tests all 3 conditions. If interaction detected, increase repli
 **H6/H7 (diversity/hard negatives) — Already factorial:**
 
 Primary analysis runs full 2×2. If interaction detected:
+
 - Report which cell(s) drive the interaction
 - Test whether Pro requires different combination than Flash
 - Increase replicates if effect sizes are small but directionally interesting
@@ -573,6 +622,7 @@ If secondary analysis reveals complex or multiple interactions (≥2 hypotheses 
 > "Due to significant Flash-Pro interactions detected in secondary analysis, full experimental replication was conducted on Pro to establish Pro-specific optimal configuration."
 
 This would include:
+
 - Full H4 grid search (N ∈ {5, 10, 30}, all thresholds)
 - All H5, H6, H7 conditions with increased replication
 
@@ -592,7 +642,7 @@ This would include:
 
 ### H9: Temperature Effects on Detection Performance
 
-**Background**: Google documentation recommends temperature=1.0 for Gemini 3, warning that values \<1.0 cause "looping or degraded performance." However, lower temperatures conventionally reduce output variance, which may benefit structured detection tasks. This recommendation has not been validated for cartographic symbol detection.
+**Background**: Google documentation recommends temperature=1.0 for Gemini 3, warning that values <1.0 cause "looping or degraded performance." However, lower temperatures conventionally reduce output variance, which may benefit structured detection tasks. This recommendation has not been validated for cartographic symbol detection.
 
 **Prediction**: Temperature=1.0 will perform at least as well as lower temperature settings on Gemini 3 Flash.
 
@@ -615,7 +665,7 @@ This would include:
 
 ---
 
-## 6\. Exploratory Hypotheses
+## 6. Exploratory Hypotheses
 
 *These analyses will be conducted and reported but are not confirmatory. Results will be interpreted cautiously and framed as hypothesis-generating. Not included in FDR correction.*
 
@@ -628,7 +678,7 @@ This would include:
 **Test**: Compare:
 
 - Condition A: Single-stage detection with fixed 50% consensus threshold  
-- Condition B: Single-stage detection \+ context-expanded re-query for 40-60% consensus cases
+- Condition B: Single-stage detection + context-expanded re-query for 40-60% consensus cases
 
 **Analysis**: Compare F1 on the subset of "uncertain" detections; report computational cost.
 
@@ -660,9 +710,9 @@ This would include:
 
 ### H12: Cross-Model Consistency
 
-**Background**: Results obtained on Gemini 3 may not generalize to other VLMs. Testing across Claude and GPT-5.2 validates that findings reflect task properties rather than model-specific behaviors.
+**Background**: Results obtained on Gemini 3 may not generalise to other VLMs. Testing across Claude and GPT-5.2 validates that findings reflect task properties rather than model-specific behaviours.
 
-**Prediction**: Relative ordering of conditions (e.g., voting \> single-pass; hard negatives improve precision) will be consistent across different models, e.g., Gemini, Claude, and GPT-5.2, even if absolute F1 differs.
+**Prediction**: Relative ordering of conditions (e.g., voting > single-pass; hard negatives improve precision) will be consistent across different models, e.g., Gemini, Claude, and GPT-5.2, even if absolute F1 differs.
 
 **Test**: Replicate primary confirmatory tests (H4, H5, H7) on Claude and GPT-5.2 models as per Section 8.1.
 
@@ -672,7 +722,7 @@ This would include:
 - Qualitative assessment of whether significant effects replicate  
 - Test for condition × model interaction if sample size permits
 
-**Status**: Exploratory but important for generalizability claims.
+**Status**: Exploratory but important for generalisability claims.
 
 ---
 
@@ -689,19 +739,19 @@ This would include:
 | A | 6× Flash | Within-model baseline (Gemini 3 Flash) |
 | B | 6× Sonnet | Within-model baseline (Claude 4.5 Sonnet) |
 | C | 6× Thinking | Within-model baseline (GPT-5.2 Thinking, medium) |
-| D | 2× Flash \+ 2× Sonnet \+ 2× Thinking | Cross-model ensemble |
+| D | 2× Flash + 2× Sonnet + 2× Thinking | Cross-model ensemble |
 
 **Implementation considerations**:
 
 * Output format standardized across models (coordinate lists)  
 * Spatial matching applied uniformly  
-* Equal weighting (each pass \= 1 vote, threshold \= 4/6)  
+* Equal weighting (each pass = 1 vote, threshold = 4/6)  
 * Cost tracked per condition for efficiency analysis
 
 **Analysis**:
 
 * Compare F1 across conditions  
-* Analyze error correlation: do different models make different mistakes?  
+* Analyse error correlation: do different models make different mistakes?  
 * Cost-adjusted comparison: F1 per dollar
 
 **Exploratory extensions**:
@@ -714,7 +764,7 @@ This would include:
 
 ### H14: Training Pool Size Effects on Library Quality
 
-**Background**: Few-shot library construction (Section 2.2) identifies hard examples from training tile evaluation. A larger training pool may surface more diverse or representative hard examples, improving the resulting library's effectiveness.
+**Background**: Few-shot library construction (Section 8.4.2) identifies hard examples from training tile evaluation. A larger training pool may surface more diverse or representative hard examples, improving the resulting library's effectiveness.
 
 **Question**: How does training pool size affect detection performance on held-out tiles?
 
@@ -731,7 +781,7 @@ This would include:
 
 * Training pools are nested (A ⊂ B ⊂ C ⊂ D) for comparability  
 * Same holdout set across all conditions  
-* Library construction procedure (Section 2.2) applied identically to each pool  
+* Library construction procedure (Section 8.4.2) applied identically to each pool  
 * Document resulting library composition for each condition
 
 **Analysis**:
@@ -744,7 +794,7 @@ This would include:
 
 * Total tiles available: 361  
 * Holdout fixed at 20 tiles  
-* Maximum training pool: \~340 tiles
+* Maximum training pool: ~340 tiles
 
 ---
 
@@ -779,7 +829,7 @@ This would include:
 
 ---
 
-### **E7: Tile Size Effects on Detection Performance**
+### H16: Tile Size Effects on Detection Performance
 
 **Background**: Larger tiles reduce API calls required for full map coverage but increase symbols per tile and decrease symbol-to-image ratio. VLM attention to small features may degrade as tile size increases.
 
@@ -809,7 +859,7 @@ This would include:
 
 ---
 
-## 7\. Summary Table
+## 7. Summary Table
 
 ### 7.1 Confirmatory Hypotheses
 
@@ -835,17 +885,17 @@ This would include:
 | H13 (cross-model voting) | Does cross-model voting beat within-model? | Compare F1 at N=6 |
 | H14 (training pool size) | How does pool size affect library quality? | F1 vs pool size curve |
 | H15 (library size) | What is optimal few-shot library size? | F1 vs library size curve |
-| E7 (tile size) | How does tile size affect performance? | F1 vs tile size |
+| H16 (tile size) | How does tile size affect performance? | F1 vs tile size |
 
 ---
 
-## 8\. Implementation Details
+## 8. Implementation Details
 
 ### 8.1 Models
 
 **Primary**: Gemini 3 Flash, Gemini 3 Pro
 
-**Secondary (for H10)**: Claude 4.5 Haiku, Sonnet, Opus; GPT-5.2 Thinking, Pro
+**Secondary (for H12)**: Claude 4.5 Haiku, Sonnet, Opus; GPT-5.2 Thinking, Pro
 
 ### 8.2 API Parameters
 
@@ -860,7 +910,7 @@ All models tested at maximum capability configuration. Parameters
 
 Fixed parameters:
 
-* `temperature`: 1.0 (required; values \<1.0 cause degraded performance)  
+* `temperature`: 1.0 (required; values <1.0 cause degraded performance)
 * `mediaResolution`: `default (media_resolution_medium)`  
 * `max_output_tokens`: 8192
 
@@ -883,7 +933,7 @@ Notes: Extended thinking enabled for all variants. Effort parameter (beta) appli
 
 | Model | Model ID | reasoning.effort | Notes |
 | ----- | ----- | ----- | ----- |
-| Instant | `gpt-5.2-chat-latest` | N/A | Speed-optimized variant; 128k context |
+| Instant | `gpt-5.2-chat-latest` | N/A | Speed-optimised variant; 128k context |
 | Thinking | `gpt-5.2` | `xhigh` | Maximum single-path reasoning |
 | Pro | `gpt-5.2-pro` | `xhigh` | Parallel reasoning threads |
 
@@ -928,6 +978,8 @@ The primary value of cross-model comparison is enabling practitioners to make in
 
 **Recommendation format**: Results will include guidance such as:
 > "For budget-constrained applications, Model X achieves Y% of maximum F1 at Z% of the cost. For maximum performance regardless of cost, Model W is recommended."
+
+**Version documentation**: Model version identifiers are automatically captured from API response metadata and will be reported in supplementary materials.
 
 ### 8.3 Prompt Variants
 
@@ -979,7 +1031,41 @@ For H6 Conditions B and D (varied text), we use 5 semantically equivalent instru
 - Vocabulary diversity targets: archaeological terminology (burial mound, tumulus, kurgan), cartographic terminology (symbol, marker, indicator), action verbs (identify, detect, find, locate, mark)
 - Final instruction files will be committed to the repository before holdout evaluation
 
-#### 8.3.3 Runtime Parameters
+#### 8.3.3 H6 Text Diversity Specification
+
+**Variation level**: Level 3 (Content variation, fixed structure)
+
+All 5 prompt variants maintain identical structure (same sections, same order, same output format) while varying:
+
+1. **Task framing**: The opening instruction line using varied terminology:
+   - Action verbs: identify, detect, find, locate, mark
+   - Domain vocabulary: burial mound, tumuli, kurgan, mound features, cartographic symbols
+
+2. **Instruction phrasing**: The task elaboration sentence following reference examples (semantically equivalent, differently worded)
+
+3. **Guideline wording**: Semantically equivalent guidelines with varied phrasing (e.g., "focus on sunburst shape" vs "look for gear/ship's wheel pattern"; "include borderline cases" vs "favour inclusion over omission")
+
+**Elements held constant across all variants:**
+
+- Section headers and order
+- Output format specification (JSON schema)
+- Number and type of guidelines (3 guidelines in all variants)
+- Reference example labelling convention
+- Exclusion guidance text (if hard negatives in base config)
+
+**Rationale**: This isolates content diversity from structural diversity, enabling clean attribution of any observed effect to semantic variation rather than prompt organisation.
+
+**Potential extension**: If content diversity shows significant benefit, structural diversity (varied section headers, reorganised flow) may be explored as a follow-on investigation in Stage 2.
+
+**Construction procedure**:
+
+1. Identify optimal base configuration from main factorial (M, O, H, T) and H2 (E)
+2. Use the winning prompt template as the structural base
+3. Create V1–V5 by varying task framing, instruction phrasing, and guideline wording
+4. Verify semantic equivalence across all 5 variants
+5. Document final prompt text in pre-holdout specifications
+
+#### 8.3.4 Runtime Parameters
 
 The following parameters are specified at runtime, not in config files:
 
@@ -1005,6 +1091,7 @@ The library comprises four example categories:
 **Category ratios**: The baseline library uses approximately 4:K:M:3 (canonical:hard-pos:hard-neg:null). For H7 conditions without hard negatives, the ratio becomes 4:K:0:3.
 
 **Library size variations**: Total library size varies by condition:
+
 - Minimal: 7 examples (4 canonical + 3 null; no hard examples)
 - Baseline: 7 + K + M examples (with hard positives and negatives)
 - Extended: May include additional hard examples if pool allows (documented)
@@ -1012,6 +1099,7 @@ The library comprises four example categories:
 #### 8.4.2 Baseline Library
 
 **Canonical positives** (legend-derived):
+
 * Burial mound, settlement mound, triangulation on mound, benchmark on mound
 
 **Null tiles** (3 tiles selected via stratified sampling):
@@ -1037,16 +1125,19 @@ The library comprises four example categories:
 
 **Hard example selection procedure:**
 
-1. Run baseline library on all 20 training tiles with 5-pass consensus voting  
-2. Identify False Negatives (ground truth mounds missed in ≥3/5 passes)  
-3. Rank FNs by frequency; select top 4 as hard positive examples  
-4. Identify False Positives (detections in ≥3/5 passes with no matching ground truth)  
-5. Rank FPs by frequency; select top 3 as hard negative examples  
-6. If ties occur, select randomly (document seed)
+1. Construct initial library: 4 canonical positives (legend-derived) + 3 null tiles
+2. Run initial library on all 20 training tiles with 5-pass consensus voting
+3. Identify False Negatives (ground truth mounds missed in ≥3/5 passes)
+4. Rank FNs by frequency; select top K as hard positive examples (target K=4)
+5. Identify False Positives (detections in ≥3/5 passes with no matching ground truth)
+6. Rank FPs by frequency; select top M as hard negative examples (target M=3)
+7. If ties occur, select randomly (document seed)
+8. Construct augmented library: canonical + hard positives + hard negatives + null
 
 **Ordering (for H5):**
 
-* "Best-last" condition: Hard positives placed in final positions  
+* "Canonical-first" condition: Legend-derived symbols in initial positions, hard examples last
+* "Canonical-last" condition: Hard examples in initial positions, legend-derived symbols last
 * "Random" condition: Shuffled with documented seed
 
 **Documentation:** The resulting library will be uploaded to OSF as a supplement before any holdout evaluation. The supplement will include:
@@ -1069,6 +1160,7 @@ For conditions requiring varied examples across passes (H6 Conditions C and D), 
 | Category minimums | Each pass includes ≥1 canonical, ≥1 hard positive, ≥1 null | Maintains category representation |
 
 **Decision rule for cap**: The exact frequency cap will be determined by library size once known:
+
 - If library size k ≤ examples_per_pass × 2: No cap needed (natural diversity from sampling)
 - If library size k > examples_per_pass × 2: Cap = ceil(N × 0.6)
 
@@ -1084,6 +1176,7 @@ For conditions requiring varied examples across passes (H6 Conditions C and D), 
 3. Document random seed used for reproducibility
 
 **Fixed elements across all passes:**
+
 - Canonical positive examples (legend-derived) — always included in every pass
 - Null tiles — always included in every pass
 - Only hard positives and hard negatives vary across passes in "Varied" conditions
@@ -1096,16 +1189,18 @@ Understanding which specific examples drive library effectiveness enables future
 
 After completing H6 experiments, fit a linear model predicting pass-level F1 from example presence:
 
-```
+```text
 F1_pass ~ β₀ + Σᵢ βᵢ(exampleᵢ_present) + ε
 ```
 
 Where:
+
 - `exampleᵢ_present` = 1 if example i appeared in that pass, 0 otherwise
 - βᵢ estimates the marginal contribution of example i to F1
 - Model fitted using ordinary least squares with robust standard errors
 
 **Reporting:**
+
 - Coefficient estimates (βᵢ) with 95% confidence intervals
 - Flag examples where |βᵢ| > 0.02 F1 as "high-impact"
 - Rank examples by absolute effect size within each category
@@ -1114,7 +1209,7 @@ Where:
 
 Aggregate example-level effects by category:
 
-```
+```text
 F1_pass ~ β₀ + β_canon(n_canonical) + β_hardpos(n_hard_positive)
         + β_hardneg(n_hard_negative) + β_null(n_null) + ε
 ```
@@ -1124,12 +1219,13 @@ This estimates the marginal value of adding one more example of each type.
 **Tertiary analysis (BIBD, if feasible):**
 
 If library size k ≤ 10 and N ≥ 20, construct a Balanced Incomplete Block Design where:
+
 - Each example appears in exactly r passes (r ≈ N/2)
 - Each pair of examples co-occurs in exactly λ passes
 
 This enables ANOVA decomposition:
 
-```
+```text
 F1 = μ + Σᵢ(main effect of exampleᵢ) + Σᵢⱼ(interaction of exampleᵢ × exampleⱼ) + ε
 ```
 
@@ -1138,6 +1234,7 @@ BIBD parameters will be determined post-library-construction and documented befo
 **Documentation commitment:**
 
 The following will be published as supplementary data:
+
 - Exact example assignment matrix (passes × examples)
 - Achieved frequency distribution per example
 - Regression coefficients and diagnostics
@@ -1173,6 +1270,7 @@ The following table summarises how library-related hypotheses interact and which
 **Cross-hypothesis analysis:**
 
 After individual hypothesis tests, exploratory analyses will examine:
+
 - Whether optimal voting threshold (H4) differs by library composition (H7)
 - Whether ordering effects (H5) interact with diversity (H6)
 - Whether example-level effects (Section 8.4.4) explain hypothesis-level results
@@ -1258,6 +1356,7 @@ Consensus voting aggregates detections from multiple passes into a single predic
 #### Consensus Detection Output
 
 For each cluster meeting the vote threshold:
+
 - **Geometry**: Mean centroid of constituent detections
 - **Label**: Majority vote among constituent detection subtypes
 - **Confidence**: Vote count / total passes (e.g., 4/5 = 0.8)
@@ -1266,6 +1365,7 @@ For each cluster meeting the vote threshold:
 #### Alignment with F1 Evaluation
 
 The 20m clustering threshold deliberately matches the spatial tolerance used in F1 calculation (Section 4.1.1). This ensures that:
+
 - Detections considered "the same" during voting are also treated as matching the same reference during evaluation
 - No artificial precision loss from threshold misalignment
 
@@ -1337,6 +1437,7 @@ Tiles are excluded from analysis (after selection) if:
 4. **Empty response**: Model returns no detections AND no explanation (indicates processing failure rather than genuine empty tile)
 
 **Documentation requirement**: Any tile excluded after selection must be documented with:
+
 - Tile filename
 - Exclusion reason
 - Number of retry attempts (if applicable)
@@ -1361,6 +1462,13 @@ This section maps each hypothesis to the specific configuration files, system in
 | H7 | Hard negatives | ✅ Ready | Factorial factor (hard_negatives) |
 | H8 | Flash→Pro transfer | ✅ Ready | Runtime model parameter |
 | H9 | Temperature | ✅ Ready | Factorial factor (temperature) |
+| H10 | Fine-to-coarse validation | 📋 Exploratory | Context-expanded re-query pipeline |
+| H11 | Temperature variation across prompts | 📋 Exploratory | Runtime temperature parameter |
+| H12 | Cross-model consistency | 📋 Exploratory | Runtime model parameter (Claude, GPT) |
+| H13 | Cross-model voting | 📋 Exploratory | Multi-model ensemble voting |
+| H14 | Training pool size effects | 📋 Exploratory | Varied training pool sampling |
+| H15 | Few-shot library size effects | 📋 Exploratory | Library size parameter |
+| H16 | Tile size effects | 📋 Exploratory | Tile dimension parameter |
 
 #### 8.7.2 Configuration File Mapping
 
@@ -1410,7 +1518,7 @@ Each of the 12 configs is tested at 4 temperatures (0.0, 0.3, 0.7, 1.0) for H9, 
 
 ---
 
-## 9\. Implementation Priority
+## 9. Implementation Priority
 
 ### Tier 1: Must Test (Core Confirmatory)
 
@@ -1433,31 +1541,55 @@ Each of the 12 configs is tested at 4 temperatures (0.0, 0.3, 0.7, 1.0) for H9, 
 
 - **H10** (fine-to-coarse) — novel, worth exploring
 - **H11** (temperature variation) — likely small effect
-- **H12** (cross-model) — important for generalizability
-- **H13–H15, E7** — additional exploratory questions
+- **H12** (cross-model) — important for generalisability
+- **H13–H16** — additional exploratory questions
 
 ---
 
-## 10\. Stage 2 Planning (Contingent on Stage 1 Results)
+## 10. Stage 2 Planning (Contingent on Stage 1 Results)
 
 Techniques that pass Stage 1 screening will be validated in Stage 2 with:
 
-- **Larger sample**: Additional tiles from the 361-tile corpus (e.g., 40-80 tiles)  
-- **Stricter correction**: Bonferroni or Holm-Bonferroni at α = 0.05  
-- **Transfer testing**: Tiles from maps outside the 4 annotated sheets (if feasible)  
-- **Optimized parameters**: For techniques that show promise, optimize hyperparameters (e.g., voting threshold, number of hard negatives)
+- **Larger sample**: 80-160 additional tiles from the 321-tile reserve set
+- **Stricter correction**: Bonferroni or Holm-Bonferroni at α = 0.05
+- **Transfer testing**: Tiles from maps outside the 4 annotated sheets (if feasible)
+- **Optimised parameters**: For techniques that show promise, optimise hyperparameters (e.g., voting threshold, number of hard negatives)
 
-Stage 2 will be separately preregistered based on Stage 1 findings.
+### 10.1 Configuration Selection Strategy
+
+Stage 2 will test the **top 3-5 configurations** from Stage 1 rather than only the single best performer. This approach:
+
+- Guards against overfitting to Stage 1 sample
+- Allows detection of configurations that generalise better despite slightly lower Stage 1 performance
+- Provides robustness if top configuration has high variance
+
+**Selection criteria**:
+
+1. Include the highest-F1 configuration
+2. Include configurations within 0.05 F1 of the best (if any)
+3. Include configurations representing distinct factor combinations (e.g., if best uses image-only, include best text+image)
+4. Maximum 5 configurations to maintain statistical power
+
+### 10.2 Stage 2 Preregistration
+
+Stage 2 will be separately preregistered after Stage 1 completion. The Stage 2 preregistration will specify:
+
+- Exact configurations to test (based on Stage 1 results)
+- Sample size and tile selection methodology
+- Power analysis based on observed Stage 1 effect sizes
+- Analysis plan with appropriate multiple comparison correction
+
+This separation ensures Stage 2 design is informed by Stage 1 data without compromising preregistration integrity.
 
 ---
 
-## 11\. Preregistration Checklist
+## 11. Preregistration Checklist
 
 Before any test set evaluation:
 
-- [ ] Finalize hypothesis list and predictions  
-- [ ] Specify exact test tile IDs (20 tiles, identified by map \+ tile number)  
-- [x] Specify primary outcome: Overall F1 at \[X\]m spatial tolerance  
+- [ ] Finalise hypothesis list and predictions  
+- [ ] Specify exact test tile IDs (20 tiles, identified by map + tile number)
+- [x] Specify primary outcome: Overall F1 at 20m spatial tolerance  
 - [ ] Specify success threshold: F1 ≥ 0.85 for pipeline as a whole  
 - [ ] Document few-shot library composition (examples, ordering)  
 - [ ] Document prompt text for all conditions  
@@ -1471,7 +1603,7 @@ Before any test set evaluation:
 
 ---
 
-## 12\. Outstanding Questions
+## 12. Outstanding Questions
 
 The following items need to be specified before preregistration can be finalised:
 
@@ -1495,19 +1627,58 @@ The following items need to be specified before preregistration can be finalised
 
 ---
 
+## 13. Conflict of Interest
+
+The authors declare no competing interests. This research received no external funding from AI model providers.
+
+---
+
+## 14. Ethics Statement
+
+This study analyses historical map imagery and involves no human participants. No ethics approval was required.
+
+---
+
+## 15. Registration Statement
+
+This preregistration will be submitted to OSF Registries using the OSF Preregistration format.
+
+---
+
+## 16. Data and Code Availability
+
+- **Code**: All analysis scripts will be released via GitHub/OSF upon publication
+- **API responses**: Raw API response logs will be archived (with timestamps)
+- **Ground truth**: [Pending confirmation of Bulgarian data sharing requirements]
+- **Map tiles**: [Pending confirmation of Bulgarian data sharing requirements]
+- **Prompts**: All prompt text and configuration files documented in `preregistration-appendix-prompts.md`
+
+### 16.1 Companion Documents
+
+This preregistration is accompanied by the following supplementary documents:
+
+| Document | Purpose |
+|----------|---------|
+| `preregistration-coverage.md` | Factorial coverage matrix, extended tests, explicit exclusions |
+| `preregistration-appendix-prompts.md` | Complete prompt text for all system instructions and configurations |
+
+---
+
 ## References
 
-- Sobotkova, A., Ross, S.A., Nassif-Haynes, C., & Ballsun-Stanton, B. (2023). Creating large, high-quality geospatial datasets from historical maps using novice volunteers. *Applied Geography*, 155, 102967\.  
+- Sobotkova, A., Ross, S.A., Nassif-Haynes, C., & Ballsun-Stanton, B. (2023). Creating large, high-quality geospatial datasets from historical maps using novice volunteers. *Applied Geography*, 155, 102967.  
     
 - Vo, A., et al. (2025). Vision Language Models are Biased. arXiv:2505.23941.
 
 ---
 
-*Document version: 3.0*
+*Document version: 3.1*
 *Created: 2025-12-22*
-*Updated: 2026-01-01*
+*Updated: 2026-01-02*
 
 **Changelog:**
+
+- v3.1: Comprehensive review updates — fixed errors (hypothesis count, H1 prediction, H10→H12 reference, ordering terminology, escaped characters, E7→H16); added new sections (power analysis, blinding, analysis scope, Lesovo terrain, spatial tolerance sensitivity, model version documentation, Stage 2 expansion); updated hypothesis descriptions (H3 stopping rule, H4 primary/exploratory clarification, H6 symmetric replication, H8 transfer approach); added administrative sections (COI, ethics, registration, data availability); added H10-H16 to implementation table; created companion documents (preregistration-coverage.md for factorial coverage, preregistration-appendix-prompts.md for complete prompt documentation); added Section 16.1 Companion Documents reference table
 - v3.0: Added Section 8.7 hypothesis-to-implementation mapping; status set to Ready for Registration
 - v2.11: Section 8.3 prompt variants documentation; H6 text diversity methodology with example variants; runtime parameters specification
 - v2.10: Section 8.4.6 pairwise interaction testing methodology; full 48-condition factorial design; text-image ordering constraint; escalation triggers for 3-way interactions; cost estimation (~$60-100 total)
