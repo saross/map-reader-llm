@@ -162,7 +162,7 @@ def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000):
 
 def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds):
     print("\nGenerating Spatial Tolerance Curve...")
-    buffers = [10, 20, 30, 40, 50]
+    buffers = [10, 20, 30, 50]
     results = []
     
     for b in buffers:

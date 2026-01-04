@@ -126,7 +126,7 @@ Traditional CV methods achieving competitive performance required:
 - **Precision-Recall Curve**: Performance across confidence thresholds
 
 #### Spatial Metrics
-- **Spatial Tolerance Curve**: F1 at varying match distances (0m, 10m, 25m, 50m, 100m)
+- **Spatial Tolerance Curve**: F1 at varying match distances (10m, 20m, 30m, 50m)
 - Accounts for localization uncertainty in both predictions and annotations
 
 #### Tile-Level Metrics

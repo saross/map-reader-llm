@@ -141,7 +141,7 @@ Standard object detection metrics calculated against ground truth mound location
 - **F1 Score**: Primary metric; harmonic mean of precision and recall
 - **Precision**: Proportion of detections that are true mounds
 - **Recall**: Proportion of true mounds that are detected
-- **Spatial Tolerance Curve**: F1 at varying match distances (10m, 25m, 50m)
+- **Spatial Tolerance Curve**: F1 at varying match distances (10m, 20m, 30m, 50m)
 
 **Limitation**: True Negatives are undefined in continuous raster space (cannot count all locations where mounds *don't* exist), so metrics like MCC and accuracy are not applicable at the symbol level.
 
