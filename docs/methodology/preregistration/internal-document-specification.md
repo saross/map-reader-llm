@@ -25,35 +25,36 @@
 ```markdown
 ## Cost Estimates
 
-**Estimated date**: 2026-01-03
-**Soft budget limit**: $250 (may be exceeded given expanded holdout)
+**Estimated date**: 2026-01-04
+**Soft budget limit**: $220 (with 20% contingency buffer)
 
-### Summary (from execution-plan.md)
+### Summary (from execution-plan.md v2.0)
 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
-| Phase 1: Library | ~100 | $1-2 |
-| Phase 2: Factorial (48 cond × 5 passes × 60 tiles) | ~14,400 | $18-30 |
-| Phase 3a: H4 Voting | ~2,400 | $75-120 |
-| Phase 3b: H6 Diversity | ~2,400 | $15-24 |
-| Phase 3c: H3 Two-Stage | ~1,200 | $9-15 |
-| Phase 3d: H2 Elaboration | ~2,400 | $9-15 |
-| Phase 4: H8 Transfer | ~1,400 | $40-70 |
-| **Confirmatory Total** | **~24,300** | **$167-276** |
-| Phase 5: Exploratory | ~2,000-5,000 | $20-50 |
-| **Grand Total** | **~26,300-29,300** | **$187-326** |
+| Phase 1: Library + Text | ~100 | $1-2 |
+| Phase 2: Factorial (100 cond × K=10 runs × 60 tiles) | ~60,000 | ~$90 |
+| Phase 3a: H4 N=30 Extension | ~1,200 | ~$2 |
+| Phase 3b: H5 Ordering | ~3,600 | ~$5 |
+| Phase 3c: H6 Diversity | ~6,000 | ~$9 |
+| Phase 3d: H3 Two-Stage | ~1,200 | ~$2 |
+| **Flash Subtotal** | **~72,100** | **~$109** |
+| Phase 4: H8 Pro Transfer (OFAT) | ~1,400-1,600 | ~$21-24 |
+| **Confirmatory Total** | **~73,500-73,700** | **~$130-133** |
+| Phase 5: Exploratory | ~2,000-5,000 | ~$20-50 |
+| **Grand Total** | **~75,500-78,700** | **~$150-183** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$390**
+**Contingency**: 20% buffer → **Budget ceiling: ~$220**
 
 ### Budget Reserves Allocation
 
 | Reserve | Amount | Purpose |
 |---------|--------|---------|
-| Contingency | ~$40 | API failures, retries |
-| H8 escalation | ~$50 | If transfer triggers activate |
-| Unexpected findings | ~$50 | Worth-pursuing discoveries |
+| Contingency | ~$25 | API failures, retries |
+| H8 escalation | ~$40 | If Pro shows superiority warranting full optimisation |
+| Unexpected findings | ~$25 | Worth-pursuing discoveries |
 
-**Note**: Budget increased due to expanded holdout set (60 tiles vs original 20).
+**Note**: Budget significantly lower than previous design (~$187-326) due to K=10 protocol, H2 integration, and OFAT approach for H8.
 ```
 
 ### 2.2 Pricing Assumptions
@@ -90,28 +91,58 @@ This section documents the rationale for major design decisions, for internal re
 
 ### Factorial Design Scope
 
-**Decision**: Run full 48-condition factorial plus extended coverage (Tiers 1-3)
+**Decision**: Run full 100-condition factorial (5 M/E × 4 H7 × 5 T) with K=10 independent runs
 
 **Rationale**:
 - Expanded holdout (60 tiles) provides improved statistical power (MDE ≈ 0.07-0.09 for F1)
-- Comprehensive pairwise coverage enables strong claims about interactions
-- Extended coverage tests plausible mechanisms (diversity × hard negatives, voting × modality)
+- 5-level M/E factor integrates modality and elaboration testing (H1 + H2) in unified design
+- 4-level H7 factor enables orthogonal testing of text and image hard negatives
+- K=10 independent runs enable proper variance estimation and post-hoc voting analysis
 
-**Note**: Budget (~$187-326) exceeds original $250 soft limit due to holdout expansion; approved given power benefits.
+**Note**: Budget (~$150-183) is lower than previous design despite expanded factorial, due to K=10 protocol efficiency and H2 integration.
 
 **Alternatives considered**:
-- Sequential determination (test M and T independently first): Rejected — budget allows full testing
-- Fractional factorial: Rejected — would lose information on intermediate levels
-- Reduced temperature levels: Rejected — want full characterization
+- Separate H2 phase: Rejected — M/E factor provides full coverage within main factorial
+- Full O crossing: Rejected — H5 partial cross sufficient with mitigation trigger
+- N=5 voting in factorial: Rejected — K=10 independent runs enable unbiased testing
+
+### K=10 Independent Runs Protocol
+
+**Decision**: Evaluate each condition with K=10 independent single-pass runs
+
+**Rationale**:
+- Avoids circular application of voting when testing main effects
+- Enables proper variance-based statistical comparisons
+- Allows post-hoc computation of voted results (N=5 from runs 1-5 or 6-10; N=10 from all runs)
+- Same data supports both factor testing and H4 voting analysis
+
+### H5 Partial Cross Design
+
+**Decision**: Test ordering as 3 × 3 partial cross (3 orderings × 3 M/E levels) instead of full factorial crossing
+
+**Rationale**:
+- Full O × M/E × H7 × T crossing would add 200 conditions
+- Partial cross tests key interaction (O × M/E) at fixed H7 and T
+- Mitigation trigger (p < 0.10) extends to remaining M/E levels if interaction detected
+
+### H8 OFAT Transfer Approach
+
+**Decision**: Use One-Factor-At-a-Time (OFAT) approach for Pro transfer validation on 20-tile subset
+
+**Rationale**:
+- Goal is transfer validation, not full Pro optimisation
+- OFAT tests 1-2 alternatives per factor to check if optimal differs
+- 20-tile stratified subset preserves statistical power for key comparisons
+- Full Pro optimisation only if superiority warrants
 
 ### Diversity and Voting Single-Config Testing
 
-**Decision**: Test H6 (diversity) and H4 (voting threshold) at optimal base configuration only
+**Decision**: Test H6 (diversity) and H4 (extended voting N=30) at optimal base configuration only
 
 **Rationale**:
-- Diversity mechanism (error decorrelation) is general; should generalize across configs
-- Preliminary voting results showed consistent ~30-40% optimum
-- Full factorial crossing would add ~$50+ for low expected information gain
+- Diversity mechanism (error decorrelation) is general; should generalise across configs
+- H4 voting at N=5 and N=10 comes from K=10 factorial runs (no additional cost)
+- N=30 extension requires only 20 additional runs at optimal config
 
 **Caveats documented in preregistration**: Yes
 
@@ -149,7 +180,10 @@ The following internal working documents informed the preregistration:
 | preregistration-review-final.md | Comprehensive review and action items | Incorporated into preregistration |
 | factorial-coverage-synopsis.md | Coverage analysis | Key content moved to preregistration-coverage.md |
 | experimental-factor-inventory.md | Factor-by-factor analysis | Archived; decisions captured |
-| h2-text-elaboration-comparison.md | H2 prompt specifications | Referenced in preregistration |
+| h2-text-elaboration-comparison.md | H2 prompt specifications | Superseded by M/E factor |
+| cc-consolidated-design-updates.md | 100-condition factorial, K=10 protocol | Incorporated into preregistration v3.2 |
+| cc-text-image-alignment.md | Text-image alignment for library/verbose text | Incorporated into preregistration v3.2 |
+| cc-editing-instructions-h6-diversity.md | H6 diversity implementation notes | Archived |
 
 These documents are retained for project archive but are not part of the formal preregistration.
 ```
@@ -167,11 +201,12 @@ After study completion, add the following sections:
 
 | Component | Estimated | Actual | Variance | Notes |
 |-----------|-----------|--------|----------|-------|
-| Confirmatory (Flash) | $127-201 | | | |
-| H8 Pro transfer | $40-70 | | | |
-| Exploratory | $20-50 | | | |
+| Phase 2 Factorial (Flash) | ~$90 | | | |
+| Phase 3 Follow-ups (Flash) | ~$18 | | | |
+| H8 Pro transfer | ~$21-24 | | | |
+| Exploratory | ~$20-50 | | | |
 | Contingency used | $0 | | | |
-| **TOTAL** | $187-326 | | | |
+| **TOTAL** | ~$150-183 | | | |
 ```
 
 ### 3.2 Model Versions Used
@@ -228,4 +263,11 @@ The preregistration is the **public commitment**. This document is the **project
 
 ---
 
-*Created 2026-01-02*
+*Document version: 1.1*
+*Created: 2026-01-02*
+*Updated: 2026-01-04*
+
+**Changelog:**
+
+- v1.1: Updated cost estimates for 100-condition factorial (~$150-183); added K=10, H5 partial cross, H8 OFAT decision rationale; updated working documents archive with cc-consolidated-design-updates.md and cc-text-image-alignment.md
+- v1.0: Initial specification

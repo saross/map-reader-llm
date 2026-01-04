@@ -12,24 +12,28 @@
 Phase 0: Preparation
     │
     ▼
-Phase 1: Library Construction ──────────────────────────────┐
+Phase 1: Library + Verbose Text Construction ───────────────┐
     │                                                       │
     ▼                                                       │
-Phase 2: Core Factorial (H1, H5, H7, H9) ◄──────────────────┤
+Phase 2: Core Factorial (H1, H2, H7, H9) ◄──────────────────┤
+    │    100 conditions × K=10 runs                         │
     │                                                       │
     ├───────────────┬───────────────┬───────────────┐       │
     ▼               ▼               ▼               ▼       │
 Phase 3a:       Phase 3b:       Phase 3c:       Phase 3d:   │
-H4 Voting       H6 Diversity    H3 Two-Stage    H2 Elaboration
+H4 Voting       H5 Ordering     H6 Diversity    H3 Two-Stage│
+(N=30 extend)   (partial cross)                             │
     │               │               │               │       │
     └───────────────┴───────────────┴───────────────┘       │
                     │                                       │
                     ▼                                       │
-            Phase 4: H8 Flash→Pro Transfer ◄────────────────┘
+            Phase 4: H8 Flash→Pro Transfer (OFAT) ◄─────────┘
                     │
                     ▼
             Phase 5: Exploratory (H10-H15, E7)
 ```
+
+**Note**: H2 (Text Elaboration) is now integrated into the main factorial as the M/E factor (5 levels). Phase 3d formerly tested H2 separately; this is no longer required.
 
 ---
 
@@ -110,7 +114,7 @@ See `docs/PIPELINES.md` for full schema documentation.
 
 ---
 
-## Phase 1: Library Construction
+## Phase 1: Library + Verbose Text Construction
 
 **Duration**: 0.5 days
 **Estimated cost**: ~$1-2 (Flash)
@@ -118,56 +122,110 @@ See `docs/PIPELINES.md` for full schema documentation.
 
 ### Purpose
 
-Run baseline detection on training tiles to identify hard examples for the few-shot library.
+Run baseline detection on training tiles to:
+
+1. Identify hard examples for the few-shot library
+2. Derive verbose text additions from the same failures (text-image alignment)
 
 ### Procedure
 
-1. **Run baseline** (image-only, 4 canonical + 3 null, no hard examples)
-   - 5 passes × 20 training tiles = 100 API calls
-   - Use T=1.0 (vendor recommended)
+**Step 1: Image-Only Baseline**
 
-2. **Analyse results**
-   - Identify False Negatives: ground truth mounds missed in ≥3/5 passes
-   - Identify False Positives: detections in ≥3/5 passes with no matching ground truth
-   - Rank by frequency
+- Prompt: Image-only (4 canonical positives + 3 null tiles, minimal text instruction)
+- Passes: 5 × 20 training tiles = 100 API calls
+- Temperature: T=1.0
 
-3. **Select hard examples**
-   - Hard positives: Top 4 FNs by frequency
-   - Hard negatives: Top 3 FPs by frequency
-   - Document selection with crops and rationale
+**Step 2: Failure Analysis**
 
-4. **Outputs**
-   - [ ] `inputs/few-shot-library/hard-positives/` (4 images)
-   - [ ] `inputs/few-shot-library/hard-negatives/` (3 images)
-   - [ ] `inputs/few-shot-library/library-manifest.json` (metadata)
-   - [ ] Upload library to OSF before Phase 2
+- Identify False Negatives (FNs): Ground truth mounds missed in ≥3/5 passes
+- Identify False Positives (FPs): Detections in ≥3/5 passes with no matching ground truth
+- Rank by frequency and categorise by failure type
+
+**Step 3: Construct Hard Example Library**
+
+Select hard examples based on frequency ranking:
+
+- Hard positives: Top K FNs (target K=4)
+- Hard negatives: Top M FPs (target M=3)
+
+Document for each selected example:
+
+- Source tile
+- Frequency (passes where failure occurred)
+- Failure category (e.g., "occluded mound", "benchmark confusion")
+
+**Step 4: Construct Verbose Text**
+
+Build verbose text by adding targeted guidance for each hard example:
+
+| Component | Source | Content |
+|-----------|--------|---------|
+| Base | Legend descriptions | Brief text describing canonical mound types |
+| Exclusion guidance | Hard negative images | Text describing why each FP is NOT a mound |
+| Edge case guidance | Hard positive images | Text describing why each FN IS a mound |
+
+**Alignment requirement**: Each hard example image must have corresponding text guidance. The verbose text directly describes the hard examples in the library.
+
+**Step 5: Construct Brief vs Verbose Text**
+
+| Text Version | Content |
+|--------------|---------|
+| Brief text | Legend-based descriptions of canonical mound types only (~200-400 words) |
+| Verbose text | Brief text + exclusion guidance + edge case guidance (~700-1400 words) |
+
+**Text-modality consistency**: Identical text is used across modalities:
+
+- Text-only brief = Text+image brief (same text)
+- Text-only verbose = Text+image verbose (same text)
+
+**Step 6: Document and Upload**
+
+Before any holdout evaluation, upload to OSF:
+
+- [ ] `inputs/few-shot-library/hard-positives/` (4 images)
+- [ ] `inputs/few-shot-library/hard-negatives/` (3 images)
+- [ ] `inputs/few-shot-library/library-manifest.json`
+- [ ] `prompts/brief-text.md` (identical for text-only and text+image)
+- [ ] `prompts/verbose-text.md` (identical for text-only and text+image)
+- [ ] `prompts/text-image-alignment.md` (mapping of hard examples to text)
 
 ### Decision Point
 
 If <4 distinct FNs or <3 distinct FPs are found:
+
 - Option A: Proceed with smaller hard example set (document)
-- Option B: Expand training pool (requires re-randomisation)
+- Option B: Lower frequency threshold (≥2/5 instead of ≥3/5)
+- Document decision and rationale
 
 ---
 
-## Phase 2: Core Factorial (H1, H5, H7, H9)
+## Phase 2: Core Factorial (H1, H2, H7, H9)
 
-**Duration**: 1-2 days
-**Estimated cost**: ~$18-30 (Flash)
-**Prerequisites**: Phase 1 complete, library uploaded to OSF
+**Duration**: 2-3 days
+**Estimated cost**: ~$90 (Flash)
+**Prerequisites**: Phase 1 complete, library and text uploaded to OSF
 
 ### Design
 
-Full 2×3×2×4 factorial on Gemini 3 Flash:
+Full 5×4×5 factorial on Gemini 3 Flash:
 
 | Factor | Levels | Values |
 |--------|--------|--------|
-| Modality (M) | 2 | image-only, text+image |
-| Ordering (O) | 3 | canonical-first, canonical-last, random |
-| Hard negatives (H) | 2 | without, with |
-| Temperature (T) | 4 | 0.0, 0.3, 0.7, 1.0 |
+| Modality/Elaboration (M/E) | 5 | Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image |
+| Hard negatives (H7) | 4 | None, Text-only, Images-only, Text+Images |
+| Temperature (T) | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |
 
-**Total**: 48 conditions × 5 passes × 60 holdout tiles = 14,400 API calls
+**Note**: Ordering (H5) is tested as a partial cross in Phase 3b, not in the main factorial. All main factorial conditions use canonical-first ordering.
+
+**Total**: 100 conditions × K=10 runs × 60 holdout tiles = **60,000 API calls**
+
+### Evaluation Protocol
+
+Each condition is evaluated using K=10 independent single-pass runs (see preregistration Section 3.8):
+
+- Results characterised statistically (mean F1, SD, 95% CI)
+- Post-hoc voting computed from runs (N=5 from runs 1-5 or 6-10; N=10 from all runs)
+- No circular application of voting when testing main effects
 
 ### Execution Order
 
@@ -175,14 +233,14 @@ Run conditions in randomised order to distribute any temporal effects (API perfo
 
 ```python
 # Pseudocode for execution
-conditions = generate_all_48_conditions()
-random.seed(20251231)  # Document seed
+conditions = generate_all_100_conditions()
+random.seed(20260104)  # Document seed
 random.shuffle(conditions)
 
 for condition in conditions:
     for tile in holdout_tiles:
-        for pass_num in range(5):
-            run_detection(condition, tile, pass_num)
+        for run_num in range(10):  # K=10 independent runs
+            run_detection(condition, tile, run_num)
             save_response()
     # Checkpoint after each condition
     save_checkpoint(condition)
@@ -190,22 +248,23 @@ for condition in conditions:
 
 ### Checkpoints
 
-- After every 10 conditions (~1,000 calls): Spot-check parsing success rate
+- After every 10 conditions (~6,000 calls): Spot-check parsing success rate
 - If parsing failure rate >5%: Pause and investigate
 - If API errors >10%: Pause and check rate limits
 
 ### Outputs
 
-- [ ] Raw JSON responses: `outputs/phase2-factorial/raw-responses/{condition_id}/{tile_id}_pass{n}.json`
+- [ ] Raw JSON responses: `outputs/phase2-factorial/raw-responses/{condition_id}/{tile_id}_run{n}.json`
 - [ ] Aggregated results: `outputs/phase2-factorial/aggregated/factorial-results.csv`
 - [ ] Preliminary ANOVA: `outputs/phase2-factorial/factorial-anova.md`
 
 ### Analysis (Immediate)
 
-1. Compute F1 for each condition (2-of-5 voting as default threshold)
-2. Run 4-way ANOVA: M × O × H × T
-3. Identify significant main effects and interactions
-4. **Decision**: Which factors show significant effects? These inform Phase 3 priorities.
+1. Compute mean F1 and SD for each condition across K=10 runs
+2. Run 3-way ANOVA: M/E × H7 × T
+3. Compute post-hoc voting performance at multiple thresholds
+4. Identify significant main effects and interactions
+5. **Decision**: Which factors show significant effects? These inform Phase 3 priorities.
 
 ---
 
@@ -213,34 +272,34 @@ for condition in conditions:
 
 These can run in parallel after Phase 2, depending on results.
 
-### Phase 3a: H4 Voting Grid Search
+### Phase 3a: H4 Voting Extension (N=30)
 
-**Duration**: 2-3 days
-**Estimated cost**: ~$75-120 (Flash)
+**Duration**: 0.5 days
+**Estimated cost**: ~$2 (Flash)
 **Trigger**: Always run (Tier 1 priority)
 
 #### Design
 
-Using best config from Phase 2 (or baseline if no clear winner):
+The K=10 runs from Phase 2 provide data for voting analysis at N=5 and N=10. Phase 3a extends to N=30 at the optimal configuration only.
 
-| Pool size (N) | Thresholds tested | Passes needed |
-|---------------|-------------------|---------------|
-| 5 | 1, 2, 3, 4, 5 | 5 × 60 = 300 |
-| 10 | 1, 2, ..., 10 | 10 × 60 = 600 |
-| 30 | 1, 2, ..., 30 | 30 × 60 = 1,800 |
+**Data from Phase 2 (no additional calls)**:
 
-**Note**: N=5 data already exists from Phase 2 for the best config. Only need N=10 and N=30 fresh runs.
+| Pool size (N) | Source | Thresholds |
+|---------------|--------|------------|
+| 5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5 |
+| 10 | All runs 1-10 | 1, 2, ..., 10 |
 
-**New API calls**: (10 + 30) × 60 tiles = 2,400 tile-evaluations
+**Additional runs for N=30**:
+
+- 20 additional runs at optimal config (already have 10 from Phase 2)
+- 20 runs × 60 tiles = **1,200 API calls**
 
 #### Execution
 
-1. Run N=10: 10 passes × 60 tiles = 600 API calls
-   - Then aggregate at T=1,2,...,10 (no additional calls)
-
-2. Run N=30: 30 passes × 60 tiles = 1,800 API calls
-
-**Total new calls**: 600 + 1,800 = 2,400 API calls
+1. Identify optimal configuration from Phase 2 results
+2. Run 20 additional passes at that configuration
+3. Combine with K=10 runs for N=30 voting pool
+4. Analyse threshold sweep across N=5, 10, 30
 
 #### Outputs
 
@@ -250,27 +309,59 @@ Using best config from Phase 2 (or baseline if no clear winner):
 
 ---
 
-### Phase 3b: H6 Diversity Testing
+### Phase 3b: H5 Ordering (Partial Cross)
+
+**Duration**: 0.5 days
+**Estimated cost**: ~$5 (Flash)
+**Trigger**: Always run
+
+#### Design
+
+Test 3 orderings × 3 M/E levels = 9 conditions total (partial cross):
+
+| Ordering | M/E Levels Tested |
+|----------|-------------------|
+| Canonical-first | (covered in main factorial) |
+| Canonical-last | Image-only, Brief-text+image, Verbose-text+image |
+| Random | Image-only, Brief-text+image, Verbose-text+image |
+
+**Note**: Canonical-first is covered in the main factorial. This adds 6 new conditions (2 orderings × 3 M/E levels).
+
+**API calls**: 6 conditions × K=10 runs × 60 tiles = **3,600 API calls**
+
+#### Mitigation Trigger
+
+If O × M/E interaction is detected (p < 0.10), extend to remaining 2 M/E levels (Brief-text and Verbose-text).
+
+#### Outputs
+
+- [ ] 3 × 3 ANOVA (ordering × M/E)
+- [ ] Interaction test results
+- [ ] Recommendation for operational ordering
+
+---
+
+### Phase 3c: H6 Diversity Testing
 
 **Duration**: 1 day
-**Estimated cost**: ~$15-24 (Flash)
+**Estimated cost**: ~$9 (Flash)
 **Trigger**: Run if H4 shows voting helps (expected)
 
 #### Design
 
-2×2 factorial:
+2×2 factorial at optimal configuration:
 
 | Condition | Text | Images | Description |
 |-----------|------|--------|-------------|
-| A | Fixed | Fixed | Baseline (run 5× with different seeds, average) |
+| A | Fixed | Fixed | Baseline: identical prompt and examples across all 5 passes |
 | B | Varied | Fixed | 5 prompt variants, same images |
 | C | Fixed | Varied | Same prompt, resampled hard examples per pass |
 | D | Varied | Varied | Both mechanisms |
 
 **API calls**:
-- Condition A: 5 runs × 5 passes × 60 tiles = 1,500 calls
-- Conditions B, C, D: 1 run × 5 passes × 60 tiles × 3 = 900 calls
-- **Total**: 2,400 calls
+
+- Each condition: 5 runs × 5 passes × 60 tiles = 1,500 calls
+- 4 conditions × 1,500 = **6,000 calls**
 
 #### Outputs
 
@@ -279,22 +370,26 @@ Using best config from Phase 2 (or baseline if no clear winner):
 
 ---
 
-### Phase 3c: H3 Two-Stage Pipeline
+### Phase 3d: H3 Two-Stage Pipeline
 
 **Duration**: 1 day
-**Estimated cost**: ~$9-15 (Flash)
+**Estimated cost**: ~$2 (Flash)
 **Trigger**: Always run (confirms preliminary finding)
 
 #### Design
 
 Compare:
-- Condition A: Single-stage detection (baseline from Phase 2)
+
+- Condition A: Single-stage detection (optimal from Phase 2)
 - Condition B: Proposer → Verifier pipeline
 
 **API calls**:
-- Proposer: 5 passes × 60 tiles = 300 calls
+
+- Proposer: K=10 runs × 60 tiles = 600 calls
 - Verifier: ~X candidates × 60 tiles (depends on proposer output)
-- Estimate: ~900-1,500 total calls
+- Estimate: ~600-1,200 total calls
+
+**Stopping rule**: Two-stage must exceed single-stage by ≥0.05 F1 to justify ~2× cost overhead (see preregistration H3).
 
 #### Outputs
 
@@ -303,74 +398,69 @@ Compare:
 
 ---
 
-### Phase 3d: H2 Text Elaboration
-
-**Duration**: 0.5-1 day
-**Estimated cost**: ~$9-15 (Flash)
-**Trigger**: Run if Phase 2 shows modality matters (M main effect significant)
-
-#### Design
-
-2×2×2 factorial within text-containing conditions:
-
-| Factor | Levels |
-|--------|--------|
-| Modality | text-only, text+image |
-| Elaboration | brief (~200-400 words), elaborate (~700-1400 words) |
-| Hard negatives | baseline, hardneg |
-
-**Configs**: 8 total (see `planning/h2-text-elaboration-comparison.md`)
-- `detect_text-only.json`, `detect_text-only_hardneg.json`
-- `detect_text-only_elaborate.json`, `detect_text-only_elaborate_hardneg.json`
-- `detect_text-image.json`, `detect_text-image_hardneg.json`
-- `detect_text-image_elaborate.json`, `detect_text-image_elaborate_hardneg.json`
-
-**API calls**: 8 × 5 passes × 60 tiles = 2,400 calls
-
-#### Outputs
-
-- [ ] 2×2×2 ANOVA (modality × elaboration × hardneg)
-- [ ] F1 comparison: brief vs elaborate within each modality
-- [ ] Qualitative analysis of error patterns
-
----
-
-## Phase 4: H8 Flash→Pro Transfer
+## Phase 4: H8 Flash→Pro Transfer (OFAT)
 
 **Duration**: 2-3 days
-**Estimated cost**: ~$50-100 (Pro is ~10× Flash cost)
-**Prerequisites**: Phase 2 and Phase 3a complete
+**Estimated cost**: ~$60-90 (Pro is ~10× Flash cost)
+**Prerequisites**: Phase 2 complete
 
 ### Design
 
-Replicate key findings on Gemini 3 Pro using adaptive testing framework (see preregistration Section H8).
+Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time (OFAT) approach. Uses 20-tile stratified subset (preserving density distribution from the 60 holdout tiles).
 
-#### Primary Analysis (~14 conditions)
+### Phase 4a: Baseline Comparison
 
-| Hypothesis | Conditions on Pro |
-|------------|-------------------|
-| H4 (voting) | Single-pass, Flash-optimal, Unanimity |
-| H5 (ordering) | All 3 conditions |
-| H6 (diversity) | Full 2×2 |
-| H7 (hard negatives) | Full 2×2 |
+**Purpose**: Verify Pro performance at Flash-optimal configuration.
 
-**API calls**: ~14 conditions × 5 passes × 20 tiles = 1,400 calls
-**Estimated cost**: ~$40-70
+**API calls**: K=10 runs × 20 tiles = 200 calls
 
-#### Trigger Conditions
+**Decision point**: If Pro F1 within 0.05 of Flash F1, proceed with OFAT. If large degradation (>0.10 F1), investigate before continuing.
 
-Monitor for:
-- Effect reversal (sign change)
-- Significant interaction (p < 0.10)
-- Large attenuation (Cohen's d ratio < 0.50)
-- Rank reversal
+### Phase 4b: OFAT Sensitivity Testing
 
-If triggered → Secondary analysis (bracketing, expanded testing)
+**Purpose**: Test 1-2 alternatives per factor to check if optimal point differs.
+
+| Factor | Flash Optimal | Alternatives to Test |
+|--------|---------------|---------------------|
+| M/E | (from Phase 2) | 1-2 adjacent levels |
+| H7 | (from Phase 2) | 1-2 adjacent levels |
+| T | (from Phase 2) | ±0.3 temperatures |
+
+**API calls**: ~3 factors × 2 alternatives × K=10 runs × 20 tiles = ~1,200 calls
+
+### Phase 4c: Voting Analysis
+
+**Purpose**: Verify Flash voting threshold transfers.
+
+**Data source**: Runs from Phase 4a-4b provide voting pools.
+
+**Analysis**: Compute optimal threshold from Phase 4a-4b data; compare to Flash-optimal.
+
+### Phase 4d: Refinement (Conditional)
+
+**Trigger**: Only if Phase 4b shows optimum differs from Flash.
+
+**Design**: Targeted follow-up at Pro-optimal configuration.
+
+**API calls**: ~K=10 × 20 tiles = 200 calls (if triggered)
+
+### Total Phase 4 API Calls
+
+| Sub-phase | API Calls | Est. Cost |
+|-----------|-----------|-----------|
+| 4a: Baseline | 200 | ~$3 |
+| 4b: OFAT | ~1,200 | ~$18 |
+| 4c: Voting | (from 4a-4b) | — |
+| 4d: Refinement | 0-200 | $0-3 |
+| **Total** | **~1,400-1,600** | **~$21-24** |
+
+**Note**: If Pro shows dramatic superiority warranting full optimisation, budget for extended Pro testing (~$40-60 additional).
 
 ### Outputs
 
-- [ ] Transfer success rate (% effects replicating)
-- [ ] Model-specific recommendations (if needed)
+- [ ] Transfer success rate (% factors transferring)
+- [ ] Pro-specific recommendations (if any)
+- [ ] Voting threshold comparison (Flash vs Pro)
 
 ---
 
@@ -402,18 +492,25 @@ If triggered → Secondary analysis (bracketing, expanded testing)
 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
-| Phase 1: Library | ~100 | $1-2 |
-| Phase 2: Factorial | ~14,400 | $18-30 |
-| Phase 3a: H4 Voting | ~2,400 | $75-120 |
-| Phase 3b: H6 Diversity | ~2,400 | $15-24 |
-| Phase 3c: H3 Two-Stage | ~1,200 | $9-15 |
-| Phase 3d: H2 Elaboration | ~2,400 | $9-15 |
-| Phase 4: H8 Transfer | ~1,400 | $40-70 |
-| **Confirmatory Total** | **~24,300** | **$167-276** |
-| Phase 5: Exploratory | ~2,000-5,000 | $20-50 |
-| **Grand Total** | **~26,300-29,300** | **$187-326** |
+| Phase 1: Library + Text | ~100 | $1-2 |
+| Phase 2: Factorial (100 × K=10) | ~60,000 | ~$90 |
+| Phase 3a: H4 N=30 Extension | ~1,200 | ~$2 |
+| Phase 3b: H5 Ordering | ~3,600 | ~$5 |
+| Phase 3c: H6 Diversity | ~6,000 | ~$9 |
+| Phase 3d: H3 Two-Stage | ~1,200 | ~$2 |
+| **Flash Subtotal** | **~72,100** | **~$109** |
+| Phase 4: H8 Pro Transfer | ~1,400-1,600 | ~$21-24 |
+| **Confirmatory Total** | **~73,500-73,700** | **~$130-133** |
+| Phase 5: Exploratory | ~2,000-5,000 | ~$20-50 |
+| **Grand Total** | **~75,500-78,700** | **~$150-183** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$390**
+**Contingency**: 20% buffer → **Budget ceiling: ~$220**
+
+**Note**: This is significantly lower than the previous design (~$187-326) due to:
+
+1. K=10 independent runs replace N=5 voting in factorial (same data, different framing)
+2. H2 integrated into main factorial (no separate Phase 3d)
+3. H8 uses OFAT on 20-tile subset rather than full replication
 
 ---
 
@@ -471,6 +568,13 @@ Before submitting results:
 
 ---
 
-*Document version: 1.2*
+*Document version: 2.0*
 *Created: 2025-12-31*
-*Updated: 2026-01-02 (added metadata tracking documentation)*
+*Updated: 2026-01-04*
+
+**Changelog:**
+
+- v2.0: Major design update — revised to 100-condition factorial (5 M/E × 4 H7 × 5 T); K=10 independent runs protocol; Phase 1 now includes verbose text construction with text-image alignment; H2 integrated into main factorial (removed Phase 3d); H5 partial cross design; H8 OFAT approach on 20-tile subset; revised budget summary (~$150-183 vs ~$187-326)
+- v1.2: Added metadata tracking documentation
+- v1.1: Added H6 diversity configs, H9 temperature parameter
+- v1.0: Initial execution plan
