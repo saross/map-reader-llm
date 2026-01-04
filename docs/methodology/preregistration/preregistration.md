@@ -1723,16 +1723,22 @@ The 100-condition factorial experiment (`studies/phase2-factorial.yaml`) tests H
 
 **Config naming pattern**: `detect_{modality}_{hardneg}.json`
 
-Temperature is specified at runtime, not in config files. This yields 20 config files (5 M/E × 4 H7).
+Temperature is specified at runtime, not in config files. This yields 16 config files (see note below).
+
+**Config count**: Text-only modalities (Brief-text, Verbose-text) cannot use H7=Images-only or H7=Both:
+
+- 3 image-using modalities × 4 H7 levels = 12
+- 2 text-only modalities × 2 H7 levels = 4
+- **Total: 16 configurations**
 
 Example configurations:
 
 | Config Pattern | M/E | H7 |
 | :--- | :--- | :--- |
 | `detect_image-only_none.json` | Image-only | None |
-| `detect_text-brief_hardneg-text.json` | Brief-text | Text-only |
-| `detect_text-brief-image_hardneg-images.json` | Brief-text+image | Images-only |
-| `detect_text-verbose-image_hardneg-both.json` | Verbose-text+image | Text+Images |
+| `detect_brief-text_text.json` | Brief-text | Text-only |
+| `detect_brief-text-image_images.json` | Brief-text+image | Images-only |
+| `detect_verbose-text-image_both.json` | Verbose-text+image | Text+Images |
 
 **Runtime parameters** (specified at execution, not in config files):
 
@@ -1903,7 +1909,7 @@ This preregistration is accompanied by the following supplementary documents:
 
 **Changelog:**
 
-- v3.4: Final review fixes — H2/H7 orthogonality clarification (exclusion guidance controlled by H7 only); config naming corrected (temperature is runtime parameter); H3 factor list corrected; temperature "required" → "recommended"; Section 8.3.3/8.3.4 factor references fixed; typos corrected; terminology standardised (elaborate → verbose)
+- v3.4: Final review fixes — H2/H7 orthogonality clarification (exclusion guidance controlled by H7 only); config naming corrected (temperature is runtime parameter, 16 configs not 20 due to text-only constraints); H3 factor list corrected; temperature "required" → "recommended"; Section 8.3.3/8.3.4 factor references fixed; typos corrected; terminology standardised (elaborate → verbose)
 - v3.3: Exploratory hypotheses H10-H16 comprehensive rewrite with detailed test designs; fixed H11 implementation table description ("prompts" → "passes"); markdown linting (asterisk lists → dashes throughout)
 - v3.2: Major factorial design update — revised to 100-condition design (5 M/E × 4 H7 × 5 T levels); added Section 3.8 K=10 Evaluation Protocol; updated H1 to 5-level M/E factor; H2 now contrasts within factorial; H4 integrated with K=10 runs; H5 partial cross design (3 × 3) with p < 0.10 mitigation; H9 extended to 5 temperatures with escalation trigger; H7 alignment clarification (text describes same failures as images); Section 1.3 text-only role clarification; Section 8.4.1 library and verbose text construction procedure with alignment requirements; updated Section 8.4.7 and Section 8.7.4 for 100-condition factorial
 - v3.1: Comprehensive review updates — fixed errors (hypothesis count, H1 prediction, H10→H12 reference, ordering terminology, escaped characters, E7→H16); added new sections (power analysis, blinding, analysis scope, Lesovo terrain, spatial tolerance sensitivity, model version documentation, Stage 2 expansion); updated hypothesis descriptions (H3 stopping rule, H4 primary/exploratory clarification, H6 symmetric replication, H8 transfer approach); added administrative sections (COI, ethics, registration, data availability); added H10-H16 to implementation table; created companion documents (preregistration-coverage.md for factorial coverage, preregistration-appendix-prompts.md for complete prompt documentation); added Section 16.1 Companion Documents reference table

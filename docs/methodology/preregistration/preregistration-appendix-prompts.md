@@ -26,8 +26,14 @@ The prompt architecture reflects the orthogonal factorial design:
 
 This yields:
 
-- **10 instruction files**: 5 M/E levels × 2 exclusion variants (base, `_hardneg`)
-- **20 configuration files**: 5 M/E levels × 4 H7 levels
+- **10 detection instruction files**: 5 M/E levels × 2 exclusion variants (base, `_hardneg`)
+- **2 two-stage pipeline instruction files**: propose_image-only.md, verify_image-only.md
+- **16 configuration files**: See Section 2.2 for breakdown
+
+**Note on config count**: Text-only modalities (Brief-text, Verbose-text) cannot use H7=Images-only or H7=Both since they have no example images. This reduces the factorial from 5×4=20 to 16 valid combinations:
+
+- 3 image-using modalities × 4 H7 levels = 12
+- 2 text-only modalities × 2 H7 levels (None, Text-only) = 4
 
 ### Orthogonal Factor Separation
 
@@ -52,8 +58,8 @@ The following elements will be finalised before holdout evaluation:
 
 Configuration files with hard negative images currently use placeholder paths for empirically-derived examples. These will be populated via the procedure in preregistration.md Section 8.4.2:
 
-1. Run image-only baseline on 20 training tiles (K=10 runs)
-2. Identify False Positives (≥3/10 runs) → select top M as hard negatives
+1. Run image-only baseline on 20 training tiles (5 passes)
+2. Identify False Positives (≥3/5 passes) → select top M as hard negatives
 3. Document selected images with filenames, source tiles, and selection rationale
 
 **Legend-derived hard negatives** (can be specified now):
@@ -815,8 +821,8 @@ Base your decision on visual similarity to the Positive reference examples.
 Return a JSON object with your assessment.
 
 {
-    "reasoning": "Brief description of visual features observed.",
-    "mound_probability": 0.0
+    "reasoning": "<Brief description of visual features observed>",
+    "mound_probability": "<0.0-1.0>"
 }
 
 ## Scoring Guide
@@ -826,6 +832,44 @@ Return a JSON object with your assessment.
 - **0.3-0.5**: Uncertain, could be mound or similar feature.
 - **0.0-0.2**: Not a mound (noise, text, isolated marker, building).
 ```
+
+---
+
+### 1.7 Fine-to-Coarse Verification Prompt (H10)
+
+**Status**: Exploratory — prompt to be finalised if H10 is conducted.
+
+#### 1.7.1 verify_context-expanded.md
+
+**Purpose**: Focused verification for uncertain detections with expanded spatial context.
+**Used by**: H10 (Stage 2 re-query for 2/5 or 3/5 consensus cases)
+
+```markdown
+# Context-Expanded Verification
+
+Examine the centre of this image. Is there a burial mound symbol at that location?
+
+The image shows an expanded view (~896×896 pixels) centred on a candidate detection from initial analysis.
+
+## Task
+
+Determine whether the feature at the centre matches burial mound symbols:
+
+- Look for radiating rays (hachures; spikes) extending outward
+- Consider the surrounding context for disambiguation
+
+## Output Format
+
+Return a JSON object:
+
+{
+    "is_mound": true | false,
+    "confidence": "<low | medium | high>",
+    "reasoning": "<Brief explanation>"
+}
+```
+
+**Note**: This prompt will be refined based on Stage 1 results before H10 testing.
 
 ---
 
@@ -941,9 +985,11 @@ This yields **16 valid configurations**:
         {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
         {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
         {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"}
+        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
+        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
+        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"}
     ],
-    "ordering_note": "Canonical-first: legend positives, then nulls."
+    "ordering_note": "Canonical-first: legend positives, hard positives, nulls."
 }
 ```
 
@@ -972,13 +1018,24 @@ This yields **16 valid configurations**:
         {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
         {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
         {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
-        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
-        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
-        {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative: [TBD from Phase 1 FP analysis]", "category": "hard_negative"}
+        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative", "category": "hard_negative"}
     ],
-    "ordering_note": "Canonical-first: legend positives, nulls, then hard negatives."
+    "ordering_note": "Canonical-first: legend positives, hard positives, nulls, then hard negatives."
 }
 ```
+
+**Label convention for H7 conditions:**
+
+| H7 Level | Hard Negative Label Style |
+|----------|---------------------------|
+| Images-only | Minimal: `"Negative"` |
+| Text+Images | Detailed: `"Negative: Benchmark ALONE (no mound). NO radiating rays."` |
+
+This distinction tests whether the model needs explicit textual explanation of why examples are negative, or whether visual examples alone suffice.
 
 ---
 
@@ -1005,11 +1062,13 @@ This yields **16 valid configurations**:
         {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
         {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
         {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
+        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
+        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
         {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
         {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
         {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative: [TBD from Phase 1 FP analysis]", "category": "hard_negative"}
     ],
-    "ordering_note": "Canonical-first: legend positives, nulls, then hard negatives."
+    "ordering_note": "Canonical-first: legend positives, hard positives, nulls, then hard negatives."
 }
 ```
 
@@ -1059,9 +1118,11 @@ This yields **16 valid configurations**:
         {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays.", "category": "canonical"},
         {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
         {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"}
+        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
+        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
+        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"}
     ],
-    "ordering_note": "Text-only hard negatives: exclusion guidance in instruction file, no hard negative images."
+    "ordering_note": "Canonical-first: legend positives, hard positives, nulls. Text-only hard negatives in instruction file."
 }
 ```
 
@@ -1083,6 +1144,36 @@ Example ordering variant files would follow the pattern:
 
 - `detect_image-only_none_canonical-last.json`
 - `detect_image-only_none_random.json`
+
+#### Example: Canonical-Last Ordering
+
+**detect_image-only_none_canonical-last.json**
+
+```json
+{
+    "version": "detect_image-only_none_canonical-last",
+    "description": "Image-only baseline with canonical-LAST ordering (H5 variant).",
+    "hypothesis": "M/E=Image-only, H7=None, O=Canonical-last",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_image-only.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"}
+    ],
+    "ordering_note": "Canonical-LAST: hard positives first, nulls, then legend positives in final positions (testing recency bias)."
+}
+```
+
+**Note**: For conditions with hard negatives, the canonical-last ordering places hard negatives before nulls and canonical examples last.
 
 ---
 
@@ -1179,16 +1270,17 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 | Content Type | Source | Placeholder |
 |--------------|--------|-------------|
 | Additional hard negative images | FPs from Phase 1 (≥3/10 runs) | `hardneg_empirical_TBD_*.png` |
-| Hard positive images (H6) | FNs from Phase 1 (≥3/10 runs) | `hardpos_empirical_TBD_*.png` |
+| Hard positive images (H6) | FNs from Phase 1 (≥3/5 passes) | `hardpos_empirical_TBD_*.png` |
 
 ---
 
-*Document version: 2.0*
+*Document version: 2.1*
 *Created: 2026-01-02*
 *Updated: 2026-01-04*
 
 **Changelog:**
 
+- v2.1: Final review fixes — corrected config count explanation (20→16 due to text-only constraints); aligned Phase 1 baseline with preregistration (5 passes, ≥3/5 threshold); fixed hard negative labels for Images-only condition (minimal "Negative" labels); added hard positive placeholders to example configs; added H10 verification prompt placeholder (Section 1.7); added H5 canonical-last example config; fixed verifier prompt to use placeholder notation
 - v2.0: Major restructure — 10 instruction files (5 M/E × 2 exclusion variants), 16 config files (reflecting text-only constraints); renamed "elaborate" to "verbose"; clarified orthogonal separation between H2 (edge case guidance for FNs) and H7 (exclusion guidance for FPs); added legend-derived hard negatives; flagged empirically-derived content as TBD
 - v1.1: Added T=1.3 to temperature values; removed stale H2 reference from H6 construction procedure
 - v1.0: Initial documentation
