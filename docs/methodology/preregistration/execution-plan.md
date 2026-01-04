@@ -153,7 +153,7 @@ If <4 distinct FNs or <3 distinct FPs are found:
 ## Phase 2: Core Factorial (H1, H5, H7, H9)
 
 **Duration**: 1-2 days
-**Estimated cost**: ~$6-10 (Flash)
+**Estimated cost**: ~$18-30 (Flash)
 **Prerequisites**: Phase 1 complete, library uploaded to OSF
 
 ### Design
@@ -167,7 +167,7 @@ Full 2×3×2×4 factorial on Gemini 3 Flash:
 | Hard negatives (H) | 2 | without, with |
 | Temperature (T) | 4 | 0.0, 0.3, 0.7, 1.0 |
 
-**Total**: 48 conditions × 5 passes × 20 holdout tiles = 4,800 API calls
+**Total**: 48 conditions × 5 passes × 60 holdout tiles = 14,400 API calls
 
 ### Execution Order
 
@@ -216,7 +216,7 @@ These can run in parallel after Phase 2, depending on results.
 ### Phase 3a: H4 Voting Grid Search
 
 **Duration**: 2-3 days
-**Estimated cost**: ~$25-40 (Flash)
+**Estimated cost**: ~$75-120 (Flash)
 **Trigger**: Always run (Tier 1 priority)
 
 #### Design
@@ -225,23 +225,22 @@ Using best config from Phase 2 (or baseline if no clear winner):
 
 | Pool size (N) | Thresholds tested | Passes needed |
 |---------------|-------------------|---------------|
-| 5 | 1, 2, 3, 4, 5 | 5 × 20 = 100 |
-| 10 | 1, 2, ..., 10 | 10 × 20 = 200 |
-| 30 | 1, 2, ..., 30 | 30 × 20 = 600 |
+| 5 | 1, 2, 3, 4, 5 | 5 × 60 = 300 |
+| 10 | 1, 2, ..., 10 | 10 × 60 = 600 |
+| 30 | 1, 2, ..., 30 | 30 × 60 = 1,800 |
 
 **Note**: N=5 data already exists from Phase 2 for the best config. Only need N=10 and N=30 fresh runs.
 
-**New API calls**: (10 + 30) × 20 tiles = 800 tile-evaluations = 800 × avg_passes = ~16,000 calls
+**New API calls**: (10 + 30) × 60 tiles = 2,400 tile-evaluations
 
 #### Execution
 
-1. Run N=10: 10 passes × 20 tiles = 200 API calls per tile... wait, that's 10 passes total, evaluated at all 10 thresholds
-   - Actually: 10 passes × 20 tiles = 200 API calls
+1. Run N=10: 10 passes × 60 tiles = 600 API calls
    - Then aggregate at T=1,2,...,10 (no additional calls)
 
-2. Run N=30: 30 passes × 20 tiles = 600 API calls
+2. Run N=30: 30 passes × 60 tiles = 1,800 API calls
 
-**Total new calls**: 200 + 600 = 800 API calls (much less than I initially calculated!)
+**Total new calls**: 600 + 1,800 = 2,400 API calls
 
 #### Outputs
 
@@ -254,7 +253,7 @@ Using best config from Phase 2 (or baseline if no clear winner):
 ### Phase 3b: H6 Diversity Testing
 
 **Duration**: 1 day
-**Estimated cost**: ~$5-8 (Flash)
+**Estimated cost**: ~$15-24 (Flash)
 **Trigger**: Run if H4 shows voting helps (expected)
 
 #### Design
@@ -269,9 +268,9 @@ Using best config from Phase 2 (or baseline if no clear winner):
 | D | Varied | Varied | Both mechanisms |
 
 **API calls**:
-- Condition A: 5 runs × 5 passes × 20 tiles = 500 calls
-- Conditions B, C, D: 1 run × 5 passes × 20 tiles × 3 = 300 calls
-- **Total**: 800 calls
+- Condition A: 5 runs × 5 passes × 60 tiles = 1,500 calls
+- Conditions B, C, D: 1 run × 5 passes × 60 tiles × 3 = 900 calls
+- **Total**: 2,400 calls
 
 #### Outputs
 
@@ -283,7 +282,7 @@ Using best config from Phase 2 (or baseline if no clear winner):
 ### Phase 3c: H3 Two-Stage Pipeline
 
 **Duration**: 1 day
-**Estimated cost**: ~$3-5 (Flash)
+**Estimated cost**: ~$9-15 (Flash)
 **Trigger**: Always run (confirms preliminary finding)
 
 #### Design
@@ -293,9 +292,9 @@ Compare:
 - Condition B: Proposer → Verifier pipeline
 
 **API calls**:
-- Proposer: 5 passes × 20 tiles = 100 calls
-- Verifier: ~X candidates × 20 tiles (depends on proposer output)
-- Estimate: ~300-500 total calls
+- Proposer: 5 passes × 60 tiles = 300 calls
+- Verifier: ~X candidates × 60 tiles (depends on proposer output)
+- Estimate: ~900-1,500 total calls
 
 #### Outputs
 
@@ -307,7 +306,7 @@ Compare:
 ### Phase 3d: H2 Text Elaboration
 
 **Duration**: 0.5-1 day
-**Estimated cost**: ~$3-5 (Flash)
+**Estimated cost**: ~$9-15 (Flash)
 **Trigger**: Run if Phase 2 shows modality matters (M main effect significant)
 
 #### Design
@@ -326,7 +325,7 @@ Compare:
 - `detect_text-image.json`, `detect_text-image_hardneg.json`
 - `detect_text-image_elaborate.json`, `detect_text-image_elaborate_hardneg.json`
 
-**API calls**: 8 × 5 passes × 20 tiles = 800 calls
+**API calls**: 8 × 5 passes × 60 tiles = 2,400 calls
 
 #### Outputs
 
@@ -404,17 +403,17 @@ If triggered → Secondary analysis (bracketing, expanded testing)
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
 | Phase 1: Library | ~100 | $1-2 |
-| Phase 2: Factorial | ~4,800 | $6-10 |
-| Phase 3a: H4 Voting | ~800 | $3-5 |
-| Phase 3b: H6 Diversity | ~800 | $5-8 |
-| Phase 3c: H3 Two-Stage | ~400 | $3-5 |
-| Phase 3d: H2 Elaboration | ~800 | $3-5 |
+| Phase 2: Factorial | ~14,400 | $18-30 |
+| Phase 3a: H4 Voting | ~2,400 | $75-120 |
+| Phase 3b: H6 Diversity | ~2,400 | $15-24 |
+| Phase 3c: H3 Two-Stage | ~1,200 | $9-15 |
+| Phase 3d: H2 Elaboration | ~2,400 | $9-15 |
 | Phase 4: H8 Transfer | ~1,400 | $40-70 |
-| **Confirmatory Total** | **~9,100** | **$62-108** |
+| **Confirmatory Total** | **~24,300** | **$167-276** |
 | Phase 5: Exploratory | ~2,000-5,000 | $20-50 |
-| **Grand Total** | **~11,100-14,100** | **$82-158** |
+| **Grand Total** | **~26,300-29,300** | **$187-326** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$190**
+**Contingency**: 20% buffer → **Budget ceiling: ~$390**
 
 ---
 

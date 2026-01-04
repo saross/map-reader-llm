@@ -2,9 +2,9 @@
 
 **Title**: Extracting geospatial datasets from historical maps using frontier vision-language models: Evaluating prompting strategies for cartographic symbol detection
 
-**Authors**: Shawn Ross(1), Adela Sobotkova(2), Brian Ballsun-Stanton(1)
+**Authors**: Shawn Ross(1)
 
-**Affiliations**: (1) Macquarie University, Sydney, Australia; (2) Aarhus University, Denmark
+**Affiliations**: (1) Macquarie University, Sydney, Australia
 
 **Document version**: 3.1
 **Last updated**: 2026-01-01
@@ -16,28 +16,32 @@
 
 ### 1.1 Background
 
-This study evaluates prompting strategies for vision-language model (VLM) based detection of burial mound symbols from Soviet 1:50,000 topographic maps. It builds on Sobotkova et al. (2023), which used participatory GIS for the same extraction task.
+This study evaluates prompting strategies for using frontier vision-language model (VLM) to detect burial mound symbols from Soviet-era 1:50,000 topographic maps of Bulgaria. It builds on Sobotkova et al. (2023), which used participatory GIS for the same extraction task.
 
-During preliminary development, we discovered that several "best practice" prompting strategies derived from the VLM literature did not transfer to this task:
+During preliminary development, we discovered that some "best practice" prompting strategies derived from the VLM literature did not seem to transfer to this task, while others did, for example:
 
 1. **Text minimisation had little effect**: Contrary to text-image interference literature (Vo et al., 2025), removing text from prompts didn't improve performance.  
 2. **Two-stage proposer-verifier was actively harmful**: This architecture degraded performance rather than improving precision-recall tradeoffs.  
 3. **Consensus voting worked well**: n-of-x voting schemes substantially improved F1.
 
-These findings suggest that prompting strategies derived from general VLM benchmarks may not generalise to specialised detection tasks on frontier models, a finding with implications for practitioners.
+These findings suggest that prompting strategies derived from general VLM benchmarks may not generalise to specialised detection tasks like map symbol extraction using frontier models, a finding with implications for practitioners.
 
 ### 1.2 Research Questions
 
-1. Does text content affect VLM detection performance on novel domain tasks, as opposed to image-only prompting?  
-2. Do two-stage proposer-verifier pipelines improve precision-recall tradeoffs for VLM detection?  
-3. What voting and ensemble strategies optimise detection F1, precision, and recall?  
-4. Do these effects generalise across frontier VLM providers (Gemini, Claude, GPT)?
+1. Does text + image prompting affect VLM detection performance on novel domain tasks, as opposed to image-only prompting?
+2. Does the nature of text (consise, verbose, varied across consensus voting runs) affect detection performance?
+3. Do two-stage proposer-verifier pipelines improve precision-recall tradeoffs for VLM detection?  
+4. What voting and ensemble strategies optimise detection F1, precision, and recall?  
+5. Does model temperature affect VLM detection performance?
+6. Do these factors interact with one another to affect VLM detection performance?
+7. Do effects generalise from low-cost models like Gemini 3 Flash to more capable models like Gemini 3 Pro, and across frontier VLM families (Gemini 3, Claude 4.5, GPT-5.2)?
+8. What image library characteristics most improve detection performance (e.g., library size, inclusion of negatives, diversity of images, etc.)?
 
 ### 1.3 Two-Stage Trial Framework
 
-This study adopts a **two-stage trial framework** using a 361-tile corpus representing four manually annotated Soviet-era topographic map sheets from Bulgaria (Thracian Plain and surrounding areas).
+This study adopts a **two-stage trial framework** using a 361-tile corpus including four manually annotated Soviet-era topographic map sheets from Bulgaria (Thracian Plain and surrounding areas). Annotation is comprehensive, with all mound symbols identified.
 
-**Stage 1 (current work)**: Identify promising techniques using modest training (20 tiles) and holdout sets (20 tiles). Given limited statistical power, the goal is to screen for techniques that show directional improvement and warrant further investigation. False Discovery Rate (FDR) correction is used to balance discovery against false positives.
+**Stage 1 (current work)**: Identify promising techniques using a modest training set (20 tiles) and an expanded holdout set (60 tiles). The expanded holdout provides adequate power to detect moderate effects (MDE ≈ 0.07–0.09 for F1). False Discovery Rate (FDR) correction is used to balance discovery against false positives.
 
 **Stage 2 (future work)**: Techniques that show promise in Stage 1 will be validated on a larger holdout set (additional tiles from the 361-tile corpus or transfer testing on out-of-sample maps) with more stringent significance thresholds.
 
@@ -55,13 +59,13 @@ This framing acknowledges the power limitations of small-sample evaluation while
 
 | Dataset | Tiles | Purpose | Status |
 | :---- | :---- | :---- | :---- |
-| Development set (‘training tiles’) | 20 | Prompt engineering, iteration | Used \- contaminated |
-| Exploratory test set(‘holdout tiles’) | 20 | Generalisation checks (no feedback to prompts) | Used for evaluation only |
-| Reserve set | 321 | Confirmatory testing | **Untouched** |
+| Development set ('training tiles') | 20 | Prompt engineering, iteration | Used — contaminated |
+| Exploratory test set ('holdout tiles') | 60 | Generalisation checks (no feedback to prompts) | Used for evaluation only |
+| Reserve set | 281 | Confirmatory testing | **Untouched** |
 
 **Total**: 361 tiles from 4 annotated Soviet topographic map sheets. Maps were hand-annotated by students with comprehensive expert review.
 
-**Note**: The 20 exploratory test tiles were used ONLY for final generalisation checks on prompts, with NO feedback into prompt development.
+**Note**: The 60 exploratory test tiles were used ONLY for generalisation assessment of prompts, with NO feedback into prompt development.
 
 **Analysis scope**: Training tiles are excluded from all reported performance metrics. F1, precision, recall, and MCC are computed on holdout tiles only.
 
@@ -69,13 +73,16 @@ This framing acknowledges the power limitations of small-sample evaluation while
 
 See Section 8.6 for full methodology. Key parameters:
 
+| Parameter | Training | Holdout |
+| :--- | :--- | :--- |
+| Selection date | 2025-12-23 | 2026-01-03 |
+| Random seed | 1766464625 | 1767425239 |
+| Samples per map | 5 | 15 |
+
 | Parameter | Value |
 | :--- | :--- |
-| Selection date | 2025-12-23 |
-| Random seed | 1766464625 |
-| Samples per map | 5 |
 | Content threshold | ≤75% background |
-| Spatial separation | Not adjacent to training |
+| Spatial separation | Holdout tiles not adjacent to training tiles |
 | Tile size | 448×448 pixels |
 
 ### 2.3 Training Tiles (n=20)
@@ -86,91 +93,131 @@ Tiles used for prompt development and few-shot examples.
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
+| K-35-052-4\_32635\_x1344\_y1344.png | 0 | empty |
 | K-35-052-4\_32635\_x1344\_y2240.png | 2 | sparse |
-| K-35-052-4\_32635\_x1792\_y3136.png | 1 | sparse |
-| K-35-052-4\_32635\_x3136\_y3584.png | 0 | empty |
-| K-35-052-4\_32635\_x3584\_y3584.png | 3 | dense |
-| K-35-052-4\_32635\_x896\_y1792.png | 0 | empty |
+| K-35-052-4\_32635\_x2240\_y2240.png | 1 | sparse |
+| K-35-052-4\_32635\_x2240\_y3584.png | 3 | dense |
+| K-35-052-4\_32635\_x3136\_y896.png | 0 | empty |
 
 #### K-35-053-3\_Elenovo (5 tiles)
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
-| K-35-053-3\_Elenovo\_x1792\_y1792.png | 3 | dense |
-| K-35-053-3\_Elenovo\_x1792\_y896.png | 1 | sparse |
-| K-35-053-3\_Elenovo\_x3136\_y2688.png | 3 | dense |
-| K-35-053-3\_Elenovo\_x3136\_y3584.png | 2 | sparse |
-| K-35-053-3\_Elenovo\_x3584\_y1344.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x1792\_y2240.png | 4 | dense |
+| K-35-053-3\_Elenovo\_x2240\_y2240.png | 11 | dense |
+| K-35-053-3\_Elenovo\_x2240\_y3584.png | 1 | sparse |
+| K-35-053-3\_Elenovo\_x3136\_y3136.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x896\_y1344.png | 2 | sparse |
 
 #### K-35-062-2\_Rakovski (5 tiles)
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
-| K-35-062-2\_Rakovski\_x1344\_y1792.png | 2 | sparse |
-| K-35-062-2\_Rakovski\_x1792\_y2688.png | 0 | empty |
-| K-35-062-2\_Rakovski\_x1792\_y896.png | 3 | dense |
-| K-35-062-2\_Rakovski\_x3136\_y1792.png | 2 | sparse |
+| K-35-062-2\_Rakovski\_x0\_y1792.png | 2 | sparse |
+| K-35-062-2\_Rakovski\_x0\_y3136.png | 0 | empty |
 | K-35-062-2\_Rakovski\_x448\_y2688.png | 3 | dense |
+| K-35-062-2\_Rakovski\_x896\_y2688.png | 1 | sparse |
+| K-35-062-2\_Rakovski\_x896\_y3136.png | 4 | dense |
 
 #### K-35-078-1\_Lesovo (5 tiles)
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
 | K-35-078-1\_Lesovo\_x1344\_y0.png | 2 | sparse |
-| K-35-078-1\_Lesovo\_x1344\_y3136.png | 0 | empty |
-| K-35-078-1\_Lesovo\_x2240\_y2688.png | 0 | empty |
-| K-35-078-1\_Lesovo\_x2688\_y1344.png | 0 | empty |
-| K-35-078-1\_Lesovo\_x448\_y0.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x1344\_y896.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x3136\_y2688.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x3584\_y3136.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x896\_y3136.png | 0 | empty |
 
-**Training set summary**: 20 tiles, 27 mounds total
+**Training set summary**: 20 tiles, 36 mounds total
 
 ---
 
-### 2.4 Holdout Tiles (n=20)
+### 2.4 Holdout Tiles (n=60)
 
 Tiles reserved for final evaluation. Spatially separated from training tiles.
 
-#### K-35-052-4\_32635 (5 tiles)
+#### K-35-052-4\_32635 (15 tiles)
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
-| K-35-052-4\_32635\_x0\_y2688.png | 4 | dense |
-| K-35-052-4\_32635\_x1792\_y1344.png | 2 | sparse |
-| K-35-052-4\_32635\_x3584\_y0.png | 0 | empty |
-| K-35-052-4\_32635\_x3584\_y2240.png | 1 | sparse |
+| K-35-052-4\_32635\_x0\_y0.png | 1 | sparse |
+| K-35-052-4\_32635\_x0\_y1344.png | 1 | sparse |
+| K-35-052-4\_32635\_x0\_y2240.png | 9 | dense |
+| K-35-052-4\_32635\_x1344\_y3136.png | 0 | empty |
+| K-35-052-4\_32635\_x2240\_y1344.png | 1 | sparse |
+| K-35-052-4\_32635\_x2688\_y0.png | 0 | empty |
+| K-35-052-4\_32635\_x3136\_y0.png | 0 | empty |
+| K-35-052-4\_32635\_x3136\_y2240.png | 1 | sparse |
+| K-35-052-4\_32635\_x3136\_y3584.png | 0 | empty |
+| K-35-052-4\_32635\_x3584\_y3136.png | 2 | sparse |
+| K-35-052-4\_32635\_x3584\_y3584.png | 3 | dense |
+| K-35-052-4\_32635\_x448\_y1344.png | 1 | sparse |
+| K-35-052-4\_32635\_x448\_y3136.png | 0 | empty |
 | K-35-052-4\_32635\_x448\_y896.png | 0 | empty |
+| K-35-052-4\_32635\_x896\_y3136.png | 0 | empty |
 
-#### K-35-053-3\_Elenovo (5 tiles)
+#### K-35-053-3\_Elenovo (15 tiles)
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
+| K-35-053-3\_Elenovo\_x0\_y0.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x0\_y1344.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x0\_y2688.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x0\_y3136.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x1792\_y448.png | 2 | sparse |
+| K-35-053-3\_Elenovo\_x2240\_y448.png | 1 | sparse |
 | K-35-053-3\_Elenovo\_x2688\_y1344.png | 0 | empty |
-| K-35-053-3\_Elenovo\_x2688\_y896.png | 1 | sparse |
-| K-35-053-3\_Elenovo\_x448\_y1792.png | 1 | sparse |
-| K-35-053-3\_Elenovo\_x896\_y0.png | 4 | dense |
+| K-35-053-3\_Elenovo\_x3136\_y1344.png | 0 | empty |
+| K-35-053-3\_Elenovo\_x3584\_y2240.png | 3 | dense |
+| K-35-053-3\_Elenovo\_x448\_y0.png | 1 | sparse |
+| K-35-053-3\_Elenovo\_x448\_y2688.png | 8 | dense |
+| K-35-053-3\_Elenovo\_x448\_y3136.png | 3 | dense |
+| K-35-053-3\_Elenovo\_x448\_y448.png | 4 | dense |
 | K-35-053-3\_Elenovo\_x896\_y2240.png | 3 | dense |
+| K-35-053-3\_Elenovo\_x896\_y448.png | 1 | sparse |
 
-#### K-35-062-2\_Rakovski (5 tiles)
-
-| Tile ID | Mound Count | Density |
-| :---- | :---- | :---- |
-| K-35-062-2\_Rakovski\_x3584\_y0.png | 0 | empty |
-| K-35-062-2\_Rakovski\_x4032\_y0.png | 2 | sparse |
-| K-35-062-2\_Rakovski\_x4032\_y1344.png | 3 | dense |
-| K-35-062-2\_Rakovski\_x448\_y1792.png | 2 | sparse |
-| K-35-062-2\_Rakovski\_x448\_y448.png | 3 | dense |
-
-#### K-35-078-1\_Lesovo (5 tiles)
+#### K-35-062-2\_Rakovski (15 tiles)
 
 | Tile ID | Mound Count | Density |
 | :---- | :---- | :---- |
-| K-35-078-1\_Lesovo\_x1792\_y1792.png | 0 | empty |
-| K-35-078-1\_Lesovo\_x2688\_y448.png | 2 | sparse |
-| K-35-078-1\_Lesovo\_x3136\_y3136.png | 0 | empty |
+| K-35-062-2\_Rakovski\_x1792\_y0.png | 5 | dense |
+| K-35-062-2\_Rakovski\_x1792\_y3584.png | 0 | empty |
+| K-35-062-2\_Rakovski\_x2240\_y2240.png | 5 | dense |
+| K-35-062-2\_Rakovski\_x2240\_y448.png | 1 | sparse |
+| K-35-062-2\_Rakovski\_x2688\_y1344.png | 4 | dense |
+| K-35-062-2\_Rakovski\_x2688\_y2240.png | 1 | sparse |
+| K-35-062-2\_Rakovski\_x2688\_y2688.png | 0 | empty |
+| K-35-062-2\_Rakovski\_x3136\_y1344.png | 2 | sparse |
+| K-35-062-2\_Rakovski\_x3136\_y1792.png | 2 | sparse |
+| K-35-062-2\_Rakovski\_x3136\_y2240.png | 0 | empty |
+| K-35-062-2\_Rakovski\_x3136\_y3136.png | 3 | dense |
+| K-35-062-2\_Rakovski\_x3136\_y896.png | 2 | sparse |
+| K-35-062-2\_Rakovski\_x3584\_y1344.png | 0 | empty |
+| K-35-062-2\_Rakovski\_x3584\_y448.png | 2 | sparse |
+| K-35-062-2\_Rakovski\_x448\_y896.png | 4 | dense |
+
+#### K-35-078-1\_Lesovo (15 tiles)
+
+| Tile ID | Mound Count | Density |
+| :---- | :---- | :---- |
+| K-35-078-1\_Lesovo\_x0\_y2688.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x0\_y3136.png | 2 | sparse |
+| K-35-078-1\_Lesovo\_x1344\_y2240.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x2240\_y1344.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x2240\_y3136.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x2688\_y1792.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x2688\_y896.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x3136\_y1344.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x3136\_y1792.png | 1 | sparse |
+| K-35-078-1\_Lesovo\_x3136\_y448.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x3584\_y0.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x3584\_y1344.png | 0 | empty |
 | K-35-078-1\_Lesovo\_x3584\_y448.png | 0 | empty |
-| K-35-078-1\_Lesovo\_x896\_y896.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x448\_y1792.png | 0 | empty |
+| K-35-078-1\_Lesovo\_x896\_y1792.png | 0 | empty |
 
-**Holdout set summary**: 20 tiles, 28 mounds total
+**Holdout set summary**: 60 tiles, 79 mounds total
 
 ---
 
@@ -180,11 +227,11 @@ Tiles were stratified by mound density (see Section 8.6 for category definitions
 
 | Density | Training | Holdout |
 | :---- | :---- | :---- |
-| Empty (0 mounds) | 8 | 8 |
-| Sparse (1-2 mounds) | 7 | 7 |
-| Dense (3+ mounds) | 5 | 5 |
+| Empty (0 mounds) | 8 | 30 |
+| Sparse (1-2 mounds) | 7 | 18 |
+| Dense (3+ mounds) | 5 | 12 |
 
-**Terrain representation**: Lesovo represents mountainous terrain with characteristically low mound density, consistent with similar regions near the Bulgarian-Turkish border and Stara Planina. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in unfamiliar terrain types.
+**Terrain and mound density representation**: Lesovo represents mountainous terrain with characteristically low mound density, consistent with similar regions in mountainous areas. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in unfamiliar terrain types. The expanded holdout set includes 15 tiles from each map, with Lesovo contributing primarily empty tiles (13 of 15) which serve as a rigorous test of false positive rates in challenging terrain.
 
 ### 2.6 Map Annotation
 
@@ -196,7 +243,7 @@ Soviet-era maps were initially annotated by students using the FAIMS v2.6 mobile
 * Benchmarks (no burial mound)  
 * Triangulation points (no burial mound)
 
-These four tiles were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). 
+The four mapss used in the present study were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). 
 
 ---
 
@@ -210,40 +257,40 @@ These four tiles were later selected for the quality assessment of student work 
 
 ### 3.2 Rationale for FDR
 
-With 9 confirmatory hypotheses tested on 20 tiles (28 mound symbols), statistical power is limited. Bonferroni correction (α = 0.008) would be overly conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
+With 9 confirmatory hypotheses tested on 60 tiles (79 mound symbols), statistical power is adequate for detecting moderate effects. Bonferroni correction (α = 0.006) would remain conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
 
-* The goal is identifying promising techniques for further validation  
-* Some false positives are acceptable if balanced by discovery of true effects  
-* Sample size limits power for detecting moderate effects
+* The goal is identifying promising techniques for further validation
+* Some false positives are acceptable if balanced by discovery of true effects
+* The screening study prioritises sensitivity to real effects over strict Type I error control
 
 ### 3.3 Interpretation Guidelines
 
 * **Statistically significant (FDR-corrected p < 0.05)**: Technique shows promise; advance to Stage 2 validation
 * **Nominally significant (uncorrected p < 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority
-* **Non-significant (uncorrected p ≥ 0.05)**: No evidence of benefit; do not advance unless strong theoretical rationale
+* **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This guards against discarding genuinely useful techniques due to sampling noise
 
 ### 3.4 Practical Significance Caveat
 
-Results will be interpreted in light of practical significance. A statistically significant but trivially small improvement (e.g., F1 +0.01) will be reported but not treated as actionable. Techniques advanced to Stage 2 should show both statistical significance and a meaningful effect direction.
+Results will be interpreted in light of practical significance. A statistically significant but trivially small improvement (e.g., F1 +0.01) will be reported but not treated as actionable. Techniques advanced to Stage 2 should show both statistical significance and a meaningful effect.
 
 ### 3.5 Reporting
 
-* All preregistered analyses reported regardless of outcome
-* Report both uncorrected and FDR-corrected p-values
-* Report effect sizes (F1 difference, precision difference, recall difference) with 95% bootstrapped CIs
-* Exploratory analyses clearly labelled and interpreted cautiously
+* All preregistered analyses reported **regardless of outcome**
+* Report **effect sizes** (F1 difference, precision difference, recall difference) with 95% bootstrapped CIs
 * **Spatial tolerance sensitivity**: All primary results reported at 20m; robustness checks at 10m, 30m, and 50m included in supplementary materials
+* Report both uncorrected and FDR-corrected p-values
+* Exploratory analyses clearly labelled and interpreted cautiously
 
 ### 3.6 Power Considerations
 
-With 20 holdout tiles containing 28 mound symbols, statistical power is limited. Approximate detectable effect sizes (80% power, α = 0.05, two-tailed):
+With 60 holdout tiles containing 79 mound symbols, statistical power is adequate for detecting moderate effects. Approximate detectable effect sizes (80% power, α = 0.05, two-tailed):
 
-- **Symbol-level F1**: Minimum detectable difference ≈ 0.12-0.15
-- **Tile-level MCC**: Minimum detectable difference ≈ 0.30
+- **Symbol-level F1**: Minimum detectable difference ≈ 0.07-0.09
+- **Tile-level MCC**: Minimum detectable difference ≈ 0.20
 
-These estimates are approximate and assume moderate correlation between tiles. The two-stage trial framework addresses power limitations by treating Stage 1 as a screening study; techniques showing directional improvement will be validated with larger samples in Stage 2.
+These estimates are approximate and assume moderate correlation between tiles. The two-stage trial framework treats Stage 1 as a screening study; techniques showing promise will be validated with additional samples in Stage 2.
 
-**Implication**: Small but practically meaningful effects (e.g., F1 +0.05) may not reach statistical significance in Stage 1. Such effects will be flagged for Stage 2 investigation if directionally consistent.
+**Implication**: Effects of F1 ≈ 0.08 or larger should be detectable with reasonable power. Smaller effects (e.g., F1 +0.05) may still fall below the detection threshold and will be flagged for Stage 2 investigation if directionally consistent.
 
 ### 3.7 Blinding
 
@@ -308,9 +355,9 @@ In addition to symbol-level F1, we report tile-level Matthews Correlation Coeffi
 | Empty | Detected ≥1 mound | False Positive (hallucination) |
 | Has mounds | Detected nothing | False Negative |
 
-MCC is preferred over accuracy given class imbalance in the holdout set (8 empty tiles, 12 non-empty tiles). MCC ranges from -1 (perfect inverse classification) through 0 (random) to +1 (perfect classification), and appropriately penalises both false positives and false negatives.
+MCC is preferred over accuracy given balanced class distribution in the holdout set (30 empty tiles, 30 non-empty tiles). MCC ranges from -1 (perfect inverse classification) through 0 (random) to +1 (perfect classification), and appropriately penalises both false positives and false negatives.
 
-**Rationale**: A method that simply predicts "mounds present" for every tile would achieve ~60% accuracy but MCC ≈ 0. Tile-level MCC directly addresses the practical question: "Can this method correctly identify when there is nothing to find?"
+**Rationale**: A method that simply predicts "mounds present" for every tile would achieve 50% accuracy but MCC ≈ 0. Tile-level MCC directly addresses the practical question: "Can this method correctly identify when there is nothing to find?"
 
 We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and specificity (P(detect 0 | tile is empty)) for interpretability.
 
@@ -331,7 +378,7 @@ We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and spe
 
 H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboration vs. hard negatives.
 
-**Analysis**: Two-tailed test for difference; equivalence supported if 95% CI for F1 difference includes zero and excludes practically significant effects (±0.05).
+**Analysis**: Two-tailed test for difference; equivalence supported if 95% bootstrapped CI for F1 difference includes zero and excludes practically significant effects (±0.05).
 
 **Advance to Stage 2 if**: Significant difference detected (suggesting the addition of text *does* matter for this domain, contrary to preliminary findings).
 
@@ -792,9 +839,9 @@ This would include:
 
 **Constraints**:
 
-* Total tiles available: 361  
-* Holdout fixed at 20 tiles  
-* Maximum training pool: ~340 tiles
+* Total tiles available: 361
+* Holdout fixed at 60 tiles
+* Maximum training pool: ~300 tiles
 
 ---
 
@@ -1201,7 +1248,7 @@ Where:
 
 **Reporting:**
 
-- Coefficient estimates (βᵢ) with 95% confidence intervals
+- Coefficient estimates (βᵢ) with 95% bootstrapped confidence intervals
 - Flag examples where |βᵢ| > 0.02 F1 as "high-impact"
 - Rank examples by absolute effect size within each category
 
@@ -1294,8 +1341,8 @@ To systematically detect two-way interactions between experimental factors, we e
 
 - Full factorial: 2 × 3 × 2 × 4 = 48 conditions
 - Each condition tested at N=5 voting (5 passes per tile)
-- Total runs: 48 × 5 × 20 tiles = 4,800 API calls on Flash
-- Estimated cost: ~$6-10 (well under $250 budget trigger)
+- Total runs: 48 × 5 × 60 tiles = 14,400 API calls on Flash
+- Estimated cost: ~$18-30 (well under $250 budget trigger)
 
 This design provides full power to detect all two-way interactions without confounding. Three-way and four-way interactions are estimable but with reduced power.
 
@@ -1325,7 +1372,7 @@ If pairwise analysis reveals unexpected patterns, we escalate to three-way inter
 2. **IF any trigger condition is met**:
    - Identify the three factors involved
    - Test the specific 3-way interaction term
-   - Report effect size and confidence interval
+   - Report effect size and 95% bootstrapped confidence interval
 3. **IF 3-way interaction is significant (α = 0.05)**:
    - Document the interaction pattern
    - Consider additional spot-check conditions (e.g., text-position variants)
@@ -1396,7 +1443,7 @@ Full methodology documented in `docs/methodology/tile-selection-methodology.md`.
 | :--- | :--- | :--- |
 | **Content threshold** | ≤75% background (black) | Excludes predominantly empty edge tiles |
 | **Training set** | 20 tiles (5 per map) | Sufficient for few-shot library development |
-| **Holdout set** | 20 tiles (5 per map) | Matched sample for evaluation |
+| **Holdout set** | 60 tiles (15 per map) | Expanded sample for improved statistical power |
 | **Stratification** | Empty/Sparse/Dense | Balanced density representation |
 | **Spatial separation** | Holdout tiles not adjacent to training tiles | Prevents spatial autocorrelation |
 
@@ -1410,9 +1457,9 @@ Full methodology documented in `docs/methodology/tile-selection-methodology.md`.
 
 #### Randomisation
 
-- **Random seed**: 1766464625 (documented in `inputs/tile_selection_metadata.json`)
+- **Random seeds**: Training selection seed 1766464625 (2025-12-23), holdout selection seed 1767425239 (2026-01-03). Both documented in `inputs/tile_selection_metadata.json`
 - **Stratified random sampling**: Within each map, sample proportionally from density strata
-- **Reproducibility**: Re-running with same seed produces identical selection
+- **Reproducibility**: Re-running with same seeds produces identical selection
 
 #### Output Artefacts
 
@@ -1550,7 +1597,7 @@ Each of the 12 configs is tested at 4 temperatures (0.0, 0.3, 0.7, 1.0) for H9, 
 
 Techniques that pass Stage 1 screening will be validated in Stage 2 with:
 
-- **Larger sample**: 80-160 additional tiles from the 321-tile reserve set
+- **Larger sample**: 80-160 additional tiles from the 281-tile reserve set
 - **Stricter correction**: Bonferroni or Holm-Bonferroni at α = 0.05
 - **Transfer testing**: Tiles from maps outside the 4 annotated sheets (if feasible)
 - **Optimised parameters**: For techniques that show promise, optimise hyperparameters (e.g., voting threshold, number of hard negatives)
@@ -1587,8 +1634,8 @@ This separation ensures Stage 2 design is informed by Stage 1 data without compr
 
 Before any test set evaluation:
 
-- [ ] Finalise hypothesis list and predictions  
-- [ ] Specify exact test tile IDs (20 tiles, identified by map + tile number)
+- [ ] Finalise hypothesis list and predictions
+- [ ] Specify exact test tile IDs (60 tiles, identified by map + tile number)
 - [x] Specify primary outcome: Overall F1 at 20m spatial tolerance  
 - [ ] Specify success threshold: F1 ≥ 0.85 for pipeline as a whole  
 - [ ] Document few-shot library composition (examples, ordering)  

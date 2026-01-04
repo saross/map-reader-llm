@@ -1,8 +1,9 @@
 {
-  "created": "2025-12-23T04:37:08.953824+00:00",
-  "random_seed": 1766464625,
+  "created": "2026-01-03T07:27:30.571168+00:00",
+  "random_seed": 1767425239,
   "parameters": {
-    "samples_per_map": 5,
+    "training_samples_per_map": 5,
+    "holdout_samples_per_map": 15,
     "max_background_percent": 0.75,
     "adjacency_distance": 1,
     "tile_size": 448
@@ -11,58 +12,58 @@
     "total_tiles": 20,
     "by_map": {
       "K-35-052-4_32635": [
-        "K-35-052-4_32635_x3584_y3584.png",
-        "K-35-052-4_32635_x1792_y3136.png",
+        "K-35-052-4_32635_x2240_y3584.png",
+        "K-35-052-4_32635_x2240_y2240.png",
         "K-35-052-4_32635_x1344_y2240.png",
-        "K-35-052-4_32635_x896_y1792.png",
-        "K-35-052-4_32635_x3136_y3584.png"
+        "K-35-052-4_32635_x3136_y896.png",
+        "K-35-052-4_32635_x1344_y1344.png"
       ],
       "K-35-053-3_Elenovo": [
-        "K-35-053-3_Elenovo_x1792_y1792.png",
-        "K-35-053-3_Elenovo_x3136_y2688.png",
-        "K-35-053-3_Elenovo_x1792_y896.png",
-        "K-35-053-3_Elenovo_x3136_y3584.png",
-        "K-35-053-3_Elenovo_x3584_y1344.png"
+        "K-35-053-3_Elenovo_x1792_y2240.png",
+        "K-35-053-3_Elenovo_x2240_y2240.png",
+        "K-35-053-3_Elenovo_x2240_y3584.png",
+        "K-35-053-3_Elenovo_x896_y1344.png",
+        "K-35-053-3_Elenovo_x3136_y3136.png"
       ],
       "K-35-062-2_Rakovski": [
-        "K-35-062-2_Rakovski_x1792_y896.png",
         "K-35-062-2_Rakovski_x448_y2688.png",
-        "K-35-062-2_Rakovski_x1344_y1792.png",
-        "K-35-062-2_Rakovski_x3136_y1792.png",
-        "K-35-062-2_Rakovski_x1792_y2688.png"
+        "K-35-062-2_Rakovski_x896_y3136.png",
+        "K-35-062-2_Rakovski_x0_y1792.png",
+        "K-35-062-2_Rakovski_x896_y2688.png",
+        "K-35-062-2_Rakovski_x0_y3136.png"
       ],
       "K-35-078-1_Lesovo": [
         "K-35-078-1_Lesovo_x1344_y0.png",
-        "K-35-078-1_Lesovo_x1344_y3136.png",
-        "K-35-078-1_Lesovo_x2688_y1344.png",
-        "K-35-078-1_Lesovo_x448_y0.png",
-        "K-35-078-1_Lesovo_x2240_y2688.png"
+        "K-35-078-1_Lesovo_x3136_y2688.png",
+        "K-35-078-1_Lesovo_x896_y3136.png",
+        "K-35-078-1_Lesovo_x1344_y896.png",
+        "K-35-078-1_Lesovo_x3584_y3136.png"
       ]
     },
     "tiles": [
       {
-        "filename": "K-35-052-4_32635_x1792_y3136.png",
+        "filename": "K-35-052-4_32635_x3136_y896.png",
         "map": "K-35-052-4_32635",
-        "mound_count": 1,
-        "density": "sparse"
+        "mound_count": 0,
+        "density": "empty"
       },
       {
-        "filename": "K-35-052-4_32635_x3584_y3584.png",
+        "filename": "K-35-052-4_32635_x1344_y1344.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-052-4_32635_x2240_y3584.png",
         "map": "K-35-052-4_32635",
         "mound_count": 3,
         "density": "dense"
       },
       {
-        "filename": "K-35-052-4_32635_x3136_y3584.png",
+        "filename": "K-35-052-4_32635_x2240_y2240.png",
         "map": "K-35-052-4_32635",
-        "mound_count": 0,
-        "density": "empty"
-      },
-      {
-        "filename": "K-35-052-4_32635_x896_y1792.png",
-        "map": "K-35-052-4_32635",
-        "mound_count": 0,
-        "density": "empty"
+        "mound_count": 1,
+        "density": "sparse"
       },
       {
         "filename": "K-35-052-4_32635_x1344_y2240.png",
@@ -71,57 +72,51 @@
         "density": "sparse"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x3136_y2688.png",
+        "filename": "K-35-053-3_Elenovo_x896_y1344.png",
         "map": "K-35-053-3_Elenovo",
-        "mound_count": 3,
+        "mound_count": 2,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x2240_y2240.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 11,
         "density": "dense"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x1792_y896.png",
+        "filename": "K-35-053-3_Elenovo_x3136_y3136.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x2240_y3584.png",
         "map": "K-35-053-3_Elenovo",
         "mound_count": 1,
         "density": "sparse"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x3584_y1344.png",
+        "filename": "K-35-053-3_Elenovo_x1792_y2240.png",
         "map": "K-35-053-3_Elenovo",
-        "mound_count": 0,
-        "density": "empty"
-      },
-      {
-        "filename": "K-35-053-3_Elenovo_x1792_y1792.png",
-        "map": "K-35-053-3_Elenovo",
-        "mound_count": 3,
+        "mound_count": 4,
         "density": "dense"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x3136_y3584.png",
-        "map": "K-35-053-3_Elenovo",
-        "mound_count": 2,
-        "density": "sparse"
-      },
-      {
-        "filename": "K-35-062-2_Rakovski_x3136_y1792.png",
+        "filename": "K-35-062-2_Rakovski_x0_y1792.png",
         "map": "K-35-062-2_Rakovski",
         "mound_count": 2,
         "density": "sparse"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x1792_y2688.png",
+        "filename": "K-35-062-2_Rakovski_x896_y2688.png",
         "map": "K-35-062-2_Rakovski",
-        "mound_count": 0,
-        "density": "empty"
-      },
-      {
-        "filename": "K-35-062-2_Rakovski_x1344_y1792.png",
-        "map": "K-35-062-2_Rakovski",
-        "mound_count": 2,
+        "mound_count": 1,
         "density": "sparse"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x1792_y896.png",
+        "filename": "K-35-062-2_Rakovski_x896_y3136.png",
         "map": "K-35-062-2_Rakovski",
-        "mound_count": 3,
+        "mound_count": 4,
         "density": "dense"
       },
       {
@@ -131,31 +126,37 @@
         "density": "dense"
       },
       {
+        "filename": "K-35-062-2_Rakovski_x0_y3136.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
         "filename": "K-35-078-1_Lesovo_x1344_y0.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 2,
         "density": "sparse"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x448_y0.png",
+        "filename": "K-35-078-1_Lesovo_x896_y3136.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x1344_y3136.png",
+        "filename": "K-35-078-1_Lesovo_x3584_y3136.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x2240_y2688.png",
+        "filename": "K-35-078-1_Lesovo_x1344_y896.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x2688_y1344.png",
+        "filename": "K-35-078-1_Lesovo_x3136_y2688.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"
@@ -163,35 +164,75 @@
     ]
   },
   "holdout": {
-    "total_tiles": 20,
+    "total_tiles": 60,
     "by_map": {
       "K-35-052-4_32635": [
-        "K-35-052-4_32635_x0_y2688.png",
-        "K-35-052-4_32635_x1792_y1344.png",
-        "K-35-052-4_32635_x3584_y2240.png",
-        "K-35-052-4_32635_x3584_y0.png",
-        "K-35-052-4_32635_x448_y896.png"
+        "K-35-052-4_32635_x3584_y3584.png",
+        "K-35-052-4_32635_x3584_y3136.png",
+        "K-35-052-4_32635_x3136_y2240.png",
+        "K-35-052-4_32635_x448_y3136.png",
+        "K-35-052-4_32635_x1344_y3136.png",
+        "K-35-052-4_32635_x2688_y0.png",
+        "K-35-052-4_32635_x0_y2240.png",
+        "K-35-052-4_32635_x448_y896.png",
+        "K-35-052-4_32635_x3136_y0.png",
+        "K-35-052-4_32635_x896_y3136.png",
+        "K-35-052-4_32635_x448_y1344.png",
+        "K-35-052-4_32635_x3136_y3584.png",
+        "K-35-052-4_32635_x0_y0.png",
+        "K-35-052-4_32635_x0_y1344.png",
+        "K-35-052-4_32635_x2240_y1344.png"
       ],
       "K-35-053-3_Elenovo": [
-        "K-35-053-3_Elenovo_x896_y0.png",
         "K-35-053-3_Elenovo_x896_y2240.png",
-        "K-35-053-3_Elenovo_x2688_y896.png",
-        "K-35-053-3_Elenovo_x448_y1792.png",
-        "K-35-053-3_Elenovo_x2688_y1344.png"
+        "K-35-053-3_Elenovo_x448_y3136.png",
+        "K-35-053-3_Elenovo_x896_y448.png",
+        "K-35-053-3_Elenovo_x2240_y448.png",
+        "K-35-053-3_Elenovo_x0_y3136.png",
+        "K-35-053-3_Elenovo_x3584_y2240.png",
+        "K-35-053-3_Elenovo_x448_y0.png",
+        "K-35-053-3_Elenovo_x1792_y448.png",
+        "K-35-053-3_Elenovo_x448_y448.png",
+        "K-35-053-3_Elenovo_x0_y0.png",
+        "K-35-053-3_Elenovo_x0_y2688.png",
+        "K-35-053-3_Elenovo_x3136_y1344.png",
+        "K-35-053-3_Elenovo_x448_y2688.png",
+        "K-35-053-3_Elenovo_x2688_y1344.png",
+        "K-35-053-3_Elenovo_x0_y1344.png"
       ],
       "K-35-062-2_Rakovski": [
-        "K-35-062-2_Rakovski_x4032_y1344.png",
-        "K-35-062-2_Rakovski_x448_y448.png",
-        "K-35-062-2_Rakovski_x4032_y0.png",
-        "K-35-062-2_Rakovski_x448_y1792.png",
-        "K-35-062-2_Rakovski_x3584_y0.png"
+        "K-35-062-2_Rakovski_x2688_y1344.png",
+        "K-35-062-2_Rakovski_x2240_y2240.png",
+        "K-35-062-2_Rakovski_x3136_y1792.png",
+        "K-35-062-2_Rakovski_x3136_y1344.png",
+        "K-35-062-2_Rakovski_x3584_y1344.png",
+        "K-35-062-2_Rakovski_x3136_y896.png",
+        "K-35-062-2_Rakovski_x1792_y3584.png",
+        "K-35-062-2_Rakovski_x2688_y2240.png",
+        "K-35-062-2_Rakovski_x2688_y2688.png",
+        "K-35-062-2_Rakovski_x2240_y448.png",
+        "K-35-062-2_Rakovski_x3584_y448.png",
+        "K-35-062-2_Rakovski_x448_y896.png",
+        "K-35-062-2_Rakovski_x3136_y2240.png",
+        "K-35-062-2_Rakovski_x1792_y0.png",
+        "K-35-062-2_Rakovski_x3136_y3136.png"
       ],
       "K-35-078-1_Lesovo": [
-        "K-35-078-1_Lesovo_x2688_y448.png",
-        "K-35-078-1_Lesovo_x3136_y3136.png",
-        "K-35-078-1_Lesovo_x896_y896.png",
+        "K-35-078-1_Lesovo_x3136_y1792.png",
         "K-35-078-1_Lesovo_x3584_y448.png",
-        "K-35-078-1_Lesovo_x1792_y1792.png"
+        "K-35-078-1_Lesovo_x1344_y2240.png",
+        "K-35-078-1_Lesovo_x0_y2688.png",
+        "K-35-078-1_Lesovo_x2240_y1344.png",
+        "K-35-078-1_Lesovo_x3136_y1344.png",
+        "K-35-078-1_Lesovo_x3584_y1344.png",
+        "K-35-078-1_Lesovo_x448_y1792.png",
+        "K-35-078-1_Lesovo_x896_y1792.png",
+        "K-35-078-1_Lesovo_x0_y3136.png",
+        "K-35-078-1_Lesovo_x3584_y0.png",
+        "K-35-078-1_Lesovo_x2688_y896.png",
+        "K-35-078-1_Lesovo_x2240_y3136.png",
+        "K-35-078-1_Lesovo_x3136_y448.png",
+        "K-35-078-1_Lesovo_x2688_y1792.png"
       ]
     },
     "spatial_separation_relaxed": false,
@@ -203,28 +244,124 @@
         "density": "empty"
       },
       {
-        "filename": "K-35-052-4_32635_x3584_y2240.png",
+        "filename": "K-35-052-4_32635_x2240_y1344.png",
         "map": "K-35-052-4_32635",
         "mound_count": 1,
         "density": "sparse"
       },
       {
-        "filename": "K-35-052-4_32635_x1792_y1344.png",
-        "map": "K-35-052-4_32635",
-        "mound_count": 2,
-        "density": "sparse"
-      },
-      {
-        "filename": "K-35-052-4_32635_x3584_y0.png",
+        "filename": "K-35-052-4_32635_x448_y3136.png",
         "map": "K-35-052-4_32635",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-052-4_32635_x0_y2688.png",
+        "filename": "K-35-052-4_32635_x896_y3136.png",
         "map": "K-35-052-4_32635",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-052-4_32635_x3584_y3136.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 2,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-052-4_32635_x3584_y3584.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 3,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-052-4_32635_x3136_y2240.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-052-4_32635_x3136_y3584.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-052-4_32635_x0_y1344.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-052-4_32635_x448_y1344.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-052-4_32635_x0_y0.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-052-4_32635_x2688_y0.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-052-4_32635_x1344_y3136.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-052-4_32635_x0_y2240.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 9,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-052-4_32635_x3136_y0.png",
+        "map": "K-35-052-4_32635",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 3,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x0_y2688.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x448_y3136.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 3,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x896_y448.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x448_y448.png",
+        "map": "K-35-053-3_Elenovo",
         "mound_count": 4,
         "density": "dense"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x0_y0.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 0,
+        "density": "empty"
       },
       {
         "filename": "K-35-053-3_Elenovo_x2688_y1344.png",
@@ -233,16 +370,40 @@
         "density": "empty"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x448_y1792.png",
+        "filename": "K-35-053-3_Elenovo_x1792_y448.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 2,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x0_y3136.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x448_y2688.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 8,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x0_y1344.png",
+        "map": "K-35-053-3_Elenovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-053-3_Elenovo_x448_y0.png",
         "map": "K-35-053-3_Elenovo",
         "mound_count": 1,
         "density": "sparse"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x896_y0.png",
+        "filename": "K-35-053-3_Elenovo_x2240_y448.png",
         "map": "K-35-053-3_Elenovo",
-        "mound_count": 4,
-        "density": "dense"
+        "mound_count": 1,
+        "density": "sparse"
       },
       {
         "filename": "K-35-053-3_Elenovo_x896_y2240.png",
@@ -251,55 +412,163 @@
         "density": "dense"
       },
       {
-        "filename": "K-35-053-3_Elenovo_x2688_y896.png",
+        "filename": "K-35-053-3_Elenovo_x3136_y1344.png",
         "map": "K-35-053-3_Elenovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x2688_y2240.png",
+        "map": "K-35-062-2_Rakovski",
         "mound_count": 1,
         "density": "sparse"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x448_y1792.png",
+        "filename": "K-35-062-2_Rakovski_x3584_y448.png",
         "map": "K-35-062-2_Rakovski",
         "mound_count": 2,
         "density": "sparse"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x4032_y0.png",
+        "filename": "K-35-062-2_Rakovski_x3136_y1792.png",
         "map": "K-35-062-2_Rakovski",
         "mound_count": 2,
         "density": "sparse"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x448_y448.png",
+        "filename": "K-35-062-2_Rakovski_x1792_y3584.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 5,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 4,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x3136_y3136.png",
         "map": "K-35-062-2_Rakovski",
         "mound_count": 3,
         "density": "dense"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x3584_y0.png",
+        "filename": "K-35-062-2_Rakovski_x2240_y448.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x3584_y1344.png",
         "map": "K-35-062-2_Rakovski",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-062-2_Rakovski_x4032_y1344.png",
+        "filename": "K-35-062-2_Rakovski_x2688_y2688.png",
         "map": "K-35-062-2_Rakovski",
-        "mound_count": 3,
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x1792_y0.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 5,
         "density": "dense"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x896_y896.png",
+        "filename": "K-35-062-2_Rakovski_x448_y896.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 4,
+        "density": "dense"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x3136_y2240.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x3136_y896.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 2,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-062-2_Rakovski_x3136_y1344.png",
+        "map": "K-35-062-2_Rakovski",
+        "mound_count": 2,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x896_y1792.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x3136_y3136.png",
+        "filename": "K-35-078-1_Lesovo_x448_y1792.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x2688_y448.png",
+        "filename": "K-35-078-1_Lesovo_x3136_y1792.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 1,
+        "density": "sparse"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x3584_y0.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x2688_y896.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x0_y2688.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x2240_y1344.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x3136_y448.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x0_y3136.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 2,
         "density": "sparse"
@@ -311,7 +580,19 @@
         "density": "empty"
       },
       {
-        "filename": "K-35-078-1_Lesovo_x1792_y1792.png",
+        "filename": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "map": "K-35-078-1_Lesovo",
+        "mound_count": 0,
+        "density": "empty"
+      },
+      {
+        "filename": "K-35-078-1_Lesovo_x3584_y1344.png",
         "map": "K-35-078-1_Lesovo",
         "mound_count": 0,
         "density": "empty"

@@ -44,7 +44,8 @@ MAPS = [
 ]
 
 # Selection parameters
-SAMPLES_PER_MAP = 5
+TRAINING_SAMPLES_PER_MAP = 5
+HOLDOUT_SAMPLES_PER_MAP = 15  # Expanded from 5 to 15 for improved statistical power
 MAX_BACKGROUND_PERCENT = 0.75  # Tiles must have ≤75% background pixels
 TILE_SIZE = 448  # Pixels
 
@@ -499,7 +500,7 @@ def main():
     print("\n" + "=" * 60)
     print("Selecting TRAINING tiles (density-stratified random)...")
     print("=" * 60)
-    training_tiles, training_by_map = select_training_tiles(candidates, SAMPLES_PER_MAP)
+    training_tiles, training_by_map = select_training_tiles(candidates, TRAINING_SAMPLES_PER_MAP)
 
     # Select holdout tiles
     print("\n" + "=" * 60)
@@ -508,7 +509,7 @@ def main():
     holdout_tiles, holdout_by_map, spatial_relaxed = select_holdout_tiles(
         candidates,
         training_tiles,
-        SAMPLES_PER_MAP,
+        HOLDOUT_SAMPLES_PER_MAP,
         ADJACENCY_DISTANCE,
     )
 
@@ -523,7 +524,8 @@ def main():
         "created": datetime.now(timezone.utc).isoformat(),
         "random_seed": seed,
         "parameters": {
-            "samples_per_map": SAMPLES_PER_MAP,
+            "training_samples_per_map": TRAINING_SAMPLES_PER_MAP,
+            "holdout_samples_per_map": HOLDOUT_SAMPLES_PER_MAP,
             "max_background_percent": MAX_BACKGROUND_PERCENT,
             "adjacency_distance": ADJACENCY_DISTANCE,
             "tile_size": TILE_SIZE,

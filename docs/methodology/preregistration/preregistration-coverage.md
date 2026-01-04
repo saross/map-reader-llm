@@ -45,7 +45,7 @@ These factors control how a single detection prompt is constructed:
 
 **Design**: M(2) × O(3) × H(2) × T(4) = **48 conditions**
 
-Each condition run with 5 passes on 20 holdout tiles.
+Each condition run with 5 passes on 60 holdout tiles.
 
 ### 3.2 H2 Design (Elaboration)
 
