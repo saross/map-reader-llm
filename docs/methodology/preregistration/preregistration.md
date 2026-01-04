@@ -367,7 +367,7 @@ We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and spe
 
 ### H1: Text Modality Has No Significant Effect
 
-**Background**: The text-image interference literature (Vo et al., 2025) found VLMs override visual analysis with textual priors. This effect, however, applies to domains where VLMs have strong priors (e.g., "Adidas logos have 3 stripes"). Burial mound symbols are novel domain content with no conflicting prior knowledge.
+**Background**: The text-image interference literature (Vo et al., 2025) found VLMs override visual analysis with textual priors. This effect, however, was observed in domains where VLMs have strong priors (e.g., "Adidas logos have 3 stripes"). Burial mound symbols on Soviet maps represent novel domain content with little conflicting prior knowledge.
 
 **Prediction**: Text+image prompts will perform equivalently to image-only prompts.
 
@@ -412,17 +412,17 @@ H1, H2, and H7 will be coordinated to isolate effects of modality vs. elaboratio
 * Condition A: Single-stage detection (baseline prompt)
 * Condition B: Two-stage proposer-verifier pipeline (liberal proposer → strict verifier)
 
-**Testing approach**: The two-stage pipeline will be tested using the optimal single-stage configuration identified from H1, H5, H7, H9 (modality, ordering, hard negatives, temperature). This ensures a fair comparison where any performance difference reflects architectural rather than configurational factors.
+**Testing approach**: The two-stage pipeline will be tested using the optimal single-stage configuration identified from H1, H5, H7, H9 (modality, ordering, hard negatives, temperature). This approach ensures a fair comparison where any performance difference reflects architectural rather than configurational factors.
 
-**Stopping rule**: If two-stage F1 is ≥0.10 lower than single-stage F1 at the same configuration, we will conclude the architecture is unsuitable for this task and will not pursue further optimisation. This threshold accounts for the inherent cost (~2× API calls) and complexity overhead of two-stage pipelines — marginal performance parity would not justify the additional operational burden.
+**Stopping rule**: Two-stage architecture will only be pursued further if it demonstrates F1 at least 0.05 higher than single-stage at the same configuration. Given the inherent cost (~2× API calls) and complexity overhead, parity or marginal improvement would not justify the additional operational burden when deeper single-stage voting is available as an alternative.
 
-**Scope limitation**: Exhaustive optimisation of proposer-verifier configurations (e.g., varying proposer/verifier thresholds, prompt variants for each stage) is beyond the scope of this study. Such investigation would be warranted only if initial testing shows the architecture is competitive (within 0.10 F1 of single-stage baseline).
+**Scope limitation**: Exhaustive optimisation of proposer-verifier configurations (e.g., varying proposer/verifier thresholds, prompt variants for each stage) is beyond the scope of this study. Such investigation would be warranted only if initial testing shows the architecture exceeds single-stage performance by at least 0.05 F1.
 
-**Applicability to other two-stage approaches**: The same stopping rule (F1 ≥0.10 below single-stage baseline) applies to H10 (fine-to-coarse validation) and any other multi-stage architecture tested. Two-stage approaches must demonstrate near-parity to justify their overhead.
+**Applicability to other two-stage approaches**: The same stopping rule (must exceed single-stage by ≥0.05 F1) applies to H10 (fine-to-coarse validation) and any other multi-stage architecture tested. Two-stage approaches must demonstrate clear improvement to justify their overhead.
 
 **Analysis**: One-tailed test; H0: two-stage ≥ single-stage; H1: two-stage < single-stage. Prediction is that H0 will be rejected (two-stage performs worse).
 
-**Advance to Stage 2 if**: Two-stage shows equivalent or superior performance (would contradict preliminary findings and suggest the architecture merits further optimisation).
+**Advance to Stage 2 if**: Two-stage shows F1 improvement of at least 0.05 over single-stage (would contradict preliminary findings and suggest the architecture merits further optimisation).
 
 ---
 
@@ -724,15 +724,17 @@ This would include:
 
 **Test**: Compare:
 
-- Condition A: Single-stage detection with fixed 50% consensus threshold  
+- Condition A: Single-stage detection with fixed 50% consensus threshold
 - Condition B: Single-stage detection + context-expanded re-query for 40-60% consensus cases
 
 **Analysis**: Compare F1 on the subset of "uncertain" detections; report computational cost.
 
 **Implementation**:
 
-- Stage 1: Standard detection on original tiles  
-- Stage 2: For candidates with 2/5 or 3/5 agreement, generate expanded context crop (2x area) and re-query
+- Stage 1: Standard detection on original tiles
+- Stage 2: For candidates with 2/5 or 3/5 agreement, generate expanded context crop (2× area) and re-query
+
+**Stopping rule**: As specified in H3, this two-stage architecture will only be pursued further if it demonstrates F1 at least 0.05 higher than the single-stage baseline. The same rationale applies: given the ~2× cost overhead and complexity, parity or marginal improvement would not justify adoption.
 
 **Status**: Exploratory. Novel approach; uncertain whether context expansion helps or introduces new confounders.
 

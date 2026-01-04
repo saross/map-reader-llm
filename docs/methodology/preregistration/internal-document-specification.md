@@ -117,12 +117,13 @@ This section documents the rationale for major design decisions, for internal re
 
 ### Two-Stage Stopping Rule
 
-**Decision**: -0.10 F1 threshold; test at optimal single-stage config only
+**Decision**: +0.05 F1 improvement threshold; test at optimal single-stage config only
 
 **Rationale**:
-- Preliminary testing showed 0.2-0.4 F1 deficit
-- Two-stage has ~2× cost overhead; must demonstrate near-parity to justify
-- Architecture problem (context loss) unlikely fixable by configuration tuning
+- Preliminary testing showed 0.2-0.4 F1 deficit for coarse-to-fine
+- Two-stage has ~2× cost overhead; must demonstrate clear improvement (≥0.05 F1) to justify
+- Parity or marginal improvement insufficient when deeper single-stage voting is available
+- Same threshold applies to H10 (fine-to-coarse) and any other multi-stage architecture
 
 ### Stage 2 Pilot Deferral
 

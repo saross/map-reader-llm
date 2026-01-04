@@ -136,7 +136,7 @@ The following interactions are explicitly NOT tested, with rationale:
 
 | Interaction | Reason for Exclusion |
 |-------------|---------------------|
-| P × {anything} (pipeline × other factors) | Two-stage architecture must first demonstrate competitiveness (-0.10 F1 threshold); exhaustive optimisation only if competitive |
+| P × {anything} (pipeline × other factors) | Two-stage architecture must exceed single-stage by ≥0.05 F1 to justify ~2× cost overhead; exhaustive optimisation only if this threshold is met |
 
 ### 6.3 Deferred to Stage 2 or Model-Specific Studies
 
