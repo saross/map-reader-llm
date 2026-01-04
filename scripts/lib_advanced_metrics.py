@@ -4,6 +4,16 @@ Advanced metrics library for mound detection evaluation.
 
 Provides F1, precision, recall calculations with one-to-one matching
 using the Hungarian algorithm for optimal detection-to-reference assignment.
+
+Includes bootstrapped confidence interval functions aligned with preregistration
+Section 3.5:
+- bootstrap_ci(): 95% CIs for absolute F1, precision, and recall
+- bootstrap_effect_size_ci(): 95% CIs for differences between conditions
+
+Tile-level classification (Section 4.2):
+- calculate_tile_classification(): Binary classification of tiles (empty vs populated)
+- bootstrap_tile_classification_ci(): 95% CIs for MCC, sensitivity, specificity
+- bootstrap_tile_effect_size_ci(): 95% CIs for tile-level effect sizes
 """
 
 import geopandas as gpd
@@ -192,48 +202,488 @@ def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
 
     return precision, recall, f1
 
-def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000):
+def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=None):
+    """
+    Bootstrap resampling for 95% confidence intervals on precision, recall, and F1.
+
+    Methodology aligned with preregistration Section 3.5:
+    - Resampling unit: Tiles (the unit of analysis)
+    - Resampling method: With replacement (standard bootstrap)
+    - Sample size: n_tiles per iteration
+    - Iterations: 1000 by default
+    - CI calculation: 2.5th and 97.5th percentiles (95% CI)
+
+    Args:
+        gdf_det: GeoDataFrame of detections
+        gdf_ref: GeoDataFrame of ground truth references
+        gdf_bounds: GeoDataFrame of tile boundaries (defines tiles for resampling)
+        n_iterations: Number of bootstrap iterations (default 1000)
+        random_seed: Optional seed for reproducibility
+
+    Returns:
+        dict: Bootstrap results with CIs for F1, precision, and recall
+    """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
-    if n_tiles == 0: return {}
-    
+    if n_tiles == 0:
+        return {}
+
+    if random_seed is not None:
+        np.random.seed(random_seed)
+
+    precision_scores = []
+    recall_scores = []
     f1_scores = []
-    
+
     for i in range(n_iterations):
         sample_tiles = np.random.choice(tiles, n_tiles, replace=True)
-        
+
         sample_dets = []
         sample_bounds = []
-        
+
         for t in sample_tiles:
             d = gdf_det[gdf_det['source_tile'] == t].copy()
             sample_dets.append(d)
             b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
             sample_bounds.append(b)
-            
+
         if not sample_dets:
+            precision_scores.append(0)
+            recall_scores.append(0)
             f1_scores.append(0)
             continue
-            
+
         gdf_sample_det = pd.concat(sample_dets, ignore_index=True)
         gdf_sample_bounds = pd.concat(sample_bounds, ignore_index=True)
-        
+
         try:
-             _, _, f1 = calculate_f1_internal(gdf_sample_det, gdf_ref, gdf_sample_bounds)
-             f1_scores.append(f1)
-        except:
-             f1_scores.append(0)
-             
-    lower = float(np.percentile(f1_scores, 2.5))
-    upper = float(np.percentile(f1_scores, 97.5))
-    mean = float(np.mean(f1_scores))
-    
+            precision, recall, f1 = calculate_f1_internal(
+                gdf_sample_det, gdf_ref, gdf_sample_bounds
+            )
+            precision_scores.append(precision)
+            recall_scores.append(recall)
+            f1_scores.append(f1)
+        except Exception:
+            precision_scores.append(0)
+            recall_scores.append(0)
+            f1_scores.append(0)
+
     return {
-        "mean": mean,
-        "ci_lower": lower,
-        "ci_upper": upper,
-        "n_iterations": n_iterations
+        "f1": {
+            "mean": float(np.mean(f1_scores)),
+            "ci_lower": float(np.percentile(f1_scores, 2.5)),
+            "ci_upper": float(np.percentile(f1_scores, 97.5)),
+        },
+        "precision": {
+            "mean": float(np.mean(precision_scores)),
+            "ci_lower": float(np.percentile(precision_scores, 2.5)),
+            "ci_upper": float(np.percentile(precision_scores, 97.5)),
+        },
+        "recall": {
+            "mean": float(np.mean(recall_scores)),
+            "ci_lower": float(np.percentile(recall_scores, 2.5)),
+            "ci_upper": float(np.percentile(recall_scores, 97.5)),
+        },
+        "n_iterations": n_iterations,
+        # Backwards compatibility fields (deprecated, use nested structure above)
+        "mean": float(np.mean(f1_scores)),
+        "ci_lower": float(np.percentile(f1_scores, 2.5)),
+        "ci_upper": float(np.percentile(f1_scores, 97.5)),
     }
+
+
+def bootstrap_effect_size_ci(
+    gdf_det_a, gdf_bounds_a,
+    gdf_det_b, gdf_bounds_b,
+    gdf_ref,
+    n_iterations=1000,
+    random_seed=None
+):
+    """
+    Bootstrap confidence intervals for effect size (difference) between two conditions.
+
+    Computes 95% bootstrapped CIs for the difference in F1, precision, and recall
+    between Condition A and Condition B, as required by preregistration Section 3.5:
+    "Report effect sizes (F1 difference, precision difference, recall difference)
+    with 95% bootstrapped CIs"
+
+    Methodology:
+    - Paired bootstrap: Same tile indices sampled for both conditions
+    - Resampling unit: Tiles (respects hierarchical structure)
+    - Effect size: Condition A - Condition B (positive = A better)
+    - CI calculation: 2.5th and 97.5th percentiles
+
+    Args:
+        gdf_det_a: GeoDataFrame of detections for Condition A
+        gdf_bounds_a: GeoDataFrame of tile boundaries for Condition A
+        gdf_det_b: GeoDataFrame of detections for Condition B
+        gdf_bounds_b: GeoDataFrame of tile boundaries for Condition B
+        gdf_ref: GeoDataFrame of ground truth references (shared)
+        n_iterations: Number of bootstrap iterations (default 1000)
+        random_seed: Optional seed for reproducibility
+
+    Returns:
+        dict: Effect size estimates with 95% CIs for F1, precision, recall differences
+    """
+    # Get common tiles between conditions
+    tiles_a = set(gdf_bounds_a['tile_name'].unique())
+    tiles_b = set(gdf_bounds_b['tile_name'].unique())
+    common_tiles = list(tiles_a & tiles_b)
+    n_tiles = len(common_tiles)
+
+    if n_tiles == 0:
+        return {"error": "No common tiles between conditions"}
+
+    if random_seed is not None:
+        np.random.seed(random_seed)
+
+    f1_diffs = []
+    precision_diffs = []
+    recall_diffs = []
+
+    for i in range(n_iterations):
+        # Paired sampling: same tiles for both conditions
+        sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
+
+        # Build sample for Condition A
+        sample_dets_a = []
+        sample_bounds_a = []
+        for t in sample_tiles:
+            d = gdf_det_a[gdf_det_a['source_tile'] == t].copy()
+            sample_dets_a.append(d)
+            b = gdf_bounds_a[gdf_bounds_a['tile_name'] == t].copy()
+            sample_bounds_a.append(b)
+
+        # Build sample for Condition B
+        sample_dets_b = []
+        sample_bounds_b = []
+        for t in sample_tiles:
+            d = gdf_det_b[gdf_det_b['source_tile'] == t].copy()
+            sample_dets_b.append(d)
+            b = gdf_bounds_b[gdf_bounds_b['tile_name'] == t].copy()
+            sample_bounds_b.append(b)
+
+        try:
+            # Condition A metrics
+            if sample_dets_a:
+                gdf_sample_det_a = pd.concat(sample_dets_a, ignore_index=True)
+                gdf_sample_bounds_a = pd.concat(sample_bounds_a, ignore_index=True)
+                p_a, r_a, f1_a = calculate_f1_internal(
+                    gdf_sample_det_a, gdf_ref, gdf_sample_bounds_a
+                )
+            else:
+                p_a, r_a, f1_a = 0, 0, 0
+
+            # Condition B metrics
+            if sample_dets_b:
+                gdf_sample_det_b = pd.concat(sample_dets_b, ignore_index=True)
+                gdf_sample_bounds_b = pd.concat(sample_bounds_b, ignore_index=True)
+                p_b, r_b, f1_b = calculate_f1_internal(
+                    gdf_sample_det_b, gdf_ref, gdf_sample_bounds_b
+                )
+            else:
+                p_b, r_b, f1_b = 0, 0, 0
+
+            # Effect sizes (A - B)
+            f1_diffs.append(f1_a - f1_b)
+            precision_diffs.append(p_a - p_b)
+            recall_diffs.append(r_a - r_b)
+
+        except Exception:
+            f1_diffs.append(0)
+            precision_diffs.append(0)
+            recall_diffs.append(0)
+
+    return {
+        "f1_difference": {
+            "mean": float(np.mean(f1_diffs)),
+            "ci_lower": float(np.percentile(f1_diffs, 2.5)),
+            "ci_upper": float(np.percentile(f1_diffs, 97.5)),
+        },
+        "precision_difference": {
+            "mean": float(np.mean(precision_diffs)),
+            "ci_lower": float(np.percentile(precision_diffs, 2.5)),
+            "ci_upper": float(np.percentile(precision_diffs, 97.5)),
+        },
+        "recall_difference": {
+            "mean": float(np.mean(recall_diffs)),
+            "ci_lower": float(np.percentile(recall_diffs, 2.5)),
+            "ci_upper": float(np.percentile(recall_diffs, 97.5)),
+        },
+        "n_tiles": n_tiles,
+        "n_iterations": n_iterations,
+    }
+
+def calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds):
+    """
+    Binary classification of tiles as empty vs populated for MCC calculation.
+
+    Implements preregistration Section 4.2: Tile-level Discrimination (MCC).
+    Each tile is classified based on whether it contains reference mounds
+    and whether the model detected any mounds in that tile.
+
+    Classification matrix:
+    - True Positive:  Has mounds + Detected ≥1 mound
+    - True Negative:  Empty + Detected nothing
+    - False Positive: Empty + Detected ≥1 mound (hallucination)
+    - False Negative: Has mounds + Detected nothing
+
+    Args:
+        gdf_det: GeoDataFrame of detections (must have 'source_tile' column)
+        gdf_ref: GeoDataFrame of ground truth references
+        gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name' column)
+
+    Returns:
+        dict: Classification results including:
+            - tp, tn, fp, fn: Confusion matrix counts
+            - mcc: Matthews Correlation Coefficient
+            - sensitivity: P(detect ≥1 | tile has mounds)
+            - specificity: P(detect 0 | tile is empty)
+            - n_tiles, n_empty, n_populated: Tile counts
+            - tile_details: Per-tile classification list
+    """
+    tiles = gdf_bounds['tile_name'].unique()
+    n_tiles = len(tiles)
+
+    if n_tiles == 0:
+        return {"error": "No tiles in bounds"}
+
+    tile_details = []
+    tp = 0
+    tn = 0
+    fp = 0
+    fn = 0
+
+    for tile_name in tiles:
+        # Get tile geometry
+        tile_row = gdf_bounds[gdf_bounds['tile_name'] == tile_name].iloc[0]
+        tile_geom = tile_row.geometry
+
+        # Check if tile has any reference mounds (intersecting tile geometry)
+        refs_in_tile = gdf_ref[gdf_ref.intersects(tile_geom)]
+        has_mounds = len(refs_in_tile) > 0
+
+        # Check if model detected any mounds in this tile
+        dets_in_tile = gdf_det[gdf_det['source_tile'] == tile_name]
+        has_detections = len(dets_in_tile) > 0
+
+        # Classify tile
+        if has_mounds and has_detections:
+            classification = "TP"
+            tp += 1
+        elif not has_mounds and not has_detections:
+            classification = "TN"
+            tn += 1
+        elif not has_mounds and has_detections:
+            classification = "FP"
+            fp += 1
+        else:  # has_mounds and not has_detections
+            classification = "FN"
+            fn += 1
+
+        tile_details.append({
+            "tile_name": tile_name,
+            "has_mounds": has_mounds,
+            "has_detections": has_detections,
+            "n_references": len(refs_in_tile),
+            "n_detections": len(dets_in_tile),
+            "classification": classification,
+        })
+
+    # Calculate MCC
+    # MCC = (TP×TN - FP×FN) / √((TP+FP)(TP+FN)(TN+FP)(TN+FN))
+    numerator = (tp * tn) - (fp * fn)
+    denominator_parts = (tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)
+
+    if denominator_parts == 0:
+        # Edge case: MCC undefined when any row/column sum is zero
+        mcc = None
+    else:
+        mcc = numerator / np.sqrt(denominator_parts)
+
+    # Calculate sensitivity: TP / (TP + FN)
+    if (tp + fn) > 0:
+        sensitivity = tp / (tp + fn)
+    else:
+        sensitivity = None  # No populated tiles
+
+    # Calculate specificity: TN / (TN + FP)
+    if (tn + fp) > 0:
+        specificity = tn / (tn + fp)
+    else:
+        specificity = None  # No empty tiles
+
+    n_populated = tp + fn
+    n_empty = tn + fp
+
+    return {
+        "tp": tp,
+        "tn": tn,
+        "fp": fp,
+        "fn": fn,
+        "mcc": mcc,
+        "sensitivity": sensitivity,
+        "specificity": specificity,
+        "n_tiles": n_tiles,
+        "n_populated": n_populated,
+        "n_empty": n_empty,
+        "tile_details": tile_details,
+    }
+
+
+def bootstrap_tile_classification_ci(
+    gdf_det, gdf_ref, gdf_bounds,
+    n_iterations=1000,
+    random_seed=None
+):
+    """
+    Bootstrap 95% confidence intervals for tile-level MCC, sensitivity, and specificity.
+
+    Aligned with preregistration Section 3.5: tile-level resampling with replacement.
+
+    Args:
+        gdf_det: GeoDataFrame of detections
+        gdf_ref: GeoDataFrame of ground truth references
+        gdf_bounds: GeoDataFrame of tile boundaries
+        n_iterations: Number of bootstrap iterations (default 1000)
+        random_seed: Optional seed for reproducibility
+
+    Returns:
+        dict: Bootstrap CIs for MCC, sensitivity, and specificity
+    """
+    tiles = gdf_bounds['tile_name'].unique()
+    n_tiles = len(tiles)
+
+    if n_tiles == 0:
+        return {"error": "No tiles in bounds"}
+
+    if random_seed is not None:
+        np.random.seed(random_seed)
+
+    mcc_scores = []
+    sensitivity_scores = []
+    specificity_scores = []
+
+    for i in range(n_iterations):
+        # Resample tiles with replacement
+        sample_tiles = np.random.choice(tiles, n_tiles, replace=True)
+
+        # Build resampled bounds
+        sample_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(sample_tiles)].copy()
+
+        # Calculate tile classification on resampled set
+        result = calculate_tile_classification(gdf_det, gdf_ref, sample_bounds)
+
+        # Collect scores (handle None values)
+        if result.get('mcc') is not None:
+            mcc_scores.append(result['mcc'])
+        if result.get('sensitivity') is not None:
+            sensitivity_scores.append(result['sensitivity'])
+        if result.get('specificity') is not None:
+            specificity_scores.append(result['specificity'])
+
+    # Calculate CIs
+    def compute_ci(scores):
+        if not scores:
+            return {"mean": None, "ci_lower": None, "ci_upper": None}
+        return {
+            "mean": float(np.mean(scores)),
+            "ci_lower": float(np.percentile(scores, 2.5)),
+            "ci_upper": float(np.percentile(scores, 97.5)),
+        }
+
+    return {
+        "mcc": compute_ci(mcc_scores),
+        "sensitivity": compute_ci(sensitivity_scores),
+        "specificity": compute_ci(specificity_scores),
+        "n_iterations": n_iterations,
+        "n_valid_mcc": len(mcc_scores),
+        "n_valid_sensitivity": len(sensitivity_scores),
+        "n_valid_specificity": len(specificity_scores),
+    }
+
+
+def bootstrap_tile_effect_size_ci(
+    gdf_det_a, gdf_bounds_a,
+    gdf_det_b, gdf_bounds_b,
+    gdf_ref,
+    n_iterations=1000,
+    random_seed=None
+):
+    """
+    Bootstrap 95% CIs for tile-level MCC difference between two conditions.
+
+    Paired bootstrap: same tiles sampled for both conditions to enable
+    valid effect size estimation.
+
+    Args:
+        gdf_det_a: GeoDataFrame of detections for Condition A
+        gdf_bounds_a: GeoDataFrame of tile boundaries for Condition A
+        gdf_det_b: GeoDataFrame of detections for Condition B
+        gdf_bounds_b: GeoDataFrame of tile boundaries for Condition B
+        gdf_ref: GeoDataFrame of ground truth references (shared)
+        n_iterations: Number of bootstrap iterations (default 1000)
+        random_seed: Optional seed for reproducibility
+
+    Returns:
+        dict: Effect size CIs for MCC, sensitivity, and specificity differences
+    """
+    # Get common tiles between conditions
+    tiles_a = set(gdf_bounds_a['tile_name'].unique())
+    tiles_b = set(gdf_bounds_b['tile_name'].unique())
+    common_tiles = list(tiles_a & tiles_b)
+    n_tiles = len(common_tiles)
+
+    if n_tiles == 0:
+        return {"error": "No common tiles between conditions"}
+
+    if random_seed is not None:
+        np.random.seed(random_seed)
+
+    mcc_diffs = []
+    sensitivity_diffs = []
+    specificity_diffs = []
+
+    for i in range(n_iterations):
+        # Paired sampling: same tiles for both conditions
+        sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
+
+        # Build sample bounds for each condition
+        sample_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(sample_tiles)].copy()
+        sample_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(sample_tiles)].copy()
+
+        # Calculate tile classification for each condition
+        result_a = calculate_tile_classification(gdf_det_a, gdf_ref, sample_bounds_a)
+        result_b = calculate_tile_classification(gdf_det_b, gdf_ref, sample_bounds_b)
+
+        # Calculate differences (A - B) where both are defined
+        if result_a.get('mcc') is not None and result_b.get('mcc') is not None:
+            mcc_diffs.append(result_a['mcc'] - result_b['mcc'])
+
+        if result_a.get('sensitivity') is not None and result_b.get('sensitivity') is not None:
+            sensitivity_diffs.append(result_a['sensitivity'] - result_b['sensitivity'])
+
+        if result_a.get('specificity') is not None and result_b.get('specificity') is not None:
+            specificity_diffs.append(result_a['specificity'] - result_b['specificity'])
+
+    # Calculate CIs for differences
+    def compute_ci(diffs):
+        if not diffs:
+            return {"mean": None, "ci_lower": None, "ci_upper": None}
+        return {
+            "mean": float(np.mean(diffs)),
+            "ci_lower": float(np.percentile(diffs, 2.5)),
+            "ci_upper": float(np.percentile(diffs, 97.5)),
+        }
+
+    return {
+        "mcc_difference": compute_ci(mcc_diffs),
+        "sensitivity_difference": compute_ci(sensitivity_diffs),
+        "specificity_difference": compute_ci(specificity_diffs),
+        "n_tiles": n_tiles,
+        "n_iterations": n_iterations,
+    }
+
 
 def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds, buffers=[10, 20, 30, 50]):
     results = []
@@ -365,12 +815,26 @@ def print_report_summary(report, title="Metrics Summary"):
     print(f"  Precision: {gm.get('precision', 0):.4f}")
     print(f"  Recall:    {gm.get('recall', 0):.4f}")
 
-    # Bootstrap CI
+    # Bootstrap CI (supports both new nested format and legacy flat format)
     ci = report.get("bootstrap_ci", {})
     if ci:
-        print(f"\n[Bootstrap Confidence Interval (N={ci.get('n_iterations', 0)})]")
-        print(f"  Mean F1:   {ci.get('mean', 0):.4f}")
-        print(f"  95% CI:    [{ci.get('ci_lower', 0):.4f}, {ci.get('ci_upper', 0):.4f}]")
+        n_iter = ci.get('n_iterations', 0)
+        print(f"\n[Bootstrap 95% Confidence Intervals (N={n_iter})]")
+
+        # Check for new nested format (preferred)
+        if "f1" in ci and isinstance(ci["f1"], dict):
+            print(f"  {'Metric':<12} {'Mean':>8} {'95% CI':>20}")
+            print(f"  {'-'*12} {'-'*8} {'-'*20}")
+            for metric in ["f1", "precision", "recall"]:
+                m = ci.get(metric, {})
+                mean_val = m.get('mean', 0)
+                ci_low = m.get('ci_lower', 0)
+                ci_high = m.get('ci_upper', 0)
+                print(f"  {metric.capitalize():<12} {mean_val:>8.4f} [{ci_low:.4f}, {ci_high:.4f}]")
+        else:
+            # Legacy flat format (backwards compatibility)
+            print(f"  Mean F1:   {ci.get('mean', 0):.4f}")
+            print(f"  95% CI:    [{ci.get('ci_lower', 0):.4f}, {ci.get('ci_upper', 0):.4f}]")
 
     # Per-class performance
     pcp = report.get("per_class_performance", [])
@@ -402,3 +866,200 @@ def print_report_summary(report, title="Metrics Summary"):
             print(f"  False Negatives: {dict(fns)}")
 
     print(f"\n{'='*60}\n")
+
+
+def print_effect_size_summary(effect_sizes, condition_a="Condition A", condition_b="Condition B"):
+    """
+    Print a formatted summary of effect size comparisons between two conditions.
+
+    Args:
+        effect_sizes (dict): Output from bootstrap_effect_size_ci()
+        condition_a (str): Name/label for first condition
+        condition_b (str): Name/label for second condition
+    """
+    if "error" in effect_sizes:
+        print(f"Error: {effect_sizes['error']}")
+        return
+
+    print(f"\n{'='*70}")
+    print(f" Effect Size Comparison: {condition_a} vs {condition_b}")
+    print(f"{'='*70}")
+    print(f"\n[Bootstrapped 95% CIs for Differences (N={effect_sizes.get('n_iterations', 0)})]")
+    print(f"  Positive values indicate {condition_a} outperforms {condition_b}")
+    print()
+    print(f"  {'Metric':<20} {'Δ Mean':>10} {'95% CI':>24}")
+    print(f"  {'-'*20} {'-'*10} {'-'*24}")
+
+    for metric_key, label in [
+        ("f1_difference", "F1 Difference"),
+        ("precision_difference", "Precision Difference"),
+        ("recall_difference", "Recall Difference"),
+    ]:
+        m = effect_sizes.get(metric_key, {})
+        mean_val = m.get('mean', 0)
+        ci_low = m.get('ci_lower', 0)
+        ci_high = m.get('ci_upper', 0)
+
+        # Indicate significance (CI excludes zero)
+        sig_marker = ""
+        if ci_low > 0:
+            sig_marker = " *"  # A significantly better
+        elif ci_high < 0:
+            sig_marker = " *"  # B significantly better
+
+        print(f"  {label:<20} {mean_val:>+10.4f} [{ci_low:>+.4f}, {ci_high:>+.4f}]{sig_marker}")
+
+    print(f"\n  * = 95% CI excludes zero (statistically significant at α=0.05)")
+    print(f"  n_tiles = {effect_sizes.get('n_tiles', 'N/A')}")
+    print(f"\n{'='*70}\n")
+
+
+def print_tile_classification_summary(results, title="Tile-Level Classification"):
+    """
+    Print a formatted summary of tile-level classification results.
+
+    Args:
+        results (dict): Output from calculate_tile_classification()
+        title (str): Header title for the summary
+    """
+    if "error" in results:
+        print(f"Error: {results['error']}")
+        return
+
+    print(f"\n{'='*60}")
+    print(f" {title}")
+    print(f"{'='*60}")
+
+    # Confusion matrix
+    print(f"\n[Confusion Matrix]")
+    print(f"  {'':15} {'Detected':>12} {'Not Detected':>14}")
+    print(f"  {'Has Mounds':<15} {results['tp']:>12} (TP) {results['fn']:>10} (FN)")
+    print(f"  {'Empty':<15} {results['fp']:>12} (FP) {results['tn']:>10} (TN)")
+
+    # Metrics
+    print(f"\n[Metrics]")
+    mcc = results.get('mcc')
+    sens = results.get('sensitivity')
+    spec = results.get('specificity')
+
+    mcc_str = f"{mcc:.4f}" if mcc is not None else "undefined"
+    sens_str = f"{sens:.4f}" if sens is not None else "undefined"
+    spec_str = f"{spec:.4f}" if spec is not None else "undefined"
+
+    print(f"  MCC:         {mcc_str}")
+    print(f"  Sensitivity: {sens_str}  (P(detect ≥1 | has mounds))")
+    print(f"  Specificity: {spec_str}  (P(detect 0 | empty))")
+
+    # Tile counts
+    print(f"\n[Tile Counts]")
+    print(f"  Total tiles:     {results['n_tiles']}")
+    print(f"  Populated tiles: {results['n_populated']}")
+    print(f"  Empty tiles:     {results['n_empty']}")
+
+    print(f"\n{'='*60}\n")
+
+
+def print_tile_classification_ci_summary(results, ci_results, title="Tile-Level Classification"):
+    """
+    Print a formatted summary of tile-level classification with bootstrap CIs.
+
+    Args:
+        results (dict): Output from calculate_tile_classification()
+        ci_results (dict): Output from bootstrap_tile_classification_ci()
+        title (str): Header title for the summary
+    """
+    if "error" in results:
+        print(f"Error: {results['error']}")
+        return
+
+    print(f"\n{'='*60}")
+    print(f" {title}")
+    print(f"{'='*60}")
+
+    # Confusion matrix
+    print(f"\n[Confusion Matrix]")
+    print(f"  {'':15} {'Detected':>12} {'Not Detected':>14}")
+    print(f"  {'Has Mounds':<15} {results['tp']:>12} (TP) {results['fn']:>10} (FN)")
+    print(f"  {'Empty':<15} {results['fp']:>12} (FP) {results['tn']:>10} (TN)")
+
+    # Metrics with CIs
+    n_iter = ci_results.get('n_iterations', 0)
+    print(f"\n[Metrics with 95% Bootstrapped CIs (N={n_iter})]")
+    print(f"  {'Metric':<12} {'Value':>10} {'95% CI':>24}")
+    print(f"  {'-'*12} {'-'*10} {'-'*24}")
+
+    for metric, label in [("mcc", "MCC"), ("sensitivity", "Sensitivity"), ("specificity", "Specificity")]:
+        val = results.get(metric)
+        ci = ci_results.get(metric, {})
+        ci_low = ci.get('ci_lower')
+        ci_high = ci.get('ci_upper')
+
+        if val is not None and ci_low is not None:
+            print(f"  {label:<12} {val:>10.4f} [{ci_low:.4f}, {ci_high:.4f}]")
+        elif val is not None:
+            print(f"  {label:<12} {val:>10.4f} [CI unavailable]")
+        else:
+            print(f"  {label:<12} {'undefined':>10}")
+
+    # Tile counts
+    print(f"\n[Tile Counts]")
+    print(f"  Total tiles:     {results['n_tiles']}")
+    print(f"  Populated tiles: {results['n_populated']}")
+    print(f"  Empty tiles:     {results['n_empty']}")
+
+    print(f"\n{'='*60}\n")
+
+
+def print_tile_effect_size_summary(
+    effect_sizes,
+    condition_a="Condition A",
+    condition_b="Condition B"
+):
+    """
+    Print a formatted summary of tile-level effect size comparisons.
+
+    Args:
+        effect_sizes (dict): Output from bootstrap_tile_effect_size_ci()
+        condition_a (str): Name/label for first condition
+        condition_b (str): Name/label for second condition
+    """
+    if "error" in effect_sizes:
+        print(f"Error: {effect_sizes['error']}")
+        return
+
+    print(f"\n{'='*70}")
+    print(f" Tile-Level Effect Size: {condition_a} vs {condition_b}")
+    print(f"{'='*70}")
+    print(f"\n[Bootstrapped 95% CIs for Differences (N={effect_sizes.get('n_iterations', 0)})]")
+    print(f"  Positive values indicate {condition_a} outperforms {condition_b}")
+    print()
+    print(f"  {'Metric':<22} {'Δ Mean':>10} {'95% CI':>24}")
+    print(f"  {'-'*22} {'-'*10} {'-'*24}")
+
+    for metric_key, label in [
+        ("mcc_difference", "MCC Difference"),
+        ("sensitivity_difference", "Sensitivity Difference"),
+        ("specificity_difference", "Specificity Difference"),
+    ]:
+        m = effect_sizes.get(metric_key, {})
+        mean_val = m.get('mean')
+        ci_low = m.get('ci_lower')
+        ci_high = m.get('ci_upper')
+
+        if mean_val is None:
+            print(f"  {label:<22} {'undefined':>10}")
+            continue
+
+        # Indicate significance (CI excludes zero)
+        sig_marker = ""
+        if ci_low is not None and ci_high is not None:
+            if ci_low > 0:
+                sig_marker = " *"  # A significantly better
+            elif ci_high < 0:
+                sig_marker = " *"  # B significantly better
+
+        print(f"  {label:<22} {mean_val:>+10.4f} [{ci_low:>+.4f}, {ci_high:>+.4f}]{sig_marker}")
+
+    print(f"\n  * = 95% CI excludes zero (statistically significant at α=0.05)")
+    print(f"  n_tiles = {effect_sizes.get('n_tiles', 'N/A')}")
+    print(f"\n{'='*70}\n")

@@ -11,7 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 try:
-    from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
+    from scripts.lib_advanced_metrics import (
+        calculate_f1_internal,
+        calculate_tile_classification,
+        bootstrap_tile_classification_ci,
+        load_data,
+    )
 except ImportError:
     print("Error importing scripts.lib_advanced_metrics.")
     sys.exit(1)
@@ -73,12 +78,35 @@ def validate_file(pred_path, bounds_path, template_det_path):
         
     p, r, f1 = calculate_f1_internal(gdf_verified, gdf_ref, gdf_bounds)
     
-    print("\n=== Validation Results ===")
+    print("\n=== Validation Results (Symbol-Level) ===")
     print(f"Precision: {p:.4f}")
     print(f"Recall:    {r:.4f}")
     print(f"F1 Score:  {f1:.4f}")
-    print("==========================")
-    
+    print("==========================================")
+
+    # 5. Calculate Tile-Level MCC (Section 4.2)
+    tile_results = calculate_tile_classification(gdf_verified, gdf_ref, gdf_bounds)
+    tile_ci = bootstrap_tile_classification_ci(gdf_verified, gdf_ref, gdf_bounds)
+
+    print("\n=== Tile-Level Classification (MCC) ===")
+    mcc = tile_results.get('mcc')
+    sens = tile_results.get('sensitivity')
+    spec = tile_results.get('specificity')
+    mcc_ci = tile_ci.get('mcc', {})
+
+    if mcc is not None:
+        ci_str = ""
+        if mcc_ci.get('ci_lower') is not None:
+            ci_str = f" (95% CI: {mcc_ci['ci_lower']:.4f}-{mcc_ci['ci_upper']:.4f})"
+        print(f"MCC:         {mcc:.4f}{ci_str}")
+    else:
+        print(f"MCC:         undefined")
+
+    print(f"Sensitivity: {sens:.4f}" if sens is not None else "Sensitivity: undefined")
+    print(f"Specificity: {spec:.4f}" if spec is not None else "Specificity: undefined")
+    print(f"Tiles: {tile_results['n_populated']} populated, {tile_results['n_empty']} empty")
+    print("========================================")
+
     # Save FP and FN files for Mining
     print("\nGenerating FP/FN files...")
     # Buffer Refs for matching
