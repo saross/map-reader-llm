@@ -30,7 +30,7 @@ H4 Voting       H5 Ordering     H6 Diversity    H3 Two-Stage│
             Phase 4: H8 Flash→Pro Transfer (OFAT) ◄─────────┘
                     │
                     ▼
-            Phase 5: Exploratory (H10-H15, E7)
+            Phase 5: Exploratory (H10-H16)
 ```
 
 **Note**: H2 (Text Elaboration) is now integrated into the main factorial as the M/E factor (5 levels). Phase 3d formerly tested H2 separately; this is no longer required.
@@ -484,7 +484,7 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
    - Context-expanded re-query for uncertain detections
    - ~$5-10
 
-4. **H11, H14, H15, E7**: Lower priority, if budget allows
+4. **H11, H14, H15, H16**: Lower priority, if budget allows
 
 ---
 
@@ -568,12 +568,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.0*
+*Document version: 2.1*
 *Created: 2025-12-31*
 *Updated: 2026-01-04*
 
 **Changelog:**
 
+- v2.1: Fixed stale E7 reference → H16 in dependency graph and Phase 5 priority list
 - v2.0: Major design update — revised to 100-condition factorial (5 M/E × 4 H7 × 5 T); K=10 independent runs protocol; Phase 1 now includes verbose text construction with text-image alignment; H2 integrated into main factorial (removed Phase 3d); H5 partial cross design; H8 OFAT approach on 20-tile subset; revised budget summary (~$150-183 vs ~$187-326)
 - v1.2: Added metadata tracking documentation
 - v1.1: Added H6 diversity configs, H9 temperature parameter

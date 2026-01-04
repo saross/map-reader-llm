@@ -249,11 +249,11 @@ Tiles were stratified by mound density (see Section 8.6 for category definitions
 
 Soviet-era maps were initially annotated by students using the FAIMS v2.6 mobile data capture application (customised as a participatory GIS). Annotation consisted of identifying all symbols representing:
 
-* Burial mounds  
-* Burial mounds with benchmarks  
-* Burial mounds with triangulation points  
-* Benchmarks (no burial mound)  
-* Triangulation points (no burial mound)
+- Burial mounds
+- Burial mounds with benchmarks
+- Burial mounds with triangulation points
+- Benchmarks (no burial mound)
+- Triangulation points (no burial mound)
 
 The four mapss used in the present study were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). 
 
@@ -263,23 +263,23 @@ The four mapss used in the present study were later selected for the quality ass
 
 ### 3.1 Significance Testing
 
-* **Per-hypothesis α**: 0.05
-* **Direction**: One-tailed for directional predictions; two-tailed for equivalence tests (H1)
-* **Multiple comparison correction**: Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses
+- **Per-hypothesis α**: 0.05
+- **Direction**: One-tailed for directional predictions; two-tailed for equivalence tests (H1)
+- **Multiple comparison correction**: Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses
 
 ### 3.2 Rationale for FDR
 
 With 9 confirmatory hypotheses tested on 60 tiles (79 mound symbols), statistical power is adequate for detecting moderate effects. Bonferroni correction (α = 0.006) would remain conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
 
-* The goal is identifying promising techniques for further validation
-* Some false positives are acceptable if balanced by discovery of true effects
-* The screening study prioritises sensitivity to real effects over strict Type I error control
+- The goal is identifying promising techniques for further validation
+- Some false positives are acceptable if balanced by discovery of true effects
+- The screening study prioritises sensitivity to real effects over strict Type I error control
 
 ### 3.3 Interpretation Guidelines
 
-* **Statistically significant (FDR-corrected p < 0.05)**: Technique shows promise; advance to Stage 2 validation
-* **Nominally significant (uncorrected p < 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority
-* **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This guards against discarding genuinely useful techniques due to sampling noise
+- **Statistically significant (FDR-corrected p < 0.05)**: Technique shows promise; advance to Stage 2 validation
+- **Nominally significant (uncorrected p < 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority
+- **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This guards against discarding genuinely useful techniques due to sampling noise
 
 ### 3.4 Practical Significance Caveat
 
@@ -287,11 +287,11 @@ Results will be interpreted in light of practical significance. A statistically 
 
 ### 3.5 Reporting
 
-* All preregistered analyses reported **regardless of outcome**
-* Report **effect sizes** (F1 difference, precision difference, recall difference) with 95% bootstrapped CIs
-* **Spatial tolerance sensitivity**: All primary results reported at 20m; robustness checks at 10m, 30m, and 50m included in supplementary materials
-* Report both uncorrected and FDR-corrected p-values
-* Exploratory analyses clearly labelled and interpreted cautiously
+- All preregistered analyses reported **regardless of outcome**
+- Report **effect sizes** (F1 difference, precision difference, recall difference) with 95% bootstrapped CIs
+- **Spatial tolerance sensitivity**: All primary results reported at 20m; robustness checks at 10m, 30m, and 50m included in supplementary materials
+- Report both uncorrected and FDR-corrected p-values
+- Exploratory analyses clearly labelled and interpreted cautiously
 
 ### 3.6 Power Considerations
 
@@ -349,9 +349,9 @@ Detection performance is evaluated at the symbol level using precision, recall, 
 
 The 20m default was chosen as a reasonable balance \- it accounts for:
 
-* Georeferencing imprecision in historical maps  
-* Symbol centroid ambiguity (mound symbols can be 10-20m across at 1:50,000 scale)  
-* Ground truth digitisation variation
+- Georeferencing imprecision in historical maps
+- Symbol centroid ambiguity (mound symbols can be 10-20m across at 1:50,000 scale)
+- Ground truth digitisation variation
 
 #### 4.1.2 Detection Matching Algorithm
 
@@ -458,8 +458,8 @@ Verbose text additions are derived from image-only baseline failures, ensuring t
 
 **Test**: Compare detection performance with:
 
-* Condition A: Single-stage detection (baseline prompt)
-* Condition B: Two-stage proposer-verifier pipeline (liberal proposer → strict verifier)
+- Condition A: Single-stage detection (baseline prompt)
+- Condition B: Two-stage proposer-verifier pipeline (liberal proposer → strict verifier)
 
 **Testing approach**: The two-stage pipeline will be tested using the optimal single-stage configuration identified from H1, H2, H4, H5, H7, H9 (modality, text elaboration, consensus voting, ordering, hard negatives, temperature). This approach ensures a fair comparison where any performance difference reflects architectural rather than configurational factors.
 
@@ -520,9 +520,9 @@ Verbose text additions are derived from image-only baseline failures, ensuring t
 
 **Test**: Compare detection performance across three ordering conditions:
 
-* Condition A: Canonical-first — Legend entries in initial positions, followed by hard examples
-* Condition B: Canonical-last — Hard examples in initial positions, legend entries in final positions
-* Condition C: Random ordering (average of 3 random permutations with documented seeds)
+- Condition A: Canonical-first — Legend entries in initial positions, followed by hard examples
+- Condition B: Canonical-last — Hard examples in initial positions, legend entries in final positions
+- Condition C: Random ordering (average of 3 random permutations with documented seeds)
 
 **Partial factorial cross**: Ordering is tested at 3 M/E levels to assess M/E × O interaction:
 
@@ -577,11 +577,11 @@ Task framing examples (opening lines):
 
 **Image diversity implementation**:
 
-* Pool construction: All false negatives (≥1 occurrence) and all false positives (≥1 occurrence) during training tile evaluation (per Section 8.4.2 procedure)
-* Hard example count: K hard positives and M hard negatives per pass, where K and M are set based on pool size (preregistered once pool is constructed; target K=4, M=3 if pool allows)
-* Fixed conditions (A, B): Sample K hard positives and M hard negatives once from pool; use same selection for all 5 passes
-* Varied conditions (C, D): Resample hard examples for each pass using frequency-capped random sampling (see Section 8.4.3 for methodology)
-* Canonical examples (legend-derived symbols) and null tiles remain fixed across all conditions and passes
+- Pool construction: All false negatives (≥1 occurrence) and all false positives (≥1 occurrence) during training tile evaluation (per Section 8.4.2 procedure)
+- Hard example count: K hard positives and M hard negatives per pass, where K and M are set based on pool size (preregistered once pool is constructed; target K=4, M=3 if pool allows)
+- Fixed conditions (A, B): Sample K hard positives and M hard negatives once from pool; use same selection for all 5 passes
+- Varied conditions (C, D): Resample hard examples for each pass using frequency-capped random sampling (see Section 8.4.3 for methodology)
+- Canonical examples (legend-derived symbols) and null tiles remain fixed across all conditions and passes
 
 **Text vs structure variation**: H6 tests content diversity (varied wording) not structural diversity (varied organisation). This isolates the effect of semantic variation from potential confounds introduced by prompt restructuring.
 
@@ -593,9 +593,9 @@ Task framing examples (opening lines):
 
 **Analysis**:
 
-* Primary: 2×2 factorial ANOVA testing main effects (text diversity, image diversity) and interaction  
-* Secondary: Planned contrasts comparing each diversity condition (B, C, D) against baseline (A, averaged across runs)  
-* Effect sizes reported for each factor
+- Primary: 2×2 factorial ANOVA testing main effects (text diversity, image diversity) and interaction
+- Secondary: Planned contrasts comparing each diversity condition (B, C, D) against baseline (A, averaged across runs)
+- Effect sizes reported for each factor
 
 **Advance to Stage 2 if**: Either main effect is significant, OR the interaction is significant (indicating combined diversity outperforms either alone). Would establish diversity mechanisms as refinements to consensus voting.
 
@@ -638,20 +638,20 @@ This means:
 
 **Text implementation**:
 
-* Condition A: No exclusion guidance in prompt
-* Condition B: Exclusion instructions describing hard negative categories (e.g., "Do NOT mark: benchmarks without radiating rays, isolated triangulation points...")
-* Condition D: Same exclusion instructions as B, plus explanatory labels on hard negative images (e.g., "Negative: Benchmark ALONE — square with dot but NO radiating rays. NOT a mound.")
+- Condition A: No exclusion guidance in prompt
+- Condition B: Exclusion instructions describing hard negative categories (e.g., "Do NOT mark: benchmarks without radiating rays, isolated triangulation points...")
+- Condition D: Same exclusion instructions as B, plus explanatory labels on hard negative images (e.g., "Negative: Benchmark ALONE — square with dot but NO radiating rays. NOT a mound.")
 
 **Image label implementation**:
 
-* Condition C: Minimal labels only ("Negative" or "Negative: Not a mound")
-* Condition D: Labels with distinguishing features matching the exclusion text
+- Condition C: Minimal labels only ("Negative" or "Negative: Not a mound")
+- Condition D: Labels with distinguishing features matching the exclusion text
 
 **Analysis**:
 
-* Primary: 2×2 factorial ANOVA testing main effects (exclusion text, hard negative images) and interaction on precision
-* Secondary: Parallel analysis on recall to confirm no significant harm
-* Tertiary: Analysis on F1 to assess net benefit
+- Primary: 2×2 factorial ANOVA testing main effects (exclusion text, hard negative images) and interaction on precision
+- Secondary: Parallel analysis on recall to confirm no significant harm
+- Tertiary: Analysis on F1 to assess net benefit
 
 **Advance to Stage 2 if**: Either main effect significantly improves precision AND recall does not significantly decrease.
 
@@ -879,22 +879,22 @@ After completing Phases 1-3 for all models:
 
 **Implementation considerations**:
 
-* Output format standardized across models (coordinate lists)  
-* Spatial matching applied uniformly  
-* Equal weighting (each pass = 1 vote, threshold = 4/6)  
-* Cost tracked per condition for efficiency analysis
+- Output format standardized across models (coordinate lists)
+- Spatial matching applied uniformly
+- Equal weighting (each pass = 1 vote, threshold = 4/6)
+- Cost tracked per condition for efficiency analysis
 
 **Analysis**:
 
-* Compare F1 across conditions  
-* Analyse error correlation: do different models make different mistakes?  
-* Cost-adjusted comparison: F1 per dollar
+- Compare F1 across conditions
+- Analyse error correlation: do different models make different mistakes?
+- Cost-adjusted comparison: F1 per dollar
 
 **Exploratory extensions**:
 
-* Weighted voting by model confidence (if parseable)  
-* Weighted voting by model-specific precision/recall profiles  
-* Optimal ensemble composition search
+- Weighted voting by model confidence (if parseable)
+- Weighted voting by model-specific precision/recall profiles
+- Optimal ensemble composition search
 
 ---
 
@@ -915,22 +915,22 @@ After completing Phases 1-3 for all models:
 
 **Implementation**:
 
-* Training pools are nested (A ⊂ B ⊂ C ⊂ D) for comparability  
-* Same holdout set across all conditions  
-* Library construction procedure (Section 8.4.1) applied identically to each pool  
-* Document resulting library composition for each condition
+- Training pools are nested (A ⊂ B ⊂ C ⊂ D) for comparability
+- Same holdout set across all conditions
+- Library construction procedure (Section 8.4.1) applied identically to each pool
+- Document resulting library composition for each condition
 
 **Analysis**:
 
-* F1 on holdout as function of training pool size  
-* Characterise diminishing returns curve  
-* Compare library composition across conditions (do larger pools find different hard examples?)
+- F1 on holdout as function of training pool size
+- Characterise diminishing returns curve
+- Compare library composition across conditions (do larger pools find different hard examples?)
 
 **Constraints**:
 
-* Total tiles available: 361
-* Holdout fixed at 60 tiles  
-* Maximum training pool: ~301 tiles (361 − 60 holdout)
+- Total tiles available: 361
+- Holdout fixed at 60 tiles
+- Maximum training pool: ~301 tiles (361 − 60 holdout)
 
 **Sequencing**: H14 is conducted after Stage 2 completion but before generalisation to out-of-sample maps. Training pool expansion (Conditions B, C, D) draws from the reserve set, which is permissible after Stage 2 evaluation is complete. H14 results inform decisions about training data requirements when applying the pipeline to maps outside the four annotated sheets.
 
@@ -957,10 +957,10 @@ After completing Phases 1-3 for all models:
 
 **Implementation**:
 
-* Legend-derived positives fixed across conditions (canonical examples)  
-* Null tiles fixed at 3 across conditions (isolates hard example effects)
-* Hard examples drawn from pool ranked by frequency; larger libraries sample more deeply
-* Frequency threshold relaxed as needed to populate larger libraries (minimum 1/5 occurrence)
+- Legend-derived positives fixed across conditions (canonical examples)
+- Null tiles fixed at 3 across conditions (isolates hard example effects)
+- Hard examples drawn from pool ranked by frequency; larger libraries sample more deeply
+- Frequency threshold relaxed as needed to populate larger libraries (minimum 1/5 occurrence)
 
 **Hard example selection for larger libraries**:
 
@@ -974,10 +974,10 @@ After completing Phases 1-3 for all models:
 
 **Analysis**:
 
-* F1 as function of library size  
-* Token cost as function of library size  
-* F1 per dollar (cost-efficiency frontier)  
-* Qualitative assessment: does adding lower-frequency examples introduce noise?
+- F1 as function of library size
+- Token cost as function of library size
+- F1 per dollar (cost-efficiency frontier)
+- Qualitative assessment: does adding lower-frequency examples introduce noise?
 
 **Status**: Exploratory. Addresses practical question of library size optimisation for cost-constrained deployment.
 
@@ -989,7 +989,7 @@ After completing Phases 1-3 for all models:
 
 **Question**: How does tile size affect detection performance and operational efficiency?
 
-**Test**: Compare detection performance across tile sizes (conditional advancement):
+**Test**: Apply optimal configuration from Stages 1-2 across tile sizes:
 
 | Condition | Tile Size | Area Multiplier | Est. Symbols/Tile |
 | ----- | ----- | ----- | ----- |
@@ -999,17 +999,22 @@ After completing Phases 1-3 for all models:
 
 **Conditional advancement**: Condition C tested only if Condition B achieves F1 within 0.05 of baseline.
 
+**Implementation**:
+
+- Uses optimal configuration (M/E, H7, T, voting) from Stages 1-2
+- Tiles generated from source maps with consistent overlap handling
+- Few-shot library images remain at original resolution (448×448 crops)
+- Ground truth regenerated for larger tile boundaries
+
 **Analysis**:
 
-* F1 as function of tile size  
-* Efficiency metric: F1 × coverage rate (symbols evaluated per API call)  
-* Qualitative assessment: Are errors concentrated on small/crowded symbols?
+- F1 as function of tile size
+- Efficiency metric: F1 × coverage rate (symbols evaluated per API call)
+- Qualitative assessment: Are errors concentrated on small/crowded symbols?
 
-**Implementation notes**:
+**Sequencing**: H16 is conducted as a standalone experiment after Stage 2 completion, independent of other hypotheses. Results inform operational decisions about tile size when deploying the pipeline at scale.
 
-* Tiles generated from same source maps with consistent overlap handling  
-* Few-shot library images remain at original resolution (448×448 crops)  
-* Ground truth regenerated for larger tile boundaries
+**Status**: Exploratory. Addresses practical question of optimising tile size for cost-efficient map coverage.
 
 ---
 
@@ -1064,9 +1069,9 @@ All models tested at maximum capability configuration. Parameters
 
 Fixed parameters:
 
-* `temperature`: 1.0 (required; values <1.0 cause degraded performance)
-* `mediaResolution`: `default (media_resolution_medium)`  
-* `max_output_tokens`: 8192
+- `temperature`: 1.0 (required; values <1.0 cause degraded performance)
+- `mediaResolution`: `default (media_resolution_medium)`
+- `max_output_tokens`: 8192
 
 **Claude 4.5 (Anthropic):**
 
@@ -1078,8 +1083,8 @@ Fixed parameters:
 
 Fixed parameters:
 
-* `temperature`: 1.0  
-* `max_tokens`: 16384 (must exceed budget\_tokens)
+- `temperature`: 1.0
+- `max_tokens`: 16384 (must exceed budget\_tokens)
 
 Notes: Extended thinking enabled for all variants. Effort parameter (beta) applied to Opus only.
 
@@ -1093,9 +1098,9 @@ Notes: Extended thinking enabled for all variants. Effort parameter (beta) appli
 
 Fixed parameters:
 
-* `temperature`: 1.0 (fixed; cannot be modified)  
-* `verbosity`: `low`  
-* `max_output_tokens`: 8192
+- `temperature`: 1.0 (fixed; cannot be modified)
+- `verbosity`: `low`
+- `max_output_tokens`: 8192
 
 All other parameters left at provider defaults.
 
@@ -1660,7 +1665,7 @@ This section maps each hypothesis to the specific configuration files, system in
 | H8 | Flash→Pro transfer | ✅ Ready | Runtime model parameter |
 | H9 | Temperature | ✅ Ready | Factorial factor (temperature) |
 | H10 | Fine-to-coarse validation | 📋 Exploratory | Context-expanded re-query pipeline |
-| H11 | Temperature variation across prompts | 📋 Exploratory | Runtime temperature parameter |
+| H11 | Temperature variation across passes | 📋 Exploratory | Runtime temperature parameter |
 | H12 | Cross-model consistency | 📋 Exploratory | Runtime model parameter (Claude, GPT) |
 | H13 | Cross-model voting | 📋 Exploratory | Multi-model ensemble voting |
 | H14 | Training pool size effects | 📋 Exploratory | Varied training pool sampling |
@@ -1874,12 +1879,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 3.2*
+*Document version: 3.3*
 *Created: 2025-12-22*
 *Updated: 2026-01-04*
 
 **Changelog:**
 
+- v3.3: Exploratory hypotheses H10-H16 comprehensive rewrite with detailed test designs; fixed H11 implementation table description ("prompts" → "passes"); markdown linting (asterisk lists → dashes throughout)
 - v3.2: Major factorial design update — revised to 100-condition design (5 M/E × 4 H7 × 5 T levels); added Section 3.8 K=10 Evaluation Protocol; updated H1 to 5-level M/E factor; H2 now contrasts within factorial; H4 integrated with K=10 runs; H5 partial cross design (3 × 3) with p < 0.10 mitigation; H9 extended to 5 temperatures with escalation trigger; H7 alignment clarification (text describes same failures as images); Section 1.3 text-only role clarification; Section 8.4.1 library and verbose text construction procedure with alignment requirements; updated Section 8.4.7 and Section 8.7.4 for 100-condition factorial
 - v3.1: Comprehensive review updates — fixed errors (hypothesis count, H1 prediction, H10→H12 reference, ordering terminology, escaped characters, E7→H16); added new sections (power analysis, blinding, analysis scope, Lesovo terrain, spatial tolerance sensitivity, model version documentation, Stage 2 expansion); updated hypothesis descriptions (H3 stopping rule, H4 primary/exploratory clarification, H6 symmetric replication, H8 transfer approach); added administrative sections (COI, ethics, registration, data availability); added H10-H16 to implementation table; created companion documents (preregistration-coverage.md for factorial coverage, preregistration-appendix-prompts.md for complete prompt documentation); added Section 16.1 Companion Documents reference table
 - v3.0: Added Section 8.7 hypothesis-to-implementation mapping; status set to Ready for Registration
