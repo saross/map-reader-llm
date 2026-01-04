@@ -45,18 +45,20 @@ H4 Voting       H5 Ordering     H6 Diversity    H3 Two-Stage│
 ### Checklist
 
 - [x] **Prompts**: Finalise all instruction files (2026-01-01)
-  - [x] `detect_image-only.md` (baseline, also used by hardneg configs)
-  - [x] `detect_text-image.md` and `detect_text-image_hardneg.md`
-  - [x] `detect_text-only.md` and `detect_text-only_hardneg.md`
-  - [x] `detect_*_elaborate.md` and `detect_*_elaborate_hardneg.md` (H2)
-  - [ ] H6 text variants (5 semantically equivalent instructions)
+  - [x] `detect_image-only.md` and `detect_image-only_hardneg.md`
+  - [x] `detect_brief-text.md` and `detect_brief-text_hardneg.md`
+  - [x] `detect_brief-text-image.md` and `detect_brief-text-image_hardneg.md`
+  - [x] `detect_verbose-text.md` and `detect_verbose-text_hardneg.md`
+  - [x] `detect_verbose-text-image.md` and `detect_verbose-text-image_hardneg.md`
+  - [ ] H6 text variants (5 semantically equivalent instructions, constructed after Phase 2)
   - [x] `propose_image-only.md` and `verify_image-only.md` (H3)
 
 - [x] **Configs**: Create all JSON config files (2026-01-01)
-  - [x] H1/H5/H7 baseline and ordering variants (`detect_image-only*.json`, `detect_text-image*.json`)
-  - [x] H2 elaboration variants (`detect_*_elaborate*.json`)
-  - [ ] H9 temperature (runtime parameter, no separate configs needed)
-  - [ ] H6 diversity configs
+  - [x] 16 main factorial configs: 5 M/E × 4 H7 (minus 4 invalid text-only × image-H7 combos)
+  - [x] Naming pattern: `detect_{modality}_{hardneg}.json`
+  - [ ] H5 ordering variants (6 configs: 2 orderings × 3 M/E levels)
+  - [ ] H9 temperature: runtime parameter, no separate configs needed
+  - [ ] H6 diversity configs: constructed after Phase 2 optimal determined
 
 - [x] **Scripts**: Verify/create analysis code (2026-01-02)
   - [x] Batch detection script handles all config variants
@@ -87,13 +89,13 @@ outputs/
 │   └── aggregated/
 ├── phase3-followup/
 │   ├── h4-voting/
+│   ├── h5-ordering/
 │   ├── h6-diversity/
-│   ├── h3-twostage/
-│   │   ├── candidates.geojson        # Proposer output
-│   │   ├── candidates.meta.json
-│   │   ├── verified.geojson          # Verifier output
-│   │   └── verified.meta.json
-│   └── h2-elaboration/
+│   └── h3-twostage/
+│       ├── candidates.geojson        # Proposer output
+│       ├── candidates.meta.json
+│       ├── verified.geojson          # Verifier output
+│       └── verified.meta.json
 ├── phase4-transfer/
 │   └── pro-replication/
 └── phase5-exploratory/
@@ -156,22 +158,29 @@ Document for each selected example:
 
 **Step 4: Construct Verbose Text**
 
-Build verbose text by adding targeted guidance for each hard example:
+Build verbose text by adding edge case guidance for hard positives:
 
 | Component | Source | Content |
 |-----------|--------|---------|
 | Base | Legend descriptions | Brief text describing canonical mound types |
-| Exclusion guidance | Hard negative images | Text describing why each FP is NOT a mound |
-| Edge case guidance | Hard positive images | Text describing why each FN IS a mound |
+| Edge case guidance | Hard positive images | Text describing why each FN IS a mound (e.g., occluded symbols, degraded examples) |
 
-**Alignment requirement**: Each hard example image must have corresponding text guidance. The verbose text directly describes the hard examples in the library.
+**Note on exclusion guidance**: Text describing hard negatives (FPs) is NOT part of verbose text. Exclusion guidance is controlled by the H7 factor:
+- H7 = None or Images-only: No exclusion text
+- H7 = Text-only or Text+Images: Exclusion text added via `_hardneg.md` instruction variants
+
+This separation ensures H2 (elaboration) and H7 (hard negatives) remain orthogonal factors.
+
+**Alignment requirement**: Each hard positive image must have corresponding edge case text in verbose prompts.
 
 **Step 5: Construct Brief vs Verbose Text**
 
 | Text Version | Content |
 |--------------|---------|
 | Brief text | Legend-based descriptions of canonical mound types only (~200-400 words) |
-| Verbose text | Brief text + exclusion guidance + edge case guidance (~700-1400 words) |
+| Verbose text | Brief text + edge case guidance for hard positives (~400-700 words) |
+
+**Note**: Exclusion guidance for hard negatives is added separately via H7 `_hardneg.md` variants, not via the brief/verbose distinction.
 
 **Text-modality consistency**: Identical text is used across modalities:
 
@@ -218,6 +227,8 @@ Full 5×4×5 factorial on Gemini 3 Flash:
 **Note**: Ordering (H5) is tested as a partial cross in Phase 3b, not in the main factorial. All main factorial conditions use canonical-first ordering.
 
 **Total**: 100 conditions × K=10 runs × 60 holdout tiles = **60,000 API calls**
+
+**Implementation note**: The 100 conditions are implemented using 16 config files × 5 temperature values (runtime parameter). Text-only modalities (Brief-text, Verbose-text) only have 2 valid H7 levels each (None, Text-only), yielding 16 rather than 20 configs.
 
 ### Evaluation Protocol
 
@@ -317,7 +328,7 @@ The K=10 runs from Phase 2 provide data for voting analysis at N=5 and N=10. Pha
 
 #### Design
 
-Test 3 orderings × 3 M/E levels = 9 conditions total (partial cross):
+Test 3 orderings × 3 M/E levels, but canonical-first is already in the main factorial. This adds **6 new conditions** (2 orderings × 3 M/E levels):
 
 | Ordering | M/E Levels Tested |
 |----------|-------------------|
@@ -328,6 +339,8 @@ Test 3 orderings × 3 M/E levels = 9 conditions total (partial cross):
 **Note**: Canonical-first is covered in the main factorial. This adds 6 new conditions (2 orderings × 3 M/E levels).
 
 **API calls**: 6 conditions × K=10 runs × 60 tiles = **3,600 API calls**
+
+**Fixed parameters**: All H5 conditions tested at optimal H7 and T from Phase 2 results.
 
 #### Mitigation Trigger
 
@@ -448,13 +461,13 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 
 | Sub-phase | API Calls | Est. Cost |
 |-----------|-----------|-----------|
-| 4a: Baseline | 200 | ~$3 |
-| 4b: OFAT | ~1,200 | ~$18 |
+| 4a: Baseline | 200 | ~$15 |
+| 4b: OFAT | ~1,200 | ~$90 |
 | 4c: Voting | (from 4a-4b) | — |
-| 4d: Refinement | 0-200 | $0-3 |
-| **Total** | **~1,400-1,600** | **~$21-24** |
+| 4d: Refinement | 0-200 | $0-15 |
+| **Total** | **~1,400-1,600** | **~$105-120** |
 
-**Note**: If Pro shows dramatic superiority warranting full optimisation, budget for extended Pro testing (~$40-60 additional).
+**Note**: Pro pricing is ~10× Flash (~$0.075/call vs ~$0.0015/call). If Pro shows dramatic superiority warranting full optimisation, budget for extended Pro testing (~$50-80 additional).
 
 ### Outputs
 
@@ -473,8 +486,9 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 ### Priority Order
 
 1. **H12 (cross-model consistency)**: Most important for generalisability
-   - Replicate H4, H5, H7 on Claude 4.5 Sonnet and GPT-5.2
-   - ~$30-50
+   - Test Flash-optimal configuration on Claude 4.5 Sonnet and GPT-5.2 Thinking
+   - OFAT sensitivity testing per factor (same protocol as H8)
+   - ~$40-60 (depends on provider pricing)
 
 2. **H13 (cross-model voting)**: Novel contribution
    - 6-pass voting: 6×Flash vs 6×Sonnet vs 6×GPT vs 2×each
@@ -499,18 +513,14 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 | Phase 3c: H6 Diversity | ~6,000 | ~$9 |
 | Phase 3d: H3 Two-Stage | ~1,200 | ~$2 |
 | **Flash Subtotal** | **~72,100** | **~$109** |
-| Phase 4: H8 Pro Transfer | ~1,400-1,600 | ~$21-24 |
-| **Confirmatory Total** | **~73,500-73,700** | **~$130-133** |
-| Phase 5: Exploratory | ~2,000-5,000 | ~$20-50 |
-| **Grand Total** | **~75,500-78,700** | **~$150-183** |
+| Phase 4: H8 Pro Transfer | ~1,400-1,600 | ~$105-120 |
+| **Confirmatory Total** | **~73,500-73,700** | **~$214-229** |
+| Phase 5: Exploratory | ~2,000-5,000 | ~$30-60 |
+| **Grand Total** | **~75,500-78,700** | **~$244-289** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$220**
+**Contingency**: 20% buffer → **Budget ceiling: ~$350**
 
-**Note**: This is significantly lower than the previous design (~$187-326) due to:
-
-1. K=10 independent runs replace N=5 voting in factorial (same data, different framing)
-2. H2 integrated into main factorial (no separate Phase 3d)
-3. H8 uses OFAT on 20-tile subset rather than full replication
+**Note**: The majority of cost comes from Pro model testing (Phase 4) at ~10× Flash pricing. Flash-only confirmatory testing would cost ~$109.
 
 ---
 
@@ -568,12 +578,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.1*
+*Document version: 2.2*
 *Created: 2025-12-31*
 *Updated: 2026-01-04*
 
 **Changelog:**
 
+- v2.2: Final review fixes — H2/H7 orthogonality in Phase 1 (exclusion guidance controlled by H7 only); corrected Pro cost estimates (~$105-120, not ~$21-24); fixed budget summary totals; updated file naming to match 10-instruction structure; fixed H5 condition count (6 new, not 9); removed stale h2-elaboration directory; corrected H12 description
 - v2.1: Fixed stale E7 reference → H16 in dependency graph and Phase 5 priority list
 - v2.0: Major design update — revised to 100-condition factorial (5 M/E × 4 H7 × 5 T); K=10 independent runs protocol; Phase 1 now includes verbose text construction with text-image alignment; H2 integrated into main factorial (removed Phase 3d); H5 partial cross design; H8 OFAT approach on 20-tile subset; revised budget summary (~$150-183 vs ~$187-326)
 - v1.2: Added metadata tracking documentation
