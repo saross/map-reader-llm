@@ -10,10 +10,35 @@
 
 This appendix contains the complete text of all prompts used in the study. Prompts are organised into:
 
-1. **System Instructions** — The text instructions provided to the VLM
-2. **Configuration Files** — JSON files specifying example ordering, labels, and parameters
+1. **System Instructions** — The text instructions provided to the Vision Language Model (VLM)
+2. **Configuration Files** — JavaScript Object Notation (JSON) files specifying example images, labels, and parameters
 
 All files are stored in the `prompts/` directory of the project repository.
+
+### Design Summary
+
+The prompt architecture reflects the orthogonal factorial design:
+
+- **M/E Factor** (5 levels): Controls modality and text elaboration
+  - Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image
+- **H7 Factor** (4 levels): Controls hard negative guidance
+  - None, Text-only, Images-only, Text+Images
+
+This yields:
+
+- **10 instruction files**: 5 M/E levels × 2 exclusion variants (base, `_hardneg`)
+- **20 configuration files**: 5 M/E levels × 4 H7 levels
+
+### Orthogonal Factor Separation
+
+The design maintains strict orthogonality between H2 (elaboration) and H7 (hard negatives):
+
+| Factor | Controls | Content |
+|--------|----------|---------|
+| H2 (Elaboration) | Edge case guidance for **hard positives** (FNs) | Verbose text adds descriptions of occluded mounds, degraded symbols, edge cases to detect |
+| H7 (Hard negatives) | Exclusion guidance for **hard negatives** (FPs) | Text about what NOT to detect; images of confusable symbols |
+
+**Critical distinction**: Verbose text does NOT include exclusion guidance for hard negatives. That is controlled exclusively by H7.
 
 ---
 
@@ -21,29 +46,43 @@ All files are stored in the `prompts/` directory of the project repository.
 
 The following elements will be finalised before holdout evaluation:
 
-### Empirically-Determined Images
+### Empirically-Determined Content
 
-All configuration files that include hard examples (hard positives, hard negatives) currently use placeholder paths (e.g., `neutral/example_08.png`). These will be replaced with actual images selected via the procedure in preregistration.md Section 8.4.2:
+#### Hard Negative Images (H7 Images-only and Text+Images conditions)
 
-1. Run baseline library (4 canonical positives + 3 null tiles) on 20 training tiles
-2. Identify False Negatives (≥3/5 passes) → select top K as hard positives
-3. Identify False Positives (≥3/5 passes) → select top M as hard negatives
-4. Document selected images with filenames, source tiles, and selection rationale
+Configuration files with hard negative images currently use placeholder paths for empirically-derived examples. These will be populated via the procedure in preregistration.md Section 8.4.2:
+
+1. Run image-only baseline on 20 training tiles (K=10 runs)
+2. Identify False Positives (≥3/10 runs) → select top M as hard negatives
+3. Document selected images with filenames, source tiles, and selection rationale
+
+**Legend-derived hard negatives** (can be specified now):
+
+- Standalone benchmark (no rays)
+- Standalone triangulation point (no rays)
+
+**Empirically-derived hard negatives** (TBD after Phase 1):
+
+- Additional confusable symbols identified from FP analysis
+
+#### Hard Positive Images (H6 Diversity conditions)
+
+Hard positive images for H6 diversity conditions will be derived from False Negatives in Phase 1 baseline analysis.
 
 **Configs affected:**
 
-- All `*_hardneg.json` variants (H7)
+- All `*_images.json` and `*_both.json` variants (H7)
 - `propose_image-only.json` and `verify_image-only.json` (H3)
 - H6 diversity conditions C and D (varied images)
 
 ### H6 Text Diversity Prompts
 
-The 5 semantically equivalent prompt variants (V1–V5) will be constructed after the optimal base configuration is determined from the main factorial and H2 experiments.
+The 5 semantically equivalent prompt variants (V1–V5) will be constructed after the optimal base configuration is determined from the main factorial.
 
 **Construction procedure:**
 
-1. Identify winning configuration (modality, elaboration, hard negatives, ordering, temperature)
-2. Use the corresponding prompt template as structural base
+1. Identify winning configuration (M/E level, H7 level, temperature)
+2. Use the corresponding instruction file as structural base
 3. Create V1–V5 using Level 3 variation (content diversity, fixed structure):
    - Vary task framing line
    - Vary instruction phrasing
@@ -63,7 +102,7 @@ See preregistration.md Section 8.3.3 for full specification of variation approac
 
 ### Finalisation Documentation
 
-Before any holdout evaluation, the following will be uploaded to the connected OSF project:
+Before any holdout evaluation, the following will be uploaded to the connected Open Science Framework (OSF) project:
 
 - Final image filenames for all hard examples
 - Selection rationale (frequency counts from training evaluation)
@@ -75,12 +114,34 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 
 ## Part 1: System Instructions
 
-### 1.1 Single-Stage Detection Prompts
+### 1.0 Instruction File Summary
+
+| Filename | M/E Level | Exclusion Guidance | H1/H2 Role |
+|----------|-----------|-------------------|------------|
+| `detect_image-only.md` | Image-only | No | H1 baseline |
+| `detect_image-only_hardneg.md` | Image-only | Yes | H7 text conditions |
+| `detect_brief-text.md` | Brief-text | No | H1/H2 text-only baseline |
+| `detect_brief-text_hardneg.md` | Brief-text | Yes | H7 text conditions |
+| `detect_brief-text-image.md` | Brief-text+image | No | H1/H2 baseline |
+| `detect_brief-text-image_hardneg.md` | Brief-text+image | Yes | H7 text conditions |
+| `detect_verbose-text.md` | Verbose-text | No | H2 elaboration |
+| `detect_verbose-text_hardneg.md` | Verbose-text | Yes | H2 + H7 |
+| `detect_verbose-text-image.md` | Verbose-text+image | No | H2 elaboration |
+| `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Yes | H2 + H7 |
+
+**Naming convention**: `detect_{modality}[_hardneg].md`
+
+- `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
+- `_hardneg`: suffix indicates exclusion guidance for hard negatives (H7 text conditions)
+
+---
+
+### 1.1 Image-Only Instructions
 
 #### 1.1.1 detect_image-only.md
 
 **Purpose**: Baseline image-only detection with minimal text instruction.
-**Used by**: H1 (image-only condition), H5, H7 (baseline), H9
+**Used by**: M/E = Image-only; H7 = None or Images-only
 **H6 note**: If image-only is the optimal base configuration, this template's structure will be used for H6 V1–V5 variants (with varied content per Section 8.3.3).
 
 ```markdown
@@ -103,72 +164,88 @@ Return JSON with normalised coordinates (0-1000):
 
 ---
 
-#### 1.1.2 detect_text-only.md
+#### 1.1.2 detect_image-only_hardneg.md
 
-**Purpose**: Text-only detection with detailed symbol descriptions but no visual examples.
-**Used by**: H1 (text condition), H2 (brief text)
+**Purpose**: Image-only detection with exclusion guidance for hard negatives.
+**Used by**: M/E = Image-only; H7 = Text-only or Text+Images
 
 ```markdown
-# Detection Prompt: Text-Only Baseline
+# Mound Detection (Image-Only)
 
-You are an expert analyst of Soviet
-Topographic Maps and landscape archaeologist. Your goal is to
-identify burial mound symbols.
+Scan the Target Image. Mark all symbols that look like the Positive examples.
+
+## Exclusion Guidance
+
+The key diagnostic feature is **radiating rays** (hachures; spikes) extending OUTWARD from a central shape.
+
+**DO NOT mark symbols without visible rays**, including:
+
+- Standalone triangulation points (black triangle, NO rays)
+- Standalone benchmarks (black square/circle, NO rays)
+- Spot heights (simple dots with elevation numbers)
+- Bridge/culvert markers (dots on roads/rivers)
+
+Consider occlusion or degradation before excluding — partial rays still indicate a mound.
+
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+### 1.2 Brief-Text Instructions
+
+#### 1.2.1 detect_brief-text.md
+
+**Purpose**: Text-only detection with concise symbol descriptions.
+**Used by**: M/E = Brief-text; H7 = None (no images in this condition)
+
+```markdown
+# Detection Prompt: Brief Text
+
+You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to identify burial mound symbols.
 
 ## Target Symbols
 
-Create bounding boxes for all
-instances of the following symbols:
+Create bounding boxes for all instances of the following symbols:
 
 ### A. Burial Mound (Kurgan)
 
-- **Visual:** A small, hollow **circle**
-  with short, radiating **rays** (hachures; spikes) extending outward. Resembles a
-  "sunburst", "gear", or "ship's wheel".
+- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
 - **Colour:** Orange-brown.
-- **Context:** Often accompanied by an
-  isolated elevation number (e.g., "3",
-  "10") or the abbreviation **"кург."**
+- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") or the abbreviation **"кург."**
 
 ### B. Settlement Mound
 
-- **Visual:** Similar to a burial mound
-  but **larger** and often oval or
-  irregular in shape.
+- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape.
 - **Colour:** Orange-brown.
 
 ### C. Triangulation Point on a Mound
 
-- **Visual:** A hollow **black triangle**
-  with a central dot, surrounded by
-  radiating rays of a mound.
+- **Visual:** A hollow **black triangle** with a central dot, surrounded by radiating rays of a mound.
 - **Distinction:** Must have rays.
 
 ### D. Benchmark on a Mound
 
-- **Visual:** A hollow **black square**
-  with a central dot, surrounded by
-  radiating rays of a mound.
+- **Visual:** A hollow **black square** with a central dot, surrounded by radiating rays of a mound.
 - **Distinction:** Must have rays.
 
-## Handling Occlusion
+## Guidelines
 
-Symbols may be partially obscured by
-lines (roads, contours, grid lines) or
-text. Focus on identifying the
-characteristic "sunburst" shape.
-
-## Separating Clusters
-
-Symbols may appear close together. Each
-distinct "sunburst" centre represents a
-separate mound. Provide individual
-bounding boxes for each.
-
-## When Uncertain
-
-Include borderline cases rather than
-missing genuine mounds.
+- Symbols may be partially obscured by lines or text. Focus on the characteristic "sunburst" shape.
+- Each distinct "sunburst" centre represents a separate mound. Provide individual bounding boxes.
+- Include borderline cases rather than missing genuine mounds.
 
 ## Output Format
 
@@ -187,103 +264,70 @@ Return JSON with normalised coords (0-1000).
 
 ---
 
-#### 1.1.3 detect_text-only_hardneg.md
+#### 1.2.2 detect_brief-text_hardneg.md
 
-**Purpose**: Text-only detection with hard negative exclusion criteria.
-**Used by**: H7 (text-only + hard negatives)
+**Purpose**: Brief text-only detection with exclusion guidance for hard negatives.
+**Used by**: M/E = Brief-text; H7 = Text-only (no images in text-only conditions)
 
 ```markdown
-# Detection Prompt: Text-Only with Hard Negatives
+# Detection Prompt: Brief Text with Exclusion Guidance
 
-You are an expert analyst of Soviet
-Topographic Maps and landscape archaeologist. Your goal is to
-identify burial mound symbols.
+You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to identify burial mound symbols.
 
 ## Target Symbols
 
-Create bounding boxes for all
-instances of the following symbols:
+Create bounding boxes for all instances of the following symbols:
 
 ### A. Burial Mound (Kurgan)
 
-- **Visual:** A small, hollow **circle**
-  with short, radiating **rays** (hachures; spikes) extending outward. Resembles a
-  "sunburst", "gear", or "ship's wheel".
+- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
 - **Colour:** Orange-brown.
-- **Context:** Often accompanied by an
-  isolated elevation number (e.g., "3",
-  "10") or the abbreviation **"кург."**
+- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") or the abbreviation **"кург."**
 
 ### B. Settlement Mound
 
-- **Visual:** Similar to a burial mound
-  but **larger** and often oval or
-  irregular in shape.
+- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape.
 - **Colour:** Orange-brown.
 
 ### C. Triangulation Point on a Mound
 
-- **Visual:** A hollow **black triangle**
-  with a central dot, surrounded by
-  radiating rays of a mound.
+- **Visual:** A hollow **black triangle** with a central dot, surrounded by radiating rays of a mound.
 - **Distinction:** Must have rays.
 
 ### D. Benchmark on a Mound
 
-- **Visual:** A hollow **black square**
-  with a central dot, surrounded by
-  radiating rays of a mound.
+- **Visual:** A hollow **black square** with a central dot, surrounded by radiating rays of a mound.
 - **Distinction:** Must have rays.
 
 ## Exclusion Criteria (CRITICAL)
 
-The following symbols are easily
-confused with mounds. **DO NOT mark:**
+The following symbols are easily confused with mounds. **DO NOT mark:**
 
 ### Triangulation Point (standalone)
 
-- **Visual:** Hollow black triangle with
-  central dot, but **NO radiating rays**.
+- **Visual:** Hollow black triangle with central dot, but **NO radiating rays**.
 
 ### Benchmark (standalone)
 
-- **Visual:** Hollow black square/circle
-  with crosshairs, but **NO radiating rays**.
+- **Visual:** Hollow black square/circle with crosshairs, but **NO radiating rays**.
 
 ### Bridge/Culvert Dots
 
-- **Visual:** Simple black dots on roads,
-  rivers, or canals. NO rays.
+- **Visual:** Simple black dots on roads, rivers, or canals. NO rays.
 
 ### Spot Heights
 
-- **Visual:** Simple dots (black/brown)
-  with elevation numbers. NO rays.
+- **Visual:** Simple dots (black/brown) with elevation numbers. NO rays.
 
 ### Quarry/Pit Symbols
 
-- **Visual:** Circular shapes with rays
-  pointing **INWARD**. Mound rays always point
-  OUTWARD.
+- **Visual:** Circular shapes with rays pointing **INWARD**. Mound rays always point OUTWARD.
 
-## Handling Occlusion
+## Guidelines
 
-Symbols may be partially obscured by
-lines (roads, contours, grid lines) or
-text. Focus on identifying the
-characteristic "sunburst" shape.
-
-## Separating Clusters
-
-Symbols may appear close together. Each
-distinct "sunburst" centre represents a
-separate mound. Provide individual
-bounding boxes for each.
-
-## When Uncertain
-
-Include borderline cases rather than
-missing genuine mounds.
+- Symbols may be partially obscured by lines or text. Focus on the characteristic "sunburst" shape.
+- Each distinct "sunburst" centre represents a separate mound. Provide individual bounding boxes.
+- Include borderline cases rather than missing genuine mounds.
 
 ## Output Format
 
@@ -302,51 +346,39 @@ Return JSON with normalised coords (0-1000).
 
 ---
 
-#### 1.1.4 detect_text-image.md
+### 1.3 Brief-Text+Image Instructions
 
-**Purpose**: Combined text and image prompt with reference examples.
-**Used by**: H1 (text+image condition), H2 (brief)
-**H6 note**: If text+image is the optimal base configuration, this template's structure will be used for H6 V1–V5 variants (with varied content per Section 8.3.3).
+#### 1.3.1 detect_brief-text-image.md
+
+**Purpose**: Combined brief text and image prompt with reference examples.
+**Used by**: M/E = Brief-text+image; H7 = None or Images-only
+**H6 note**: If brief-text+image is the optimal base configuration, this template's structure will be used for H6 V1–V5 variants.
 
 ```markdown
-# Detection Prompt: Text+Image Baseline
+# Detection Prompt: Brief Text+Image
 
-You are an expert analyst of Soviet
-Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually
-match** the provided Positive examples.
+You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
 
 ## Reference Examples
 
 You are provided with labelled images:
 
-- **Positive examples** show mound symbols
-  to detect (burial mounds, settlement
-  mounds, and survey markers on mounds)
-- **Negative examples** show areas or
-  symbols that are NOT mounds
+- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
+- **Negative examples** show areas or symbols that are NOT mounds
 
 ## Task
 
-Scan the **Target Image** and create
-bounding boxes for all instances that
-visually match the Positive reference
-symbols.
+Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
 
 ## Guidelines
 
-1. **Visual Match:** Symbols may be
-   rotated, degraded, or intersected by
-   lines. Focus on the "sunburst" shape
-   with short rays (hachures; spikes) extending OUTWARD.
+1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
 
-2. **Separate Clusters:** Provide
-   individual boxes for each symbol.
+2. **Separate Clusters:** Provide individual boxes for each symbol.
 
-3. **Refer to Examples:** Compare uncertain
-   cases to Positive references.
+3. **Refer to Examples:** Compare uncertain cases to Positive references.
 
-4. **Default to inclusion:** Include borderline
-   cases rather than missing genuine mounds.
+4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
 
 ## Output Format
 
@@ -365,57 +397,46 @@ Return JSON with normalised coords (0-1000).
 
 ---
 
-#### 1.1.5 detect_text-image_hardneg.md
+#### 1.3.2 detect_brief-text-image_hardneg.md
 
-**Purpose**: Combined text and image prompt with hard negative guidance.
-**Used by**: H7 (text+image + hard negatives)
+**Purpose**: Brief text+image prompt with exclusion guidance for hard negatives.
+**Used by**: M/E = Brief-text+image; H7 = Text-only or Text+Images
 
 ```markdown
-# Detection Prompt: Text+Image with Hard Negatives
+# Detection Prompt: Brief Text+Image with Exclusion Guidance
 
-You are an expert analyst of Soviet
-Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually
-match** the provided Positive examples.
+You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
 
 ## Reference Examples
 
 You are provided with labelled images:
 
-- **Positive examples** show mound symbols
-  to detect (burial mounds, settlement
-  mounds, and survey markers on mounds)
-- **Negative examples** show areas or
-  symbols that are NOT mounds
+- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
+- **Negative examples** show areas or symbols that are NOT mounds
 
 ## Task
 
-Scan the **Target Image** and create
-bounding boxes for all instances that
-visually match the Positive reference
-symbols.
+Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
 
 ## Guidelines
 
-1. **Visual Match:** Symbols may be
-   rotated, degraded, or intersected by
-   lines. Focus on the "sunburst" shape
-   with short rays (hachures; spikes) extending OUTWARD.
+1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
 
-2. **Separate Clusters:** Provide
-   individual boxes for each symbol.
+2. **Separate Clusters:** Provide individual boxes for each symbol.
 
-3. **Refer to Examples:** Compare uncertain
-   cases to Positive references.
+3. **Refer to Examples:** Compare uncertain cases to Positive references.
 
-4. **Default to inclusion:** Include borderline
-   cases rather than missing genuine mounds.
+4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
 
 ## Exclusion Guidance
 
-Rays are key: Shapes without visible
-radiating rays are not mounds.
-Consider occlusion or degradation before
-excluding.
+Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+
+**DO NOT mark:**
+
+- Standalone triangulation points (black triangle, NO rays)
+- Standalone benchmarks (black square/circle, NO rays)
+- Spot heights, bridge markers, or other simple dots
 
 ## Output Format
 
@@ -434,233 +455,131 @@ Return JSON with normalised coords (0-1000).
 
 ---
 
-### 1.2 Elaborate Prompts (H2)
+### 1.4 Verbose-Text Instructions
 
-#### 1.2.1 detect_text-only_elaborate.md
+**Note on verbose text content**: Verbose text extends brief text with detailed descriptions and **edge case guidance for hard positives** (symbols that are genuine mounds but may be missed due to occlusion, degradation, or atypical appearance). Verbose text does NOT include exclusion guidance for hard negatives — that is controlled by the `_hardneg` variant and H7 factor.
 
-**Purpose**: Extended text-only prompt with comprehensive symbol descriptions and decision procedures.
-**Used by**: H2 (elaborate text condition)
+#### 1.4.1 detect_verbose-text.md
+
+**Purpose**: Extended text-only prompt with comprehensive symbol descriptions and edge case guidance.
+**Used by**: M/E = Verbose-text; H7 = None (no images in text-only conditions)
 **Word count**: ~700 words (vs ~200 for brief version)
 
 ```markdown
-# Detection Prompt: Text-Only Elaborate
+# Detection Prompt: Verbose Text
 
-You are an expert analyst of Soviet
-Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
-Your goal is to identify symbols on the Soviet military map that represent burial
-mounds (kurgans; tumuli), settlement mounds (tells), including composite symbols, positioned across the Bulgarian
-landscape.
+You are an expert analyst of Soviet Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist. Your goal is to identify symbols on the Soviet military map that represent burial mounds (kurgans; tumuli), settlement mounds (tells), including composite symbols, positioned across the Bulgarian landscape.
 
-## Background: Soviet Cartographic
-Conventions
+## Background: Soviet Cartographic Conventions
 
-Soviet military topographic maps used
-standardised symbology across the USSR
-and Eastern Bloc / Warsaw Pact nations. Archaeological
-mounds were marked because they served
-as useful landmarks for navigation and orientation, and they could be militarily useful, e.g., as lookout points or cover. The symbol design
-emphasises the elevated, roughly circular
-nature of these features through
-radiating rays (hachures; spikes).
+Soviet military topographic maps used standardised symbology across the USSR and Eastern Bloc / Warsaw Pact nations. Archaeological mounds were marked because they served as useful landmarks for navigation and orientation, and they could be militarily useful, e.g., as lookout points or cover. The symbol design emphasises the elevated, roughly circular nature of these features through radiating rays (hachures; spikes).
 
 ## Target Symbols
 
-Identify the bounding boxes for all
-instances of the following symbols:
+Identify the bounding boxes for all instances of the following symbols:
 
 ### A. Burial Mound (Kurgan)
 
-- **Visual:** A small, hollow **circle**
-  with short, radiating **rays** (hachures; spikes)
-  extending outward. Resembles a
-  "sunburst", "gear", or "ship's wheel".
-- **Colour:** Orange-brown (same colour
-  as contour lines, indicating relief).
-- **Size:** Typically 2-4mm diameter at
-  map scale, which translates to roughly
-  10-20 pixels in a 448×448 tile.
-- **Ray characteristics:** Usually 6-8
-  rays of approximately equal length,
-  radiating evenly from the central
-  circle.
-- **Context:** Often accompanied by an
-  isolated elevation number (e.g., "3",
-  "10") indicating height in metres, or
-  the Cyrillic abbreviation **"кург."**
-  ("kurgan").
-- **Landscape position:** Typically
-  located on elevated terrain, ridges,
-  hilltops, or other prominent landscape
-  positions where ancient peoples chose
-  to bury their dead. May also be found in flat, open areas, where large examples dominate the landscape.
+- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
+- **Colour:** Orange-brown (same colour as contour lines, indicating relief).
+- **Size:** Typically 2-4mm diameter at map scale, which translates to roughly 10-20 pixels in a 448×448 tile.
+- **Ray characteristics:** Usually 6-8 rays of approximately equal length, radiating evenly from the central circle.
+- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") indicating height in metres, or the Cyrillic abbreviation **"кург."** ("kurgan").
+- **Landscape position:** Typically located on elevated terrain, ridges, hilltops, or other prominent landscape positions where ancient peoples chose to bury their dead. May also be found in flat, open areas, where large examples dominate the landscape.
 - **Grouping:** Mounds may appear in groups (necropoleis), which may contain mounds of different sizes.
 
 ### B. Settlement Mound
 
-- **Visual:** Similar to a burial mound
-  but **larger** and often oval or
-  irregular in shape rather than
-  circular. Radiating ticks point
-  outward from the perimeter.
+- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape rather than circular. Radiating ticks point outward from the perimeter.
 - **Ray characteristics:** Rays appear similar to burial mounds, but sometimes larger, and often more rays are present (often 8-15).
 - **Colour:** Orange-brown.
-- **Size:** Larger than burial mounds,
-  may be 5-10mm at map scale.
-- **Shape:** May be elongated or
-  irregular, reflecting the accumulated
-  debris of ancient settlements.
+- **Size:** Larger than burial mounds, may be 5-10mm at map scale.
+- **Shape:** May be elongated or irregular, reflecting the accumulated debris of ancient settlements.
 
 ### C. Triangulation Point on a Mound
 
-- **Visual:** A hollow **black triangle**
-  with a central dot (the geodetic
-  survey marker), surrounded by the
-  characteristic radiating
-  rays of a mound, also in black. Often have 6-12 rays. Size similar to or slightly larger than a typical 'base' burial mound, since large, prominent mounds were often chosen for triangulation points.
-- **Interpretation:** Soviet surveyors
-  placed triangulation markers on mounds
-  because they provided elevated, stable
-  positions with good sight lines.
-- **Critical distinction:** The symbol
-  MUST have radiating black rays around the
-  triangle.
+- **Visual:** A hollow **black triangle** with a central dot (the geodetic survey marker), surrounded by the characteristic radiating rays of a mound, also in black. Often have 6-12 rays. Size similar to or slightly larger than a typical 'base' burial mound, since large, prominent mounds were often chosen for triangulation points.
+- **Interpretation:** Soviet surveyors placed triangulation markers on mounds because they provided elevated, stable positions with good sight lines.
+- **Critical distinction:** The symbol MUST have radiating black rays around the triangle.
 
 ### D. Benchmark on a Mound
 
-- **Visual:** A hollow **black square**
-  (or circle with crosshairs) with a
-  central dot, surrounded by the
-  characteristic radiating
-  rays of a mound, also in black. Often have 8 rays. Size similar to or slightly larger than a typical 'base' burial mound, since large, prominent mounds were often chosen for benchmarks.
-- **Interpretation:** Similar to
-  triangulation points, benchmarks were
-  placed on mounds for stability and
-  visibility.
-- **Critical distinction:** The symbol
-  MUST have radiating black rays around the
-  square/circle.
+- **Visual:** A hollow **black square** (or circle with crosshairs) with a central dot, surrounded by the characteristic radiating rays of a mound, also in black. Often have 8 rays. Size similar to or slightly larger than a typical 'base' burial mound, since large, prominent mounds were often chosen for benchmarks.
+- **Interpretation:** Similar to triangulation points, benchmarks were placed on mounds for stability and visibility.
+- **Critical distinction:** The symbol MUST have radiating black rays around the square/circle.
 
 ## Detection Criteria
 
-The **radiating rays** (hachures; spikes) are the primary
-and essential diagnostic feature. All
-mound symbols, of whatever type, share this characteristic
-regardless of what (if anything) is
-superimposed at the centre.
+The **radiating rays** (hachures; spikes) are the primary and essential diagnostic feature. All mound symbols, of whatever type, share this characteristic regardless of what (if anything) is superimposed at the centre.
 
 ### Ray Pattern Analysis
 
-1. **Direction:** Rays extend OUTWARD
-   from a central point or oval,
-   indicating elevated terrain (like
-   contour hachures for hills).
-2. **Count:** Typically 8-15 rays,
-   roughly evenly spaced around the
-   perimeter. Count depends on symbol type (burial mound, settlement mound, burial mound with triangulation point, burial mound with benchmark)
-3. **Length:** Approximately equal to
-   or slightly longer than the diameter
-   of the central shape.
-4. **Consistency:** Rays should be
-   roughly equal in length and evenly spaced; highly
-   irregular patterns may indicate other
-   features (noting that some areas of the map scanned poorly and may have some distortion)
+1. **Direction:** Rays extend OUTWARD from a central point or oval, indicating elevated terrain (like contour hachures for hills).
+2. **Count:** Typically 8-15 rays, roughly evenly spaced around the perimeter. Count depends on symbol type.
+3. **Length:** Approximately equal to or slightly longer than the diameter of the central shape.
+4. **Consistency:** Rays should be roughly equal in length and evenly spaced; highly irregular patterns may indicate other features (noting that some areas of the map scanned poorly and may have some distortion).
 
 ### Colour Analysis
 
 - **Orange-brown symbol:** Indicates a "plain" burial or settlement mound.
-- **Black symbol:** Indicates a burial mound with
-  survey marker (triangulation point or
-  benchmark) placed on top of the mound.
+- **Black symbol:** Indicates a burial mound with survey marker (triangulation point or benchmark) placed on top of the mound.
 - Each symbol is a single colour, either orange-brown or black.
+
+## Edge Cases: Hard-to-Detect Mounds
+
+The following situations may cause genuine mounds to be missed. Pay special attention to these cases:
+
+### Occluded Mounds
+
+Symbols frequently intersected by other map features:
+
+- **Roads:** Black or red lines may cross through a mound symbol.
+- **Contour lines:** Brown lines at similar colour may partially merge with mound rays.
+- **Grid lines:** Blue coordinate grid lines may overlay symbols.
+- **Text labels:** Cyrillic place names or elevation numbers may obscure parts of symbols.
+
+In all cases, focus on identifying the characteristic "sunburst" pattern. If you can see rays extending outward from a central point, even partially, mark the detection.
+
+### Degraded or Faded Symbols
+
+Map scanning or printing may have faded or distorted some symbols. Look for faint or somewhat asymmetrical ray patterns even if not perfectly symmetrical or fully distinct.
+
+### Clustered Mounds
+
+Mounds often appear in groups (cemetery fields; necropoleis). When symbols are close together:
+
+- Each distinct "sunburst" centre represents a separate mound.
+- Provide individual bounding boxes for each symbol, even if they touch.
+- Do not merge adjacent mounds into a single large box.
 
 ## Decision Procedure
 
-When uncertain whether a feature is a
-mound, apply this systematic checklist:
+When uncertain whether a feature is a mound, apply this systematic checklist:
 
-1. **Check for rays:** Are there short
-   rays (hachures; spikes) radiating outward from a central
-   point? No rays = not
-   a mound.
+1. **Check for rays:** Are there short rays (hachures; spikes) radiating outward from a central point? No rays = not a mound.
 
-2. **Check ray direction:** Do the rays
-   point OUTWARD (elevation/mound) or
-   INWARD (excavation/quarry)? Burial or settlement mound rays ALWAYS point outwards.
+2. **Check ray direction:** Do the rays point OUTWARD (elevation/mound) or INWARD (excavation/quarry)? Burial or settlement mound rays ALWAYS point outwards.
 
-3. **Check central shape:** Is there a
-   circle, oval, triangle, or square at
-   the centre? The central shape helps
-   classify the mound subtype.
+3. **Check central shape:** Is there a circle, oval, triangle, or square at the centre? The central shape helps classify the mound subtype.
 
-4. **Check colour:** Are the symbols
-   orange-brown ("plain" burial or settlement mound with no survey infrastructure) or black
-   (mound with triangulation point or benchmark)?
+4. **Check colour:** Are the symbols orange-brown ("plain" burial or settlement mound with no survey infrastructure) or black (mound with triangulation point or benchmark)?
 
-5. **Consider occlusion:** Roads,
-   contours, rivers, or text may obscure
-   part of the symbol. If some rays, or partial rays, are
-   visible and the overall pattern
-   matches, include the detection.
+5. **Consider occlusion:** Roads, contours, rivers, or text may obscure part of the symbol. If some rays, or partial rays, are visible and the overall pattern matches, include the detection.
 
-6. **Consider degradation:** Map
-   scanning or printing may have faded or distorted
-   some symbols. Look for faint or somewhat asymmetrical ray
-   patterns even if not perfectly symmetrical or fully distinct.
+6. **Consider degradation:** Map scanning or printing may have faded or distorted some symbols. Look for faint ray patterns.
 
-7. **When still uncertain:** Err on the
-   side of detection. It is better to
-   include a borderline case than to
-   miss a genuine mound.
-
-## Handling Occlusion
-
-Symbols are frequently intersected by
-other map features:
-
-- **Roads:** Black or red lines may
-  cross through a mound symbol.
-- **Contour lines:** Brown lines at
-  similar colour may partially merge
-  with mound rays.
-- **Grid lines:** Blue coordinate grid
-  lines may overlay symbols.
-- **Text labels:** Cyrillic place names
-  or elevation numbers may obscure parts
-  of symbols.
-
-In all cases, focus on identifying the
-characteristic "sunburst" pattern. If
-you can see rays extending outward from
-a central point, even partially, mark
-the detection.
-
-## Separating Clusters
-
-Mounds often appear in groups (cemetery
-fields; necropoleis). When symbols are close together:
-
-- Each distinct "sunburst" centre
-  represents a separate mound.
-- Provide individual bounding boxes for
-  each symbol, even if they touch.
-- Do not merge adjacent mounds into a
-  single large box.
+7. **When still uncertain:** Err on the side of detection. It is better to include a borderline case than to miss a genuine mound.
 
 ## Output Format
 
-Return a JSON object with detections
-using normalised coordinates (0-1000).
+Return a JSON object with detections using normalised coordinates (0-1000).
 
 {
     "detections": [
         {
-            "box_2d": [ymin, xmin,
-                       ymax, xmax],
+            "box_2d": [ymin, xmin, ymax, xmax],
             "label": "mound",
-            "subtype": "burial_mound" |
-                "settlement_mound" |
-                "triangulation_mound" |
-                "benchmark_mound"
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
         }
     ]
 }
@@ -668,138 +587,147 @@ using normalised coordinates (0-1000).
 
 ---
 
-#### 1.2.2 detect_text-only_elaborate_hardneg.md
+#### 1.4.2 detect_verbose-text_hardneg.md
 
-**Purpose**: Extended text-only prompt with comprehensive exclusion criteria.
-**Used by**: H2 (elaborate text + hard negatives)
+**Purpose**: Extended text-only prompt with edge case guidance AND exclusion criteria.
+**Used by**: M/E = Verbose-text; H7 = Text-only (no images in text-only conditions)
 **Word count**: ~1,200 words
 
-*[Full content available in repository — extends detect_text-only_elaborate.md with detailed exclusion criteria for 8 confusable symbol types: triangulation points, benchmarks, spot heights, quarry/pit symbols, bridge/culvert markers, contour artefacts, vegetation symbols, and well symbols]*
+*[Extends detect_verbose-text.md with the following additional section after "Decision Procedure":]*
+
+```markdown
+## Exclusion Criteria (CRITICAL)
+
+The following symbols are easily confused with mounds. **DO NOT mark:**
+
+### Triangulation Point (standalone)
+
+- **Visual:** Hollow black triangle with central dot, but **NO radiating rays**.
+- **Key distinction:** Mound-based triangulation points have rays; standalone ones do not.
+
+### Benchmark (standalone)
+
+- **Visual:** Hollow black square/circle with crosshairs, but **NO radiating rays**.
+- **Key distinction:** Mound-based benchmarks have rays; standalone ones do not.
+
+### Bridge/Culvert Dots
+
+- **Visual:** Simple black dots on roads, rivers, or canals. NO rays.
+- **Location:** Always on linear features (roads, waterways).
+
+### Spot Heights
+
+- **Visual:** Simple dots (black/brown) with elevation numbers. NO rays.
+- **Function:** Mark elevation at a point, not a mound.
+
+### Quarry/Pit Symbols
+
+- **Visual:** Circular shapes with rays pointing **INWARD**. Mound rays always point OUTWARD.
+- **Colour:** Often orange-brown like mounds.
+- **Key distinction:** Ray direction — inward = excavation, outward = elevation.
+
+### Contour Artefacts
+
+- **Visual:** Dense contour lines may create ray-like patterns.
+- **Key distinction:** Contours are continuous lines; mound rays are discrete ticks.
+
+### Vegetation Symbols
+
+- **Visual:** Some vegetation symbols have radiating elements.
+- **Colour:** Usually green or grey, not orange-brown.
+
+### Well Symbols
+
+- **Visual:** Small circles, sometimes with short ticks.
+- **Colour:** Usually blue (water features).
+- **Key distinction:** Fewer, shorter ticks than mound rays.
+```
 
 ---
 
-#### 1.2.3 detect_text-image_elaborate.md
+### 1.5 Verbose-Text+Image Instructions
 
-**Purpose**: Extended text+image prompt with decision procedures.
-**Used by**: H2 (elaborate text+image)
+#### 1.5.1 detect_verbose-text-image.md
+
+**Purpose**: Extended text+image prompt with decision procedures and edge case guidance.
+**Used by**: M/E = Verbose-text+image; H7 = None or Images-only
 
 ```markdown
-# Detection Prompt: Text+Image Elaborate
+# Detection Prompt: Verbose Text+Image
 
-You are an expert analyst of Soviet
-Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
-Your goal is to find symbols on the Soviet military map that **visually match** the
-provided Positive examples, representing burial
-mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
+You are an expert analyst of Soviet Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist. Your goal is to find symbols on the Soviet military map that **visually match** the provided Positive examples, representing burial mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
 
 ## Reference Examples
 
-You are provided with labelled reference
-images demonstrating the target symbols:
+You are provided with labelled reference images demonstrating the target symbols:
 
-- **Positive examples** show mound
-  symbols to detect. These include
-  burial mounds (kurgans), settlement
-  mounds (tells), and survey markers
-  (triangulation points, benchmarks)
-  placed ON mounds.
-- **Negative examples** show areas or
-  symbols that are NOT mounds. Study
-  these to understand what to exclude.
+- **Positive examples** show mound symbols to detect. These include burial mounds (kurgans), settlement mounds (tells), and survey markers (triangulation points, benchmarks) placed ON mounds.
+- **Negative examples** show areas or symbols that are NOT mounds. Study these to understand what to exclude.
 
-Pay close attention to the visual
-characteristics that distinguish
-positive from negative examples.
+Pay close attention to the visual characteristics that distinguish positive from negative examples.
 
 ## Task
 
-Scan the **Target Image** systematically
-and create bounding boxes for all instances that visually
-match the Positive reference symbols.
+Scan the **Target Image** systematically and create bounding boxes for all instances that visually match the Positive reference symbols.
 
 ## Detection Criteria
 
-Mound symbols on Soviet 1:50,000 maps
-share these characteristics:
+Mound symbols on Soviet 1:50,000 maps share these characteristics:
 
-- **Shape:** Small circular or oval
-  forms, 2-4mm diameter at map scale
-  (~10-20 pixels in tile)
-- **Rays:** Short radiating rays
-  (hachures; spikes) extending OUTWARD,
-  indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
-- **Pattern:** The "sunburst" or
-  "ship's wheel" pattern is the
-  essential diagnostic feature
-- **Colour:** Orange-brown for plain mounds
-  (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound
-- **Grouping:** May appear individually
-  or in groups (necropoleis)
+- **Shape:** Small circular or oval forms, 2-4mm diameter at map scale (~10-20 pixels in tile)
+- **Rays:** Short radiating rays (hachures; spikes) extending OUTWARD, indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
+- **Pattern:** The "sunburst" or "ship's wheel" pattern is the essential diagnostic feature
+- **Colour:** Orange-brown for plain mounds (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound
+- **Grouping:** May appear individually or in groups (necropoleis)
+
+## Edge Cases: Hard-to-Detect Mounds
+
+### Occluded Mounds
+
+Roads, contours, grid lines, and text may obscure parts of symbols. If you can see rays extending outward from a central point, even partially, mark the detection.
+
+### Degraded or Faded Symbols
+
+Map scanning may have faded or distorted symbols. If some rays are visible and the pattern matches examples, include.
+
+### Clustered Mounds
+
+Mounds often appear in groups. Provide individual bounding boxes for each distinct symbol, even if they touch or overlap.
 
 ## Decision Procedure
 
-When uncertain whether a feature matches
-the positive examples:
+When uncertain whether a feature matches the positive examples:
 
-1. **Check for radiating rays:** The
-   outward-pointing pattern is essential.
-   No rays = not a mound.
+1. **Check for radiating rays:** The outward-pointing pattern is essential. No rays = not a mound.
 
-2. **Compare to examples:** Hold the
-   candidate feature mentally against
-   the positive references. Similar
-   overall pattern?
+2. **Compare to examples:** Hold the candidate feature mentally against the positive references. Similar overall pattern?
 
-3. **Check ray direction:** Outward =
-   elevated terrain = mound. Inward =
-   excavated terrain = quarry/pit.
+3. **Check ray direction:** Outward = elevated terrain = mound. Inward = excavated terrain = quarry/pit.
 
-4. **Consider degradation:** Map
-   scanning may have faded or distorted symbols.
-   If some rays are visible and the
-   pattern matches examples, include.
+4. **Consider degradation:** Map scanning may have faded or distorted symbols. If some rays are visible and the pattern matches examples, include.
 
-5. **Consider occlusion:** Roads,
-   contours, and text may obscure
-   parts of symbols. Partial matches
-   are acceptable.
+5. **Consider occlusion:** Roads, contours, and text may obscure parts of symbols. Partial matches are acceptable.
 
-6. **Refer to negative examples:** Does
-   the feature look more like a negative
-   example than a positive? If so,
-   exclude.
+6. **Refer to negative examples:** Does the feature look more like a negative example than a positive? If so, exclude.
 
-7. **When still uncertain:** Err on the
-   side of detection. Include borderline
-   cases rather than missing genuine
-   mounds.
+7. **When still uncertain:** Err on the side of detection. Include borderline cases rather than missing genuine mounds.
 
 ## Guidelines
 
-1. **Separate Clusters:** Mounds often
-   appear in groups (necropoleis). Provide individual
-   bounding boxes for each distinct
-   symbol, even if they touch or overlap.
+1. **Separate Clusters:** Mounds often appear in groups (necropoleis). Provide individual bounding boxes for each distinct symbol, even if they touch or overlap.
 
-2. **Systematic Scanning:** Work through
-   the target image methodically to
-   avoid missing symbols in busy areas.
+2. **Systematic Scanning:** Work through the target image methodically to avoid missing symbols in busy areas.
 
 ## Output Format
 
-Return a JSON object with detections
-using normalised coordinates (0-1000).
+Return a JSON object with detections using normalised coordinates (0-1000).
 
 {
     "detections": [
         {
-            "box_2d": [ymin, xmin,
-                       ymax, xmax],
+            "box_2d": [ymin, xmin, ymax, xmax],
             "label": "mound",
-            "subtype": "burial_mound" |
-                "settlement_mound" |
-                "triangulation_mound" |
-                "benchmark_mound"
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
         }
     ]
 }
@@ -807,18 +735,33 @@ using normalised coordinates (0-1000).
 
 ---
 
-#### 1.2.4 detect_text-image_elaborate_hardneg.md
+#### 1.5.2 detect_verbose-text-image_hardneg.md
 
-**Purpose**: Extended text+image prompt with explicit exclusion criteria.
-**Used by**: H2 (elaborate text+image + hard negatives)
+**Purpose**: Extended text+image prompt with edge case guidance AND exclusion criteria.
+**Used by**: M/E = Verbose-text+image; H7 = Text-only or Text+Images
 
-*[Full content available in repository — extends detect_text-image_elaborate.md with exclusion criteria for 6 confusable symbol types]*
+*[Extends detect_verbose-text-image.md with the following additional section after "Decision Procedure":]*
+
+```markdown
+## Exclusion Guidance
+
+Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+
+**DO NOT mark:**
+
+- **Standalone triangulation points:** Black triangle, NO rays
+- **Standalone benchmarks:** Black square/circle, NO rays
+- **Spot heights:** Simple dots with elevation numbers
+- **Bridge/culvert markers:** Dots on roads or waterways
+- **Quarry/pit symbols:** Rays pointing INWARD (mound rays point OUTWARD)
+- **Contour artefacts:** Dense contour lines creating ray-like patterns
+```
 
 ---
 
-### 1.3 Two-Stage Pipeline Prompts (H3)
+### 1.6 Two-Stage Pipeline Prompts (H3)
 
-#### 1.3.1 propose_image-only.md
+#### 1.6.1 propose_image-only.md
 
 **Purpose**: High-recall proposer stage for two-stage pipeline.
 **Used by**: H3 (Stage 1)
@@ -851,7 +794,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 
 ---
 
-#### 1.3.2 verify_image-only.md
+#### 1.6.2 verify_image-only.md
 
 **Purpose**: Precision-focused verifier stage for two-stage pipeline.
 **Used by**: H3 (Stage 2)
@@ -896,16 +839,16 @@ All configuration files follow this JSON schema:
 {
     "version": "string — unique identifier",
     "description": "string — human-readable description",
-    "hypothesis": "string — optional, which hypothesis this tests",
+    "hypothesis": "string — which hypothesis/factor levels this tests",
     "model": "string — model identifier (e.g., 'gemini-3-flash')",
     "instruction_file": "string — path to system instruction .md file",
-    "temperature": "number — generation temperature",
+    "temperature": "number — default generation temperature (overridden at runtime for H9)",
     "max_output_tokens": "number — maximum output tokens",
     "examples": [
         {
             "path": "string — path to example image",
             "label": "string — label shown to model",
-            "category": "string — optional, 'canonical'/'null'/'hard_positive'/'hard_negative'"
+            "category": "string — 'canonical'/'null'/'hard_positive'/'hard_negative'"
         }
     ],
     "ordering_note": "string — optional, explains example ordering"
@@ -914,176 +857,258 @@ All configuration files follow this JSON schema:
 
 ---
 
-### 2.2 Baseline Configurations
+### 2.2 Configuration File Naming Convention
 
-#### detect_image-only.json
+**Pattern**: `detect_{modality}_{hardneg}.json`
 
-**Hypothesis**: H5-A (Canonical-first ordering)
+Where:
+
+- `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
+- `{hardneg}`: none, text, images, both
+
+This yields 20 configuration files (5 M/E × 4 H7).
+
+**Note on text-only modalities**: Brief-text and Verbose-text conditions do not use example images. For these modalities:
+
+- `*_none.json` and `*_text.json` have no example images (instruction file only)
+- `*_images.json` and `*_both.json` are not applicable (text-only has no images)
+
+This reduces the practical count to **16 image-inclusive configs** + **4 text-only configs** = **20 total**, but text-only `*_images.json` and `*_both.json` are logically excluded.
+
+**Revised structure for text-only modalities:**
+
+| M/E Level | H7 = None | H7 = Text | H7 = Images | H7 = Both |
+|-----------|-----------|-----------|-------------|-----------|
+| Brief-text | ✓ | ✓ | N/A | N/A |
+| Verbose-text | ✓ | ✓ | N/A | N/A |
+
+This yields **16 valid configurations**:
+
+- 3 image-using modalities × 4 H7 levels = 12
+- 2 text-only modalities × 2 applicable H7 levels = 4
+
+---
+
+### 2.3 Complete Configuration File List
+
+| Configuration File | M/E Level | H7 Level | Instruction File |
+|--------------------|-----------|----------|------------------|
+| `detect_image-only_none.json` | Image-only | None | detect_image-only.md |
+| `detect_image-only_text.json` | Image-only | Text-only | detect_image-only_hardneg.md |
+| `detect_image-only_images.json` | Image-only | Images-only | detect_image-only.md |
+| `detect_image-only_both.json` | Image-only | Text+Images | detect_image-only_hardneg.md |
+| `detect_brief-text_none.json` | Brief-text | None | detect_brief-text.md |
+| `detect_brief-text_text.json` | Brief-text | Text-only | detect_brief-text_hardneg.md |
+| `detect_brief-text-image_none.json` | Brief-text+image | None | detect_brief-text-image.md |
+| `detect_brief-text-image_text.json` | Brief-text+image | Text-only | detect_brief-text-image_hardneg.md |
+| `detect_brief-text-image_images.json` | Brief-text+image | Images-only | detect_brief-text-image.md |
+| `detect_brief-text-image_both.json` | Brief-text+image | Text+Images | detect_brief-text-image_hardneg.md |
+| `detect_verbose-text_none.json` | Verbose-text | None | detect_verbose-text.md |
+| `detect_verbose-text_text.json` | Verbose-text | Text-only | detect_verbose-text_hardneg.md |
+| `detect_verbose-text-image_none.json` | Verbose-text+image | None | detect_verbose-text-image.md |
+| `detect_verbose-text-image_text.json` | Verbose-text+image | Text-only | detect_verbose-text-image_hardneg.md |
+| `detect_verbose-text-image_images.json` | Verbose-text+image | Images-only | detect_verbose-text-image.md |
+| `detect_verbose-text-image_both.json` | Verbose-text+image | Text+Images | detect_verbose-text-image_hardneg.md |
+
+**Additional pipeline configurations:**
+
+| Configuration File | Purpose | Instruction File |
+|--------------------|---------|------------------|
+| `propose_image-only.json` | H3 Stage 1 (Proposer) | propose_image-only.md |
+| `verify_image-only.json` | H3 Stage 2 (Verifier) | verify_image-only.md |
+
+---
+
+### 2.4 Example Configuration: Image-Only, No Hard Negatives
+
+#### detect_image-only_none.json
+
+**M/E**: Image-only | **H7**: None
 
 ```json
 {
-    "version": "detect_image-only",
-    "description": "H5-A: Canonical-first ordering. Legend positives first, then nulls. Hard examples (when added) follow legend positives/negatives respectively.",
-    "hypothesis": "H5-A",
+    "version": "detect_image-only_none",
+    "description": "Image-only baseline. Minimal text, canonical examples only.",
+    "hypothesis": "M/E=Image-only, H7=None",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"}
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: legend positives, then nulls. Hard examples (when added) inserted after legend items of same polarity."
+    "ordering_note": "Canonical-first: legend positives, then nulls."
 }
 ```
 
 ---
 
-#### detect_text-image.json
+### 2.5 Example Configuration: Image-Only, Images-Only Hard Negatives
 
-**Hypothesis**: H1 (Text+image condition)
+#### detect_image-only_images.json
 
-```json
-{
-    "version": "detect_text-image",
-    "description": "Text + Image baseline. Neutral filenames, descriptive labels, no hard negatives.",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_text-image.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
-    "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes."},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks."},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays."},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays."},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile. No mounds present."},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile. No mounds present."},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile. No mounds present."}
-    ]
-}
-```
-
----
-
-### 2.3 Ordering Variant Configurations (H5)
-
-#### detect_image-only_canonical-last.json
-
-**Hypothesis**: H5-B (Canonical-last ordering)
+**M/E**: Image-only | **H7**: Images-only
 
 ```json
 {
-    "version": "detect_image-only_canonical-last",
-    "description": "H5-B: Canonical-last ordering. Hard examples (when added) first, then legend positives/negatives. Skeleton uses reversed block order.",
-    "hypothesis": "H5-B",
+    "version": "detect_image-only_images",
+    "description": "Image-only with hard negative IMAGES (no exclusion text).",
+    "hypothesis": "M/E=Image-only, H7=Images-only",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"}
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
+        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
+        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
+        {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative: [TBD from Phase 1 FP analysis]", "category": "hard_negative"}
     ],
-    "ordering_note": "When hard examples are added: [hard_positive..., hard_negative..., null..., canonical_positive...]"
+    "ordering_note": "Canonical-first: legend positives, nulls, then hard negatives."
 }
 ```
 
 ---
 
-#### detect_image-only_random-order.json
+### 2.6 Example Configuration: Image-Only, Text+Images Hard Negatives
 
-**Hypothesis**: H5-C (Random ordering)
+#### detect_image-only_both.json
 
-*[Uses documented random seed to shuffle all examples]*
-
----
-
-### 2.4 Hard Negative Configurations (H7)
-
-#### detect_image-only_hardneg.json
+**M/E**: Image-only | **H7**: Text+Images
 
 ```json
 {
-    "version": "detect_image-only_hardneg",
-    "description": "Image-only with hard negatives. Minimal text, neutral filenames.",
+    "version": "detect_image-only_both",
+    "description": "Image-only with hard negative TEXT (exclusion guidance) AND IMAGES.",
+    "hypothesis": "M/E=Image-only, H7=Text+Images",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive"},
-        {"path": "neutral/example_02.png", "label": "Positive"},
-        {"path": "neutral/example_03.png", "label": "Positive"},
-        {"path": "neutral/example_04.png", "label": "Positive"},
-        {"path": "neutral/example_05.png", "label": "Negative"},
-        {"path": "neutral/example_06.png", "label": "Negative"},
-        {"path": "neutral/example_07.png", "label": "Negative"},
-        {"path": "neutral/example_08.png", "label": "Negative"},
-        {"path": "neutral/example_09.png", "label": "Negative"}
-    ]
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
+        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
+        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
+        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
+        {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative: [TBD from Phase 1 FP analysis]", "category": "hard_negative"}
+    ],
+    "ordering_note": "Canonical-first: legend positives, nulls, then hard negatives."
 }
 ```
 
 ---
 
-#### detect_text-image_hardneg.json
+### 2.7 Example Configuration: Brief-Text (No Images)
+
+#### detect_brief-text_none.json
+
+**M/E**: Brief-text | **H7**: None
 
 ```json
 {
-    "version": "detect_text-image_hardneg",
-    "description": "Text + Image with hard negatives. Neutral filenames, descriptive labels.",
+    "version": "detect_brief-text_none",
+    "description": "Brief text-only baseline. No example images.",
+    "hypothesis": "M/E=Brief-text, H7=None",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_text-image_hardneg.md",
+    "instruction_file": "detect_brief-text.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
-    "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes."},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks."},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays."},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays."},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile. No mounds present."},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile. No mounds present."},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile. No mounds present."},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound). Square with dot but NO radiating rays. NOT a mound."},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound). Triangle with dot but NO radiating rays. NOT a mound."}
-    ]
+    "examples": [],
+    "ordering_note": "Text-only condition: no example images."
 }
 ```
 
 ---
 
-### 2.5 Two-Stage Pipeline Configurations (H3)
+### 2.8 Example Configuration: Verbose-Text+Image, Text-Only Hard Negatives
+
+#### detect_verbose-text-image_text.json
+
+**M/E**: Verbose-text+image | **H7**: Text-only
+
+```json
+{
+    "version": "detect_verbose-text-image_text",
+    "description": "Verbose text+image with hard negative TEXT (exclusion guidance) but no hard negative images.",
+    "hypothesis": "M/E=Verbose-text+image, H7=Text-only",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_verbose-text-image_hardneg.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes.", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks.", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays.", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays.", "category": "canonical"},
+        {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"}
+    ],
+    "ordering_note": "Text-only hard negatives: exclusion guidance in instruction file, no hard negative images."
+}
+```
+
+---
+
+### 2.9 H5 Ordering Variant Configurations
+
+For H5 (ordering hypothesis), three ordering variants are tested at selected M/E levels:
+
+| Ordering | Description |
+|----------|-------------|
+| Canonical-first | Legend positives first, then nulls, then hard negatives (if any) |
+| Canonical-last | Hard negatives first (if any), then nulls, then legend positives |
+| Random | All examples shuffled with documented random seed |
+
+**H5 partial cross**: 3 orderings × 3 M/E levels (Image-only, Brief-text+image, Verbose-text+image) at fixed H7 and T.
+
+Example ordering variant files would follow the pattern:
+
+- `detect_image-only_none_canonical-last.json`
+- `detect_image-only_none_random.json`
+
+---
+
+### 2.10 Two-Stage Pipeline Configurations (H3)
 
 #### propose_image-only.json
 
 ```json
 {
     "version": "propose_image-only",
-    "description": "Two-Stage Proposer (Stage 1). High-recall detection, use with verify_image-only.",
+    "description": "Two-Stage Proposer (Stage 1). High-recall detection.",
+    "hypothesis": "H3",
     "model": "gemini-3-flash",
     "instruction_file": "propose_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)"},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound"},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound"},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound"},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)"}
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive: Settlement Mound", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound", "category": "canonical"},
+        {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "hard_negative"},
+        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "hard_negative"}
     ]
 }
 ```
@@ -1095,7 +1120,8 @@ All configuration files follow this JSON schema:
 ```json
 {
     "version": "verify_image-only",
-    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification of proposals.",
+    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification.",
+    "hypothesis": "H3",
     "model": "gemini-3-flash",
     "instruction_file": "verify_image-only.md",
     "temperature": 1.0,
@@ -1103,45 +1129,18 @@ All configuration files follow this JSON schema:
     "verification_threshold": 0.51,
     "majority_vote_fraction": 0.5,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)"},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound"},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound"},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound"},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)"}
+        {"path": "examples/canonical_burial_mound.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical"},
+        {"path": "examples/canonical_settlement_mound.png", "label": "Positive: Settlement Mound", "category": "canonical"},
+        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical"},
+        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound", "category": "canonical"},
+        {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "hard_negative"},
+        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "hard_negative"}
     ]
 }
 ```
-
----
-
-### 2.6 Complete Configuration File List
-
-| Configuration File | Hypothesis | Modality | Hard Neg | Ordering |
-|--------------------|------------|----------|----------|----------|
-| `detect_image-only.json` | H5-A | image-only | no | canonical-first |
-| `detect_image-only_canonical-last.json` | H5-B | image-only | no | canonical-last |
-| `detect_image-only_random-order.json` | H5-C | image-only | no | random |
-| `detect_image-only_hardneg.json` | H7 | image-only | yes | canonical-first |
-| `detect_image-only_canonical-last_hardneg.json` | H5-B, H7 | image-only | yes | canonical-last |
-| `detect_image-only_random-order_hardneg.json` | H5-C, H7 | image-only | yes | random |
-| `detect_text-only.json` | H1 | text-only | no | canonical-first |
-| `detect_text-only_hardneg.json` | H7 | text-only | yes | canonical-first |
-| `detect_text-only_elaborate.json` | H2 | text-only | no | canonical-first |
-| `detect_text-only_elaborate_hardneg.json` | H2, H7 | text-only | yes | canonical-first |
-| `detect_text-image.json` | H1 | text+image | no | canonical-first |
-| `detect_text-image_canonical-last.json` | H5-B | text+image | no | canonical-last |
-| `detect_text-image_random-order.json` | H5-C | text+image | no | random |
-| `detect_text-image_hardneg.json` | H7 | text+image | yes | canonical-first |
-| `detect_text-image_canonical-last_hardneg.json` | H5-B, H7 | text+image | yes | canonical-last |
-| `detect_text-image_random-order_hardneg.json` | H5-C, H7 | text+image | yes | random |
-| `detect_text-image_elaborate.json` | H2 | text+image | no | canonical-first |
-| `detect_text-image_elaborate_hardneg.json` | H2, H7 | text+image | yes | canonical-first |
-| `propose_image-only.json` | H3 | image-only | yes | canonical-first |
-| `verify_image-only.json` | H3 | image-only | yes | canonical-first |
 
 ---
 
@@ -1151,12 +1150,45 @@ The following parameters are controlled at runtime rather than in configuration 
 
 | Parameter | Values | Hypothesis | Notes |
 |-----------|--------|------------|-------|
-| Temperature | 0.0, 0.3, 0.7, 1.0 | H9 | Overrides config file value |
+| Temperature | 0.0, 0.3, 0.7, 1.0, 1.3 | H9 | Overrides config file default |
 | Model | gemini-3-flash, gemini-3-pro, claude-4.5-sonnet, gpt-5.2-thinking | H8, H12 | Overrides config file value |
 | Passes | 1, 5, 10, 30 | H4 | Number of detection runs per tile |
 | Voting threshold | 1 to N | H4 | Minimum votes for detection acceptance |
 
+**Note**: Temperature escalation trigger (H9): If T=1.3 outperforms T=1.0, additional tests at T=1.6 and T=2.0 will be conducted.
+
 ---
 
-*Document version: 1.0*
+## Part 4: Legend-Derived vs Empirically-Derived Content
+
+### 4.1 Legend-Derived Hard Negatives (Specified)
+
+The following hard negative examples can be specified from the map legend prior to empirical testing:
+
+| Hard Negative Type | Description | Example Path |
+|--------------------|-------------|--------------|
+| Standalone benchmark | Black square/circle with dot, NO rays | `hardneg_standalone_benchmark.png` |
+| Standalone triangulation | Black triangle with dot, NO rays | `hardneg_standalone_triangulation.png` |
+
+These are visually similar to mound-based survey markers but lack the diagnostic radiating rays.
+
+### 4.2 Empirically-Derived Content (TBD)
+
+The following content will be derived from Phase 1 baseline analysis and finalised before holdout evaluation:
+
+| Content Type | Source | Placeholder |
+|--------------|--------|-------------|
+| Additional hard negative images | FPs from Phase 1 (≥3/10 runs) | `hardneg_empirical_TBD_*.png` |
+| Hard positive images (H6) | FNs from Phase 1 (≥3/10 runs) | `hardpos_empirical_TBD_*.png` |
+
+---
+
+*Document version: 2.0*
 *Created: 2026-01-02*
+*Updated: 2026-01-04*
+
+**Changelog:**
+
+- v2.0: Major restructure — 10 instruction files (5 M/E × 2 exclusion variants), 16 config files (reflecting text-only constraints); renamed "elaborate" to "verbose"; clarified orthogonal separation between H2 (edge case guidance for FNs) and H7 (exclusion guidance for FPs); added legend-derived hard negatives; flagged empirically-derived content as TBD
+- v1.1: Added T=1.3 to temperature values; removed stale H2 reference from H6 construction procedure
+- v1.0: Initial documentation
