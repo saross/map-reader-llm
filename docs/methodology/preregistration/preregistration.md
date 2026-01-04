@@ -6,7 +6,7 @@
 
 **Affiliations**: (1) Macquarie University, Sydney, Australia
 
-**Document version**: 3.1
+**Document version**: 3.4
 **Last updated**: 2026-01-01
 **Status**: Ready for Registration
 
@@ -29,7 +29,7 @@ These findings suggest that prompting strategies derived from general VLM benchm
 ### 1.2 Research Questions
 
 1. Does text + image prompting affect VLM detection performance on novel domain tasks, as opposed to image-only prompting?
-2. Does the nature of text (consise, verbose, varied across consensus voting runs) affect detection performance?
+2. Does the nature of text (concise, verbose, varied across consensus voting runs) affect detection performance?
 3. Do two-stage proposer-verifier pipelines improve precision-recall tradeoffs for VLM detection?  
 4. What voting and ensemble strategies optimise detection F1, precision, and recall?  
 5. Does model temperature affect VLM detection performance?
@@ -255,7 +255,7 @@ Soviet-era maps were initially annotated by students using the FAIMS v2.6 mobile
 - Benchmarks (no burial mound)
 - Triangulation points (no burial mound)
 
-The four mapss used in the present study were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). 
+The four maps used in the present study were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols).
 
 ---
 
@@ -279,7 +279,7 @@ With 9 confirmatory hypotheses tested on 60 tiles (79 mound symbols), statistica
 
 - **Statistically significant (FDR-corrected p < 0.05)**: Technique shows promise; advance to Stage 2 validation
 - **Nominally significant (uncorrected p < 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority
-- **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This guards against discarding genuinely useful techniques due to sampling noise
+- **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This guards against discarding genuinely useful techniques due to sampling noise.
 
 ### 3.4 Practical Significance Caveat
 
@@ -408,8 +408,8 @@ We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and spe
 | Image-only | Minimal | Yes | Few-shot visual examples with minimal task instruction |
 | Brief-text | Brief | No | Text-only with concise symbol descriptions |
 | Brief-text+image | Brief | Yes | Brief text combined with visual examples |
-| Verbose-text | Elaborate | No | Text-only with comprehensive descriptions |
-| Verbose-text+image | Elaborate | Yes | Elaborate text combined with visual examples |
+| Verbose-text | Verbose | No | Text-only with comprehensive descriptions |
+| Verbose-text+image | Verbose | Yes | Verbose text combined with visual examples |
 
 **Analysis**:
 
@@ -461,7 +461,7 @@ Verbose text additions are derived from image-only baseline failures, ensuring t
 - Condition A: Single-stage detection (baseline prompt)
 - Condition B: Two-stage proposer-verifier pipeline (liberal proposer → strict verifier)
 
-**Testing approach**: The two-stage pipeline will be tested using the optimal single-stage configuration identified from H1, H2, H4, H5, H7, H9 (modality, text elaboration, consensus voting, ordering, hard negatives, temperature). This approach ensures a fair comparison where any performance difference reflects architectural rather than configurational factors.
+**Testing approach**: The two-stage pipeline will be tested using the optimal single-stage configuration identified from H1, H2, H5, H7, H9 (modality, text elaboration, ordering, hard negatives, temperature). Consensus voting (H4) is applied as post-processing to both single-stage and two-stage outputs for fair comparison. This approach ensures a fair comparison where any performance difference reflects architectural rather than configurational factors.
 
 **Stopping rule**: Two-stage architecture will only be pursued further if it demonstrates F1 at least 0.05 higher than single-stage at the same configuration. Given the inherent cost (~2× API calls) and complexity overhead, parity or marginal improvement would not justify the additional operational burden when deeper single-stage voting is available as an alternative.
 
@@ -530,7 +530,7 @@ Verbose text additions are derived from image-only baseline failures, ensuring t
 - Brief-text+image (probable operational mode)
 - Verbose-text+image (extensive text may reduce ordering sensitivity)
 
-**Design**: 3 orderings × 3 M/E levels = 9 conditions, tested at optimal H7 and T from main factorial.
+**Design**: 3 orderings × 3 M/E levels = 9 total conditions. Since the main factorial uses canonical-first ordering throughout, this adds 6 new conditions (canonical-last and random orderings at each of 3 M/E levels) beyond what the factorial already tests. All H5 conditions tested at optimal H7 and T from main factorial.
 
 **Note**: Canonical-first ordering is used throughout the main factorial. This design adds canonical-last and random orderings at the 3 selected M/E levels.
 
@@ -896,6 +896,8 @@ After completing Phases 1-3 for all models:
 - Weighted voting by model-specific precision/recall profiles
 - Optimal ensemble composition search
 
+**Status**: Exploratory. Tests whether architectural diversity in ensembles provides benefits beyond single-model voting.
+
 ---
 
 ### H14: Training Pool Size Effects on Library Quality
@@ -1069,7 +1071,7 @@ All models tested at maximum capability configuration. Parameters
 
 Fixed parameters:
 
-- `temperature`: 1.0 (required; values <1.0 cause degraded performance)
+- `temperature`: 1.0 (vendor recommended; preliminary testing suggested lower values may degrade performance — tested explicitly in H9)
 - `mediaResolution`: `default (media_resolution_medium)`
 - `max_output_tokens`: 8192
 
@@ -1218,7 +1220,7 @@ All 5 prompt variants maintain identical structure (same sections, same order, s
 
 **Construction procedure**:
 
-1. Identify optimal base configuration from main factorial (M, O, H, T) and H2 (E)
+1. Identify optimal base configuration from main factorial (M/E, H7, T)
 2. Use the winning prompt template as the structural base
 3. Create V1–V5 by varying task framing, instruction phrasing, and guideline wording
 4. Verify semantic equivalence across all 5 variants
@@ -1228,7 +1230,7 @@ All 5 prompt variants maintain identical structure (same sections, same order, s
 
 The following parameters are specified at runtime, not in config files:
 
-- **Temperature**: T ∈ {0.0, 0.3, 0.7, 1.0} as per factorial design (Section 8.4.6)
+- **Temperature**: T ∈ {0.0, 0.3, 0.7, 1.0, 1.3} as per factorial design (Section 8.4.7)
 - **Model**: Flash vs Pro specified via command-line argument
 - **Number of passes (N)**: For voting experiments
 
@@ -1273,22 +1275,30 @@ Document for each selected example: source tile, frequency, failure category.
 
 **Step 4: Construct Verbose Text**
 
-Build verbose text by adding targeted guidance for each hard example:
+Build verbose text by adding edge case guidance for hard positives:
 
 | Component | Source | Content |
 |-----------|--------|---------|
 | Base | Legend descriptions | Brief text describing canonical mound types |
-| Exclusion guidance | Hard negative images | Text describing why each FP is NOT a mound |
-| Edge case guidance | Hard positive images | Text describing why each FN IS a mound |
+| Edge case guidance | Hard positive images | Text describing why each FN IS a mound (e.g., partially occluded symbols, small variants) |
 
-**Alignment requirement**: Each hard example image must have corresponding text guidance.
+**Note on exclusion guidance**: Exclusion guidance for hard negatives (FPs) is NOT included in verbose text. Instead, it is controlled by the H7 factor:
+
+- H7 Conditions A and C: No exclusion text
+- H7 Conditions B and D: Exclusion text added via `_hardneg.md` instruction variants
+
+This separation ensures H2 (elaboration) and H7 (hard negative guidance) remain orthogonal factors.
+
+**Alignment requirement**: Each hard positive image must have corresponding edge case text in verbose prompts. Hard negative text alignment is controlled by H7.
 
 **Step 5: Construct Brief vs Verbose Text**
 
 | Text Version | Content |
 |--------------|---------|
-| Brief text | Legend-based descriptions only (~200-400 words) |
-| Verbose text | Brief text + exclusion guidance + edge case guidance (~700-1400 words) |
+| Brief text | Legend-based descriptions of canonical mound types only (~200-400 words) |
+| Verbose text | Brief text + edge case guidance for hard positives (~400-700 words) |
+
+**Note**: Exclusion guidance for hard negatives is added separately via H7 `_hardneg.md` variants, not via the brief/verbose distinction. This keeps H2 (elaboration) and H7 (hard negatives) as orthogonal factors.
 
 **Text-modality consistency**: Identical text is used across modalities (text-only brief = text+image brief; text-only verbose = text+image verbose).
 
@@ -1677,7 +1687,7 @@ This section maps each hypothesis to the specific configuration files, system in
 | Hypothesis | Config Files | System Instructions |
 | :--- | :--- | :--- |
 | H1 | `detect_image-only*.json` vs `detect_text-image*.json` | `detect_image-only.md` vs `detect_text-image.md` |
-| H2 | `detect_*_elaborate*.json` variants | `detect_*_elaborate*.md` variants |
+| H2 | `detect_*_verbose*.json` variants | `detect_*_verbose*.md` variants |
 | H3 | `propose_image-only.json` + `verify_image-only.json` | `propose_image-only.md`, `verify_image-only.md` |
 | H4 | Any detect config (passes parameter) | Any detect instruction |
 | H5 | `*_canonical-last.json`, `*_random-order.json` | Same instruction file per modality |
@@ -1711,16 +1721,24 @@ The 100-condition factorial experiment (`studies/phase2-factorial.yaml`) tests H
 
 **Design**: 5 × 4 × 5 = 100 conditions, each with K=10 independent runs on 60 holdout tiles.
 
-**Config naming pattern**: `detect_{modality}_{elaboration}_{hardneg}_{temp}.json`
+**Config naming pattern**: `detect_{modality}_{hardneg}.json`
+
+Temperature is specified at runtime, not in config files. This yields 20 config files (5 M/E × 4 H7).
 
 Example configurations:
 
-| Config Pattern | M/E | H7 | T |
-| :--- | :--- | :--- | :--- |
-| `detect_image-only_none_t0.0.json` | Image-only | None | 0.0 |
-| `detect_brief-text_text-only_t1.0.json` | Brief-text | Text-only | 1.0 |
-| `detect_brief-text-image_images-only_t0.7.json` | Brief-text+image | Images-only | 0.7 |
-| `detect_verbose-text-image_text-images_t1.3.json` | Verbose-text+image | Text+Images | 1.3 |
+| Config Pattern | M/E | H7 |
+| :--- | :--- | :--- |
+| `detect_image-only_none.json` | Image-only | None |
+| `detect_text-brief_hardneg-text.json` | Brief-text | Text-only |
+| `detect_text-brief-image_hardneg-images.json` | Brief-text+image | Images-only |
+| `detect_text-verbose-image_hardneg-both.json` | Verbose-text+image | Text+Images |
+
+**Runtime parameters** (specified at execution, not in config files):
+
+- Temperature: T ∈ {0.0, 0.3, 0.7, 1.0, 1.3}
+- Model: gemini-3-flash, gemini-3-pro, claude-sonnet-4-5, etc.
+- Number of passes (K): 10 for main factorial, varies for H4
 
 **Note**: H5 (ordering) is tested as a partial cross, not in the main factorial. All main factorial conditions use canonical-first ordering. See H5 for the 9-condition partial cross design (3 orderings × 3 M/E levels).
 
@@ -1879,12 +1897,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 3.3*
+*Document version: 3.4*
 *Created: 2025-12-22*
 *Updated: 2026-01-04*
 
 **Changelog:**
 
+- v3.4: Final review fixes — H2/H7 orthogonality clarification (exclusion guidance controlled by H7 only); config naming corrected (temperature is runtime parameter); H3 factor list corrected; temperature "required" → "recommended"; Section 8.3.3/8.3.4 factor references fixed; typos corrected; terminology standardised (elaborate → verbose)
 - v3.3: Exploratory hypotheses H10-H16 comprehensive rewrite with detailed test designs; fixed H11 implementation table description ("prompts" → "passes"); markdown linting (asterisk lists → dashes throughout)
 - v3.2: Major factorial design update — revised to 100-condition design (5 M/E × 4 H7 × 5 T levels); added Section 3.8 K=10 Evaluation Protocol; updated H1 to 5-level M/E factor; H2 now contrasts within factorial; H4 integrated with K=10 runs; H5 partial cross design (3 × 3) with p < 0.10 mitigation; H9 extended to 5 temperatures with escalation trigger; H7 alignment clarification (text describes same failures as images); Section 1.3 text-only role clarification; Section 8.4.1 library and verbose text construction procedure with alignment requirements; updated Section 8.4.7 and Section 8.7.4 for 100-condition factorial
 - v3.1: Comprehensive review updates — fixed errors (hypothesis count, H1 prediction, H10→H12 reference, ordering terminology, escaped characters, E7→H16); added new sections (power analysis, blinding, analysis scope, Lesovo terrain, spatial tolerance sensitivity, model version documentation, Stage 2 expansion); updated hypothesis descriptions (H3 stopping rule, H4 primary/exploratory clarification, H6 symmetric replication, H8 transfer approach); added administrative sections (COI, ethics, registration, data availability); added H10-H16 to implementation table; created companion documents (preregistration-coverage.md for factorial coverage, preregistration-appendix-prompts.md for complete prompt documentation); added Section 16.1 Companion Documents reference table
