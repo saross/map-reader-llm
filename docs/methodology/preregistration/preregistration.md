@@ -660,17 +660,21 @@ After Strand 1 identifies optimal M/E level, test all 4 H7 levels at that M/E:
 
 **Library composition by H7 level**:
 
-| H7 Level | Canonical | Hard Pos | Hard Neg | Nulls | Total |
-|----------|-----------|----------|----------|-------|-------|
-| None | 4 | 4 | 0 | 3 | 11 |
-| Text-only | 4 | 4 | 0 | 3 | 11 |
-| Images-only | 4 | 4 | 3 | 3 | 14 |
-| Text+Images | 4 | 4 | 3 | 3 | 14 |
+| H7 Level | Canon+ | Canon- | HP | Emp-HN | Nulls | Total |
+|----------|--------|--------|-----|--------|-------|-------|
+| None | 4 | 2 | 4 | 0 | 3 | 13 |
+| Text-only | 4 | 2 | 4 | 0 | 3 | 13 |
+| Images-only | 4 | 2 | 4 | 3 | 3 | 16 |
+| Text+Images | 4 | 2 | 4 | 3 | 3 | 16 |
+
+**Note**: Canon- (legend-derived negatives) are always included in H7 to provide baseline visual context for distinguishing "marker on mound" from "standalone marker". Only H15 Pure tests without Canon-.
 
 **Hard negative sources**:
 
-1. **Legend-derived negatives (Canon-)**: Visually confusable symbols from Soviet topographic legend (benchmark standalone, triangulation point standalone)
-2. **Empirically-derived negatives (Emp-HN)**: False positives with ≥3/5 occurrence during image-only baseline on training tiles
+1. **Canon-** (legend-derived negatives): Standalone triangulation point, standalone benchmark — always included in H7 to provide baseline context
+2. **Emp-HN** (empirically-derived hard negatives): False positives with ≥3/5 occurrence during image-only baseline on training tiles — presence/modality controlled by H7 factor
+
+**Note**: H7 tests Emp-HN modality (text/images/both/none). Canon- is always present as baseline visual vocabulary. Only H15 Pure tests without Canon-.
 
 **What H7 tests**:
 
@@ -1136,7 +1140,7 @@ After completing Phases 1-3 for all models:
 | H1 (text modality) | No effect | Two-tailed equivalence | Significant difference found |
 | H2 (text elaboration) | No benefit | One-tailed | Elaboration helps (unexpected) |
 | H4 (consensus voting) | Improvement | One-tailed | Significant improvement |
-| H5 (example ordering) | Canonical placement matters | One-tailed | Significant improvement |
+| H5 (example ordering) | Canonical placement matters | Factorial ANOVA | Significant ordering effect or interaction |
 | H7 (hard negatives) | Precision ↑, Recall stable | 2×2 factorial ANOVA | Precision up, recall stable |
 | H9 (temperature) | T=1.0 optimal | One-way ANOVA | Any temperature outperforms 1.0 |
 | H15 (library size) | Diminishing returns | One-way ANOVA | Optimal library size identified |
@@ -1420,16 +1424,17 @@ Before any holdout evaluation, upload to OSF: library manifest, brief text, verb
 
 #### 8.4.2 Library Composition
 
-The library comprises four example categories:
+The library comprises five example categories:
 
-| Category | Source | Purpose | Selection |
-| :--- | :--- | :--- | :--- |
-| Canonical positive | Map legend | Establish clear positive prototypes | 4 legend-derived symbols |
-| Hard positive | FN mining | Cover difficult positive cases | Top K by frequency (target K=4) |
-| Hard negative | FP mining | Prevent common false positives | Top M by frequency (target M=3) |
-| Null tile | Training set | Establish "no mounds" baseline | Stratified sample (n=3) |
+| Category | Abbreviation | Source | Purpose | Selection |
+| :--- | :--- | :--- | :--- | :--- |
+| Canonical positive | Canon+ | Map legend | Establish clear positive prototypes | 4 legend-derived mound types |
+| Canonical negative | Canon- | Map legend | Distinguish markers on mounds from standalone markers | 2 legend-derived non-mound symbols |
+| Hard positive | HP | FN mining | Cover difficult positive cases | Top K by frequency (target K=4) |
+| Empirical hard negative | Emp-HN | FP mining | Prevent common false positives | Top M by frequency (target M=3) |
+| Null tile | — | Training set | Establish "no mounds" baseline | Stratified sample (n=3) |
 
-**Category ratios**: The baseline library uses approximately 4:K:M:3 (canonical:hard-pos:hard-neg:null). For H7 conditions without hard negatives, the ratio becomes 4:K:0:3.
+**Category ratios**: The baseline library uses 4:2:K:M:3 (Canon+:Canon-:HP:Emp-HN:null). For H7 conditions without empirical hard negatives, the ratio becomes 4:2:K:0:3. Only H15 Pure omits Canon-.
 
 **Library size variations**: Total library size varies by condition:
 
@@ -1439,9 +1444,14 @@ The library comprises four example categories:
 
 #### 8.4.3 Baseline Library
 
-**Canonical positives** (legend-derived):
+**Canonical positives (Canon+)** — legend-derived mound types:
 
 - Burial mound, settlement mound, triangulation on mound, benchmark on mound
+
+**Canonical negatives (Canon-)** — legend-derived non-mound markers:
+
+- Standalone triangulation point, standalone benchmark
+- **Purpose**: Distinguish "marker on mound" from "marker alone" — prevents confusion between composite symbols and their components
 
 **Null tiles** (3 tiles selected via stratified sampling):
 
@@ -1853,7 +1863,7 @@ This section maps each hypothesis to the specific configuration files, system in
 | H12 | Cross-model consistency | 📋 Exploratory | Runtime model parameter (Claude, GPT) |
 | H13 | Cross-model voting | 📋 Exploratory | Multi-model ensemble voting |
 | H14 | Training pool size effects | 📋 Exploratory | Varied training pool sampling |
-| H15 | Few-shot library size effects | 📋 Exploratory | Library size parameter |
+| H15 | Few-shot library size effects | ✅ Ready | Strand 2 core (confirmatory) |
 | H16 | Tile size effects | 📋 Exploratory | Tile dimension parameter |
 
 #### 8.7.2 Configuration File Mapping
@@ -2086,12 +2096,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 3.5*
+*Document version: 3.6*
 *Created: 2025-12-22*
 *Updated: 2026-01-06*
 
 **Changelog:**
 
+- v3.6: Terminology consistency corrections — H7 library table updated to use Canon+/Canon-/HP/Emp-HN columns with corrected totals (13/13/16/16); Canon- always included note added; H15 implementation status updated to confirmatory; H5 test type corrected to Factorial ANOVA; Section 8.4.2 library composition table expanded to 5 categories with abbreviation column; Section 8.4.3 Canon- section added
 - v3.5: Major factorial restructure separating text elaboration from library content — H2 redefined as 3 detail levels (Minimal/Brief/Verbose) with HP edge cases in both brief and verbose at different detail levels; stranded design (Strand 1: 50 cells for verbosity × partial H7; H7 Confirmatory: 20 cells full 2×2 at optimal M/E; Strand 2: 30 cells for H15 library size with 6 conditions); H15 promoted to confirmatory with Pure/Canonical/A-D library conditions using 1:1 HP:Emp-HN ratio and Canon+/Canon-/HP/Emp-HN terminology; H17 added as exploratory ratio hypothesis; H3/H6/H8 moved to exploratory; confirmatory count reduced to 7 (H1, H2, H4, H5, H7, H9, H15); M/E factor remains 5 levels (Image-only uses minimal text, no separate level); H7 constraint documented (Pure/Canonical run at H7=None); Section 8.4.1 updated (brief includes terse HP guidance, verbose includes detailed HP guidance); Section 8.4.7 rewritten for stranded design; Section 8.7.4 updated for stranded coverage
 - v3.4: Final review fixes — H2/H7 orthogonality clarification (exclusion guidance controlled by H7 only); config naming corrected (temperature is runtime parameter, 16 configs not 20 due to text-only constraints); H3 factor list corrected; temperature "required" → "recommended"; Section 8.3.3/8.3.4 factor references fixed; typos corrected; terminology standardised (elaborate → verbose)
 - v3.3: Exploratory hypotheses H10-H16 comprehensive rewrite with detailed test designs; fixed H11 implementation table description ("prompts" → "passes"); markdown linting (asterisk lists → dashes throughout)
