@@ -490,7 +490,7 @@ Identify the bounding boxes for all instances of the following symbols:
 
 - **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
 - **Colour:** Orange-brown (same colour as contour lines, indicating relief).
-- **Size:** Typically 2-4mm diameter at map scale, which translates to roughly 10-20 pixels in a 448×448 tile.
+- **Size:** Typically 2-4mm diameter at map scale, which translates to roughly 10-20 pixels in a 512×512 tile.
 - **Ray characteristics:** Usually 6-8 rays of approximately equal length, radiating evenly from the central circle.
 - **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") indicating height in metres, or the Cyrillic abbreviation **"кург."** ("kurgan").
 - **Landscape position:** Typically located on elevated terrain, ridges, hilltops, or other prominent landscape positions where ancient peoples chose to bury their dead. May also be found in flat, open areas, where large examples dominate the landscape.

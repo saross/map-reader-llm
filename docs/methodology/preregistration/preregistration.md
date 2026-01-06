@@ -6,8 +6,8 @@
 
 **Affiliations**: Macquarie University, Sydney, Australia
 
-**Document version**: 3.5
-**Last updated**: 2026-01-06
+**Document version**: 3.7
+**Last updated**: 2026-01-07
 **Status**: Ready for Registration
 
 ---
@@ -95,7 +95,7 @@ See Section 8.6 for full methodology. Key parameters:
 | :--- | :--- |
 | Content threshold | ≤75% background |
 | Spatial separation | Holdout tiles not adjacent to training tiles |
-| Tile size | 448×448 pixels |
+| Tile size | 512×512 pixels (64px overlap, 448px stride) |
 
 ### 2.3 Training Tiles (n=20)
 
@@ -876,7 +876,7 @@ This adjustment is imperfect (library compositions differ slightly), but provide
 
 **Implementation**:
 
-1. **Stage 1**: Standard detection on 448×448 tiles with 5-pass voting
+1. **Stage 1**: Standard detection on 512×512 tiles with 5-pass voting
 2. **Identify uncertain candidates**: Detections with 2/5 or 3/5 agreement
 3. **Stage 2**: For each uncertain candidate:
    - Extract larger tile (~896×896 px, 4× area) from source map, centered on candidate coordinates
@@ -1106,9 +1106,9 @@ After completing Phases 1-3 for all models:
 
 | Condition | Tile Size | Area Multiplier | Est. Symbols/Tile |
 | ----- | ----- | ----- | ----- |
-| A (baseline) | 448×448 | 1× | 0-3 |
-| B | 896×896 | 4× | 0-12 |
-| C (conditional) | 1792×1792 | 16× | 0-48 |
+| A (baseline) | 512×512 | 1× | 0-3 |
+| B | 1024×1024 | 4× | 0-12 |
+| C (conditional) | 2048×2048 | 16× | 0-48 |
 
 **Conditional advancement**: Condition C tested only if Condition B achieves F1 within 0.05 of baseline.
 
@@ -1116,7 +1116,7 @@ After completing Phases 1-3 for all models:
 
 - Uses optimal configuration (M/E, H7, T, voting) from Stages 1-2
 - Tiles generated from source maps with consistent overlap handling
-- Few-shot library images remain at original resolution (448×448 crops)
+- Few-shot library images remain at original resolution (512×512 crops)
 - Ground truth regenerated for larger tile boundaries
 
 **Analysis**:
@@ -1783,7 +1783,7 @@ Full methodology documented in `docs/methodology/tile-selection-methodology.md`.
 
 - **Maps**: 4 Soviet 1:50,000 topographic maps (Bulgaria)
   - K-35-052-4_32635, K-35-053-3_Elenovo, K-35-062-2_Rakovski, K-35-078-1_Lesovo
-- **Tiles**: 448×448 pixel tiles at native resolution (~90 tiles per map, ~360 total)
+- **Tiles**: 512×512 pixel tiles at native resolution (~90 tiles per map, ~360 total)
 - **Ground Truth**: 569 annotated mound symbols across all maps
 
 #### Selection Criteria

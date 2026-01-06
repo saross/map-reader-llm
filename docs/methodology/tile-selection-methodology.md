@@ -17,7 +17,7 @@ This methodology establishes a clean separation between training and holdout til
   - K-35-062-2_Rakovski
   - K-35-078-1_Lesovo
 
-- **Tiles**: 448×448 pixel tiles at native resolution
+- **Tiles**: 512×512 pixel tiles at native resolution (64px overlap, 448px stride)
   - ~90 tiles per map
   - ~360 tiles total
 
@@ -55,7 +55,7 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 1. Exclude all training tiles
 2. Filter by content threshold
-3. Apply **spatial separation**: exclude tiles adjacent to training tiles (Manhattan distance ≤ 1 tile = 448 pixels)
+3. Apply **spatial separation**: exclude tiles adjacent to training tiles (Manhattan distance ≤ 1 in grid units, i.e., 448px stride)
 4. Match training set density distribution as closely as possible
 5. If spatial separation over-constrains, relax adjacency requirement and document
 

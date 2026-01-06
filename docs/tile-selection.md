@@ -1,7 +1,7 @@
 # Tile Selection for Pre-Registration
 
-**Document version**: 1.0
-**Last updated**: 2025-12-31
+**Document version**: 1.1
+**Last updated**: 2026-01-07
 
 This document records the training and holdout tile sets selected for the study.
 
@@ -14,7 +14,7 @@ This document records the training and holdout tile sets selected for the study.
 - **Samples per map**: 5 (balanced across 4 maps)
 - **Maximum background**: 75% (tiles with >75% empty space excluded)
 - **Adjacency distance**: 1 tile (spatial separation between training/holdout)
-- **Tile size**: 448×448 pixels
+- **Tile size**: 512×512 pixels (64px overlap, 448px stride)
 
 ## Training Tiles (n=20)
 
