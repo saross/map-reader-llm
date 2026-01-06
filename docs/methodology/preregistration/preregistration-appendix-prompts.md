@@ -37,14 +37,16 @@ This yields:
 
 ### Orthogonal Factor Separation
 
-The design maintains strict orthogonality between H2 (elaboration) and H7 (hard negatives):
+The design maintains strict orthogonality between H2 (text elaboration) and H7 (hard negatives):
 
 | Factor | Controls | Content |
-|--------|----------|---------|
-| H2 (Elaboration) | Edge case guidance for **hard positives** (FNs) | Verbose text adds descriptions of occluded mounds, degraded symbols, edge cases to detect |
-| H7 (Hard negatives) | Exclusion guidance for **hard negatives** (FPs) | Text about what NOT to detect; images of confusable symbols |
+| ------ | -------- | ------- |
+| H2 (Text elaboration) | Detail level for **positives** (canonical symbols + HP edge cases) | Minimal = task only; Brief = terse descriptions + terse HP mention; Verbose = detailed descriptions + detailed HP guidance |
+| H7 (Hard negatives) | Presence of **negative** guidance | Exclusion text about what NOT to detect; HN images of confusable symbols |
 
-**Critical distinction**: Verbose text does NOT include exclusion guidance for hard negatives. That is controlled exclusively by H7.
+**Brief vs Verbose distinction**: Both brief and verbose include hard positive (HP) edge case guidance — the difference is detail level, not content coverage. Brief mentions edge case types tersely ("symbols may be partially occluded"); verbose provides detailed guidance on occlusion types, degradation patterns, clustering, and variants.
+
+**Critical distinction**: Neither brief nor verbose includes exclusion guidance for hard negatives. That is controlled exclusively by H7 via `_hardneg.md` instruction variants.
 
 ---
 
@@ -1274,12 +1276,13 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.1*
+*Document version: 2.2*
 *Created: 2026-01-02*
-*Updated: 2026-01-04*
+*Updated: 2026-01-06*
 
 **Changelog:**
 
+- v2.2: H2 elaboration clarification — both brief and verbose include HP edge case guidance at different detail levels (brief = terse mention, verbose = detailed guidance); orthogonality is H2 (detail level for positives) vs H7 (presence of negatives); aligned with preregistration.md v3.5 factorial restructure
 - v2.1: Final review fixes — corrected config count explanation (20→16 due to text-only constraints); aligned Phase 1 baseline with preregistration (5 passes, ≥3/5 threshold); fixed hard negative labels for Images-only condition (minimal "Negative" labels); added hard positive placeholders to example configs; added H10 verification prompt placeholder (Section 1.7); added H5 canonical-last example config; fixed verifier prompt to use placeholder notation
 - v2.0: Major restructure — 10 instruction files (5 M/E × 2 exclusion variants), 16 config files (reflecting text-only constraints); renamed "elaborate" to "verbose"; clarified orthogonal separation between H2 (edge case guidance for FNs) and H7 (exclusion guidance for FPs); added legend-derived hard negatives; flagged empirically-derived content as TBD
 - v1.1: Added T=1.3 to temperature values; removed stale H2 reference from H6 construction procedure

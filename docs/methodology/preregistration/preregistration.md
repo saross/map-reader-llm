@@ -2,12 +2,12 @@
 
 **Title**: Extracting geospatial datasets from historical maps using frontier vision-language models: Evaluating prompting strategies for cartographic symbol detection
 
-**Authors**: Shawn Ross(1)
+**Authors**: Shawn Ross
 
-**Affiliations**: (1) Macquarie University, Sydney, Australia
+**Affiliations**: Macquarie University, Sydney, Australia
 
-**Document version**: 3.4
-**Last updated**: 2026-01-01
+**Document version**: 3.5
+**Last updated**: 2026-01-06
 **Status**: Ready for Registration
 
 ---
@@ -16,13 +16,13 @@
 
 ### 1.1 Background
 
-This study evaluates prompting strategies for using frontier vision-language model (VLM) to detect burial mound symbols from Soviet-era 1:50,000 topographic maps of Bulgaria. It builds on Sobotkova et al. (2023), which used participatory GIS for the same extraction task.
+This study evaluates prompting strategies for using frontier vision-language models (VLMs) to detect burial mound symbols from Soviet-era 1:50,000 topographic maps of Bulgaria. It builds on Sobotkova et al. (2023), which used participatory GIS for the same extraction task.
 
 During preliminary development, we discovered that some "best practice" prompting strategies derived from the VLM literature did not seem to transfer to this task, while others did, for example:
 
 1. **Text minimisation had little effect**: Contrary to text-image interference literature (Vo et al., 2025), removing text from prompts didn't improve performance.  
 2. **Two-stage proposer-verifier was actively harmful**: This architecture degraded performance rather than improving precision-recall tradeoffs.  
-3. **Consensus voting worked well**: n-of-x voting schemes substantially improved F1.
+3. **Consensus voting worked well**: n-of-x voting schemes substantially improved performance.
 
 These findings suggest that prompting strategies derived from general VLM benchmarks may not generalise to specialised detection tasks like map symbol extraction using frontier models, a finding with implications for practitioners.
 
@@ -32,10 +32,10 @@ These findings suggest that prompting strategies derived from general VLM benchm
 2. Does the nature of text (concise, verbose, varied across consensus voting runs) affect detection performance?
 3. Do two-stage proposer-verifier pipelines improve precision-recall tradeoffs for VLM detection?  
 4. What voting and ensemble strategies optimise detection F1, precision, and recall?  
-5. Does model temperature affect VLM detection performance?
-6. Do these factors interact with one another to affect VLM detection performance?
+5. Does model temperature affect VLM performance?
+6. Do these factors interact with one another to affect VLM performance?
 7. Do effects generalise from low-cost models like Gemini 3 Flash to more capable models like Gemini 3 Pro, and across frontier VLM families (Gemini 3, Claude 4.5, GPT-5.2)?
-8. What image library characteristics most improve detection performance (e.g., library size, inclusion of negatives, diversity of images, etc.)?
+8. What image library characteristics most improve performance (e.g., library size, inclusion of negatives, diversity of images, etc.)?
 
 ### 1.3 Two-Stage Trial Framework
 
@@ -45,19 +45,19 @@ This study adopts a **two-stage trial framework** using a 361-tile corpus includ
 
 **Stage 2 (future work)**: Techniques that show promise in Stage 1 will be validated on a larger holdout set (additional tiles from the 361-tile corpus or transfer testing on out-of-sample maps) with more stringent significance thresholds.
 
-This framing acknowledges the power limitations of small-sample evaluation while maintaining scientific rigor through preregistration and appropriate multiple comparison correction.
+This framing acknowledges the power limitations of small-sample evaluation while maintaining rigor through preregistration and appropriate multiple comparison correction.
 
 **Role of text-only conditions**:
 
-Text-only conditions (Brief-text, Verbose-text) serve primarily as academic baselines to assess VLM capability without visual examples. The primary optimisation target is image-based discovery, as operational deployment will likely include few-shot visual examples.
+Text-only conditions (Brief-text, Verbose-text) serve primarily as academic baselines to assess VLM capability without visual examples. The primary optimisation target is image-based discovery, as an optimal deployment will almost certainly include visual examples.
 
 Text-only results inform:
 
 - Whether text guidance alone has any value (academic interest)
-- Whether adding images to text improves performance (H1)
+- Whether modality matters: comparing image-only, text-only, and text+image performance
 - Baseline comparison for text+image improvements
 
-Text-only conditions are NOT separately optimised. The same text (brief and verbose) is used across all modalities to isolate the effect of adding images.
+Identical text is used across modalities (text-only and text+image) to isolate the effect of adding visual examples. Verbose text additions (edge case guidance) are derived from image-only baseline failures.
 
 ### 1.4 Timeline
 
@@ -269,7 +269,7 @@ The four maps used in the present study were later selected for the quality asse
 
 ### 3.2 Rationale for FDR
 
-With 9 confirmatory hypotheses tested on 60 tiles (79 mound symbols), statistical power is adequate for detecting moderate effects. Bonferroni correction (α = 0.006) would remain conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
+With 7 confirmatory hypotheses tested on 60 tiles (79 mound symbols), statistical power is adequate for detecting moderate effects. Bonferroni correction (α = 0.007) would remain conservative for a screening study. FDR controls the expected proportion of false discoveries among rejected hypotheses, which is appropriate when:
 
 - The goal is identifying promising techniques for further validation
 - Some false positives are acceptable if balanced by discovery of true effects
@@ -427,26 +427,35 @@ We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and spe
 
 **Prediction**: Verbose text instructions will not significantly improve F1 compared to brief instructions.
 
-**Text construction methodology**:
+**Text elaboration levels**:
 
-- **Brief text**: Legend-based descriptions of canonical mound symbol types (~200-400 words)
-- **Verbose text**: Brief text + targeted additions addressing hard example failures (see Section 8.4.1)
+H2 tests the **detail level** of text guidance, not content coverage. All levels describe the same content categories (canonical symbols + hard positive edge cases) at different levels of detail:
 
-Verbose text additions are derived from image-only baseline failures, ensuring text guidance describes the same edge cases and exclusions present in the hard example image library. This alignment means:
+| Level | Canonical Symbols | HP Edge Cases | Word Count |
+|-------|-------------------|---------------|------------|
+| Minimal | Task instruction only | None | ~50 |
+| Brief | Terse descriptions | Terse mention ("symbols may be occluded") | ~200-300 |
+| Verbose | Detailed descriptions | Detailed guidance on types + variants | ~500-700 |
 
-- In text+image conditions: verbose text reinforces the visual hard examples
-- In text-only conditions: verbose text provides conceptual guidance without visual anchors
+**Example of brief vs verbose HP guidance**:
 
-**Test**: Planned contrasts within the main factorial:
+- **Brief**: "Symbols may be partially obscured by roads, contours, or text. Include borderline cases."
+- **Verbose**: "Symbols are frequently intersected by other map features. Roads (black or red lines) may cross through a mound symbol. Contour lines (brown) at similar colour may partially merge with mound rays. Grid lines (blue) may overlay symbols. Text labels may obscure parts of symbols. In all cases, if you can see rays extending outward from a central point, even partially, mark the detection. Degraded or faded symbols from map scanning should also be included if the ray pattern is discernible."
 
-- Brief-text vs Verbose-text (text-only comparison)
-- Brief-text+image vs Verbose-text+image (text+image comparison)
+**Orthogonality with H7**: H2 controls detail level for **positives** (canonical symbols + hard positive edge cases). H7 controls presence of **negative** guidance (exclusion text + hard negative images). These are independent dimensions.
+
+**Text-modality consistency**: Identical text is used across modalities (Brief-text = Brief+image; Verbose-text = Verbose+image). This isolates the effect of adding visual examples.
+
+**Test**: Planned contrasts within Strand 1:
+
+- Image-only vs Brief+image vs Verbose+image (within image conditions)
+- Brief-text vs Verbose-text (within text-only conditions)
 
 **Analysis**: One-tailed tests; H0: verbose ≤ brief; H1: verbose > brief. Prediction is that H0 will not be rejected (verbose does not significantly help).
 
-**Interpretation note**: Text-only conditions serve primarily as academic baselines. The operationally-relevant comparison is Brief-text+image vs Verbose-text+image, as deployment will likely include visual examples.
+**Interpretation note**: Text-only conditions serve primarily as academic baselines. The operationally-relevant comparison is Image-only vs Brief+image vs Verbose+image, as deployment will likely include visual examples.
 
-**Advance to Stage 2 if**: Verbose text shows significant improvement in either comparison (would contradict preliminary findings).
+**Advance to Stage 2 if**: Verbose text shows significant improvement in any comparison (would contradict preliminary findings).
 
 ---
 
@@ -607,51 +616,74 @@ Task framing examples (opening lines):
 
 **Prediction**: Including hard negative information (text and/or images) will improve precision without significantly harming recall.
 
+**H7 Testing Structure**:
+
+H7 uses a staged testing approach to balance detection of M/E × H7 interactions with budget efficiency:
+
+1. **Strand 1 (partial cross)**: H7=None vs H7=Text+Images tested across all M/E levels to detect overall H7 effect and M/E × H7 interaction
+2. **H7 Confirmatory (full 2×2)**: All 4 H7 levels tested at optimal M/E to decompose the mechanism (exclusion text × hard negative images)
+3. **Expansion trigger**: H7 middle levels (Text-only, Images-only) tested at a second M/E level if:
+   - M/E × H7 interaction detected (p < 0.10), OR
+   - H7 main effect > 0.08 F1
+
 **Test**: 2×2 factorial design comparing:
 
 | Condition | Exclusion Text | Hard Neg Images | Description |
 | ----- | ----- | ----- | ----- |
-| A | No | No | Baseline: positive examples only, no exclusion guidance |
-| B | Yes | No | Text-only: explicit exclusion instructions, no visual counter-examples |
-| C | No | Yes | Image-only: hard negative images with minimal labels ("Negative") |
-| D | Yes | Yes | Combined: hard negative images with explicit explanatory labels |
+| A (None) | No | No | Baseline: positive examples only, no exclusion guidance |
+| B (Text-only) | Yes | No | Text-only: explicit exclusion instructions, no visual counter-examples |
+| C (Images-only) | No | Yes | Image-only: hard negative images with minimal labels ("Negative") |
+| D (Text+Images) | Yes | Yes | Combined: hard negative images with explicit explanatory labels |
 
-**Alignment of text and images**:
+**Strand 1 partial cross**:
 
-The exclusion text in Conditions B and D describes the same failures as the hard negative images in Conditions C and D. Both are derived from False Positives in the image-only baseline (see Section 8.4.1).
+| M/E Level | H7=None | H7=Text+Images |
+|-----------|---------|----------------|
+| Image-only | ✓ | ✓ |
+| Brief+image | ✓ | ✓ |
+| Verbose+image | ✓ | ✓ |
+| Brief-text | ✓ | ✓ (text-only H7) |
+| Verbose-text | ✓ | ✓ (text-only H7) |
 
-This means:
+**Note**: Text-only modalities use H7=Text-only rather than H7=Text+Images since they have no example images.
 
-- Condition B: Verbal description of FPs (no visual examples)
-- Condition C: Visual examples of FPs (minimal labels)
-- Condition D: Visual examples + verbal descriptions (reinforcement)
+**H7 Confirmatory design**:
+
+After Strand 1 identifies optimal M/E level, test all 4 H7 levels at that M/E:
+
+| H7 Level | Exclusion Text | HN Images | Image Labels |
+|----------|----------------|-----------|--------------|
+| None | No | No | — |
+| Text-only | Yes | No | — |
+| Images-only | No | Yes | Minimal ("Negative") |
+| Text+Images | Yes | Yes | Detailed (with explanation) |
+
+**Library composition by H7 level**:
+
+| H7 Level | Canonical | Hard Pos | Hard Neg | Nulls | Total |
+|----------|-----------|----------|----------|-------|-------|
+| None | 4 | 4 | 0 | 3 | 11 |
+| Text-only | 4 | 4 | 0 | 3 | 11 |
+| Images-only | 4 | 4 | 3 | 3 | 14 |
+| Text+Images | 4 | 4 | 3 | 3 | 14 |
+
+**Hard negative sources**:
+
+1. **Legend-derived negatives (Canon-)**: Visually confusable symbols from Soviet topographic legend (benchmark standalone, triangulation point standalone)
+2. **Empirically-derived negatives (Emp-HN)**: False positives with ≥3/5 occurrence during image-only baseline on training tiles
 
 **What H7 tests**:
 
 - Does the model need to *see* hard negatives (C), *read about* them (B), or both (D)?
 - Is there redundancy (D ≈ B or C) or synergy (D > B and D > C)?
-
-**Hard negative sources**:
-
-1. **Legend-derived negatives**: Visually confusable symbols confirmed from Soviet topographic legend (benchmark standalone, triangulation point standalone)
-2. **Empirically-derived negatives**: False positives with ≥3/5 occurrence during image-only baseline on training tiles
-
-**Text implementation**:
-
-- Condition A: No exclusion guidance in prompt
-- Condition B: Exclusion instructions describing hard negative categories (e.g., "Do NOT mark: benchmarks without radiating rays, isolated triangulation points...")
-- Condition D: Same exclusion instructions as B, plus explanatory labels on hard negative images (e.g., "Negative: Benchmark ALONE — square with dot but NO radiating rays. NOT a mound.")
-
-**Image label implementation**:
-
-- Condition C: Minimal labels only ("Negative" or "Negative: Not a mound")
-- Condition D: Labels with distinguishing features matching the exclusion text
+- Does the H7 effect vary by verbosity level (M/E × H7 interaction)?
 
 **Analysis**:
 
 - Primary: 2×2 factorial ANOVA testing main effects (exclusion text, hard negative images) and interaction on precision
 - Secondary: Parallel analysis on recall to confirm no significant harm
 - Tertiary: Analysis on F1 to assess net benefit
+- Strand 1: Test for M/E × H7 interaction
 
 **Advance to Stage 2 if**: Either main effect significantly improves precision AND recall does not significantly decrease.
 
@@ -736,6 +768,90 @@ If Phase 2 identifies factors needing adjustment:
 **Temperature escalation trigger**: If T=1.3 yields higher F1 than T=1.0 (point estimate, same M/E and H7 condition), exploratory testing at T=1.6 and T=2.0 will be conducted at the optimal configuration to characterise the upper bound of the temperature-performance curve.
 
 **Advance to Stage 2 if**: Any temperature significantly outperforms T=1.0, or if escalation trigger activates and higher temperatures show continued improvement.
+
+---
+
+### H15: Few-Shot Library Size Affects Detection Performance
+
+**Status**: Confirmatory (Strand 2)
+
+**Background**: Few-shot library size affects both the information available to the model and the token cost of each query. Preliminary exploration suggested performance improves with additional examples, but the optimal size and diminishing returns curve are unknown.
+
+**Terminology**:
+
+| Term | Definition |
+|------|------------|
+| Canon+ | Legend-derived positive examples (burial mound, settlement mound, trig point on mound, bench mark on mound) — always present |
+| Canon- | Legend-derived negative examples (standalone triangulation point, standalone bench mark) — distinguishes "marker on mound" from "marker alone" |
+| HP | Empirically-derived hard positives (false negatives from Phase 1 image-only baseline) |
+| Emp-HN | Empirically-derived hard negatives (false positives from Phase 1 image-only baseline) |
+| Hard Examples | HP + Emp-HN combined |
+
+**Predictions**:
+
+1. F1 will increase from Pure (7 examples) to Canonical (9 examples) — legend-derived negatives help distinguish similar symbols
+2. F1 will increase from Canonical to Library A (9 → 13) — empirical hard examples help
+3. F1 will increase from A to B (13 → 17), with moderate marginal gain
+4. F1 will increase from B to C (17 → 25), with smaller marginal gain
+5. F1 increase from C to D (25 → 41) will show minimal or no improvement (diminishing returns plateau)
+
+**Test**: Compare detection performance across 6 library conditions:
+
+| Condition | Canon+ | Canon- | HP | Emp-HN | Nulls | Total | Hard Examples |
+|-----------|--------|--------|-----|--------|-------|-------|---------------|
+| Pure      | 4      | 0      | 0   | 0      | 3     | 7     | 0             |
+| Canonical | 4      | 2      | 0   | 0      | 3     | 9     | 0             |
+| A         | 4      | 2      | 2   | 2      | 3     | 13    | 4             |
+| B         | 4      | 2      | 4   | 4      | 3     | 17    | 8             |
+| C         | 4      | 2      | 8   | 8      | 3     | 25    | 16            |
+| D         | 4      | 2      | 16  | 16     | 3     | 41    | 32            |
+
+**Baselines**:
+
+- **Pure**: Positive examples only — tests whether VLM can detect mounds with no negative guidance at all
+- **Canonical**: Adds legend-derived negatives — tests whether distinguishing similar symbols helps
+
+**H7 constraint**: Pure and Canonical conditions run at H7=None by necessity (no empirical HNs to include). Conditions A-D run at optimal H7 from Strand 1.
+
+**Ratio**: Conditions A-D use 1:1 HP:Emp-HN ratio. This avoids majority label bias and is the most defensible default given limited guidance in the literature. Ratio exploration is addressed in H17 (exploratory).
+
+**Progression**: Enables three key contrasts:
+
+- Pure → Canonical: Do legend-derived negatives help?
+- Canonical → A: Do empirical hard examples help?
+- A → B → C → D: Diminishing returns curve (0 → 4 → 8 → 16 → 32 hard examples)
+
+**Fixed parameters**: Optimal verbosity (from Strand 1), optimal H7 from Strand 1, optimal temperature.
+
+**Confound note**: Pure and Canonical conditions run at H7=None by design constraint (no empirical HNs available to include). Conditions A-D run at optimal H7 from Strand 1. The Canonical → A contrast therefore tests the combined effect of (1) adding empirical hard examples and (2) applying optimal H7 setting.
+
+Interpretation depends on Strand 1 results:
+
+- If Strand 1 finds H7=None is optimal → confound is moot; A-D also run at H7=None
+- If Strand 1 finds H7≠None is optimal → interpret Canonical → A as a bundled treatment
+
+**Adjustment option**: If the confound complicates interpretation, Strand 1 data can be used to estimate and adjust for the H7 effect. Specifically:
+
+1. From Strand 1, estimate the H7 effect size (F1 difference between H7=None and H7=Optimal) at a comparable library composition
+2. Subtract this estimated H7 effect from the observed Canonical → A difference
+3. The residual approximates the "pure" effect of adding empirical hard examples
+
+This adjustment is imperfect (library compositions differ slightly), but provides inferential leverage if needed. Document any such adjustment as post-hoc sensitivity analysis.
+
+**Analysis**:
+
+- Primary: One-way ANOVA across 6 library conditions
+- Planned contrasts:
+  - Pure vs Canonical (legend negatives help?)
+  - Canonical vs A (empirical hard examples help?)
+  - A vs B, B vs C, C vs D (diminishing returns)
+- Secondary: Characterise diminishing returns curve (F1 vs total example count)
+- Tertiary: Cost-efficiency analysis (F1 per input token)
+
+**Advance to Stage 2 if**:
+
+- Significant main effect of library size (FDR-corrected p < 0.05), OR
+- Significant deviation from expected diminishing returns pattern (e.g., D substantially outperforms C)
 
 ---
 
@@ -940,48 +1056,39 @@ After completing Phases 1-3 for all models:
 
 ---
 
-### H15: Few-Shot Library Size Effects
+### H17: Hard Positive to Hard Negative Ratio
 
-**Background**: Larger few-shot libraries provide more examples for pattern matching but increase token cost and may introduce inconsistency. The optimal library size for cartographic symbol detection is unknown.
+**Status**: Exploratory
 
-**Question**: How does few-shot library size affect detection performance and cost efficiency?
+**Prerequisite**: H15 (library size) complete; optimal library size determined
 
-**Test**: Compare library sizes holding training pool and null tile count constant:
+**Background**: The main factorial (H15) uses a 1:1 ratio of hard positives to hard negatives across all library sizes. However, optimal ratio may differ:
 
-| Condition | Positives | Hard Positives | Hard Negatives | Null Tiles | Total |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| A | 4 (legend) | 2 | 2 | 3 | 11 |
-| B | 4 (legend) | 4 | 3 | 3 | 14 |
-| C | 4 (legend) | 8 | 6 | 3 | 21 |
-| D | 4 (legend) | 16 | 12 | 3 | 35 |
+- Higher HP:Emp-HN ratio may improve recall (more positive guidance)
+- Lower HP:Emp-HN ratio may improve precision (more exclusion examples)
+- Optimal ratio may depend on library size or baseline error profile
 
-**Note**: Condition B matches the baseline design (K=4 hard positives, M=3 hard negatives).
+**Research question**: Does the ratio of hard positives to hard negatives affect detection performance, holding total hard example count constant?
 
-**Implementation**:
+**Test**: At optimal library size from H15 (selecting from A-D only; Pure/Canonical excluded as they have no empirical hard examples), compare ratios while holding total hard example count constant:
 
-- Legend-derived positives fixed across conditions (canonical examples)
-- Null tiles fixed at 3 across conditions (isolates hard example effects)
-- Hard examples drawn from pool ranked by frequency; larger libraries sample more deeply
-- Frequency threshold relaxed as needed to populate larger libraries (minimum 1/5 occurrence)
+| Condition | HP  | Emp-HN | Total Hard | Ratio           |
+| --------- | --- | ------ | ---------- | --------------- |
+| R1        | 2   | 6      | 8          | 1:3 (HN-heavy)  |
+| R2        | 4   | 4      | 8          | 1:1 (balanced)  |
+| R3        | 6   | 2      | 8          | 3:1 (HP-heavy)  |
 
-**Hard example selection for larger libraries**:
-
-1. Rank all FPs and FNs by frequency (highest first)
-2. For Condition A: Select top 2 of each
-3. For Condition B: Select top 4 hard positives, top 3 hard negatives (baseline)
-4. For Conditions C/D: Continue down ranked list, relaxing threshold to ≥1/5 if necessary
-5. Document frequency counts for all selected examples
-
-**Sequencing**: H15 runs during Stage 1, using hard examples surfaced from Phase 1 image-only baseline. All conditions use the same 20-tile training pool.
+**Note**: Exact counts depend on optimal library size from H15. If optimal is Library C (8 HP, 8 Emp-HN), the above applies. If optimal is Library B (4 HP, 4 Emp-HN), scale accordingly.
 
 **Analysis**:
 
-- F1 as function of library size
-- Token cost as function of library size
-- F1 per dollar (cost-efficiency frontier)
-- Qualitative assessment: does adding lower-frequency examples introduce noise?
+- Compare F1, precision, and recall across ratio conditions
+- Test whether ratio affects precision vs recall differentially
+- Identify whether ratio interacts with baseline error profile (FP-heavy vs FN-heavy tiles)
 
-**Status**: Exploratory. Addresses practical question of library size optimisation for cost-constrained deployment.
+**Trigger**: Run if H15 shows library size matters AND budget permits (~$9 additional, since R2 is already tested in H15)
+
+**Practical implication**: If ratio matters, deployment recommendations should specify not just "how many" but "what balance" of hard examples.
 
 ---
 
@@ -1028,25 +1135,26 @@ After completing Phases 1-3 for all models:
 | :---- | :---- | :---- | :---- |
 | H1 (text modality) | No effect | Two-tailed equivalence | Significant difference found |
 | H2 (text elaboration) | No benefit | One-tailed | Elaboration helps (unexpected) |
-| H3 (coarse-to-fine) | Degradation | One-tailed | Two-stage approach warrants optimisation |
 | H4 (consensus voting) | Improvement | One-tailed | Significant improvement |
 | H5 (example ordering) | Canonical placement matters | One-tailed | Significant improvement |
-| H6 (prompt diversity) | Diverse > identical | Factorial ANOVA | Main effect or interaction significant |
-| H7 (hard negatives) | Precision ↑, Recall stable | Factorial ANOVA | Precision up, recall stable |
-| H8 (Flash→Pro transfer) | Effects replicate | Replication | ≥80% effects replicate directionally |
+| H7 (hard negatives) | Precision ↑, Recall stable | 2×2 factorial ANOVA | Precision up, recall stable |
 | H9 (temperature) | T=1.0 optimal | One-way ANOVA | Any temperature outperforms 1.0 |
+| H15 (library size) | Diminishing returns | One-way ANOVA | Optimal library size identified |
 
 ### 7.2 Exploratory Hypotheses
 
 | Hypothesis | Question | Analysis |
 | :---- | :---- | :---- |
+| H3 (two-stage) | Does proposer-verifier help? | Compare F1 at matched config |
+| H6 (diversity) | Does variation improve voting? | 2×2 factorial ANOVA |
+| H8 (Flash→Pro transfer) | Do effects replicate on Pro? | OFAT sensitivity |
 | H10 (fine-to-coarse) | Does context expansion help uncertain cases? | Compare F1 on uncertain subset |
 | H11 (temperature variation) | Does varied temperature improve ensembles? | Paired comparison |
 | H12 (cross-model consistency) | Do effects generalise across providers? | Qualitative replication |
 | H13 (cross-model voting) | Does cross-model voting beat within-model? | Compare F1 at N=6 |
 | H14 (training pool size) | How does pool size affect library quality? | F1 vs pool size curve |
-| H15 (library size) | What is optimal few-shot library size? | F1 vs library size curve |
 | H16 (tile size) | How does tile size affect performance? | F1 vs tile size |
+| H17 (HP:HN ratio) | Does hard example ratio affect performance? | Compare ratios at fixed total count |
 
 ---
 
@@ -1273,34 +1381,38 @@ Select hard examples based on frequency ranking:
 
 Document for each selected example: source tile, frequency, failure category.
 
-**Step 4: Construct Verbose Text**
+**Step 4: Construct Brief Text**
 
-Build verbose text by adding edge case guidance for hard positives:
+Build brief text with terse descriptions:
 
 | Component | Source | Content |
-|-----------|--------|---------|
-| Base | Legend descriptions | Brief text describing canonical mound types |
-| Edge case guidance | Hard positive images | Text describing why each FN IS a mound (e.g., partially occluded symbols, small variants) |
+| --------- | ------ | ------- |
+| Canonical descriptions | Legend | Terse descriptions of 4 canonical mound types |
+| HP edge case guidance | Hard positive images | Terse mention of edge case types ("symbols may be partially occluded by roads or contours") |
 
-**Note on exclusion guidance**: Exclusion guidance for hard negatives (FPs) is NOT included in verbose text. Instead, it is controlled by the H7 factor:
+Word count: ~200-300 words.
 
-- H7 Conditions A and C: No exclusion text
-- H7 Conditions B and D: Exclusion text added via `_hardneg.md` instruction variants
+**Step 5: Construct Verbose Text**
 
-This separation ensures H2 (elaboration) and H7 (hard negative guidance) remain orthogonal factors.
+Expand brief text with detailed guidance:
 
-**Alignment requirement**: Each hard positive image must have corresponding edge case text in verbose prompts. Hard negative text alignment is controlled by H7.
+| Component | Source | Content |
+| --------- | ------ | ------- |
+| Canonical descriptions | Legend | Detailed descriptions of 4 canonical types (size, colour, ray count, context) |
+| HP edge case guidance | Hard positive images | Detailed guidance on occlusion types, degradation patterns, clustering, variant types as identified in library |
 
-**Step 5: Construct Brief vs Verbose Text**
+Word count: ~500-700 words.
 
-| Text Version | Content |
-|--------------|---------|
-| Brief text | Legend-based descriptions of canonical mound types only (~200-400 words) |
-| Verbose text | Brief text + edge case guidance for hard positives (~400-700 words) |
+**Brief vs Verbose distinction**: Both include the same content categories (canonical symbols + HP edge cases). The difference is detail level, not content coverage.
 
-**Note**: Exclusion guidance for hard negatives is added separately via H7 `_hardneg.md` variants, not via the brief/verbose distinction. This keeps H2 (elaboration) and H7 (hard negatives) as orthogonal factors.
+**Note on exclusion guidance**: Exclusion guidance for hard negatives (FPs) is NOT included in either brief or verbose text. Instead, it is controlled by the H7 factor via `_hardneg.md` instruction variants:
 
-**Text-modality consistency**: Identical text is used across modalities (text-only brief = text+image brief; text-only verbose = text+image verbose).
+- H7=None: No exclusion text
+- H7=Text-only or H7=Text+Images: Exclusion text added
+
+This separation ensures H2 (text elaboration) and H7 (hard negative guidance) remain orthogonal factors.
+
+**Text-modality consistency**: Identical text is used across modalities (text-only brief = text+image brief; text-only verbose = text+image verbose). Text-only conditions receive the same guidance; they just lack visual examples to anchor it.
 
 **Step 6: Document and Upload**
 
@@ -1487,68 +1599,130 @@ After individual hypothesis tests, exploratory analyses will examine:
 - Whether ordering effects (H5) interact with diversity (H6)
 - Whether example-level effects (Section 8.4.4) explain hypothesis-level results
 
-#### 8.4.7 Pairwise Interaction Testing Methodology
+#### 8.4.7 Stranded Factorial Design
 
-**Rationale**: Individual hypothesis tests (H1, H5, H7, H9) examine main effects in isolation. However, factor effects may not be additive — a technique that improves performance in one condition may degrade it in another. To detect such positive or negative interactions, we test all two-way (pairwise) combinations of experimental factors. This enables us to identify synergistic effects (e.g., hard negatives help more with text+image than image-only) or antagonistic effects (e.g., low temperature helps with canonical-first but hurts with random ordering).
+**Rationale**: The factorial cleanly separates text elaboration (how much detail) from library content (how many hard examples). This is achieved via a stranded design:
 
-To systematically detect two-way interactions between experimental factors, we employ a full factorial design on core factors, with pre-specified escalation triggers for higher-order interactions.
+- **Strand 1**: Verbosity × partial H7 cross — tests H2, H7, H9
+- **H7 Confirmatory**: Full 2×2 decomposition at optimal M/E — decomposes H7 mechanism
+- **Strand 2**: Library size (H15) — tests diminishing returns of hard examples
+- **Strand 3**: Interaction check (conditional) — tests M/E × library interaction
 
 **Core experimental factors:**
 
 | Factor | Symbol | Levels | Description |
 | :--- | :--- | :--- | :--- |
-| Modality/Elaboration | M/E | 5 | Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image |
+| Modality/Elaboration | M/E | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |
 | Hard negatives | H7 | 4 | None, Text-only, Images-only, Text+Images |
 | Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |
+| Library size | L | 6 | Pure (7), Canonical (9), A (13), B (17), C (25), D (41) |
 
-**Design:**
+**Strand 1: Verbosity × Partial H7 Cross**
 
-- Full factorial: 5 × 4 × 5 = 100 conditions
-- Each condition tested with K=10 independent runs (see Section 3.8)
-- Total runs: 100 × 10 × 60 tiles = 60,000 API calls on Flash
-- Estimated cost: ~$90 (well under $250 budget trigger)
+Test M/E and H7 with temperature, but only test H7 extremes (None vs Text+Images) to detect interaction without full cross:
 
-This design provides full power to detect all two-way interactions without confounding. The K=10 independent runs enable post-hoc voting analysis at multiple pool sizes (N=5 from runs 1-5 or 6-10; N=10 from all runs) without circular application of voting when testing other factors.
+*Image-using modalities (3 levels):*
 
-**Note on ordering (H5)**: Example ordering is tested as a partial cross (see H5), not in the main factorial. All main factorial conditions use canonical-first ordering. The H5 partial cross adds canonical-last and random ordering at 3 selected M/E levels, with mitigation trigger if interaction detected.
+| M/E Level | H7=None | H7=Text+Images |
+| --------- | ------- | -------------- |
+| Image-only | ✓ | ✓ |
+| Brief+image | ✓ | ✓ |
+| Verbose+image | ✓ | ✓ |
+
+*Text-only modalities (2 levels):*
+
+| M/E Level | H7=None | H7=Text-only |
+| --------- | ------- | ------------ |
+| Brief-text | ✓ | ✓ |
+| Verbose-text | ✓ | ✓ |
+
+**Note**: Text-only modalities cannot have H7=Images-only or H7=Text+Images since they have no example images.
+
+**Strand 1 totals:**
+
+| Component | Cells |
+| --------- | ----- |
+| Image M/E (3) × H7 (2) × T (5) | 30 |
+| Text M/E (2) × H7 (2) × T (5) | 20 |
+| **Total** | **50** |
+
+**API calls**: 50 × K=10 × 60 tiles = **30,000 calls** (~$45)
+
+**H7 Confirmatory: Full 2×2 Decomposition**
+
+After Strand 1 identifies optimal M/E level, test all 4 H7 levels at that M/E to decompose the mechanism:
+
+| H7 Level | Exclusion Text | HN Images | Image Labels |
+| -------- | -------------- | --------- | ------------ |
+| None | No | No | — |
+| Text-only | Yes | No | — |
+| Images-only | No | Yes | Minimal ("Negative") |
+| Text+Images | Yes | Yes | Detailed (with explanation) |
+
+**H7 Confirmatory totals:**
+
+- 1 M/E × 4 H7 × 5 T = **20 cells**
+- **API calls**: 20 × K=10 × 60 tiles = **12,000 calls** (~$18)
+
+**H7 Expansion trigger**: Run H7 middle levels (Text-only, Images-only) at a second M/E level if EITHER:
+
+1. M/E × H7 interaction detected in Strand 1 (p < 0.10), OR
+2. H7 main effect (None vs Text+Images) exceeds 0.08 F1
+
+**Strand 2: Library Size (H15)**
+
+Test 6 library conditions at optimal M/E and H7 from Strand 1:
+
+| Condition | Canon+ | Canon- | HP  | Emp-HN | Nulls | Total |
+| --------- | ------ | ------ | --- | ------ | ----- | ----- |
+| Pure | 4 | 0 | 0 | 0 | 3 | 7 |
+| Canonical | 4 | 2 | 0 | 0 | 3 | 9 |
+| A | 4 | 2 | 2 | 2 | 3 | 13 |
+| B | 4 | 2 | 4 | 4 | 3 | 17 |
+| C | 4 | 2 | 8 | 8 | 3 | 25 |
+| D | 4 | 2 | 16 | 16 | 3 | 41 |
+
+**H7 Constraint**: Pure and Canonical run at H7=None (no empirical HNs available). Conditions A-D run at optimal H7 from Strand 1.
+
+**Strand 2 totals:**
+
+- 6 conditions × 5 T = **30 cells**
+- **API calls**: 30 × K=10 × 60 tiles = **18,000 calls** (~$27)
+
+**Strand 3: Interaction Check (Conditional)**
+
+If Strand 1 AND Strand 2 show significant effects, check whether optimal M/E depends on library size by testing a second M/E level across library conditions.
+
+**Trigger**: Run if BOTH:
+
+1. Strand 1 shows significant M/E effect (p < 0.05), AND
+2. Strand 2 shows significant library size effect (p < 0.05)
+
+**Strand 3 totals:**
+
+- 1 additional M/E × 6 conditions × 5 T = **30 cells** (but ~10 already run in Strand 1)
+- **API calls**: ~10 × K=10 × 60 tiles = **6,000 calls** (~$9)
+
+**Total stranded design:**
+
+| Component | Cells | Calls | Cost |
+| --------- | ----- | ----- | ---- |
+| Strand 1 (Verbosity × partial H7) | 50 | 30,000 | ~$45 |
+| H7 Confirmatory (full 2×2) | 20 | 12,000 | ~$18 |
+| Strand 2 (Library size) | 30 | 18,000 | ~$27 |
+| **Base total** | **100** | **60,000** | **~$90** |
+| Strand 3 (conditional) | 10 | 6,000 | ~$9 |
+| H7 Expansion (if triggered) | 10 | 6,000 | ~$9 |
+| **Maximum total** | **120** | **72,000** | **~$108** |
+
+**Note on ordering (H5)**: Example ordering is tested as a partial cross (see H5), not in the main strands. All strand conditions use canonical-first ordering. The H5 partial cross adds canonical-last and random ordering at 3 selected M/E levels.
 
 **Text-image ordering constraint:**
 
-For text+image conditions (M/E = Brief-text+image or Verbose-text+image), text ordering corresponds with image ordering:
+For text+image conditions, text ordering corresponds with image ordering:
 
-- If example images are ordered [burial_mound, settlement_mound, triangulation_mound, ...], the text descriptions follow the same sequence
+- If example images are ordered [burial_mound, settlement_mound, ...], the text descriptions follow the same sequence
 - Text always precedes images in the prompt structure (fixed position)
-
-Rationale: If ordering effects exist, they should manifest consistently across modalities when text and image orderings are aligned. Misaligned orderings (e.g., images in one order, text in another) are not tested; this is noted as a design constraint.
-
-**Escalation triggers for higher-order interactions:**
-
-If pairwise analysis reveals unexpected patterns, we escalate to three-way interaction testing:
-
-| Trigger | Definition | Action |
-| :--- | :--- | :--- |
-| Crossover interaction | Effect direction reverses across levels of another factor | Test 3-way: A × B × C where C is the moderating factor |
-| Large attenuation | Effect size reduces by >50% at different level of another factor | Spot-check 3-way interaction |
-| Transfer failure | M × O interaction shows ordering matters for image-only but not text+image | Test text-position factor |
-
-**Escalation procedure:**
-
-1. **Primary analysis**: Full factorial ANOVA on 100 conditions, testing all main effects and two-way interactions
-2. **IF any trigger condition is met**:
-   - Identify the three factors involved
-   - Test the specific 3-way interaction term
-   - Report effect size and 95% bootstrapped confidence interval
-3. **IF 3-way interaction is significant (α = 0.05)**:
-   - Document the interaction pattern
-   - Consider additional spot-check conditions (e.g., text-position variants)
-   - Flag for Stage 2 validation with larger sample
-4. **IF no triggers are met**:
-   - Conclude that pairwise interactions adequately characterise the factor relationships
-   - Report this as a positive finding (interpretable, additive effects)
-
-**Cost containment:**
-
-Escalation beyond the primary 100-condition factorial is budgeted at $50 additional (allowing ~3,800 additional Flash calls or ~380 Pro calls). If escalation costs approach $250 cumulative, we pause for cost-benefit review before proceeding.
 
 ### 8.5 Voting Implementation
 
@@ -1707,25 +1881,31 @@ This section maps each hypothesis to the specific configuration files, system in
 | H6 | `run_study.py` (extended for diversity) | `lib_advanced_metrics.py` |
 | H8 | `run_study.py` (model parameter) | `lib_advanced_metrics.py` |
 
-#### 8.7.4 Factorial Design Coverage (Phase 2)
+#### 8.7.4 Stranded Factorial Design Coverage (Phase 2)
 
-The 100-condition factorial experiment (`studies/phase2-factorial.yaml`) tests H1, H2, H7, and H9 in a unified design:
+The stranded factorial design tests H1, H2, H7, H9, and H15 across multiple strands:
 
 **Factor summary:**
 
 | Factor | Levels | Values |
 | :--- | :--- | :--- |
-| M/E (Modality/Elaboration) | 5 | Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image |
+| M/E (Modality/Elaboration) | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |
 | H7 (Hard negatives) | 4 | None, Text-only, Images-only, Text+Images |
 | T (Temperature) | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |
+| L (Library size) | 6 | Pure, Canonical, A, B, C, D |
 
-**Design**: 5 × 4 × 5 = 100 conditions, each with K=10 independent runs on 60 holdout tiles.
+**Design**: Stranded structure (see Section 8.4.7):
+
+- Strand 1: 50 cells (M/E × partial H7 × T)
+- H7 Confirmatory: 20 cells (optimal M/E × full H7 × T)
+- Strand 2: 30 cells (6 library conditions × T)
+- Strand 3: ~10 cells (conditional interaction check)
 
 **Config naming pattern**: `detect_{modality}_{hardneg}.json`
 
-Temperature is specified at runtime, not in config files. This yields 16 config files (see note below).
+Temperature and library composition are specified at runtime, not in config files. This yields 16 config files.
 
-**Config count**: Text-only modalities (Brief-text, Verbose-text) cannot use H7=Images-only or H7=Both:
+**Config count**: Text-only modalities cannot use H7=Images-only or H7=Both:
 
 - 3 image-using modalities × 4 H7 levels = 12
 - 2 text-only modalities × 2 H7 levels = 4
@@ -1737,16 +1917,17 @@ Example configurations:
 | :--- | :--- | :--- |
 | `detect_image-only_none.json` | Image-only | None |
 | `detect_brief-text_text.json` | Brief-text | Text-only |
-| `detect_brief-text-image_images.json` | Brief-text+image | Images-only |
-| `detect_verbose-text-image_both.json` | Verbose-text+image | Text+Images |
+| `detect_brief-image_images.json` | Brief+image | Images-only |
+| `detect_verbose-image_both.json` | Verbose+image | Text+Images |
 
 **Runtime parameters** (specified at execution, not in config files):
 
 - Temperature: T ∈ {0.0, 0.3, 0.7, 1.0, 1.3}
 - Model: gemini-3-flash, gemini-3-pro, claude-sonnet-4-5, etc.
 - Number of passes (K): 10 for main factorial, varies for H4
+- Library composition: Varies by strand (see Section 8.4.7)
 
-**Note**: H5 (ordering) is tested as a partial cross, not in the main factorial. All main factorial conditions use canonical-first ordering. See H5 for the 9-condition partial cross design (3 orderings × 3 M/E levels).
+**Note**: H5 (ordering) is tested as a partial cross, not in the main strands. All strand conditions use canonical-first ordering. See H5 for the 9-condition partial cross design (3 orderings × 3 M/E levels).
 
 ---
 
@@ -1756,25 +1937,27 @@ Example configurations:
 
 - **H4** (consensus voting) — highest practical impact; foundational
 - **H7** (hard negatives) — directly addresses precision issues
+- **H15** (library size) — determines optimal hard example count
 
 ### Tier 2: Should Test (Secondary Confirmatory)
 
 - **H5** (example ordering) — low implementation cost, clear theoretical basis
-- **H6** (prompt diversity) — moderate confidence, refines H4
-- **H8** (Flash→Pro transfer) — validates development approach
 - **H9** (temperature) — validates vendor recommendation
 
 ### Tier 3: Lower Priority (Confirmatory)
 
 - **H1, H2** (text effects) — already informally tested; confirmatory test validates preliminary findings
-- **H3** (coarse-to-fine) — preliminary evidence suggests degradation; confirmatory test validates this unexpected result against literature recommendations
 
 ### Tier 4: If Resources Allow (Exploratory)
 
+- **H3** (two-stage) — preliminary evidence suggests degradation; exploratory validation
+- **H6** (prompt diversity) — refines H4
+- **H8** (Flash→Pro transfer) — validates development approach
 - **H10** (fine-to-coarse) — novel, worth exploring
 - **H11** (temperature variation) — likely small effect
 - **H12** (cross-model) — important for generalisability
-- **H13–H16** — additional exploratory questions
+- **H13, H14, H16** — additional exploratory questions
+- **H17** (HP:HN ratio) — ratio optimisation (conditional on H15)
 
 ---
 
@@ -1903,12 +2086,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 3.4*
+*Document version: 3.5*
 *Created: 2025-12-22*
-*Updated: 2026-01-04*
+*Updated: 2026-01-06*
 
 **Changelog:**
 
+- v3.5: Major factorial restructure separating text elaboration from library content — H2 redefined as 3 detail levels (Minimal/Brief/Verbose) with HP edge cases in both brief and verbose at different detail levels; stranded design (Strand 1: 50 cells for verbosity × partial H7; H7 Confirmatory: 20 cells full 2×2 at optimal M/E; Strand 2: 30 cells for H15 library size with 6 conditions); H15 promoted to confirmatory with Pure/Canonical/A-D library conditions using 1:1 HP:Emp-HN ratio and Canon+/Canon-/HP/Emp-HN terminology; H17 added as exploratory ratio hypothesis; H3/H6/H8 moved to exploratory; confirmatory count reduced to 7 (H1, H2, H4, H5, H7, H9, H15); M/E factor remains 5 levels (Image-only uses minimal text, no separate level); H7 constraint documented (Pure/Canonical run at H7=None); Section 8.4.1 updated (brief includes terse HP guidance, verbose includes detailed HP guidance); Section 8.4.7 rewritten for stranded design; Section 8.7.4 updated for stranded coverage
 - v3.4: Final review fixes — H2/H7 orthogonality clarification (exclusion guidance controlled by H7 only); config naming corrected (temperature is runtime parameter, 16 configs not 20 due to text-only constraints); H3 factor list corrected; temperature "required" → "recommended"; Section 8.3.3/8.3.4 factor references fixed; typos corrected; terminology standardised (elaborate → verbose)
 - v3.3: Exploratory hypotheses H10-H16 comprehensive rewrite with detailed test designs; fixed H11 implementation table description ("prompts" → "passes"); markdown linting (asterisk lists → dashes throughout)
 - v3.2: Major factorial design update — revised to 100-condition design (5 M/E × 4 H7 × 5 T levels); added Section 3.8 K=10 Evaluation Protocol; updated H1 to 5-level M/E factor; H2 now contrasts within factorial; H4 integrated with K=10 runs; H5 partial cross design (3 × 3) with p < 0.10 mitigation; H9 extended to 5 temperatures with escalation trigger; H7 alignment clarification (text describes same failures as images); Section 1.3 text-only role clarification; Section 8.4.1 library and verbose text construction procedure with alignment requirements; updated Section 8.4.7 and Section 8.7.4 for 100-condition factorial

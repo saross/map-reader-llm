@@ -12,28 +12,37 @@
 Phase 0: Preparation
     │
     ▼
-Phase 1: Library + Verbose Text Construction ───────────────┐
+Phase 1: Library + Text Construction ───────────────────────┐
     │                                                       │
     ▼                                                       │
-Phase 2: Core Factorial (H1, H2, H7, H9) ◄──────────────────┤
-    │    100 conditions × K=10 runs                         │
+Phase 2a: Strand 1 (Verbosity × Partial H7) ◄───────────────┤
+    │    50 cells × K=10 runs                               │
+    ▼                                                       │
+Phase 2b: H7 Confirmatory (Full 2×2 at Optimal M/E)         │
+    │    20 cells × K=10 runs                               │
+    ▼                                                       │
+Phase 2c: Strand 2 (Library Size H15) ──────────────────────┤
+    │    30 cells × K=10 runs                               │
+    ▼                                                       │
+Phase 2d: Strand 3 (Interaction, conditional)               │
+    │    ~10 cells × K=10 runs                              │
     │                                                       │
     ├───────────────┬───────────────┬───────────────┐       │
     ▼               ▼               ▼               ▼       │
 Phase 3a:       Phase 3b:       Phase 3c:       Phase 3d:   │
 H4 Voting       H5 Ordering     H6 Diversity    H3 Two-Stage│
-(N=30 extend)   (partial cross)                             │
+(N=30 extend)   (partial cross) (exploratory)   (exploratory)
     │               │               │               │       │
     └───────────────┴───────────────┴───────────────┘       │
                     │                                       │
                     ▼                                       │
             Phase 4: H8 Flash→Pro Transfer (OFAT) ◄─────────┘
-                    │
+                    │                                       (exploratory)
                     ▼
-            Phase 5: Exploratory (H10-H16)
+            Phase 5: Exploratory (H10-H14, H16, H17)
 ```
 
-**Note**: H2 (Text Elaboration) is now integrated into the main factorial as the M/E factor (5 levels). Phase 3d formerly tested H2 separately; this is no longer required.
+**Note**: The stranded design separates text elaboration (Strand 1) from library content (Strand 2). H3, H6, and H8 are now exploratory hypotheses.
 
 ---
 
@@ -156,31 +165,36 @@ Document for each selected example:
 - Frequency (passes where failure occurred)
 - Failure category (e.g., "occluded mound", "benchmark confusion")
 
-**Step 4: Construct Verbose Text**
+**Step 4: Construct Brief Text**
 
-Build verbose text by adding edge case guidance for hard positives:
+Build brief text with terse descriptions:
 
 | Component | Source | Content |
-|-----------|--------|---------|
-| Base | Legend descriptions | Brief text describing canonical mound types |
-| Edge case guidance | Hard positive images | Text describing why each FN IS a mound (e.g., occluded symbols, degraded examples) |
+| --------- | ------ | ------- |
+| Canonical descriptions | Legend | Terse descriptions of 4 canonical mound types |
+| HP edge case guidance | Hard positive images | Terse mention of edge case types ("symbols may be partially occluded") |
 
-**Note on exclusion guidance**: Text describing hard negatives (FPs) is NOT part of verbose text. Exclusion guidance is controlled by the H7 factor:
+Word count: ~200-300 words.
+
+**Step 5: Construct Verbose Text**
+
+Expand brief text with detailed guidance:
+
+| Component | Source | Content |
+| --------- | ------ | ------- |
+| Canonical descriptions | Legend | Detailed descriptions of 4 canonical types (size, colour, ray count, context) |
+| HP edge case guidance | Hard positive images | Detailed guidance on occlusion types, degradation patterns, clustering |
+
+Word count: ~500-700 words.
+
+**Brief vs Verbose distinction**: Both include the same content categories (canonical symbols + HP edge cases). The difference is detail level, not content coverage.
+
+**Note on exclusion guidance**: Exclusion guidance for hard negatives (FPs) is NOT part of either brief or verbose text. Exclusion guidance is controlled by the H7 factor via `_hardneg.md` instruction variants:
+
 - H7 = None or Images-only: No exclusion text
-- H7 = Text-only or Text+Images: Exclusion text added via `_hardneg.md` instruction variants
+- H7 = Text-only or Text+Images: Exclusion text added
 
-This separation ensures H2 (elaboration) and H7 (hard negatives) remain orthogonal factors.
-
-**Alignment requirement**: Each hard positive image must have corresponding edge case text in verbose prompts.
-
-**Step 5: Construct Brief vs Verbose Text**
-
-| Text Version | Content |
-|--------------|---------|
-| Brief text | Legend-based descriptions of canonical mound types only (~200-400 words) |
-| Verbose text | Brief text + edge case guidance for hard positives (~400-700 words) |
-
-**Note**: Exclusion guidance for hard negatives is added separately via H7 `_hardneg.md` variants, not via the brief/verbose distinction.
+This separation ensures H2 (text elaboration) and H7 (hard negatives) remain orthogonal factors.
 
 **Text-modality consistency**: Identical text is used across modalities:
 
@@ -208,29 +222,141 @@ If <4 distinct FNs or <3 distinct FPs are found:
 
 ---
 
-## Phase 2: Core Factorial (H1, H2, H7, H9)
+## Phase 2: Stranded Factorial Design (H1, H2, H7, H9, H15)
 
-**Duration**: 2-3 days
-**Estimated cost**: ~$90 (Flash)
+**Duration**: 3-4 days
+**Estimated cost**: ~$99 (Flash)
 **Prerequisites**: Phase 1 complete, library and text uploaded to OSF
 
-### Design
+The stranded design separates text elaboration (Strand 1) from library content (Strand 2), avoiding a full factorial cross that would conflate these factors.
 
-Full 5×4×5 factorial on Gemini 3 Flash:
+---
 
-| Factor | Levels | Values |
-|--------|--------|--------|
-| Modality/Elaboration (M/E) | 5 | Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image |
-| Hard negatives (H7) | 4 | None, Text-only, Images-only, Text+Images |
-| Temperature (T) | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |
+### Phase 2a: Strand 1 — Verbosity × Partial H7 Cross
 
-**Note**: Ordering (H5) is tested as a partial cross in Phase 3b, not in the main factorial. All main factorial conditions use canonical-first ordering.
+**Purpose**: Determine optimal text elaboration and hard negative settings.
 
-**Total**: 100 conditions × K=10 runs × 60 holdout tiles = **60,000 API calls**
+**Design**: 5 M/E levels × partial H7 cross × 5 temperatures:
 
-**Implementation note**: The 100 conditions are implemented using 16 config files × 5 temperature values (runtime parameter). Text-only modalities (Brief-text, Verbose-text) only have 2 valid H7 levels each (None, Text-only), yielding 16 rather than 20 configs.
+**Image-using modalities (3 levels)**:
 
-### Evaluation Protocol
+| M/E | H7=None | H7=Text+Images |
+|-----|---------|----------------|
+| Image-only | ✓ | ✓ |
+| Brief+image | ✓ | ✓ |
+| Verbose+image | ✓ | ✓ |
+
+**Text-only modalities (2 levels)**:
+
+| M/E | H7=None | H7=Text-only |
+|-----|---------|--------------|
+| Brief-text | ✓ | ✓ |
+| Verbose-text | ✓ | ✓ |
+
+**Strand 1 totals**:
+
+- (3 image M/E × 2 H7 × 5 T) + (2 text M/E × 2 H7 × 5 T) = 30 + 20 = **50 cells**
+- 50 × K=10 × 60 tiles = **30,000 API calls** (~$45)
+
+**Fixed parameters**: All conditions use Library A (13 examples: 4 Canon+, 2 Canon-, 2 HP, 2 Emp-HN, 3 nulls). Canonical-first ordering.
+
+**Analysis**:
+
+1. 2-way ANOVA: M/E × H7 (aggregating over T)
+2. 1-way ANOVA on T (at optimal M/E × H7)
+3. Identify optimal M/E and optimal H7 for next stage
+
+---
+
+### Phase 2b: H7 Confirmatory — Full 2×2 at Optimal M/E
+
+**Purpose**: Test all 4 H7 levels at the optimal modality from Strand 1.
+
+**Design**: Full 2×2 H7 factorial at optimal M/E:
+
+| H7 Level | Exclusion Text | HN Images |
+|----------|----------------|-----------|
+| None | No | No |
+| Text-only | Yes | No |
+| Images-only | No | Yes (minimal labels) |
+| Text+Images | Yes | Yes (detailed labels) |
+
+**H7 Confirmatory totals**:
+
+- 4 H7 × 5 T = **20 cells**
+- 20 × K=10 × 60 = **12,000 API calls** (~$18)
+
+**Note**: H7=None and H7=Text+Images are already tested in Strand 1 at optimal M/E. This adds H7=Text-only and H7=Images-only conditions, yielding complete 2×2 data.
+
+**Expansion trigger**: Run H7 middle levels (Text-only, Images-only) at second-best M/E if:
+
+- M/E × H7 interaction (p < 0.10) in Strand 1, OR
+- H7 main effect > 0.08 F1 in Strand 1
+
+**Expansion cost (if triggered)**: 2 H7 × 5 T × K=10 × 60 = **6,000 calls** (~$9)
+
+---
+
+### Phase 2c: Strand 2 — Library Size (H15)
+
+**Purpose**: Determine optimal hard example library size.
+
+**Prerequisite**: Optimal M/E and H7 from Strands 1 and 2b.
+
+**Design**: 6 library conditions at optimal M/E and H7:
+
+| Condition | Canon+ | Canon- | HP | Emp-HN | Nulls | Total | Hard Examples |
+|-----------|--------|--------|-----|--------|-------|-------|---------------|
+| Pure | 4 | 0 | 0 | 0 | 3 | 7 | 0 |
+| Canonical | 4 | 2 | 0 | 0 | 3 | 9 | 0 |
+| A | 4 | 2 | 2 | 2 | 3 | 13 | 4 |
+| B | 4 | 2 | 4 | 4 | 3 | 17 | 8 |
+| C | 4 | 2 | 8 | 8 | 3 | 25 | 16 |
+| D | 4 | 2 | 16 | 16 | 3 | 41 | 32 |
+
+**Terminology**:
+
+- **Canon+**: Legend-derived positives (burial mound, settlement mound, trig on mound, bench mark on mound)
+- **Canon-**: Legend-derived negatives (standalone trig point, standalone bench mark)
+- **HP**: Empirically-derived hard positives (FNs from Phase 1)
+- **Emp-HN**: Empirically-derived hard negatives (FPs from Phase 1)
+
+**H7 constraint**: Pure and Canonical run at H7=None (no empirical HNs available). Conditions A-D run at optimal H7 from Strand 1.
+
+**Strand 2 totals**:
+
+- 6 conditions × 5 T = **30 cells**
+- 30 × K=10 × 60 = **18,000 API calls** (~$27)
+
+**Planned contrasts**:
+
+1. Pure → Canonical: Do legend-derived negatives help?
+2. Canonical → A: Do empirical hard examples help? (confounded with H7 if optimal ≠ None)
+3. A → B → C → D: Diminishing returns curve
+
+**Confound note**: The Canonical → A contrast is confounded if Strand 1 optimal H7 ≠ None, because Canonical runs at H7=None while A runs at optimal H7. Document adjustment option in analysis.
+
+---
+
+### Phase 2d: Strand 3 — Interaction Check (Conditional)
+
+**Purpose**: Check whether optimal verbosity depends on library size.
+
+**Trigger**: Run if BOTH:
+
+1. Strand 1 shows significant M/E effect (p < 0.05), AND
+2. Strand 2 shows significant library size effect (p < 0.05)
+
+**Design**: Test second-best M/E at 2 library sizes (optimal and one adjacent):
+
+- 2 M/E × 2 Library × 5 T = **20 cells** (10 new cells; 10 overlap with Strands 1-2)
+- ~10 new cells × K=10 × 60 = **6,000 API calls** (~$9)
+
+**Analysis**: Test M/E × Library interaction. If significant (p < 0.10), optimal configuration depends on library size.
+
+---
+
+### Evaluation Protocol (All Strands)
 
 Each condition is evaluated using K=10 independent single-pass runs (see preregistration Section 3.8):
 
@@ -240,21 +366,29 @@ Each condition is evaluated using K=10 independent single-pass runs (see preregi
 
 ### Execution Order
 
-Run conditions in randomised order to distribute any temporal effects (API performance variation, rate limiting).
+Run conditions in randomised order within each strand to distribute temporal effects.
 
 ```python
-# Pseudocode for execution
-conditions = generate_all_100_conditions()
-random.seed(20260104)  # Document seed
-random.shuffle(conditions)
+# Pseudocode for strand execution
+def run_strand(strand_conditions, seed):
+    random.seed(seed)
+    random.shuffle(strand_conditions)
+    for condition in strand_conditions:
+        for tile in holdout_tiles:
+            for run_num in range(10):  # K=10 independent runs
+                run_detection(condition, tile, run_num)
+                save_response()
+        save_checkpoint(condition)
 
-for condition in conditions:
-    for tile in holdout_tiles:
-        for run_num in range(10):  # K=10 independent runs
-            run_detection(condition, tile, run_num)
-            save_response()
-    # Checkpoint after each condition
-    save_checkpoint(condition)
+# Execute strands sequentially
+run_strand(strand1_conditions, seed=20260104)
+analyse_strand1()  # Determine optimal M/E, H7
+run_strand(h7_confirmatory_conditions, seed=20260105)
+analyse_h7()  # Complete H7 picture
+run_strand(strand2_conditions, seed=20260106)
+analyse_strand2()  # Determine optimal library size
+if interaction_triggered():
+    run_strand(strand3_conditions, seed=20260107)
 ```
 
 ### Checkpoints
@@ -265,17 +399,19 @@ for condition in conditions:
 
 ### Outputs
 
-- [ ] Raw JSON responses: `outputs/phase2-factorial/raw-responses/{condition_id}/{tile_id}_run{n}.json`
-- [ ] Aggregated results: `outputs/phase2-factorial/aggregated/factorial-results.csv`
-- [ ] Preliminary ANOVA: `outputs/phase2-factorial/factorial-anova.md`
+- [ ] Raw JSON responses: `outputs/phase2-factorial/raw-responses/{strand}/{condition_id}/{tile_id}_run{n}.json`
+- [ ] Aggregated results: `outputs/phase2-factorial/aggregated/strand{n}-results.csv`
+- [ ] Strand analyses: `outputs/phase2-factorial/strand{n}-anova.md`
+- [ ] Final optimal configuration: `outputs/phase2-factorial/optimal-config.json`
 
-### Analysis (Immediate)
+### Analysis Summary
 
-1. Compute mean F1 and SD for each condition across K=10 runs
-2. Run 3-way ANOVA: M/E × H7 × T
-3. Compute post-hoc voting performance at multiple thresholds
-4. Identify significant main effects and interactions
-5. **Decision**: Which factors show significant effects? These inform Phase 3 priorities.
+| Strand | Primary Analysis | Key Output |
+|--------|------------------|------------|
+| 1 | M/E × H7 partial ANOVA | Optimal M/E, preliminary H7 |
+| 2b | H7 2×2 ANOVA | Optimal H7 (confirmed) |
+| 2c | Library size ANOVA + contrasts | Optimal library size |
+| 3 | M/E × Library interaction | Interaction present? |
 
 ---
 
@@ -480,7 +616,7 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 ## Phase 5: Exploratory Hypotheses
 
 **Duration**: Variable
-**Estimated cost**: ~$20-50 (budget permitting)
+**Estimated cost**: ~$40-60 (budget permitting)
 **Prerequisites**: Phases 2-4 complete
 
 ### Priority Order
@@ -498,7 +634,13 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
    - Context-expanded re-query for uncertain detections
    - ~$5-10
 
-4. **H11, H14, H15, H16**: Lower priority, if budget allows
+4. **H17 (HP:HN ratio)**: Ratio exploration
+   - At optimal library size from H15 (A-D only), compare HP:HN ratios at fixed total count
+   - 3 ratios: 1:3 (HN-heavy), 1:1 (baseline), 3:1 (HP-heavy)
+   - Trigger: Run if H15 shows library size matters AND budget permits
+   - ~$9 incremental (R2 already tested in H15)
+
+5. **H11, H14, H16**: Lower priority, if budget allows
 
 ---
 
@@ -506,21 +648,31 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
-| Phase 1: Library + Text | ~100 | $1-2 |
-| Phase 2: Factorial (100 × K=10) | ~60,000 | ~$90 |
+| Phase 1: Library + Text | ~100 | ~$1-2 |
+| Phase 2a: Strand 1 (Verbosity × partial H7) | ~30,000 | ~$45 |
+| Phase 2b: H7 Confirmatory (full 2×2) | ~12,000 | ~$18 |
+| Phase 2c: Strand 2 — H15 (6 library conditions) | ~18,000 | ~$27 |
+| Phase 2d: Strand 3 (conditional interaction) | ~6,000 | ~$9 |
 | Phase 3a: H4 N=30 Extension | ~1,200 | ~$2 |
 | Phase 3b: H5 Ordering | ~3,600 | ~$5 |
-| Phase 3c: H6 Diversity | ~6,000 | ~$9 |
-| Phase 3d: H3 Two-Stage | ~1,200 | ~$2 |
-| **Flash Subtotal** | **~72,100** | **~$109** |
-| Phase 4: H8 Pro Transfer | ~1,400-1,600 | ~$105-120 |
-| **Confirmatory Total** | **~73,500-73,700** | **~$214-229** |
-| Phase 5: Exploratory | ~2,000-5,000 | ~$30-60 |
-| **Grand Total** | **~75,500-78,700** | **~$244-289** |
+| Phase 3c: H6 Diversity (exploratory) | ~6,000 | ~$9 |
+| Phase 3d: H3 Two-Stage (exploratory) | ~1,200 | ~$2 |
+| H7 Expansion (if triggered) | ~6,000 | ~$9 |
+| **Flash Subtotal** | **~78,100-90,100** | **~$117-135** |
+| Phase 4: H8 Pro Transfer (exploratory) | ~1,400-1,600 | ~$105-120 |
+| **Confirmatory Total** | **~79,500-91,700** | **~$222-255** |
+| Phase 5: Exploratory (H10-H14, H16, H17) | ~7,000-12,000 | ~$40-60 |
+| **Grand Total** | **~86,500-103,700** | **~$262-315** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$350**
+**Contingency**: 20% buffer → **Budget ceiling: ~$380**
 
-**Note**: The majority of cost comes from Pro model testing (Phase 4) at ~10× Flash pricing. Flash-only confirmatory testing would cost ~$109.
+**Notes**:
+
+- Phase 2d (Strand 3) only runs if Strands 1 and 2 both show significant effects
+- H7 Expansion only runs if interaction or large H7 effect detected
+- H3, H6, and H8 are now exploratory (moved from confirmatory)
+- The majority of cost comes from Pro model testing (Phase 4) at ~10× Flash pricing
+- Flash-only confirmatory testing would cost ~$117-135
 
 ---
 
@@ -578,12 +730,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.2*
+*Document version: 2.3*
 *Created: 2025-12-31*
-*Updated: 2026-01-04*
+*Updated: 2026-01-06*
 
 **Changelog:**
 
+- v2.3: Stranded factorial restructure — separates text elaboration (Strand 1) from library content (Strand 2); Phase 2 now has 4 sub-phases (2a-2d); H15 promoted to confirmatory with 6 library conditions (Pure, Canonical, A-D) using 1:1 HP:Emp-HN ratio; H3, H6, H8 moved to exploratory; H17 added to Phase 5 (HP:HN ratio exploration); budget updated (~$117-135 Flash, ~$222-255 total confirmatory)
 - v2.2: Final review fixes — H2/H7 orthogonality in Phase 1 (exclusion guidance controlled by H7 only); corrected Pro cost estimates (~$105-120, not ~$21-24); fixed budget summary totals; updated file naming to match 10-instruction structure; fixed H5 condition count (6 new, not 9); removed stale h2-elaboration directory; corrected H12 description
 - v2.1: Fixed stale E7 reference → H16 in dependency graph and Phase 5 priority list
 - v2.0: Major design update — revised to 100-condition factorial (5 M/E × 4 H7 × 5 T); K=10 independent runs protocol; Phase 1 now includes verbose text construction with text-image alignment; H2 integrated into main factorial (removed Phase 3d); H5 partial cross design; H8 OFAT approach on 20-tile subset; revised budget summary (~$150-183 vs ~$187-326)
