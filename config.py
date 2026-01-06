@@ -19,9 +19,41 @@ OUTPUTS_DIR.mkdir(exist_ok=True)
 RESULTS_DIR = OUTPUTS_DIR / "results"
 RESULTS_DIR.mkdir(exist_ok=True)
 
-# Tiling settings
-TILE_SIZE = 512
-OVERLAP = 64  # Overlap in pixels. 20-30px mounds -> 64px is safe.
+# =============================================================================
+# TILE CONFIGURATION
+# =============================================================================
+#
+# Tile Generation (preprocess_tiling.py):
+#   - Source: High-resolution GeoTIFF maps (~5.02 m/pixel)
+#   - Output: TILE_SIZE × TILE_SIZE PNG tiles with OVERLAP pixels of overlap
+#   - Naming: {map_name}_x{origin_x}_y{origin_y}.png
+#   - Coordinates: Pixel coordinates of tile origin (top-left corner)
+#
+# Key Relationships:
+#   - TILE_SIZE: Actual tile dimensions (default 512px)
+#   - OVERLAP: Overlap ensures features at edges aren't clipped (default 64px)
+#   - STRIDE: Distance between tile origins = TILE_SIZE - OVERLAP (default 448px)
+#   - Tile origin coordinates are always multiples of STRIDE (0, 448, 896, ...)
+#
+# Spatial Calculations:
+#   - Grid position: tile_coords // STRIDE (not TILE_SIZE!)
+#   - Geographic extent: tile_coords + TILE_SIZE (actual dimensions)
+#
+# These parameters are configurable to support experiments with different
+# tile sizes and overlap configurations.
+# =============================================================================
+
+# Core tiling parameters
+TILE_SIZE = 512  # Actual tile dimensions in pixels (512×512)
+OVERLAP = 64     # Overlap in pixels. 20-30px mounds -> 64px is safe.
+STRIDE = TILE_SIZE - OVERLAP  # Distance between tile origins (448px)
+
+# Tile selection parameters
+MAX_BACKGROUND_PERCENT = 0.75  # Tiles must have ≤75% background (black) pixels
+ADJACENCY_DISTANCE = 1         # Spatial separation in grid units (Manhattan distance)
+
+# Crop extraction parameters
+CONTEXT_SIZE = 512  # Pixel dimensions for context window crops
 
 # Grid Settings (v4.7)
 GRID_METERS = 100

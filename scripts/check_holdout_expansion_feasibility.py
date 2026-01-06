@@ -16,11 +16,22 @@ Usage:
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
 import numpy as np
 from PIL import Image
+
+# Add parent directory to path for config import
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from config import (
+    TILE_SIZE,
+    OVERLAP,
+    STRIDE,
+    MAX_BACKGROUND_PERCENT,
+    ADJACENCY_DISTANCE,
+)
 
 # -----------------------------------------------------------------------------
 # Configuration
@@ -39,11 +50,6 @@ MAPS = [
     "K-35-078-1_Lesovo",
 ]
 
-# Constraints
-MAX_BACKGROUND_PERCENT = 0.75
-TILE_SIZE = 448
-ADJACENCY_DISTANCE = 1
-
 # Target
 TARGET_HOLDOUT_PER_MAP = 15
 
@@ -61,9 +67,13 @@ def parse_tile_coords(tile_name: str) -> Tuple[int, int]:
 
 
 def get_tile_grid_position(tile_name: str) -> Tuple[int, int]:
-    """Convert tile coordinates to grid position (tile indices)."""
+    """
+    Convert tile coordinates to grid position (tile indices).
+
+    Note: Tile origins are spaced by STRIDE (not TILE_SIZE) due to overlap.
+    """
     x, y = parse_tile_coords(tile_name)
-    return x // TILE_SIZE, y // TILE_SIZE
+    return x // STRIDE, y // STRIDE
 
 
 def is_adjacent(tile1: str, tile2: str, distance: int = 1) -> bool:

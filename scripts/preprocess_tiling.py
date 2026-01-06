@@ -30,7 +30,7 @@ import sys
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import INPUTS_DIR, RASTERS_DIR, TILES_DIR, TILE_SIZE, OVERLAP
+from config import INPUTS_DIR, RASTERS_DIR, TILES_DIR, TILE_SIZE, OVERLAP, STRIDE
 
 def tile_raster(input_path: Path):
     """
@@ -38,7 +38,7 @@ def tile_raster(input_path: Path):
 
     Process:
         1. Reads the source GeoTIFF.
-        2. Iterates through the raster in sliding windows (default 512px with 64px overlap).
+        2. Iterates through the raster using STRIDE spacing (TILE_SIZE - OVERLAP).
         3. Extracts the RGB pixel data (converting 1-band to RGB if necessary).
         4. Saves the tile as a PNG.
         5. Calculates the specific geotransform for that tile's top-left corner.
@@ -59,15 +59,11 @@ def tile_raster(input_path: Path):
     with rasterio.open(input_path) as src:
         width = src.width
         height = src.height
-        
-        # Calculate steps
-        step = TILE_SIZE - OVERLAP
-        
-        # Generate windows
-        # Using a list comprehension for a cleaner progress bar setup
+
+        # Generate windows using STRIDE (distance between tile origins)
         windows = []
-        for y in range(0, height, step):
-            for x in range(0, width, step):
+        for y in range(0, height, STRIDE):
+            for x in range(0, width, STRIDE):
                 # Handle edge cases where window goes out of bounds
                 # Rasterio handles this automatically if we request a window larger than the image
                 # by padding or clipping? Let's be explicit to avoid black bars if possible, 

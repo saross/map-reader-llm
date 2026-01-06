@@ -9,11 +9,15 @@ Created: 2025-12-23
 """
 
 import json
+import sys
 from pathlib import Path
 
+# Add parent directory to path for config import
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from config import TILE_SIZE, STRIDE
 
-# Constants
-TILE_SIZE = 448  # pixels
+
+# Constants (TILE_SIZE imported from config.py)
 TILE_DIRS = [
     "K-35-052-4_32635",
     "K-35-053-3_Elenovo",

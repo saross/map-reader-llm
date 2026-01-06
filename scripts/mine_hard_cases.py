@@ -13,14 +13,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 try:
-    import config
+    from config import TILES_DIR, CONTEXT_SIZE
 except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
 
 def get_tile_path(tile_id: str) -> Path:
     """Resolves tile ID to absolute path."""
-    tiles_dir = config.TILES_DIR
+    tiles_dir = TILES_DIR
     print(f"DEBUG: Searching for {tile_id} in {tiles_dir}")
     found = list(tiles_dir.glob(f"**/{tile_id}")) 
     if not found:
@@ -33,7 +33,7 @@ def get_tile_path(tile_id: str) -> Path:
     print(f"DEBUG: Not found.")
     return None
 
-def crop_candidate(raster_path: Path, geom, context_px: int = 512):
+def crop_candidate(raster_path: Path, geom, context_px: int = CONTEXT_SIZE):
     """Crops the raster around the candidate geometry."""
     with rasterio.open(raster_path) as src:
         bounds = shape(geom).bounds
@@ -96,7 +96,7 @@ def mine_crops(geojson_path, output_dir, label, bounds_path=None):
         if not tile_path: continue
         
         # Crop
-        img = crop_candidate(tile_path, row['geometry'], context_px=512)
+        img = crop_candidate(tile_path, row['geometry'])
         if img:
             fname = f"{label}_{idx}_{tile_id}.png"
             img.save(out_path / fname)

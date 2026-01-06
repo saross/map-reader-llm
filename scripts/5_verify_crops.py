@@ -49,7 +49,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 try:
-    import config
+    from config import TILES_DIR, CONTEXT_SIZE
 except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
@@ -81,7 +81,7 @@ def load_candidates(candidates_path: Path) -> List[Feature]:
 
 def get_tile_path(tile_id: str) -> Path:
     """Resolves tile ID to absolute path."""
-    tiles_dir = config.TILES_DIR
+    tiles_dir = TILES_DIR
     found = list(tiles_dir.glob(f"**/{tile_id}")) 
     if not found:
         found = list(tiles_dir.glob(f"**/{tile_id}.png"))
@@ -90,7 +90,7 @@ def get_tile_path(tile_id: str) -> Path:
         return found[0]
     return None
 
-def crop_candidate(raster_path: Path, geom: Dict, context_px: int = 512) -> Image.Image:
+def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE) -> Image.Image:
     """Crops the raster around the candidate geometry."""
     with rasterio.open(raster_path) as src:
         bounds = shape(geom).bounds

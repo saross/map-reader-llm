@@ -19,12 +19,23 @@ import argparse
 import json
 import random
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
 import numpy as np
 from PIL import Image
+
+# Add parent directory to path for config import
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from config import (
+    TILE_SIZE,
+    OVERLAP,
+    STRIDE,
+    MAX_BACKGROUND_PERCENT,
+    ADJACENCY_DISTANCE,
+)
 
 # -----------------------------------------------------------------------------
 # Configuration
@@ -46,16 +57,12 @@ MAPS = [
 # Selection parameters
 TRAINING_SAMPLES_PER_MAP = 5
 HOLDOUT_SAMPLES_PER_MAP = 15  # Expanded from 5 to 15 for improved statistical power
-MAX_BACKGROUND_PERCENT = 0.75  # Tiles must have ≤75% background pixels
-TILE_SIZE = 448  # Pixels
+# TILE_SIZE, OVERLAP, STRIDE, MAX_BACKGROUND_PERCENT, ADJACENCY_DISTANCE imported from config.py
 
 # Density strata thresholds
 DENSITY_EMPTY = 0
 DENSITY_SPARSE = (1, 2)
 DENSITY_DENSE = 3  # 3 or more
-
-# Spatial separation: exclude tiles within this Manhattan distance (in tiles)
-ADJACENCY_DISTANCE = 1
 
 
 # -----------------------------------------------------------------------------
@@ -78,10 +85,13 @@ def get_tile_grid_position(tile_name: str) -> Tuple[int, int]:
     """
     Convert tile coordinates to grid position (tile indices).
 
-    Example: x=1792, y=3136 with TILE_SIZE=448 -> (4, 7)
+    Note: Tile origins are spaced by STRIDE (448px), not TILE_SIZE (512px),
+    due to overlap. So grid position = coords // STRIDE.
+
+    Example: x=1792, y=3136 with STRIDE=448 -> (4, 7)
     """
     x, y = parse_tile_coords(tile_name)
-    return x // TILE_SIZE, y // TILE_SIZE
+    return x // STRIDE, y // STRIDE
 
 
 def is_adjacent(tile1: str, tile2: str, distance: int = 1) -> bool:
@@ -529,6 +539,8 @@ def main():
             "max_background_percent": MAX_BACKGROUND_PERCENT,
             "adjacency_distance": ADJACENCY_DISTANCE,
             "tile_size": TILE_SIZE,
+            "tile_overlap": OVERLAP,
+            "tile_stride": STRIDE,
         },
         "training": {
             "total_tiles": len(training_tiles),
