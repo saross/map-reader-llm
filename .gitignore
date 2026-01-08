@@ -1,14 +1,18 @@
-inputs/mapmounds/
+# Large GIS data
+inputs/gis-map-mounds/
+inputs/rasters/
 *.tif
+
+# Python
 venv/
 .venv/
 __pycache__/
 .env
-outputs/
-!outputs/README.md
-!outputs/results/
-!archive/results/
+
+# External references
 references/articles
+
+# IDE
 .Rproj.user
 
 # Claude Code session archives (keep markdown summaries, ignore raw JSONL)
