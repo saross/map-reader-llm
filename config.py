@@ -10,7 +10,26 @@ INPUTS_DIR = BASE_DIR / "inputs"
 RASTERS_DIR = INPUTS_DIR / "rasters"
 VECTORS_DIR = INPUTS_DIR / "vectors"
 TILES_DIR = INPUTS_DIR / "tiles"
-REFERENCES_DIR = INPUTS_DIR / "references"
+
+# =============================================================================
+# EXAMPLE IMAGES CONFIGURATION
+# =============================================================================
+#
+# Example images for few-shot prompts. Supports two naming modes:
+#   - "neutral": Uses neutral-names/ with example_01.png, example_02.png, etc.
+#                Prevents semantic leakage in image-only experiments.
+#   - "descriptive": Uses legend-positive/, legend-negative/, null-tiles/
+#                    with descriptive names like burial_mound.png
+#
+# The naming mode affects which subdirectory is used when resolving paths
+# from config JSON files. Config paths like "neutral/example_01.png" or
+# "legend-positive/burial_mound.png" are resolved relative to EXAMPLES_DIR.
+# =============================================================================
+
+EXAMPLES_DIR = INPUTS_DIR / "examples"
+
+# Backwards compatibility alias (deprecated - use EXAMPLES_DIR)
+REFERENCES_DIR = EXAMPLES_DIR
 
 OUTPUTS_DIR = BASE_DIR / "outputs"
 

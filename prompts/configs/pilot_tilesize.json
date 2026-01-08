@@ -1,0 +1,62 @@
+{
+    "version": "pilot_tilesize",
+    "description": "Tile size calibration pilot. Canonical library only (no hard negatives). Tests 256, 512, 1024px tiles.",
+    "purpose": "pre-registration_calibration",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "detect_brief-text-image.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {
+            "path": "legend-positive/burial_mound.png",
+            "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes.",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "legend-positive/settlement_mound.png",
+            "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks.",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "legend-positive/triangulation_mound.png",
+            "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays.",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "legend-positive/benchmark_mound.png",
+            "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays.",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "legend-negative/standalone_triangulation.png",
+            "label": "Negative: Triangulation Point ALONE (no mound). Black triangle without surrounding rays.",
+            "category": "canonical_negative"
+        },
+        {
+            "path": "legend-negative/standalone_benchmark.png",
+            "label": "Negative: Benchmark ALONE (no mound). Black square without surrounding rays.",
+            "category": "canonical_negative"
+        },
+        {
+            "path": "null-tiles/null_lesovo.png",
+            "label": "Negative: Empty tile. Contains map features but NO mound symbols.",
+            "category": "null"
+        },
+        {
+            "path": "null-tiles/null_elenovo.png",
+            "label": "Negative: Empty tile. Contains map features but NO mound symbols.",
+            "category": "null"
+        },
+        {
+            "path": "null-tiles/null_32635.png",
+            "label": "Negative: Empty tile. Contains map features but NO mound symbols.",
+            "category": "null"
+        }
+    ],
+    "library_composition": {
+        "canon_positive": 4,
+        "canon_negative": 2,
+        "null": 3,
+        "total": 9
+    }
+}

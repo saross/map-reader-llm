@@ -1,0 +1,91 @@
+{
+  "run_id": "cfd65350-41c8-42f5-b02e-cbb34e0b1a03",
+  "timestamp": {
+    "start": "2025-12-22T08:24:06.407961+00:00",
+    "end": "2025-12-22T08:26:00.142742+00:00",
+    "duration_seconds": 113.734781
+  },
+  "environment": {
+    "git_commit": "10c2fdd3561826629910cffd5e0a95a96fae787a",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.1.0"
+  },
+  "configuration": {
+    "version": "v4.3_multipass_liberal",
+    "model": "gemini-2.5-flash",
+    "instruction_file": "v3.7_visual_instruction.md",
+    "prompt_hash": "d458ab6697506d59ddb596fcd23944cd719156d7641a9a32b79f585d68d96c83",
+    "temperature": 2.0,
+    "full_config_snapshot": {
+      "version": "v4.3_multipass_liberal",
+      "description": "Ultra-liberal proposer for multi-pass union. Max temperature, high top_p, no negatives.",
+      "model": "gemini-2.5-flash",
+      "instruction_file": "v3.7_visual_instruction.md",
+      "temperature": 2.0,
+      "top_p": 0.99,
+      "top_k": 64,
+      "examples": [
+        {
+          "label": "Positive Example: Burial Mound",
+          "path": "burial_mound.png"
+        },
+        {
+          "label": "Positive Example: Burial Mound (Compound)",
+          "path": "ref_pos_compound.png"
+        },
+        {
+          "label": "Positive Example: Degraded Mound",
+          "path": "ref_variant_2.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_1_K-35-053-3_Elenovo.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_2_K-35-053-3_Elenovo.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_4_K-35-062-2_Rakovski.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_5_K-35-062-2_Rakovski.png"
+        },
+        {
+          "label": "Positive Example: Hard Case (Mined)",
+          "path": "hard_positive_10_K-35-062-2_Rakovski.png"
+        }
+      ],
+      "manifest_path": "inputs/holdout_manifest.json"
+    },
+    "target_manifest": "inputs/holdout_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 20,
+    "tiles_failed": 0,
+    "retries_total": 1,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [],
+    "retry_details": [
+      {
+        "tile": "K-35-062-2_Rakovski_x896_y3136.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason 2)"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 55692,
+    "total_output_tokens": 6607
+  },
+  "results_summary": {
+    "total_detections": 63,
+    "class_counts": {
+      "burial_mound": 63
+    }
+  }
+}

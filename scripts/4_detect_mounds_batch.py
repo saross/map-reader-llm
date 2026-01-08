@@ -41,7 +41,7 @@ import threading
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, REFERENCES_DIR
+from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, EXAMPLES_DIR
 
 # Import comprehensive metadata tracking
 from scripts.lib_llm_metadata import (
@@ -371,14 +371,14 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     results_tracker = ResultsTracker()
 
     # Build Few-Shot Context from Config
-    refs_dir = REFERENCES_DIR
+    examples_dir = EXAMPLES_DIR
     reference_content = []
-    
+
     examples = config.get("examples", [])
     for ex in examples:
         label = ex.get("label", "Example")
         path_str = ex.get("path", "")
-        img_path = refs_dir / path_str
+        img_path = examples_dir / path_str
         
         if img_path.exists():
             reference_content.append(label)

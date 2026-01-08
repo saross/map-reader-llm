@@ -1,0 +1,207 @@
+{
+  "run_id": "0fdf6d70-40ab-42b6-ba20-ed19e40f7d72",
+  "timestamp": {
+    "start": "2025-12-20T23:31:51.546978+00:00",
+    "end": "2025-12-20T23:47:54.017600+00:00",
+    "duration_seconds": 962.470622
+  },
+  "environment": {
+    "git_commit": "f8dddcf4e3ba2cd8def8bbc8794eb131ab4fde34",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.1.0"
+  },
+  "configuration": {
+    "version": "v3.5_clean",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.5_clean_instruction.md",
+    "prompt_hash": "d458ab6697506d59ddb596fcd23944cd719156d7641a9a32b79f585d68d96c83",
+    "temperature": 0.3,
+    "full_config_snapshot": {
+      "version": "v3.5_clean",
+      "description": "Clean Visual-First Prompt (Text Constraints Removed). Baseline for Feature Removal Study.",
+      "model": "gemini-3-flash-preview",
+      "instruction_file": "v3.5_clean_instruction.md",
+      "temperature": 0.3,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Positive Example: Burial Mound (Standard)"
+        },
+        {
+          "path": "ref_variant_2.png",
+          "label": "Positive Example: Burial Mound (Simple/Degraded)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Positive Example: Settlement Mound (Irregular)"
+        },
+        {
+          "path": "triangulation_mound.png",
+          "label": "Positive Example: Triangulation Point on Mound"
+        },
+        {
+          "path": "benchmark_mound.png",
+          "label": "Positive Example: Benchmark on Mound"
+        },
+        {
+          "path": "ref_variant_1.png",
+          "label": "Positive Example: Benchmark on Mound (Variant)"
+        },
+        {
+          "path": "ref_pos_green.png",
+          "label": "Positive Example: Mound on Vegetation (Green Background)"
+        },
+        {
+          "path": "ref_pos_intersected.png",
+          "label": "Positive Example: Intersected Mound (Obscured by Lines)"
+        },
+        {
+          "path": "ref_pos_compound.png",
+          "label": "Positive Example: Compound Symbol"
+        },
+        {
+          "path": "ref_negative_1.png",
+          "label": "Negative Example: Noise (Ignore)"
+        },
+        {
+          "path": "neg_sparse.png",
+          "label": "Negative Example: Sparse Area (No Mounds)"
+        },
+        {
+          "path": "neg_topo.png",
+          "label": "Negative Example: Topography / River (No Mounds)"
+        },
+        {
+          "path": "neg_urban.png",
+          "label": "Negative Example: Urban Area (No Mounds)"
+        },
+        {
+          "path": "ref_neg_embankment_2.png",
+          "label": "Negative Example: Embankment (Ignore)"
+        },
+        {
+          "path": "ref_neg_benchmark.png",
+          "label": "Negative Example: Benchmark Symbol (Ignore)"
+        },
+        {
+          "path": "ref_neg_triangulation.png",
+          "label": "Negative Example: Triangulation Point (Ignore)"
+        }
+      ],
+      "manifest_path": "inputs/target_tiles_manifest.json"
+    },
+    "target_manifest": "inputs/target_tiles_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 3,
+    "tiles_failed": 2,
+    "retries_total": 16,
+    "retries_429_ratelimit": 16,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason"
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x2240_y2240.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason"
+      }
+    ],
+    "retry_details": [
+      {
+        "tile": "K-35-052-4_32635_x448_y3136.png",
+        "attempt": 1,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x1344_y896.png",
+        "attempt": 1,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "attempt": 1,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "attempt": 1,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x2240_y2240.png",
+        "attempt": 1,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x1344_y896.png",
+        "attempt": 2,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "attempt": 2,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "attempt": 2,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x2240_y2240.png",
+        "attempt": 2,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "attempt": 3,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "attempt": 3,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x2240_y2240.png",
+        "attempt": 3,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "attempt": 4,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x2240_y2240.png",
+        "attempt": 4,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-053-3_Elenovo_x2240_y1344.png",
+        "attempt": 5,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      },
+      {
+        "tile": "K-35-078-1_Lesovo_x2240_y2240.png",
+        "attempt": 5,
+        "reason": "429 Resource has been exhausted (e.g. check quota)."
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 56679,
+    "total_output_tokens": 1762
+  },
+  "results_summary": {
+    "total_detections": 20,
+    "class_counts": {
+      "burial_mound": 17,
+      "triangulation_mound": 1,
+      "benchmark_mound": 2
+    }
+  }
+}

@@ -333,7 +333,7 @@ def run_verification(
         f"Concurrent Workers: {workers}. Iterations per candidate: {iterations}"
     )
 
-    refs_dir = config.REFERENCES_DIR
+    refs_dir = config.EXAMPLES_DIR
     base_prompt = construct_verifier_prompt(prompt_cfg, refs_dir)
 
     # Load instruction file for hashing (metadata tracker needs it)

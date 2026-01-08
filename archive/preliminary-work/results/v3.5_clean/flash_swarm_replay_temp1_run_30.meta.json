@@ -1,0 +1,118 @@
+{
+  "run_id": "137a8e9f-66d1-447c-8907-8746727b7c8a",
+  "timestamp": {
+    "start": "2025-12-21T03:50:22.633044+00:00",
+    "end": "2025-12-21T03:52:05.914937+00:00",
+    "duration_seconds": 103.281893
+  },
+  "environment": {
+    "git_commit": "f96bbe1fbac83b90377550c0ebf68ffa663b62a3",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "4.1.0"
+  },
+  "configuration": {
+    "version": "v3.5_clean",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "v3.5_clean_instruction.md",
+    "prompt_hash": "d458ab6697506d59ddb596fcd23944cd719156d7641a9a32b79f585d68d96c83",
+    "temperature": 1.0,
+    "full_config_snapshot": {
+      "version": "v3.5_clean",
+      "description": "Clean Visual-First Prompt (Text Constraints Removed). Baseline for Feature Removal Study.",
+      "model": "gemini-3-flash-preview",
+      "instruction_file": "v3.5_clean_instruction.md",
+      "temperature": 1.0,
+      "examples": [
+        {
+          "path": "burial_mound.png",
+          "label": "Positive Example: Burial Mound (Standard)"
+        },
+        {
+          "path": "ref_variant_2.png",
+          "label": "Positive Example: Burial Mound (Simple/Degraded)"
+        },
+        {
+          "path": "settlement_mound.png",
+          "label": "Positive Example: Settlement Mound (Irregular)"
+        },
+        {
+          "path": "triangulation_mound.png",
+          "label": "Positive Example: Triangulation Point on Mound"
+        },
+        {
+          "path": "benchmark_mound.png",
+          "label": "Positive Example: Benchmark on Mound"
+        },
+        {
+          "path": "ref_variant_1.png",
+          "label": "Positive Example: Benchmark on Mound (Variant)"
+        },
+        {
+          "path": "ref_pos_green.png",
+          "label": "Positive Example: Mound on Vegetation (Green Background)"
+        },
+        {
+          "path": "ref_pos_intersected.png",
+          "label": "Positive Example: Intersected Mound (Obscured by Lines)"
+        },
+        {
+          "path": "ref_pos_compound.png",
+          "label": "Positive Example: Compound Symbol"
+        },
+        {
+          "path": "ref_negative_1.png",
+          "label": "Negative Example: Noise (Ignore)"
+        },
+        {
+          "path": "neg_sparse.png",
+          "label": "Negative Example: Sparse Area (No Mounds)"
+        },
+        {
+          "path": "neg_topo.png",
+          "label": "Negative Example: Topography / River (No Mounds)"
+        },
+        {
+          "path": "neg_urban.png",
+          "label": "Negative Example: Urban Area (No Mounds)"
+        },
+        {
+          "path": "ref_neg_embankment_2.png",
+          "label": "Negative Example: Embankment (Ignore)"
+        },
+        {
+          "path": "ref_neg_benchmark.png",
+          "label": "Negative Example: Benchmark Symbol (Ignore)"
+        },
+        {
+          "path": "ref_neg_triangulation.png",
+          "label": "Negative Example: Triangulation Point (Ignore)"
+        }
+      ],
+      "manifest_path": "inputs/target_tiles_manifest.json"
+    },
+    "target_manifest": "inputs/target_tiles_manifest.json"
+  },
+  "execution_stats": {
+    "tiles_processed": 20,
+    "tiles_failed": 0,
+    "retries_total": 0,
+    "retries_429_ratelimit": 0,
+    "retries_500_server": 0,
+    "timeouts": 0,
+    "failed_tiles_details": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 377860,
+    "total_output_tokens": 6710
+  },
+  "results_summary": {
+    "total_detections": 74,
+    "class_counts": {
+      "burial_mound": 60,
+      "triangulation_mound": 5,
+      "benchmark_mound": 8,
+      "settlement_mound": 1
+    }
+  }
+}

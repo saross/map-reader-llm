@@ -21,8 +21,8 @@ The prompt architecture reflects the orthogonal factorial design:
 
 - **M/E Factor** (5 levels): Controls modality and text elaboration
   - Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image
-- **H7 Factor** (4 levels): Controls hard negative guidance
-  - None, Text-only, Images-only, Text+Images
+- **H5 Factor** (3 levels): Controls hard negative guidance
+  - None, Images-only, Text+Images
 
 This yields:
 
@@ -30,23 +30,23 @@ This yields:
 - **2 two-stage pipeline instruction files**: propose_image-only.md, verify_image-only.md
 - **16 configuration files**: See Section 2.2 for breakdown
 
-**Note on config count**: Text-only modalities (Brief-text, Verbose-text) cannot use H7=Images-only or H7=Both since they have no example images. This reduces the factorial from 5×4=20 to 16 valid combinations:
+**Note on config count**: Text-only modalities (Brief-text, Verbose-text) cannot use H5=Images-only or H5=Text+Images since they have no example images. This reduces the factorial from 5×3=15 to 9 valid combinations:
 
-- 3 image-using modalities × 4 H7 levels = 12
-- 2 text-only modalities × 2 H7 levels (None, Text-only) = 4
+- 3 image-using modalities × 3 H5 levels = 9
+- 2 text-only modalities × H5=None only = 2 (runtime variants, not separate configs)
 
 ### Orthogonal Factor Separation
 
-The design maintains strict orthogonality between H2 (text elaboration) and H7 (hard negatives):
+The design maintains strict orthogonality between M/E levels (modality + elaboration, tested in H1) and H5 (hard negatives):
 
 | Factor | Controls | Content |
 | ------ | -------- | ------- |
-| H2 (Text elaboration) | Detail level for **positives** (canonical symbols + HP edge cases) | Minimal = task only; Brief = terse descriptions + terse HP mention; Verbose = detailed descriptions + detailed HP guidance |
-| H7 (Hard negatives) | Presence of **negative** guidance | Exclusion text about what NOT to detect; HN images of confusable symbols |
+| M/E level (H1) | Detail level for **positives** (canonical symbols + HP edge cases) | Minimal = task only; Brief = terse descriptions + terse HP mention; Verbose = detailed descriptions + detailed HP guidance |
+| H5 (Hard negatives) | Presence of **negative** guidance | Exclusion text about what NOT to detect; HN images of confusable symbols |
 
 **Brief vs Verbose distinction**: Both brief and verbose include hard positive (HP) edge case guidance — the difference is detail level, not content coverage. Brief mentions edge case types tersely ("symbols may be partially occluded"); verbose provides detailed guidance on occlusion types, degradation patterns, clustering, and variants.
 
-**Critical distinction**: Neither brief nor verbose includes exclusion guidance for hard negatives. That is controlled exclusively by H7 via `_hardneg.md` instruction variants.
+**Critical distinction**: Neither brief nor verbose includes exclusion guidance for hard negatives. That is controlled exclusively by H5 via `_hardneg.md` instruction variants.
 
 ---
 
@@ -56,7 +56,7 @@ The following elements will be finalised before holdout evaluation:
 
 ### Empirically-Determined Content
 
-#### Hard Negative Images (H7 Images-only and Text+Images conditions)
+#### Hard Negative Images (H5 Images-only and Text+Images conditions)
 
 Configuration files with hard negative images currently use placeholder paths for empirically-derived examples. These will be populated via the procedure in preregistration.md Section 8.4.2:
 
@@ -73,17 +73,17 @@ Configuration files with hard negative images currently use placeholder paths fo
 
 - Additional confusable symbols identified from FP analysis
 
-#### Hard Positive Images (H6 Diversity conditions)
+#### Hard Positive Images (H9 Diversity conditions)
 
-Hard positive images for H6 diversity conditions will be derived from False Negatives in Phase 1 baseline analysis.
+Hard positive images for H9 diversity conditions will be derived from False Negatives in Phase 1 baseline analysis.
 
 **Configs affected:**
 
-- All `*_images.json` and `*_both.json` variants (H7)
-- `propose_image-only.json` and `verify_image-only.json` (H3)
-- H6 diversity conditions C and D (varied images)
+- All `*_images.json` and `*_both.json` variants (H5)
+- `propose_image-only.json` and `verify_image-only.json` (H2)
+- H9 diversity conditions C and E (varied images)
 
-### H6 Text Diversity Prompts
+### H9 Text Diversity Prompts
 
 The 5 semantically equivalent prompt variants (V1–V5) will be constructed after the optimal base configuration is determined from the main factorial.
 
@@ -114,7 +114,7 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 
 - Final image filenames for all hard examples
 - Selection rationale (frequency counts from training evaluation)
-- Complete H6 prompt variants (V1–V5)
+- Complete H9 prompt variants (V1–V5)
 - Exact ordering for each condition
 - Random seeds used
 
@@ -124,23 +124,23 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 
 ### 1.0 Instruction File Summary
 
-| Filename | M/E Level | Exclusion Guidance | H1/H2 Role |
-|----------|-----------|-------------------|------------|
+| Filename | M/E Level | Exclusion Guidance | H1 Role |
+|----------|-----------|-------------------|---------|
 | `detect_image-only.md` | Image-only | No | H1 baseline |
-| `detect_image-only_hardneg.md` | Image-only | Yes | H7 text conditions |
-| `detect_brief-text.md` | Brief-text | No | H1/H2 text-only baseline |
-| `detect_brief-text_hardneg.md` | Brief-text | Yes | H7 text conditions |
-| `detect_brief-text-image.md` | Brief-text+image | No | H1/H2 baseline |
-| `detect_brief-text-image_hardneg.md` | Brief-text+image | Yes | H7 text conditions |
-| `detect_verbose-text.md` | Verbose-text | No | H2 elaboration |
-| `detect_verbose-text_hardneg.md` | Verbose-text | Yes | H2 + H7 |
-| `detect_verbose-text-image.md` | Verbose-text+image | No | H2 elaboration |
-| `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Yes | H2 + H7 |
+| `detect_image-only_hardneg.md` | Image-only | Yes | H1 + H5 |
+| `detect_brief-text.md` | Brief-text | No | H1 text-only baseline |
+| `detect_brief-text_hardneg.md` | Brief-text | Yes | H1 + H5 |
+| `detect_brief-text-image.md` | Brief-text+image | No | H1 baseline |
+| `detect_brief-text-image_hardneg.md` | Brief-text+image | Yes | H1 + H5 |
+| `detect_verbose-text.md` | Verbose-text | No | H1 elaboration |
+| `detect_verbose-text_hardneg.md` | Verbose-text | Yes | H1 + H5 |
+| `detect_verbose-text-image.md` | Verbose-text+image | No | H1 elaboration |
+| `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Yes | H1 + H5 |
 
 **Naming convention**: `detect_{modality}[_hardneg].md`
 
 - `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
-- `_hardneg`: suffix indicates exclusion guidance for hard negatives (H7 text conditions)
+- `_hardneg`: suffix indicates exclusion guidance for hard negatives (H5 conditions)
 
 ---
 
@@ -149,8 +149,8 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 #### 1.1.1 detect_image-only.md
 
 **Purpose**: Baseline image-only detection with minimal text instruction.
-**Used by**: M/E = Image-only; H7 = None or Images-only
-**H6 note**: If image-only is the optimal base configuration, this template's structure will be used for H6 V1–V5 variants (with varied content per Section 8.3.3).
+**Used by**: M/E = Image-only; H5 = None or Images-only
+**H9 note**: If image-only is the optimal base configuration, this template's structure will be used for H9 V1–V5 variants (with varied content per Section 8.3.3).
 
 ```markdown
 # Mound Detection (Image-Only)
@@ -175,7 +175,7 @@ Return JSON with normalised coordinates (0-1000):
 #### 1.1.2 detect_image-only_hardneg.md
 
 **Purpose**: Image-only detection with exclusion guidance for hard negatives.
-**Used by**: M/E = Image-only; H7 = Text-only or Text+Images
+**Used by**: M/E = Image-only; H5 = Text+Images
 
 ```markdown
 # Mound Detection (Image-Only)
@@ -217,7 +217,7 @@ Return JSON with normalised coordinates (0-1000):
 #### 1.2.1 detect_brief-text.md
 
 **Purpose**: Text-only detection with concise symbol descriptions.
-**Used by**: M/E = Brief-text; H7 = None (no images in this condition)
+**Used by**: M/E = Brief-text; H5 = None (no images in this condition)
 
 ```markdown
 # Detection Prompt: Brief Text
@@ -275,7 +275,7 @@ Return JSON with normalised coords (0-1000).
 #### 1.2.2 detect_brief-text_hardneg.md
 
 **Purpose**: Brief text-only detection with exclusion guidance for hard negatives.
-**Used by**: M/E = Brief-text; H7 = Text-only (no images in text-only conditions)
+**Used by**: M/E = Brief-text; H5 = None (text-only condition)
 
 ```markdown
 # Detection Prompt: Brief Text with Exclusion Guidance
@@ -359,8 +359,8 @@ Return JSON with normalised coords (0-1000).
 #### 1.3.1 detect_brief-text-image.md
 
 **Purpose**: Combined brief text and image prompt with reference examples.
-**Used by**: M/E = Brief-text+image; H7 = None or Images-only
-**H6 note**: If brief-text+image is the optimal base configuration, this template's structure will be used for H6 V1–V5 variants.
+**Used by**: M/E = Brief-text+image; H5 = None or Images-only
+**H9 note**: If brief-text+image is the optimal base configuration, this template's structure will be used for H9 V1–V5 variants.
 
 ```markdown
 # Detection Prompt: Brief Text+Image
@@ -408,7 +408,7 @@ Return JSON with normalised coords (0-1000).
 #### 1.3.2 detect_brief-text-image_hardneg.md
 
 **Purpose**: Brief text+image prompt with exclusion guidance for hard negatives.
-**Used by**: M/E = Brief-text+image; H7 = Text-only or Text+Images
+**Used by**: M/E = Brief-text+image; H5 = Text+Images
 
 ```markdown
 # Detection Prompt: Brief Text+Image with Exclusion Guidance
@@ -470,7 +470,7 @@ Return JSON with normalised coords (0-1000).
 #### 1.4.1 detect_verbose-text.md
 
 **Purpose**: Extended text-only prompt with comprehensive symbol descriptions and edge case guidance.
-**Used by**: M/E = Verbose-text; H7 = None (no images in text-only conditions)
+**Used by**: M/E = Verbose-text; H5 = None (no images in text-only conditions)
 **Word count**: ~700 words (vs ~200 for brief version)
 
 ```markdown
@@ -658,7 +658,7 @@ The following symbols are easily confused with mounds. **DO NOT mark:**
 #### 1.5.1 detect_verbose-text-image.md
 
 **Purpose**: Extended text+image prompt with decision procedures and edge case guidance.
-**Used by**: M/E = Verbose-text+image; H7 = None or Images-only
+**Used by**: M/E = Verbose-text+image; H5 = None or Images-only
 
 ```markdown
 # Detection Prompt: Verbose Text+Image
@@ -746,7 +746,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 #### 1.5.2 detect_verbose-text-image_hardneg.md
 
 **Purpose**: Extended text+image prompt with edge case guidance AND exclusion criteria.
-**Used by**: M/E = Verbose-text+image; H7 = Text-only or Text+Images
+**Used by**: M/E = Verbose-text+image; H5 = Text+Images
 
 *[Extends detect_verbose-text-image.md with the following additional section after "Decision Procedure":]*
 
@@ -767,12 +767,12 @@ Rays are key: Shapes without visible radiating rays are not mounds. Consider occ
 
 ---
 
-### 1.6 Two-Stage Pipeline Prompts (H3)
+### 1.6 Two-Stage Pipeline Prompts (H2)
 
 #### 1.6.1 propose_image-only.md
 
 **Purpose**: High-recall proposer stage for two-stage pipeline.
-**Used by**: H3 (Stage 1)
+**Used by**: H2 (Stage 1)
 
 ```markdown
 # Two-Stage Detection: Proposer (Stage 1)
@@ -805,7 +805,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 #### 1.6.2 verify_image-only.md
 
 **Purpose**: Precision-focused verifier stage for two-stage pipeline.
-**Used by**: H3 (Stage 2)
+**Used by**: H2 (Stage 2)
 
 ```markdown
 # Two-Stage Detection: Verifier (Stage 2)
@@ -837,14 +837,14 @@ Return a JSON object with your assessment.
 
 ---
 
-### 1.7 Fine-to-Coarse Verification Prompt (H10)
+### 1.7 Fine-to-Coarse Verification Prompt (H2 Context Expansion)
 
-**Status**: Exploratory — prompt to be finalised if H10 is conducted.
+**Status**: Confirmatory — prompt to be used in H2 fine-to-coarse direction testing.
 
 #### 1.7.1 verify_context-expanded.md
 
 **Purpose**: Focused verification for uncertain detections with expanded spatial context.
-**Used by**: H10 (Stage 2 re-query for 2/5 or 3/5 consensus cases)
+**Used by**: H2 fine-to-coarse (Stage 2 re-query for 2/5 or 3/5 consensus cases)
 
 ```markdown
 # Context-Expanded Verification
@@ -871,7 +871,7 @@ Return a JSON object:
 }
 ```
 
-**Note**: This prompt will be refined based on Stage 1 results before H10 testing.
+**Note**: This prompt will be refined based on Stage 1 results before H2 fine-to-coarse testing.
 
 ---
 
@@ -888,7 +888,7 @@ All configuration files follow this JSON schema:
     "hypothesis": "string — which hypothesis/factor levels this tests",
     "model": "string — model identifier (e.g., 'gemini-3-flash')",
     "instruction_file": "string — path to system instruction .md file",
-    "temperature": "number — default generation temperature (overridden at runtime for H9)",
+    "temperature": "number — default generation temperature (overridden at runtime for H7)",
     "max_output_tokens": "number — maximum output tokens",
     "examples": [
         {
@@ -912,32 +912,27 @@ Where:
 - `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
 - `{hardneg}`: none, text, images, both
 
-This yields 20 configuration files (5 M/E × 4 H7).
+This yields 9 configuration files (3 image-using modalities × 3 H5 levels).
 
-**Note on text-only modalities**: Brief-text and Verbose-text conditions do not use example images. For these modalities:
+**Note on text-only modalities**: Brief-text and Verbose-text conditions do not use example images and cannot use H5=Images-only or H5=Text+Images. Text-only modalities are tested at T=1.0 only as runtime variants.
 
-- `*_none.json` and `*_text.json` have no example images (instruction file only)
-- `*_images.json` and `*_both.json` are not applicable (text-only has no images)
+**Structure for image-using modalities:**
 
-This reduces the practical count to **16 image-inclusive configs** + **4 text-only configs** = **20 total**, but text-only `*_images.json` and `*_both.json` are logically excluded.
+| M/E Level | H5 = None | H5 = Images-only | H5 = Text+Images |
+|-----------|-----------|------------------|------------------|
+| Image-only | ✓ | ✓ | ✓ |
+| Brief-text+image | ✓ | ✓ | ✓ |
+| Verbose-text+image | ✓ | ✓ | ✓ |
 
-**Revised structure for text-only modalities:**
+This yields **9 valid configurations**:
 
-| M/E Level | H7 = None | H7 = Text | H7 = Images | H7 = Both |
-|-----------|-----------|-----------|-------------|-----------|
-| Brief-text | ✓ | ✓ | N/A | N/A |
-| Verbose-text | ✓ | ✓ | N/A | N/A |
-
-This yields **16 valid configurations**:
-
-- 3 image-using modalities × 4 H7 levels = 12
-- 2 text-only modalities × 2 applicable H7 levels = 4
+- 3 image-using modalities × 3 H5 levels = 9
 
 ---
 
 ### 2.3 Complete Configuration File List
 
-| Configuration File | M/E Level | H7 Level | Instruction File |
+| Configuration File | M/E Level | H5 Level | Instruction File |
 |--------------------|-----------|----------|------------------|
 | `detect_image-only_none.json` | Image-only | None | detect_image-only.md |
 | `detect_image-only_text.json` | Image-only | Text-only | detect_image-only_hardneg.md |
@@ -975,7 +970,7 @@ This yields **16 valid configurations**:
 {
     "version": "detect_image-only_none",
     "description": "Image-only baseline. Minimal text, canonical examples only.",
-    "hypothesis": "M/E=Image-only, H7=None",
+    "hypothesis": "M/E=Image-only, H5=None",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
@@ -1007,7 +1002,7 @@ This yields **16 valid configurations**:
 {
     "version": "detect_image-only_images",
     "description": "Image-only with hard negative IMAGES (no exclusion text).",
-    "hypothesis": "M/E=Image-only, H7=Images-only",
+    "hypothesis": "M/E=Image-only, H5=Images-only",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
@@ -1032,7 +1027,7 @@ This yields **16 valid configurations**:
 
 **Label convention for H7 conditions:**
 
-| H7 Level | Hard Negative Label Style |
+| H5 Level | Hard Negative Label Style |
 |----------|---------------------------|
 | Images-only | Minimal: `"Negative"` |
 | Text+Images | Detailed: `"Negative: Benchmark ALONE (no mound). NO radiating rays."` |
@@ -1051,7 +1046,7 @@ This distinction tests whether the model needs explicit textual explanation of w
 {
     "version": "detect_image-only_both",
     "description": "Image-only with hard negative TEXT (exclusion guidance) AND IMAGES.",
-    "hypothesis": "M/E=Image-only, H7=Text+Images",
+    "hypothesis": "M/E=Image-only, H5=Text+Images",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
@@ -1086,7 +1081,7 @@ This distinction tests whether the model needs explicit textual explanation of w
 {
     "version": "detect_brief-text_none",
     "description": "Brief text-only baseline. No example images.",
-    "hypothesis": "M/E=Brief-text, H7=None",
+    "hypothesis": "M/E=Brief-text, H5=None",
     "model": "gemini-3-flash",
     "instruction_file": "detect_brief-text.md",
     "temperature": 1.0,
@@ -1108,7 +1103,7 @@ This distinction tests whether the model needs explicit textual explanation of w
 {
     "version": "detect_verbose-text-image_text",
     "description": "Verbose text+image with hard negative TEXT (exclusion guidance) but no hard negative images.",
-    "hypothesis": "M/E=Verbose-text+image, H7=Text-only",
+    "hypothesis": "M/E=Verbose-text+image, H5=Text+Images",
     "model": "gemini-3-flash",
     "instruction_file": "detect_verbose-text-image_hardneg.md",
     "temperature": 1.0,
@@ -1130,9 +1125,9 @@ This distinction tests whether the model needs explicit textual explanation of w
 
 ---
 
-### 2.9 H5 Ordering Variant Configurations
+### 2.9 H4 Ordering Variant Configurations
 
-For H5 (ordering hypothesis), three ordering variants are tested at selected M/E levels:
+For H4 (ordering hypothesis), three ordering variants are tested at selected M/E levels:
 
 | Ordering | Description |
 |----------|-------------|
@@ -1140,7 +1135,7 @@ For H5 (ordering hypothesis), three ordering variants are tested at selected M/E
 | Canonical-last | Hard negatives first (if any), then nulls, then legend positives |
 | Random | All examples shuffled with documented random seed |
 
-**H5 partial cross**: 3 orderings × 3 M/E levels (Image-only, Brief-text+image, Verbose-text+image) at fixed H7 and T.
+**H4 partial cross**: 3 orderings × 3 M/E levels (Image-only, Brief-text+image, Verbose-text+image) at fixed H5 and T.
 
 Example ordering variant files would follow the pattern:
 
@@ -1154,8 +1149,8 @@ Example ordering variant files would follow the pattern:
 ```json
 {
     "version": "detect_image-only_none_canonical-last",
-    "description": "Image-only baseline with canonical-LAST ordering (H5 variant).",
-    "hypothesis": "M/E=Image-only, H7=None, O=Canonical-last",
+    "description": "Image-only baseline with canonical-LAST ordering (H4 variant).",
+    "hypothesis": "M/E=Image-only, H5=None, O=Canonical-last",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
@@ -1179,7 +1174,7 @@ Example ordering variant files would follow the pattern:
 
 ---
 
-### 2.10 Two-Stage Pipeline Configurations (H3)
+### 2.10 Two-Stage Pipeline Configurations (H2)
 
 #### propose_image-only.json
 
@@ -1187,7 +1182,7 @@ Example ordering variant files would follow the pattern:
 {
     "version": "propose_image-only",
     "description": "Two-Stage Proposer (Stage 1). High-recall detection.",
-    "hypothesis": "H3",
+    "hypothesis": "H2",
     "model": "gemini-3-flash",
     "instruction_file": "propose_image-only.md",
     "temperature": 1.0,
@@ -1214,7 +1209,7 @@ Example ordering variant files would follow the pattern:
 {
     "version": "verify_image-only",
     "description": "Two-Stage Verifier (Stage 2). Precision-focused verification.",
-    "hypothesis": "H3",
+    "hypothesis": "H2",
     "model": "gemini-3-flash",
     "instruction_file": "verify_image-only.md",
     "temperature": 1.0,
@@ -1243,12 +1238,12 @@ The following parameters are controlled at runtime rather than in configuration 
 
 | Parameter | Values | Hypothesis | Notes |
 |-----------|--------|------------|-------|
-| Temperature | 0.0, 0.3, 0.7, 1.0, 1.3 | H9 | Overrides config file default |
-| Model | gemini-3-flash, gemini-3-pro, claude-4.5-sonnet, gpt-5.2-thinking | H8, H12 | Overrides config file value |
-| Passes | 1, 5, 10, 30 | H4 | Number of detection runs per tile |
-| Voting threshold | 1 to N | H4 | Minimum votes for detection acceptance |
+| Temperature | 0.0, 0.7, 1.0, 1.3 | H7 | Overrides config file default |
+| Model | gemini-3-flash, gemini-3-pro, claude-4.5-sonnet, gpt-5.2-thinking | H6, H14 | Overrides config file value |
+| Passes | 1, 5, 10, 30 | H3 | Number of detection runs per tile |
+| Voting threshold | 1 to N | H3 | Minimum votes for detection acceptance |
 
-**Note**: Temperature escalation trigger (H9): If T=1.3 outperforms T=1.0, additional tests at T=1.6 and T=2.0 will be conducted.
+**Note**: Temperature escalation trigger (H7): If T=1.3 outperforms T=1.0, additional tests at T=1.6 and T=2.0 will be conducted.
 
 ---
 
@@ -1272,16 +1267,17 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 | Content Type | Source | Placeholder |
 |--------------|--------|-------------|
 | Additional hard negative images | FPs from Phase 1 (≥3/10 runs) | `hardneg_empirical_TBD_*.png` |
-| Hard positive images (H6) | FNs from Phase 1 (≥3/5 passes) | `hardpos_empirical_TBD_*.png` |
+| Hard positive images (H9) | FNs from Phase 1 (≥3/5 passes) | `hardpos_empirical_TBD_*.png` |
 
 ---
 
-*Document version: 2.2*
+*Document version: 2.3*
 *Created: 2026-01-02*
-*Updated: 2026-01-06*
+*Updated: 2026-01-07*
 
 **Changelog:**
 
+- v2.3: Hypothesis renumbering alignment with preregistration.md v4.0 — H7→H5 (hard negatives now 3 levels), H9→H7 (temperature now 4 levels), H5→H4 (ordering), H3→H2 (two-stage), H6→H9 (diversity exploratory), H8→H6 (transfer), H4→H3 (voting), H10 merged into H2; config count reduced from 16 to 9; text-only tested at T=1.0 only
 - v2.2: H2 elaboration clarification — both brief and verbose include HP edge case guidance at different detail levels (brief = terse mention, verbose = detailed guidance); orthogonality is H2 (detail level for positives) vs H7 (presence of negatives); aligned with preregistration.md v3.5 factorial restructure
 - v2.1: Final review fixes — corrected config count explanation (20→16 due to text-only constraints); aligned Phase 1 baseline with preregistration (5 passes, ≥3/5 threshold); fixed hard negative labels for Images-only condition (minimal "Negative" labels); added hard positive placeholders to example configs; added H10 verification prompt placeholder (Section 1.7); added H5 canonical-last example config; fixed verifier prompt to use placeholder notation
 - v2.0: Major restructure — 10 instruction files (5 M/E × 2 exclusion variants), 16 config files (reflecting text-only constraints); renamed "elaborate" to "verbose"; clarified orthogonal separation between H2 (edge case guidance for FNs) and H7 (exclusion guidance for FPs); added legend-derived hard negatives; flagged empirically-derived content as TBD
