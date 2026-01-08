@@ -1,0 +1,29 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [323, 344, 386, 415],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        323,
+        344,
+        386,
+        415
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-052-4_32635_pilot_region_08_x2768_y1840.png",
+    "request_start": "2026-01-07T06:22:38.370596+00:00",
+    "request_end": "2026-01-07T06:22:54.558473+00:00",
+    "latency_ms": 16187.877,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 1,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 73,
+      "total": 13353
+    }
+  }
+}

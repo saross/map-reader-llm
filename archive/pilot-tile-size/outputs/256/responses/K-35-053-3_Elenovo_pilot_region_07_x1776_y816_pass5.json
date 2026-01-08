@@ -1,0 +1,49 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [593, 419, 622, 447],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [625, 494, 654, 523],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [735, 428, 886, 506],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        593,
+        419,
+        622,
+        447
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        625,
+        494,
+        654,
+        523
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        735,
+        428,
+        886,
+        506
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x1776_y816.png",
+    "request_start": "2026-01-07T06:37:58.696571+00:00",
+    "request_end": "2026-01-07T06:38:56.476003+00:00",
+    "latency_ms": 57779.432,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 3,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 182,
+      "total": 20398
+    }
+  }
+}

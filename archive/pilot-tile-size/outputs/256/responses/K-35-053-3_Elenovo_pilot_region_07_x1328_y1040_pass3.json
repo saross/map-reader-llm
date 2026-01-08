@@ -1,0 +1,59 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [37, 115, 87, 153],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [81, 488, 128, 532],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [318, 261, 375, 318],\n            \"label\": \"mound\",\n            \"subtype\": \"triangulation_mound\"\n        },\n        {\n            \"box_2d\": [315, 442, 365, 494],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        37,
+        115,
+        87,
+        153
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        81,
+        488,
+        128,
+        532
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        318,
+        261,
+        375,
+        318
+      ],
+      "label": "mound",
+      "subtype": "triangulation_mound"
+    },
+    {
+      "box_2d": [
+        315,
+        442,
+        365,
+        494
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x1328_y1040.png",
+    "request_start": "2026-01-07T06:09:21.751504+00:00",
+    "request_end": "2026-01-07T06:09:39.395815+00:00",
+    "latency_ms": 17644.310999999998,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 4,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 236,
+      "total": 13752
+    }
+  }
+}

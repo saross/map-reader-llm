@@ -1,0 +1,49 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [\n                568,\n                788,\n                599,\n                820\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [\n                650,\n                925,\n                682,\n                959\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [\n                871,\n                630,\n                901,\n                661\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        568,
+        788,
+        599,
+        820
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        650,
+        925,
+        682,
+        959
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        871,
+        630,
+        901,
+        661
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_03_x32_y2784.png",
+    "request_start": "2026-01-07T06:47:15.331183+00:00",
+    "request_end": "2026-01-07T06:47:26.710753+00:00",
+    "latency_ms": 11379.57,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 3,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 204,
+      "total": 12643
+    }
+  }
+}

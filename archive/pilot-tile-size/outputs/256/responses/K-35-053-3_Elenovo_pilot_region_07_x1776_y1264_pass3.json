@@ -1,0 +1,79 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [34, 715, 86, 843],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        },\n        {\n            \"box_2d\": [101, 728, 150, 811],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        },\n        {\n            \"box_2d\": [105, 547, 165, 650],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        },\n        {\n            \"box_2d\": [157, 727, 211, 844],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        },\n        {\n            \"box_2d\": [448, 625, 484, 663],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [923, 715, 983, 808],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        34,
+        715,
+        86,
+        843
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    },
+    {
+      "box_2d": [
+        101,
+        728,
+        150,
+        811
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    },
+    {
+      "box_2d": [
+        105,
+        547,
+        165,
+        650
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    },
+    {
+      "box_2d": [
+        157,
+        727,
+        211,
+        844
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    },
+    {
+      "box_2d": [
+        448,
+        625,
+        484,
+        663
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        923,
+        715,
+        983,
+        808
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x1776_y1264.png",
+    "request_start": "2026-01-07T06:09:57.589149+00:00",
+    "request_end": "2026-01-07T06:10:21.142273+00:00",
+    "latency_ms": 23553.124,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 6,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 346,
+      "total": 14682
+    }
+  }
+}

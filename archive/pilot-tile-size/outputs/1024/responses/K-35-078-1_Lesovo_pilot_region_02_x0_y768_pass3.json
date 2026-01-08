@@ -1,0 +1,40 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [139, 614, 163, 642],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        },\n        {\n            \"box_2d\": [671, 638, 696, 664],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        139,
+        614,
+        163,
+        642
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    },
+    {
+      "box_2d": [
+        671,
+        638,
+        696,
+        664
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_02_x0_y768.png",
+    "request_start": "2026-01-07T07:24:26.180512+00:00",
+    "request_end": "2026-01-07T07:25:09.210315+00:00",
+    "latency_ms": 43029.803,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 2,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 127,
+      "total": 17612
+    }
+  }
+}

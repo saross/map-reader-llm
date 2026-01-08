@@ -1,0 +1,80 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [7, 524, 21, 538],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [318, 786, 335, 804],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        },\n        {\n            \"box_2d\": [409, 325, 423, 337],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [596, 977, 611, 991],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        },\n        {\n            \"box_2d\": [880, 110, 893, 122],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [906, 241, 919, 253],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        7,
+        524,
+        21,
+        538
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        318,
+        786,
+        335,
+        804
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    },
+    {
+      "box_2d": [
+        409,
+        325,
+        423,
+        337
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        596,
+        977,
+        611,
+        991
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    },
+    {
+      "box_2d": [
+        880,
+        110,
+        893,
+        122
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        906,
+        241,
+        919,
+        253
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x1280_y768.png",
+    "request_start": "2026-01-07T07:27:37.122661+00:00",
+    "request_end": "2026-01-07T07:28:30.638049+00:00",
+    "latency_ms": 53515.388,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 6,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 345,
+      "total": 19332
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [34, 605, 55, 627],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [147, 358, 169, 381],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [246, 155, 268, 177],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [421, 601, 443, 624],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [736, 786, 757, 809],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [906, 247, 927, 269],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        34,
+        605,
+        55,
+        627
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        147,
+        358,
+        169,
+        381
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        246,
+        155,
+        268,
+        177
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        421,
+        601,
+        443,
+        624
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        736,
+        786,
+        757,
+        809
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        906,
+        247,
+        927,
+        269
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_05_x2800_y2032.png",
+    "request_start": "2026-01-07T06:43:29.363676+00:00",
+    "request_end": "2026-01-07T06:44:14.291035+00:00",
+    "latency_ms": 44927.359000000004,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 6,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 346,
+      "total": 18239
+    }
+  }
+}

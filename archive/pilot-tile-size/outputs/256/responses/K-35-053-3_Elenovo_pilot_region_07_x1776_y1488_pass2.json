@@ -1,0 +1,29 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [520, 259, 584, 321],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        520,
+        259,
+        584,
+        321
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x1776_y1488.png",
+    "request_start": "2026-01-07T05:55:57.429593+00:00",
+    "request_end": "2026-01-07T05:56:05.963388+00:00",
+    "latency_ms": 8533.795,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 1,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 72,
+      "total": 12129
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [\n                236,\n                345,\n                289,\n                398\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        },\n        {\n            \"box_2d\": [\n                343,\n                437,\n                360,\n                453\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [\n                461,\n                245,\n                501,\n                286\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [\n                722,\n                687,\n                773,\n                739\n            ],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        236,
+        345,
+        289,
+        398
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    },
+    {
+      "box_2d": [
+        343,
+        437,
+        360,
+        453
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        461,
+        245,
+        501,
+        286
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        722,
+        687,
+        773,
+        739
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_04_x816_y2608.png",
+    "request_start": "2026-01-07T06:42:46.156007+00:00",
+    "request_end": "2026-01-07T06:43:08.444758+00:00",
+    "latency_ms": 22288.751,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 4,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 264,
+      "total": 14482
+    }
+  }
+}

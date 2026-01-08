@@ -1,0 +1,29 @@
+{
+  "raw_response": "```json\n{\n  \"detections\": [\n    {\n      \"box_2d\": [\n        191,\n        313,\n        238,\n        359\n      ],\n      \"label\": \"mound\",\n      \"subtype\": \"burial_mound\"\n    }\n  ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        191,
+        313,
+        238,
+        359
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x2000_y1040.png",
+    "request_start": "2026-01-07T06:38:00.200844+00:00",
+    "request_end": "2026-01-07T06:38:14.702467+00:00",
+    "latency_ms": 14501.623,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 1,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 80,
+      "total": 13101
+    }
+  }
+}

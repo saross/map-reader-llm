@@ -1,0 +1,69 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [194, 633, 230, 674],\n            \"label\": \"mound\",\n            \"subtype\": \"triangulation_mound\"\n        },\n        {\n            \"box_2d\": [215, 332, 246, 370],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [421, 380, 452, 416],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [619, 732, 650, 769],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [897, 597, 932, 641],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        194,
+        633,
+        230,
+        674
+      ],
+      "label": "mound",
+      "subtype": "triangulation_mound"
+    },
+    {
+      "box_2d": [
+        215,
+        332,
+        246,
+        370
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        421,
+        380,
+        452,
+        416
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        619,
+        732,
+        650,
+        769
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        897,
+        597,
+        932,
+        641
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-052-4_32635_pilot_region_08_x2528_y1824.png",
+    "request_start": "2026-01-07T05:48:56.160794+00:00",
+    "request_end": "2026-01-07T05:49:29.313561+00:00",
+    "latency_ms": 33152.767,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 5,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 294,
+      "total": 16048
+    }
+  }
+}

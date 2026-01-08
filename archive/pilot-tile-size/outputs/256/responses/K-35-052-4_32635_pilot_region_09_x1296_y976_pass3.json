@@ -1,0 +1,29 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [538, 118, 594, 188],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        538,
+        118,
+        594,
+        188
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-052-4_32635_pilot_region_09_x1296_y976.png",
+    "request_start": "2026-01-07T06:08:53.836762+00:00",
+    "request_end": "2026-01-07T06:09:04.105604+00:00",
+    "latency_ms": 10268.841999999999,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 1,
+    "tokens": {
+      "prompt": 11340,
+      "completion": 72,
+      "total": 12475
+    }
+  }
+}

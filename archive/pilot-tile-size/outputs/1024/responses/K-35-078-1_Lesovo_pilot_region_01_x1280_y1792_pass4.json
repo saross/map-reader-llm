@@ -1,0 +1,90 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [20, 938, 36, 955],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [46, 953, 63, 971],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [108, 983, 125, 1000],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [237, 786, 255, 806],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [601, 891, 625, 915],\n            \"label\": \"mound\",\n            \"subtype\": \"triangulation_mound\"\n        },\n        {\n            \"box_2d\": [742, 755, 759, 773],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [892, 962, 914, 985],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        20,
+        938,
+        36,
+        955
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        46,
+        953,
+        63,
+        971
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        108,
+        983,
+        125,
+        1000
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        237,
+        786,
+        255,
+        806
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        601,
+        891,
+        625,
+        915
+      ],
+      "label": "mound",
+      "subtype": "triangulation_mound"
+    },
+    {
+      "box_2d": [
+        742,
+        755,
+        759,
+        773
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        892,
+        962,
+        914,
+        985
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_01_x1280_y1792.png",
+    "request_start": "2026-01-07T07:25:53.389739+00:00",
+    "request_end": "2026-01-07T07:26:23.787367+00:00",
+    "latency_ms": 30397.628,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 7,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 401,
+      "total": 14962
+    }
+  }
+}

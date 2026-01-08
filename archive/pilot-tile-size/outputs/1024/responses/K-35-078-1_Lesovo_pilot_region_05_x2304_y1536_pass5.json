@@ -1,0 +1,70 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [1, 492, 23, 514],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [110, 933, 127, 952],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [212, 404, 233, 426],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [297, 637, 318, 659],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [923, 947, 951, 977],\n            \"label\": \"mound\",\n            \"subtype\": \"triangulation_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        1,
+        492,
+        23,
+        514
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        110,
+        933,
+        127,
+        952
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        212,
+        404,
+        233,
+        426
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        297,
+        637,
+        318,
+        659
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        923,
+        947,
+        951,
+        977
+      ],
+      "label": "mound",
+      "subtype": "triangulation_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_05_x2304_y1536.png",
+    "request_start": "2026-01-07T07:28:30.638130+00:00",
+    "request_end": "2026-01-07T07:28:54.343804+00:00",
+    "latency_ms": 23705.674,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 5,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 291,
+      "total": 14493
+    }
+  }
+}

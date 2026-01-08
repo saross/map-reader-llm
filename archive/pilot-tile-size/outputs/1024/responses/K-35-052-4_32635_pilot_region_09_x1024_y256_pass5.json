@@ -1,0 +1,50 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [465, 270, 503, 312],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [52, 907, 88, 945],\n            \"label\": \"mound\",\n            \"subtype\": \"triangulation_mound\"\n        },\n        {\n            \"box_2d\": [932, 638, 990, 715],\n            \"label\": \"mound\",\n            \"subtype\": \"settlement_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        465,
+        270,
+        503,
+        312
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        52,
+        907,
+        88,
+        945
+      ],
+      "label": "mound",
+      "subtype": "triangulation_mound"
+    },
+    {
+      "box_2d": [
+        932,
+        638,
+        990,
+        715
+      ],
+      "label": "mound",
+      "subtype": "settlement_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-052-4_32635_pilot_region_09_x1024_y256.png",
+    "request_start": "2026-01-07T07:27:37.122540+00:00",
+    "request_end": "2026-01-07T07:28:03.418360+00:00",
+    "latency_ms": 26295.82,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 3,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 182,
+      "total": 13942
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [1, 474, 25, 497],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        },\n        {\n            \"box_2d\": [310, 804, 331, 827],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [791, 391, 815, 415],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [891, 126, 917, 152],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        },\n        {\n            \"box_2d\": [907, 236, 932, 261],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        1,
+        474,
+        25,
+        497
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    },
+    {
+      "box_2d": [
+        310,
+        804,
+        331,
+        827
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        791,
+        391,
+        815,
+        415
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        891,
+        126,
+        917,
+        152
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    },
+    {
+      "box_2d": [
+        907,
+        236,
+        932,
+        261
+      ],
+      "label": "mound",
+      "subtype": "burial_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-053-3_Elenovo_pilot_region_07_x1280_y768.png",
+    "request_start": "2026-01-07T07:25:53.389541+00:00",
+    "request_end": "2026-01-07T07:26:31.796509+00:00",
+    "latency_ms": 38406.968,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 5,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 289,
+      "total": 15937
+    }
+  }
+}

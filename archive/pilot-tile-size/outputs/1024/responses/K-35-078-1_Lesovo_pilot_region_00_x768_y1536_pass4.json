@@ -1,0 +1,50 @@
+{
+  "raw_response": "```json\n{\n    \"detections\": [\n        {\n            \"box_2d\": [151, 112, 173, 134],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        },\n        {\n            \"box_2d\": [665, 243, 687, 269],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        },\n        {\n            \"box_2d\": [825, 124, 847, 147],\n            \"label\": \"mound\",\n            \"subtype\": \"benchmark_mound\"\n        }\n    ]\n}\n```",
+  "detections": [
+    {
+      "box_2d": [
+        151,
+        112,
+        173,
+        134
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    },
+    {
+      "box_2d": [
+        665,
+        243,
+        687,
+        269
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    },
+    {
+      "box_2d": [
+        825,
+        124,
+        847,
+        147
+      ],
+      "label": "mound",
+      "subtype": "benchmark_mound"
+    }
+  ],
+  "metadata": {
+    "tile": "K-35-078-1_Lesovo_pilot_region_00_x768_y1536.png",
+    "request_start": "2026-01-07T07:25:53.389628+00:00",
+    "request_end": "2026-01-07T07:26:51.170137+00:00",
+    "latency_ms": 57780.509000000005,
+    "attempt": 1,
+    "success": true,
+    "detection_count": 3,
+    "media_resolution": "high",
+    "tokens": {
+      "prompt": 11339,
+      "completion": 180,
+      "total": 19249
+    }
+  }
+}
