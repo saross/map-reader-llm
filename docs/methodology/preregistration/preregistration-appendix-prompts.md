@@ -89,7 +89,7 @@ The 5 semantically equivalent prompt variants (V1–V5) will be constructed afte
 
 **Construction procedure:**
 
-1. Identify winning configuration (M/E level, H7 level, temperature)
+1. Identify winning configuration (M/E level, H5 level, temperature)
 2. Use the corresponding instruction file as structural base
 3. Create V1–V5 using Level 3 variation (content diversity, fixed structure):
    - Vary task framing line
@@ -465,7 +465,7 @@ Return JSON with normalised coords (0-1000).
 
 ### 1.4 Verbose-Text Instructions
 
-**Note on verbose text content**: Verbose text extends brief text with detailed descriptions and **edge case guidance for hard positives** (symbols that are genuine mounds but may be missed due to occlusion, degradation, or atypical appearance). Verbose text does NOT include exclusion guidance for hard negatives — that is controlled by the `_hardneg` variant and H7 factor.
+**Note on verbose text content**: Verbose text extends brief text with detailed descriptions and **edge case guidance for hard positives** (symbols that are genuine mounds but may be missed due to occlusion, degradation, or atypical appearance). Verbose text does NOT include exclusion guidance for hard negatives — that is controlled by the `_hardneg` variant and H5 factor.
 
 #### 1.4.1 detect_verbose-text.md
 
@@ -598,7 +598,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 #### 1.4.2 detect_verbose-text_hardneg.md
 
 **Purpose**: Extended text-only prompt with edge case guidance AND exclusion criteria.
-**Used by**: M/E = Verbose-text; H7 = Text-only (no images in text-only conditions)
+**Used by**: M/E = Verbose-text; H5 = Text+Images (no images in text-only conditions)
 **Word count**: ~1,200 words
 
 *[Extends detect_verbose-text.md with the following additional section after "Decision Procedure":]*
@@ -964,7 +964,7 @@ This yields **9 valid configurations**:
 
 #### detect_image-only_none.json
 
-**M/E**: Image-only | **H7**: None
+**M/E**: Image-only | **H5**: None
 
 ```json
 {
@@ -996,7 +996,7 @@ This yields **9 valid configurations**:
 
 #### detect_image-only_images.json
 
-**M/E**: Image-only | **H7**: Images-only
+**M/E**: Image-only | **H5**: Images-only
 
 ```json
 {
@@ -1025,7 +1025,7 @@ This yields **9 valid configurations**:
 }
 ```
 
-**Label convention for H7 conditions:**
+**Label convention for H5 conditions:**
 
 | H5 Level | Hard Negative Label Style |
 |----------|---------------------------|
@@ -1040,7 +1040,7 @@ This distinction tests whether the model needs explicit textual explanation of w
 
 #### detect_image-only_both.json
 
-**M/E**: Image-only | **H7**: Text+Images
+**M/E**: Image-only | **H5**: Text+Images
 
 ```json
 {
@@ -1075,7 +1075,7 @@ This distinction tests whether the model needs explicit textual explanation of w
 
 #### detect_brief-text_none.json
 
-**M/E**: Brief-text | **H7**: None
+**M/E**: Brief-text | **H5**: None
 
 ```json
 {
@@ -1097,7 +1097,7 @@ This distinction tests whether the model needs explicit textual explanation of w
 
 #### detect_verbose-text-image_text.json
 
-**M/E**: Verbose-text+image | **H7**: Text-only
+**M/E**: Verbose-text+image | **H5**: Text+Images
 
 ```json
 {
@@ -1243,7 +1243,7 @@ The following parameters are controlled at runtime rather than in configuration 
 | Passes | 1, 5, 10, 30 | H3 | Number of detection runs per tile |
 | Voting threshold | 1 to N | H3 | Minimum votes for detection acceptance |
 
-**Note**: Temperature escalation trigger (H7): If T=1.3 outperforms T=1.0, additional tests at T=1.6 and T=2.0 will be conducted.
+**Note**: Temperature escalation trigger (H7): If T=1.3 outperforms T=1.0, additional tests at higher temperatures may be conducted.
 
 ---
 
@@ -1271,12 +1271,13 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.3*
+*Document version: 2.4*
 *Created: 2026-01-02*
-*Updated: 2026-01-07*
+*Updated: 2026-01-08*
 
 **Changelog:**
 
+- v2.4: Final synchronisation with preregistration.md v4.2 — fixed remaining H7→H5 references in text (construction procedure, verbose text note, config headers); label convention now references H5 correctly
 - v2.3: Hypothesis renumbering alignment with preregistration.md v4.0 — H7→H5 (hard negatives now 3 levels), H9→H7 (temperature now 4 levels), H5→H4 (ordering), H3→H2 (two-stage), H6→H9 (diversity exploratory), H8→H6 (transfer), H4→H3 (voting), H10 merged into H2; config count reduced from 16 to 9; text-only tested at T=1.0 only
 - v2.2: H2 elaboration clarification — both brief and verbose include HP edge case guidance at different detail levels (brief = terse mention, verbose = detailed guidance); orthogonality is H2 (detail level for positives) vs H7 (presence of negatives); aligned with preregistration.md v3.5 factorial restructure
 - v2.1: Final review fixes — corrected config count explanation (20→16 due to text-only constraints); aligned Phase 1 baseline with preregistration (5 passes, ≥3/5 threshold); fixed hard negative labels for Images-only condition (minimal "Negative" labels); added hard positive placeholders to example configs; added H10 verification prompt placeholder (Section 1.7); added H5 canonical-last example config; fixed verifier prompt to use placeholder notation

@@ -13,9 +13,9 @@ These factors control how a single detection prompt is constructed:
 | Factor | Symbol | Levels | Hypothesis |
 |--------|--------|--------|------------|
 | Modality/Elaboration | M/E | 5 (Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image) | H1, H2 |
-| Hard negatives | H7 | 4 (None, Text-only, Images-only, Text+Images) | H7 |
-| Temperature | T | 5 (0.0, 0.3, 0.7, 1.0, 1.3) | H9 |
-| Ordering | O | 3 (canonical-first, canonical-last, random) | H5 (partial cross) |
+| Hard negatives | H5 | 3 (None, Images-only, Text+Images) | H5 |
+| Temperature | T | 4 (0.0, 0.7, 1.0, 1.3) | H7 |
+| Ordering | O | 3 (canonical-first, canonical-last, random) | H4 (partial cross) |
 
 **Note**: Ordering is tested via a partial cross (3 orderings × 3 M/E levels = 9 conditions), not in the main factorial. The main factorial uses canonical-first throughout.
 
@@ -27,22 +27,22 @@ These factors control how a single detection prompt is constructed:
 
 | Pair | Covered By | Conditions |
 |------|------------|------------|
-| M/E × H7 | Main factorial | 5 × 4 = 20 |
-| M/E × T | Main factorial | 5 × 5 = 25 |
-| H7 × T | Main factorial | 4 × 5 = 20 |
-| M/E × O | H5 partial cross | 3 × 3 = 9 |
-| H7 × O | (not in scope) | — |
+| M/E × H5 | Main factorial | 5 × 3 = 15 |
+| M/E × T | Main factorial | 5 × 4 = 20 |
+| H5 × T | Main factorial | 3 × 4 = 12 |
+| M/E × O | H4 partial cross | 3 × 3 = 9 |
+| H5 × O | (not in scope) | — |
 | T × O | (not in scope) | — |
 
-**Note**: H7 × O and T × O interactions are not tested. Ordering is tested at fixed H7 and T levels (optimal from main factorial). If H5 partial cross reveals O × M/E interaction (p < 0.10), extended coverage may be triggered.
+**Note**: H5 × O and T × O interactions are not tested. Ordering is tested at fixed H5 and T levels (optimal from main factorial). If H4 partial cross reveals O × M/E interaction (p < 0.10), extended coverage may be triggered.
 
 ---
 
 ## 3. Experimental Designs
 
-### 3.1 Main Factorial (H1, H2, H7, H9)
+### 3.1 Main Factorial (H1, H2, H5, H7)
 
-**Design**: M/E(5) × H7(4) × T(5) = **100 conditions**
+**Design**: M/E(5) × H5(3) × T(4) = **60 conditions**
 
 Each condition evaluated with K=10 independent single-pass runs on 60 holdout tiles.
 
@@ -57,7 +57,7 @@ H2 is tested as planned contrasts within the main factorial, not as a separate e
 
 All pairwise elaboration comparisons are available from the M/E factor in the main factorial.
 
-### 3.3 H5 Design (Ordering Partial Cross)
+### 3.3 H4 Design (Ordering Partial Cross)
 
 **Design**: O(3) × M/E(3) = **9 conditions**
 
@@ -71,7 +71,7 @@ All pairwise elaboration comparisons are available from the M/E factor in the ma
 
 **Mitigation trigger**: If O × M/E interaction (p < 0.10), extend to remaining 2 M/E levels (Brief-text, Verbose-text).
 
-### 3.4 H4 Design (Voting)
+### 3.4 H3 Design (Voting)
 
 **Primary data**: K=10 runs from main factorial enable voting analysis at:
 
@@ -80,7 +80,7 @@ All pairwise elaboration comparisons are available from the M/E factor in the ma
 
 **Extended voting**: Additional 20 runs at optimal configuration for N=30 analysis.
 
-### 3.5 H6 Design (Diversity)
+### 3.5 H9 Design (Diversity)
 
 **Design**: TD(2) × ID(2) = **4 conditions** × 5 runs × 5 passes = **100 runs**
 
@@ -129,11 +129,11 @@ These factors operate "on top of" the base prompt configuration:
 
 | Factor | Symbol | Levels | Hypothesis |
 |--------|--------|--------|------------|
-| Text diversity | TD | 2 (fixed, varied) | H6 |
-| Image diversity | ID | 2 (fixed, varied) | H6 |
-| Voting pool size | N | 3 (5, 10, 30) | H4 |
-| Pipeline architecture | P | 2 (single-stage, two-stage) | H3 |
-| Model tier | MT | 4+ (Flash, Pro, Claude, GPT) | H8, H12 |
+| Text diversity | TD | 2 (fixed, varied) | H9 |
+| Image diversity | ID | 2 (fixed, varied) | H9 |
+| Voting pool size | N | 3 (5, 10, 30) | H3 |
+| Pipeline architecture | P | 2 (single-stage, two-stage) | H2 |
+| Model tier | MT | 4+ (Flash, Pro, Claude, GPT) | H6, H14 |
 
 **Note on voting**: N=5 and N=10 are derived from K=10 factorial runs. N=30 requires 20 additional runs at optimal config.
 
@@ -174,8 +174,8 @@ Some factors are tested at a single optimal configuration with documented ration
 
 | Factor | Approach | Rationale | Caveat |
 |--------|----------|-----------|--------|
-| H6 Diversity | Tested at optimal base config | Mechanism (error decorrelation) is general; should generalise | "Generalisation to other configurations assumed" |
-| H4 Voting optimal | Grid at optimal base config | Preliminary shows ~30-40% consistent | "Contingent follow-up if interactions detected" |
+| H9 Diversity | Tested at optimal base config | Mechanism (error decorrelation) is general; should generalise | "Generalisation to other configurations assumed" |
+| H3 Voting optimal | Grid at optimal base config | Preliminary shows ~30-40% consistent | "Contingent follow-up if interactions detected" |
 
 ---
 
@@ -222,11 +222,12 @@ Some factors are tested at a single optimal configuration with documented ration
 
 ---
 
-*Document version: 2.0*
+*Document version: 2.1*
 *Created: 2026-01-02*
-*Updated: 2026-01-04*
+*Updated: 2026-01-08*
 
 **Changelog:**
 
-- v2.0: Major update — revised to 100-condition factorial (5 M/E × 4 H7 × 5 T); K=10 independent runs; H2 now contrasts within factorial; H5 partial cross design; updated pairwise coverage matrix; voting from K=10 runs (N=5, N=10, N=30)
+- v2.1: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)
+- v2.0: Major update — revised factorial design; K=10 independent runs; H2 now contrasts within factorial; ordering partial cross design; updated pairwise coverage matrix; voting from K=10 runs (N=5, N=10, N=30)
 - v1.0: Initial coverage documentation
