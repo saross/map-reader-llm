@@ -152,6 +152,7 @@ The session followed an incremental review and correction workflow:
 ### Data Inputs
 
 Three preregistration documents (markdown format):
+
 - `preregistration.md` — main preregistration (~1,500 lines)
 - `preregistration-coverage.md` — factorial coverage companion (~200 lines)
 - `preregistration-appendix-prompts.md` — prompts appendix (~900 lines)
@@ -165,6 +166,7 @@ The process was iterative with three main phases:
 3. **Comprehensive review** (multiple iterations): Read all documents, identified spelling/formatting issues, applied corrections
 
 Decision points included:
+
 - Determining encoding issue was viewer-side (no file change needed)
 - Choosing placement for new section (after Overview)
 - Standardising on UK/Australian spelling throughout
@@ -178,6 +180,7 @@ Decision points included:
 ### Outputs
 
 Three updated preregistration documents ready for final review, with:
+
 - Consistent cross-references between documents
 - UK/Australian English spelling throughout
 - New Pre-Holdout Finalisation section documenting empirical elements to be determined before holdout evaluation
