@@ -1,9 +1,9 @@
 {
     "version": "detect_image-only_canonical-last_hardneg",
-    "description": "H5-B + H7: Canonical-last ordering with hard negatives. Hard positives first, hard negatives, nulls, then legend positives.",
-    "hypothesis": "H5-B, H7",
+    "description": "H4-B + H5: Image-only with canonical-last ordering and hard negatives.",
+    "hypothesis": "H4-B, H5",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [

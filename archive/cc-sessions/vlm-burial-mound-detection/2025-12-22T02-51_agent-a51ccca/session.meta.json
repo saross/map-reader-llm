@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a51ccca",
+    "started_at": "2025-12-22T02:51:40.164Z",
+    "ended_at": "2025-12-22T02:51:43.872Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": []
+  },
+  "statistics": {
+    "turns": 1,
+    "human_messages": 1,
+    "assistant_messages": 1,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 0,
+      "by_type": {}
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 0,
+      "by_type": {},
+      "largest_single_output_bytes": 0
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "f9ddd5ea9002bbd327d7f00a2350283cdb34b6bf9b5f4d38185dc218863d9f4a",
+    "jsonl_bytes": 2010,
+    "archived_at": "2026-01-09T13:31:19.080734"
+  }
+}

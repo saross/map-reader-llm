@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a80721e",
+    "started_at": "2026-01-03T07:13:36.233Z",
+    "ended_at": "2026-01-03T07:14:26.819Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "docs/methodology/preregistration/cc-editing-instructions-expand-holdout.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 8,
+    "human_messages": 8,
+    "assistant_messages": 12,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 7,
+      "by_type": {
+        "Read": 4,
+        "Glob": 2,
+        "Bash": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 62635,
+      "by_type": {
+        "Read": {
+          "count": 4,
+          "bytes": 59512
+        },
+        "Glob": {
+          "count": 2,
+          "bytes": 2811
+        },
+        "Bash": {
+          "count": 1,
+          "bytes": 312
+        }
+      },
+      "largest_single_output_bytes": 25503
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "5b0dc434019059cedf655cb496e0b5248b2dec371d5c65e82b958f1f528ac2a5",
+    "jsonl_bytes": 148342,
+    "archived_at": "2026-01-09T13:31:20.600993"
+  }
+}

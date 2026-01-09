@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a26f0ca",
+    "started_at": "2026-01-07T02:46:43.866Z",
+    "ended_at": "2026-01-07T02:47:25.760Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/holdout_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/training_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 18,
+    "human_messages": 18,
+    "assistant_messages": 23,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 17,
+      "by_type": {
+        "Bash": 7,
+        "Glob": 3,
+        "Read": 7
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 77457,
+      "by_type": {
+        "Glob": {
+          "count": 3,
+          "bytes": 816
+        },
+        "Bash": {
+          "count": 7,
+          "bytes": 22093
+        },
+        "Read": {
+          "count": 7,
+          "bytes": 54548
+        }
+      },
+      "largest_single_output_bytes": 26144
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "5f9a72ceac40e1a497064dcadcb0542152782b6c7dd49e98c6a19025eedf6c98",
+    "jsonl_bytes": 190865,
+    "archived_at": "2026-01-09T13:31:20.983679"
+  }
+}

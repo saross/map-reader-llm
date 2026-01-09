@@ -3,7 +3,7 @@
 **Document version**: 1.1
 **Last updated**: 2026-01-07
 
-This document records the training and holdout tile sets selected for the study.
+This document records the calibration and holdout tile sets selected for the study.
 
 ---
 
@@ -13,12 +13,12 @@ This document records the training and holdout tile sets selected for the study.
 - **Random seed**: 1766464625
 - **Samples per map**: 5 (balanced across 4 maps)
 - **Maximum background**: 75% (tiles with >75% empty space excluded)
-- **Adjacency distance**: 1 tile (spatial separation between training/holdout)
+- **Adjacency distance**: 1 tile (spatial separation between calibration/holdout)
 - **Tile size**: 512×512 pixels (64px overlap, 448px stride)
 
-## Training Tiles (n=20)
+## Calibration Tiles (n=20)
 
-Tiles used for prompt development and few-shot examples.
+Tiles used for prompt development and few-shot examples (not model training).
 
 ### K-35-052-4_32635 (5 tiles)
 
@@ -60,13 +60,13 @@ Tiles used for prompt development and few-shot examples.
 | K-35-078-1_Lesovo_x2688_y1344.png | 0 | empty |
 | K-35-078-1_Lesovo_x448_y0.png | 0 | empty |
 
-**Training set summary**: 20 tiles, 22 mounds total
+**Calibration set summary**: 20 tiles, 22 mounds total
 
 ---
 
 ## Holdout Tiles (n=20)
 
-Tiles reserved for final evaluation. Spatially separated from training tiles.
+Tiles reserved for final evaluation. Spatially separated from calibration tiles.
 
 ### K-35-052-4_32635 (5 tiles)
 
@@ -114,7 +114,7 @@ Tiles reserved for final evaluation. Spatially separated from training tiles.
 
 ## Density Distribution
 
-| Density | Training | Holdout |
+| Density | Calibration | Holdout |
 |---------|----------|---------|
 | Empty (0 mounds) | 8 | 8 |
 | Sparse (1-2 mounds) | 7 | 7 |
@@ -124,6 +124,6 @@ Tiles reserved for final evaluation. Spatially separated from training tiles.
 
 ## Source Files
 
-- `inputs/training_manifest.json` - Training tile list
-- `inputs/holdout_manifest.json` - Holdout tile list
-- `inputs/tile_selection_metadata.json` - Full selection metadata
+- `inputs/tiles/calibration_manifest.json` - Calibration tile list
+- `inputs/tiles/holdout_manifest.json` - Holdout tile list
+- `inputs/tiles/tile_selection_metadata.json` - Full selection metadata

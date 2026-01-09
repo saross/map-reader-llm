@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-abbc59e",
+    "started_at": "2025-12-31T06:17:35.493Z",
+    "ended_at": "2025-12-31T06:18:47.616Z",
+    "duration_minutes": 1
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": ".gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/ARCHIVE_MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_score_results.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/benchmark_single_wrapper.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/check_resolution.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_metrics_for_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_overnight_configs.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/list_models.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 43,
+    "human_messages": 43,
+    "assistant_messages": 55,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 42,
+      "by_type": {
+        "Bash": 34,
+        "Read": 8
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 85163,
+      "by_type": {
+        "Bash": {
+          "count": 34,
+          "bytes": 69657
+        },
+        "Read": {
+          "count": 8,
+          "bytes": 15506
+        }
+      },
+      "largest_single_output_bytes": 30031
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "c30b59c7860c90c6753153b5ceda712fd80401c32db39f34060a229eb9aeca26",
+    "jsonl_bytes": 256647,
+    "archived_at": "2026-01-09T13:31:20.246036"
+  }
+}

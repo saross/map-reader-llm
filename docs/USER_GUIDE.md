@@ -14,9 +14,9 @@ To run the pipeline on new survey data:
 ## 2. Running Detection (Standard)
 1.  **Select a Configuration**: Choose a JSON file from `prompts/configs/`.
     *   Use `detect_image-only.json` for general purpose (recommended).
-2.  **Define a Manifest (Optional)**: If you only want to run specific tiles, create a json list in `inputs/manifests/my_run.json`.
+2.  **Define a Manifest (Optional)**: If you only want to run specific tiles, create a JSON list in `inputs/tiles/my_run.json`.
     *   Format: `["K-35-101-1_1_1", "K-35-101-1_1_2"]`
-    *   If no manifest is provided, some scripts may process all available tiles or default to `training_manifest.json`.
+    *   If no manifest is provided, some scripts may process all available tiles or default to `inputs/tiles/calibration_manifest.json`.
 3.  **Execute**:
     ```bash
     python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json

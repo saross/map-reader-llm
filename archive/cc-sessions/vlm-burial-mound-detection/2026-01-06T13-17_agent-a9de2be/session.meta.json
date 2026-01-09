@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a9de2be",
+    "started_at": "2026-01-06T13:17:14.108Z",
+    "ended_at": "2026-01-06T13:18:26.519Z",
+    "duration_minutes": 1
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": ".",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/3_georeference_and_visualize.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_fp_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/check_holdout_expansion_feasibility.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_grid_utils.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/mine_hard_cases.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/preprocess_tiling.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 33,
+    "human_messages": 33,
+    "assistant_messages": 43,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 32,
+      "by_type": {
+        "Glob": 5,
+        "Grep": 4,
+        "Read": 15,
+        "Bash": 8
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 136993,
+      "by_type": {
+        "Glob": {
+          "count": 5,
+          "bytes": 21807
+        },
+        "Read": {
+          "count": 15,
+          "bytes": 93772
+        },
+        "Grep": {
+          "count": 4,
+          "bytes": 5082
+        },
+        "Bash": {
+          "count": 8,
+          "bytes": 16332
+        }
+      },
+      "largest_single_output_bytes": 26171
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "9ebe039c1bef8fbcbd168c4113bf712d2a92f4782cff270fdd937c486870c7c8",
+    "jsonl_bytes": 331939,
+    "archived_at": "2026-01-09T13:31:20.626058"
+  }
+}

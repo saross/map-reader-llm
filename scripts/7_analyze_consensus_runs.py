@@ -116,7 +116,7 @@ def main():
         print(f"Missing GT ({gt_file}) or Bounds ({bounds_path}).")
         # Proceed with partial output? No, validaton needs recall.
         # Hardcode fallback for GT
-        gt_file = Path("inputs/vectors/mounds-reference.geojson")
+        gt_file = Path("inputs/vectors/references/mounds-reference.geojson")
         
     print(f"Using GT: {gt_file}")
     

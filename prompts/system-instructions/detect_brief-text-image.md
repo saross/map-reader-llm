@@ -27,7 +27,6 @@ Scan the **Target Image** and create bounding boxes for all instances that visua
 
 Return JSON with normalised coords (0-1000).
 
-```json
 {
     "detections": [
         {
@@ -37,4 +36,3 @@ Return JSON with normalised coords (0-1000).
         }
     ]
 }
-```

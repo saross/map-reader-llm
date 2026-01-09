@@ -1,0 +1,714 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "f4cb3541-2e17-40dd-a94e-1e114107f55b",
+    "started_at": "2026-01-06T22:04:26.089Z",
+    "ended_at": "2026-01-08T07:25:31.771Z",
+    "duration_minutes": 2001
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 976,
+    "total_tokens": 84090,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": ".gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "outputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/pilot_decision.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/prompt-library-alignment.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_images.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_images.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_canonical-last_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_images.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_random-order_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_tilesize.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_multiscale_voting.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_pilot_results.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_pilot_tiles.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_pilot_detection.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_pilot_tiles.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/USER_GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-coverage.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/reports/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/tile-selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-names/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "planning/future_work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_canonical-last_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_random-order_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_canonical-last_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/7_analyze_consensus_runs.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_fp_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/check_holdout_expansion_feasibility.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/mine_hard_cases.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/preprocess_tiling.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2-factorial.yaml",
+        "type": "config",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "docs/methodology/preregistration/.gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-prereg-corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-prereg-simplifications.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan-corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-multiscale-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-review-2026-01-07.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/prompts-appendix-corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/tile-size-and-overlap.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/holdout_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/holdout_manifest_v1_original.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/pilot_tiles/1024/ground_truth.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/pilot_tiles/256/ground_truth.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/legend-negative/standalone_benchmark.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/legend-negative/standalone_triangulation.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/legend.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/training_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "notebooks/phase2-factorial-analysis.ipynb",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/256/detections.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/256/responses/K-35-052-4_32635_pilot_region_08_x2096_y1840_pass1.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/multiscale_analysis.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/multiscale_summary.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/pilot_results.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/pilot/pilot_summary.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/cc-tile-size-pilot.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/h2-text-elaboration-comparison.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/multiscale-voting-analysis.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/options_model_selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/prompt-library-alignment-review.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/prompt-standardisation-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/vlm-implementation-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/propose_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/verify_image-only.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 1312,
+    "human_messages": 1312,
+    "assistant_messages": 2606,
+    "thinking_blocks": 976,
+    "tool_calls": {
+      "total": 1232,
+      "by_type": {
+        "Bash": 293,
+        "Glob": 23,
+        "Read": 234,
+        "TodoWrite": 132,
+        "Edit": 392,
+        "Grep": 79,
+        "Task": 10,
+        "AskUserQuestion": 5,
+        "Write": 28,
+        "ExitPlanMode": 12,
+        "TaskOutput": 7,
+        "KillShell": 2,
+        "WebSearch": 8,
+        "WebFetch": 7
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 3839909,
+      "by_type": {
+        "Bash": {
+          "count": 293,
+          "bytes": 517721
+        },
+        "Glob": {
+          "count": 23,
+          "bytes": 12059
+        },
+        "Read": {
+          "count": 234,
+          "bytes": 2309587
+        },
+        "TodoWrite": {
+          "count": 132,
+          "bytes": 21120
+        },
+        "Edit": {
+          "count": 392,
+          "bytes": 461817
+        },
+        "Grep": {
+          "count": 79,
+          "bytes": 211412
+        },
+        "Task": {
+          "count": 10,
+          "bytes": 73715
+        },
+        "AskUserQuestion": {
+          "count": 5,
+          "bytes": 2637
+        },
+        "Write": {
+          "count": 28,
+          "bytes": 72404
+        },
+        "ExitPlanMode": {
+          "count": 12,
+          "bytes": 58419
+        },
+        "TaskOutput": {
+          "count": 7,
+          "bytes": 61688
+        },
+        "KillShell": {
+          "count": 2,
+          "bytes": 330
+        },
+        "WebSearch": {
+          "count": 8,
+          "bytes": 29097
+        },
+        "WebFetch": {
+          "count": 7,
+          "bytes": 7903
+        }
+      },
+      "largest_single_output_bytes": 142574
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "27ff50dc593ee13af620d4d5a41122f74f4d6bded2fb343e98d612ac002530d4",
+    "jsonl_bytes": 29149846,
+    "archived_at": "2026-01-09T13:31:21.446478"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"
+    ],
+    "detection_notes": [
+      "Found session ID reference: a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

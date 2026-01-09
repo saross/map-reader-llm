@@ -16,12 +16,12 @@ Phase 1: Library + Text Construction ──────────────�
     │                                                       │
     ▼                                                       │
 Phase 2a: Strand 1 (Verbosity × Partial H5) ◄───────────────┤
-    │    50 cells × K=10 runs                               │
+    │    26 cells × K=10 runs                               │
     ▼                                                       │
 Phase 2b: H5 Confirmatory (Full 3-level at Optimal M/E)     │
-    │    15 cells × K=10 runs                               │
+    │    4 cells × K=10 runs                                │
     ▼                                                       │
-Phase 2c: Strand 2 (Library Size H15) ──────────────────────┤
+Phase 2c: Strand 2 (Library Size H8) ───────────────────────┤
     │    30 cells × K=10 runs                               │
     ▼                                                       │
 Phase 2d: Strand 3 (Interaction, conditional)               │
@@ -42,7 +42,7 @@ H3 Voting       H4 Ordering     H9 Diversity    H2 Two-Stage│
             Phase 5: Exploratory (H10-H14, H16, H17)
 ```
 
-**Note**: The stranded design separates text elaboration (Strand 1) from library content (Strand 2). H2, H6, and H9 are now exploratory hypotheses.
+**Note**: The stranded design separates text elaboration (Strand 1) from library content (Strand 2). H9 is exploratory; H2 and H6 remain confirmatory.
 
 ---
 
@@ -629,8 +629,8 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
    - 6-pass voting: 6×Flash vs 6×Sonnet vs 6×GPT vs 2×each
    - ~$15-25
 
-3. **H10 (fine-to-coarse)**: Novel architecture
-   - Context-expanded re-query for uncertain detections
+3. **H10 (training pool size)**: Library quality assessment
+   - Test libraries constructed from larger training pools
    - ~$5-10
 
 4. **H12 (HP:HN ratio)**: Ratio exploration
@@ -648,8 +648,8 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
 | Phase 1: Library + Text | ~100 | ~$1-2 |
-| Phase 2a: Strand 1 (Verbosity × partial H5) | ~24,000 | ~$36 |
-| Phase 2b: H5 Confirmatory (full 3-level) | ~7,200 | ~$11 |
+| Phase 2a: Strand 1 (Verbosity × partial H5) | ~15,600 | ~$23 |
+| Phase 2b: H5 Confirmatory (full 3-level) | ~2,400 | ~$4 |
 | Phase 2c: Strand 2 — H8 (6 library conditions) | ~14,400 | ~$22 |
 | Phase 2d: Strand 3 (conditional interaction) | ~4,800 | ~$7 |
 | Phase 3a: H3 N=30 Extension | ~1,200 | ~$2 |
@@ -657,21 +657,21 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 | Phase 3c: H9 Diversity (exploratory) | ~6,000 | ~$9 |
 | Phase 3d: H2 Two-Stage (exploratory) | ~1,200 | ~$2 |
 | H5 Expansion (if triggered) | ~2,400 | ~$4 |
-| **Flash Subtotal** | **~62,500-67,300** | **~$94-101** |
+| **Flash Subtotal** | **~42,500-47,300** | **~$74-81** |
 | Phase 4: H6 Pro Transfer (exploratory) | ~1,400-1,600 | ~$105-120 |
-| **Confirmatory Total** | **~63,900-68,900** | **~$199-221** |
+| **Confirmatory Total** | **~43,900-48,900** | **~$179-201** |
 | Phase 5: Exploratory (H10-H15) | ~7,000-12,000 | ~$40-60 |
-| **Grand Total** | **~70,900-80,900** | **~$239-281** |
+| **Grand Total** | **~50,900-60,900** | **~$219-261** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$337**
+**Contingency**: 20% buffer → **Budget ceiling: ~$313**
 
 **Notes**:
 
 - Phase 2d (Strand 3) only runs if Strands 1 and 2 both show significant effects
 - H5 Expansion only runs if interaction or large H5 effect detected
-- H2, H6, and H9 are now exploratory (moved from confirmatory)
+- H9 is exploratory; H2 and H6 remain confirmatory
 - The majority of cost comes from Pro model testing (Phase 4) at ~10× Flash pricing
-- Flash-only confirmatory testing would cost ~$94-101
+- Flash-only confirmatory testing would cost ~$74-81
 
 ---
 
@@ -729,12 +729,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.4*
+*Document version: 2.5*
 *Created: 2025-12-31*
 *Updated: 2026-01-08*
 
 **Changelog:**
 
+- v2.5: Consistency fixes with preregistration.md v4.2 — corrected H8 label (was H15); fixed H2/H6 status (confirmatory, not exploratory); corrected cell counts (Strand 1: 26, H5 Confirmatory: 4); fixed H10 description (training pool size, not fine-to-coarse); recalculated budget totals
 - v2.4: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H2=two-stage, H6=Flash→Pro, H8=library size, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T); revised budget (~$94-101 Flash, ~$199-221 confirmatory); status updated to Ready for Registration
 - v2.3: Stranded factorial restructure — separates text elaboration (Strand 1) from library content (Strand 2); Phase 2 now has 4 sub-phases (2a-2d); library size promoted to confirmatory with 6 library conditions (Pure, Canonical, A-D) using 1:1 HP:Emp-HN ratio; two-stage, diversity, and Flash→Pro moved to exploratory; HP:HN ratio added to Phase 5 exploration; budget updated
 - v2.2: Final review fixes — H2/hard negatives orthogonality in Phase 1 (exclusion guidance controlled by hard negatives only); corrected Pro cost estimates (~$105-120); fixed budget summary totals; updated file naming to match 10-instruction structure; fixed ordering condition count (6 new, not 9); removed stale elaboration directory

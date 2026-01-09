@@ -1,0 +1,648 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+    "started_at": "2025-12-31T01:34:25.992Z",
+    "ended_at": "2026-01-02T06:13:15.390Z",
+    "duration_minutes": 3158
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 501,
+    "total_tokens": 39918,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": ".zenodo.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "CODE_OF_CONDUCT.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "codemeta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase0-script-audit.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-coverage.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/vlm-burial-mounds-internal-operations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "notebooks/phase2-factorial-analysis.ipynb",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "planning/h2-text-elaboration-comparison.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/prompt-standardisation-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_canonical-last-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image-elaborate-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image-elaborate.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_canonical-last-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_random-order-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only-elaborate-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only-elaborate.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image-elaborate-hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image-elaborate.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image-hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only-elaborate-hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only-elaborate.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only-hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_llm_metadata.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2-factorial.yaml",
+        "type": "config",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": ".gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/data_split_strategy.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-few-shot-multimodal-prompting.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-optimising-symbol-detection-benchmarks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-vlm-evidence-review.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/vlm-implementation-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/tile-selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/options_model_selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_canonical-last_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_canonical-last_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_elaborate.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_elaborate_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image_random-order_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only_elaborate.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only_elaborate_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only_hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/propose_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/verify_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "requirements.txt",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/7_analyze_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_fp_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_variability_study.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "CITATION.cff",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/USER_GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/factorial-coverage-synopsis.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specifications.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-review-final.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image_elaborate.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image_elaborate_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only_elaborate.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only_elaborate_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only_hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/3_georeference_and_visualize.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_cc_sessions.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/benchmark_single_wrapper.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_overnight_configs.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/mine_hard_cases.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 735,
+    "human_messages": 735,
+    "assistant_messages": 1383,
+    "thinking_blocks": 501,
+    "tool_calls": {
+      "total": 679,
+      "by_type": {
+        "Glob": 32,
+        "Read": 174,
+        "Bash": 117,
+        "TodoWrite": 80,
+        "Write": 41,
+        "Task": 7,
+        "Grep": 34,
+        "Edit": 188,
+        "ExitPlanMode": 4,
+        "mcp__ide__getDiagnostics": 1,
+        "AskUserQuestion": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 2033502,
+      "by_type": {
+        "Glob": {
+          "count": 32,
+          "bytes": 28628
+        },
+        "Read": {
+          "count": 174,
+          "bytes": 1334900
+        },
+        "Bash": {
+          "count": 117,
+          "bytes": 108949
+        },
+        "TodoWrite": {
+          "count": 80,
+          "bytes": 12800
+        },
+        "Write": {
+          "count": 41,
+          "bytes": 186824
+        },
+        "Task": {
+          "count": 7,
+          "bytes": 61070
+        },
+        "Grep": {
+          "count": 34,
+          "bytes": 41717
+        },
+        "Edit": {
+          "count": 188,
+          "bytes": 245693
+        },
+        "ExitPlanMode": {
+          "count": 4,
+          "bytes": 12350
+        },
+        "mcp__ide__getDiagnostics": {
+          "count": 1,
+          "bytes": 196
+        },
+        "AskUserQuestion": {
+          "count": 1,
+          "bytes": 375
+        }
+      },
+      "largest_single_output_bytes": 87914
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "ba6ce8fecee8089ed302e693aed6ecfe9b9b0228d9946ae590f5fd7d14923f16",
+    "jsonl_bytes": 15089860,
+    "archived_at": "2026-01-09T13:31:20.492349"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [],
+    "detection_notes": [
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+    "version": "detect_brief-text-image_random-order",
+    "description": "H4-C: Brief text+image with random ordering. Examples randomly permuted with documented seed.",
+    "hypothesis": "H4-C",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "random_seed": 42,
+    "examples": [
+        {
+            "path": "neutral/example_03.png",
+            "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays.",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_06.png",
+            "label": "Negative: Empty tile. No mounds present.",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_01.png",
+            "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes.",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_05.png",
+            "label": "Negative: Empty tile. No mounds present.",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_04.png",
+            "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays.",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_07.png",
+            "label": "Negative: Empty tile. No mounds present.",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_02.png",
+            "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks.",
+            "category": "canonical"
+        }
+    ],
+    "ordering_note": "Permutation generated with seed 42. Two additional seeds (43, 44) will be tested; results averaged."
+}

@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a6d92cb",
+    "started_at": "2026-01-07T13:16:25.278Z",
+    "ended_at": "2026-01-07T13:17:28.712Z",
+    "duration_minutes": 1
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "archive/preliminary-work/ARCHIVE_MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/gemini-few-shot-multimodel-prompting.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/user_observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/future_work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_methodology.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 19,
+    "human_messages": 19,
+    "assistant_messages": 25,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 18,
+      "by_type": {
+        "Grep": 1,
+        "Glob": 2,
+        "Bash": 10,
+        "Read": 5
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 87074,
+      "by_type": {
+        "Glob": {
+          "count": 2,
+          "bytes": 1253
+        },
+        "Grep": {
+          "count": 1,
+          "bytes": 45167
+        },
+        "Bash": {
+          "count": 10,
+          "bytes": 10847
+        },
+        "Read": {
+          "count": 5,
+          "bytes": 29807
+        }
+      },
+      "largest_single_output_bytes": 45167
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "f8e206d1c0c2fd4dd739cbf1655ac6fcf0a61eb807d80a9fa1902a32aa0cf3bf",
+    "jsonl_bytes": 214179,
+    "archived_at": "2026-01-09T13:31:21.012024"
+  }
+}

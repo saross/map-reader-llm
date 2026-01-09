@@ -1,0 +1,366 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+    "started_at": "2025-12-23T07:25:35.452Z",
+    "ended_at": "2025-12-31T01:25:40.990Z",
+    "duration_minutes": 11160
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 344,
+    "total_tokens": 34200,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "docs/methodology/preregistration/review-notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/tile-selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/neutral/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only-hardneg.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_text-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image-hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only-hardneg.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/propose_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/verify_image-only.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/7_analyze_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_fp_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/benchmark_variability.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_union_candidates.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "archive/preliminary-work/prompt_example_images/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/null-tiles-selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/prompt-analysis-v35-clean.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/holdout_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/null_tiles_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/SovietTopoSymbols.pdf",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "inputs/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/training_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/config.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 431,
+    "human_messages": 431,
+    "assistant_messages": 860,
+    "thinking_blocks": 344,
+    "tool_calls": {
+      "total": 376,
+      "by_type": {
+        "Bash": 36,
+        "Read": 86,
+        "TodoWrite": 60,
+        "Write": 27,
+        "Glob": 16,
+        "Grep": 42,
+        "Edit": 103,
+        "WebSearch": 3,
+        "WebFetch": 3
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 804072,
+      "by_type": {
+        "Bash": {
+          "count": 36,
+          "bytes": 31660
+        },
+        "Read": {
+          "count": 86,
+          "bytes": 457564
+        },
+        "TodoWrite": {
+          "count": 60,
+          "bytes": 9600
+        },
+        "Write": {
+          "count": 27,
+          "bytes": 27187
+        },
+        "Glob": {
+          "count": 16,
+          "bytes": 10780
+        },
+        "Grep": {
+          "count": 42,
+          "bytes": 102229
+        },
+        "Edit": {
+          "count": 103,
+          "bytes": 153099
+        },
+        "WebSearch": {
+          "count": 3,
+          "bytes": 11899
+        },
+        "WebFetch": {
+          "count": 3,
+          "bytes": 54
+        }
+      },
+      "largest_single_output_bytes": 59754
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "99df7eafd394b29d3b9c33165b0868cdbb974719b668fc23395291a374de81d5",
+    "jsonl_bytes": 74521740,
+    "archived_at": "2026-01-09T13:31:20.222551"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [],
+    "detection_notes": [
+      "Found continuation language: 'last\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'last\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

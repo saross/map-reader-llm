@@ -1,7 +1,7 @@
 {
     "version": "detect_image-only_canonical-last",
-    "description": "H5-B: Canonical-last ordering. Hard examples (when added) first, then legend positives/negatives. Skeleton uses reversed block order.",
-    "hypothesis": "H5-B",
+    "description": "H4-B: Canonical-last ordering. Nulls first, then legend positives.",
+    "hypothesis": "H4-B",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,

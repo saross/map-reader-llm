@@ -1,170 +1,107 @@
 # Future Work & Remaining Tasks
 
-This document tracks methodological tasks, experiments, and stretch goals for the Map Reader LLM project.
+This document tracks implementation tasks and stretch goals for the Map Reader LLM project.
 
-**Last Updated**: 2025-12-22
+**Last Updated**: 2026-01-08
+
+> **Note**: Hypothesis testing is now formalised in the preregistration document (`docs/methodology/preregistration/preregistration.md` v4.2). This document covers implementation-specific tasks and exploratory ideas not in the preregistration.
 
 ---
 
-## Priority 1: Immediate Implementation Tasks
+## Status: Preregistration Complete
 
-### 1.1 Fix v4.x Two-Stage Verification Bugs
+The following areas from earlier planning are now addressed by the preregistration:
 
-**Status**: Ready to implement
+| Earlier Task | Preregistration Coverage |
+|--------------|-------------------------|
+| Text vs image modality effects | H1 (M/E factor: 5 levels) |
+| Text elaboration (brief vs verbose) | H2 (text elaboration) |
+| Two-stage pipeline | H2 (two-stage confirmatory) |
+| Voting/consensus strategies | H3 (voting threshold) |
+| Example ordering | H4 (canonical-first/last/random) |
+| Hard negatives | H5 (3 levels: None/Images-only/Text+Images) |
+| Model selection | H6 (4 models), H14 (architecture transfer) |
+| Temperature optimisation | H7 (4 levels: 0.0, 0.7, 1.0, 1.3) |
+| Library size | H8 (training pool size) |
+| Hard positives | H9 (exploratory) |
+| Multi-scale detection | H10 (tile size pilot) |
+
+**See**: `docs/methodology/preregistration/execution-plan.md` for implementation timeline.
+
+---
+
+## Implementation Tasks (Pre-Execution)
+
+### 1.1 Pipeline Preparation
+
+**Status**: Pending
 **Priority**: High
-**Discovered**: 2025-12-22 (Code review session)
 
-The v4.x two-stage pipeline (F1 0.716, P=0.97, R=0.57) underperforms due to implementation bugs, not architectural limitations.
+Before executing the preregistration:
 
-**Critical bugs identified:**
+- [ ] Verify all 26 config files exist and are correct
+- [ ] Verify all 10 instruction files match preregistration appendix
+- [ ] Test pipeline end-to-end on a single tile
+- [ ] Confirm API clients work for all 4 models (Gemini Flash, Gemini Pro, Claude Sonnet, GPT-5.2)
+- [ ] Set up results directory structure per execution plan
 
-1. **Missing instruction file** (`prompts/configs/verify_image-only.json`)
-   - Config references `"instruction_file": "verify_image-only.md"`
-   - File must exist in `prompts/system-instructions/`
-   - Missing file causes fallback to basic default prompt in `scripts/5_verify_crops.py`
-   - **Fix**: Ensure `prompts/system-instructions/verify_image-only.md` exists with proper visual chain-of-thought instructions
+### 1.2 Tile Selection (Phase 1)
 
-2. **Contradictory example labels** (`prompts/configs/verify_image-only.json`)
-   - `benchmark_mound.png` labelled as "Negative Example: Hard Benchmark"
-   - `triangulation_mound.png` labelled as "Negative Example: Hard Triangulation"
-   - These ARE positive examples (mounds with survey markers)
-   - This teaches the verifier to reject valid detections, explaining the 0.57 recall
-   - **Fix**: Change labels to "Positive Example: Benchmark on Mound" etc.
+**Status**: Pending
+**Reference**: `scripts/select_tiles_phase2.py`
 
-3. **Unused config flags** (`prompts/configs/verify_image-only.json`)
-   - `"visual_cot": true` and `"confidence_rubric": "explicit"` are defined but never read by `5_verify_crops.py`
-   - **Fix**: Either implement flag handling or remove dead config
-
-4. **Temperature 0.0 may be suboptimal**
-   - Deterministic output prevents stochastic voting benefits
-   - Consider temperature 0.3-0.5 for light variation
-
-**Expected outcome**: With fixes applied, two-stage should approach consensus performance (F1 ~0.90) while maintaining high precision (P≥0.95).
+- [ ] Finalise Phase 1 stratified tile selection (60 development tiles)
+- [ ] Generate tile bounds files
+- [ ] Verify ground truth annotations for selected tiles
 
 ---
 
-### 1.2 Investigate v3.5 Flash Swarm Collapse
+## Multi-Provider Implementation
 
-**Status**: Root cause identified (2025-12-22)
-**Priority**: High
-**Reference**: Observation 45 in `docs/working_notes.md`
+### 2.1 API Client Status
 
-**The paradox:**
-- v3.2 (Text+Image) Flash Swarm N=30: F1 0.920 (excellent)
-- v3.5 (Image-Only) Flash Swarm N=30: F1 0.000 (2,327 hallucinations)
+| Provider | Client | Status |
+|----------|--------|--------|
+| Google (Gemini) | `google-generativeai` | ✅ Implemented |
+| Anthropic (Claude) | `anthropic` | ❌ Pending |
+| OpenAI (GPT) | `openai` | ❌ Pending |
 
-**Root Cause Analysis (COMPLETED)**:
+### 2.2 Provider-Specific Adaptations
 
-The original comparison was **not controlled**. Two variables differed simultaneously:
+**Claude adaptation notes:**
+- Multimodal API uses base64 image encoding
+- System prompt in separate `system` parameter
+- Different token counting
 
-| Parameter | v3.2 Swarm (F1 0.92) | v3.5 Swarm (F1 0.00) |
-|-----------|----------------------|----------------------|
-| **Temperature** | **0.3** | **1.0** |
-| Text scaffolding | "No Spikes = No Mound" rules | Minimal (27 lines) |
-| Verbose neg labels | "NO MOUNDS." (emphatic) | "No Mounds" (passive) |
-| Detections/run | ~59 | ~86 (more hallucinations) |
-
-Source: Meta files at:
-- `outputs/results/v3.2_experimental/variability_study_v3.2_flash_30_run_01.meta.json`
-- `outputs/results/v3.5_clean/flash_swarm_replay_temp1_run_01.meta.json`
-
-**Conclusion**: The collapse was caused by **both** factors:
-1. Temperature 1.0 introduces excessive stochasticity
-2. No text rails means Flash has no anchor to suppress hallucinations
-
-**Next Steps (Controlled Experiments)**:
-- [ ] Test v3.5 at temperature **0.3** (isolate text effect)
-- [ ] Test v3.2 at temperature **1.0** (isolate temperature effect)
-- [ ] If v3.5 @ 0.3 works: Text is unnecessary, just use lower temperature
-- [ ] If v3.5 @ 0.3 fails: Text scaffolding is essential for Flash stability
+**OpenAI adaptation notes:**
+- Vision API uses URL or base64 images
+- Different response format
 
 ---
 
-## Priority 2: Optimisation Tasks
+## Exploratory Ideas (Post-Preregistration)
 
-### 2.1 Tune v3.2 and v3.5 Prompts
+These are not in the preregistration but may be worth exploring:
 
-**Status**: Pending
-**Goal**: Find optimal scaffolding balance
+### 3.1 Cross-Provider Ensemble
 
-- Test systematic variations:
-  - Text-only, Image-only, Text+Image hybrids
-  - Different instruction lengths
-  - Alternative phrasing for detection criteria
-- Document what text is essential vs. harmful (modality interference)
+Test whether mixing models improves consensus:
+- Gemini Pro + Claude Sonnet + GPT-4o consensus
+- Compare to single-provider consensus
 
-### 2.2 Optimise Few-Shot Image Libraries
+### 3.2 Automated Hard Negative Mining
 
-**Status**: Pending
-**Goal**: Statistically select optimal example sets
+Systematic FP analysis pipeline:
+- Cluster FPs by visual similarity
+- Generate hard negative categories automatically
+- Feed back into prompt library
 
-- Current approach: Manual curation of 16-48 examples
-- Proposed approach:
-  - Bootstrap sampling of example subsets
-  - Measure per-example contribution to F1
-  - Identify high-value and harmful examples
-  - Implement ablation study automation
+### 3.3 Active Learning Loop
 
-### 2.3 Experiment with Training Dataset Sizes
-
-**Status**: Pending
-**Current**: 20 tiles (~5% of corpus)
-
-- Test hypotheses:
-  - Is 20 tiles sufficient for generalisation?
-  - What's the learning curve shape?
-  - Diminishing returns threshold?
-- Expand to 40, 80, 160 tiles if variance remains high
-
----
-
-## Priority 3: Multi-Provider Support
-
-### 3.1 Add Anthropic Model Support
-
-**Status**: Pending
-**Models**: Claude Sonnet 4, Claude Opus 4.5
-
-- Implement Anthropic API client in detection pipeline
-- Adapt prompt format for Claude's multimodal interface
-- Test single-shot and consensus strategies
-- Compare cost/performance ratios
-
-### 3.2 Add OpenAI Model Support
-
-**Status**: Pending
-**Models**: GPT-4o, GPT-4-Vision
-
-- Implement OpenAI API client
-- Adapt prompt format for OpenAI's vision interface
-- Test and benchmark
-
-### 3.3 Cross-Provider Consensus Voting
-
-**Status**: Pending
-**Goal**: Test whether diverse models improve consensus
-
-- Hypotheses:
-  - Mixed-provider ensemble may reduce correlated errors
-  - "Wisdom of crowds" across different training regimes
-- Experiments:
-  - Gemini Pro + Claude Sonnet + GPT-4o consensus
-  - Compare to single-provider 3/3 consensus
-
----
-
-## Priority 4: Advanced Techniques
-
-### 4.1 Explore Additional Improvement Techniques
-
-**Status**: Pending
-**Ideas to investigate:**
-
-- **Chain-of-thought variations**: Test explicit reasoning steps vs. direct detection
-- **Self-consistency decoding**: Multiple reasoning paths, majority vote on answer
-- **Calibration**: Adjust confidence thresholds based on validation set
-- **Active learning**: Prioritise ambiguous cases for human review
-- **Hard negative mining automation**: Systematic FP analysis pipeline
+Prioritise ambiguous cases for human review:
+- Identify low-confidence detections
+- Request human annotation
+- Update training set iteratively
 
 ---
 
@@ -172,46 +109,45 @@ Source: Meta files at:
 
 ### S1. Automated Map-to-Reader Pipeline
 
-**Status**: Stretch goal
 **Goal**: Zero-shot generalisation from legend to detection
 
-**Vision**: Given a new map sheet with its legend, automatically:
+Given a new map sheet with its legend, automatically:
 1. Extract symbol definitions from legend
 2. Generate appropriate few-shot examples
 3. Construct detection prompt
 4. Run detection without human prompt engineering
 
-**Research questions:**
-- Can LLMs learn symbol patterns from legend crops alone?
-- What legend quality/resolution is required?
-- Can we bootstrap from a "meta-prompt" describing how to read legends?
-
 ---
 
 ## Completed Tasks
 
-### Methodological Records
-- [x] **Log Retention Strategy**: `~/.gemini/antigravity/` logs reviewed, methodology archived.
+### Preregistration & Documentation (2026-01)
+- [x] **Preregistration finalised** (v4.2): All 15 hypotheses defined
+- [x] **Execution plan created** (v2.5): Phased implementation timeline
+- [x] **Prompts appendix aligned** (v2.6): All instruction and config files documented
+- [x] **Prompt library standardised**: 10 instruction files, 26 config files
 
-### Open Science Standards
-- [x] **FAIR4RS Compliance**: Repository upgraded to meet FAIR principles.
+### Methodological Records (2025-12)
+- [x] **Log Retention Strategy**: `~/.gemini/antigravity/` logs reviewed, methodology archived
+- [x] **v4.x Implementation Review**: Identified root cause of two-stage underperformance
+
+### Open Science Standards (2025-12)
+- [x] **FAIR4RS Compliance**: Repository upgraded to meet FAIR principles
   - [x] Add `CITATION.cff`
   - [x] Ensure comprehensive licence coverage
   - [x] Improve documentation for reusability
 
-### Analysis & Documentation
-- [x] **v4.x Implementation Review** (2025-12-22): Identified root cause of two-stage underperformance (bugs, not architecture).
-
 ---
 
-## Reference: Current Performance Baselines
+## Reference: Pre-Preregistration Performance Baselines
+
+> **Note**: These baselines are from exploratory v3.x/v4.x experiments (Dec 2025) before the preregistration was finalised. They use different prompt configurations than the preregistered conditions.
 
 | Strategy | Model | F1 | Precision | Recall | Notes |
 |----------|-------|-----|-----------|--------|-------|
-| v3.2 Swarm 10/30 | Flash | **0.920** | 0.92 | 0.92 | Current ceiling |
-| v3.5 Consensus 2/5 | Pro | **0.914** | 0.914 | 0.914 | SOTA recommendation |
-| v3.5 Single | Pro | 0.886 | 0.877 | 0.894 | Strong baseline |
-| v4.6 Verifier | Pro | 0.716 | **0.970** | 0.57 | Precision specialist (buggy) |
-| v3.5 Swarm 30 | Flash | 0.000 | 0.00 | 0.00 | Collapsed (needs investigation) |
+| v3.2 Swarm 10/30 | Flash | **0.920** | 0.92 | 0.92 | Text+Image, T=0.3 |
+| v3.5 Consensus 2/5 | Pro | **0.914** | 0.914 | 0.914 | Image-only, T=1.0 |
+| v3.5 Single | Pro | 0.886 | 0.877 | 0.894 | Image-only baseline |
+| v4.6 Verifier | Pro | 0.716 | **0.970** | 0.57 | Two-stage (had bugs) |
 
-**Target**: Reproducible F1 > 0.90 across strategies and providers.
+**Preregistered target**: F1 ≥ 0.85 on holdout set with optimal configuration.

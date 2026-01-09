@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate GeoJSON bounds files for training and holdout tile sets.
+Generate GeoJSON bounds files for calibration and holdout tile sets.
 
 Creates polygon features for each tile showing its geographic extent,
 useful for visualisation and spatial analysis of tile coverage.
@@ -128,7 +128,7 @@ def create_bounds_geojson(
         tile_filenames: List of tile filenames
         metadata: Tile georeferencing metadata
         selection_metadata: Tile selection metadata with mound counts
-        set_type: 'training' or 'holdout'
+        set_type: 'calibration' or 'holdout'
 
     Returns:
         GeoJSON FeatureCollection dict
@@ -166,7 +166,7 @@ def create_bounds_geojson(
 
 
 def main():
-    """Generate bounds GeoJSONs for training and holdout tile sets."""
+    """Generate bounds GeoJSONs for calibration and holdout tile sets."""
     base_dir = Path(__file__).parent.parent
     inputs_dir = base_dir / "inputs"
     tiles_dir = inputs_dir / "tiles"
@@ -177,13 +177,13 @@ def main():
 
     # Load manifests
     print("Loading manifests...")
-    training_path = inputs_dir / "training_manifest.json"
-    holdout_path = inputs_dir / "holdout_manifest.json"
-    selection_path = inputs_dir / "tile_selection_metadata.json"
+    calibration_path = tiles_dir / "calibration_manifest.json"
+    holdout_path = tiles_dir / "holdout_manifest.json"
+    selection_path = tiles_dir / "tile_selection_metadata.json"
 
-    with open(training_path) as f:
-        training_tiles = json.load(f)
-    print(f"  Training tiles: {len(training_tiles)}")
+    with open(calibration_path) as f:
+        calibration_tiles = json.load(f)
+    print(f"  Calibration tiles: {len(calibration_tiles)}")
 
     with open(holdout_path) as f:
         holdout_tiles = json.load(f)
@@ -197,16 +197,16 @@ def main():
     metadata = load_metadata(tiles_dir)
     print(f"  Total tiles with metadata: {len(metadata)}")
 
-    # Generate training bounds
-    print("\nGenerating training bounds GeoJSON...")
-    training_geojson = create_bounds_geojson(
-        training_tiles, metadata, selection_metadata, "training"
+    # Generate calibration bounds
+    print("\nGenerating calibration bounds GeoJSON...")
+    calibration_geojson = create_bounds_geojson(
+        calibration_tiles, metadata, selection_metadata, "calibration"
     )
-    training_output = outputs_dir / "training_bounds.geojson"
-    with open(training_output, 'w') as f:
-        json.dump(training_geojson, f, indent=2)
-    print(f"  Saved: {training_output}")
-    print(f"  Features: {len(training_geojson['features'])}")
+    calibration_output = outputs_dir / "calibration_bounds.geojson"
+    with open(calibration_output, 'w') as f:
+        json.dump(calibration_geojson, f, indent=2)
+    print(f"  Saved: {calibration_output}")
+    print(f"  Features: {len(calibration_geojson['features'])}")
 
     # Generate holdout bounds
     print("\nGenerating holdout bounds GeoJSON...")

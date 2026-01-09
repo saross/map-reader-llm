@@ -1,9 +1,9 @@
 {
     "version": "detect_image-only_random-order_hardneg",
-    "description": "H5-C + H7: Random ordering with hard negatives. All examples randomly permuted with documented seed.",
-    "hypothesis": "H5-C, H7",
+    "description": "H4-C + H5: Image-only with random ordering and hard negatives. All examples randomly permuted.",
+    "hypothesis": "H4-C, H5",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "random_seed": 42,

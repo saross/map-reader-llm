@@ -1,0 +1,481 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
+    "started_at": "2026-01-08T07:58:58.105Z",
+    "ended_at": "2026-01-09T02:31:17.467Z",
+    "duration_minutes": 1112
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 199,
+    "total_tokens": 17082,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": ".gitattributes",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/archive-defaults.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-artifacts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-decisions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-issues.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/summarise-session.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "results/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_cc_session.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/convert_session_to_markdown.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_session_catalog.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "studies/README.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [],
+    "referenced": [
+      {
+        "path": ".gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "archive/deprecated-scripts/archive_cc_sessions.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/ARCHIVE_MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/transparency/cc-session-archiving-addendum.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/transparency/cc-session-archiving-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/future_work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "requirements-lock.txt",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "requirements.txt",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/3_georeference_and_visualize.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_score_results.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/7_analyze_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/7_analyze_consensus_runs.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/8_analyze_proposer_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_fp_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_multiscale_voting.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_pilot_results.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_study_effects.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_cc_sessions.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_methodology.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/benchmark_variability.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/check_holdout_expansion_feasibility.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/check_resolution.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/compile_stock_taking.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_metrics_for_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_pilot_tiles.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_union_candidates.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_validation_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_grid_utils.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_llm_metadata.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/list_models.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/mine_hard_cases.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/overnight_experiments.sh",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/preprocess_tiling.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/rerun_4_5.sh",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_pilot_detection.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_variability_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_pilot_tiles.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/util_aggregate_partial_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "stock_taking.csv",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2-factorial.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "verification/MappingDetections.R",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 242,
+    "human_messages": 242,
+    "assistant_messages": 529,
+    "thinking_blocks": 199,
+    "tool_calls": {
+      "total": 216,
+      "by_type": {
+        "Bash": 65,
+        "Read": 67,
+        "Write": 18,
+        "TodoWrite": 23,
+        "AskUserQuestion": 2,
+        "Edit": 32,
+        "ExitPlanMode": 6,
+        "Glob": 2,
+        "Grep": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 715167,
+      "by_type": {
+        "Bash": {
+          "count": 64,
+          "bytes": 130821
+        },
+        "Read": {
+          "count": 67,
+          "bytes": 450056
+        },
+        "Write": {
+          "count": 18,
+          "bytes": 20265
+        },
+        "TodoWrite": {
+          "count": 23,
+          "bytes": 3680
+        },
+        "AskUserQuestion": {
+          "count": 2,
+          "bytes": 1113
+        },
+        "Edit": {
+          "count": 32,
+          "bytes": 77109
+        },
+        "ExitPlanMode": {
+          "count": 6,
+          "bytes": 28039
+        },
+        "Glob": {
+          "count": 2,
+          "bytes": 28
+        },
+        "Grep": {
+          "count": 1,
+          "bytes": 4056
+        }
+      },
+      "largest_single_output_bytes": 50448
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "fe718b6eec186dc2bc878e686957fd9fb66a692a900c12e25b7fa7fa2a939c03",
+    "jsonl_bytes": 3309059,
+    "archived_at": "2026-01-09T13:31:21.510795"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+    ],
+    "detection_notes": [
+      "Found continuation language: 'pick(?:ing)?\\s+up\\s+(?:from\\s+)?where'",
+      "Found session ID reference: 5e52df73-8bcf-4c07-9a53-b59087d32b1f",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'pick(?:ing)?\\s+up\\s+(?:from\\s+)?where'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

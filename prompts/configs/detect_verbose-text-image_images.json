@@ -1,0 +1,57 @@
+{
+    "version": "detect_verbose-text-image_images",
+    "description": "H5-B: Images-only hard negatives. Hard negative images included with minimal labels (no exclusion text).",
+    "hypothesis": "H5-B",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_verbose-text-image.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {
+            "path": "neutral/example_01.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_02.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_03.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_04.png",
+            "label": "Positive",
+            "category": "canonical"
+        },
+        {
+            "path": "neutral/example_05.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_06.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_07.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral/example_08.png",
+            "label": "Negative",
+            "category": "hard_negative"
+        },
+        {
+            "path": "neutral/example_09.png",
+            "label": "Negative",
+            "category": "hard_negative"
+        }
+    ],
+    "ordering_note": "Canonical-first ordering. Hard negatives included with minimal labels (no explanation)."
+}

@@ -9,19 +9,18 @@ This directory contains the configurations and system instructions for LLM infer
 
 ## Naming Convention
 
-Prompts follow this pattern: `{workflow}_{modality}.json`
+Prompts follow this pattern: `{workflow}_{modality}[_ordering][_hardneg].json`
 
 | Component | Values | Meaning |
 |-----------|--------|---------|
 | **workflow** | `detect`, `propose`, `verify` | Single-shot, Two-stage S1, Two-stage S2 |
-| **modality** | `text-only`, `text-image`, `image-only` | What drives the prompt |
+| **modality** | `image-only`, `brief-text`, `brief-text-image`, `verbose-text`, `verbose-text-image` | What drives the prompt |
 
 Optional variant suffixes:
 
-- `-hardneg`: Includes hard negative examples and exclusion guidance
-- `_canonical-last`: H5-B ordering (hard examples first, legend last)
-- `_random-order`: H5-C ordering (random permutation with documented seed)
-- `_temp-X.X`: Temperature variant for H9 testing
+- `_hardneg`: Includes hard negative examples and exclusion guidance (H5)
+- `_canonical-last`: H4-B ordering (hard examples first, legend last)
+- `_random-order`: H4-C ordering (random permutation with documented seed)
 
 **Note:** Model selection (Flash vs Pro) is a runtime parameter passed to the script, not encoded in the prompt config.
 
@@ -42,30 +41,46 @@ Optional variant suffixes:
 
 ## Active Configs
 
-| Config | Instruction | Workflow | Modality | Hard Neg |
-|--------|-------------|----------|----------|----------|
-| `detect_text-only.json` | `detect_text-only.md` | Single-shot | Text only | ✗ |
-| `detect_text-only-hardneg.json` | `detect_text-only-hardneg.md` | Single-shot | Text only | ✓ |
-| `detect_text-image.json` | `detect_text-image.md` | Single-shot | Text + Image | ✗ |
-| `detect_text-image-hardneg.json` | `detect_text-image-hardneg.md` | Single-shot | Text + Image | ✓ |
-| `detect_image-only.json` | `detect_image-only.md` | Single-shot | Image only | ✗ |
-| `detect_image-only_canonical-last.json` | `detect_image-only.md` | Single-shot | Image only | ✗ |
-| `detect_image-only_random-order.json` | `detect_image-only.md` | Single-shot | Image only | ✗ |
-| `detect_image-only-hardneg.json` | `detect_image-only.md` | Single-shot | Image only | ✓ |
-| `propose_image-only.json` | `propose_image-only.md` | Two-stage S1 | Image only | ✓ |
-| `verify_image-only.json` | `verify_image-only.md` | Two-stage S2 | Image only | ✓ |
+### Main Detection Configs
+
+| Config | Instruction | Modality | H5 |
+|--------|-------------|----------|-----|
+| `detect_image-only.json` | `detect_image-only.md` | Image-only | None |
+| `detect_image-only_hardneg.json` | `detect_image-only_hardneg.md` | Image-only | Text+Images |
+| `detect_brief-text.json` | `detect_brief-text.md` | Brief-text | None |
+| `detect_brief-text-image.json` | `detect_brief-text-image.md` | Brief-text+image | None |
+| `detect_brief-text-image_hardneg.json` | `detect_brief-text-image_hardneg.md` | Brief-text+image | Text+Images |
+| `detect_verbose-text.json` | `detect_verbose-text.md` | Verbose-text | None |
+| `detect_verbose-text-image.json` | `detect_verbose-text-image.md` | Verbose-text+image | None |
+| `detect_verbose-text-image_hardneg.json` | `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Text+Images |
+
+### Two-Stage Pipeline Configs
+
+| Config | Instruction | Stage | Description |
+|--------|-------------|-------|-------------|
+| `propose_image-only.json` | `propose_image-only.md` | S1 Proposer | High-recall detection |
+| `verify_image-only.json` | `verify_image-only.md` | S2 Verifier | Precision-focused verification |
+
+### H4 Ordering Variants
+
+| Config | Ordering | Description |
+|--------|----------|-------------|
+| `detect_*_canonical-last.json` | H4-B | Hard examples first, legend last |
+| `detect_*_random-order.json` | H4-C | Random permutation (seed 42) |
+
+Available for: image-only, brief-text-image, verbose-text-image (± hardneg)
 
 ## Hypothesis-Specific Configs
 
-### H5: Example Ordering
+### H4: Example Ordering
 
 Tests whether the order of few-shot examples affects detection performance.
 
-| Config | Hypothesis | Ordering | Description |
+| Config Pattern | Hypothesis | Ordering | Description |
 |--------|------------|----------|-------------|
-| `detect_image-only.json` | H5-A | Canonical-first | Legend positives → nulls (baseline) |
-| `detect_image-only_canonical-last.json` | H5-B | Canonical-last | Hard examples first → legend last |
-| `detect_image-only_random-order.json` | H5-C | Random | Random permutation (seed 42; seeds 43, 44 also tested) |
+| `detect_*.json` (base) | H4-A | Canonical-first | Legend positives → nulls (baseline) |
+| `detect_*_canonical-last.json` | H4-B | Canonical-last | Hard examples first → legend last |
+| `detect_*_random-order.json` | H4-C | Random | Random permutation (seed 42; seeds 43, 44 also tested) |
 
 **Example categories:**
 
@@ -76,11 +91,15 @@ Tests whether the order of few-shot examples affects detection performance.
 
 **Current status**: Skeleton configs with canonical + null examples only. Hard examples to be added after training tile evaluation.
 
-### H9: Temperature
+### H5: Hard Negative Guidance
 
-Temperature is a **runtime parameter**, not a config variant. The 48-condition factorial design (preregistration Section 8.4.6) tests T ∈ {0.0, 0.3, 0.7, 1.0} across all config combinations. No separate config files needed.
+Tested via `_hardneg` config suffix and corresponding instruction files with exclusion guidance.
 
-### H6: Prompt Diversity
+### H7: Temperature
+
+Temperature is a **runtime parameter**, not a config variant. The factorial design (preregistration Section 8.4.6) tests T ∈ {0.0, 0.7, 1.0, 1.3} across all config combinations. No separate config files needed.
+
+### H9: Prompt Diversity (Exploratory)
 
 Methodology documented in preregistration Section 8.3.2. Five semantically equivalent instruction variants will be created before holdout evaluation:
 
@@ -96,32 +115,25 @@ Methodology documented in preregistration Section 8.3.2. Five semantically equiv
 
 ---
 
-## Migration from Old Names (2025-12-23)
+## Migration from Old Names (2026-01-08)
 
-The prompts were reorganised for clarity. Old versions archived at `archive/prompts-pre-reorganisation/`.
+The prompts were reorganised to align with preregistration v4.2 naming conventions.
 
-### Config Files
+### Naming Convention Changes
 
-| Old Name | New Name |
-|----------|----------|
-| *(V2.3 resurrected)* | `detect_text-only.json` |
-| `v3.2_experimental.json` | `detect_text-image.json` |
-| `v3.5_clean.json` | `detect_image-only.json` |
-| `v3.5_clean_pro.json` | *(deleted — model is runtime param)* |
-| `v4.1_recall_augmented.json` | *(deleted — v4.2 performed better)* |
-| `v4.2_recall_high_temp.json` | `propose_image-only.json` |
-| `v4.6_verifier.json` | `verify_image-only.json` |
-| `v4.6_verifier_pro.json` | *(deleted — model is runtime param)* |
+| Old Pattern | New Pattern |
+|-------------|-------------|
+| `detect_text-only*` | `detect_brief-text*` |
+| `detect_text-image*` | `detect_brief-text-image*` |
+| `*_elaborate*` | `*verbose*` |
 
-### Instruction Files
+### Files Removed
 
-| Old Name | New Name |
-|----------|----------|
-| *(V2.3 extracted)* | `detect_text-only.md` |
-| `v3.0_system_instruction.md` | `detect_text-image.md` |
-| `v3.5_clean_instruction.md` | `detect_image-only.md` |
-| `v3.7_visual_instruction.md` | `propose_image-only.md` |
-| `v4.6_verifier_instructions.md` | `verify_image-only.md` |
+| File | Reason |
+|------|--------|
+| `detect_text-only_hardneg.*` | Text-only tested at H5=None only |
+| `detect_text-only_elaborate_hardneg.*` | Text-only tested at H5=None only |
+| `detect_text-image.md` | Duplicate of `detect_brief-text-image.md` |
 
 ## How to Create a New Version
 

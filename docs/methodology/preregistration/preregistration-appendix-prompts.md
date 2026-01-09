@@ -26,14 +26,11 @@ The prompt architecture reflects the orthogonal factorial design:
 
 This yields:
 
-- **10 detection instruction files**: 5 M/E levels × 2 exclusion variants (base, `_hardneg`)
+- **8 detection instruction files**: 3 image-using M/E levels × 2 exclusion variants (base, `_hardneg`) + 2 text-only M/E levels × 1 variant (H5=None only)
 - **2 two-stage pipeline instruction files**: propose_image-only.md, verify_image-only.md
-- **16 configuration files**: See Section 2.2 for breakdown
+- **26 configuration files**: See Section 2.2 for breakdown
 
-**Note on config count**: Text-only modalities (Brief-text, Verbose-text) cannot use H5=Images-only or H5=Text+Images since they have no example images. This reduces the factorial from 5×3=15 to 9 valid combinations:
-
-- 3 image-using modalities × 3 H5 levels = 9
-- 2 text-only modalities × H5=None only = 2 (runtime variants, not separate configs)
+**Note on text-only modalities**: Brief-text and Verbose-text cannot use H5=Images-only or H5=Text+Images since they have no example images. Therefore, text-only modalities are tested at H5=None only and do not have `_hardneg` instruction file variants.
 
 ### Orthogonal Factor Separation
 
@@ -129,11 +126,9 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 | `detect_image-only.md` | Image-only | No | H1 baseline |
 | `detect_image-only_hardneg.md` | Image-only | Yes | H1 + H5 |
 | `detect_brief-text.md` | Brief-text | No | H1 text-only baseline |
-| `detect_brief-text_hardneg.md` | Brief-text | Yes | H1 + H5 |
 | `detect_brief-text-image.md` | Brief-text+image | No | H1 baseline |
 | `detect_brief-text-image_hardneg.md` | Brief-text+image | Yes | H1 + H5 |
 | `detect_verbose-text.md` | Verbose-text | No | H1 elaboration |
-| `detect_verbose-text_hardneg.md` | Verbose-text | Yes | H1 + H5 |
 | `detect_verbose-text-image.md` | Verbose-text+image | No | H1 elaboration |
 | `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Yes | H1 + H5 |
 
@@ -141,6 +136,7 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 
 - `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
 - `_hardneg`: suffix indicates exclusion guidance for hard negatives (H5 conditions)
+- **Text-only modalities** (brief-text, verbose-text) do not have `_hardneg` variants since they cannot use example images for hard negatives
 
 ---
 
@@ -248,88 +244,6 @@ Create bounding boxes for all instances of the following symbols:
 
 - **Visual:** A hollow **black square** with a central dot, surrounded by radiating rays of a mound.
 - **Distinction:** Must have rays.
-
-## Guidelines
-
-- Symbols may be partially obscured by lines or text. Focus on the characteristic "sunburst" shape.
-- Each distinct "sunburst" centre represents a separate mound. Provide individual bounding boxes.
-- Include borderline cases rather than missing genuine mounds.
-
-## Output Format
-
-Return JSON with normalised coords (0-1000).
-
-{
-    "detections": [
-        {
-            "box_2d": [ymin, xmin, ymax, xmax],
-            "label": "mound",
-            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
-        }
-    ]
-}
-```
-
----
-
-#### 1.2.2 detect_brief-text_hardneg.md
-
-**Purpose**: Brief text-only detection with exclusion guidance for hard negatives.
-**Used by**: M/E = Brief-text; H5 = None (text-only condition)
-
-```markdown
-# Detection Prompt: Brief Text with Exclusion Guidance
-
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to identify burial mound symbols.
-
-## Target Symbols
-
-Create bounding boxes for all instances of the following symbols:
-
-### A. Burial Mound (Kurgan)
-
-- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
-- **Colour:** Orange-brown.
-- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") or the abbreviation **"кург."**
-
-### B. Settlement Mound
-
-- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape.
-- **Colour:** Orange-brown.
-
-### C. Triangulation Point on a Mound
-
-- **Visual:** A hollow **black triangle** with a central dot, surrounded by radiating rays of a mound.
-- **Distinction:** Must have rays.
-
-### D. Benchmark on a Mound
-
-- **Visual:** A hollow **black square** with a central dot, surrounded by radiating rays of a mound.
-- **Distinction:** Must have rays.
-
-## Exclusion Criteria (CRITICAL)
-
-The following symbols are easily confused with mounds. **DO NOT mark:**
-
-### Triangulation Point (standalone)
-
-- **Visual:** Hollow black triangle with central dot, but **NO radiating rays**.
-
-### Benchmark (standalone)
-
-- **Visual:** Hollow black square/circle with crosshairs, but **NO radiating rays**.
-
-### Bridge/Culvert Dots
-
-- **Visual:** Simple black dots on roads, rivers, or canals. NO rays.
-
-### Spot Heights
-
-- **Visual:** Simple dots (black/brown) with elevation numbers. NO rays.
-
-### Quarry/Pit Symbols
-
-- **Visual:** Circular shapes with rays pointing **INWARD**. Mound rays always point OUTWARD.
 
 ## Guidelines
 
@@ -469,9 +383,9 @@ Return JSON with normalised coords (0-1000).
 
 #### 1.4.1 detect_verbose-text.md
 
-**Purpose**: Extended text-only prompt with comprehensive symbol descriptions and edge case guidance.
+**Purpose**: Extended text-only prompt with comprehensive symbol descriptions and decision procedures.
 **Used by**: M/E = Verbose-text; H5 = None (no images in text-only conditions)
-**Word count**: ~700 words (vs ~200 for brief version)
+**Word count**: ~800 words (vs ~200 for brief version)
 
 ```markdown
 # Detection Prompt: Verbose Text
@@ -523,42 +437,15 @@ The **radiating rays** (hachures; spikes) are the primary and essential diagnost
 ### Ray Pattern Analysis
 
 1. **Direction:** Rays extend OUTWARD from a central point or oval, indicating elevated terrain (like contour hachures for hills).
-2. **Count:** Typically 8-15 rays, roughly evenly spaced around the perimeter. Count depends on symbol type.
+2. **Count:** Typically 8-15 rays, roughly evenly spaced around the perimeter. Count depends on symbol type (burial mound, settlement mound, burial mound with triangulation point, burial mound with benchmark)
 3. **Length:** Approximately equal to or slightly longer than the diameter of the central shape.
-4. **Consistency:** Rays should be roughly equal in length and evenly spaced; highly irregular patterns may indicate other features (noting that some areas of the map scanned poorly and may have some distortion).
+4. **Consistency:** Rays should be roughly equal in length and evenly spaced; highly irregular patterns may indicate other features (noting that some areas of the map scanned poorly and may have some distortion)
 
 ### Colour Analysis
 
 - **Orange-brown symbol:** Indicates a "plain" burial or settlement mound.
 - **Black symbol:** Indicates a burial mound with survey marker (triangulation point or benchmark) placed on top of the mound.
 - Each symbol is a single colour, either orange-brown or black.
-
-## Edge Cases: Hard-to-Detect Mounds
-
-The following situations may cause genuine mounds to be missed. Pay special attention to these cases:
-
-### Occluded Mounds
-
-Symbols frequently intersected by other map features:
-
-- **Roads:** Black or red lines may cross through a mound symbol.
-- **Contour lines:** Brown lines at similar colour may partially merge with mound rays.
-- **Grid lines:** Blue coordinate grid lines may overlay symbols.
-- **Text labels:** Cyrillic place names or elevation numbers may obscure parts of symbols.
-
-In all cases, focus on identifying the characteristic "sunburst" pattern. If you can see rays extending outward from a central point, even partially, mark the detection.
-
-### Degraded or Faded Symbols
-
-Map scanning or printing may have faded or distorted some symbols. Look for faint or somewhat asymmetrical ray patterns even if not perfectly symmetrical or fully distinct.
-
-### Clustered Mounds
-
-Mounds often appear in groups (cemetery fields; necropoleis). When symbols are close together:
-
-- Each distinct "sunburst" centre represents a separate mound.
-- Provide individual bounding boxes for each symbol, even if they touch.
-- Do not merge adjacent mounds into a single large box.
 
 ## Decision Procedure
 
@@ -574,9 +461,28 @@ When uncertain whether a feature is a mound, apply this systematic checklist:
 
 5. **Consider occlusion:** Roads, contours, rivers, or text may obscure part of the symbol. If some rays, or partial rays, are visible and the overall pattern matches, include the detection.
 
-6. **Consider degradation:** Map scanning or printing may have faded or distorted some symbols. Look for faint ray patterns.
+6. **Consider degradation:** Map scanning or printing may have faded or distorted some symbols. Look for faint or somewhat asymmetrical ray patterns even if not perfectly symmetrical or fully distinct.
 
 7. **When still uncertain:** Err on the side of detection. It is better to include a borderline case than to miss a genuine mound.
+
+## Handling Occlusion
+
+Symbols are frequently intersected by other map features:
+
+- **Roads:** Black or red lines may cross through a mound symbol.
+- **Contour lines:** Brown lines at similar colour may partially merge with mound rays.
+- **Grid lines:** Blue coordinate grid lines may overlay symbols.
+- **Text labels:** Cyrillic place names or elevation numbers may obscure parts of symbols.
+
+In all cases, focus on identifying the characteristic "sunburst" pattern. If you can see rays extending outward from a central point, even partially, mark the detection.
+
+## Separating Clusters
+
+Mounds often appear in groups (cemetery fields; necropoleis). When symbols are close together:
+
+- Each distinct "sunburst" centre represents a separate mound.
+- Provide individual bounding boxes for each symbol, even if they touch.
+- Do not merge adjacent mounds into a single large box.
 
 ## Output Format
 
@@ -591,64 +497,6 @@ Return a JSON object with detections using normalised coordinates (0-1000).
         }
     ]
 }
-```
-
----
-
-#### 1.4.2 detect_verbose-text_hardneg.md
-
-**Purpose**: Extended text-only prompt with edge case guidance AND exclusion criteria.
-**Used by**: M/E = Verbose-text; H5 = Text+Images (no images in text-only conditions)
-**Word count**: ~1,200 words
-
-*[Extends detect_verbose-text.md with the following additional section after "Decision Procedure":]*
-
-```markdown
-## Exclusion Criteria (CRITICAL)
-
-The following symbols are easily confused with mounds. **DO NOT mark:**
-
-### Triangulation Point (standalone)
-
-- **Visual:** Hollow black triangle with central dot, but **NO radiating rays**.
-- **Key distinction:** Mound-based triangulation points have rays; standalone ones do not.
-
-### Benchmark (standalone)
-
-- **Visual:** Hollow black square/circle with crosshairs, but **NO radiating rays**.
-- **Key distinction:** Mound-based benchmarks have rays; standalone ones do not.
-
-### Bridge/Culvert Dots
-
-- **Visual:** Simple black dots on roads, rivers, or canals. NO rays.
-- **Location:** Always on linear features (roads, waterways).
-
-### Spot Heights
-
-- **Visual:** Simple dots (black/brown) with elevation numbers. NO rays.
-- **Function:** Mark elevation at a point, not a mound.
-
-### Quarry/Pit Symbols
-
-- **Visual:** Circular shapes with rays pointing **INWARD**. Mound rays always point OUTWARD.
-- **Colour:** Often orange-brown like mounds.
-- **Key distinction:** Ray direction — inward = excavation, outward = elevation.
-
-### Contour Artefacts
-
-- **Visual:** Dense contour lines may create ray-like patterns.
-- **Key distinction:** Contours are continuous lines; mound rays are discrete ticks.
-
-### Vegetation Symbols
-
-- **Visual:** Some vegetation symbols have radiating elements.
-- **Colour:** Usually green or grey, not orange-brown.
-
-### Well Symbols
-
-- **Visual:** Small circles, sometimes with short ticks.
-- **Colour:** Usually blue (water features).
-- **Key distinction:** Fewer, shorter ticks than mound rays.
 ```
 
 ---
@@ -774,7 +622,7 @@ Rays are key: Shapes without visible radiating rays are not mounds. Consider occ
 **Purpose**: High-recall proposer stage for two-stage pipeline.
 **Used by**: H2 (Stage 1)
 
-```markdown
+~~~markdown
 # Two-Stage Detection: Proposer (Stage 1)
 
 You are an expert landscape archaeologist analysing Soviet Topographic Maps.
@@ -789,6 +637,7 @@ When uncertain whether a feature is a mound or noise, **include it** (err on the
 
 Return a JSON object with detections using normalised coordinates (0-1000).
 
+```json
 {
     "detections": [
         {
@@ -799,6 +648,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
     ]
 }
 ```
+~~~
 
 ---
 
@@ -807,7 +657,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 **Purpose**: Precision-focused verifier stage for two-stage pipeline.
 **Used by**: H2 (Stage 2)
 
-```markdown
+~~~markdown
 # Two-Stage Detection: Verifier (Stage 2)
 
 You are an expert landscape archaeologist verifying candidate detections from Soviet Topographic Maps.
@@ -822,10 +672,12 @@ Base your decision on visual similarity to the Positive reference examples.
 
 Return a JSON object with your assessment.
 
+```json
 {
-    "reasoning": "<Brief description of visual features observed>",
-    "mound_probability": "<0.0-1.0>"
+    "reasoning": "Brief description of visual features observed.",
+    "mound_probability": 0.0
 }
+```
 
 ## Scoring Guide
 
@@ -833,7 +685,7 @@ Return a JSON object with your assessment.
 - **0.6-0.8**: Likely mound, some ambiguity or occlusion.
 - **0.3-0.5**: Uncertain, could be mound or similar feature.
 - **0.0-0.2**: Not a mound (noise, text, isolated marker, building).
-```
+~~~
 
 ---
 
@@ -905,94 +757,163 @@ All configuration files follow this JSON schema:
 
 ### 2.2 Configuration File Naming Convention
 
-**Pattern**: `detect_{modality}_{hardneg}.json`
+**Base pattern**: `detect_{modality}[_hardneg].json`
 
 Where:
 
 - `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
-- `{hardneg}`: none, text, images, both
+- `_hardneg`: optional suffix for H5 conditions with exclusion guidance
 
-This yields 9 configuration files (3 image-using modalities × 3 H5 levels).
+**H4 ordering variants**: `detect_{modality}_{ordering}[_hardneg].json`
 
-**Note on text-only modalities**: Brief-text and Verbose-text conditions do not use example images and cannot use H5=Images-only or H5=Text+Images. Text-only modalities are tested at T=1.0 only as runtime variants.
+Where:
 
-**Structure for image-using modalities:**
+- `{ordering}`: canonical-last, random-order (canonical-first is the default, no suffix needed)
 
-| M/E Level | H5 = None | H5 = Images-only | H5 = Text+Images |
-|-----------|-----------|------------------|------------------|
-| Image-only | ✓ | ✓ | ✓ |
-| Brief-text+image | ✓ | ✓ | ✓ |
-| Verbose-text+image | ✓ | ✓ | ✓ |
+This yields:
 
-This yields **9 valid configurations**:
+- **11 base detection configs**: 3 image-using M/E levels × 3 H5 levels + 2 text-only M/E levels × 1 H5 level
+- **12 H4 ordering variants**: 3 image-using M/E levels × 2 orderings × 2 H5 levels (None and Text+Images only; Images-only uses canonical-first)
+- **2 pipeline configs**: propose_image-only.json, verify_image-only.json
+- **1 pilot config**: pilot_tilesize.json
 
-- 3 image-using modalities × 3 H5 levels = 9
+**Total: 26 configuration files**
+
+**Structure for detection configs:**
+
+| M/E Level | H5=None | H5=Images-only | H5=Text+Images | H4 variants |
+|-----------|---------|----------------|----------------|-------------|
+| Image-only | ✓ | ✓ (`_images`) | ✓ (`_hardneg`) | 4 (2 orderings × 2 H5) |
+| Brief-text | ✓ | — | — | — |
+| Brief-text+image | ✓ | ✓ (`_images`) | ✓ (`_hardneg`) | 4 (2 orderings × 2 H5) |
+| Verbose-text | ✓ | — | — | — |
+| Verbose-text+image | ✓ | ✓ (`_images`) | ✓ (`_hardneg`) | 4 (2 orderings × 2 H5) |
+
+**Notes**:
+
+- H5=Images-only uses the same instruction file as H5=None but includes hard negative images with minimal "Negative" labels in the config
+- Text-only modalities (brief-text, verbose-text) have only H5=None configs since they cannot use example images
+- H4 ordering variants are tested for H5=None and H5=Text+Images only; H5=Images-only uses canonical-first ordering
 
 ---
 
 ### 2.3 Complete Configuration File List
 
+#### Base Detection Configs (11 files)
+
 | Configuration File | M/E Level | H5 Level | Instruction File |
 |--------------------|-----------|----------|------------------|
-| `detect_image-only_none.json` | Image-only | None | detect_image-only.md |
-| `detect_image-only_text.json` | Image-only | Text-only | detect_image-only_hardneg.md |
+| `detect_image-only.json` | Image-only | None | detect_image-only.md |
 | `detect_image-only_images.json` | Image-only | Images-only | detect_image-only.md |
-| `detect_image-only_both.json` | Image-only | Text+Images | detect_image-only_hardneg.md |
-| `detect_brief-text_none.json` | Brief-text | None | detect_brief-text.md |
-| `detect_brief-text_text.json` | Brief-text | Text-only | detect_brief-text_hardneg.md |
-| `detect_brief-text-image_none.json` | Brief-text+image | None | detect_brief-text-image.md |
-| `detect_brief-text-image_text.json` | Brief-text+image | Text-only | detect_brief-text-image_hardneg.md |
+| `detect_image-only_hardneg.json` | Image-only | Text+Images | detect_image-only_hardneg.md |
+| `detect_brief-text.json` | Brief-text | None | detect_brief-text.md |
+| `detect_brief-text-image.json` | Brief-text+image | None | detect_brief-text-image.md |
 | `detect_brief-text-image_images.json` | Brief-text+image | Images-only | detect_brief-text-image.md |
-| `detect_brief-text-image_both.json` | Brief-text+image | Text+Images | detect_brief-text-image_hardneg.md |
-| `detect_verbose-text_none.json` | Verbose-text | None | detect_verbose-text.md |
-| `detect_verbose-text_text.json` | Verbose-text | Text-only | detect_verbose-text_hardneg.md |
-| `detect_verbose-text-image_none.json` | Verbose-text+image | None | detect_verbose-text-image.md |
-| `detect_verbose-text-image_text.json` | Verbose-text+image | Text-only | detect_verbose-text-image_hardneg.md |
+| `detect_brief-text-image_hardneg.json` | Brief-text+image | Text+Images | detect_brief-text-image_hardneg.md |
+| `detect_verbose-text.json` | Verbose-text | None | detect_verbose-text.md |
+| `detect_verbose-text-image.json` | Verbose-text+image | None | detect_verbose-text-image.md |
 | `detect_verbose-text-image_images.json` | Verbose-text+image | Images-only | detect_verbose-text-image.md |
-| `detect_verbose-text-image_both.json` | Verbose-text+image | Text+Images | detect_verbose-text-image_hardneg.md |
+| `detect_verbose-text-image_hardneg.json` | Verbose-text+image | Text+Images | detect_verbose-text-image_hardneg.md |
 
-**Additional pipeline configurations:**
+**Note**: H5=Images-only configs (`_images.json`) use the same instruction file as H5=None but include hard negative images with minimal "Negative" labels.
+
+#### H4 Ordering Variant Configs (12 files)
+
+| Configuration File | M/E Level | Ordering | H5 Level |
+|--------------------|-----------|----------|----------|
+| `detect_image-only_canonical-last.json` | Image-only | Canonical-last | None |
+| `detect_image-only_canonical-last_hardneg.json` | Image-only | Canonical-last | Text+Images |
+| `detect_image-only_random-order.json` | Image-only | Random | None |
+| `detect_image-only_random-order_hardneg.json` | Image-only | Random | Text+Images |
+| `detect_brief-text-image_canonical-last.json` | Brief-text+image | Canonical-last | None |
+| `detect_brief-text-image_canonical-last_hardneg.json` | Brief-text+image | Canonical-last | Text+Images |
+| `detect_brief-text-image_random-order.json` | Brief-text+image | Random | None |
+| `detect_brief-text-image_random-order_hardneg.json` | Brief-text+image | Random | Text+Images |
+| `detect_verbose-text-image_canonical-last.json` | Verbose-text+image | Canonical-last | None |
+| `detect_verbose-text-image_canonical-last_hardneg.json` | Verbose-text+image | Canonical-last | Text+Images |
+| `detect_verbose-text-image_random-order.json` | Verbose-text+image | Random | None |
+| `detect_verbose-text-image_random-order_hardneg.json` | Verbose-text+image | Random | Text+Images |
+
+#### Pipeline Configs (2 files)
 
 | Configuration File | Purpose | Instruction File |
 |--------------------|---------|------------------|
-| `propose_image-only.json` | H3 Stage 1 (Proposer) | propose_image-only.md |
-| `verify_image-only.json` | H3 Stage 2 (Verifier) | verify_image-only.md |
+| `propose_image-only.json` | H2 Stage 1 (Proposer) | propose_image-only.md |
+| `verify_image-only.json` | H2 Stage 2 (Verifier) | verify_image-only.md |
+
+#### Pilot Config (1 file)
+
+| Configuration File | Purpose |
+|--------------------|---------|
+| `pilot_tilesize.json` | Tile size pilot study |
 
 ---
 
-### 2.4 Example Configuration: Image-Only, No Hard Negatives
+### 2.4 Example Configuration: Image-Only, Canonical-First (Base)
 
-#### detect_image-only_none.json
+#### detect_image-only.json
 
-**M/E**: Image-only | **H5**: None
+**M/E**: Image-only | **H5**: None | **H4**: Canonical-first
 
 ```json
 {
-    "version": "detect_image-only_none",
-    "description": "Image-only baseline. Minimal text, canonical examples only.",
-    "hypothesis": "M/E=Image-only, H5=None",
+    "version": "detect_image-only",
+    "description": "H4-A: Canonical-first ordering. Legend positives first, then nulls.",
+    "hypothesis": "H4-A",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
-        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
-        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"}
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: legend positives, hard positives, nulls."
+    "ordering_note": "Canonical-first: legend positives, then nulls. Hard examples (when added) inserted after legend items of same polarity."
 }
 ```
 
+**Note on neutral filenames**: Example images use neutral filenames (`example_01.png` etc.) rather than semantic names to avoid biasing the model through filename leakage.
+
 ---
 
-### 2.5 Example Configuration: Image-Only, Images-Only Hard Negatives
+### 2.5 Example Configuration: Image-Only, With Hard Negatives
+
+#### detect_image-only_hardneg.json
+
+**M/E**: Image-only | **H5**: Text+Images
+
+```json
+{
+    "version": "detect_image-only_hardneg",
+    "description": "Image-only with hard negatives. Minimal text, neutral filenames.",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_image-only_hardneg.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {"path": "neutral/example_01.png", "label": "Positive"},
+        {"path": "neutral/example_02.png", "label": "Positive"},
+        {"path": "neutral/example_03.png", "label": "Positive"},
+        {"path": "neutral/example_04.png", "label": "Positive"},
+        {"path": "neutral/example_05.png", "label": "Negative"},
+        {"path": "neutral/example_06.png", "label": "Negative"},
+        {"path": "neutral/example_07.png", "label": "Negative"},
+        {"path": "neutral/example_08.png", "label": "Negative"},
+        {"path": "neutral/example_09.png", "label": "Negative"}
+    ]
+}
+```
+
+**Note**: Hard negative configs include additional negative examples (08, 09) representing confusable symbols (standalone benchmarks, triangulation points). The `_hardneg` instruction file provides exclusion text guidance.
+
+---
+
+### 2.6 Example Configuration: Image-Only, Images-Only Hard Negatives
 
 #### detect_image-only_images.json
 
@@ -1001,176 +922,127 @@ This yields **9 valid configurations**:
 ```json
 {
     "version": "detect_image-only_images",
-    "description": "Image-only with hard negative IMAGES (no exclusion text).",
-    "hypothesis": "M/E=Image-only, H5=Images-only",
+    "description": "Image-only with hard negative images (minimal labels). Tests H5=Images-only.",
+    "hypothesis": "H5-B",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
-        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative", "category": "hard_negative"}
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_08.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "hard_negative"}
     ],
-    "ordering_note": "Canonical-first: legend positives, hard positives, nulls, then hard negatives."
+    "ordering_note": "Canonical-first ordering. Hard negatives included with minimal labels (no explanation)."
 }
 ```
 
-**Label convention for H5 conditions:**
-
-| H5 Level | Hard Negative Label Style |
-|----------|---------------------------|
-| Images-only | Minimal: `"Negative"` |
-| Text+Images | Detailed: `"Negative: Benchmark ALONE (no mound). NO radiating rays."` |
-
-This distinction tests whether the model needs explicit textual explanation of why examples are negative, or whether visual examples alone suffice.
+**Key difference from H5=Text+Images**: Hard negative images are present but use minimal "Negative" labels rather than detailed explanatory labels. The instruction file has NO exclusion guidance text.
 
 ---
 
-### 2.6 Example Configuration: Image-Only, Text+Images Hard Negatives
+### 2.7 Example Configuration: H4 Canonical-Last Ordering
 
-#### detect_image-only_both.json
+#### detect_image-only_canonical-last.json
 
-**M/E**: Image-only | **H5**: Text+Images
+**M/E**: Image-only | **H5**: None | **H4**: Canonical-last
 
 ```json
 {
-    "version": "detect_image-only_both",
-    "description": "Image-only with hard negative TEXT (exclusion guidance) AND IMAGES.",
-    "hypothesis": "M/E=Image-only, H5=Text+Images",
+    "version": "detect_image-only_canonical-last",
+    "description": "H4-B: Canonical-last ordering. Nulls first, then legend positives.",
+    "hypothesis": "H4-B",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_image-only.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"}
+    ],
+    "ordering_note": "When hard examples are added: [hard_positive..., hard_negative..., null..., canonical_positive...]"
+}
+```
+
+**Note**: Canonical-last tests recency bias by placing the most informative examples (canonical positives) in final positions.
+
+---
+
+### 2.8 Example Configuration: H4 Random Ordering
+
+#### detect_image-only_random-order.json
+
+**M/E**: Image-only | **H5**: None | **H4**: Random
+
+```json
+{
+    "version": "detect_image-only_random-order",
+    "description": "H4-C: Random ordering. Examples randomly permuted with documented seed.",
+    "hypothesis": "H4-C",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_image-only.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "random_seed": 42,
+    "examples": [
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"}
+    ],
+    "ordering_note": "Permutation generated with seed 42. Two additional seeds (43, 44) will be tested; results averaged."
+}
+```
+
+**Note**: Random ordering controls for position effects. Multiple seeds are tested and results averaged to reduce variance from any particular permutation.
+
+---
+
+### 2.9 Example Configuration: H4 Canonical-Last with Hard Negatives
+
+#### detect_image-only_canonical-last_hardneg.json
+
+**M/E**: Image-only | **H5**: Text+Images | **H4**: Canonical-last
+
+```json
+{
+    "version": "detect_image-only_canonical-last_hardneg",
+    "description": "H4-B + H5: Image-only with canonical-last ordering and hard negatives.",
+    "hypothesis": "H4-B, H5",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
-        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
-        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
-        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
-        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound). NO radiating rays.", "category": "hard_negative"},
-        {"path": "examples/hardneg_empirical_TBD_01.png", "label": "Negative: [TBD from Phase 1 FP analysis]", "category": "hard_negative"}
+        {"path": "neutral/example_08.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"}
     ],
-    "ordering_note": "Canonical-first: legend positives, hard positives, nulls, then hard negatives."
+    "ordering_note": "Canonical-last with hard negatives: [hard_negative..., null..., canonical_positive...]"
 }
 ```
 
----
-
-### 2.7 Example Configuration: Brief-Text (No Images)
-
-#### detect_brief-text_none.json
-
-**M/E**: Brief-text | **H5**: None
-
-```json
-{
-    "version": "detect_brief-text_none",
-    "description": "Brief text-only baseline. No example images.",
-    "hypothesis": "M/E=Brief-text, H5=None",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_brief-text.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
-    "examples": [],
-    "ordering_note": "Text-only condition: no example images."
-}
-```
-
----
-
-### 2.8 Example Configuration: Verbose-Text+Image, Text-Only Hard Negatives
-
-#### detect_verbose-text-image_text.json
-
-**M/E**: Verbose-text+image | **H5**: Text+Images
-
-```json
-{
-    "version": "detect_verbose-text-image_text",
-    "description": "Verbose text+image with hard negative TEXT (exclusion guidance) but no hard negative images.",
-    "hypothesis": "M/E=Verbose-text+image, H5=Text+Images",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_verbose-text-image_hardneg.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
-    "examples": [
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes.", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks.", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays.", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays.", "category": "canonical"},
-        {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile. No mounds present.", "category": "null"},
-        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"},
-        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive: [TBD from Phase 1 FN analysis]", "category": "hard_positive"}
-    ],
-    "ordering_note": "Canonical-first: legend positives, hard positives, nulls. Text-only hard negatives in instruction file."
-}
-```
-
----
-
-### 2.9 H4 Ordering Variant Configurations
-
-For H4 (ordering hypothesis), three ordering variants are tested at selected M/E levels:
-
-| Ordering | Description |
-|----------|-------------|
-| Canonical-first | Legend positives first, then nulls, then hard negatives (if any) |
-| Canonical-last | Hard negatives first (if any), then nulls, then legend positives |
-| Random | All examples shuffled with documented random seed |
-
-**H4 partial cross**: 3 orderings × 3 M/E levels (Image-only, Brief-text+image, Verbose-text+image) at fixed H5 and T.
-
-Example ordering variant files would follow the pattern:
-
-- `detect_image-only_none_canonical-last.json`
-- `detect_image-only_none_random.json`
-
-#### Example: Canonical-Last Ordering
-
-**detect_image-only_none_canonical-last.json**
-
-```json
-{
-    "version": "detect_image-only_none_canonical-last",
-    "description": "Image-only baseline with canonical-LAST ordering (H4 variant).",
-    "hypothesis": "M/E=Image-only, H5=None, O=Canonical-last",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
-    "examples": [
-        {"path": "examples/hardpos_empirical_TBD_01.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "examples/hardpos_empirical_TBD_02.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "examples/null_tile_01.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative", "category": "null"},
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive", "category": "canonical"}
-    ],
-    "ordering_note": "Canonical-LAST: hard positives first, nulls, then legend positives in final positions (testing recency bias)."
-}
-```
-
-**Note**: For conditions with hard negatives, the canonical-last ordering places hard negatives before nulls and canonical examples last.
+**Note**: Combined H4 and H5 conditions test whether ordering effects interact with hard negative guidance.
 
 ---
 
@@ -1181,22 +1053,21 @@ Example ordering variant files would follow the pattern:
 ```json
 {
     "version": "propose_image-only",
-    "description": "Two-Stage Proposer (Stage 1). High-recall detection.",
-    "hypothesis": "H2",
+    "description": "Two-Stage Proposer (Stage 1). High-recall detection, use with verify_image-only.",
     "model": "gemini-3-flash",
     "instruction_file": "propose_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive: Settlement Mound", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound", "category": "canonical"},
-        {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "hard_negative"},
-        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "hard_negative"}
+        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)"},
+        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound"},
+        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound"},
+        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound"},
+        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)"},
+        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)"},
+        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)"},
+        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)"},
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)"}
     ]
 }
 ```
@@ -1209,26 +1080,25 @@ Example ordering variant files would follow the pattern:
 {
     "version": "verify_image-only",
     "description": "Two-Stage Verifier (Stage 2). Precision-focused verification.",
-    "hypothesis": "H2",
     "model": "gemini-3-flash",
     "instruction_file": "verify_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
-    "verification_threshold": 0.51,
-    "majority_vote_fraction": 0.5,
     "examples": [
-        {"path": "examples/canonical_burial_mound.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical"},
-        {"path": "examples/canonical_settlement_mound.png", "label": "Positive: Settlement Mound", "category": "canonical"},
-        {"path": "examples/canonical_triangulation_mound.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical"},
-        {"path": "examples/canonical_benchmark_mound.png", "label": "Positive: Benchmark ON Mound", "category": "canonical"},
-        {"path": "examples/null_tile_01.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "examples/null_tile_02.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "examples/null_tile_03.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "examples/hardneg_standalone_benchmark.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "hard_negative"},
-        {"path": "examples/hardneg_standalone_triangulation.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "hard_negative"}
+        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)"},
+        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound"},
+        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound"},
+        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound"},
+        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)"},
+        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)"},
+        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)"},
+        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)"},
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)"}
     ]
 }
 ```
+
+**Note**: Pipeline configs use descriptive labels since they are separate from the base detection experiment.
 
 ---
 
@@ -1271,12 +1141,14 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.4*
+*Document version: 2.6*
 *Created: 2026-01-02*
 *Updated: 2026-01-08*
 
 **Changelog:**
 
+- v2.6: Added missing H5=Images-only configs — 3 new base configs (`_images.json` variants) for image-using modalities; updated config count from 23 to 26; clarified H5=Images-only uses same instruction file as H5=None but includes hard negative images with minimal labels; added example config for H5=Images-only; restructured config table to show H5 levels clearly
+- v2.5: Comprehensive alignment with actual prompt library — fixed instruction file count from 10 to 8 (text-only modalities don't have `_hardneg` variants per preregistration); removed sections 1.2.2 and 1.4.2 (non-existent files); updated config naming to match actual files (base/`_hardneg` pattern, H4 ordering suffixes); rewrote Section 2.3 to reflect 23 configs (8 base + 12 H4 variants + 2 pipeline + 1 pilot); updated example configs to use neutral filenames; synced verbose-text section structure with actual file; added JSON code fences to pipeline prompts
 - v2.4: Final synchronisation with preregistration.md v4.2 — fixed remaining H7→H5 references in text (construction procedure, verbose text note, config headers); label convention now references H5 correctly
 - v2.3: Hypothesis renumbering alignment with preregistration.md v4.0 — H7→H5 (hard negatives now 3 levels), H9→H7 (temperature now 4 levels), H5→H4 (ordering), H3→H2 (two-stage), H6→H9 (diversity exploratory), H8→H6 (transfer), H4→H3 (voting), H10 merged into H2; config count reduced from 16 to 9; text-only tested at T=1.0 only
 - v2.2: H2 elaboration clarification — both brief and verbose include HP edge case guidance at different detail levels (brief = terse mention, verbose = detailed guidance); orthogonality is H2 (detail level for positives) vs H7 (presence of negatives); aligned with preregistration.md v3.5 factorial restructure

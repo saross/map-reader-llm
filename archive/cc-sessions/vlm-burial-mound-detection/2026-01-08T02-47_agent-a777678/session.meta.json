@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a777678",
+    "started_at": "2026-01-08T02:47:27.448Z",
+    "ended_at": "2026-01-08T02:48:20.068Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "archive/preregistration/cc-preregistration-final-fixes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-prereg-corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-coverage.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 24,
+    "human_messages": 24,
+    "assistant_messages": 32,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 23,
+      "by_type": {
+        "Glob": 4,
+        "Bash": 9,
+        "Read": 8,
+        "Grep": 2
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 60103,
+      "by_type": {
+        "Glob": {
+          "count": 4,
+          "bytes": 17035
+        },
+        "Bash": {
+          "count": 9,
+          "bytes": 8359
+        },
+        "Read": {
+          "count": 8,
+          "bytes": 34245
+        },
+        "Grep": {
+          "count": 2,
+          "bytes": 464
+        }
+      },
+      "largest_single_output_bytes": 11255
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "a62982f68f73f5c3a9ae0c17a53e4e6a90f8508624cab8a3f2f3096fa378dd6c",
+    "jsonl_bytes": 168981,
+    "archived_at": "2026-01-09T13:31:21.017443"
+  }
+}

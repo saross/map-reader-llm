@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-aaaca52",
+    "started_at": "2026-01-06T10:52:11.806Z",
+    "ended_at": "2026-01-06T10:52:55.623Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 16,
+    "human_messages": 16,
+    "assistant_messages": 22,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 15,
+      "by_type": {
+        "Read": 11,
+        "Grep": 4
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 52666,
+      "by_type": {
+        "Read": {
+          "count": 11,
+          "bytes": 44019
+        },
+        "Grep": {
+          "count": 4,
+          "bytes": 8647
+        }
+      },
+      "largest_single_output_bytes": 7073
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "817a0607f0fabf97835bbd7343c0f2178d43a2e3b99690c869c9108f3848dee3",
+    "jsonl_bytes": 137733,
+    "archived_at": "2026-01-09T13:31:20.619357"
+  }
+}

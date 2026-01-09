@@ -1,0 +1,418 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
+    "started_at": "2026-01-03T04:45:32.944Z",
+    "ended_at": "2026-01-06T13:19:17.057Z",
+    "duration_minutes": 4833
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 618,
+    "total_tokens": 55899,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyze_study_effects.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/check_holdout_expansion_feasibility.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "archive/preliminary-work/scripts/util_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-coverage.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-burial-mound-vlm-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "archive/preliminary-work/references/hard_positive_1_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/references/hard_positive_4_K-35-062-2_Rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/references/hard_positive_fn_1_K-35-052-4_32635_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-consolidated-design-updates.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-editing-instructions-expand-holdout.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-execution-plan-fixes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-factorial-restructure.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-h15-confirmatory-addendum.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-h7-strand1-integration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-library-ratio-correction.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-prereg-corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-preregistration-final-fixes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-preregistration-fixes-addendum.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-prompts-appendix-fixes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-remove-minimal-image-level.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-text-image-alignment.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc-verbose-text-correction.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-review-final.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/vlm-burial-mounds-internal-operations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/null_tiles_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/burial_mound.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/settlement_mound.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/triangulation_mound.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-053-3_Elenovo/K-35-053-3_Elenovo_x2240_y2240.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-image_elaborate.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_text-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/preprocess_tiling.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 837,
+    "human_messages": 837,
+    "assistant_messages": 1666,
+    "thinking_blocks": 618,
+    "tool_calls": {
+      "total": 777,
+      "by_type": {
+        "Read": 212,
+        "Grep": 89,
+        "Edit": 227,
+        "Task": 10,
+        "TodoWrite": 95,
+        "Glob": 14,
+        "Write": 12,
+        "Bash": 98,
+        "mcp__ide__getDiagnostics": 5,
+        "AskUserQuestion": 4,
+        "ExitPlanMode": 11
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 3198365,
+      "by_type": {
+        "Read": {
+          "count": 212,
+          "bytes": 2253154
+        },
+        "Grep": {
+          "count": 89,
+          "bytes": 207378
+        },
+        "Edit": {
+          "count": 227,
+          "bytes": 362673
+        },
+        "Task": {
+          "count": 10,
+          "bytes": 85564
+        },
+        "TodoWrite": {
+          "count": 95,
+          "bytes": 15200
+        },
+        "Glob": {
+          "count": 14,
+          "bytes": 12879
+        },
+        "Write": {
+          "count": 12,
+          "bytes": 131316
+        },
+        "Bash": {
+          "count": 98,
+          "bytes": 84992
+        },
+        "mcp__ide__getDiagnostics": {
+          "count": 5,
+          "bytes": 784
+        },
+        "AskUserQuestion": {
+          "count": 3,
+          "bytes": 1306
+        },
+        "ExitPlanMode": {
+          "count": 11,
+          "bytes": 43119
+        }
+      },
+      "largest_single_output_bytes": 178886
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "372448917b643de2003953b052cd13d0adf5c3bb295e3c6a91ae6cc79e9e8d81",
+    "jsonl_bytes": 22817739,
+    "archived_at": "2026-01-09T13:31:20.968076"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [],
+    "detection_notes": [
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

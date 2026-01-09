@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-ae29ce9",
+    "started_at": "2025-12-31T06:17:35.491Z",
+    "ended_at": "2025-12-31T06:18:36.915Z",
+    "duration_minutes": 1
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase0-script-audit.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/review-notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/tile-selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/working_notes.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 18,
+    "human_messages": 18,
+    "assistant_messages": 25,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 17,
+      "by_type": {
+        "Bash": 10,
+        "Read": 7
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 166363,
+      "by_type": {
+        "Bash": {
+          "count": 10,
+          "bytes": 11157
+        },
+        "Read": {
+          "count": 7,
+          "bytes": 155206
+        }
+      },
+      "largest_single_output_bytes": 82863
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "e9aaafc64ee082dc8c3d8f2d80e44f2c328d82df637e209324f87598978e7165",
+    "jsonl_bytes": 356706,
+    "archived_at": "2026-01-09T13:31:20.240075"
+  }
+}

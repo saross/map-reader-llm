@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-abe3854",
+    "started_at": "2025-12-31T06:17:35.494Z",
+    "ended_at": "2025-12-31T06:18:28.155Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": ".gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "CITATION.cff",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "LICENSE",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "LICENSE-DOCS",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/USER_GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "requirements-lock.txt",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "requirements.txt",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 20,
+    "human_messages": 20,
+    "assistant_messages": 28,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 19,
+      "by_type": {
+        "Bash": 7,
+        "Read": 10,
+        "Grep": 2
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 61677,
+      "by_type": {
+        "Bash": {
+          "count": 7,
+          "bytes": 3470
+        },
+        "Read": {
+          "count": 10,
+          "bytes": 54695
+        },
+        "Grep": {
+          "count": 2,
+          "bytes": 3512
+        }
+      },
+      "largest_single_output_bytes": 15296
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "552ca175269f08c1a18202c82f432fc0e9b428eaa898de1f376a0fc9f35c4173",
+    "jsonl_bytes": 163066,
+    "archived_at": "2026-01-09T13:31:20.233605"
+  }
+}

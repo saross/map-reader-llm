@@ -1,13 +1,13 @@
 # Tile Selection Methodology (Phase 2)
 
 **Created**: 2025-12-23
-**Purpose**: Documented procedure for selecting training and holdout tile sets with provenance tracking
+**Purpose**: Documented procedure for selecting calibration and holdout tile sets with provenance tracking
 
 ---
 
 ## Overview
 
-This methodology establishes a clean separation between training and holdout tile sets for VLM-based burial mound detection experiments. All selections are random with documented seeds for reproducibility.
+This methodology establishes a clean separation between calibration and holdout tile sets for VLM-based burial mound detection experiments. All selections are random with documented seeds for reproducibility. Note: "Calibration" is used instead of "training" because we are configuring few-shot prompts, not training models in the machine learning sense.
 
 ## Data Sources
 
@@ -21,7 +21,7 @@ This methodology establishes a clean separation between training and holdout til
   - ~90 tiles per map
   - ~360 tiles total
 
-- **Ground Truth**: `inputs/vectors/mounds-reference.geojson`
+- **Ground Truth**: `inputs/vectors/references/mounds-reference.geojson`
   - 569 annotated mound symbols across all maps
   - Annotated by primary researcher (Shawn Ross) and student collaborators
 
@@ -35,12 +35,12 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 ### Sample Size
 
-- **Training set**: 20 tiles (5 per map)
+- **Calibration set**: 20 tiles (5 per map)
 - **Holdout set**: 20 tiles (5 per map)
 
 ### Stratification
 
-**Training Set**:
+**Calibration Set**:
 
 1. Filter tiles by content threshold
 2. Calculate mound count per tile from ground truth
@@ -53,10 +53,10 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 **Holdout Set**:
 
-1. Exclude all training tiles
+1. Exclude all calibration tiles
 2. Filter by content threshold
-3. Apply **spatial separation**: exclude tiles adjacent to training tiles (Manhattan distance ≤ 1 in grid units, i.e., 448px stride)
-4. Match training set density distribution as closely as possible
+3. Apply **spatial separation**: exclude tiles adjacent to calibration tiles (Manhattan distance ≤ 1 in grid units, i.e., 448px stride)
+4. Match calibration set density distribution as closely as possible
 5. If spatial separation over-constrains, relax adjacency requirement and document
 
 ## Randomisation
@@ -69,10 +69,10 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 ### Manifests
 
-- `inputs/training_manifest.json` — list of training tile filenames
-- `inputs/holdout_manifest.json` — list of holdout tile filenames
+- `inputs/tiles/calibration_manifest.json` — list of calibration tile filenames
+- `inputs/tiles/holdout_manifest.json` — list of holdout tile filenames
 - `inputs/null_tiles_manifest.json` — null tiles for few-shot library
-- `inputs/tile_selection_metadata.json` — full metadata including:
+- `inputs/tiles/tile_selection_metadata.json` — full metadata including:
   - Random seed used
   - Per-tile mound counts
   - Density strata assignments
@@ -81,7 +81,7 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 ### Bounds GeoJSON
 
-- `outputs/results/training_bounds.geojson` — spatial extent of training tiles
+- `outputs/results/calibration_bounds.geojson` — spatial extent of calibration tiles
 - `outputs/results/holdout_bounds.geojson` — spatial extent of holdout tiles
 
 ## Few-Shot Example Rules
@@ -102,13 +102,13 @@ From `inputs/references/`:
 - `ref_neg_benchmark.png` — benchmark symbol (no mound)
 - `ref_neg_triangulation.png` — triangulation point (no mound)
 
-### Null Tiles (From Training Tiles)
+### Null Tiles (From Calibration Tiles)
 
 Full empty tiles included in few-shot library to calibrate model expectations and reduce hallucinations. These demonstrate "some tiles contain no mounds."
 
 **Selection methodology**:
 
-1. Pool: All training tiles with `density: empty` (mound_count = 0)
+1. Pool: All calibration tiles with `density: empty` (mound_count = 0)
 2. Filter: Must meet content threshold (≤75% background)
 3. Stratification: One tile required from Lesovo (distinct terrain), remainder from other maps
 4. Selection: Stratified random (one per map until target reached)
@@ -126,7 +126,7 @@ Full empty tiles included in few-shot library to calibrate model expectations an
 
 ## Constraints
 
-1. **No holdout contamination**: Few-shot examples may only come from legend or training tiles
+1. **No holdout contamination**: Few-shot examples may only come from legend or calibration tiles
 2. **Documented provenance**: Every example must trace to a specific source
 3. **No iterative refinement on holdout**: Holdout tiles are for final evaluation only
 
@@ -185,18 +185,18 @@ Script: `scripts/select_tiles_phase2.py`
 python scripts/select_tiles_phase2.py
 
 # Output:
-#   inputs/training_manifest.json
-#   inputs/holdout_manifest.json
-#   inputs/tile_selection_metadata.json
+#   inputs/tiles/calibration_manifest.json
+#   inputs/tiles/holdout_manifest.json
+#   inputs/tiles/tile_selection_metadata.json
 ```
 
 ## Verification Checklist
 
 Executed: 2025-12-23 | Seed: 1766464625
 
-- [x] Training and holdout sets are mutually exclusive (verified: 0 overlap)
+- [x] Calibration and holdout sets are mutually exclusive (verified: 0 overlap)
 - [x] All selected tiles meet content threshold (≤75% background)
 - [x] Spatial separation applied to holdout tiles (not relaxed)
-- [x] Density distribution approximately matched (training: 8 empty, 7 sparse, 5 dense; holdout: identical)
+- [x] Density distribution approximately matched (calibration: 8 empty, 7 sparse, 5 dense; holdout: identical)
 - [x] Random seed documented (1766464625)
 - [x] All file paths verified (40/40 tiles exist)

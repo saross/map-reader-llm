@@ -1,0 +1,878 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "6c7214f9-a128-42d4-af63-4dc861a7e760",
+    "started_at": "2025-12-22T03:05:27.960Z",
+    "ended_at": "2025-12-23T06:55:58.186Z",
+    "duration_minutes": 1670
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 648,
+    "total_tokens": 52867,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "archive/phase2-reset/ARCHIVE_MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/prompts-pre-reorganisation/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/null_tiles_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "planning/future_work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/text/detect_text-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/text/v4.6_verifier_instructions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/detect_text-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v4.1_recall_augmented.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v4.2_recall_high_temp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v4.3_multipass_liberal.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_cc_sessions.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_overnight_configs.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": ".gitignore",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/USER_GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/vlm-implementation-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v3.2_experimental.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v3.5_clean.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v3.5_clean_pro.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v4.6_verifier.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v4.6_verifier_pro.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/benchmark_single_wrapper.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/overnight_experiments.sh",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/rerun_4_5.sh",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_variability_study.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "archive/methodology_logs/artifacts/5db91c6b-c83a-4a3c-9afd-b035a50a3c49/implementation_plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/planning/initial-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/ARCHIVE_MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/methodology_logs/artifacts/6851caa9-7a98-4a59-a463-41c740ad9802/metrics_strategy.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/methodology_logs/artifacts/7f9838be-f730-4489-bbb3-d7be6b259603/walkthrough.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/methodology_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/walkthrough.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/planning/initial-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/prompts/V2.3_mound_detection_prompt.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/results/v1_initial_experiments/v1.0_manifest_calibration.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/results/v2_text_based/test_v2.5_x2688_y3136.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/results/v2_text_based/v2.6_debug_detections_single-tile.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/results/v3.1_baseline/benchmark_v3.1_baseline_metrics.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/results/v3_visual_prototypes/v3.x_debug_detections_rakovski-random5.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/results/variability_study_v3.2/run_01_advanced_metrics.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/articles/Sobotkova et al. - 2023 - Creating large, high-quality geospatial datasets from historical maps using novice volunteers.pdf",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/articles/sobotkova et al. - 2023 - evaluating the quality and potential of crowdsourced annotations - bulgarian burial mounds.pdf",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/data_split_strategy.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-burial-mound-vlm-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-few-shot-multimodal-prompting.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-optimising-symbol-detection-benchmarks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-vlm-evidence-review.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/gemini-few-shot-multimodel-prompting.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/reports/stock_taking_report.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/ground_truth/ground_truth_holdout.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/holdout_ground_truth.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/holdout_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/burial_mound.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_0_K-35-078-1_Lesovo_x0_y2688.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_10_K-35-078-1_Lesovo_x2240_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_11_K-35-052-4_32635_x2240_y896.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_12_K-35-062-2_Rakovski_x3136_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_1_K-35-078-1_Lesovo_x3584_y0.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_2_K-35-078-1_Lesovo_x3584_y0.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_3_K-35-078-1_Lesovo_x0_y2688.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_4_K-35-062-2_Rakovski_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_5_K-35-052-4_32635_x896_y0.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_6_K-35-052-4_32635_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_7_K-35-052-4_32635_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_8_K-35-062-2_Rakovski_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_negative_fp_9_K-35-053-3_Elenovo_x1344_y2688.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_10_K-35-062-2_Rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_11_K-35-052-4_32635.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_12_K-35-062-2_Rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_1_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_2_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_3_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_4_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_4_K-35-062-2_Rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_5_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_5_K-35-062-2_Rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_6_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_8_K-35-053-3_Elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_9_K-35-052-4_32635.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_1_K-35-052-4_32635_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_3_K-35-062-2_Rakovski_x0_y2240.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_4_K-35-062-2_Rakovski_x3584_y3584.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_5_K-35-053-3_Elenovo_x448_y448.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_6_K-35-053-3_Elenovo_x448_y448.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_7_K-35-053-3_Elenovo_x1344_y896.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_8_K-35-053-3_Elenovo_x1344_y2688.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/hard_positive_fn_9_K-35-053-3_Elenovo_x1344_y2688.png.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/neg_sparse.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/neg_topo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/neg_urban.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/ref_neg_benchmark.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/ref_neg_hard_benchmark_blob.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/ref_neg_hard_triangulation_blob.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/ref_neg_triangulation.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/ref_negative_1.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/references/ref_pos_compound.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/target_tiles_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-052-4_32635/metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-053-3_Elenovo/K-35-053-3_Elenovo_x2240_y448.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-062-2_Rakovski/K-35-062-2_Rakovski_x896_y3136.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-062-2_Rakovski/K-35-062-2_Rakovski_x896_y448.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/training_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/vectors/mounds-reference.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/holdout_bounds.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v3.2_experimental/benchmark_v3.2_experimental_advanced_metrics.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v3.2_experimental/final_verification_bounds.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v3.2_experimental/variability_study_v3.2_flash_30_run_01.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v3.5_clean/detections-v3.5_clean-3-flash-2025-12-21.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v3.5_clean/flash_swarm_replay_temp1_run_01.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v3.5_clean/v3.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v4.1_recall_augmented/v4.1_holdout_run_01",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "outputs/results/v4.2_recall_high_temp/v4.2_holdout_run_01",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "prompts/text/v3.0_system_instruction.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/text/v3.2_system_instruction_tightbox.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/text/v3.5_clean_instruction.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/text/v3.7_visual_instruction.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/v4.6_verifier_instructions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/v4.7_verifier_instructions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/detect_image-only_pro.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v3.2_recall_balanced.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/versions/v3.7_visual_instruction.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "reports/stock_taking_report.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_score_results.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/benchmark_variability.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/create_stratified_holdout.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_validation_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_v3_1_benchmark.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 920,
+    "human_messages": 920,
+    "assistant_messages": 1746,
+    "thinking_blocks": 648,
+    "tool_calls": {
+      "total": 836,
+      "by_type": {
+        "Task": 2,
+        "Read": 215,
+        "Glob": 102,
+        "TodoWrite": 59,
+        "Write": 18,
+        "Grep": 54,
+        "Edit": 87,
+        "Bash": 291,
+        "TaskOutput": 7,
+        "KillShell": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 6404975,
+      "by_type": {
+        "Read": {
+          "count": 215,
+          "bytes": 5381892
+        },
+        "Task": {
+          "count": 2,
+          "bytes": 20539
+        },
+        "Glob": {
+          "count": 102,
+          "bytes": 112944
+        },
+        "TodoWrite": {
+          "count": 59,
+          "bytes": 9440
+        },
+        "Write": {
+          "count": 18,
+          "bytes": 29371
+        },
+        "Grep": {
+          "count": 54,
+          "bytes": 389849
+        },
+        "Edit": {
+          "count": 87,
+          "bytes": 84657
+        },
+        "Bash": {
+          "count": 291,
+          "bytes": 362418
+        },
+        "TaskOutput": {
+          "count": 7,
+          "bytes": 13796
+        },
+        "KillShell": {
+          "count": 1,
+          "bytes": 69
+        }
+      },
+      "largest_single_output_bytes": 306484
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "6fa7783f73b13b0b9a8f89fe93a171b0a797163aa9e803b837ec2d6915e0cc3a",
+    "jsonl_bytes": 35625991,
+    "archived_at": "2026-01-09T13:31:19.485721"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [],
+    "detection_notes": [
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

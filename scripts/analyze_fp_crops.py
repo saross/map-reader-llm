@@ -12,7 +12,7 @@ Usage:
         --input outputs/results/v4.2_temp_0_7_train/run_01_fn.geojson \\
         --output_dir outputs/hard-examples \\
         --mode fn \\
-        --manifest inputs/training_manifest.json
+        --manifest inputs/tiles/calibration_manifest.json
 
 Author: Shawn Ross, Claude Code
 License: Apache 2.0

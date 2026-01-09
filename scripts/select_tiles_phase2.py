@@ -2,7 +2,7 @@
 """
 Tile Selection Script (Phase 2)
 
-Selects training and holdout tile sets with documented provenance and
+Selects calibration and holdout tile sets with documented provenance and
 spatial separation. See docs/methodology/tile-selection-methodology.md
 for full documentation.
 
@@ -10,9 +10,9 @@ Usage:
     python scripts/select_tiles_phase2.py [--seed SEED]
 
 Output:
-    inputs/training_manifest.json
-    inputs/holdout_manifest.json
-    inputs/tile_selection_metadata.json
+    inputs/tiles/calibration_manifest.json
+    inputs/tiles/holdout_manifest.json
+    inputs/tiles/tile_selection_metadata.json
 """
 
 import argparse
@@ -43,7 +43,7 @@ from config import (
 
 INPUTS_DIR = Path("inputs")
 TILES_DIR = INPUTS_DIR / "tiles"
-GROUND_TRUTH_PATH = INPUTS_DIR / "vectors" / "mounds-reference.geojson"
+GROUND_TRUTH_PATH = INPUTS_DIR / "vectors" / "references" / "mounds-reference.geojson"
 OUTPUT_DIR = INPUTS_DIR
 
 # Maps to process (excluding legend)
@@ -55,7 +55,7 @@ MAPS = [
 ]
 
 # Selection parameters
-TRAINING_SAMPLES_PER_MAP = 5
+CALIBRATION_SAMPLES_PER_MAP = 5
 HOLDOUT_SAMPLES_PER_MAP = 15  # Expanded from 5 to 15 for improved statistical power
 # TILE_SIZE, OVERLAP, STRIDE, MAX_BACKGROUND_PERCENT, ADJACENCY_DISTANCE imported from config.py
 
@@ -164,7 +164,7 @@ def load_map_georef(map_id: str) -> Dict:
 
     We'll compute this from the reference geojson bounding box.
     """
-    ref_path = INPUTS_DIR / "vectors" / f"reference_{map_id}.geojson"
+    ref_path = INPUTS_DIR / "vectors" / "references" / f"reference_{map_id}.geojson"
     if not ref_path.exists():
         return None
 
@@ -272,12 +272,12 @@ def categorise_density(mound_count: int) -> str:
         return "dense"
 
 
-def select_training_tiles(
+def select_calibration_tiles(
     candidates: Dict[str, List[dict]],
     samples_per_map: int,
 ) -> Tuple[List[str], Dict[str, List[str]]]:
     """
-    Select training tiles with density stratification.
+    Select calibration tiles with density stratification.
 
     Returns:
         - List of selected tile filenames
@@ -337,40 +337,40 @@ def select_training_tiles(
 
 def select_holdout_tiles(
     candidates: Dict[str, List[dict]],
-    training_tiles: List[str],
+    calibration_tiles: List[str],
     samples_per_map: int,
     adjacency_distance: int,
 ) -> Tuple[List[str], Dict[str, List[str]], bool]:
     """
-    Select holdout tiles with spatial separation from training tiles.
+    Select holdout tiles with spatial separation from calibration tiles.
 
     Returns:
         - List of selected tile filenames
         - Dict of selections by map
         - Whether spatial separation was relaxed
     """
-    training_set = set(training_tiles)
+    calibration_set = set(calibration_tiles)
     selected = []
     by_map = {}
     relaxed = False
 
     for map_id, tiles in candidates.items():
-        # Get training tiles for this map
-        map_training = [t for t in training_tiles if map_id in t]
+        # Get calibration tiles for this map
+        map_calibration = [t for t in calibration_tiles if map_id in t]
 
-        # Filter out training tiles and adjacent tiles
+        # Filter out calibration tiles and adjacent tiles
         available = []
         for t in tiles:
-            if t["filename"] in training_set:
+            if t["filename"] in calibration_set:
                 continue
 
-            # Check adjacency to any training tile
-            is_adjacent_to_training = any(
-                is_adjacent(t["filename"], train_tile, adjacency_distance)
-                for train_tile in map_training
+            # Check adjacency to any calibration tile
+            is_adjacent_to_calibration = any(
+                is_adjacent(t["filename"], calib_tile, adjacency_distance)
+                for calib_tile in map_calibration
             )
 
-            if not is_adjacent_to_training:
+            if not is_adjacent_to_calibration:
                 available.append(t)
 
         # If insufficient tiles with spatial separation, relax constraint
@@ -379,21 +379,21 @@ def select_holdout_tiles(
             print(f"    Available with separation: {len(available)}, needed: {samples_per_map}")
             relaxed = True
 
-            # Add back adjacent tiles (but not training tiles themselves)
-            available = [t for t in tiles if t["filename"] not in training_set]
+            # Add back adjacent tiles (but not calibration tiles themselves)
+            available = [t for t in tiles if t["filename"] not in calibration_set]
 
-        # Try to match training density distribution
-        training_densities = {}
+        # Try to match calibration density distribution
+        calibration_densities = {}
         for t in tiles:
-            if t["filename"] in map_training:
-                training_densities[t["density"]] = training_densities.get(t["density"], 0) + 1
+            if t["filename"] in map_calibration:
+                calibration_densities[t["density"]] = calibration_densities.get(t["density"], 0) + 1
 
         # Select with similar density distribution
         map_selected = []
         remaining = samples_per_map
 
         for density in ["dense", "sparse", "empty"]:
-            target = training_densities.get(density, 0)
+            target = calibration_densities.get(density, 0)
             stratum = [t for t in available if t["density"] == density and t not in map_selected]
 
             if not stratum or target == 0:
@@ -427,7 +427,7 @@ def select_holdout_tiles(
 # -----------------------------------------------------------------------------
 
 def main():
-    parser = argparse.ArgumentParser(description="Select training and holdout tiles")
+    parser = argparse.ArgumentParser(description="Select calibration and holdout tiles")
     parser.add_argument(
         "--seed",
         type=int,
@@ -506,11 +506,11 @@ def main():
             densities[c["density"]] += 1
         print(f"    Density distribution: {densities}")
 
-    # Select training tiles
+    # Select calibration tiles
     print("\n" + "=" * 60)
-    print("Selecting TRAINING tiles (density-stratified random)...")
+    print("Selecting CALIBRATION tiles (density-stratified random)...")
     print("=" * 60)
-    training_tiles, training_by_map = select_training_tiles(candidates, TRAINING_SAMPLES_PER_MAP)
+    calibration_tiles, calibration_by_map = select_calibration_tiles(candidates, CALIBRATION_SAMPLES_PER_MAP)
 
     # Select holdout tiles
     print("\n" + "=" * 60)
@@ -518,15 +518,15 @@ def main():
     print("=" * 60)
     holdout_tiles, holdout_by_map, spatial_relaxed = select_holdout_tiles(
         candidates,
-        training_tiles,
+        calibration_tiles,
         HOLDOUT_SAMPLES_PER_MAP,
         ADJACENCY_DISTANCE,
     )
 
     # Verify no overlap
-    overlap = set(training_tiles) & set(holdout_tiles)
+    overlap = set(calibration_tiles) & set(holdout_tiles)
     if overlap:
-        print(f"\nERROR: Overlap detected between training and holdout: {overlap}")
+        print(f"\nERROR: Overlap detected between calibration and holdout: {overlap}")
         return 1
 
     # Build metadata
@@ -534,7 +534,7 @@ def main():
         "created": datetime.now(timezone.utc).isoformat(),
         "random_seed": seed,
         "parameters": {
-            "training_samples_per_map": TRAINING_SAMPLES_PER_MAP,
+            "calibration_samples_per_map": CALIBRATION_SAMPLES_PER_MAP,
             "holdout_samples_per_map": HOLDOUT_SAMPLES_PER_MAP,
             "max_background_percent": MAX_BACKGROUND_PERCENT,
             "adjacency_distance": ADJACENCY_DISTANCE,
@@ -542,9 +542,9 @@ def main():
             "tile_overlap": OVERLAP,
             "tile_stride": STRIDE,
         },
-        "training": {
-            "total_tiles": len(training_tiles),
-            "by_map": training_by_map,
+        "calibration": {
+            "total_tiles": len(calibration_tiles),
+            "by_map": calibration_by_map,
             "tiles": [],
         },
         "holdout": {
@@ -558,8 +558,8 @@ def main():
     # Add tile details to metadata
     for map_id, map_cands in candidates.items():
         for c in map_cands:
-            if c["filename"] in training_tiles:
-                metadata["training"]["tiles"].append({
+            if c["filename"] in calibration_tiles:
+                metadata["calibration"]["tiles"].append({
                     "filename": c["filename"],
                     "map": map_id,
                     "mound_count": c["mound_count"],
@@ -578,13 +578,13 @@ def main():
     print("Saving outputs...")
     print("=" * 60)
 
-    training_manifest_path = OUTPUT_DIR / "training_manifest.json"
-    holdout_manifest_path = OUTPUT_DIR / "holdout_manifest.json"
-    metadata_path = OUTPUT_DIR / "tile_selection_metadata.json"
+    calibration_manifest_path = TILES_DIR / "calibration_manifest.json"
+    holdout_manifest_path = TILES_DIR / "holdout_manifest.json"
+    metadata_path = TILES_DIR / "tile_selection_metadata.json"
 
-    with open(training_manifest_path, "w") as f:
-        json.dump(sorted(training_tiles), f, indent=2)
-    print(f"  Saved: {training_manifest_path}")
+    with open(calibration_manifest_path, "w") as f:
+        json.dump(sorted(calibration_tiles), f, indent=2)
+    print(f"  Saved: {calibration_manifest_path}")
 
     with open(holdout_manifest_path, "w") as f:
         json.dump(sorted(holdout_tiles), f, indent=2)
@@ -599,26 +599,26 @@ def main():
     print("SUMMARY")
     print("=" * 60)
     print(f"Random seed: {seed}")
-    print(f"Training tiles: {len(training_tiles)}")
+    print(f"Calibration tiles: {len(calibration_tiles)}")
     print(f"Holdout tiles: {len(holdout_tiles)}")
     print(f"Spatial separation relaxed: {spatial_relaxed}")
 
     # Density summary
-    train_densities = {"empty": 0, "sparse": 0, "dense": 0}
+    calibration_densities = {"empty": 0, "sparse": 0, "dense": 0}
     holdout_densities = {"empty": 0, "sparse": 0, "dense": 0}
 
-    for t in metadata["training"]["tiles"]:
-        train_densities[t["density"]] += 1
+    for t in metadata["calibration"]["tiles"]:
+        calibration_densities[t["density"]] += 1
     for t in metadata["holdout"]["tiles"]:
         holdout_densities[t["density"]] += 1
 
-    print(f"\nTraining density: {train_densities}")
-    print(f"Holdout density:  {holdout_densities}")
+    print(f"\nCalibration density: {calibration_densities}")
+    print(f"Holdout density:     {holdout_densities}")
 
-    train_mounds = sum(t["mound_count"] for t in metadata["training"]["tiles"])
+    calibration_mounds = sum(t["mound_count"] for t in metadata["calibration"]["tiles"])
     holdout_mounds = sum(t["mound_count"] for t in metadata["holdout"]["tiles"])
-    print(f"\nTotal mounds in training tiles: {train_mounds}")
-    print(f"Total mounds in holdout tiles:  {holdout_mounds}")
+    print(f"\nTotal mounds in calibration tiles: {calibration_mounds}")
+    print(f"Total mounds in holdout tiles:     {holdout_mounds}")
 
     return 0
 
