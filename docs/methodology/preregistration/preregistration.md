@@ -53,11 +53,11 @@ Text-only conditions (Brief-text, Verbose-text) serve primarily as academic base
 
 Text-only results inform:
 
-- Whether text guidance alone has any value (academic interest)
+- Whether text guidance alone has any value
 - Whether modality matters: comparing image-only, text-only, and text+image performance
 - Baseline comparison for text+image improvements
 
-Identical text is used across modalities (text-only and text+image) to isolate the effect of adding visual examples. Verbose text additions (edge case guidance) are derived from image-only baseline failures.
+Identical text is used across modalities (text-only and text+image) to isolate the effect of adding visual examples. Verbose text additions (edge case guidance) are derived from image-only baseline failures (difficult examples for the image library are selected empirically from false positives and false negatives).
 
 ### 1.4 Timeline
 
@@ -245,7 +245,7 @@ Tiles were stratified by mound density (see Section 8.6 for category definitions
 | Sparse (1-2 mounds) | 7 | 18 |
 | Dense (3+ mounds) | 5 | 12 |
 
-**Terrain and mound density representation**: Lesovo represents mountainous terrain with characteristically low mound density, consistent with similar regions in mountainous areas. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in unfamiliar terrain types. The expanded holdout set includes 15 tiles from each map, with Lesovo contributing primarily empty tiles (13 of 15) which serve as a rigorous test of false positive rates in challenging terrain.
+**Terrain and mound density representation**: Lesovo represents mountainous terrain with low mound density, consistent with similar regions in mountainous areas. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in areas where mounds are sparse and geographic sybology (e.g., contour lines) are dense. The expanded holdout set includes 15 tiles from each map, with Lesovo contributing primarily empty tiles (13 of 15) which serve as a rigorous test of false positive rates in challenging terrain.
 
 ### 2.6 Map Annotation
 
@@ -257,7 +257,7 @@ Soviet-era maps were initially annotated by students using the FAIMS v2.6 mobile
 - Benchmarks (no burial mound)
 - Triangulation points (no burial mound)
 
-The four maps used in the present study were later selected for the quality assessment of student work as reported in Sobotkova et al., 2023. To that end, the author (Shawn Ross) manually assessed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols).
+The four maps used in the present study were later selected for the quality assessment of student work. To that end, the author (Shawn Ross) manually reviewed these tiles to ensure complete extraction and accuracy, with results then compared to the student work (which also served as a check against missed symbols). For a thorough presentation and discussion of the background, participatory GIS approach used to build the mound dataset, and quality assurance measures, please see Sobotkova et al., 2023.
 
 ---
 
@@ -281,7 +281,7 @@ With 8 confirmatory hypotheses tested on 60 tiles (79 mound symbols), statistica
 
 - **Statistically significant (FDR-corrected p < 0.05)**: Technique shows promise; advance to Stage 2 validation
 - **Nominally significant (uncorrected p < 0.05, FDR-corrected p ≥ 0.05)**: Suggestive evidence; consider for Stage 2 with lower priority
-- **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This guards against discarding genuinely useful techniques due to sampling noise.
+- **Non-significant (uncorrected p ≥ 0.05)**: No statistical evidence of benefit. However, techniques showing consistent directional improvement (e.g., positive point estimate in ≥75% of conditions where tested) may be flagged for Stage 2 investigation with lowest priority if theoretically motivated. This fallback guards against discarding genuinely useful techniques due to sampling noise.
 
 ### 3.4 Practical Significance Caveat
 
@@ -353,7 +353,7 @@ The 20m default was chosen as a reasonable balance \- it accounts for:
 
 - Georeferencing imprecision in historical maps
 - Symbol centroid ambiguity (mound symbols can be 10-20m across at 1:50,000 scale)
-- Ground truth digitisation variation
+- Variation in map digitisation precision
 
 #### 4.1.2 Detection Matching Algorithm
 
