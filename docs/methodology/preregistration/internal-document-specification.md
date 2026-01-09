@@ -26,25 +26,28 @@
 ## Cost Estimates
 
 **Estimated date**: 2026-01-04
-**Soft budget limit**: $220 (with 20% contingency buffer)
+**Soft budget limit**: $180 (with 20% contingency buffer)
 
-### Summary (from execution-plan.md v2.0)
+### Summary (from execution-plan.md v2.6)
 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
-| Phase 1: Library + Text | ~100 | $1-2 |
-| Phase 2: Factorial (100 cond × K=10 runs × 60 tiles) | ~60,000 | ~$90 |
+| Phase 1: Library + Text | ~100 | ~$1-2 |
+| Phase 2a: Strand 1 (M/E × partial H5) | ~15,600 | ~$23 |
+| Phase 2b: H5 Confirmatory | ~2,400 | ~$4 |
+| Phase 2c: Strand 2 (Library Size H8) | ~14,400 | ~$22 |
+| Phase 2d: Strand 3 (conditional) | ~4,800 | ~$7 |
 | Phase 3a: H3 N=30 Extension | ~1,200 | ~$2 |
 | Phase 3b: H4 Ordering | ~3,600 | ~$5 |
 | Phase 3c: H9 Diversity | ~6,000 | ~$9 |
 | Phase 3d: H2 Two-Stage | ~1,200 | ~$2 |
-| **Flash Subtotal** | **~72,100** | **~$109** |
+| **Flash Subtotal** | **~49,300** | **~$75** |
 | Phase 4: H6 Pro Transfer (OFAT) | ~1,400-1,600 | ~$21-24 |
-| **Confirmatory Total** | **~73,500-73,700** | **~$130-133** |
+| **Confirmatory Total** | **~50,700-50,900** | **~$96-99** |
 | Phase 5: Exploratory | ~2,000-5,000 | ~$20-50 |
-| **Grand Total** | **~75,500-78,700** | **~$150-183** |
+| **Grand Total** | **~52,700-55,900** | **~$116-149** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$220**
+**Contingency**: 20% buffer → **Budget ceiling: ~$180**
 
 ### Budget Reserves Allocation
 
@@ -54,7 +57,7 @@
 | H6 escalation | ~$40 | If Pro shows superiority warranting full optimisation |
 | Unexpected findings | ~$25 | Worth-pursuing discoveries |
 
-**Note**: Budget significantly lower than previous design (~$187-326) due to K=10 protocol, H2 integration, and OFAT approach for H8.
+**Note**: Budget significantly lower than previous designs due to stranded factorial (54 base cells vs full 60-cell factorial), text-only constraints (H5=None and T=1.0 only), K=10 protocol, and OFAT approach for H6.
 ```
 
 ### 2.2 Pricing Assumptions
@@ -89,20 +92,26 @@
 
 This section documents the rationale for major design decisions, for internal reference.
 
-### Factorial Design Scope
+### Stranded Factorial Design Scope
 
-**Decision**: Run full 60-condition factorial (5 M/E × 3 H5 × 4 T) with K=10 independent runs
+**Decision**: Run stranded factorial design with 54 base cells (not full 60-condition factorial)
+
+**Design**:
+- Strand 1: (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 1 H5 × 1 T) = 26 cells
+- H5 Confirmatory: 1 optimal M/E × 1 H5 (Images-only) × 4 T = 4 cells
+- Strand 2: 6 library conditions × 4 T = 24 cells
+- Base total: 54 cells
 
 **Rationale**:
 - Expanded holdout (60 tiles) provides improved statistical power (MDE ≈ 0.07-0.09 for F1)
-- 5-level M/E factor integrates modality and elaboration testing (H1 + H2) in unified design
-- 3-level H5 factor enables orthogonal testing of hard negatives
+- 5-level M/E factor integrates modality and elaboration testing (H1) in unified design
+- Text-only modalities tested at H5=None only (no example images) and T=1.0 only (budget efficiency)
 - K=10 independent runs enable proper variance estimation and post-hoc voting analysis
 
-**Note**: Budget (~$150-183) is lower than previous design despite expanded factorial, due to K=10 protocol efficiency and H2 integration.
+**Note**: Budget (~$116-149) is lower than previous designs due to stranded structure and text-only constraints.
 
 **Alternatives considered**:
-- Separate H2 phase: Rejected — M/E factor provides full coverage within main factorial
+- Full 60-condition factorial: Rejected — text-only cannot use H5=Images-only or H5=Text+Images
 - Full O crossing: Rejected — H4 partial cross sufficient with mitigation trigger
 - N=5 voting in factorial: Rejected — K=10 independent runs enable unbiased testing
 
@@ -154,7 +163,7 @@ This section documents the rationale for major design decisions, for internal re
 - Preliminary testing showed 0.2-0.4 F1 deficit for coarse-to-fine
 - Two-stage has ~2× cost overhead; must demonstrate clear improvement (≥0.05 F1) to justify
 - Parity or marginal improvement insufficient when deeper single-stage voting is available
-- Same threshold applies to H10 (fine-to-coarse) and any other multi-stage architecture
+- Same threshold applies to both two-stage directions tested in H2 (coarse-to-fine and fine-to-coarse)
 
 ### Stage 2 Pilot Deferral
 
@@ -201,12 +210,12 @@ After study completion, add the following sections:
 
 | Component | Estimated | Actual | Variance | Notes |
 |-----------|-----------|--------|----------|-------|
-| Phase 2 Factorial (Flash) | ~$90 | | | |
+| Phase 2 Stranded Factorial (Flash) | ~$56 | | | |
 | Phase 3 Follow-ups (Flash) | ~$18 | | | |
 | H6 Pro transfer | ~$21-24 | | | |
 | Exploratory | ~$20-50 | | | |
 | Contingency used | $0 | | | |
-| **TOTAL** | ~$150-183 | | | |
+| **TOTAL** | ~$116-149 | | | |
 ```
 
 ### 3.2 Model Versions Used
@@ -263,12 +272,13 @@ The preregistration is the **public commitment**. This document is the **project
 
 ---
 
-*Document version: 1.2*
+*Document version: 1.3*
 *Created: 2026-01-02*
-*Updated: 2026-01-08*
+*Updated: 2026-01-09*
 
 **Changelog:**
 
+- v1.3: Aligned with preregistration.md v4.2 and execution-plan.md v2.6 — replaced "60-condition factorial" with stranded design (54 base cells); updated budget tables (~$116-149 vs previous ~$150-183); text-only constraints (H5=None, T=1.0 only); fixed H10 reference (merged into H2)
 - v1.2: Synchronised hypothesis numbering with preregistration.md v4.2 — H3=voting, H4=ordering, H5=hard negatives (3 levels), H6=Flash→Pro transfer, H7=temperature (4 levels), H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)
 - v1.1: Updated cost estimates for 100-condition factorial (~$150-183); added K=10, H4 partial cross, H6 OFAT decision rationale; updated working documents archive with cc-consolidated-design-updates.md and cc-text-image-alignment.md
 - v1.0: Initial specification
