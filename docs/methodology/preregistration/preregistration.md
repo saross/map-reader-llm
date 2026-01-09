@@ -245,7 +245,7 @@ Tiles were stratified by mound density (see Section 8.6 for category definitions
 | Sparse (1-2 mounds) | 7 | 18 |
 | Dense (3+ mounds) | 5 | 12 |
 
-**Terrain and mound density representation**: Lesovo represents mountainous terrain with low mound density, consistent with similar regions in mountainous areas. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in areas where mounds are sparse and geographic sybology (e.g., contour lines) are dense. The expanded holdout set includes 15 tiles from each map, with Lesovo contributing primarily empty tiles (13 of 15) which serve as a rigorous test of false positive rates in challenging terrain.
+**Terrain and mound density representation**: Lesovo represents mountainous terrain with low mound density, consistent with similar regions in mountainous areas. Its inclusion ensures the pipeline is evaluated on terrain representative of sparse-mound contexts, testing both detection in low-density environments and false positive rates in areas where mounds are sparse and geographic symbology (e.g., contour lines) are dense. The expanded holdout set includes 15 tiles from each map, with Lesovo contributing primarily empty tiles (13 of 15) which serve as a rigorous test of false positive rates in challenging terrain.
 
 ### 2.6 Map Annotation
 
