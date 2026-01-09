@@ -87,14 +87,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Holdout Expansion Preregistration Analysis",
+    "purpose": "Sub-agent analysed preregistration document to identify sections mentioning holdout tiles needing updates for 20-to-60 expansion",
+    "tags": ["exploration", "documentation-analysis", "holdout-expansion", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to analyse preregistration.md for holdout tile mentions (20 tiles, 28 mounds, 321 reserve) and summarise required edits from editing instructions",
+    "process_summary": "Agent used Read (2 calls) to examine preregistration.md and editing instructions, producing section-by-section outline of required changes",
+    "provenance_summary": "Sub-agent of session a76fa1a1 (preregistration V4 finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

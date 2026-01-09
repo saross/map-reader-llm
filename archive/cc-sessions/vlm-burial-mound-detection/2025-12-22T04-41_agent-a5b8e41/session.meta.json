@@ -132,14 +132,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Two-Stage Pipeline Code Audit",
+    "purpose": "Sub-agent performed thorough code audit of v4.x two-stage pipeline checking config consistency and script bugs",
+    "tags": ["code-audit", "two-stage-pipeline", "config-validation", "sub-agent"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to audit v4.x two-stage pipeline: config file consistency, image path validation, instruction file references, label correctness, script bugs in 5_verify_crops.py",
+    "process_summary": "Agent used Glob (4 calls), Read (8 calls), Bash (14 calls), and Grep (3 calls) to examine config files, verify path references, and check for bugs",
+    "provenance_summary": "Sub-agent of session 6c7214f9 (initial project setup)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

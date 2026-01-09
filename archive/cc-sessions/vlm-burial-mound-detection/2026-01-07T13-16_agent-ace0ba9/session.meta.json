@@ -147,14 +147,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Archiving Candidates Search",
+    "purpose": "Sub-agent searched for pilot, planning, and superseded preregistration files to identify archiving candidates",
+    "tags": ["exploration", "archiving-prep", "planning-cleanup", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to find pilot files, planning documents, completed checklists, old versions, and superseded documents for archiving (excluding pilot results)",
+    "process_summary": "Agent used Bash (10 calls), Glob (5 calls), Read (11 calls), and Grep (1 call) to identify 11 potential archiving candidates",
+    "provenance_summary": "Sub-agent of session f4cb3541 (preregistration finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

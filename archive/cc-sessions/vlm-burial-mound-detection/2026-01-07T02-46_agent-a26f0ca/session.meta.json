@@ -122,14 +122,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Tile Selection Data Exploration",
+    "purpose": "Sub-agent explored tile selection scripts and manifests to understand selection process and data availability",
+    "tags": ["exploration", "tile-selection", "data-discovery", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to understand tile selection: scripts, manifests, ground truth files, reserve/training/holdout lists, tile ID format, density categories",
+    "process_summary": "Agent used Bash (7 calls), Glob (3 calls), and Read (7 calls) to examine selection scripts and 7 related data files",
+    "provenance_summary": "Sub-agent of session f4cb3541 (preregistration finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

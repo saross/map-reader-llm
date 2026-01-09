@@ -82,14 +82,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Prompts Appendix Analysis",
+    "purpose": "Sub-agent analysed prompts appendix to understand instruction files, M/E factor structure, and config definitions",
+    "tags": ["exploration", "documentation-analysis", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to understand prompts appendix structure: instruction files (detect_*.md), M/E factor (5 levels), config definitions, and brief vs verbose text content",
+    "process_summary": "Agent used Read (1 call) to read preregistration-appendix-prompts.md and extract instruction file definitions and config structure",
+    "provenance_summary": "Sub-agent of session a76fa1a1 (preregistration V4 finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

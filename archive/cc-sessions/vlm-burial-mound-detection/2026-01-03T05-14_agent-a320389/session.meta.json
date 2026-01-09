@@ -137,14 +137,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Evaluation Workflow Analysis",
+    "purpose": "Sub-agent explored evaluation workflow to understand where tile-level MCC assessment would fit in the pipeline",
+    "tags": ["exploration", "evaluation-pipeline", "metrics-analysis", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to trace detection-to-evaluation flow: 4_detect_mounds_batch.py outputs, 6_accuracy_report.py inputs, lib_advanced_metrics.py usage, GeoJSON data structures",
+    "process_summary": "Agent used Glob (2 calls), Bash (9 calls), Read (9 calls), and Grep (1 call) to trace evaluation workflow through 9 related scripts and documents",
+    "provenance_summary": "Sub-agent of session a76fa1a1 (preregistration V4 finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

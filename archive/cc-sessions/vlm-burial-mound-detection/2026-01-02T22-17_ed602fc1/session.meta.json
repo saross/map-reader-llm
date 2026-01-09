@@ -133,14 +133,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Preregistration Encoding and Reference Fixes",
+    "purpose": "Fixed UTF-8 encoding corruption in preregistration-coverage.md and resolved dangling section references in preregistration.md",
+    "tags": ["bugfix", "preregistration", "encoding", "documentation", "main-session", "opus"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Fix encoding problems in preregistration-coverage.md (UTF-8 corruption showing as Ã— instead of ×) and dangling reference to Section 8: Extended Coverage in preregistration.md line 403",
+    "process_summary": "Session with 147 tool calls dominated by Edit (57) and Read (36). Systematically fixed encoding issues across preregistration documents and resolved cross-reference inconsistencies",
+    "provenance_summary": "Standalone main session for preregistration document quality fixes"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

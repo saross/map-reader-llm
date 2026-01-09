@@ -157,14 +157,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Tile Processing Code Inventory",
+    "purpose": "Sub-agent comprehensively searched for all scripts and config files related to tile creation, selection, and processing",
+    "tags": ["exploration", "tile-processing", "code-inventory", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to find ALL scripts, config files, and code that create, read, process, or interact with tiles (tiling, selection, metadata, VLM loading, tile parameters, constants)",
+    "process_summary": "Agent used Glob (5 calls), Grep (4 calls), Read (15 calls), and Bash (8 calls) to inventory 12 tile-related scripts and config files",
+    "provenance_summary": "Sub-agent of session a76fa1a1 (preregistration V4 finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

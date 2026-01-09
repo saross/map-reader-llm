@@ -107,14 +107,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Holdout Tile Expansion Analysis",
+    "purpose": "Sub-agent investigated tile selection process to understand how to expand holdout from 20 to 60 tiles",
+    "tags": ["exploration", "tile-selection", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to understand tile selection modification: select_tiles_phase2.py algorithm, tile_selection_metadata.json structure, and parameters for expanding holdout",
+    "process_summary": "Agent used Read (4 calls), Glob (2 calls), and Bash (1 call) to examine selection script and metadata structure, identifying SAMPLES_PER_MAP parameter changes needed",
+    "provenance_summary": "Sub-agent of session a76fa1a1 (preregistration V4 finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

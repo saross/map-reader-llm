@@ -122,14 +122,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Multi-Scale Voting Data Exploration",
+    "purpose": "Sub-agent explored pilot detection data structures to understand format for implementing multi-scale voting analysis",
+    "tags": ["exploration", "data-structures", "multi-scale-voting", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to understand data structures: detection file format at 256/512/1024, tile metadata format, ground truth structure for multi-scale voting analysis",
+    "process_summary": "Agent used Glob (3 calls), Read (6 calls), Bash (13 calls), and Grep (1 call) to examine 6 pilot detection and ground truth files",
+    "provenance_summary": "Sub-agent of session f4cb3541 (preregistration finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

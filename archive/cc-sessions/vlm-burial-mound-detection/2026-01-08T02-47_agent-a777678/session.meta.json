@@ -132,14 +132,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Preregistration File Discovery",
+    "purpose": "Sub-agent found all preregistration-related files to understand document structure and synchronisation requirements",
+    "tags": ["exploration", "documentation-discovery", "preregistration", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to find all preregistration files: main document, appendices, supplements, execution plans, prompts, and files requiring synchronisation",
+    "process_summary": "Agent used Glob (4 calls), Bash (9 calls), Read (8 calls), and Grep (2 calls) to discover 8 related files in docs/methodology/preregistration/ and prompts/",
+    "provenance_summary": "Sub-agent of session f4cb3541 (preregistration finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

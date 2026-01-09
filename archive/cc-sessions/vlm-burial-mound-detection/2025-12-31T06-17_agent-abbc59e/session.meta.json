@@ -122,14 +122,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Archive Structure Comparison",
+    "purpose": "Sub-agent explored archive directory and compared with active files to identify obsolete content for archiving",
+    "tags": ["exploration", "archive-analysis", "file-organisation", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to explore archive/ structure and compare with active files in scripts/, docs/, prompts/ to identify superseded, obsolete, or duplicate files",
+    "process_summary": "Agent used Bash (34 calls) and Read (8 calls) to examine archive structure and identify 8 files potentially needing archiving",
+    "provenance_summary": "Sub-agent of session 85c5dc6e (LLM metadata library implementation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",

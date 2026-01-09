@@ -20,6 +20,7 @@ Rather than pre-generating multiple views of each session (summaries, decision l
 | `extract-artifacts.md` | Files created/modified/referenced | Tracking code changes |
 | `extract-methodology.md` | Methods documentation | Writing papers/reports |
 | `extract-issues.md` | Errors, issues, resolutions | Debugging, retrospectives |
+| `populate-metadata.md` | Fill empty metadata fields | Enriching session.meta.json |
 
 ## How to Use
 

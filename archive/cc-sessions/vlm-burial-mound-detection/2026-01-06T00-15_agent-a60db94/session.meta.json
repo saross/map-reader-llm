@@ -87,14 +87,14 @@
     }
   },
   "auto_generated": {
-    "title": "Untitled Session",
-    "purpose": "No description provided",
-    "tags": []
+    "title": "Preregistration Structure Analysis",
+    "purpose": "Sub-agent analysed preregistration document to identify H2, hypothesis tables, Phase 1 steps, and prompt variants sections",
+    "tags": ["exploration", "documentation-analysis", "sub-agent", "haiku"]
   },
   "three_ps": {
-    "prompt_summary": "",
-    "process_summary": "",
-    "provenance_summary": ""
+    "prompt_summary": "Request to understand preregistration.md structure: Section 5 (H2), Sections 7.1-7.2 (hypothesis tables), Section 8.4.1 (Phase 1), Section 8.3 (prompts), Section 9 (priorities)",
+    "process_summary": "Agent used Read (6 calls) and Grep (3 calls) to locate key sections and extract line numbers and content for planned edits",
+    "provenance_summary": "Sub-agent of session a76fa1a1 (preregistration V4 finalisation)"
   },
   "archive": {
     "jsonl_path": "session.jsonl",
