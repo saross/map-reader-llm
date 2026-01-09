@@ -22,7 +22,7 @@ Phase 2b: H5 Confirmatory (Full 3-level at Optimal M/E)     │
     │    4 cells × K=10 runs                                │
     ▼                                                       │
 Phase 2c: Strand 2 (Library Size H8) ───────────────────────┤
-    │    30 cells × K=10 runs                               │
+    │    24 cells × K=10 runs                               │
     ▼                                                       │
 Phase 2d: Strand 3 (Interaction, conditional)               │
     │    ~10 cells × K=10 runs                              │
@@ -55,9 +55,9 @@ H3 Voting       H4 Ordering     H9 Diversity    H2 Two-Stage│
 
 - [x] **Prompts**: Finalise all instruction files (2026-01-01)
   - [x] `detect_image-only.md` and `detect_image-only_hardneg.md`
-  - [x] `detect_brief-text.md` and `detect_brief-text_hardneg.md`
+  - [x] `detect_brief-text.md` (no hardneg variant — text-only tested at H5=None only)
   - [x] `detect_brief-text-image.md` and `detect_brief-text-image_hardneg.md`
-  - [x] `detect_verbose-text.md` and `detect_verbose-text_hardneg.md`
+  - [x] `detect_verbose-text.md` (no hardneg variant — text-only tested at H5=None only)
   - [x] `detect_verbose-text-image.md` and `detect_verbose-text-image_hardneg.md`
   - [ ] H9 text variants (5 semantically equivalent instructions, constructed after Phase 2)
   - [x] `propose_image-only.md` and `verify_image-only.md` (H2)
@@ -248,15 +248,17 @@ The stranded design separates text elaboration (Strand 1) from library content (
 
 **Text-only modalities (2 levels)**:
 
-| M/E | H5=None | H5=Text+Images |
-|-----|---------|----------------|
-| Brief-text | ✓ | ✓ |
-| Verbose-text | ✓ | ✓ |
+| M/E | H5=None | Notes |
+|-----|---------|-------|
+| Brief-text | ✓ | T=1.0 only (no example images) |
+| Verbose-text | ✓ | T=1.0 only (no example images) |
+
+**Note**: Text-only modalities are tested at H5=None only (they cannot use H5=Images-only or H5=Text+Images since they have no example images) and T=1.0 only (budget efficiency).
 
 **Strand 1 totals**:
 
-- (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 2 H5 × 4 T) = 24 + 16 = **40 cells**
-- 40 × K=10 × 60 tiles = **24,000 API calls** (~$36)
+- (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 1 H5 × 1 T) = 24 + 2 = **26 cells**
+- 26 × K=10 × 60 tiles = **15,600 API calls** (~$23)
 
 **Fixed parameters**: All conditions use Library A (13 examples: 4 Canon+, 2 Canon-, 2 HP, 2 Emp-HN, 3 nulls). Canonical-first ordering.
 
@@ -729,12 +731,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.5*
+*Document version: 2.6*
 *Created: 2025-12-31*
-*Updated: 2026-01-08*
+*Updated: 2026-01-09*
 
 **Changelog:**
 
+- v2.6: Fixed text-only modality constraints in Strand 1 — text-only tested at H5=None only and T=1.0 only per preregistration.md; corrected Strand 1 calculation from 40 cells to 26 cells (24 image + 2 text); fixed API call count from 24,000 to 15,600; updated prompts checklist to note text-only has no hardneg variants; corrected Strand 2 cell count in dependency graph from 30 to 24
 - v2.5: Consistency fixes with preregistration.md v4.2 — corrected H8 label (was H15); fixed H2/H6 status (confirmatory, not exploratory); corrected cell counts (Strand 1: 26, H5 Confirmatory: 4); fixed H10 description (training pool size, not fine-to-coarse); recalculated budget totals
 - v2.4: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H2=two-stage, H6=Flash→Pro, H8=library size, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T); revised budget (~$94-101 Flash, ~$199-221 confirmatory); status updated to Ready for Registration
 - v2.3: Stranded factorial restructure — separates text elaboration (Strand 1) from library content (Strand 2); Phase 2 now has 4 sub-phases (2a-2d); library size promoted to confirmatory with 6 library conditions (Pure, Canonical, A-D) using 1:1 HP:Emp-HN ratio; two-stage, diversity, and Flash→Pro moved to exploratory; HP:HN ratio added to Phase 5 exploration; budget updated

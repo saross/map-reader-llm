@@ -40,9 +40,20 @@ These factors control how a single detection prompt is constructed:
 
 ## 3. Experimental Designs
 
-### 3.1 Main Factorial (H1, H2, H5, H7)
+### 3.1 Stranded Factorial Design (H1, H5, H7, H8)
 
-**Design**: M/E(5) × H5(3) × T(4) = **60 conditions**
+**Design**: Stranded structure with text-only constraints:
+
+| Strand | Design | Cells |
+|--------|--------|-------|
+| Strand 1 | (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 1 H5 × 1 T) | 26 |
+| H5 Confirmatory | 1 optimal M/E × 1 H5 (Images-only) × 4 T | 4 |
+| Strand 2 | 6 library conditions × 4 T | 24 |
+| **Base total** | | **54** |
+| Strand 3 (conditional) | Interaction check if triggered | ~8 |
+| **Maximum total** | | **~62** |
+
+**Note**: Text-only modalities tested at H5=None only (no example images) and T=1.0 only (budget efficiency). This is not a full 60-condition factorial.
 
 Each condition evaluated with K=10 independent single-pass runs on 60 holdout tiles.
 
@@ -82,14 +93,17 @@ All pairwise elaboration comparisons are available from the M/E factor in the ma
 
 ### 3.5 H9 Design (Diversity)
 
-**Design**: TD(2) × ID(2) = **4 conditions** × 5 runs × 5 passes = **100 runs**
+**Design**: **5 conditions** comparing diversity mechanisms:
 
-Where:
+| Condition | Text | Images | Temperature | Description |
+|-----------|------|--------|-------------|-------------|
+| A | Fixed | Fixed | Fixed | Baseline: identical across all passes |
+| B | Varied | Fixed | Fixed | Text diversity only |
+| C | Fixed | Varied | Fixed | Image diversity only |
+| D | Fixed | Fixed | Varied | Temperature diversity only |
+| E | Varied | Varied | Varied | Full diversity |
 
-- TD = Text Diversity (fixed, varied)
-- ID = Image Diversity (fixed, varied)
-
-Tested at optimal configuration from main factorial.
+Each condition run 5 times to provide symmetric variance estimates. Tested at optimal configuration from stranded factorial.
 
 ---
 
@@ -222,12 +236,13 @@ Some factors are tested at a single optimal configuration with documented ration
 
 ---
 
-*Document version: 2.1*
+*Document version: 2.2*
 *Created: 2026-01-02*
-*Updated: 2026-01-08*
+*Updated: 2026-01-09*
 
 **Changelog:**
 
+- v2.2: Corrected main design description — replaced incorrect "60-condition factorial" with stranded design (54 base cells); text-only modalities tested at H5=None only and T=1.0 only per preregistration.md; fixed H9 design from 4 conditions to 5 conditions (added temperature diversity condition D)
 - v2.1: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)
 - v2.0: Major update — revised factorial design; K=10 independent runs; H2 now contrasts within factorial; ordering partial cross design; updated pairwise coverage matrix; voting from K=10 runs (N=5, N=10, N=30)
 - v1.0: Initial coverage documentation
