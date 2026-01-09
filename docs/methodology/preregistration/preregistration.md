@@ -6,8 +6,8 @@
 
 **Affiliations**: Macquarie University, Sydney, Australia
 
-**Document version**: 4.3
-**Last updated**: 2026-01-09
+**Document version**: 4.3.1
+**Last updated**: 2026-01-10
 **Status**: Ready for Registration
 
 ---
@@ -314,7 +314,7 @@ All API calls and metric computations are automated via scripts committed before
 
 **Independent runs**: Each condition in the main factorial is evaluated using K=10 independent single-pass runs. Results are characterised statistically (mean F1, SD, 95% CI).
 
-**Rationale**: Independent runs provide unbiased estimates of each factor's effect without assuming voting (which is itself under test in H4). This design:
+**Rationale**: Independent runs provide unbiased estimates of each factor's effect without assuming voting (which is itself under test in H3). This design:
 
 - Avoids circular application of voting when testing other hypotheses
 - Enables proper variance-based statistical comparisons
@@ -326,7 +326,7 @@ All API calls and metric computations are automated via scripts committed before
 - N=10 voting: all runs as single pool
 - Multiple thresholds computed for each N
 
-**H4 integration**: The K=10 protocol directly supports H4 analysis. Additional N=30 runs are conducted at the optimal configuration to extend the voting characterisation.
+**H3 integration**: The K=10 protocol directly supports H3 analysis. Additional N=30 runs are conducted at the optimal configuration to extend the voting characterisation.
 
 ---
 
@@ -565,7 +565,7 @@ All levels describe the same content categories (canonical symbols + hard positi
 - If no interaction: report main effect of ordering pooled across M/E levels
 - Random ordering provides baseline for comparison
 
-**Implementation**: Canonical examples are legend-derived symbols (burial mound, settlement mound, triangulation on mound, benchmark on mound). Hard examples are selected via the procedure in Section 8.4.2. Within each block (canonical or hard), internal ordering is randomised with documented seed.
+**Implementation**: Canonical examples are legend-derived symbols (burial mound, settlement mound, triangulation on mound, benchmark on mound). Hard examples are selected via the procedure in Section 8.4.1. Within each block (canonical or hard), internal ordering is randomised with documented seed.
 
 **Advance to Stage 2 if**: Significant ordering effect or O × M/E interaction detected.
 
@@ -744,8 +744,8 @@ If Phase 2 identifies factors needing adjustment:
 
 | Term | Definition |
 |------|------------|
-| Canon+ | Legend-derived positive examples (burial mound, settlement mound, trig point on mound, bench mark on mound) — always 4 |
-| Canon- | Legend-derived negative examples (standalone triangulation point, standalone bench mark) — distinguishes "marker on mound" from "marker alone" |
+| Canon+ | Legend-derived positive examples (burial mound, settlement mound, trig point on mound, benchmark on mound) — always 4 |
+| Canon- | Legend-derived negative examples (standalone triangulation point, standalone benchmark) — distinguishes "marker on mound" from "marker alone" |
 | HP | Empirically-derived hard positives (false negatives from Phase 1 image-only baseline) |
 | HN | Empirically-derived hard negatives (false positives from Phase 1 image-only baseline) |
 | Null | Tiles containing no burial mounds — prevents hallucination and infinite output loops — always 3 |
@@ -1509,7 +1509,7 @@ Understanding which specific examples drive library effectiveness enables future
 
 **Primary analysis (post-hoc regression):**
 
-After completing H6 experiments, fit a linear model predicting pass-level F1 from example presence:
+After completing H9 experiments, fit a linear model predicting pass-level F1 from example presence:
 
 ```text
 F1_pass ~ β₀ + Σᵢ βᵢ(exampleᵢ_present) + ε
@@ -2197,12 +2197,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 4.3*
+*Document version: 4.3.1*
 *Created: 2025-12-22*
-*Updated: 2026-01-09*
+*Updated: 2026-01-10*
 
 **Changelog:**
 
+- v4.3.1: Cross-reference corrections — Section 3.8 voting references corrected from H4 to H3; H4 Implementation section reference corrected from Section 8.4.2 to Section 8.4.1; Section 8.4.5 example-level analysis reference corrected from H6 to H9; spelling consistency ("bench mark" → "benchmark")
 - v4.3: Pure-positive baseline for H5 — H5=None now contains only canonical positives and null tiles (no canonical negatives); canonical negatives moved from fixed elements to H5-conditional elements (included in Images-only and Text+Images only); Section 8.4.4 restructured with explicit fixed/negative/variable element categories; Section 8.4.6 Hypothesis Interaction Summary updated; H9 image diversity implementation clarified; sampling procedure updated with explicit canonical negative handling; Section 8.4.7 Strand 2 H5 constraint updated (Pure at H5=None, Canonical and A-D at H5=Images-only); H8 confound note rewritten to reflect unavoidable Pure→Canonical confound under pure-positive design
 - v4.2: Pilot context additions — H2 fine-to-coarse note (1024px 37% recall limitation); H11 note expanded (256px precision issues); Section 12.2 scale characteristics threshold specified (2/5); Section 2.2 pilot validation cross-reference; Section 8.2 `media_resolution=high` documentation for large tiles; Section 8.8 added (calibration pilot outputs table)
 - v4.1: Section 8.5 updated with region-level pooling methodology (within-pass deduplication before cross-pass voting; corrects for tile boundary artefacts); Section 12.2 expanded with multi-scale fusion pilot results (n=19 mounds, F1=0.61 multi-scale vs F1=0.49 single-scale, designated exploratory for Paper 2)
