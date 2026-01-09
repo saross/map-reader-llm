@@ -128,7 +128,7 @@ See `docs/PIPELINES.md` for full schema documentation.
 ## Phase 1: Library + Verbose Text Construction
 
 **Duration**: 0.5 days
-**Estimated cost**: ~$1-2 (Flash)
+**Estimated cost**: ~$1 (Flash at $0.003/call)
 **Prerequisite for**: All subsequent phases
 
 ### Purpose
@@ -225,7 +225,7 @@ If <4 distinct FNs or <3 distinct FPs are found:
 ## Phase 2: Stranded Factorial Design (H1, H2, H5, H7, H8)
 
 **Duration**: 3-4 days
-**Estimated cost**: ~$99 (Flash)
+**Estimated cost**: ~$111 (Flash at $0.003/call)
 **Prerequisites**: Phase 1 complete, library and text uploaded to OSF
 
 The stranded design separates text elaboration (Strand 1) from library content (Strand 2), avoiding a full factorial cross that would conflate these factors.
@@ -258,9 +258,9 @@ The stranded design separates text elaboration (Strand 1) from library content (
 **Strand 1 totals**:
 
 - (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 1 H5 × 1 T) = 24 + 2 = **26 cells**
-- 26 × K=10 × 60 tiles = **15,600 API calls** (~$23)
+- 26 × K=10 × 60 tiles = **15,600 API calls** (~$47)
 
-**Fixed parameters**: All conditions use Library A (13 examples: 4 Canon+, 2 Canon-, 2 HP, 2 Emp-HN, 3 nulls). Canonical-first ordering.
+**Fixed parameters**: All conditions use Library A (13 examples: 4 Canon+, 2 Canon-, 2 HP, 2 HN, 3 nulls). Canonical-first ordering.
 
 **Analysis**:
 
@@ -285,7 +285,7 @@ The stranded design separates text elaboration (Strand 1) from library content (
 **H5 Confirmatory totals**:
 
 - 3 H5 × 4 T = **12 cells**
-- 12 × K=10 × 60 = **7,200 API calls** (~$11)
+- 12 × K=10 × 60 = **7,200 API calls** (~$22)
 
 **Note**: H5=None and H5=Text+Images are already tested in Strand 1 at optimal M/E. This adds H5=Images-only condition, yielding complete 3-level data.
 
@@ -294,7 +294,7 @@ The stranded design separates text elaboration (Strand 1) from library content (
 - M/E × H5 interaction (p < 0.10) in Strand 1, OR
 - H5 main effect > 0.08 F1 in Strand 1
 
-**Expansion cost (if triggered)**: 1 H5 × 4 T × K=10 × 60 = **2,400 calls** (~$4)
+**Expansion cost (if triggered)**: 1 H5 × 4 T × K=10 × 60 = **2,400 calls** (~$7)
 
 ---
 
@@ -306,7 +306,7 @@ The stranded design separates text elaboration (Strand 1) from library content (
 
 **Design**: 6 library conditions at optimal M/E and H5:
 
-| Condition | Canon+ | Canon- | HP | Emp-HN | Nulls | Total | Hard Examples |
+| Condition | Canon+ | Canon- | HP | HN | Nulls | Total | Hard Examples |
 |-----------|--------|--------|-----|--------|-------|-------|---------------|
 | Pure | 4 | 0 | 0 | 0 | 3 | 7 | 0 |
 | Canonical | 4 | 2 | 0 | 0 | 3 | 9 | 0 |
@@ -320,14 +320,14 @@ The stranded design separates text elaboration (Strand 1) from library content (
 - **Canon+**: Legend-derived positives (burial mound, settlement mound, trig on mound, bench mark on mound)
 - **Canon-**: Legend-derived negatives (standalone trig point, standalone bench mark)
 - **HP**: Empirically-derived hard positives (FNs from Phase 1)
-- **Emp-HN**: Empirically-derived hard negatives (FPs from Phase 1)
+- **HN**: Empirically-derived hard negatives (FPs from Phase 1)
 
 **H5 constraint**: Pure and Canonical run at H5=None (no empirical HNs available). Conditions A-D run at optimal H5 from Strand 1.
 
 **Strand 2 totals**:
 
 - 6 conditions × 4 T = **24 cells**
-- 24 × K=10 × 60 = **14,400 API calls** (~$22)
+- 24 × K=10 × 60 = **14,400 API calls** (~$43)
 
 **Planned contrasts**:
 
@@ -351,7 +351,7 @@ The stranded design separates text elaboration (Strand 1) from library content (
 **Design**: Test second-best M/E at 2 library sizes (optimal and one adjacent):
 
 - 2 M/E × 2 Library × 4 T = **16 cells** (8 new cells; 8 overlap with Strands 1-2)
-- ~8 new cells × K=10 × 60 = **4,800 API calls** (~$7)
+- ~8 new cells × K=10 × 60 = **4,800 API calls** (~$14)
 
 **Analysis**: Test M/E × Library interaction. If significant (p < 0.10), optimal configuration depends on library size.
 
@@ -423,7 +423,7 @@ These can run in parallel after Phase 2, depending on results.
 ### Phase 3a: H3 Voting Extension (N=30)
 
 **Duration**: 0.5 days
-**Estimated cost**: ~$2 (Flash)
+**Estimated cost**: ~$4 (Flash at $0.003/call)
 **Trigger**: Always run (Tier 1 priority)
 
 #### Design
@@ -460,7 +460,7 @@ The K=10 runs from Phase 2 provide data for voting analysis (H3) at N=5 and N=10
 ### Phase 3b: H4 Ordering (Partial Cross)
 
 **Duration**: 0.5 days
-**Estimated cost**: ~$5 (Flash)
+**Estimated cost**: ~$11 (Flash at $0.003/call)
 **Trigger**: Always run
 
 #### Design
@@ -494,7 +494,7 @@ If O × M/E interaction is detected (p < 0.10), extend to remaining 2 M/E levels
 ### Phase 3c: H9 Diversity Testing
 
 **Duration**: 1 day
-**Estimated cost**: ~$9 (Flash)
+**Estimated cost**: ~$18 (Flash at $0.003/call)
 **Trigger**: Run if H3 shows voting helps (expected)
 
 #### Design
@@ -523,7 +523,7 @@ If O × M/E interaction is detected (p < 0.10), extend to remaining 2 M/E levels
 ### Phase 3d: H2 Two-Stage Pipeline
 
 **Duration**: 1 day
-**Estimated cost**: ~$2 (Flash)
+**Estimated cost**: ~$4 (Flash at $0.003/call)
 **Trigger**: Always run (confirms preliminary finding)
 
 #### Design
@@ -551,7 +551,7 @@ Compare:
 ## Phase 4: H6 Flash→Pro Transfer (OFAT)
 
 **Duration**: 2-3 days
-**Estimated cost**: ~$60-90 (Pro is ~10× Flash cost)
+**Estimated cost**: ~$42-48 (Pro at ~$0.03/call, needs verification)
 **Prerequisites**: Phase 2 complete
 
 ### Design
@@ -598,13 +598,13 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 
 | Sub-phase | API Calls | Est. Cost |
 |-----------|-----------|-----------|
-| 4a: Baseline | 200 | ~$15 |
-| 4b: OFAT | ~1,200 | ~$90 |
+| 4a: Baseline | 200 | ~$6 |
+| 4b: OFAT | ~1,200 | ~$36 |
 | 4c: Voting | (from 4a-4b) | — |
-| 4d: Refinement | 0-200 | $0-15 |
-| **Total** | **~1,400-1,600** | **~$105-120** |
+| 4d: Refinement | 0-200 | $0-6 |
+| **Total** | **~1,400-1,600** | **~$42-48** |
 
-**Note**: Pro pricing is ~10× Flash (~$0.075/call vs ~$0.0015/call). If Pro shows dramatic superiority warranting full optimisation, budget for extended Pro testing (~$50-80 additional).
+**Note**: Pro pricing assumed ~10× Flash (~$0.03/call vs ~$0.003/call). Actual Pro pricing to be verified at experiment start. If Pro shows dramatic superiority warranting full optimisation, budget for extended Pro testing (~$50-80 additional).
 
 ### Outputs
 
@@ -647,33 +647,36 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 
 ## Budget Summary
 
+**Pricing basis**: Gemini 3 Flash at $0.003/call ($0.50/1M input + $3/1M output for ~5K input + 200 output tokens). Pro estimated at ~10× Flash ($0.03/call; needs verification).
+
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
-| Phase 1: Library + Text | ~100 | ~$1-2 |
-| Phase 2a: Strand 1 (Verbosity × partial H5) | ~15,600 | ~$23 |
-| Phase 2b: H5 Confirmatory (full 3-level) | ~2,400 | ~$4 |
-| Phase 2c: Strand 2 — H8 (6 library conditions) | ~14,400 | ~$22 |
-| Phase 2d: Strand 3 (conditional interaction) | ~4,800 | ~$7 |
-| Phase 3a: H3 N=30 Extension | ~1,200 | ~$2 |
-| Phase 3b: H4 Ordering | ~3,600 | ~$5 |
-| Phase 3c: H9 Diversity (exploratory) | ~6,000 | ~$9 |
-| Phase 3d: H2 Two-Stage (exploratory) | ~1,200 | ~$2 |
-| H5 Expansion (if triggered) | ~2,400 | ~$4 |
-| **Flash Subtotal** | **~42,500-47,300** | **~$74-81** |
-| Phase 4: H6 Pro Transfer (exploratory) | ~1,400-1,600 | ~$105-120 |
-| **Confirmatory Total** | **~43,900-48,900** | **~$179-201** |
+| Phase 1: Library + Text | ~100 | ~$1 |
+| Phase 2a: Strand 1 (Verbosity × partial H5) | ~15,600 | ~$47 |
+| Phase 2b: H5 Confirmatory (full 3-level) | ~7,200 | ~$22 |
+| Phase 2c: Strand 2 — H8 (6 library conditions) | ~14,400 | ~$43 |
+| Phase 2d: Strand 3 (conditional interaction) | ~4,800 | ~$14 |
+| Phase 3a: H3 N=30 Extension | ~1,200 | ~$4 |
+| Phase 3b: H4 Ordering | ~3,600 | ~$11 |
+| Phase 3c: H9 Diversity (exploratory) | ~6,000 | ~$18 |
+| Phase 3d: H2 Two-Stage (exploratory) | ~1,200 | ~$4 |
+| H5 Expansion (if triggered) | ~2,400 | ~$7 |
+| **Flash Subtotal** | **~56,500** | **~$171** |
+| Phase 4: H6 Pro Transfer (exploratory) | ~1,400-1,600 | ~$42-48 |
+| **Confirmatory Total** | **~58,100** | **~$213-219** |
 | Phase 5: Exploratory (H10-H15) | ~7,000-12,000 | ~$40-60 |
-| **Grand Total** | **~50,900-60,900** | **~$219-261** |
+| **Grand Total** | **~65,100-70,100** | **~$253-279** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$313**
+**Soft budget limit**: $250 (triggers review, not hard cap)
+**Contingency**: 20% buffer → **Budget ceiling: ~$335**
 
 **Notes**:
 
 - Phase 2d (Strand 3) only runs if Strands 1 and 2 both show significant effects
 - H5 Expansion only runs if interaction or large H5 effect detected
 - H9 is exploratory; H2 and H6 remain confirmatory
-- The majority of cost comes from Pro model testing (Phase 4) at ~10× Flash pricing
-- Flash-only confirmatory testing would cost ~$74-81
+- Flash-only confirmatory testing would cost ~$171
+- Pro pricing needs verification at experiment start
 
 ---
 
@@ -695,7 +698,7 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 
 | Condition | Action |
 |-----------|--------|
-| Budget reaches $200 | Pause, prioritise remaining experiments |
+| Budget reaches $250 | Pause, review and prioritise remaining experiments |
 | API error rate >20% sustained | Pause, contact provider |
 | Model deprecated mid-study | Document, switch to successor, note in limitations |
 | Clear null result (p > 0.5, effect ~0) | Complete condition but deprioritise follow-up |
@@ -731,16 +734,17 @@ Before submitting results:
 
 ---
 
-*Document version: 2.6*
+*Document version: 2.7*
 *Created: 2025-12-31*
 *Updated: 2026-01-09*
 
 **Changelog:**
 
+- v2.7: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); all Flash cost estimates doubled; Pro estimate revised to ~$0.03/call (needs verification); soft budget limit $250; budget ceiling ~$335
 - v2.6: Fixed text-only modality constraints in Strand 1 — text-only tested at H5=None only and T=1.0 only per preregistration.md; corrected Strand 1 calculation from 40 cells to 26 cells (24 image + 2 text); fixed API call count from 24,000 to 15,600; updated prompts checklist to note text-only has no hardneg variants; corrected Strand 2 cell count in dependency graph from 30 to 24
 - v2.5: Consistency fixes with preregistration.md v4.2 — corrected H8 label (was H15); fixed H2/H6 status (confirmatory, not exploratory); corrected cell counts (Strand 1: 26, H5 Confirmatory: 4); fixed H10 description (training pool size, not fine-to-coarse); recalculated budget totals
 - v2.4: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H2=two-stage, H6=Flash→Pro, H8=library size, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T); revised budget (~$94-101 Flash, ~$199-221 confirmatory); status updated to Ready for Registration
-- v2.3: Stranded factorial restructure — separates text elaboration (Strand 1) from library content (Strand 2); Phase 2 now has 4 sub-phases (2a-2d); library size promoted to confirmatory with 6 library conditions (Pure, Canonical, A-D) using 1:1 HP:Emp-HN ratio; two-stage, diversity, and Flash→Pro moved to exploratory; HP:HN ratio added to Phase 5 exploration; budget updated
+- v2.3: Stranded factorial restructure — separates text elaboration (Strand 1) from library content (Strand 2); Phase 2 now has 4 sub-phases (2a-2d); library size promoted to confirmatory with 6 library conditions (Pure, Canonical, A-D) using 1:1 HP:HN ratio; two-stage, diversity, and Flash→Pro moved to exploratory; HP:HN ratio added to Phase 5 exploration; budget updated
 - v2.2: Final review fixes — H2/hard negatives orthogonality in Phase 1 (exclusion guidance controlled by hard negatives only); corrected Pro cost estimates (~$105-120); fixed budget summary totals; updated file naming to match 10-instruction structure; fixed ordering condition count (6 new, not 9); removed stale elaboration directory
 - v2.1: Fixed stale reference in dependency graph and Phase 5 priority list
 - v2.0: Major design update — revised to 100-condition factorial; K=10 independent runs protocol; Phase 1 now includes verbose text construction with text-image alignment; elaboration integrated into main factorial; ordering partial cross design; Flash→Pro OFAT approach on 20-tile subset; revised budget summary

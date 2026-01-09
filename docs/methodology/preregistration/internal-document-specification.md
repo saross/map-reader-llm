@@ -25,39 +25,41 @@
 ```markdown
 ## Cost Estimates
 
-**Estimated date**: 2026-01-04
-**Soft budget limit**: $180 (with 20% contingency buffer)
+**Estimated date**: 2026-01-09
+**Soft budget limit**: $250 (triggers review, not hard cap)
 
-### Summary (from execution-plan.md v2.6)
+### Summary (from execution-plan.md v2.7)
 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
-| Phase 1: Library + Text | ~100 | ~$1-2 |
-| Phase 2a: Strand 1 (M/E × partial H5) | ~15,600 | ~$23 |
-| Phase 2b: H5 Confirmatory | ~2,400 | ~$4 |
-| Phase 2c: Strand 2 (Library Size H8) | ~14,400 | ~$22 |
-| Phase 2d: Strand 3 (conditional) | ~4,800 | ~$7 |
-| Phase 3a: H3 N=30 Extension | ~1,200 | ~$2 |
-| Phase 3b: H4 Ordering | ~3,600 | ~$5 |
-| Phase 3c: H9 Diversity | ~6,000 | ~$9 |
-| Phase 3d: H2 Two-Stage | ~1,200 | ~$2 |
-| **Flash Subtotal** | **~49,300** | **~$75** |
-| Phase 4: H6 Pro Transfer (OFAT) | ~1,400-1,600 | ~$21-24 |
-| **Confirmatory Total** | **~50,700-50,900** | **~$96-99** |
-| Phase 5: Exploratory | ~2,000-5,000 | ~$20-50 |
-| **Grand Total** | **~52,700-55,900** | **~$116-149** |
+| Phase 1: Library + Text | ~100 | ~$1 |
+| Phase 2a: Strand 1 (M/E × partial H5) | ~15,600 | ~$47 |
+| Phase 2b: H5 Confirmatory | ~7,200 | ~$22 |
+| Phase 2c: Strand 2 (Library Size H8) | ~14,400 | ~$43 |
+| Phase 2d: Strand 3 (conditional) | ~4,800 | ~$14 |
+| Phase 3a: H3 N=30 Extension | ~1,200 | ~$4 |
+| Phase 3b: H4 Ordering | ~3,600 | ~$11 |
+| Phase 3c: H9 Diversity | ~6,000 | ~$18 |
+| Phase 3d: H2 Two-Stage | ~1,200 | ~$4 |
+| H5 Expansion (if triggered) | ~2,400 | ~$7 |
+| **Flash Subtotal** | **~56,500** | **~$171** |
+| Phase 4: H6 Pro Transfer (OFAT) | ~1,400-1,600 | ~$42-48 |
+| **Confirmatory Total** | **~58,100** | **~$213-219** |
+| Phase 5: Exploratory | ~2,000-5,000 | ~$40-60 |
+| **Grand Total** | **~60,100-63,100** | **~$253-279** |
 
-**Contingency**: 20% buffer → **Budget ceiling: ~$180**
+**Soft budget limit**: $250 (triggers review, not hard cap)
+**Contingency**: 20% buffer → **Budget ceiling: ~$335**
 
 ### Budget Reserves Allocation
 
 | Reserve | Amount | Purpose |
 |---------|--------|---------|
-| Contingency | ~$25 | API failures, retries |
-| H6 escalation | ~$40 | If Pro shows superiority warranting full optimisation |
-| Unexpected findings | ~$25 | Worth-pursuing discoveries |
+| Contingency | ~$50 | API failures, retries |
+| H6 escalation | ~$50 | If Pro shows superiority warranting full optimisation |
+| Unexpected findings | ~$30 | Worth-pursuing discoveries |
 
-**Note**: Budget significantly lower than previous designs due to stranded factorial (54 base cells vs full 60-cell factorial), text-only constraints (H5=None and T=1.0 only), K=10 protocol, and OFAT approach for H6.
+**Note**: Stranded factorial (54 base cells) with text-only constraints (H5=None and T=1.0 only), K=10 protocol, and OFAT approach for H6.
 ```
 
 ### 2.2 Pricing Assumptions
@@ -65,24 +67,36 @@
 ```markdown
 ## API Pricing Assumptions
 
-**Date recorded**: 2026-01-02
+**Date recorded**: 2026-01-09
 **Note**: Record actual pricing at experiment start; update if pricing changes during study.
 
-| Model | Per-Call Estimate | Calculation Basis |
-|-------|-------------------|-------------------|
-| Gemini 3 Flash | $0.0015 | ~5K input + 200 output tokens |
-| Gemini 3 Pro | $0.015 | ~10× Flash |
-| Claude 4.5 Sonnet | $0.02 | Estimate |
-| GPT-5.2 Thinking | $0.025 | Estimate |
+### Published Pricing (Gemini 3 Flash verified 2026-01-09)
+
+| Model | Input $/1M tokens | Output $/1M tokens | Per-Call Est. | Calculation Basis |
+|-------|-------------------|--------------------| --------------|-------------------|
+| Gemini 3 Flash | $0.50 | $3.00 | $0.003 | ~5K input + 200 output tokens |
+| Gemini 3 Pro | ~$5.00 | ~$30.00 | ~$0.03 | ~10× Flash (needs verification) |
+| Claude 4.5 Sonnet | TBD | TBD | ~$0.02 | Estimate |
+| GPT-5.2 Thinking | TBD | TBD | ~$0.025 | Estimate |
+
+**Per-call calculation**: (5,000 input × $0.50/1M) + (200 output × $3.00/1M) = $0.0025 + $0.0006 ≈ $0.003
+
+**Source**: [Gemini Developer API pricing](https://ai.google.dev/gemini-api/docs/pricing)
 
 ### Actual Pricing (to be filled at experiment start)
 
-| Model | Actual Input $/1K | Actual Output $/1K | Date Recorded |
+| Model | Actual Input $/1M | Actual Output $/1M | Date Recorded |
 |-------|-------------------|--------------------| --------------|
 | Gemini 3 Flash | | | |
 | Gemini 3 Pro | | | |
 | Claude 4.5 Sonnet | | | |
 | GPT-5.2 Thinking | | | |
+
+### Pilot vs Projection Discrepancy Note
+
+Initial cost projections assumed $0.0015/call for Flash. Actual pricing ($0.003/call) is ~2× higher.
+Pilot exploratory work (Dec 2025) cost A$62.93, which included API learning curve, proactive runs by
+Gemini in Antigravity, and some accidental Pro usage. This informed the revised budget estimates.
 ```
 
 ### 2.3 Decision Rationale Log
@@ -108,7 +122,7 @@ This section documents the rationale for major design decisions, for internal re
 - Text-only modalities tested at H5=None only (no example images) and T=1.0 only (budget efficiency)
 - K=10 independent runs enable proper variance estimation and post-hoc voting analysis
 
-**Note**: Budget (~$116-149) is lower than previous designs due to stranded structure and text-only constraints.
+**Note**: Budget (~$253-279) reflects updated Gemini 3 Flash pricing ($0.003/call vs initial $0.0015 estimate).
 
 **Alternatives considered**:
 - Full 60-condition factorial: Rejected — text-only cannot use H5=Images-only or H5=Text+Images
@@ -210,12 +224,12 @@ After study completion, add the following sections:
 
 | Component | Estimated | Actual | Variance | Notes |
 |-----------|-----------|--------|----------|-------|
-| Phase 2 Stranded Factorial (Flash) | ~$56 | | | |
-| Phase 3 Follow-ups (Flash) | ~$18 | | | |
-| H6 Pro transfer | ~$21-24 | | | |
-| Exploratory | ~$20-50 | | | |
+| Phase 2 Stranded Factorial (Flash) | ~$133 | | | |
+| Phase 3 Follow-ups (Flash) | ~$37 | | | |
+| H6 Pro transfer | ~$42-48 | | | |
+| Exploratory | ~$40-60 | | | |
 | Contingency used | $0 | | | |
-| **TOTAL** | ~$116-149 | | | |
+| **TOTAL** | ~$253-279 | | | |
 ```
 
 ### 3.2 Model Versions Used
@@ -272,12 +286,13 @@ The preregistration is the **public commitment**. This document is the **project
 
 ---
 
-*Document version: 1.3*
+*Document version: 1.4*
 *Created: 2026-01-02*
 *Updated: 2026-01-09*
 
 **Changelog:**
 
+- v1.4: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); revised budget estimates (~$253-279 vs previous ~$116-149); soft budget limit $250; added pilot discrepancy note; aligned with execution-plan.md v2.7
 - v1.3: Aligned with preregistration.md v4.2 and execution-plan.md v2.6 — replaced "60-condition factorial" with stranded design (54 base cells); updated budget tables (~$116-149 vs previous ~$150-183); text-only constraints (H5=None, T=1.0 only); fixed H10 reference (merged into H2)
 - v1.2: Synchronised hypothesis numbering with preregistration.md v4.2 — H3=voting, H4=ordering, H5=hard negatives (3 levels), H6=Flash→Pro transfer, H7=temperature (4 levels), H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)
 - v1.1: Updated cost estimates for 100-condition factorial (~$150-183); added K=10, H4 partial cross, H6 OFAT decision rationale; updated working documents archive with cc-consolidated-design-updates.md and cc-text-image-alignment.md

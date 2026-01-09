@@ -236,12 +236,13 @@ Some factors are tested at a single optimal configuration with documented ration
 
 ---
 
-*Document version: 2.2*
+*Document version: 2.3*
 *Created: 2026-01-02*
 *Updated: 2026-01-09*
 
 **Changelog:**
 
+- v2.3: Aligned with preregistration.md v4.3 — H5=None is pure-positive baseline (canonical positives + null tiles only; no canonical negatives); canonical negatives included in H5=Images-only and H5=Text+Images only
 - v2.2: Corrected main design description — replaced incorrect "60-condition factorial" with stranded design (54 base cells); text-only modalities tested at H5=None only and T=1.0 only per preregistration.md; fixed H9 design from 4 conditions to 5 conditions (added temperature diversity condition D)
 - v2.1: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)
 - v2.0: Major update — revised factorial design; K=10 independent runs; H2 now contrasts within factorial; ordering partial cross design; updated pairwise coverage matrix; voting from K=10 runs (N=5, N=10, N=30)
