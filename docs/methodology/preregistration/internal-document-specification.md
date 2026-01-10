@@ -28,7 +28,7 @@
 **Estimated date**: 2026-01-09
 **Soft budget limit**: $250 (triggers review, not hard cap)
 
-### Summary (from execution-plan.md v2.7)
+### Summary (from execution-plan.md v2.8)
 
 | Phase | API Calls | Estimated Cost |
 |-------|-----------|----------------|
@@ -286,12 +286,13 @@ The preregistration is the **public commitment**. This document is the **project
 
 ---
 
-*Document version: 1.4*
+*Document version: 1.5*
 *Created: 2026-01-02*
-*Updated: 2026-01-09*
+*Updated: 2026-01-10*
 
 **Changelog:**
 
+- v1.5: Updated reference to execution-plan.md v2.8; aligned with preregistration.md v4.4
 - v1.4: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); revised budget estimates (~$253-279 vs previous ~$116-149); soft budget limit $250; added pilot discrepancy note; aligned with execution-plan.md v2.7
 - v1.3: Aligned with preregistration.md v4.2 and execution-plan.md v2.6 — replaced "60-condition factorial" with stranded design (54 base cells); updated budget tables (~$116-149 vs previous ~$150-183); text-only constraints (H5=None, T=1.0 only); fixed H10 reference (merged into H2)
 - v1.2: Synchronised hypothesis numbering with preregistration.md v4.2 — H3=voting, H4=ordering, H5=hard negatives (3 levels), H6=Flash→Pro transfer, H7=temperature (4 levels), H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)

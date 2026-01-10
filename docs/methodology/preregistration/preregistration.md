@@ -6,7 +6,7 @@
 
 **Affiliations**: Macquarie University, Sydney, Australia
 
-**Document version**: 4.3.1
+**Document version**: 4.4
 **Last updated**: 2026-01-10
 **Status**: Ready for Registration
 
@@ -624,6 +624,8 @@ After Strand 1 identifies optimal M/E level, test all 3 H5 levels at that M/E:
 | Images-only | 4 | 2 | 4 | 3 | 3 | 16 |
 | Text+Images | 4 | 2 | 4 | 3 | 3 | 16 |
 
+**Note on HP**: Hard positives (HP=4) are included in ALL H5 conditions. H5 tests the effect of the *negative* channel (Canon- + HN) while holding positive guidance constant. This is distinct from H8 Pure Positive Canon (HP=0), which tests performance with legend-derived positives only.
+
 **Negative example sources**:
 
 1. **Canon-** (legend-derived negatives): Standalone triangulation point, standalone benchmark — included in H5=Images-only and H5=Text+Images conditions
@@ -755,13 +757,13 @@ If Phase 2 identifies factors needing adjustment:
 
 | Condition | Composition | Total |
 |-----------|-------------|-------|
-| Pure | Canon+ only | 7 (4 + 3 nulls) |
+| Pure Positive Canon | Canon+ only (no hard examples) | 7 (4 + 3 nulls) |
 | Canonical | Canon+ and Canon- | 9 (4 + 2 + 3 nulls) |
 | A–D | Canon+ + Canon- + increasing HP + HN | 13, 17, 25, 41 |
 
 **Predictions**:
 
-1. F1 will increase from Pure (7 examples) to Canonical (9 examples) — legend-derived negatives help distinguish similar symbols
+1. F1 will increase from Pure Positive Canon (7 examples) to Canonical (9 examples) — legend-derived negatives help distinguish similar symbols
 2. F1 will increase from Canonical to Library A (9 → 13) — empirical hard examples help
 3. F1 will increase from A to B (13 → 17), with moderate marginal gain
 4. F1 will increase from B to C (17 → 25), with smaller marginal gain
@@ -771,7 +773,7 @@ If Phase 2 identifies factors needing adjustment:
 
 | Condition | Canon+ | Canon- | HP | HN | Nulls | Total | Hard Examples |
 |-----------|--------|--------|-----|--------|-------|-------|---------------|
-| Pure      | 4      | 0      | 0   | 0      | 3     | 7     | 0             |
+| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 | 0 |
 | Canonical | 4      | 2      | 0   | 0      | 3     | 9     | 0             |
 | A         | 4      | 2      | 2   | 2      | 3     | 13    | 4             |
 | B         | 4      | 2      | 4   | 4      | 3     | 17    | 8             |
@@ -780,10 +782,10 @@ If Phase 2 identifies factors needing adjustment:
 
 **Baselines**:
 
-- **Pure**: Positive examples only — tests whether VLM can detect mounds with no negative guidance at all
-- **Canonical**: Adds legend-derived negatives — tests whether distinguishing similar symbols helps
+- **Pure Positive Canon**: Legend-derived positives only, no hard examples — tests whether VLM can detect mounds with only canonical positive guidance (most minimal baseline)
+- **Canonical**: Adds legend-derived negatives (Canon-) — tests whether distinguishing similar symbols helps
 
-**H5 constraint**: Pure runs at H5=None (pure-positive baseline). Canonical and Conditions A-D run at H5=Images-only (or optimal H5 from Strand 1 if different), since these conditions include negatives which require H5≠None.
+**H5 constraint**: Pure Positive Canon runs at H5=None (no negatives of any kind). Canonical and Conditions A-D run at H5=Images-only (or optimal H5 from Strand 1 if different), since these conditions include negatives which require H5≠None.
 
 **Ratio**: Conditions A-D use 1:1 HP:HN ratio. This avoids majority label bias and is the most defensible default given limited guidance in the literature. Ratio exploration is addressed in H12 (exploratory).
 
@@ -791,17 +793,17 @@ If Phase 2 identifies factors needing adjustment:
 
 **Progression**: Enables three key contrasts:
 
-- Pure → Canonical: Do legend-derived negatives help?
-- Canonical → A: Do empirical hard examples help?
-- A → B → C → D: Diminishing returns curve (0 → 4 → 8 → 16 → 32 hard examples)
+- Pure Positive Canon → Canonical: Do legend-derived negatives (Canon-) help?
+- Canonical → A: Do empirical hard examples (HP + HN) help?
+- A → B → C → D: Diminishing returns curve (4 → 8 → 16 → 32 hard examples)
 
 **Fixed parameters**: Optimal verbosity (from Strand 1), optimal H5 from Strand 1, optimal temperature.
 
-**Confound note**: Because H5=None is a pure-positive baseline (no negatives), Pure → Canonical inherently confounds adding Canon- with changing H5 level. This confound is unavoidable under the pure-positive design and is acceptable: testing "do canonical negatives help?" necessarily involves introducing negatives. The Canonical → A contrast is cleaner, testing only the addition of empirical hard examples at consistent H5 level.
+**Confound note**: Because H5=None excludes all negatives, Pure Positive Canon → Canonical inherently confounds adding Canon- with changing H5 level. This confound is unavoidable under the pure-positive design and is acceptable: testing "do canonical negatives help?" necessarily involves introducing negatives. The Canonical → A contrast is cleaner, testing only the addition of empirical hard examples at consistent H5 level.
 
 Interpretation:
 
-- Pure → Canonical: Tests combined effect of (1) adding Canon- and (2) changing from H5=None to H5=Images-only
+- Pure Positive Canon → Canonical: Tests combined effect of (1) adding Canon- and (2) changing from H5=None to H5=Images-only
 - Canonical → A → B → C → D: Tests library size scaling at consistent H5 level (primary value of Strand 2)
 
 **Adjustment option**: If the confound complicates interpretation, Strand 1 data can be used to estimate and adjust for the H5 effect. Specifically:
@@ -816,7 +818,7 @@ This adjustment is imperfect (library compositions differ slightly), but provide
 
 - Primary: One-way ANOVA across 6 library conditions
 - Planned contrasts:
-  - Pure vs Canonical (legend negatives help?)
+  - Pure Positive Canon vs Canonical (legend negatives help?)
   - Canonical vs A (empirical hard examples help?)
   - A vs B, B vs C, C vs D (diminishing returns)
 - Secondary: Characterise diminishing returns curve (F1 vs total example count)
@@ -990,7 +992,7 @@ These mechanisms may operate independently, redundantly, or synergistically.
 
 **Research question**: Does the ratio of hard positives to hard negatives affect detection performance, holding total hard example count constant?
 
-**Test**: At optimal library size from H8 (selecting from A-D only; Pure/Canonical excluded as they have no empirical hard examples), compare ratios while holding total hard example count constant:
+**Test**: At optimal library size from H8 (selecting from A-D only; Pure Positive Canon/Canonical excluded as they have no empirical hard examples), compare ratios while holding total hard example count constant:
 
 | Condition | HP | HN | Total Hard | Ratio |
 | --------- | -- | ------ | ---------- | ----- |
@@ -1409,7 +1411,7 @@ The library comprises five example categories:
 | Empirical hard negative | HN | FP mining | Prevent common false positives | Top M by frequency (target M=3) |
 | Null tile | — | Training set | Establish "no mounds" baseline | Stratified sample (n=3) |
 
-**Category ratios**: The baseline library uses 4:2:K:M:3 (Canon+:Canon-:HP:HN:null). For H5 conditions without empirical hard negatives, the ratio becomes 4:2:K:0:3. Only H8 Pure omits Canon-.
+**Category ratios**: The baseline library uses 4:2:K:M:3 (Canon+:Canon-:HP:HN:null). For H5 conditions without negatives (H5=None), the ratio becomes 4:0:K:0:3 (HP present, no negatives). Only H8 Pure Positive Canon omits both Canon- and HP.
 
 **Library size variations**: Total library size varies by condition:
 
@@ -1615,7 +1617,7 @@ After individual hypothesis tests, exploratory analyses will examine:
 | Modality/Elaboration | M/E | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |
 | Hard negatives | H5 | 3 | None, Images-only, Text+Images |
 | Temperature | T | 4 | 0.0, 0.7, 1.0, 1.3 |
-| Library size | L | 6 | Pure (7), Canonical (9), A (13), B (17), C (25), D (41) |
+| Library size | L | 6 | Pure Positive Canon (7), Canonical (9), A (13), B (17), C (25), D (41) |
 
 **Strand 1: M/E × Partial H5 Cross**
 
@@ -1670,16 +1672,16 @@ Test 6 library conditions at optimal M/E and H5 from Strand 1:
 
 | Condition | Canon+ | Canon- | HP | HN | Nulls | Total |
 | --------- | ------ | ------ | -- | ------ | ----- | ----- |
-| Pure | 4 | 0 | 0 | 0 | 3 | 7 |
+| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 |
 | Canonical | 4 | 2 | 0 | 0 | 3 | 9 |
 | A | 4 | 2 | 2 | 2 | 3 | 13 |
 | B | 4 | 2 | 4 | 4 | 3 | 17 |
 | C | 4 | 2 | 8 | 8 | 3 | 25 |
 | D | 4 | 2 | 16 | 16 | 3 | 41 |
 
-**H5 Constraint**: Pure runs at H5=None (pure-positive baseline). Canonical and Conditions A-D run at H5=Images-only (or optimal H5 from Strand 1 if different). This means comparing Pure vs Canonical inherently confounds H5 level with Canon- presence — this is unavoidable since Canon- cannot exist at H5=None by design.
+**H5 Constraint**: Pure Positive Canon runs at H5=None (no negatives). Canonical and Conditions A-D run at H5=Images-only (or optimal H5 from Strand 1 if different). This means comparing Pure Positive Canon vs Canonical inherently confounds H5 level with Canon- presence — this is unavoidable since Canon- cannot exist at H5=None by design.
 
-**Design note**: The Pure→Canonical comparison tests whether adding legend-derived negative examples helps. Because our pure-positive baseline (H5=None) excludes all negatives, this comparison necessarily involves changing H5 level. This confound is acknowledged but acceptable: the question "do canonical negatives help?" cannot be isolated from the H5 factor under the pure-positive design. Strand 2's primary value is the A-D library size scaling analysis, which runs at consistent H5 level.
+**Design note**: The Pure Positive Canon → Canonical comparison tests whether adding legend-derived negative examples helps. Because H5=None excludes all negatives, this comparison necessarily involves changing H5 level. This confound is acknowledged but acceptable: the question "do canonical negatives help?" cannot be isolated from the H5 factor under the pure-positive design. Strand 2's primary value is the A-D library size scaling analysis, which runs at consistent H5 level.
 
 **Strand 2 totals:**
 
@@ -1907,7 +1909,7 @@ The stranded factorial design tests H1, H5, H7, and H8 across multiple strands:
 | M/E (Modality/Elaboration) | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |
 | H5 (Hard negatives) | 3 | None, Images-only, Text+Images |
 | T (Temperature) | 4 | 0.0, 0.7, 1.0, 1.3 |
-| L (Library size) | 6 | Pure, Canonical, A, B, C, D |
+| L (Library size) | 6 | Pure Positive Canon, Canonical, A, B, C, D |
 
 **Design**: Stranded structure (see Section 8.4.7):
 
@@ -2197,12 +2199,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 4.3.1*
+*Document version: 4.4*
 *Created: 2025-12-22*
 *Updated: 2026-01-10*
 
 **Changelog:**
 
+- v4.4: H8 "Pure" renamed to "Pure Positive Canon" for clarity; clarified that HP (4 examples) is present in ALL H5 conditions (H5 tests negative channel only); distinguished H5=None (11 examples, includes HP) from H8 Pure Positive Canon (7 examples, no hard examples); added note on HP to H5 section; updated Section 8.4.2 category ratios; appendix configs to be updated to match
 - v4.3.1: Cross-reference corrections — Section 3.8 voting references corrected from H4 to H3; H4 Implementation section reference corrected from Section 8.4.2 to Section 8.4.1; Section 8.4.5 example-level analysis reference corrected from H6 to H9; spelling consistency ("bench mark" → "benchmark")
 - v4.3: Pure-positive baseline for H5 — H5=None now contains only canonical positives and null tiles (no canonical negatives); canonical negatives moved from fixed elements to H5-conditional elements (included in Images-only and Text+Images only); Section 8.4.4 restructured with explicit fixed/negative/variable element categories; Section 8.4.6 Hypothesis Interaction Summary updated; H9 image diversity implementation clarified; sampling procedure updated with explicit canonical negative handling; Section 8.4.7 Strand 2 H5 constraint updated (Pure at H5=None, Canonical and A-D at H5=Images-only); H8 confound note rewritten to reflect unavoidable Pure→Canonical confound under pure-positive design
 - v4.2: Pilot context additions — H2 fine-to-coarse note (1024px 37% recall limitation); H11 note expanded (256px precision issues); Section 12.2 scale characteristics threshold specified (2/5); Section 2.2 pilot validation cross-reference; Section 8.2 `media_resolution=high` documentation for large tiles; Section 8.8 added (calibration pilot outputs table)

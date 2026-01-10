@@ -308,7 +308,7 @@ The stranded design separates text elaboration (Strand 1) from library content (
 
 | Condition | Canon+ | Canon- | HP | HN | Nulls | Total | Hard Examples |
 |-----------|--------|--------|-----|--------|-------|-------|---------------|
-| Pure | 4 | 0 | 0 | 0 | 3 | 7 | 0 |
+| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 | 0 |
 | Canonical | 4 | 2 | 0 | 0 | 3 | 9 | 0 |
 | A | 4 | 2 | 2 | 2 | 3 | 13 | 4 |
 | B | 4 | 2 | 4 | 4 | 3 | 17 | 8 |
@@ -317,12 +317,16 @@ The stranded design separates text elaboration (Strand 1) from library content (
 
 **Terminology**:
 
-- **Canon+**: Legend-derived positives (burial mound, settlement mound, trig on mound, bench mark on mound)
-- **Canon-**: Legend-derived negatives (standalone trig point, standalone bench mark)
+- **Canon+**: Legend-derived positives (burial mound, settlement mound, trig on mound, benchmark on mound)
+- **Canon-**: Legend-derived negatives (standalone trig point, standalone benchmark)
 - **HP**: Empirically-derived hard positives (FNs from Phase 1)
 - **HN**: Empirically-derived hard negatives (FPs from Phase 1)
 
-**H5 constraint**: Pure and Canonical run at H5=None (no empirical HNs available). Conditions A-D run at optimal H5 from Strand 1.
+**Note on Pure Positive Canon**: This is the minimal baseline using only legend-derived positives and null tiles. It has no HP, Canon-, or HN — testing performance with canonical examples only. This is distinct from H5=None (which includes HP=4 for edge case guidance).
+
+**Note on Canonical**: Adds legend-derived negatives (Canon-) to the baseline. Conditions A–D progressively add empirical hard examples (HP + HN at 1:1 ratio) to characterise diminishing returns.
+
+**H5 constraint**: Pure Positive Canon and Canonical run at H5=None (no empirical negatives). Conditions A-D run at optimal H5 from Strand 1.
 
 **Strand 2 totals**:
 
@@ -331,11 +335,11 @@ The stranded design separates text elaboration (Strand 1) from library content (
 
 **Planned contrasts**:
 
-1. Pure → Canonical: Do legend-derived negatives help?
-2. Canonical → A: Do empirical hard examples help? (confounded with H5 if optimal ≠ None)
-3. A → B → C → D: Diminishing returns curve
+1. Pure Positive Canon → Canonical: Do legend-derived negatives (Canon-) help?
+2. Canonical → A: Do empirical hard examples help? (A adds HP=2 and HN=2)
+3. A → B → C → D: Diminishing returns curve for scaling hard examples
 
-**Confound note**: The Canonical → A contrast is confounded if Strand 1 optimal H5 ≠ None, because Canonical runs at H5=None while A runs at optimal H5. Document adjustment option in analysis.
+**Note**: All contrasts tested at optimal H5 from Strand 1. Canonical → A is the key contrast for hard example value.
 
 ---
 
@@ -734,12 +738,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.7*
+*Document version: 2.8*
 *Created: 2025-12-31*
-*Updated: 2026-01-09*
+*Updated: 2026-01-10*
 
 **Changelog:**
 
+- v2.8: Aligned with preregistration.md v4.4 — renamed "Pure" to "Pure Positive Canon" in Strand 2 table; updated H8 library compositions to match preregistration; clarified distinction between H5=None (includes HP) and Pure Positive Canon (no HP); updated planned contrasts; corrected terminology (benchmark not "bench mark")
 - v2.7: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); all Flash cost estimates doubled; Pro estimate revised to ~$0.03/call (needs verification); soft budget limit $250; budget ceiling ~$335
 - v2.6: Fixed text-only modality constraints in Strand 1 — text-only tested at H5=None only and T=1.0 only per preregistration.md; corrected Strand 1 calculation from 40 cells to 26 cells (24 image + 2 text); fixed API call count from 24,000 to 15,600; updated prompts checklist to note text-only has no hardneg variants; corrected Strand 2 cell count in dependency graph from 30 to 24
 - v2.5: Consistency fixes with preregistration.md v4.2 — corrected H8 label (was H15); fixed H2/H6 status (confirmatory, not exploratory); corrected cell counts (Strand 1: 26, H5 Confirmatory: 4); fixed H10 description (training pool size, not fine-to-coarse); recalculated budget totals

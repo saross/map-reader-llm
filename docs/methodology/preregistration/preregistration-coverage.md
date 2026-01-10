@@ -17,6 +17,8 @@ These factors control how a single detection prompt is constructed:
 | Temperature | T | 4 (0.0, 0.7, 1.0, 1.3) | H7 |
 | Ordering | O | 3 (canonical-first, canonical-last, random) | H4 (partial cross) |
 
+**Note on H5**: H5 tests the *negative* channel (Canon- and HN) while holding positive guidance constant. **Hard positives (HP=4) are included in ALL H5 conditions**, providing edge case guidance regardless of negative level. This is distinct from H8 Pure Positive Canon (HP=0), which tests the minimal baseline without any hard examples.
+
 **Note**: Ordering is tested via a partial cross (3 orderings × 3 M/E levels = 9 conditions), not in the main factorial. The main factorial uses canonical-first throughout.
 
 ---
@@ -236,12 +238,13 @@ Some factors are tested at a single optimal configuration with documented ration
 
 ---
 
-*Document version: 2.3*
+*Document version: 2.4*
 *Created: 2026-01-02*
-*Updated: 2026-01-09*
+*Updated: 2026-01-10*
 
 **Changelog:**
 
+- v2.4: Aligned with preregistration.md v4.4 — clarified HP (4 examples) included in ALL H5 conditions (H5 tests negative channel with positive guidance constant); distinguished H5=None (11 examples with HP) from H8 Pure Positive Canon (7 examples, no HP); added note on H5 factor explaining this distinction
 - v2.3: Aligned with preregistration.md v4.3 — H5=None is pure-positive baseline (canonical positives + null tiles only; no canonical negatives); canonical negatives included in H5=Images-only and H5=Text+Images only
 - v2.2: Corrected main design description — replaced incorrect "60-condition factorial" with stranded design (54 base cells); text-only modalities tested at H5=None only and T=1.0 only per preregistration.md; fixed H9 design from 4 conditions to 5 conditions (added temperature diversity condition D)
 - v2.1: Synchronised hypothesis numbering with preregistration.md v4.2 — H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T)

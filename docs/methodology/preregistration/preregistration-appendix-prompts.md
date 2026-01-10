@@ -45,6 +45,39 @@ The design maintains strict orthogonality between M/E levels (modality + elabora
 
 **Critical distinction**: Neither brief nor verbose includes exclusion guidance for hard negatives. That is controlled exclusively by H5 via `_hardneg.md` instruction variants.
 
+### Library Composition by Condition
+
+The example library composition differs between H5 conditions (which test the negative channel) and H8 conditions (which test library scaling).
+
+#### H5 Conditions (Negative Channel Testing)
+
+H5 holds positive guidance constant (Canon+ = 4, HP = 4) while varying negative guidance:
+
+| H5 Level | Canon+ | Canon- | HP | HN | Null | Total |
+|----------|--------|--------|----|----|------|-------|
+| None | 4 | 0 | 4 | 0 | 3 | **11** |
+| Images-only | 4 | 2 | 4 | 3 | 3 | **16** |
+| Text+Images | 4 | 2 | 4 | 3 | 3 | **16** |
+
+**Note**: H5=None includes HP but excludes Canon- and HN. This provides positive guidance (canonical + edge cases) without negative guidance.
+
+#### H8 Conditions (Library Size Testing)
+
+H8 tests scaling from minimal to maximal library:
+
+| Condition | Canon+ | Canon- | HP | HN | Null | Total | Hard Examples |
+|-----------|--------|--------|----|----|------|-------|---------------|
+| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | **7** | 0 |
+| Canonical | 4 | 2 | 0 | 0 | 3 | **9** | 0 |
+| A | 4 | 2 | 2 | 2 | 3 | **13** | 4 |
+| B | 4 | 2 | 4 | 4 | 3 | **17** | 8 |
+| C | 4 | 2 | 8 | 8 | 3 | **25** | 16 |
+| D | 4 | 2 | 16 | 16 | 3 | **41** | 32 |
+
+**Note**: H8 Pure Positive Canon is the minimal baseline (legend-derived positives + nulls only, no hard examples). Canonical adds legend-derived negatives (Canon-). Conditions A–D progressively add empirical hard examples (HP + HN at 1:1 ratio) to characterise diminishing returns.
+
+**Key distinction from H5**: H8 tests library *size scaling* (varying HP and HN counts). H5 tests the *negative channel* (HP fixed at 4; varying presence of Canon- and HN).
+
 ---
 
 ## Pre-Holdout Finalisation
@@ -70,15 +103,25 @@ Configuration files with hard negative images currently use placeholder paths fo
 
 - Additional confusable symbols identified from FP analysis
 
-#### Hard Positive Images (H9 Diversity conditions)
+#### Hard Positive Images (All H5 Conditions)
 
-Hard positive images for H9 diversity conditions will be derived from False Negatives in Phase 1 baseline analysis.
+Hard positive (HP) images represent edge cases: genuine mound symbols that may be missed due to occlusion, degradation, or atypical appearance. **HP examples (4 images) are included in ALL H5 conditions** — H5 tests the effect of the *negative* channel while holding positive guidance constant.
+
+HP images will be derived from False Negatives in Phase 1 baseline analysis (≥3/10 passes missed).
+
+**HP inclusion by condition:**
+
+| Condition Type | HP Included | Notes |
+|----------------|-------------|-------|
+| All H5 conditions (None, Images-only, Text+Images) | Yes (4) | H5 tests negative channel; HP constant |
+| H8 Pure Positive Canon | No | Tests minimal baseline (Canon+ and null only) |
+| H9 diversity conditions C and E | Yes (varied) | Image diversity uses HP pool |
 
 **Configs affected:**
 
-- All `*_images.json` and `*_both.json` variants (H5)
+- All `*_images.json` and `*_hardneg.json` variants (H5 conditions)
 - `propose_image-only.json` and `verify_image-only.json` (H2)
-- H9 diversity conditions C and E (varied images)
+- H9 diversity conditions C and E (varied images from HP pool)
 
 ### H9 Text Diversity Prompts
 
@@ -1078,22 +1121,26 @@ This yields:
 ```json
 {
     "version": "detect_image-only",
-    "description": "H4-A: Canonical-first ordering. Legend positives first, then nulls.",
+    "description": "H4-A: Canonical-first ordering. Canon+ first, then HP, then nulls.",
     "hypothesis": "H4-A",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"}
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: legend positives, then nulls. Hard examples (when added) inserted after legend items of same polarity."
+    "ordering_note": "Canonical-first: Canon+ (4), then HP (4), then null (3). Total: 11 examples."
 }
 ```
 
@@ -1110,26 +1157,35 @@ This yields:
 ```json
 {
     "version": "detect_image-only_hardneg",
-    "description": "Image-only with hard negatives. Minimal text, neutral filenames.",
+    "description": "Image-only with hard negatives. H5=Text+Images (full negative guidance).",
+    "hypothesis": "H5-C",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive"},
-        {"path": "neutral/example_02.png", "label": "Positive"},
-        {"path": "neutral/example_03.png", "label": "Positive"},
-        {"path": "neutral/example_04.png", "label": "Positive"},
-        {"path": "neutral/example_05.png", "label": "Negative"},
-        {"path": "neutral/example_06.png", "label": "Negative"},
-        {"path": "neutral/example_07.png", "label": "Negative"},
-        {"path": "neutral/example_08.png", "label": "Negative"},
-        {"path": "neutral/example_09.png", "label": "Negative"}
-    ]
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"}
+    ],
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (3), null (3). Total: 16 examples."
 }
 ```
 
-**Note**: Hard negative configs include additional negative examples (08, 09) representing confusable symbols (standalone benchmarks, triangulation points). The `_hardneg` instruction file provides exclusion text guidance.
+**Note**: H5=Text+Images includes Canon- (legend-derived negatives) and HN (empirically-derived hard negatives), plus exclusion text guidance in the `_hardneg` instruction file.
 
 ---
 
@@ -1149,21 +1205,28 @@ This yields:
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_08.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "hard_negative"}
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first ordering. Hard negatives included with minimal labels (no explanation)."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (3), null (3). Total: 16 examples."
 }
 ```
 
-**Key difference from H5=Text+Images**: Hard negative images are present but use minimal "Negative" labels rather than detailed explanatory labels. The instruction file has NO exclusion guidance text.
+**Key difference from H5=Text+Images**: Same image library (16 examples) but minimal "Negative" labels only — no exclusion guidance text in instruction file. Tests whether negative images alone provide value without explicit exclusion instructions.
 
 ---
 
@@ -1176,22 +1239,26 @@ This yields:
 ```json
 {
     "version": "detect_image-only_canonical-last",
-    "description": "H4-B: Canonical-last ordering. Nulls first, then legend positives.",
+    "description": "H4-B: Canonical-last ordering. Nulls first, HP, then Canon+.",
     "hypothesis": "H4-B",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"}
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "When hard examples are added: [hard_positive..., hard_negative..., null..., canonical_positive...]"
+    "ordering_note": "Canonical-last: null (3), HP (4), Canon+ (4). Total: 11 examples."
 }
 ```
 
@@ -1216,15 +1283,19 @@ This yields:
     "max_output_tokens": 8192,
     "random_seed": 42,
     "examples": [
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"}
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"}
     ],
-    "ordering_note": "Permutation generated with seed 42. Two additional seeds (43, 44) will be tested; results averaged."
+    "ordering_note": "Permutation generated with seed 42. Total: 11 examples (Canon+ 4, HP 4, null 3). Multiple seeds tested; results averaged."
 }
 ```
 
@@ -1241,24 +1312,31 @@ This yields:
 ```json
 {
     "version": "detect_image-only_canonical-last_hardneg",
-    "description": "H4-B + H5: Image-only with canonical-last ordering and hard negatives.",
-    "hypothesis": "H4-B, H5",
+    "description": "H4-B + H5-C: Canonical-last ordering with full negative guidance.",
+    "hypothesis": "H4-B, H5-C",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only_hardneg.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_08.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_05.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical"}
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last with hard negatives: [hard_negative..., null..., canonical_positive...]"
+    "ordering_note": "Canonical-last: HN (3), Canon- (2), null (3), HP (4), Canon+ (4). Total: 16 examples."
 }
 ```
 
@@ -1361,12 +1439,14 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.7*
+*Document version: 2.9*
 *Created: 2026-01-02*
-*Updated: 2026-01-09*
+*Updated: 2026-01-10*
 
 **Changelog:**
 
+- v2.9: Fixed H8 library composition table — added missing Canonical condition; corrected A-D to use 1:1 HP:HN ratio (2:2, 4:4, 8:8, 16:16) with constant Canon+/Canon- (4/2); added Hard Examples column; corrected totals (13, 17, 25, 41); added key distinction note explaining H8 vs H5
+- v2.8: HP clarification and library composition tables — clarified HP (4 examples) included in ALL H5 conditions (not H9-only); added Library Composition by Condition section with H5 vs H8 tables; updated all example configs to show correct counts (H5=None: 11, H5=Images-only/Text+Images: 16); renamed category field from "canonical"/"null" to "canonical_positive"/"canonical_negative"/"hard_positive"/"hard_negative"/"null" for clarity; aligned with preregistration.md v4.4
 - v2.7: Synchronised Section 1.5 verbose-text+image prompts with actual instruction files — updated Section 1.5.1 (detect_verbose-text-image.md) to match actual file structure (removed separate "Edge Cases" section; guidance integrated into Decision Procedure); updated Section 1.5.2 (detect_verbose-text-image_hardneg.md) to include full "Exclusion Criteria (CRITICAL)" section with 6 detailed subsections matching actual file
 - v2.6: Added missing H5=Images-only configs — 3 new base configs (`_images.json` variants) for image-using modalities; updated config count from 23 to 26; clarified H5=Images-only uses same instruction file as H5=None but includes hard negative images with minimal labels; added example config for H5=Images-only; restructured config table to show H5 levels clearly
 - v2.5: Comprehensive alignment with actual prompt library — fixed instruction file count from 10 to 8 (text-only modalities don't have `_hardneg` variants per preregistration); removed sections 1.2.2 and 1.4.2 (non-existent files); updated config naming to match actual files (base/`_hardneg` pattern, H4 ordering suffixes); rewrote Section 2.3 to reflect 23 configs (8 base + 12 H4 variants + 2 pipeline + 1 pilot); updated example configs to use neutral filenames; synced verbose-text section structure with actual file; added JSON code fences to pipeline prompts
