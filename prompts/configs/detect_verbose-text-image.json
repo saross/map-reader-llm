@@ -1,38 +1,23 @@
 {
     "version": "detect_verbose-text-image",
-    "description": "Verbose text+image. Neutral filenames, descriptive labels, detailed instructions.",
+    "description": "H4-A: Canonical-first ordering. Canon+ first, then HP, then nulls.",
+    "hypothesis": "H4-A",
     "model": "gemini-3-flash",
     "instruction_file": "detect_verbose-text-image.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {
-            "path": "neutral/example_01.png",
-            "label": "Positive: Burial Mound (Kurgan). Sunburst/gear shape with radiating spikes."
-        },
-        {
-            "path": "neutral/example_02.png",
-            "label": "Positive: Settlement Mound. Larger, irregular shape with radiating ticks."
-        },
-        {
-            "path": "neutral/example_03.png",
-            "label": "Positive: Triangulation Point ON Mound. Black triangle surrounded by mound rays."
-        },
-        {
-            "path": "neutral/example_04.png",
-            "label": "Positive: Benchmark ON Mound. Black square surrounded by mound rays."
-        },
-        {
-            "path": "neutral/example_05.png",
-            "label": "Negative: Empty tile. No mounds present."
-        },
-        {
-            "path": "neutral/example_06.png",
-            "label": "Negative: Empty tile. No mounds present."
-        },
-        {
-            "path": "neutral/example_07.png",
-            "label": "Negative: Empty tile. No mounds present."
-        }
-    ]
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"}
+    ],
+    "ordering_note": "Canonical-first: Canon+ (4), then HP (4), then null (3). Total: 11 examples."
 }
