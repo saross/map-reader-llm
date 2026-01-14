@@ -4,7 +4,13 @@ Scan the Target Image. Mark all symbols that look like the Positive examples.
 
 ## Exclusion Guidance
 
-Do not mark symbols without visible radiating rays. Standalone triangulation points, benchmarks, spot heights, and bridge markers are NOT mounds.
+Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+
+**DO NOT mark:**
+
+- Standalone triangulation points (black triangle, NO rays)
+- Standalone benchmarks (black square/circle, NO rays)
+- Spot heights, bridge markers, or other simple dots
 
 ## Output Format
 

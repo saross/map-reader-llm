@@ -52,15 +52,13 @@ share these characteristics:
 
 ## Exclusion Guidance
 
-Do not mark symbols without visible radiating rays. The following are commonly confused with mounds but should be excluded:
+Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
 
-- **Spot heights:** Simple dots with elevation numbers (no rays)
-- **Standalone triangulation points:** Black triangles with central dot (no surrounding rays)
-- **Standalone benchmarks:** Black squares/circles with central dot (no surrounding rays)
-- **Quarry/pit symbols:** Circular shapes with marks pointing INWARD (not outward)
-- **Contour line artefacts:** Closed contours on hilltops (smooth curves, no rays)
+**DO NOT mark:**
 
-The key test: mounds have **radiating rays pointing OUTWARD**. No rays = not a mound.
+- Standalone triangulation points (black triangle, NO rays)
+- Standalone benchmarks (black square/circle, NO rays)
+- Spot heights, bridge markers, or other simple dots
 
 ## Decision Procedure
 

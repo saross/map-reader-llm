@@ -2,18 +2,45 @@
 
 Scan the Target Image. Mark all symbols that look like the Positive examples.
 
-## Exclusion Guidance (Detailed)
+## Exclusion Criteria (CRITICAL)
 
-The key diagnostic feature is **radiating rays** (hachures; spikes) extending OUTWARD from a central shape.
+The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study the negative reference images carefully, and actively avoid marking these features:
 
-**DO NOT mark symbols without visible rays**, including:
+### 1. Spot Heights
 
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights (simple dots with elevation numbers)
-- Bridge/culvert markers (dots on roads/rivers)
+- **Visual:** Simple dots (black or brown) accompanied by elevation numbers (e.g., "185", "247").
+- **Critical difference:** NO hollow shape. NO radiating rays (hachures; spikes). Just a dot with a number.
+- **Key test:** Ignore the number; check the symbol. Is it hollow, with rays? No → exclude.
 
-Consider occlusion or degradation before excluding — partial rays still indicate a mound.
+### 2. Triangulation Points (standalone)
+
+- **Visual:** Black triangles with a central dot, but NO surrounding rays.
+- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the triangle-with-central-dot.
+- **Key test:** Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
+
+### 3. Benchmarks (standalone)
+
+- **Visual:** Black squares or circles with a central dot, NO surrounding rays.
+- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the square-with-central-dot.
+- **Key test:** Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
+
+### 4. Quarry and Pit Symbols
+
+- **Visual:** Circular shapes with short marks pointing INWARD toward centre.
+- **Critical difference:** Ray direction reversed (inward = excavation, outward = elevation).
+- **Key test:** Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
+
+### 5. Contour Line Artefacts
+
+- **Visual:** Closed contour lines on hilltops forming roughly circular patterns or patterns similar to a settlement mound.
+- **Critical difference:** Smooth, continuous curves with NO rays (hachures; spikes).
+- **Key test:** Rays radiating outward? No → contours, exclude. Yes → mound, include.
+
+### 6. Infrastructure Markers
+
+- **Visual:** Dots on roads, bridges, rivers, or canals.
+- **Critical difference:** Located on linear features; no rays.
+- **Key test:** Dot only on a road/river line? → infrastructure, exclude. Dot within a square or triangle that has rays (hachures; spikes) → mound, include.
 
 ## Output Format
 
