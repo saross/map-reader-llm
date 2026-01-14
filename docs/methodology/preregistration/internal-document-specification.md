@@ -28,28 +28,19 @@
 **Estimated date**: 2026-01-09
 **Soft budget limit**: $250 (triggers review, not hard cap)
 
-### Summary (from execution-plan.md v2.8)
+### Summary (from execution-plan.md v3.0)
 
-| Phase | API Calls | Estimated Cost |
-|-------|-----------|----------------|
-| Phase 1: Library + Text | ~100 | ~$1 |
-| Phase 2a: Strand 1 (M/E × partial H5) | ~15,600 | ~$47 |
-| Phase 2b: H5 Confirmatory | ~7,200 | ~$22 |
-| Phase 2c: Strand 2 (Library Size H8) | ~14,400 | ~$43 |
-| Phase 2d: Strand 3 (conditional) | ~4,800 | ~$14 |
-| Phase 3a: H3 N=30 Extension | ~1,200 | ~$4 |
-| Phase 3b: H4 Ordering | ~3,600 | ~$11 |
-| Phase 3c: H9 Diversity | ~6,000 | ~$18 |
-| Phase 3d: H2 Two-Stage | ~1,200 | ~$4 |
-| H5 Expansion (if triggered) | ~2,400 | ~$7 |
-| **Flash Subtotal** | **~56,500** | **~$171** |
-| Phase 4: H6 Pro Transfer (OFAT) | ~1,400-1,600 | ~$42-48 |
-| **Confirmatory Total** | **~58,100** | **~$213-219** |
-| Phase 5: Exploratory | ~2,000-5,000 | ~$40-60 |
-| **Grand Total** | **~60,100-63,100** | **~$253-279** |
+| Component | Cells | Calls | Cost (~$11/cell) |
+|-----------|-------|-------|------------------|
+| H1 (M/E) | 5 | 15,000 | ~$55 |
+| H7 (Temperature) | 5 | 15,000 | ~$55 |
+| H8 (Composition) | 7 | 21,000 | ~$77 |
+| H5 (Negative Text) | 6 | 18,000 | ~$66 |
+| H4 (Ordering) | 3 | 9,000 | ~$33 |
+| **Confirmatory total** | **26** | **78,000** | **~$286** |
 
-**Soft budget limit**: $250 (triggers review, not hard cap)
-**Contingency**: 20% buffer → **Budget ceiling: ~$335**
+**Soft budget limit**: $500 (triggers review, not hard cap)
+**Contingency**: 20% buffer → **Budget ceiling: ~$600**
 
 ### Budget Reserves Allocation
 
@@ -59,7 +50,7 @@
 | H6 escalation | ~$50 | If Pro shows superiority warranting full optimisation |
 | Unexpected findings | ~$30 | Worth-pursuing discoveries |
 
-**Note**: Stranded factorial (54 base cells) with text-only constraints (H5=None and T=1.0 only), K=10 protocol, and OFAT approach for H6.
+**Note**: Sequential OFAT design (26 confirmatory cells), K=10 protocol, and OFAT approach for H6 Pro transfer.
 ```
 
 ### 2.2 Pricing Assumptions
@@ -106,27 +97,27 @@ Gemini in Antigravity, and some accidental Pro usage. This informed the revised 
 
 This section documents the rationale for major design decisions, for internal reference.
 
-### Stranded Factorial Design Scope
+### Sequential OFAT Design Scope
 
-**Decision**: Run stranded factorial design with 54 base cells (not full 60-condition factorial)
+**Decision**: Run sequential One-Factor-At-a-Time (OFAT) design with 26 confirmatory cells
 
 **Design**:
-- Strand 1: (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 1 H5 × 1 T) = 26 cells
-- H5 Confirmatory: 1 optimal M/E × 1 H5 (Images-only) × 4 T = 4 cells
-- Strand 2: 6 library conditions × 4 T = 24 cells
-- Base total: 54 cells
+- Phase 2a: H1 — Modality/Elaboration (5 levels) = 5 cells
+- Phase 2b: H7 — Temperature (5 levels) = 5 cells
+- Phase 2c: H8 — Library Composition (7 conditions) = 7 cells
+- Phase 2d: H5 — Negative Text (3 M/E × 3 H5, 6 net new) = 6 cells
+- Phase 2e: H4 — Ordering (3 conditions) = 3 cells
+- Total: 26 cells
 
 **Rationale**:
-- Expanded holdout (60 tiles) provides improved statistical power (MDE ≈ 0.07-0.09 for F1)
-- 5-level M/E factor integrates modality and elaboration testing (H1) in unified design
-- Text-only modalities tested at H5=None only (no example images) and T=1.0 only (budget efficiency)
+- Sequential design reduces cells from ~54 to 26 while testing each factor at truly optimal parameters
+- H5 tested at all 3 image-using M/E levels to detect M/E × H5 interaction
 - K=10 independent runs enable proper variance estimation and post-hoc voting analysis
-
-**Note**: Budget (~$253-279) reflects updated Gemini 3 Flash pricing ($0.003/call vs initial $0.0015 estimate).
+- Budget (~$286) based on ~$11/cell pricing
 
 **Alternatives considered**:
-- Full 60-condition factorial: Rejected — text-only cannot use H5=Images-only or H5=Text+Images
-- Full O crossing: Rejected — H4 partial cross sufficient with mitigation trigger
+- Full factorial crossing: Rejected — would require ~100 conditions
+- H5 at optimal M/E only: Rejected — expanded to all image-using M/E to detect interactions
 - N=5 voting in factorial: Rejected — K=10 independent runs enable unbiased testing
 
 ### K=10 Independent Runs Protocol
@@ -139,14 +130,14 @@ This section documents the rationale for major design decisions, for internal re
 - Allows post-hoc computation of voted results (N=5 from runs 1-5 or 6-10; N=10 from all runs)
 - Same data supports both factor testing and H3 voting analysis
 
-### H4 Partial Cross Design
+### H4 Ordering Design
 
-**Decision**: Test ordering as 3 × 3 partial cross (3 orderings × 3 M/E levels) instead of full factorial crossing
+**Decision**: Test ordering at optimal M/E only (3 conditions), not as partial cross
 
 **Rationale**:
-- Full O × M/E × H5 × T crossing would add 200 conditions
-- Partial cross tests key interaction (O × M/E) at fixed H5 and T
-- Mitigation trigger (p < 0.10) extends to remaining M/E levels if interaction detected
+- Simplified from 3×3 partial cross (9 cells) to 3 cells at optimal M/E
+- Focuses H4 on primary question: does ordering matter?
+- Triggered exploratory (H4b) tests HP-first vs HN-first if H4 significant
 
 ### H6 OFAT Transfer Approach
 
@@ -224,12 +215,12 @@ After study completion, add the following sections:
 
 | Component | Estimated | Actual | Variance | Notes |
 |-----------|-----------|--------|----------|-------|
-| Phase 2 Stranded Factorial (Flash) | ~$133 | | | |
-| Phase 3 Follow-ups (Flash) | ~$37 | | | |
+| Phase 2 Confirmatory (Flash) | ~$286 | | | |
+| Phase 3 Follow-ups (Flash) | ~$70 | | | |
 | H6 Pro transfer | ~$42-48 | | | |
 | Exploratory | ~$40-60 | | | |
 | Contingency used | $0 | | | |
-| **TOTAL** | ~$253-279 | | | |
+| **TOTAL** | ~$439-465 | | | |
 ```
 
 ### 3.2 Model Versions Used
@@ -286,12 +277,13 @@ The preregistration is the **public commitment**. This document is the **project
 
 ---
 
-*Document version: 1.5*
+*Document version: 1.6*
 *Created: 2026-01-02*
-*Updated: 2026-01-10*
+*Updated: 2026-01-14*
 
 **Changelog:**
 
+- v1.6: Aligned with preregistration.md v4.6 and execution-plan.md v3.0 — replaced stranded factorial design with sequential OFAT design (26 cells); updated budget table (~$286 confirmatory at ~$11/cell); updated H4 design description; soft budget limit $500
 - v1.5: Updated reference to execution-plan.md v2.8; aligned with preregistration.md v4.4
 - v1.4: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); revised budget estimates (~$253-279 vs previous ~$116-149); soft budget limit $250; added pilot discrepancy note; aligned with execution-plan.md v2.7
 - v1.3: Aligned with preregistration.md v4.2 and execution-plan.md v2.6 — replaced "60-condition factorial" with stranded design (54 base cells); updated budget tables (~$116-149 vs previous ~$150-183); text-only constraints (H5=None, T=1.0 only); fixed H10 reference (merged into H2)

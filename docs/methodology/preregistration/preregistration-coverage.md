@@ -12,50 +12,55 @@ These factors control how a single detection prompt is constructed:
 
 | Factor | Symbol | Levels | Hypothesis |
 |--------|--------|--------|------------|
-| Modality/Elaboration | M/E | 5 (Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image) | H1, H2 |
-| Hard negatives | H5 | 3 (None, Images-only, Text+Images) | H5 |
-| Temperature | T | 4 (0.0, 0.7, 1.0, 1.3) | H7 |
-| Ordering | O | 3 (canonical-first, canonical-last, random) | H4 (partial cross) |
+| Modality/Elaboration | M/E | 5 (Image-only, Brief-text+image, Verbose-text+image, Brief-text-only, Verbose-text-only) | H1 |
+| Negative text treatment | H5 | 3 (Minimal, Terse, Verbose) | H5 |
+| Temperature | T | 5 (0.0, 0.3, 0.7, 1.0, 1.3) | H7 |
+| Ordering | O | 3 (canonical-first, canonical-last, random) | H4 |
 
-**Note on H5**: H5 tests the *negative* channel (Canon- and HN) while holding positive guidance constant. **Hard positives (HP=4) are included in ALL H5 conditions**, providing edge case guidance regardless of negative level. This is distinct from H8 Pure Positive Canon (HP=0), which tests the minimal baseline without any hard examples.
+**Note on H5**: H5 tests the text treatment for negative examples (how much exclusion guidance to provide), given negatives are present. The three levels are:
+- **Minimal**: "Negative" label only (images speak for themselves)
+- **Terse**: Brief exclusion guidance (1-2 sentences)
+- **Verbose**: Detailed exclusion explanations
 
-**Note**: Ordering is tested via a partial cross (3 orderings × 3 M/E levels = 9 conditions), not in the main factorial. The main factorial uses canonical-first throughout.
+H5 is tested at ALL three image-using M/E levels (Image-only, Brief-text+image, Verbose-text+image) to detect any M/E × H5 interaction.
+
+**Note on Ordering**: Ordering is tested at optimal M/E only (3 conditions), not as a partial cross.
 
 ---
 
-## 2. Pairwise Coverage Matrix
+## 2. Factor Coverage in OFAT Design
 
-**All pairwise combinations of core factors are covered:**
+**OFAT tests main effects sequentially, with limited interaction coverage:**
 
-| Pair | Covered By | Conditions |
-|------|------------|------------|
-| M/E × H5 | Main factorial | 5 × 3 = 15 |
-| M/E × T | Main factorial | 5 × 4 = 20 |
-| H5 × T | Main factorial | 3 × 4 = 12 |
-| M/E × O | H4 partial cross | 3 × 3 = 9 |
-| H5 × O | (not in scope) | — |
-| T × O | (not in scope) | — |
+| Factor Pair | Coverage | Notes |
+|-------------|----------|-------|
+| M/E × H5 | 3 × 3 = 9 cells | H5 tested at all 3 image-using M/E levels |
+| M/E × T | Main effect only | T tested at optimal M/E from H1 |
+| M/E × H8 | Main effect only | H8 tested at optimal M/E and T |
+| H5 × T | Not tested | H5 tested at optimal T from H7 |
+| H5 × H8 | Not tested | Both tested at respective optima |
+| M/E × O | Main effect only | O tested at optimal M/E only |
 
-**Note**: H5 × O and T × O interactions are not tested. Ordering is tested at fixed H5 and T levels (optimal from main factorial). If H4 partial cross reveals O × M/E interaction (p < 0.10), extended coverage may be triggered.
+**Interaction detection**: The 3×3 M/E × H5 factorial in Phase 2d allows testing of this interaction. Other interactions are not directly testable but are controlled by sequential optimisation.
 
 ---
 
 ## 3. Experimental Designs
 
-### 3.1 Stranded Factorial Design (H1, H5, H7, H8)
+### 3.1 Sequential OFAT Design (H1, H7, H8, H5, H4)
 
-**Design**: Stranded structure with text-only constraints:
+**Design**: Sequential One-Factor-At-a-Time (OFAT), carrying optimal parameters forward:
 
-| Strand | Design | Cells |
-|--------|--------|-------|
-| Strand 1 | (3 image M/E × 2 H5 × 4 T) + (2 text M/E × 1 H5 × 1 T) | 26 |
-| H5 Confirmatory | 1 optimal M/E × 1 H5 (Images-only) × 4 T | 4 |
-| Strand 2 | 6 library conditions × 4 T | 24 |
-| **Base total** | | **54** |
-| Strand 3 (conditional) | Interaction check if triggered | ~8 |
-| **Maximum total** | | **~62** |
+| Phase | Factor | Cells | Cumulative |
+|-------|--------|-------|------------|
+| Phase 2a | H1 — Modality/Elaboration (5 levels) | 5 | 5 |
+| Phase 2b | H7 — Temperature (5 levels) | 5 | 10 |
+| Phase 2c | H8 — Library Composition (7 conditions) | 7 | 17 |
+| Phase 2d | H5 — Negative Text (3 M/E × 3 H5, 6 net new) | 6 | 23 |
+| Phase 2e | H4 — Ordering (3 conditions at optimal M/E) | 3 | 26 |
+| **Confirmatory total** | | **26** | |
 
-**Note**: Text-only modalities tested at H5=None only (no example images) and T=1.0 only (budget efficiency). This is not a full 60-condition factorial.
+**H5 expanded scope**: H5 is tested at ALL three image-using M/E levels (Image-only, Brief-text+image, Verbose-text+image) to detect M/E × H5 interaction. 3 M/E × 3 H5 = 9 cells total; 3 overlap with H1 baseline (each M/E at H5=Minimal), leaving 6 net new cells.
 
 Each condition evaluated with K=10 independent single-pass runs on 60 holdout tiles.
 
@@ -70,19 +75,17 @@ H2 is tested as planned contrasts within the main factorial, not as a separate e
 
 All pairwise elaboration comparisons are available from the M/E factor in the main factorial.
 
-### 3.3 H4 Design (Ordering Partial Cross)
+### 3.3 H4 Design (Ordering at Optimal M/E)
 
-**Design**: O(3) × M/E(3) = **9 conditions**
+**Design**: 3 orderings at optimal M/E only = **3 conditions**
 
-| Ordering | M/E Levels |
-|----------|------------|
-| Canonical-first | (covered in main factorial) |
-| Canonical-last | Image-only, Brief-text+image, Verbose-text+image |
-| Random | Image-only, Brief-text+image, Verbose-text+image |
+| Ordering | Description |
+|----------|-------------|
+| Canonical-first | Canonical positives and negatives before hard examples |
+| Canonical-last | Hard examples first, canonical last |
+| Random | All examples shuffled |
 
-**New conditions**: 6 (2 orderings × 3 M/E levels). Canonical-first data from main factorial.
-
-**Mitigation trigger**: If O × M/E interaction (p < 0.10), extend to remaining 2 M/E levels (Brief-text, Verbose-text).
+**Triggered exploratory (H4b)**: If H4 significant (p < 0.05), test HP-first vs HN-first ordering within the hard block (+2 cells).
 
 ### 3.4 H3 Design (Voting)
 
@@ -238,12 +241,13 @@ Some factors are tested at a single optimal configuration with documented ration
 
 ---
 
-*Document version: 2.4*
+*Document version: 2.5*
 *Created: 2026-01-02*
-*Updated: 2026-01-10*
+*Updated: 2026-01-14*
 
 **Changelog:**
 
+- v2.5: Aligned with preregistration.md v4.6 — replaced stranded factorial design with sequential OFAT design (26 cells); updated H5 terminology from "None/Images-only/Text+Images" to "Minimal/Terse/Verbose"; H5 now tested at all 3 image-using M/E levels (3×3=9 cells, 6 net new); updated H7 temperature levels to 5 (added T=0.3); simplified H4 to optimal M/E only (3 conditions); updated pairwise coverage matrix for OFAT design
 - v2.4: Aligned with preregistration.md v4.4 — clarified HP (4 examples) included in ALL H5 conditions (H5 tests negative channel with positive guidance constant); distinguished H5=None (11 examples with HP) from H8 Pure Positive Canon (7 examples, no HP); added note on H5 factor explaining this distinction
 - v2.3: Aligned with preregistration.md v4.3 — H5=None is pure-positive baseline (canonical positives + null tiles only; no canonical negatives); canonical negatives included in H5=Images-only and H5=Text+Images only
 - v2.2: Corrected main design description — replaced incorrect "60-condition factorial" with stranded design (54 base cells); text-only modalities tested at H5=None only and T=1.0 only per preregistration.md; fixed H9 design from 4 conditions to 5 conditions (added temperature diversity condition D)

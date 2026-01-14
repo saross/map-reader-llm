@@ -24,7 +24,7 @@ Phase 2b: H7 Temperature (5 cells)
 Phase 2c: H8 Library Composition (7 cells)
     │    ↓ optimal library
     ▼
-Phase 2d: H5 Negative Text Treatment (3 cells)
+Phase 2d: H5 Negative Text Treatment (6 cells)
     │    ↓ optimal text treatment
     ▼
 Phase 2e: H4 Ordering (3 cells)
@@ -46,7 +46,7 @@ H3 Voting       H9 Diversity    H2 Two-Stage    Triggered
             Phase 5: Exploratory (H10-H15)
 ```
 
-**Note**: The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 23 cells while ensuring each hypothesis runs at truly optimal parameters.
+**Note**: The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 26 cells while ensuring each hypothesis runs at truly optimal parameters.
 
 ---
 
@@ -63,16 +63,16 @@ H3 Voting       H9 Diversity    H2 Two-Stage    Triggered
   - [x] `detect_brief-text-image.md` (text+image)
   - [x] `detect_verbose-text.md` (text-only)
   - [x] `detect_verbose-text-image.md` (base for H5)
-  - [ ] H5 instruction variants at optimal M/E (likely verbose-text-image):
-    - [ ] `detect_verbose-text-image_minimal.md` (no exclusion text)
-    - [ ] `detect_verbose-text-image_terse.md` (brief exclusion guidance)
-    - [ ] `detect_verbose-text-image_verbose.md` (detailed exclusion text)
+  - [x] H5 instruction variants at all 3 image-using M/E levels (2026-01-14):
+    - [x] `detect_image-only_{minimal,terse,verbose}.md` (3 files)
+    - [x] `detect_brief-text-image_{minimal,terse,verbose}.md` (3 files)
+    - [x] `detect_verbose-text-image_{minimal,terse,verbose}.md` (3 files)
   - [ ] H9 text variants (5 semantically equivalent instructions, constructed after Phase 2)
   - [x] `propose_image-only.md` and `verify_image-only.md` (H2)
 
 - [x] **Configs**: Create all JSON config files (2026-01-01)
   - [x] 5 M/E configs: `detect_{modality}.json`
-  - [ ] 3 H5 configs at optimal M/E: `detect_verbose-text-image_{minimal,terse,verbose}.json`
+  - [x] 9 H5 configs at 3 image-using M/E levels: `detect_{modality}_{minimal,terse,verbose}.json` (2026-01-14)
   - [ ] 7 H8 library configs: `library_{composition}.json`
   - [ ] H4 ordering variants: 2 additional orderings at optimal M/E
   - [ ] H7 temperature: runtime parameter, no separate configs needed
@@ -235,10 +235,10 @@ If <4 distinct FNs or <3 distinct FPs are found:
 ## Phase 2: Sequential Hypothesis Testing (H1, H7, H8, H5, H4)
 
 **Duration**: 2-3 days
-**Estimated cost**: ~$59 confirmatory, ~$67 maximum (Flash at ~$3/cell)
+**Estimated cost**: ~$286 confirmatory (26 cells at ~$11/cell)
 **Prerequisites**: Phase 1 complete, library and text uploaded to OSF
 
-The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 23 cells while ensuring each hypothesis runs at truly optimal parameters.
+The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 26 cells while ensuring each hypothesis runs at truly optimal parameters.
 
 ---
 
@@ -331,11 +331,11 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 ### Phase 2d: H5 — Negative Text Treatment
 
-**Purpose**: Determine optimal text treatment for negative examples.
+**Purpose**: Determine optimal text treatment for negative examples across all image-using M/E levels.
 
-**Prerequisite**: Optimal M/E, T, and library composition from Phases 2a-2c.
+**Prerequisite**: Optimal T and library composition from Phases 2a-2c.
 
-**Design**: 3 H5 levels at optimal configuration:
+**Design**: 3 H5 levels × 3 image-using M/E levels (factorial):
 
 | H5 Level | Exclusion Text | Description |
 | -------- | -------------- | ----------- |
@@ -343,16 +343,22 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 | Terse | Brief guidance | 1-2 sentences: "Do not detect triangulation points..." |
 | Verbose | Detailed guidance | Full explanation of why each is not a mound |
 
+| M/E Level | Description |
+| --------- | ----------- |
+| Image-only | No text guidance |
+| Brief-text+image | Concise text + images |
+| Verbose-text+image | Detailed text + images |
+
 **Phase 2d totals**:
 
-- 3 H5 levels = **3 cells**
-- 3 × K=10 × 60 = **1,800 API calls** (~$8)
+- 3 M/E × 3 H5 = **9 cells** total
+- 3 cells overlap with H1 baseline (each M/E at H5=Minimal)
+- Net new: **6 cells**
+- 6 × K=10 × 60 = **3,600 API calls** (~$66)
 
-**Fixed parameters**: Optimal M/E, T, and library from previous phases.
+**Fixed parameters**: Optimal T and library from previous phases.
 
-**Analysis**: One-way ANOVA on precision. Planned contrasts: Minimal vs Terse; Terse vs Verbose.
-
-**Cross-hypothesis comparison**: Compare H1 optimal (positive text) vs H5 optimal (negative text) to assess asymmetric elaboration requirements.
+**Analysis**: Two-way ANOVA (3 M/E × 3 H5). Test H5 main effect and M/E × H5 interaction. Planned contrasts: Minimal vs Terse; Terse vs Verbose (pooled across M/E levels).
 
 ---
 
@@ -667,20 +673,20 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 | Phase | Cells | API Calls | Estimated Cost |
 |-------|-------|-----------|----------------|
 | Phase 1: Library + Text | — | ~100 | ~$1 |
-| Phase 2a: H1 — M/E Level | 5 | 3,000 | ~$10 |
-| Phase 2b: H7 — Temperature | 5 | 3,000 | ~$10 |
-| Phase 2c: H8 — Library Composition | 7 | 4,200 | ~$18 |
-| Phase 2d: H5 — Negative Text | 3 | 1,800 | ~$6 |
-| Phase 2e: H4 — Ordering | 3 | 1,800 | ~$6 |
-| **Phase 2 Confirmatory** | **23** | **13,800** | **~$50** |
-| Phase 3a: H3 N=30 Extension | — | ~1,200 | ~$4 |
-| Phase 3c: H9 Diversity (exploratory) | — | ~6,000 | ~$18 |
+| Phase 2a: H1 — M/E Level | 5 | 15,000 | ~$55 |
+| Phase 2b: H7 — Temperature | 5 | 15,000 | ~$55 |
+| Phase 2c: H8 — Library Composition | 7 | 21,000 | ~$77 |
+| Phase 2d: H5 — Negative Text | 6 | 18,000 | ~$66 |
+| Phase 2e: H4 — Ordering | 3 | 9,000 | ~$33 |
+| **Phase 2 Confirmatory** | **26** | **78,000** | **~$286** |
+| Phase 3a: H3 N=30 Extension | — | ~12,000 | ~$44 |
+| Phase 3c: H9 Diversity (exploratory) | — | ~6,000 | ~$22 |
 | Phase 3d: H2 Two-Stage (exploratory) | — | ~1,200 | ~$4 |
-| **Flash Subtotal** | **23+** | **~22,300** | **~$77** |
+| **Flash Subtotal** | **26+** | **~97,300** | **~$357** |
 | Phase 4: H6 Pro Transfer | — | ~1,400-1,600 | ~$42-48 |
-| **Confirmatory Total** | — | **~24,000** | **~$119-125** |
+| **Confirmatory Total** | — | **~99,000** | **~$399-405** |
 | Phase 5: Exploratory (H10-H15) | — | ~7,000-12,000 | ~$40-60 |
-| **Grand Total** | — | **~31,000-36,000** | **~$159-185** |
+| **Grand Total** | — | **~106,000-111,000** | **~$439-465** |
 
 **Triggered exploratory** (not included in totals above):
 
@@ -690,15 +696,15 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 | HN-only condition | β_hardneg > 2×β_hardpos | 1 | 600 | ~$2 |
 | **Maximum triggered** | | **3** | **1,800** | **~$6** |
 
-**Soft budget limit**: $200 (triggers review, not hard cap)
-**Contingency**: 20% buffer → **Budget ceiling: ~$240**
+**Soft budget limit**: $500 (triggers review, not hard cap)
+**Contingency**: 20% buffer → **Budget ceiling: ~$600**
 
 **Notes**:
 
-- Sequential design reduces confirmatory cells from ~54 to 23
-- Total budget is significantly lower than original stranded factorial design
+- Sequential design reduces confirmatory cells from ~54 to 26
+- H5 now tests at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new)
 - H9 is exploratory; H2 and H6 remain confirmatory
-- Flash-only confirmatory testing costs ~$50
+- Flash-only confirmatory testing costs ~$286
 - Pro pricing needs verification at experiment start
 
 ---
@@ -757,12 +763,13 @@ Before submitting results:
 
 ---
 
-*Document version: 2.9*
+*Document version: 3.0*
 *Created: 2025-12-31*
-*Updated: 2026-01-12*
+*Updated: 2026-01-14*
 
 **Changelog:**
 
+- v3.0: Aligned with preregistration.md v4.6 — H5 scope expanded to test at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new); total confirmatory cells updated from 23 to 26; cost estimates corrected (~$286 confirmatory); Phase 0 checklist updated to reflect all 9 H5 instruction files and configs now created; budget summary recalculated with revised per-cell costs
 - v2.9: Major redesign aligned with preregistration.md v4.5 — replaced stranded factorial with sequential OFAT design; H5 now tests text treatment only (Minimal/Terse/Verbose) given negatives present; H8 expanded to 7 conditions with sequential addition (C1-C3) and scaling (S1-S3) contrasts; H4 simplified to optimal M/E only (3 cells); H7 adds T=0.3 (5 levels); added triggered exploratory (H4b, HN-only); revised budget (~$50 confirmatory vs ~$171); Phase 2 restructured to sequential phases 2a-2e; Phase 3b absorbed into Phase 2e
 - v2.8: Aligned with preregistration.md v4.4 — renamed "Pure" to "Pure Positive Canon" in Strand 2 table; updated H8 library compositions to match preregistration; clarified distinction between H5=None (includes HP) and Pure Positive Canon (no HP); updated planned contrasts; corrected terminology (benchmark not "bench mark")
 - v2.7: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); all Flash cost estimates doubled; Pro estimate revised to ~$0.03/call (needs verification); soft budget limit $250; budget ceiling ~$335

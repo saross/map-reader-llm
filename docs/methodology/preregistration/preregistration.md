@@ -613,10 +613,13 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 1. Adding terse exclusion text will improve precision vs minimal labels
 2. Verbose exclusion text will show minimal additional benefit over terse (diminishing returns)
 3. Optimal negative text level may differ from optimal positive text level (H1)
+4. The M/E × H5 interaction will be non-significant, indicating that optimal negative text level is consistent across positive elaboration levels
 
 **Execution parameters**:
 
-- **M/E level**: Optimal from H1
+- **M/E level**: All image-based conditions (Image-only, Brief-text+image, Verbose-text+image)
+- **Rationale**: Tests whether optimal negative text level depends on positive elaboration (M/E × H5 interaction)
+- **Text-only exclusion**: Brief-text and Verbose-text M/E levels cannot have "Images-only" negative guidance and serve only as H1 baselines
 - **Library composition**: Scale-8 (or optimal from H8)
 - **Temperature**: Optimal from H7 (or T=1.0 default)
 - **Ordering**: Canonical-first (default)
@@ -624,11 +627,21 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 
 **Analysis**:
 
-- **Primary**: One-way ANOVA across 3 H5 levels on precision
+- **Primary**: One-way ANOVA across 3 H5 levels on precision (within each M/E level)
 - **Planned contrasts**: Minimal vs Terse; Terse vs Verbose
 - **Secondary**: Parallel analysis on recall to confirm no significant harm
 - **Tertiary**: Analysis on F1 to assess net benefit
 - **Cross-hypothesis (H1/H5)**: Compare optimal positive text level (H1) vs optimal negative text level (H5) — if they differ, indicates asymmetric elaboration requirements
+
+**M/E × H5 Interaction Analysis**:
+
+Beyond the primary one-way ANOVA for each M/E level separately, exploratory analysis will examine whether optimal H5 level varies by M/E condition:
+
+- **Two-way ANOVA**: M/E (3 levels) × H5 (3 levels) on precision and F1
+- **Interaction test**: Does the H5 effect (Minimal → Terse → Verbose) differ across M/E levels?
+- **Practical implication**: If interaction exists, optimal recommendations become conditional: "For M/E level X, use H5 level Y"
+
+This addresses the theoretical concern that positive and negative guidance may have asymmetric elaboration requirements.
 
 **Advance to Stage 2 if**: Significant H5 effect on precision (FDR-corrected p < 0.05) AND recall does not significantly decrease.
 
@@ -1139,7 +1152,7 @@ These mechanisms may operate independently, redundantly, or synergistically.
 | H2 (two-stage) | Neither architecture improves over single-stage | Compare F1 | Either direction shows ≥0.05 F1 improvement |
 | H3 (consensus voting) | Voting improves over single-pass | One-tailed | Significant improvement |
 | H4 (example ordering) | Canonical-last > canonical-first | One-tailed | Significant ordering effect |
-| H5 (negative text) | Terse helps, verbose diminishing returns | One-way ANOVA (3 levels) | Significant text treatment effect, recall stable |
+| H5 (negative text) | Terse helps, verbose diminishing returns; effect consistent across M/E | Two-way ANOVA (3 M/E × 3 H5) | Significant H5 main effect, recall stable, M/E × H5 interaction non-significant |
 | H6 (Flash→Pro transfer) | Effects replicate on Pro | OFAT sensitivity | Transfer confirmed |
 | H7 (temperature) | T=1.0 optimal | One-way ANOVA (5 levels) | Any temperature outperforms 1.0 |
 | H8 (library composition) | Sequential addition + diminishing returns | One-way ANOVA (7 levels) + contrasts | Significant composition effect identified |
@@ -1313,6 +1326,33 @@ Return JSON with normalised coordinates (0-1000):
 ```
 
 The text+image variant adds domain context and explicit guidance (see `detect_text-image.md`).
+
+#### 8.3.1a H5 × M/E Factorial Structure
+
+H5 tests negative text elaboration at three image-based M/E levels, creating a 3×3 design:
+
+| M/E Level | H5=Minimal | H5=Terse | H5=Verbose | Total |
+|-----------|------------|----------|------------|-------|
+| Image-only | ✓ (H1) | ✓ | ✓ | 3 |
+| Brief-text+image | ✓ (H1) | ✓ | ✓ | 3 |
+| Verbose-text+image | ✓ (H1) | ✓ | ✓ | 3 |
+| **Total** | **3** | **3** | **3** | **9** |
+
+**Overlap with H1:** The H5=Minimal column represents the same conditions as H1 baselines for these three M/E levels (all using Scale-8 library with no exclusion text).
+
+**Instruction file count:** 11 total
+
+- 5 base files for H1 (all 5 M/E levels at H5=Minimal)
+- 3 H5=Terse variants (image-based M/E only)
+- 3 H5=Verbose variants (image-based M/E only)
+
+**Text-only M/E levels:** Brief-text and Verbose-text serve as academic baselines in H1 only. They cannot have H5 variants because "Images-only" negative guidance requires images to show.
+
+**Orthogonality maintenance:**
+
+- M/E factor controls positive guidance elaboration (via instruction file text)
+- H5 factor controls negative guidance elaboration (via exclusion text presence/detail)
+- Both factors vary instruction files only; config files maintain minimal labels throughout
 
 #### 8.3.2 H9 Text Diversity Methodology
 
@@ -1647,7 +1687,7 @@ The following table summarises how library-related hypotheses interact and which
 1. **H1 first**: Determines optimal M/E level
 2. **H7 second**: Determines optimal temperature
 3. **H8 third**: Determines optimal library composition
-4. **H5 fourth**: Tests text treatment for negatives at optimal library
+4. **H5 fourth**: Tests negative text treatment at all image-based M/E levels × optimal library (9 conditions, 6 net new cells; enables M/E × H5 interaction analysis)
 5. **H4 fifth**: Tests ordering effects at optimal M/E, T, library, and H5
 6. **H3 throughout**: Vote threshold grid search runs in parallel across conditions
 
@@ -1762,9 +1802,9 @@ Test text elaboration for negatives at optimal M/E, T, and library composition.
 | Terse | Brief guidance | 1-2 sentences: "Do not detect triangulation points..." |
 | Verbose | Detailed guidance | Full explanation of why each is not a mound |
 
-**H5 totals**: 3 cells
+**H5 totals**: 9 cells (3 M/E × 3 H5), but 3 overlap with H1 → 6 net new cells
 
-**Note**: H5 tests text treatment for negatives, not whether negatives help (answered by H8 contrast C3).
+**Note**: H5 tests text treatment for negatives at all image-based M/E levels, enabling M/E × H5 interaction analysis. Tests whether negatives help is answered by H8 contrast C3.
 
 **Phase 4: Example Ordering (H4)**
 
@@ -1782,20 +1822,22 @@ Test ordering at optimal M/E, T, library, and H5.
 
 **Total sequential design:**
 
-| Component | Cells | Calls | Cost (~$3/cell) |
-| --------- | ----- | ----- | --------------- |
-| H1 (M/E) | 5 | 3,000 | ~$11 |
-| H7 (Temperature) | 5 | 3,000 | ~$11 |
-| H8 (Composition) | 7 | 4,200 | ~$21 |
-| H5 (Negative Text) | 3 | 1,800 | ~$8 |
-| H4 (Ordering) | 3 | 1,800 | ~$8 |
-| **Confirmatory total** | **23** | **13,800** | **~$59** |
-| H4b (triggered) | 2 | 1,200 | ~$5 |
-| HN-only (triggered) | 1 | 600 | ~$3 |
-| M/E sensitivity (triggered) | 3 | 1,800 | ~$8 |
-| **Maximum total** | **29** | **17,400** | **~$76** |
+| Component | Cells | Calls | Cost (~$11/cell) |
+| --------- | ----- | ----- | ---------------- |
+| H1 (M/E) | 5 | 15,000 | ~$55 |
+| H7 (Temperature) | 5 | 15,000 | ~$55 |
+| H8 (Composition) | 7 | 21,000 | ~$77 |
+| H5 (Negative Text) | 6* | 18,000 | ~$66 |
+| H4 (Ordering) | 3 | 9,000 | ~$33 |
+| **Confirmatory total** | **26** | **78,000** | **~$286** |
+| M/E-sensitivity (triggered) | 3 | 9,000 | ~$33 |
+| H4b (triggered) | 2 | 6,000 | ~$22 |
+| HN-only (triggered) | 1 | 3,000 | ~$11 |
+| **Maximum total** | **32** | **96,000** | **~$352** |
 
-*Note: Cell count reduced from v4.4 (54 cells) to v4.5 (23 cells) due to sequential design, removal of partial factorial crosses, and H4 simplification. Cost similar (~$60 → ~$59) as design retains adequate power.*
+*H5 tests 3 M/E × 3 H5 = 9 conditions total, but 3 overlap with H1 baselines → 6 net new cells
+
+*Note: Cost estimates corrected to ~$11/cell based on actual Gemini 3 Flash pricing. Cell count updated from v4.4 (23 cells) to v4.6 (26 cells) due to H5 scope expansion to test at all image-based M/E levels.*
 
 **Parallelisation options:**
 
@@ -2009,25 +2051,31 @@ The sequential design tests H1, H7, H8, H5, and H4 using OFAT methodology (see S
 | 1 | H1 (M/E) | 5 | 5 |
 | 1 | H7 (Temperature) | 5 | 10 |
 | 2 | H8 (Composition) | 7 | 17 |
-| 3 | H5 (Negative text) | 3 | 20 |
-| 4 | H4 (Ordering) | 3 | 23 |
+| 3 | H5 (Negative text) | 6* | 23 |
+| 4 | H4 (Ordering) | 3 | 26 |
 
-*Note: H4 runs at optimal M/E only (not partial factorial cross). Total confirmatory: 23 cells.*
+*H5 tests 3 M/E × 3 H5 = 9 conditions, 3 overlap with H1 baselines → 6 net new cells. Total confirmatory: 26 cells.*
 
 **Config naming pattern**: `detect_{modality}_{elaboration}_{h5_level}.json`
 
 Temperature, library composition, and ordering are specified at runtime, not in config files.
 
-**Config count** (at optimal M/E, likely Verbose+image):
+**Config count** (H5 at all 3 image-using M/E levels):
 
-- 3 H5 levels × 1 M/E = 3 base configs
-- 3 ordering variants = 3 ordering configs (same instruction files)
-- **Total: ~6 configurations** for H5 + H4 testing
+- 3 M/E levels × 3 H5 levels = 9 H5 configs
+- 3 ordering variants = 3 ordering configs (at optimal M/E)
+- **Total: 12 configurations** for H5 + H4 testing
 
 Example configurations:
 
 | Config Pattern | M/E | H5 |
 | :--- | :--- | :--- |
+| `detect_image-only_minimal.json` | Image-only | Minimal |
+| `detect_image-only_terse.json` | Image-only | Terse |
+| `detect_image-only_verbose.json` | Image-only | Verbose |
+| `detect_brief-text-image_minimal.json` | Brief+image | Minimal |
+| `detect_brief-text-image_terse.json` | Brief+image | Terse |
+| `detect_brief-text-image_verbose.json` | Brief+image | Verbose |
 | `detect_verbose-text-image_minimal.json` | Verbose+image | Minimal |
 | `detect_verbose-text-image_terse.json` | Verbose+image | Terse |
 | `detect_verbose-text-image_verbose.json` | Verbose+image | Verbose |
@@ -2295,12 +2343,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 4.5*
+*Document version: 4.6*
 *Created: 2025-12-22*
-*Updated: 2026-01-12*
+*Updated: 2026-01-14*
 
 **Changelog:**
 
+- v4.6: H5 scope expansion and cost correction — H5 now tests at all three image-based M/E levels (Image-only, Brief-text+image, Verbose-text+image) rather than optimal M/E only; adds 6 net new cells enabling direct test of M/E × H5 interaction; cost estimates corrected to ~$11/cell based on actual Gemini 3 Flash pricing (~$286 confirmatory vs previous ~$59 estimate); Section 5.5 updated (execution parameters, interaction analysis subsection, fourth prediction); Section 7.1 updated (H5 test type to two-way ANOVA); Section 8.3.1a added (H5 × M/E factorial structure); Section 8.4.7 updated (execution order, budget table with corrected costs and 26 confirmatory cells); instruction files standardised (terse template applied consistently, verbose sections use 6-subsection format)
 - v4.5: Major H5/H8/H4 redesign — H5 now tests text treatment only (Minimal/Terse/Verbose) given negatives are always present (moved "do negatives help?" to H8 contrast C3); H8 expanded to 7 conditions with sequential addition contrasts (C1-C3) and scaling contrasts (S1-S3); H4 simplified to optimal M/E only (3 cells vs 9); H7 temperatures expanded to 5 levels (added T=0.3); new triggered exploratory hypotheses H4b (HP/HN ordering), HN-only condition, and M/E sensitivity at H8-optimal (tests M/E robustness if H8 optimal differs from Scale-8 by ≥2 levels); budget 23 confirmatory cells (~$59), 29 maximum with triggered exploratories (~$76); detection configs updated to match (hypothesis H1, Scale-8 library with 17 examples); see h5-h8-redesign-consolidated.md for full rationale
 - v4.4: H8 "Pure" renamed to "Pure Positive Canon" for clarity; clarified that HP (4 examples) is present in ALL H5 conditions (H5 tests negative channel only); distinguished H5=None (11 examples, includes HP) from H8 Pure Positive Canon (7 examples, no hard examples); added note on HP to H5 section; updated Section 8.4.2 category ratios; appendix configs to be updated to match
 - v4.3.1: Cross-reference corrections — Section 3.8 voting references corrected from H4 to H3; H4 Implementation section reference corrected from Section 8.4.2 to Section 8.4.1; Section 8.4.5 example-level analysis reference corrected from H6 to H9; spelling consistency ("bench mark" → "benchmark")

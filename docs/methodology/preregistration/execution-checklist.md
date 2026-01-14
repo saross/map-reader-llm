@@ -2,9 +2,9 @@
 
 **Purpose**: Working checklist for tracking preregistration tasks. This file can be updated after the preregistration document is lodged.
 
-**Associated preregistration**: `preregistration.md` v4.4
+**Associated preregistration**: `preregistration.md` v4.6
 
-**Last updated**: 2026-01-10
+**Last updated**: 2026-01-14
 
 ---
 

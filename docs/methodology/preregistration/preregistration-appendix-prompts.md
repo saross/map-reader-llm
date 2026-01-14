@@ -26,7 +26,7 @@ The prompt architecture reflects the sequential hypothesis design:
 
 This yields:
 
-- **10 detection instruction files**: 3 image-using M/E levels × 3 H5 variants (base=Minimal, `_terse`, `_verbose`) + 2 text-only M/E levels × 1 variant (H5=Minimal only)
+- **11 detection instruction files**: 3 image-using M/E levels × 3 H5 variants (base=Minimal, `_terse`, `_verbose`) + 2 text-only M/E levels × 1 variant (H5=Minimal only)
 - **2 two-stage pipeline instruction files**: propose_image-only.md, verify_image-only.md
 - **Configuration files**: See Section 2.2 for breakdown
 
@@ -229,25 +229,87 @@ Return JSON with normalised coordinates (0-1000):
 **Purpose**: Image-only detection with detailed exclusion guidance for hard negatives.
 **Used by**: M/E = Image-only; H5 = Verbose
 
-**Note**: This file was previously named `detect_image-only_hardneg.md`. Renamed to reflect H5 level naming.
+```markdown
+# Mound Detection (Image-Only with Verbose Exclusion)
+
+Scan the Target Image. Mark all symbols that look like the Positive examples.
+
+## Exclusion Criteria (CRITICAL)
+
+The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study the negative reference images carefully, and actively avoid marking these features:
+
+### 1. Spot Heights
+
+- **Visual:** Simple dots (black or brown) accompanied by elevation numbers (e.g., "185", "247").
+- **Critical difference:** NO hollow shape. NO radiating rays (hachures; spikes). Just a dot with a number.
+- **Key test:** Ignore the number; check the symbol. Is it hollow, with rays? No → exclude.
+
+### 2. Triangulation Points (standalone)
+
+- **Visual:** Black triangles with a central dot, but NO surrounding rays.
+- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the triangle-with-central-dot.
+- **Key test:** Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
+
+### 3. Benchmarks (standalone)
+
+- **Visual:** Black squares or circles with a central dot, NO surrounding rays.
+- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the square-with-central-dot.
+- **Key test:** Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
+
+### 4. Quarry and Pit Symbols
+
+- **Visual:** Circular shapes with short marks pointing INWARD toward centre.
+- **Critical difference:** Ray direction reversed (inward = excavation, outward = elevation).
+- **Key test:** Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
+
+### 5. Contour Line Artefacts
+
+- **Visual:** Closed contour lines on hilltops forming roughly circular patterns or patterns similar to a settlement mound.
+- **Critical difference:** Smooth, continuous curves with NO rays (hachures; spikes).
+- **Key test:** Rays radiating outward? No → contours, exclude. Yes → mound, include.
+
+### 6. Infrastructure Markers
+
+- **Visual:** Dots on roads, bridges, rivers, or canals.
+- **Critical difference:** Located on linear features; no rays.
+- **Key test:** Dot only on a road/river line? → infrastructure, exclude. Dot within a square or triangle that has rays (hachures; spikes) → mound, include.
+
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+#### 1.1.3 detect_image-only_terse.md
+
+**Purpose**: Image-only detection with brief exclusion guidance for hard negatives.
+**Used by**: M/E = Image-only; H5 = Terse
 
 ```markdown
-# Mound Detection (Image-Only)
+# Mound Detection (Image-Only with Terse Exclusion)
 
 Scan the Target Image. Mark all symbols that look like the Positive examples.
 
 ## Exclusion Guidance
 
-The key diagnostic feature is **radiating rays** (hachures; spikes) extending OUTWARD from a central shape.
+Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
 
-**DO NOT mark symbols without visible rays**, including:
+**DO NOT mark:**
 
 - Standalone triangulation points (black triangle, NO rays)
 - Standalone benchmarks (black square/circle, NO rays)
-- Spot heights (simple dots with elevation numbers)
-- Bridge/culvert markers (dots on roads/rivers)
-
-Consider occlusion or degradation before excluding — partial rays still indicate a mound.
+- Spot heights, bridge markers, or other simple dots
 
 ## Output Format
 
@@ -385,7 +447,95 @@ Return JSON with normalised coords (0-1000).
 **Note**: This file was previously named `detect_brief-text-image_hardneg.md`. Renamed to reflect H5 level naming.
 
 ```markdown
-# Detection Prompt: Brief Text+Image with Exclusion Guidance
+# Detection Prompt: Brief Text+Image with Verbose Exclusion Guidance
+
+You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
+
+## Reference Examples
+
+You are provided with labelled images:
+
+- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
+- **Negative examples** show areas or symbols that are NOT mounds
+
+## Task
+
+Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
+
+## Guidelines
+
+1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
+
+2. **Separate Clusters:** Provide individual boxes for each symbol.
+
+3. **Refer to Examples:** Compare uncertain cases to Positive references.
+
+4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
+
+## Exclusion Criteria (CRITICAL)
+
+The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study the negative reference images carefully, and actively avoid marking these features:
+
+### 1. Spot Heights
+
+- **Visual:** Simple dots (black or brown) accompanied by elevation numbers (e.g., "185", "247").
+- **Critical difference:** NO hollow shape. NO radiating rays (hachures; spikes). Just a dot with a number.
+- **Key test:** Ignore the number; check the symbol. Is it hollow, with rays? No → exclude.
+
+### 2. Triangulation Points (standalone)
+
+- **Visual:** Black triangles with a central dot, but NO surrounding rays.
+- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the triangle-with-central-dot.
+- **Key test:** Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
+
+### 3. Benchmarks (standalone)
+
+- **Visual:** Black squares or circles with a central dot, NO surrounding rays.
+- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the square-with-central-dot.
+- **Key test:** Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
+
+### 4. Quarry and Pit Symbols
+
+- **Visual:** Circular shapes with short marks pointing INWARD toward centre.
+- **Critical difference:** Ray direction reversed (inward = excavation, outward = elevation).
+- **Key test:** Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
+
+### 5. Contour Line Artefacts
+
+- **Visual:** Closed contour lines on hilltops forming roughly circular patterns or patterns similar to a settlement mound.
+- **Critical difference:** Smooth, continuous curves with NO rays (hachures; spikes).
+- **Key test:** Rays radiating outward? No → contours, exclude. Yes → mound, include.
+
+### 6. Infrastructure Markers
+
+- **Visual:** Dots on roads, bridges, rivers, or canals.
+- **Critical difference:** Located on linear features; no rays.
+- **Key test:** Dot only on a road/river line? → infrastructure, exclude. Dot within a square or triangle that has rays (hachures; spikes) → mound, include.
+
+## Output Format
+
+Return JSON with normalised coords (0-1000).
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+#### 1.3.3 detect_brief-text-image_terse.md
+
+**Purpose**: Brief text+image prompt with brief exclusion guidance for hard negatives.
+**Used by**: M/E = Brief-text+image; H5 = Terse
+
+```markdown
+# Detection Prompt: Brief Text+Image with Terse Exclusion Guidance
 
 You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
 
@@ -700,7 +850,7 @@ using normalised coordinates (0-1000).
 **Note**: This file was previously named `detect_verbose-text-image_hardneg.md`. Renamed to reflect H5 level naming.
 
 ```markdown
-# Detection Prompt: Verbose Text+Image with Exclusion Guidance
+# Detection Prompt: Verbose Text+Image with Verbose Exclusion Guidance
 
 You are an expert analyst of Soviet
 Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
@@ -825,6 +975,143 @@ avoid marking these features:
   → infrastructure, exclude. Dot within a
   square or triangle that has rays
   (hachures; spikes) → mound, include.
+
+## Decision Procedure
+
+When uncertain whether a feature matches
+the positive examples:
+
+1. **Check for radiating rays:** The
+   outward-pointing pattern is essential.
+   No rays = not a mound.
+
+2. **Compare to examples:** Hold the
+   candidate feature mentally against
+   the positive references. Similar
+   overall pattern?
+
+3. **Check ray direction:** Outward =
+   elevated terrain = mound. Inward =
+   excavated terrain = quarry/pit.
+
+4. **Consider degradation:** Map
+   scanning may have faded or distorted symbols.
+   If some rays are visible and the
+   pattern matches examples, include.
+
+5. **Consider occlusion:** Roads,
+   contours, and text may obscure
+   parts of symbols. Partial matches
+   are acceptable.
+
+6. **Refer to negative examples:** Does
+   the feature look more like a negative
+   example than a positive? If so,
+   exclude.
+
+7. **When still uncertain:** Err on the
+   side of detection. Include borderline
+   cases rather than missing genuine
+   mounds.
+
+## Guidelines
+
+1. **Separate Clusters:** Mounds often
+   appear in groups (necropoleis). Provide individual
+   bounding boxes for each distinct
+   symbol, even if they touch or overlap.
+
+2. **Systematic Scanning:** Work through
+   the target image methodically to
+   avoid missing symbols in busy areas.
+
+## Output Format
+
+Return a JSON object with detections
+using normalised coordinates (0-1000).
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin,
+                       ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" |
+                "settlement_mound" |
+                "triangulation_mound" |
+                "benchmark_mound"
+        }
+    ]
+}
+```
+
+#### 1.5.3 detect_verbose-text-image_terse.md
+
+**Purpose**: Extended text+image prompt with edge case guidance AND brief exclusion criteria.
+**Used by**: M/E = Verbose-text+image; H5 = Terse
+
+```markdown
+# Detection Prompt: Verbose Text+Image with Terse Exclusion Guidance
+
+You are an expert analyst of Soviet
+Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
+Your goal is to find symbols on the Soviet military map that **visually match** the
+provided Positive examples, representing burial
+mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
+
+## Reference Examples
+
+You are provided with labelled reference
+images demonstrating the target symbols:
+
+- **Positive examples** show mound
+  symbols to detect. These include
+  burial mounds (kurgans), settlement
+  mounds (tells), and survey markers
+  (triangulation points, benchmarks)
+  placed ON mounds.
+- **Negative examples** show areas or
+  symbols that are NOT mounds. Study
+  these to understand what to exclude.
+
+Pay close attention to the visual
+characteristics that distinguish
+positive from negative examples.
+
+## Task
+
+Scan the **Target Image** systematically
+and create bounding boxes for all instances that visually
+match the Positive reference symbols.
+
+## Detection Criteria
+
+Mound symbols on Soviet 1:50,000 maps
+share these characteristics:
+
+- **Shape:** Small circular or oval
+  forms, 2-4mm diameter at map scale
+  (~10-20 pixels in tile)
+- **Rays:** Short radiating rays
+  (hachures; spikes) extending OUTWARD,
+  indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
+- **Pattern:** The "sunburst" or
+  "ship's wheel" pattern is the
+  essential diagnostic feature
+- **Colour:** Orange-brown for plain mounds
+  (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound
+- **Grouping:** May appear individually
+  or in groups (necropoleis)
+
+## Exclusion Guidance
+
+Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+
+**DO NOT mark:**
+
+- Standalone triangulation points (black triangle, NO rays)
+- Standalone benchmarks (black square/circle, NO rays)
+- Spot heights, bridge markers, or other simple dots
 
 ## Decision Procedure
 
@@ -1028,7 +1315,7 @@ All configuration files follow this JSON schema:
         {
             "path": "string — path to example image",
             "label": "string — label shown to model",
-            "category": "string — 'canonical'/'null'/'hard_positive'/'hard_negative'"
+            "category": "string — 'canonical_positive'/'canonical_negative'/'hard_positive'/'hard_negative'/'null'"
         }
     ],
     "ordering_note": "string — optional, explains example ordering"
@@ -1289,23 +1576,23 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 
 ```json
 {
-    "version": "detect_verbose-text-image_canonical-last_terse",
-    "description": "H4-B: Canonical-last ordering at optimal M/E and H5.",
+    "version": "detect_verbose-text-image_canonical-last",
+    "description": "H4-B: Canonical-last ordering at optimal M/E. Tests recency bias.",
     "hypothesis": "H4-B",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_verbose-text-image_terse.md",
+    "instruction_file": "detect_verbose-text-image.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
@@ -1315,7 +1602,7 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last: HN (4), Canon- (2), null (3), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-last: null (3), HN (4), Canon- (2), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
 }
 ```
 
@@ -1331,34 +1618,34 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 
 ```json
 {
-    "version": "detect_verbose-text-image_random-order_terse",
-    "description": "H4-C: Random ordering at optimal M/E and H5.",
+    "version": "detect_verbose-text-image_random-order",
+    "description": "H4-C: Random ordering at optimal M/E. Tests whether example ordering matters.",
     "hypothesis": "H4-C",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_verbose-text-image_terse.md",
+    "instruction_file": "detect_verbose-text-image.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "random_seed": 42,
     "examples": [
-        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"}
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"}
     ],
-    "ordering_note": "Permutation generated with seed 42. Total: 17 examples (Scale-8). Multiple seeds tested; results averaged."
+    "ordering_note": "Permutation generated with seed 42. Total: 17 examples (Scale-8: Canon+ 4, HP 4, Canon- 2, HN 4, null 3)."
 }
 ```
 
@@ -1375,22 +1662,22 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 ```json
 {
     "version": "detect_image-only_canonical-last_verbose",
-    "description": "H4-B + H5-C: Canonical-last ordering with verbose negative guidance.",
+    "description": "H4-B + H5-C: Canonical-last ordering with verbose exclusion guidance.",
     "hypothesis": "H4-B, H5-C",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only_verbose.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
@@ -1400,7 +1687,7 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last: HN (4), Canon- (2), null (3), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-last: null (3), HN (4), Canon- (2), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
 }
 ```
 
@@ -1503,12 +1790,16 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.10*
+*Document version: 2.14*
 *Created: 2026-01-02*
-*Updated: 2026-01-12*
+*Updated: 2026-01-14*
 
 **Changelog:**
 
+- v2.14: Three-way consistency check — corrected instruction file count from "10" to "11" in Design Summary (matches preregistration.md and actual file count: 3 image-using × 3 H5 + 2 text-only = 11)
+- v2.13: Standardised exclusion guidance templates — updated Section 1.3.2 (brief-text-image_verbose) to use full 6-subsection "Exclusion Criteria (CRITICAL)" format matching actual file; updated Sections 1.3.3 (brief-text-image_terse) and 1.5.3 (verbose-text-image_terse) to use standardised 3-bullet terse template ("Rays are key..." + DO NOT mark list) matching actual files; ensured positive guidance sections are identical across H5 variants within each M/E level
+- v2.12: Instruction file content alignment — added missing terse sections (1.1.3 detect_image-only_terse.md, 1.3.3 detect_brief-text-image_terse.md, 1.5.3 detect_verbose-text-image_terse.md) with full content matching actual prompt library files; fixed verbose instruction file titles to match actual files (Section 1.1.2 "with Verbose Exclusion"/"Exclusion Guidance (Detailed)", Section 1.3.2 "with Verbose Exclusion Guidance", Section 1.5.2 "with Verbose Exclusion Guidance")
+- v2.11: Consistency fixes — updated schema category values to include all 5 types (canonical_positive, canonical_negative, hard_positive, hard_negative, null); fixed canonical-last ordering in Sections 2.7 and 2.9 to match actual configs (null first, then HN, Canon-, HP, Canon+); fixed random-order permutation in Section 2.8 to match actual seed-42 output; updated H4 example configs to use base instruction files (not _terse which doesn't exist for H4 variants)
 - v2.10: Major H5/H8/H4 redesign alignment — H5 now tests text treatment only (Minimal/Terse/Verbose) given negatives are always present; H8 expanded to 7 conditions with sequential addition contrasts (C1-C3) and scaling contrasts (S1-S3); H4 simplified to optimal M/E only (3 cells); instruction file naming changed from `_hardneg` to `_verbose`, added `_terse`, base = Minimal; H7 temperature levels now 5 (added T=0.3); all example configs updated to Scale-8 (17 examples); see h5-h8-redesign-consolidated.md for full rationale
 - v2.9: Fixed H8 library composition table — added missing Canonical condition; corrected A-D to use 1:1 HP:HN ratio (2:2, 4:4, 8:8, 16:16) with constant Canon+/Canon- (4/2); added Hard Examples column; corrected totals (13, 17, 25, 41); added key distinction note explaining H8 vs H5
 - v2.8: HP clarification and library composition tables — clarified HP (4 examples) included in ALL H5 conditions (not H9-only); added Library Composition by Condition section with H5 vs H8 tables; updated all example configs to show correct counts (H5=None: 11, H5=Images-only/Text+Images: 16); renamed category field from "canonical"/"null" to "canonical_positive"/"canonical_negative"/"hard_positive"/"hard_negative"/"null" for clarity; aligned with preregistration.md v4.4
