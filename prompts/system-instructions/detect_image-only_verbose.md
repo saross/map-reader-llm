@@ -1,8 +1,8 @@
-# Mound Detection (Image-Only)
+# Mound Detection (Image-Only with Verbose Exclusion)
 
 Scan the Target Image. Mark all symbols that look like the Positive examples.
 
-## Exclusion Guidance
+## Exclusion Guidance (Detailed)
 
 The key diagnostic feature is **radiating rays** (hachures; spikes) extending OUTWARD from a central shape.
 

@@ -1,9 +1,9 @@
 {
-    "version": "detect_verbose-text-image",
-    "description": "H1 baseline. M/E=Verbose-text+image, H5=Minimal, canonical-first ordering.",
-    "hypothesis": "H1",
+    "version": "detect_brief-text-image_terse",
+    "description": "H5-B: Terse exclusion guidance at Brief-text+image M/E level.",
+    "hypothesis": "H5-B",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_verbose-text-image.md",
+    "instruction_file": "detect_brief-text-image_terse.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [

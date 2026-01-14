@@ -1,4 +1,4 @@
-# Detection Prompt: Brief Text+Image with Exclusion Guidance
+# Detection Prompt: Brief Text+Image with Verbose Exclusion Guidance
 
 You are an expert analyst of Soviet
 Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually

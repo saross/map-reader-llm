@@ -1,0 +1,42 @@
+{
+    "version": "library_scale-16",
+    "description": "H8 Condition 6: Scale-16 library. 8 HP, 8 HN.",
+    "hypothesis": "H8-6",
+    "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 8,
+        "hard_negative": 8,
+        "null": 3
+    },
+    "total_examples": 25,
+    "hard_examples": 16,
+    "examples": [
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/hp_example_01.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_02.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_03.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_04.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/hp_example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/hn_example_01.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_02.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_03.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_04.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_05.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_06.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_07.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/hn_example_08.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
+    ],
+    "note": "Mid-range scaling (S2). Tests diminishing returns from Scale-8."
+}

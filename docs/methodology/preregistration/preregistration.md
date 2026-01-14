@@ -6,8 +6,8 @@
 
 **Affiliations**: Macquarie University, Sydney, Australia
 
-**Document version**: 4.4
-**Last updated**: 2026-01-10
+**Document version**: 4.5
+**Last updated**: 2026-01-14
 **Status**: Ready for Registration
 
 ---
@@ -531,123 +531,106 @@ All levels describe the same content categories (canonical symbols + hard positi
 
 ### H4: Example Ordering Affects Performance (Canonical Placement)
 
+**Status**: Confirmatory (Strand 2)
+
+**Research question**: Does the positioning of canonical (legend-derived) examples relative to hard (empirically-derived) examples affect detection performance?
+
 **Background**: VLMs exhibit documented recency bias where attention heads prioritise the final demonstration example. However, prototype theory suggests establishing canonical forms before presenting edge cases may improve schema formation.
 
-**Prediction**: Canonical-last ordering will produce higher F1 than canonical-first ordering.
+**Prediction**: Canonical-last ordering will produce higher F1 than canonical-first ordering. Random ordering will perform between the two.
 
 **Rationale**: Recency bias in VLM attention means final examples have outsized influence on schema formation. Placing clean prototypes (canonical examples) in the final positions should anchor the model's representation more effectively than placing them first.
 
 **Directional hypothesis**: H0: canonical-last ≤ canonical-first; H1: canonical-last > canonical-first
 
-**Test**: Compare detection performance across three ordering conditions:
+**Test**: Compare detection performance across three ordering conditions at optimal M/E level:
 
-- Condition A: Canonical-first — Legend entries in initial positions, followed by hard examples
-- Condition B: Canonical-last — Hard examples in initial positions, legend entries in final positions
-- Condition C: Random ordering (average of 3 random permutations with documented seeds)
+| Condition | Canonical Position | Hard Position | Rationale |
+| --------- | ------------------ | ------------- | --------- |
+| Canonical-first | Positions 1-6 | Final positions | Tests primacy effect |
+| Canonical-last | Final positions | Positions 1-N | Tests recency effect |
+| Random | Shuffled | Shuffled | Neutral baseline |
 
-**Partial factorial cross**: Ordering is tested at 3 M/E levels to assess M/E × O interaction:
+**Simplification rationale**: The original design tested ordering across multiple M/E levels to detect O × M/E interaction. This interaction is theoretically speculative (the hypothesis that text verbosity would moderate ordering effects lacks strong prior support). Testing at optimal M/E only:
 
-- Image-only (minimal text may increase ordering sensitivity)
-- Brief-text+image (probable operational mode)
-- Verbose-text+image (extensive text may reduce ordering sensitivity)
+- Answers the primary question (does ordering matter?)
+- Saves 6 cells ($72)
+- Avoids underpowered interaction tests
 
-**Design**: 3 orderings × 3 M/E levels = 9 total conditions. Since the main factorial uses canonical-first ordering throughout, this adds 6 new conditions (canonical-last and random orderings at each of 3 M/E levels) beyond what the factorial already tests. All H4 conditions tested at optimal H5 and T from main factorial.
+If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity testing at a contrasting M/E level can be conducted as exploratory follow-up.
 
-**Note**: Canonical-first ordering is used throughout the main factorial. This design adds canonical-last and random orderings at the 3 selected M/E levels.
+**Implementation**: Canonical examples are legend-derived symbols (Canon+ and Canon-). Hard examples are empirically-derived (HP and HN). Within the hard example block, HP and HN are interleaved randomly (documented seed). HP/HN ordering within the hard block is tested separately in exploratory H4b if H4 main effect is significant.
 
-**Mitigation trigger**: If H4 shows significant O × M/E interaction (p < 0.10), extend ordering tests to remaining 2 M/E levels (Brief-text, Verbose-text) to complete the factorial.
+**Fixed parameters**: Optimal M/E (from H1), optimal H5 (from H5), optimal library (from H8), optimal temperature (from H7).
 
 **Analysis**:
 
-- Primary: 3 × 3 ANOVA (Ordering × M/E subset)
-- Planned contrast: canonical-last vs canonical-first (one-tailed)
-- Test for O × M/E interaction
-- If no interaction: report main effect of ordering pooled across M/E levels
-- Random ordering provides baseline for comparison
+- **Primary**: One-way ANOVA across 3 ordering conditions
+- **Planned contrasts**: Canonical-first vs Canonical-last; Optimal vs Random
+- **Secondary**: Effect size estimation for ordering benefit
 
-**Implementation**: Canonical examples are legend-derived symbols (burial mound, settlement mound, triangulation on mound, benchmark on mound). Hard examples are selected via the procedure in Section 8.4.1. Within each block (canonical or hard), internal ordering is randomised with documented seed.
-
-**Advance to Stage 2 if**: Significant ordering effect or O × M/E interaction detected.
+**Advance to Stage 2 if**: Significant ordering effect detected (FDR-corrected p < 0.05).
 
 ---
 
-### H5: Hard Negative Examples Improve Precision
+### H5: Negative Text Treatment
 
-**Background**: Hard negative mining is established in few-shot learning. Two channels could improve precision: (1) explicit text instructions describing what to exclude; (2) visual counter-examples showing confusable symbols. These may operate independently or synergistically.
+**Research question**: Given that hard negatives are included in the library, what is the optimal level of text support for negative examples?
 
-**Prediction**: Including hard negative information (text and/or images) will improve precision without significantly harming recall.
+**Background**: This hypothesis tests text elaboration for the *negative* channel, complementing H1's focus on positive guidance. The question of *whether* negatives help is now answered by H8 (contrast C3: +HP → Scale-8). H5 instead examines *how* to present negative examples once their inclusion is established.
 
-**H5 Testing Structure**:
+**Relationship to H1**: H1 tests text elaboration for positive guidance (image-only → brief → verbose). H5 tests text elaboration for negative guidance (minimal → terse → verbose). After both hypotheses complete, comparing optimal positive vs negative text levels may reveal asymmetric elaboration requirements.
 
-H5 uses a staged testing approach to balance detection of M/E × H5 interactions with budget efficiency:
+**Test**: 3-level design comparing text support for negatives:
 
-1. **Strand 1 (partial cross)**: H5=None vs H5=Text+Images tested across all image-based M/E levels to detect overall H5 effect and M/E × H5 interaction
-2. **H5 Confirmatory (full 3 levels)**: All 3 H5 levels tested at optimal M/E to decompose the mechanism
+| Level | Condition | HN Images | Exclusion Text | Description |
+| ----- | --------- | --------- | -------------- | ----------- |
+| A | Minimal | Yes | "Negative" label only | Images speak for themselves |
+| B | Terse | Yes | Brief exclusion guidance | Concise "do not detect" instructions |
+| C | Verbose | Yes | Detailed exclusion guidance | Full explanation of why each is not a mound |
 
-*Note: A 4-level design (None, Text-only, Images-only, Text+Images) was considered but has been simplified to 3 levels. The "Text-only" condition (exclusion text without hard negative images) was removed as practically implausible — if hard negative examples are important enough to explain in text, they warrant visual demonstration.*
+**Exclusion text content**:
 
-**Test**: 3-level design comparing:
+- **Minimal**: No exclusion text in instruction file; examples labelled simply as "Negative" in config
+- **Terse**: 1-2 sentences: "Do not detect triangulation points, benchmarks, or similar cartographic symbols. These may appear similar but are not burial mounds."
+- **Verbose**: Full paragraph explaining each confusable symbol type and why it should not be detected
 
-| Condition | Exclusion Text | Negative Images | Library Composition |
-| --------- | -------------- | --------------- | ------------------- |
-| A (None) | No | No | Canonical positives + nulls only (pure positive baseline) |
-| B (Images-only) | No | Yes | Canonical positives + nulls + canonical negatives + hard negatives |
-| C (Text+Images) | Yes | Yes | Canonical positives + nulls + canonical negatives + hard negatives + explanatory labels |
+**Library composition for all H5 conditions**: Scale-8 (or optimal from H8)
 
-**Design note**: H5 Condition A serves as a pure-positive baseline, containing only canonical positive examples (mound types from legend) and null tiles (no mounds). This enables direct measurement of whether any form of negative guidance improves precision. Canonical negatives (legend-derived confusable symbols: standalone benchmark, standalone triangulation point) are introduced alongside empirically-derived hard negatives in Conditions B and C, as they serve the same conceptual purpose: showing the model what NOT to detect.
+| Component | Count |
+| --------- | ----- |
+| Canon+ | 4 |
+| Canon- | 2 |
+| HP | 4 |
+| HN | 4 |
+| Nulls | 3 |
+| **Total** | **17** |
 
-**Strand 1 partial cross**:
+**Note**: All H5 conditions use the same library (Scale-8, 17 examples) with negatives present. The variation is in how those negatives are described in the instruction text, not whether they are included.
 
-| M/E Level | H5=None | H5=Text+Images |
-| --------- | ------- | -------------- |
-| Image-only | ✓ | ✓ |
-| Brief+image | ✓ | ✓ |
-| Verbose+image | ✓ | ✓ |
+**Predictions**:
 
-**Note**: Text-only modalities are tested at H5=None only, since they have no example images and the Text-only H5 condition has been removed.
+1. Adding terse exclusion text will improve precision vs minimal labels
+2. Verbose exclusion text will show minimal additional benefit over terse (diminishing returns)
+3. Optimal negative text level may differ from optimal positive text level (H1)
 
-**H5 Confirmatory design**:
+**Execution parameters**:
 
-After Strand 1 identifies optimal M/E level, test all 3 H5 levels at that M/E:
-
-| H5 Level | Exclusion Text | HN Images | Image Labels |
-| -------- | -------------- | --------- | ------------ |
-| None | No | No | — |
-| Images-only | No | Yes | Minimal ("Negative") |
-| Text+Images | Yes | Yes | Detailed (with explanation) |
-
-**Library composition by H5 level**:
-
-| H5 Level | Canon+ | Canon- | HP | HN | Nulls | Total |
-| -------- | ------ | ------ | -- | -- | ----- | ----- |
-| None | 4 | 0 | 4 | 0 | 3 | 11 |
-| Images-only | 4 | 2 | 4 | 3 | 3 | 16 |
-| Text+Images | 4 | 2 | 4 | 3 | 3 | 16 |
-
-**Note on HP**: Hard positives (HP=4) are included in ALL H5 conditions. H5 tests the effect of the *negative* channel (Canon- + HN) while holding positive guidance constant. This is distinct from H8 Pure Positive Canon (HP=0), which tests performance with legend-derived positives only.
-
-**Negative example sources**:
-
-1. **Canon-** (legend-derived negatives): Standalone triangulation point, standalone benchmark — included in H5=Images-only and H5=Text+Images conditions
-2. **HN** (empirically-derived hard negatives): False positives with ≥3/5 occurrence during image-only baseline on training tiles — included in H5=Images-only and H5=Text+Images conditions
-
-**Note**: H5=None is the pure-positive baseline (no negative images of any kind). Canon- and HN are introduced together in H5=Images-only and H5=Text+Images, as they serve the same conceptual purpose of demonstrating what NOT to detect.
-
-**What H5 tests**:
-
-- Do hard negatives help when shown visually with minimal labels (B)?
-- Does adding explanatory text improve further (C vs B)?
-- Does the H5 effect vary by verbosity level (M/E × H5 interaction)?
+- **M/E level**: Optimal from H1
+- **Library composition**: Scale-8 (or optimal from H8)
+- **Temperature**: Optimal from H7 (or T=1.0 default)
+- **Ordering**: Canonical-first (default)
+- **K**: 10 independent runs per condition
 
 **Analysis**:
 
-- Primary: One-way ANOVA across 3 H5 levels on precision
-- Planned contrasts: None vs Images-only; Images-only vs Text+Images
-- Secondary: Parallel analysis on recall to confirm no significant harm
-- Tertiary: Analysis on F1 to assess net benefit
-- Strand 1: Test for M/E × H5 interaction
+- **Primary**: One-way ANOVA across 3 H5 levels on precision
+- **Planned contrasts**: Minimal vs Terse; Terse vs Verbose
+- **Secondary**: Parallel analysis on recall to confirm no significant harm
+- **Tertiary**: Analysis on F1 to assess net benefit
+- **Cross-hypothesis (H1/H5)**: Compare optimal positive text level (H1) vs optimal negative text level (H5) — if they differ, indicates asymmetric elaboration requirements
 
-**Advance to Stage 2 if**: Significant H5 effect on precision AND recall does not significantly decrease.
+**Advance to Stage 2 if**: Significant H5 effect on precision (FDR-corrected p < 0.05) AND recall does not significantly decrease.
 
 ---
 
@@ -707,45 +690,53 @@ If Phase 2 identifies factors needing adjustment:
 
 ### H7: Temperature Affects Detection Performance
 
+**Status**: Confirmatory (Strand 1)
+
 **Background**: Gemini documentation recommends T=1.0 for reasoning tasks. Preliminary testing found T<1.0 degraded performance. Higher temperatures may increase output diversity, potentially benefiting voting ensembles.
 
 **Prediction**: T=1.0 (vendor recommended) will yield optimal or near-optimal performance. Lower temperatures will degrade performance; higher temperatures may increase variance without improving mean F1.
 
-*Note: A 5-level design was considered but has been reduced to 4 levels. T=0.3 was removed pending the results of T=0.7 and T=0.0.*
-
-**Test**: Compare detection performance across 4 temperature levels:
+**Test**: Compare detection performance across 5 temperature levels:
 
 | Level | Temperature | Rationale |
 | ----- | ----------- | --------- |
 | 1 | 0.0 | Minimum (deterministic) |
-| 2 | 0.7 | Moderate variance |
-| 3 | 1.0 | Vendor default |
-| 4 | 1.3 | Above default (conservative extension) |
+| 2 | 0.3 | Low variance (evidence suggests benefit for visual detection tasks) |
+| 3 | 0.7 | Moderate variance |
+| 4 | 1.0 | Vendor default |
+| 5 | 1.3 | Above default (conservative extension) |
+
+*Note*: T=0.3 added based on evidence that low temperatures (0.2-0.3) improve accuracy for visual detection tasks in similar domains (Humphries, 2025).
 
 **Analysis**:
 
-- One-way ANOVA across 4 temperature levels
+- One-way ANOVA across 5 temperature levels
 - Planned contrasts: T=1.0 vs each other level
 - Examine temperature × voting interaction via post-hoc analysis
 
-**Temperature escalation trigger**: If T=1.3 yields higher F1 than T=1.0 (point estimate, same M/E and H5 condition), exploratory testing at T=1.6 and T=2.0 will be conducted at the optimal configuration to characterise the upper bound of the temperature-performance curve. If T=0.7 improves performance (alone or in ensembles) further testing at low temperatures will be conducted at the optimal configuration to charactherise the lower bound of the temperature-performance curve.
+**Temperature escalation trigger**: If T=1.3 yields higher F1 than T=1.0 (point estimate, same M/E and H5 condition), exploratory testing at T=1.6 and T=2.0 will be conducted at the optimal configuration to characterise the upper bound of the temperature-performance curve. If T=0.3 or T=0.7 improves performance (alone or in ensembles), further testing at low temperatures will be conducted at the optimal configuration to characterise the lower bound of the temperature-performance curve.
 
 **Advance to Stage 2 if**: Any temperature significantly outperforms T=1.0, or if escalation trigger activates and higher or low temperatures show improvement.
 
 ---
 
-### H8: Few-Shot Library Size Affects Detection Performance
+### H8: Library Composition and Scaling
 
 **Status**: Confirmatory (Strand 2)
 
-**Background**: Few-shot library size affects both the information available to the model and the token cost of each query. Preliminary exploration suggested performance improves with additional examples, but the optimal size and diminishing returns curve are unknown.
+**Background**: Few-shot library composition and size affect both the information available to the model and the token cost of each query. Preliminary exploration suggested performance improves with additional examples, but the optimal composition (which components to include) and size (how many hard examples) remain unknown.
+
+H8 now addresses two distinct questions through a unified sequential design:
+
+1. **Sequential addition**: What is the marginal value of each library component?
+2. **Size scaling**: What is the optimal total number of hard examples?
 
 **Terminology**:
 
 *Library components*:
 
 | Term | Definition |
-|------|------------|
+| ---- | ---------- |
 | Canon+ | Legend-derived positive examples (burial mound, settlement mound, trig point on mound, benchmark on mound) — always 4 |
 | Canon- | Legend-derived negative examples (standalone triangulation point, standalone benchmark) — distinguishes "marker on mound" from "marker alone" |
 | HP | Empirically-derived hard positives (false negatives from Phase 1 image-only baseline) |
@@ -753,81 +744,75 @@ If Phase 2 identifies factors needing adjustment:
 | Null | Tiles containing no burial mounds — prevents hallucination and infinite output loops — always 3 |
 | Hard Examples | HP + HN combined |
 
-*Library conditions* (tested in H8):
+**Test**: Compare detection performance across 7 library conditions:
 
-| Condition | Composition | Total |
-|-----------|-------------|-------|
-| Pure Positive Canon | Canon+ only (no hard examples) | 7 (4 + 3 nulls) |
-| Canonical | Canon+ and Canon- | 9 (4 + 2 + 3 nulls) |
-| A–D | Canon+ + Canon- + increasing HP + HN | 13, 17, 25, 41 |
+| ID | Condition | Canon+ | Canon- | HP | HN | Nulls | Total | Hard | Primary Purpose |
+| -- | --------- | ------ | ------ | -- | -- | ----- | ----- | ---- | --------------- |
+| 1 | Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | **7** | 0 | Minimal baseline |
+| 2 | Canonical | 4 | 2 | 0 | 0 | 3 | **9** | 0 | +Canon- effect |
+| 3 | +HP | 4 | 2 | 4 | 0 | 3 | **13** | 4 | +HP effect |
+| 4 | Scale-4 | 4 | 2 | 2 | 2 | 3 | **13** | 4 | 1:1 floor |
+| 5 | Scale-8 | 4 | 2 | 4 | 4 | 3 | **17** | 8 | +HN effect / scaling baseline |
+| 6 | Scale-16 | 4 | 2 | 8 | 8 | 3 | **25** | 16 | Scaling mid |
+| 7 | Scale-32* | 4 | 2 | 16 | 16 | 3 | **41** | 32 | Scaling ceiling |
+
+*Or available maximum maintaining 1:1 HP:HN ratio. If fewer than 16 distinct HP or HN are available from training set mining, Scale-32 is capped at the maximum available while preserving 1:1 ratio.
+
+**Planned contrasts**:
+
+*Sequential addition contrasts* (tests component value):
+
+| Contrast | Comparison | What It Tests | Controlled Variables |
+| -------- | ---------- | ------------- | -------------------- |
+| C1 | Pure Positive Canon → Canonical | Does Canon- help? | Canon+ constant (4), HP=0, HN=0 |
+| C2 | Canonical → +HP | Do HP help? | Canon+/- constant, HN=0 |
+| C3 | +HP → Scale-8 | Do HN help? | Canon+/- constant, HP constant (4) |
+
+*Scaling contrasts* (tests diminishing returns):
+
+| Contrast | Comparison | Hard Examples | What It Tests |
+| -------- | ---------- | ------------- | ------------- |
+| S1 | Scale-4 → Scale-8 | 4 → 8 | Initial scaling value |
+| S2 | Scale-8 → Scale-16 | 8 → 16 | Mid-range scaling |
+| S3 | Scale-16 → Scale-32 | 16 → 32 | Ceiling/diminishing returns |
+
+*Bonus contrast* (composition vs size):
+
+| Contrast | Comparison | What It Tests |
+| -------- | ---------- | ------------- |
+| B1 | +HP vs Scale-4 | At matched total (13 examples): is 4+0 or 2+2 better? |
 
 **Predictions**:
 
-1. F1 will increase from Pure Positive Canon (7 examples) to Canonical (9 examples) — legend-derived negatives help distinguish similar symbols
-2. F1 will increase from Canonical to Library A (9 → 13) — empirical hard examples help
-3. F1 will increase from A to B (13 → 17), with moderate marginal gain
-4. F1 will increase from B to C (17 → 25), with smaller marginal gain
-5. F1 increase from C to D (25 → 41) will show minimal or no improvement (diminishing returns plateau)
-
-**Test**: Compare detection performance across 6 library conditions:
-
-| Condition | Canon+ | Canon- | HP | HN | Nulls | Total | Hard Examples |
-|-----------|--------|--------|-----|--------|-------|-------|---------------|
-| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 | 0 |
-| Canonical | 4      | 2      | 0   | 0      | 3     | 9     | 0             |
-| A         | 4      | 2      | 2   | 2      | 3     | 13    | 4             |
-| B         | 4      | 2      | 4   | 4      | 3     | 17    | 8             |
-| C         | 4      | 2      | 8   | 8      | 3     | 25    | 16            |
-| D         | 4      | 2      | 16  | 16     | 3     | 41    | 32            |
+1. F1 will increase from Pure Positive Canon → Canonical (Canon- helps distinguish confusable symbols)
+2. F1 will increase from Canonical → +HP (hard positives improve recall)
+3. F1 will increase from +HP → Scale-8 (hard negatives improve precision)
+4. F1 will increase from Scale-4 → Scale-8, with moderate marginal gain
+5. F1 will increase from Scale-8 → Scale-16, with smaller marginal gain
+6. F1 increase from Scale-16 → Scale-32 will show minimal or no improvement (diminishing returns)
 
 **Baselines**:
 
-- **Pure Positive Canon**: Legend-derived positives only, no hard examples — tests whether VLM can detect mounds with only canonical positive guidance (most minimal baseline)
+- **Pure Positive Canon**: Legend-derived positives only, no negatives of any kind — tests whether VLM can detect mounds with only canonical positive guidance (most minimal baseline)
 - **Canonical**: Adds legend-derived negatives (Canon-) — tests whether distinguishing similar symbols helps
 
-**H5 constraint**: Pure Positive Canon runs at H5=None (no negatives of any kind). Canonical and Conditions A-D run at H5=Images-only (or optimal H5 from Strand 1 if different), since these conditions include negatives which require H5≠None.
+**Ratio**: Scaling conditions (Scale-4 through Scale-32) use 1:1 HP:HN ratio. This avoids majority label bias and is the most defensible default given limited guidance in the literature. Ratio exploration is addressed in H12 (exploratory).
 
-**Ratio**: Conditions A-D use 1:1 HP:HN ratio. This avoids majority label bias and is the most defensible default given limited guidance in the literature. Ratio exploration is addressed in H12 (exploratory).
+**Availability constraint**: The training set contains 36 mounds across 20 tiles. Hard examples are drawn from failures across K=10 baseline runs (a mound missed in any run is a candidate HP; any false detection is a candidate HN). If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available, maintaining 1:1 ratio. This constraint motivates H10 (training pool size): a larger calibration corpus may yield more hard examples, enabling fuller exploration of the diminishing returns curve.
 
-**Availability constraint**: The training set contains 36 mounds across 20 tiles. Hard examples are drawn from failures across K=10 baseline runs (a mound missed in any run is a candidate HP; any false detection is a candidate HN). If fewer than 16 distinct HPs or HNs are available, Library D (and possibly C) will be capped at the maximum available, maintaining 1:1 ratio. This constraint motivates H10 (training pool size): a larger calibration corpus may yield more hard examples, enabling fuller exploration of the diminishing returns curve.
-
-**Progression**: Enables three key contrasts:
-
-- Pure Positive Canon → Canonical: Do legend-derived negatives (Canon-) help?
-- Canonical → A: Do empirical hard examples (HP + HN) help?
-- A → B → C → D: Diminishing returns curve (4 → 8 → 16 → 32 hard examples)
-
-**Fixed parameters**: Optimal verbosity (from Strand 1), optimal H5 from Strand 1, optimal temperature.
-
-**Confound note**: Because H5=None excludes all negatives, Pure Positive Canon → Canonical inherently confounds adding Canon- with changing H5 level. This confound is unavoidable under the pure-positive design and is acceptable: testing "do canonical negatives help?" necessarily involves introducing negatives. The Canonical → A contrast is cleaner, testing only the addition of empirical hard examples at consistent H5 level.
-
-Interpretation:
-
-- Pure Positive Canon → Canonical: Tests combined effect of (1) adding Canon- and (2) changing from H5=None to H5=Images-only
-- Canonical → A → B → C → D: Tests library size scaling at consistent H5 level (primary value of Strand 2)
-
-**Adjustment option**: If the confound complicates interpretation, Strand 1 data can be used to estimate and adjust for the H5 effect. Specifically:
-
-1. From Strand 1, estimate the H5 effect size (F1 difference between H5=None and H5=Optimal) at a comparable library composition
-2. Subtract this estimated H5 effect from the observed Canonical → A difference
-3. The residual approximates the "pure" effect of adding empirical hard examples
-
-This adjustment is imperfect (library compositions differ slightly), but provides inferential leverage if needed. Document any such adjustment as post-hoc sensitivity analysis.
+**Fixed parameters**: Optimal verbosity (from H1), optimal temperature (from H7).
 
 **Analysis**:
 
-- Primary: One-way ANOVA across 6 library conditions
-- Planned contrasts:
-  - Pure Positive Canon vs Canonical (legend negatives help?)
-  - Canonical vs A (empirical hard examples help?)
-  - A vs B, B vs C, C vs D (diminishing returns)
-- Secondary: Characterise diminishing returns curve (F1 vs total example count)
-- Tertiary: Cost-efficiency analysis (F1 per input token)
+- **Primary**: One-way ANOVA across 7 library conditions
+- **Planned contrasts**: As specified above (sequential addition + scaling)
+- **Secondary**: Characterise diminishing returns curve (F1 vs hard example count)
+- **Tertiary**: Cost-efficiency analysis (F1 improvement per input token)
 
 **Advance to Stage 2 if**:
 
-- Significant main effect of library size (FDR-corrected p < 0.05), OR
-- Significant deviation from expected diminishing returns pattern (e.g., D substantially outperforms C)
+- Significant main effect of library composition (FDR-corrected p < 0.05), OR
+- Significant deviation from expected diminishing returns pattern
 
 ---
 
@@ -1090,6 +1075,60 @@ These mechanisms may operate independently, redundantly, or synergistically.
 
 ---
 
+### Tier C: Triggered Exploratory
+
+*Tests that are conducted only if specific triggering conditions are met. These are exploratory (not confirmatory) but have pre-specified triggers to reduce HARKing risk.*
+
+### H4b: HP/HN Ordering Within Hard Block
+
+**Status**: Triggered Exploratory
+
+**Trigger**: H4 main effect is significant (FDR-corrected p < 0.05)
+
+**Research question**: Given that ordering matters, does the position of HP relative to HN within the hard example block affect performance?
+
+**Background**: If canonical placement matters (H4), the internal structure of the hard block may also matter. HP and HN may have different optimal positions based on their function (recall vs precision).
+
+**Test**: At optimal canonical placement from H4, compare:
+
+| Condition | HP Position | HN Position |
+| --------- | ----------- | ----------- |
+| HP-first | Before HN | After HP |
+| HN-first | After HN | Before HP |
+
+**Cells**: 2
+
+**Analysis**: Paired comparison; report effect size and direction.
+
+**Interpretation**: If significant, indicates that not just canonical vs hard placement matters, but also the internal ordering of hard example types.
+
+---
+
+### HN-Only Condition
+
+**Status**: Triggered Exploratory
+
+**Trigger**: Example-level regression (Section 8.4.5) shows |β_hardneg| > 2×|β_hardpos| AND both coefficients significant (p < 0.05)
+
+**Research question**: If HN are disproportionately valuable, can we achieve good performance with Canon + HN only (no HP)?
+
+**Background**: If hard negatives contribute substantially more to performance than hard positives, a simpler library without HP may achieve comparable results at lower token cost.
+
+**Test**: Compare matched-size libraries with different compositions:
+
+| Condition | Canon+ | Canon- | HP | HN | Nulls | Total |
+| --------- | ------ | ------ | -- | -- | ----- | ----- |
+| HN-only | 4 | 2 | 0 | 4 | 3 | **13** |
+| +HP (from H8) | 4 | 2 | 4 | 0 | 3 | **13** |
+
+**Cells**: 1 (HN-only; +HP already tested in H8)
+
+**Analysis**: Direct comparison; assess whether HP can be omitted without performance loss.
+
+**Interpretation**: If HN-only matches or exceeds +HP, suggests HP may be redundant when HN are present. Cost implications for deployment.
+
+---
+
 ## 7. Summary Table
 
 ### 7.1 Confirmatory Hypotheses (H1-H8)
@@ -1100,10 +1139,10 @@ These mechanisms may operate independently, redundantly, or synergistically.
 | H2 (two-stage) | Neither architecture improves over single-stage | Compare F1 | Either direction shows ≥0.05 F1 improvement |
 | H3 (consensus voting) | Voting improves over single-pass | One-tailed | Significant improvement |
 | H4 (example ordering) | Canonical-last > canonical-first | One-tailed | Significant ordering effect |
-| H5 (hard negatives) | Precision ↑, recall stable | One-way ANOVA (3 levels) | Precision up, recall stable |
+| H5 (negative text) | Terse helps, verbose diminishing returns | One-way ANOVA (3 levels) | Significant text treatment effect, recall stable |
 | H6 (Flash→Pro transfer) | Effects replicate on Pro | OFAT sensitivity | Transfer confirmed |
-| H7 (temperature) | T=1.0 optimal | One-way ANOVA (4 levels) | Any temperature outperforms 1.0 |
-| H8 (library size) | Diminishing returns | One-way ANOVA (6 levels) | Optimal library size identified |
+| H7 (temperature) | T=1.0 optimal | One-way ANOVA (5 levels) | Any temperature outperforms 1.0 |
+| H8 (library composition) | Sequential addition + diminishing returns | One-way ANOVA (7 levels) + contrasts | Significant composition effect identified |
 
 ### 7.2 Exploratory Hypotheses (H9-H15)
 
@@ -1116,6 +1155,26 @@ These mechanisms may operate independently, redundantly, or synergistically.
 | H13 (overlap/stride) | B | Does increased overlap improve edge detection? | F1 vs overlap, cost analysis |
 | H14 (cross-model) | C | Do effects generalise across providers? | Deferred to future work |
 | H15 (cross-model voting) | C | Does cross-model voting outperform within-model? | Deferred to future work |
+
+### 7.3 Triggered Exploratory Hypotheses
+
+| Hypothesis | Trigger | Question | Cells |
+| :--------- | :------ | :------- | :---- |
+| H4b (HP/HN ordering) | H4 significant (p < 0.05) | Does HP vs HN position within hard block matter? | 2 |
+| HN-only condition | β_hardneg > 2×β_hardpos | Can we omit HP if HN are disproportionately valuable? | 1 |
+| M/E sensitivity at H8-optimal | H8 optimal ≠ Scale-8 by ≥2 levels | Does M/E ranking hold at different library size? | 3 |
+
+**M/E Sensitivity at H8-Optimal Library (Triggered Exploratory)**
+
+**Trigger**: H8 optimal library differs from Scale-8 by ≥2 levels (e.g., Scale-4 or Scale-16+)
+
+**Rationale**: The H1 M/E comparison is conducted at Scale-8 (the H8 baseline). If H8 reveals that a substantially different library size is optimal, the M/E ranking established at Scale-8 may not generalise. This triggered exploratory tests whether the M/E effect is robust to library composition.
+
+**Conditions tested (3 cells)**:
+
+1. H1-optimal M/E at H8-optimal library
+2. One adjacent M/E alternative at H8-optimal library
+3. Image-only at H8-optimal library (if not already covered by condition 1 or 2)
 
 ---
 
@@ -1318,7 +1377,7 @@ All 5 prompt variants maintain identical structure (same sections, same order, s
 
 The following parameters are specified at runtime, not in config files:
 
-- **Temperature**: T ∈ {0.0, 0.7, 1.0, 1.3} as per factorial design (Section 8.4.7)
+- **Temperature**: T ∈ {0.0, 0.3, 0.7, 1.0, 1.3} (5 levels)
 - **Model**: Flash vs Pro specified via command-line argument
 - **Number of passes (N)**: For voting experiments
 
@@ -1385,13 +1444,13 @@ Word count: ~500-700 words.
 
 **Brief vs Verbose distinction**: Both include the same content categories (canonical symbols + HP edge cases). The difference is detail level, not content coverage.
 
-**Note on exclusion guidance**: Exclusion guidance for hard negatives (FPs) is NOT included in either brief or verbose text. Instead, it is controlled by the H5 factor via `_hardneg.md` instruction variants:
+**Note on exclusion guidance**: Exclusion guidance for hard negatives (FPs) is NOT included in either brief or verbose text for H1. Instead, it is controlled by the H5 factor via separate instruction variants:
 
-- H5=None: No exclusion text
-- H5=Images-only: Hard negative images with minimal labels
-- H5=Text+Images: Hard negative images with explanatory exclusion text
+- H5=Minimal: Hard negative images with "Negative" label only (no exclusion text)
+- H5=Terse: Hard negative images with brief exclusion guidance (1-2 sentences)
+- H5=Verbose: Hard negative images with detailed exclusion explanations
 
-This separation ensures H1 (M/E level) and H5 (hard negative guidance) remain orthogonal factors.
+This separation ensures H1 (M/E level, positive guidance) and H5 (negative text treatment) remain orthogonal factors.
 
 **Text-modality consistency**: Identical text is used across modalities (text-only brief = text+image brief; text-only verbose = text+image verbose). Text-only conditions receive the same guidance; they just lack visual examples to anchor it.
 
@@ -1411,7 +1470,7 @@ The library comprises five example categories:
 | Empirical hard negative | HN | FP mining | Prevent common false positives | Top M by frequency (target M=3) |
 | Null tile | — | Training set | Establish "no mounds" baseline | Stratified sample (n=3) |
 
-**Category ratios**: The baseline library uses 4:2:K:M:3 (Canon+:Canon-:HP:HN:null). For H5 conditions without negatives (H5=None), the ratio becomes 4:0:K:0:3 (HP present, no negatives). Only H8 Pure Positive Canon omits both Canon- and HP.
+**Category ratios**: The baseline library (Scale-8) uses 4:2:4:4:3 (Canon+:Canon-:HP:HN:null = 17 examples). All H5 conditions use the same library; H5 varies only the text treatment for negatives, not their presence. Only H8 Pure Positive Canon and Canonical conditions test reduced libraries.
 
 **Library size variations**: Total library size varies by condition:
 
@@ -1466,17 +1525,17 @@ For conditions requiring varied examples across passes (H9 Conditions C and E), 
 - **Canonical positives** — clear, unambiguous mound examples from map legend
 - **Null tiles** — tiles with no mounds (baseline/control)
 
-**Negative examples (present only in H5 conditions that include negative guidance):**
+**Negative examples (present in all H5 conditions — H5 varies text treatment, not presence):**
 
-- **Canonical negatives** — legend-derived non-mound examples (standalone benchmark, standalone triangulation point); included in H5=Images-only and H5=Text+Images conditions
-- **Hard negatives** — non-mounds the model often misclassifies as mounds (from FP analysis); included in H5=Images-only and H5=Text+Images conditions
+- **Canonical negatives** — legend-derived non-mound examples (standalone benchmark, standalone triangulation point)
+- **Hard negatives** — non-mounds the model often misclassifies as mounds (from FP analysis)
 
 **Variable elements (subject to H9 diversity sampling):**
 
 - **Hard positives** — mounds the model struggles with (from FN analysis)
-- **Hard negatives** — when present per H5 condition (see above)
+- **Hard negatives** — subject to sampling for diversity across passes
 
-**Note**: H5 Condition A (None) serves as a pure-positive baseline, containing only canonical positive examples and null tiles. This enables direct measurement of whether any form of negative guidance (text or visual) improves precision. Canonical negatives are introduced alongside hard negatives in H5 Conditions B and C (Images-only and Text+Images), as they serve the same conceptual purpose: showing the model what NOT to detect.
+**Note**: All H5 conditions (Minimal, Terse, Verbose) include the same negative examples. The H5 factor varies only the text treatment: Minimal uses "Negative" labels only, Terse adds brief exclusion guidance, Verbose provides detailed explanations. The question of whether negatives help at all is answered by H8 contrast C3 (+HP → Scale-8), not by H5.
 
 **Sampling constraints (apply to variable elements only):**
 
@@ -1494,16 +1553,15 @@ For conditions requiring varied examples across passes (H9 Conditions C and E), 
 
 **Sampling procedure:**
 
-1. Include fixed elements in every pass (canonical positives, null tiles)
-2. For H5 conditions B and C (Images-only, Text+Images), include canonical negatives in every pass
-3. Initialise hard example frequency counters to zero
-4. For each pass p in 1..N:
-   a. Sample from hard example pool: ≥1 hard positive, ≥1 hard negative (if H5 condition includes them)
+1. Include fixed elements in every pass (canonical positives, canonical negatives, null tiles)
+2. Initialise hard example frequency counters to zero
+3. For each pass p in 1..N:
+   a. Sample from hard example pool: ≥1 hard positive, ≥1 hard negative
    b. Fill remaining hard example slots by sampling from eligible examples (those below frequency cap)
    c. If insufficient eligible examples, relax cap for lowest-frequency examples
    d. Increment frequency counters for selected hard examples
    e. Record exact example assignment for pass p
-5. Document random seed used for reproducibility
+4. Document random seed used for reproducibility
 
 #### 8.4.5 Example-Level Effectiveness Analysis
 
@@ -1572,7 +1630,7 @@ The following table summarises how library-related hypotheses interact and which
 | :--------- | :---------- | :------------- | :----------- | :----- |
 | H3 (voting) | N, T (vote threshold) | Library composition, ordering | Baseline | 5, 10, 30 |
 | H4 (ordering) | Example order within pass | Library composition, which examples | Baseline | 5 |
-| H5 (hard negatives) | Presence/absence of negative category (canonical + hard) | Canonical positives, null | Varies by condition | 5 |
+| H5 (negative text) | Text treatment for negatives | Library composition (negatives always present) | Varies by level | 5 |
 | H9 (diversity) | Which hard examples per pass; prompt text; temperature | Canonical positives + null (always present) | Baseline | 5 |
 
 **Interaction constraints:**
@@ -1580,16 +1638,18 @@ The following table summarises how library-related hypotheses interact and which
 | Interaction | Resolution |
 | :---------- | :--------- |
 | H4 × H9 | H4 ordering applies to the examples selected for each pass; in H9 "Varied" conditions, ordering is applied after sampling |
-| H4 × H5 | H5=None uses ordering over pure-positive library (canonical positives + hard positives + null only); H5=Images-only and H5=Text+Images include canonical and hard negatives |
-| H9 × H5 | H9 image diversity varies hard positives and hard negatives (when present); H5=None has no negatives to vary (pure-positive baseline) |
+| H4 × H5 | H5 text treatment applies to the same library; ordering operates on fixed example set |
+| H9 × H5 | H9 image diversity varies hard positives and hard negatives; all H5 levels include negatives |
 | H3 × H9 | H3 vote threshold optimisation uses H9 Condition A (fixed library) as baseline; diversity effects tested at fixed N=5 |
 
 **Execution order:**
 
-1. **H5 first**: Determines whether negatives are included (canonical + hard negatives; establishes library composition)
-2. **H4 second**: Tests ordering effects on the established library
-3. **H9 third**: Tests diversity effects (requires H4 baseline for comparison)
-4. **H3 throughout**: Vote threshold grid search runs in parallel across conditions
+1. **H1 first**: Determines optimal M/E level
+2. **H7 second**: Determines optimal temperature
+3. **H8 third**: Determines optimal library composition
+4. **H5 fourth**: Tests text treatment for negatives at optimal library
+5. **H4 fifth**: Tests ordering effects at optimal M/E, T, library, and H5
+6. **H3 throughout**: Vote threshold grid search runs in parallel across conditions
 
 **Cross-hypothesis analysis:**
 
@@ -1599,124 +1659,154 @@ After individual hypothesis tests, exploratory analyses will examine:
 - Whether ordering effects (H4) interact with diversity (H9)
 - Whether example-level effects (Section 8.4.4) explain hypothesis-level results
 
-#### 8.4.7 Stranded Factorial Design
+#### 8.4.7 Sequential Hypothesis Design
 
-**Rationale**: The factorial cleanly separates text elaboration (how much detail) from library content (how many hard examples). This is achieved via a stranded design:
+**Rationale**: The redesigned study uses a sequential OFAT (One-Factor-At-a-Time) approach where each hypothesis identifies an optimal level that is then used as the fixed parameter for subsequent hypotheses. This approach:
 
-- **Strand 1**: M/E × partial H5 cross — tests H1, H5, H7
-- **H5 Confirmatory**: Full 3-level decomposition at optimal M/E — decomposes H5 mechanism
-- **Strand 2**: Library size (H8) — tests diminishing returns of hard examples
-- **Strand 3**: Interaction check (conditional) — tests M/E × library interaction
+- Reduces budget substantially compared to full factorial designs
+- Ensures each hypothesis runs at truly optimal parameters
+- Enables clean separation of research questions (e.g., H5 tests text treatment, H8 tests composition)
 
-*Note: Text-only modalities are tested at T=1.0 only to reduce costs, as any production system will include images.*
+**Dependency structure:**
+
+```text
+H1 (M/E: 5 cells)
+    ↓ optimal M/E
+    ├── H7 (Temperature: 5 cells)
+    │       ↓ optimal T
+    │       └── H8 (Composition + Scaling: 7 cells)
+    │               ├── ↓ optimal composition
+    │               │   └── H5 (Negative Text: 3 cells)
+    │               │           ↓ optimal text treatment
+    │               │           └── H4 (Ordering: 3 cells)
+    │               │                   ↓ if significant
+    │               │                   └── [H4b: HP/HN Order: 2 cells] (exploratory)
+    │               │
+    │               └── ↓ if optimal ≠ Scale-8 by ≥2 levels
+    │                   └── [M/E sensitivity: 3 cells] (exploratory)
+    │
+    └── [Cross-comparison: H1 optimal vs H5 optimal text]
+
+H8 example-level analysis
+    ↓ if β_hardneg >> β_hardpos
+    └── [HN-only: 1 cell] (exploratory)
+```
 
 **Core experimental factors:**
 
 | Factor | Symbol | Levels | Description |
 | :----- | :----- | :----- | :---------- |
 | Modality/Elaboration | M/E | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |
-| Hard negatives | H5 | 3 | None, Images-only, Text+Images |
-| Temperature | T | 4 | 0.0, 0.7, 1.0, 1.3 |
-| Library size | L | 6 | Pure Positive Canon (7), Canonical (9), A (13), B (17), C (25), D (41) |
+| Negative Text Treatment | H5 | 3 | Minimal, Terse, Verbose |
+| Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |
+| Library Composition | L | 7 | Pure Positive Canon (7), Canonical (9), +HP (13), Scale-4 (13), Scale-8 (17), Scale-16 (25), Scale-32 (41) |
+| Ordering | O | 3 | Canonical-first, Canonical-last, Random |
 
-**Strand 1: M/E × Partial H5 Cross**
+**Phase 1: M/E + Temperature (H1, H7)**
 
-Test M/E and H5 with temperature, but only test H5 extremes (None vs Text+Images) to detect interaction without full cross:
+Test M/E and Temperature to establish baseline optimal parameters.
 
-*Image-using modalities (3 levels):*
+*H1: Modality/Elaboration*
 
-| M/E Level | H5=None | H5=Text+Images |
-| --------- | ------- | -------------- |
-| Image-only | ✓ (4T) | ✓ (4T) |
-| Brief+image | ✓ (4T) | ✓ (4T) |
-| Verbose+image | ✓ (4T) | ✓ (4T) |
+| M/E Level | Description | Cells |
+| --------- | ----------- | ----- |
+| Image-only | No text guidance | 1 |
+| Brief-text+image | Concise text + images | 1 |
+| Verbose-text+image | Detailed text + images | 1 |
+| Brief-text-only | Text-only (no images) | 1 |
+| Verbose-text-only | Detailed text (no images) | 1 |
 
-*Text-only modalities (2 levels):*
+**H1 totals**: 5 cells (tested at T=1.0, Scale-8 library, canonical-first ordering)
 
-| M/E Level | H5=None |
-| --------- | ------- |
-| Brief-text | ✓ (T=1.0 only) |
-| Verbose-text | ✓ (T=1.0 only) |
+*H7: Temperature*
 
-**Note**: Text-only modalities are tested at H5=None only (no example images) and T=1.0 only (budget efficiency).
+| Level | Temperature | Cells |
+| ----- | ----------- | ----- |
+| 1 | 0.0 | 1 |
+| 2 | 0.3 | 1 |
+| 3 | 0.7 | 1 |
+| 4 | 1.0 | 1 |
+| 5 | 1.3 | 1 |
 
-**Strand 1 totals:**
+**H7 totals**: 5 cells (tested at optimal M/E from H1, Scale-8 library)
 
-| Component | Cells |
-| --------- | ----- |
-| Image M/E (3) × H5 (2) × T (4) | 24 |
-| Text M/E (2) × H5=None × T=1.0 | 2 |
-| **Total** | **26** |
+**Phase 2: Library Composition (H8)**
 
-**API calls**: 26 × K=10 × 60 tiles = **15,600 calls** (~$23)
+Test library composition at optimal M/E and T from Phase 1.
 
-**H5 Confirmatory: Full 3-Level Decomposition**
+| ID | Condition | Canon+ | Canon- | HP | HN | Nulls | Total |
+| -- | --------- | ------ | ------ | -- | -- | ----- | ----- |
+| 1 | Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 |
+| 2 | Canonical | 4 | 2 | 0 | 0 | 3 | 9 |
+| 3 | +HP | 4 | 2 | 4 | 0 | 3 | 13 |
+| 4 | Scale-4 | 4 | 2 | 2 | 2 | 3 | 13 |
+| 5 | Scale-8 | 4 | 2 | 4 | 4 | 3 | 17 |
+| 6 | Scale-16 | 4 | 2 | 8 | 8 | 3 | 25 |
+| 7 | Scale-32 | 4 | 2 | 16 | 16 | 3 | 41 |
 
-After Strand 1 identifies optimal M/E level, test all 3 H5 levels at that M/E to decompose the mechanism:
+**H8 totals**: 7 cells
 
-| H5 Level | Exclusion Text | HN Images | Image Labels |
-| -------- | -------------- | --------- | ------------ |
-| None | No | No | — |
-| Images-only | No | Yes | Minimal ("Negative") |
-| Text+Images | Yes | Yes | Detailed (with explanation) |
+**Key contrasts:**
 
-**H5 Confirmatory totals:**
+- Sequential addition: C1 (Canon-), C2 (HP), C3 (HN)
+- Scaling: S1 (4→8), S2 (8→16), S3 (16→32)
+- Bonus: B1 (+HP vs Scale-4)
 
-- 1 M/E × 3 H5 × 4 T = **12 cells** (but 8 already run in Strand 1)
-- New cells: 1 M/E × 1 H5 (Images-only) × 4 T = **4 cells**
-- **API calls**: 4 × K=10 × 60 tiles = **2,400 calls** (~$4)
+**Phase 3: Negative Text Treatment (H5)**
 
-**Strand 2: Library Size (H8)**
+Test text elaboration for negatives at optimal M/E, T, and library composition.
 
-Test 6 library conditions at optimal M/E and H5 from Strand 1:
+| H5 Level | Exclusion Text | Description |
+| -------- | -------------- | ----------- |
+| Minimal | "Negative" label only | Images speak for themselves |
+| Terse | Brief guidance | 1-2 sentences: "Do not detect triangulation points..." |
+| Verbose | Detailed guidance | Full explanation of why each is not a mound |
 
-| Condition | Canon+ | Canon- | HP | HN | Nulls | Total |
-| --------- | ------ | ------ | -- | ------ | ----- | ----- |
-| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 |
-| Canonical | 4 | 2 | 0 | 0 | 3 | 9 |
-| A | 4 | 2 | 2 | 2 | 3 | 13 |
-| B | 4 | 2 | 4 | 4 | 3 | 17 |
-| C | 4 | 2 | 8 | 8 | 3 | 25 |
-| D | 4 | 2 | 16 | 16 | 3 | 41 |
+**H5 totals**: 3 cells
 
-**H5 Constraint**: Pure Positive Canon runs at H5=None (no negatives). Canonical and Conditions A-D run at H5=Images-only (or optimal H5 from Strand 1 if different). This means comparing Pure Positive Canon vs Canonical inherently confounds H5 level with Canon- presence — this is unavoidable since Canon- cannot exist at H5=None by design.
+**Note**: H5 tests text treatment for negatives, not whether negatives help (answered by H8 contrast C3).
 
-**Design note**: The Pure Positive Canon → Canonical comparison tests whether adding legend-derived negative examples helps. Because H5=None excludes all negatives, this comparison necessarily involves changing H5 level. This confound is acknowledged but acceptable: the question "do canonical negatives help?" cannot be isolated from the H5 factor under the pure-positive design. Strand 2's primary value is the A-D library size scaling analysis, which runs at consistent H5 level.
+**Phase 4: Example Ordering (H4)**
 
-**Strand 2 totals:**
+Test ordering at optimal M/E, T, library, and H5.
 
-- 6 conditions × 4 T = **24 cells**
-- **API calls**: 24 × K=10 × 60 tiles = **14,400 calls** (~$22)
+| Condition | Canonical Position | Hard Position |
+| --------- | ------------------ | ------------- |
+| Canonical-first | Positions 1-6 | Final positions |
+| Canonical-last | Final positions | Positions 1-N |
+| Random | Shuffled | Shuffled |
 
-**Strand 3: Interaction Check (Conditional)**
+**H4 totals**: 3 cells (at optimal M/E only)
 
-If Strand 1 AND Strand 2 show significant effects, check whether optimal M/E depends on library size by testing a second M/E level across library conditions.
+**Triggered exploratory (if H4 significant)**: H4b tests HP-first vs HN-first within hard block (+2 cells)
 
-**Trigger**: Run if BOTH:
+**Total sequential design:**
 
-1. Strand 1 shows significant M/E effect (p < 0.05), AND
-2. Strand 2 shows significant library size effect (p < 0.05)
+| Component | Cells | Calls | Cost (~$3/cell) |
+| --------- | ----- | ----- | --------------- |
+| H1 (M/E) | 5 | 3,000 | ~$11 |
+| H7 (Temperature) | 5 | 3,000 | ~$11 |
+| H8 (Composition) | 7 | 4,200 | ~$21 |
+| H5 (Negative Text) | 3 | 1,800 | ~$8 |
+| H4 (Ordering) | 3 | 1,800 | ~$8 |
+| **Confirmatory total** | **23** | **13,800** | **~$59** |
+| H4b (triggered) | 2 | 1,200 | ~$5 |
+| HN-only (triggered) | 1 | 600 | ~$3 |
+| M/E sensitivity (triggered) | 3 | 1,800 | ~$8 |
+| **Maximum total** | **29** | **17,400** | **~$76** |
 
-**Strand 3 totals:**
+*Note: Cell count reduced from v4.4 (54 cells) to v4.5 (23 cells) due to sequential design, removal of partial factorial crosses, and H4 simplification. Cost similar (~$60 → ~$59) as design retains adequate power.*
 
-- 1 additional M/E × 6 conditions × 4 T = **24 cells** (but ~8 already run in Strand 1)
-- **API calls**: ~8 × K=10 × 60 tiles = **4,800 calls** (~$7)
+**Parallelisation options:**
 
-**Total stranded design:**
+To reduce timeline, some hypotheses can run in parallel with acknowledged risk:
 
-| Component | Cells | Calls | Cost |
-| --------- | ----- | ----- | ---- |
-| Strand 1 (M/E × partial H5) | 26 | 15,600 | ~$23 |
-| H5 Confirmatory (Images-only level) | 4 | 2,400 | ~$4 |
-| Strand 2 (Library size) | 24 | 14,400 | ~$22 |
-| **Base total** | **54** | **32,400** | **~$49** |
-| Strand 3 (conditional) | 8 | 4,800 | ~$7 |
-| H5 Expansion (2nd M/E, if triggered) | 4 | 2,400 | ~$4 |
-| **Maximum total** | **66** | **39,600** | **~$60** |
+- **H8 at default M/E**: If confident image+verbose will be optimal, H8 can start before H1 completes
+- **H5 at Scale-8**: If confident Scale-8 is near-optimal, H5 can start before H8 completes
 
-*Note: Budget reduced from v3.x (~$90 base) due to simplifications: H5 reduced from 4 to 3 levels, temperature reduced from 5 to 4 levels, text-only modalities tested at T=1.0 only.*
+However, strictly sequential execution ensures each hypothesis runs at truly optimal parameters.
 
-**Note on ordering (H4)**: Example ordering is tested as a partial cross (see H4), not in the main strands. All strand conditions use canonical-first ordering. The H4 partial cross adds canonical-last and random ordering at 3 selected M/E levels.
+**Note on ordering (H4)**: Example ordering is tested at optimal M/E level only (see H4). All other conditions use canonical-first ordering. The H4 test adds canonical-last and random orderings at the single optimal M/E level.
 
 **Text-image ordering constraint:**
 
@@ -1857,10 +1947,10 @@ This section maps each hypothesis to the specific configuration files, system in
 | H2 | Two-stage pipelines | ✅ Ready | Separate pipelines (coarse-to-fine, fine-to-coarse) |
 | H3 | Consensus voting | ✅ Ready | Voting grid search |
 | H4 | Example ordering | ✅ Ready | Factorial factor (ordering) |
-| H5 | Hard negatives | ✅ Ready | Factorial factor (hard_negatives) |
+| H5 | Negative text treatment | ✅ Ready | Factorial factor (h5_level) |
 | H6 | Flash→Pro transfer | ✅ Ready | Runtime model parameter |
 | H7 | Temperature | ✅ Ready | Factorial factor (temperature) |
-| H8 | Library size | ✅ Ready | Strand 2 core |
+| H8 | Library composition | ✅ Ready | Sequential design (7 conditions) |
 
 **Exploratory Hypotheses (H9-H15)**:
 
@@ -1882,10 +1972,10 @@ This section maps each hypothesis to the specific configuration files, system in
 | H2 | `propose_*.json` + `verify_*.json` (coarse-to-fine); `detect_*.json` + `expand_*.json` (fine-to-coarse) | Corresponding `.md` files |
 | H3 | Any detect config (passes parameter) | Any detect instruction |
 | H4 | `*_canonical-last.json`, `*_random-order.json` | Same instruction file per modality |
-| H5 | `*_hardneg.json` variants | `*_hardneg.md` variants |
+| H5 | `*_minimal.json`, `*_terse.json`, `*_verbose.json` | `*_minimal.md`, `*_terse.md`, `*_verbose.md` |
 | H6 | All configs (model runtime override) | All instructions |
 | H7 | All configs (temperature runtime override) | All instructions |
-| H8 | Strand 2 library configs | All instructions |
+| H8 | `library_*.json` configs (7 compositions) | All instructions |
 
 #### 8.7.3 Script Mapping
 
@@ -1895,55 +1985,61 @@ This section maps each hypothesis to the specific configuration files, system in
 | H2 | `4_detect_mounds_batch.py` (2× sequential) | `7_analyze_consensus.py`, `8_analyze_proposer_consensus.py` |
 | H3 | `run_study.py` (passes parameter) | `7_analyze_consensus.py` |
 | H6 | `run_study.py` (model parameter) | `lib_advanced_metrics.py` |
-| H8 | Strand 2 library configuration | `lib_advanced_metrics.py` |
+| H8 | `run_study.py` (library composition) | `lib_advanced_metrics.py` |
 | H9 | `run_study.py` (extended for diversity) | `lib_advanced_metrics.py` |
 
-#### 8.7.4 Stranded Factorial Design Coverage (Phase 2)
+#### 8.7.4 Sequential Design Coverage (Phase 2)
 
-The stranded factorial design tests H1, H5, H7, and H8 across multiple strands:
+The sequential design tests H1, H7, H8, H5, and H4 using OFAT methodology (see Section 8.4.7):
 
 **Factor summary:**
 
 | Factor | Levels | Values |
 | :--- | :--- | :--- |
 | M/E (Modality/Elaboration) | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |
-| H5 (Hard negatives) | 3 | None, Images-only, Text+Images |
-| T (Temperature) | 4 | 0.0, 0.7, 1.0, 1.3 |
-| L (Library size) | 6 | Pure Positive Canon, Canonical, A, B, C, D |
+| H5 (Negative text) | 3 | Minimal, Terse, Verbose |
+| T (Temperature) | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |
+| L (Library composition) | 7 | Pure Positive Canon, Canonical, +HP, Scale-4, Scale-8, Scale-16, Scale-32 |
+| O (Ordering) | 3 | Canonical-first, Canonical-last, Random |
 
-**Design**: Stranded structure (see Section 8.4.7):
+**Design**: Sequential structure (see Section 8.4.7):
 
-- Strand 1: 26 cells (M/E × partial H5 × T; text-only at T=1.0 only)
-- H5 Confirmatory: 4 cells (1 optimal M/E × H5=Images-only × 4 T)
-- Strand 2: 24 cells (6 library conditions × T)
-- Strand 3: ~10 cells (conditional interaction check)
+| Phase | Hypothesis | Cells | Cumulative |
+| :---- | :--------- | :---- | :--------- |
+| 1 | H1 (M/E) | 5 | 5 |
+| 1 | H7 (Temperature) | 5 | 10 |
+| 2 | H8 (Composition) | 7 | 17 |
+| 3 | H5 (Negative text) | 3 | 20 |
+| 4 | H4 (Ordering) | 3 | 23 |
 
-**Config naming pattern**: `detect_{modality}_{hardneg}.json`
+*Note: H4 runs at optimal M/E only (not partial factorial cross). Total confirmatory: 23 cells.*
 
-Temperature and library composition are specified at runtime, not in config files. This yields 9 config files.
+**Config naming pattern**: `detect_{modality}_{elaboration}_{h5_level}.json`
 
-**Config count**: Text-only modalities cannot use H5=Images-only or H5=Text+Images:
+Temperature, library composition, and ordering are specified at runtime, not in config files.
 
-- 3 image-using modalities × 3 H5 levels = 9
-- 2 text-only modalities × H5=None only = 2 (but runtime variants, not separate configs)
-- **Total: 9 configurations** (text-only tested at T=1.0 only)
+**Config count** (at optimal M/E, likely Verbose+image):
+
+- 3 H5 levels × 1 M/E = 3 base configs
+- 3 ordering variants = 3 ordering configs (same instruction files)
+- **Total: ~6 configurations** for H5 + H4 testing
 
 Example configurations:
 
 | Config Pattern | M/E | H5 |
 | :--- | :--- | :--- |
-| `detect_image-only_none.json` | Image-only | None |
-| `detect_brief-image_images.json` | Brief+image | Images-only |
-| `detect_verbose-image_both.json` | Verbose+image | Text+Images |
+| `detect_verbose-text-image_minimal.json` | Verbose+image | Minimal |
+| `detect_verbose-text-image_terse.json` | Verbose+image | Terse |
+| `detect_verbose-text-image_verbose.json` | Verbose+image | Verbose |
 
 **Runtime parameters** (specified at execution, not in config files):
 
-- Temperature: T ∈ {0.0, 0.7, 1.0, 1.3}
+- Temperature: T ∈ {0.0, 0.3, 0.7, 1.0, 1.3}
 - Model: gemini-3-flash, gemini-3-pro, claude-sonnet-4-5, etc.
-- Number of passes (K): 10 for main factorial, varies for H3
-- Library composition: Varies by strand (see Section 8.4.7)
+- Number of passes (K): 10 for all confirmatory hypotheses
+- Library composition: Varies by H8 condition (see Section 8.4.7)
 
-**Note**: H4 (ordering) is tested as a partial cross, not in the main strands. All strand conditions use canonical-first ordering. See H4 for the 9-condition partial cross design (3 orderings × 3 M/E levels).
+**Note**: H4 (ordering) is tested at optimal M/E level only (3 cells). All other conditions use canonical-first ordering.
 
 ### 8.8 Calibration Pilot Outputs
 
@@ -2199,12 +2295,13 @@ This preregistration is accompanied by the following supplementary documents:
 
 ---
 
-*Document version: 4.4*
+*Document version: 4.5*
 *Created: 2025-12-22*
-*Updated: 2026-01-10*
+*Updated: 2026-01-12*
 
 **Changelog:**
 
+- v4.5: Major H5/H8/H4 redesign — H5 now tests text treatment only (Minimal/Terse/Verbose) given negatives are always present (moved "do negatives help?" to H8 contrast C3); H8 expanded to 7 conditions with sequential addition contrasts (C1-C3) and scaling contrasts (S1-S3); H4 simplified to optimal M/E only (3 cells vs 9); H7 temperatures expanded to 5 levels (added T=0.3); new triggered exploratory hypotheses H4b (HP/HN ordering), HN-only condition, and M/E sensitivity at H8-optimal (tests M/E robustness if H8 optimal differs from Scale-8 by ≥2 levels); budget 23 confirmatory cells (~$59), 29 maximum with triggered exploratories (~$76); detection configs updated to match (hypothesis H1, Scale-8 library with 17 examples); see h5-h8-redesign-consolidated.md for full rationale
 - v4.4: H8 "Pure" renamed to "Pure Positive Canon" for clarity; clarified that HP (4 examples) is present in ALL H5 conditions (H5 tests negative channel only); distinguished H5=None (11 examples, includes HP) from H8 Pure Positive Canon (7 examples, no hard examples); added note on HP to H5 section; updated Section 8.4.2 category ratios; appendix configs to be updated to match
 - v4.3.1: Cross-reference corrections — Section 3.8 voting references corrected from H4 to H3; H4 Implementation section reference corrected from Section 8.4.2 to Section 8.4.1; Section 8.4.5 example-level analysis reference corrected from H6 to H9; spelling consistency ("bench mark" → "benchmark")
 - v4.3: Pure-positive baseline for H5 — H5=None now contains only canonical positives and null tiles (no canonical negatives); canonical negatives moved from fixed elements to H5-conditional elements (included in Images-only and Text+Images only); Section 8.4.4 restructured with explicit fixed/negative/variable element categories; Section 8.4.6 Hypothesis Interaction Summary updated; H9 image diversity implementation clarified; sampling procedure updated with explicit canonical negative handling; Section 8.4.7 Strand 2 H5 constraint updated (Pure at H5=None, Canonical and A-D at H5=Images-only); H8 confound note rewritten to reflect unavoidable Pure→Canonical confound under pure-positive design

@@ -1,9 +1,9 @@
 {
-    "version": "detect_brief-text-image_hardneg",
-    "description": "H5-C: Text+Images hard negatives. Full negative guidance with exclusion text and images.",
+    "version": "detect_brief-text-image_verbose",
+    "description": "H5-C: Verbose exclusion guidance. Detailed explanations of confusable symbols.",
     "hypothesis": "H5-C",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_brief-text-image_hardneg.md",
+    "instruction_file": "detect_brief-text-image_verbose.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
@@ -20,9 +20,10 @@
         {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"}
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (3), null (3). Total: 16 examples."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
 }

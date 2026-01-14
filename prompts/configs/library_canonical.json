@@ -1,0 +1,26 @@
+{
+    "version": "library_canonical",
+    "description": "H8 Condition 2: Canonical library. Canon+ and Canon- (no hard examples).",
+    "hypothesis": "H8-2",
+    "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 0,
+        "hard_negative": 0,
+        "null": 3
+    },
+    "total_examples": 9,
+    "hard_examples": 0,
+    "examples": [
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
+    ],
+    "note": "Tests +Canon- effect (contrast C1). Legend-derived negatives only."
+}

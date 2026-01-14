@@ -1,11 +1,16 @@
 {
-    "version": "detect_verbose-text-image",
-    "description": "H1 baseline. M/E=Verbose-text+image, H5=Minimal, canonical-first ordering.",
-    "hypothesis": "H1",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_verbose-text-image.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
+    "version": "library_scale-8",
+    "description": "H8 Condition 5: Scale-8 library. 4 HP, 4 HN.",
+    "hypothesis": "H8-5",
+    "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 4,
+        "hard_negative": 4,
+        "null": 3
+    },
+    "total_examples": 17,
+    "hard_examples": 8,
     "examples": [
         {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
@@ -25,5 +30,5 @@
         {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
+    "note": "Tests +HN effect (contrast C3) and serves as scaling baseline (S1). Default for H5 testing."
 }

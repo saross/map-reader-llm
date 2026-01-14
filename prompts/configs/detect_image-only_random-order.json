@@ -1,6 +1,6 @@
 {
     "version": "detect_image-only_random-order",
-    "description": "H4-C: Random ordering. Examples randomly permuted with documented seed.",
+    "description": "H4-C: Random ordering at optimal M/E. Tests whether example ordering matters.",
     "hypothesis": "H4-C",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
@@ -8,17 +8,23 @@
     "max_output_tokens": 8192,
     "random_seed": 42,
     "examples": [
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"}
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"}
     ],
-    "ordering_note": "Permutation generated with seed 42. Total: 11 examples (Canon+ 4, HP 4, null 3). Multiple seeds tested; results averaged."
+    "ordering_note": "Permutation generated with seed 42. Total: 17 examples (Scale-8: Canon+ 4, HP 4, Canon- 2, HN 4, null 3)."
 }

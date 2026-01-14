@@ -1,11 +1,16 @@
 {
-    "version": "detect_verbose-text-image",
-    "description": "H1 baseline. M/E=Verbose-text+image, H5=Minimal, canonical-first ordering.",
-    "hypothesis": "H1",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_verbose-text-image.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
+    "version": "library_plus-hp",
+    "description": "H8 Condition 3: +HP library. Adds hard positives (no hard negatives).",
+    "hypothesis": "H8-3",
+    "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 4,
+        "hard_negative": 0,
+        "null": 3
+    },
+    "total_examples": 13,
+    "hard_examples": 4,
     "examples": [
         {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
@@ -17,13 +22,9 @@
         {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
+    "note": "Tests +HP effect (contrast C2). Hard positives improve recall for degraded/occluded mounds."
 }
