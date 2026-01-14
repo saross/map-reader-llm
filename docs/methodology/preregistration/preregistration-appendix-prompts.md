@@ -17,66 +17,71 @@ All files are stored in the `prompts/` directory of the project repository.
 
 ### Design Summary
 
-The prompt architecture reflects the orthogonal factorial design:
+The prompt architecture reflects the sequential hypothesis design:
 
 - **M/E Factor** (5 levels): Controls modality and text elaboration
   - Image-only, Brief-text, Brief-text+image, Verbose-text, Verbose-text+image
-- **H5 Factor** (3 levels): Controls hard negative guidance
-  - None, Images-only, Text+Images
+- **H5 Factor** (3 levels): Controls negative text treatment (given negatives are present)
+  - Minimal, Terse, Verbose
 
 This yields:
 
-- **8 detection instruction files**: 3 image-using M/E levels × 2 exclusion variants (base, `_hardneg`) + 2 text-only M/E levels × 1 variant (H5=None only)
+- **10 detection instruction files**: 3 image-using M/E levels × 3 H5 variants (base=Minimal, `_terse`, `_verbose`) + 2 text-only M/E levels × 1 variant (H5=Minimal only)
 - **2 two-stage pipeline instruction files**: propose_image-only.md, verify_image-only.md
-- **26 configuration files**: See Section 2.2 for breakdown
+- **Configuration files**: See Section 2.2 for breakdown
 
-**Note on text-only modalities**: Brief-text and Verbose-text cannot use H5=Images-only or H5=Text+Images since they have no example images. Therefore, text-only modalities are tested at H5=None only and do not have `_hardneg` instruction file variants.
+**Note on text-only modalities**: Brief-text and Verbose-text cannot use H5=Terse or H5=Verbose since they have no example images for hard negatives. Therefore, text-only modalities are tested at H5=Minimal only and do not have `_terse` or `_verbose` instruction file variants.
 
-### Orthogonal Factor Separation
+**Note on H5 design change**: H5 no longer tests "whether negatives help" (that is answered by H8 contrast C3). H5 now tests the optimal level of text support for negative examples, given that negatives are always present. All H5 conditions use Scale-8 library composition (17 examples).
 
-The design maintains strict orthogonality between M/E levels (modality + elaboration, tested in H1) and H5 (hard negatives):
+### Factor Separation
+
+The design maintains separation between M/E levels (modality + elaboration, tested in H1) and H5 (negative text treatment):
 
 | Factor | Controls | Content |
 | ------ | -------- | ------- |
 | M/E level (H1) | Detail level for **positives** (canonical symbols + HP edge cases) | Minimal = task only; Brief = terse descriptions + terse HP mention; Verbose = detailed descriptions + detailed HP guidance |
-| H5 (Hard negatives) | Presence of **negative** guidance | Exclusion text about what NOT to detect; HN images of confusable symbols |
+| H5 (Negative text) | Elaboration level for **negative** guidance | Minimal = "Negative" label only; Terse = brief "do not detect" instructions; Verbose = detailed exclusion explanations |
 
-**Brief vs Verbose distinction**: Both brief and verbose include hard positive (HP) edge case guidance — the difference is detail level, not content coverage. Brief mentions edge case types tersely ("symbols may be partially occluded"); verbose provides detailed guidance on occlusion types, degradation patterns, clustering, and variants.
+**Brief vs Verbose distinction** (M/E): Both brief and verbose include hard positive (HP) edge case guidance — the difference is detail level, not content coverage. Brief mentions edge case types tersely ("symbols may be partially occluded"); verbose provides detailed guidance on occlusion types, degradation patterns, clustering, and variants.
 
-**Critical distinction**: Neither brief nor verbose includes exclusion guidance for hard negatives. That is controlled exclusively by H5 via `_hardneg.md` instruction variants.
+**H5 level distinction**: H5 tests how much text guidance is needed for negatives. Minimal provides only "Negative" labels (images speak for themselves). Terse adds concise exclusion instructions. Verbose provides full explanations of why each confusable symbol is not a mound.
 
 ### Library Composition by Condition
 
-The example library composition differs between H5 conditions (which test the negative channel) and H8 conditions (which test library scaling).
+The example library composition differs between H5 conditions (which test negative text treatment) and H8 conditions (which test library composition and scaling).
 
-#### H5 Conditions (Negative Channel Testing)
+#### H5 Conditions (Negative Text Treatment)
 
-H5 holds positive guidance constant (Canon+ = 4, HP = 4) while varying negative guidance:
+H5 tests text elaboration for negatives while holding library composition constant at Scale-8:
 
-| H5 Level | Canon+ | Canon- | HP | HN | Null | Total |
-|----------|--------|--------|----|----|------|-------|
-| None | 4 | 0 | 4 | 0 | 3 | **11** |
-| Images-only | 4 | 2 | 4 | 3 | 3 | **16** |
-| Text+Images | 4 | 2 | 4 | 3 | 3 | **16** |
+| H5 Level | Canon+ | Canon- | HP | HN | Null | Total | Text Treatment |
+|----------|--------|--------|----|----|------|-------|----------------|
+| Minimal | 4 | 2 | 4 | 4 | 3 | **17** | "Negative" label only |
+| Terse | 4 | 2 | 4 | 4 | 3 | **17** | Brief exclusion guidance |
+| Verbose | 4 | 2 | 4 | 4 | 3 | **17** | Detailed exclusion explanations |
 
-**Note**: H5=None includes HP but excludes Canon- and HN. This provides positive guidance (canonical + edge cases) without negative guidance.
+**Note**: All H5 conditions use identical library composition (Scale-8). The only difference is the instruction file text treatment for negatives.
 
-#### H8 Conditions (Library Size Testing)
+#### H8 Conditions (Library Composition and Scaling)
 
-H8 tests scaling from minimal to maximal library:
+H8 tests two questions through a sequential design: (1) What is the marginal value of each library component? (2) What is the optimal library size?
 
-| Condition | Canon+ | Canon- | HP | HN | Null | Total | Hard Examples |
-|-----------|--------|--------|----|----|------|-------|---------------|
-| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | **7** | 0 |
-| Canonical | 4 | 2 | 0 | 0 | 3 | **9** | 0 |
-| A | 4 | 2 | 2 | 2 | 3 | **13** | 4 |
-| B | 4 | 2 | 4 | 4 | 3 | **17** | 8 |
-| C | 4 | 2 | 8 | 8 | 3 | **25** | 16 |
-| D | 4 | 2 | 16 | 16 | 3 | **41** | 32 |
+| Condition | Canon+ | Canon- | HP | HN | Null | Total | Hard | Primary Purpose |
+|-----------|--------|--------|----|----|------|-------|------|-----------------|
+| Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | **7** | 0 | Minimal baseline |
+| Canonical | 4 | 2 | 0 | 0 | 3 | **9** | 0 | +Canon- effect (C1) |
+| +HP | 4 | 2 | 4 | 0 | 3 | **13** | 4 | +HP effect (C2) |
+| Scale-4 | 4 | 2 | 2 | 2 | 3 | **13** | 4 | 1:1 floor |
+| Scale-8 | 4 | 2 | 4 | 4 | 3 | **17** | 8 | +HN effect (C3) / scaling baseline |
+| Scale-16 | 4 | 2 | 8 | 8 | 3 | **25** | 16 | Scaling mid (S2) |
+| Scale-32 | 4 | 2 | 16 | 16 | 3 | **41** | 32 | Scaling ceiling (S3) |
 
-**Note**: H8 Pure Positive Canon is the minimal baseline (legend-derived positives + nulls only, no hard examples). Canonical adds legend-derived negatives (Canon-). Conditions A–D progressively add empirical hard examples (HP + HN at 1:1 ratio) to characterise diminishing returns.
+**Sequential addition contrasts**: C1 tests Canon- effect, C2 tests HP effect, C3 tests HN effect.
 
-**Key distinction from H5**: H8 tests library *size scaling* (varying HP and HN counts). H5 tests the *negative channel* (HP fixed at 4; varying presence of Canon- and HN).
+**Scaling contrasts**: S1 (Scale-4 → Scale-8), S2 (Scale-8 → Scale-16), S3 (Scale-16 → Scale-32) test diminishing returns.
+
+**Key distinction from H5**: H8 tests library *composition and scaling* (which components and how many). H5 tests *text treatment* for negatives (how much explanation is needed).
 
 ---
 
@@ -86,7 +91,7 @@ The following elements will be finalised before holdout evaluation:
 
 ### Empirically-Determined Content
 
-#### Hard Negative Images (H5 Images-only and Text+Images conditions)
+#### Hard Negative Images (All H5 and H8 conditions with HN)
 
 Configuration files with hard negative images currently use placeholder paths for empirically-derived examples. These will be populated via the procedure in preregistration.md Section 8.4.2:
 
@@ -103,9 +108,9 @@ Configuration files with hard negative images currently use placeholder paths fo
 
 - Additional confusable symbols identified from FP analysis
 
-#### Hard Positive Images (All H5 Conditions)
+#### Hard Positive Images (H5 and H8 conditions with HP)
 
-Hard positive (HP) images represent edge cases: genuine mound symbols that may be missed due to occlusion, degradation, or atypical appearance. **HP examples (4 images) are included in ALL H5 conditions** — H5 tests the effect of the *negative* channel while holding positive guidance constant.
+Hard positive (HP) images represent edge cases: genuine mound symbols that may be missed due to occlusion, degradation, or atypical appearance.
 
 HP images will be derived from False Negatives in Phase 1 baseline analysis (≥3/10 passes missed).
 
@@ -113,13 +118,16 @@ HP images will be derived from False Negatives in Phase 1 baseline analysis (≥
 
 | Condition Type | HP Included | Notes |
 |----------------|-------------|-------|
-| All H5 conditions (None, Images-only, Text+Images) | Yes (4) | H5 tests negative channel; HP constant |
+| All H5 conditions (Minimal, Terse, Verbose) | Yes (4) | H5 uses Scale-8; HP constant |
 | H8 Pure Positive Canon | No | Tests minimal baseline (Canon+ and null only) |
+| H8 Canonical | No | Tests +Canon- effect |
+| H8 +HP and Scale-4 through Scale-32 | Yes (varies) | HP count varies with library size |
 | H9 diversity conditions C and E | Yes (varied) | Image diversity uses HP pool |
 
 **Configs affected:**
 
-- All `*_images.json` and `*_hardneg.json` variants (H5 conditions)
+- All H5 configs (`*_minimal.json`, `*_terse.json`, `*_verbose.json`)
+- H8 library configs (`library_*.json`) where HP > 0
 - `propose_image-only.json` and `verify_image-only.json` (H2)
 - H9 diversity conditions C and E (varied images from HP pool)
 
@@ -164,22 +172,27 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 
 ### 1.0 Instruction File Summary
 
-| Filename | M/E Level | Exclusion Guidance | H1 Role |
-|----------|-----------|-------------------|---------|
-| `detect_image-only.md` | Image-only | No | H1 baseline |
-| `detect_image-only_hardneg.md` | Image-only | Yes | H1 + H5 |
-| `detect_brief-text.md` | Brief-text | No | H1 text-only baseline |
-| `detect_brief-text-image.md` | Brief-text+image | No | H1 baseline |
-| `detect_brief-text-image_hardneg.md` | Brief-text+image | Yes | H1 + H5 |
-| `detect_verbose-text.md` | Verbose-text | No | H1 elaboration |
-| `detect_verbose-text-image.md` | Verbose-text+image | No | H1 elaboration |
-| `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Yes | H1 + H5 |
+| Filename | M/E Level | H5 Level | Role |
+|----------|-----------|----------|------|
+| `detect_image-only.md` | Image-only | Minimal | H1 baseline / H5=Minimal |
+| `detect_image-only_terse.md` | Image-only | Terse | H5=Terse |
+| `detect_image-only_verbose.md` | Image-only | Verbose | H5=Verbose |
+| `detect_brief-text.md` | Brief-text | Minimal | H1 text-only |
+| `detect_brief-text-image.md` | Brief-text+image | Minimal | H1 baseline / H5=Minimal |
+| `detect_brief-text-image_terse.md` | Brief-text+image | Terse | H5=Terse |
+| `detect_brief-text-image_verbose.md` | Brief-text+image | Verbose | H5=Verbose |
+| `detect_verbose-text.md` | Verbose-text | Minimal | H1 elaboration |
+| `detect_verbose-text-image.md` | Verbose-text+image | Minimal | H1 elaboration / H5=Minimal |
+| `detect_verbose-text-image_terse.md` | Verbose-text+image | Terse | H5=Terse |
+| `detect_verbose-text-image_verbose.md` | Verbose-text+image | Verbose | H5=Verbose |
 
-**Naming convention**: `detect_{modality}[_hardneg].md`
+**Naming convention**: `detect_{modality}[_{h5_level}].md`
 
 - `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
-- `_hardneg`: suffix indicates exclusion guidance for hard negatives (H5 conditions)
-- **Text-only modalities** (brief-text, verbose-text) do not have `_hardneg` variants since they cannot use example images for hard negatives
+- `_{h5_level}`: suffix indicates H5 negative text treatment (omit for Minimal, `_terse` for Terse, `_verbose` for Verbose)
+- **Text-only modalities** (brief-text, verbose-text) only have base (Minimal) variants since they cannot use example images for hard negatives
+
+**Note on legacy naming**: The previous `_hardneg` suffix has been replaced with `_verbose` to better reflect the H5 redesign. The base instruction files (no suffix) now correspond to H5=Minimal rather than H5=None.
 
 ---
 
@@ -188,7 +201,7 @@ Before any holdout evaluation, the following will be uploaded to the connected O
 #### 1.1.1 detect_image-only.md
 
 **Purpose**: Baseline image-only detection with minimal text instruction.
-**Used by**: M/E = Image-only; H5 = None or Images-only
+**Used by**: M/E = Image-only; H5 = Minimal
 **H9 note**: If image-only is the optimal base configuration, this template's structure will be used for H9 V1–V5 variants (with varied content per Section 8.3.3).
 
 ```markdown
@@ -211,10 +224,12 @@ Return JSON with normalised coordinates (0-1000):
 
 ---
 
-#### 1.1.2 detect_image-only_hardneg.md
+#### 1.1.2 detect_image-only_verbose.md
 
-**Purpose**: Image-only detection with exclusion guidance for hard negatives.
-**Used by**: M/E = Image-only; H5 = Text+Images
+**Purpose**: Image-only detection with detailed exclusion guidance for hard negatives.
+**Used by**: M/E = Image-only; H5 = Verbose
+
+**Note**: This file was previously named `detect_image-only_hardneg.md`. Renamed to reflect H5 level naming.
 
 ```markdown
 # Mound Detection (Image-Only)
@@ -256,7 +271,7 @@ Return JSON with normalised coordinates (0-1000):
 #### 1.2.1 detect_brief-text.md
 
 **Purpose**: Text-only detection with concise symbol descriptions.
-**Used by**: M/E = Brief-text; H5 = None (no images in this condition)
+**Used by**: M/E = Brief-text; H5 = Minimal (no images in this condition)
 
 ```markdown
 # Detection Prompt: Brief Text
@@ -316,7 +331,7 @@ Return JSON with normalised coords (0-1000).
 #### 1.3.1 detect_brief-text-image.md
 
 **Purpose**: Combined brief text and image prompt with reference examples.
-**Used by**: M/E = Brief-text+image; H5 = None or Images-only
+**Used by**: M/E = Brief-text+image; H5 = Minimal
 **H9 note**: If brief-text+image is the optimal base configuration, this template's structure will be used for H9 V1–V5 variants.
 
 ```markdown
@@ -362,10 +377,12 @@ Return JSON with normalised coords (0-1000).
 
 ---
 
-#### 1.3.2 detect_brief-text-image_hardneg.md
+#### 1.3.2 detect_brief-text-image_verbose.md
 
-**Purpose**: Brief text+image prompt with exclusion guidance for hard negatives.
-**Used by**: M/E = Brief-text+image; H5 = Text+Images
+**Purpose**: Brief text+image prompt with detailed exclusion guidance for hard negatives.
+**Used by**: M/E = Brief-text+image; H5 = Verbose
+
+**Note**: This file was previously named `detect_brief-text-image_hardneg.md`. Renamed to reflect H5 level naming.
 
 ```markdown
 # Detection Prompt: Brief Text+Image with Exclusion Guidance
@@ -422,12 +439,12 @@ Return JSON with normalised coords (0-1000).
 
 ### 1.4 Verbose-Text Instructions
 
-**Note on verbose text content**: Verbose text extends brief text with detailed descriptions and **edge case guidance for hard positives** (symbols that are genuine mounds but may be missed due to occlusion, degradation, or atypical appearance). Verbose text does NOT include exclusion guidance for hard negatives — that is controlled by the `_hardneg` variant and H5 factor.
+**Note on verbose text content**: Verbose text extends brief text with detailed descriptions and **edge case guidance for hard positives** (symbols that are genuine mounds but may be missed due to occlusion, degradation, or atypical appearance). Verbose text does NOT include exclusion guidance for hard negatives — that is controlled by the H5 level variants (`_terse`, `_verbose`).
 
 #### 1.4.1 detect_verbose-text.md
 
 **Purpose**: Extended text-only prompt with comprehensive symbol descriptions and decision procedures.
-**Used by**: M/E = Verbose-text; H5 = None (no images in text-only conditions)
+**Used by**: M/E = Verbose-text; H5 = Minimal (no images in text-only conditions)
 **Word count**: ~800 words (vs ~200 for brief version)
 
 ```markdown
@@ -549,7 +566,7 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 #### 1.5.1 detect_verbose-text-image.md
 
 **Purpose**: Extended text+image prompt with decision procedures and edge case guidance.
-**Used by**: M/E = Verbose-text+image; H5 = None or Images-only
+**Used by**: M/E = Verbose-text+image; H5 = Minimal
 
 ```markdown
 # Detection Prompt: Verbose Text+Image
@@ -675,10 +692,12 @@ using normalised coordinates (0-1000).
 
 ---
 
-#### 1.5.2 detect_verbose-text-image_hardneg.md
+#### 1.5.2 detect_verbose-text-image_verbose.md
 
-**Purpose**: Extended text+image prompt with edge case guidance AND exclusion criteria.
-**Used by**: M/E = Verbose-text+image; H5 = Text+Images
+**Purpose**: Extended text+image prompt with edge case guidance AND detailed exclusion criteria.
+**Used by**: M/E = Verbose-text+image; H5 = Verbose
+
+**Note**: This file was previously named `detect_verbose-text-image_hardneg.md`. Renamed to reflect H5 level naming.
 
 ```markdown
 # Detection Prompt: Verbose Text+Image with Exclusion Guidance
@@ -1020,43 +1039,50 @@ All configuration files follow this JSON schema:
 
 ### 2.2 Configuration File Naming Convention
 
-**Base pattern**: `detect_{modality}[_hardneg].json`
+**Base pattern**: `detect_{modality}[_{h5_level}].json`
 
 Where:
 
 - `{modality}`: image-only, brief-text, brief-text-image, verbose-text, verbose-text-image
-- `_hardneg`: optional suffix for H5 conditions with exclusion guidance
+- `_{h5_level}`: optional suffix for H5 level (omit for Minimal, `_terse` for Terse, `_verbose` for Verbose)
 
-**H4 ordering variants**: `detect_{modality}_{ordering}[_hardneg].json`
+**H4 ordering variants**: `detect_{modality}_{ordering}[_{h5_level}].json`
 
 Where:
 
 - `{ordering}`: canonical-last, random-order (canonical-first is the default, no suffix needed)
 
-This yields:
+**H8 library configs**: `library_{condition}.json`
 
-- **11 base detection configs**: 3 image-using M/E levels × 3 H5 levels + 2 text-only M/E levels × 1 H5 level
-- **12 H4 ordering variants**: 3 image-using M/E levels × 2 orderings × 2 H5 levels (None and Text+Images only; Images-only uses canonical-first)
-- **2 pipeline configs**: propose_image-only.json, verify_image-only.json
-- **1 pilot config**: pilot_tilesize.json
+Where:
 
-**Total: 26 configuration files**
+- `{condition}`: pure-positive-canon, canonical, plus-hp, scale-4, scale-8, scale-16, scale-32
 
-**Structure for detection configs:**
+**Detection config structure** (H5 runs at optimal M/E only, likely verbose-text-image):
 
-| M/E Level | H5=None | H5=Images-only | H5=Text+Images | H4 variants |
-|-----------|---------|----------------|----------------|-------------|
-| Image-only | ✓ | ✓ (`_images`) | ✓ (`_hardneg`) | 4 (2 orderings × 2 H5) |
-| Brief-text | ✓ | — | — | — |
-| Brief-text+image | ✓ | ✓ (`_images`) | ✓ (`_hardneg`) | 4 (2 orderings × 2 H5) |
-| Verbose-text | ✓ | — | — | — |
-| Verbose-text+image | ✓ | ✓ (`_images`) | ✓ (`_hardneg`) | 4 (2 orderings × 2 H5) |
+| M/E Level | H5=Minimal | H5=Terse | H5=Verbose |
+|-----------|------------|----------|------------|
+| Image-only | ✓ (base) | ✓ (`_terse`) | ✓ (`_verbose`) |
+| Brief-text | ✓ (base) | — | — |
+| Brief-text+image | ✓ (base) | ✓ (`_terse`) | ✓ (`_verbose`) |
+| Verbose-text | ✓ (base) | — | — |
+| Verbose-text+image | ✓ (base) | ✓ (`_terse`) | ✓ (`_verbose`) |
+
+**H4 ordering variants** (at optimal M/E + optimal H5 only):
+
+| Ordering | Config Suffix |
+|----------|---------------|
+| Canonical-first | (no suffix) |
+| Canonical-last | `_canonical-last` |
+| Random | `_random-order` |
 
 **Notes**:
 
-- H5=Images-only uses the same instruction file as H5=None but includes hard negative images with minimal "Negative" labels in the config
-- Text-only modalities (brief-text, verbose-text) have only H5=None configs since they cannot use example images
-- H4 ordering variants are tested for H5=None and H5=Text+Images only; H5=Images-only uses canonical-first ordering
+- H5=Minimal uses the base instruction file (no exclusion text) with HN images labelled simply as "Negative"
+- H5=Terse uses `_terse` instruction files with brief exclusion guidance
+- H5=Verbose uses `_verbose` instruction files with detailed exclusion explanations
+- Text-only modalities (brief-text, verbose-text) have only H5=Minimal configs since they cannot use HN images
+- H4 ordering is tested at optimal M/E and optimal H5 only (3 conditions vs original 12)
 
 ---
 
@@ -1066,36 +1092,51 @@ This yields:
 
 | Configuration File | M/E Level | H5 Level | Instruction File |
 |--------------------|-----------|----------|------------------|
-| `detect_image-only.json` | Image-only | None | detect_image-only.md |
-| `detect_image-only_images.json` | Image-only | Images-only | detect_image-only.md |
-| `detect_image-only_hardneg.json` | Image-only | Text+Images | detect_image-only_hardneg.md |
-| `detect_brief-text.json` | Brief-text | None | detect_brief-text.md |
-| `detect_brief-text-image.json` | Brief-text+image | None | detect_brief-text-image.md |
-| `detect_brief-text-image_images.json` | Brief-text+image | Images-only | detect_brief-text-image.md |
-| `detect_brief-text-image_hardneg.json` | Brief-text+image | Text+Images | detect_brief-text-image_hardneg.md |
-| `detect_verbose-text.json` | Verbose-text | None | detect_verbose-text.md |
-| `detect_verbose-text-image.json` | Verbose-text+image | None | detect_verbose-text-image.md |
-| `detect_verbose-text-image_images.json` | Verbose-text+image | Images-only | detect_verbose-text-image.md |
-| `detect_verbose-text-image_hardneg.json` | Verbose-text+image | Text+Images | detect_verbose-text-image_hardneg.md |
+| `detect_image-only.json` | Image-only | Minimal | detect_image-only.md |
+| `detect_image-only_terse.json` | Image-only | Terse | detect_image-only_terse.md |
+| `detect_image-only_verbose.json` | Image-only | Verbose | detect_image-only_verbose.md |
+| `detect_brief-text.json` | Brief-text | Minimal | detect_brief-text.md |
+| `detect_brief-text-image.json` | Brief-text+image | Minimal | detect_brief-text-image.md |
+| `detect_brief-text-image_terse.json` | Brief-text+image | Terse | detect_brief-text-image_terse.md |
+| `detect_brief-text-image_verbose.json` | Brief-text+image | Verbose | detect_brief-text-image_verbose.md |
+| `detect_verbose-text.json` | Verbose-text | Minimal | detect_verbose-text.md |
+| `detect_verbose-text-image.json` | Verbose-text+image | Minimal | detect_verbose-text-image.md |
+| `detect_verbose-text-image_terse.json` | Verbose-text+image | Terse | detect_verbose-text-image_terse.md |
+| `detect_verbose-text-image_verbose.json` | Verbose-text+image | Verbose | detect_verbose-text-image_verbose.md |
 
-**Note**: H5=Images-only configs (`_images.json`) use the same instruction file as H5=None but include hard negative images with minimal "Negative" labels.
+**Note**: H5=Minimal configs use the base instruction file (no exclusion text) with HN images labelled simply as "Negative". All H5 conditions use Scale-8 library composition (17 examples).
 
-#### H4 Ordering Variant Configs (12 files)
+#### H4 Ordering Variant Configs (at optimal M/E only)
 
-| Configuration File | M/E Level | Ordering | H5 Level |
-|--------------------|-----------|----------|----------|
-| `detect_image-only_canonical-last.json` | Image-only | Canonical-last | None |
-| `detect_image-only_canonical-last_hardneg.json` | Image-only | Canonical-last | Text+Images |
-| `detect_image-only_random-order.json` | Image-only | Random | None |
-| `detect_image-only_random-order_hardneg.json` | Image-only | Random | Text+Images |
-| `detect_brief-text-image_canonical-last.json` | Brief-text+image | Canonical-last | None |
-| `detect_brief-text-image_canonical-last_hardneg.json` | Brief-text+image | Canonical-last | Text+Images |
-| `detect_brief-text-image_random-order.json` | Brief-text+image | Random | None |
-| `detect_brief-text-image_random-order_hardneg.json` | Brief-text+image | Random | Text+Images |
-| `detect_verbose-text-image_canonical-last.json` | Verbose-text+image | Canonical-last | None |
-| `detect_verbose-text-image_canonical-last_hardneg.json` | Verbose-text+image | Canonical-last | Text+Images |
-| `detect_verbose-text-image_random-order.json` | Verbose-text+image | Random | None |
-| `detect_verbose-text-image_random-order_hardneg.json` | Verbose-text+image | Random | Text+Images |
+H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 12):
+
+| Configuration File | Ordering | Notes |
+|--------------------|----------|-------|
+| `detect_{optimal-me}_{optimal-h5}.json` | Canonical-first | Base config (no ordering suffix) |
+| `detect_{optimal-me}_canonical-last_{optimal-h5}.json` | Canonical-last | Canonical examples at end |
+| `detect_{optimal-me}_random-order_{optimal-h5}.json` | Random | Shuffled with documented seed |
+
+**Example** (if optimal M/E = verbose-text-image, optimal H5 = Terse):
+
+| Configuration File | Ordering |
+|--------------------|----------|
+| `detect_verbose-text-image_terse.json` | Canonical-first |
+| `detect_verbose-text-image_canonical-last_terse.json` | Canonical-last |
+| `detect_verbose-text-image_random-order_terse.json` | Random |
+
+#### H8 Library Configs (7 files)
+
+| Configuration File | Composition | Total Examples |
+|--------------------|-------------|----------------|
+| `library_pure-positive-canon.json` | Canon+ (4) + Null (3) | 7 |
+| `library_canonical.json` | + Canon- (2) | 9 |
+| `library_plus-hp.json` | + HP (4) | 13 |
+| `library_scale-4.json` | HP (2) + HN (2) | 13 |
+| `library_scale-8.json` | HP (4) + HN (4) | 17 |
+| `library_scale-16.json` | HP (8) + HN (8) | 25 |
+| `library_scale-32.json` | HP (16) + HN (16) | 41 |
+
+**Note**: H8 library configs specify example composition only. M/E level and instruction file are determined at runtime based on H1 results.
 
 #### Pipeline Configs (2 files)
 
@@ -1112,19 +1153,19 @@ This yields:
 
 ---
 
-### 2.4 Example Configuration: Image-Only, Canonical-First (Base)
+### 2.4 Example Configuration: Verbose-Text-Image, H5=Minimal (Base)
 
-#### detect_image-only.json
+#### detect_verbose-text-image.json
 
-**M/E**: Image-only | **H5**: None | **H4**: Canonical-first
+**M/E**: Verbose-text+image | **H5**: Minimal | **H4**: Canonical-first
 
 ```json
 {
-    "version": "detect_image-only",
-    "description": "H4-A: Canonical-first ordering. Canon+ first, then HP, then nulls.",
-    "hypothesis": "H4-A",
+    "version": "detect_verbose-text-image",
+    "description": "H1 baseline. M/E=Verbose-text+image, H5=Minimal, canonical-first ordering.",
+    "hypothesis": "H1",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_verbose-text-image.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
@@ -1136,72 +1177,39 @@ This yields:
         {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"}
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), then HP (4), then null (3). Total: 11 examples."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
 }
 ```
 
 **Note on neutral filenames**: Example images use neutral filenames (`example_01.png` etc.) rather than semantic names to avoid biasing the model through filename leakage.
 
----
-
-### 2.5 Example Configuration: Image-Only, With Hard Negatives
-
-#### detect_image-only_hardneg.json
-
-**M/E**: Image-only | **H5**: Text+Images
-
-```json
-{
-    "version": "detect_image-only_hardneg",
-    "description": "Image-only with hard negatives. H5=Text+Images (full negative guidance).",
-    "hypothesis": "H5-C",
-    "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only_hardneg.md",
-    "temperature": 1.0,
-    "max_output_tokens": 8192,
-    "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"}
-    ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (3), null (3). Total: 16 examples."
-}
-```
-
-**Note**: H5=Text+Images includes Canon- (legend-derived negatives) and HN (empirically-derived hard negatives), plus exclusion text guidance in the `_hardneg` instruction file.
+**Note on H5=Minimal**: The base instruction file (`detect_verbose-text-image.md`) has no exclusion text. Hard negatives are included in the library with simple "Negative" labels — the images speak for themselves.
 
 ---
 
-### 2.6 Example Configuration: Image-Only, Images-Only Hard Negatives
+### 2.5 Example Configuration: Verbose-Text-Image, H5=Terse
 
-#### detect_image-only_images.json
+#### detect_verbose-text-image_terse.json
 
-**M/E**: Image-only | **H5**: Images-only
+**M/E**: Verbose-text+image | **H5**: Terse
 
 ```json
 {
-    "version": "detect_image-only_images",
-    "description": "Image-only with hard negative images (minimal labels). Tests H5=Images-only.",
+    "version": "detect_verbose-text-image_terse",
+    "description": "H5=Terse: Brief exclusion guidance. Same Scale-8 library as Minimal/Verbose.",
     "hypothesis": "H5-B",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_verbose-text-image_terse.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
@@ -1218,37 +1226,86 @@ This yields:
         {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
-        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"}
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (3), null (3). Total: 16 examples."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
 }
 ```
 
-**Key difference from H5=Text+Images**: Same image library (16 examples) but minimal "Negative" labels only — no exclusion guidance text in instruction file. Tests whether negative images alone provide value without explicit exclusion instructions.
+**Note**: H5=Terse uses `_terse` instruction file with brief exclusion guidance (1-2 sentences: "Do not detect triangulation points, benchmarks, or similar symbols"). Same Scale-8 library as Minimal and Verbose.
+
+---
+
+### 2.6 Example Configuration: Verbose-Text-Image, H5=Verbose
+
+#### detect_verbose-text-image_verbose.json
+
+**M/E**: Verbose-text+image | **H5**: Verbose
+
+```json
+{
+    "version": "detect_verbose-text-image_verbose",
+    "description": "H5=Verbose: Detailed exclusion guidance with explanations for each confusable symbol.",
+    "hypothesis": "H5-C",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_verbose-text-image_verbose.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "examples": [
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
+    ],
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
+}
+```
+
+**Key difference from H5=Terse**: Same Scale-8 library (17 examples) with detailed exclusion text in `_verbose` instruction file explaining why each confusable symbol is not a mound. Tests whether verbose explanations improve precision over brief guidance.
 
 ---
 
 ### 2.7 Example Configuration: H4 Canonical-Last Ordering
 
-#### detect_image-only_canonical-last.json
+#### detect_verbose-text-image_canonical-last_{optimal-h5}.json
 
-**M/E**: Image-only | **H5**: None | **H4**: Canonical-last
+**M/E**: Optimal from H1 (likely Verbose-text+image) | **H5**: Optimal from H5 | **H4**: Canonical-last
 
 ```json
 {
-    "version": "detect_image-only_canonical-last",
-    "description": "H4-B: Canonical-last ordering. Nulls first, HP, then Canon+.",
+    "version": "detect_verbose-text-image_canonical-last_terse",
+    "description": "H4-B: Canonical-last ordering at optimal M/E and H5.",
     "hypothesis": "H4-B",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_verbose-text-image_terse.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
@@ -1258,44 +1315,50 @@ This yields:
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last: null (3), HP (4), Canon+ (4). Total: 11 examples."
+    "ordering_note": "Canonical-last: HN (4), Canon- (2), null (3), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
 }
 ```
 
-**Note**: Canonical-last tests recency bias by placing the most informative examples (canonical positives) in final positions.
+**Note**: Canonical-last tests recency bias by placing the most informative examples (canonical positives) in final positions. H4 is now tested at optimal M/E only (3 cells total).
 
 ---
 
 ### 2.8 Example Configuration: H4 Random Ordering
 
-#### detect_image-only_random-order.json
+#### detect_verbose-text-image_random-order_{optimal-h5}.json
 
-**M/E**: Image-only | **H5**: None | **H4**: Random
+**M/E**: Optimal from H1 | **H5**: Optimal from H5 | **H4**: Random
 
 ```json
 {
-    "version": "detect_image-only_random-order",
-    "description": "H4-C: Random ordering. Examples randomly permuted with documented seed.",
+    "version": "detect_verbose-text-image_random-order_terse",
+    "description": "H4-C: Random ordering at optimal M/E and H5.",
     "hypothesis": "H4-C",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only.md",
+    "instruction_file": "detect_verbose-text-image_terse.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "random_seed": 42,
     "examples": [
-        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_10.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_09.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
-        {"path": "neutral/example_11.png", "label": "Negative", "category": "null"},
-        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_02.png", "label": "Positive", "category": "canonical_positive"},
-        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"}
+        {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_01.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_08.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"}
     ],
-    "ordering_note": "Permutation generated with seed 42. Total: 11 examples (Canon+ 4, HP 4, null 3). Multiple seeds tested; results averaged."
+    "ordering_note": "Permutation generated with seed 42. Total: 17 examples (Scale-8). Multiple seeds tested; results averaged."
 }
 ```
 
@@ -1303,30 +1366,31 @@ This yields:
 
 ---
 
-### 2.9 Example Configuration: H4 Canonical-Last with Hard Negatives
+### 2.9 Example Configuration: H4 Canonical-Last with Verbose Negatives
 
-#### detect_image-only_canonical-last_hardneg.json
+#### detect_image-only_canonical-last_verbose.json
 
-**M/E**: Image-only | **H5**: Text+Images | **H4**: Canonical-last
+**M/E**: Image-only | **H5**: Verbose | **H4**: Canonical-last
 
 ```json
 {
-    "version": "detect_image-only_canonical-last_hardneg",
-    "description": "H4-B + H5-C: Canonical-last ordering with full negative guidance.",
+    "version": "detect_image-only_canonical-last_verbose",
+    "description": "H4-B + H5-C: Canonical-last ordering with verbose negative guidance.",
     "hypothesis": "H4-B, H5-C",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_image-only_hardneg.md",
+    "instruction_file": "detect_image-only_verbose.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "examples": [
         {"path": "neutral/example_11.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral/example_10.png", "label": "Negative", "category": "canonical_negative"},
-        {"path": "neutral/example_14.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_15.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_06.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral/example_07.png", "label": "Positive", "category": "hard_positive"},
@@ -1336,11 +1400,11 @@ This yields:
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last: HN (3), Canon- (2), null (3), HP (4), Canon+ (4). Total: 16 examples."
+    "ordering_note": "Canonical-last: HN (4), Canon- (2), null (3), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
 }
 ```
 
-**Note**: Combined H4 and H5 conditions test whether ordering effects interact with hard negative guidance.
+**Note**: Combined H4 and H5 conditions test whether ordering effects interact with negative text elaboration.
 
 ---
 
@@ -1406,12 +1470,12 @@ The following parameters are controlled at runtime rather than in configuration 
 
 | Parameter | Values | Hypothesis | Notes |
 |-----------|--------|------------|-------|
-| Temperature | 0.0, 0.7, 1.0, 1.3 | H7 | Overrides config file default |
+| Temperature | 0.0, 0.3, 0.7, 1.0, 1.3 | H7 | Overrides config file default |
 | Model | gemini-3-flash, gemini-3-pro, claude-4.5-sonnet, gpt-5.2-thinking | H6, H14 | Overrides config file value |
 | Passes | 1, 5, 10, 30 | H3 | Number of detection runs per tile |
 | Voting threshold | 1 to N | H3 | Minimum votes for detection acceptance |
 
-**Note**: Temperature escalation trigger (H7): If T=1.3 outperforms T=1.0, additional tests at higher temperatures may be conducted.
+**Note**: Temperature escalation trigger (H7): If T=1.3 outperforms T=1.0, additional tests at higher temperatures may be conducted. T=0.3 added based on evidence that low temperatures (0.2-0.3) improve accuracy for visual detection tasks.
 
 ---
 
@@ -1439,12 +1503,13 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.9*
+*Document version: 2.10*
 *Created: 2026-01-02*
-*Updated: 2026-01-10*
+*Updated: 2026-01-12*
 
 **Changelog:**
 
+- v2.10: Major H5/H8/H4 redesign alignment — H5 now tests text treatment only (Minimal/Terse/Verbose) given negatives are always present; H8 expanded to 7 conditions with sequential addition contrasts (C1-C3) and scaling contrasts (S1-S3); H4 simplified to optimal M/E only (3 cells); instruction file naming changed from `_hardneg` to `_verbose`, added `_terse`, base = Minimal; H7 temperature levels now 5 (added T=0.3); all example configs updated to Scale-8 (17 examples); see h5-h8-redesign-consolidated.md for full rationale
 - v2.9: Fixed H8 library composition table — added missing Canonical condition; corrected A-D to use 1:1 HP:HN ratio (2:2, 4:4, 8:8, 16:16) with constant Canon+/Canon- (4/2); added Hard Examples column; corrected totals (13, 17, 25, 41); added key distinction note explaining H8 vs H5
 - v2.8: HP clarification and library composition tables — clarified HP (4 examples) included in ALL H5 conditions (not H9-only); added Library Composition by Condition section with H5 vs H8 tables; updated all example configs to show correct counts (H5=None: 11, H5=Images-only/Text+Images: 16); renamed category field from "canonical"/"null" to "canonical_positive"/"canonical_negative"/"hard_positive"/"hard_negative"/"null" for clarity; aligned with preregistration.md v4.4
 - v2.7: Synchronised Section 1.5 verbose-text+image prompts with actual instruction files — updated Section 1.5.1 (detect_verbose-text-image.md) to match actual file structure (removed separate "Edge Cases" section; guidance integrated into Decision Procedure); updated Section 1.5.2 (detect_verbose-text-image_hardneg.md) to include full "Exclusion Criteria (CRITICAL)" section with 6 detailed subsections matching actual file

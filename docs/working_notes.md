@@ -965,3 +965,23 @@ The v3.5 "clean" instruction removed too much guidance, leading to both lower pr
 2. The v3.2 prompt (with v3.0 instruction) should be the baseline for all future work
 3. Temperature 0.3 should be the default for single-run evaluations
 4. Consensus strategies (2/5 or 10/30) should only be compared against holdout baselines
+
+---
+
+## Observation 51: Qualitative Shift in Human-AI Collaboration (2026-01-09)
+
+The nature of human-AI collaboration in this research project feels qualitatively different from prior LLM-assisted work. With newer Anthropic models (Claude 4 Opus/Sonnet) and the modern Claude Code harness, the interaction pattern has shifted from "LLM as oracle" (ask a question, receive an answer) to something closer to an extended collaborative partnership.
+
+**Key characteristics of this shift:**
+
+1. **Planning-execution-review cycles**: Work proceeds through structured phases where the AI proposes plans, executes them, and the human reviews outcomes—then iterates. This resembles supervising a capable but sometimes misdirected junior colleague more than querying a knowledge base.
+
+2. **Research taste as human contribution**: The human's primary role has shifted toward providing "research taste"—making judgement calls about what questions are worth asking, which approaches align with disciplinary norms, and when results are "good enough" versus requiring further investigation. The AI handles much of the implementation and can generate plausible options, but evaluating those options against tacit disciplinary standards remains firmly human.
+
+3. **Session continuity and context**: Modern agent harnesses maintain context across extended sessions and can reference prior work. This enables building on previous decisions rather than re-explaining context each interaction—more like a working relationship than isolated consultations.
+
+4. **Correction and course-adjustment**: The AI sometimes pursues approaches that are technically competent but misaligned with research goals (cf. Observation 6 on "technoscholasticism"). Human intervention to redirect is routine and expected, not a failure mode.
+
+**Implications for reproducibility**: Researchers attempting to replicate this work in future should note that agentic AI capabilities are advancing rapidly. The Claude Code harness and model capabilities available in early 2026 may differ substantially from what is available when this paper is read. The session archiving approach (see `archive/cc-sessions/`) aims to preserve the actual interactions for transparency, but the tacit knowledge of "how to work with an AI agent" may be difficult to fully convey.
+
+**Contrast with earlier LLM use**: In 2023-2024, LLM assistance typically involved isolated prompts, careful prompt engineering for each query, and treating the model as a sophisticated search engine or writing assistant. The current pattern feels more like delegating coherent sub-tasks to an agent that maintains state and can be trusted (with verification) to execute multi-step plans.

@@ -28,3 +28,14 @@ This project uses structured CC session archiving for research transparency:
 - **Hypothesis references**: Use format H1, H2, ... H15 when referencing preregistered hypotheses
 - **Phase references**: Use format "Phase 2a", "Phase 3b" when referencing execution plan phases
 - **Config files**: Prompt configurations are in `prompts/configs/`, system instructions in `prompts/system-instructions/`
+
+## Working Notes and Observations
+
+The file `docs/working_notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
+
+**Proactive observation sharing**: If you notice something interesting about how we work together, about the research process, or about findings that might inform future work, you should proactively raise it with the user. If they agree it's worth documenting, we'll add it to `working_notes.md`. This includes:
+
+- Observations about human-AI collaboration patterns
+- Methodological insights or lessons learned
+- Unexpected findings or edge cases worth noting
+- Reflections on tool/harness behaviour relevant to reproducibility
