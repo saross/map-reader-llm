@@ -7,22 +7,68 @@ This directory contains the configurations and system instructions for LLM infer
 - **`configs/*.json`**: Run configurations. See **[docs/PIPELINES.md](../docs/PIPELINES.md)** for active pipelines.
 - **`system-instructions/*.md`**: System instructions (the "Brain" or "Logic").
 
-## Naming Convention
+## File Naming Convention
 
-Prompts follow this pattern: `{workflow}_{modality}[_ordering][_hardneg].json`
+Instruction files follow the pattern: `{workflow}_{M/E-level}_{H5-level}.md`
 
-| Component | Values | Meaning |
-|-----------|--------|---------|
-| **workflow** | `detect`, `propose`, `verify` | Single-shot, Two-stage S1, Two-stage S2 |
-| **modality** | `image-only`, `brief-text`, `brief-text-image`, `verbose-text`, `verbose-text-image` | What drives the prompt |
+This naming reflects two **orthogonal experimental factors**:
 
-Optional variant suffixes:
+1. **M/E level** (Modality/Elaboration) - controls **positive guidance** (what TO detect)
+2. **H5 level** (Negative Text Treatment) - controls **negative guidance** (what NOT to detect)
 
-- `_hardneg`: Includes hard negative examples and exclusion guidance (H5)
-- `_canonical-last`: H4-B ordering (hard examples first, legend last)
-- `_random-order`: H4-C ordering (random permutation with documented seed)
+### M/E Levels (Positive Guidance)
 
-**Note:** Model selection (Flash vs Pro) is a runtime parameter passed to the script, not encoded in the prompt config.
+| M/E Level | Filename Component | Description |
+|-----------|-------------------|-------------|
+| Image-only | `image-only` | Minimal text, visual examples only |
+| Brief-text | `brief-text` | Concise text descriptions, no images |
+| Brief-text+image | `brief-text-image` | Concise text + visual examples |
+| Verbose-text | `verbose-text` | Detailed text descriptions, no images |
+| Verbose-text+image | `verbose-text-image` | Detailed text + visual examples |
+
+### H5 Levels (Negative Guidance)
+
+| H5 Level | Filename Suffix | Exclusion Text |
+|----------|----------------|----------------|
+| Minimal | `_minimal` or *(no suffix)* | None - examples labelled "Negative" only |
+| Terse | `_terse` | Brief (1-2 sentences) |
+| Verbose | `_verbose` | Detailed (full section with subsections) |
+
+### Naming Examples
+
+| Filename | Positive Guidance | Negative Guidance | Interpretation |
+|----------|-------------------|-------------------|----------------|
+| `detect_image-only.md` | Minimal text, images | None | H1 baseline - image-only with no exclusion text |
+| `detect_verbose-text-image.md` | Detailed text + images | None | H1 baseline - verbose positive, no exclusion text |
+| `detect_verbose-text-image_terse.md` | Detailed text + images | Brief exclusion text | Verbose positive + terse negative |
+| `detect_verbose-text-image_verbose.md` | Detailed text + images | Detailed exclusion text | Both positive and negative guidance are verbose |
+| `detect_image-only_terse.md` | Minimal text, images | Brief exclusion text | Minimal positive + terse negative |
+
+### Key Points
+
+- **Orthogonal factors:** Any M/E level can be combined with any H5 level
+- **Text-only M/E levels** (brief-text, verbose-text) have no H5 variants because negative guidance requires visual examples
+- **All image-using files use Scale-8 library** (17 examples: Canon+ 4, Canon- 2, HP 4, HN 4, null 3)
+- **Config files (.json) always use minimal labels** ("Positive"/"Negative"); text elaboration controlled only in instruction files (.md)
+
+### Structural Consistency
+
+Within each M/E level, positive guidance text is **identical** across all H5 variants. Only the exclusion guidance section varies:
+
+- `detect_verbose-text-image.md` - NO exclusion section
+- `detect_verbose-text-image_terse.md` - Same positive text + brief exclusion section
+- `detect_verbose-text-image_verbose.md` - Same positive text + detailed exclusion section
+
+This ensures that any performance differences between H5 levels can be attributed solely to the negative guidance, not to changes in positive guidance.
+
+### Additional Suffixes
+
+| Suffix | Factor | Description |
+|--------|--------|-------------|
+| `_canonical-last` | H4 | Ordering: hard examples first, legend last |
+| `_random-order` | H4 | Ordering: random permutation (documented seed) |
+
+**Note:** Model selection (Flash vs Pro) and temperature are runtime parameters passed to the script, not encoded in the config.
 
 ## Config Schema
 
@@ -41,18 +87,26 @@ Optional variant suffixes:
 
 ## Active Configs
 
-### Main Detection Configs
+### Detection Instruction Files (11 total)
 
-| Config | Instruction | Modality | H5 |
-|--------|-------------|----------|-----|
-| `detect_image-only.json` | `detect_image-only.md` | Image-only | None |
-| `detect_image-only_hardneg.json` | `detect_image-only_hardneg.md` | Image-only | Text+Images |
-| `detect_brief-text.json` | `detect_brief-text.md` | Brief-text | None |
-| `detect_brief-text-image.json` | `detect_brief-text-image.md` | Brief-text+image | None |
-| `detect_brief-text-image_hardneg.json` | `detect_brief-text-image_hardneg.md` | Brief-text+image | Text+Images |
-| `detect_verbose-text.json` | `detect_verbose-text.md` | Verbose-text | None |
-| `detect_verbose-text-image.json` | `detect_verbose-text-image.md` | Verbose-text+image | None |
-| `detect_verbose-text-image_hardneg.json` | `detect_verbose-text-image_hardneg.md` | Verbose-text+image | Text+Images |
+**Image-using M/E levels × 3 H5 levels = 9 files:**
+
+| M/E Level | Minimal | Terse | Verbose |
+|-----------|---------|-------|---------|
+| Image-only | `detect_image-only.md` | `detect_image-only_terse.md` | `detect_image-only_verbose.md` |
+| Brief-text+image | `detect_brief-text-image.md` | `detect_brief-text-image_terse.md` | `detect_brief-text-image_verbose.md` |
+| Verbose-text+image | `detect_verbose-text-image.md` | `detect_verbose-text-image_terse.md` | `detect_verbose-text-image_verbose.md` |
+
+**Text-only M/E levels × 1 H5 level = 2 files:**
+
+| M/E Level | H5=Minimal |
+|-----------|------------|
+| Brief-text | `detect_brief-text.md` |
+| Verbose-text | `detect_verbose-text.md` |
+
+### Detection Config Files
+
+Config files (`.json`) pair with instruction files and specify the few-shot library. See `configs/` directory for full inventory.
 
 ### Two-Stage Pipeline Configs
 
@@ -68,7 +122,7 @@ Optional variant suffixes:
 | `detect_*_canonical-last.json` | H4-B | Hard examples first, legend last |
 | `detect_*_random-order.json` | H4-C | Random permutation (seed 42) |
 
-Available for: image-only, brief-text-image, verbose-text-image (± hardneg)
+Available for: image-only, brief-text-image, verbose-text-image (at each H5 level)
 
 ## Hypothesis-Specific Configs
 
@@ -91,13 +145,21 @@ Tests whether the order of few-shot examples affects detection performance.
 
 **Current status**: Skeleton configs with canonical + null examples only. Hard examples to be added after training tile evaluation.
 
-### H5: Hard Negative Guidance
+### H5: Negative Text Treatment
 
-Tested via `_hardneg` config suffix and corresponding instruction files with exclusion guidance.
+Tests how much exclusion guidance to provide for negative examples.
+
+| H5 Level | Suffix | Description |
+|----------|--------|-------------|
+| Minimal | `_minimal` or none | "Negative" label only - images speak for themselves |
+| Terse | `_terse` | Brief exclusion guidance (1-2 sentences) |
+| Verbose | `_verbose` | Detailed exclusion guidance (6 subsections) |
+
+H5 is tested at all 3 image-using M/E levels (9 cells total, 6 net new after H1 overlap).
 
 ### H7: Temperature
 
-Temperature is a **runtime parameter**, not a config variant. The factorial design (preregistration Section 8.4.6) tests T ∈ {0.0, 0.7, 1.0, 1.3} across all config combinations. No separate config files needed.
+Temperature is a **runtime parameter**, not a config variant. The OFAT design (preregistration Section 8.4.7) tests T ∈ {0.0, 0.3, 0.7, 1.0, 1.3} at optimal M/E. No separate config files needed.
 
 ### H9: Prompt Diversity (Exploratory)
 
@@ -115,11 +177,21 @@ Methodology documented in preregistration Section 8.3.2. Five semantically equiv
 
 ---
 
-## Migration from Old Names (2026-01-08)
+## Migration History
 
-The prompts were reorganised to align with preregistration v4.2 naming conventions.
+### v4.6 Changes (2026-01-14)
 
-### Naming Convention Changes
+H5 naming updated from binary (`_hardneg`) to three-level system:
+
+| Old Pattern | New Pattern |
+|-------------|-------------|
+| `*_hardneg.*` | `*_verbose.*` (detailed exclusion) |
+| *(no suffix)* | `*_minimal.*` or no suffix (no exclusion text) |
+| *(new)* | `*_terse.*` (brief exclusion) |
+
+H5 now tested at all 3 image-using M/E levels (not just optimal).
+
+### v4.2 Changes (2026-01-08)
 
 | Old Pattern | New Pattern |
 |-------------|-------------|
@@ -131,8 +203,8 @@ The prompts were reorganised to align with preregistration v4.2 naming conventio
 
 | File | Reason |
 |------|--------|
-| `detect_text-only_hardneg.*` | Text-only tested at H5=None only |
-| `detect_text-only_elaborate_hardneg.*` | Text-only tested at H5=None only |
+| `detect_text-only_hardneg.*` | Text-only tested at H5=Minimal only |
+| `detect_text-only_elaborate_hardneg.*` | Text-only tested at H5=Minimal only |
 | `detect_text-image.md` | Duplicate of `detect_brief-text-image.md` |
 
 ## How to Create a New Version
