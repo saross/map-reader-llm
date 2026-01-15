@@ -1,38 +1,36 @@
 # Interaction Triggers for Follow-up Testing
 
-**Date:** January 12, 2026  
-**Context:** Post-cascade analysis of VLM burial mound detection experiments  
+**Date:** January 12, 2026 (updated January 14, 2026)
+**Context:** Post-cascade analysis of VLM burial mound detection experiments
 **Purpose:** Guide decisions about whether to conduct OFAT interaction probes after main experiment
+**Status:** Planning document — NOT part of preregistration (non-binding guidance)
 
 ---
 
 ## Overview
 
-The main experiment uses a sequential/cascading design:
+The main experiment uses a sequential OFAT design (preregistration v4.6):
 
 ```
-H1 (M/E) → H8 (Composition) → H5 (Text treatment) → H4 (Ordering)
+H1 (M/E: 5 cells) → H7 (Temperature: 5 cells) → H8 (Composition: 7 cells) → H5 (Text: 6 cells) → H4 (Ordering: 3 cells)
 ```
 
-This efficiently answers main effect questions but doesn't directly test interactions. This document identifies signals that would warrant follow-up OFAT interaction testing.
+This efficiently answers main effect questions. The v4.6 design directly tests **M/E × H5 interaction** (H5 at all 3 image-using M/E levels), but other interactions remain untested. This document identifies signals that would warrant follow-up OFAT interaction testing.
 
 ---
 
 ## Potential Interactions to Monitor
 
-### 1. M/E × H5 (Positive vs Negative Text Elaboration)
+### 1. M/E × H5 — NOW TESTED IN CONFIRMATORY DESIGN
 
-**Why it might matter:** Optimal text elaboration for describing what TO detect (positives) might differ from optimal text for what NOT to detect (negatives). Verbose positive guidance might pair best with terse negative guidance, or vice versa.
+**Status:** ✅ Superseded — v4.6 tests H5 at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new). The M/E × H5 interaction is directly testable via two-way ANOVA in the confirmatory analysis.
 
-**Signal to trigger follow-up:**
-- H1 optimal (e.g., Brief+image) ≠ H5 optimal (e.g., Verbose)
-- Large effect size in one but not the other
+**What to look for in results:**
+- Significant M/E × H5 interaction term
+- Whether optimal H5 level differs by M/E (e.g., Image-only benefits from Verbose exclusions, but Verbose+image doesn't)
+- Asymmetric elaboration effects (positive vs negative guidance)
 
-**Follow-up design (OFAT):**
-- Test H5 levels at a contrasting M/E level (e.g., if H1 optimal = Verbose, test H5 at Brief)
-- 3 cells, ~$9
-
-**What it would tell us:** Whether text elaboration recommendations are symmetric or asymmetric for positive vs negative guidance.
+No follow-up probe needed — this is now confirmatory.
 
 ---
 
@@ -46,7 +44,7 @@ This efficiently answers main effect questions but doesn't directly test interac
 
 **Follow-up design (OFAT):**
 - Test 2-3 H8 library sizes at a contrasting M/E level
-- 2-3 cells, ~$6-9
+- 2-3 cells, ~$22-33
 
 **What it would tell us:** Whether verbose text reduces the need for large example libraries (cost optimisation insight).
 
@@ -78,7 +76,7 @@ This efficiently answers main effect questions but doesn't directly test interac
 
 **Follow-up design (OFAT):**
 - Test H5 at a different H8 library size (e.g., if tested at Scale-8, probe at Scale-4 or +HP)
-- 3 cells, ~$9
+- 3 cells, ~$33
 
 **What it would tell us:** Whether text and image guidance for negatives are substitutes or complements.
 
@@ -94,7 +92,7 @@ This efficiently answers main effect questions but doesn't directly test interac
 
 **Follow-up design (OFAT):**
 - Test ordering at a contrasting library size
-- 3 cells, ~$9
+- 3 cells, ~$33
 
 **What it would tell us:** Whether ordering recommendations generalise across library sizes.
 
@@ -119,7 +117,7 @@ After cascade results are complete, use this checklist:
 
 ### Step 1: Check for Obvious Signals
 
-- [ ] Does H1 optimal differ from H5 optimal? → Consider M/E × H5 probe
+- [ ] Is M/E × H5 interaction significant? → Already tested in confirmatory design (Section 1)
 - [ ] Does voting improvement vary by temperature? → Note for deployment; may not need new runs
 - [ ] Do example-level coefficients show surprises? → Consider composition follow-ups
 
@@ -135,10 +133,10 @@ For each potential interaction:
 | Probe | Cells | Cost | Practical Value |
 |-------|-------|------|-----------------|
 | Temperature × Voting | 0 (post-hoc) | $0 | High (deployment) |
-| M/E × H5 | 3 | ~$9 | Medium (text guidance) |
-| M/E × H8 | 2-3 | ~$6-9 | Medium (cost optimisation) |
-| H8 × H5 | 3 | ~$9 | Medium (redundancy) |
-| Ordering × Library | 3 | ~$9 | Low (unless H4 effect is strong) |
+| M/E × H5 | — | — | ✅ Now confirmatory |
+| M/E × H8 | 2-3 | ~$22-33 | Medium (cost optimisation) |
+| H8 × H5 | 3 | ~$33 | Medium (redundancy) |
+| Ordering × Library | 3 | ~$33 | Low (unless H4 effect is strong) |
 
 ---
 
