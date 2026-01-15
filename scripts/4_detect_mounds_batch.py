@@ -394,6 +394,11 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         "max_output_tokens": config.get("max_output_tokens", 8192),
         "response_mime_type": "application/json",
     }
+
+    # Add thinking_level if specified (Gemini 3 reasoning depth control)
+    # Note: API uses camelCase 'thinkingLevel' in GenerationConfig
+    if "thinking_level" in config:
+        generation_config["thinkingLevel"] = config["thinking_level"]
     
     safety_settings = [
         {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
