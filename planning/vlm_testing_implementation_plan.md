@@ -1,9 +1,10 @@
 # VLM Burial Mound Detection: Testing Implementation Plan
 
-**Document Purpose**: Implementation specification for pytest-based testing framework  
-**Target Audience**: Claude Code (implementation), Shawn Ross (review/approval)  
-**Created**: 2025-01-02  
-**Status**: Ready for review
+**Document Purpose**: Implementation specification for pytest-based testing framework
+**Target Audience**: Claude Code (implementation), Shawn Ross (review/approval)
+**Created**: 2025-01-02
+**Updated**: 2026-01-17
+**Status**: Revised based on review
 
 ---
 
@@ -19,6 +20,8 @@ This testing plan supports a research project with:
 **Testing Philosophy**: Research code needs different testing than production software. Focus on **reproducibility**, **integration correctness**, and **methodology compliance** rather than exhaustive unit test coverage.
 
 **Implementation Strategy**: Phased approach starting with critical path tests (Tier 1), expanding to high-value tests if time permits (Tier 2), with optional coverage (Tier 3).
+
+**2026-01-17 Revision**: Voting aggregation promoted to Tier 1 (methodology-critical). Config uniqueness test redesigned to validate structure not behaviour. Ground truth and provider metadata tests added.
 
 ---
 
@@ -273,16 +276,18 @@ def test_crs_matches_preregistration():
 - `tests/test_preregistration_compliance.py`: 5 compliance tests
 - Refactor existing scripts to import from `preregistration_params.py`
 
-### 1.3 Config Behavioral Uniqueness Tests
+### 1.3 Config Structural Uniqueness Tests
 
 **File**: `tests/test_config_uniqueness.py`
 
-**Purpose**: Verify 16 experimental configs produce distinct behaviors
+**Purpose**: Verify 16 experimental configs are structurally distinct and valid
 
-**Rationale**: Config files might look different but execute identically due to:
-- Temperature parameters being ignored by model
-- Prompt variants producing identical outputs
-- Config parsing errors causing fallback to defaults
+**Rationale**: Config files must be:
+- Loadable without errors
+- Complete (all required fields present)
+- Distinct (no duplicate parameter combinations)
+
+**Note**: These tests validate config *structure*, not API *behaviour*. Behavioural differences are validated in experimental runs where actual API responses differ.
 
 **Implementation**:
 
@@ -293,7 +298,7 @@ def test_configs_load_without_error():
     """All 16 configs load successfully"""
     config_files = list_config_files()
     assert len(config_files) == 16
-    
+
     for config_path in config_files:
         config = load_config(config_path)
         assert config is not None, f"Failed to load {config_path}"
@@ -301,45 +306,35 @@ def test_configs_load_without_error():
 def test_configs_have_required_fields():
     """All configs contain required fields"""
     required_fields = ['prompt_type', 'temperature', 'model', 'voting_threshold']
-    
+
     for config_path in list_config_files():
         config = load_config(config_path)
         for field in required_fields:
             assert field in config, f"{config_path} missing field: {field}"
 
-def test_configs_produce_distinct_outputs():
+def test_configs_have_distinct_parameters():
     """
-    Verify configs don't collapse to identical behavior
-    
-    Runs simple detection on same tile with each config,
-    verifies sufficient output diversity
+    Verify configs produce distinct parameter combinations.
+
+    Note: This validates config structure, not API behaviour.
+    Actual behavioural differences are validated in experimental runs.
     """
-    # Use one of our regression test tiles
-    test_tile_response = load_fixture("fixtures/tile_sparse_response.json")
-    
-    outputs = {}
+    signatures = {}
     for config_path in list_config_files():
         config = load_config(config_path)
-        # Parse detection with this config's parameters
-        detections = parse_detection_response(test_tile_response, config)
-        # Create hashable representation
-        output_signature = (
-            len(detections),
-            tuple(sorted((d.x, d.y) for d in detections))
+        sig = (
+            config.get('model'),
+            config.get('temperature'),
+            config.get('prompt_type'),
+            config.get('voting_threshold'),
+            # Add other distinguishing parameters as needed
         )
-        outputs[config_path.stem] = output_signature
-    
-    # Assert we get at least 12 distinct outputs (allow some duplication)
-    unique_outputs = len(set(outputs.values()))
-    assert unique_outputs >= 12, \
-        f"Only {unique_outputs}/16 unique outputs - configs may be redundant"
-    
-    # Report any duplicate configs
-    from collections import Counter
-    duplicates = [sig for sig, count in Counter(outputs.values()).items() 
-                  if count > 1]
-    if duplicates:
-        print(f"Warning: {len(duplicates)} duplicate output signatures")
+        signatures[config_path.stem] = sig
+
+    # All 16 configs should have unique parameter combinations
+    unique_sigs = set(signatures.values())
+    assert len(unique_sigs) == len(signatures), \
+        "Some configs have identical parameter combinations"
 ```
 
 **Deliverables**:
@@ -438,49 +433,19 @@ def test_spatial_tolerance_applied():
 **Deliverables**:
 - `tests/test_f1_calculation.py`: 6 correctness tests
 
----
-
-### Tier 1 Summary
-
-**Total Estimated Time**: 6-8 hours (including pytest learning)
-
-**Files Created**:
-- `tests/__init__.py`
-- `tests/conftest.py` (pytest configuration)
-- `tests/test_integration_regression.py` (3 tests)
-- `tests/test_preregistration_compliance.py` (5 tests)
-- `tests/test_config_uniqueness.py` (3 tests)
-- `tests/test_f1_calculation.py` (6 tests)
-- `scripts/preregistration_params.py` (constants)
-- `scripts/create_test_fixtures.py` (one-time script)
-- `tests/fixtures/*.json` (6 fixture files)
-- `pytest.ini` (pytest config)
-
-**Total Tests**: ~17 tests covering critical paths
-
-**Run Command**: `pytest tests/ -v`
-
-**Success Criteria**: All tests pass, providing confidence in:
-- End-to-end pipeline correctness
-- Methodology compliance with preregistration
-- Config behavioral diversity
-- Core metric calculation accuracy
-
----
-
-## TIER 2: High-Value Tests (If Time Permits)
-
-**Priority**: Valuable but not blocking  
-**Time Estimate**: 3-4 hours  
-**Implement if**: Tier 1 complete and time available before factorial experiments
-
-### 2.1 Voting Aggregation Correctness
+### 1.5 Voting Aggregation Correctness
 
 **File**: `tests/test_voting_aggregation.py`
 
 **Purpose**: Validate consensus voting logic
 
+**Rationale**: Consensus voting is central to the preregistered methodology (§4.1). A bug here would invalidate experimental results. This is methodology-critical and belongs in Tier 1.
+
+**Implementation**:
+
 ```python
+# tests/test_voting_aggregation.py
+
 def test_voting_threshold_3_of_5():
     """Test 3/5 consensus threshold"""
     # 5 passes detect at slightly different coordinates
@@ -491,9 +456,9 @@ def test_voting_threshold_3_of_5():
         [(50, 50)],  # Pass 4 (different location)
         [(10.1, 10.1)]  # Pass 5
     ]
-    
+
     consensus = aggregate_voting(pass_detections, threshold=3, tolerance_m=5.0)
-    
+
     # Should find 1 consensus detection at ~(10, 10) with 4/5 votes
     assert len(consensus) == 1
     assert consensus[0].vote_count == 4
@@ -504,10 +469,151 @@ def test_voting_spatial_matching():
 
 def test_voting_edge_case_exactly_at_threshold():
     """Detection appearing in exactly k of N passes"""
-    # Test tie-breaking behavior
+    # Test tie-breaking behaviour
 ```
 
-### 2.2 Cost Model Validation
+**Deliverables**:
+- `tests/test_voting_aggregation.py`: 3 voting correctness tests
+
+### 1.6 Ground Truth Loading Validation
+
+**File**: `tests/test_ground_truth.py`
+
+**Purpose**: Verify ground truth file exists and has expected schema
+
+**Rationale**: Tests assume `load_ground_truth()` is correct. Bugs there would silently corrupt all F1 calculations.
+
+**Implementation**:
+
+```python
+# tests/test_ground_truth.py
+
+def test_ground_truth_loads_correctly():
+    """
+    Verify ground truth file exists and has expected schema.
+
+    Catches: missing files, schema changes, encoding issues
+    """
+    from scripts.config import GROUND_TRUTH_PATH
+    import geopandas as gpd
+
+    # File exists
+    assert GROUND_TRUTH_PATH.exists(), f"Ground truth missing: {GROUND_TRUTH_PATH}"
+
+    # Loads as valid GeoDataFrame
+    gdf = gpd.read_file(GROUND_TRUTH_PATH)
+    assert len(gdf) > 0, "Ground truth is empty"
+
+    # Has required columns
+    required = ['geometry', 'tile_id']  # Adjust based on actual schema
+    for col in required:
+        assert col in gdf.columns, f"Missing column: {col}"
+
+    # Geometries are valid
+    assert gdf.geometry.is_valid.all(), "Invalid geometries in ground truth"
+
+def test_ground_truth_crs_matches_preregistration():
+    """Verify ground truth uses preregistered CRS (EPSG:32635)"""
+    from scripts.config import GROUND_TRUTH_PATH
+    from scripts.preregistration_params import CRS_EPSG
+    import geopandas as gpd
+
+    gdf = gpd.read_file(GROUND_TRUTH_PATH)
+    assert gdf.crs.to_epsg() == CRS_EPSG, \
+        f"Ground truth CRS {gdf.crs.to_epsg()} != preregistered {CRS_EPSG}"
+```
+
+**Deliverables**:
+- `tests/test_ground_truth.py`: 2 ground truth validation tests
+
+### 1.7 Provider Metadata Extraction (Optional)
+
+**File**: `tests/test_metadata_extraction.py`
+
+**Purpose**: Verify provider-specific metadata fields are extracted correctly
+
+**Rationale**: Given multi-provider support (Gemini, Claude, GPT) and recent work on `lib_llm_metadata.py` adding Gemini thinking tokens, verify extraction works for each provider.
+
+**Note**: Optional for Tier 1. Implement if time permits after core tests complete.
+
+**Implementation**:
+
+```python
+# tests/test_metadata_extraction.py
+
+def test_gemini_metadata_extraction():
+    """
+    Verify Gemini-specific metadata fields are extracted correctly.
+
+    Tests: thoughts_tokens, modality_breakdown, traffic_type
+    """
+    from scripts.lib_llm_metadata import extract_gemini_metadata
+
+    # Load a recorded Gemini response fixture
+    response = load_fixture("fixtures/gemini_response_sample.json")
+
+    metadata = extract_gemini_metadata(response)
+
+    # Verify Gemini-specific fields
+    assert metadata.tokens.thoughts_tokens >= 0
+    assert metadata.provider == "google"
+    # Add more assertions based on expected fields
+
+def test_claude_metadata_extraction():
+    """Verify Claude-specific metadata fields are extracted correctly"""
+    # Similar pattern for Claude responses
+
+def test_openai_metadata_extraction():
+    """Verify OpenAI-specific metadata fields are extracted correctly"""
+    # Similar pattern for OpenAI responses
+```
+
+**Note**: Requires creating provider-specific response fixtures. Can be combined with fixture creation for integration tests.
+
+**Deliverables**:
+- `tests/test_metadata_extraction.py`: 3 metadata extraction tests (optional)
+
+---
+
+### Tier 1 Summary
+
+**Files Created**:
+- `tests/__init__.py`
+- `tests/conftest.py` (pytest configuration)
+- `tests/test_integration_regression.py` (3 tests)
+- `tests/test_preregistration_compliance.py` (5 tests)
+- `tests/test_config_uniqueness.py` (3 tests)
+- `tests/test_f1_calculation.py` (6 tests)
+- `tests/test_voting_aggregation.py` (3 tests)
+- `tests/test_ground_truth.py` (2 tests)
+- `tests/test_metadata_extraction.py` (3 tests, optional)
+- `scripts/preregistration_params.py` (constants)
+- `scripts/create_test_fixtures.py` (one-time script)
+- `tests/fixtures/*.json` (6+ fixture files)
+- `pytest.ini` (pytest config)
+
+**Total Tests**: ~22-25 tests covering critical paths (was ~17)
+
+**Run Command**: `pytest tests/ -v`
+
+**Success Criteria**: All tests pass, providing confidence in:
+- End-to-end pipeline correctness
+- Methodology compliance with preregistration
+- Config structural validity
+- Core metric calculation accuracy
+- Voting aggregation correctness
+- Ground truth data integrity
+
+---
+
+## TIER 2: High-Value Tests (If Time Permits)
+
+**Priority**: Valuable but not blocking
+**Implement if**: Tier 1 complete and time available before factorial experiments
+
+**Note**: Voting aggregation moved to Tier 1 as methodology-critical.
+
+### 2.1 Cost Model Validation
 
 **File**: `tests/test_cost_estimation.py` + one-time validation script
 
@@ -566,7 +672,7 @@ def test_cost_estimation_pricing_model():
     # Test against known pricing (update when pricing changes)
 ```
 
-### 2.3 Reproducibility/Determinism Tests
+### 2.2 Reproducibility/Determinism Tests
 
 **File**: `tests/test_reproducibility.py`
 
@@ -996,12 +1102,20 @@ Before implementation, please confirm:
 
 1. **Tile selection for fixtures**: Approve empty/sparse/dense tile choices from training set?
 2. **F1 tolerance**: Is ±0.01 acceptable tolerance for regression tests, or should it be tighter?
-3. **Config uniqueness threshold**: Currently 12/16 unique outputs - adjust if needed?
-4. **Time budget**: Confirm 6-8 hours acceptable for Tier 1 implementation?
-5. **Tier 2 priority**: Should we implement Tier 2, or stop after Tier 1?
+3. **Ground truth schema**: Confirm required columns for `test_ground_truth.py` (currently assumes `geometry`, `tile_id`)
+4. **Tier 2 priority**: Should we implement Tier 2, or stop after Tier 1?
+
+---
+
+## Revision History
+
+| Date | Changes |
+|------|---------|
+| 2025-01-02 | Initial version |
+| 2026-01-17 | Revised based on review: moved voting to Tier 1, redesigned config test, added ground truth and metadata tests |
 
 ---
 
 **Document End**
 
-*Ready for review and handoff to Claude Code for implementation*
+*Ready for implementation*
