@@ -11,6 +11,7 @@ Usage:
     python scripts/run_study.py studies/phase2-factorial.yaml
     python scripts/run_study.py studies/phase2-factorial.yaml --dry-run
     python scripts/run_study.py studies/phase2-factorial.yaml --resume
+    python scripts/run_study.py studies/phase2-factorial.yaml --timeout 7200
     python scripts/run_study.py studies/phase2-factorial.yaml --condition "image-only_canonical-first_baseline_T1.0"
 
 Inputs:
@@ -24,9 +25,14 @@ Outputs:
     - Study manifest documenting all conditions
     - Summary CSV with per-condition metrics
 
+Exit Codes:
+    0 - Success: All conditions completed successfully
+    1 - Error: Configuration or execution error prevented study from running
+    2 - Partial failure: Some conditions failed but study completed
+
 Author: Shawn Ross, Claude Code
 Version: 1.0.0
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 import argparse
@@ -209,7 +215,8 @@ def run_condition(
     condition: dict,
     config: dict,
     output_dir: Path,
-    dry_run: bool = False
+    dry_run: bool = False,
+    timeout: int = 3600,
 ) -> tuple[bool, str]:
     """
     Execute detection for a single condition.
@@ -219,6 +226,7 @@ def run_condition(
         config: Full study configuration
         output_dir: Base output directory for results
         dry_run: If True, print command without executing
+        timeout: Maximum seconds to wait for condition to complete (default: 3600)
 
     Returns:
         Tuple of (success: bool, message: str)
@@ -264,7 +272,7 @@ def run_condition(
             cwd=str(PROJECT_ROOT),
             capture_output=True,
             text=True,
-            timeout=3600,  # 1 hour timeout per condition
+            timeout=timeout,
             env=env,
         )
 
@@ -286,6 +294,7 @@ def run_study(
     resume: bool = False,
     single_condition: str | None = None,
     verbose: bool = True,
+    timeout: int = 3600,
 ) -> dict:
     """
     Execute a complete study from YAML definition.
@@ -296,6 +305,7 @@ def run_study(
         resume: If True, skip already-completed conditions
         single_condition: If specified, run only this condition ID
         verbose: If True, print progress information
+        timeout: Maximum seconds per condition (default: 3600)
 
     Returns:
         Summary dictionary with results
@@ -400,7 +410,9 @@ def run_study(
             print(f"         Config: {condition['config_filename']}")
             print(f"         Temperature: {condition['temperature']}")
 
-        success, message = run_condition(condition, config, output_dir, dry_run=dry_run)
+        success, message = run_condition(
+            condition, config, output_dir, dry_run=dry_run, timeout=timeout
+        )
 
         if success:
             results["completed"].append(condition_id)
@@ -497,6 +509,12 @@ Examples:
         help="Minimal output",
     )
     parser.add_argument(
+        "--timeout",
+        type=int,
+        default=3600,
+        help="Timeout in seconds per condition (default: 3600)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -529,6 +547,7 @@ Examples:
         resume=args.resume,
         single_condition=args.condition,
         verbose=not args.quiet,
+        timeout=args.timeout,
     )
 
     # Exit code based on results

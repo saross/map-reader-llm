@@ -16,16 +16,16 @@ Tile-level (Section 4.2):
 
 Usage:
     # Compare two specific conditions
-    python scripts/analyze_study_effects.py outputs/study \
+    python scripts/analyse_study_effects.py outputs/study \
         --condition-a image-only_canonical-first_baseline_T1.0 \
         --condition-b text-image_canonical-first_baseline_T1.0
 
     # Run all pairwise comparisons for a factor
-    python scripts/analyze_study_effects.py outputs/study \
+    python scripts/analyse_study_effects.py outputs/study \
         --factor modality
 
     # Export results to JSON
-    python scripts/analyze_study_effects.py outputs/study \
+    python scripts/analyse_study_effects.py outputs/study \
         --condition-a A --condition-b B --output results.json
 
 Inputs:
@@ -357,15 +357,15 @@ def main():
         epilog="""
 Examples:
   # Compare two conditions
-  python scripts/analyze_study_effects.py outputs/study \\
+  python scripts/analyse_study_effects.py outputs/study \\
       --condition-a image-only_canonical-first_baseline_T1.0 \\
       --condition-b text-image_canonical-first_baseline_T1.0
 
   # List available conditions
-  python scripts/analyze_study_effects.py outputs/study --list
+  python scripts/analyse_study_effects.py outputs/study --list
 
   # Export to JSON
-  python scripts/analyze_study_effects.py outputs/study \\
+  python scripts/analyse_study_effects.py outputs/study \\
       --condition-a A --condition-b B --output effects.json
         """,
     )

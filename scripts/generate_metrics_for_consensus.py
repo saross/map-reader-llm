@@ -14,6 +14,9 @@ def generate_metrics(run_dir, bounds_path, output_dir=None):
     run_dir = Path(run_dir)
     if output_dir is None:
         output_dir = run_dir
+    else:
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
     print(f"Scanning runs in {run_dir}...")
     
     # Find all run_* files (excluding .meta.json, _metrics.json, etc)

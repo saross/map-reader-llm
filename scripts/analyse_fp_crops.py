@@ -8,7 +8,7 @@ to align with F1 evaluation spatial tolerance, then extracts image crops for
 the most recurrent errors to build a hard example library.
 
 Usage:
-    python scripts/analyze_fp_crops.py \\
+    python scripts/analyse_fp_crops.py \\
         --input outputs/results/v4.2_temp_0_7_train/run_01_fn.geojson \\
         --output_dir outputs/hard-examples \\
         --mode fn \\
@@ -34,6 +34,11 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # Import project config for consistent paths
 import config
 
+# Constants for clustering and cropping
+DISTANCE_THRESHOLD_METRES = 20.0  # Aligns with F1 evaluation spatial tolerance
+DEFAULT_CROP_LIMIT = 10  # Maximum number of hard examples to extract
+CROP_MARGIN_PX = 60  # Pixel margin around detection for context
+
 
 def get_centroid(geom_bounds):
     """Get centroid coordinates from geometry bounds [minx, miny, maxx, maxy]."""
@@ -52,11 +57,32 @@ def centroid_distance(bounds_a, bounds_b):
     return math.sqrt((cx_a - cx_b) ** 2 + (cy_a - cy_b) ** 2)
 
 def geo_to_pixel(geo_bounds, tile_bounds, img_size):
+    """
+    Convert geographic bounds to pixel coordinates.
+
+    Args:
+        geo_bounds: Geographic bounds [minx, miny, maxx, maxy]
+        tile_bounds: Tile geographic bounds [minx, miny, maxx, maxy]
+        img_size: Image dimensions (width, height)
+
+    Returns:
+        Pixel bounds [px_minx, px_miny, px_maxx, px_maxy]
+
+    Raises:
+        ValueError: If tile bounds have zero width or height
+    """
     g_minx, g_miny, g_maxx, g_maxy = geo_bounds
     t_minx, t_miny, t_maxx, t_maxy = tile_bounds
     w, h = img_size
-    scale_x = w / (t_maxx - t_minx)
-    scale_y = h / (t_maxy - t_miny)
+
+    # Guard against degenerate tile bounds
+    tile_width = t_maxx - t_minx
+    tile_height = t_maxy - t_miny
+    if tile_width == 0 or tile_height == 0:
+        raise ValueError(f"Degenerate tile bounds: width={tile_width}, height={tile_height}")
+
+    scale_x = w / tile_width
+    scale_y = h / tile_height
     px_minx = (g_minx - t_minx) * scale_x
     px_maxx = (g_maxx - t_minx) * scale_x
     px_miny = (t_maxy - g_maxy) * scale_y
@@ -68,7 +94,7 @@ def extract_crops(args):
     results_dir = input_file.parent
     mode_suffix = "_fn.geojson" if args.mode == "fn" else "_fp.geojson"
     
-    print(f"--- Analyzing {args.mode.upper()}s ---")
+    print(f"--- Analysing {args.mode.upper()}s ---")
     
     # 1. Load Bounds
     # Assuming bounds file is in the same results tree or provided via arg? 
@@ -118,9 +144,9 @@ def extract_crops(args):
             
     print(f"Total entries loaded: {len(all_dets)}")
     
-    # 3. Cluster using distance-based matching (20m threshold)
+    # 3. Cluster using distance-based matching
     # Aligns with F1 evaluation spatial tolerance for consistency
-    distance_thresh = 20.0
+    distance_thresh = DISTANCE_THRESHOLD_METRES
     clusters = []
     used_indices = set()
 
@@ -189,8 +215,8 @@ def extract_crops(args):
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Extract top N
-    limit = 10
+    # Extract top N hard examples
+    limit = DEFAULT_CROP_LIMIT
     extracted_count = 0
     
     for i, item in enumerate(sorted_clusters):
@@ -272,8 +298,8 @@ def extract_crops(args):
             with Image.open(img_path_resolved) as img:
                 px_bounds = geo_to_pixel(item["geo_bounds"], t_bounds, img.size)
                 
-                # Expand
-                margin = 60 # Slightly larger for context
+                # Expand crop area with margin for context
+                margin = CROP_MARGIN_PX
                 p_minx, p_miny, p_maxx, p_maxy = px_bounds
                 
                 crop_minx = max(0, int(p_minx) - margin)

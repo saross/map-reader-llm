@@ -14,8 +14,8 @@ except ImportError:
     print("Error importing scripts.lib_advanced_metrics.")
     sys.exit(1)
 
-def analyze_proposer(union_path, bounds_path, template_path):
-    print(f"Analyzing Proposer Consensus: {union_path}")
+def analyse_proposer(union_path, bounds_path, template_path):
+    print(f"Analysing Proposer Consensus: {union_path}")
     
     # 1. Load Ground Truth
     try:
@@ -75,4 +75,4 @@ if __name__ == "__main__":
     parser.add_argument("--template", required=True)
     args = parser.parse_args()
     
-    analyze_proposer(args.union, args.bounds, args.template)
+    analyse_proposer(args.union, args.bounds, args.template)

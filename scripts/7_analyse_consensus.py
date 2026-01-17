@@ -11,7 +11,7 @@ Description:
     - Verifier Vote Threshold (v4.6): How many times must Stage 2 confirm it?
 
 Usage:
-    python scripts/7_analyze_consensus.py \\
+    python scripts/7_analyse_consensus.py \\
         --pred outputs/results/v4.1/verified.geojson \\
         --bounds inputs/vectors/region_bounds.geojson \\
         --template inputs/vectors/ground_truth.geojson \\
@@ -47,8 +47,26 @@ except ImportError:
     print("Error importing scripts.lib_advanced_metrics.")
     sys.exit(1)
 
-def analyze_consensus(pred_path, bounds_path, template_path, iterations=5):
-    print(f"Analyzing Consensus: {pred_path}")
+def analyse_consensus(
+    pred_path: Path | str,
+    bounds_path: Path | str,
+    template_path: Path | str,
+    iterations: int = 5,
+) -> None:
+    """
+    Analyse consensus voting thresholds for the two-stage pipeline.
+
+    Performs a 2D grid search over proposer vote thresholds (1-5) and verifier
+    vote thresholds (1-iterations) to find optimal consensus settings.
+
+    Args:
+        pred_path: Path to the union predictions GeoJSON (containing proposer_votes
+            and verifier_votes).
+        bounds_path: Path to the tile bounds GeoJSON.
+        template_path: Path to the ground truth reference GeoJSON.
+        iterations: Maximum number of verifier iterations to simulate (default: 5).
+    """
+    print(f"Analysing Consensus: {pred_path}")
     
     # 1. Load Ground Truth
     try:
@@ -91,10 +109,11 @@ def analyze_consensus(pred_path, bounds_path, template_path, iterations=5):
         # We need to parse 'verifier_results' which is a list of dicts or a string
         # It's likely a list of dicts if loaded from GeoJSON
         
-        # Helper to check first result
-        def check_first_pass(row):
+        def check_first_pass(row: pd.Series) -> bool:
+            """Check if the first verifier pass returned verified=True."""
             res = row.get('verifier_results')
-            if not res or not isinstance(res, list) or len(res) == 0: return False
+            if not res or not isinstance(res, list) or len(res) == 0:
+                return False
             return res[0].get('verified', False)
 
         subset_verified = subset_p[subset_p.apply(check_first_pass, axis=1)].copy()
@@ -105,7 +124,7 @@ def analyze_consensus(pred_path, bounds_path, template_path, iterations=5):
             p, r, f1 = calculate_f1_internal(subset_verified, gdf_ref, gdf_bounds)
             
         label = "1-Pass Verifier"
-        best_mark = "🏆" if f1 > 0.7 else ""
+        best_mark = "*" if f1 > 0.7 else ""
         print(f"{p_thresh:<10} | {label:<15} | {r:.4f}     | {p:.4f}     | {f1:.4f} {best_mark}   | {count}")
 
     print("\n--- Experiment: Full Consensus Matrix (Proposer x Verifier Votes) ---")
@@ -137,7 +156,7 @@ def analyze_consensus(pred_path, bounds_path, template_path, iterations=5):
                 
             # Print compelling rows (F1 > 0.7 or specific interest)
             if f1 > 0.7:
-                best_mark = "🏆" if f1 == best_overall["f1"] else ""
+                best_mark = "*" if f1 == best_overall["f1"] else ""
                 print(f"{p_thresh:<10} | {v_thresh:<10} | {r:.4f}     | {p:.4f}     | {f1:.4f} {best_mark}   | {count}")
 
     print("-" * 80)
@@ -157,4 +176,4 @@ if __name__ == "__main__":
     parser.add_argument("--iterations", type=int, default=5)
     args = parser.parse_args()
     
-    analyze_consensus(args.pred, args.bounds, args.template, args.iterations)
+    analyse_consensus(args.pred, args.bounds, args.template, args.iterations)

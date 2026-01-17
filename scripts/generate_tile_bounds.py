@@ -181,6 +181,18 @@ def main():
     holdout_path = tiles_dir / "holdout_manifest.json"
     selection_path = tiles_dir / "tile_selection_metadata.json"
 
+    # Validate manifest files exist before loading
+    required_files = [
+        (calibration_path, "calibration manifest"),
+        (holdout_path, "holdout manifest"),
+        (selection_path, "tile selection metadata"),
+    ]
+    for path, description in required_files:
+        if not path.exists():
+            print(f"ERROR: Required file not found: {path}")
+            print(f"  Missing: {description}")
+            sys.exit(1)
+
     with open(calibration_path) as f:
         calibration_tiles = json.load(f)
     print(f"  Calibration tiles: {len(calibration_tiles)}")

@@ -16,23 +16,46 @@ Tile-level classification (Section 4.2):
 - bootstrap_tile_effect_size_ci(): 95% CIs for tile-level effect sizes
 """
 
-import geopandas as gpd
-import pandas as pd
-import numpy as np
 import json
+import logging
 from pathlib import Path
-from shapely.geometry import box
+from typing import Optional, Tuple, Dict, Any, List
+
+import geopandas as gpd
+import numpy as np
+import pandas as pd
 from scipy.optimize import linear_sum_assignment
-import sys
+from shapely.geometry import box
+
+# Configure module logger
+logger = logging.getLogger(__name__)
 
 # Constants for project structure
 INPUTS_DIR = Path("inputs")
+DEFAULT_CRS = "EPSG:32635"  # UTM Zone 35N (Bulgaria)
 
-def load_data(detection_file, bounds_file, inputs_dir=INPUTS_DIR):
+def load_data(
+    detection_file: Path | str,
+    bounds_file: Path | str,
+    inputs_dir: Path = INPUTS_DIR,
+    target_crs: str = DEFAULT_CRS,
+) -> Tuple[Optional[gpd.GeoDataFrame], Optional[gpd.GeoDataFrame], Optional[gpd.GeoDataFrame]]:
+    """
+    Load detection, bounds, and reference GeoDataFrames for metrics calculation.
+
+    Args:
+        detection_file: Path to the detection GeoJSON file.
+        bounds_file: Path to the bounds GeoJSON file.
+        inputs_dir: Base directory containing reference vectors (default: 'inputs').
+        target_crs: Target CRS for all datasets (default: EPSG:32635).
+
+    Returns:
+        Tuple of (detections, bounds, references) GeoDataFrames, or (None, None, None) on error.
+    """
     try:
         gdf_det = gpd.read_file(detection_file)
         gdf_bounds = gpd.read_file(bounds_file)
-        
+
         # Load references
         ref_files = list((inputs_dir / "vectors").glob("reference_*.geojson"))
         ref_gdfs = []
@@ -40,39 +63,49 @@ def load_data(detection_file, bounds_file, inputs_dir=INPUTS_DIR):
             gdf = gpd.read_file(rf)
             gdf['Map'] = rf.stem.replace("reference_", "")
             ref_gdfs.append(gdf)
-        
+
         if not ref_gdfs:
-            print("Warning: No reference vectors found.")
+            logger.warning("No reference vectors found in %s/vectors/", inputs_dir)
             return None, None, None
 
         gdf_ref = pd.concat(ref_gdfs, ignore_index=True)
-        
-        # CRS Standardization
-        target_crs = "EPSG:32635"
-        if gdf_det.crs != target_crs: 
+
+        # CRS Standardisation
+        if gdf_det.crs != target_crs:
             if gdf_det.crs is None: gdf_det.set_crs(target_crs, inplace=True)
             else: gdf_det = gdf_det.to_crs(target_crs)
-            
-        if gdf_bounds.crs != target_crs: 
+
+        if gdf_bounds.crs != target_crs:
             if gdf_bounds.crs is None: gdf_bounds.set_crs(target_crs, inplace=True)
             else: gdf_bounds = gdf_bounds.to_crs(target_crs)
 
-        if gdf_ref.crs != target_crs: 
+        if gdf_ref.crs != target_crs:
             if gdf_ref.crs is None: gdf_ref.set_crs(target_crs, inplace=True)
             else: gdf_ref = gdf_ref.to_crs(target_crs)
-        
+
         return gdf_det, gdf_bounds, gdf_ref
     except Exception as e:
-        print(f"Error loading metrics data: {e}")
+        logger.error("Error loading metrics data: %s", e)
         return None, None, None
 
-def get_map_name(tile_name):
+def get_map_name(tile_name: str) -> str:
+    """
+    Extract map name from tile filename.
+
+    Args:
+        tile_name: The tile filename (e.g., 'K-35-052-4_32635_tile_001.png').
+
+    Returns:
+        The map name prefix, or 'Unknown' if not recognised.
+    """
     matches = ["K-35-062-2_Rakovski", "K-35-052-4_32635", "K-35-053-3_Elenovo", "K-35-078-1_Lesovo"]
     for m in matches:
-        if tile_name.startswith(m): return m
+        if tile_name.startswith(m):
+            return m
     return "Unknown"
 
-def normalize_ref_class(symbol):
+
+def normalise_ref_class(symbol: Any) -> str:
     """Normalise reference symbol class names to standard categories."""
     s = "{0}".format(symbol).lower()  # Handle None/NaN safety
     if "bench mark" in s:
@@ -263,7 +296,8 @@ def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=No
             precision_scores.append(precision)
             recall_scores.append(recall)
             f1_scores.append(f1)
-        except Exception:
+        except Exception as e:
+            logger.debug("Bootstrap iteration %d failed: %s", i, e)
             precision_scores.append(0)
             recall_scores.append(0)
             f1_scores.append(0)
@@ -389,7 +423,8 @@ def bootstrap_effect_size_ci(
             precision_diffs.append(p_a - p_b)
             recall_diffs.append(r_a - r_b)
 
-        except Exception:
+        except Exception as e:
+            logger.debug("Bootstrap effect size iteration %d failed: %s", i, e)
             f1_diffs.append(0)
             precision_diffs.append(0)
             recall_diffs.append(0)
@@ -698,13 +733,13 @@ def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds, buffers=[10, 20, 30, 5
     return results
 
 def calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
-    gdf_ref['normalized_class'] = gdf_ref['Symbol'].apply(normalize_ref_class)
+    gdf_ref['normalised_class'] = gdf_ref['Symbol'].apply(normalise_ref_class)
     classes = ["burial_mound", "benchmark_mound", "triangulation_mound"]
     
     results = []
     for cls in classes:
         det_cls = gdf_det[gdf_det['subtype'] == cls].copy()
-        ref_cls = gdf_ref[gdf_ref['normalized_class'] == cls].copy()
+        ref_cls = gdf_ref[gdf_ref['normalised_class'] == cls].copy()
         
         p, r, f1 = calculate_f1_internal(det_cls, ref_cls, gdf_bounds, buffer_meters)
         results.append({
@@ -755,8 +790,8 @@ def error_taxonomy(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     # Categorise false negatives by reference class
     if unmatched_ref and not refs_in_scope.empty:
         fn_refs = refs_in_scope.iloc[unmatched_ref].copy()
-        fn_refs['normalized_class'] = fn_refs['Symbol'].apply(normalize_ref_class)
-        taxonomy["false_negatives"] = fn_refs['normalized_class'].value_counts().to_dict()
+        fn_refs['normalised_class'] = fn_refs['Symbol'].apply(normalise_ref_class)
+        taxonomy["false_negatives"] = fn_refs['normalised_class'].value_counts().to_dict()
 
     return taxonomy
 

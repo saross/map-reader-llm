@@ -54,11 +54,11 @@ Study runner for factorial experiments. Executes multi-condition studies defined
 
 ## Phase 1: Library Construction
 
-### `analyze_fp_crops.py`
+### `analyse_fp_crops.py`
 
 Analyses false positives/negatives from baseline runs and extracts image crops for the hard example library. Clusters errors using 20m distance matching.
 
-**Usage**: `python scripts/analyze_fp_crops.py --input <detections.geojson> --mode fn`
+**Usage**: `python scripts/analyse_fp_crops.py --input <detections.geojson> --mode fn`
 
 **Output**: `outputs/hard-examples/`
 
@@ -84,15 +84,11 @@ Core metrics library providing F1, precision, recall calculations with one-to-on
 
 Generates accuracy reports comparing detections against ground truth.
 
-### `7_analyze_consensus.py`
+### `7_analyse_consensus.py`
 
 Analysis engine for the two-stage pipeline. Calculates performance metrics and performs grid-search simulation for optimal voting thresholds.
 
-### `7_analyze_consensus_runs.py`
-
-Analyses consensus across multiple independent runs for voting threshold optimisation (H3).
-
-### `8_analyze_proposer_consensus.py`
+### `8_analyse_proposer_consensus.py`
 
 Analyses proposer-stage consensus for the two-stage pipeline.
 
@@ -104,7 +100,7 @@ Clusters detections from multiple runs using 20m distance matching for voting ag
 
 Generates per-run metrics files for consensus/voting analysis.
 
-### `analyze_study_effects.py`
+### `analyse_study_effects.py`
 
 Computes bootstrapped 95% CIs for effect sizes between experimental conditions, as specified in preregistration Sections 3.5 and 4.2.
 

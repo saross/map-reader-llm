@@ -1,10 +1,27 @@
+"""
+Accuracy Report Generator
+=========================
 
-import sys
-import os
+Generates accuracy reports comparing VLM detections against ground truth.
+Calculates symbol-level metrics (precision, recall, F1) and tile-level
+classification metrics (MCC, sensitivity, specificity).
+
+Usage:
+    python scripts/6_accuracy_report.py \\
+        --pred outputs/results/v4.1/verified.geojson \\
+        --bounds inputs/vectors/region_bounds.geojson \\
+        --template inputs/vectors/ground_truth.geojson
+
+Author: Shawn Ross, Claude Code
+Licence: Apache 2.0
+"""
+
 import argparse
-import json
-import geopandas as gpd
+import sys
 from pathlib import Path
+from typing import Optional
+
+import geopandas as gpd
 
 # Setup Path
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,16 +29,32 @@ sys.path.append(str(BASE_DIR))
 
 try:
     from scripts.lib_advanced_metrics import (
+        DEFAULT_CRS,
+        bootstrap_tile_classification_ci,
         calculate_f1_internal,
         calculate_tile_classification,
-        bootstrap_tile_classification_ci,
         load_data,
     )
 except ImportError:
     print("Error importing scripts.lib_advanced_metrics.")
     sys.exit(1)
 
-def validate_file(pred_path, bounds_path, template_det_path):
+
+def validate_file(
+    pred_path: Path | str,
+    bounds_path: Path | str,
+    template_det_path: Path | str,
+    target_crs: str = DEFAULT_CRS,
+) -> None:
+    """
+    Validate detection predictions against ground truth and generate accuracy report.
+
+    Args:
+        pred_path: Path to the predicted detections GeoJSON file.
+        bounds_path: Path to the tile bounds GeoJSON file.
+        template_det_path: Path to the ground truth reference GeoJSON.
+        target_crs: Target CRS for all datasets (default: EPSG:32635).
+    """
     print(f"Validating: {pred_path}")
     
     # 1. Load Ground Truth (using template)
@@ -41,9 +74,9 @@ def validate_file(pred_path, bounds_path, template_det_path):
         gdf_pred = gpd.read_file(pred_path)
         # Check source_tile
         if not gdf_pred.empty:
-             # Logic fix: Force CRS to 32635 because coordinates are clearly UTM
-             # defaulting to 4326 causes reprojection errors
-             gdf_pred.set_crs("EPSG:32635", allow_override=True, inplace=True)
+            # Force CRS because coordinates are clearly UTM;
+            # defaulting to WGS84 causes reprojection errors
+            gdf_pred.set_crs(target_crs, allow_override=True, inplace=True)
              
              print(f"Loaded Pred: {len(gdf_pred)} candidates. Sample Source: {gdf_pred.iloc[0].get('source_tile', 'Missing')}")
              print(f"Ref Bounds: {gdf_ref.total_bounds}")
@@ -151,8 +184,9 @@ def validate_file(pred_path, bounds_path, template_det_path):
 
     # Compare with Unfiltered (Base)
     print("\n--- Comparison (Unfiltered Input) ---")
-    gdf_all = gpd.read_file(pred_path) # Reload full
-    if not gdf_all.empty: gdf_all.set_crs("EPSG:32635", allow_override=True, inplace=True)
+    gdf_all = gpd.read_file(pred_path)  # Reload full
+    if not gdf_all.empty:
+        gdf_all.set_crs(target_crs, allow_override=True, inplace=True)
     if gdf_all.crs != gdf_ref.crs: gdf_all = gdf_all.to_crs(gdf_ref.crs)
     p_base, r_base, f1_base = calculate_f1_internal(gdf_all, gdf_ref, gdf_bounds)
     print(f"Base Precision: {p_base:.4f}")
@@ -164,10 +198,17 @@ def validate_file(pred_path, bounds_path, template_det_path):
     print(f"Delta Recall:    {r - r_base:+.4f}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--pred", required=True)
-    parser.add_argument("--bounds", required=True)
-    parser.add_argument("--template", required=True)
+    parser = argparse.ArgumentParser(
+        description="Generate accuracy report comparing detections against ground truth."
+    )
+    parser.add_argument("--pred", required=True, help="Path to predicted detections GeoJSON")
+    parser.add_argument("--bounds", required=True, help="Path to tile bounds GeoJSON")
+    parser.add_argument("--template", required=True, help="Path to ground truth reference GeoJSON")
+    parser.add_argument(
+        "--crs",
+        default=DEFAULT_CRS,
+        help=f"Target CRS for all datasets (default: {DEFAULT_CRS})",
+    )
     args = parser.parse_args()
-    
-    validate_file(args.pred, args.bounds, args.template)
+
+    validate_file(args.pred, args.bounds, args.template, target_crs=args.crs)
