@@ -220,11 +220,13 @@ def extract_crops(args):
     extracted_count = 0
     
     for i, item in enumerate(sorted_clusters):
-        if extracted_count >= limit: break
-        
-        # Only take items that appeared in at least 2 runs (if available), else top 
+        if extracted_count >= limit:
+            break
+
+        # Only take items that appeared in at least 2 runs (if available), else top
         # For FN mining, ANY miss is interesting, but recurring misses are critical.
-        if item["count"] < 1: continue 
+        if item["count"] < 1:
+            continue
 
         rank = i + 1
         tile_name = item["tile"]

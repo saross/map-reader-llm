@@ -36,7 +36,7 @@ from typing import List, Dict, Any, Tuple, Optional
 from datetime import datetime, timezone
 import geojson
 from geojson import FeatureCollection, Feature
-from shapely.geometry import shape, box
+from shapely.geometry import shape
 import rasterio
 from rasterio.windows import Window
 import google.generativeai as genai
@@ -61,8 +61,7 @@ from scripts.lib_llm_metadata import (
     extract_gemini_metadata,
     create_error_metadata,
     estimate_cost,
-    LLMProvider,
-    AggregatedUsage
+    LLMProvider
 )
 
 # Script Version
@@ -106,7 +105,7 @@ def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE
             if arr.shape[0] == 0: return None
             img_data = arr.transpose(1, 2, 0)
             return Image.fromarray(img_data)
-        except Exception as e:
+        except Exception:
             return None
 
 def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:

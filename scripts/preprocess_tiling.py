@@ -30,7 +30,7 @@ import sys
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import INPUTS_DIR, RASTERS_DIR, TILES_DIR, TILE_SIZE, OVERLAP, STRIDE
+from config import RASTERS_DIR, TILES_DIR, TILE_SIZE, STRIDE
 
 def tile_raster(input_path: Path):
     """

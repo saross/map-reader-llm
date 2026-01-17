@@ -2,7 +2,6 @@
 import geopandas as gpd
 from pathlib import Path
 import sys
-import os
 from PIL import Image
 import rasterio
 from rasterio.windows import Window
@@ -24,13 +23,13 @@ def get_tile_path(tile_id: str) -> Path:
     print(f"DEBUG: Searching for {tile_id} in {tiles_dir}")
     found = list(tiles_dir.glob(f"**/{tile_id}")) 
     if not found:
-        print(f"DEBUG: Direct match failed. Trying with .png extension.")
+        print("DEBUG: Direct match failed. Trying with .png extension.")
         found = list(tiles_dir.glob(f"**/{tile_id}.png"))
     
     if found:
         print(f"DEBUG: Found {found[0]}")
         return found[0]
-    print(f"DEBUG: Not found.")
+    print("DEBUG: Not found.")
     return None
 
 def crop_candidate(raster_path: Path, geom, context_px: int = CONTEXT_SIZE):
@@ -49,7 +48,7 @@ def crop_candidate(raster_path: Path, geom, context_px: int = CONTEXT_SIZE):
             if arr.shape[0] == 0: return None
             img_data = arr.transpose(1, 2, 0)
             return Image.fromarray(img_data)
-        except Exception as e:
+        except Exception:
             return None
 
 def mine_crops(geojson_path, output_dir, label, bounds_path=None):

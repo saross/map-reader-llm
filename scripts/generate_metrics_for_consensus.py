@@ -1,8 +1,6 @@
 import json
 import argparse
 from pathlib import Path
-import geopandas as gpd
-import pandas as pd
 import sys
 import os
 
@@ -23,10 +21,14 @@ def generate_metrics(run_dir, bounds_path, output_dir=None):
     all_files = sorted(run_dir.glob("run_*"))
     run_files = []
     for f in all_files:
-        if f.suffix in ['.json'] and 'meta' in f.name: continue
-        if '_metrics' in f.name: continue
-        if '_advanced_metrics' in f.name: continue
-        if f.is_dir(): continue # Skip directories if any
+        if f.suffix in ['.json'] and 'meta' in f.name:
+            continue
+        if '_metrics' in f.name:
+            continue
+        if '_advanced_metrics' in f.name:
+            continue
+        if f.is_dir():
+            continue
         run_files.append(f)
     
     for run_file in run_files:

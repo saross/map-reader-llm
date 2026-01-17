@@ -25,7 +25,6 @@ License: Apache 2.0
 
 import json
 import time
-import os
 import argparse
 from pathlib import Path
 from tqdm import tqdm
@@ -41,12 +40,11 @@ import threading
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import GOOGLE_API_KEY, TILES_DIR, OUTPUTS_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, EXAMPLES_DIR
+from config import GOOGLE_API_KEY, TILES_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, EXAMPLES_DIR
 
 # Import comprehensive metadata tracking
 from scripts.lib_llm_metadata import (
     LLMMetadataTracker,
-    LLMResponseMetadata,
     extract_gemini_metadata,
     create_error_metadata,
     estimate_cost,

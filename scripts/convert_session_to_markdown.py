@@ -25,7 +25,6 @@ Created: 2026-01-08
 import argparse
 import gzip
 import json
-import re
 import sys
 from datetime import datetime
 from pathlib import Path

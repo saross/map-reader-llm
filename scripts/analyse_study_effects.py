@@ -56,8 +56,6 @@ import pandas as pd
 from lib_advanced_metrics import (
     bootstrap_effect_size_ci,
     bootstrap_tile_effect_size_ci,
-    calculate_tile_classification,
-    load_data,
     print_effect_size_summary,
     print_tile_effect_size_summary,
 )

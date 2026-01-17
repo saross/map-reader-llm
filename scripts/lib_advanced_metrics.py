@@ -19,13 +19,12 @@ Tile-level classification (Section 4.2):
 import json
 import logging
 from pathlib import Path
-from typing import Optional, Tuple, Dict, Any, List
+from typing import Optional, Tuple, Any
 
 import geopandas as gpd
 import numpy as np
 import pandas as pd
 from scipy.optimize import linear_sum_assignment
-from shapely.geometry import box
 
 # Configure module logger
 logger = logging.getLogger(__name__)
@@ -72,16 +71,22 @@ def load_data(
 
         # CRS Standardisation
         if gdf_det.crs != target_crs:
-            if gdf_det.crs is None: gdf_det.set_crs(target_crs, inplace=True)
-            else: gdf_det = gdf_det.to_crs(target_crs)
+            if gdf_det.crs is None:
+                gdf_det.set_crs(target_crs, inplace=True)
+            else:
+                gdf_det = gdf_det.to_crs(target_crs)
 
         if gdf_bounds.crs != target_crs:
-            if gdf_bounds.crs is None: gdf_bounds.set_crs(target_crs, inplace=True)
-            else: gdf_bounds = gdf_bounds.to_crs(target_crs)
+            if gdf_bounds.crs is None:
+                gdf_bounds.set_crs(target_crs, inplace=True)
+            else:
+                gdf_bounds = gdf_bounds.to_crs(target_crs)
 
         if gdf_ref.crs != target_crs:
-            if gdf_ref.crs is None: gdf_ref.set_crs(target_crs, inplace=True)
-            else: gdf_ref = gdf_ref.to_crs(target_crs)
+            if gdf_ref.crs is None:
+                gdf_ref.set_crs(target_crs, inplace=True)
+            else:
+                gdf_ref = gdf_ref.to_crs(target_crs)
 
         return gdf_det, gdf_bounds, gdf_ref
     except Exception as e:
@@ -799,7 +804,8 @@ def generate_report(detection_path, bounds_path, output_path=None, bootstrap_ite
     print("Generating Advanced Metrics Report...")
     gdf_det, gdf_bounds, gdf_ref = load_data(detection_path, bounds_path)
 
-    if gdf_det is None: return {}
+    if gdf_det is None:
+        return {}
 
     report = {}
 
@@ -845,7 +851,7 @@ def print_report_summary(report, title="Metrics Summary"):
 
     # Global metrics
     gm = report.get("global_metrics", {})
-    print(f"\n[Global Performance @ 20m buffer]")
+    print("\n[Global Performance @ 20m buffer]")
     print(f"  F1:        {gm.get('f1', 0):.4f}")
     print(f"  Precision: {gm.get('precision', 0):.4f}")
     print(f"  Recall:    {gm.get('recall', 0):.4f}")
@@ -874,7 +880,7 @@ def print_report_summary(report, title="Metrics Summary"):
     # Per-class performance
     pcp = report.get("per_class_performance", [])
     if pcp:
-        print(f"\n[Per-Class Performance]")
+        print("\n[Per-Class Performance]")
         print(f"  {'Class':<22} {'F1':>8} {'Prec':>8} {'Rec':>8}")
         print(f"  {'-'*22} {'-'*8} {'-'*8} {'-'*8}")
         for cls in pcp:
@@ -883,7 +889,7 @@ def print_report_summary(report, title="Metrics Summary"):
     # Spatial tolerance
     st = report.get("spatial_tolerance", [])
     if st:
-        print(f"\n[Spatial Tolerance Curve]")
+        print("\n[Spatial Tolerance Curve]")
         print(f"  {'Buffer (m)':<12} {'F1':>8} {'Prec':>8} {'Rec':>8}")
         print(f"  {'-'*12} {'-'*8} {'-'*8} {'-'*8}")
         for row in st:
@@ -894,7 +900,7 @@ def print_report_summary(report, title="Metrics Summary"):
     fps = et.get("false_positives", {})
     fns = et.get("false_negatives", {})
     if fps or fns:
-        print(f"\n[Error Taxonomy]")
+        print("\n[Error Taxonomy]")
         if fps:
             print(f"  False Positives: {dict(fps)}")
         if fns:
@@ -944,7 +950,7 @@ def print_effect_size_summary(effect_sizes, condition_a="Condition A", condition
 
         print(f"  {label:<20} {mean_val:>+10.4f} [{ci_low:>+.4f}, {ci_high:>+.4f}]{sig_marker}")
 
-    print(f"\n  * = 95% CI excludes zero (statistically significant at α=0.05)")
+    print("\n  * = 95% CI excludes zero (statistically significant at α=0.05)")
     print(f"  n_tiles = {effect_sizes.get('n_tiles', 'N/A')}")
     print(f"\n{'='*70}\n")
 
@@ -966,13 +972,13 @@ def print_tile_classification_summary(results, title="Tile-Level Classification"
     print(f"{'='*60}")
 
     # Confusion matrix
-    print(f"\n[Confusion Matrix]")
+    print("\n[Confusion Matrix]")
     print(f"  {'':15} {'Detected':>12} {'Not Detected':>14}")
     print(f"  {'Has Mounds':<15} {results['tp']:>12} (TP) {results['fn']:>10} (FN)")
     print(f"  {'Empty':<15} {results['fp']:>12} (FP) {results['tn']:>10} (TN)")
 
     # Metrics
-    print(f"\n[Metrics]")
+    print("\n[Metrics]")
     mcc = results.get('mcc')
     sens = results.get('sensitivity')
     spec = results.get('specificity')
@@ -986,7 +992,7 @@ def print_tile_classification_summary(results, title="Tile-Level Classification"
     print(f"  Specificity: {spec_str}  (P(detect 0 | empty))")
 
     # Tile counts
-    print(f"\n[Tile Counts]")
+    print("\n[Tile Counts]")
     print(f"  Total tiles:     {results['n_tiles']}")
     print(f"  Populated tiles: {results['n_populated']}")
     print(f"  Empty tiles:     {results['n_empty']}")
@@ -1012,7 +1018,7 @@ def print_tile_classification_ci_summary(results, ci_results, title="Tile-Level 
     print(f"{'='*60}")
 
     # Confusion matrix
-    print(f"\n[Confusion Matrix]")
+    print("\n[Confusion Matrix]")
     print(f"  {'':15} {'Detected':>12} {'Not Detected':>14}")
     print(f"  {'Has Mounds':<15} {results['tp']:>12} (TP) {results['fn']:>10} (FN)")
     print(f"  {'Empty':<15} {results['fp']:>12} (FP) {results['tn']:>10} (TN)")
@@ -1037,7 +1043,7 @@ def print_tile_classification_ci_summary(results, ci_results, title="Tile-Level 
             print(f"  {label:<12} {'undefined':>10}")
 
     # Tile counts
-    print(f"\n[Tile Counts]")
+    print("\n[Tile Counts]")
     print(f"  Total tiles:     {results['n_tiles']}")
     print(f"  Populated tiles: {results['n_populated']}")
     print(f"  Empty tiles:     {results['n_empty']}")
@@ -1095,6 +1101,6 @@ def print_tile_effect_size_summary(
 
         print(f"  {label:<22} {mean_val:>+10.4f} [{ci_low:>+.4f}, {ci_high:>+.4f}]{sig_marker}")
 
-    print(f"\n  * = 95% CI excludes zero (statistically significant at α=0.05)")
+    print("\n  * = 95% CI excludes zero (statistically significant at α=0.05)")
     print(f"  n_tiles = {effect_sizes.get('n_tiles', 'N/A')}")
     print(f"\n{'='*70}\n")

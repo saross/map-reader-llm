@@ -29,13 +29,10 @@ Methodology:
 """
 
 import sys
-import os
 import argparse
-import json
 import geopandas as gpd
 from pathlib import Path
 import pandas as pd
-import numpy as np
 
 # Setup Path
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,7 +78,8 @@ def analyse_consensus(
         # Ensure CRS
         if not gdf_pred.empty:
             gdf_pred.set_crs("EPSG:32635", allow_override=True, inplace=True)
-            if gdf_pred.crs != gdf_ref.crs: gdf_pred = gdf_pred.to_crs(gdf_ref.crs)
+            if gdf_pred.crs != gdf_ref.crs:
+                gdf_pred = gdf_pred.to_crs(gdf_ref.crs)
     except Exception as e:
         print(f"Error loading predictions: {e}")
         return
@@ -102,8 +100,9 @@ def analyse_consensus(
     for p_thresh in range(1, 6):
         # 1. Filter by Proposer Votes
         subset_p = gdf_pred[gdf_pred['proposer_votes'] >= p_thresh].copy()
-        if subset_p.empty: continue
-        
+        if subset_p.empty:
+            continue
+
         # 2. Simulate Single-Pass Verifier
         # logic: verified=True in result[0]
         # We need to parse 'verifier_results' which is a list of dicts or a string
@@ -138,8 +137,9 @@ def analyse_consensus(
         # Note: 'proposer_votes' is in properties
         subset_p = gdf_pred[gdf_pred['proposer_votes'] >= p_thresh].copy()
         
-        if subset_p.empty: continue
-            
+        if subset_p.empty:
+            continue
+
         for v_thresh in range(1, iterations + 1):
             # Filter Verifier Consensus
             subset_pv = subset_p[subset_p['verifier_votes'] >= v_thresh].copy()

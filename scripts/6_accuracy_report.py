@@ -19,7 +19,6 @@ Licence: Apache 2.0
 import argparse
 import sys
 from pathlib import Path
-from typing import Optional
 
 import geopandas as gpd
 
@@ -77,11 +76,11 @@ def validate_file(
             # Force CRS because coordinates are clearly UTM;
             # defaulting to WGS84 causes reprojection errors
             gdf_pred.set_crs(target_crs, allow_override=True, inplace=True)
-             
-             print(f"Loaded Pred: {len(gdf_pred)} candidates. Sample Source: {gdf_pred.iloc[0].get('source_tile', 'Missing')}")
-             print(f"Ref Bounds: {gdf_ref.total_bounds}")
-             print(f"Pred Bounds: {gdf_pred.total_bounds}")
-             print(f"Ref CRS: {gdf_ref.crs} | Pred CRS: {gdf_pred.crs}")
+
+            print(f"Loaded Pred: {len(gdf_pred)} candidates. Sample Source: {gdf_pred.iloc[0].get('source_tile', 'Missing')}")
+            print(f"Ref Bounds: {gdf_ref.total_bounds}")
+            print(f"Pred Bounds: {gdf_pred.total_bounds}")
+            print(f"Ref CRS: {gdf_ref.crs} | Pred CRS: {gdf_pred.crs}")
     except Exception as e:
         print(f"Error loading predictions: {e}")
         return
@@ -93,7 +92,7 @@ def validate_file(
         # Verified is boolean or 0/1?
         # GeoJSON saves booleans as true/false.
         # Pandas might load as bool or object.
-        gdf_verified = gdf_pred[gdf_pred["verified"] == True]
+        gdf_verified = gdf_pred[gdf_pred["verified"]]
     else:
         print("Warning: 'verified' column not found. Assuming all are verified.")
         gdf_verified = gdf_pred
@@ -133,7 +132,7 @@ def validate_file(
             ci_str = f" (95% CI: {mcc_ci['ci_lower']:.4f}-{mcc_ci['ci_upper']:.4f})"
         print(f"MCC:         {mcc:.4f}{ci_str}")
     else:
-        print(f"MCC:         undefined")
+        print("MCC:         undefined")
 
     print(f"Sensitivity: {sens:.4f}" if sens is not None else "Sensitivity: undefined")
     print(f"Specificity: {spec:.4f}" if spec is not None else "Specificity: undefined")
@@ -160,7 +159,8 @@ def validate_file(
     # Recover original geometry (unbuffered) for FNs
     fns = fns.merge(gdf_ref[['geometry']], left_index=True, right_index=True, how='left', suffixes=('_buf', ''))
     fns.set_geometry('geometry', inplace=True)
-    if 'geometry_buf' in fns.columns: fns.drop(columns=['geometry_buf'], inplace=True)
+    if 'geometry_buf' in fns.columns:
+        fns.drop(columns=['geometry_buf'], inplace=True)
 
     base_name = Path(pred_path).stem
     parent_dir = Path(pred_path).parent
@@ -170,15 +170,17 @@ def validate_file(
     
     if not fps.empty:
         # Drop columns that cause save errors
-        for col in ['index_right', 'Map_left', 'Map_right']: 
-            if col in fps.columns: fps.drop(columns=[col], inplace=True)
+        for col in ['index_right', 'Map_left', 'Map_right']:
+            if col in fps.columns:
+                fps.drop(columns=[col], inplace=True)
         fps.to_file(fp_path, driver='GeoJSON')
         print(f"Saved {len(fps)} False Positives to {fp_path}")
         
     if not fns.empty:
         # Drop columns
         for col in ['index_right', 'Map_left', 'Map_right']:
-             if col in fns.columns: fns.drop(columns=[col], inplace=True)
+            if col in fns.columns:
+                fns.drop(columns=[col], inplace=True)
         fns.to_file(fn_path, driver='GeoJSON')
         print(f"Saved {len(fns)} False Negatives to {fn_path}")
 
@@ -187,7 +189,8 @@ def validate_file(
     gdf_all = gpd.read_file(pred_path)  # Reload full
     if not gdf_all.empty:
         gdf_all.set_crs(target_crs, allow_override=True, inplace=True)
-    if gdf_all.crs != gdf_ref.crs: gdf_all = gdf_all.to_crs(gdf_ref.crs)
+    if gdf_all.crs != gdf_ref.crs:
+        gdf_all = gdf_all.to_crs(gdf_ref.crs)
     p_base, r_base, f1_base = calculate_f1_internal(gdf_all, gdf_ref, gdf_bounds)
     print(f"Base Precision: {p_base:.4f}")
     print(f"Base Recall:    {r_base:.4f}")

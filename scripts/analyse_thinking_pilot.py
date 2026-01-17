@@ -262,7 +262,7 @@ def determine_recommendation(stats: dict[str, dict]) -> tuple[str, str]:
             minimal_f1 = stats["minimal"]["f1"]["mean"]
             minimal_low_diff = low_f1 - minimal_f1
             if minimal_low_diff <= SMALL_DIFFERENCE:
-                return "minimal", f"minimal ≈ low ≈ high (max efficiency, F1 diff ≤ 0.03)"
+                return "minimal", "minimal ≈ low ≈ high (max efficiency, F1 diff ≤ 0.03)"
 
         return "low", f"high ≈ low (F1 diff = {diff:.3f} ≤ 0.03; cost/latency savings)"
 
@@ -271,7 +271,7 @@ def determine_recommendation(stats: dict[str, dict]) -> tuple[str, str]:
 
     # Ambiguous case
     if cis_overlap:
-        return "high", f"Ambiguous (0.03 < diff < 0.05, CIs overlap); defaulting to high"
+        return "high", "Ambiguous (0.03 < diff < 0.05, CIs overlap); defaulting to high"
 
     return "high", f"Ambiguous (diff = {diff:.3f}); defaulting to Google's recommended setting"
 

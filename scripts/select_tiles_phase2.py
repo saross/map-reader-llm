@@ -22,7 +22,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 from PIL import Image
