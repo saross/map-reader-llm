@@ -63,16 +63,16 @@ H3 Voting       H9 Diversity    H2 Two-Stage    Triggered
   - [x] `detect_brief-text-image.md` (text+image)
   - [x] `detect_verbose-text.md` (text-only)
   - [x] `detect_verbose-text-image.md` (base for H5)
-  - [x] H5 instruction variants at all 3 image-using M/E levels (2026-01-14):
-    - [x] `detect_image-only_{minimal,terse,verbose}.md` (3 files)
-    - [x] `detect_brief-text-image_{minimal,terse,verbose}.md` (3 files)
-    - [x] `detect_verbose-text-image_{minimal,terse,verbose}.md` (3 files)
+  - [x] H5 variants (_terse, _verbose) at 3 image-using M/E levels (2026-01-14):
+    - [x] `detect_image-only_{terse,verbose}.md` (2 files)
+    - [x] `detect_brief-text-image_{terse,verbose}.md` (2 files)
+    - [x] `detect_verbose-text-image_{terse,verbose}.md` (2 files)
   - [ ] H9 text variants (5 semantically equivalent instructions, constructed after Phase 2)
   - [x] `propose_image-only.md` and `verify_image-only.md` (H2)
 
 - [x] **Configs**: Create all JSON config files (2026-01-01)
   - [x] 5 M/E configs: `detect_{modality}.json`
-  - [x] 9 H5 configs at 3 image-using M/E levels: `detect_{modality}_{minimal,terse,verbose}.json` (2026-01-14)
+  - [x] 6 H5 variant configs (_terse, _verbose) at 3 image-using M/E levels: `detect_{modality}_{terse,verbose}.json` (2026-01-14)
   - [ ] 7 H8 library configs: `library_{composition}.json`
   - [ ] H4 ordering variants: 2 additional orderings at optimal M/E
   - [ ] H7 temperature: runtime parameter, no separate configs needed
