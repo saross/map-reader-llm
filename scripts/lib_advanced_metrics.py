@@ -1,4 +1,3 @@
-
 """
 Advanced metrics library for mound detection evaluation.
 
@@ -112,7 +111,7 @@ def get_map_name(tile_name: str) -> str:
 
 def normalise_ref_class(symbol: Any) -> str:
     """Normalise reference symbol class names to standard categories."""
-    s = "{0}".format(symbol).lower()  # Handle None/NaN safety
+    s = str(symbol).lower()  # Handle None/NaN safety
     if "bench mark" in s:
         return "benchmark_mound"
     if "triangulation" in s:

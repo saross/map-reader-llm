@@ -1,79 +1,104 @@
-import json
+"""
+Metrics Generator for Consensus Runs
+=====================================
+
+Generates metrics files for each detection run in a directory, calculating
+F1, precision, recall, and per-class performance against ground truth.
+
+Used to prepare data for consensus analysis and benchmark variability studies.
+
+Usage:
+    python scripts/generate_metrics_for_consensus.py \\
+        --run_dir outputs/results/v4.1/ \\
+        --bounds inputs/vectors/region_bounds.geojson
+
+Author: Shawn Ross, Claude Code
+Licence: Apache 2.0
+"""
+
 import argparse
-from pathlib import Path
+import json
 import sys
-import os
+from pathlib import Path
 
 # Add parent directory to path
-sys.path.append(os.getcwd())
-from scripts.lib_advanced_metrics import load_data, calculate_f1_internal, calculate_per_class_f1
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))
 
-def generate_metrics(run_dir, bounds_path, output_dir=None):
+from scripts.lib_advanced_metrics import calculate_f1_internal, calculate_per_class_f1, load_data
+
+
+def generate_metrics(
+    run_dir: Path | str,
+    bounds_path: Path | str,
+    output_dir: Path | str | None = None
+) -> None:
+    """
+    Generate metrics files for all detection runs in a directory.
+
+    Scans for run_*.geojson files and calculates F1, precision, recall,
+    and per-class performance for each, saving results as JSON files.
+
+    Args:
+        run_dir: Directory containing run GeoJSON files.
+        bounds_path: Path to the tile bounds GeoJSON file.
+        output_dir: Optional output directory for metrics files (defaults to run_dir).
+    """
     run_dir = Path(run_dir)
-    if output_dir is None:
-        output_dir = run_dir
-    else:
-        output_dir = Path(output_dir)
-        output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = Path(output_dir) if output_dir else run_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     print(f"Scanning runs in {run_dir}...")
-    
-    # Find all run_* files (excluding .meta.json, _metrics.json, etc)
+
+    # Find all run_* files (excluding metadata, metrics, and directories)
     all_files = sorted(run_dir.glob("run_*"))
-    run_files = []
-    for f in all_files:
-        if f.suffix in ['.json'] and 'meta' in f.name:
-            continue
-        if '_metrics' in f.name:
-            continue
-        if '_advanced_metrics' in f.name:
-            continue
-        if f.is_dir():
-            continue
-        run_files.append(f)
-    
+    run_files = [
+        f for f in all_files
+        if f.is_file()
+        and not f.is_dir()
+        and 'meta' not in f.name
+        and '_metrics' not in f.name
+        and '_advanced_metrics' not in f.name
+    ]
+
     for run_file in run_files:
-        run_name = run_file.stem # run_1
+        run_name = run_file.stem
         print(f"Processing {run_name}...")
-        
+
         try:
-            # Load Data
             gdf_det, gdf_bounds, gdf_ref = load_data(run_file, bounds_path)
-            
+
             if gdf_det is None or gdf_det.empty:
                 print(f"Skipping {run_name}: No detections or load error.")
                 continue
 
-            # Calculate Metrics
+            # Calculate metrics
             p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds)
-            
-            # Calculate Per Class
             per_class_res = calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds)
-            
-            # Construct Metrics Dictionary (matching structure expected by benchmark_variability.py)
+
+            # Construct metrics dictionary (structure expected by benchmark_variability.py)
             metrics = {
                 "precision": round(p, 4),
                 "recall": round(r, 4),
                 "f1": round(f1, 4),
                 "tiles_processed": len(gdf_bounds['tile_name'].unique()) if gdf_bounds is not None else 0
             }
-            
-            # Advanced metrics (for per-class)
+
             advanced_metrics = {
                 "per_class_performance": per_class_res
             }
-            
-            # Save metrics.json
+
+            # Save metrics files
             metrics_path = output_dir / f"{run_name}_metrics.json"
             with open(metrics_path, "w") as f:
                 json.dump(metrics, f, indent=2)
-                
-            # Save advanced_metrics.json
+
             adv_metrics_path = output_dir / f"{run_name}_advanced_metrics.json"
             with open(adv_metrics_path, "w") as f:
                 json.dump(advanced_metrics, f, indent=2)
-                
+
             print(f"Saved metrics for {run_name}")
-            
+
         except Exception as e:
             import traceback
             traceback.print_exc()
