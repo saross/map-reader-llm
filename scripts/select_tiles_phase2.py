@@ -530,9 +530,12 @@ def main():
         return 1
 
     # Build metadata
+    # Note: In actual usage, calibration and holdout may be selected on different
+    # dates with different seeds (per preregistration). When re-running, update
+    # the seed/date in each section accordingly.
+    selection_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     metadata = {
         "created": datetime.now(timezone.utc).isoformat(),
-        "random_seed": seed,
         "parameters": {
             "calibration_samples_per_map": CALIBRATION_SAMPLES_PER_MAP,
             "holdout_samples_per_map": HOLDOUT_SAMPLES_PER_MAP,
@@ -543,11 +546,15 @@ def main():
             "tile_stride": STRIDE,
         },
         "calibration": {
+            "random_seed": seed,
+            "selection_date": selection_date,
             "total_tiles": len(calibration_tiles),
             "by_map": calibration_by_map,
             "tiles": [],
         },
         "holdout": {
+            "random_seed": seed,
+            "selection_date": selection_date,
             "total_tiles": len(holdout_tiles),
             "by_map": holdout_by_map,
             "spatial_separation_relaxed": spatial_relaxed,
