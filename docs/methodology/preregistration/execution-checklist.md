@@ -80,16 +80,17 @@
 | Phase | Start Date | End Date | Notes |
 |-------|------------|----------|-------|
 | Phase 1: Library + Text | | | |
-| Phase 2a: Strand 1 | | | |
-| Phase 2b: H5 Confirmatory | | | |
-| Phase 2c: Strand 2 | | | |
-| Phase 2d: Strand 3 (if triggered) | | | |
+| Phase 2a: H1 M/E Level | | | |
+| Phase 2b: H7 Temperature | | | |
+| Phase 2c: H8 Library Composition | | | |
+| Phase 2d: H5 Negative Text | | | |
+| Phase 2e: H4 Ordering | | | |
 | Phase 3a: H3 N=30 Extension | | | |
-| Phase 3b: H4 Ordering | | | |
-| Phase 3c: H9 Diversity | | | |
-| Phase 3d: H2 Two-Stage | | | |
+| Phase 3b: H9 Diversity | | | |
+| Phase 3c: H2 Two-Stage | | | |
+| Phase 3d: Triggered Exploratory (H4b, M/E-sensitivity, HN-only) | | | |
 | Phase 4: H6 Pro Transfer | | | |
-| Phase 5: Exploratory | | | |
+| Phase 5: Exploratory (H10-H15) | | | |
 
 ---
 
