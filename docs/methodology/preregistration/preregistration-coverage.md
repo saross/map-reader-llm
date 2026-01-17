@@ -116,7 +116,7 @@ All pairwise elaboration comparisons are available from the M/E factor in the ma
 | D | Fixed | Fixed | Varied | Temperature diversity only |
 | E | Varied | Varied | Varied | Full diversity |
 
-Each condition run 5 times to provide symmetric variance estimates. Tested at optimal configuration from stranded factorial.
+Each condition run 5 times to provide symmetric variance estimates. Tested at optimal configuration from sequential OFAT design.
 
 ---
 
