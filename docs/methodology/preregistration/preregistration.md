@@ -1207,8 +1207,8 @@ All models tested at maximum capability configuration. Parameters
 
 | Model | Model ID | thinking\_level |
 | ----- | ----- | ----- |
-| Flash | `gemini-3-flash` | `high` |
-| Pro | `gemini-3-pro` | `high` |
+| Flash | `gemini-3-flash` | `minimal` |
+| Pro | `gemini-3-pro` | `minimal` |
 
 Fixed parameters:
 
@@ -1224,22 +1224,22 @@ Fixed parameters:
 | ----- | ----- | ----- | ----- |
 | Haiku | `claude-haiku-4-5-20251001` | — | 8192 |
 | Sonnet | `claude-sonnet-4-5-20250929` | — | 8192 |
-| Opus | `claude-opus-4-5-20251101` | `high` | 16384 |
+| Opus | `claude-opus-4-5-20251101` | `low` | 8192 |
 
 Fixed parameters:
 
 - `temperature`: 1.0
 - `max_tokens`: 16384 (must exceed budget\_tokens)
 
-Notes: Extended thinking enabled for all variants. Effort parameter (beta) applied to Opus only.
+Notes: Extended thinking enabled for all variants. Effort parameter (beta) set to `low` for Opus, consistent with minimal-reasoning approach calibrated for Gemini (see §8.9).
 
 **GPT-5.2 (OpenAI):**
 
 | Model | Model ID | reasoning.effort | Notes |
 | ----- | ----- | ----- | ----- |
 | Instant | `gpt-5.2-chat-latest` | N/A | Speed-optimised variant; 128k context |
-| Thinking | `gpt-5.2` | `xhigh` | Maximum single-path reasoning |
-| Pro | `gpt-5.2-pro` | `xhigh` | Parallel reasoning threads |
+| Thinking | `gpt-5.2` | `low` | Minimum reasoning effort |
+| Pro | `gpt-5.2-pro` | `low` | Minimum reasoning effort |
 
 Fixed parameters:
 
@@ -1263,11 +1263,11 @@ These mechanisms differ in architecture, compute allocation, and output characte
 
 | Provider | Setting Used | Interpretation |
 | :--- | :--- | :--- |
-| Gemini | `thinking_level=high` | Provider's maximum reasoning mode |
-| Claude | Extended thinking + `effort=high` (Opus) | Provider's maximum reasoning mode |
-| GPT | `reasoning.effort=xhigh` | Provider's maximum reasoning mode |
+| Gemini | `thinking_level=minimal` | Calibrated via pilot (see §8.9) |
+| Claude | Extended thinking + `effort=low` (Opus) | Provider's minimum reasoning mode |
+| GPT | `reasoning.effort=low` | Provider's minimum reasoning mode |
 
-Cross-model comparisons should be interpreted as "performance at provider-recommended high-reasoning configuration" rather than matched computational effort.
+Cross-model comparisons should be interpreted as "performance at provider's minimum-reasoning configuration" rather than matched computational effort. This approach is motivated by the Gemini pilot finding that symbol detection (visual pattern matching) does not benefit from extended reasoning (see §8.9).
 
 #### Cost-Performance Analysis
 
@@ -2103,6 +2103,47 @@ Tile size and voting methodology were calibrated via pilot studies before holdou
 | `archive/pilot-tile-size/outputs/multiscale_summary.md` | Multi-scale summary |
 
 These files document calibration decisions made before holdout evaluation and are archived for reproducibility. See Section 12.2 for multi-scale pilot findings.
+
+### 8.9 Thinking Level Calibration
+
+**Background:** Gemini 3's `thinking_level` parameter controls reasoning depth (`minimal`, `low`, `high`). Higher levels increase latency and cost. We calibrated this parameter to determine the minimum level needed for symbol detection.
+
+**Pilot methodology:**
+
+- Conditions: minimal, low, high (3 levels)
+- Tiles: 20 calibration tiles (same as tile-size pilot)
+- Replications: K=10 per condition (600 total API calls)
+- Library: Canonical-only (9 examples)
+- Model: gemini-3-flash-preview
+
+**Results:**
+
+| Level | Mean F1 | SD | 95% CI | Mean Latency |
+|-------|---------|------|--------|--------------|
+| minimal | 0.479 | 0.023 | [0.464, 0.492] | 34.2s |
+| low | 0.465 | 0.031 | [0.446, 0.483] | 39.7s |
+| high | 0.460 | 0.044 | [0.432, 0.486] | 97.3s |
+
+**Key findings:**
+
+- All three levels have overlapping 95% CIs — differences not statistically significant
+- Minimal achieves highest mean F1 (0.479) with lowest variance (SD=0.023)
+- High shows 2× the F1 variance of minimal (0.044 vs 0.023)
+- Minimal is 2.84× faster than high (34.2s vs 97.3s per 20 tiles)
+
+**Decision:** Use `thinking_level=minimal` for main experiment.
+
+**Rationale:** Visual pattern matching (symbol detection) does not benefit from extended reasoning. The model either recognises the "sunburst" mound symbol or it doesn't — additional reasoning steps don't improve pattern recognition.
+
+**Post-experiment verification:** A confirmatory analysis with full Hungarian matching at the optimal configuration will compare:
+
+- Detection accuracy (F1, precision, recall)
+- Latency per tile
+- Token usage and API costs
+
+If minimal is truly equivalent at 1/3 the latency, this is a practical finding for practitioners scaling VLM detection pipelines.
+
+**Pilot outputs:** `outputs/pilot-thinking/`, `results/pilot-thinking/`
 
 ---
 

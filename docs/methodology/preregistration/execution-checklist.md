@@ -27,6 +27,12 @@
 
 *Complete after lodging but before running any holdout evaluation.*
 
+- [x] Calibrate `thinking_level` parameter (2026-01-15)
+  - Pilot tested minimal, low, high across 20 tiles × K=10
+  - Result: minimal achieves equivalent F1 to high at 1/3 latency
+  - All Gemini configs updated to `thinking_level: minimal`
+  - See preregistration.md §8.9 for full results
+
 - [ ] Document hard negative examples (for H5)
   - Run FP analysis on training tiles
   - Select examples meeting ≥3/5 occurrence threshold

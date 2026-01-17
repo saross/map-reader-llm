@@ -85,6 +85,10 @@ H3 Voting       H9 Diversity    H2 Two-Stage    Triggered
   - [ ] Voting aggregation at multiple thresholds
   - [ ] Results collation and statistical tests
 
+- [x] **Calibration pilots** (2026-01-15):
+  - [x] Thinking level calibration complete — minimal achieves equivalent F1 to high at 1/3 latency (see §8.9)
+  - [x] All Gemini configs set to `thinking_level: minimal`
+
 - [ ] **Data management**:
   - [ ] Create output directory structure (see below)
   - [ ] Set up results tracking spreadsheet

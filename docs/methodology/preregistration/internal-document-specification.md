@@ -2,7 +2,7 @@
 
 **Purpose**: This document specifies what should be recorded in an internal project document SEPARATE from the OSF preregistration. These items are operational/planning details that support project execution but are not methodological commitments.
 
-**Date**: 2026-01-03 (updated for holdout expansion)
+**Date**: 2026-01-15 (updated for thinking level calibration)
 
 ---
 
@@ -71,6 +71,8 @@
 | GPT-5.2 Thinking | TBD | TBD | ~$0.025 | Estimate |
 
 **Per-call calculation**: (5,000 input × $0.50/1M) + (200 output × $3.00/1M) = $0.0025 + $0.0006 ≈ $0.003
+
+**Thinking tokens**: Gemini thinking tokens (`thoughts_token_count`) are billed as output tokens. With `thinking_level=minimal`, thinking token overhead is negligible. Higher thinking levels would significantly increase output token costs.
 
 **Source**: [Gemini Developer API pricing](https://ai.google.dev/gemini-api/docs/pricing)
 
@@ -180,6 +182,29 @@ This section documents the rationale for major design decisions, for internal re
 - Clean separation supports two-stage trial framework
 
 **Pre-specified**: Test top 3-5 configurations (not just winner) in Stage 2
+
+### Thinking Level Calibration (2026-01-15)
+
+**Decision**: Use `thinking_level=minimal` for all Gemini experiments
+
+**Pilot methodology**:
+- Conditions: minimal, low, high (3 levels)
+- Tiles: 20 calibration tiles × K=10 replications = 600 API calls
+- Library: Canonical-only (9 examples)
+- Model: gemini-3-flash-preview
+
+**Results**:
+- All three levels have overlapping 95% CIs — no significant differences
+- Minimal: F1=0.479 (SD=0.023), latency=34.2s
+- High: F1=0.460 (SD=0.044), latency=97.3s
+- Minimal is 2.84× faster with lower variance
+
+**Rationale**:
+- Visual pattern matching does not benefit from extended reasoning
+- Symbol detection is recognition-based, not reasoning-based
+- Minimal achieves equivalent accuracy at 1/3 the latency and cost
+
+**Outputs**: `outputs/pilot-thinking/`, `results/pilot-thinking/`
 ```
 
 ### 2.4 Working Documents Archive
@@ -277,12 +302,13 @@ The preregistration is the **public commitment**. This document is the **project
 
 ---
 
-*Document version: 1.6*
+*Document version: 1.7*
 *Created: 2026-01-02*
-*Updated: 2026-01-14*
+*Updated: 2026-01-15*
 
 **Changelog:**
 
+- v1.7: Added thinking level calibration decision rationale (pilot completed 2026-01-15); added thinking tokens billing note to pricing section; aligned with preregistration.md §8.9
 - v1.6: Aligned with preregistration.md v4.6 and execution-plan.md v3.0 — replaced stranded factorial design with sequential OFAT design (26 cells); updated budget table (~$286 confirmatory at ~$11/cell); updated H4 design description; soft budget limit $500
 - v1.5: Updated reference to execution-plan.md v2.8; aligned with preregistration.md v4.4
 - v1.4: Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); revised budget estimates (~$253-279 vs previous ~$116-149); soft budget limit $250; added pilot discrepancy note; aligned with execution-plan.md v2.7

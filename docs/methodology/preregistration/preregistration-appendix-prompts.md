@@ -1322,6 +1322,8 @@ All configuration files follow this JSON schema:
 }
 ```
 
+**Gemini thinking level**: All Gemini configurations use `thinking_level: minimal`, calibrated via pilot study (see preregistration.md Section 8.9). The pilot found that minimal thinking achieves equivalent F1 to high at one-third the latency.
+
 ---
 
 ### 2.2 Configuration File Naming Convention

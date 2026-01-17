@@ -26,6 +26,14 @@ H5 is tested at ALL three image-using M/E levels (Image-only, Brief-text+image, 
 
 **Note on Ordering**: Ordering is tested at optimal M/E only (3 conditions), not as a partial cross.
 
+**Fixed parameters (Gemini)**: The following parameters are fixed across all Gemini experiments:
+
+| Parameter | Value | Rationale |
+|-----------|-------|-----------|
+| `thinking_level` | `minimal` | Calibrated via pilot; minimal achieves equivalent F1 to high at 1/3 latency (see §8.9) |
+| `media_resolution` | default (HIGH) | Sufficient for 512×512 tiles; no benefit from ULTRA_HIGH in pilot |
+| `max_output_tokens` | 8192 | Sufficient for detection output |
+
 ---
 
 ## 2. Factor Coverage in OFAT Design
