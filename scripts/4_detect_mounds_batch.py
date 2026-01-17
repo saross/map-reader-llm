@@ -297,7 +297,7 @@ def process_single_tile(
 
     except Exception as e:
         print(f"Error processing {tile_filename}: {e}")
-        tracker.log_failure(tile_filename, str(e))
+        metadata_tracker.log_failure(tile_filename, str(e))
         return []
 
 def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False, model_override=None, workers=1):

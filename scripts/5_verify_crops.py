@@ -49,7 +49,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 try:
-    from config import TILES_DIR, CONTEXT_SIZE
+    from config import TILES_DIR, CONTEXT_SIZE, EXAMPLES_DIR
 except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
@@ -332,7 +332,7 @@ def run_verification(
         f"Concurrent Workers: {workers}. Iterations per candidate: {iterations}"
     )
 
-    refs_dir = config.EXAMPLES_DIR
+    refs_dir = EXAMPLES_DIR
     base_prompt = construct_verifier_prompt(prompt_cfg, refs_dir)
 
     # Load instruction file for hashing (metadata tracker needs it)
