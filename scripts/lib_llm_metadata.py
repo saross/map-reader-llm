@@ -84,8 +84,12 @@ class TokenUsage:
     cached_input_tokens: int = 0          # Tokens read from cache
     cache_creation_tokens: int = 0        # Claude: tokens used to create cache
 
-    # Reasoning tokens (OpenAI GPT-5/o-series)
-    reasoning_tokens: int = 0             # Hidden chain-of-thought tokens
+    # Reasoning/thinking tokens
+    reasoning_tokens: int = 0             # OpenAI GPT-5/o-series: hidden chain-of-thought
+    thoughts_tokens: int = 0              # Gemini: thinking tokens (thinking_level param)
+
+    # Tool/function calling tokens (Gemini)
+    tool_use_tokens: int = 0              # Tokens for tool-related prompts
 
     # Audio tokens (OpenAI multimodal)
     audio_input_tokens: int = 0
@@ -125,6 +129,13 @@ class LLMResponseMetadata:
 
     # Token usage
     tokens: TokenUsage = field(default_factory=TokenUsage)
+
+    # Token modality breakdown (Gemini: TEXT, IMAGE, AUDIO, VIDEO, DOCUMENT)
+    # Each key maps to a list of {"modality": str, "count": int} dicts
+    modality_breakdown: Dict[str, List[Dict[str, Any]]] = field(default_factory=dict)
+
+    # Traffic type (Gemini: ON_DEMAND vs PROVISIONED_THROUGHPUT)
+    traffic_type: Optional[str] = None
 
     # Completion status
     finish_reason: str = "unknown"        # Normalised: success, max_tokens, safety, etc.
@@ -168,7 +179,9 @@ class AggregatedUsage:
     total_input_tokens: int = 0
     total_output_tokens: int = 0
     total_cached_tokens: int = 0
-    total_reasoning_tokens: int = 0
+    total_reasoning_tokens: int = 0       # OpenAI reasoning
+    total_thoughts_tokens: int = 0        # Gemini thinking
+    total_tool_use_tokens: int = 0        # Tool/function calling
     total_tokens: int = 0
 
     # Per-provider breakdown (if mixed providers used)
@@ -284,6 +297,8 @@ class LLMMetadataTracker:
             self.usage.total_output_tokens += metadata.tokens.output_tokens
             self.usage.total_cached_tokens += metadata.tokens.cached_input_tokens
             self.usage.total_reasoning_tokens += metadata.tokens.reasoning_tokens
+            self.usage.total_thoughts_tokens += metadata.tokens.thoughts_tokens
+            self.usage.total_tool_use_tokens += metadata.tokens.tool_use_tokens
             self.usage.total_tokens += metadata.tokens.total_tokens
 
             # Provider-specific tracking
@@ -484,8 +499,41 @@ def extract_gemini_metadata(
             input_tokens=getattr(um, 'prompt_token_count', 0) or 0,
             output_tokens=getattr(um, 'candidates_token_count', 0) or 0,
             total_tokens=getattr(um, 'total_token_count', 0) or 0,
-            cached_input_tokens=getattr(um, 'cached_content_token_count', 0) or 0
+            cached_input_tokens=getattr(um, 'cached_content_token_count', 0) or 0,
+            thoughts_tokens=getattr(um, 'thoughts_token_count', 0) or 0,
+            tool_use_tokens=getattr(um, 'tool_use_prompt_token_count', 0) or 0
         )
+
+        # Traffic type (ON_DEMAND vs PROVISIONED_THROUGHPUT)
+        traffic_type = getattr(um, 'traffic_type', None)
+        if traffic_type is not None:
+            metadata.traffic_type = str(traffic_type)
+
+        # Modality breakdown for research analysis
+        # Shows token distribution across TEXT, IMAGE, AUDIO, VIDEO, DOCUMENT
+        prompt_details = getattr(um, 'prompt_tokens_details', None)
+        if prompt_details:
+            metadata.modality_breakdown["prompt"] = [
+                {"modality": str(m.modality), "count": m.token_count}
+                for m in prompt_details
+                if hasattr(m, "modality") and hasattr(m, "token_count")
+            ]
+
+        candidates_details = getattr(um, 'candidates_tokens_details', None)
+        if candidates_details:
+            metadata.modality_breakdown["candidates"] = [
+                {"modality": str(m.modality), "count": m.token_count}
+                for m in candidates_details
+                if hasattr(m, "modality") and hasattr(m, "token_count")
+            ]
+
+        cache_details = getattr(um, 'cache_tokens_details', None)
+        if cache_details:
+            metadata.modality_breakdown["cache"] = [
+                {"modality": str(m.modality), "count": m.token_count}
+                for m in cache_details
+                if hasattr(m, "modality") and hasattr(m, "token_count")
+            ]
 
     # Model version (if available)
     if hasattr(response, 'model_version'):

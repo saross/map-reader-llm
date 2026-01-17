@@ -33,7 +33,7 @@ import argparse
 import threading
 from pathlib import Path
 from datetime import datetime, timezone
-from typing import Dict, List, Any, Tuple, NamedTuple
+from typing import Dict, List, Tuple, NamedTuple
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Setup Project Path
@@ -449,6 +449,72 @@ def process_tile(
                     "total": getattr(response.usage_metadata, "total_token_count", 0),
                 }
 
+                # Enhanced token tracking for latency/cost analysis
+                # Note: Gemini uses "thoughts_token_count" (not "thinking_token_count")
+                thoughts_tokens = getattr(
+                    response.usage_metadata, "thoughts_token_count", None
+                )
+                if thoughts_tokens is not None:
+                    metadata["tokens"]["thoughts"] = thoughts_tokens
+
+                cached_tokens = getattr(
+                    response.usage_metadata, "cached_content_token_count", None
+                )
+                if cached_tokens is not None:
+                    metadata["tokens"]["cached"] = cached_tokens
+
+                # Tool use tokens (if using function calling)
+                tool_tokens = getattr(
+                    response.usage_metadata, "tool_use_prompt_token_count", None
+                )
+                if tool_tokens is not None:
+                    metadata["tokens"]["tool_use"] = tool_tokens
+
+                # Modality breakdown for research analysis
+                # Shows token distribution across TEXT, IMAGE, AUDIO, VIDEO, DOCUMENT
+                prompt_details = getattr(
+                    response.usage_metadata, "prompt_tokens_details", None
+                )
+                if prompt_details:
+                    metadata["tokens"]["prompt_by_modality"] = [
+                        {"modality": str(m.modality), "count": m.token_count}
+                        for m in prompt_details
+                        if hasattr(m, "modality") and hasattr(m, "token_count")
+                    ]
+
+                candidates_details = getattr(
+                    response.usage_metadata, "candidates_tokens_details", None
+                )
+                if candidates_details:
+                    metadata["tokens"]["completion_by_modality"] = [
+                        {"modality": str(m.modality), "count": m.token_count}
+                        for m in candidates_details
+                        if hasattr(m, "modality") and hasattr(m, "token_count")
+                    ]
+
+                cache_details = getattr(
+                    response.usage_metadata, "cache_tokens_details", None
+                )
+                if cache_details:
+                    metadata["tokens"]["cached_by_modality"] = [
+                        {"modality": str(m.modality), "count": m.token_count}
+                        for m in cache_details
+                        if hasattr(m, "modality") and hasattr(m, "token_count")
+                    ]
+
+            # Add finish reason for completeness analysis
+            if hasattr(response, "candidates") and response.candidates:
+                finish_reason = response.candidates[0].finish_reason
+                metadata["finish_reason"] = str(finish_reason)
+
+            # Add traffic type if available (ON_DEMAND vs PROVISIONED_THROUGHPUT)
+            if hasattr(response, "usage_metadata") and response.usage_metadata:
+                traffic_type = getattr(
+                    response.usage_metadata, "traffic_type", None
+                )
+                if traffic_type is not None:
+                    metadata["traffic_type"] = str(traffic_type)
+
             return response_text, features, metadata
 
         except Exception as e:
@@ -624,6 +690,29 @@ def save_run_results(results: Dict, output_dir: Path) -> Tuple[Path, Path]:
     with open(geojson_path, "w") as f:
         geojson.dump(geojson_output, f, indent=2)
 
+    # Aggregate token counts across all tiles for cost estimation
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
+    total_thoughts_tokens = 0
+    total_cached_tokens = 0
+    total_tool_tokens = 0
+    for tile_meta in results["metadata_by_tile"].values():
+        if "tokens" in tile_meta:
+            total_prompt_tokens += tile_meta["tokens"].get("prompt", 0)
+            total_completion_tokens += tile_meta["tokens"].get("completion", 0)
+            total_thoughts_tokens += tile_meta["tokens"].get("thoughts", 0)
+            total_cached_tokens += tile_meta["tokens"].get("cached", 0)
+            total_tool_tokens += tile_meta["tokens"].get("tool_use", 0)
+
+    # Estimate cost using Gemini Flash pricing (as of 2026-01)
+    # Flash: $0.50/1M input, $3.00/1M output (thoughts tokens billed as output)
+    flash_input_rate = 0.50  # USD per 1M tokens
+    flash_output_rate = 3.00  # USD per 1M tokens
+
+    input_cost = (total_prompt_tokens / 1_000_000) * flash_input_rate
+    output_cost = ((total_completion_tokens + total_thoughts_tokens) / 1_000_000) * flash_output_rate
+    total_cost = input_cost + output_cost
+
     # Build metadata
     meta = {
         "run": run_name,
@@ -635,6 +724,20 @@ def save_run_results(results: Dict, output_dir: Path) -> Tuple[Path, Path]:
         "tiles_processed": results["tiles_processed"],
         "tiles_successful": results["tiles_successful"],
         "total_detections": results["total_detections"],
+        "tokens_aggregated": {
+            "prompt": total_prompt_tokens,
+            "completion": total_completion_tokens,
+            "thoughts": total_thoughts_tokens,
+            "cached": total_cached_tokens,
+            "tool_use": total_tool_tokens,
+            "total": total_prompt_tokens + total_completion_tokens + total_thoughts_tokens,
+        },
+        "cost_estimate_usd": {
+            "input": round(input_cost, 6),
+            "output": round(output_cost, 6),
+            "total": round(total_cost, 6),
+            "pricing_note": "Gemini Flash: $0.50/1M input, $3.00/1M output (thoughts billed as output)",
+        },
         "tile_metadata": results["metadata_by_tile"],
     }
 
