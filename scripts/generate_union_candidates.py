@@ -3,11 +3,20 @@ Generate Union Candidates from Multiple Detection Runs
 =======================================================
 
 Clusters detections from multiple runs using distance-based matching (20m)
-to align with F1 evaluation spatial tolerance.
+to align with F1 evaluation spatial tolerance. Used in the two-stage pipeline
+to aggregate proposals from multiple runs before verification.
+
+Usage:
+    python scripts/generate_union_candidates.py \\
+        --input outputs/proposer_runs \\
+        --output outputs/union_candidates.geojson
+
+Author: Shawn Ross, Claude Code
+Licence: Apache 2.0
 """
 
-import json
 import argparse
+import json
 import math
 from pathlib import Path
 from shapely.geometry import shape
@@ -141,8 +150,31 @@ def generate_union(input_dir, output_path):
     print(f"Saved {len(union_features)} union candidates to {output_path}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True)
-    parser.add_argument("--output", required=True)
+    parser = argparse.ArgumentParser(
+        description="Cluster detections from multiple runs into union candidates",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+    # Generate union candidates from proposer runs
+    python scripts/generate_union_candidates.py \\
+        --input outputs/proposer_runs \\
+        --output outputs/union_candidates.geojson
+
+Notes:
+    - Input directory should contain run_*.geojson files
+    - Uses 20m centroid distance threshold for clustering (matches F1 evaluation)
+    - Output includes vote counts and cluster sizes for each candidate
+        """,
+    )
+    parser.add_argument(
+        "--input",
+        required=True,
+        help="Directory containing run_*.geojson detection files",
+    )
+    parser.add_argument(
+        "--output",
+        required=True,
+        help="Output path for union candidates GeoJSON file",
+    )
     args = parser.parse_args()
     generate_union(args.input, args.output)

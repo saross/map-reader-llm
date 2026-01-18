@@ -5,9 +5,16 @@ Generate GeoJSON bounds files for calibration and holdout tile sets.
 Creates polygon features for each tile showing its geographic extent,
 useful for visualisation and spatial analysis of tile coverage.
 
+Usage:
+    python scripts/generate_tile_bounds.py
+    python scripts/generate_tile_bounds.py --tiles-dir inputs/tiles --output-dir outputs/results
+
 Created: 2025-12-23
+Author: Shawn Ross, Claude Code
+Licence: Apache 2.0
 """
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -167,10 +174,44 @@ def create_bounds_geojson(
 
 def main():
     """Generate bounds GeoJSONs for calibration and holdout tile sets."""
+    parser = argparse.ArgumentParser(
+        description="Generate GeoJSON bounds files for calibration and holdout tile sets",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+    # Use default paths (inputs/tiles and outputs/results)
+    python scripts/generate_tile_bounds.py
+
+    # Specify custom paths
+    python scripts/generate_tile_bounds.py \\
+        --tiles-dir /path/to/tiles \\
+        --output-dir /path/to/output
+
+Output Files:
+    calibration_bounds.geojson  - Polygon bounds for calibration tiles
+    holdout_bounds.geojson      - Polygon bounds for holdout tiles
+        """,
+    )
+
     base_dir = Path(__file__).parent.parent
-    inputs_dir = base_dir / "inputs"
-    tiles_dir = inputs_dir / "tiles"
-    outputs_dir = base_dir / "outputs" / "results"
+
+    parser.add_argument(
+        "--tiles-dir",
+        type=Path,
+        default=base_dir / "inputs" / "tiles",
+        help="Path to tiles directory containing manifests and metadata (default: inputs/tiles)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=base_dir / "outputs" / "results",
+        help="Path to output directory for GeoJSON files (default: outputs/results)",
+    )
+
+    args = parser.parse_args()
+
+    tiles_dir = args.tiles_dir
+    outputs_dir = args.output_dir
 
     # Ensure output directory exists
     outputs_dir.mkdir(parents=True, exist_ok=True)
