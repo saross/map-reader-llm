@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "0e36df87-0938-44c6-a210-63d8d6463f55",
+    "started_at": "2026-01-18T11:17:51.013Z",
+    "ended_at": "2026-01-18T11:19:55.944Z",
+    "duration_minutes": 2
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 5,
+    "total_tokens": 640,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "scripts/archive_cc_session.py",
+        "type": "code",
+        "description": "CC session archiving script for research transparency"
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 5,
+    "human_messages": 5,
+    "assistant_messages": 12,
+    "thinking_blocks": 5,
+    "tool_calls": {
+      "total": 4,
+      "by_type": {
+        "Read": 1,
+        "Bash": 3
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 63845,
+      "by_type": {
+        "Read": {
+          "count": 1,
+          "bytes": 57581
+        },
+        "Bash": {
+          "count": 2,
+          "bytes": 6264
+        }
+      },
+      "largest_single_output_bytes": 57581
+    }
+  },
+  "auto_generated": {
+    "title": "Session archiving and metadata updates",
+    "purpose": "Archive recent CC sessions and systematically update metadata for all 15 newly archived sessions, including agent sub-sessions, empty sessions, and large main sessions.",
+    "tags": ["archiving", "metadata", "session-management", "housekeeping"]
+  },
+  "three_ps": {
+    "prompt_summary": "User requested reminder of archiving script workflow, then asked to run script and update all session metadata systematically.",
+    "process_summary": "5 turns. Explained archiving script, ran --all --stats-only to archive 15 sessions, then began systematic metadata updates for each archived session.",
+    "provenance_summary": "Administrative session for maintaining research transparency infrastructure. Archives sessions from 5e52df73 → 49cb5c21 → d40e04c4 continuation chain."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "60e77ca32b6d2b80c6ce5799738e98e3b64ac732713ba40621f0279c44b006fe",
+    "jsonl_bytes": 151907,
+    "archived_at": "2026-01-18T22:19:56.648791"
+  }
+}

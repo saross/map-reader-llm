@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-af3c4df",
+    "started_at": "2026-01-12T11:35:35.965Z",
+    "ended_at": "2026-01-12T11:36:02.218Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": "Brief text+image instruction template"
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_terse.md",
+        "type": "document",
+        "description": "Brief text+image with terse exclusion guidance"
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_verbose.md",
+        "type": "document",
+        "description": "Brief text+image with verbose exclusion guidance"
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": "Brief text-only instruction template"
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": "Image-only minimal instruction template"
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_terse.md",
+        "type": "document",
+        "description": "Image-only with terse exclusion guidance"
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_verbose.md",
+        "type": "document",
+        "description": "Image-only with verbose exclusion guidance"
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image.md",
+        "type": "document",
+        "description": "Verbose text+image instruction template"
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 10,
+    "human_messages": 10,
+    "assistant_messages": 14,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 9,
+      "by_type": {
+        "Glob": 1,
+        "Read": 8
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 18425,
+      "by_type": {
+        "Glob": {
+          "count": 1,
+          "bytes": 976
+        },
+        "Read": {
+          "count": 8,
+          "bytes": 17449
+        }
+      },
+      "largest_single_output_bytes": 4800
+    }
+  },
+  "auto_generated": {
+    "title": "Instruction file structure analysis",
+    "purpose": "Explore prompt library instruction files to understand structure, variation patterns across M/E levels and H5 variants, for consistency review planning.",
+    "tags": ["exploration", "prompts", "system-instructions", "consistency-review", "H5"]
+  },
+  "three_ps": {
+    "prompt_summary": "Explore detect_*.md instruction files to understand structure, content variations, and patterns for documentation consistency review.",
+    "process_summary": "Agent sampled 8 instruction files, identifying three variation dimensions: input type, verbosity level, and exclusion guidance presence.",
+    "provenance_summary": "Sub-agent exploration supporting consistency validation between documentation and actual instruction files."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "bde7954e5dafb8606edacd41347c9497e59a3a87c7a2fab2c0b0bf7c8d35df7e",
+    "jsonl_bytes": 58495,
+    "archived_at": "2026-01-18T22:19:54.006947"
+  }
+}

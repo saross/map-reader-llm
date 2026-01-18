@@ -1,0 +1,451 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "d40e04c4-0c5b-4b59-a01d-955e77462dde",
+    "started_at": "2026-01-17T12:38:58.837Z",
+    "ended_at": "2026-01-18T11:16:53.979Z",
+    "duration_minutes": 1357
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 317,
+    "total_tokens": 26525,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": ["5e52df73-8bcf-4c07-9a53-b59087d32b1f"],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "archive/speculative-configs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/TROUBLESHOOTING.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/VISUALISATION-GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/analysis-summary.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/hypothesis-tracking.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "pytest.ini",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "scripts/create_test_fixtures.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/__init__.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/conftest.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_config_uniqueness.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_f1_calculation.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_ground_truth.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_integration_regression.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_preregistration_compliance.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": ".zenodo.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "CITATION.cff",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "codemeta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-coverage.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_union_candidates.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "CODE_OF_CONDUCT.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "LICENSE",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preregistration/operations/vlm-burial-mounds-internal-operations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_execution_checklist_corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_execution_plan_corrections.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_h2-config-alignment-instructions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_naming_convention_enhancement.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/reports/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/vectors/bounds/validation_bounds.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/vectors/references/reference_K-35-052-4_32635.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_verbose.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_canonical.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_plus-hp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_thinking-minimal.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "requirements.txt",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 401,
+    "human_messages": 401,
+    "assistant_messages": 792,
+    "thinking_blocks": 317,
+    "tool_calls": {
+      "total": 359,
+      "by_type": {
+        "TodoWrite": 44,
+        "Read": 90,
+        "Glob": 31,
+        "Bash": 86,
+        "Write": 21,
+        "Edit": 38,
+        "mcp__ide__getDiagnostics": 1,
+        "Grep": 34,
+        "Task": 10,
+        "AskUserQuestion": 1,
+        "ExitPlanMode": 3
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 952666,
+      "by_type": {
+        "TodoWrite": {
+          "count": 44,
+          "bytes": 7040
+        },
+        "Read": {
+          "count": 90,
+          "bytes": 607528
+        },
+        "Glob": {
+          "count": 31,
+          "bytes": 20242
+        },
+        "Bash": {
+          "count": 86,
+          "bytes": 54111
+        },
+        "Write": {
+          "count": 21,
+          "bytes": 40469
+        },
+        "Edit": {
+          "count": 38,
+          "bytes": 56296
+        },
+        "mcp__ide__getDiagnostics": {
+          "count": 1,
+          "bytes": 193
+        },
+        "Grep": {
+          "count": 34,
+          "bytes": 72357
+        },
+        "Task": {
+          "count": 10,
+          "bytes": 88821
+        },
+        "AskUserQuestion": {
+          "count": 1,
+          "bytes": 815
+        },
+        "ExitPlanMode": {
+          "count": 3,
+          "bytes": 4794
+        }
+      },
+      "largest_single_output_bytes": 81247
+    }
+  },
+  "auto_generated": {
+    "title": "OSF documentation implementation and metadata updates",
+    "purpose": "Implementation of the documentation plan from previous session: created hypothesis tracking, decisions log, analysis summary, troubleshooting guide, visualisation guide, updated FAIR metadata files, and completed test framework.",
+    "tags": ["continuation", "documentation", "OSF-preparation", "testing", "FAIR-metadata", "preregistration"]
+  },
+  "three_ps": {
+    "prompt_summary": "Implement the documentation plan across 3 phases: OSF submission blockers, transparency improvements, and operational conveniences.",
+    "process_summary": "401 turns over ~23 hours. Created 7 new documentation files, updated FAIR metadata (CITATION.cff, codemeta.json, .zenodo.json), expanded prompts/README.md, added argparse to utility scripts, completed test suite with fixtures.",
+    "provenance_summary": "Final session in preparation for OSF submission. Continues from 49cb5c21 (which continues from 5e52df73). Completes documentation updates and metadata alignment."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "78951a89bb8ed1aee7dd627d189d34bcd6545d4fd396b9b275f45adaaf886ddd",
+    "jsonl_bytes": 79901319,
+    "archived_at": "2026-01-18T22:19:56.645051"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde"
+    ],
+    "detection_notes": [
+      "Found session ID reference: 5e52df73-8bcf-4c07-9a53-b59087d32b1f",
+      "Found session ID reference: 49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found session ID reference: d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

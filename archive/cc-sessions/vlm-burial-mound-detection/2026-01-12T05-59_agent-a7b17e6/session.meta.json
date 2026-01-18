@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a7b17e6",
+    "started_at": "2026-01-12T05:59:51.733Z",
+    "ended_at": "2026-01-12T06:00:10.798Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": "Preregistration appendix documenting prompt configurations and H5 factor levels"
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 2,
+    "human_messages": 2,
+    "assistant_messages": 3,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 1,
+      "by_type": {
+        "Read": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 76524,
+      "by_type": {
+        "Read": {
+          "count": 1,
+          "bytes": 76524
+        }
+      },
+      "largest_single_output_bytes": 76524
+    }
+  },
+  "auto_generated": {
+    "title": "H5 appendix structure exploration",
+    "purpose": "Explore the preregistration appendix to understand H5 prompt style documentation structure for planning updates from None/Images-only/Text+Images to Minimal/Terse/Verbose naming.",
+    "tags": ["exploration", "H5", "preregistration", "documentation", "refactoring"]
+  },
+  "three_ps": {
+    "prompt_summary": "Explore preregistration-appendix-prompts.md to understand H5 level documentation, library composition tables, and config file examples.",
+    "process_summary": "Agent read the full appendix document and provided a structured summary of H5 levels, library composition tables, and instruction file mappings.",
+    "provenance_summary": "Sub-agent exploration task supporting H5 factor renaming from None/Images-only/Text+Images to Minimal/Terse/Verbose."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "bbe82fccb9078e0c23cbdfa07b1723b8ed335519547a32ad50177f6e04420f21",
+    "jsonl_bytes": 155347,
+    "archived_at": "2026-01-18T22:19:53.994368"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "agent-a14c2f3",
+    "started_at": "2026-01-12T11:35:35.968Z",
+    "ended_at": "2026-01-12T11:36:13.972Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-haiku-4-5-20251001",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": [
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_canonical-last.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_verbose.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_random-order.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_canonical.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_plus-hp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_pure-positive-canon.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_tilesize.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 18,
+    "human_messages": 18,
+    "assistant_messages": 24,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 17,
+      "by_type": {
+        "Bash": 2,
+        "Read": 15
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 47430,
+      "by_type": {
+        "Bash": {
+          "count": 2,
+          "bytes": 3718
+        },
+        "Read": {
+          "count": 15,
+          "bytes": 43712
+        }
+      },
+      "largest_single_output_bytes": 12442
+    }
+  },
+  "auto_generated": {
+    "title": "Config file structure analysis",
+    "purpose": "Explore detection and library config files to understand JSON structure, field patterns, and identify elements for documentation consistency verification.",
+    "tags": ["exploration", "configs", "consistency-review", "H4", "H5", "H8"]
+  },
+  "three_ps": {
+    "prompt_summary": "Explore detect_*.json and library_*.json config files to understand structure and identify fields requiring consistency verification.",
+    "process_summary": "Agent sampled 15 config files, documenting core metadata fields, example structures, ordering-specific fields, and library composition tracking.",
+    "provenance_summary": "Sub-agent exploration supporting consistency validation between config files and preregistration appendix."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "a203f96a3f6636dbf805959c3315a6d55921fb61b54abc7369d2dcd630dcb8af",
+    "jsonl_bytes": 133308,
+    "archived_at": "2026-01-18T22:19:54.011600"
+  }
+}
