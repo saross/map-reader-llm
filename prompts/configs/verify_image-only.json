@@ -1,49 +1,29 @@
 {
     "version": "verify_image-only",
     "description": "Two-Stage Verifier (Stage 2). Precision-focused verification of proposals.",
+    "hypothesis": "H2",
     "model": "gemini-3-flash",
     "instruction_file": "verify_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "thinking_level": "minimal",
-    "verification_threshold": 0.51,
-    "majority_vote_fraction": 0.5,
+    "_config_notes": {
+        "template_status": "This config is a template. Parameters will be finalised after earlier phases complete.",
+        "temperature": "Placeholder - will use H7-optimal from Phase 2b (or 1.0 if T=1.0 proves optimal)",
+        "library": "Placeholder - will use H8-optimal from Phase 2c (likely Scale-8, Scale-16, or Scale-32)",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15)",
+        "usage": "Run with --iterations 1 for H2 testing. Each K=10 run is independent (one proposer pass, one verifier pass). Raw mound_probability scores used for evaluation, no binary thresholding."
+    },
     "examples": [
-        {
-            "path": "neutral/example_01.png",
-            "label": "Positive: Burial Mound (Kurgan)"
-        },
-        {
-            "path": "neutral/example_02.png",
-            "label": "Positive: Settlement Mound"
-        },
-        {
-            "path": "neutral/example_03.png",
-            "label": "Positive: Triangulation Point ON Mound"
-        },
-        {
-            "path": "neutral/example_04.png",
-            "label": "Positive: Benchmark ON Mound"
-        },
-        {
-            "path": "neutral/example_05.png",
-            "label": "Negative: Empty tile (no mounds)"
-        },
-        {
-            "path": "neutral/example_06.png",
-            "label": "Negative: Empty tile (no mounds)"
-        },
-        {
-            "path": "neutral/example_07.png",
-            "label": "Negative: Empty tile (no mounds)"
-        },
-        {
-            "path": "neutral/example_08.png",
-            "label": "Negative: Benchmark ALONE (no mound)"
-        },
-        {
-            "path": "neutral/example_09.png",
-            "label": "Negative: Triangulation Point ALONE (no mound)"
-        }
-    ]
+        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"}
+    ],
+    "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
 }

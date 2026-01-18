@@ -3,6 +3,11 @@
 **Companion document to**: `preregistration.md`
 **Purpose**: Operational sequencing for executing the preregistered experiments
 **Status**: Ready for Registration
+**Publication status**: Internal operational document (not published with preregistration)
+
+> **Note**: This document contains detailed cost estimates, budget limits, and operational
+> triggers that are kept internal for planning purposes. The public preregistration
+> (`preregistration.md`) includes only summary cost information.
 
 ---
 
@@ -554,12 +559,36 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 **Estimated cost**: ~$4 (Flash at $0.003/call)
 **Trigger**: Always run (confirms preliminary finding)
 
+**Prerequisites**:
+
+- Phase 2a (H1) complete → optimal M/E level known
+- Phase 2b (H7) complete → optimal temperature known
+- Phase 2c (H8) complete → optimal library composition known
+- Phase 2d (H5) complete → optimal negative text treatment known
+
+**Configuration**:
+
+- Uses optimal M/E level from Phase 2a (H1)
+- Uses optimal temperature from Phase 2b (H7)
+- Uses optimal library from Phase 2c (H8)
+- Uses optimal negative text from Phase 2d (H5)
+
+**Config finalisation**: Before H2 testing begins (after Phase 2e completes):
+
+1. Update both configs with H7-optimal temperature
+2. Update both configs with H8-optimal library composition
+3. Update both configs with H1-optimal M/E level instruction file
+4. Commit finalised configs with version tag (e.g., `h2-final-20260125`)
+5. Run H2 experiments with finalised configs
+
 #### Design
 
 Compare:
 
 - Condition A: Single-stage detection (optimal from Phase 2)
 - Condition B: Proposer → Verifier pipeline
+
+**Protocol**: Each of the K=10 runs is independent (one proposer pass → one verifier pass). The verifier returns raw `mound_probability` scores used directly for evaluation — no binary thresholding or voting within the verification step.
 
 **API calls**:
 

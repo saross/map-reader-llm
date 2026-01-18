@@ -1456,11 +1456,16 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 | `propose_image-only.json` | H2 Stage 1 (Proposer) | propose_image-only.md |
 | `verify_image-only.json` | H2 Stage 2 (Verifier) | verify_image-only.md |
 
-#### Pilot Config (1 file)
+#### Pilot Configs (4 files)
 
 | Configuration File | Purpose |
 |--------------------|---------|
-| `pilot_tilesize.json` | Tile size pilot study |
+| `pilot_tilesize.json` | Tile size pilot study (512px selected) |
+| `pilot_thinking-minimal.json` | Gemini thinking level calibration |
+| `pilot_thinking-low.json` | Gemini thinking level calibration |
+| `pilot_thinking-high.json` | Gemini thinking level calibration |
+
+**Note**: Thinking level pilot (2026-01-15) tested minimal, low, and high thinking across 20 calibration tiles. Result: `thinking_level: minimal` selected for all Gemini configs (equivalent F1, lower latency). See preregistration.md Section 8.9.
 
 ---
 
@@ -1721,27 +1726,41 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 
 ### 2.10 Two-Stage Pipeline Configurations (H2)
 
+**Template status**: These configs are templates that will be finalised after earlier phases complete. Temperature will use the H7-optimal value from Phase 2b. Library composition will use the H8-optimal from Phase 2c.
+
+**H2 protocol**: Each of the K=10 runs is independent (one proposer pass → one verifier pass). The verifier returns raw `mound_probability` scores used directly for evaluation — no binary thresholding or voting within the verification step.
+
 #### propose_image-only.json
 
 ```json
 {
     "version": "propose_image-only",
     "description": "Two-Stage Proposer (Stage 1). High-recall detection, use with verify_image-only.",
+    "hypothesis": "H2",
     "model": "gemini-3-flash",
     "instruction_file": "propose_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "_config_notes": {
+        "template_status": "This config is a template. Parameters will be finalised after earlier phases complete.",
+        "temperature": "Placeholder - will use H7-optimal from Phase 2b",
+        "library": "Placeholder - will use H8-optimal from Phase 2c",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15)",
+        "proposer_strategy": "Instruction says 'err on the side of detection' for high recall. Subtypes are for diagnostics; all count as positive detections for F1."
+    },
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)"},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound"},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound"},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound"},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)"}
-    ]
+        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"}
+    ],
+    "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
 }
 ```
 
@@ -1752,26 +1771,36 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 ```json
 {
     "version": "verify_image-only",
-    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification.",
+    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification of proposals.",
+    "hypothesis": "H2",
     "model": "gemini-3-flash",
     "instruction_file": "verify_image-only.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "_config_notes": {
+        "template_status": "This config is a template. Parameters will be finalised after earlier phases complete.",
+        "temperature": "Placeholder - will use H7-optimal from Phase 2b",
+        "library": "Placeholder - will use H8-optimal from Phase 2c",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15)",
+        "usage": "Run with --iterations 1 for H2 testing. Raw mound_probability scores used for evaluation."
+    },
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)"},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound"},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound"},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound"},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)"},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)"}
-    ]
+        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
+        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
+        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"}
+    ],
+    "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
 }
 ```
 
-**Note**: Pipeline configs use descriptive labels since they are separate from the base detection experiment.
+**Note**: Pipeline configs use Canonical library as placeholder. Will be updated to H8-optimal composition after Phase 2c determines the optimal library.
 
 ---
 

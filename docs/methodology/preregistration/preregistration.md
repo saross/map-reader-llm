@@ -6,7 +6,7 @@
 
 **Affiliations**: Macquarie University, Sydney, Australia
 
-**Document version**: 4.5
+**Document version**: 4.6
 **Last updated**: 2026-01-14
 **Status**: Ready for Registration
 
@@ -473,6 +473,8 @@ All levels describe the same content categories (canonical symbols + hard positi
 - Stage 1: Detection with lower confidence threshold
 - Stage 2: Crop candidate regions, verify with focused prompt
 
+*Implementation note: The proposer classifies detections into subtypes (burial mound, settlement mound, triangulation point on mound, benchmark on mound) based on visual characteristics. This classification is for diagnostic purposes and quality assessment; all subtypes are treated as positive detections for F1 calculation.*
+
 **Fine-to-coarse implementation (Condition C)**:
 
 - Stage 1: Standard detection on 512×512 tiles with 5-pass voting
@@ -554,7 +556,7 @@ All levels describe the same content categories (canonical symbols + hard positi
 **Simplification rationale**: The original design tested ordering across multiple M/E levels to detect O × M/E interaction. This interaction is theoretically speculative (the hypothesis that text verbosity would moderate ordering effects lacks strong prior support). Testing at optimal M/E only:
 
 - Answers the primary question (does ordering matter?)
-- Saves 6 cells ($72)
+- Saves 6 cells
 - Avoids underpowered interaction tests
 
 If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity testing at a contrasting M/E level can be conducted as exploratory follow-up.
@@ -1006,7 +1008,7 @@ These mechanisms may operate independently, redundantly, or synergistically.
 - Test whether ratio affects precision vs recall differentially
 - Identify whether ratio interacts with baseline error profile (FP-heavy vs FN-heavy tiles)
 
-**Trigger**: Run if H8 shows library size matters AND budget permits (~$9 additional)
+**Trigger**: Run if H8 shows library size matters
 
 ---
 
@@ -1822,22 +1824,22 @@ Test ordering at optimal M/E, T, library, and H5.
 
 **Total sequential design:**
 
-| Component | Cells | Calls | Cost (~$11/cell) |
-| --------- | ----- | ----- | ---------------- |
-| H1 (M/E) | 5 | 15,000 | ~$55 |
-| H7 (Temperature) | 5 | 15,000 | ~$55 |
-| H8 (Composition) | 7 | 21,000 | ~$77 |
-| H5 (Negative Text) | 6* | 18,000 | ~$66 |
-| H4 (Ordering) | 3 | 9,000 | ~$33 |
-| **Confirmatory total** | **26** | **78,000** | **~$286** |
-| M/E-sensitivity (triggered) | 3 | 9,000 | ~$33 |
-| H4b (triggered) | 2 | 6,000 | ~$22 |
-| HN-only (triggered) | 1 | 3,000 | ~$11 |
-| **Maximum total** | **32** | **96,000** | **~$352** |
+| Component | Cells | Calls |
+| --------- | ----- | ----- |
+| H1 (M/E) | 5 | 15,000 |
+| H7 (Temperature) | 5 | 15,000 |
+| H8 (Composition) | 7 | 21,000 |
+| H5 (Negative Text) | 6* | 18,000 |
+| H4 (Ordering) | 3 | 9,000 |
+| **Confirmatory total** | **26** | **78,000** |
+| M/E-sensitivity (triggered) | 3 | 9,000 |
+| H4b (triggered) | 2 | 6,000 |
+| HN-only (triggered) | 1 | 3,000 |
+| **Maximum total** | **32** | **96,000** |
 
 *H5 tests 3 M/E × 3 H5 = 9 conditions total, but 3 overlap with H1 baselines → 6 net new cells
 
-*Note: Cost estimates corrected to ~$11/cell based on actual Gemini 3 Flash pricing. Cell count updated from v4.4 (23 cells) to v4.6 (26 cells) due to H5 scope expansion to test at all image-based M/E levels.*
+**Estimated cost**: ~$286 for confirmatory tests (26 cells × ~$11/cell), up to ~$352 if all triggered tests run.
 
 **Parallelisation options:**
 
