@@ -39,7 +39,7 @@ Outputs:
 
 Author: Claude Code
 Version: 1.0.0
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 import argparse

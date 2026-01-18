@@ -23,7 +23,7 @@ Key Features:
     - Comprehensive Metadata: Full API response tracking via lib_llm_metadata.
 
 Author: Shawn Ross, Adela Sobotkova
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 import os

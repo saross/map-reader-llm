@@ -84,6 +84,128 @@ This ensures that any performance differences between H5 levels can be attribute
 | `examples` | array | Few-shot examples with `path`, `label`, and optional `category` |
 | `random_seed` | int | (Optional) Seed used for random ordering (H5-C) |
 | `ordering_note` | string | (Optional) Documents the ordering logic for this config |
+| `thinking_level` | string | (Optional) Gemini reasoning depth: `minimal`, `low`, or `high`. Default: `minimal` (see preregistration §8.9) |
+
+### Example Categories
+
+The `category` field in each example object classifies its role in the few-shot library:
+
+| Category | Description | Source |
+|----------|-------------|--------|
+| `canonical_positive` | Legend-derived mound symbols (burial, settlement, trig+mound, benchmark+mound) | Legend |
+| `canonical_negative` | Legend-derived confusable symbols (standalone triangulation, standalone benchmark) | Legend |
+| `hard_positive` | Edge cases — genuine mounds missed in baseline evaluation | Phase 1 FN analysis |
+| `hard_negative` | Confusables — map features falsely detected as mounds | Phase 1 FP analysis |
+| `null` | Empty tiles with no mound symbols | Training tiles |
+
+### Internal Documentation Fields
+
+Configs may include underscore-prefixed fields for internal documentation. These are ignored by scripts but preserved for reproducibility:
+
+| Field | Type | Purpose |
+|-------|------|---------|
+| `_config_notes` | object | Documents placeholder status, parameter rationale, usage instructions |
+| `_library_note` | string | Documents library composition and any pending updates |
+
+**Example**:
+
+```json
+{
+  "_config_notes": {
+    "template_status": "This config is a template. Parameters will be finalised after earlier phases complete.",
+    "temperature": "Placeholder - will use H7-optimal from Phase 2b",
+    "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15)"
+  },
+  "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
+}
+```
+
+---
+
+## Library Config Schema
+
+Library configs (`library_*.json`) define few-shot example compositions for H8 testing. They are referenced by detection scripts to load the appropriate example set.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `version` | string | Library identifier (e.g., `library_scale-8`) |
+| `description` | string | Human-readable description |
+| `hypothesis` | string | H8 condition this library tests (e.g., `H8-5`) |
+| `composition` | object | Counts by category: `canonical_positive`, `canonical_negative`, `hard_positive`, `hard_negative`, `null` |
+| `total_examples` | int | Total example count |
+| `hard_examples` | int | Count of HP + HN |
+| `examples` | array | Example objects with `path`, `label`, `category` |
+| `note` | string | (Optional) Documents the library's purpose and relevant contrasts |
+
+**Example**:
+
+```json
+{
+  "version": "library_scale-8",
+  "description": "H8 Condition 5: Scale-8 library. 4 HP, 4 HN.",
+  "hypothesis": "H8-5",
+  "composition": {
+    "canonical_positive": 4,
+    "canonical_negative": 2,
+    "hard_positive": 4,
+    "hard_negative": 4,
+    "null": 3
+  },
+  "total_examples": 17,
+  "hard_examples": 8,
+  "examples": [ ... ],
+  "note": "Tests +HN effect (contrast C3) and serves as scaling baseline (S1)."
+}
+```
+
+### Library Conditions (H8)
+
+| Config | Canon+ | Canon- | HP | HN | Null | Total | Purpose |
+|--------|--------|--------|----|----|------|-------|---------|
+| `library_pure-positive-canon.json` | 4 | 0 | 0 | 0 | 3 | 7 | Minimal baseline |
+| `library_canonical.json` | 4 | 2 | 0 | 0 | 3 | 9 | +Canon- effect (C1) |
+| `library_plus-hp.json` | 4 | 2 | 4 | 0 | 3 | 13 | +HP effect (C2) |
+| `library_scale-4.json` | 4 | 2 | 2 | 2 | 3 | 13 | 1:1 ratio floor |
+| `library_scale-8.json` | 4 | 2 | 4 | 4 | 3 | 17 | +HN effect (C3), scaling baseline |
+| `library_scale-16.json` | 4 | 2 | 8 | 8 | 3 | 25 | Scaling mid (S2) |
+| `library_scale-32.json` | 4 | 2 | 16 | 16 | 3 | 41 | Scaling ceiling (S3) |
+
+---
+
+## Two-Stage Config Schema
+
+Two-stage pipeline configs (`propose_*.json`, `verify_*.json`) follow the base schema with additional considerations.
+
+### Proposer Configs
+
+Stage 1 configs prioritise recall. Key differences:
+
+- **Labels**: More descriptive (e.g., `"Positive: Burial Mound (Kurgan)"`) to guide subtype classification
+- **Strategy**: Instruction says "err on the side of detection" for high recall
+
+**Example label**:
+
+```json
+{"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"}
+```
+
+### Verifier Configs
+
+Stage 2 configs prioritise precision. Key differences:
+
+- **Usage**: Run with `--iterations 1` for H2 testing
+- **Output**: Raw `mound_probability` scores (0.0-1.0) for threshold analysis
+- **Labels**: Same descriptive format as proposer
+
+### Current Status
+
+Two-stage configs are templates pending finalisation after Phase 2:
+
+- Temperature: Will use H7-optimal
+- Library: Will use H8-optimal composition
+- Thinking level: Fixed at `minimal` (calibration pilot 2026-01-15)
+
+---
 
 ## Active Configs
 

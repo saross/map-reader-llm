@@ -28,7 +28,7 @@ Usage:
     final_metadata = tracker.finalise()
 
 Author: Shawn Ross
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 from dataclasses import dataclass, field, asdict

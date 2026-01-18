@@ -15,7 +15,7 @@ Usage:
         --manifest inputs/tiles/calibration_manifest.json
 
 Author: Shawn Ross, Claude Code
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 import json

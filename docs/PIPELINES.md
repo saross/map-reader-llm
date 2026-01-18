@@ -1,7 +1,7 @@
 # Active Pipelines
 
-**Document version**: 1.1
-**Last updated**: 2026-01-02
+**Document version**: 1.2
+**Last updated**: 2026-01-18
 
 ---
 
@@ -9,74 +9,105 @@ This document details the analysis pipelines currently active in the Map Reader 
 
 ## Naming Convention
 
-Prompts follow this pattern: `{workflow}_{modality}[_{variant}].json`
+Prompts follow the pattern: `{workflow}_{M/E-level}[_{H5-level}].json`
 
 | Component | Values | Meaning |
 |-----------|--------|---------|
 | **workflow** | `detect`, `propose`, `verify` | Single-shot, Two-stage S1, Two-stage S2 |
-| **modality** | `text-only`, `text-image`, `image-only` | What drives the prompt |
-| **variant** | `-hardneg`, `_liberal` | Hard negatives, parameter variants |
+| **M/E-level** | `image-only`, `brief-text`, `brief-text-image`, `verbose-text`, `verbose-text-image` | Modality and elaboration level |
+| **H5-level** | `_terse`, `_verbose` | Negative text treatment (omit for minimal) |
 
 ---
 
 ## Summary Table
 
-| Pipeline | Config | Hard Neg Variant | Focus |
-|----------|--------|------------------|-------|
-| **Text-Only** | `detect_text-only.json` | `detect_text-only-hardneg.json` | Baseline (no images) |
-| **Text + Image** | `detect_text-image.json` | `detect_text-image-hardneg.json` | Text + images |
-| **Image-Only** | `detect_image-only.json` | `detect_image-only-hardneg.json` | Minimal text |
-| **Two-Stage** | `propose_image-only.json` + `verify_image-only.json` | *(includes hard neg)* | Maximum rigour |
+| Pipeline | Base Config | H5 Variants | Focus |
+|----------|-------------|-------------|-------|
+| **Image-Only** | `detect_image-only.json` | `_terse`, `_verbose` | Minimal text, images only |
+| **Brief-Text** | `detect_brief-text.json` | N/A (text-only) | Concise text, no images |
+| **Brief-Text+Image** | `detect_brief-text-image.json` | `_terse`, `_verbose` | Concise text + images |
+| **Verbose-Text** | `detect_verbose-text.json` | N/A (text-only) | Detailed text, no images |
+| **Verbose-Text+Image** | `detect_verbose-text-image.json` | `_terse`, `_verbose` | Detailed text + images |
+| **Two-Stage** | `propose_image-only.json` + `verify_image-only.json` | N/A | Exploratory (H2) |
 
 ---
 
 ## 1. Single-Shot Detection Pipelines
 
-### Text-Only (`detect_text-only`)
-
-- **Config**: `prompts/configs/detect_text-only.json`
-- **Instructions**: `prompts/system-instructions/detect_text-only.md`
-- **Description**: Pure text instructions with no reference images. V2.3 revival from preliminary work. Use as baseline to measure image contribution.
-- **Usage**:
-
-  ```bash
-  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_text-only.json
-  ```
-
-### Text + Image (`detect_text-image`)
-
-- **Config**: `prompts/configs/detect_text-image.json`
-- **Instructions**: `prompts/system-instructions/detect_text-image.md`
-- **Description**: Descriptive text instructions combined with 7 reference images (4 positive, 3 null). Use `-hardneg` variant to add hard negative examples.
-- **Usage**:
-
-  ```bash
-  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_text-image.json
-  ```
-
 ### Image-Only (`detect_image-only`)
 
 - **Config**: `prompts/configs/detect_image-only.json`
 - **Instructions**: `prompts/system-instructions/detect_image-only.md`
-- **Description**: Minimal text instructions with 7 reference images (4 positive, 3 null). Neutral filenames to prevent semantic leakage. Use `-hardneg` variant to add hard negative examples.
+- **Description**: Minimal text instructions with visual examples. Neutral filenames prevent semantic leakage. H5 variants add exclusion guidance for negative examples.
+- **Library**: Scale-8 (17 examples: 4 Canon+, 2 Canon-, 4 HP, 4 HN, 3 null)
 - **Usage**:
 
   ```bash
   python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
   ```
 
+### Brief-Text (`detect_brief-text`)
+
+- **Config**: `prompts/configs/detect_brief-text.json`
+- **Instructions**: `prompts/system-instructions/detect_brief-text.md`
+- **Description**: Text-only baseline with concise symbol descriptions. No visual examples.
+- **Purpose**: Academic baseline to measure image contribution.
+- **Usage**:
+
+  ```bash
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json
+  ```
+
+### Brief-Text+Image (`detect_brief-text-image`)
+
+- **Config**: `prompts/configs/detect_brief-text-image.json`
+- **Instructions**: `prompts/system-instructions/detect_brief-text-image.md`
+- **Description**: Concise text instructions combined with visual examples. H5 variants add exclusion guidance.
+- **Library**: Scale-8 (17 examples)
+- **Usage**:
+
+  ```bash
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json
+  ```
+
+### Verbose-Text (`detect_verbose-text`)
+
+- **Config**: `prompts/configs/detect_verbose-text.json`
+- **Instructions**: `prompts/system-instructions/detect_verbose-text.md`
+- **Description**: Text-only baseline with detailed symbol descriptions. No visual examples.
+- **Purpose**: Academic baseline to test if verbose text compensates for lack of images.
+- **Usage**:
+
+  ```bash
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_verbose-text.json
+  ```
+
+### Verbose-Text+Image (`detect_verbose-text-image`)
+
+- **Config**: `prompts/configs/detect_verbose-text-image.json`
+- **Instructions**: `prompts/system-instructions/detect_verbose-text-image.md`
+- **Description**: Detailed text instructions combined with visual examples. H5 variants add exclusion guidance.
+- **Library**: Scale-8 (17 examples)
+- **Usage**:
+
+  ```bash
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_verbose-text-image.json
+  ```
+
 ---
 
 ## 2. Two-Stage Pipeline (Propose + Verify)
 
-This is the most rigorous pipeline, designed to mimic a "Proposer-Reviewer" human workflow.
+> **Note**: Two-stage pipelines are tested as **exploratory (H2)** based on preliminary evidence suggesting they do not outperform single-stage detection with voting. The pipeline is retained to formally test the null hypothesis.
+
+This pipeline mimics a "Proposer-Reviewer" human workflow.
 
 ### Stage 1: Proposer (`propose_image-only`)
 
 - **Config**: `prompts/configs/propose_image-only.json`
 - **Instructions**: `prompts/system-instructions/propose_image-only.md`
 - **Goal**: **Recall at all costs.** Flag anything that *might* be a mound.
-- **Strategy**: 9 reference images (4 positive, 3 null, 2 hard negatives).
+- **Strategy**: Liberal detection threshold; classify subtypes for diagnostics.
 - **Output**: GeoJSON with many candidates (including False Positives).
 - **Command**:
 
@@ -103,19 +134,36 @@ This is the most rigorous pipeline, designed to mimic a "Proposer-Reviewer" huma
     --config prompts/configs/verify_image-only.json
   ```
 
+### Known Limitations
+
+Preliminary testing found two-stage pipelines underperformed single-stage with voting:
+
+| Issue | Impact |
+|-------|--------|
+| **Compounding errors** | If Stage 1 misses a target, Stage 2 never sees it |
+| **Context loss** | Verifier sees cropped regions without full map context |
+| **Systematic failures** | Two-stage failures are unfixable by voting; single-stage failures are stochastic |
+
+See `decisions-log.md` for full rationale on H2 exploratory status.
+
 ---
 
 ## Configuration Details
 
 All pipeline configurations are stored in `prompts/configs/`. These JSON files control:
 
-- **model**: Which model to use (e.g., `gemini-3-flash`)
-- **temperature**: Sampling temperature (1.0 for experiments)
-- **max_output_tokens**: Maximum output tokens (8192)
-- **examples**: Reference images loaded into context window
-- **instruction_file**: Path to system instruction markdown
+| Field | Description |
+|-------|-------------|
+| `model` | Which model to use (e.g., `gemini-3-flash`) |
+| `temperature` | Sampling temperature (1.0 for experiments) |
+| `max_output_tokens` | Maximum output tokens (8192) |
+| `thinking_level` | Gemini reasoning depth (`minimal` by default) |
+| `examples` | Reference images loaded into context window |
+| `instruction_file` | Path to system instruction markdown |
 
 System instructions are stored in `prompts/system-instructions/`.
+
+See `prompts/README.md` for full schema documentation including library configs and internal documentation fields.
 
 ---
 
@@ -223,13 +271,30 @@ The metadata tracking logic is centralised in `scripts/lib_llm_metadata.py`, whi
 
 This design ensures consistent metadata capture across all scripts and supports future multi-provider experiments.
 
-## Baseline vs Hard Negative Variants
+---
 
-Each single-shot pipeline has two variants:
+## H5: Negative Text Treatment Variants
 
-| Variant | Examples | Instruction | Purpose |
-|---------|----------|-------------|---------|
-| Baseline | Positives + null tiles | What to find | Measure baseline performance |
-| `-hardneg` | + hard negatives | + exclusion guidance | Test if hard negatives improve precision |
+Each image-using pipeline has three H5 variants controlling how negative examples are described:
 
-Two-stage pipelines include hard negatives by default (no baseline variant).
+| H5 Level | Suffix | Exclusion Text | Purpose |
+|----------|--------|----------------|---------|
+| Minimal | *(none)* | "Negative" label only | Images speak for themselves |
+| Terse | `_terse` | Brief (1-2 sentences) | Concise exclusion guidance |
+| Verbose | `_verbose` | Detailed (6 subsections) | Full explanation of confusables |
+
+**Example configs for Image-Only**:
+
+- `detect_image-only.json` — H5=Minimal
+- `detect_image-only_terse.json` — H5=Terse
+- `detect_image-only_verbose.json` — H5=Verbose
+
+Text-only pipelines (Brief-Text, Verbose-Text) have no H5 variants because negative guidance requires visual examples.
+
+---
+
+## Related Documents
+
+- **Config schema**: `prompts/README.md` — Full configuration documentation
+- **Hypothesis tracking**: `docs/methodology/preregistration/hypothesis-tracking.md` — Condition mappings
+- **Decisions log**: `docs/methodology/preregistration/decisions-log.md` — Rationale for key decisions

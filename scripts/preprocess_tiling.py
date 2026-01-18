@@ -16,7 +16,7 @@ Outputs:
     - tiles in `inputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}`
 
 Author: Shawn Ross, Adela Sobotkova
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 import json

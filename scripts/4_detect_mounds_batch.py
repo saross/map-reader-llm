@@ -20,7 +20,7 @@ Outputs:
     - Processing Metadata (.meta.json)
 
 Author: Shawn Ross, Adela Sobotkova
-License: Apache 2.0
+Licence: Apache 2.0
 """
 
 import json
