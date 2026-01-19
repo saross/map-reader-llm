@@ -9,10 +9,13 @@ This repository contains a preregistered study using Vision Language Models (VLM
 ## Key Directories
 
 - `docs/methodology/preregistration/` — Preregistration document and execution plan
+- `docs/methodology/articles/` — Downloaded journal articles and literature references
+- `docs/methodology/research/` — Deep research reports commissioned from Claude and Gemini chatbots
 - `prompts/` — VLM prompt configurations and system instructions
 - `scripts/` — Detection pipeline and analysis scripts
 - `outputs/` — Raw VLM responses (gitignored, large files)
 - `results/` — Statistical analysis outputs
+- `reports/` — Internal reports produced by Claude Code concerning project decisions
 - `archive/cc-sessions/` — Claude Code session archives
 
 ## Session Archiving
