@@ -2,7 +2,7 @@
 
 This document tracks implementation tasks and stretch goals for the Map Reader LLM project.
 
-**Last Updated**: 2026-01-08
+**Last Updated**: 2026-01-19
 
 > **Note**: Hypothesis testing is now formalised in the preregistration document (`docs/methodology/preregistration/preregistration.md` v4.2). This document covers implementation-specific tasks and exploratory ideas not in the preregistration.
 
@@ -10,70 +10,50 @@ This document tracks implementation tasks and stretch goals for the Map Reader L
 
 ## Status: Preregistration Complete
 
-The following areas from earlier planning are now addressed by the preregistration:
+All 15 hypotheses are formalised in the preregistration (v4.2). The sequential OFAT design tests factors one at a time, carrying optimal parameters forward.
 
-| Earlier Task | Preregistration Coverage |
-|--------------|-------------------------|
-| Text vs image modality effects | H1 (M/E factor: 5 levels) |
-| Text elaboration (brief vs verbose) | H2 (text elaboration) |
-| Two-stage pipeline | H2 (two-stage confirmatory) |
-| Voting/consensus strategies | H3 (voting threshold) |
-| Example ordering | H4 (canonical-first/last/random) |
-| Hard negatives | H5 (3 levels: None/Images-only/Text+Images) |
-| Model selection | H6 (4 models), H14 (architecture transfer) |
-| Temperature optimisation | H7 (4 levels: 0.0, 0.7, 1.0, 1.3) |
-| Library size | H8 (training pool size) |
-| Hard positives | H9 (exploratory) |
-| Multi-scale detection | H10 (tile size pilot) |
+| Hypothesis | Description | Phase |
+|------------|-------------|-------|
+| H1 | Modality/Elaboration level (5 levels) | 2a |
+| H2 | Two-stage pipelines | 3c |
+| H3 | Consensus voting thresholds | 3a |
+| H4 | Example ordering (canonical placement) | 2e |
+| H5 | Negative text treatment (3 levels) | 2d |
+| H6 | Flash→Pro transfer | 4 |
+| H7 | Temperature (4 levels) | 2b |
+| H8 | Library composition and scaling | 2c |
+| H9 | Diversity mechanisms | 3b |
+| H10 | Training pool size | 5 |
+| H11 | Tile size effects | 5 |
+| H12 | Hard positive to hard negative ratio | 5 |
+| H13 | Overlap/stride effects | 5 |
+| H14 | Cross-model consistency | 5 |
+| H15 | Cross-model consensus voting | 5 |
 
-**See**: `docs/methodology/preregistration/execution-plan.md` for implementation timeline.
-
----
-
-## Implementation Tasks (Pre-Execution)
-
-### 1.1 Pipeline Preparation
-
-**Status**: Pending
-**Priority**: High
-
-Before executing the preregistration:
-
-- [ ] Verify all 26 config files exist and are correct
-- [ ] Verify all 10 instruction files match preregistration appendix
-- [ ] Test pipeline end-to-end on a single tile
-- [ ] Confirm API clients work for all 4 models (Gemini Flash, Gemini Pro, Claude Sonnet, GPT-5.2)
-- [ ] Set up results directory structure per execution plan
-
-### 1.2 Tile Selection (Phase 1)
-
-**Status**: Pending
-**Reference**: `scripts/select_tiles_phase2.py`
-
-- [ ] Finalise Phase 1 stratified tile selection (60 development tiles)
-- [ ] Generate tile bounds files
-- [ ] Verify ground truth annotations for selected tiles
+**See**: `docs/methodology/preregistration/execution-plan.md` for full timeline.
 
 ---
 
-## Multi-Provider Implementation
+## Deferred Implementation Tasks
 
-### 2.1 API Client Status
+### Multi-Provider API Clients
 
 | Provider | Client | Status |
 |----------|--------|--------|
 | Google (Gemini) | `google-generativeai` | ✅ Implemented |
-| Anthropic (Claude) | `anthropic` | ❌ Pending |
-| OpenAI (GPT) | `openai` | ❌ Pending |
+| Anthropic (Claude) | `anthropic` | ⏸️ Deferred |
+| OpenAI (GPT) | `openai` | ⏸️ Deferred |
 
-### 2.2 Provider-Specific Adaptations
+Non-Gemini API clients deferred until needed for H6/H14 (Phase 4-5).
 
-**Claude adaptation notes:**
+**Claude adaptation notes** (for future reference):
+
 - Multimodal API uses base64 image encoding
 - System prompt in separate `system` parameter
 - Different token counting
 
-**OpenAI adaptation notes:**
+**OpenAI adaptation notes** (for future reference):
+
 - Vision API uses URL or base64 images
 - Different response format
 
@@ -121,17 +101,28 @@ Given a new map sheet with its legend, automatically:
 
 ## Completed Tasks
 
+### Pipeline Preparation (2026-01)
+
+- [x] **Tile selection complete** (2026-01-03): 20 calibration + 60 holdout tiles with documented seeds
+- [x] **Instruction files finalised** (2026-01-14): 13 detection/two-stage instruction files
+- [x] **Config files created** (2026-01-14): 24 JSON configs for M/E levels, H5 variants, libraries
+- [x] **Thinking pilot calibration** (2026-01-15): Minimal thinking achieves equivalent F1 at 1/3 latency
+- [x] **End-to-end pipeline verified**: Batch detection scripts working with Gemini Flash/Pro
+- [x] **Results directory initialised** (2026-01-19): Structure per execution plan
+
 ### Preregistration & Documentation (2026-01)
+
 - [x] **Preregistration finalised** (v4.2): All 15 hypotheses defined
-- [x] **Execution plan created** (v2.5): Phased implementation timeline
-- [x] **Prompts appendix aligned** (v2.6): All instruction and config files documented
-- [x] **Prompt library standardised**: 10 instruction files, 26 config files
+- [x] **Execution plan created**: Phased OFAT implementation timeline
+- [x] **Prompts appendix aligned**: All instruction and config files documented
 
 ### Methodological Records (2025-12)
+
 - [x] **Log Retention Strategy**: `~/.gemini/antigravity/` logs reviewed, methodology archived
 - [x] **v4.x Implementation Review**: Identified root cause of two-stage underperformance
 
 ### Open Science Standards (2025-12)
+
 - [x] **FAIR4RS Compliance**: Repository upgraded to meet FAIR principles
   - [x] Add `CITATION.cff`
   - [x] Ensure comprehensive licence coverage
