@@ -1350,7 +1350,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8).",
+    "thinking_level": "minimal"
 }
 ```
 
@@ -1369,7 +1370,7 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 ```json
 {
     "version": "detect_verbose-text-image_terse",
-    "description": "H5=Terse: Brief exclusion guidance. Same Scale-8 library as Minimal/Verbose.",
+    "description": "H5-B: Terse exclusion guidance. Brief list of confusable symbols to avoid.",
     "hypothesis": "H5-B",
     "model": "gemini-3-flash",
     "instruction_file": "detect_verbose-text-image_terse.md",
@@ -1394,7 +1395,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8).",
+    "thinking_level": "minimal"
 }
 ```
 
@@ -1411,7 +1413,7 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 ```json
 {
     "version": "detect_verbose-text-image_verbose",
-    "description": "H5=Verbose: Detailed exclusion guidance with explanations for each confusable symbol.",
+    "description": "H5-C: Verbose exclusion guidance. Detailed explanations of confusable symbols.",
     "hypothesis": "H5-C",
     "model": "gemini-3-flash",
     "instruction_file": "detect_verbose-text-image_verbose.md",
@@ -1436,7 +1438,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8).",
+    "thinking_level": "minimal"
 }
 ```
 
@@ -1478,7 +1481,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last: null (3), HN (4), Canon- (2), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-last: null (3), HN (4), Canon- (2), HP (4), Canon+ (4). Total: 17 examples (Scale-8).",
+    "thinking_level": "minimal"
 }
 ```
 
@@ -1521,7 +1525,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_13.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral/example_05.png", "label": "Positive", "category": "hard_positive"}
     ],
-    "ordering_note": "Permutation generated with seed 42. Total: 17 examples (Scale-8: Canon+ 4, HP 4, Canon- 2, HN 4, null 3)."
+    "ordering_note": "Permutation generated with seed 42. Total: 17 examples (Scale-8: Canon+ 4, HP 4, Canon- 2, HN 4, null 3).",
+    "thinking_level": "minimal"
 }
 ```
 
@@ -1563,7 +1568,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
         {"path": "neutral/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive", "category": "canonical_positive"}
     ],
-    "ordering_note": "Canonical-last: null (3), HN (4), Canon- (2), HP (4), Canon+ (4). Total: 17 examples (Scale-8)."
+    "ordering_note": "Canonical-last: null (3), HN (4), Canon- (2), HP (4), Canon+ (4). Total: 17 examples (Scale-8).",
+    "thinking_level": "minimal"
 }
 ```
 
@@ -1690,12 +1696,13 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.16*
+*Document version: 2.17*
 *Created: 2026-01-02*
 *Updated: 2026-01-20*
 
 **Changelog:**
 
+- v2.17: Config example synchronisation — added `thinking_level: "minimal"` field to all example configs in Sections 2.4-2.9 (matching actual config files); updated description fields in Sections 2.5 and 2.6 to match actual configs exactly ("H5-B: Terse exclusion guidance. Brief list of confusable symbols to avoid." and "H5-C: Verbose exclusion guidance. Detailed explanations of confusable symbols.")
 - v2.16: Fixed example numbering inconsistencies — corrected propose_brief.json and verify_brief.json configs to use standard numbering scheme per MANIFEST.md (Canon-: example_09-10, null: example_15-17); corrected symlinks in `inputs/examples/neutral-naming/` to match MANIFEST (removed incorrect 05-09 symlinks, created correct 09-10 and 15-17 symlinks); slots 05-08 (HP) and 11-14 (HN) remain reserved for Phase 1 mining
 - v2.15: Major prompt library synchronisation — replaced all 11 detection instruction prompts with actual file content (action-first opening, no recall bias language, conditional reference framing "If reference examples are provided..."); updated two-stage pipeline prompts renamed from `propose_image-only.md`/`verify_image-only.md` to `propose_brief.md`/`verify_brief.md`; updated config examples to match; added text-modality consistency notes (detect_brief-text.md = detect_brief-text-image.md); reordered H5 variant sections consistently (base → terse → verbose)
 - v2.14: Three-way consistency check — corrected instruction file count from "10" to "11" in Design Summary (matches preregistration.md and actual file count: 3 image-using × 3 H5 + 2 text-only = 11)
