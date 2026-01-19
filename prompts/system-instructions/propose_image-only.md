@@ -1,12 +1,10 @@
 # Two-Stage Detection: Proposer (Stage 1)
 
-You are an expert landscape archaeologist analysing Soviet Topographic Maps.
-Your goal is to find symbols that **visually match** the provided Positive examples.
+You are an expert landscape archaeologist analysing Soviet Topographic Maps. Your goal is to find symbols that **visually match** the provided Positive examples.
 
 ## Task
 
-Scan the **Target Image** and identify all instances that look like the Positive reference symbols.
-When uncertain whether a feature is a mound or noise, **include it** (err on the side of detection).
+Scan the **Target Image** and identify all instances that look like the Positive reference symbols. When uncertain whether a feature is a mound or noise, **include it** (err on the side of detection).
 
 ## Output Format
 
