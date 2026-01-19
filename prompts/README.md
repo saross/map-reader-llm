@@ -234,8 +234,8 @@ Config files (`.json`) pair with instruction files and specify the few-shot libr
 
 | Config | Instruction | Stage | Description |
 |--------|-------------|-------|-------------|
-| `propose_image-only.json` | `propose_image-only.md` | S1 Proposer | High-recall detection |
-| `verify_image-only.json` | `verify_image-only.md` | S2 Verifier | Precision-focused verification |
+| `propose_brief.json` | `propose_brief.md` | S1 Proposer | High-recall detection |
+| `verify_brief.json` | `verify_brief.md` | S2 Verifier | Precision-focused verification |
 
 ### H4 Ordering Variants
 
@@ -333,9 +333,9 @@ H5 now tested at all 3 image-using M/E levels (not just optimal).
 
 To test a new hypothesis (e.g., "Does removing hard negatives improve recall?"):
 
-1. Create `configs/propose_image-only_no-negatives.json`
-2. Copy content from `propose_image-only.json`
+1. Create `configs/propose_brief_no-negatives.json`
+2. Copy content from `propose_brief.json`
 3. Modify the `examples` array
-4. Run: `python scripts/4_detect_mounds_batch.py --config prompts/configs/propose_image-only_no-negatives.json`
+4. Run: `python scripts/4_detect_mounds_batch.py --config prompts/configs/propose_brief_no-negatives.json`
 
 This preserves the baseline exactly while capturing your experiment as a distinct entity.

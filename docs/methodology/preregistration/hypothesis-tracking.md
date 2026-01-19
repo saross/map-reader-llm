@@ -58,7 +58,7 @@ Tests whether two-stage architectures improve over single-stage detection.
 | Condition | Architecture | Stage 1 | Stage 2 | Configs |
 |-----------|--------------|---------|---------|---------|
 | H2-A | Single-stage (baseline) | N/A | N/A | Optimal single-stage config |
-| H2-B | Coarse-to-fine | `propose_image-only.json` | `verify_image-only.json` | Both configs |
+| H2-B | Coarse-to-fine | `propose_brief.json` | `verify_brief.json` | Both configs |
 | H2-C | Fine-to-coarse | Standard detection | Context-expanded re-query | TBD |
 
 **Note**: H2 is now confirmatory but treated as exploratory in execution due to preliminary evidence suggesting no benefit.

@@ -1,6 +1,6 @@
-# Mound Detection
+# Two-Stage Detection: Proposer
 
-Detect all burial mound symbols in this Soviet topographic map tile.
+Detect all candidate burial mound symbols in this Soviet topographic map tile. This is Stage 1 of a two-stage pipeline; a verifier will filter false positives.
 
 ## Target Symbols
 

@@ -128,7 +128,7 @@ H8 tests library composition effects by varying the number of hard examples. See
 | 11-14 | Pending | Awaiting Phase 1 FP analysis |
 | 15-17 | Created | Null tiles selected |
 
-**Last updated**: 2026-01-18
+**Last updated**: 2026-01-20 (symlinks corrected to match documented scheme)
 
 ---
 

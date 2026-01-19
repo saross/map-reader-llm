@@ -1,6 +1,10 @@
-# Mound Detection (Image-Only)
+# Mound Detection
 
-Scan the Target Image. Mark all symbols that look like the Positive examples.
+Detect all burial mound symbols in this map tile. Target symbols have a "sunburst" pattern: a central shape with short rays (hachures) radiating OUTWARD.
+
+If reference examples are provided, compare uncertain cases against them.
+
+## Output Format
 
 Return JSON with normalised coordinates (0-1000):
 

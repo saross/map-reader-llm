@@ -73,7 +73,7 @@ H3 Voting       H9 Diversity    H2 Two-Stage    Triggered
     - [x] `detect_brief-text-image_{terse,verbose}.md` (2 files)
     - [x] `detect_verbose-text-image_{terse,verbose}.md` (2 files)
   - [ ] H9 text variants (5 semantically equivalent instructions, constructed after Phase 2)
-  - [x] `propose_image-only.md` and `verify_image-only.md` (H2)
+  - [x] `propose_brief.md` and `verify_brief.md` (H2)
 
 - [x] **Configs**: Create all JSON config files (2026-01-01)
   - [x] 5 M/E configs: `detect_{modality}.json`

@@ -1,41 +1,40 @@
-# Detection Prompt: Brief Text+Image with Terse Exclusion Guidance
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
-## Reference Examples
+## Target Symbols
 
-You are provided with labelled images:
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
 
-- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
-- **Negative examples** show areas or symbols that are NOT mounds
+**Subtypes to detect:**
 
-## Task
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
 
-Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
 
 ## Guidelines
 
-1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
-
-2. **Separate Clusters:** Provide individual boxes for each symbol.
-
-3. **Refer to Examples:** Compare uncertain cases to Positive references.
-
-4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
 
 ## Exclusion Guidance
 
-Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+Rays are essential: shapes without visible radiating rays are not mounds.
 
-**DO NOT mark:**
-
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights, bridge markers, or other simple dots
+**Do NOT mark:**
+- Standalone triangulation points (black triangle, no rays)
+- Standalone benchmarks (black square/circle, no rays)
+- Spot heights (dot with elevation number, no rays)
+- Quarry/pit symbols (marks pointing INWARD, not outward)
+- Infrastructure markers (dots on roads, bridges, rivers)
 
 ## Output Format
 
-Return JSON with normalised coords (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [

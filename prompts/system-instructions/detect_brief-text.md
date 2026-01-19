@@ -1,43 +1,29 @@
-# Detection Prompt: Brief Text
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to identify burial mound symbols.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
 ## Target Symbols
 
-Create bounding boxes for all instances of the following symbols:
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
 
-### A. Burial Mound (Kurgan)
+**Subtypes to detect:**
 
-- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
-- **Colour:** Orange-brown.
-- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") or the abbreviation **"кург."**
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
 
-### B. Settlement Mound
-
-- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape.
-- **Colour:** Orange-brown.
-
-### C. Triangulation Point on a Mound
-
-- **Visual:** A hollow **black triangle** with a central dot, surrounded by radiating rays of a mound.
-- **Distinction:** Must have rays.
-
-### D. Benchmark on a Mound
-
-- **Visual:** A hollow **black square** with a central dot, surrounded by radiating rays of a mound.
-- **Distinction:** Must have rays.
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
 
 ## Guidelines
 
-1. **Partial Occlusion:** Symbols may be partially obscured by lines or text. Focus on the characteristic "sunburst" shape.
-
-2. **Separate Clusters:** Each distinct "sunburst" centre represents a separate mound. Provide individual bounding boxes.
-
-3. **Default to Inclusion:** Include borderline cases rather than missing genuine mounds.
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
 
 ## Output Format
 
-Return JSON with normalised coords (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [

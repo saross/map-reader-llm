@@ -1,16 +1,19 @@
-# Mound Detection (Image-Only with Terse Exclusion)
+# Mound Detection
 
-Scan the Target Image. Mark all symbols that look like the Positive examples.
+Detect all burial mound symbols in this map tile. Target symbols have a "sunburst" pattern: a central shape with short rays (hachures) radiating OUTWARD.
+
+If reference examples are provided, compare uncertain cases against them.
 
 ## Exclusion Guidance
 
-Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+Rays are essential: shapes without visible radiating rays are not mounds.
 
-**DO NOT mark:**
-
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights, bridge markers, or other simple dots
+**Do NOT mark:**
+- Standalone triangulation points (black triangle, no rays)
+- Standalone benchmarks (black square/circle, no rays)
+- Spot heights (dot with elevation number, no rays)
+- Quarry/pit symbols (marks pointing INWARD, not outward)
+- Infrastructure markers (dots on roads, bridges, rivers)
 
 ## Output Format
 

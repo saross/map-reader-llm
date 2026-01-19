@@ -27,7 +27,7 @@ The prompt architecture reflects the sequential hypothesis design:
 This yields:
 
 - **11 detection instruction files**: 3 image-using M/E levels × 3 H5 variants (base=Minimal, `_terse`, `_verbose`) + 2 text-only M/E levels × 1 variant (H5=Minimal only)
-- **2 two-stage pipeline instruction files**: propose_image-only.md, verify_image-only.md
+- **2 two-stage pipeline instruction files**: propose_brief.md, verify_brief.md
 - **Configuration files**: See Section 2.2 for breakdown
 
 **Note on text-only modalities**: Brief-text and Verbose-text cannot use H5=Terse or H5=Verbose since they have no example images for hard negatives. Therefore, text-only modalities are tested at H5=Minimal only and do not have `_terse` or `_verbose` instruction file variants.
@@ -128,7 +128,7 @@ HP images will be derived from False Negatives in Phase 1 baseline analysis (≥
 
 - All H5 configs (`*_minimal.json`, `*_terse.json`, `*_verbose.json`)
 - H8 library configs (`library_*.json`) where HP > 0
-- `propose_image-only.json` and `verify_image-only.json` (H2)
+- `propose_brief.json` and `verify_brief.json` (H2)
 - H9 diversity conditions C and E (varied images from HP pool)
 
 ### H9 Text Diversity Prompts
@@ -224,77 +224,13 @@ These factors are **independent**: any M/E level can be combined with any H5 lev
 
 **Purpose**: Baseline image-only detection with minimal text instruction.
 **Used by**: M/E = Image-only; H5 = Minimal
-**H9 note**: If image-only is the optimal base configuration, this template's structure will be used for H9 V1–V5 variants (with varied content per Section 8.3.3).
 
 ```markdown
-# Mound Detection (Image-Only)
+# Mound Detection
 
-Scan the Target Image. Mark all symbols that look like the Positive examples.
+Detect all burial mound symbols in this map tile. Target symbols have a "sunburst" pattern: a central shape with short rays (hachures) radiating OUTWARD.
 
-Return JSON with normalised coordinates (0-1000):
-
-{
-    "detections": [
-        {
-            "box_2d": [ymin, xmin, ymax, xmax],
-            "label": "mound",
-            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
-        }
-    ]
-}
-```
-
----
-
-#### 1.1.2 detect_image-only_verbose.md
-
-**Purpose**: Image-only detection with detailed exclusion guidance for hard negatives.
-**Used by**: M/E = Image-only; H5 = Verbose
-
-```markdown
-# Mound Detection (Image-Only with Verbose Exclusion)
-
-Scan the Target Image. Mark all symbols that look like the Positive examples.
-
-## Exclusion Criteria (CRITICAL)
-
-The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study the negative reference images carefully, and actively avoid marking these features:
-
-### 1. Spot Heights
-
-- **Visual:** Simple dots (black or brown) accompanied by elevation numbers (e.g., "185", "247").
-- **Critical difference:** NO hollow shape. NO radiating rays (hachures; spikes). Just a dot with a number.
-- **Key test:** Ignore the number; check the symbol. Is it hollow, with rays? No → exclude.
-
-### 2. Triangulation Points (standalone)
-
-- **Visual:** Black triangles with a central dot, but NO surrounding rays.
-- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the triangle-with-central-dot.
-- **Key test:** Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
-
-### 3. Benchmarks (standalone)
-
-- **Visual:** Black squares or circles with a central dot, NO surrounding rays.
-- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the square-with-central-dot.
-- **Key test:** Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
-
-### 4. Quarry and Pit Symbols
-
-- **Visual:** Circular shapes with short marks pointing INWARD toward centre.
-- **Critical difference:** Ray direction reversed (inward = excavation, outward = elevation).
-- **Key test:** Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
-
-### 5. Contour Line Artefacts
-
-- **Visual:** Closed contour lines on hilltops forming roughly circular patterns or patterns similar to a settlement mound.
-- **Critical difference:** Smooth, continuous curves with NO rays (hachures; spikes).
-- **Key test:** Rays radiating outward? No → contours, exclude. Yes → mound, include.
-
-### 6. Infrastructure Markers
-
-- **Visual:** Dots on roads, bridges, rivers, or canals.
-- **Critical difference:** Located on linear features; no rays.
-- **Key test:** Dot only on a road/river line? → infrastructure, exclude. Dot within a square or triangle that has rays (hachures; spikes) → mound, include.
+If reference examples are provided, compare uncertain cases against them.
 
 ## Output Format
 
@@ -313,25 +249,91 @@ Return JSON with normalised coordinates (0-1000):
 
 ---
 
-#### 1.1.3 detect_image-only_terse.md
+#### 1.1.2 detect_image-only_terse.md
 
 **Purpose**: Image-only detection with brief exclusion guidance for hard negatives.
 **Used by**: M/E = Image-only; H5 = Terse
 
 ```markdown
-# Mound Detection (Image-Only with Terse Exclusion)
+# Mound Detection
 
-Scan the Target Image. Mark all symbols that look like the Positive examples.
+Detect all burial mound symbols in this map tile. Target symbols have a "sunburst" pattern: a central shape with short rays (hachures) radiating OUTWARD.
+
+If reference examples are provided, compare uncertain cases against them.
 
 ## Exclusion Guidance
 
-Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+Rays are essential: shapes without visible radiating rays are not mounds.
 
-**DO NOT mark:**
+**Do NOT mark:**
+- Standalone triangulation points (black triangle, no rays)
+- Standalone benchmarks (black square/circle, no rays)
+- Spot heights (dot with elevation number, no rays)
+- Quarry/pit symbols (marks pointing INWARD, not outward)
+- Infrastructure markers (dots on roads, bridges, rivers)
 
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights, bridge markers, or other simple dots
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+#### 1.1.3 detect_image-only_verbose.md
+
+**Purpose**: Image-only detection with detailed exclusion guidance for hard negatives.
+**Used by**: M/E = Image-only; H5 = Verbose
+
+```markdown
+# Mound Detection
+
+Detect all burial mound symbols in this map tile. Target symbols have a "sunburst" pattern: a central shape with short rays (hachures) radiating OUTWARD.
+
+If reference examples are provided, compare uncertain cases against them.
+
+## Exclusion Criteria
+
+The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study any negative reference images carefully.
+
+### Spot Heights
+- **Visual**: Simple dot (black or brown) with elevation number (e.g., "185", "247")
+- **Key difference**: No hollow shape, no radiating rays—just a dot with a number
+- **Test**: Ignore the number. Is there a hollow shape with rays? No → exclude.
+
+### Standalone Triangulation Points
+- **Visual**: Black triangle with central dot, but NO surrounding rays
+- **Key difference**: No radiating rays extending outward from the triangle
+- **Test**: Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
+
+### Standalone Benchmarks
+- **Visual**: Black square or circle with central dot, NO surrounding rays
+- **Key difference**: No radiating rays extending outward from the shape
+- **Test**: Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
+
+### Quarry and Pit Symbols
+- **Visual**: Circular shapes with short marks pointing INWARD toward centre
+- **Key difference**: Ray direction is reversed (inward = excavation, outward = elevation)
+- **Test**: Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
+
+### Contour Line Artefacts
+- **Visual**: Closed contour lines on hilltops forming roughly circular patterns
+- **Key difference**: Smooth, continuous curves with no discrete rays
+- **Test**: Discrete rays radiating outward? No → contours, exclude. Yes → mound, include.
+
+### Infrastructure Markers
+- **Visual**: Dots positioned on roads, bridges, rivers, or canals
+- **Key difference**: Located on linear features; no rays
+- **Test**: Simple dot on a linear feature? → infrastructure, exclude.
 
 ## Output Format
 
@@ -358,44 +360,32 @@ Return JSON with normalised coordinates (0-1000):
 **Used by**: M/E = Brief-text; H5 = Minimal (no images in this condition)
 
 ```markdown
-# Detection Prompt: Brief Text
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to identify burial mound symbols.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
 ## Target Symbols
 
-Create bounding boxes for all instances of the following symbols:
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
 
-### A. Burial Mound (Kurgan)
+**Subtypes to detect:**
 
-- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
-- **Colour:** Orange-brown.
-- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") or the abbreviation **"кург."**
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
 
-### B. Settlement Mound
-
-- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape.
-- **Colour:** Orange-brown.
-
-### C. Triangulation Point on a Mound
-
-- **Visual:** A hollow **black triangle** with a central dot, surrounded by radiating rays of a mound.
-- **Distinction:** Must have rays.
-
-### D. Benchmark on a Mound
-
-- **Visual:** A hollow **black square** with a central dot, surrounded by radiating rays of a mound.
-- **Distinction:** Must have rays.
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
 
 ## Guidelines
 
-- Symbols may be partially obscured by lines or text. Focus on the characteristic "sunburst" shape.
-- Each distinct "sunburst" centre represents a separate mound. Provide individual bounding boxes.
-- Include borderline cases rather than missing genuine mounds.
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
 
 ## Output Format
 
-Return JSON with normalised coords (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [
@@ -416,37 +406,35 @@ Return JSON with normalised coords (0-1000).
 
 **Purpose**: Combined brief text and image prompt with reference examples.
 **Used by**: M/E = Brief-text+image; H5 = Minimal
-**H9 note**: If brief-text+image is the optimal base configuration, this template's structure will be used for H9 V1–V5 variants.
+**Note**: This file is identical to detect_brief-text.md (text-modality consistency).
 
 ```markdown
-# Detection Prompt: Brief Text+Image
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
-## Reference Examples
+## Target Symbols
 
-You are provided with labelled images:
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
 
-- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
-- **Negative examples** show areas or symbols that are NOT mounds
+**Subtypes to detect:**
 
-## Task
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
 
-Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
 
 ## Guidelines
 
-1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
-
-2. **Separate Clusters:** Provide individual boxes for each symbol.
-
-3. **Refer to Examples:** Compare uncertain cases to Positive references.
-
-4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
 
 ## Output Format
 
-Return JSON with normalised coords (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [
@@ -461,140 +449,129 @@ Return JSON with normalised coords (0-1000).
 
 ---
 
-#### 1.3.2 detect_brief-text-image_verbose.md
-
-**Purpose**: Brief text+image prompt with detailed exclusion guidance for hard negatives.
-**Used by**: M/E = Brief-text+image; H5 = Verbose
-
-**Note**: This file was previously named `detect_brief-text-image_hardneg.md`. Renamed to reflect H5 level naming.
-
-```markdown
-# Detection Prompt: Brief Text+Image with Verbose Exclusion Guidance
-
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
-
-## Reference Examples
-
-You are provided with labelled images:
-
-- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
-- **Negative examples** show areas or symbols that are NOT mounds
-
-## Task
-
-Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
-
-## Guidelines
-
-1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
-
-2. **Separate Clusters:** Provide individual boxes for each symbol.
-
-3. **Refer to Examples:** Compare uncertain cases to Positive references.
-
-4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
-
-## Exclusion Criteria (CRITICAL)
-
-The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study the negative reference images carefully, and actively avoid marking these features:
-
-### 1. Spot Heights
-
-- **Visual:** Simple dots (black or brown) accompanied by elevation numbers (e.g., "185", "247").
-- **Critical difference:** NO hollow shape. NO radiating rays (hachures; spikes). Just a dot with a number.
-- **Key test:** Ignore the number; check the symbol. Is it hollow, with rays? No → exclude.
-
-### 2. Triangulation Points (standalone)
-
-- **Visual:** Black triangles with a central dot, but NO surrounding rays.
-- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the triangle-with-central-dot.
-- **Key test:** Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
-
-### 3. Benchmarks (standalone)
-
-- **Visual:** Black squares or circles with a central dot, NO surrounding rays.
-- **Critical difference:** NO radiating rays (hachures; spikes) extending outward from the square-with-central-dot.
-- **Key test:** Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
-
-### 4. Quarry and Pit Symbols
-
-- **Visual:** Circular shapes with short marks pointing INWARD toward centre.
-- **Critical difference:** Ray direction reversed (inward = excavation, outward = elevation).
-- **Key test:** Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
-
-### 5. Contour Line Artefacts
-
-- **Visual:** Closed contour lines on hilltops forming roughly circular patterns or patterns similar to a settlement mound.
-- **Critical difference:** Smooth, continuous curves with NO rays (hachures; spikes).
-- **Key test:** Rays radiating outward? No → contours, exclude. Yes → mound, include.
-
-### 6. Infrastructure Markers
-
-- **Visual:** Dots on roads, bridges, rivers, or canals.
-- **Critical difference:** Located on linear features; no rays.
-- **Key test:** Dot only on a road/river line? → infrastructure, exclude. Dot within a square or triangle that has rays (hachures; spikes) → mound, include.
-
-## Output Format
-
-Return JSON with normalised coords (0-1000).
-
-{
-    "detections": [
-        {
-            "box_2d": [ymin, xmin, ymax, xmax],
-            "label": "mound",
-            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
-        }
-    ]
-}
-```
-
----
-
-#### 1.3.3 detect_brief-text-image_terse.md
+#### 1.3.2 detect_brief-text-image_terse.md
 
 **Purpose**: Brief text+image prompt with brief exclusion guidance for hard negatives.
 **Used by**: M/E = Brief-text+image; H5 = Terse
 
 ```markdown
-# Detection Prompt: Brief Text+Image with Terse Exclusion Guidance
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps and landscape archaeologist. Your goal is to find symbols that **visually match** the provided Positive examples.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
-## Reference Examples
+## Target Symbols
 
-You are provided with labelled images:
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
 
-- **Positive examples** show mound symbols to detect (burial mounds, settlement mounds, and survey markers on mounds)
-- **Negative examples** show areas or symbols that are NOT mounds
+**Subtypes to detect:**
 
-## Task
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
 
-Scan the **Target Image** and create bounding boxes for all instances that visually match the Positive reference symbols.
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
 
 ## Guidelines
 
-1. **Visual Match:** Symbols may be rotated, degraded, or intersected by lines. Focus on the "sunburst" shape with short rays (hachures; spikes) extending OUTWARD.
-
-2. **Separate Clusters:** Provide individual boxes for each symbol.
-
-3. **Refer to Examples:** Compare uncertain cases to Positive references.
-
-4. **Default to inclusion:** Include borderline cases rather than missing genuine mounds.
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
 
 ## Exclusion Guidance
 
-Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
+Rays are essential: shapes without visible radiating rays are not mounds.
 
-**DO NOT mark:**
-
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights, bridge markers, or other simple dots
+**Do NOT mark:**
+- Standalone triangulation points (black triangle, no rays)
+- Standalone benchmarks (black square/circle, no rays)
+- Spot heights (dot with elevation number, no rays)
+- Quarry/pit symbols (marks pointing INWARD, not outward)
+- Infrastructure markers (dots on roads, bridges, rivers)
 
 ## Output Format
 
-Return JSON with normalised coords (0-1000).
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+#### 1.3.3 detect_brief-text-image_verbose.md
+
+**Purpose**: Brief text+image prompt with detailed exclusion guidance for hard negatives.
+**Used by**: M/E = Brief-text+image; H5 = Verbose
+
+```markdown
+# Mound Detection
+
+Detect all burial mound symbols in this Soviet topographic map tile.
+
+## Target Symbols
+
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
+
+**Subtypes to detect:**
+
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
+
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
+
+## Guidelines
+
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
+
+## Exclusion Criteria
+
+The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study any negative reference images carefully.
+
+### Spot Heights
+- **Visual**: Simple dot (black or brown) with elevation number (e.g., "185", "247")
+- **Key difference**: No hollow shape, no radiating rays—just a dot with a number
+- **Test**: Ignore the number. Is there a hollow shape with rays? No → exclude.
+
+### Standalone Triangulation Points
+- **Visual**: Black triangle with central dot, but NO surrounding rays
+- **Key difference**: No radiating rays extending outward from the triangle
+- **Test**: Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
+
+### Standalone Benchmarks
+- **Visual**: Black square or circle with central dot, NO surrounding rays
+- **Key difference**: No radiating rays extending outward from the shape
+- **Test**: Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
+
+### Quarry and Pit Symbols
+- **Visual**: Circular shapes with short marks pointing INWARD toward centre
+- **Key difference**: Ray direction is reversed (inward = excavation, outward = elevation)
+- **Test**: Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
+
+### Contour Line Artefacts
+- **Visual**: Closed contour lines on hilltops forming roughly circular patterns
+- **Key difference**: Smooth, continuous curves with no discrete rays
+- **Test**: Discrete rays radiating outward? No → contours, exclude. Yes → mound, include.
+
+### Infrastructure Markers
+- **Visual**: Dots positioned on roads, bridges, rivers, or canals
+- **Key difference**: Located on linear features; no rays
+- **Test**: Simple dot on a linear feature? → infrastructure, exclude.
+
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [
@@ -611,114 +588,93 @@ Return JSON with normalised coords (0-1000).
 
 ### 1.4 Verbose-Text Instructions
 
-**Note on verbose text content**: Verbose text extends brief text with detailed descriptions and **edge case guidance for hard positives** (symbols that are genuine mounds but may be missed due to occlusion, degradation, or atypical appearance). Verbose text does NOT include exclusion guidance for hard negatives — that is controlled by the H5 level variants (`_terse`, `_verbose`).
-
 #### 1.4.1 detect_verbose-text.md
 
 **Purpose**: Extended text-only prompt with comprehensive symbol descriptions and decision procedures.
 **Used by**: M/E = Verbose-text; H5 = Minimal (no images in text-only conditions)
-**Word count**: ~800 words (vs ~200 for brief version)
+**Note**: This file is identical to detect_verbose-text-image.md (text-modality consistency).
 
 ```markdown
-# Detection Prompt: Verbose Text
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist. Your goal is to identify symbols on the Soviet military map that represent burial mounds (kurgans; tumuli), settlement mounds (tells), including composite symbols, positioned across the Bulgarian landscape.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
-## Background: Soviet Cartographic Conventions
+This is a Soviet 1:50,000 military topographic map from the Cold War era. Archaeological mounds were marked as navigation landmarks using standardised symbology.
 
-Soviet military topographic maps used standardised symbology across the USSR and Eastern Bloc / Warsaw Pact nations. Archaeological mounds were marked because they served as useful landmarks for navigation and orientation, and they could be militarily useful, e.g., as lookout points or cover. The symbol design emphasises the elevated, roughly circular nature of these features through radiating rays (hachures; spikes).
+## Core Diagnostic
+
+All mound symbols share one essential feature: **short rays (hachures) radiating OUTWARD** from a central shape. This "sunburst" or "gear" pattern indicates elevated terrain, distinguishing mounds from excavations (which have inward-pointing marks).
+
+The rays are the primary diagnostic. Any symbol with outward-radiating rays is a mound candidate, regardless of central shape.
 
 ## Target Symbols
 
-Identify the bounding boxes for all instances of the following symbols:
+### Burial Mound (Kurgan)
+- **Visual**: Orange-brown hollow circle with 6-8 short rays radiating outward
+- **Size**: ~10-20 pixels diameter in a 512×512 tile
+- **Context**: Often accompanied by an elevation number (e.g., "3", "10") or the Cyrillic abbreviation "кург."
+- **Grouping**: May appear individually or in clusters (necropoleis)
 
-### A. Burial Mound (Kurgan)
+### Settlement Mound (Tell)
+- **Visual**: Orange-brown, larger than burial mounds, often oval or irregular rather than circular
+- **Rays**: More numerous (typically 8-15) due to larger perimeter
+- **Size**: Larger than burial mounds, may be 20-40+ pixels
 
-- **Visual:** A small, hollow **circle** with short, radiating **rays** (hachures; spikes) extending outward. Resembles a "sunburst", "gear", or "ship's wheel".
-- **Colour:** Orange-brown (same colour as contour lines, indicating relief).
-- **Size:** Typically 2-4mm diameter at map scale, which translates to roughly 10-20 pixels in a 512×512 tile.
-- **Ray characteristics:** Usually 6-8 rays of approximately equal length, radiating evenly from the central circle.
-- **Context:** Often accompanied by an isolated elevation number (e.g., "3", "10") indicating height in metres, or the Cyrillic abbreviation **"кург."** ("kurgan").
-- **Landscape position:** Typically located on elevated terrain, ridges, hilltops, or other prominent landscape positions where ancient peoples chose to bury their dead. May also be found in flat, open areas, where large examples dominate the landscape.
-- **Grouping:** Mounds may appear in groups (necropoleis), which may contain mounds of different sizes.
+### Triangulation Point on Mound
+- **Visual**: Black hollow triangle with central dot, surrounded by black radiating rays
+- **Interpretation**: Soviet surveyors placed triangulation markers on existing mounds for elevation and sight lines
+- **Key distinction**: Must have rays around the triangle. Triangle alone without rays is NOT a mound.
 
-### B. Settlement Mound
-
-- **Visual:** Similar to a burial mound but **larger** and often oval or irregular in shape rather than circular. Radiating ticks point outward from the perimeter.
-- **Ray characteristics:** Rays appear similar to burial mounds, but sometimes larger, and often more rays are present (often 8-15).
-- **Colour:** Orange-brown.
-- **Size:** Larger than burial mounds, may be 5-10mm at map scale.
-- **Shape:** May be elongated or irregular, reflecting the accumulated debris of ancient settlements.
-
-### C. Triangulation Point on a Mound
-
-- **Visual:** A hollow **black triangle** with a central dot (the geodetic survey marker), surrounded by the characteristic radiating rays of a mound, also in black. Often have 6-12 rays. Size similar to or slightly larger than a typical 'base' burial mound, since large, prominent mounds were often chosen for triangulation points.
-- **Interpretation:** Soviet surveyors placed triangulation markers on mounds because they provided elevated, stable positions with good sight lines.
-- **Critical distinction:** The symbol MUST have radiating black rays around the triangle.
-
-### D. Benchmark on a Mound
-
-- **Visual:** A hollow **black square** (or circle with crosshairs) with a central dot, surrounded by the characteristic radiating rays of a mound, also in black. Often have 8 rays. Size similar to or slightly larger than a typical 'base' burial mound, since large, prominent mounds were often chosen for benchmarks.
-- **Interpretation:** Similar to triangulation points, benchmarks were placed on mounds for stability and visibility.
-- **Critical distinction:** The symbol MUST have radiating black rays around the square/circle.
-
-## Detection Criteria
-
-The **radiating rays** (hachures; spikes) are the primary and essential diagnostic feature. All mound symbols, of whatever type, share this characteristic regardless of what (if anything) is superimposed at the centre.
-
-### Ray Pattern Analysis
-
-1. **Direction:** Rays extend OUTWARD from a central point or oval, indicating elevated terrain (like contour hachures for hills).
-2. **Count:** Typically 8-15 rays, roughly evenly spaced around the perimeter. Count depends on symbol type (burial mound, settlement mound, burial mound with triangulation point, burial mound with benchmark)
-3. **Length:** Approximately equal to or slightly longer than the diameter of the central shape.
-4. **Consistency:** Rays should be roughly equal in length and evenly spaced; highly irregular patterns may indicate other features (noting that some areas of the map scanned poorly and may have some distortion)
-
-### Colour Analysis
-
-- **Orange-brown symbol:** Indicates a "plain" burial or settlement mound.
-- **Black symbol:** Indicates a burial mound with survey marker (triangulation point or benchmark) placed on top of the mound.
-- Each symbol is a single colour, either orange-brown or black.
+### Benchmark on Mound
+- **Visual**: Black hollow square (or circle with crosshairs) with central dot, surrounded by black radiating rays
+- **Interpretation**: Benchmarks placed on mounds for stability
+- **Key distinction**: Must have rays around the square. Square alone without rays is NOT a mound.
 
 ## Decision Procedure
 
-When uncertain whether a feature is a mound, apply this systematic checklist:
+For each candidate feature:
 
-1. **Check for rays:** Are there short rays (hachures; spikes) radiating outward from a central point? No rays = not a mound.
+1. **Check for rays**: Are there short marks radiating from a central point? No rays → not a mound.
 
-2. **Check ray direction:** Do the rays point OUTWARD (elevation/mound) or INWARD (excavation/quarry)? Burial or settlement mound rays ALWAYS point outwards.
+2. **Check ray direction**: Do rays point OUTWARD (elevated terrain) or INWARD (excavation)? Inward → not a mound.
 
-3. **Check central shape:** Is there a circle, oval, triangle, or square at the centre? The central shape helps classify the mound subtype.
+3. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
 
-4. **Check colour:** Are the symbols orange-brown ("plain" burial or settlement mound with no survey infrastructure) or black (mound with triangulation point or benchmark)?
+4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
 
-5. **Consider occlusion:** Roads, contours, rivers, or text may obscure part of the symbol. If some rays, or partial rays, are visible and the overall pattern matches, include the detection.
+5. **Consider occlusion**: Roads (black/red lines), contour lines (brown), grid lines (blue), or text labels may partially obscure symbols. If some rays are visible and the pattern matches, include the detection.
 
-6. **Consider degradation:** Map scanning or printing may have faded or distorted some symbols. Look for faint or somewhat asymmetrical ray patterns even if not perfectly symmetrical or fully distinct.
+6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
 
-7. **When still uncertain:** Err on the side of detection. It is better to include a borderline case than to miss a genuine mound.
+## Handling Edge Cases
 
-## Handling Occlusion
+### Partially Occluded Symbols
+Linear features frequently cross mound symbols:
+- Roads and tracks (black or red lines)
+- Contour lines (brown, may merge with orange-brown symbols)
+- Coordinate grid lines (blue)
+- Text labels and elevation numbers
 
-Symbols are frequently intersected by other map features:
+If you can identify rays extending outward from a central point, even partially, mark the detection.
 
-- **Roads:** Black or red lines may cross through a mound symbol.
-- **Contour lines:** Brown lines at similar colour may partially merge with mound rays.
-- **Grid lines:** Blue coordinate grid lines may overlay symbols.
-- **Text labels:** Cyrillic place names or elevation numbers may obscure parts of symbols.
+### Clustered Mounds
+Mounds often appear in groups (cemetery fields). Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
 
-In all cases, focus on identifying the characteristic "sunburst" pattern. If you can see rays extending outward from a central point, even partially, mark the detection.
+### Faded or Degraded Symbols
+Scanning artefacts may cause:
+- Incomplete ray patterns (some rays faint or missing)
+- Colour bleeding or fading
+- Slight geometric distortion
 
-## Separating Clusters
+Look for the characteristic sunburst structure even if imperfect.
 
-Mounds often appear in groups (cemetery fields; necropoleis). When symbols are close together:
+## Reference Examples
 
-- Each distinct "sunburst" centre represents a separate mound.
-- Provide individual bounding boxes for each symbol, even if they touch.
-- Do not merge adjacent mounds into a single large box.
+If reference examples are provided, compare uncertain cases against them. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
 
 ## Output Format
 
-Return a JSON object with detections using normalised coordinates (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [
@@ -739,496 +695,90 @@ Return a JSON object with detections using normalised coordinates (0-1000).
 
 **Purpose**: Extended text+image prompt with decision procedures and edge case guidance.
 **Used by**: M/E = Verbose-text+image; H5 = Minimal
+**Note**: This file is identical to detect_verbose-text.md (text-modality consistency).
 
 ```markdown
-# Detection Prompt: Verbose Text+Image
+# Mound Detection
 
-You are an expert analyst of Soviet
-Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
-Your goal is to find symbols on the Soviet military map that **visually match** the
-provided Positive examples, representing burial
-mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
-## Reference Examples
+This is a Soviet 1:50,000 military topographic map from the Cold War era. Archaeological mounds were marked as navigation landmarks using standardised symbology.
 
-You are provided with labelled reference
-images demonstrating the target symbols:
+## Core Diagnostic
 
-- **Positive examples** show mound
-  symbols to detect. These include
-  burial mounds (kurgans), settlement
-  mounds (tells), and survey markers
-  (triangulation points, benchmarks)
-  placed ON mounds.
-- **Negative examples** show areas or
-  symbols that are NOT mounds. Study
-  these to understand what to exclude.
+All mound symbols share one essential feature: **short rays (hachures) radiating OUTWARD** from a central shape. This "sunburst" or "gear" pattern indicates elevated terrain, distinguishing mounds from excavations (which have inward-pointing marks).
 
-Pay close attention to the visual
-characteristics that distinguish
-positive from negative examples.
+The rays are the primary diagnostic. Any symbol with outward-radiating rays is a mound candidate, regardless of central shape.
 
-## Task
+## Target Symbols
 
-Scan the **Target Image** systematically
-and create bounding boxes for all instances that visually
-match the Positive reference symbols.
+### Burial Mound (Kurgan)
+- **Visual**: Orange-brown hollow circle with 6-8 short rays radiating outward
+- **Size**: ~10-20 pixels diameter in a 512×512 tile
+- **Context**: Often accompanied by an elevation number (e.g., "3", "10") or the Cyrillic abbreviation "кург."
+- **Grouping**: May appear individually or in clusters (necropoleis)
 
-## Detection Criteria
+### Settlement Mound (Tell)
+- **Visual**: Orange-brown, larger than burial mounds, often oval or irregular rather than circular
+- **Rays**: More numerous (typically 8-15) due to larger perimeter
+- **Size**: Larger than burial mounds, may be 20-40+ pixels
 
-Mound symbols on Soviet 1:50,000 maps
-share these characteristics:
+### Triangulation Point on Mound
+- **Visual**: Black hollow triangle with central dot, surrounded by black radiating rays
+- **Interpretation**: Soviet surveyors placed triangulation markers on existing mounds for elevation and sight lines
+- **Key distinction**: Must have rays around the triangle. Triangle alone without rays is NOT a mound.
 
-- **Shape:** Small circular or oval
-  forms, 2-4mm diameter at map scale
-  (~10-20 pixels in tile)
-- **Rays:** Short radiating rays
-  (hachures; spikes) extending OUTWARD,
-  indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
-- **Pattern:** The "sunburst" or
-  "ship's wheel" pattern is the
-  essential diagnostic feature
-- **Colour:** Orange-brown for plain mounds
-  (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound
-- **Grouping:** May appear individually
-  or in groups (necropoleis)
+### Benchmark on Mound
+- **Visual**: Black hollow square (or circle with crosshairs) with central dot, surrounded by black radiating rays
+- **Interpretation**: Benchmarks placed on mounds for stability
+- **Key distinction**: Must have rays around the square. Square alone without rays is NOT a mound.
 
 ## Decision Procedure
 
-When uncertain whether a feature matches
-the positive examples:
+For each candidate feature:
 
-1. **Check for radiating rays:** The
-   outward-pointing pattern is essential.
-   No rays = not a mound.
+1. **Check for rays**: Are there short marks radiating from a central point? No rays → not a mound.
 
-2. **Compare to examples:** Hold the
-   candidate feature mentally against
-   the positive references. Similar
-   overall pattern?
+2. **Check ray direction**: Do rays point OUTWARD (elevated terrain) or INWARD (excavation)? Inward → not a mound.
 
-3. **Check ray direction:** Outward =
-   elevated terrain = mound. Inward =
-   excavated terrain = quarry/pit.
+3. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
 
-4. **Consider degradation:** Map
-   scanning may have faded or distorted symbols.
-   If some rays are visible and the
-   pattern matches examples, include.
+4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
 
-5. **Consider occlusion:** Roads,
-   contours, and text may obscure
-   parts of symbols. Partial matches
-   are acceptable.
+5. **Consider occlusion**: Roads (black/red lines), contour lines (brown), grid lines (blue), or text labels may partially obscure symbols. If some rays are visible and the pattern matches, include the detection.
 
-6. **Refer to negative examples:** Does
-   the feature look more like a negative
-   example than a positive? If so,
-   exclude.
+6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
 
-7. **When still uncertain:** Err on the
-   side of detection. Include borderline
-   cases rather than missing genuine
-   mounds.
+## Handling Edge Cases
 
-## Guidelines
+### Partially Occluded Symbols
+Linear features frequently cross mound symbols:
+- Roads and tracks (black or red lines)
+- Contour lines (brown, may merge with orange-brown symbols)
+- Coordinate grid lines (blue)
+- Text labels and elevation numbers
 
-1. **Separate Clusters:** Mounds often
-   appear in groups (necropoleis). Provide individual
-   bounding boxes for each distinct
-   symbol, even if they touch or overlap.
+If you can identify rays extending outward from a central point, even partially, mark the detection.
 
-2. **Systematic Scanning:** Work through
-   the target image methodically to
-   avoid missing symbols in busy areas.
+### Clustered Mounds
+Mounds often appear in groups (cemetery fields). Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
 
-## Output Format
+### Faded or Degraded Symbols
+Scanning artefacts may cause:
+- Incomplete ray patterns (some rays faint or missing)
+- Colour bleeding or fading
+- Slight geometric distortion
 
-Return a JSON object with detections
-using normalised coordinates (0-1000).
-
-{
-    "detections": [
-        {
-            "box_2d": [ymin, xmin,
-                       ymax, xmax],
-            "label": "mound",
-            "subtype": "burial_mound" |
-                "settlement_mound" |
-                "triangulation_mound" |
-                "benchmark_mound"
-        }
-    ]
-}
-```
-
----
-
-#### 1.5.2 detect_verbose-text-image_verbose.md
-
-**Purpose**: Extended text+image prompt with edge case guidance AND detailed exclusion criteria.
-**Used by**: M/E = Verbose-text+image; H5 = Verbose
-
-**Note**: This file was previously named `detect_verbose-text-image_hardneg.md`. Renamed to reflect H5 level naming.
-
-```markdown
-# Detection Prompt: Verbose Text+Image with Verbose Exclusion Guidance
-
-You are an expert analyst of Soviet
-Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
-Your goal is to find symbols on the Soviet military map that **visually match** the
-provided Positive examples, representing burial
-mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
+Look for the characteristic sunburst structure even if imperfect.
 
 ## Reference Examples
 
-You are provided with labelled reference
-images demonstrating the target symbols:
-
-- **Positive examples** show mound
-  symbols to detect. These include
-  burial mounds (kurgans), settlement
-  mounds (tells), and survey markers
-  (triangulation points, benchmarks)
-  placed ON mounds.
-- **Negative examples** show areas or
-  symbols that are NOT mounds. Study
-  these carefully to understand what
-  to exclude.
-
-Pay close attention to the visual
-characteristics that distinguish
-positive from negative examples.
-
-## Task
-
-Scan the **Target Image** systematically
-and create bounding boxes for all instances that visually
-match the Positive reference symbols.
-
-## Detection Criteria
-
-Mound symbols on Soviet 1:50,000 maps
-share these characteristics:
-
-- **Shape:** Small circular or oval
-  forms, 2-4mm diameter at map scale
-  (~10-20 pixels in tile)
-- **Rays:** Short radiating rays
-  (hachures; spikes) extending OUTWARD,
-  indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
-- **Pattern:** The "sunburst" or
-  "ship's wheel" pattern is the
-  essential diagnostic feature
-- **Colour:** Orange-brown for plain mounds
-  (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound
-- **Grouping:** May appear individually
-  or in groups (necropoleis)
-
-## Exclusion Criteria (CRITICAL)
-
-The following symbols appear frequently
-on Soviet maps and are commonly confused
-with mound symbols. Study the negative
-reference images carefully, and actively
-avoid marking these features:
-
-### 1. Spot Heights
-
-- **Visual:** Simple dots (black or
-  brown) accompanied by elevation numbers
-  (e.g., "185", "247").
-- **Critical difference:** NO hollow shape. NO radiating
-  rays (hachures; spikes). Just a dot with a number.
-- **Key test:** Ignore the number; check
-  the symbol. Is it hollow, with rays? No → exclude.
-
-### 2. Triangulation Points (standalone)
-
-- **Visual:** Black triangles with a
-  central dot, but NO surrounding rays.
-- **Critical difference:** NO radiating
-  rays (hachures; spikes) extending outward from the
-  triangle-with-central-dot.
-- **Key test:** Rays around the triangle?
-  No → survey marker only, exclude.
-  Yes → triangulation ON mound, include.
-
-### 3. Benchmarks (standalone)
-
-- **Visual:** Black squares or circles
-  with a central dot, NO surrounding rays.
-- **Critical difference:** NO radiating
-  rays (hachures; spikes) extending outward from the
-  square-with-central-dot.
-- **Key test:** Rays around the shape?
-  No → benchmark only, exclude.
-  Yes → benchmark ON mound, include.
-
-### 4. Quarry and Pit Symbols
-
-- **Visual:** Circular shapes with short
-  marks pointing INWARD toward centre.
-- **Critical difference:** Ray direction
-  reversed (inward = excavation, outward
-  = elevation).
-- **Key test:** Which way do marks point?
-  Inward → quarry/pit, exclude.
-  Outward → mound, include.
-
-### 5. Contour Line Artefacts
-
-- **Visual:** Closed contour lines on
-  hilltops forming roughly circular
-  patterns or patterns similar to a settlement mound.
-- **Critical difference:** Smooth,
-  continuous curves with NO rays (hachures; spikes).
-- **Key test:** Rays radiating outward?
-  No → contours, exclude.
-  Yes → mound, include.
-
-### 6. Infrastructure Markers
-
-- **Visual:** Dots on roads, bridges,
-  rivers, or canals.
-- **Critical difference:** Located on
-  linear features; no rays.
-- **Key test:** Dot only on a road/river line?
-  → infrastructure, exclude. Dot within a
-  square or triangle that has rays
-  (hachures; spikes) → mound, include.
-
-## Decision Procedure
-
-When uncertain whether a feature matches
-the positive examples:
-
-1. **Check for radiating rays:** The
-   outward-pointing pattern is essential.
-   No rays = not a mound.
-
-2. **Compare to examples:** Hold the
-   candidate feature mentally against
-   the positive references. Similar
-   overall pattern?
-
-3. **Check ray direction:** Outward =
-   elevated terrain = mound. Inward =
-   excavated terrain = quarry/pit.
-
-4. **Consider degradation:** Map
-   scanning may have faded or distorted symbols.
-   If some rays are visible and the
-   pattern matches examples, include.
-
-5. **Consider occlusion:** Roads,
-   contours, and text may obscure
-   parts of symbols. Partial matches
-   are acceptable.
-
-6. **Refer to negative examples:** Does
-   the feature look more like a negative
-   example than a positive? If so,
-   exclude.
-
-7. **When still uncertain:** Err on the
-   side of detection. Include borderline
-   cases rather than missing genuine
-   mounds.
-
-## Guidelines
-
-1. **Separate Clusters:** Mounds often
-   appear in groups (necropoleis). Provide individual
-   bounding boxes for each distinct
-   symbol, even if they touch or overlap.
-
-2. **Systematic Scanning:** Work through
-   the target image methodically to
-   avoid missing symbols in busy areas.
+If reference examples are provided, compare uncertain cases against them. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
 
 ## Output Format
 
-Return a JSON object with detections
-using normalised coordinates (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
-{
-    "detections": [
-        {
-            "box_2d": [ymin, xmin,
-                       ymax, xmax],
-            "label": "mound",
-            "subtype": "burial_mound" |
-                "settlement_mound" |
-                "triangulation_mound" |
-                "benchmark_mound"
-        }
-    ]
-}
-```
-
-#### 1.5.3 detect_verbose-text-image_terse.md
-
-**Purpose**: Extended text+image prompt with edge case guidance AND brief exclusion criteria.
-**Used by**: M/E = Verbose-text+image; H5 = Terse
-
-```markdown
-# Detection Prompt: Verbose Text+Image with Terse Exclusion Guidance
-
-You are an expert analyst of Soviet
-Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist.
-Your goal is to find symbols on the Soviet military map that **visually match** the
-provided Positive examples, representing burial
-mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
-
-## Reference Examples
-
-You are provided with labelled reference
-images demonstrating the target symbols:
-
-- **Positive examples** show mound
-  symbols to detect. These include
-  burial mounds (kurgans), settlement
-  mounds (tells), and survey markers
-  (triangulation points, benchmarks)
-  placed ON mounds.
-- **Negative examples** show areas or
-  symbols that are NOT mounds. Study
-  these to understand what to exclude.
-
-Pay close attention to the visual
-characteristics that distinguish
-positive from negative examples.
-
-## Task
-
-Scan the **Target Image** systematically
-and create bounding boxes for all instances that visually
-match the Positive reference symbols.
-
-## Detection Criteria
-
-Mound symbols on Soviet 1:50,000 maps
-share these characteristics:
-
-- **Shape:** Small circular or oval
-  forms, 2-4mm diameter at map scale
-  (~10-20 pixels in tile)
-- **Rays:** Short radiating rays
-  (hachures; spikes) extending OUTWARD,
-  indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
-- **Pattern:** The "sunburst" or
-  "ship's wheel" pattern is the
-  essential diagnostic feature
-- **Colour:** Orange-brown for plain mounds
-  (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound
-- **Grouping:** May appear individually
-  or in groups (necropoleis)
-
-## Exclusion Guidance
-
-Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
-
-**DO NOT mark:**
-
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights, bridge markers, or other simple dots
-
-## Decision Procedure
-
-When uncertain whether a feature matches
-the positive examples:
-
-1. **Check for radiating rays:** The
-   outward-pointing pattern is essential.
-   No rays = not a mound.
-
-2. **Compare to examples:** Hold the
-   candidate feature mentally against
-   the positive references. Similar
-   overall pattern?
-
-3. **Check ray direction:** Outward =
-   elevated terrain = mound. Inward =
-   excavated terrain = quarry/pit.
-
-4. **Consider degradation:** Map
-   scanning may have faded or distorted symbols.
-   If some rays are visible and the
-   pattern matches examples, include.
-
-5. **Consider occlusion:** Roads,
-   contours, and text may obscure
-   parts of symbols. Partial matches
-   are acceptable.
-
-6. **Refer to negative examples:** Does
-   the feature look more like a negative
-   example than a positive? If so,
-   exclude.
-
-7. **When still uncertain:** Err on the
-   side of detection. Include borderline
-   cases rather than missing genuine
-   mounds.
-
-## Guidelines
-
-1. **Separate Clusters:** Mounds often
-   appear in groups (necropoleis). Provide individual
-   bounding boxes for each distinct
-   symbol, even if they touch or overlap.
-
-2. **Systematic Scanning:** Work through
-   the target image methodically to
-   avoid missing symbols in busy areas.
-
-## Output Format
-
-Return a JSON object with detections
-using normalised coordinates (0-1000).
-
-{
-    "detections": [
-        {
-            "box_2d": [ymin, xmin,
-                       ymax, xmax],
-            "label": "mound",
-            "subtype": "burial_mound" |
-                "settlement_mound" |
-                "triangulation_mound" |
-                "benchmark_mound"
-        }
-    ]
-}
-```
-
----
-
-### 1.6 Two-Stage Pipeline Prompts (H2)
-
-#### 1.6.1 propose_image-only.md
-
-**Purpose**: High-recall proposer stage for two-stage pipeline.
-**Used by**: H2 (Stage 1)
-
-~~~markdown
-# Two-Stage Detection: Proposer (Stage 1)
-
-You are an expert landscape archaeologist analysing Soviet Topographic Maps.
-Your goal is to find symbols that **visually match** the provided Positive examples.
-
-## Task
-
-Scan the **Target Image** and identify all instances that look like the Positive reference symbols.
-When uncertain whether a feature is a mound or noise, **include it** (err on the side of detection).
-
-## Output Format
-
-Return a JSON object with detections using normalised coordinates (0-1000).
-
-```json
 {
     "detections": [
         {
@@ -1239,43 +789,340 @@ Return a JSON object with detections using normalised coordinates (0-1000).
     ]
 }
 ```
+
+---
+
+#### 1.5.2 detect_verbose-text-image_terse.md
+
+**Purpose**: Extended text+image prompt with edge case guidance AND brief exclusion criteria.
+**Used by**: M/E = Verbose-text+image; H5 = Terse
+
+```markdown
+# Mound Detection
+
+Detect all burial mound symbols in this Soviet topographic map tile.
+
+This is a Soviet 1:50,000 military topographic map from the Cold War era. Archaeological mounds were marked as navigation landmarks using standardised symbology.
+
+## Core Diagnostic
+
+All mound symbols share one essential feature: **short rays (hachures) radiating OUTWARD** from a central shape. This "sunburst" or "gear" pattern indicates elevated terrain, distinguishing mounds from excavations (which have inward-pointing marks).
+
+The rays are the primary diagnostic. Any symbol with outward-radiating rays is a mound candidate, regardless of central shape.
+
+## Target Symbols
+
+### Burial Mound (Kurgan)
+- **Visual**: Orange-brown hollow circle with 6-8 short rays radiating outward
+- **Size**: ~10-20 pixels diameter in a 512×512 tile
+- **Context**: Often accompanied by an elevation number (e.g., "3", "10") or the Cyrillic abbreviation "кург."
+- **Grouping**: May appear individually or in clusters (necropoleis)
+
+### Settlement Mound (Tell)
+- **Visual**: Orange-brown, larger than burial mounds, often oval or irregular rather than circular
+- **Rays**: More numerous (typically 8-15) due to larger perimeter
+- **Size**: Larger than burial mounds, may be 20-40+ pixels
+
+### Triangulation Point on Mound
+- **Visual**: Black hollow triangle with central dot, surrounded by black radiating rays
+- **Interpretation**: Soviet surveyors placed triangulation markers on existing mounds for elevation and sight lines
+- **Key distinction**: Must have rays around the triangle. Triangle alone without rays is NOT a mound.
+
+### Benchmark on Mound
+- **Visual**: Black hollow square (or circle with crosshairs) with central dot, surrounded by black radiating rays
+- **Interpretation**: Benchmarks placed on mounds for stability
+- **Key distinction**: Must have rays around the square. Square alone without rays is NOT a mound.
+
+## Decision Procedure
+
+For each candidate feature:
+
+1. **Check for rays**: Are there short marks radiating from a central point? No rays → not a mound.
+
+2. **Check ray direction**: Do rays point OUTWARD (elevated terrain) or INWARD (excavation)? Inward → not a mound.
+
+3. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
+
+4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
+
+5. **Consider occlusion**: Roads (black/red lines), contour lines (brown), grid lines (blue), or text labels may partially obscure symbols. If some rays are visible and the pattern matches, include the detection.
+
+6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
+
+## Handling Edge Cases
+
+### Partially Occluded Symbols
+Linear features frequently cross mound symbols:
+- Roads and tracks (black or red lines)
+- Contour lines (brown, may merge with orange-brown symbols)
+- Coordinate grid lines (blue)
+- Text labels and elevation numbers
+
+If you can identify rays extending outward from a central point, even partially, mark the detection.
+
+### Clustered Mounds
+Mounds often appear in groups (cemetery fields). Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
+
+### Faded or Degraded Symbols
+Scanning artefacts may cause:
+- Incomplete ray patterns (some rays faint or missing)
+- Colour bleeding or fading
+- Slight geometric distortion
+
+Look for the characteristic sunburst structure even if imperfect.
+
+## Reference Examples
+
+If reference examples are provided, compare uncertain cases against them. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
+
+## Exclusion Guidance
+
+Rays are essential: shapes without visible radiating rays are not mounds.
+
+**Do NOT mark:**
+- Standalone triangulation points (black triangle, no rays)
+- Standalone benchmarks (black square/circle, no rays)
+- Spot heights (dot with elevation number, no rays)
+- Quarry/pit symbols (marks pointing INWARD, not outward)
+- Infrastructure markers (dots on roads, bridges, rivers)
+
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+#### 1.5.3 detect_verbose-text-image_verbose.md
+
+**Purpose**: Extended text+image prompt with edge case guidance AND detailed exclusion criteria.
+**Used by**: M/E = Verbose-text+image; H5 = Verbose
+
+```markdown
+# Mound Detection
+
+Detect all burial mound symbols in this Soviet topographic map tile.
+
+This is a Soviet 1:50,000 military topographic map from the Cold War era. Archaeological mounds were marked as navigation landmarks using standardised symbology.
+
+## Core Diagnostic
+
+All mound symbols share one essential feature: **short rays (hachures) radiating OUTWARD** from a central shape. This "sunburst" or "gear" pattern indicates elevated terrain, distinguishing mounds from excavations (which have inward-pointing marks).
+
+The rays are the primary diagnostic. Any symbol with outward-radiating rays is a mound candidate, regardless of central shape.
+
+## Target Symbols
+
+### Burial Mound (Kurgan)
+- **Visual**: Orange-brown hollow circle with 6-8 short rays radiating outward
+- **Size**: ~10-20 pixels diameter in a 512×512 tile
+- **Context**: Often accompanied by an elevation number (e.g., "3", "10") or the Cyrillic abbreviation "кург."
+- **Grouping**: May appear individually or in clusters (necropoleis)
+
+### Settlement Mound (Tell)
+- **Visual**: Orange-brown, larger than burial mounds, often oval or irregular rather than circular
+- **Rays**: More numerous (typically 8-15) due to larger perimeter
+- **Size**: Larger than burial mounds, may be 20-40+ pixels
+
+### Triangulation Point on Mound
+- **Visual**: Black hollow triangle with central dot, surrounded by black radiating rays
+- **Interpretation**: Soviet surveyors placed triangulation markers on existing mounds for elevation and sight lines
+- **Key distinction**: Must have rays around the triangle. Triangle alone without rays is NOT a mound.
+
+### Benchmark on Mound
+- **Visual**: Black hollow square (or circle with crosshairs) with central dot, surrounded by black radiating rays
+- **Interpretation**: Benchmarks placed on mounds for stability
+- **Key distinction**: Must have rays around the square. Square alone without rays is NOT a mound.
+
+## Decision Procedure
+
+For each candidate feature:
+
+1. **Check for rays**: Are there short marks radiating from a central point? No rays → not a mound.
+
+2. **Check ray direction**: Do rays point OUTWARD (elevated terrain) or INWARD (excavation)? Inward → not a mound.
+
+3. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
+
+4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
+
+5. **Consider occlusion**: Roads (black/red lines), contour lines (brown), grid lines (blue), or text labels may partially obscure symbols. If some rays are visible and the pattern matches, include the detection.
+
+6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
+
+## Handling Edge Cases
+
+### Partially Occluded Symbols
+Linear features frequently cross mound symbols:
+- Roads and tracks (black or red lines)
+- Contour lines (brown, may merge with orange-brown symbols)
+- Coordinate grid lines (blue)
+- Text labels and elevation numbers
+
+If you can identify rays extending outward from a central point, even partially, mark the detection.
+
+### Clustered Mounds
+Mounds often appear in groups (cemetery fields). Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
+
+### Faded or Degraded Symbols
+Scanning artefacts may cause:
+- Incomplete ray patterns (some rays faint or missing)
+- Colour bleeding or fading
+- Slight geometric distortion
+
+Look for the characteristic sunburst structure even if imperfect.
+
+## Reference Examples
+
+If reference examples are provided, compare uncertain cases against them. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
+
+## Exclusion Criteria
+
+The following symbols appear frequently on Soviet maps and are commonly confused with mound symbols. Study any negative reference images carefully.
+
+### Spot Heights
+- **Visual**: Simple dot (black or brown) with elevation number (e.g., "185", "247")
+- **Key difference**: No hollow shape, no radiating rays—just a dot with a number
+- **Test**: Ignore the number. Is there a hollow shape with rays? No → exclude.
+
+### Standalone Triangulation Points
+- **Visual**: Black triangle with central dot, but NO surrounding rays
+- **Key difference**: No radiating rays extending outward from the triangle
+- **Test**: Rays around the triangle? No → survey marker only, exclude. Yes → triangulation ON mound, include.
+
+### Standalone Benchmarks
+- **Visual**: Black square or circle with central dot, NO surrounding rays
+- **Key difference**: No radiating rays extending outward from the shape
+- **Test**: Rays around the shape? No → benchmark only, exclude. Yes → benchmark ON mound, include.
+
+### Quarry and Pit Symbols
+- **Visual**: Circular shapes with short marks pointing INWARD toward centre
+- **Key difference**: Ray direction is reversed (inward = excavation, outward = elevation)
+- **Test**: Which way do marks point? Inward → quarry/pit, exclude. Outward → mound, include.
+
+### Contour Line Artefacts
+- **Visual**: Closed contour lines on hilltops forming roughly circular patterns
+- **Key difference**: Smooth, continuous curves with no discrete rays
+- **Test**: Discrete rays radiating outward? No → contours, exclude. Yes → mound, include.
+
+### Infrastructure Markers
+- **Visual**: Dots positioned on roads, bridges, rivers, or canals
+- **Key difference**: Located on linear features; no rays
+- **Test**: Simple dot on a linear feature? → infrastructure, exclude.
+
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
+```
+
+---
+
+### 1.6 Two-Stage Pipeline Prompts (H2)
+
+#### 1.6.1 propose_brief.md
+
+**Purpose**: High-recall proposer stage for two-stage pipeline.
+**Used by**: H2 (Stage 1)
+
+~~~markdown
+# Two-Stage Detection: Proposer
+
+Detect all candidate burial mound symbols in this Soviet topographic map tile. This is Stage 1 of a two-stage pipeline; a verifier will filter false positives.
+
+## Target Symbols
+
+All mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a "sunburst" or "gear" pattern. This indicates elevated terrain.
+
+**Subtypes to detect:**
+
+- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or "кург." label.
+- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).
+- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.
+- **Benchmark on mound**: Black square with central dot, surrounded by black rays.
+
+The **rays pointing outward** are essential. Symbols without visible rays are not mounds.
+
+## Guidelines
+
+1. Provide individual bounding boxes for each symbol, even in clusters.
+2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+3. If reference examples are provided, compare uncertain cases against them.
+
+## Output Format
+
+Return JSON with normalised coordinates (0-1000):
+
+{
+    "detections": [
+        {
+            "box_2d": [ymin, xmin, ymax, xmax],
+            "label": "mound",
+            "subtype": "burial_mound" | "settlement_mound" | "triangulation_mound" | "benchmark_mound"
+        }
+    ]
+}
 ~~~
 
 ---
 
-#### 1.6.2 verify_image-only.md
+#### 1.6.2 verify_brief.md
 
 **Purpose**: Precision-focused verifier stage for two-stage pipeline.
 **Used by**: H2 (Stage 2)
 
 ~~~markdown
-# Two-Stage Detection: Verifier (Stage 2)
+# Two-Stage Detection: Verifier
 
-You are an expert landscape archaeologist verifying candidate detections from Soviet Topographic Maps.
-Your goal is to determine whether the **candidate symbol in the centre** of the crop visually matches the provided Positive examples.
+Classify whether the candidate symbol at the centre of this crop is a burial mound.
 
-## Task
+## Diagnostic Criteria
 
-Examine the **Target Candidate** and decide if it is a mound symbol.
-Base your decision on visual similarity to the Positive reference examples.
+Mound symbols have **rays (hachures) radiating OUTWARD** from a central shape ("sunburst" pattern). This indicates elevated terrain.
+
+**Key tests:**
+
+1. Are there rays radiating from a central point? No rays → not a mound.
+2. Do rays point OUTWARD (mound) or INWARD (quarry/pit)? Inward → not a mound.
+3. Check central shape: circle/oval (plain mound), triangle (triangulation on mound), square (benchmark on mound).
+4. Check colour: orange-brown (plain mound) or black (survey marker on mound).
+
+If reference examples are provided, compare the candidate against them.
 
 ## Output Format
 
-Return a JSON object with your assessment.
+Return JSON:
 
-```json
 {
     "reasoning": "Brief description of visual features observed.",
     "mound_probability": 0.0
 }
-```
 
 ## Scoring Guide
 
-- **0.9-1.0**: Clear mound symbol with radiating rays (hachures; spikes).
-- **0.6-0.8**: Likely mound, some ambiguity or occlusion.
-- **0.3-0.5**: Uncertain, could be mound or similar feature.
-- **0.0-0.2**: Not a mound (noise, text, isolated marker, building).
+- **0.9-1.0**: Clear sunburst pattern with outward-radiating rays
+- **0.6-0.8**: Likely mound, some ambiguity or occlusion
+- **0.3-0.5**: Uncertain, could be mound or similar feature
+- **0.0-0.2**: Not a mound (no rays, wrong direction, noise, isolated marker)
 ~~~
 
 ---
@@ -1453,8 +1300,8 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 
 | Configuration File | Purpose | Instruction File |
 |--------------------|---------|------------------|
-| `propose_image-only.json` | H2 Stage 1 (Proposer) | propose_image-only.md |
-| `verify_image-only.json` | H2 Stage 2 (Verifier) | verify_image-only.md |
+| `propose_brief.json` | H2 Stage 1 (Proposer) | propose_brief.md |
+| `verify_brief.json` | H2 Stage 2 (Verifier) | verify_brief.md |
 
 #### Pilot Configs (4 files)
 
@@ -1730,35 +1577,35 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 
 **H2 protocol**: Each of the K=10 runs is independent (one proposer pass → one verifier pass). The verifier returns raw `mound_probability` scores used directly for evaluation — no binary thresholding or voting within the verification step.
 
-#### propose_image-only.json
+#### propose_brief.json
 
 ```json
 {
-    "version": "propose_image-only",
-    "description": "Two-Stage Proposer (Stage 1). High-recall detection, use with verify_image-only.",
+    "version": "propose_brief",
+    "description": "Two-Stage Proposer (Stage 1). High-recall detection using brief text, use with verify_brief.",
     "hypothesis": "H2",
     "model": "gemini-3-flash",
-    "instruction_file": "propose_image-only.md",
+    "instruction_file": "propose_brief.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "thinking_level": "minimal",
     "_config_notes": {
         "template_status": "This config is a template. Parameters will be finalised after earlier phases complete.",
-        "temperature": "Placeholder - will use H7-optimal from Phase 2b",
-        "library": "Placeholder - will use H8-optimal from Phase 2c",
+        "temperature": "Placeholder - will use H7-optimal from Phase 2b (or 1.0 if T=1.0 proves optimal)",
+        "library": "Placeholder - will use H8-optimal from Phase 2c (likely Scale-8, Scale-16, or Scale-32)",
         "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15)",
-        "proposer_strategy": "Instruction says 'err on the side of detection' for high recall. Subtypes are for diagnostics; all count as positive detections for F1."
+        "proposer_strategy": "Uses brief-level diagnostic text. Subtypes (burial_mound, settlement_mound, triangulation_mound, benchmark_mound) are for diagnostics; all count as positive detections for F1."
     },
     "examples": [
         {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
         {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
         {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"}
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative: Empty tile (no mounds)", "category": "null"}
     ],
     "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
 }
@@ -1766,35 +1613,35 @@ H4 ordering is tested at optimal M/E + optimal H5 only (3 conditions total, not 
 
 ---
 
-#### verify_image-only.json
+#### verify_brief.json
 
 ```json
 {
-    "version": "verify_image-only",
-    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification of proposals.",
+    "version": "verify_brief",
+    "description": "Two-Stage Verifier (Stage 2). Precision-focused verification using brief text.",
     "hypothesis": "H2",
     "model": "gemini-3-flash",
-    "instruction_file": "verify_image-only.md",
+    "instruction_file": "verify_brief.md",
     "temperature": 1.0,
     "max_output_tokens": 8192,
     "thinking_level": "minimal",
     "_config_notes": {
         "template_status": "This config is a template. Parameters will be finalised after earlier phases complete.",
-        "temperature": "Placeholder - will use H7-optimal from Phase 2b",
-        "library": "Placeholder - will use H8-optimal from Phase 2c",
+        "temperature": "Placeholder - will use H7-optimal from Phase 2b (or 1.0 if T=1.0 proves optimal)",
+        "library": "Placeholder - will use H8-optimal from Phase 2c (likely Scale-8, Scale-16, or Scale-32)",
         "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15)",
-        "usage": "Run with --iterations 1 for H2 testing. Raw mound_probability scores used for evaluation."
+        "usage": "Run with --iterations 1 for H2 testing. Each K=10 run is independent (one proposer pass, one verifier pass). Raw mound_probability scores used for evaluation, no binary thresholding."
     },
     "examples": [
         {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
         {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
         {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
         {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
-        {"path": "neutral/example_05.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_06.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_07.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_08.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"}
+        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_10.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral/example_15.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_16.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral/example_17.png", "label": "Negative: Empty tile (no mounds)", "category": "null"}
     ],
     "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
 }
@@ -1843,12 +1690,14 @@ The following content will be derived from Phase 1 baseline analysis and finalis
 
 ---
 
-*Document version: 2.14*
+*Document version: 2.16*
 *Created: 2026-01-02*
-*Updated: 2026-01-14*
+*Updated: 2026-01-20*
 
 **Changelog:**
 
+- v2.16: Fixed example numbering inconsistencies — corrected propose_brief.json and verify_brief.json configs to use standard numbering scheme per MANIFEST.md (Canon-: example_09-10, null: example_15-17); corrected symlinks in `inputs/examples/neutral-naming/` to match MANIFEST (removed incorrect 05-09 symlinks, created correct 09-10 and 15-17 symlinks); slots 05-08 (HP) and 11-14 (HN) remain reserved for Phase 1 mining
+- v2.15: Major prompt library synchronisation — replaced all 11 detection instruction prompts with actual file content (action-first opening, no recall bias language, conditional reference framing "If reference examples are provided..."); updated two-stage pipeline prompts renamed from `propose_image-only.md`/`verify_image-only.md` to `propose_brief.md`/`verify_brief.md`; updated config examples to match; added text-modality consistency notes (detect_brief-text.md = detect_brief-text-image.md); reordered H5 variant sections consistently (base → terse → verbose)
 - v2.14: Three-way consistency check — corrected instruction file count from "10" to "11" in Design Summary (matches preregistration.md and actual file count: 3 image-using × 3 H5 + 2 text-only = 11)
 - v2.13: Standardised exclusion guidance templates — updated Section 1.3.2 (brief-text-image_verbose) to use full 6-subsection "Exclusion Criteria (CRITICAL)" format matching actual file; updated Sections 1.3.3 (brief-text-image_terse) and 1.5.3 (verbose-text-image_terse) to use standardised 3-bullet terse template ("Rays are key..." + DO NOT mark list) matching actual files; ensured positive guidance sections are identical across H5 variants within each M/E level
 - v2.12: Instruction file content alignment — added missing terse sections (1.1.3 detect_image-only_terse.md, 1.3.3 detect_brief-text-image_terse.md, 1.5.3 detect_verbose-text-image_terse.md) with full content matching actual prompt library files; fixed verbose instruction file titles to match actual files (Section 1.1.2 "with Verbose Exclusion"/"Exclusion Guidance (Detailed)", Section 1.3.2 "with Verbose Exclusion Guidance", Section 1.5.2 "with Verbose Exclusion Guidance")

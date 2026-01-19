@@ -1,67 +1,94 @@
-# Detection Prompt: Verbose Text+Image with Terse Exclusion Guidance
+# Mound Detection
 
-You are an expert analyst of Soviet Topographic Maps from the 1950s-1980s, and a seasoned landscape archaeologist. Your goal is to find symbols on the Soviet military map that **visually match** the provided Positive examples, representing burial mounds (kurgans; tumuli), settlement mounds (tells), and composite symbols.
+Detect all burial mound symbols in this Soviet topographic map tile.
 
-## Reference Examples
+This is a Soviet 1:50,000 military topographic map from the Cold War era. Archaeological mounds were marked as navigation landmarks using standardised symbology.
 
-You are provided with labelled reference images demonstrating the target symbols:
+## Core Diagnostic
 
-- **Positive examples** show mound symbols to detect. These include burial mounds (kurgans), settlement mounds (tells), and survey markers (triangulation points, benchmarks) placed ON mounds.
-- **Negative examples** show areas or symbols that are NOT mounds. Study these to understand what to exclude.
+All mound symbols share one essential feature: **short rays (hachures) radiating OUTWARD** from a central shape. This "sunburst" or "gear" pattern indicates elevated terrain, distinguishing mounds from excavations (which have inward-pointing marks).
 
-Pay close attention to the visual characteristics that distinguish positive from negative examples.
+The rays are the primary diagnostic. Any symbol with outward-radiating rays is a mound candidate, regardless of central shape.
 
-## Task
+## Target Symbols
 
-Scan the **Target Image** systematically and create bounding boxes for all instances that visually match the Positive reference symbols.
+### Burial Mound (Kurgan)
+- **Visual**: Orange-brown hollow circle with 6-8 short rays radiating outward
+- **Size**: ~10-20 pixels diameter in a 512×512 tile
+- **Context**: Often accompanied by an elevation number (e.g., "3", "10") or the Cyrillic abbreviation "кург."
+- **Grouping**: May appear individually or in clusters (necropoleis)
 
-## Detection Criteria
+### Settlement Mound (Tell)
+- **Visual**: Orange-brown, larger than burial mounds, often oval or irregular rather than circular
+- **Rays**: More numerous (typically 8-15) due to larger perimeter
+- **Size**: Larger than burial mounds, may be 20-40+ pixels
 
-Mound symbols on Soviet 1:50,000 maps share these characteristics:
+### Triangulation Point on Mound
+- **Visual**: Black hollow triangle with central dot, surrounded by black radiating rays
+- **Interpretation**: Soviet surveyors placed triangulation markers on existing mounds for elevation and sight lines
+- **Key distinction**: Must have rays around the triangle. Triangle alone without rays is NOT a mound.
 
-- **Shape:** Small circular or oval forms, 2-4mm diameter at map scale (~10-20 pixels in tile).
-- **Rays:** Short radiating rays (hachures; spikes) extending OUTWARD, indicating elevated terrain. Usually 6-8 rays for burial mounds, 8-15 for settlement mounds.
-- **Pattern:** The "sunburst" or "ship's wheel" pattern is the essential diagnostic feature.
-- **Colour:** Orange-brown for plain mounds (same as contour lines); all-black for survey markers (triangulation or benchmark) ON a mound.
-- **Grouping:** May appear individually or in groups (necropoleis).
-
-## Exclusion Guidance
-
-Rays are key: Shapes without visible radiating rays are not mounds. Consider occlusion or degradation before excluding.
-
-**DO NOT mark:**
-
-- Standalone triangulation points (black triangle, NO rays)
-- Standalone benchmarks (black square/circle, NO rays)
-- Spot heights, bridge markers, or other simple dots
+### Benchmark on Mound
+- **Visual**: Black hollow square (or circle with crosshairs) with central dot, surrounded by black radiating rays
+- **Interpretation**: Benchmarks placed on mounds for stability
+- **Key distinction**: Must have rays around the square. Square alone without rays is NOT a mound.
 
 ## Decision Procedure
 
-When uncertain whether a feature matches the positive examples:
+For each candidate feature:
 
-1. **Check for radiating rays:** The outward-pointing pattern is essential. No rays = not a mound.
+1. **Check for rays**: Are there short marks radiating from a central point? No rays → not a mound.
 
-2. **Compare to examples:** Hold the candidate feature mentally against the positive references. Similar overall pattern?
+2. **Check ray direction**: Do rays point OUTWARD (elevated terrain) or INWARD (excavation)? Inward → not a mound.
 
-3. **Check ray direction:** Outward = elevated terrain = mound. Inward = excavated terrain = quarry/pit.
+3. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
 
-4. **Consider degradation:** Map scanning may have faded or distorted symbols. If some rays are visible and the pattern matches examples, include.
+4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
 
-5. **Consider occlusion:** Roads, contours, and text may obscure parts of symbols. Partial matches are acceptable.
+5. **Consider occlusion**: Roads (black/red lines), contour lines (brown), grid lines (blue), or text labels may partially obscure symbols. If some rays are visible and the pattern matches, include the detection.
 
-6. **Refer to negative examples:** Does the feature look more like a negative example than a positive? If so, exclude.
+6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
 
-7. **When still uncertain:** Err on the side of detection. Include borderline cases rather than missing genuine mounds.
+## Handling Edge Cases
 
-## Guidelines
+### Partially Occluded Symbols
+Linear features frequently cross mound symbols:
+- Roads and tracks (black or red lines)
+- Contour lines (brown, may merge with orange-brown symbols)
+- Coordinate grid lines (blue)
+- Text labels and elevation numbers
 
-1. **Separate Clusters:** Mounds often appear in groups (necropoleis). Provide individual bounding boxes for each distinct symbol, even if they touch or overlap.
+If you can identify rays extending outward from a central point, even partially, mark the detection.
 
-2. **Systematic Scanning:** Work through the target image methodically to avoid missing symbols in busy areas.
+### Clustered Mounds
+Mounds often appear in groups (cemetery fields). Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
+
+### Faded or Degraded Symbols
+Scanning artefacts may cause:
+- Incomplete ray patterns (some rays faint or missing)
+- Colour bleeding or fading
+- Slight geometric distortion
+
+Look for the characteristic sunburst structure even if imperfect.
+
+## Reference Examples
+
+If reference examples are provided, compare uncertain cases against them. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
+
+## Exclusion Guidance
+
+Rays are essential: shapes without visible radiating rays are not mounds.
+
+**Do NOT mark:**
+- Standalone triangulation points (black triangle, no rays)
+- Standalone benchmarks (black square/circle, no rays)
+- Spot heights (dot with elevation number, no rays)
+- Quarry/pit symbols (marks pointing INWARD, not outward)
+- Infrastructure markers (dots on roads, bridges, rivers)
 
 ## Output Format
 
-Return a JSON object with detections using normalised coordinates (0-1000).
+Return JSON with normalised coordinates (0-1000):
 
 {
     "detections": [
