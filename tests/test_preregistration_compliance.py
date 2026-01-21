@@ -157,3 +157,85 @@ class TestSpatialToleranceCompliance:
         assert len(matched_det) == 0, (
             f"Detection at 21m should NOT match (outside {PREREGISTERED_SPATIAL_TOLERANCE}m tolerance)"
         )
+
+
+# =============================================================================
+# PHASE 2 STATISTICAL ANALYSIS COMPLIANCE
+# =============================================================================
+# Preregistration Section 3.5 specifies statistical parameters for Phase 2.
+
+PREREGISTERED_FDR_Q = 0.05  # Benjamini-Hochberg FDR control level
+PREREGISTERED_BOOTSTRAP_N = 1000  # Bootstrap iterations for CIs
+
+
+@pytest.mark.tier1
+@pytest.mark.compliance
+class TestPhase2AnalysisCompliance:
+    """Tests for Phase 2 statistical analysis parameter compliance.
+
+    Preregistration Section 3.5 specifies:
+    - Bootstrapped 95% CIs with N=1000 iterations
+    - Benjamini-Hochberg FDR correction at q=0.05
+    """
+
+    def test_fdr_default_matches_preregistration(self) -> None:
+        """Verify FDR correction uses preregistered q=0.05.
+
+        The Benjamini-Hochberg FDR correction controls the false discovery
+        rate at q=0.05 as specified in the preregistration.
+        """
+        sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+        from analyse_phase2_results import apply_fdr_correction
+
+        # Create test data with one significant comparison
+        pairwise = [
+            {
+                "condition_a": "A",
+                "condition_b": "B",
+                "f1_difference": {"mean": 0.05, "ci_lower": 0.02, "ci_upper": 0.08},
+            }
+        ]
+
+        # Default call should use q=0.05
+        result = apply_fdr_correction(pairwise)
+
+        # Function should work with default - we're testing it doesn't crash
+        # and that its default behaviour is consistent with preregistration
+        assert len(result) == 1
+        assert "fdr_significant" in result[0]
+
+    def test_bootstrap_default_matches_preregistration(self) -> None:
+        """Verify bootstrap iterations default matches preregistration (N=1000).
+
+        The preregistration specifies 1000 bootstrap iterations for
+        computing 95% confidence intervals.
+        """
+        sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+        from analyse_phase2_results import DEFAULT_N_BOOTSTRAP
+
+        assert DEFAULT_N_BOOTSTRAP == PREREGISTERED_BOOTSTRAP_N, (
+            f"Bootstrap iterations mismatch:\n"
+            f"  Preregistered: {PREREGISTERED_BOOTSTRAP_N}\n"
+            f"  Actual:        {DEFAULT_N_BOOTSTRAP}"
+        )
+
+    def test_fdr_q_value_constant_matches_preregistration(self) -> None:
+        """Verify the FDR q parameter matches preregistration (q=0.05).
+
+        The apply_fdr_correction function's default q parameter should
+        match the preregistered value of 0.05.
+        """
+        sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+        import inspect
+        from analyse_phase2_results import apply_fdr_correction
+
+        # Get the function signature to check default value
+        sig = inspect.signature(apply_fdr_correction)
+        q_param = sig.parameters.get("q")
+
+        assert q_param is not None, "apply_fdr_correction should have a 'q' parameter"
+        assert q_param.default == PREREGISTERED_FDR_Q, (
+            f"FDR q default mismatch:\n"
+            f"  Preregistered: {PREREGISTERED_FDR_Q}\n"
+            f"  Actual:        {q_param.default}"
+        )
