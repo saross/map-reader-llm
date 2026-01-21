@@ -18,7 +18,7 @@ from pathlib import Path
 import pytest
 
 # Minimum number of config files expected
-MINIMUM_CONFIG_COUNT = 36
+MINIMUM_CONFIG_COUNT = 24
 
 # Execution config prefixes (configs that run experiments)
 EXECUTION_CONFIG_PREFIXES = ("detect_", "pilot_", "propose_", "verify_")

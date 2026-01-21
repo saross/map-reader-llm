@@ -1,0 +1,107 @@
+# Phase 1: Library Construction
+# ==============================
+# Single-condition study with 5 repeated passes for hard example extraction.
+# This is a repeated-measures design, not a factorial experiment.
+#
+# Usage:
+#   python scripts/run_phase1.py
+#   python scripts/run_phase1.py --dry-run
+#   python scripts/run_phase1.py --resume
+#
+# Note: This study uses run_phase1.py (not run_study.py) because Phase 1
+# requires 5 passes of a single condition, not factorial combinations.
+
+study:
+  name: "Phase 1: Library Construction"
+  version: "1.0"
+  description: |
+    Constructs the hard example library by running baseline detection on
+    calibration tiles and analysing systematic failures (FNs become hard
+    positives, FPs become hard negatives).
+  phase: "1"
+  created: "2026-01-20"
+
+# Execution parameters
+config:
+  file: "prompts/configs/library_pure-positive-canon.json"
+  description: "Minimal baseline: Canon+ (4) and null (3) only"
+
+inputs:
+  manifest: "inputs/tiles/calibration_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/calibration_bounds.geojson"
+
+execution:
+  passes: 5
+  workers: 1
+  output_dir: "outputs/phase1-library"
+
+# Post-processing pipeline
+pipeline:
+  - step: "detection"
+    description: "Run 5 detection passes"
+    command: |
+      for i in {1..5}; do
+        python scripts/4_detect_mounds_batch.py \
+          --config {config.file} \
+          --manifest {inputs.manifest} \
+          --output-dir {execution.output_dir}/pass_0${i} \
+          --workers {execution.workers}
+      done
+
+  - step: "merge"
+    description: "Merge passes with spatial clustering"
+    command: |
+      python scripts/merge_passes.py \
+        --input-dir {execution.output_dir} \
+        --output {execution.output_dir}/merged_detections.geojson \
+        --passes 5 \
+        --tolerance 20.0
+
+  - step: "evaluate"
+    description: "Match against ground truth"
+    command: |
+      python scripts/6_accuracy_report.py \
+        --pred {execution.output_dir}/merged_detections.geojson \
+        --bounds {inputs.bounds} \
+        --template {inputs.ground_truth}
+
+  - step: "extract_hp"
+    description: "Extract hard positives (systematic FNs)"
+    command: |
+      python scripts/analyse_fp_crops.py \
+        --input {execution.output_dir}/fn_analysis.geojson \
+        --output_dir {execution.output_dir}/hard-positives \
+        --mode fn \
+        --manifest {inputs.manifest} \
+        --limit 4
+
+  - step: "extract_hn"
+    description: "Extract hard negatives (systematic FPs)"
+    command: |
+      python scripts/analyse_fp_crops.py \
+        --input {execution.output_dir}/fp_analysis.geojson \
+        --output_dir {execution.output_dir}/hard-negatives \
+        --mode fp \
+        --manifest {inputs.manifest} \
+        --limit 4
+
+# Expected outputs
+outputs:
+  per_pass:
+    - "{output_dir}/pass_0{n}/{tile_name}.geojson"
+    - "{output_dir}/pass_0{n}/{tile_name}.meta.json"
+  merged:
+    - "{output_dir}/merged_detections.geojson"
+  analysis:
+    - "{output_dir}/fn_analysis.geojson"
+    - "{output_dir}/fp_analysis.geojson"
+  hard_examples:
+    - "{output_dir}/hard-positives/hp_001-004.png"
+    - "{output_dir}/hard-negatives/hn_001-004.png"
+
+# Cost and time estimates
+estimates:
+  api_calls: 100  # 20 tiles × 5 passes
+  cost_usd: 0.30  # ~$0.003/call for Flash
+  time_minutes: 15

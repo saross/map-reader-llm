@@ -68,6 +68,47 @@ Extracts candidate crops from detection results for manual review and hard examp
 
 ---
 
+## Voting & Consensus
+
+### `merge_passes.py`
+
+Implements the consensus voting algorithm from preregistration Section 8.5. Merges K detection passes into consensus predictions with configurable vote thresholds.
+
+**Algorithm**:
+
+1. Within-pass deduplication (20m tolerance) — handles overlapping tiles
+2. Cross-pass clustering (20m tolerance)
+3. Count votes per cluster (distinct passes contributing)
+4. Apply vote threshold
+5. Output: centroid, majority label, confidence (votes/N), source passes
+
+**Usage**:
+
+```bash
+# Merge all passes with threshold ≥3
+python scripts/merge_passes.py \
+    --input-dir outputs/phase1-library \
+    --output outputs/phase1-library/merged_t3.geojson \
+    --threshold 3
+
+# Split K=10 into N=5 pool A (passes 1-5)
+python scripts/merge_passes.py \
+    --input-dir outputs/experiment \
+    --output outputs/experiment/pool_a.geojson \
+    --passes 1,2,3,4,5 \
+    --threshold 3
+
+# Generate outputs for all thresholds
+python scripts/merge_passes.py \
+    --input-dir outputs/experiment \
+    --output-dir outputs/experiment/voting \
+    --sweep
+```
+
+**Output**: Consensus GeoJSON with vote counts, confidence, contributing passes.
+
+---
+
 ## Evaluation & Analysis
 
 ### `lib_advanced_metrics.py`
