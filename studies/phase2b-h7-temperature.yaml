@@ -1,0 +1,113 @@
+# Phase 2b: H7 Temperature Testing
+# =================================
+# Tests 5 temperature levels at the optimal M/E from Phase 2a.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase2b-h7-temperature.yaml
+#   python scripts/run_study.py studies/phase2b-h7-temperature.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2a complete (optimal M/E determined)
+#   - Update 'optimal_me_config' below with Phase 2a result
+
+study:
+  name: "Phase 2b: H7 Temperature"
+  version: "1.0"
+  description: |
+    Tests 5 temperature levels to determine optimal temperature setting.
+    Uses optimal M/E from Phase 2a. Results inform temperature used in
+    subsequent phases (2c-2e).
+  phase: "2b"
+  hypothesis: "H7"
+  created: "2026-01-21"
+
+# Carried forward from Phase 2a (UPDATE AFTER PHASE 2A ANALYSIS)
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_image-only.json"  # PLACEHOLDER - update after 2a
+  optimal_me_name: "image-only"                                 # PLACEHOLDER - update after 2a
+
+# Factor under test
+factors:
+  temperature:
+    description: "Model temperature (controls output randomness)"
+    levels:
+      - name: "T0.0"
+        value: 0.0
+        description: "Minimum (deterministic)"
+      - name: "T0.3"
+        value: 0.3
+        description: "Low variance"
+      - name: "T0.7"
+        value: 0.7
+        description: "Moderate variance"
+      - name: "T1.0"
+        value: 1.0
+        description: "Vendor default"
+      - name: "T1.3"
+        value: 1.3
+        description: "Above default"
+
+# Fixed parameters
+fixed:
+  ordering: "canonical-first"
+  # M/E and library defined by optimal_me_config
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10
+  passes: 5
+  workers: 1
+  output_dir: "outputs/phase2b"
+  checkpoint_dir: "outputs/phase2b/checkpoints"
+  # Use --temperature CLI flag to override config temperature
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --temperature {factor_value}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+    - ["T1.0", "T0.0"]
+    - ["T1.0", "T0.3"]
+    - ["T1.0", "T0.7"]
+    - ["T1.0", "T1.3"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2b/analysis_report.json"
+    summary: "outputs/phase2b/analysis_summary.md"
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+estimates:
+  cells: 5
+  api_calls_per_cell: 3000
+  total_api_calls: 15000
+  cost_usd: 55
+  time_hours: 5
+
+outcome:
+  determines: "optimal_temperature"
+  carries_forward_to: "phase2c"
+  decision_rule: |
+    Select temperature with highest mean F1.
+    If T=1.0 (default) is within 0.02 F1 of best, prefer T=1.0 for simplicity.

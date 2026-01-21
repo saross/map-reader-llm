@@ -1,0 +1,135 @@
+# Phase 2e: H4 Example Ordering Testing
+# ======================================
+# Tests 3 example ordering strategies at optimal configuration.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase2e-h4-ordering.yaml
+#   python scripts/run_study.py studies/phase2e-h4-ordering.yaml --dry-run
+#
+# Prerequisites:
+#   - Phases 2a-2d complete (all optimal parameters determined)
+#   - Update 'carried_forward' below with prior phase results
+
+study:
+  name: "Phase 2e: H4 Example Ordering"
+  version: "1.0"
+  description: |
+    Tests 3 example ordering strategies to determine if position of canonical
+    vs hard examples affects detection performance.
+    Uses all optimal parameters from Phases 2a-2d.
+    Final phase before Phase 3 validation.
+  phase: "2e"
+  hypothesis: "H4"
+  created: "2026-01-21"
+
+# Carried forward from all prior phases (UPDATE AFTER PHASES 2A-2D ANALYSIS)
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_image-only.json"  # PLACEHOLDER - update after 2a
+  optimal_me_name: "image-only"                                 # PLACEHOLDER - update after 2a
+  optimal_temperature: 1.0                                      # PLACEHOLDER - update after 2b
+  optimal_library: "scale-8"                                    # PLACEHOLDER - update after 2c
+  optimal_h5_treatment: "minimal"                               # PLACEHOLDER - update after 2d
+
+# Factor under test
+factors:
+  ordering:
+    description: "Position of canonical vs hard examples in the prompt"
+    levels:
+      - name: "canonical-first"
+        value: "canonical-first"
+        description: "Canonical examples at start, hard examples at end"
+      - name: "canonical-last"
+        value: "canonical-last"
+        description: "Hard examples at start, canonical examples at end"
+      - name: "random"
+        value: "random"
+        description: "Examples in shuffled order (seeded for reproducibility)"
+
+# Fixed parameters
+fixed:
+  # All from carried_forward - this phase only varies ordering
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10
+  passes: 5
+  workers: 1
+  output_dir: "outputs/phase2e"
+  checkpoint_dir: "outputs/phase2e/checkpoints"
+  # Random ordering uses per-run seeds for reproducibility
+  random_seed_base: 42  # run_1 uses seed 42, run_2 uses 43, etc.
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --temperature {carried_forward.optimal_temperature} \
+    --ordering {factor_value} \
+    --ordering-seed {random_seed}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+    - ["canonical-first", "canonical-last"]
+    - ["canonical-first", "random"]
+    - ["canonical-last", "random"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2e/analysis_report.json"
+    summary: "outputs/phase2e/analysis_summary.md"
+
+# Triggered exploratory analysis (H4b)
+triggered_exploratory:
+  condition: "H4 significant at p < 0.05"
+  description: |
+    If ordering effect is significant, test HP-first vs HN-first
+    ordering within the hard example block.
+  additional_cells: 2
+  levels:
+    - name: "hp-first"
+      description: "Hard positives before hard negatives"
+    - name: "hn-first"
+      description: "Hard negatives before hard positives"
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+estimates:
+  cells: 3
+  api_calls_per_cell: 3000
+  total_api_calls: 9000
+  cost_usd: 33
+  time_hours: 3
+  # If H4b triggered: +2 cells, +6000 calls, +$22, +2 hours
+
+outcome:
+  determines: "optimal_ordering"
+  carries_forward_to: "phase3"
+  decision_rule: |
+    Select ordering with highest mean F1.
+    If canonical-first (current default) is within 0.02 F1 of best,
+    prefer canonical-first for consistency with prior work.
+    If H4 significant, document effect size for reporting.
+  final_configuration: |
+    After Phase 2e, the optimal configuration is:
+    - M/E: {optimal_me_name}
+    - Temperature: {optimal_temperature}
+    - Library: {optimal_library}
+    - H5 Treatment: {optimal_h5_treatment}
+    - Ordering: {optimal_ordering}

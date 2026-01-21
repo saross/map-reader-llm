@@ -1,0 +1,185 @@
+# Phase 2d: H5 Negative Text Treatment Testing
+# =============================================
+# Tests 3 negative text treatment levels across 3 M/E levels.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase2d-h5-negtext.yaml
+#   python scripts/run_study.py studies/phase2d-h5-negtext.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2a complete (optimal M/E determined)
+#   - Phase 2b complete (optimal temperature determined)
+#   - Phase 2c complete (optimal library determined)
+#   - Update 'carried_forward' below with prior phase results
+
+study:
+  name: "Phase 2d: H5 Negative Text Treatment"
+  version: "1.0"
+  description: |
+    Tests 3 negative text treatment levels (Minimal, Terse, Verbose) across
+    3 image-using M/E levels. Minimal treatment already tested in Phase 2a,
+    so only Terse and Verbose variants need execution (6 net new cells).
+    Results inform negative text treatment in Phase 2e.
+  phase: "2d"
+  hypothesis: "H5"
+  created: "2026-01-21"
+
+# Carried forward from prior phases (UPDATE AFTER PHASES 2A-2C ANALYSIS)
+carried_forward:
+  optimal_temperature: 1.0            # PLACEHOLDER - update after 2b
+  optimal_library: "scale-8"          # PLACEHOLDER - update after 2c
+
+# Factors under test (2-way design: M/E × H5)
+factors:
+  modality_elaboration:
+    description: "Image-using M/E levels (text-only excluded from H5 testing)"
+    levels:
+      - name: "image-only"
+        description: "No text guidance, images only"
+      - name: "brief-text-image"
+        description: "Concise text with images"
+      - name: "verbose-text-image"
+        description: "Detailed text with images"
+
+  negative_text_treatment:
+    description: "Text treatment for negative examples"
+    levels:
+      - name: "minimal"
+        description: "\"Negative\" label only (baseline from Phase 2a)"
+        run_in_phase2d: false  # Already tested in Phase 2a
+      - name: "terse"
+        description: "Brief exclusion guidance"
+        run_in_phase2d: true
+      - name: "verbose"
+        description: "Detailed exclusion guidance"
+        run_in_phase2d: true
+
+# Full factorial design (9 cells, 3 reuse from 2a, 6 new)
+conditions:
+  # Baseline (H5=Minimal) - reuse Phase 2a results
+  - name: "image-only_minimal"
+    me: "image-only"
+    h5: "minimal"
+    config: "prompts/configs/detect_image-only.json"
+    reuse_from: "phase2a"
+  - name: "brief-text-image_minimal"
+    me: "brief-text-image"
+    h5: "minimal"
+    config: "prompts/configs/detect_brief-text-image.json"
+    reuse_from: "phase2a"
+  - name: "verbose-text-image_minimal"
+    me: "verbose-text-image"
+    h5: "minimal"
+    config: "prompts/configs/detect_verbose-text-image.json"
+    reuse_from: "phase2a"
+
+  # Terse variants (6 new cells to run)
+  - name: "image-only_terse"
+    me: "image-only"
+    h5: "terse"
+    config: "prompts/configs/detect_image-only_terse.json"
+    run: true
+  - name: "brief-text-image_terse"
+    me: "brief-text-image"
+    h5: "terse"
+    config: "prompts/configs/detect_brief-text-image_terse.json"
+    run: true
+  - name: "verbose-text-image_terse"
+    me: "verbose-text-image"
+    h5: "terse"
+    config: "prompts/configs/detect_verbose-text-image_terse.json"
+    run: true
+
+  # Verbose variants
+  - name: "image-only_verbose"
+    me: "image-only"
+    h5: "verbose"
+    config: "prompts/configs/detect_image-only_verbose.json"
+    run: true
+  - name: "brief-text-image_verbose"
+    me: "brief-text-image"
+    h5: "verbose"
+    config: "prompts/configs/detect_brief-text-image_verbose.json"
+    run: true
+  - name: "verbose-text-image_verbose"
+    me: "verbose-text-image"
+    h5: "verbose"
+    config: "prompts/configs/detect_verbose-text-image_verbose.json"
+    run: true
+
+# Fixed parameters
+fixed:
+  ordering: "canonical-first"
+  # Temperature and library from carried_forward
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10
+  passes: 5
+  workers: 1
+  output_dir: "outputs/phase2d"
+  checkpoint_dir: "outputs/phase2d/checkpoints"
+  cells_to_run: 6  # Only Terse and Verbose variants; Minimal reused from 2a
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {condition_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --temperature {carried_forward.optimal_temperature}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  design: "two_way"  # M/E × H5 factorial
+  planned_contrasts:
+    # H5 main effect contrasts (collapsed across M/E)
+    - ["minimal", "terse"]
+    - ["terse", "verbose"]
+    # Per-M/E contrasts if interaction significant
+    - ["image-only_minimal", "image-only_terse"]
+    - ["image-only_terse", "image-only_verbose"]
+    - ["brief-text-image_minimal", "brief-text-image_terse"]
+    - ["brief-text-image_terse", "brief-text-image_verbose"]
+    - ["verbose-text-image_minimal", "verbose-text-image_terse"]
+    - ["verbose-text-image_terse", "verbose-text-image_verbose"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2d/analysis_report.json"
+    summary: "outputs/phase2d/analysis_summary.md"
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+estimates:
+  cells: 6  # Net new cells (Terse + Verbose variants only)
+  api_calls_per_cell: 3000
+  total_api_calls: 18000
+  cost_usd: 66
+  time_hours: 6
+
+outcome:
+  determines: "optimal_h5_treatment"
+  carries_forward_to: "phase2e"
+  decision_rule: |
+    Test H5 main effect and M/E × H5 interaction.
+    If H5 main effect significant:
+      Select H5 level with highest mean F1 (collapsed across M/E).
+    If M/E × H5 interaction significant:
+      Select H5 level that performs best at optimal M/E from Phase 2a.
+    If neither significant:
+      Use Minimal (simplest) as default.

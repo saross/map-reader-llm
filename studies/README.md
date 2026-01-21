@@ -1,16 +1,18 @@
 # Studies
 
-YAML configuration files for `scripts/run_study.py`, which orchestrates factorial experiments.
+YAML configuration files for study execution. Phase 1 uses `scripts/run_phase1.py` (single-condition repeated measures). Phases 2+ use `scripts/run_study.py` (factorial experiments).
 
-## Status
+## Active Studies
 
-Study definitions will be created when ready to execute the preregistered experiments. They will align with the stranded factorial design in `docs/methodology/preregistration/execution-plan.md`.
+| File | Phase | Script | Description |
+|------|-------|--------|-------------|
+| `phase1-library.yaml` | 1 | `run_phase1.py` | Library construction (5 passes) |
 
-## Planned Files
+## Planned Studies
 
-| File | Phase | Description |
-|------|-------|-------------|
-| `phase2a-strand1.yaml` | 2a | Verbosity × H5 cross (40 cells) |
+| File | Phase | Script | Description |
+|------|-------|--------|-------------|
+| `phase2a-strand1.yaml` | 2a | `run_study.py` | Verbosity × H5 cross (40 cells) |
 | `phase2b-h5-confirmatory.yaml` | 2b | Full 3-level H5 at optimal M/E |
 | `phase2c-strand2-library.yaml` | 2c | Library size (H8) |
 | `phase2d-interaction.yaml` | 2d | M/E × Library interaction (conditional) |

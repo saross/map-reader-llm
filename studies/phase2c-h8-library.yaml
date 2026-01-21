@@ -1,0 +1,176 @@
+# Phase 2c: H8 Library Composition Testing
+# =========================================
+# Tests 7 library compositions at optimal M/E and temperature.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase2c-h8-library.yaml
+#   python scripts/run_study.py studies/phase2c-h8-library.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2a complete (optimal M/E determined)
+#   - Phase 2b complete (optimal temperature determined)
+#   - Update 'carried_forward' below with Phase 2a/2b results
+
+study:
+  name: "Phase 2c: H8 Library Composition"
+  version: "1.0"
+  description: |
+    Tests 7 library compositions to determine optimal example set.
+    Uses optimal M/E from Phase 2a and optimal temperature from Phase 2b.
+    Results inform library used in subsequent phases (2d-2e).
+  phase: "2c"
+  hypothesis: "H8"
+  created: "2026-01-21"
+
+# Carried forward from prior phases (UPDATE AFTER PHASES 2A/2B ANALYSIS)
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_image-only.json"  # PLACEHOLDER - update after 2a
+  optimal_me_name: "image-only"                                 # PLACEHOLDER - update after 2a
+  optimal_temperature: 1.0                                      # PLACEHOLDER - update after 2b
+
+# Factor under test
+factors:
+  library_composition:
+    description: "Example library composition and scaling"
+    levels:
+      - name: "pure-positive-canon"
+        config: "prompts/configs/library_pure-positive-canon.json"
+        description: "Canon+ (4), null (3) = 7 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 0
+          hard_positive: 0
+          hard_negative: 0
+          null_examples: 3
+          total: 7
+      - name: "canonical"
+        config: "prompts/configs/library_canonical.json"
+        description: "Canon+ (4), Canon- (2), null (3) = 9 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 0
+          hard_negative: 0
+          null_examples: 3
+          total: 9
+      - name: "plus-hp"
+        config: "prompts/configs/library_plus-hp.json"
+        description: "Canon+ (4), HP (4), Canon- (2), null (3) = 13 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 4
+          hard_negative: 0
+          null_examples: 3
+          total: 13
+      - name: "scale-4"
+        config: "prompts/configs/library_scale-4.json"
+        description: "Canon+ (4), HP (2), Canon- (2), HN (2), null (3) = 13 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 2
+          hard_negative: 2
+          null_examples: 3
+          total: 13
+      - name: "scale-8"
+        config: "prompts/configs/library_scale-8.json"
+        description: "Canon+ (4), HP (4), Canon- (2), HN (4), null (3) = 17 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 4
+          hard_negative: 4
+          null_examples: 3
+          total: 17
+      - name: "scale-16"
+        config: "prompts/configs/library_scale-16.json"
+        description: "Canon+ (4), HP (8), Canon- (2), HN (8), null (3) = 25 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 8
+          hard_negative: 8
+          null_examples: 3
+          total: 25
+      - name: "scale-32"
+        config: "prompts/configs/library_scale-32.json"
+        description: "Canon+ (4), HP (16), Canon- (2), HN (16), null (3) = 41 examples"
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 16
+          hard_negative: 16
+          null_examples: 3
+          total: 41
+
+# Fixed parameters
+fixed:
+  ordering: "canonical-first"
+  # M/E and temperature defined by carried_forward values
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10
+  passes: 5
+  workers: 1
+  output_dir: "outputs/phase2c"
+  checkpoint_dir: "outputs/phase2c/checkpoints"
+
+# Command pattern for execution
+# Note: Library configs embed the example library; use --temperature to override
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {factor_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --temperature {carried_forward.optimal_temperature}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+    # Sequential addition contrasts (C1-C3)
+    - ["pure-positive-canon", "canonical"]
+    - ["canonical", "plus-hp"]
+    - ["plus-hp", "scale-4"]
+    # Scaling contrasts (S1-S3)
+    - ["scale-4", "scale-8"]
+    - ["scale-8", "scale-16"]
+    - ["scale-16", "scale-32"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2c/analysis_report.json"
+    summary: "outputs/phase2c/analysis_summary.md"
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+estimates:
+  cells: 7
+  api_calls_per_cell: 3000
+  total_api_calls: 21000
+  cost_usd: 77
+  time_hours: 7
+
+outcome:
+  determines: "optimal_library"
+  carries_forward_to: "phase2d"
+  decision_rule: |
+    Select library with highest mean F1.
+    If multiple libraries have overlapping 95% CIs with the best,
+    prefer smaller library (fewer examples) for parsimony.
+    Note: Scale-16/32 require extended HP/HN pools from Phase 1.

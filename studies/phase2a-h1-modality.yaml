@@ -1,0 +1,100 @@
+# Phase 2a: H1 Modality/Elaboration Testing
+# ==========================================
+# Tests 5 M/E levels to determine optimal modality and elaboration.
+# This is the first sub-phase of the sequential OFAT design.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase2a-h1-modality.yaml
+#   python scripts/run_study.py studies/phase2a-h1-modality.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 1 complete (hard example library constructed)
+#   - Examples 05-08 (HP) and 11-14 (HN) symlinked in inputs/examples/neutral-naming/
+
+study:
+  name: "Phase 2a: H1 Modality/Elaboration"
+  version: "1.0"
+  description: |
+    Tests 5 modality/elaboration (M/E) levels to determine optimal configuration.
+    Results inform the M/E level used in subsequent phases (2b-2e).
+  phase: "2a"
+  hypothesis: "H1"
+  created: "2026-01-21"
+
+# Factor under test
+factors:
+  modality_elaboration:
+    description: "Text modality and elaboration level"
+    levels:
+      - name: "image-only"
+        config: "prompts/configs/detect_image-only.json"
+        description: "No text guidance, images only"
+      - name: "brief-text"
+        config: "prompts/configs/detect_brief-text.json"
+        description: "Concise text, no images"
+      - name: "brief-text-image"
+        config: "prompts/configs/detect_brief-text-image.json"
+        description: "Concise text with images"
+      - name: "verbose-text"
+        config: "prompts/configs/detect_verbose-text.json"
+        description: "Detailed text, no images"
+      - name: "verbose-text-image"
+        config: "prompts/configs/detect_verbose-text-image.json"
+        description: "Detailed text with images"
+
+# Fixed parameters (defaults for Phase 2a)
+fixed:
+  temperature: 1.0
+  ordering: "canonical-first"
+  # Library is embedded in each config (Scale-8 = 17 examples)
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10          # K=10 independent runs
+  passes: 5         # N=5 consensus passes per run
+  workers: 1        # Sequential execution (rate limit safe)
+  output_dir: "outputs/phase2a"
+  checkpoint_dir: "outputs/phase2a/checkpoints"
+
+# Analysis specification
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2a/analysis_report.json"
+    summary: "outputs/phase2a/analysis_summary.md"
+
+# Expected outputs per condition
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+# Cost and time estimates
+estimates:
+  cells: 5
+  api_calls_per_cell: 3000    # 10 runs x 5 passes x 60 tiles
+  total_api_calls: 15000
+  cost_usd: 55                # ~$0.003/call for Flash
+  time_hours: 5               # ~1 hour per cell at conservative rate
+
+# Outcome
+outcome:
+  determines: "optimal_me"
+  carries_forward_to: "phase2b"
+  decision_rule: |
+    Select M/E level with highest mean F1.
+    If multiple levels have overlapping 95% CIs with the best,
+    prefer the simpler option (image-only > brief > verbose).
