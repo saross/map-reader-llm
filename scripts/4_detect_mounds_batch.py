@@ -9,6 +9,9 @@ Description:
 
 Usage:
     python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
+    python scripts/4_detect_mounds_batch.py --config <config> --manifest <manifest> --output-dir <dir>
+    python scripts/4_detect_mounds_batch.py --config <config> --dry-run
+    python scripts/4_detect_mounds_batch.py --config <config> --limit 10
 
 Inputs:
     - Tiles from `outputs/tiles/`
@@ -53,7 +56,52 @@ from scripts.lib_llm_metadata import (
 
 
 # Script Version
-__version__ = "4.2.0"  # Comprehensive metadata tracking
+__version__ = "4.3.0"  # Add temperature and ordering CLI overrides
+
+
+def reorder_examples(examples: list, ordering: str, seed: int = None) -> list:
+    """
+    Reorder examples array based on ordering strategy.
+
+    Args:
+        examples: List of example dictionaries with 'category' field.
+        ordering: Ordering strategy - 'canonical-first', 'canonical-last', or 'random'.
+        seed: Random seed for reproducible ordering when using 'random'.
+
+    Returns:
+        Reordered list of examples.
+
+    Example categories expected:
+        - canonical_positive, canonical_negative (canonical examples)
+        - hard_positive, hard_negative (hard examples)
+        - null (null tiles)
+    """
+    import random as rand_module
+
+    if ordering == "canonical-first":
+        # Default ordering: canonical examples first, then hard, then null
+        # Already the default in most configs, so return as-is
+        return examples
+
+    elif ordering == "canonical-last":
+        # Move canonical examples to the end
+        canonical = [e for e in examples if e.get("category", "").startswith("canonical")]
+        non_canonical = [e for e in examples if not e.get("category", "").startswith("canonical")]
+        return non_canonical + canonical
+
+    elif ordering == "random":
+        # Randomly shuffle all examples
+        if seed is not None:
+            rand_module.seed(seed)
+        shuffled = examples.copy()
+        rand_module.shuffle(shuffled)
+        return shuffled
+
+    else:
+        # Unknown ordering, return unchanged with warning
+        print(f"Warning: Unknown ordering '{ordering}', using original order")
+        return examples
+
 
 class ResultsTracker:
     """
@@ -300,7 +348,21 @@ def process_single_tile(
         metadata_tracker.log_failure(tile_filename, str(e))
         return []
 
-def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, output_name=None, export_bounds=False, model_override=None, workers=1):
+def detect_mounds_versioned(
+    config_path,
+    manifest_path=None,
+    tile_list=None,
+    output_name=None,
+    output_dir=None,
+    export_bounds=False,
+    model_override=None,
+    temperature_override=None,
+    ordering_override=None,
+    ordering_seed=None,
+    workers=1,
+    dry_run=False,
+    limit=None,
+):
     """
     Executes the detection pipeline using a specific versioned configuration.
 
@@ -309,9 +371,16 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         manifest_path (str, optional): Path to a JSON list of filenames to process (Target Set).
         tile_list (list, optional): List of specific Path objects to process (Manual override).
         output_name (str, optional): Custom filename for the output GeoJSON.
+        output_dir (str, optional): Custom output directory (overrides default versioned directory).
         export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles (debug feature).
         model_override (str, optional): Overrides the model defined in the JSON config.
+        temperature_override (float, optional): Overrides the temperature defined in the JSON config.
+        ordering_override (str, optional): Overrides example ordering. Options: 'canonical-first',
+            'canonical-last', 'random'. Canonical-first is the default in most configs.
+        ordering_seed (int, optional): Random seed for reproducible ordering when using 'random'.
         workers (int, optional): Number of parallel workers. Defaults to 1.
+        dry_run (bool, optional): If True, validate config and show what would be processed without API calls.
+        limit (int, optional): Process only the first N tiles.
     """
     # Load Config
     try:
@@ -331,9 +400,18 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         config["model"] = model_override
         # Note: MetadataTracker uses 'config' object, so this change will be automatically recorded in metadata.
 
+    # Apply Temperature Override
+    if temperature_override is not None:
+        print(f"Overriding Config Temperature ({config.get('temperature', 0.1)}) with CLI Argument: {temperature_override}")
+        config["temperature"] = temperature_override
+
     print(f"Loaded Version: {config.get('version', 'unknown')}")
     print(f"Model: {config.get('model', 'unknown')}")
     print(f"Workers: {workers}")
+    if dry_run:
+        print("Mode: DRY RUN (no API calls)")
+    if limit:
+        print(f"Limit: {limit} tiles")
 
     model_name_cfg = config.get("model")
     
@@ -373,6 +451,20 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     reference_content = []
 
     examples = config.get("examples", [])
+
+    # Apply Ordering Override
+    if ordering_override:
+        original_order = [e.get("path", "") for e in examples]
+        examples = reorder_examples(examples, ordering_override, ordering_seed)
+        new_order = [e.get("path", "") for e in examples]
+        print(f"Overriding example ordering with: {ordering_override}")
+        if ordering_seed is not None:
+            print(f"  Random seed: {ordering_seed}")
+        # Update config to record the override in metadata
+        config["ordering_override"] = ordering_override
+        if ordering_seed is not None:
+            config["ordering_seed"] = ordering_seed
+
     for ex in examples:
         label = ex.get("label", "Example")
         path_str = ex.get("path", "")
@@ -425,10 +517,13 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
         sanitized_model = model_name_cfg.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
         filename = f"detections-{version_tag}-{sanitized_model}-{current_date}.geojson"
     
-    # Versioned Output Directory
-    version_out_dir = RESULTS_DIR / config.get("version", "unknown")
+    # Output Directory: CLI override takes precedence
+    if output_dir:
+        version_out_dir = Path(output_dir)
+    else:
+        version_out_dir = RESULTS_DIR / config.get("version", "unknown")
     version_out_dir.mkdir(parents=True, exist_ok=True)
-    
+
     output_file = version_out_dir / filename
     meta_file = output_file.with_suffix('.meta.json')
     print(f"Output: {output_file}")
@@ -494,10 +589,36 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
             print(f"Applying TEST_LIMIT: {TEST_LIMIT}")
             tiles_to_process = tiles_to_process[:TEST_LIMIT]
 
+    # Apply CLI limit (overrides TEST_LIMIT)
+    if limit and limit > 0:
+        print(f"Applying --limit: {limit}")
+        tiles_to_process = tiles_to_process[:limit]
+
     print(f"Processing {len(tiles_to_process)} new tiles...")
-    
+
     if len(tiles_to_process) == 0:
         print("No tiles to process.")
+        return
+
+    # Dry run: show what would be processed and exit
+    if dry_run:
+        print("\n--- DRY RUN SUMMARY ---")
+        print(f"Config: {config_path}")
+        print(f"Version: {config.get('version', 'unknown')}")
+        print(f"Model: {model_name_cfg}")
+        print(f"System instruction: {instruction_file}")
+        print(f"Examples loaded: {len([x for x in reference_content if isinstance(x, Image.Image)])}")
+        print(f"Output directory: {version_out_dir}")
+        print(f"Output file: {output_file}")
+        print(f"Tiles to process: {len(tiles_to_process)}")
+        if len(tiles_to_process) <= 10:
+            for t in tiles_to_process:
+                print(f"  - {t.name}")
+        else:
+            for t in tiles_to_process[:5]:
+                print(f"  - {t.name}")
+            print(f"  ... and {len(tiles_to_process) - 5} more")
+        print("\nValidation PASSED. Ready to run without --dry-run.")
         return
 
     # --- PARALLEL EXECUTION ---
@@ -563,12 +684,54 @@ def detect_mounds_versioned(config_path, manifest_path=None, tile_list=None, out
     print(f"Estimated cost: ${cost_estimate['total_cost_usd']:.4f}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="Batch mound detection using VLM",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Basic detection with config
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
+
+  # Detection with manifest and custom output directory
+  python scripts/4_detect_mounds_batch.py \\
+      --config prompts/configs/library_pure-positive-canon.json \\
+      --manifest inputs/tiles/calibration_manifest.json \\
+      --output-dir outputs/phase1-library/pass_01
+
+  # Dry run to validate config without API calls
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json --dry-run
+
+  # Process only first 5 tiles for testing
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json --limit 5
+        """,
+    )
     parser.add_argument("--config", required=True, help="Path to JSON prompt config")
     parser.add_argument("--manifest", required=False, help="Path to JSON manifest of target tiles")
     parser.add_argument("--output", required=False, help="Custom output filename (without extension)")
+    parser.add_argument("--output-dir", required=False, help="Custom output directory (overrides versioned dir)")
     parser.add_argument("--model", required=False, help="Override model name (e.g. gemini-1.5-flash)")
+    parser.add_argument("--temperature", type=float, required=False,
+                        help="Override temperature from config (0.0-2.0)")
+    parser.add_argument("--ordering", required=False,
+                        choices=["canonical-first", "canonical-last", "random"],
+                        help="Override example ordering (canonical-first, canonical-last, random)")
+    parser.add_argument("--ordering-seed", type=int, required=False,
+                        help="Random seed for reproducible ordering when using --ordering random")
     parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers")
+    parser.add_argument("--dry-run", action="store_true", help="Validate config without making API calls")
+    parser.add_argument("--limit", type=int, help="Process only first N tiles")
     args = parser.parse_args()
-    
-    detect_mounds_versioned(args.config, manifest_path=args.manifest, output_name=args.output, model_override=args.model, workers=args.workers)
+
+    detect_mounds_versioned(
+        args.config,
+        manifest_path=args.manifest,
+        output_name=args.output,
+        output_dir=getattr(args, 'output_dir', None),
+        model_override=args.model,
+        temperature_override=args.temperature,
+        ordering_override=args.ordering,
+        ordering_seed=getattr(args, 'ordering_seed', None),
+        workers=args.workers,
+        dry_run=args.dry_run,
+        limit=args.limit,
+    )
