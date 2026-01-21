@@ -985,3 +985,31 @@ The nature of human-AI collaboration in this research project feels qualitativel
 **Implications for reproducibility**: Researchers attempting to replicate this work in future should note that agentic AI capabilities are advancing rapidly. The Claude Code harness and model capabilities available in early 2026 may differ substantially from what is available when this paper is read. The session archiving approach (see `archive/cc-sessions/`) aims to preserve the actual interactions for transparency, but the tacit knowledge of "how to work with an AI agent" may be difficult to fully convey.
 
 **Contrast with earlier LLM use**: In 2023-2024, LLM assistance typically involved isolated prompts, careful prompt engineering for each query, and treating the model as a sophisticated search engine or writing assistant. The current pattern feels more like delegating coherent sub-tasks to an agent that maintains state and can be trusted (with verification) to execute multi-step plans.
+
+## Observation 52: Dry-Run Simulation for Gap Analysis (2026-01-20)
+
+A valuable methodology has emerged for identifying missing infrastructure before implementing new workflow phases: the **dry-run simulation**.
+
+**The approach:**
+Rather than diving into implementation, we mentally execute the workflow step-by-step, checking at each point whether the required resources exist:
+- Does the input manifest exist? Does it reference tiles that exist?
+- Does the config file exist? Does it reference instruction files and examples that exist?
+- Does the script exist? Does it import modules that exist?
+- Does the output directory structure match what downstream scripts expect?
+
+**Why this works well with AI agents:**
+1. **Systematic coverage**: The agent can exhaustively trace dependencies through configs, imports, and file references in a way that manual review often misses
+2. **Documentation as output**: The simulation naturally produces a checklist of missing pieces that becomes the implementation plan
+3. **Prevents partial implementations**: Discovering gaps after writing code leads to half-finished states; finding them upfront allows coherent implementation
+4. **Reveals implicit assumptions**: Simulating execution surfaces undocumented dependencies and conventions
+
+**Example application:**
+Before implementing Phase 1 execution, we simulated running `run_phase1.py` with a study config, checking each referenced file. This revealed 6 categories of gaps (missing study config template, incomplete preflight checks, missing test coverage, etc.) that were then addressed systematically.
+
+**When to use:**
+- Before implementing any new workflow phase
+- When integrating multiple existing scripts into a pipeline
+- When porting a workflow to a new dataset or study area
+- After significant refactoring to verify nothing broke
+
+**Limitation:** The simulation only catches *structural* gaps (missing files, broken imports). It doesn't catch *semantic* issues (wrong logic, incorrect parameters) that only emerge during actual execution.
