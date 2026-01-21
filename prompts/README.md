@@ -186,7 +186,7 @@ Stage 1 configs prioritise recall. Key differences:
 **Example label**:
 
 ```json
-{"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"}
+{"path": "neutral-naming/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"}
 ```
 
 ### Verifier Configs

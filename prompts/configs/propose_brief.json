@@ -15,15 +15,15 @@
         "proposer_strategy": "Uses brief-level diagnostic text. Subtypes (burial_mound, settlement_mound, triangulation_mound, benchmark_mound) are for diagnostics; all count as positive detections for F1."
     },
     "examples": [
-        {"path": "neutral/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
-        {"path": "neutral/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
-        {"path": "neutral/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
-        {"path": "neutral/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
-        {"path": "neutral/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"},
-        {"path": "neutral/example_10.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
-        {"path": "neutral/example_15.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_16.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
-        {"path": "neutral/example_17.png", "label": "Negative: Empty tile (no mounds)", "category": "null"}
+        {"path": "neutral-naming/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_10.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_15.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral-naming/example_16.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral-naming/example_17.png", "label": "Negative: Empty tile (no mounds)", "category": "null"}
     ],
     "_library_note": "Current examples are Canonical library (placeholder). Will be updated to H8-optimal composition after Phase 2c."
 }

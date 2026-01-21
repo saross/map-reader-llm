@@ -16,13 +16,13 @@ TILES_DIR = INPUTS_DIR / "tiles"
 # =============================================================================
 #
 # Example images for few-shot prompts. Supports two naming modes:
-#   - "neutral": Uses neutral-names/ with example_01.png, example_02.png, etc.
+#   - "neutral": Uses neutral-naming/ with example_01.png, example_02.png, etc.
 #                Prevents semantic leakage in image-only experiments.
 #   - "descriptive": Uses legend-positive/, legend-negative/, null-tiles/
 #                    with descriptive names like burial_mound.png
 #
 # The naming mode affects which subdirectory is used when resolving paths
-# from config JSON files. Config paths like "neutral/example_01.png" or
+# from config JSON files. Config paths like "neutral-naming/example_01.png" or
 # "legend-positive/burial_mound.png" are resolved relative to EXAMPLES_DIR.
 # =============================================================================
 
