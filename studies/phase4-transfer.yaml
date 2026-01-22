@@ -1,0 +1,195 @@
+# Phase 4: H6 Flash→Pro Transfer Testing
+# ========================================
+# Validates that optimisations developed on Gemini 3 Flash transfer to
+# Gemini 3 Pro using OFAT (One-Factor-At-a-Time) sensitivity testing.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase4-transfer.yaml
+#   python scripts/run_study.py studies/phase4-transfer.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2 complete (optimal M/E, temperature, library, H5, ordering)
+#   - Phase 3a complete (optimal voting threshold for Flash)
+#   - Phase 4 validation manifest exists (20-tile stratified subset)
+
+study:
+  name: "Phase 4: H6 Flash→Pro Transfer"
+  version: "1.0"
+  description: |
+    Validates that optimisations developed on Gemini 3 Flash (cost-efficient)
+    transfer to Gemini 3 Pro (more capable) without requiring complete
+    re-optimisation. Uses OFAT sensitivity testing on a 20-tile stratified
+    subset to identify any Pro-specific adjustments needed.
+  phase: "4"
+  hypothesis: "H6"
+  created: "2026-01-22"
+
+# Optimal parameters carried forward from Phase 2-3
+# PLACEHOLDER: Fill after Phase 2-3 completes
+carried_forward:
+  # From Phase 2a (H1)
+  optimal_me_config: "PLACEHOLDER"           # e.g., "prompts/configs/detect_brief-text-image.json"
+  optimal_me_instruction: "PLACEHOLDER"      # e.g., "prompts/system-instructions/detect_brief-text-image.md"
+
+  # From Phase 2b (H7)
+  optimal_temperature: "PLACEHOLDER"         # e.g., 1.0
+
+  # From Phase 2c (H8)
+  optimal_library: "PLACEHOLDER"             # e.g., "prompts/configs/library_scale-8.json"
+
+  # From Phase 2d (H5)
+  optimal_h5_level: "PLACEHOLDER"            # e.g., "minimal"
+
+  # From Phase 2e (H4)
+  optimal_ordering: "PLACEHOLDER"            # e.g., "canonical-first"
+
+  # From Phase 3a (H3)
+  flash_optimal_n: "PLACEHOLDER"             # e.g., 5
+  flash_optimal_threshold: "PLACEHOLDER"     # e.g., 2
+
+# Model configuration
+model:
+  target: "gemini-3-pro"
+  baseline: "gemini-3-flash"
+  # Note: Model selection is a runtime parameter, not config-encoded
+
+# Sub-phases
+subphases:
+  phase4a:
+    name: "Baseline Comparison"
+    description: "Verify Pro performance at Flash-optimal configuration"
+    runs: 10
+    passes: 1
+    tiles: 20
+    api_calls: 200  # K=10 × 20 tiles
+    decision_threshold:
+      proceed: 0.05       # |Δ F1| ≤ 0.05 → proceed
+      investigate: 0.10   # |Δ F1| > 0.10 → investigate
+
+  phase4b:
+    name: "OFAT Sensitivity Testing"
+    description: "Test 1-2 alternatives per factor"
+    factors:
+      - name: "M/E"
+        alternatives: 2   # 1-2 adjacent M/E levels
+      - name: "H5"
+        alternatives: 2   # 1-2 adjacent H5 levels
+      - name: "T"
+        alternatives: 2   # ±0.3 temperatures
+      - name: "O"
+        alternatives: 2   # 1-2 alternative orderings
+    runs_per_alternative: 10
+    tiles: 20
+    api_calls: 1200  # ~4 factors × 2 alternatives × K=10 × 20 tiles
+    decision_threshold: 0.03  # Flag factor if Δ F1 ≥ 0.03 AND CI excludes 0
+
+  phase4c:
+    name: "Voting Analysis"
+    description: "Verify Flash voting threshold transfers"
+    data_source: "phase4a_phase4b"  # No additional API calls
+    api_calls: 0
+    decision_threshold: 0.10  # Flag if threshold differs by >10% relative
+
+  phase4d:
+    name: "Refinement (Conditional)"
+    description: "Targeted follow-up if adjustments needed"
+    trigger: "phase4b_flags_factors OR phase4c_threshold_differs_20_percent"
+    runs: 10
+    tiles: 20
+    api_calls: 200  # Conditional
+
+# Fixed parameters (using Phase 2-3 optimal settings)
+fixed:
+  config: "PLACEHOLDER"           # From carried_forward.optimal_me_config
+  temperature: "PLACEHOLDER"      # From carried_forward.optimal_temperature
+  library_config: "PLACEHOLDER"   # From carried_forward.optimal_library
+  ordering: "PLACEHOLDER"         # From carried_forward.optimal_ordering
+
+inputs:
+  manifest: "inputs/tiles/phase4_validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/phase4_validation_bounds.geojson"
+
+execution:
+  workers: 1            # Sequential execution (rate limit safe)
+  output_dir: "outputs/phase4"
+  checkpoint_dir: "outputs/phase4/checkpoints"
+
+# Analysis specification
+analysis:
+  method: "transfer_comparison"
+  script: "scripts/analyse_phase4_transfer.py"  # To be created
+  bootstrap:
+    n_iterations: 1000
+    confidence_level: 0.95
+    resampling_unit: "tile"
+  # Note: No FDR correction needed for OFAT (sequential single comparisons)
+  decision_thresholds:
+    baseline_transfer: 0.05     # Phase 4a
+    baseline_investigate: 0.10  # Phase 4a
+    factor_adjustment: 0.03     # Phase 4b
+    voting_threshold: 0.10      # Phase 4c (relative)
+  output:
+    baseline: "outputs/phase4/transfer_baseline_comparison.json"
+    ofat: "outputs/phase4/ofat_sensitivity_results.json"
+    voting: "outputs/phase4/threshold_comparison.json"
+    summary: "outputs/phase4/transfer_summary.md"
+
+# Expected outputs
+outputs:
+  phase4a:
+    - "{output_dir}/phase4a/baseline/run_{run}/detections.geojson"
+    - "{output_dir}/phase4a/pro_baseline_metrics.json"
+    - "{output_dir}/phase4a/transfer_baseline_comparison.json"
+  phase4b:
+    - "{output_dir}/phase4b/ofat_{factor}_{level}/run_{run}/detections.geojson"
+    - "{output_dir}/phase4b/ofat_sensitivity_results.json"
+  phase4c:
+    - "{output_dir}/phase4c/threshold_comparison.json"
+    - "{output_dir}/phase4c/voting_curves.json"
+  phase4d:
+    - "{output_dir}/phase4d/refinement_results.json"
+
+# Cost and time estimates
+estimates:
+  api_calls:
+    phase4a: 200
+    phase4b: 1200
+    phase4c: 0
+    phase4d: 200  # Conditional
+    total: 1600   # Maximum
+  cost_usd:
+    per_call: 0.03  # Pro pricing (~10× Flash), verify at execution
+    phase4a: 6
+    phase4b: 36
+    phase4d: 6      # Conditional
+    total: 48       # Maximum
+  time_hours:
+    phase4a: 2
+    phase4b: 6
+    phase4c: 0.5    # Analysis only
+    phase4d: 2      # Conditional
+    total: 10       # Maximum
+
+# Outcome classification
+outcome:
+  determines:
+    - "transfer_success"      # Full, partial, or poor transfer
+    - "pro_adjustments"       # Any Pro-specific recommendations
+    - "voting_threshold_pro"  # Pro-optimal threshold (if different)
+  classification:
+    full_transfer:
+      criteria: "All factors within 0.03 F1"
+      action: "Report unified Flash/Pro recommendation"
+    partial_transfer:
+      criteria: "1-2 factors differ by ≥0.03 F1"
+      action: "Report Flash-optimal with Pro adjustments"
+    poor_transfer:
+      criteria: "≥3 factors differ by ≥0.03 F1"
+      action: "Consider Pro-specific optimisation (out of scope)"
+  decision_rule: |
+    1. If Phase 4a shows |Δ F1| > 0.10: STOP, investigate baseline degradation
+    2. If Phase 4b flags 0 factors: Full transfer, use Flash-optimal for Pro
+    3. If Phase 4b flags 1-2 factors: Partial transfer, document Pro adjustments
+    4. If Phase 4b flags ≥3 factors: Poor transfer, note in limitations
+    5. If Phase 4c shows >10% threshold difference: Document Pro-optimal threshold
