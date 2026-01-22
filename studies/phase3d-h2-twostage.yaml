@@ -1,0 +1,186 @@
+# Phase 3d: H2 Two-Stage Pipeline
+# =================================
+# Tests the Proposer + Verifier two-stage architecture against
+# the single-stage detector with consensus voting.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase3d-h2-twostage.yaml
+#   python scripts/run_study.py studies/phase3d-h2-twostage.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2 complete (optimal M/E, temperature, library determined)
+#   - Phase 3a complete (optimal N, T determined)
+#   - Candidate extraction script available (scripts/extract_candidates.py)
+#   - Verifier configs available (prompts/configs/verify_*.json)
+
+study:
+  name: "Phase 3d: H2 Two-Stage Pipeline"
+  version: "1.0"
+  description: |
+    Compares the Proposer + Verifier two-stage architecture against
+    the single-stage detector with consensus voting. Tests whether
+    a high-recall proposer followed by a precision-focused verifier
+    outperforms the single-stage approach at equivalent cost.
+  phase: "3d"
+  hypothesis: "H2"
+  created: "2026-01-22"
+
+# Optimal parameters carried forward from Phase 2 and 3a
+# PLACEHOLDER: Fill after Phase 2 and Phase 3a complete
+carried_forward:
+  optimal_me_config: "PLACEHOLDER"          # From Phase 2a
+  optimal_temperature: "PLACEHOLDER"        # From Phase 2b
+  optimal_library: "PLACEHOLDER"            # From Phase 2c
+  optimal_n: "PLACEHOLDER"                  # From Phase 3a - e.g., 5
+  optimal_threshold: "PLACEHOLDER"          # From Phase 3a - e.g., 3
+
+# Pipeline architectures under test
+factors:
+  architecture:
+    description: "Detection pipeline architecture"
+    levels:
+      - name: "single_stage"
+        description: "Single detector with N-pass consensus voting"
+        pipeline:
+          stages:
+            - type: "detector"
+              config: "PLACEHOLDER"  # optimal_me_config
+              passes: "PLACEHOLDER"  # optimal_n
+          post_processing:
+            - type: "merge_passes"
+              script: "scripts/merge_passes.py"
+            - type: "threshold_filter"
+              threshold: "PLACEHOLDER"  # optimal_threshold
+
+      - name: "two_stage"
+        description: "Proposer + Verifier pipeline"
+        pipeline:
+          stages:
+            - type: "proposer"
+              config: "prompts/configs/propose_brief.json"
+              passes: 5
+              threshold: 1  # Low threshold for high recall
+              description: "High-recall proposer stage"
+            - type: "candidate_extraction"
+              script: "scripts/extract_candidates.py"
+              padding: 75
+            - type: "verifier"
+              config: "prompts/configs/verify_brief.json"
+              passes: 5
+              threshold: 3  # Higher threshold for precision
+              description: "Precision-focused verifier stage"
+          post_processing:
+            - type: "merge_verified"
+              script: "scripts/generate_union_candidates.py"
+
+# Fixed parameters
+fixed:
+  temperature: "PLACEHOLDER"    # From Phase 2b
+  library_config: "PLACEHOLDER" # From Phase 2c
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10              # K=10 independent runs
+  workers: 1            # Sequential execution
+  output_dir: "outputs/phase3d"
+  checkpoint_dir: "outputs/phase3d/checkpoints"
+
+# Analysis specification
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  comparison: "independent"  # Compare architectures
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+    - "api_calls"
+    - "cost_usd"
+    - "f1_per_dollar"
+  output:
+    report: "outputs/phase3d/analysis_report.json"
+    summary: "outputs/phase3d/analysis_summary.md"
+    cost_comparison: "outputs/phase3d/cost_comparison.json"
+
+# Expected outputs per architecture
+outputs:
+  single_stage:
+    - "{output_dir}/single_stage/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/single_stage/run_{run}/merged.geojson"
+    - "{output_dir}/single_stage/run_{run}/thresholded.geojson"
+  two_stage:
+    - "{output_dir}/two_stage/run_{run}/proposer/pass_{pass}/*.geojson"
+    - "{output_dir}/two_stage/run_{run}/proposer/merged.geojson"
+    - "{output_dir}/two_stage/run_{run}/candidates/"
+    - "{output_dir}/two_stage/run_{run}/verifier/pass_{pass}/*.geojson"
+    - "{output_dir}/two_stage/run_{run}/verified.geojson"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+# Cost and time estimates
+estimates:
+  single_stage:
+    passes: 5                   # From Phase 3a optimal_n
+    tiles: 60
+    api_calls: 300              # 5 × 60
+    cost_usd: 0.90              # Per run
+
+  two_stage:
+    proposer_passes: 5
+    proposer_tiles: 60
+    proposer_calls: 300         # 5 × 60
+    # Verifier calls depend on proposer output
+    # Estimate: ~50 candidates per tile average
+    verifier_passes: 5
+    estimated_candidates: 200   # Conservative
+    verifier_calls: 1000        # 5 × 200
+    total_calls: 1300           # 300 + 1000
+    cost_usd: 3.90              # Per run
+
+  totals:
+    runs: 10
+    single_stage_total: 3000    # 10 × 300
+    two_stage_total: 13000      # 10 × 1300
+    total_api_calls: 16000
+    cost_usd: 48.00
+    time_hours: 5
+
+# Outcome
+outcome:
+  determines:
+    - "architecture_preference"
+    - "f1_difference"
+    - "cost_efficiency_difference"
+  decision_rule: |
+    Compare F1 scores and cost-efficiency between architectures:
+    1. If two-stage F1 > single-stage F1 with non-overlapping 95% CIs,
+       two-stage is preferred if cost increase is acceptable.
+    2. If F1 is similar (overlapping CIs), prefer single-stage for simplicity.
+    3. Report cost-efficiency (F1/dollar) for budget-constrained scenarios.
+
+# Implementation notes
+notes:
+  verifier_config_creation: |
+    Verifier configs should be tuned for precision over recall:
+    - Focus instructions on discriminating hard negatives
+    - Include examples of triangulation points, benchmarks, text
+    - Request explicit rejection reasoning
+
+  candidate_count_variability: |
+    The number of candidates from the proposer varies by run.
+    Track actual candidate counts to compute accurate cost metrics.
+
+  dependencies:
+    - "Phase 2a: optimal_me_config"
+    - "Phase 2b: optimal_temperature"
+    - "Phase 2c: optimal_library"
+    - "Phase 3a: optimal_n, optimal_threshold"
+    - "scripts/extract_candidates.py"
+    - "prompts/configs/propose_brief.json"
+    - "prompts/configs/verify_brief.json"

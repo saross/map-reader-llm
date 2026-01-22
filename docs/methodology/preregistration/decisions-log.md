@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-01-18
+**Last updated**: 2026-01-22
 
 ---
 
@@ -273,6 +273,42 @@ Voting addresses stochastic variation in VLM outputs without assumptions about:
 **Trade-off acknowledged**: OFAT cannot detect interactions. If H5 × M/E interaction is suspected, exploratory two-way ANOVA is included in Phase 2d analysis.
 
 **Evidence**: Preregistration §8.3.1a, execution-plan.md dependency graph.
+
+---
+
+## Decision 10: Statistical Methods — Bootstrap CIs with FDR Correction
+
+**Date**: 2026-01-22
+
+**Decision**: Use bootstrap confidence intervals with Benjamini-Hochberg FDR correction for multiple comparisons.
+
+**Statistical approach**:
+
+| Component | Method | Parameters |
+|-----------|--------|------------|
+| Confidence intervals | Bootstrap resampling (tile-level) | 1000 iterations, percentile method (2.5th/97.5th) |
+| Multiple comparisons | Benjamini-Hochberg FDR | q = 0.05 |
+| Effect sizes | F1 difference with 95% CI | Signed difference between conditions |
+
+**Rationale**:
+
+1. **Bootstrap CIs**: Non-parametric approach makes no distributional assumptions. Tile-level resampling preserves spatial structure.
+
+2. **Benjamini-Hochberg**: Controls false discovery rate rather than family-wise error rate, offering better power for multiple comparisons while controlling type I error.
+
+3. **Effect size focus**: Primary inference is based on effect sizes (F1 differences) with CIs, not p-values. This aligns with modern statistical practice.
+
+**Implementation note — Pseudo-p-values**:
+
+The FDR correction uses pseudo-p-values derived from bootstrap CI position rather than formal p-values. If the 95% CI for a difference excludes zero, we treat this as "significant" for FDR purposes (pseudo-p < 0.05). This is a pragmatic simplification:
+
+- It is conservative: the CI must fully exclude zero
+- It aligns with our preregistered focus on effect sizes with CIs
+- It avoids the need for formal null hypothesis significance testing
+
+This approach is not standard but is appropriate for CI-based inference where we prioritise effect size estimation over binary significance decisions.
+
+**Implementation**: `scripts/lib_advanced_metrics.py` (bootstrap functions), `scripts/analyse_phase2_results.py` (FDR correction, lines 174-183).
 
 ---
 

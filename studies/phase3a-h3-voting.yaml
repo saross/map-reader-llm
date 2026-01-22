@@ -1,0 +1,119 @@
+# Phase 3a: H3 Voting Extension
+# ==============================
+# Extends voting analysis to N=5, 10, 30 passes to characterise
+# the precision-recall-cost trade-off at different voting pool sizes.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase3a-h3-voting.yaml
+#   python scripts/run_study.py studies/phase3a-h3-voting.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2 complete (optimal M/E, temperature, library determined)
+#   - Validation tile set available
+
+study:
+  name: "Phase 3a: H3 Voting Extension"
+  version: "1.0"
+  description: |
+    Extends consensus voting analysis beyond N=5 to characterise performance
+    at N=10 and N=30 passes. Uses threshold sweep analysis to find optimal
+    (N, T) combinations and calculate cost-efficiency metrics.
+  phase: "3a"
+  hypothesis: "H3"
+  created: "2026-01-22"
+
+# Optimal parameters carried forward from Phase 2
+# PLACEHOLDER: Fill after Phase 2 completes
+carried_forward:
+  optimal_me_config: "PLACEHOLDER"          # From Phase 2a - e.g., "prompts/configs/detect_brief-text-image.json"
+  optimal_temperature: "PLACEHOLDER"        # From Phase 2b - e.g., 1.0
+  optimal_library: "PLACEHOLDER"            # From Phase 2c - e.g., "prompts/configs/library_scale-8.json"
+  # Note: ordering from Phase 2e not critical for H3
+
+# Factor under test
+factors:
+  voting_pool_size:
+    description: "Number of independent passes for consensus voting"
+    levels:
+      - name: "N5"
+        passes: 5
+        description: "Baseline voting pool (from Phase 2)"
+      - name: "N10"
+        passes: 10
+        description: "Moderate voting pool"
+      - name: "N30"
+        passes: 30
+        description: "Large voting pool (compute-intensive)"
+
+# Fixed parameters (using Phase 2 optimal settings)
+fixed:
+  config: "PLACEHOLDER"  # From carried_forward.optimal_me_config
+  temperature: "PLACEHOLDER"  # From carried_forward.optimal_temperature
+  library_config: "PLACEHOLDER"  # From carried_forward.optimal_library
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 1               # Single run (not repeated K times)
+  workers: 1            # Sequential execution (rate limit safe)
+  output_dir: "outputs/phase3a"
+  checkpoint_dir: "outputs/phase3a/checkpoints"
+  # Note: Total passes = 5 + 10 + 30 = 45 per tile
+
+# Analysis specification
+analysis:
+  method: "threshold_sweep"
+  script: "scripts/7_analyse_consensus.py"
+  args:
+    - "--threshold-sweep"
+    - "--max-n"
+    - "30"
+  n_values:
+    - 5
+    - 10
+    - 30
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+    - "f1_per_dollar"
+  output:
+    curves: "outputs/phase3a/threshold_curves.json"
+    report: "outputs/phase3a/analysis_report.json"
+    summary: "outputs/phase3a/analysis_summary.md"
+
+# Expected outputs
+outputs:
+  raw:
+    - "{output_dir}/N5/pass_{pass}/detections.geojson"
+    - "{output_dir}/N10/pass_{pass}/detections.geojson"
+    - "{output_dir}/N30/pass_{pass}/detections.geojson"
+  merged:
+    - "{output_dir}/merged_N5.geojson"
+    - "{output_dir}/merged_N10.geojson"
+    - "{output_dir}/merged_N30.geojson"
+  analysis:
+    - "{output_dir}/threshold_curves.json"
+    - "{output_dir}/analysis_report.json"
+
+# Cost and time estimates
+estimates:
+  api_calls_per_tile: 45  # 5 + 10 + 30 passes
+  tiles: 60               # Validation set
+  total_api_calls: 2700   # 45 × 60
+  cost_usd: 8.10          # ~$0.003/call for Flash
+  time_hours: 1.5         # Conservative estimate
+
+# Outcome
+outcome:
+  determines:
+    - "optimal_n"         # Best voting pool size
+    - "optimal_threshold" # Best vote threshold for each N
+    - "cost_efficiency"   # F1 per dollar at each (N, T)
+  decision_rule: |
+    Select (N, T) combination that maximises F1 within budget constraints.
+    Report cost-efficiency curves for different budget scenarios.
+    If N=5 achieves similar F1 to larger pools, prefer N=5 for cost efficiency.

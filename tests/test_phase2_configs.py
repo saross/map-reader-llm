@@ -1,11 +1,11 @@
 """
-Tests for Phase 2 configuration validity.
+Tests for Phase 2 and Phase 3 configuration validity.
 
-Integration tests that verify Phase 2 study YAML files reference existing
-config files and contain required fields. These tests prevent expensive
-API runs from failing due to missing or misconfigured inputs.
+Integration tests that verify study YAML files reference existing config
+files and contain required fields. These tests prevent expensive API runs
+from failing due to missing or misconfigured inputs.
 
-Run before each Phase 2 sub-phase to catch configuration errors early.
+Run before each phase to catch configuration errors early.
 """
 
 import sys
@@ -194,4 +194,143 @@ class TestInputFilesExist:
         assert ref_path.exists(), (
             f"Ground truth not found: {ref_path}\n"
             "Phase 2 requires ground truth for accuracy evaluation."
+        )
+
+
+# =============================================================================
+# PHASE 3 YAML VALIDITY TESTS
+# =============================================================================
+
+
+@pytest.mark.tier1
+@pytest.mark.compliance
+class TestPhase3YamlValidity:
+    """Tests that Phase 3 YAML files are valid and have required structure."""
+
+    @pytest.fixture
+    def phase3_yamls(self) -> list[Path]:
+        """Return list of Phase 3 study YAML files."""
+        return sorted(STUDIES_DIR.glob("phase3*.yaml"))
+
+    def test_phase3_yamls_exist(self, phase3_yamls: list[Path]) -> None:
+        """Verify expected Phase 3 YAML files exist."""
+        expected = [
+            "phase3a-h3-voting.yaml",
+            "phase3c-h9-diversity.yaml",
+            "phase3d-h2-twostage.yaml",
+        ]
+        actual = [p.name for p in phase3_yamls]
+
+        for name in expected:
+            assert name in actual, f"Missing Phase 3 YAML: {name}"
+
+    def test_phase3_yamls_parse_without_error(self, phase3_yamls: list[Path]) -> None:
+        """Verify all Phase 3 YAML files parse without syntax errors."""
+        for yaml_path in phase3_yamls:
+            try:
+                data = load_yaml(yaml_path)
+                assert data is not None, f"{yaml_path.name} parsed as empty"
+            except yaml.YAMLError as e:
+                pytest.fail(f"YAML parse error in {yaml_path.name}: {e}")
+
+    def test_phase3_yamls_have_required_sections(self, phase3_yamls: list[Path]) -> None:
+        """Verify all Phase 3 YAML files have required top-level sections."""
+        required_sections = ["study", "inputs", "execution", "analysis"]
+
+        for yaml_path in phase3_yamls:
+            data = load_yaml(yaml_path)
+
+            for section in required_sections:
+                assert section in data, (
+                    f"{yaml_path.name} missing required section: {section}"
+                )
+
+    def test_phase3_yamls_have_study_metadata(self, phase3_yamls: list[Path]) -> None:
+        """Verify all Phase 3 YAML files have proper study metadata."""
+        for yaml_path in phase3_yamls:
+            data = load_yaml(yaml_path)
+            study = data.get("study", {})
+
+            assert "name" in study, f"{yaml_path.name} missing study.name"
+            assert "phase" in study, f"{yaml_path.name} missing study.phase"
+            assert "hypothesis" in study, f"{yaml_path.name} missing study.hypothesis"
+
+    def test_phase3_yamls_have_carried_forward(self, phase3_yamls: list[Path]) -> None:
+        """Verify Phase 3 YAMLs have carried_forward section for Phase 2 dependencies."""
+        for yaml_path in phase3_yamls:
+            data = load_yaml(yaml_path)
+
+            assert "carried_forward" in data, (
+                f"{yaml_path.name} missing carried_forward section\n"
+                "Phase 3 YAMLs must document Phase 2 dependencies."
+            )
+
+            carried = data.get("carried_forward", {})
+            # All Phase 3 studies should at least reference optimal M/E config
+            assert "optimal_me_config" in carried, (
+                f"{yaml_path.name} missing carried_forward.optimal_me_config"
+            )
+
+
+@pytest.mark.tier1
+@pytest.mark.compliance
+class TestPhase3aStructure:
+    """Tests for Phase 3a (H3 Voting) specific structure."""
+
+    @pytest.fixture
+    def phase3a_yaml(self) -> dict:
+        """Load Phase 3a study definition."""
+        return load_yaml(STUDIES_DIR / "phase3a-h3-voting.yaml")
+
+    def test_phase3a_has_voting_factor(self, phase3a_yaml: dict) -> None:
+        """Verify Phase 3a defines voting pool sizes as factor."""
+        factors = phase3a_yaml.get("factors", {})
+        assert "voting_pool_size" in factors, (
+            "Phase 3a missing factors.voting_pool_size"
+        )
+
+        levels = factors["voting_pool_size"].get("levels", [])
+        level_names = [lvl.get("name") for lvl in levels]
+
+        # Should include at least N=5 and N=30
+        assert any("5" in name for name in level_names), (
+            "Phase 3a should include N=5 voting level"
+        )
+        assert any("30" in name for name in level_names), (
+            "Phase 3a should include N=30 voting level"
+        )
+
+    def test_phase3a_analysis_is_threshold_sweep(self, phase3a_yaml: dict) -> None:
+        """Verify Phase 3a uses threshold sweep analysis method."""
+        analysis = phase3a_yaml.get("analysis", {})
+        assert analysis.get("method") == "threshold_sweep", (
+            "Phase 3a should use threshold_sweep analysis method"
+        )
+
+
+@pytest.mark.tier1
+@pytest.mark.compliance
+class TestPhase3dStructure:
+    """Tests for Phase 3d (H2 Two-Stage) specific structure."""
+
+    @pytest.fixture
+    def phase3d_yaml(self) -> dict:
+        """Load Phase 3d study definition."""
+        return load_yaml(STUDIES_DIR / "phase3d-h2-twostage.yaml")
+
+    def test_phase3d_has_architecture_factor(self, phase3d_yaml: dict) -> None:
+        """Verify Phase 3d defines architecture as factor."""
+        factors = phase3d_yaml.get("factors", {})
+        assert "architecture" in factors, (
+            "Phase 3d missing factors.architecture"
+        )
+
+        levels = factors["architecture"].get("levels", [])
+        level_names = [lvl.get("name") for lvl in levels]
+
+        assert "single_stage" in level_names, (
+            "Phase 3d should include single_stage architecture"
+        )
+        assert "two_stage" in level_names, (
+            "Phase 3d should include two_stage architecture"
         )

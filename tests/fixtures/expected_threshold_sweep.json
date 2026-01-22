@@ -1,0 +1,31 @@
+{
+  "_comment": "Expected threshold sweep results for detections_with_votes.geojson against references_for_voting_test.geojson",
+  "_note": "With 6 detections (votes: 5,5,4,3,2,1) and 2 references (matched by first 2 detections with vote=5)",
+  "reference_file": "references_for_voting_test.geojson",
+  "detection_file": "detections_with_votes.geojson",
+  "expected_counts_by_threshold": {
+    "T1": 6,
+    "T2": 5,
+    "T3": 4,
+    "T4": 3,
+    "T5": 2
+  },
+  "expected_metrics_by_threshold": {
+    "T1": { "tp": 2, "fp": 4, "fn": 0, "precision": 0.333, "recall": 1.0, "f1": 0.5 },
+    "T2": { "tp": 2, "fp": 3, "fn": 0, "precision": 0.4, "recall": 1.0, "f1": 0.571 },
+    "T3": { "tp": 2, "fp": 2, "fn": 0, "precision": 0.5, "recall": 1.0, "f1": 0.667 },
+    "T4": { "tp": 2, "fp": 1, "fn": 0, "precision": 0.667, "recall": 1.0, "f1": 0.8 },
+    "T5": { "tp": 2, "fp": 0, "fn": 0, "precision": 1.0, "recall": 1.0, "f1": 1.0 }
+  },
+  "expected_optimal": {
+    "threshold": 5,
+    "f1": 1.0,
+    "_rationale": "At T>=5, we keep 2 detections that match 2 references = perfect P/R/F1"
+  },
+  "structure_checks": {
+    "has_curves": true,
+    "has_optimal": true,
+    "has_cost_efficiency": true,
+    "has_metadata": true
+  }
+}

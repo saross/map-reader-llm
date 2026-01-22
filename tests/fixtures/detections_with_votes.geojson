@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "detections_with_votes",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32635" } },
+"features": [
+{ "type": "Feature", "properties": { "source_tile": "K-35-052-4_32635_x448_y0.png", "vote_count": 5, "confidence": 1.0, "subtype": "burial_mound" }, "geometry": { "type": "Point", "coordinates": [ 403505.0, 4700505.0 ] } },
+{ "type": "Feature", "properties": { "source_tile": "K-35-052-4_32635_x448_y0.png", "vote_count": 5, "confidence": 1.0, "subtype": "burial_mound" }, "geometry": { "type": "Point", "coordinates": [ 405000.0, 4702000.0 ] } },
+{ "type": "Feature", "properties": { "source_tile": "K-35-052-4_32635_x448_y448.png", "vote_count": 4, "confidence": 0.8, "subtype": "burial_mound" }, "geometry": { "type": "Point", "coordinates": [ 404000.0, 4701000.0 ] } },
+{ "type": "Feature", "properties": { "source_tile": "K-35-052-4_32635_x448_y448.png", "vote_count": 3, "confidence": 0.6, "subtype": "burial_mound" }, "geometry": { "type": "Point", "coordinates": [ 404500.0, 4701500.0 ] } },
+{ "type": "Feature", "properties": { "source_tile": "K-35-052-4_32635_x896_y0.png", "vote_count": 2, "confidence": 0.4, "subtype": "burial_mound" }, "geometry": { "type": "Point", "coordinates": [ 406000.0, 4700500.0 ] } },
+{ "type": "Feature", "properties": { "source_tile": "K-35-052-4_32635_x896_y0.png", "vote_count": 1, "confidence": 0.2, "subtype": "burial_mound" }, "geometry": { "type": "Point", "coordinates": [ 406500.0, 4700800.0 ] } }
+]
+}

@@ -1,37 +1,59 @@
 """
 Consensus Analysis & Scoring Script
 ===================================
-Description:
-    This script is the analytical engine for the Two-Stage Pipeline (Proposer + Verifier).
-    It calculates performance metrics (Precision, Recall, F1) by comparing the pipeline's 
-    GeoJSON output against a "Gold Standard" Ground Truth dataset.
 
-    It performs a grid search simulation to find the optimal voting threshold:
-    - Proposer Vote Threshold (v4.1): How many times must Stage 1 flag it?
-    - Verifier Vote Threshold (v4.6): How many times must Stage 2 confirm it?
+Description:
+    This script provides analytical tools for consensus voting analysis:
+
+    1. Two-Stage Pipeline Analysis (analyse_consensus):
+       Analyses the Proposer + Verifier pipeline with 2D grid search over
+       proposer and verifier vote thresholds.
+
+    2. Single-Stage Threshold Sweep (analyse_threshold_sweep):
+       Sweeps vote thresholds across multiple pool sizes (N=5, 10, 30) to
+       find optimal (N, T) combination. Used for H3 hypothesis testing.
 
 Usage:
+    # Two-stage pipeline analysis
     python scripts/7_analyse_consensus.py \\
-        --pred outputs/results/v4.1/verified.geojson \\
-        --bounds inputs/vectors/region_bounds.geojson \\
-        --template inputs/vectors/ground_truth.geojson \\
+        --pred outputs/results/verified.geojson \\
+        --bounds inputs/vectors/bounds/validation_bounds.geojson \\
+        --template inputs/vectors/references/mounds-reference.geojson \\
         --iterations 5
 
+    # Single-stage threshold sweep (H3)
+    python scripts/7_analyse_consensus.py \\
+        --pred outputs/phase3a/merged_detections.geojson \\
+        --bounds inputs/vectors/bounds/validation_bounds.geojson \\
+        --template inputs/vectors/references/mounds-reference.geojson \\
+        --threshold-sweep \\
+        --max-n 30 \\
+        --output outputs/phase3a/threshold_sweep.json
+
 Arguments:
-    --pred: Path to the predicted GeoJSON (containing 'proposer_votes' and 'verifier_votes').
-    --bounds: GeoJSON defining the valid study area (to ignore out-of-bounds GT).
+    --pred: Path to the predicted GeoJSON.
+    --bounds: GeoJSON defining the valid study area.
     --template: Ground Truth GeoJSON.
-    --iterations: Max number of verifier iterations to simulate.
+    --iterations: Max verifier iterations for two-stage analysis (default: 5).
+    --threshold-sweep: Enable single-stage threshold sweep mode.
+    --max-n: Maximum N for threshold sweep (default: 30).
+    --output: Output path for threshold sweep results (JSON).
+    --cost-per-call: Cost per API call in USD for efficiency calculation (default: 0.003).
 
 Methodology:
     Uses 'lib_advanced_metrics' for one-to-one detection matching via the Hungarian algorithm
     with a 20m spatial tolerance (centroid distance), ensuring consistency with F1 evaluation.
+
+Author: Shawn Ross, Claude Code
+Licence: Apache 2.0
 """
 
-import sys
 import argparse
-import geopandas as gpd
+import json
+import sys
 from pathlib import Path
+
+import geopandas as gpd
 import pandas as pd
 
 # Setup Path
@@ -168,12 +190,311 @@ def analyse_consensus(
         print(f"Recall:    {r:.4f}")
 
 
+def analyse_threshold_sweep(
+    pred_path: Path | str,
+    bounds_path: Path | str,
+    template_path: Path | str,
+    max_n: int = 30,
+    cost_per_call: float = 0.003,
+    n_tiles: int = 60,
+    output_path: Path | str | None = None,
+) -> dict:
+    """
+    Perform threshold sweep analysis across voting pool sizes.
+
+    This function supports H3 hypothesis testing by analysing how F1 varies
+    with vote threshold T for different voting pool sizes N. It computes
+    cost-efficiency metrics to identify optimal (N, T) combinations.
+
+    The input GeoJSON must contain a 'vote_count' property per detection
+    (typically output from merge_passes.py). The function sweeps thresholds
+    T=1,2,...,N for each pool size N in [5, 10, max_n].
+
+    Args:
+        pred_path: Path to merged predictions GeoJSON with 'vote_count' property.
+        bounds_path: Path to the tile bounds GeoJSON.
+        template_path: Path to the ground truth reference GeoJSON.
+        max_n: Maximum voting pool size to analyse (default: 30).
+        cost_per_call: Cost per API call in USD (default: 0.003 for Gemini Flash).
+        n_tiles: Number of tiles per pass (default: 60 for validation set).
+        output_path: Optional path to write JSON results.
+
+    Returns:
+        dict with keys:
+        - 'curves': List of {n, threshold, f1, precision, recall, count} dicts.
+        - 'optimal': Best (N, T) combination by F1.
+        - 'cost_efficiency': F1 per dollar at each (N, T).
+        - 'metadata': Analysis parameters.
+    """
+    pred_path = Path(pred_path)
+    bounds_path = Path(bounds_path)
+    template_path = Path(template_path)
+
+    print(f"Threshold Sweep Analysis: {pred_path}")
+
+    # 1. Load ground truth (bounds and references)
+    try:
+        gdf_bounds = gpd.read_file(bounds_path)
+        gdf_ref = gpd.read_file(template_path)
+
+        # Standardise CRS to EPSG:32635
+        target_crs = "EPSG:32635"
+        if gdf_bounds.crs is None:
+            gdf_bounds.set_crs(target_crs, inplace=True)
+        elif gdf_bounds.crs != target_crs:
+            gdf_bounds = gdf_bounds.to_crs(target_crs)
+
+        if gdf_ref.crs is None:
+            gdf_ref.set_crs(target_crs, inplace=True)
+        elif gdf_ref.crs != target_crs:
+            gdf_ref = gdf_ref.to_crs(target_crs)
+
+    except Exception as e:
+        print(f"Error loading ground truth: {e}")
+        return {}
+
+    # 2. Load predictions with vote_count
+    try:
+        gdf_pred = gpd.read_file(pred_path)
+        if gdf_pred.empty:
+            print("Warning: Empty predictions file")
+            return _empty_sweep_result(max_n, cost_per_call, n_tiles)
+
+        gdf_pred.set_crs("EPSG:32635", allow_override=True, inplace=True)
+        if gdf_pred.crs != gdf_ref.crs:
+            gdf_pred = gdf_pred.to_crs(gdf_ref.crs)
+    except Exception as e:
+        print(f"Error loading predictions: {e}")
+        return {}
+
+    # Check for vote_count column
+    if "vote_count" not in gdf_pred.columns:
+        print("Error: Predictions must contain 'vote_count' property")
+        print("       (Use merge_passes.py to generate merged detections)")
+        return {}
+
+    max_observed_votes = int(gdf_pred["vote_count"].max())
+    print(f"Total detections: {len(gdf_pred)}")
+    print(f"Max observed vote count: {max_observed_votes}")
+
+    # 3. Define N values to analyse
+    n_values = [n for n in [5, 10, max_n] if n <= max_observed_votes]
+    if not n_values:
+        n_values = [max_observed_votes]
+    print(f"Analysing N values: {n_values}")
+
+    # 4. Sweep thresholds
+    curves = []
+    best_f1 = 0.0
+    optimal = {"n": 0, "threshold": 0, "f1": 0.0, "precision": 0.0, "recall": 0.0, "count": 0}
+
+    for n in n_values:
+        print(f"\n--- N={n} ---")
+        for threshold in range(1, n + 1):
+            # Filter by vote threshold
+            subset = gdf_pred[gdf_pred["vote_count"] >= threshold].copy()
+            count = len(subset)
+
+            # Calculate metrics
+            precision, recall, f1 = 0.0, 0.0, 0.0
+            if count > 0:
+                precision, recall, f1 = calculate_f1_internal(subset, gdf_ref, gdf_bounds)
+
+            # Calculate cost
+            api_calls = n * n_tiles
+            cost = api_calls * cost_per_call
+            f1_per_dollar = f1 / cost if cost > 0 else 0.0
+
+            curves.append({
+                "n": n,
+                "threshold": threshold,
+                "f1": round(f1, 4),
+                "precision": round(precision, 4),
+                "recall": round(recall, 4),
+                "count": count,
+                "api_calls": api_calls,
+                "cost_usd": round(cost, 2),
+                "f1_per_dollar": round(f1_per_dollar, 4),
+            })
+
+            # Track best
+            if f1 > best_f1:
+                best_f1 = f1
+                optimal = {
+                    "n": n,
+                    "threshold": threshold,
+                    "f1": round(f1, 4),
+                    "precision": round(precision, 4),
+                    "recall": round(recall, 4),
+                    "count": count,
+                }
+
+            # Print notable rows
+            marker = "*" if f1 == best_f1 and f1 > 0 else ""
+            if f1 >= 0.5 or threshold == 1 or threshold == n:
+                print(f"  T>={threshold}: F1={f1:.4f}, P={precision:.4f}, "
+                      f"R={recall:.4f}, n={count} {marker}")
+
+    # 5. Build result
+    result = {
+        "curves": curves,
+        "optimal": optimal,
+        "cost_efficiency": _calculate_cost_efficiency(curves),
+        "metadata": {
+            "pred_path": str(pred_path),
+            "bounds_path": str(bounds_path),
+            "template_path": str(template_path),
+            "max_n": max_n,
+            "n_values_analysed": n_values,
+            "max_observed_votes": max_observed_votes,
+            "cost_per_call": cost_per_call,
+            "n_tiles": n_tiles,
+        },
+    }
+
+    # 6. Print summary
+    print("\n" + "=" * 60)
+    print("THRESHOLD SWEEP SUMMARY")
+    print("=" * 60)
+    print(f"Optimal: N={optimal['n']}, T>={optimal['threshold']}")
+    print(f"  F1:        {optimal['f1']:.4f}")
+    print(f"  Precision: {optimal['precision']:.4f}")
+    print(f"  Recall:    {optimal['recall']:.4f}")
+    print(f"  Detections: {optimal['count']}")
+
+    # Best cost efficiency
+    if result["cost_efficiency"]:
+        best_eff = max(result["cost_efficiency"], key=lambda x: x["f1_per_dollar"])
+        print(f"\nBest cost efficiency: N={best_eff['n']}, T>={best_eff['threshold']}")
+        print(f"  F1/dollar: {best_eff['f1_per_dollar']:.4f}")
+
+    # 7. Write output if requested
+    if output_path:
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(output_path, "w") as f:
+            json.dump(result, f, indent=2)
+        print(f"\nResults written to: {output_path}")
+
+    return result
+
+
+def _empty_sweep_result(max_n: int, cost_per_call: float, n_tiles: int) -> dict:
+    """Return empty result structure for empty predictions."""
+    return {
+        "curves": [],
+        "optimal": {"n": 0, "threshold": 0, "f1": 0.0, "precision": 0.0, "recall": 0.0},
+        "cost_efficiency": [],
+        "metadata": {
+            "max_n": max_n,
+            "cost_per_call": cost_per_call,
+            "n_tiles": n_tiles,
+            "note": "Empty predictions",
+        },
+    }
+
+
+def _calculate_cost_efficiency(curves: list[dict]) -> list[dict]:
+    """
+    Calculate cost efficiency metrics for each (N, T) point.
+
+    Returns list of dicts with n, threshold, f1, cost_usd, f1_per_dollar.
+    """
+    efficiency = []
+    for point in curves:
+        if point["cost_usd"] > 0:
+            efficiency.append({
+                "n": point["n"],
+                "threshold": point["threshold"],
+                "f1": point["f1"],
+                "cost_usd": point["cost_usd"],
+                "f1_per_dollar": point["f1_per_dollar"],
+            })
+    return efficiency
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--pred", required=True)
-    parser.add_argument("--bounds", required=True)
-    parser.add_argument("--template", required=True)
-    parser.add_argument("--iterations", type=int, default=5)
+    parser = argparse.ArgumentParser(
+        description="Consensus voting analysis for detection pipelines",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Two-stage pipeline analysis
+  python scripts/7_analyse_consensus.py \\
+      --pred outputs/verified.geojson \\
+      --bounds inputs/vectors/bounds/validation_bounds.geojson \\
+      --template inputs/vectors/references/mounds-reference.geojson
+
+  # Single-stage threshold sweep (H3)
+  python scripts/7_analyse_consensus.py \\
+      --pred outputs/merged_detections.geojson \\
+      --bounds inputs/vectors/bounds/validation_bounds.geojson \\
+      --template inputs/vectors/references/mounds-reference.geojson \\
+      --threshold-sweep \\
+      --output outputs/threshold_sweep.json
+        """,
+    )
+    parser.add_argument(
+        "--pred",
+        required=True,
+        help="Path to predictions GeoJSON",
+    )
+    parser.add_argument(
+        "--bounds",
+        required=True,
+        help="Path to bounds GeoJSON",
+    )
+    parser.add_argument(
+        "--template",
+        required=True,
+        help="Path to ground truth GeoJSON",
+    )
+    parser.add_argument(
+        "--iterations",
+        type=int,
+        default=5,
+        help="Max verifier iterations for two-stage analysis (default: 5)",
+    )
+    parser.add_argument(
+        "--threshold-sweep",
+        action="store_true",
+        help="Enable single-stage threshold sweep mode (H3)",
+    )
+    parser.add_argument(
+        "--max-n",
+        type=int,
+        default=30,
+        help="Maximum N for threshold sweep (default: 30)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Output path for threshold sweep results (JSON)",
+    )
+    parser.add_argument(
+        "--cost-per-call",
+        type=float,
+        default=0.003,
+        help="Cost per API call in USD (default: 0.003)",
+    )
+    parser.add_argument(
+        "--n-tiles",
+        type=int,
+        default=60,
+        help="Number of tiles per pass (default: 60)",
+    )
+
     args = parser.parse_args()
-    
-    analyse_consensus(args.pred, args.bounds, args.template, args.iterations)
+
+    if args.threshold_sweep:
+        analyse_threshold_sweep(
+            args.pred,
+            args.bounds,
+            args.template,
+            max_n=args.max_n,
+            cost_per_call=args.cost_per_call,
+            n_tiles=args.n_tiles,
+            output_path=args.output,
+        )
+    else:
+        analyse_consensus(args.pred, args.bounds, args.template, args.iterations)

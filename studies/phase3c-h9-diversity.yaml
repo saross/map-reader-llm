@@ -1,0 +1,139 @@
+# Phase 3c: H9 Text Diversity
+# ============================
+# Tests whether restating instructions across passes (text diversity)
+# improves consensus voting outcomes compared to identical prompts.
+#
+# Usage:
+#   python scripts/run_study.py studies/phase3c-h9-diversity.yaml
+#   python scripts/run_study.py studies/phase3c-h9-diversity.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2 complete (optimal M/E, temperature, library determined)
+#   - Phase 3a complete (optimal N, T determined)
+#   - Text variant instruction files created (see below)
+
+study:
+  name: "Phase 3c: H9 Text Diversity"
+  version: "1.0"
+  description: |
+    Tests whether using semantically equivalent but lexically varied
+    instructions across consensus passes improves detection accuracy
+    compared to using identical instructions for all passes.
+  phase: "3c"
+  hypothesis: "H9"
+  created: "2026-01-22"
+
+# Optimal parameters carried forward from Phase 2 and 3a
+# PLACEHOLDER: Fill after Phase 2 and Phase 3a complete
+carried_forward:
+  optimal_me_config: "PLACEHOLDER"          # From Phase 2a
+  optimal_temperature: "PLACEHOLDER"        # From Phase 2b
+  optimal_library: "PLACEHOLDER"            # From Phase 2c
+  optimal_n: "PLACEHOLDER"                  # From Phase 3a - e.g., 5
+  optimal_threshold: "PLACEHOLDER"          # From Phase 3a - e.g., 3
+
+# Factor under test
+factors:
+  text_diversity:
+    description: "Whether to use varied or identical instructions across passes"
+    levels:
+      - name: "identical"
+        description: "Same instruction file for all N passes"
+        instruction_files:
+          # All passes use the same optimal instruction
+          all: "PLACEHOLDER"  # From optimal_me_config
+      - name: "diverse"
+        description: "Different instruction variants for each pass"
+        instruction_files:
+          # PLACEHOLDER: Create these files after Phase 2a determines optimal M/E
+          # If optimal is brief-text-image, create:
+          #   - prompts/system-instructions/detect_brief-text-image_v1.md
+          #   - prompts/system-instructions/detect_brief-text-image_v2.md
+          #   - prompts/system-instructions/detect_brief-text-image_v3.md
+          #   - prompts/system-instructions/detect_brief-text-image_v4.md
+          #   - prompts/system-instructions/detect_brief-text-image_v5.md
+          pass_1: "PLACEHOLDER"
+          pass_2: "PLACEHOLDER"
+          pass_3: "PLACEHOLDER"
+          pass_4: "PLACEHOLDER"
+          pass_5: "PLACEHOLDER"
+
+# Fixed parameters
+fixed:
+  temperature: "PLACEHOLDER"    # From Phase 2b
+  library_config: "PLACEHOLDER" # From Phase 2c
+  passes: "PLACEHOLDER"         # From Phase 3a optimal_n
+  threshold: "PLACEHOLDER"      # From Phase 3a optimal_threshold
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10              # K=10 independent runs for statistical power
+  workers: 1            # Sequential execution
+  output_dir: "outputs/phase3c"
+  checkpoint_dir: "outputs/phase3c/checkpoints"
+
+# Analysis specification
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  comparison: "paired"  # Compare identical vs diverse on same tiles
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase3c/analysis_report.json"
+    summary: "outputs/phase3c/analysis_summary.md"
+
+# Expected outputs per condition
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/merged.geojson"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+# Cost and time estimates
+estimates:
+  conditions: 2
+  runs_per_condition: 10
+  passes_per_run: 5               # Assuming N=5 from Phase 3a
+  tiles: 60
+  api_calls_per_cell: 3000        # 10 runs × 5 passes × 60 tiles
+  total_api_calls: 6000           # 2 conditions × 3000
+  cost_usd: 18.00                 # ~$0.003/call for Flash
+  time_hours: 3                   # ~1.5 hours per condition
+
+# Outcome
+outcome:
+  determines: "text_diversity_benefit"
+  decision_rule: |
+    If diverse instructions show significantly higher F1 (95% CI excludes 0),
+    adopt text diversity for operational use. Otherwise, use identical
+    instructions for simplicity.
+
+# Implementation notes
+notes:
+  text_variant_creation: |
+    After Phase 2a determines optimal M/E level, create 5 semantically
+    equivalent instruction variants:
+    1. Rephrase key detection criteria using synonyms
+    2. Reorder instruction sections
+    3. Vary examples' contextual framing
+    4. Use different emphasis patterns
+    5. Maintain identical semantic content
+
+    All variants must convey the same detection criteria to ensure
+    the comparison isolates lexical diversity effects.
+
+  dependencies:
+    - "Phase 2a: optimal_me_config"
+    - "Phase 2b: optimal_temperature"
+    - "Phase 2c: optimal_library"
+    - "Phase 3a: optimal_n, optimal_threshold"
