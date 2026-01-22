@@ -1013,3 +1013,46 @@ Before implementing Phase 1 execution, we simulated running `run_phase1.py` with
 - After significant refactoring to verify nothing broke
 
 **Limitation:** The simulation only catches *structural* gaps (missing files, broken imports). It doesn't catch *semantic* issues (wrong logic, incorrect parameters) that only emerge during actual execution.
+
+## Observation 53: Skills as Reusable Expertise Modules (2026-01-23)
+
+During repository reorganisation, I used the **skill-creator** skill—a meta-skill for building other skills. This interaction highlighted how skills complement `CLAUDE.md` in shaping agent behaviour.
+
+**The three-tier context hierarchy:**
+
+| Layer | Scope | Loaded when | Purpose |
+| ----- | ----- | ----------- | ------- |
+| `~/.claude/CLAUDE.md` | Global (all projects) | Always | User preferences, spelling conventions, commit style |
+| `project/CLAUDE.md` | Project-specific | In project directory | Domain context, file structure, hypothesis naming conventions |
+| Skills (`.claude/skills/`) | Task-specific | Skill triggered | Procedural workflows, bundled scripts, reference documents |
+
+**How skills differ from CLAUDE.md:**
+
+- **CLAUDE.md** provides *declarative* context: "This project studies burial mound detection", "Use UK spelling", "Commits should follow conventional format"
+- **Skills** provide *procedural* knowledge: step-by-step workflows, validation scripts, reference templates
+
+**Progressive disclosure design:**
+
+Skills use a three-level loading system to manage context efficiently:
+
+1. **Metadata** (name + description) — always in context (~100 tokens)
+2. **SKILL.md body** — loaded when skill triggers (<5k words)
+3. **Bundled resources** (scripts, references, assets) — loaded as needed by Claude
+
+This prevents context bloat from dozens of installed skills while ensuring relevant expertise is available when needed.
+
+**Practical utility in this project:**
+
+The skill system enabled:
+
+1. **Document generation** (docx, pptx, pdf skills) — creating formatted outputs without manually specifying libraries
+2. **Webapp testing** — browser automation via Playwright for testing any web interfaces
+3. **Skill creation itself** — meta-skill for packaging reusable expertise
+
+**Observation for reproducibility:**
+
+Future researchers replicating this work should note that skills represent *versioned procedural knowledge*. The same agent with different installed skills will behave differently on identical tasks. Skills installed during this research are not archived with the repository (they're user-specific configuration), which creates a potential reproducibility gap. Consider documenting which skills were instrumental to key workflows.
+
+**Connection to Observation 51:**
+
+Skills are another manifestation of the shift toward "AI as collaborator"—they represent packaged expertise that the agent can draw upon, much like a human colleague might have specialised training in particular tools or methodologies.
