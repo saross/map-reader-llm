@@ -9,7 +9,7 @@ This repository contains a preregistered study using Vision Language Models (VLM
 ## Key Directories
 
 - `docs/methodology/preregistration/` — Preregistration document and execution plan
-- `docs/methodology/articles/` — Downloaded journal articles and literature references
+- `docs/methodology/references/` — Downloaded journal articles and literature references
 - `docs/methodology/research/` — Deep research reports commissioned from Claude and Gemini chatbots
 - `prompts/` — VLM prompt configurations and system instructions
 - `scripts/` — Detection pipeline and analysis scripts
@@ -37,7 +37,7 @@ This project uses structured CC session archiving for research transparency:
 
 ## Working Notes and Observations
 
-The file `docs/working_notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
+The file `docs/notes/working_notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
 
 **Proactive observation sharing**: If you notice something interesting about how we work together, about the research process, or about findings that might inform future work, you should proactively raise it with the user. If they agree it's worth documenting, we'll add it to `working_notes.md`. This includes:
 

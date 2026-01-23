@@ -16,7 +16,7 @@ Phase 2 executes the confirmatory factorial testing using a sequential One-Facto
 
 **Inputs required**:
 
-- 60 holdout tiles (from `holdout_manifest.json`)
+- 60 validation tiles (from `validation_manifest.json`)
 - Ground truth annotations
 - Phase 1 outputs (hard example library: examples 05-08, 11-14)
 - All detection configs
@@ -61,10 +61,10 @@ Phase 2 executes the confirmatory factorial testing using a sequential One-Facto
 
 ### Data Resources
 
-- [ ] Holdout manifest exists: `inputs/tiles/holdout_manifest.json`
+- [ ] Validation manifest exists: `inputs/tiles/validation_manifest.json`
 - [ ] Ground truth exists: `inputs/vectors/references/mounds-reference.geojson`
-- [ ] Holdout bounds exist: `inputs/vectors/bounds/holdout_bounds.geojson`
-- [ ] All 60 holdout tiles present in tile directories
+- [ ] Validation bounds exist: `inputs/vectors/bounds/validation_bounds.geojson`
+- [ ] All 60 validation tiles present in tile directories
 
 ### Configuration Files
 
@@ -180,7 +180,7 @@ for run in {1..10}; do
     for pass in {1..5}; do
         python scripts/4_detect_mounds_batch.py \
             --config prompts/configs/detect_image-only.json \
-            --manifest inputs/tiles/holdout_manifest.json \
+            --manifest inputs/tiles/validation_manifest.json \
             --output-dir outputs/phase2a/h1_image-only/run_${run}/pass_${pass} \
             --workers 1
     done
@@ -199,7 +199,7 @@ done
 
 **Gaps to fill before execution**:
 
-1. Holdout manifest file (verify existence/create)
+1. Validation manifest file (verify existence/create)
 2. Phase 2a study YAML
 3. Orchestration script to manage K×N loop
 4. ANOVA analysis script
@@ -229,7 +229,7 @@ A. **CLI override** (preferred): Add `--temperature` flag to detection script
 ```bash
 python scripts/4_detect_mounds_batch.py \
     --config prompts/configs/detect_{optimal_me}.json \
-    --manifest inputs/tiles/holdout_manifest.json \
+    --manifest inputs/tiles/validation_manifest.json \
     --output-dir outputs/phase2b/h7_T0.3/run_${run}/pass_${pass} \
     --temperature 0.3 \
     --workers 1
@@ -291,7 +291,7 @@ prompts/configs/detect_{optimal_me}_T1.3.json
 # Use optimal M/E instruction with each library composition
 python scripts/4_detect_mounds_batch.py \
     --config prompts/configs/library_scale-8.json \
-    --manifest inputs/tiles/holdout_manifest.json \
+    --manifest inputs/tiles/validation_manifest.json \
     --output-dir outputs/phase2c/h8_scale-8/run_${run}/pass_${pass} \
     --temperature ${optimal_T} \
     --workers 1
@@ -337,7 +337,7 @@ python scripts/4_detect_mounds_batch.py \
 # Terse variant at image-only M/E
 python scripts/4_detect_mounds_batch.py \
     --config prompts/configs/detect_image-only_terse.json \
-    --manifest inputs/tiles/holdout_manifest.json \
+    --manifest inputs/tiles/validation_manifest.json \
     --output-dir outputs/phase2d/h5_image-only_terse/run_${run}/pass_${pass} \
     --temperature ${optimal_T} \
     --workers 1
@@ -394,7 +394,7 @@ Ordering is controlled by the `examples` array order in config files. Need:
 ```bash
 python scripts/4_detect_mounds_batch.py \
     --config prompts/configs/detect_{optimal_config}.json \
-    --manifest inputs/tiles/holdout_manifest.json \
+    --manifest inputs/tiles/validation_manifest.json \
     --output-dir outputs/phase2e/h4_canonical-last/run_${run}/pass_${pass} \
     --temperature ${optimal_T} \
     --ordering canonical-last \
@@ -459,8 +459,8 @@ All required instruction files exist.
 
 | Item | Path | Action |
 |------|------|--------|
-| Holdout manifest | `inputs/tiles/holdout_manifest.json` | Verify or create |
-| Holdout bounds | `inputs/vectors/bounds/holdout_bounds.geojson` | Verify or create |
+| Validation manifest | `inputs/tiles/validation_manifest.json` | Verify or create |
+| Validation bounds | `inputs/vectors/bounds/validation_bounds.geojson` | Verify or create |
 | Scale-16/32 hard examples | `inputs/examples/neutral-naming/example_18-41.png` | May need extended pool |
 
 ### Operational Knowledge Gaps (3 items)

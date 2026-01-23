@@ -28,7 +28,7 @@ Prompts follow the pattern: `{workflow}_{M/E-level}[_{H5-level}].json`
 | **Brief-Text+Image** | `detect_brief-text-image.json` | `_terse`, `_verbose` | Concise text + images |
 | **Verbose-Text** | `detect_verbose-text.json` | N/A (text-only) | Detailed text, no images |
 | **Verbose-Text+Image** | `detect_verbose-text-image.json` | `_terse`, `_verbose` | Detailed text + images |
-| **Two-Stage** | `propose_image-only.json` + `verify_image-only.json` | N/A | Exploratory (H2) |
+| **Two-Stage** | `propose_brief.json` + `verify_brief.json` | N/A | Exploratory (H2) |
 
 ---
 
@@ -102,23 +102,23 @@ Prompts follow the pattern: `{workflow}_{M/E-level}[_{H5-level}].json`
 
 This pipeline mimics a "Proposer-Reviewer" human workflow.
 
-### Stage 1: Proposer (`propose_image-only`)
+### Stage 1: Proposer (`propose_brief`)
 
-- **Config**: `prompts/configs/propose_image-only.json`
-- **Instructions**: `prompts/system-instructions/propose_image-only.md`
+- **Config**: `prompts/configs/propose_brief.json`
+- **Instructions**: `prompts/system-instructions/propose_brief.md`
 - **Goal**: **Recall at all costs.** Flag anything that *might* be a mound.
 - **Strategy**: Liberal detection threshold; classify subtypes for diagnostics.
 - **Output**: GeoJSON with many candidates (including False Positives).
 - **Command**:
 
   ```bash
-  python scripts/4_detect_mounds_batch.py --config prompts/configs/propose_image-only.json
+  python scripts/4_detect_mounds_batch.py --config prompts/configs/propose_brief.json
   ```
 
-### Stage 2: Verifier (`verify_image-only`)
+### Stage 2: Verifier (`verify_brief`)
 
-- **Config**: `prompts/configs/verify_image-only.json`
-- **Instructions**: `prompts/system-instructions/verify_image-only.md`
+- **Config**: `prompts/configs/verify_brief.json`
+- **Instructions**: `prompts/system-instructions/verify_brief.md`
 - **Script**: `scripts/5_verify_crops.py`
 - **Goal**: **Precision filter.** Crop each candidate, perform detailed visual inspection, assign confidence score.
 - **Mechanism**:
@@ -129,9 +129,9 @@ This pipeline mimics a "Proposer-Reviewer" human workflow.
 
   ```bash
   python scripts/5_verify_crops.py \
-    --candidates outputs/results/propose_image-only/candidates.geojson \
-    --output outputs/results/propose_image-only/verified.geojson \
-    --config prompts/configs/verify_image-only.json
+    --candidates outputs/propose_brief/candidates.geojson \
+    --output outputs/propose_brief/verified.geojson \
+    --config prompts/configs/verify_brief.json
   ```
 
 ### Known Limitations

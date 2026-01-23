@@ -4,7 +4,7 @@ This document tracks implementation tasks and stretch goals for the Map Reader L
 
 **Last Updated**: 2026-01-19
 
-> **Note**: Hypothesis testing is now formalised in the preregistration document (`docs/methodology/preregistration/preregistration.md` v4.2). This document covers implementation-specific tasks and exploratory ideas not in the preregistration.
+> **Note**: Hypothesis testing is now formalised in the preregistration document (`docs/methodology/preregistration/osf/preregistration.md` v4.2). This document covers implementation-specific tasks and exploratory ideas not in the preregistration.
 
 ---
 

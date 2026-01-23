@@ -257,8 +257,8 @@ done
 ### Pre-Flight Checklist
 
 - [ ] Phase 2 completed (optimal parameters determined)
-- [ ] Holdout manifest exists: `inputs/tiles/holdout_manifest.json`
-- [ ] Holdout bounds exist: `inputs/vectors/bounds/holdout_bounds.geojson`
+- [ ] Validation manifest exists: `inputs/tiles/validation_manifest.json`
+- [ ] Validation bounds exist: `inputs/vectors/bounds/validation_bounds.geojson`
 - [ ] Optimal config created based on Phase 2 results
 
 ### Execution
@@ -267,7 +267,7 @@ done
 for i in $(seq -w 1 10); do
     python scripts/4_detect_mounds_batch.py \
         --config prompts/configs/optimal_final.json \
-        --manifest inputs/tiles/holdout_manifest.json \
+        --manifest inputs/tiles/validation_manifest.json \
         --output-dir outputs/phase3-holdout/pass_${i}
 done
 ```
@@ -277,7 +277,7 @@ done
 ```bash
 python scripts/6_accuracy_report.py \
     --pred outputs/phase3-holdout/merged_detections.geojson \
-    --bounds inputs/vectors/bounds/holdout_bounds.geojson \
+    --bounds inputs/vectors/bounds/validation_bounds.geojson \
     --template inputs/vectors/references/mounds-reference.geojson
 ```
 

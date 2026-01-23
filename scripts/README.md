@@ -12,9 +12,9 @@ Splits large GeoTIFF maps into tiles (default 512×512) for VLM processing. Gene
 
 ### `select_tiles_phase2.py`
 
-Selects calibration and holdout tile sets with documented provenance and spatial separation. Implements stratified sampling by mound density.
+Selects calibration and validation tile sets with documented provenance and spatial separation. Implements stratified sampling by mound density.
 
-**Output**: `inputs/tiles/{calibration,holdout}_manifest.json`, `tile_selection_metadata.json`
+**Output**: `inputs/tiles/{calibration,validation}_manifest.json`, `tile_selection_metadata.json`
 
 ### `generate_tile_bounds.py`
 
@@ -38,7 +38,7 @@ Core **Stage 1** detection engine. Reads a prompt configuration, builds multimod
 
 **Stage 2** verification engine for the two-stage pipeline (H2). Extracts high-resolution crops of Stage 1 candidates and submits them to a verifier prompt using visual chain-of-thought.
 
-**Usage**: `python scripts/5_verify_crops.py --candidates <input.geojson> --config prompts/configs/verify_image-only.json`
+**Usage**: `python scripts/5_verify_crops.py --candidates <input.geojson> --config prompts/configs/verify_brief.json`
 
 **Output**: `outputs/phase*/h2-twostage/verified-*.geojson`
 

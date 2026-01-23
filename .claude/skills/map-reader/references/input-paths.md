@@ -9,7 +9,7 @@ Quick reference for all input files and directories used in detection experiment
 | Manifest | Path | Purpose |
 |----------|------|---------|
 | Calibration | `inputs/tiles/calibration_manifest.json` | 20 tiles for Phase 1-2 |
-| Holdout | `inputs/tiles/holdout_manifest.json` | Reserved for Phase 3 validation |
+| Validation | `inputs/tiles/validation_manifest.json` | Reserved for Phase 3 validation |
 | Production | `inputs/tiles/production_manifest.json` | Full region coverage |
 
 ### Manifest Format
@@ -61,7 +61,7 @@ Quick reference for all input files and directories used in detection experiment
 | Bounds | Path | Purpose |
 |--------|------|---------|
 | Calibration | `inputs/vectors/bounds/calibration_bounds.geojson` | Phase 1-2 region |
-| Holdout | `inputs/vectors/bounds/holdout_bounds.geojson` | Phase 3 region |
+| Validation | `inputs/vectors/bounds/validation_bounds.geojson` | Phase 3 region |
 | Full region | `inputs/vectors/bounds/study_region.geojson` | Complete study area |
 
 ---
@@ -174,14 +174,14 @@ Check all critical inputs exist:
 ```bash
 # Manifests
 ls inputs/tiles/calibration_manifest.json
-ls inputs/tiles/holdout_manifest.json
+ls inputs/tiles/validation_manifest.json
 
 # Ground truth
 ls inputs/vectors/references/mounds-reference.geojson
 
 # Bounds
 ls inputs/vectors/bounds/calibration_bounds.geojson
-ls inputs/vectors/bounds/holdout_bounds.geojson
+ls inputs/vectors/bounds/validation_bounds.geojson
 
 # Example library
 ls inputs/examples/neutral-naming/example_*.png | wc -l  # Should be 17

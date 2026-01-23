@@ -13,7 +13,7 @@
 *Complete before lodging preregistration on OSF.*
 
 - [x] Finalise hypothesis list and predictions (H1-H15 documented)
-- [x] Specify exact test tile IDs (60 tiles in `inputs/tiles/holdout_manifest.json`)
+- [x] Specify exact test tile IDs (60 tiles in `inputs/tiles/validation_manifest.json`)
 - [x] Specify primary outcome: Overall F1 at 20m spatial tolerance
 - [x] Specify success threshold: F1 ≥ 0.85 triggers H11 tile size testing
 - [x] Document few-shot library composition (Section 8.4)

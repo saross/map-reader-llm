@@ -3,9 +3,9 @@
   "@type": "SoftwareSourceCode",
   "name": "Map Reader LLM: Automated Archaeological Feature Extraction Pipeline",
   "description": "An automated pipeline for extracting archaeological features (specifically \"Burial Mounds\" or Tumuli) from historical Soviet 1:50,000 topographic maps using Multimodal Large Language Models (Google Gemini). The system handles tiling, VLM inference, and geospatial reconstitution.",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "datePublished": "2026-01-18",
-  "dateModified": "2026-01-18",
+  "dateModified": "2026-01-23",
   "license": "https://spdx.org/licenses/Apache-2.0.html",
   "codeRepository": "https://github.com/saross/map-reader-llm",
   "issueTracker": "https://github.com/saross/map-reader-llm/issues",
@@ -20,11 +20,16 @@
     "pyproj",
     "Pillow",
     "geojson",
+    "pyyaml",
+    "tqdm",
+    "python-dotenv",
     "numpy",
     "pandas",
     "statsmodels",
     "scipy",
-    "matplotlib"
+    "pingouin",
+    "matplotlib",
+    "seaborn"
   ],
   "author": [
     {

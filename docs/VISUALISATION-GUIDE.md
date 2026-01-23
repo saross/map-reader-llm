@@ -25,7 +25,7 @@ Alternatively, load the original GeoTIFF:
 ### 2. Load Detection Results
 
 1. **Layer → Add Layer → Add Vector Layer**
-2. Navigate to `outputs/results/`
+2. Navigate to `outputs/`
 3. Select the detection GeoJSON file (e.g., `run_01_detections.geojson`)
 4. Ensure CRS is EPSG:32635 (UTM zone 35N)
 
@@ -40,7 +40,7 @@ Alternatively, load the original GeoTIFF:
 Useful for understanding tile coverage:
 
 1. **Layer → Add Layer → Add Vector Layer**
-2. Select `outputs/results/calibration_bounds.geojson` or `holdout_bounds.geojson`
+2. Select `inputs/vectors/bounds/calibration_bounds.geojson` or `validation_bounds.geojson`
 
 ## Styling Recommendations
 
@@ -186,7 +186,7 @@ project.qgz
 │   └── run_01_fn.geojson
 └── Bounds (Group)
     ├── calibration_bounds.geojson
-    └── holdout_bounds.geojson
+    └── validation_bounds.geojson
 ```
 
 ## Further Resources

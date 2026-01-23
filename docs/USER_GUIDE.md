@@ -27,9 +27,9 @@ If you have a `candidates.geojson` from Stage 1:
 
 ```bash
 python scripts/5_verify_crops.py \
-  --candidates outputs/results/propose_image-only/candidates.geojson \
-  --output outputs/results/propose_image-only/verified.geojson \
-  --config prompts/configs/verify_image-only.json \
+  --candidates outputs/propose_brief/candidates.geojson \
+  --output outputs/propose_brief/verified.geojson \
+  --config prompts/configs/verify_brief.json \
   --iterations 1 \
   --model gemini-2.5-pro
 ```
@@ -40,7 +40,7 @@ python scripts/5_verify_crops.py \
 To create your own experiment:
 1.  **Duplicate a Config**: Copy `prompts/configs/detect_image-only.json` to a new file like `detect_image-only_experiment.json`.
 2.  **Edit Examples**: Change the `"examples"` list to point to different images in `inputs/references/`.
-3.  **Run with new Config**: The system automatically logs results under the config name (`outputs/results/detect_image-only_experiment/`).
+3.  **Run with new Config**: The system automatically logs results under the config name (`outputs/detect_image-only_experiment/`).
 
 ## 5. View Results
 *   **QGIS / ArcGIS**: Drag and drop the output `.geojson` files directly into your GIS software. They are fully georeferenced.

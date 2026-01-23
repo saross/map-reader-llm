@@ -326,6 +326,6 @@ The following decisions will be documented after Phase 1 analysis:
 ## Related Documents
 
 - **Preregistration**: `preregistration.md` — Full study design
-- **Working notes**: `docs/working_notes.md` — Observations and evidence
+- **Working notes**: `docs/notes/working_notes.md` — Observations and evidence
 - **Hypothesis tracking**: `hypothesis-tracking.md` — Condition mappings
 - **Example manifest**: `inputs/examples/neutral-naming/MANIFEST.md` — Library composition

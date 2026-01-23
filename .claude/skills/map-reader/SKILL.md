@@ -166,7 +166,7 @@ See [references/config-guide.md](references/config-guide.md) for complete config
 | Resource | Path |
 |----------|------|
 | Calibration manifest | `inputs/tiles/calibration_manifest.json` |
-| Holdout manifest | `inputs/tiles/holdout_manifest.json` |
+| Validation manifest | `inputs/tiles/validation_manifest.json` |
 | Ground truth | `inputs/vectors/references/mounds-reference.geojson` |
 | Calibration bounds | `inputs/vectors/bounds/calibration_bounds.geojson` |
 | Example images | `inputs/examples/neutral-naming/example_*.png` |

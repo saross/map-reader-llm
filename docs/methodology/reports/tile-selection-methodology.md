@@ -70,7 +70,7 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 ### Manifests
 
 - `inputs/tiles/calibration_manifest.json` — list of calibration tile filenames
-- `inputs/tiles/holdout_manifest.json` — list of holdout tile filenames
+- `inputs/tiles/validation_manifest.json` — list of validation tile filenames
 - `inputs/null_tiles_manifest.json` — null tiles for few-shot library
 - `inputs/tiles/tile_selection_metadata.json` — full metadata including:
   - Random seed used
@@ -81,8 +81,8 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 ### Bounds GeoJSON
 
-- `outputs/results/calibration_bounds.geojson` — spatial extent of calibration tiles
-- `outputs/results/holdout_bounds.geojson` — spatial extent of holdout tiles
+- `inputs/vectors/bounds/calibration_bounds.geojson` — spatial extent of calibration tiles
+- `inputs/vectors/bounds/validation_bounds.geojson` — spatial extent of validation tiles
 
 ## Few-Shot Example Rules
 
@@ -186,7 +186,7 @@ python scripts/select_tiles_phase2.py
 
 # Output:
 #   inputs/tiles/calibration_manifest.json
-#   inputs/tiles/holdout_manifest.json
+#   inputs/tiles/validation_manifest.json
 #   inputs/tiles/tile_selection_metadata.json
 ```
 

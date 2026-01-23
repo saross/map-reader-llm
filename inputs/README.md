@@ -10,7 +10,7 @@ Place your source Soviet Topographic Maps and vector data here.
     *   `references/`: Ground truth and reference GeoJSON files
 *   `tiles/`: Pre-processed PNG map tiles, with manifest and metadata files:
     *   `calibration_manifest.json`: Tiles for few-shot library development
-    *   `holdout_manifest.json`: Tiles for evaluation
+    *   `validation_manifest.json`: Tiles for evaluation
     *   `tile_selection_metadata.json`: Full selection provenance (seeds, mound counts, etc.)
 *   `examples/`: Few-shot example images for prompts.
 

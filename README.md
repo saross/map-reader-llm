@@ -69,7 +69,7 @@ python scripts/preprocess_tiling.py
 ```bash
 python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
 ```
-Results will be saved to `outputs/results/detect_image-only/`.
+Results will be saved to `outputs/detect_image-only/`.
 
 ---
 
@@ -97,7 +97,7 @@ Results will be saved to `outputs/results/detect_image-only/`.
 To ensure transparency, this project archives AI interaction logs (`conversations/*.pb`) and planning artifacts (`task.md`, `implementation_plan.md`).
 To update the archive:
 ```bash
-python scripts/archive_methodology.py
+python scripts/archive_cc_session.py
 ```
 
 ---
