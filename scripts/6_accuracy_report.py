@@ -55,7 +55,7 @@ def validate_file(
         target_crs: Target CRS for all datasets (default: EPSG:32635).
     """
     print(f"Validating: {pred_path}")
-    
+
     # 1. Load Ground Truth (using template)
     # load_data returns (gdf_det, gdf_bounds, gdf_ref) treating template_det as the detection
     # We only want gdf_bounds and gdf_ref
@@ -84,9 +84,9 @@ def validate_file(
     except Exception as e:
         print(f"Error loading predictions: {e}")
         return
-        
+
     print(f"Total Candidates: {len(gdf_pred)}")
-    
+
     # 3. Filter for Verified
     if "verified" in gdf_pred.columns:
         # Verified is boolean or 0/1?
@@ -96,9 +96,9 @@ def validate_file(
     else:
         print("Warning: 'verified' column not found. Assuming all are verified.")
         gdf_verified = gdf_pred
-        
+
     print(f"Verified Candidates: {len(gdf_verified)}")
-    
+
     if len(gdf_verified) == 0:
         print("No verified candidates found.")
         return
@@ -107,9 +107,9 @@ def validate_file(
     # Ensure CRS match
     if gdf_verified.crs != gdf_ref.crs:
         gdf_verified = gdf_verified.to_crs(gdf_ref.crs)
-        
+
     p, r, f1 = calculate_f1_internal(gdf_verified, gdf_ref, gdf_bounds)
-    
+
     print("\n=== Validation Results (Symbol-Level) ===")
     print(f"Precision: {p:.4f}")
     print(f"Recall:    {r:.4f}")
@@ -144,16 +144,16 @@ def validate_file(
     # Buffer Refs for matching
     gdf_ref_buf = gdf_ref.copy()
     gdf_ref_buf['geometry'] = gdf_ref_buf.geometry.buffer(20)
-    
+
     # Identify FPs (Verified candidates not hitting any Ref)
     join_fp = gpd.sjoin(gdf_verified, gdf_ref_buf, how='left', predicate='intersects')
     fps = join_fp[join_fp.index_right.isna()].copy()
-    
+
     # Identify FNs (Refs not hit by any Verified candidate)
     # Filter refs to bounds first
     processed_geometry = gdf_bounds.geometry.union_all()
     refs_in_scope = gdf_ref_buf[gdf_ref_buf.intersects(processed_geometry)].copy()
-    
+
     join_fn = gpd.sjoin(refs_in_scope, gdf_verified, how='left', predicate='intersects')
     fns = join_fn[join_fn.index_right.isna()].copy()
     # Recover original geometry (unbuffered) for FNs
@@ -164,10 +164,10 @@ def validate_file(
 
     base_name = Path(pred_path).stem
     parent_dir = Path(pred_path).parent
-    
+
     fp_path = parent_dir / f"{base_name}_fp.geojson"
     fn_path = parent_dir / f"{base_name}_fn.geojson"
-    
+
     if not fps.empty:
         # Drop columns that cause save errors
         for col in ['index_right', 'Map_left', 'Map_right']:
@@ -175,7 +175,7 @@ def validate_file(
                 fps.drop(columns=[col], inplace=True)
         fps.to_file(fp_path, driver='GeoJSON')
         print(f"Saved {len(fps)} False Positives to {fp_path}")
-        
+
     if not fns.empty:
         # Drop columns
         for col in ['index_right', 'Map_left', 'Map_right']:
@@ -195,7 +195,7 @@ def validate_file(
     print(f"Base Precision: {p_base:.4f}")
     print(f"Base Recall:    {r_base:.4f}")
     print(f"Base F1:        {f1_base:.4f}")
-    
+
     # Delta
     print(f"\nDelta Precision: {p - p_base:+.4f}")
     print(f"Delta Recall:    {r - r_base:+.4f}")

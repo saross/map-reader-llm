@@ -65,7 +65,7 @@ def cluster_detections(all_detections, distance_thresh=20.0):
                 g = shape(f["geometry"])
                 geom_box = g.bounds  # minx, miny, maxx, maxy
                 legacy_box = [geom_box[1], geom_box[0], geom_box[3], geom_box[2]]  # yx
-            except:
+            except (KeyError, ValueError, TypeError):
                 continue
 
             pool.append({
@@ -105,26 +105,26 @@ def generate_union(input_dir, output_path):
     input_path = Path(input_dir)
     run_files = list(input_path.glob("run_*.geojson"))
     print(f"Found {len(run_files)} runs in {input_dir}")
-    
+
     all_dets = {}
     for rf in run_files:
         with open(rf) as f:
             fc = json.load(f)
             all_dets[rf.stem] = fc.get("features", [])
-            
+
     clusters = cluster_detections(all_dets)
     print(f"Generated {len(clusters)} unique clusters from {sum(len(v) for v in all_dets.values())} detections.")
-    
+
     # Create Union Features (Vote >= 1)
     union_features = []
     for cl in clusters:
         # Averaging Geometry
         boxes = np.array([c["box"] for c in cl])
         avg_box = np.mean(boxes, axis=0).tolist() # ymin, xmin, ymax, xmax
-        
+
         # Convert to Geom (minx, miny, maxx, maxy)
         minx, miny, maxx, maxy = avg_box[1], avg_box[0], avg_box[3], avg_box[2]
-        
+
         feat = {
             "type": "Feature",
             "properties": {
@@ -144,7 +144,7 @@ def generate_union(input_dir, output_path):
             }
         }
         union_features.append(feat)
-        
+
     with open(output_path, 'w') as f:
         geojson.dump(FeatureCollection(union_features), f)
     print(f"Saved {len(union_features)} union candidates to {output_path}")

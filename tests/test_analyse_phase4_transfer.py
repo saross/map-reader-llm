@@ -19,9 +19,9 @@ from lib_phase4_transfer import (
     classify_transfer_outcome,
     ci_excludes_zero,
     TransferClassification,
+    FactorSensitivityResult,
     BASELINE_TRANSFER_THRESHOLD,
     BASELINE_INVESTIGATE_THRESHOLD,
-    FACTOR_ADJUSTMENT_THRESHOLD,
     VOTING_THRESHOLD_DIFFERENCE,
 )
 
@@ -216,7 +216,7 @@ class TestEvaluateFactorSensitivity:
         )
 
         baseline_entry = next(
-            (l for l in result.tested_levels if l.get("is_baseline")), None
+            (lvl for lvl in result.tested_levels if lvl.get("is_baseline")), None
         )
         assert baseline_entry is not None
         assert baseline_entry["level"] == "brief-text-image"

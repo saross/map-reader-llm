@@ -109,5 +109,5 @@ if __name__ == "__main__":
     parser.add_argument("--run_dir", required=True, help="Directory containing run GeoJSONs")
     parser.add_argument("--bounds", required=True, help="Path to bounds GeoJSON")
     args = parser.parse_args()
-    
+
     generate_metrics(args.run_dir, args.bounds)

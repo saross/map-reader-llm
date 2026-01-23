@@ -20,9 +20,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from preflight_check import (
     check_api_key,
-    check_config,
     check_directory_exists,
-    check_example_library,
     check_file_exists,
 )
 
@@ -81,8 +79,8 @@ class TestManifests:
         legacy_path = PROJECT_ROOT / "inputs" / "tiles" / "holdout_manifest.json"
         if not manifest_path.exists() and legacy_path.exists():
             pytest.skip(
-                f"validation_manifest.json not found, but holdout_manifest.json exists. "
-                f"Consider renaming to match calibration/validation nomenclature."
+                "validation_manifest.json not found, but holdout_manifest.json exists. "
+                "Consider renaming to match calibration/validation nomenclature."
             )
 
         passed, msg = check_file_exists(manifest_path, "Validation manifest")

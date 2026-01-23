@@ -10,14 +10,13 @@ import sys
 from pathlib import Path
 
 import pytest
-from shapely.geometry import Point, box, mapping
+from shapely.geometry import box, mapping
 
 # Add project root to path for imports
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.merge_passes import (
-    DISTANCE_THRESHOLD_METRES,
     apply_threshold,
     centroid_from_geometry,
     cluster_across_passes,

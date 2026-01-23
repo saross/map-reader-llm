@@ -10,7 +10,6 @@ import sys
 from pathlib import Path
 
 import geopandas as gpd
-import numpy as np
 import pytest
 from shapely.geometry import Point, box
 

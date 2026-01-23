@@ -8,7 +8,6 @@ potential deviation from the registered study protocol.
 Preregistration reference: OSF registration (see docs/methodology/preregistration/)
 """
 
-import json
 import sys
 from pathlib import Path
 

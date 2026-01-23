@@ -739,12 +739,12 @@ def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds, buffers=[10, 20, 30, 5
 def calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     gdf_ref['normalised_class'] = gdf_ref['Symbol'].apply(normalise_ref_class)
     classes = ["burial_mound", "benchmark_mound", "triangulation_mound"]
-    
+
     results = []
     for cls in classes:
         det_cls = gdf_det[gdf_det['subtype'] == cls].copy()
         ref_cls = gdf_ref[gdf_ref['normalised_class'] == cls].copy()
-        
+
         p, r, f1 = calculate_f1_internal(det_cls, ref_cls, gdf_bounds, buffer_meters)
         results.append({
             "class": cls,

@@ -295,7 +295,7 @@ def extract_candidates(
         print(f"\n[DRY RUN] Would write manifest to: {manifest_path}")
 
     # Summary
-    print(f"\nExtraction Summary:")
+    print("\nExtraction Summary:")
     print(f"  Total detections: {len(features)}")
     print(f"  Successful:       {successful}")
     print(f"  Failed:           {failed}")

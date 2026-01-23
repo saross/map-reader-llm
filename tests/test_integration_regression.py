@@ -22,7 +22,6 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.lib_advanced_metrics import (
-    calculate_f1_internal,
     match_detections_to_references,
 )
 

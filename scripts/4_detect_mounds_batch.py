@@ -2,9 +2,9 @@
 Batch Mound Detection Script
 ============================
 Description:
-    The core inference engine. Orchestrates the loading of map tiles, construction of 
+    The core inference engine. Orchestrates the loading of map tiles, construction of
     multimodal prompts (visual + text), and interaction with the Google Gemini API.
-    Designed for reproducibility, it uses a versioned configuration system and tracks 
+    Designed for reproducibility, it uses a versioned configuration system and tracks
     comprehensive metadata (prompt hashes, model versions) for every run.
 
 Usage:
@@ -308,7 +308,7 @@ def process_single_tile(
 
         with rasterio.open(tile_path) as src:
             transform = src.transform
-            crs = src.crs
+            _crs = src.crs  # Extracted for potential future use (e.g., multi-CRS support)
 
         for det in detections:
             if "box_2d" not in det:
@@ -318,15 +318,15 @@ def process_single_tile(
             px_max_x = (xmax_n / 1000.0) * TILE_SIZE
             px_min_y = (ymin_n / 1000.0) * TILE_SIZE
             px_max_y = (ymax_n / 1000.0) * TILE_SIZE
-            
+
             geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
             geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
-            
+
             min_geo_x = min(geo_x1, geo_x2)
             max_geo_x = max(geo_x1, geo_x2)
             min_geo_y = min(geo_y1, geo_y2)
             max_geo_y = max(geo_y1, geo_y2)
-            
+
             geom = box(min_geo_x, min_geo_y, max_geo_x, max_geo_y)
             feature = geojson.Feature(
                 geometry=mapping(geom),
@@ -340,7 +340,7 @@ def process_single_tile(
                 }
             )
             features.append(feature)
-            
+
         return features
 
     except Exception as e:
@@ -414,18 +414,18 @@ def detect_mounds_versioned(
         print(f"Limit: {limit} tiles")
 
     model_name_cfg = config.get("model")
-    
+
     # Configure Gemini
     if not GOOGLE_API_KEY:
         print("Error: GOOGLE_API_KEY not found.")
         return
 
     genai.configure(api_key=GOOGLE_API_KEY)
-    
+
     # Load Prompt Text
     instruction_file = config.get("instruction_file", "v3.0_system_instruction.md")
     prompt_path = Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
-    
+
     print(f"System Instruction: {instruction_file}") # Feedback to user
 
     try:
@@ -454,9 +454,9 @@ def detect_mounds_versioned(
 
     # Apply Ordering Override
     if ordering_override:
-        original_order = [e.get("path", "") for e in examples]
+        _original_order = [e.get("path", "") for e in examples]  # For debugging
         examples = reorder_examples(examples, ordering_override, ordering_seed)
-        new_order = [e.get("path", "") for e in examples]
+        _new_order = [e.get("path", "") for e in examples]  # For debugging
         print(f"Overriding example ordering with: {ordering_override}")
         if ordering_seed is not None:
             print(f"  Random seed: {ordering_seed}")
@@ -469,7 +469,7 @@ def detect_mounds_versioned(
         label = ex.get("label", "Example")
         path_str = ex.get("path", "")
         img_path = examples_dir / path_str
-        
+
         if img_path.exists():
             reference_content.append(label)
             reference_content.append(Image.open(img_path))
@@ -489,7 +489,7 @@ def detect_mounds_versioned(
     # Note: API uses camelCase 'thinkingLevel' in GenerationConfig
     if "thinking_level" in config:
         generation_config["thinkingLevel"] = config["thinking_level"]
-    
+
     safety_settings = [
         {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
         {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
@@ -516,7 +516,7 @@ def detect_mounds_versioned(
         version_tag = config.get("version", "vX")
         sanitized_model = model_name_cfg.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
         filename = f"detections-{version_tag}-{sanitized_model}-{current_date}.geojson"
-    
+
     # Output Directory: CLI override takes precedence
     if output_dir:
         version_out_dir = Path(output_dir)
@@ -528,7 +528,7 @@ def detect_mounds_versioned(
     meta_file = output_file.with_suffix('.meta.json')
     print(f"Output: {output_file}")
     print(f"Metadata: {meta_file}")
-    
+
     # Load existing results (Resume capability)
     features = []
     processed_tiles = set()
@@ -545,12 +545,12 @@ def detect_mounds_versioned(
 
     # Gather tiles
     tiles_to_process = []
-    
+
     # Priority 1: Manual List (e.g. from code call)
     if tile_list:
         tiles_to_process = [t for t in tile_list if t.name not in processed_tiles]
         print(f"Using provided tile list. {len(tiles_to_process)} remaining.")
-        
+
     # Priority 2: Manifest File (Target Set)
     elif manifest_path:
         print(f"Using Manifest: {manifest_path}")
@@ -562,19 +562,19 @@ def detect_mounds_versioned(
                     if map_dir.is_dir():
                         for t in map_dir.glob("*.png"):
                             all_tiles_map[t.name] = t
-                            
+
                 found_count = 0
                 for fname in target_filenames:
                     if fname in all_tiles_map and fname not in processed_tiles:
                         tiles_to_process.append(all_tiles_map[fname])
                         found_count += 1
-                        
+
                 print(f"Manifest loaded. Found {found_count} of {len(target_filenames)} tiles ({len(tiles_to_process)} remaining to process).")
-                
+
         except Exception as e:
             print(f"Error reading manifest: {e}")
             return
-            
+
     # Priority 3: Scan All (Default)
     else:
         all_tiles = []
@@ -584,7 +584,7 @@ def detect_mounds_versioned(
         all_tiles = sorted(all_tiles)
         tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
         print(f"Scanning all tiles. {len(tiles_to_process)} remaining.")
-        
+
         if TEST_LIMIT and TEST_LIMIT > 0:
             print(f"Applying TEST_LIMIT: {TEST_LIMIT}")
             tiles_to_process = tiles_to_process[:TEST_LIMIT]
@@ -626,7 +626,7 @@ def detect_mounds_versioned(
     max_retries = 5
     base_wait = 30
     config_version = config.get("version", "vX")
-    
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         # Submit all tasks
         futures = {
@@ -643,7 +643,7 @@ def detect_mounds_versioned(
                 model_name_cfg
             ): tile.name for tile in tiles_to_process
         }
-        
+
         for future in tqdm(concurrent.futures.as_completed(futures), total=len(tiles_to_process)):
             tile_name = futures[future]
             try:

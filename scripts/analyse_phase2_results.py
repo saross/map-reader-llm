@@ -35,7 +35,6 @@ from pathlib import Path
 from typing import Optional
 
 import geopandas as gpd
-import numpy as np
 import pandas as pd
 
 # Add scripts directory to path for lib imports

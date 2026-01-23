@@ -393,7 +393,7 @@ def classify_transfer_outcome(
         )
 
     if voting_flagged:
-        message += f" Voting threshold also differs."
+        message += " Voting threshold also differs."
 
     return TransferOutcome(
         classification=classification,

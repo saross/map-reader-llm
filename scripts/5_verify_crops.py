@@ -81,10 +81,10 @@ def load_candidates(candidates_path: Path) -> List[Feature]:
 def get_tile_path(tile_id: str) -> Path:
     """Resolves tile ID to absolute path."""
     tiles_dir = TILES_DIR
-    found = list(tiles_dir.glob(f"**/{tile_id}")) 
+    found = list(tiles_dir.glob(f"**/{tile_id}"))
     if not found:
         found = list(tiles_dir.glob(f"**/{tile_id}.png"))
-    
+
     if found:
         return found[0]
     return None
@@ -95,14 +95,15 @@ def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE
         bounds = shape(geom).bounds
         cx = (bounds[0] + bounds[2]) / 2
         cy = (bounds[1] + bounds[3]) / 2
-        
+
         row, col = src.index(cx, cy)
         half_size = context_px // 2
         window = Window(col - half_size, row - half_size, context_px, context_px)
-        
+
         try:
             arr = src.read(window=window)
-            if arr.shape[0] == 0: return None
+            if arr.shape[0] == 0:
+                return None
             img_data = arr.transpose(1, 2, 0)
             return Image.fromarray(img_data)
         except Exception:
@@ -111,7 +112,7 @@ def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE
 def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
     """Constructs the Multimodal Prompt."""
     prompt_parts = []
-    
+
     # 1. Image Library (Federated)
     for ex in prompt_config.get("examples", []):
         img_path = refs_dir / ex["path"]
@@ -122,7 +123,7 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
         else:
             logging.warning(f"Missing reference: {img_path}")
 
-    # 2. Instructions 
+    # 2. Instructions
     # v4.6 Optimization: Load from external file if specified
     instruction_file = prompt_config.get("instruction_file")
     if instruction_file:
@@ -146,16 +147,16 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
         2. **DISCRIMINATE**: Check for Hard Negatives (Is it a Benchmark? Triangulation Point? Text?).
         3. **FACTORS**: List 3 specific factors that REDUCE your confidence.
         4. **SCORE**: Assign a Probability Score (0.0 to 1.0) that this is a BURIAL MOUND.
-        
+
         **Rubric**:
         * 0.9-1.0: Clear, circular, 3D relief. Verified.
         * 0.6-0.8: Likely mound, fuzziness/intersection present.
         * 0.2-0.5: Ambiguous, random blob, or competing symbol.
         * 0.0-0.1: Rejection (Text, Box, Line).
-        
+
         Output JSON: {"reasoning": "...", "mound_probability": 0.X}
         """
-    
+
     prompt_parts.append(instructions)
     return prompt_parts
 
@@ -443,5 +444,5 @@ if __name__ == "__main__":
     parser.add_argument("--iterations", type=int, default=1)
     parser.add_argument("--model", type=str, default=None, help="Override the model in the config (e.g. gemini-1.5-pro)")
     args = parser.parse_args()
-    
+
     run_verification(args.candidates, args.output, args.config, args.workers, args.iterations, model_override=args.model)

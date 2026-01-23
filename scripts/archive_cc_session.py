@@ -392,7 +392,7 @@ def extract_thinking_block_tokens(session_path: Path) -> dict[str, Any]:
     """
     thinking_count = 0
     estimated_tokens = 0
-    actual_tokens_from_usage = None
+    _actual_tokens_from_usage = None  # Placeholder for future usage stats extraction
 
     with open(session_path, 'r') as f:
         for line in f:

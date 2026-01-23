@@ -93,16 +93,16 @@ def extract_crops(args):
     input_file = Path(args.input)
     results_dir = input_file.parent
     mode_suffix = "_fn.geojson" if args.mode == "fn" else "_fp.geojson"
-    
+
     print(f"--- Analysing {args.mode.upper()}s ---")
-    
+
     # 1. Load Bounds
-    # Assuming bounds file is in the same results tree or provided via arg? 
+    # Assuming bounds file is in the same results tree or provided via arg?
     # For now, let's try to infer from the run name or use a known location if possible.
     # Hack: Look for the corresponding bounds file in the same dir as the input file
     run_id = input_file.stem.replace("_fn", "").replace("_fp", "")
     bounds_file = results_dir / f"{run_id}_bounds.geojson"
-    
+
     print(f"Loading bounds from {bounds_file}...")
     if not bounds_file.exists():
         print(f"Bounds file not found: {bounds_file}")
@@ -126,9 +126,9 @@ def extract_crops(args):
     # If mode is FN, look for *_fn.geojson
     files = list(results_dir.glob(f"*{mode_suffix}"))
     print(f"Found {len(files)} {args.mode.upper()} files.")
-    
+
     all_dets = []
-    
+
     for f in files:
         rid = f.stem.replace(mode_suffix.replace(".geojson",""), "")
         try:
@@ -141,9 +141,9 @@ def extract_crops(args):
                 })
         except Exception as e:
             print(f"Skipping {f}: {e}")
-            
+
     print(f"Total entries loaded: {len(all_dets)}")
-    
+
     # 3. Cluster using distance-based matching
     # Aligns with F1 evaluation spatial tolerance for consistency
     distance_thresh = DISTANCE_THRESHOLD_METRES
@@ -166,9 +166,9 @@ def extract_crops(args):
                 current_cluster.append(candidate)
                 used_indices.add(j)
         clusters.append(current_cluster)
-        
+
     print(f"Unique Clusters: {len(clusters)}")
-    
+
     # 4. Sort by Recurrence
     cluster_stats = []
     for cl in clusters:
@@ -178,9 +178,9 @@ def extract_crops(args):
             "tile": cl[0]["source_tile"],
             "geo_bounds": cl[0]["geo_bounds"]
         })
-        
+
     sorted_clusters = sorted(cluster_stats, key=lambda x: x["count"], reverse=True)
-    
+
     # 5. Extract
     manifest_path = Path(args.manifest)
     if not manifest_path.exists():
@@ -214,11 +214,11 @@ def extract_crops(args):
     print(f"Built tile lookup with {len(tile_lookup)} entries from manifest")
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Extract top N hard examples
     limit = DEFAULT_CROP_LIMIT
     extracted_count = 0
-    
+
     for i, item in enumerate(sorted_clusters):
         if extracted_count >= limit:
             break
@@ -255,14 +255,14 @@ def extract_crops(args):
         if not tile_path:
             print(f"Tile image not found for {tile_name}")
             continue
-            
+
         try:
             # Identify correct sub-tile by checking containment
             t_bounds = None
             img_path_resolved = None
-            
+
             geo_b = item["geo_bounds"]
-            
+
             # Check if exact match exists (try with and without .png extension)
             if tile_stem in tile_bounds_map:
                 t_bounds = tile_bounds_map[tile_stem]
@@ -275,7 +275,7 @@ def extract_crops(args):
                 # And actually contains the detection center
                 det_box = box(*geo_b)
                 det_center = det_box.centroid
-                
+
                 for b_name, b_coords in tile_bounds_map.items():
                     # Check spatial containment first
                     b_box = box(*b_coords)
@@ -283,34 +283,34 @@ def extract_crops(args):
                         # Found the sub-tile that contains this FN
                         t_bounds = b_coords
                         # Now find this specific image file
-                        possible_path = next(tiles_dir.rglob(b_name), None) 
+                        possible_path = next(tiles_dir.rglob(b_name), None)
                         if not possible_path:
                             possible_path = next(tiles_dir.rglob(f"{b_name}.png"), None)
-                        
+
                         if possible_path:
                             img_path_resolved = possible_path
                             print(f"Resolved {tile_name} -> {b_name}")
                             break
-            
+
             if not t_bounds or not img_path_resolved:
                 print(f"Could not resolve bounds/image for {tile_name}")
                 continue
-                
+
             # Open the correct sub-tile image
             with Image.open(img_path_resolved) as img:
                 px_bounds = geo_to_pixel(item["geo_bounds"], t_bounds, img.size)
-                
+
                 # Expand crop area with margin for context
                 margin = CROP_MARGIN_PX
                 p_minx, p_miny, p_maxx, p_maxy = px_bounds
-                
+
                 crop_minx = max(0, int(p_minx) - margin)
                 crop_miny = max(0, int(p_miny) - margin)
                 crop_maxx = min(img.width, int(p_maxx) + margin)
                 crop_maxy = min(img.height, int(p_maxy) + margin)
-                
+
                 crop = img.crop((crop_minx, crop_miny, crop_maxx, crop_maxy))
-                
+
                 # Save with informative name
                 # hard_positive_rank_tile.png
                 type_prefix = "hard_positive" if args.mode == "fn" else "hard_negative"
@@ -318,7 +318,7 @@ def extract_crops(args):
                 crop.save(output_dir / out_name)
                 print(f"Saved {out_name}")
                 extracted_count += 1
-                
+
         except Exception as e:
             print(f"Error cropping: {e}")
 
@@ -329,5 +329,5 @@ if __name__ == "__main__":
     parser.add_argument("--mode", choices=["fp", "fn"], required=True)
     parser.add_argument("--manifest", required=True)
     args = parser.parse_args()
-    
+
     extract_crops(args)

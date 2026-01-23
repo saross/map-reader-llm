@@ -104,5 +104,5 @@ if __name__ == "__main__":
     parser.add_argument("--bounds", required=True)
     parser.add_argument("--template", required=True)
     args = parser.parse_args()
-    
+
     analyse_proposer(args.union, args.bounds, args.template)

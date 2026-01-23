@@ -1,0 +1,19 @@
+# Ruff linter configuration
+# https://docs.astral.sh/ruff/configuration/
+
+line-length = 100
+
+[lint]
+select = ["E", "F", "W"]
+ignore = [
+    # E402: Module level import not at top of file
+    # Intentionally ignored - scripts use sys.path manipulation before imports
+    "E402",
+    # E501: Line too long
+    # Some lines exceed 100 chars due to long strings/paths - minor issue
+    "E501",
+]
+
+[lint.per-file-ignores]
+# Test files may have unused variables for fixtures/assertions
+"tests/*.py" = ["F841"]

@@ -171,8 +171,8 @@ class TestInputFilesExist:
         legacy_path = PROJECT_ROOT / "inputs" / "tiles" / "holdout_manifest.json"
         if not manifest_path.exists() and legacy_path.exists():
             pytest.skip(
-                f"validation_manifest.json not found, but holdout_manifest.json exists. "
-                f"Consider renaming to match calibration/validation nomenclature."
+                "validation_manifest.json not found, but holdout_manifest.json exists. "
+                "Consider renaming to match calibration/validation nomenclature."
             )
 
         assert manifest_path.exists(), (

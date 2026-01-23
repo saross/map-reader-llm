@@ -51,7 +51,7 @@ class TestConfigLoading:
             except json.JSONDecodeError as e:
                 errors.append(f"{config_file.name}: {e}")
 
-        assert not errors, f"Config files with JSON errors:\n" + "\n".join(errors)
+        assert not errors, "Config files with JSON errors:\n" + "\n".join(errors)
 
 
 @pytest.mark.tier1
@@ -82,7 +82,7 @@ class TestConfigSchema:
                 missing_fields.append(f"{config_file.name}: missing {file_missing}")
 
         assert not missing_fields, (
-            f"Config files missing required fields:\n" + "\n".join(missing_fields)
+            "Config files missing required fields:\n" + "\n".join(missing_fields)
         )
 
 
@@ -146,7 +146,7 @@ class TestConfigUniqueness:
         }
 
         assert not duplicates, (
-            f"Found config files with identical signatures:\n"
+            "Found config files with identical signatures:\n"
             + "\n".join(
                 f"  {sig}: {files}" for sig, files in duplicates.items()
             )

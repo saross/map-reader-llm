@@ -9,7 +9,7 @@ import json
 import sys
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -330,7 +330,7 @@ class TestCentroidCalculation:
 
     def test_point_centroid(self) -> None:
         """Verify Point geometry centroid is the point itself."""
-        from shapely.geometry import Point, shape
+        from shapely.geometry import shape
 
         geom = {"type": "Point", "coordinates": [500000, 4700000]}
         geom_shape = shape(geom)

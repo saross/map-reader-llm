@@ -156,11 +156,11 @@ if __name__ == "__main__":
     if len(sys.argv) < 4:
         print("Usage: python mine_hard_cases.py <fp_path> <fn_path> <output_dir> [bounds_path]")
         sys.exit(1)
-        
+
     fp_path = sys.argv[1]
     fn_path = sys.argv[2]
     out_dir = sys.argv[3]
     bounds_path = sys.argv[4] if len(sys.argv) > 4 else None
-    
+
     mine_crops(fp_path, out_dir, "hard_negative_fp", bounds_path)
     mine_crops(fn_path, out_dir, "hard_positive_fn", bounds_path)

@@ -388,7 +388,7 @@ def merge_passes(
     total_passes = len(raw_passes)
     total_raw_detections = sum(len(feats) for feats in raw_passes.values())
 
-    print(f"\nStep 1: Within-pass deduplication (20m tolerance)...")
+    print("\nStep 1: Within-pass deduplication (20m tolerance)...")
     deduped_passes = {}
     total_deduped = 0
     for pass_id, features in raw_passes.items():
@@ -397,7 +397,7 @@ def merge_passes(
         total_deduped += len(deduped)
         print(f"  {pass_id}: {len(features)} → {len(deduped)} detections")
 
-    print(f"\nStep 2-5: Cross-pass clustering and vote counting...")
+    print("\nStep 2-5: Cross-pass clustering and vote counting...")
     clusters = cluster_across_passes(deduped_passes)
     print(f"  Generated {len(clusters)} unique clusters")
 
@@ -450,12 +450,12 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
 
     total_passes = len(raw_passes)
 
-    print(f"\nStep 1: Within-pass deduplication...")
+    print("\nStep 1: Within-pass deduplication...")
     deduped_passes = {}
     for pass_id, features in raw_passes.items():
         deduped_passes[pass_id] = deduplicate_within_pass(features)
 
-    print(f"\nStep 2-5: Cross-pass clustering...")
+    print("\nStep 2-5: Cross-pass clustering...")
     clusters = cluster_across_passes(deduped_passes)
 
     # Ensure output directory exists
