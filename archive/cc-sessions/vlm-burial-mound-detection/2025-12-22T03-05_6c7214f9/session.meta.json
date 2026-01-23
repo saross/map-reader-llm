@@ -33,7 +33,7 @@
   },
   "relationships": {
     "continues": null,
-    "continuedBy": null,
+    "continuedBy": "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
     "isPartOf": [
       "vlm-burial-mound-detection"
     ],
@@ -834,20 +834,33 @@
     }
   },
   "auto_generated": {
-    "title": "Initial Project Onboarding and Infrastructure",
-    "purpose": "First Claude Code session: codebase exploration, tile selection system, overnight experiment configs, archive_cc_sessions.py creation, documentation updates",
-    "tags": ["onboarding", "infrastructure", "tile-selection", "overnight-configs", "main-session", "opus"]
+    "title": "VLM pipeline development and codebase reorganisation",
+    "purpose": "Initial orientation to the burial mound detection project, followed by systematic review of the v4.x two-stage verification pipeline, investigation of Flash model discrepancies, and codebase reorganisation including directory renaming and path reference updates.",
+    "tags": [
+      "vlm",
+      "burial-mounds",
+      "gemini",
+      "prompt-engineering",
+      "codebase-exploration",
+      "refactoring",
+      "experimental-pipeline"
+    ],
+    "three_ps": {
+      "prompt_summary": "User requested orientation to the map-reader-llm project, then systematic investigation of v4.x verification results and v3.5 Flash discrepancies, followed by codebase housekeeping and directory reorganisation.",
+      "process_summary": "Extensive codebase exploration using Task agents, systematic review of configuration files and scripts, analysis of experimental results, and multi-file edits to update path references after directory renaming.",
+      "provenance_summary": "First CC session in a month-long collaboration, establishing baseline understanding; continued by 76a6bf00 and subsequent sessions."
+    }
   },
   "three_ps": {
-    "prompt_summary": "Initial onboarding to LLM-driven burial mound extraction project (from Antigravity/Gemini). Explored codebase, created tile selection system, overnight experiment configs, archive_cc_sessions.py, updated documentation",
-    "process_summary": "First major session (28h) with 836 tool calls including Bash (291), Read (215), Glob (102), Edit (87), Grep (54). Created 17 files including tile selection scripts, archive_cc_sessions.py, PIPELINES.md",
-    "provenance_summary": "First Claude Code session for this project, transitioning from Antigravity/Gemini development"
+    "prompt_summary": "User requested orientation to the map-reader-llm project, then systematic investigation of v4.x verification results and v3.5 Flash discrepancies, followed by codebase housekeeping and directory reorganisation.",
+    "process_summary": "Extensive codebase exploration using Task agents, systematic review of configuration files and scripts, analysis of experimental results, and multi-file edits to update path references after directory renaming.",
+    "provenance_summary": "First CC session in a month-long collaboration, establishing baseline understanding; continued by 76a6bf00 and subsequent sessions."
   },
   "archive": {
     "jsonl_path": "session.jsonl",
-    "jsonl_sha256": "6fa7783f73b13b0b9a8f89fe93a171b0a797163aa9e803b837ec2d6915e0cc3a",
-    "jsonl_bytes": 35625991,
-    "archived_at": "2026-01-09T13:31:19.485721"
+    "jsonl_sha256": "50a79931bcfaefe5782cfdf47807e8f31c05c97fdebaa33f325c7112679330d7",
+    "jsonl_bytes": 35626127,
+    "archived_at": "2026-01-23T22:54:46.830762"
   },
   "_relationship_hints": {
     "continues_hint": null,

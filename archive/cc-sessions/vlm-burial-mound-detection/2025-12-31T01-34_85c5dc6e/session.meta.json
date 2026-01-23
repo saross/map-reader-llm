@@ -32,8 +32,8 @@
     "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
   },
   "relationships": {
-    "continues": null,
-    "continuedBy": null,
+    "continues": "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+    "continuedBy": "ed602fc1-b157-4050-85b3-7426db5ebcb5",
     "isPartOf": [
       "vlm-burial-mound-detection"
     ],
@@ -604,14 +604,14 @@
     }
   },
   "auto_generated": {
-    "title": "LLM Metadata Library and Preregistration Sprint",
-    "purpose": "Major development session: created lib_llm_metadata.py, run_study.py, prompt configs reorganisation, FAIR4RS compliance files, preregistration companion documents",
-    "tags": ["implementation", "llm-metadata", "preregistration", "prompt-configs", "fair4rs", "main-session", "opus"]
+    "title": "LLM metadata library and preregistration sprint",
+    "purpose": "Major development session creating experimental infrastructure: lib_llm_metadata.py for API response handling, run_study.py orchestrator, Phase 2 prompt configurations, FAIR4RS compliance files, and preregistration companion documents.",
+    "tags": ["implementation", "llm-metadata", "preregistration", "fair4rs", "run-study", "infrastructure"]
   },
   "three_ps": {
-    "prompt_summary": "Multi-day session covering: session archiving script, LLM metadata library implementation, run_study.py orchestrator, prompt configs creation for Phase 2 factorial design, FAIR4RS compliance (codemeta.json, .zenodo.json), preregistration companion documents",
-    "process_summary": "Extended session (53h) with 679 tool calls including Edit (188), Read (174), Bash (117), Write (41), Task (7 sub-agents). Created 33 files, modified 31, referenced 30 across prompts, scripts, and docs",
-    "provenance_summary": "Major standalone session establishing Phase 2 experimental infrastructure"
+    "prompt_summary": "User requested session archiving, then progressed through LLM metadata library implementation, study orchestrator development, and preregistration documentation completion.",
+    "process_summary": "Extended 53-hour session with 679 tool calls; created 33 files including lib_llm_metadata.py, run_study.py, prompt configs, codemeta.json, and preregistration appendices.",
+    "provenance_summary": "Third CC session; continues from 76a6bf00, continued by ed602fc1; established Phase 2 experimental infrastructure."
   },
   "archive": {
     "jsonl_path": "session.jsonl",

@@ -32,8 +32,8 @@
     "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
   },
   "relationships": {
-    "continues": null,
-    "continuedBy": null,
+    "continues": "ed602fc1-b157-4050-85b3-7426db5ebcb5",
+    "continuedBy": "f4cb3541-2e17-40dd-a94e-1e114107f55b",
     "isPartOf": [
       "vlm-burial-mound-detection"
     ],
@@ -369,14 +369,14 @@
     }
   },
   "auto_generated": {
-    "title": "Preregistration V4 Finalisation",
-    "purpose": "Extended preregistration refinement: hypothesis counting verification (9 principal), holdout expansion feasibility, tile selection methodology, bootstrap CI verification",
-    "tags": ["preregistration", "hypothesis-review", "tile-selection", "holdout-expansion", "main-session", "opus"]
+    "title": "Preregistration V4 finalisation",
+    "purpose": "Extended preregistration refinement: hypothesis counting verification (9 principal), holdout expansion feasibility analysis, tile selection methodology, bootstrap CI verification.",
+    "tags": ["preregistration", "hypothesis-review", "tile-selection", "holdout-expansion", "statistical-analysis"]
   },
   "three_ps": {
-    "prompt_summary": "Multi-day preregistration review: confirm 9 principal hypotheses (section 3.2), holdout expansion feasibility, tile selection methodology documentation, bootstrap CI implementation verification, prompts appendix creation",
-    "process_summary": "Extended session (80h) with 777 tool calls including Edit (227), Read (212), Bash (98), Grep (89), Task (10 sub-agents). Created analyze_study_effects.py, check_holdout_expansion_feasibility.py, preregistration-appendix-prompts.md",
-    "provenance_summary": "Major preregistration session continuing from 85c5dc6e infrastructure work"
+    "prompt_summary": "Multi-day preregistration review: confirm 9 principal hypotheses (Section 3.2), holdout expansion feasibility, tile selection methodology documentation, bootstrap CI implementation verification, prompts appendix creation.",
+    "process_summary": "Extended 80-hour session with 777 tool calls; created analyze_study_effects.py, check_holdout_expansion_feasibility.py, preregistration-appendix-prompts.md.",
+    "provenance_summary": "Fifth CC session; continues from ed602fc1, continued by f4cb3541; major preregistration refinement sprint."
   },
   "archive": {
     "jsonl_path": "session.jsonl",

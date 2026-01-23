@@ -32,8 +32,8 @@
     "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
   },
   "relationships": {
-    "continues": null,
-    "continuedBy": null,
+    "continues": "6c7214f9-a128-42d4-af63-4dc861a7e760",
+    "continuedBy": "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
     "isPartOf": [
       "vlm-burial-mound-detection"
     ],
@@ -334,14 +334,14 @@
     }
   },
   "auto_generated": {
-    "title": "Prompt Reorganisation and Preregistration Drafting",
-    "purpose": "Major prompt library restructure: created prompts/configs/ and prompts/system-instructions/ hierarchy, 20 prompt config files, initial preregistration.md drafting",
-    "tags": ["prompt-library", "reorganisation", "preregistration", "configs", "main-session", "opus"]
+    "title": "Prompt reorganisation and preregistration drafting",
+    "purpose": "Completed commit for prompt directory restructuring, refined preregistration document with consistency and de-duplication checks, reviewed Soviet topographic symbol reference materials for false positive analysis.",
+    "tags": ["preregistration", "prompt-reorganisation", "osf", "consistency-check", "reference-materials"]
   },
   "three_ps": {
-    "prompt_summary": "Extended session: prompt library reorganisation to configs/system-instructions structure, created 20 prompt config JSON files for factorial design, preregistration.md initial drafting, review-notes.md, tile-selection.md",
-    "process_summary": "Longest session (186h across 8 days) with 376 tool calls including Edit (103), Read (86), TodoWrite (60), Grep (42), Write (27). Created prompt hierarchy and initial preregistration framework",
-    "provenance_summary": "Standalone main session building on initial infrastructure from 6c7214f9"
+    "prompt_summary": "User requested commit of prompt reorganisation, preregistration consistency review, and analysis of Soviet map symbols for potential false positives.",
+    "process_summary": "Git operations to commit restructuring, systematic consistency checks of preregistration document (TODOs, cross-references, terminology), PDF analysis of reference materials.",
+    "provenance_summary": "Second CC session; continues from 6c7214f9, continued by 85c5dc6e; transitioned from codebase setup to preregistration refinement."
   },
   "archive": {
     "jsonl_path": "session.jsonl",
