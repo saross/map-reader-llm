@@ -139,7 +139,7 @@ Each script run produces a `.meta.json` file containing:
 - **Cost estimate**: Calculated from current pricing
 - **Per-item metadata**: Detailed per-tile/per-candidate data
 
-See `docs/PIPELINES.md` for full schema documentation.
+See `docs/pipelines.md` for full schema documentation.
 
 ---
 

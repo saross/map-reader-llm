@@ -26,9 +26,9 @@ Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify arc
 
 Detailed documentation is available in the `docs/` directory:
 
-*   **[Pipelines Guide](docs/PIPELINES.md)**: Detailed breakdown of the active analysis pipelines. **Start here to understand the methodology.**
-*   **[User Guide](docs/USER_GUIDE.md)**: Step-by-step instructions for running scripts, configuring prompts, and managing data.
-*   **[Architecture](docs/ARCHITECTURE.md)**: High-level system architecture, data flow diagrams, and component descriptions.
+*   **[Pipelines Guide](docs/pipelines.md)**: Detailed breakdown of the active analysis pipelines. **Start here to understand the methodology.**
+*   **[User Guide](docs/user-guide.md)**: Step-by-step instructions for running scripts, configuring prompts, and managing data.
+*   **[Architecture](docs/architecture.md)**: High-level system architecture, data flow diagrams, and component descriptions.
 
 ---
 

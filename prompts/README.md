@@ -4,7 +4,7 @@ This directory contains the configurations and system instructions for LLM infer
 
 ## Structure
 
-- **`configs/*.json`**: Run configurations. See **[docs/PIPELINES.md](../docs/PIPELINES.md)** for active pipelines.
+- **`configs/*.json`**: Run configurations. See **[docs/pipelines.md](../docs/pipelines.md)** for active pipelines.
 - **`system-instructions/*.md`**: System instructions (the "Brain" or "Logic").
 
 ## File Naming Convention
