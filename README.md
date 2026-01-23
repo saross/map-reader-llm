@@ -52,6 +52,7 @@ pip install -r requirements-lock.txt
 
 ### 2. Configuration
 Create a `.env` file in the root directory with your Google API Key:
+
 ```bash
 GOOGLE_API_KEY=your_key_here
 ```
@@ -61,14 +62,17 @@ This is the recommended baseline for general detection (high speed, balanced acc
 
 **Step 1: Tile Input Maps**
 Tiles maps located in `inputs/rasters/`.
+
 ```bash
 python scripts/preprocess_tiling.py
 ```
 
 **Step 2: Run Detection**
+
 ```bash
 python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
 ```
+
 Results will be saved to `outputs/detect_image-only/`.
 
 ---
@@ -96,6 +100,7 @@ Results will be saved to `outputs/detect_image-only/`.
 ## Methodological Records (Open Science)
 To ensure transparency, this project archives AI interaction logs (`conversations/*.pb`) and planning artifacts (`task.md`, `implementation_plan.md`).
 To update the archive:
+
 ```bash
 python scripts/archive_cc_session.py
 ```

@@ -32,7 +32,7 @@ Your F1 drop from 0.75 to 0.64 follows a predictable pattern: text instructions 
 
 The solution is counterintuitive: **use less text, not better text**. Structure your prompt with images first, followed by minimal task framing:
 
-```
+```text
 [Visual examples - positive, then hard positive, then hard negative]
 "Detect features similar to these examples. When uncertain, err toward detection."
 [Target tile]
@@ -58,7 +58,7 @@ This architecture prevents restrictive criteria from affecting initial detection
 
 VLMs can self-report useful confidence scores when prompted correctly, despite systematic overconfidence. The key technique is **verbalized confidence with calibration framing**:
 
-```
+```text
 After analysis, provide:
 1. Detection result (MOUND or NOT_MOUND)
 2. Confidence score (0-100%) representing probability your answer is correct

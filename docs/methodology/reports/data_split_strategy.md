@@ -12,7 +12,7 @@ Standard ML practice is to divide data into three distinct buckets.
 ### A. Training & Development Set (The "Lab" Set)
 *   **Size**: **20 Tiles** (The "Original 20").
 *   **Composition**: A stratified sample representing ~5% of the corpus.
-*   **Usage**: 
+*   **Usage**:
     1.  **Prompt Engineering**: All few-shot examples (the "teaching material") are cropped from these 20 tiles.
     2.  **Iterative Tuning**: We benchmark newly engineered prompts against *this same set* to measure improvement.
 *   **Status**: **Biased/Burned**. Since the prompt is explicitly designed to solve *these* tiles, performance here will be higher than on unseen data. This is expected.
@@ -26,12 +26,12 @@ Standard ML practice is to divide data into three distinct buckets.
 ### C. Production Run (The "Archaeological Result")
 *   **Size**: **All Remaining Tiles** (~321 tiles).
 *   **Role**: **Final Deployment**.
-*   **Publication Usage**: 
+*   **Publication Usage**:
     1.  **Global Metrics**: Since we have Ground Truth for the whole area, we can report the *true* accuracy of the method (n=321). This is the gold standard.
     2.  **Discovery**: We analyse the False Positives to see if we found *new* unmapped mounds (the archaeological goal).
     3.  **Spatial Analysis**: We map the distribution of mounds across the landscape.
 
-**Summary**: 
+**Summary**:
 *   **Dev Set** = "Build the tool."
 *   **Test Set** = "Verify the tool works."
 *   **Production** = "Use the tool to do Science."

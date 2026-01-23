@@ -11,7 +11,7 @@
 
 The main experiment uses a sequential OFAT design (preregistration v4.6):
 
-```
+```text
 H1 (M/E: 5 cells) → H7 (Temperature: 5 cells) → H8 (Composition: 7 cells) → H5 (Text: 6 cells) → H4 (Ordering: 3 cells)
 ```
 

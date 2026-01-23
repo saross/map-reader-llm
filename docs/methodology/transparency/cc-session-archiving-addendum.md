@@ -221,7 +221,7 @@ The `isPartOf` relationship enables project-level views:
 
 For sessions that form a logical sequence:
 
-```
+```text
 Session A ──continues──▶ Session B ──continues──▶ Session C
     │                        │
     └──────isPartOf──────────┴──────isPartOf──────▶ Project X

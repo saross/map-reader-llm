@@ -6,9 +6,11 @@ To run the pipeline on new survey data:
 1.  **Place GeoTIFFs**: Copy your `.tif` files into `inputs/rasters/`.
     *   *Note: Ensure they are projected in EPSG:32635 (UTM Zone 35N) or a compatible metric system for best results.*
 2.  **Run Tiling**:
+
     ```bash
     python scripts/preprocess_tiling.py
     ```
+
     This will generate a folder in `inputs/tiles/` for each map.
 
 ## 2. Running Detection (Standard)
@@ -18,6 +20,7 @@ To run the pipeline on new survey data:
     *   Format: `["K-35-101-1_1_1", "K-35-101-1_1_2"]`
     *   If no manifest is provided, some scripts may process all available tiles or default to `inputs/tiles/calibration_manifest.json`.
 3.  **Execute**:
+
     ```bash
     python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
     ```
@@ -33,6 +36,7 @@ python scripts/5_verify_crops.py \
   --iterations 1 \
   --model gemini-2.5-pro
 ```
+
 *   `--iterations`: Increase this (e.g., to 3 or 5) to use "Consensus Verification" (voting).
 *   `--model`: Override the model defined in the JSON (e.g. use `gemini-2.5-pro` for harder cases).
 

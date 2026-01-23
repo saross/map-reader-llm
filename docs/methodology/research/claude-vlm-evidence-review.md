@@ -1,6 +1,6 @@
 # Evidence Review: VLM Prompting Strategy Claims vs. Empirical Findings
 
-**Document created**: 2024-12-22  
+**Document created**: 2024-12-22
 **Purpose**: Summary of investigation into the evidence base for common VLM prompting recommendations, prompted by unexpected experimental results on Gemini 3.
 
 ---
@@ -31,8 +31,8 @@ This document traces the actual evidence behind claims (1) and (2).
 
 ### Actual source
 
-**Paper**: "Vision Language Models are Biased" (Vo et al., May 2025)  
-**arXiv**: 2505.23941  
+**Paper**: "Vision Language Models are Biased" (Vo et al., May 2025)
+**arXiv**: 2505.23941
 **URL**: https://arxiv.org/abs/2505.23941
 
 ### Models actually tested
@@ -61,7 +61,7 @@ The 17% accuracy figure refers to a very specific phenomenon:
 4. **Prompt-based mitigations had minimal effect**:
    - "Rely exclusively on image details" (Debiased prompt): **+1.87** improvement
    - "Double-check your answer" prompt: **+2.70** improvement
-   
+
    The paper itself concludes that helpful prompting strategies "only slightly improve accuracy."
 
 ### Why this doesn't apply to cartographic symbol detection

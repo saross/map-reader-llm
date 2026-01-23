@@ -43,7 +43,7 @@ This approach treats LLM session archives the same way we treat other research d
 
 ### 2.1 Directory Structure
 
-```
+```text
 archive/cc-sessions/
 ├── CATALOG.json                    # Machine-readable index of all sessions
 ├── CATALOG.md                      # Auto-generated from CATALOG.json
@@ -99,7 +99,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
 {
   "$schema": "https://example.org/schemas/genai-session-meta/v1.0",
   "schema_version": "1.0",
-  
+
   "session": {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "slug": "preregistration-review",
@@ -108,7 +108,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
     "ended_at": "2026-01-08T11:45:00Z",
     "duration_minutes": 150
   },
-  
+
   "model": {
     "provider": "anthropic",
     "model_id": "claude-code",
@@ -116,7 +116,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
     "access_method": "claude-code-cli",
     "access_version": "1.0.24"
   },
-  
+
   "context": {
     "project": "vlm-burial-mound-detection",
     "purpose": "preregistration-consistency-review",
@@ -129,7 +129,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
       "related": []
     }
   },
-  
+
   "statistics": {
     "turns": 47,
     "human_messages": 24,
@@ -152,7 +152,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
     },
     "estimated_cost_usd": 0.85
   },
-  
+
   "artifacts": {
     "created": [
       {
@@ -162,7 +162,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
       },
       {
         "path": "archive/corrections/execution-plan-corrections.md",
-        "type": "document", 
+        "type": "document",
         "description": "Corrections for execution-plan.md"
       }
     ],
@@ -182,7 +182,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
       }
     ]
   },
-  
+
   "provenance": {
     "inputs": [
       {
@@ -191,7 +191,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
         "role": "primary-document"
       },
       {
-        "path": "execution-plan.md", 
+        "path": "execution-plan.md",
         "version": "v2.3",
         "role": "review-target"
       }
@@ -210,7 +210,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
     ],
     "methodology_notes": "Systematic section-by-section review against preregistration requirements"
   },
-  
+
   "archive": {
     "jsonl_path": "session.jsonl",
     "jsonl_sha256": "a1b2c3d4e5f6...",
@@ -220,7 +220,7 @@ The queries themselves become part of the documentation infrastructure—reusabl
     "archived_by": "archive-sessions.py v1.2",
     "archive_notes": null
   },
-  
+
   "three_ps": {
     "prompt_summary": "Review preregistration and related documents for consistency; generate correction documents",
     "process_summary": "Iterative document review with section-by-section comparison; correction document generation for CC implementation",
@@ -345,8 +345,8 @@ High-level documentation aligned with RDA IG framework:
 ```markdown
 # Session Summary Query
 
-You are analysing a Claude Code session transcript in JSONL format. Each line 
-is a JSON object representing one event in the conversation (human messages, 
+You are analysing a Claude Code session transcript in JSONL format. Each line
+is a JSON object representing one event in the conversation (human messages,
 assistant messages, tool calls, tool results, thinking blocks).
 
 ## Task
@@ -357,7 +357,7 @@ Provide a structured summary including:
 What was the user trying to accomplish? (1-2 sentences)
 
 ### 2. Key Activities
-What major tasks were performed? (bullet list, 3-7 items, in rough 
+What major tasks were performed? (bullet list, 3-7 items, in rough
 chronological order)
 
 ### 3. Decisions Made
@@ -381,7 +381,7 @@ What was left unfinished or flagged for follow-up? (if any)
 
 ## Output Format
 
-Use markdown with the headers above. Be concise—this is a reference summary, 
+Use markdown with the headers above. Be concise—this is a reference summary,
 not a complete transcript. Aim for 300-500 words total.
 
 ## Session Data
@@ -396,7 +396,7 @@ not a complete transcript. Aim for 300-500 words total.
 ```markdown
 # Decision Extraction Query
 
-You are analysing a Claude Code session to identify decisions, conclusions, 
+You are analysing a Claude Code session to identify decisions, conclusions,
 and commitments made during the conversation.
 
 ## Task
@@ -422,7 +422,7 @@ For each item extracted:
 
 ## Guidance
 
-- Focus on substantive decisions, not trivial ones ("let's use markdown" is 
+- Focus on substantive decisions, not trivial ones ("let's use markdown" is
   trivial; "let's use Option A for the experimental design" is substantive)
 - Include decisions made by both human and assistant
 - Note if a decision was revisited or changed later in the conversation
@@ -440,7 +440,7 @@ For each item extracted:
 ```markdown
 # Artifact Extraction Query
 
-You are analysing a Claude Code session to identify all files that were 
+You are analysing a Claude Code session to identify all files that were
 created, modified, or significantly referenced.
 
 ## Task
@@ -451,14 +451,14 @@ Identify all artifacts (files) involved in the session:
 Files that did not exist before and were created during the session.
 Look for: `create_file` tool calls, `write` operations in bash
 
-### 2. Files Modified  
+### 2. Files Modified
 Existing files that were changed during the session.
-Look for: `str_replace` tool calls, `sed`/`echo >>` in bash, explicit 
+Look for: `str_replace` tool calls, `sed`/`echo >>` in bash, explicit
 mentions of updating files
 
 ### 3. Files Read/Referenced
 Files that were examined but not modified.
-Look for: `view` tool calls, `cat`/`head`/`tail` in bash, file content 
+Look for: `view` tool calls, `cat`/`head`/`tail` in bash, file content
 appearing in conversation
 
 ## Output Format
@@ -490,12 +490,12 @@ After the table, note:
 ```markdown
 # Methodology Extraction Query
 
-You are analysing a Claude Code session to extract methodology documentation 
+You are analysing a Claude Code session to extract methodology documentation
 suitable for a research methods section or supplementary materials.
 
 ## Task
 
-Document the methodology used in this session as if writing for a 
+Document the methodology used in this session as if writing for a
 methods section of a paper. Include:
 
 ### 1. Objective
@@ -529,8 +529,8 @@ What were the final outputs? How do they relate to the research objectives?
 
 ## Output Format
 
-Write in third person, past tense, suitable for inclusion in a methods 
-section. Aim for 200-400 words. Be specific about what was done, not 
+Write in third person, past tense, suitable for inclusion in a methods
+section. Aim for 200-400 words. Be specific about what was done, not
 what could be done.
 
 ## Session Data
@@ -545,7 +545,7 @@ what could be done.
 ```markdown
 # Error and Issue Extraction Query
 
-You are analysing a Claude Code session to identify errors, issues, 
+You are analysing a Claude Code session to identify errors, issues,
 problems, and their resolutions.
 
 ## Task
@@ -602,7 +602,7 @@ For each error/issue, note how it was resolved (if it was).
 
 ### 5.1 Purpose
 
-While LLM-intermediated access is preferred for analysis, a deterministic 
+While LLM-intermediated access is preferred for analysis, a deterministic
 script provides:
 
 1. Consistent, reproducible output
@@ -617,7 +617,7 @@ script provides:
 """
 Convert Claude Code session JSONL to human-readable Markdown.
 
-Usage: 
+Usage:
     python convert-to-markdown.py session.jsonl > session.md
     python convert-to-markdown.py session.jsonl --output session.md
 
@@ -695,12 +695,12 @@ def extract_messages(jsonl_path):
 def format_tool_call(tool_name, tool_input, tool_output, args):
     """Format a tool call for display."""
     input_preview = truncate(str(tool_input), 200)
-    
+
     if args.include_tool_output:
         output_text = str(tool_output)
     else:
         output_text = truncate(str(tool_output), args.max_tool_output)
-    
+
     content = f"""**Input:**
 ```
 {input_preview}
@@ -710,7 +710,7 @@ def format_tool_call(tool_name, tool_input, tool_output, args):
 ```
 {output_text}
 ```"""
-    
+
     return collapsible(f"🔧 Tool: {tool_name}", content, not args.no_collapse)
 
 
@@ -719,23 +719,23 @@ def format_thinking(thinking_text, args):
     if not args.include_thinking:
         preview = truncate(thinking_text, 200)
         return collapsible("💭 Thinking", f"```\n{preview}\n```", True)
-    return collapsible("💭 Thinking", f"```\n{thinking_text}\n```", 
+    return collapsible("💭 Thinking", f"```\n{thinking_text}\n```",
                        not args.no_collapse)
 
 
 def convert_session(messages, args):
     """Convert messages to Markdown."""
     lines = []
-    
+
     # Header
     lines.append("# Claude Code Session Transcript\n")
-    
+
     # Try to extract metadata
     first_ts = None
     last_ts = None
     turn_count = 0
     tool_calls = {}
-    
+
     for msg in messages:
         ts = msg.get('timestamp')
         if ts:
@@ -747,7 +747,7 @@ def convert_session(messages, args):
         if msg.get('type') == 'tool_use':
             tool_name = msg.get('name', 'unknown')
             tool_calls[tool_name] = tool_calls.get(tool_name, 0) + 1
-    
+
     # Metadata section
     lines.append("## Session Metadata\n")
     lines.append(f"- **Start**: {format_timestamp(first_ts)}")
@@ -757,15 +757,15 @@ def convert_session(messages, args):
         tools_str = ", ".join(f"{k}: {v}" for k, v in sorted(tool_calls.items()))
         lines.append(f"- **Tool calls**: {tools_str}")
     lines.append("")
-    
+
     # Conversation
     lines.append("## Conversation\n")
     lines.append("---\n")
-    
+
     current_turn = 0
     for msg in messages:
         role = msg.get('role', msg.get('type', 'unknown'))
-        
+
         if role == 'human':
             current_turn += 1
             content = msg.get('content', '')
@@ -776,7 +776,7 @@ def convert_session(messages, args):
             lines.append(f"### 👤 Human (Turn {current_turn})\n")
             lines.append(content)
             lines.append("\n---\n")
-            
+
         elif role == 'assistant':
             content = msg.get('content', '')
             if isinstance(content, list):
@@ -799,30 +799,30 @@ def convert_session(messages, args):
                 lines.append(f"### 🤖 Assistant\n")
                 lines.append(str(content))
             lines.append("\n---\n")
-            
+
         elif role == 'tool_result':
             # Tool results are usually shown inline with tool calls
             pass
-    
+
     return '\n'.join(lines)
 
 
 def main():
     args = parse_args()
-    
+
     if not args.jsonl_file.exists():
         print(f"Error: File not found: {args.jsonl_file}")
         return 1
-    
+
     messages = extract_messages(args.jsonl_file)
     markdown = convert_session(messages, args)
-    
+
     if args.output:
         args.output.write_text(markdown)
         print(f"Written to {args.output}")
     else:
         print(markdown)
-    
+
     return 0
 
 
@@ -860,7 +860,7 @@ The catalog provides a searchable index of all archived sessions:
   "schema_version": "1.0",
   "generated_at": "2026-01-08T12:00:00Z",
   "project": "vlm-burial-mound-detection",
-  
+
   "sessions": [
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -889,7 +889,7 @@ The catalog provides a searchable index of all archived sessions:
       "continues": null
     }
   ],
-  
+
   "summary": {
     "total_sessions": 15,
     "total_duration_hours": 28.5,
@@ -954,7 +954,7 @@ The catalog provides a searchable index of all archived sessions:
 
 ### 7.1 Archive Workflow
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                     CC Session Ends                              │
 └─────────────────────────────────────────────────────────────────┘
@@ -1004,7 +1004,7 @@ A script to automate steps 2-4:
 
 ### 7.3 Query Workflow
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │  Need to access session content                                  │
 └─────────────────────────────────────────────────────────────────┘
@@ -1093,7 +1093,7 @@ The session directory structure is compatible with RO-Crate packaging:
     },
     {
       "@id": "session.meta.json",
-      "@type": "File", 
+      "@type": "File",
       "name": "Session metadata",
       "encodingFormat": "application/json",
       "conformsTo": "https://example.org/schemas/genai-session-meta/v1.0"

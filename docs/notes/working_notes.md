@@ -94,7 +94,7 @@ To address the False Positive Rate on "Sparse" maps (e.g., Lesovo), we identifie
 - **Problem:** Without negative examples, the model tries to force-fit noise into known classes.
 - **Solution:** We adopted a **Balanced Few-Shot** strategy (3 Positive vs 3 Negative).
   - **Positives:** Burial Mound, Settlement Mound, Benchmark/Triangulation.
-  - **Negatives:** 
+  - **Negatives:**
     1.  **Sparse/Linear:** Contours and roads (no mounds).
     2.  **Topography:** Complex river/valley systems (no mounds).
     3.  **Urban/Clutter:** Buildings and dense features (no mounds).
@@ -363,7 +363,7 @@ To satisfy rigorous publication standards without "metric hacking," we have defi
 
 ## Observation 29: Variability Deep Dive (Phase 14)
 *   **Context**: Analyzed 10 runs of `gemini-3-pro-preview` (v3.2).
-*   **Individual Performance**: 
+*   **Individual Performance**:
     *   **Mean F1**: 0.850 (Std: 0.027)
     *   **Best Run**: F1 0.89 (Run 04)
     *   **Worst Run**: F1 0.79 (Run 10)
@@ -400,7 +400,7 @@ To satisfy rigorous publication standards without "metric hacking," we have defi
 *   **Context**: Variability Study on `gemini-3-flash-preview` (N=30 independent runs).
 *   **Result**: F1 0.920 at Agreement 10/30 (33%).
 *   **Comparison**: This **matches** the peak performance of Gemini 3 Pro (0.918 at 4/10).
-*   **Economic Implication**: 
+*   **Economic Implication**:
     *   Since Flash is ~20x cheaper than Pro, running it 30 times is roughly 1.5x the cost of *one* Pro run.
     *   Running Pro 10 times (Gold Standard) costs ~10x.
     *   Therefore, the **Flash Swarm** is significantly cheaper than the Pro Gold Standard for equal quality.
@@ -471,7 +471,7 @@ We attempted to combine the best of both worlds in **v3.7** (Clean Instruction +
     *   **Recall** recovered to **0.80+** (v3.5 levels).
     *   **Precision** remained low (**0.53**), similar to v3.5.
     *   **Consensus (3-of-5)**: FAILED (**0.78**). Without text constraints, the hard negative images alone were insufficient to filter benchmarks effectively in a swarm vote.
-*   **The Dilemma**: 
+*   **The Dilemma**:
     *   Text instructions (v3.6) increase Precision but kill Recall (Modality Interference).
     *   Removing text (v3.7) restores Recall but kills Precision (Hallucinations).
 *   **The Solution (Research-Backed)**: **Two-Stage Architecture ("Propose-and-Verify")**.
@@ -528,7 +528,7 @@ Request: Catalog source of current reference examples (User Provided vs AI Mined
 ## Observation 40: v4.1 Verification Results (Augmented Recall)
 **Date:** 2024-05-18
 **Hypothesis:** Adding "Hard Positive" examples (mined False Negatives from v4.0) to the v4.0 Proposer will increase Recall > 0.83 by exposing the model to the specific edge cases it previously missed.
-**Method:** 
+**Method:**
 1. Mined 12 False Negative crops from v4.0 runs (aggregated from `_fn.geojson`).
 2. Created `v4.1_recall_augmented` config, adding these 12 images as "Positive Example: Hard Case (Mined)".
 3. Ran N=5 variability study with `gemini-3-flash-preview`.
@@ -558,7 +558,7 @@ Request: Catalog source of current reference examples (User Provided vs AI Mined
 
 ## Observation 42: High Temperature Optimization (Union Recall 0.94)
 **Date:** 2024-05-18
-**Context:** 
+**Context:**
 We hypothesized that increasing `temperature` from 0.1 to 0.7 might increase Union Recall by encouraging the model to "guess" differently on hard examples across multiple runs. We tested `v4.2` (same prompt as v4.1, Temp 0.7) on the **Training Set** (N=20).
 
 **Results (N=5):**
@@ -576,8 +576,8 @@ We hypothesized that increasing `temperature` from 0.1 to 0.7 might increase Uni
 
 ## Observation 43: Temperature Saturation (Temp 1.0)
 **Date:** 2024-05-18
-**Context:** 
-We pushed `temperature` to **1.0** to test the limits of variance. 
+**Context:**
+We pushed `temperature` to **1.0** to test the limits of variance.
 **Results (N=5):**
 | Metric | Mean (Temp 1.0) | Union (Temp 1.0) | Comparison (Temp 0.7) |
 | :--- | :--- | :--- | :--- |
@@ -608,10 +608,10 @@ We have successfully built and validated the **Stage 1 Proposer**.
 
 ## Strategic Decision: Reserve Set Activation (Holdout Test)
 **Date:** 2024-05-18
-**Context:** 
+**Context:**
 We have achieved high recall (0.83-0.89) on the initial 20-tile set ("Training Set"). However, this performance may be overfitted, as we iteratively refined prompts and mined examples specifically to solve these 20 tiles.
 
-**Decision:** 
+**Decision:**
 Activate a **Reserve Set** of 20 *new* tiles to serve as an unbiased "Test Set".
 
 **Methodology:**
@@ -628,7 +628,7 @@ Activate a **Reserve Set** of 20 *new* tiles to serve as an unbiased "Test Set".
 
 ## Observation 41: Holdout Validation Results (Generalization Confirmed)
 **Date:** 2024-05-18
-**Context:** 
+**Context:**
 We tested `v4.1_recall_augmented` on the new `holdout_manifest.json` (20 unseen tiles, stratified 5 per map).
 **Target:** Recall > 0.80 on unseen data to disprove overfitting.
 
@@ -691,7 +691,7 @@ We will **ADOPT** the **Flash 2/5 Consensus Strategy** (using Prompt v3.2) as th
 **Date**: 2025-12-21
 **Experiment**: Replicating the "Flash Swarm" success (N=30) using the modern `v3.5` (Image-Only) prompt at High Temperature (1.0).
 
-**Context**: 
+**Context**:
 History (Observation 31) suggested **Gemini 3 Flash (N=30)** achieved F1 0.92 using the verbose `v3.2` (Text + Image) prompt. We hypothesized that removing the text ("Image-Only") would improve this further by reducing text-induced bias.
 
 **Result**: **Catastrophic Failure**.
@@ -708,7 +708,7 @@ History (Observation 31) suggested **Gemini 3 Flash (N=30)** achieved F1 0.92 us
 Unlike `v3.2` (which contained detailed text definitions of mounds), the Image-Only `v3.5` prompt caused Gemini 3 Flash to "detach" from reality at high temperatures. Instead of converging on true mounds, it hallucinated unique, non-repeating objects on every pass. This suggests the **Text Instructions** in v3.2 acted as necessary "rails" or "anchors" to constrain the high-temperature randomness.
 
 **Skepticism & Future Investigation**:
-**Crucial Note**: We view this result with extreme skepticism. It is counter-intuitive that removing text constraints would cause *total* collapse (F1 0.92 -> 0.00). 
+**Crucial Note**: We view this result with extreme skepticism. It is counter-intuitive that removing text constraints would cause *total* collapse (F1 0.92 -> 0.00).
 -   Is it possible the `v3.2` success was a fluke or misreported?
 -   Is there a subtle configuration bug (e.g., image resolution, resizing) in the `v3.5` runner?
 -   Does Flash *require* text to ground its visual reasoning?
@@ -908,7 +908,7 @@ The F1 scores of 0.85-0.92 cited throughout the working notes (Observations 28, 
 ### The Actual Historical Holdout Performance
 Re-evaluating the archived v4.1 holdout runs (referenced in Observation 41) with consistent methodology reveals:
 
-```
+```text
 ARCHIVED v4.1 HOLDOUT RUNS (20m buffer, 26 GT mounds)
 ================================================================================
 Run                                    Det   TP   FP   FN   Prec    Rec     F1
@@ -928,7 +928,7 @@ Observation 41 correctly reported Recall (~0.81) and Precision (~0.33), but **F1
 ### Current Performance: Actually the Best Ever
 Running v3.2, v3.5, v4.1, and v4.2 on holdout at temperature=0.3:
 
-```
+```text
 CURRENT HOLDOUT RUNS (20m buffer, 26 GT mounds)
 ================================================================================
 Version      Det   TP   FP   FN   Precision   Recall      F1
