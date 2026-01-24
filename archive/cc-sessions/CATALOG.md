@@ -1,6 +1,6 @@
 # CC Session Catalog
 
-*Generated: 2026-01-24 15:27:21*
+*Generated: 2026-01-24 16:06:05*
 
 ## Overview
 
@@ -21,7 +21,7 @@
 
 - **Date**: 2026-01-18 11:17
 - **Duration**: 2m
-- **Directory**: `vlm-burial-mound-detection/2026-01-18T11-17_0e36df87`
+- **Directory**: `vlm-burial-mound-detection/2026-01-18T11-17_session-archiving-and-metadata-updates`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 5 turns, 4 tool calls, 5 thinking blocks (~640 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -33,7 +33,7 @@
 
 - **Date**: 2026-01-17 12:38
 - **Duration**: 22h 37m
-- **Directory**: `vlm-burial-mound-detection/2026-01-17T12-38_d40e04c4`
+- **Directory**: `vlm-burial-mound-detection/2026-01-17T12-38_osf-documentation-implementation-and`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 401 turns, 359 tool calls, 317 thinking blocks (~26,525 tokens)
 - **Artifacts**: 19 created, 13 modified, 25 referenced
@@ -45,7 +45,7 @@
 
 - **Date**: 2026-01-17 03:43
 - **Duration**: 27h 37m
-- **Directory**: `vlm-burial-mound-detection/2026-01-17T03-43_49cb5c21`
+- **Directory**: `vlm-burial-mound-detection/2026-01-17T03-43_osf-preparation-linting-tests-config`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 402 turns, 352 tool calls, 342 thinking blocks (~31,383 tokens)
 - **Artifacts**: 12 created, 8 modified, 18 referenced
@@ -57,7 +57,7 @@
 
 - **Date**: 2026-01-12 11:35
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent-ab13a90`
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent_appendix-source-of-truth-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -69,7 +69,7 @@
 
 - **Date**: 2026-01-12 11:35
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent-a14c2f3`
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent_config-file-structure-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 15 referenced
@@ -81,7 +81,7 @@
 
 - **Date**: 2026-01-12 11:35
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent-af3c4df`
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent_instruction-file-structure-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 10 turns, 9 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
@@ -93,7 +93,7 @@
 
 - **Date**: 2026-01-12 05:59
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent-a7b17e6`
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent_h5-appendix-structure-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -105,7 +105,7 @@
 
 - **Date**: 2026-01-12 05:59
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent-a777656`
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent_execution-plan-structure-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -117,7 +117,7 @@
 
 - **Date**: 2026-01-12 05:59
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent-a66ce8f`
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent_preregistration-hypothesis-sections`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 11 turns, 10 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -129,7 +129,7 @@
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 18h 32m
-- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_5e52df73`
+- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_cc-session-archiving-v1-1-implementation`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 242 turns, 216 tool calls, 199 thinking blocks (~17,082 tokens)
 - **Artifacts**: 16 created, 0 modified, 50 referenced
@@ -141,7 +141,7 @@
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_agent-a061ffc`
+- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_agent_cache-warmup-agent`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -153,7 +153,7 @@
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_agent-a626649`
+- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_agent_codebase-structure-analysis`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 4 turns, 3 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -165,7 +165,7 @@
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_agent-a529a91`
+- **Directory**: `vlm-burial-mound-detection/2026-01-08T07-58_agent_read-only-file-search-warmup`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -177,7 +177,7 @@
 
 - **Date**: 2026-01-08 02:47
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-08T02-47_agent-a777678`
+- **Directory**: `vlm-burial-mound-detection/2026-01-08T02-47_agent_preregistration-file-discovery`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 24 turns, 23 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
@@ -189,7 +189,7 @@
 
 - **Date**: 2026-01-07 13:16
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T13-16_agent-ace0ba9`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T13-16_agent_archiving-candidates-search`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 28 turns, 27 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 11 referenced
@@ -201,7 +201,7 @@
 
 - **Date**: 2026-01-07 13:16
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T13-16_agent-a6d92cb`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T13-16_agent_antigravity-preliminary-work-search`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 5 referenced
@@ -213,7 +213,7 @@
 
 - **Date**: 2026-01-07 13:16
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T13-16_agent-af00f74`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T13-16_agent_repository-structure-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 20 turns, 19 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -225,7 +225,7 @@
 
 - **Date**: 2026-01-07 11:17
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T11-17_agent-a43dfa2`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T11-17_agent_multi-scale-voting-data-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 24 turns, 23 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 6 referenced
@@ -237,7 +237,7 @@
 
 - **Date**: 2026-01-07 02:46
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T02-46_agent-a3ac931`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T02-46_agent_detection-config-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 32 turns, 31 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 10 referenced
@@ -249,7 +249,7 @@
 
 - **Date**: 2026-01-07 02:46
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T02-46_agent-a9e66e1`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T02-46_agent_tiling-pipeline-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 7 referenced
@@ -261,7 +261,7 @@
 
 - **Date**: 2026-01-07 02:46
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T02-46_agent-a26f0ca`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T02-46_agent_tile-selection-data-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 7 referenced
@@ -273,7 +273,7 @@
 
 - **Date**: 2026-01-07 00:32
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T00-32_agent-a676537`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T00-32_agent_prompts-appendix-hypothesis-check`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 4 turns, 3 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -285,7 +285,7 @@
 
 - **Date**: 2026-01-07 00:32
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-07T00-32_agent-a8892c1`
+- **Directory**: `vlm-burial-mound-detection/2026-01-07T00-32_agent_preregistration-structure-mapping`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -297,7 +297,7 @@
 
 - **Date**: 2026-01-06 22:04
 - **Duration**: 33h 21m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T22-04_f4cb3541`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T22-04_tile-size-pilot-and-preregistration`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1312 turns, 1232 tool calls, 976 thinking blocks (~84,090 tokens)
 - **Artifacts**: 19 created, 46 modified, 37 referenced
@@ -309,7 +309,7 @@
 
 - **Date**: 2026-01-06 22:04
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T22-04_agent-a1033ea`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T22-04_agent_cache-warmup-agent`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -321,7 +321,7 @@
 
 - **Date**: 2026-01-06 22:04
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T22-04_agent-a2841dc`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T22-04_agent_read-only-file-search-warmup`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -333,7 +333,7 @@
 
 - **Date**: 2026-01-06 13:17
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T13-17_agent-a9de2be`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T13-17_agent_tile-processing-code-inventory`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 33 turns, 32 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 13 referenced
@@ -345,7 +345,7 @@
 
 - **Date**: 2026-01-06 10:52
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T10-52_agent-adea462`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T10-52_agent_companion-document-discrepancy-check`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 7 turns, 6 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 5 referenced
@@ -357,7 +357,7 @@
 
 - **Date**: 2026-01-06 10:52
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T10-52_agent-aaaca52`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T10-52_agent_preregistration-reference-extraction`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 16 turns, 15 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -369,7 +369,7 @@
 
 - **Date**: 2026-01-06 00:15
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T00-15_agent-a1956e5`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T00-15_agent_execution-plan-structure-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -381,7 +381,7 @@
 
 - **Date**: 2026-01-06 00:15
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T00-15_agent-ad90464`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T00-15_agent_prompts-appendix-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -393,7 +393,7 @@
 
 - **Date**: 2026-01-06 00:15
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-06T00-15_agent-a60db94`
+- **Directory**: `vlm-burial-mound-detection/2026-01-06T00-15_agent_preregistration-structure-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 10 turns, 9 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
@@ -405,7 +405,7 @@
 
 - **Date**: 2026-01-03 07:13
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T07-13_agent-a80721e`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T07-13_agent_holdout-tile-expansion-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 8 turns, 7 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 4 referenced
@@ -417,7 +417,7 @@
 
 - **Date**: 2026-01-03 07:13
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T07-13_agent-ab699c3`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T07-13_agent_holdout-expansion-preregistration-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 3 turns, 2 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 2 referenced
@@ -429,7 +429,7 @@
 
 - **Date**: 2026-01-03 05:14
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T05-14_agent-a320389`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T05-14_agent_evaluation-workflow-analysis`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 22 turns, 21 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 9 referenced
@@ -441,7 +441,7 @@
 
 - **Date**: 2026-01-03 04:52
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-52_agent-ac01dee`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-52_agent_bootstrap-ci-implementation-check`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
@@ -453,7 +453,7 @@
 
 - **Date**: 2026-01-03 04:45
 - **Duration**: 80h 33m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-45_a76fa1a1`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-45_preregistration-v4-finalisation`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 837 turns, 777 tool calls, 618 thinking blocks (~55,899 tokens)
 - **Artifacts**: 3 created, 13 modified, 32 referenced
@@ -465,7 +465,7 @@
 
 - **Date**: 2026-01-03 04:44
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-44_agent-ab6d1b7`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-44_agent_cache-warmup-agent`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -477,7 +477,7 @@
 
 - **Date**: 2026-01-03 04:44
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-44_agent-a3a6134`
+- **Directory**: `vlm-burial-mound-detection/2026-01-03T04-44_agent_read-only-file-search-warmup`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -489,7 +489,7 @@
 
 - **Date**: 2026-01-02 22:17
 - **Duration**: 5h 20m
-- **Directory**: `vlm-burial-mound-detection/2026-01-02T22-17_ed602fc1`
+- **Directory**: `vlm-burial-mound-detection/2026-01-02T22-17_preregistration-encoding-and-reference-fixes`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 160 turns, 147 tool calls, 81 thinking blocks (~8,588 tokens)
 - **Artifacts**: 0 created, 3 modified, 3 referenced
@@ -501,7 +501,7 @@
 
 - **Date**: 2026-01-02 22:17
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-02T22-17_agent-aa3cfcd`
+- **Directory**: `vlm-burial-mound-detection/2026-01-02T22-17_agent_cache-warmup-agent`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -513,7 +513,7 @@
 
 - **Date**: 2026-01-02 22:17
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-02T22-17_agent-a303a5e`
+- **Directory**: `vlm-burial-mound-detection/2026-01-02T22-17_agent_read-only-file-search-warmup`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -525,7 +525,7 @@
 
 - **Date**: 2026-01-02 00:02
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2026-01-02T00-02_agent-adfc266`
+- **Directory**: `vlm-burial-mound-detection/2026-01-02T00-02_agent_testing-infrastructure-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 33 turns, 32 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 5 referenced
@@ -537,7 +537,7 @@
 
 - **Date**: 2026-01-01 23:08
 - **Duration**: 3m
-- **Directory**: `vlm-burial-mound-detection/2026-01-01T23-08_agent-a1f0cbe`
+- **Directory**: `vlm-burial-mound-detection/2026-01-01T23-08_agent_llm-provider-metadata-research`
 - **Model**: claude-sonnet-4-5-20250929
 - **Statistics**: 13 turns, 12 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -549,7 +549,7 @@
 
 - **Date**: 2026-01-01 23:08
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2026-01-01T23-08_agent-ab1640f`
+- **Directory**: `vlm-burial-mound-detection/2026-01-01T23-08_agent_llm-api-script-search`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 6 referenced
@@ -561,7 +561,7 @@
 
 - **Date**: 2025-12-31 06:17
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2025-12-31T06-17_agent-abe3854`
+- **Directory**: `vlm-burial-mound-detection/2025-12-31T06-17_agent_fair4rs-compliance-audit`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 20 turns, 19 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 10 referenced
@@ -573,7 +573,7 @@
 
 - **Date**: 2025-12-31 06:17
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2025-12-31T06-17_agent-abbc59e`
+- **Directory**: `vlm-burial-mound-detection/2025-12-31T06-17_agent_archive-structure-comparison`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 43 turns, 42 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
@@ -585,7 +585,7 @@
 
 - **Date**: 2025-12-31 06:17
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2025-12-31T06-17_agent-ae29ce9`
+- **Directory**: `vlm-burial-mound-detection/2025-12-31T06-17_agent_preregistration-documentation-status`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 7 referenced
@@ -597,7 +597,7 @@
 
 - **Date**: 2025-12-31 02:36
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2025-12-31T02-36_agent-a31c0a1`
+- **Directory**: `vlm-burial-mound-detection/2025-12-31T02-36_agent_script-inventory-assessment`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 24 turns, 23 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 20 referenced
@@ -609,7 +609,7 @@
 
 - **Date**: 2025-12-31 01:34
 - **Duration**: 52h 38m
-- **Directory**: `vlm-burial-mound-detection/2025-12-31T01-34_85c5dc6e`
+- **Directory**: `vlm-burial-mound-detection/2025-12-31T01-34_llm-metadata-library-and-preregistration`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 735 turns, 679 tool calls, 501 thinking blocks (~39,918 tokens)
 - **Artifacts**: 34 created, 31 modified, 30 referenced
@@ -621,7 +621,7 @@
 
 - **Date**: 2025-12-23 07:25
 - **Duration**: 186h
-- **Directory**: `vlm-burial-mound-detection/2025-12-23T07-25_76a6bf00`
+- **Directory**: `vlm-burial-mound-detection/2025-12-23T07-25_prompt-reorganisation-and-preregistration`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 431 turns, 376 tool calls, 344 thinking blocks (~34,200 tokens)
 - **Artifacts**: 20 created, 9 modified, 14 referenced
@@ -633,7 +633,7 @@
 
 - **Date**: 2025-12-23 07:25
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2025-12-23T07-25_agent-a504cee`
+- **Directory**: `vlm-burial-mound-detection/2025-12-23T07-25_agent_cache-warmup-agent`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -645,7 +645,7 @@
 
 - **Date**: 2025-12-23 07:25
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2025-12-23T07-25_agent-afd8376`
+- **Directory**: `vlm-burial-mound-detection/2025-12-23T07-25_agent_read-only-file-search-warmup`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -657,7 +657,7 @@
 
 - **Date**: 2025-12-22 04:41
 - **Duration**: 3m
-- **Directory**: `vlm-burial-mound-detection/2025-12-22T04-41_agent-a5b8e41`
+- **Directory**: `vlm-burial-mound-detection/2025-12-22T04-41_agent_two-stage-pipeline-code-audit`
 - **Model**: claude-sonnet-4-5-20250929
 - **Statistics**: 30 turns, 29 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
@@ -669,7 +669,7 @@
 
 - **Date**: 2025-12-22 03:05
 - **Duration**: 1m
-- **Directory**: `vlm-burial-mound-detection/2025-12-22T03-05_agent-abb92d3`
+- **Directory**: `vlm-burial-mound-detection/2025-12-22T03-05_agent_initial-codebase-exploration`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 45 turns, 44 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 22 referenced
@@ -681,7 +681,7 @@
 
 - **Date**: 2025-12-22 03:05
 - **Duration**: 27h 50m
-- **Directory**: `vlm-burial-mound-detection/2025-12-22T03-05_6c7214f9`
+- **Directory**: `vlm-burial-mound-detection/2025-12-22T03-05_vlm-pipeline-development-and-codebase`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 920 turns, 836 tool calls, 648 thinking blocks (~52,867 tokens)
 - **Artifacts**: 17 created, 20 modified, 105 referenced
@@ -693,7 +693,7 @@
 
 - **Date**: 2025-12-22 02:51
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2025-12-22T02-51_agent-a37c175`
+- **Directory**: `vlm-burial-mound-detection/2025-12-22T02-51_agent_codebase-exploration-warmup`
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -705,7 +705,7 @@
 
 - **Date**: 2025-12-22 02:51
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/2025-12-22T02-51_agent-a51ccca`
+- **Directory**: `vlm-burial-mound-detection/2025-12-22T02-51_agent_read-only-file-search-warmup`
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -717,7 +717,7 @@
 
 - **Date**: Unknown
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/36bb4a54`
+- **Directory**: `vlm-burial-mound-detection/2026-01-15T08-44_empty-abandoned-session`
 - **Model**: None
 - **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -729,7 +729,7 @@
 
 - **Date**: Unknown
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/13d18f5b`
+- **Directory**: `vlm-burial-mound-detection/2026-01-14T13-55_empty-abandoned-session_7fe297a3`
 - **Model**: None
 - **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -741,7 +741,7 @@
 
 - **Date**: Unknown
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/e8acccf2`
+- **Directory**: `vlm-burial-mound-detection/2026-01-17T16-32_empty-abandoned-session`
 - **Model**: None
 - **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -753,7 +753,7 @@
 
 - **Date**: Unknown
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/a9d3b427`
+- **Directory**: `vlm-burial-mound-detection/2026-01-13T10-20_empty-abandoned-session`
 - **Model**: None
 - **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -765,7 +765,7 @@
 
 - **Date**: Unknown
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/8cafd1ca`
+- **Directory**: `vlm-burial-mound-detection/2026-01-14T13-55_empty-abandoned-session`
 - **Model**: None
 - **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
@@ -777,7 +777,7 @@
 
 - **Date**: Unknown
 - **Duration**: 0m
-- **Directory**: `vlm-burial-mound-detection/7fe297a3`
+- **Directory**: `vlm-burial-mound-detection/2026-01-17T13-50_empty-abandoned-session`
 - **Model**: None
 - **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
