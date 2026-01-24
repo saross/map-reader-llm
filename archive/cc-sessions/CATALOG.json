@@ -1,109 +1,326 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-01-23T22:54:46.831789",
+  "generated_at": "2026-01-24T15:27:21.639531",
   "total_sessions": 64,
   "projects": {
     "vlm-burial-mound-detection": {
       "name": "vlm-burial-mound-detection",
-      "session_count": 49,
-      "total_duration_minutes": 24269
+      "session_count": 64,
+      "total_duration_minutes": 27285
     }
   },
   "sessions": [
     {
       "id": "0e36df87-0938-44c6-a210-63d8d6463f55",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-18T11-17_0e36df87",
+      "title": "Session archiving and metadata updates",
+      "purpose": "Archive recent CC sessions and systematically update metadata for all 15 newly archived sessions, including agent sub-sessions, empty sessions, and large main sessions.",
+      "tags": [
+        "archiving",
+        "metadata",
+        "session-management",
+        "housekeeping"
+      ],
       "started_at": "2026-01-18T11:17:51.013Z",
       "duration_minutes": 2,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 5,
+        "tool_calls": 4,
+        "thinking_blocks": 5
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 1
+      },
+      "thinking_blocks_tokens": 640
     },
     {
       "id": "d40e04c4-0c5b-4b59-a01d-955e77462dde",
       "project": "vlm-burial-mound-detection",
-      "title": "OSF documentation implementation and metadata updates",
       "directory": "vlm-burial-mound-detection/2026-01-17T12-38_d40e04c4",
+      "title": "OSF documentation implementation and metadata updates",
+      "purpose": "Implementation of the documentation plan from previous session: created hypothesis tracking, decisions log, analysis summary, troubleshooting guide, visualisation guide, updated FAIR metadata files, and completed test framework.",
+      "tags": [
+        "continuation",
+        "documentation",
+        "OSF-preparation",
+        "testing",
+        "FAIR-metadata",
+        "preregistration"
+      ],
       "started_at": "2026-01-17T12:38:58.837Z",
       "duration_minutes": 1357,
-      "tags": ["documentation", "osf-preparation", "fair-metadata", "preregistration"],
-      "purpose": "Implementation of the documentation plan: created hypothesis tracking, decisions log, analysis summary, troubleshooting guide, visualisation guide, updated FAIR metadata files.",
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 401,
+        "tool_calls": 359,
+        "thinking_blocks": 317
+      },
       "relationships": {
         "continues": "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
-        "continuedBy": null,
-        "isPartOf": ["vlm-burial-mound-detection"]
-      }
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 19,
+        "modified": 13,
+        "referenced": 25
+      },
+      "thinking_blocks_tokens": 26525
     },
     {
       "id": "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
       "project": "vlm-burial-mound-detection",
-      "title": "OSF preparation: linting, tests, config verification",
       "directory": "vlm-burial-mound-detection/2026-01-17T03-43_49cb5c21",
+      "title": "OSF preparation: linting, tests, config verification",
+      "purpose": "Comprehensive session continuing from 5e52df73 covering script linting, F821 bug fixes, test suite creation, config alignment verification, and documentation planning for OSF submission.",
+      "tags": [
+        "continuation",
+        "linting",
+        "testing",
+        "config-verification",
+        "OSF-preparation",
+        "documentation",
+        "preregistration"
+      ],
       "started_at": "2026-01-17T03:43:16.886Z",
       "duration_minutes": 1657,
-      "tags": ["linting", "testing", "config-verification", "osf-preparation", "preregistration"],
-      "purpose": "Comprehensive session covering script linting, F821 bug fixes, test suite creation, config alignment verification, and documentation planning for OSF submission.",
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 402,
+        "tool_calls": 352,
+        "thinking_blocks": 342
+      },
       "relationships": {
         "continues": "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
-        "continuedBy": "d40e04c4-0c5b-4b59-a01d-955e77462dde",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
-      }
+      },
+      "artifact_counts": {
+        "created": 12,
+        "modified": 8,
+        "referenced": 18
+      },
+      "thinking_blocks_tokens": 31383
     },
     {
       "id": "agent-ab13a90",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-12T11-35_agent-ab13a90",
+      "title": "Appendix source-of-truth analysis",
+      "purpose": "Explore how instruction files and config schemas are documented in the appendix to identify what elements need consistency checking against actual prompt/config files.",
+      "tags": [
+        "exploration",
+        "appendix",
+        "consistency-review",
+        "documentation",
+        "validation"
+      ],
       "started_at": "2026-01-12T11:35:35.969Z",
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-haiku-4-5-20251001",
+      "statistics": {
+        "turns": 2,
+        "tool_calls": 1,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 1
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "agent-a14c2f3",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-12T11-35_agent-a14c2f3",
+      "title": "Config file structure analysis",
+      "purpose": "Explore detection and library config files to understand JSON structure, field patterns, and identify elements for documentation consistency verification.",
+      "tags": [
+        "exploration",
+        "configs",
+        "consistency-review",
+        "H4",
+        "H5",
+        "H8"
+      ],
       "started_at": "2026-01-12T11:35:35.968Z",
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-haiku-4-5-20251001",
+      "statistics": {
+        "turns": 18,
+        "tool_calls": 17,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 15
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "agent-af3c4df",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-12T11-35_agent-af3c4df",
+      "title": "Instruction file structure analysis",
+      "purpose": "Explore prompt library instruction files to understand structure, variation patterns across M/E levels and H5 variants, for consistency review planning.",
+      "tags": [
+        "exploration",
+        "prompts",
+        "system-instructions",
+        "consistency-review",
+        "H5"
+      ],
       "started_at": "2026-01-12T11:35:35.965Z",
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-haiku-4-5-20251001",
+      "statistics": {
+        "turns": 10,
+        "tool_calls": 9,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 8
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "agent-a7b17e6",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-12T05-59_agent-a7b17e6",
+      "title": "H5 appendix structure exploration",
+      "purpose": "Explore the preregistration appendix to understand H5 prompt style documentation structure for planning updates from None/Images-only/Text+Images to Minimal/Terse/Verbose naming.",
+      "tags": [
+        "exploration",
+        "H5",
+        "preregistration",
+        "documentation",
+        "refactoring"
+      ],
       "started_at": "2026-01-12T05:59:51.733Z",
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-haiku-4-5-20251001",
+      "statistics": {
+        "turns": 2,
+        "tool_calls": 1,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 1
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "agent-a777656",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-12T05-59_agent-a777656",
+      "title": "Execution plan structure exploration",
+      "purpose": "Explore the execution plan to understand phase structure, strand organisation, and H4/H5/H8 factor references for planning redesign updates.",
+      "tags": [
+        "exploration",
+        "H5",
+        "H8",
+        "execution-plan",
+        "preregistration",
+        "refactoring"
+      ],
       "started_at": "2026-01-12T05:59:51.732Z",
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-haiku-4-5-20251001",
+      "statistics": {
+        "turns": 2,
+        "tool_calls": 1,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 1
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "agent-a66ce8f",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-12T05-59_agent-a66ce8f",
+      "title": "Preregistration hypothesis sections exploration",
+      "purpose": "Explore preregistration.md to understand the structure of H4, H5, H8 hypothesis sections and strand descriptions for planning redesign updates.",
+      "tags": [
+        "exploration",
+        "H4",
+        "H5",
+        "H8",
+        "preregistration",
+        "hypotheses",
+        "refactoring"
+      ],
       "started_at": "2026-01-12T05:59:51.729Z",
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": "claude-haiku-4-5-20251001",
+      "statistics": {
+        "turns": 11,
+        "tool_calls": 10,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 1
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
@@ -111,7 +328,13 @@
       "directory": "vlm-burial-mound-detection/2026-01-08T07-58_5e52df73",
       "title": "CC session archiving v1.1 implementation",
       "purpose": "Implemented v1.1 session archiving schema with thinking blocks ethics, relationships vocabulary, artifacts tracking, tool output bytes, and archive-defaults.yaml.",
-      "tags": ["implementation", "session-archiving", "transparency", "v1.1-schema", "infrastructure"],
+      "tags": [
+        "implementation",
+        "session-archiving",
+        "transparency",
+        "v1.1-schema",
+        "infrastructure"
+      ],
       "started_at": "2026-01-08T07:58:58.105Z",
       "duration_minutes": 1112,
       "model": "claude-opus-4-5-20251101",
@@ -122,7 +345,6 @@
       },
       "relationships": {
         "continues": "f4cb3541-2e17-40dd-a94e-1e114107f55b",
-        "continuedBy": "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -138,9 +360,13 @@
       "id": "agent-a061ffc",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-08T07-58_agent-a061ffc",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Cache Warmup Agent",
+      "purpose": "Sub-agent spawned to prime Claude Code's context cache before main session work",
+      "tags": [
+        "warmup",
+        "cache-priming",
+        "sub-agent"
+      ],
       "started_at": "2026-01-08T07:58:12.500Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -166,9 +392,13 @@
       "id": "agent-a626649",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-08T07-58_agent-a626649",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Codebase Structure Analysis",
+      "purpose": "Sub-agent analysed project structure using Bash and Glob commands",
+      "tags": [
+        "exploration",
+        "codebase-analysis",
+        "sub-agent"
+      ],
       "started_at": "2026-01-08T07:58:12.499Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -194,9 +424,14 @@
       "id": "agent-a529a91",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-08T07-58_agent-a529a91",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Read-Only File Search Warmup",
+      "purpose": "Sub-agent initialised as read-only file search specialist for codebase exploration",
+      "tags": [
+        "warmup",
+        "file-search",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-08T07:58:12.496Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -222,9 +457,15 @@
       "id": "agent-a777678",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-08T02-47_agent-a777678",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Preregistration File Discovery",
+      "purpose": "Sub-agent found all preregistration-related files to understand document structure and synchronisation requirements",
+      "tags": [
+        "exploration",
+        "documentation-discovery",
+        "preregistration",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-08T02:47:27.448Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -250,9 +491,15 @@
       "id": "agent-ace0ba9",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T13-16_agent-ace0ba9",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Archiving Candidates Search",
+      "purpose": "Sub-agent searched for pilot, planning, and superseded preregistration files to identify archiving candidates",
+      "tags": [
+        "exploration",
+        "archiving-prep",
+        "planning-cleanup",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T13:16:25.279Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -278,9 +525,15 @@
       "id": "agent-a6d92cb",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T13-16_agent-a6d92cb",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Antigravity Preliminary Work Search",
+      "purpose": "Sub-agent searched for Antigravity/Gemini preliminary work files to identify content for archiving",
+      "tags": [
+        "exploration",
+        "archiving-prep",
+        "preliminary-work",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T13:16:25.278Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -306,9 +559,14 @@
       "id": "agent-af00f74",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T13-16_agent-af00f74",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Repository Structure Exploration",
+      "purpose": "Sub-agent explored top-level directory structure to understand archive organisation and plan cleanup",
+      "tags": [
+        "exploration",
+        "codebase-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T13:16:25.276Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -334,9 +592,15 @@
       "id": "agent-a43dfa2",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T11-17_agent-a43dfa2",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Multi-Scale Voting Data Exploration",
+      "purpose": "Sub-agent explored pilot detection data structures to understand format for implementing multi-scale voting analysis",
+      "tags": [
+        "exploration",
+        "data-structures",
+        "multi-scale-voting",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T11:17:14.781Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -362,9 +626,15 @@
       "id": "agent-a3ac931",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T02-46_agent-a3ac931",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Detection Config Exploration",
+      "purpose": "Sub-agent explored detection script and configuration setup to understand how to run detection on tiles",
+      "tags": [
+        "exploration",
+        "detection-pipeline",
+        "configuration",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T02:46:43.870Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -390,9 +660,15 @@
       "id": "agent-a9e66e1",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T02-46_agent-a9e66e1",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Tiling Pipeline Exploration",
+      "purpose": "Sub-agent explored tile generation process to understand how tiles are created from source maps",
+      "tags": [
+        "exploration",
+        "tiling",
+        "pipeline-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T02:46:43.868Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -418,9 +694,15 @@
       "id": "agent-a26f0ca",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T02-46_agent-a26f0ca",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Tile Selection Data Exploration",
+      "purpose": "Sub-agent explored tile selection scripts and manifests to understand selection process and data availability",
+      "tags": [
+        "exploration",
+        "tile-selection",
+        "data-discovery",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T02:46:43.866Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -446,9 +728,15 @@
       "id": "agent-a676537",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T00-32_agent-a676537",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Prompts Appendix Hypothesis Check",
+      "purpose": "Sub-agent checked prompts appendix for hypothesis references that would need updating during hypothesis renumbering",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "hypothesis-references",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T00:32:02.686Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -474,9 +762,15 @@
       "id": "agent-a8892c1",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-07T00-32_agent-a8892c1",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Preregistration Structure Mapping",
+      "purpose": "Sub-agent mapped preregistration document structure to plan major restructuring including hypothesis locations and cross-references",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "restructuring-prep",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-07T00:32:02.684Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -504,7 +798,13 @@
       "directory": "vlm-burial-mound-detection/2026-01-06T22-04_f4cb3541",
       "title": "Tile size pilot and preregistration completion",
       "purpose": "Tile size pilot study (256/512/1024px), multi-scale voting analysis, prompt library alignment, preregistration v4.2 finalisation.",
-      "tags": ["pilot-study", "tile-size", "multi-scale", "preregistration", "prompt-library"],
+      "tags": [
+        "pilot-study",
+        "tile-size",
+        "multi-scale",
+        "preregistration",
+        "prompt-library"
+      ],
       "started_at": "2026-01-06T22:04:26.089Z",
       "duration_minutes": 2001,
       "model": "claude-opus-4-5-20251101",
@@ -515,7 +815,6 @@
       },
       "relationships": {
         "continues": "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
-        "continuedBy": "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -531,9 +830,13 @@
       "id": "agent-a1033ea",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T22-04_agent-a1033ea",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Cache Warmup Agent",
+      "purpose": "Sub-agent spawned to prime Claude Code's context cache before main session work",
+      "tags": [
+        "warmup",
+        "cache-priming",
+        "sub-agent"
+      ],
       "started_at": "2026-01-06T22:04:03.810Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -559,9 +862,14 @@
       "id": "agent-a2841dc",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T22-04_agent-a2841dc",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Read-Only File Search Warmup",
+      "purpose": "Sub-agent initialised as read-only file search specialist for codebase exploration",
+      "tags": [
+        "warmup",
+        "file-search",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T22:04:03.803Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -587,9 +895,15 @@
       "id": "agent-a9de2be",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T13-17_agent-a9de2be",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Tile Processing Code Inventory",
+      "purpose": "Sub-agent comprehensively searched for all scripts and config files related to tile creation, selection, and processing",
+      "tags": [
+        "exploration",
+        "tile-processing",
+        "code-inventory",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T13:17:14.108Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -615,9 +929,15 @@
       "id": "agent-adea462",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T10-52_agent-adea462",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Companion Document Discrepancy Check",
+      "purpose": "Sub-agent checked companion documents for discrepancies against preregistration.md v3.6",
+      "tags": [
+        "verification",
+        "preregistration-sync",
+        "companion-documents",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T10:52:11.809Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -643,9 +963,14 @@
       "id": "agent-aaaca52",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T10-52_agent-aaaca52",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Preregistration Reference Extraction",
+      "purpose": "Sub-agent extracted key reference information from preregistration document for alignment checking",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T10:52:11.806Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -671,9 +996,14 @@
       "id": "agent-a1956e5",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T00-15_agent-a1956e5",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Execution Plan Structure Analysis",
+      "purpose": "Sub-agent analysed execution plan to understand Phase 2 factorial design, dependency graph, budget summary, and Phase 1 procedure",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T00:15:37.432Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -699,9 +1029,14 @@
       "id": "agent-ad90464",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T00-15_agent-ad90464",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Prompts Appendix Analysis",
+      "purpose": "Sub-agent analysed prompts appendix to understand instruction files, M/E factor structure, and config definitions",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T00:15:37.430Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -727,9 +1062,14 @@
       "id": "agent-a60db94",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-06T00-15_agent-a60db94",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Preregistration Structure Analysis",
+      "purpose": "Sub-agent analysed preregistration document to identify H2, hypothesis tables, Phase 1 steps, and prompt variants sections",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-06T00:15:37.428Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -755,9 +1095,14 @@
       "id": "agent-a80721e",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-03T07-13_agent-a80721e",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Holdout Tile Expansion Analysis",
+      "purpose": "Sub-agent investigated tile selection process to understand how to expand holdout from 20 to 60 tiles",
+      "tags": [
+        "exploration",
+        "tile-selection",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-03T07:13:36.233Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -783,9 +1128,15 @@
       "id": "agent-ab699c3",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-03T07-13_agent-ab699c3",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Holdout Expansion Preregistration Analysis",
+      "purpose": "Sub-agent analysed preregistration document to identify sections mentioning holdout tiles needing updates for 20-to-60 expansion",
+      "tags": [
+        "exploration",
+        "documentation-analysis",
+        "holdout-expansion",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-03T07:13:36.230Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -811,9 +1162,15 @@
       "id": "agent-a320389",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-03T05-14_agent-a320389",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Evaluation Workflow Analysis",
+      "purpose": "Sub-agent explored evaluation workflow to understand where tile-level MCC assessment would fit in the pipeline",
+      "tags": [
+        "exploration",
+        "evaluation-pipeline",
+        "metrics-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-03T05:14:19.414Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -839,9 +1196,15 @@
       "id": "agent-ac01dee",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-03T04-52_agent-ac01dee",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Bootstrap CI Implementation Check",
+      "purpose": "Sub-agent searched analytical scripts to verify implementation of 95% bootstrapped confidence intervals per preregistration section 3.5",
+      "tags": [
+        "verification",
+        "bootstrap-ci",
+        "preregistration-compliance",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-03T04:52:52.242Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -869,7 +1232,13 @@
       "directory": "vlm-burial-mound-detection/2026-01-03T04-45_a76fa1a1",
       "title": "Preregistration V4 finalisation",
       "purpose": "Extended preregistration refinement: hypothesis counting verification (9 principal), holdout expansion feasibility analysis, tile selection methodology, bootstrap CI verification.",
-      "tags": ["preregistration", "hypothesis-review", "tile-selection", "holdout-expansion", "statistical-analysis"],
+      "tags": [
+        "preregistration",
+        "hypothesis-review",
+        "tile-selection",
+        "holdout-expansion",
+        "statistical-analysis"
+      ],
       "started_at": "2026-01-03T04:45:32.944Z",
       "duration_minutes": 4833,
       "model": "claude-opus-4-5-20251101",
@@ -880,7 +1249,6 @@
       },
       "relationships": {
         "continues": "ed602fc1-b157-4050-85b3-7426db5ebcb5",
-        "continuedBy": "f4cb3541-2e17-40dd-a94e-1e114107f55b",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -896,9 +1264,13 @@
       "id": "agent-ab6d1b7",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-03T04-44_agent-ab6d1b7",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Cache Warmup Agent",
+      "purpose": "Sub-agent spawned to prime Claude Code's context cache before main session work",
+      "tags": [
+        "warmup",
+        "cache-priming",
+        "sub-agent"
+      ],
       "started_at": "2026-01-03T04:44:31.772Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -924,9 +1296,14 @@
       "id": "agent-a3a6134",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-03T04-44_agent-a3a6134",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Read-Only File Search Warmup",
+      "purpose": "Sub-agent initialised as read-only file search specialist for codebase exploration",
+      "tags": [
+        "warmup",
+        "file-search",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-03T04:44:31.761Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -954,7 +1331,12 @@
       "directory": "vlm-burial-mound-detection/2026-01-02T22-17_ed602fc1",
       "title": "Preregistration encoding and reference fixes",
       "purpose": "Fixed UTF-8 encoding corruption in preregistration-coverage.md and resolved dangling section references in preregistration.md.",
-      "tags": ["bugfix", "preregistration", "encoding", "documentation"],
+      "tags": [
+        "bugfix",
+        "preregistration",
+        "encoding",
+        "documentation"
+      ],
       "started_at": "2026-01-02T22:17:53.411Z",
       "duration_minutes": 320,
       "model": "claude-opus-4-5-20251101",
@@ -965,7 +1347,6 @@
       },
       "relationships": {
         "continues": "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
-        "continuedBy": "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -981,9 +1362,13 @@
       "id": "agent-aa3cfcd",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-02T22-17_agent-aa3cfcd",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Cache Warmup Agent",
+      "purpose": "Sub-agent spawned to prime Claude Code's context cache before main session work",
+      "tags": [
+        "warmup",
+        "cache-priming",
+        "sub-agent"
+      ],
       "started_at": "2026-01-02T22:17:18.288Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -1009,9 +1394,14 @@
       "id": "agent-a303a5e",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-02T22-17_agent-a303a5e",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Read-Only File Search Warmup",
+      "purpose": "Sub-agent initialised as read-only file search specialist for codebase exploration",
+      "tags": [
+        "warmup",
+        "file-search",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-02T22:17:18.282Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -1037,9 +1427,15 @@
       "id": "agent-adfc266",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-02T00-02_agent-adfc266",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Testing Infrastructure Exploration",
+      "purpose": "Sub-agent explored codebase to understand testing infrastructure and identify scripts needing tests",
+      "tags": [
+        "exploration",
+        "testing",
+        "code-analysis",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-02T00:02:38.156Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -1065,9 +1461,14 @@
       "id": "agent-a1f0cbe",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-01T23-08_agent-a1f0cbe",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "LLM Provider Metadata Research",
+      "purpose": "Sub-agent researched API documentation for Google Gemini, Anthropic Claude, and OpenAI GPT to identify response metadata fields",
+      "tags": [
+        "research",
+        "web-search",
+        "api-documentation",
+        "sub-agent"
+      ],
       "started_at": "2026-01-01T23:08:05.437Z",
       "duration_minutes": 3,
       "model": "claude-sonnet-4-5-20250929",
@@ -1093,9 +1494,15 @@
       "id": "agent-ab1640f",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2026-01-01T23-08_agent-ab1640f",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "LLM API Script Search",
+      "purpose": "Sub-agent searched scripts for LLM API calls to identify where metadata capture was needed",
+      "tags": [
+        "exploration",
+        "code-analysis",
+        "api-integration",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2026-01-01T23:08:05.435Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -1121,9 +1528,15 @@
       "id": "agent-abe3854",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-31T06-17_agent-abe3854",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "FAIR4RS Compliance Audit",
+      "purpose": "Sub-agent audited repository for FAIR4RS compliance including CITATION.cff, LICENSE, README, requirements files, and UK English usage",
+      "tags": [
+        "exploration",
+        "fair4rs",
+        "compliance-audit",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-31T06:17:35.494Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -1149,9 +1562,15 @@
       "id": "agent-abbc59e",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-31T06-17_agent-abbc59e",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Archive Structure Comparison",
+      "purpose": "Sub-agent explored archive directory and compared with active files to identify obsolete content for archiving",
+      "tags": [
+        "exploration",
+        "archive-analysis",
+        "file-organisation",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-31T06:17:35.493Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -1177,9 +1596,15 @@
       "id": "agent-ae29ce9",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-31T06-17_agent-ae29ce9",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Preregistration Documentation Status",
+      "purpose": "Sub-agent explored preregistration documentation to assess completeness, state, and recent work needing reflection",
+      "tags": [
+        "exploration",
+        "preregistration",
+        "documentation-audit",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-31T06:17:35.491Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -1205,9 +1630,15 @@
       "id": "agent-a31c0a1",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-31T02-36_agent-a31c0a1",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Script Inventory Assessment",
+      "purpose": "Sub-agent inventoried Python scripts to assess readiness for executing the preregistered study",
+      "tags": [
+        "exploration",
+        "code-inventory",
+        "readiness-assessment",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-31T02:36:50.385Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -1235,7 +1666,14 @@
       "directory": "vlm-burial-mound-detection/2025-12-31T01-34_85c5dc6e",
       "title": "LLM metadata library and preregistration sprint",
       "purpose": "Major development session creating experimental infrastructure: lib_llm_metadata.py for API response handling, run_study.py orchestrator, Phase 2 prompt configurations, FAIR4RS compliance files, and preregistration companion documents.",
-      "tags": ["implementation", "llm-metadata", "preregistration", "fair4rs", "run-study", "infrastructure"],
+      "tags": [
+        "implementation",
+        "llm-metadata",
+        "preregistration",
+        "fair4rs",
+        "run-study",
+        "infrastructure"
+      ],
       "started_at": "2025-12-31T01:34:25.992Z",
       "duration_minutes": 3158,
       "model": "claude-opus-4-5-20251101",
@@ -1246,7 +1684,6 @@
       },
       "relationships": {
         "continues": "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
-        "continuedBy": "ed602fc1-b157-4050-85b3-7426db5ebcb5",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -1264,7 +1701,13 @@
       "directory": "vlm-burial-mound-detection/2025-12-23T07-25_76a6bf00",
       "title": "Prompt reorganisation and preregistration drafting",
       "purpose": "Completed commit for prompt directory restructuring, refined preregistration document with consistency and de-duplication checks, reviewed Soviet topographic symbol reference materials for false positive analysis.",
-      "tags": ["preregistration", "prompt-reorganisation", "osf", "consistency-check", "reference-materials"],
+      "tags": [
+        "preregistration",
+        "prompt-reorganisation",
+        "osf",
+        "consistency-check",
+        "reference-materials"
+      ],
       "started_at": "2025-12-23T07:25:35.452Z",
       "duration_minutes": 11160,
       "model": "claude-opus-4-5-20251101",
@@ -1275,7 +1718,6 @@
       },
       "relationships": {
         "continues": "6c7214f9-a128-42d4-af63-4dc861a7e760",
-        "continuedBy": "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -1291,9 +1733,13 @@
       "id": "agent-a504cee",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-23T07-25_agent-a504cee",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Cache Warmup Agent",
+      "purpose": "Sub-agent spawned to prime Claude Code's context cache before main session work",
+      "tags": [
+        "warmup",
+        "cache-priming",
+        "sub-agent"
+      ],
       "started_at": "2025-12-23T07:25:09.334Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -1319,9 +1765,14 @@
       "id": "agent-afd8376",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-23T07-25_agent-afd8376",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Read-Only File Search Warmup",
+      "purpose": "Sub-agent initialised as read-only file search specialist for codebase exploration",
+      "tags": [
+        "warmup",
+        "file-search",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-23T07:25:09.324Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -1347,9 +1798,14 @@
       "id": "agent-a5b8e41",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-22T04-41_agent-a5b8e41",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Two-Stage Pipeline Code Audit",
+      "purpose": "Sub-agent performed thorough code audit of v4.x two-stage pipeline checking config consistency and script bugs",
+      "tags": [
+        "code-audit",
+        "two-stage-pipeline",
+        "config-validation",
+        "sub-agent"
+      ],
       "started_at": "2025-12-22T04:41:47.736Z",
       "duration_minutes": 3,
       "model": "claude-sonnet-4-5-20250929",
@@ -1375,9 +1831,16 @@
       "id": "agent-abb92d3",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-22T03-05_agent-abb92d3",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Initial Codebase Exploration",
+      "purpose": "Sub-agent thoroughly explored codebase structure, documentation, and pipeline architecture for LLM-driven burial mound extraction project",
+      "tags": [
+        "exploration",
+        "codebase-overview",
+        "architecture",
+        "onboarding",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-22T03:05:42.937Z",
       "duration_minutes": 1,
       "model": "claude-haiku-4-5-20251001",
@@ -1405,7 +1868,15 @@
       "directory": "vlm-burial-mound-detection/2025-12-22T03-05_6c7214f9",
       "title": "VLM pipeline development and codebase reorganisation",
       "purpose": "Initial orientation to the burial mound detection project, followed by systematic review of the v4.x two-stage verification pipeline, investigation of Flash model discrepancies, and codebase reorganisation including directory renaming and path reference updates.",
-      "tags": ["vlm", "burial-mounds", "gemini", "prompt-engineering", "codebase-exploration", "refactoring", "experimental-pipeline"],
+      "tags": [
+        "vlm",
+        "burial-mounds",
+        "gemini",
+        "prompt-engineering",
+        "codebase-exploration",
+        "refactoring",
+        "experimental-pipeline"
+      ],
       "started_at": "2025-12-22T03:05:27.960Z",
       "duration_minutes": 1670,
       "model": "claude-opus-4-5-20251101",
@@ -1416,7 +1887,6 @@
       },
       "relationships": {
         "continues": null,
-        "continuedBy": "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
         "isPartOf": [
           "vlm-burial-mound-detection"
         ]
@@ -1432,9 +1902,13 @@
       "id": "agent-a37c175",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-22T02-51_agent-a37c175",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Codebase Exploration Warmup",
+      "purpose": "Sub-agent explored project structure and familiarised with the Map Reader LLM codebase",
+      "tags": [
+        "warmup",
+        "codebase-exploration",
+        "sub-agent"
+      ],
       "started_at": "2025-12-22T02:51:40.174Z",
       "duration_minutes": 0,
       "model": "claude-opus-4-5-20251101",
@@ -1460,9 +1934,14 @@
       "id": "agent-a51ccca",
       "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/2025-12-22T02-51_agent-a51ccca",
-      "title": "Untitled Session",
-      "purpose": "No description provided",
-      "tags": [],
+      "title": "Read-Only File Search Warmup",
+      "purpose": "Sub-agent initialised as read-only file search specialist for codebase exploration",
+      "tags": [
+        "warmup",
+        "file-search",
+        "sub-agent",
+        "haiku"
+      ],
       "started_at": "2025-12-22T02:51:40.164Z",
       "duration_minutes": 0,
       "model": "claude-haiku-4-5-20251001",
@@ -1485,134 +1964,717 @@
       "thinking_blocks_tokens": 0
     },
     {
-      "id": "e8acccf2-f4fb-4510-bf99-64bd71e14cf6",
-      "title": "Untitled Session",
-      "directory": "vlm-burial-mound-detection/e8acccf2",
-      "started_at": null,
-      "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
-    },
-    {
       "id": "36bb4a54-5ee3-4ea6-95ef-3332c857371e",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/36bb4a54",
+      "title": "Empty/abandoned session",
+      "purpose": "Session initialised but no conversation occurred. Likely opened and closed without interaction.",
+      "tags": [
+        "empty",
+        "abandoned"
+      ],
       "started_at": null,
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
-    },
-    {
-      "id": "7fe297a3-4be8-4e89-9395-a1c9a54b3eee",
-      "title": "Untitled Session",
-      "directory": "vlm-burial-mound-detection/7fe297a3",
-      "started_at": null,
-      "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
-    },
-    {
-      "id": "a9d3b427-eb9b-49be-ad1b-e987835f5e28",
-      "title": "Untitled Session",
-      "directory": "vlm-burial-mound-detection/a9d3b427",
-      "started_at": null,
-      "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
-    },
-    {
-      "id": "8cafd1ca-53b6-4231-a256-ddf3e24cc825",
-      "title": "Untitled Session",
-      "directory": "vlm-burial-mound-detection/8cafd1ca",
-      "started_at": null,
-      "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": null,
+      "statistics": {
+        "turns": 0,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
     },
     {
       "id": "13d18f5b-39e4-4fe5-82bd-208ce1bf0564",
-      "title": "Untitled Session",
+      "project": "vlm-burial-mound-detection",
       "directory": "vlm-burial-mound-detection/13d18f5b",
+      "title": "Empty/abandoned session",
+      "purpose": "Session initialised but no conversation occurred. Likely opened and closed without interaction.",
+      "tags": [
+        "empty",
+        "abandoned"
+      ],
       "started_at": null,
       "duration_minutes": 0,
-      "tags": [],
-      "purpose": "No description provided"
+      "model": null,
+      "statistics": {
+        "turns": 0,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
+    },
+    {
+      "id": "e8acccf2-f4fb-4510-bf99-64bd71e14cf6",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/e8acccf2",
+      "title": "Empty/abandoned session",
+      "purpose": "Session initialised but no conversation occurred. Likely opened and closed without interaction.",
+      "tags": [
+        "empty",
+        "abandoned"
+      ],
+      "started_at": null,
+      "duration_minutes": 0,
+      "model": null,
+      "statistics": {
+        "turns": 0,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
+    },
+    {
+      "id": "a9d3b427-eb9b-49be-ad1b-e987835f5e28",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/a9d3b427",
+      "title": "Empty/abandoned session",
+      "purpose": "Session initialised but no conversation occurred. Likely opened and closed without interaction.",
+      "tags": [
+        "empty",
+        "abandoned"
+      ],
+      "started_at": null,
+      "duration_minutes": 0,
+      "model": null,
+      "statistics": {
+        "turns": 0,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
+    },
+    {
+      "id": "8cafd1ca-53b6-4231-a256-ddf3e24cc825",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/8cafd1ca",
+      "title": "Empty/abandoned session",
+      "purpose": "Session initialised but no conversation occurred. Likely opened and closed without interaction.",
+      "tags": [
+        "empty",
+        "abandoned"
+      ],
+      "started_at": null,
+      "duration_minutes": 0,
+      "model": null,
+      "statistics": {
+        "turns": 0,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
+    },
+    {
+      "id": "7fe297a3-4be8-4e89-9395-a1c9a54b3eee",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/7fe297a3",
+      "title": "Empty/abandoned session",
+      "purpose": "Session initialised but no conversation occurred. Likely opened and closed without interaction.",
+      "tags": [
+        "empty",
+        "abandoned"
+      ],
+      "started_at": null,
+      "duration_minutes": 0,
+      "model": null,
+      "statistics": {
+        "turns": 0,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
     }
   ],
   "tag_index": {
-    "vlm": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "burial-mounds": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "gemini": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "prompt-engineering": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "codebase-exploration": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "refactoring": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "experimental-pipeline": ["6c7214f9-a128-42d4-af63-4dc861a7e760"],
-    "preregistration": ["76a6bf00-58ed-48d0-ada6-c0f2e391b39a", "85c5dc6e-2193-4edc-bdf7-07e43fd94db1", "ed602fc1-b157-4050-85b3-7426db5ebcb5", "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b", "f4cb3541-2e17-40dd-a94e-1e114107f55b", "d40e04c4-0c5b-4b59-a01d-955e77462dde"],
-    "pilot-study": ["f4cb3541-2e17-40dd-a94e-1e114107f55b"],
-    "tile-size": ["f4cb3541-2e17-40dd-a94e-1e114107f55b"],
-    "multi-scale": ["f4cb3541-2e17-40dd-a94e-1e114107f55b"],
-    "prompt-library": ["f4cb3541-2e17-40dd-a94e-1e114107f55b"],
-    "hypothesis-review": ["a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"],
-    "tile-selection": ["a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"],
-    "holdout-expansion": ["a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"],
-    "statistical-analysis": ["a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"],
-    "bugfix": ["ed602fc1-b157-4050-85b3-7426db5ebcb5"],
-    "encoding": ["ed602fc1-b157-4050-85b3-7426db5ebcb5"],
-    "documentation": ["ed602fc1-b157-4050-85b3-7426db5ebcb5", "d40e04c4-0c5b-4b59-a01d-955e77462dde"],
-    "prompt-reorganisation": ["76a6bf00-58ed-48d0-ada6-c0f2e391b39a"],
-    "osf": ["76a6bf00-58ed-48d0-ada6-c0f2e391b39a"],
-    "consistency-check": ["76a6bf00-58ed-48d0-ada6-c0f2e391b39a"],
-    "reference-materials": ["76a6bf00-58ed-48d0-ada6-c0f2e391b39a"],
-    "implementation": ["85c5dc6e-2193-4edc-bdf7-07e43fd94db1"],
-    "llm-metadata": ["85c5dc6e-2193-4edc-bdf7-07e43fd94db1"],
-    "fair4rs": ["85c5dc6e-2193-4edc-bdf7-07e43fd94db1"],
-    "run-study": ["85c5dc6e-2193-4edc-bdf7-07e43fd94db1"],
-    "infrastructure": ["85c5dc6e-2193-4edc-bdf7-07e43fd94db1", "5e52df73-8bcf-4c07-9a53-b59087d32b1f"],
-    "session-archiving": ["5e52df73-8bcf-4c07-9a53-b59087d32b1f"],
-    "transparency": ["5e52df73-8bcf-4c07-9a53-b59087d32b1f"],
-    "v1.1-schema": ["5e52df73-8bcf-4c07-9a53-b59087d32b1f"],
-    "linting": ["49cb5c21-057d-416d-8eb9-2b11fe0350f2"],
-    "testing": ["49cb5c21-057d-416d-8eb9-2b11fe0350f2"],
-    "config-verification": ["49cb5c21-057d-416d-8eb9-2b11fe0350f2"],
-    "osf-preparation": ["49cb5c21-057d-416d-8eb9-2b11fe0350f2", "d40e04c4-0c5b-4b59-a01d-955e77462dde"],
-    "fair-metadata": ["d40e04c4-0c5b-4b59-a01d-955e77462dde"]
+    "FAIR-metadata": [
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde"
+    ],
+    "H4": [
+      "agent-a66ce8f",
+      "agent-a14c2f3"
+    ],
+    "H5": [
+      "agent-a777656",
+      "agent-a66ce8f",
+      "agent-a7b17e6",
+      "agent-af3c4df",
+      "agent-a14c2f3"
+    ],
+    "H8": [
+      "agent-a777656",
+      "agent-a66ce8f",
+      "agent-a14c2f3"
+    ],
+    "OSF-preparation": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde"
+    ],
+    "abandoned": [
+      "36bb4a54-5ee3-4ea6-95ef-3332c857371e",
+      "13d18f5b-39e4-4fe5-82bd-208ce1bf0564",
+      "e8acccf2-f4fb-4510-bf99-64bd71e14cf6",
+      "a9d3b427-eb9b-49be-ad1b-e987835f5e28",
+      "8cafd1ca-53b6-4231-a256-ddf3e24cc825",
+      "7fe297a3-4be8-4e89-9395-a1c9a54b3eee"
+    ],
+    "api-documentation": [
+      "agent-a1f0cbe"
+    ],
+    "api-integration": [
+      "agent-ab1640f"
+    ],
+    "appendix": [
+      "agent-ab13a90"
+    ],
+    "architecture": [
+      "agent-abb92d3"
+    ],
+    "archive-analysis": [
+      "agent-abbc59e"
+    ],
+    "archiving": [
+      "0e36df87-0938-44c6-a210-63d8d6463f55"
+    ],
+    "archiving-prep": [
+      "agent-ace0ba9",
+      "agent-a6d92cb"
+    ],
+    "bootstrap-ci": [
+      "agent-ac01dee"
+    ],
+    "bugfix": [
+      "ed602fc1-b157-4050-85b3-7426db5ebcb5"
+    ],
+    "burial-mounds": [
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "cache-priming": [
+      "agent-a504cee",
+      "agent-aa3cfcd",
+      "agent-a061ffc",
+      "agent-ab6d1b7",
+      "agent-a1033ea"
+    ],
+    "code-analysis": [
+      "agent-ab1640f",
+      "agent-adfc266"
+    ],
+    "code-audit": [
+      "agent-a5b8e41"
+    ],
+    "code-inventory": [
+      "agent-a9de2be",
+      "agent-a31c0a1"
+    ],
+    "codebase-analysis": [
+      "agent-a626649",
+      "agent-af00f74"
+    ],
+    "codebase-exploration": [
+      "agent-a37c175",
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "codebase-overview": [
+      "agent-abb92d3"
+    ],
+    "companion-documents": [
+      "agent-adea462"
+    ],
+    "compliance-audit": [
+      "agent-abe3854"
+    ],
+    "config-validation": [
+      "agent-a5b8e41"
+    ],
+    "config-verification": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+    ],
+    "configs": [
+      "agent-a14c2f3"
+    ],
+    "configuration": [
+      "agent-a3ac931"
+    ],
+    "consistency-check": [
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a"
+    ],
+    "consistency-review": [
+      "agent-af3c4df",
+      "agent-a14c2f3",
+      "agent-ab13a90"
+    ],
+    "continuation": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde"
+    ],
+    "data-discovery": [
+      "agent-a26f0ca"
+    ],
+    "data-structures": [
+      "agent-a43dfa2"
+    ],
+    "detection-pipeline": [
+      "agent-a3ac931"
+    ],
+    "documentation": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "ed602fc1-b157-4050-85b3-7426db5ebcb5",
+      "agent-a7b17e6",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "agent-ab13a90"
+    ],
+    "documentation-analysis": [
+      "agent-a1956e5",
+      "agent-aaaca52",
+      "agent-ab699c3",
+      "agent-a8892c1",
+      "agent-ad90464",
+      "agent-a676537",
+      "agent-a60db94"
+    ],
+    "documentation-audit": [
+      "agent-ae29ce9"
+    ],
+    "documentation-discovery": [
+      "agent-a777678"
+    ],
+    "empty": [
+      "36bb4a54-5ee3-4ea6-95ef-3332c857371e",
+      "13d18f5b-39e4-4fe5-82bd-208ce1bf0564",
+      "e8acccf2-f4fb-4510-bf99-64bd71e14cf6",
+      "a9d3b427-eb9b-49be-ad1b-e987835f5e28",
+      "8cafd1ca-53b6-4231-a256-ddf3e24cc825",
+      "7fe297a3-4be8-4e89-9395-a1c9a54b3eee"
+    ],
+    "encoding": [
+      "ed602fc1-b157-4050-85b3-7426db5ebcb5"
+    ],
+    "evaluation-pipeline": [
+      "agent-a320389"
+    ],
+    "execution-plan": [
+      "agent-a777656"
+    ],
+    "experimental-pipeline": [
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "exploration": [
+      "agent-a1956e5",
+      "agent-a80721e",
+      "agent-aaaca52",
+      "agent-a3ac931",
+      "agent-a777656",
+      "agent-ace0ba9",
+      "agent-ab1640f",
+      "agent-adfc266",
+      "agent-a66ce8f",
+      "agent-abb92d3",
+      "agent-a26f0ca",
+      "agent-a7b17e6",
+      "agent-af3c4df",
+      "agent-ab699c3",
+      "agent-a43dfa2",
+      "agent-a320389",
+      "agent-a8892c1",
+      "agent-a14c2f3",
+      "agent-ad90464",
+      "agent-abe3854",
+      "agent-a6d92cb",
+      "agent-ae29ce9",
+      "agent-a9e66e1",
+      "agent-a676537",
+      "agent-ab13a90",
+      "agent-abbc59e",
+      "agent-a9de2be",
+      "agent-a60db94",
+      "agent-a777678",
+      "agent-a626649",
+      "agent-a31c0a1",
+      "agent-af00f74"
+    ],
+    "fair4rs": [
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "agent-abe3854"
+    ],
+    "file-organisation": [
+      "agent-abbc59e"
+    ],
+    "file-search": [
+      "agent-afd8376",
+      "agent-a2841dc",
+      "agent-a529a91",
+      "agent-a3a6134",
+      "agent-a303a5e",
+      "agent-a51ccca"
+    ],
+    "gemini": [
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "haiku": [
+      "agent-a1956e5",
+      "agent-a80721e",
+      "agent-afd8376",
+      "agent-adea462",
+      "agent-aaaca52",
+      "agent-a3ac931",
+      "agent-ace0ba9",
+      "agent-ab1640f",
+      "agent-adfc266",
+      "agent-abb92d3",
+      "agent-a26f0ca",
+      "agent-ab699c3",
+      "agent-a2841dc",
+      "agent-a529a91",
+      "agent-a3a6134",
+      "agent-a43dfa2",
+      "agent-ac01dee",
+      "agent-a320389",
+      "agent-a8892c1",
+      "agent-ad90464",
+      "agent-abe3854",
+      "agent-a6d92cb",
+      "agent-ae29ce9",
+      "agent-a9e66e1",
+      "agent-a676537",
+      "agent-a303a5e",
+      "agent-abbc59e",
+      "agent-a9de2be",
+      "agent-a60db94",
+      "agent-a777678",
+      "agent-a31c0a1",
+      "agent-a51ccca",
+      "agent-af00f74"
+    ],
+    "holdout-expansion": [
+      "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
+      "agent-ab699c3"
+    ],
+    "housekeeping": [
+      "0e36df87-0938-44c6-a210-63d8d6463f55"
+    ],
+    "hypotheses": [
+      "agent-a66ce8f"
+    ],
+    "hypothesis-references": [
+      "agent-a676537"
+    ],
+    "hypothesis-review": [
+      "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"
+    ],
+    "implementation": [
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+    ],
+    "infrastructure": [
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+    ],
+    "linting": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+    ],
+    "llm-metadata": [
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1"
+    ],
+    "metadata": [
+      "0e36df87-0938-44c6-a210-63d8d6463f55"
+    ],
+    "metrics-analysis": [
+      "agent-a320389"
+    ],
+    "multi-scale": [
+      "f4cb3541-2e17-40dd-a94e-1e114107f55b"
+    ],
+    "multi-scale-voting": [
+      "agent-a43dfa2"
+    ],
+    "onboarding": [
+      "agent-abb92d3"
+    ],
+    "osf": [
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a"
+    ],
+    "pilot-study": [
+      "f4cb3541-2e17-40dd-a94e-1e114107f55b"
+    ],
+    "pipeline-analysis": [
+      "agent-a9e66e1"
+    ],
+    "planning-cleanup": [
+      "agent-ace0ba9"
+    ],
+    "preliminary-work": [
+      "agent-a6d92cb"
+    ],
+    "preregistration": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+      "agent-a777656",
+      "ed602fc1-b157-4050-85b3-7426db5ebcb5",
+      "agent-a66ce8f",
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "agent-a7b17e6",
+      "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
+      "f4cb3541-2e17-40dd-a94e-1e114107f55b",
+      "agent-ae29ce9",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "agent-a777678"
+    ],
+    "preregistration-compliance": [
+      "agent-ac01dee"
+    ],
+    "preregistration-sync": [
+      "agent-adea462"
+    ],
+    "prompt-engineering": [
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "prompt-library": [
+      "f4cb3541-2e17-40dd-a94e-1e114107f55b"
+    ],
+    "prompt-reorganisation": [
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a"
+    ],
+    "prompts": [
+      "agent-af3c4df"
+    ],
+    "readiness-assessment": [
+      "agent-a31c0a1"
+    ],
+    "refactoring": [
+      "agent-a777656",
+      "agent-a66ce8f",
+      "agent-a7b17e6",
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "reference-materials": [
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a"
+    ],
+    "research": [
+      "agent-a1f0cbe"
+    ],
+    "restructuring-prep": [
+      "agent-a8892c1"
+    ],
+    "run-study": [
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1"
+    ],
+    "session-archiving": [
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+    ],
+    "session-management": [
+      "0e36df87-0938-44c6-a210-63d8d6463f55"
+    ],
+    "statistical-analysis": [
+      "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"
+    ],
+    "sub-agent": [
+      "agent-a1956e5",
+      "agent-a504cee",
+      "agent-a80721e",
+      "agent-afd8376",
+      "agent-adea462",
+      "agent-aaaca52",
+      "agent-a3ac931",
+      "agent-a37c175",
+      "agent-ace0ba9",
+      "agent-ab1640f",
+      "agent-adfc266",
+      "agent-a1f0cbe",
+      "agent-abb92d3",
+      "agent-a26f0ca",
+      "agent-ab699c3",
+      "agent-aa3cfcd",
+      "agent-a2841dc",
+      "agent-a529a91",
+      "agent-a3a6134",
+      "agent-a43dfa2",
+      "agent-ac01dee",
+      "agent-a320389",
+      "agent-a8892c1",
+      "agent-a061ffc",
+      "agent-ad90464",
+      "agent-ab6d1b7",
+      "agent-abe3854",
+      "agent-a6d92cb",
+      "agent-ae29ce9",
+      "agent-a9e66e1",
+      "agent-a676537",
+      "agent-a1033ea",
+      "agent-a303a5e",
+      "agent-abbc59e",
+      "agent-a9de2be",
+      "agent-a5b8e41",
+      "agent-a60db94",
+      "agent-a777678",
+      "agent-a626649",
+      "agent-a31c0a1",
+      "agent-a51ccca",
+      "agent-af00f74"
+    ],
+    "system-instructions": [
+      "agent-af3c4df"
+    ],
+    "testing": [
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "agent-adfc266",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde"
+    ],
+    "tile-processing": [
+      "agent-a9de2be"
+    ],
+    "tile-selection": [
+      "agent-a80721e",
+      "agent-a26f0ca",
+      "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"
+    ],
+    "tile-size": [
+      "f4cb3541-2e17-40dd-a94e-1e114107f55b"
+    ],
+    "tiling": [
+      "agent-a9e66e1"
+    ],
+    "transparency": [
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+    ],
+    "two-stage-pipeline": [
+      "agent-a5b8e41"
+    ],
+    "v1.1-schema": [
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+    ],
+    "validation": [
+      "agent-ab13a90"
+    ],
+    "verification": [
+      "agent-adea462",
+      "agent-ac01dee"
+    ],
+    "vlm": [
+      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+    ],
+    "warmup": [
+      "agent-a504cee",
+      "agent-afd8376",
+      "agent-a37c175",
+      "agent-aa3cfcd",
+      "agent-a2841dc",
+      "agent-a529a91",
+      "agent-a3a6134",
+      "agent-a061ffc",
+      "agent-ab6d1b7",
+      "agent-a1033ea",
+      "agent-a303a5e",
+      "agent-a51ccca"
+    ],
+    "web-search": [
+      "agent-a1f0cbe"
+    ]
   },
   "relationship_graph": {
-    "6c7214f9-a128-42d4-af63-4dc861a7e760": {
-      "continuedBy": ["76a6bf00-58ed-48d0-ada6-c0f2e391b39a"]
+    "5e52df73-8bcf-4c07-9a53-b59087d32b1f": {
+      "continuedBy": [
+        "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+      ]
     },
-    "76a6bf00-58ed-48d0-ada6-c0f2e391b39a": {
-      "continues": "6c7214f9-a128-42d4-af63-4dc861a7e760",
-      "continuedBy": ["85c5dc6e-2193-4edc-bdf7-07e43fd94db1"]
+    "6c7214f9-a128-42d4-af63-4dc861a7e760": {
+      "continuedBy": [
+        "76a6bf00-58ed-48d0-ada6-c0f2e391b39a"
+      ]
     },
     "85c5dc6e-2193-4edc-bdf7-07e43fd94db1": {
-      "continues": "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
-      "continuedBy": ["ed602fc1-b157-4050-85b3-7426db5ebcb5"]
+      "continuedBy": [
+        "ed602fc1-b157-4050-85b3-7426db5ebcb5"
+      ]
+    },
+    "76a6bf00-58ed-48d0-ada6-c0f2e391b39a": {
+      "continuedBy": [
+        "85c5dc6e-2193-4edc-bdf7-07e43fd94db1"
+      ]
     },
     "ed602fc1-b157-4050-85b3-7426db5ebcb5": {
-      "continues": "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
-      "continuedBy": ["a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"]
-    },
-    "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b": {
-      "continues": "ed602fc1-b157-4050-85b3-7426db5ebcb5",
-      "continuedBy": ["f4cb3541-2e17-40dd-a94e-1e114107f55b"]
+      "continuedBy": [
+        "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"
+      ]
     },
     "f4cb3541-2e17-40dd-a94e-1e114107f55b": {
-      "continues": "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
-      "continuedBy": ["5e52df73-8bcf-4c07-9a53-b59087d32b1f"]
+      "continuedBy": [
+        "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+      ]
     },
-    "5e52df73-8bcf-4c07-9a53-b59087d32b1f": {
-      "continues": "f4cb3541-2e17-40dd-a94e-1e114107f55b",
-      "continuedBy": ["49cb5c21-057d-416d-8eb9-2b11fe0350f2"]
+    "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b": {
+      "continuedBy": [
+        "f4cb3541-2e17-40dd-a94e-1e114107f55b"
+      ]
     },
     "49cb5c21-057d-416d-8eb9-2b11fe0350f2": {
-      "continues": "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
-      "continuedBy": ["d40e04c4-0c5b-4b59-a01d-955e77462dde"]
-    },
-    "d40e04c4-0c5b-4b59-a01d-955e77462dde": {
-      "continues": "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
-      "continuedBy": null
+      "continuedBy": [
+        "d40e04c4-0c5b-4b59-a01d-955e77462dde"
+      ]
     }
-  },
-  "project": "vlm-burial-mound-detection"
+  }
 }

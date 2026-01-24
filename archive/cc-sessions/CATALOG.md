@@ -1,23 +1,131 @@
 # CC Session Catalog
 
-*Generated: 2026-01-09 13:31:27*
+*Generated: 2026-01-24 15:27:21*
 
 ## Overview
 
-- **Total sessions**: 49
+- **Total sessions**: 64
 - **Projects**: 1
 
 ### Projects
 
 | Project | Sessions | Total Duration |
 |---------|----------|----------------|
-| vlm-burial-mound-detection | 49 | 404h 29m |
+| vlm-burial-mound-detection | 64 | 454h 45m |
 
 ## Sessions
 
 ### vlm-burial-mound-detection
 
-#### Untitled Session
+#### Session archiving and metadata updates
+
+- **Date**: 2026-01-18 11:17
+- **Duration**: 2m
+- **Directory**: `vlm-burial-mound-detection/2026-01-18T11-17_0e36df87`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 5 turns, 4 tool calls, 5 thinking blocks (~640 tokens)
+- **Artifacts**: 0 created, 0 modified, 1 referenced
+- **Tags**: archiving, metadata, session-management, housekeeping
+
+> Archive recent CC sessions and systematically update metadata for all 15 newly archived sessions, including agent sub-sessions, empty sessions, and large main sessions.
+
+#### OSF documentation implementation and metadata updates
+
+- **Date**: 2026-01-17 12:38
+- **Duration**: 22h 37m
+- **Directory**: `vlm-burial-mound-detection/2026-01-17T12-38_d40e04c4`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 401 turns, 359 tool calls, 317 thinking blocks (~26,525 tokens)
+- **Artifacts**: 19 created, 13 modified, 25 referenced
+- **Tags**: continuation, documentation, OSF-preparation, testing, FAIR-metadata, preregistration
+
+> Implementation of the documentation plan from previous session: created hypothesis tracking, decisions log, analysis summary, troubleshooting guide, visualisation guide, updated FAIR metadata files, and completed test framework.
+
+#### OSF preparation: linting, tests, config verification
+
+- **Date**: 2026-01-17 03:43
+- **Duration**: 27h 37m
+- **Directory**: `vlm-burial-mound-detection/2026-01-17T03-43_49cb5c21`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 402 turns, 352 tool calls, 342 thinking blocks (~31,383 tokens)
+- **Artifacts**: 12 created, 8 modified, 18 referenced
+- **Tags**: continuation, linting, testing, config-verification, OSF-preparation, documentation, preregistration
+
+> Comprehensive session continuing from 5e52df73 covering script linting, F821 bug fixes, test suite creation, config alignment verification, and documentation planning for OSF submission.
+
+#### Appendix source-of-truth analysis
+
+- **Date**: 2026-01-12 11:35
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent-ab13a90`
+- **Model**: claude-haiku-4-5-20251001
+- **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 1 referenced
+- **Tags**: exploration, appendix, consistency-review, documentation, validation
+
+> Explore how instruction files and config schemas are documented in the appendix to identify what elements need consistency checking against actual prompt/config files.
+
+#### Config file structure analysis
+
+- **Date**: 2026-01-12 11:35
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent-a14c2f3`
+- **Model**: claude-haiku-4-5-20251001
+- **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 15 referenced
+- **Tags**: exploration, configs, consistency-review, H4, H5, H8
+
+> Explore detection and library config files to understand JSON structure, field patterns, and identify elements for documentation consistency verification.
+
+#### Instruction file structure analysis
+
+- **Date**: 2026-01-12 11:35
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T11-35_agent-af3c4df`
+- **Model**: claude-haiku-4-5-20251001
+- **Statistics**: 10 turns, 9 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 8 referenced
+- **Tags**: exploration, prompts, system-instructions, consistency-review, H5
+
+> Explore prompt library instruction files to understand structure, variation patterns across M/E levels and H5 variants, for consistency review planning.
+
+#### H5 appendix structure exploration
+
+- **Date**: 2026-01-12 05:59
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent-a7b17e6`
+- **Model**: claude-haiku-4-5-20251001
+- **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 1 referenced
+- **Tags**: exploration, H5, preregistration, documentation, refactoring
+
+> Explore the preregistration appendix to understand H5 prompt style documentation structure for planning updates from None/Images-only/Text+Images to Minimal/Terse/Verbose naming.
+
+#### Execution plan structure exploration
+
+- **Date**: 2026-01-12 05:59
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent-a777656`
+- **Model**: claude-haiku-4-5-20251001
+- **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 1 referenced
+- **Tags**: exploration, H5, H8, execution-plan, preregistration, refactoring
+
+> Explore the execution plan to understand phase structure, strand organisation, and H4/H5/H8 factor references for planning redesign updates.
+
+#### Preregistration hypothesis sections exploration
+
+- **Date**: 2026-01-12 05:59
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-12T05-59_agent-a66ce8f`
+- **Model**: claude-haiku-4-5-20251001
+- **Statistics**: 11 turns, 10 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 1 referenced
+- **Tags**: exploration, H4, H5, H8, preregistration, hypotheses, refactoring
+
+> Explore preregistration.md to understand the structure of H4, H5, H8 hypothesis sections and strand descriptions for planning redesign updates.
+
+#### CC session archiving v1.1 implementation
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 18h 32m
@@ -25,11 +133,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 242 turns, 216 tool calls, 199 thinking blocks (~17,082 tokens)
 - **Artifacts**: 16 created, 0 modified, 50 referenced
-- **Tags**: -
+- **Tags**: implementation, session-archiving, transparency, v1.1-schema, infrastructure
 
-> No description provided
+> Implemented v1.1 session archiving schema with thinking blocks ethics, relationships vocabulary, artifacts tracking, tool output bytes, and archive-defaults.yaml.
 
-#### Untitled Session
+#### Cache Warmup Agent
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 0m
@@ -37,11 +145,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, cache-priming, sub-agent
 
-> No description provided
+> Sub-agent spawned to prime Claude Code's context cache before main session work
 
-#### Untitled Session
+#### Codebase Structure Analysis
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 0m
@@ -49,11 +157,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 4 turns, 3 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: exploration, codebase-analysis, sub-agent
 
-> No description provided
+> Sub-agent analysed project structure using Bash and Glob commands
 
-#### Untitled Session
+#### Read-Only File Search Warmup
 
 - **Date**: 2026-01-08 07:58
 - **Duration**: 0m
@@ -61,11 +169,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, file-search, sub-agent, haiku
 
-> No description provided
+> Sub-agent initialised as read-only file search specialist for codebase exploration
 
-#### Untitled Session
+#### Preregistration File Discovery
 
 - **Date**: 2026-01-08 02:47
 - **Duration**: 0m
@@ -73,11 +181,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 24 turns, 23 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-discovery, preregistration, sub-agent, haiku
 
-> No description provided
+> Sub-agent found all preregistration-related files to understand document structure and synchronisation requirements
 
-#### Untitled Session
+#### Archiving Candidates Search
 
 - **Date**: 2026-01-07 13:16
 - **Duration**: 0m
@@ -85,11 +193,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 28 turns, 27 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 11 referenced
-- **Tags**: -
+- **Tags**: exploration, archiving-prep, planning-cleanup, sub-agent, haiku
 
-> No description provided
+> Sub-agent searched for pilot, planning, and superseded preregistration files to identify archiving candidates
 
-#### Untitled Session
+#### Antigravity Preliminary Work Search
 
 - **Date**: 2026-01-07 13:16
 - **Duration**: 1m
@@ -97,11 +205,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 5 referenced
-- **Tags**: -
+- **Tags**: exploration, archiving-prep, preliminary-work, sub-agent, haiku
 
-> No description provided
+> Sub-agent searched for Antigravity/Gemini preliminary work files to identify content for archiving
 
-#### Untitled Session
+#### Repository Structure Exploration
 
 - **Date**: 2026-01-07 13:16
 - **Duration**: 0m
@@ -109,11 +217,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 20 turns, 19 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: exploration, codebase-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored top-level directory structure to understand archive organisation and plan cleanup
 
-#### Untitled Session
+#### Multi-Scale Voting Data Exploration
 
 - **Date**: 2026-01-07 11:17
 - **Duration**: 1m
@@ -121,11 +229,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 24 turns, 23 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 6 referenced
-- **Tags**: -
+- **Tags**: exploration, data-structures, multi-scale-voting, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored pilot detection data structures to understand format for implementing multi-scale voting analysis
 
-#### Untitled Session
+#### Detection Config Exploration
 
 - **Date**: 2026-01-07 02:46
 - **Duration**: 1m
@@ -133,11 +241,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 32 turns, 31 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 10 referenced
-- **Tags**: -
+- **Tags**: exploration, detection-pipeline, configuration, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored detection script and configuration setup to understand how to run detection on tiles
 
-#### Untitled Session
+#### Tiling Pipeline Exploration
 
 - **Date**: 2026-01-07 02:46
 - **Duration**: 0m
@@ -145,11 +253,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 7 referenced
-- **Tags**: -
+- **Tags**: exploration, tiling, pipeline-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored tile generation process to understand how tiles are created from source maps
 
-#### Untitled Session
+#### Tile Selection Data Exploration
 
 - **Date**: 2026-01-07 02:46
 - **Duration**: 0m
@@ -157,11 +265,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 7 referenced
-- **Tags**: -
+- **Tags**: exploration, tile-selection, data-discovery, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored tile selection scripts and manifests to understand selection process and data availability
 
-#### Untitled Session
+#### Prompts Appendix Hypothesis Check
 
 - **Date**: 2026-01-07 00:32
 - **Duration**: 0m
@@ -169,11 +277,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 4 turns, 3 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, hypothesis-references, sub-agent, haiku
 
-> No description provided
+> Sub-agent checked prompts appendix for hypothesis references that would need updating during hypothesis renumbering
 
-#### Untitled Session
+#### Preregistration Structure Mapping
 
 - **Date**: 2026-01-07 00:32
 - **Duration**: 0m
@@ -181,11 +289,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, restructuring-prep, sub-agent, haiku
 
-> No description provided
+> Sub-agent mapped preregistration document structure to plan major restructuring including hypothesis locations and cross-references
 
-#### Untitled Session
+#### Tile size pilot and preregistration completion
 
 - **Date**: 2026-01-06 22:04
 - **Duration**: 33h 21m
@@ -193,11 +301,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1312 turns, 1232 tool calls, 976 thinking blocks (~84,090 tokens)
 - **Artifacts**: 19 created, 46 modified, 37 referenced
-- **Tags**: -
+- **Tags**: pilot-study, tile-size, multi-scale, preregistration, prompt-library
 
-> No description provided
+> Tile size pilot study (256/512/1024px), multi-scale voting analysis, prompt library alignment, preregistration v4.2 finalisation.
 
-#### Untitled Session
+#### Cache Warmup Agent
 
 - **Date**: 2026-01-06 22:04
 - **Duration**: 0m
@@ -205,11 +313,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, cache-priming, sub-agent
 
-> No description provided
+> Sub-agent spawned to prime Claude Code's context cache before main session work
 
-#### Untitled Session
+#### Read-Only File Search Warmup
 
 - **Date**: 2026-01-06 22:04
 - **Duration**: 0m
@@ -217,11 +325,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, file-search, sub-agent, haiku
 
-> No description provided
+> Sub-agent initialised as read-only file search specialist for codebase exploration
 
-#### Untitled Session
+#### Tile Processing Code Inventory
 
 - **Date**: 2026-01-06 13:17
 - **Duration**: 1m
@@ -229,11 +337,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 33 turns, 32 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 13 referenced
-- **Tags**: -
+- **Tags**: exploration, tile-processing, code-inventory, sub-agent, haiku
 
-> No description provided
+> Sub-agent comprehensively searched for all scripts and config files related to tile creation, selection, and processing
 
-#### Untitled Session
+#### Companion Document Discrepancy Check
 
 - **Date**: 2026-01-06 10:52
 - **Duration**: 0m
@@ -241,11 +349,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 7 turns, 6 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 5 referenced
-- **Tags**: -
+- **Tags**: verification, preregistration-sync, companion-documents, sub-agent, haiku
 
-> No description provided
+> Sub-agent checked companion documents for discrepancies against preregistration.md v3.6
 
-#### Untitled Session
+#### Preregistration Reference Extraction
 
 - **Date**: 2026-01-06 10:52
 - **Duration**: 0m
@@ -253,11 +361,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 16 turns, 15 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent extracted key reference information from preregistration document for alignment checking
 
-#### Untitled Session
+#### Execution Plan Structure Analysis
 
 - **Date**: 2026-01-06 00:15
 - **Duration**: 0m
@@ -265,11 +373,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent analysed execution plan to understand Phase 2 factorial design, dependency graph, budget summary, and Phase 1 procedure
 
-#### Untitled Session
+#### Prompts Appendix Analysis
 
 - **Date**: 2026-01-06 00:15
 - **Duration**: 0m
@@ -277,11 +385,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 2 turns, 1 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent analysed prompts appendix to understand instruction files, M/E factor structure, and config definitions
 
-#### Untitled Session
+#### Preregistration Structure Analysis
 
 - **Date**: 2026-01-06 00:15
 - **Duration**: 0m
@@ -289,11 +397,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 10 turns, 9 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 1 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent analysed preregistration document to identify H2, hypothesis tables, Phase 1 steps, and prompt variants sections
 
-#### Untitled Session
+#### Holdout Tile Expansion Analysis
 
 - **Date**: 2026-01-03 07:13
 - **Duration**: 0m
@@ -301,11 +409,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 8 turns, 7 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 4 referenced
-- **Tags**: -
+- **Tags**: exploration, tile-selection, sub-agent, haiku
 
-> No description provided
+> Sub-agent investigated tile selection process to understand how to expand holdout from 20 to 60 tiles
 
-#### Untitled Session
+#### Holdout Expansion Preregistration Analysis
 
 - **Date**: 2026-01-03 07:13
 - **Duration**: 0m
@@ -313,11 +421,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 3 turns, 2 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 2 referenced
-- **Tags**: -
+- **Tags**: exploration, documentation-analysis, holdout-expansion, sub-agent, haiku
 
-> No description provided
+> Sub-agent analysed preregistration document to identify sections mentioning holdout tiles needing updates for 20-to-60 expansion
 
-#### Untitled Session
+#### Evaluation Workflow Analysis
 
 - **Date**: 2026-01-03 05:14
 - **Duration**: 1m
@@ -325,11 +433,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 22 turns, 21 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 9 referenced
-- **Tags**: -
+- **Tags**: exploration, evaluation-pipeline, metrics-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored evaluation workflow to understand where tile-level MCC assessment would fit in the pipeline
 
-#### Untitled Session
+#### Bootstrap CI Implementation Check
 
 - **Date**: 2026-01-03 04:52
 - **Duration**: 0m
@@ -337,11 +445,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 19 turns, 18 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
-- **Tags**: -
+- **Tags**: verification, bootstrap-ci, preregistration-compliance, sub-agent, haiku
 
-> No description provided
+> Sub-agent searched analytical scripts to verify implementation of 95% bootstrapped confidence intervals per preregistration section 3.5
 
-#### Untitled Session
+#### Preregistration V4 finalisation
 
 - **Date**: 2026-01-03 04:45
 - **Duration**: 80h 33m
@@ -349,11 +457,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 837 turns, 777 tool calls, 618 thinking blocks (~55,899 tokens)
 - **Artifacts**: 3 created, 13 modified, 32 referenced
-- **Tags**: -
+- **Tags**: preregistration, hypothesis-review, tile-selection, holdout-expansion, statistical-analysis
 
-> No description provided
+> Extended preregistration refinement: hypothesis counting verification (9 principal), holdout expansion feasibility analysis, tile selection methodology, bootstrap CI verification.
 
-#### Untitled Session
+#### Cache Warmup Agent
 
 - **Date**: 2026-01-03 04:44
 - **Duration**: 0m
@@ -361,11 +469,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, cache-priming, sub-agent
 
-> No description provided
+> Sub-agent spawned to prime Claude Code's context cache before main session work
 
-#### Untitled Session
+#### Read-Only File Search Warmup
 
 - **Date**: 2026-01-03 04:44
 - **Duration**: 0m
@@ -373,11 +481,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, file-search, sub-agent, haiku
 
-> No description provided
+> Sub-agent initialised as read-only file search specialist for codebase exploration
 
-#### Untitled Session
+#### Preregistration encoding and reference fixes
 
 - **Date**: 2026-01-02 22:17
 - **Duration**: 5h 20m
@@ -385,11 +493,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 160 turns, 147 tool calls, 81 thinking blocks (~8,588 tokens)
 - **Artifacts**: 0 created, 3 modified, 3 referenced
-- **Tags**: -
+- **Tags**: bugfix, preregistration, encoding, documentation
 
-> No description provided
+> Fixed UTF-8 encoding corruption in preregistration-coverage.md and resolved dangling section references in preregistration.md.
 
-#### Untitled Session
+#### Cache Warmup Agent
 
 - **Date**: 2026-01-02 22:17
 - **Duration**: 0m
@@ -397,11 +505,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, cache-priming, sub-agent
 
-> No description provided
+> Sub-agent spawned to prime Claude Code's context cache before main session work
 
-#### Untitled Session
+#### Read-Only File Search Warmup
 
 - **Date**: 2026-01-02 22:17
 - **Duration**: 0m
@@ -409,11 +517,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, file-search, sub-agent, haiku
 
-> No description provided
+> Sub-agent initialised as read-only file search specialist for codebase exploration
 
-#### Untitled Session
+#### Testing Infrastructure Exploration
 
 - **Date**: 2026-01-02 00:02
 - **Duration**: 1m
@@ -421,11 +529,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 33 turns, 32 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 5 referenced
-- **Tags**: -
+- **Tags**: exploration, testing, code-analysis, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored codebase to understand testing infrastructure and identify scripts needing tests
 
-#### Untitled Session
+#### LLM Provider Metadata Research
 
 - **Date**: 2026-01-01 23:08
 - **Duration**: 3m
@@ -433,11 +541,11 @@
 - **Model**: claude-sonnet-4-5-20250929
 - **Statistics**: 13 turns, 12 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: research, web-search, api-documentation, sub-agent
 
-> No description provided
+> Sub-agent researched API documentation for Google Gemini, Anthropic Claude, and OpenAI GPT to identify response metadata fields
 
-#### Untitled Session
+#### LLM API Script Search
 
 - **Date**: 2026-01-01 23:08
 - **Duration**: 0m
@@ -445,11 +553,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 6 referenced
-- **Tags**: -
+- **Tags**: exploration, code-analysis, api-integration, sub-agent, haiku
 
-> No description provided
+> Sub-agent searched scripts for LLM API calls to identify where metadata capture was needed
 
-#### Untitled Session
+#### FAIR4RS Compliance Audit
 
 - **Date**: 2025-12-31 06:17
 - **Duration**: 0m
@@ -457,11 +565,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 20 turns, 19 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 10 referenced
-- **Tags**: -
+- **Tags**: exploration, fair4rs, compliance-audit, sub-agent, haiku
 
-> No description provided
+> Sub-agent audited repository for FAIR4RS compliance including CITATION.cff, LICENSE, README, requirements files, and UK English usage
 
-#### Untitled Session
+#### Archive Structure Comparison
 
 - **Date**: 2025-12-31 06:17
 - **Duration**: 1m
@@ -469,11 +577,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 43 turns, 42 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
-- **Tags**: -
+- **Tags**: exploration, archive-analysis, file-organisation, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored archive directory and compared with active files to identify obsolete content for archiving
 
-#### Untitled Session
+#### Preregistration Documentation Status
 
 - **Date**: 2025-12-31 06:17
 - **Duration**: 1m
@@ -481,11 +589,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 18 turns, 17 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 7 referenced
-- **Tags**: -
+- **Tags**: exploration, preregistration, documentation-audit, sub-agent, haiku
 
-> No description provided
+> Sub-agent explored preregistration documentation to assess completeness, state, and recent work needing reflection
 
-#### Untitled Session
+#### Script Inventory Assessment
 
 - **Date**: 2025-12-31 02:36
 - **Duration**: 0m
@@ -493,11 +601,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 24 turns, 23 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 20 referenced
-- **Tags**: -
+- **Tags**: exploration, code-inventory, readiness-assessment, sub-agent, haiku
 
-> No description provided
+> Sub-agent inventoried Python scripts to assess readiness for executing the preregistered study
 
-#### Untitled Session
+#### LLM metadata library and preregistration sprint
 
 - **Date**: 2025-12-31 01:34
 - **Duration**: 52h 38m
@@ -505,11 +613,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 735 turns, 679 tool calls, 501 thinking blocks (~39,918 tokens)
 - **Artifacts**: 34 created, 31 modified, 30 referenced
-- **Tags**: -
+- **Tags**: implementation, llm-metadata, preregistration, fair4rs, run-study, infrastructure
 
-> No description provided
+> Major development session creating experimental infrastructure: lib_llm_metadata.py for API response handling, run_study.py orchestrator, Phase 2 prompt configurations, FAIR4RS compliance files, and preregistration companion documents.
 
-#### Untitled Session
+#### Prompt reorganisation and preregistration drafting
 
 - **Date**: 2025-12-23 07:25
 - **Duration**: 186h
@@ -517,11 +625,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 431 turns, 376 tool calls, 344 thinking blocks (~34,200 tokens)
 - **Artifacts**: 20 created, 9 modified, 14 referenced
-- **Tags**: -
+- **Tags**: preregistration, prompt-reorganisation, osf, consistency-check, reference-materials
 
-> No description provided
+> Completed commit for prompt directory restructuring, refined preregistration document with consistency and de-duplication checks, reviewed Soviet topographic symbol reference materials for false positive analysis.
 
-#### Untitled Session
+#### Cache Warmup Agent
 
 - **Date**: 2025-12-23 07:25
 - **Duration**: 0m
@@ -529,11 +637,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, cache-priming, sub-agent
 
-> No description provided
+> Sub-agent spawned to prime Claude Code's context cache before main session work
 
-#### Untitled Session
+#### Read-Only File Search Warmup
 
 - **Date**: 2025-12-23 07:25
 - **Duration**: 0m
@@ -541,11 +649,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, file-search, sub-agent, haiku
 
-> No description provided
+> Sub-agent initialised as read-only file search specialist for codebase exploration
 
-#### Untitled Session
+#### Two-Stage Pipeline Code Audit
 
 - **Date**: 2025-12-22 04:41
 - **Duration**: 3m
@@ -553,11 +661,11 @@
 - **Model**: claude-sonnet-4-5-20250929
 - **Statistics**: 30 turns, 29 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 8 referenced
-- **Tags**: -
+- **Tags**: code-audit, two-stage-pipeline, config-validation, sub-agent
 
-> No description provided
+> Sub-agent performed thorough code audit of v4.x two-stage pipeline checking config consistency and script bugs
 
-#### Untitled Session
+#### Initial Codebase Exploration
 
 - **Date**: 2025-12-22 03:05
 - **Duration**: 1m
@@ -565,11 +673,11 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 45 turns, 44 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 22 referenced
-- **Tags**: -
+- **Tags**: exploration, codebase-overview, architecture, onboarding, sub-agent, haiku
 
-> No description provided
+> Sub-agent thoroughly explored codebase structure, documentation, and pipeline architecture for LLM-driven burial mound extraction project
 
-#### Untitled Session
+#### VLM pipeline development and codebase reorganisation
 
 - **Date**: 2025-12-22 03:05
 - **Duration**: 27h 50m
@@ -577,11 +685,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 920 turns, 836 tool calls, 648 thinking blocks (~52,867 tokens)
 - **Artifacts**: 17 created, 20 modified, 105 referenced
-- **Tags**: -
+- **Tags**: vlm, burial-mounds, gemini, prompt-engineering, codebase-exploration, refactoring, experimental-pipeline
 
-> No description provided
+> Initial orientation to the burial mound detection project, followed by systematic review of the v4.x two-stage verification pipeline, investigation of Flash model discrepancies, and codebase reorganisation including directory renaming and path reference updates.
 
-#### Untitled Session
+#### Codebase Exploration Warmup
 
 - **Date**: 2025-12-22 02:51
 - **Duration**: 0m
@@ -589,11 +697,11 @@
 - **Model**: claude-opus-4-5-20251101
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, codebase-exploration, sub-agent
 
-> No description provided
+> Sub-agent explored project structure and familiarised with the Map Reader LLM codebase
 
-#### Untitled Session
+#### Read-Only File Search Warmup
 
 - **Date**: 2025-12-22 02:51
 - **Duration**: 0m
@@ -601,9 +709,184 @@
 - **Model**: claude-haiku-4-5-20251001
 - **Statistics**: 1 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
 - **Artifacts**: 0 created, 0 modified, 0 referenced
-- **Tags**: -
+- **Tags**: warmup, file-search, sub-agent, haiku
 
-> No description provided
+> Sub-agent initialised as read-only file search specialist for codebase exploration
+
+#### Empty/abandoned session
+
+- **Date**: Unknown
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/36bb4a54`
+- **Model**: None
+- **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: empty, abandoned
+
+> Session initialised but no conversation occurred. Likely opened and closed without interaction.
+
+#### Empty/abandoned session
+
+- **Date**: Unknown
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/13d18f5b`
+- **Model**: None
+- **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: empty, abandoned
+
+> Session initialised but no conversation occurred. Likely opened and closed without interaction.
+
+#### Empty/abandoned session
+
+- **Date**: Unknown
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/e8acccf2`
+- **Model**: None
+- **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: empty, abandoned
+
+> Session initialised but no conversation occurred. Likely opened and closed without interaction.
+
+#### Empty/abandoned session
+
+- **Date**: Unknown
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/a9d3b427`
+- **Model**: None
+- **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: empty, abandoned
+
+> Session initialised but no conversation occurred. Likely opened and closed without interaction.
+
+#### Empty/abandoned session
+
+- **Date**: Unknown
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/8cafd1ca`
+- **Model**: None
+- **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: empty, abandoned
+
+> Session initialised but no conversation occurred. Likely opened and closed without interaction.
+
+#### Empty/abandoned session
+
+- **Date**: Unknown
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/7fe297a3`
+- **Model**: None
+- **Statistics**: 0 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: empty, abandoned
+
+> Session initialised but no conversation occurred. Likely opened and closed without interaction.
+
+## Tag Index
+
+- **FAIR-metadata**: 1 session(s)
+- **H4**: 2 session(s)
+- **H5**: 5 session(s)
+- **H8**: 3 session(s)
+- **OSF-preparation**: 2 session(s)
+- **abandoned**: 6 session(s)
+- **api-documentation**: 1 session(s)
+- **api-integration**: 1 session(s)
+- **appendix**: 1 session(s)
+- **architecture**: 1 session(s)
+- **archive-analysis**: 1 session(s)
+- **archiving**: 1 session(s)
+- **archiving-prep**: 2 session(s)
+- **bootstrap-ci**: 1 session(s)
+- **bugfix**: 1 session(s)
+- **burial-mounds**: 1 session(s)
+- **cache-priming**: 5 session(s)
+- **code-analysis**: 2 session(s)
+- **code-audit**: 1 session(s)
+- **code-inventory**: 2 session(s)
+- **codebase-analysis**: 2 session(s)
+- **codebase-exploration**: 2 session(s)
+- **codebase-overview**: 1 session(s)
+- **companion-documents**: 1 session(s)
+- **compliance-audit**: 1 session(s)
+- **config-validation**: 1 session(s)
+- **config-verification**: 1 session(s)
+- **configs**: 1 session(s)
+- **configuration**: 1 session(s)
+- **consistency-check**: 1 session(s)
+- **consistency-review**: 3 session(s)
+- **continuation**: 2 session(s)
+- **data-discovery**: 1 session(s)
+- **data-structures**: 1 session(s)
+- **detection-pipeline**: 1 session(s)
+- **documentation**: 5 session(s)
+- **documentation-analysis**: 7 session(s)
+- **documentation-audit**: 1 session(s)
+- **documentation-discovery**: 1 session(s)
+- **empty**: 6 session(s)
+- **encoding**: 1 session(s)
+- **evaluation-pipeline**: 1 session(s)
+- **execution-plan**: 1 session(s)
+- **experimental-pipeline**: 1 session(s)
+- **exploration**: 32 session(s)
+- **fair4rs**: 2 session(s)
+- **file-organisation**: 1 session(s)
+- **file-search**: 6 session(s)
+- **gemini**: 1 session(s)
+- **haiku**: 33 session(s)
+- **holdout-expansion**: 2 session(s)
+- **housekeeping**: 1 session(s)
+- **hypotheses**: 1 session(s)
+- **hypothesis-references**: 1 session(s)
+- **hypothesis-review**: 1 session(s)
+- **implementation**: 2 session(s)
+- **infrastructure**: 2 session(s)
+- **linting**: 1 session(s)
+- **llm-metadata**: 1 session(s)
+- **metadata**: 1 session(s)
+- **metrics-analysis**: 1 session(s)
+- **multi-scale**: 1 session(s)
+- **multi-scale-voting**: 1 session(s)
+- **onboarding**: 1 session(s)
+- **osf**: 1 session(s)
+- **pilot-study**: 1 session(s)
+- **pipeline-analysis**: 1 session(s)
+- **planning-cleanup**: 1 session(s)
+- **preliminary-work**: 1 session(s)
+- **preregistration**: 12 session(s)
+- **preregistration-compliance**: 1 session(s)
+- **preregistration-sync**: 1 session(s)
+- **prompt-engineering**: 1 session(s)
+- **prompt-library**: 1 session(s)
+- **prompt-reorganisation**: 1 session(s)
+- **prompts**: 1 session(s)
+- **readiness-assessment**: 1 session(s)
+- **refactoring**: 4 session(s)
+- **reference-materials**: 1 session(s)
+- **research**: 1 session(s)
+- **restructuring-prep**: 1 session(s)
+- **run-study**: 1 session(s)
+- **session-archiving**: 1 session(s)
+- **session-management**: 1 session(s)
+- **statistical-analysis**: 1 session(s)
+- **sub-agent**: 42 session(s)
+- **system-instructions**: 1 session(s)
+- **testing**: 3 session(s)
+- **tile-processing**: 1 session(s)
+- **tile-selection**: 3 session(s)
+- **tile-size**: 1 session(s)
+- **tiling**: 1 session(s)
+- **transparency**: 1 session(s)
+- **two-stage-pipeline**: 1 session(s)
+- **v1.1-schema**: 1 session(s)
+- **validation**: 1 session(s)
+- **verification**: 2 session(s)
+- **vlm**: 1 session(s)
+- **warmup**: 12 session(s)
+- **web-search**: 1 session(s)
 
 ---
 
