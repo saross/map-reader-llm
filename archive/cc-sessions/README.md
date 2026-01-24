@@ -26,11 +26,39 @@ archive/cc-sessions/
 │   ├── extract-artifacts.md
 │   ├── extract-methodology.md
 │   └── extract-issues.md
-└── {project-name}/                     # Sessions grouped by project
-    └── {YYYY-MM-DDTHH-MM}_{id}/        # Session directory (timestamp + ID)
-        ├── session.jsonl               # Full session transcript
-        └── session.meta.json           # Structured metadata (v1.1)
+└── {project-name}/                             # Sessions grouped by project
+    └── {YYYY-MM-DDTHH-MM}[_agent]_{slug}/      # Session directory (human-readable)
+        ├── session.jsonl                       # Full session transcript
+        └── session.meta.json                   # Structured metadata (v1.1)
 ```
+
+### Directory Naming Convention
+
+Session directories use a human-readable format that sorts chronologically:
+
+```text
+{YYYY-MM-DDTHH-MM}[_agent]_{slug}[_{short_id}]
+```
+
+| Component | Description | Example |
+|-----------|-------------|---------|
+| `YYYY-MM-DDTHH-MM` | ISO 8601 date-time (session start) | `2025-12-22T03-05` |
+| `_agent` | Optional prefix for agent sub-sessions | `_agent` |
+| `slug` | Lowercase, hyphenated title (max 45 chars) | `vlm-pipeline-development` |
+| `_short_id` | Optional 8-char ID suffix for uniqueness | `_7fe297a3` |
+
+**Examples**:
+
+- `2025-12-22T03-05_vlm-pipeline-development-and-codebase` — Main session
+- `2025-12-22T02-51_agent_codebase-exploration-warmup` — Agent sub-session
+- `2026-01-14T13-55_empty-abandoned-session_7fe297a3` — With ID suffix for uniqueness
+
+**Slug generation**:
+
+- Derived from `auto_generated.title` in session metadata
+- Converted to lowercase with hyphens replacing non-alphanumeric characters
+- Truncated at word boundary if longer than 45 characters
+- Short ID suffix added only when duplicate slugs occur at the same timestamp
 
 ## Using the Archive
 

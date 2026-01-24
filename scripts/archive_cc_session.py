@@ -12,12 +12,22 @@ Usage:
     python scripts/archive_cc_session.py --all              # Archive all unarchived
     python scripts/archive_cc_session.py --list             # List sessions and status
     python scripts/archive_cc_session.py --dry-run          # Preview without archiving
+    python scripts/archive_cc_session.py --title "My Title" # Use human-readable name
 
 The script is designed to run within a CC session so that CC can generate
 rich metadata (title, purpose, tags, three_ps summaries) interactively.
 
+Directory naming convention:
+    {YYYY-MM-DDTHH-MM}[_agent]_{slug}[_{short_id}]
+
+    - Timestamp from session start
+    - _agent prefix for agent sub-sessions
+    - Slug derived from title (lowercase, hyphenated, max 45 chars)
+    - Short ID suffix added only when needed for uniqueness
+    - Falls back to short session ID if no title provided
+
 Created: 2026-01-08
-Updated: 2026-01-09 (v1.1)
+Updated: 2026-01-24 (v1.1 + human-readable directory names)
 Schema version: 1.1
 
 v1.1 additions:
@@ -27,6 +37,7 @@ v1.1 additions:
 - tool_outputs byte tracking
 - compression metadata fields
 - archive-defaults.yaml config file support
+- human-readable directory naming with title-derived slugs
 """
 
 import argparse
@@ -100,6 +111,35 @@ FILE_TYPE_MAPPINGS = {
     ".tif": "image",
     ".tiff": "image",
 }
+
+
+# =============================================================================
+# Directory Naming Utilities
+# =============================================================================
+
+def slugify(title: str, max_length: int = 45) -> str:
+    """
+    Convert a title to a URL-friendly slug for directory naming.
+
+    Args:
+        title: Session title (e.g., "VLM Pipeline Development and Codebase")
+        max_length: Maximum slug length (default 45 chars)
+
+    Returns:
+        Lowercase, hyphenated slug (e.g., "vlm-pipeline-development-and-codebase")
+    """
+    # Convert to lowercase and replace non-alphanumeric with hyphens
+    slug = re.sub(r'[^a-z0-9]+', '-', title.lower())
+    # Remove leading/trailing hyphens
+    slug = slug.strip('-')
+    # Collapse multiple hyphens
+    slug = re.sub(r'-+', '-', slug)
+
+    # Truncate at word boundary if too long
+    if len(slug) > max_length:
+        slug = slug[:max_length].rsplit('-', 1)[0]
+
+    return slug
 
 
 # =============================================================================
@@ -960,19 +1000,36 @@ def create_session_metadata(
 # Archive Operations
 # =============================================================================
 
-def get_archive_directory(session_id: str, stats: dict[str, Any]) -> Path:
+def get_archive_directory(
+    session_id: str,
+    stats: dict[str, Any],
+    title: str | None = None
+) -> Path:
     """
     Determine the archive directory for a session.
 
-    Format: archive/cc-sessions/{project}/{timestamp}_{id}/
-    Timestamp: YYYY-MM-DDTHH-MM (from session start)
-    ID: First 8 characters of session ID for uniqueness
+    Format: archive/cc-sessions/{project}/{timestamp}[_agent]_{slug}/
+    - Timestamp: YYYY-MM-DDTHH-MM (from session start)
+    - Agent prefix: Added for agent sub-sessions
+    - Slug: Derived from title if provided, otherwise short session ID
+
+    Args:
+        session_id: Session UUID or agent-xxx identifier
+        stats: Session statistics including started_at timestamp
+        title: Optional session title for human-readable slug
+
+    Returns:
+        Path to the archive directory
     """
     project_name = get_project_name()
+    project_dir = ARCHIVE_DIR / project_name
 
-    # Get short ID for uniqueness (handles both UUID and agent-xxx formats)
-    if session_id.startswith("agent-"):
-        short_id = session_id  # Keep full agent ID (already short)
+    # Determine if this is an agent session
+    is_agent = session_id.startswith("agent-")
+
+    # Get short ID for uniqueness fallback
+    if is_agent:
+        short_id = session_id.replace("agent-", "")[:7]  # e.g., "a37c175"
     else:
         short_id = session_id[:8]  # First 8 chars of UUID
 
@@ -980,20 +1037,41 @@ def get_archive_directory(session_id: str, stats: dict[str, Any]) -> Path:
     if stats["started_at"]:
         try:
             dt = datetime.fromisoformat(stats["started_at"].replace("Z", "+00:00"))
-            timestamp_dir = f"{dt.strftime('%Y-%m-%dT%H-%M')}_{short_id}"
+            timestamp = dt.strftime('%Y-%m-%dT%H-%M')
         except (ValueError, TypeError):
-            timestamp_dir = short_id
+            timestamp = None
     else:
-        timestamp_dir = short_id
+        timestamp = None
 
-    return ARCHIVE_DIR / project_name / timestamp_dir
+    # Build directory name
+    if title and title != "Untitled Session":
+        # Use human-readable slug from title
+        slug = slugify(title)
+        if is_agent:
+            dir_name = f"{timestamp}_agent_{slug}" if timestamp else f"agent_{slug}"
+        else:
+            dir_name = f"{timestamp}_{slug}" if timestamp else slug
+
+        # Check for uniqueness; add short_id suffix if needed
+        candidate = project_dir / dir_name
+        if candidate.exists():
+            dir_name = f"{dir_name}_{short_id}"
+    else:
+        # Fall back to short_id-based naming (legacy behaviour)
+        if is_agent:
+            dir_name = f"{timestamp}_{session_id}" if timestamp else session_id
+        else:
+            dir_name = f"{timestamp}_{short_id}" if timestamp else short_id
+
+    return project_dir / dir_name
 
 
 def archive_session(
     session_path: Path,
     dry_run: bool = False,
     stats_only: bool = False,
-    use_gzip: bool = False
+    use_gzip: bool = False,
+    title: str | None = None
 ) -> dict[str, Any] | None:
     """
     Archive a single session with v1.1 schema.
@@ -1003,13 +1081,14 @@ def archive_session(
         dry_run: If True, print what would be done without archiving
         stats_only: If True, skip CC metadata generation
         use_gzip: If True, compress the JSONL file
+        title: Optional session title for human-readable directory name
 
     Returns:
         Session metadata dict, or None if skipped
     """
     session_id = get_session_id(session_path)
     stats = extract_session_stats(session_path)
-    archive_dir = get_archive_directory(session_id, stats)
+    archive_dir = get_archive_directory(session_id, stats, title=title)
 
     # Load defaults from config file (v1.1)
     defaults = load_defaults()
@@ -1244,11 +1323,14 @@ def cmd_archive(args: argparse.Namespace) -> None:
     # Archive each session
     new_sessions = []
     for session_path in target_sessions:
+        # Title can only be specified for single session archives
+        session_title = args.title if len(target_sessions) == 1 else None
         result = archive_session(
             session_path,
             dry_run=args.dry_run,
             stats_only=args.stats_only,
-            use_gzip=args.gzip
+            use_gzip=args.gzip,
+            title=session_title
         )
         if result:
             new_sessions.append(result)
@@ -1271,11 +1353,12 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s                    Archive the latest session
-  %(prog)s --list             List all sessions and archive status
-  %(prog)s --all              Archive all unarchived sessions
-  %(prog)s --session-id UUID  Archive a specific session
-  %(prog)s --dry-run          Preview without archiving
+  %(prog)s                              Archive the latest session
+  %(prog)s --list                       List all sessions and archive status
+  %(prog)s --all                        Archive all unarchived sessions
+  %(prog)s --session-id UUID            Archive a specific session
+  %(prog)s --title "Pipeline Dev"       Archive with human-readable directory name
+  %(prog)s --dry-run                    Preview without archiving
 
 Note: Run this script within a CC session for interactive metadata generation.
 The current/active session cannot be archived until it ends.
@@ -1315,6 +1398,10 @@ The current/active session cannot be archived until it ends.
         "--gzip", "-z",
         action="store_true",
         help="Compress JSONL files with gzip"
+    )
+    parser.add_argument(
+        "--title", "-t",
+        help="Session title for human-readable directory name (single session only)"
     )
 
     args = parser.parse_args()
