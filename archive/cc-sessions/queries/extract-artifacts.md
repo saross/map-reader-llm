@@ -9,12 +9,12 @@ Identify all artifacts (files) involved in the session:
 ### 1. Files Created
 
 Files that did not exist before and were created during the session.
-Look for: `Write` tool calls, `create_file` operations
+Look for: `Write` tool calls
 
 ### 2. Files Modified
 
 Existing files that were changed during the session.
-Look for: `Edit` tool calls, `str_replace` operations
+Look for: `Edit` tool calls
 
 ### 3. Files Read/Referenced
 

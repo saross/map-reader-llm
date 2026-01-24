@@ -33,8 +33,8 @@ Rather than pre-generating multiple views of each session (summaries, decision l
 ### Method 2: With Claude Code
 
 1. Start a Claude Code session
-2. Read the session file: "Read archive/cc-sessions/{project}/{timestamp}/session.jsonl"
-3. Provide the query prompt
+2. Ask CC to read the session: "Read the session at archive/cc-sessions/{project}/{timestamp}/session.jsonl"
+3. Provide the query prompt or ask CC to apply a specific query
 
 ### Method 3: Programmatic Access
 

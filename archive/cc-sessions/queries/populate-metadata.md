@@ -43,6 +43,21 @@ Analyse the session transcript and generate values for any empty or placeholder 
 - **process_summary**: Describe the workflow and key tools used (1-2 sentences)
 - **provenance_summary**: Context within the broader project (1 sentence)
 
+### relationships
+
+```json
+"relationships": {
+  "continues": "UUID of previous session (if this is a continuation)",
+  "continuedBy": "UUID of next session (if work continued)",
+  "isPartOf": "UUID of parent session (for agent sub-sessions)"
+}
+```
+
+- **continues**: Only populate if the session explicitly continues prior work
+- **continuedBy**: Only populate if work was continued in a later session
+- **isPartOf**: Only populate for agent sub-sessions spawned from a parent session
+- Leave fields as `null` if not applicable
+
 ### artifacts[].description
 
 For each artifact in `created`, `modified`, and `referenced` arrays, populate empty `description` fields:
