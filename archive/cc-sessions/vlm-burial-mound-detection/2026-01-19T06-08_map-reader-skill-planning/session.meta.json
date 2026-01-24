@@ -1,0 +1,430 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+    "started_at": "2026-01-19T06:08:56.448Z",
+    "ended_at": "2026-01-20T05:22:10.876Z",
+    "duration_minutes": 1393
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 305,
+    "total_tokens": 28468,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "docs/methodology/preregistration/phase1-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_brief.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_brief.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/propose_brief.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/verify_brief.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/future_work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_terse.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_terse.json",
+        "type": "data",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "archive/planning/prompt-library-alignment.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preregistration/document-revisions/cc-text-image-alignment.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_prompt-revision-instructions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_two-stage-prompt-revision-instructions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/cc_two-stage-prompt-revisions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/internal-document-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/tile-selection.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/calibration_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_terse.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_verbose.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_canonical.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_plus-hp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_pure-positive-canon.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-16.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-32.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-4.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/propose_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/verify_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "results/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 466,
+    "human_messages": 466,
+    "assistant_messages": 836,
+    "thinking_blocks": 305,
+    "tool_calls": {
+      "total": 419,
+      "by_type": {
+        "Read": 139,
+        "Glob": 35,
+        "Bash": 91,
+        "Grep": 28,
+        "Edit": 43,
+        "mcp__ide__getDiagnostics": 1,
+        "Write": 31,
+        "ExitPlanMode": 5,
+        "TodoWrite": 43,
+        "Skill": 2,
+        "Task": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 1242492,
+      "by_type": {
+        "Read": {
+          "count": 139,
+          "bytes": 925380
+        },
+        "Glob": {
+          "count": 35,
+          "bytes": 36872
+        },
+        "Bash": {
+          "count": 91,
+          "bytes": 70119
+        },
+        "Grep": {
+          "count": 28,
+          "bytes": 81983
+        },
+        "Edit": {
+          "count": 43,
+          "bytes": 5165
+        },
+        "mcp__ide__getDiagnostics": {
+          "count": 1,
+          "bytes": 13832
+        },
+        "Write": {
+          "count": 31,
+          "bytes": 73593
+        },
+        "ExitPlanMode": {
+          "count": 4,
+          "bytes": 7317
+        },
+        "TodoWrite": {
+          "count": 43,
+          "bytes": 6880
+        },
+        "Skill": {
+          "count": 2,
+          "bytes": 60
+        },
+        "Task": {
+          "count": 1,
+          "bytes": 21291
+        }
+      },
+      "largest_single_output_bytes": 102072
+    }
+  },
+  "auto_generated": {
+    "title": "Map-Reader Skill Planning",
+    "purpose": "Designed and planned the map-reader CC skill for VLM experiment execution, created Phase 1 execution simulation, implemented prompt templates for various detection strategies, and discussed scope of cartographic vs satellite detection approaches.",
+    "tags": ["skill-development", "experiment-planning", "prompt-engineering", "phase-1", "methodology"]
+  },
+  "three_ps": {
+    "prompt_summary": "User requested planning for a CC skill to guide VLM experiment execution, including dry-run simulations of Phase 1 and implementation of detection prompt templates.",
+    "process_summary": "CC created Phase 1 execution simulation document, implemented 16 prompt templates (detect_brief, detect_verbose, propose, verify variants), discussed skill architecture and scoping decisions.",
+    "provenance_summary": "Major planning session establishing the map-reader skill framework and prompt library infrastructure for the preregistered VLM study."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "6193a08990fc6b061f12da124559cac8e4fb700c2c4e026d85743939383d2914",
+    "jsonl_bytes": 18581345,
+    "archived_at": "2026-01-24T16:52:33.360833",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 3247730,
+    "jsonl_bytes_uncompressed": 18581345,
+    "jsonl_sha256_uncompressed": "bd8c0ea0f9569a8a81bf43f6747a245f114b29bb1cd83d8091788f518aa93fd3"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "62fda995-5112-4ac1-9025-06723bad8e42",
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9"
+    ],
+    "detection_notes": [
+      "Found session ID reference: 62fda995-5112-4ac1-9025-06723bad8e42",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found session ID reference: 350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'"
+    ]
+  }
+}

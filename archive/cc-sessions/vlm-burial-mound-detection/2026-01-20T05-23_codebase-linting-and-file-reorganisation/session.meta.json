@@ -1,0 +1,846 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "69a83ee2-d370-44aa-857e-824899977a6a",
+    "started_at": "2026-01-20T05:23:07.787Z",
+    "ended_at": "2026-01-23T07:20:23.221Z",
+    "duration_minutes": 4437
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 817,
+    "total_tokens": 65693,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection",
+      "codebase-maintenance"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": ["350143a3-fafa-4bf9-ba1e-02d8ebce27f9"],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": ".claude/skills/map-reader/SKILL.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": ".claude/skills/map-reader/references/config-guide.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": ".claude/skills/map-reader/references/input-paths.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": ".claude/skills/map-reader/references/preregistration-phases.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": ".claude/skills/map-reader/references/troubleshooting.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": ".claude/skills/map-reader/references/workflow-overview.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase1-remaining-tasks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase2-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase2-remaining-tasks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase3-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase3-remaining-tasks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase4-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase4-remaining-tasks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/planning/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "reports/phase1-simulation-gaps.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "ruff.toml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyse_phase2_results.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/extract_candidates.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_phase4_transfer.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/merge_passes.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/preflight_check.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_phase1.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase4.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "studies/phase1-library.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2a-h1-modality.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2b-h7-temperature.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2c-h8-library.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2d-h5-negtext.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase2e-h4-ordering.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase3a-h3-voting.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase3c-h9-diversity.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase3d-h2-twostage.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "studies/phase4-transfer.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "tests/fixtures/detections_with_votes.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "tests/fixtures/expected_threshold_sweep.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "tests/fixtures/references_for_voting_test.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "tests/test_analyse_phase2.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_analyse_phase4_transfer.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_consensus_voting.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_error_taxonomy.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_example_ordering.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_extract_candidates.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_integration_phase3.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_integration_phase4.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_merge_passes.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_phase2_configs.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_preflight.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_run_phase1.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_select_tiles_phase4.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_threshold_sweep.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_tile_classification.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "CITATION.cff",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "codemeta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/PIPELINES.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/USER_GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/VISUALISATION-GUIDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/simulations/phase2-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/reports/tile-selection-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/research/claude-few-shot-multimodal-prompting.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/transparency/cc-session-archiving-addendum.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/transparency/cc-session-archiving-specification.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/planning/future-work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/planning/interaction-triggers-for-followup.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/user-guide.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_terse.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text-image_verbose.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_brief-text.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_terse.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only_verbose.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_terse.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text-image_verbose.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_verbose-text.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_canonical.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_plus-hp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_pure-positive-canon.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-16.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-32.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-4.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/propose_brief.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_brief.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "requirements.txt",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/7_analyse_consensus.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_cc_session.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_union_candidates.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/preprocess_tiling.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "studies/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "tests/fixtures/bounds_sparse.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "tests/test_config_uniqueness.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_preregistration_compliance.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "archive/preregistration/design-analysis/phase2-factorial.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "conftest.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/phase1-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/calibration_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_thinking-high.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_thinking-low.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_thinking-minimal.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/pilot_tilesize.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyse_fp_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyse_study_effects.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/mine_hard_cases.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/select_tiles_phase2.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "tests/conftest.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/fixtures/detections_sparse.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "tests/fixtures/references_sparse.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "tests/test_f1_calculation.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_integration_regression.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 1105,
+    "human_messages": 1105,
+    "assistant_messages": 2147,
+    "thinking_blocks": 817,
+    "tool_calls": {
+      "total": 1039,
+      "by_type": {
+        "TodoWrite": 99,
+        "Glob": 53,
+        "Read": 245,
+        "Bash": 284,
+        "Write": 59,
+        "Edit": 185,
+        "mcp__ide__getDiagnostics": 7,
+        "Grep": 80,
+        "Task": 13,
+        "ExitPlanMode": 11,
+        "AskUserQuestion": 3
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 2493562,
+      "by_type": {
+        "TodoWrite": {
+          "count": 99,
+          "bytes": 15840
+        },
+        "Read": {
+          "count": 245,
+          "bytes": 1747305
+        },
+        "Glob": {
+          "count": 53,
+          "bytes": 22389
+        },
+        "Bash": {
+          "count": 284,
+          "bytes": 337768
+        },
+        "Write": {
+          "count": 59,
+          "bytes": 51572
+        },
+        "Edit": {
+          "count": 185,
+          "bytes": 21666
+        },
+        "mcp__ide__getDiagnostics": {
+          "count": 7,
+          "bytes": 3329
+        },
+        "Grep": {
+          "count": 80,
+          "bytes": 103901
+        },
+        "Task": {
+          "count": 13,
+          "bytes": 140726
+        },
+        "ExitPlanMode": {
+          "count": 11,
+          "bytes": 47457
+        },
+        "AskUserQuestion": {
+          "count": 3,
+          "bytes": 1609
+        }
+      },
+      "largest_single_output_bytes": 101379
+    }
+  },
+  "auto_generated": {
+    "title": "Codebase Linting and File Reorganisation",
+    "purpose": "Major codebase maintenance session: renamed ALL_CAPS documentation files to lowercase, fixed all Python linting errors (ruff), fixed critical Markdown linting issues, and created ruff.toml configuration.",
+    "tags": ["codebase-maintenance", "linting", "python", "markdown", "file-renaming", "code-quality"]
+  },
+  "three_ps": {
+    "prompt_summary": "User requested comprehensive codebase linting and file reorganisation to improve code quality before preregistration submission.",
+    "process_summary": "CC renamed 5 ALL_CAPS docs to lowercase, fixed all 56 Python ruff errors (28 auto-fixed, 4 manual, 24 via config), fixed critical Markdown issues (trailing whitespace, code blocks, language specifiers), created ruff.toml configuration.",
+    "provenance_summary": "Codebase hygiene session preparing the repository for preregistration submission with consistent naming and linting."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "207634f791d30aca4d3e973d28c505375598d274dc38c0350697f270d4d78780",
+    "jsonl_bytes": 187914203,
+    "archived_at": "2026-01-24T16:52:42.684787",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 25399807,
+    "jsonl_bytes_uncompressed": 187914203,
+    "jsonl_sha256_uncompressed": "e8bfdd66ba0eb12f141c2a56443f03519f0df763306b94a60e86f5b560e1eaa9"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+      "69a83ee2-d370-44aa-857e-824899977a6a"
+    ],
+    "detection_notes": [
+      "Found session ID reference: 350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+      "Found session ID reference: 063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found session ID reference: 69a83ee2-d370-44aa-857e-824899977a6a",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'"
+    ]
+  }
+}

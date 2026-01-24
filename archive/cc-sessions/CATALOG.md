@@ -1,17 +1,17 @@
 # CC Session Catalog
 
-*Generated: 2026-01-24 16:38:12*
+*Generated: 2026-01-24 16:54:52*
 
 ## Overview
 
-- **Total sessions**: 65
+- **Total sessions**: 72
 - **Projects**: 1
 
 ### Projects
 
 | Project | Sessions | Total Duration |
 |---------|----------|----------------|
-| vlm-burial-mound-detection | 65 | 472h 26m |
+| vlm-burial-mound-detection | 72 | 599h 33m |
 
 ## Sessions
 
@@ -28,6 +28,90 @@
 - **Tags**: infrastructure, git-lfs, archive-management, naming-conventions, documentation
 
 > Standardised session archive directory naming to human-readable format, migrated 73 JSONL files to Git LFS, removed deprecated-cc-sessions, and updated the archiving script to support title-based slug generation.
+
+#### Untitled Session
+
+- **Date**: 2026-01-23 11:53
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-23T11-53_minimal-abandoned-session`
+- **Model**: None
+- **Statistics**: 3 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: -
+
+> No description provided
+
+#### Untitled Session
+
+- **Date**: 2026-01-23 07:21
+- **Duration**: 0m
+- **Directory**: `vlm-burial-mound-detection/2026-01-23T07-21_minimal-abandoned-session`
+- **Model**: None
+- **Statistics**: 3 turns, 0 tool calls, 0 thinking blocks (~0 tokens)
+- **Artifacts**: 0 created, 0 modified, 0 referenced
+- **Tags**: -
+
+> No description provided
+
+#### Codebase Linting and File Reorganisation
+
+- **Date**: 2026-01-20 05:23
+- **Duration**: 73h 57m
+- **Directory**: `vlm-burial-mound-detection/2026-01-20T05-23_codebase-linting-and-file-reorganisation`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 1105 turns, 1039 tool calls, 817 thinking blocks (~65,693 tokens)
+- **Artifacts**: 52 created, 56 modified, 23 referenced
+- **Tags**: codebase-maintenance, linting, python, markdown, file-renaming, code-quality
+
+> Major codebase maintenance session: renamed ALL_CAPS documentation files to lowercase, fixed all Python linting errors (ruff), fixed critical Markdown linting issues, and created ruff.toml configuration.
+
+#### H2 File Renaming and Documentation Cleanup
+
+- **Date**: 2026-01-19 14:58
+- **Duration**: 13m
+- **Directory**: `vlm-burial-mound-detection/2026-01-19T14-58_h2-file-renaming-and-documentation-cleanup`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 39 turns, 30 tool calls, 23 thinking blocks (~4,313 tokens)
+- **Artifacts**: 0 created, 3 modified, 5 referenced
+- **Tags**: file-renaming, documentation, cleanup, preregistration, H2
+
+> Renamed H2 two-stage prompt files from image-only to brief naming convention, fixed all documentation references, and prepared repository for preregistration submission.
+
+#### Phase 2 Execution Planning and Simulation
+
+- **Date**: 2026-01-19 14:01
+- **Duration**: 21h 55m
+- **Directory**: `vlm-burial-mound-detection/2026-01-19T14-01_phase-2-execution-planning-and-simulation`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 635 turns, 589 tool calls, 401 thinking blocks (~34,915 tokens)
+- **Artifacts**: 32 created, 28 modified, 27 referenced
+- **Tags**: experiment-planning, phase-2, phase-3, skill-development, dry-run-simulation, methodology
+
+> Created comprehensive dry-run simulations for Phase 2 (and Phase 3), implemented the map-reader CC skill with reference documentation, and identified remaining infrastructure gaps for experiment execution.
+
+#### Map-Reader Skill Planning
+
+- **Date**: 2026-01-19 06:08
+- **Duration**: 23h 13m
+- **Directory**: `vlm-burial-mound-detection/2026-01-19T06-08_map-reader-skill-planning`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 466 turns, 419 tool calls, 305 thinking blocks (~28,468 tokens)
+- **Artifacts**: 16 created, 6 modified, 30 referenced
+- **Tags**: skill-development, experiment-planning, prompt-engineering, phase-1, methodology
+
+> Designed and planned the map-reader CC skill for VLM experiment execution, created Phase 1 execution simulation, implemented prompt templates for various detection strategies, and discussed scope of cartographic vs satellite detection approaches.
+
+#### Prompt Template Implementation
+
+- **Date**: 2026-01-19 06:08
+- **Duration**: 7h 49m
+- **Directory**: `vlm-burial-mound-detection/2026-01-19T06-08_prompt-template-implementation`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 113 turns, 97 tool calls, 79 thinking blocks (~8,407 tokens)
+- **Artifacts**: 5 created, 2 modified, 17 referenced
+- **Tags**: prompt-engineering, system-instructions, implementation, templates
+
+> Implemented detection prompt templates from the internal specification document, creating system instructions for detect_verbose-text-image variants and related configurations.
 
 #### Session archiving and metadata updates
 
@@ -800,6 +884,7 @@
 ## Tag Index
 
 - **FAIR-metadata**: 1 session(s)
+- **H2**: 1 session(s)
 - **H4**: 2 session(s)
 - **H5**: 5 session(s)
 - **H8**: 3 session(s)
@@ -817,11 +902,14 @@
 - **bugfix**: 1 session(s)
 - **burial-mounds**: 1 session(s)
 - **cache-priming**: 5 session(s)
+- **cleanup**: 1 session(s)
 - **code-analysis**: 2 session(s)
 - **code-audit**: 1 session(s)
 - **code-inventory**: 2 session(s)
+- **code-quality**: 1 session(s)
 - **codebase-analysis**: 2 session(s)
 - **codebase-exploration**: 2 session(s)
+- **codebase-maintenance**: 1 session(s)
 - **codebase-overview**: 1 session(s)
 - **companion-documents**: 1 session(s)
 - **compliance-audit**: 1 session(s)
@@ -835,18 +923,21 @@
 - **data-discovery**: 1 session(s)
 - **data-structures**: 1 session(s)
 - **detection-pipeline**: 1 session(s)
-- **documentation**: 6 session(s)
+- **documentation**: 7 session(s)
 - **documentation-analysis**: 7 session(s)
 - **documentation-audit**: 1 session(s)
 - **documentation-discovery**: 1 session(s)
+- **dry-run-simulation**: 1 session(s)
 - **empty**: 6 session(s)
 - **encoding**: 1 session(s)
 - **evaluation-pipeline**: 1 session(s)
 - **execution-plan**: 1 session(s)
+- **experiment-planning**: 2 session(s)
 - **experimental-pipeline**: 1 session(s)
 - **exploration**: 32 session(s)
 - **fair4rs**: 2 session(s)
 - **file-organisation**: 1 session(s)
+- **file-renaming**: 2 session(s)
 - **file-search**: 6 session(s)
 - **gemini**: 1 session(s)
 - **git-lfs**: 1 session(s)
@@ -856,28 +947,34 @@
 - **hypotheses**: 1 session(s)
 - **hypothesis-references**: 1 session(s)
 - **hypothesis-review**: 1 session(s)
-- **implementation**: 2 session(s)
+- **implementation**: 3 session(s)
 - **infrastructure**: 3 session(s)
-- **linting**: 1 session(s)
+- **linting**: 2 session(s)
 - **llm-metadata**: 1 session(s)
+- **markdown**: 1 session(s)
 - **metadata**: 1 session(s)
+- **methodology**: 2 session(s)
 - **metrics-analysis**: 1 session(s)
 - **multi-scale**: 1 session(s)
 - **multi-scale-voting**: 1 session(s)
 - **naming-conventions**: 1 session(s)
 - **onboarding**: 1 session(s)
 - **osf**: 1 session(s)
+- **phase-1**: 1 session(s)
+- **phase-2**: 1 session(s)
+- **phase-3**: 1 session(s)
 - **pilot-study**: 1 session(s)
 - **pipeline-analysis**: 1 session(s)
 - **planning-cleanup**: 1 session(s)
 - **preliminary-work**: 1 session(s)
-- **preregistration**: 12 session(s)
+- **preregistration**: 13 session(s)
 - **preregistration-compliance**: 1 session(s)
 - **preregistration-sync**: 1 session(s)
-- **prompt-engineering**: 1 session(s)
+- **prompt-engineering**: 3 session(s)
 - **prompt-library**: 1 session(s)
 - **prompt-reorganisation**: 1 session(s)
 - **prompts**: 1 session(s)
+- **python**: 1 session(s)
 - **readiness-assessment**: 1 session(s)
 - **refactoring**: 4 session(s)
 - **reference-materials**: 1 session(s)
@@ -886,9 +983,11 @@
 - **run-study**: 1 session(s)
 - **session-archiving**: 1 session(s)
 - **session-management**: 1 session(s)
+- **skill-development**: 2 session(s)
 - **statistical-analysis**: 1 session(s)
 - **sub-agent**: 42 session(s)
-- **system-instructions**: 1 session(s)
+- **system-instructions**: 2 session(s)
+- **templates**: 1 session(s)
 - **testing**: 3 session(s)
 - **tile-processing**: 1 session(s)
 - **tile-selection**: 3 session(s)

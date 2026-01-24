@@ -1,12 +1,12 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-01-24T16:38:12.008196",
-  "total_sessions": 65,
+  "generated_at": "2026-01-24T16:54:52.428885",
+  "total_sessions": 72,
   "projects": {
     "vlm-burial-mound-detection": {
       "name": "vlm-burial-mound-detection",
-      "session_count": 65,
-      "total_duration_minutes": 28346
+      "session_count": 72,
+      "total_duration_minutes": 35973
     }
   },
   "sessions": [
@@ -44,6 +44,235 @@
         "referenced": 7
       },
       "thinking_blocks_tokens": 18454
+    },
+    {
+      "id": "4e068e33-a34f-41fd-afa9-8d6579ca86f0",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-23T11-53_minimal-abandoned-session",
+      "title": "Untitled Session",
+      "purpose": "No description provided",
+      "tags": [],
+      "started_at": "2026-01-23T11:53:34.226Z",
+      "duration_minutes": 0,
+      "model": null,
+      "statistics": {
+        "turns": 3,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
+    },
+    {
+      "id": "e68cf81c-dc6e-45b7-a21b-06195c5b85c1",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-23T07-21_minimal-abandoned-session",
+      "title": "Untitled Session",
+      "purpose": "No description provided",
+      "tags": [],
+      "started_at": "2026-01-23T07:21:00.217Z",
+      "duration_minutes": 0,
+      "model": null,
+      "statistics": {
+        "turns": 3,
+        "tool_calls": 0,
+        "thinking_blocks": 0
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 0,
+        "referenced": 0
+      },
+      "thinking_blocks_tokens": 0
+    },
+    {
+      "id": "69a83ee2-d370-44aa-857e-824899977a6a",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-20T05-23_codebase-linting-and-file-reorganisation",
+      "title": "Codebase Linting and File Reorganisation",
+      "purpose": "Major codebase maintenance session: renamed ALL_CAPS documentation files to lowercase, fixed all Python linting errors (ruff), fixed critical Markdown linting issues, and created ruff.toml configuration.",
+      "tags": [
+        "codebase-maintenance",
+        "linting",
+        "python",
+        "markdown",
+        "file-renaming",
+        "code-quality"
+      ],
+      "started_at": "2026-01-20T05:23:07.787Z",
+      "duration_minutes": 4437,
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 1105,
+        "tool_calls": 1039,
+        "thinking_blocks": 817
+      },
+      "relationships": {
+        "continues": "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+        "isPartOf": [
+          "vlm-burial-mound-detection",
+          "codebase-maintenance"
+        ]
+      },
+      "artifact_counts": {
+        "created": 52,
+        "modified": 56,
+        "referenced": 23
+      },
+      "thinking_blocks_tokens": 65693
+    },
+    {
+      "id": "2ea75915-a17f-401b-96a5-9104abc1fd52",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-19T14-58_h2-file-renaming-and-documentation-cleanup",
+      "title": "H2 File Renaming and Documentation Cleanup",
+      "purpose": "Renamed H2 two-stage prompt files from image-only to brief naming convention, fixed all documentation references, and prepared repository for preregistration submission.",
+      "tags": [
+        "file-renaming",
+        "documentation",
+        "cleanup",
+        "preregistration",
+        "H2"
+      ],
+      "started_at": "2026-01-19T14:58:06.259Z",
+      "duration_minutes": 13,
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 39,
+        "tool_calls": 30,
+        "thinking_blocks": 23
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 0,
+        "modified": 3,
+        "referenced": 5
+      },
+      "thinking_blocks_tokens": 4313
+    },
+    {
+      "id": "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-19T14-01_phase-2-execution-planning-and-simulation",
+      "title": "Phase 2 Execution Planning and Simulation",
+      "purpose": "Created comprehensive dry-run simulations for Phase 2 (and Phase 3), implemented the map-reader CC skill with reference documentation, and identified remaining infrastructure gaps for experiment execution.",
+      "tags": [
+        "experiment-planning",
+        "phase-2",
+        "phase-3",
+        "skill-development",
+        "dry-run-simulation",
+        "methodology"
+      ],
+      "started_at": "2026-01-19T14:01:27.062Z",
+      "duration_minutes": 1315,
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 635,
+        "tool_calls": 589,
+        "thinking_blocks": 401
+      },
+      "relationships": {
+        "continues": "350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+        "isPartOf": [
+          "vlm-burial-mound-detection",
+          "experiment-planning"
+        ]
+      },
+      "artifact_counts": {
+        "created": 32,
+        "modified": 28,
+        "referenced": 27
+      },
+      "thinking_blocks_tokens": 34915
+    },
+    {
+      "id": "350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-19T06-08_map-reader-skill-planning",
+      "title": "Map-Reader Skill Planning",
+      "purpose": "Designed and planned the map-reader CC skill for VLM experiment execution, created Phase 1 execution simulation, implemented prompt templates for various detection strategies, and discussed scope of cartographic vs satellite detection approaches.",
+      "tags": [
+        "skill-development",
+        "experiment-planning",
+        "prompt-engineering",
+        "phase-1",
+        "methodology"
+      ],
+      "started_at": "2026-01-19T06:08:56.448Z",
+      "duration_minutes": 1393,
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 466,
+        "tool_calls": 419,
+        "thinking_blocks": 305
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 16,
+        "modified": 6,
+        "referenced": 30
+      },
+      "thinking_blocks_tokens": 28468
+    },
+    {
+      "id": "62fda995-5112-4ac1-9025-06723bad8e42",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-19T06-08_prompt-template-implementation",
+      "title": "Prompt Template Implementation",
+      "purpose": "Implemented detection prompt templates from the internal specification document, creating system instructions for detect_verbose-text-image variants and related configurations.",
+      "tags": [
+        "prompt-engineering",
+        "system-instructions",
+        "implementation",
+        "templates"
+      ],
+      "started_at": "2026-01-19T06:08:56.448Z",
+      "duration_minutes": 469,
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 113,
+        "tool_calls": 97,
+        "thinking_blocks": 79
+      },
+      "relationships": {
+        "continues": null,
+        "isPartOf": [
+          "vlm-burial-mound-detection"
+        ]
+      },
+      "artifact_counts": {
+        "created": 5,
+        "modified": 2,
+        "referenced": 17
+      },
+      "thinking_blocks_tokens": 8407
     },
     {
       "id": "0e36df87-0938-44c6-a210-63d8d6463f55",
@@ -2189,6 +2418,9 @@
     "FAIR-metadata": [
       "d40e04c4-0c5b-4b59-a01d-955e77462dde"
     ],
+    "H2": [
+      "2ea75915-a17f-401b-96a5-9104abc1fd52"
+    ],
     "H4": [
       "agent-a14c2f3",
       "agent-a66ce8f"
@@ -2258,6 +2490,9 @@
       "agent-aa3cfcd",
       "agent-a504cee"
     ],
+    "cleanup": [
+      "2ea75915-a17f-401b-96a5-9104abc1fd52"
+    ],
     "code-analysis": [
       "agent-adfc266",
       "agent-ab1640f"
@@ -2269,6 +2504,9 @@
       "agent-a31c0a1",
       "agent-a9de2be"
     ],
+    "code-quality": [
+      "69a83ee2-d370-44aa-857e-824899977a6a"
+    ],
     "codebase-analysis": [
       "agent-af00f74",
       "agent-a626649"
@@ -2276,6 +2514,9 @@
     "codebase-exploration": [
       "6c7214f9-a128-42d4-af63-4dc861a7e760",
       "agent-a37c175"
+    ],
+    "codebase-maintenance": [
+      "69a83ee2-d370-44aa-857e-824899977a6a"
     ],
     "codebase-overview": [
       "agent-abb92d3"
@@ -2324,6 +2565,7 @@
       "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
       "c33ede00-6b46-4474-a0d6-bed7978c7a61",
       "d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "2ea75915-a17f-401b-96a5-9104abc1fd52",
       "agent-a7b17e6",
       "ed602fc1-b157-4050-85b3-7426db5ebcb5"
     ],
@@ -2342,6 +2584,9 @@
     "documentation-discovery": [
       "agent-a777678"
     ],
+    "dry-run-simulation": [
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb"
+    ],
     "empty": [
       "a9d3b427-eb9b-49be-ad1b-e987835f5e28",
       "7fe297a3-4be8-4e89-9395-a1c9a54b3eee",
@@ -2358,6 +2603,10 @@
     ],
     "execution-plan": [
       "agent-a777656"
+    ],
+    "experiment-planning": [
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9"
     ],
     "experimental-pipeline": [
       "6c7214f9-a128-42d4-af63-4dc861a7e760"
@@ -2402,6 +2651,10 @@
     ],
     "file-organisation": [
       "agent-abbc59e"
+    ],
+    "file-renaming": [
+      "2ea75915-a17f-401b-96a5-9104abc1fd52",
+      "69a83ee2-d370-44aa-857e-824899977a6a"
     ],
     "file-search": [
       "agent-a529a91",
@@ -2470,7 +2723,8 @@
     ],
     "implementation": [
       "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
-      "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
+      "5e52df73-8bcf-4c07-9a53-b59087d32b1f",
+      "62fda995-5112-4ac1-9025-06723bad8e42"
     ],
     "infrastructure": [
       "c33ede00-6b46-4474-a0d6-bed7978c7a61",
@@ -2478,13 +2732,21 @@
       "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
     ],
     "linting": [
-      "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "69a83ee2-d370-44aa-857e-824899977a6a"
     ],
     "llm-metadata": [
       "85c5dc6e-2193-4edc-bdf7-07e43fd94db1"
     ],
+    "markdown": [
+      "69a83ee2-d370-44aa-857e-824899977a6a"
+    ],
     "metadata": [
       "0e36df87-0938-44c6-a210-63d8d6463f55"
+    ],
+    "methodology": [
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9"
     ],
     "metrics-analysis": [
       "agent-a320389"
@@ -2503,6 +2765,15 @@
     ],
     "osf": [
       "76a6bf00-58ed-48d0-ada6-c0f2e391b39a"
+    ],
+    "phase-1": [
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9"
+    ],
+    "phase-2": [
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb"
+    ],
+    "phase-3": [
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb"
     ],
     "pilot-study": [
       "f4cb3541-2e17-40dd-a94e-1e114107f55b"
@@ -2524,6 +2795,7 @@
       "agent-a777656",
       "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
       "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+      "2ea75915-a17f-401b-96a5-9104abc1fd52",
       "agent-a7b17e6",
       "ed602fc1-b157-4050-85b3-7426db5ebcb5",
       "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b",
@@ -2537,7 +2809,9 @@
       "agent-adea462"
     ],
     "prompt-engineering": [
-      "6c7214f9-a128-42d4-af63-4dc861a7e760"
+      "6c7214f9-a128-42d4-af63-4dc861a7e760",
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9",
+      "62fda995-5112-4ac1-9025-06723bad8e42"
     ],
     "prompt-library": [
       "f4cb3541-2e17-40dd-a94e-1e114107f55b"
@@ -2547,6 +2821,9 @@
     ],
     "prompts": [
       "agent-af3c4df"
+    ],
+    "python": [
+      "69a83ee2-d370-44aa-857e-824899977a6a"
     ],
     "readiness-assessment": [
       "agent-a31c0a1"
@@ -2574,6 +2851,10 @@
     ],
     "session-management": [
       "0e36df87-0938-44c6-a210-63d8d6463f55"
+    ],
+    "skill-development": [
+      "063ec1f8-c655-4c75-bcfe-40f136ce13bb",
+      "350143a3-fafa-4bf9-ba1e-02d8ebce27f9"
     ],
     "statistical-analysis": [
       "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b"
@@ -2623,7 +2904,11 @@
       "agent-aaaca52"
     ],
     "system-instructions": [
+      "62fda995-5112-4ac1-9025-06723bad8e42",
       "agent-af3c4df"
+    ],
+    "templates": [
+      "62fda995-5112-4ac1-9025-06723bad8e42"
     ],
     "testing": [
       "agent-adfc266",
@@ -2682,6 +2967,11 @@
     ]
   },
   "relationship_graph": {
+    "350143a3-fafa-4bf9-ba1e-02d8ebce27f9": {
+      "continuedBy": [
+        "063ec1f8-c655-4c75-bcfe-40f136ce13bb"
+      ]
+    },
     "5e52df73-8bcf-4c07-9a53-b59087d32b1f": {
       "continuedBy": [
         "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
@@ -2725,6 +3015,11 @@
     "a76fa1a1-cfe9-4951-b4a0-b641c68bab3b": {
       "continuedBy": [
         "f4cb3541-2e17-40dd-a94e-1e114107f55b"
+      ]
+    },
+    "063ec1f8-c655-4c75-bcfe-40f136ce13bb": {
+      "continuedBy": [
+        "69a83ee2-d370-44aa-857e-824899977a6a"
       ]
     }
   }

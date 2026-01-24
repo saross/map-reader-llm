@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "4e068e33-a34f-41fd-afa9-8d6579ca86f0",
+    "started_at": "2026-01-23T11:53:34.226Z",
+    "ended_at": "2026-01-23T11:53:34.228Z",
+    "duration_minutes": 0
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": null,
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 0,
+    "total_tokens": 0,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [],
+    "referenced": []
+  },
+  "statistics": {
+    "turns": 3,
+    "human_messages": 3,
+    "assistant_messages": 0,
+    "thinking_blocks": 0,
+    "tool_calls": {
+      "total": 0,
+      "by_type": {}
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 0,
+      "by_type": {},
+      "largest_single_output_bytes": 0
+    }
+  },
+  "auto_generated": {
+    "title": "Untitled Session",
+    "purpose": "No description provided",
+    "tags": []
+  },
+  "three_ps": {
+    "prompt_summary": "",
+    "process_summary": "",
+    "provenance_summary": ""
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "a75d584ea11fd8f8195c0d2e8f25046d520fc85f4f3cf570caf663f93437ac7a",
+    "jsonl_bytes": 1844,
+    "archived_at": "2026-01-24T16:52:57.923339",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 665,
+    "jsonl_bytes_uncompressed": 1844,
+    "jsonl_sha256_uncompressed": "45c539ec40469f321c1b20021d9bcd843e5c3a28fca0b790591621dc8a6a9140"
+  }
+}
