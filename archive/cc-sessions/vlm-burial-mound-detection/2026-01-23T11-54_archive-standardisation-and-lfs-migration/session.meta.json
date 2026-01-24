@@ -1,0 +1,295 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "c33ede00-6b46-4474-a0d6-bed7978c7a61",
+    "started_at": "2026-01-23T11:54:37.236Z",
+    "ended_at": "2026-01-24T05:35:50.884Z",
+    "duration_minutes": 1061
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 266,
+    "total_tokens": 18454,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "0e36df87-0938-44c6-a210-63d8d6463f55",
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection",
+      "session-archiving-initiative"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+      "6c7214f9-a128-42d4-af63-4dc861a7e760",
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "ed602fc1-b157-4050-85b3-7426db5ebcb5",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+    ],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2025-12-22T03-05_6c7214f9/session.meta.json",
+        "type": "data",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": ".gitattributes",
+        "type": "other",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/CATALOG.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-artifacts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/populate-metadata.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2025-12-23T07-25_76a6bf00/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2025-12-31T01-34_85c5dc6e/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-02T22-17_ed602fc1/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-03T04-45_a76fa1a1/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-06T22-04_f4cb3541/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-08T07-58_5e52df73/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-17T03-43_49cb5c21/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-17T12-38_d40e04c4/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/archive_cc_session.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-decisions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-issues.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/extract-methodology.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/queries/summarise-session.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/convert_session_to_markdown.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_session_catalog.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 330,
+    "human_messages": 330,
+    "assistant_messages": 672,
+    "thinking_blocks": 266,
+    "tool_calls": {
+      "total": 299,
+      "by_type": {
+        "Bash": 146,
+        "Write": 2,
+        "Read": 46,
+        "Edit": 65,
+        "Task": 1,
+        "AskUserQuestion": 1,
+        "ExitPlanMode": 1,
+        "TaskCreate": 9,
+        "TaskUpdate": 26,
+        "TaskOutput": 2
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 665607,
+      "by_type": {
+        "Bash": {
+          "count": 146,
+          "bytes": 191598
+        },
+        "Write": {
+          "count": 2,
+          "bytes": 180
+        },
+        "Read": {
+          "count": 46,
+          "bytes": 444529
+        },
+        "Edit": {
+          "count": 65,
+          "bytes": 8167
+        },
+        "Task": {
+          "count": 1,
+          "bytes": 14006
+        },
+        "AskUserQuestion": {
+          "count": 1,
+          "bytes": 439
+        },
+        "ExitPlanMode": {
+          "count": 1,
+          "bytes": 4362
+        },
+        "TaskCreate": {
+          "count": 9,
+          "bytes": 686
+        },
+        "TaskUpdate": {
+          "count": 26,
+          "bytes": 596
+        },
+        "TaskOutput": {
+          "count": 2,
+          "bytes": 1044
+        }
+      },
+      "largest_single_output_bytes": 63908
+    }
+  },
+  "auto_generated": {
+    "title": "Archive Standardisation and LFS Migration",
+    "purpose": "Standardised session archive directory naming to human-readable format, migrated 73 JSONL files to Git LFS, removed deprecated-cc-sessions, and updated the archiving script to support title-based slug generation.",
+    "tags": ["infrastructure", "git-lfs", "archive-management", "naming-conventions", "documentation"]
+  },
+  "three_ps": {
+    "prompt_summary": "User requested completion of session archive metadata, LFS migration for large JSONL files, cleanup of deprecated archives, and standardisation of directory naming conventions.",
+    "process_summary": "CC added metadata and continuity chains to 9 major sessions, migrated 374 MB of JSONL files to Git LFS, renamed 64 directories to human-readable slugs, updated query prompts, and enhanced the archiving script with slugify functionality.",
+    "provenance_summary": "Infrastructure improvement session focused on research transparency and archive maintainability, continuing the session archiving initiative from previous sessions."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "8f526730c7f40ba0177cc7796c4ec63db5b1b6bb46110f40a14af9ce3e12cd6f",
+    "jsonl_bytes": 5528042,
+    "archived_at": "2026-01-24T16:37:32.221721",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 818656,
+    "jsonl_bytes_uncompressed": 5528042,
+    "jsonl_sha256_uncompressed": "8e859356fd6da1ffa4731ef908bbde4ff96d5577151e8766222736b308f87cb5"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+      "6c7214f9-a128-42d4-af63-4dc861a7e760",
+      "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "ed602fc1-b157-4050-85b3-7426db5ebcb5",
+      "c33ede00-6b46-4474-a0d6-bed7978c7a61",
+      "d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+    ],
+    "detection_notes": [
+      "Found continuation language: 'previous\\s+session'",
+      "Found session ID reference: 76a6bf00-58ed-48d0-ada6-c0f2e391b39a",
+      "Found session ID reference: 6c7214f9-a128-42d4-af63-4dc861a7e760",
+      "Found session ID reference: 85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
+      "Found session ID reference: ed602fc1-b157-4050-85b3-7426db5ebcb5",
+      "Found session ID reference: c33ede00-6b46-4474-a0d6-bed7978c7a61",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found session ID reference: d40e04c4-0c5b-4b59-a01d-955e77462dde",
+      "Found session ID reference: 49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

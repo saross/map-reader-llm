@@ -1,21 +1,33 @@
 # CC Session Catalog
 
-*Generated: 2026-01-24 16:18:43*
+*Generated: 2026-01-24 16:38:12*
 
 ## Overview
 
-- **Total sessions**: 64
+- **Total sessions**: 65
 - **Projects**: 1
 
 ### Projects
 
 | Project | Sessions | Total Duration |
 |---------|----------|----------------|
-| vlm-burial-mound-detection | 64 | 454h 45m |
+| vlm-burial-mound-detection | 65 | 472h 26m |
 
 ## Sessions
 
 ### vlm-burial-mound-detection
+
+#### Archive Standardisation and LFS Migration
+
+- **Date**: 2026-01-23 11:54
+- **Duration**: 17h 41m
+- **Directory**: `vlm-burial-mound-detection/2026-01-23T11-54_archive-standardisation-and-lfs-migration`
+- **Model**: claude-opus-4-5-20251101
+- **Statistics**: 330 turns, 299 tool calls, 266 thinking blocks (~18,454 tokens)
+- **Artifacts**: 1 created, 15 modified, 7 referenced
+- **Tags**: infrastructure, git-lfs, archive-management, naming-conventions, documentation
+
+> Standardised session archive directory naming to human-readable format, migrated 73 JSONL files to Git LFS, removed deprecated-cc-sessions, and updated the archiving script to support title-based slug generation.
 
 #### Session archiving and metadata updates
 
@@ -798,6 +810,7 @@
 - **appendix**: 1 session(s)
 - **architecture**: 1 session(s)
 - **archive-analysis**: 1 session(s)
+- **archive-management**: 1 session(s)
 - **archiving**: 1 session(s)
 - **archiving-prep**: 2 session(s)
 - **bootstrap-ci**: 1 session(s)
@@ -822,7 +835,7 @@
 - **data-discovery**: 1 session(s)
 - **data-structures**: 1 session(s)
 - **detection-pipeline**: 1 session(s)
-- **documentation**: 5 session(s)
+- **documentation**: 6 session(s)
 - **documentation-analysis**: 7 session(s)
 - **documentation-audit**: 1 session(s)
 - **documentation-discovery**: 1 session(s)
@@ -836,6 +849,7 @@
 - **file-organisation**: 1 session(s)
 - **file-search**: 6 session(s)
 - **gemini**: 1 session(s)
+- **git-lfs**: 1 session(s)
 - **haiku**: 33 session(s)
 - **holdout-expansion**: 2 session(s)
 - **housekeeping**: 1 session(s)
@@ -843,13 +857,14 @@
 - **hypothesis-references**: 1 session(s)
 - **hypothesis-review**: 1 session(s)
 - **implementation**: 2 session(s)
-- **infrastructure**: 2 session(s)
+- **infrastructure**: 3 session(s)
 - **linting**: 1 session(s)
 - **llm-metadata**: 1 session(s)
 - **metadata**: 1 session(s)
 - **metrics-analysis**: 1 session(s)
 - **multi-scale**: 1 session(s)
 - **multi-scale-voting**: 1 session(s)
+- **naming-conventions**: 1 session(s)
 - **onboarding**: 1 session(s)
 - **osf**: 1 session(s)
 - **pilot-study**: 1 session(s)

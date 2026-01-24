@@ -1,15 +1,50 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-01-24T16:18:43.535451",
-  "total_sessions": 64,
+  "generated_at": "2026-01-24T16:38:12.008196",
+  "total_sessions": 65,
   "projects": {
     "vlm-burial-mound-detection": {
       "name": "vlm-burial-mound-detection",
-      "session_count": 64,
-      "total_duration_minutes": 27285
+      "session_count": 65,
+      "total_duration_minutes": 28346
     }
   },
   "sessions": [
+    {
+      "id": "c33ede00-6b46-4474-a0d6-bed7978c7a61",
+      "project": "vlm-burial-mound-detection",
+      "directory": "vlm-burial-mound-detection/2026-01-23T11-54_archive-standardisation-and-lfs-migration",
+      "title": "Archive Standardisation and LFS Migration",
+      "purpose": "Standardised session archive directory naming to human-readable format, migrated 73 JSONL files to Git LFS, removed deprecated-cc-sessions, and updated the archiving script to support title-based slug generation.",
+      "tags": [
+        "infrastructure",
+        "git-lfs",
+        "archive-management",
+        "naming-conventions",
+        "documentation"
+      ],
+      "started_at": "2026-01-23T11:54:37.236Z",
+      "duration_minutes": 1061,
+      "model": "claude-opus-4-5-20251101",
+      "statistics": {
+        "turns": 330,
+        "tool_calls": 299,
+        "thinking_blocks": 266
+      },
+      "relationships": {
+        "continues": "0e36df87-0938-44c6-a210-63d8d6463f55",
+        "isPartOf": [
+          "vlm-burial-mound-detection",
+          "session-archiving-initiative"
+        ]
+      },
+      "artifact_counts": {
+        "created": 1,
+        "modified": 15,
+        "referenced": 7
+      },
+      "thinking_blocks_tokens": 18454
+    },
     {
       "id": "0e36df87-0938-44c6-a210-63d8d6463f55",
       "project": "vlm-burial-mound-detection",
@@ -2197,6 +2232,9 @@
     "archive-analysis": [
       "agent-abbc59e"
     ],
+    "archive-management": [
+      "c33ede00-6b46-4474-a0d6-bed7978c7a61"
+    ],
     "archiving": [
       "0e36df87-0938-44c6-a210-63d8d6463f55"
     ],
@@ -2284,6 +2322,7 @@
     "documentation": [
       "agent-ab13a90",
       "49cb5c21-057d-416d-8eb9-2b11fe0350f2",
+      "c33ede00-6b46-4474-a0d6-bed7978c7a61",
       "d40e04c4-0c5b-4b59-a01d-955e77462dde",
       "agent-a7b17e6",
       "ed602fc1-b157-4050-85b3-7426db5ebcb5"
@@ -2375,6 +2414,9 @@
     "gemini": [
       "6c7214f9-a128-42d4-af63-4dc861a7e760"
     ],
+    "git-lfs": [
+      "c33ede00-6b46-4474-a0d6-bed7978c7a61"
+    ],
     "haiku": [
       "agent-ae29ce9",
       "agent-a320389",
@@ -2431,6 +2473,7 @@
       "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
     ],
     "infrastructure": [
+      "c33ede00-6b46-4474-a0d6-bed7978c7a61",
       "85c5dc6e-2193-4edc-bdf7-07e43fd94db1",
       "5e52df73-8bcf-4c07-9a53-b59087d32b1f"
     ],
@@ -2451,6 +2494,9 @@
     ],
     "multi-scale-voting": [
       "agent-a43dfa2"
+    ],
+    "naming-conventions": [
+      "c33ede00-6b46-4474-a0d6-bed7978c7a61"
     ],
     "onboarding": [
       "agent-abb92d3"
@@ -2639,6 +2685,11 @@
     "5e52df73-8bcf-4c07-9a53-b59087d32b1f": {
       "continuedBy": [
         "49cb5c21-057d-416d-8eb9-2b11fe0350f2"
+      ]
+    },
+    "0e36df87-0938-44c6-a210-63d8d6463f55": {
+      "continuedBy": [
+        "c33ede00-6b46-4474-a0d6-bed7978c7a61"
       ]
     },
     "49cb5c21-057d-416d-8eb9-2b11fe0350f2": {
