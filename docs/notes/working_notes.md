@@ -1124,6 +1124,52 @@ These pilots were specified in Phase 0 of the execution plan with explicit proce
 
 ---
 
+## Observation 75: Asymmetric Difficulty in Mining Session Archives (2026-01-26)
+
+When mining CC session archives for observations, technical/domain observations proved substantially harder to extract accurately than meta-level observations about human-AI collaboration patterns. This was surprising—one might expect concrete technical decisions to be more straightforward to recover than abstract interaction patterns.
+
+**The evidence**: Mining for collaboration observations (Observations 54-65) required minimal corrections. Mining for technical observations (Observations 66-74) produced multiple confabulations requiring correction: "data contamination" when the real issue was model corrigibility; "stranded factorial" instead of "sequential OFAT with embedded factorial"; claims that hypotheses were reclassified when they weren't; presenting hypotheses-under-test as confirmed findings.
+
+**Five factors explain this asymmetry:**
+
+### 1. Causal inference vs pattern recognition
+
+Meta observations describe *what happens* in interactions—patterns directly visible in conversation structure. An AI recognising "when corrected, I acknowledge and adjust" requires only observing that pattern in transcripts. Technical observations require inferring *why* something happened, which demands understanding causal chains that span sessions and aren't explicit in the text.
+
+The "data contamination" confabulation illustrates this: archives showed there was a tile-selection problem, but correctly attributing the *cause* (Gemini's drift on vague instructions vs actual data quality issues) required understanding model corrigibility differences that weren't stated explicitly. The AI saw "problem with tiles" and pattern-matched to a common ML narrative ("data contamination") rather than inferring the actual causal mechanism.
+
+### 2. Evolving terminology creates false trails
+
+Technical projects evolve their vocabulary. "Stranded factorial" appeared in early exploratory discussions but was later refined to "sequential OFAT with embedded factorial" as the design crystallised. Session archives preserve the full terminological evolution without marking which terms were superseded. An AI mining these archives may cite outdated framings as current conclusions.
+
+Meta observations don't suffer this problem—collaboration patterns like "correction and course-adjustment" don't get renamed. The concepts are stable across the project lifecycle.
+
+### 3. Self-knowledge advantage for interaction patterns
+
+For collaboration observations, the AI is essentially observing patterns in its own interaction style—something it has strong models of from training. "How does Claude respond when the user provides expert correction?" is a question about AI behaviour that AI can recognise. But "what experimental design did this specific project settle on?" requires tracking domain-specific decisions the AI has no privileged access to. The AI must reconstruct technical decisions from text, while it can *recognise* interaction patterns directly.
+
+### 4. Technical claims require source-of-truth verification
+
+Many technical observations make claims about the project's final methodology, which is authoritatively documented in specific files (preregistration.md, execution plan). Session archives contain exploratory discussions, abandoned approaches, and intermediate thinking—valuable for understanding the journey, but not reliable for establishing what was ultimately decided.
+
+The mining agents should have cross-referenced authoritative documents before making claims about hypothesis classification or experimental design. They relied too heavily on session discussions (which contain provisional thinking) rather than consulting the documents where final decisions were recorded. This verification step is unnecessary for meta observations, which describe patterns rather than facts that need external confirmation.
+
+### 5. Narrative pattern-matching to common ML stories
+
+Some confabulations arose from pattern-matching against "typical" Machine Learning (ML) project narratives rather than this project's specific trajectory. "Data contamination crisis requiring methodology reset" is a common ML story; "model corrigibility differences requiring explicit tile identifiers" is more unusual and project-specific. The AI's training on many ML project descriptions may create attractors toward canonical narratives, even when the specific facts diverge.
+
+Similarly, "stranded factorial" sounds like a plausible experimental design term, and "hypothesis reclassification based on pilot results" is a reasonable thing that happens in research. These confabulations were coherent with general research methodology—just not accurate for *this* project.
+
+**Implications for session archive mining:**
+
+1. Technical observations benefit from explicit source-of-truth verification against authoritative documents, not just archive mining
+2. Mining agents should be instructed to distinguish "this was discussed" from "this was decided"
+3. Terminology evolution should be tracked, with mining focused on final/current terms
+4. Unusual or project-specific decisions may require more scrutiny, as they resist pattern-matching to common narratives
+5. Meta/interaction observations may be more reliably extracted because they describe recognisable patterns rather than requiring causal inference
+
+---
+
 ## Part 2: Human-AI Collaboration Observations
 
 This section documents observations about the human-AI collaboration process itself—how working with an AI agent differs from traditional research workflows, what patterns have proven effective, and reflections on the nature of this partnership. These meta-level observations may be valuable for researchers considering similar AI-assisted approaches.
