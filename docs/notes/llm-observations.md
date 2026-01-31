@@ -492,4 +492,78 @@ First reflection captured from this session (2026-01-27). The framework proposes
 
 ---
 
-*Document represents observations as of 2026-01-27. Abductive reasoning investigation completed in Session 2. Session reflection investigation initiated. Further material may be added in future sessions.*
+## Session 3: Housekeeping Observations
+
+*Observations from the ANOVA-to-bootstrap reconciliation session (2026-01-31). This
+session was primarily housekeeping — updating documents before OSF preregistration —
+but produced two observations about research process dynamics.*
+
+### On tests that pass for the wrong reason
+
+While implementing `bootstrap_interaction_ci()`, the initial test suite passed
+completely — including `test_no_interaction_detected`, which asserted that the
+difference-of-differences was near zero. The test passed because *everything*
+was zero: `calculate_f1_internal` silently caught a KeyError (the test reference
+GeoDataFrame lacked a required `Map` column), returned 0.0 for all conditions,
+and the difference-of-differences was trivially 0.0 − 0.0 = 0.0.
+
+The bug was caught by `test_simple_effects_returned`, which used an *asymmetric*
+assertion: it checked that simple effects were *negative* (B2 had fewer hits
+than B1), not merely near zero. This asymmetry made the test sensitive to the
+"everything is zero" failure mode that the symmetric near-zero assertion missed.
+
+**The lesson**: Equality tests near zero are dangerous in scientific computing
+because broken code often returns zero (division by zero → 0, empty result → 0,
+exception caught → default 0). Tests that assert a *directional* effect are more
+robust because they fail when the computation returns a trivial default. This is
+a specific instance of a broader testing principle: assertions should be as
+*specific* as possible about the expected behaviour, not just the expected range.
+
+This connects to Observation 45 in working_notes.md (the Flash Swarm collapse
+where F1 dropped to 0.00). Zero is a suspiciously common failure output, and
+tests should be designed to distinguish "correctly computed zero" from "failed
+silently and returned zero."
+
+### On decision propagation debt in evolving research designs
+
+The session's primary task was reconciling statistical methodology across
+documents. Decision 10 (2026-01-22) had formally adopted bootstrap CIs with
+Benjamini-Hochberg FDR correction, and this was correctly documented in the
+decisions log, implemented in all analysis scripts, and described in Section 3
+of the preregistration. Yet six per-hypothesis sections still referenced
+"one-way ANOVA" or "two-way ANOVA." The execution plan, results README, and
+simulation documents also retained ANOVA language.
+
+The preregistration was internally contradictory: Section 3 said "bootstrap CIs"
+while Section 5 said "one-way ANOVA." This inconsistency survived multiple
+revision cycles (v4.1 through v4.6) because updates focused on the section being
+actively worked on, not downstream references.
+
+**The pattern**: In evolving research designs, decisions propagate incompletely.
+A decision gets documented in its primary location (the decisions log) and
+implemented in code, but references scattered across other documents — especially
+per-hypothesis sections written earlier — are not updated. This creates
+"propagation debt" analogous to technical debt: the longer it accumulates, the
+more documents diverge from the actual methodology.
+
+**What caught it**: The user's instinct to do a statistical methodology review
+before OSF registration. Without this explicit reconciliation pass, the
+contradictory preregistration would have been submitted. This extends the
+project's existing "gap analysis" practice (dry-running workflow phases to find
+missing pieces) from infrastructure gaps to *methodological consistency* gaps.
+
+**Implication for human-AI collaboration**: When an AI assistant helps evolve a
+research design across multiple sessions, each session may update the focal
+document without checking downstream references. A dedicated reconciliation step
+before major milestones (like preregistration submission) appears necessary.
+This could potentially be automated — a script that extracts statistical method
+references from all documents and flags inconsistencies — but in this case,
+the human's domain knowledge was essential for confirming that bootstrap CIs
+were genuinely the correct unified approach.
+
+---
+
+*Document represents observations as of 2026-01-31. Abductive reasoning
+investigation completed in Session 2. Session reflection investigation initiated.
+Session 3 added observations on silent test failures and decision propagation
+debt. Further material may be added in future sessions.*
