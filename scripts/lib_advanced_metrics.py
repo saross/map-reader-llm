@@ -13,6 +13,10 @@ Tile-level classification (Section 4.2):
 - calculate_tile_classification(): Binary classification of tiles (empty vs populated)
 - bootstrap_tile_classification_ci(): 95% CIs for MCC, sensitivity, specificity
 - bootstrap_tile_effect_size_ci(): 95% CIs for tile-level effect sizes
+
+Factorial interaction testing (preregistration Section 5.5, M/E × H5):
+- bootstrap_interaction_ci(): 95% CIs for two-way interaction via
+  difference-of-differences bootstrap
 """
 
 import json
@@ -452,6 +456,204 @@ def bootstrap_effect_size_ci(
         "n_tiles": n_tiles,
         "n_iterations": n_iterations,
     }
+
+
+def bootstrap_interaction_ci(
+    conditions: dict,
+    gdf_ref,
+    factor_a_name: str = "factor_a",
+    factor_b_name: str = "factor_b",
+    metric: str = "f1",
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
+    """
+    Bootstrap confidence intervals for a two-way interaction effect.
+
+    Tests whether the effect of factor_b varies across levels of factor_a
+    using paired difference-of-differences bootstrap. Designed for
+    preregistration Section 5.5 (M/E × H5 interaction analysis).
+
+    For each bootstrap iteration:
+    1. Sample tiles with replacement (same tiles across all conditions)
+    2. Compute the chosen metric for each (factor_a, factor_b) cell
+    3. Compute simple effects of factor_b at each factor_a level
+       (last level minus first level of factor_b)
+    4. Compute pairwise interaction contrasts: the difference between
+       simple effects at different factor_a levels
+    5. If any interaction contrast CI excludes zero, interaction is present
+
+    Args:
+        conditions: Dict mapping (factor_a_level, factor_b_level) tuples
+            to (gdf_det, gdf_bounds) tuples for each cell of the factorial
+            design. All cells must share the same set of tiles.
+        gdf_ref: GeoDataFrame of ground truth references (shared across
+            all conditions).
+        factor_a_name: Label for factor A (e.g., "M/E level"). Used in
+            output keys for readability.
+        factor_b_name: Label for factor B (e.g., "H5 level"). Used in
+            output keys for readability.
+        metric: Which metric to test ("f1", "precision", or "recall").
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
+
+    Returns:
+        dict with keys:
+            - "simple_effects": Dict mapping each factor_a level to the
+              simple effect of factor_b (with mean, ci_lower, ci_upper)
+            - "interaction_contrasts": List of pairwise interaction
+              contrasts between factor_a levels (difference-of-differences)
+            - "interaction_detected": Boolean — True if any contrast CI
+              excludes zero
+            - "factor_a_levels": Sorted list of factor_a levels
+            - "factor_b_levels": Sorted list of factor_b levels
+            - "metric": The metric tested
+            - "n_tiles": Number of common tiles
+            - "n_iterations": Number of bootstrap iterations
+    """
+    # Extract factor levels from condition keys
+    factor_a_levels = sorted(set(k[0] for k in conditions.keys()))
+    factor_b_levels = sorted(set(k[1] for k in conditions.keys()))
+
+    if len(factor_a_levels) < 2:
+        return {"error": "Need at least 2 levels of factor_a for interaction test"}
+    if len(factor_b_levels) < 2:
+        return {"error": "Need at least 2 levels of factor_b for interaction test"}
+
+    # Find common tiles across all conditions
+    tile_sets = []
+    for (a_level, b_level), (gdf_det, gdf_bounds) in conditions.items():
+        tile_sets.append(set(gdf_bounds['tile_name'].unique()))
+
+    common_tiles = list(set.intersection(*tile_sets))
+    n_tiles = len(common_tiles)
+
+    if n_tiles == 0:
+        return {"error": "No common tiles across all conditions"}
+
+    if random_seed is not None:
+        np.random.seed(random_seed)
+
+    # Metric extraction index: maps metric name to position in
+    # (precision, recall, f1) tuple returned by calculate_f1_internal
+    metric_index = {"precision": 0, "recall": 1, "f1": 2}
+    if metric not in metric_index:
+        return {"error": f"Unknown metric '{metric}'. Use 'f1', 'precision', or 'recall'."}
+    m_idx = metric_index[metric]
+
+    # Storage for simple effect distributions per factor_a level
+    # simple_effect = metric(factor_b last level) - metric(factor_b first level)
+    simple_effect_distributions: dict[Any, list[float]] = {
+        a: [] for a in factor_a_levels
+    }
+
+    b_first = factor_b_levels[0]
+    b_last = factor_b_levels[-1]
+
+    for _i in range(n_iterations):
+        # Paired sampling: same tiles for all conditions
+        sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
+
+        # Compute metric for each cell needed (first and last factor_b levels
+        # at each factor_a level)
+        cell_metrics: dict[tuple, float] = {}
+
+        for a_level in factor_a_levels:
+            for b_level in [b_first, b_last]:
+                gdf_det, gdf_bounds = conditions[(a_level, b_level)]
+
+                sample_dets = []
+                sample_bounds = []
+                for t in sample_tiles:
+                    d = gdf_det[gdf_det['source_tile'] == t].copy()
+                    sample_dets.append(d)
+                    b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
+                    sample_bounds.append(b)
+
+                try:
+                    if sample_dets:
+                        gdf_sample_det = pd.concat(
+                            sample_dets, ignore_index=True
+                        )
+                        gdf_sample_bounds = pd.concat(
+                            sample_bounds, ignore_index=True
+                        )
+                        result = calculate_f1_internal(
+                            gdf_sample_det, gdf_ref, gdf_sample_bounds
+                        )
+                        cell_metrics[(a_level, b_level)] = result[m_idx]
+                    else:
+                        cell_metrics[(a_level, b_level)] = 0.0
+                except Exception as e:
+                    logger.debug(
+                        "Bootstrap interaction iteration %d, cell (%s, %s) "
+                        "failed: %s", _i, a_level, b_level, e
+                    )
+                    cell_metrics[(a_level, b_level)] = 0.0
+
+        # Compute simple effect of factor_b at each factor_a level
+        for a_level in factor_a_levels:
+            effect = (
+                cell_metrics.get((a_level, b_last), 0.0)
+                - cell_metrics.get((a_level, b_first), 0.0)
+            )
+            simple_effect_distributions[a_level].append(effect)
+
+    # Compute CIs for simple effects
+    simple_effects = {}
+    for a_level in factor_a_levels:
+        dist = simple_effect_distributions[a_level]
+        simple_effects[a_level] = {
+            "mean": float(np.mean(dist)),
+            "ci_lower": float(np.percentile(dist, 2.5)),
+            "ci_upper": float(np.percentile(dist, 97.5)),
+        }
+
+    # Compute pairwise interaction contrasts (difference-of-differences)
+    interaction_contrasts = []
+    interaction_detected = False
+
+    for i, a_i in enumerate(factor_a_levels):
+        for a_j in factor_a_levels[i + 1:]:
+            # Difference-of-differences for each bootstrap iteration
+            dod = [
+                simple_effect_distributions[a_i][k]
+                - simple_effect_distributions[a_j][k]
+                for k in range(n_iterations)
+            ]
+            ci_lower = float(np.percentile(dod, 2.5))
+            ci_upper = float(np.percentile(dod, 97.5))
+
+            # Interaction detected if CI excludes zero
+            excludes_zero = ci_lower > 0 or ci_upper < 0
+
+            if excludes_zero:
+                interaction_detected = True
+
+            interaction_contrasts.append({
+                f"{factor_a_name}_level_1": a_i,
+                f"{factor_a_name}_level_2": a_j,
+                "difference_of_differences": {
+                    "mean": float(np.mean(dod)),
+                    "ci_lower": ci_lower,
+                    "ci_upper": ci_upper,
+                },
+                "ci_excludes_zero": excludes_zero,
+            })
+
+    return {
+        "simple_effects": simple_effects,
+        "interaction_contrasts": interaction_contrasts,
+        "interaction_detected": interaction_detected,
+        "factor_a_levels": factor_a_levels,
+        "factor_b_levels": factor_b_levels,
+        "factor_a_name": factor_a_name,
+        "factor_b_name": factor_b_name,
+        "metric": metric,
+        "n_tiles": n_tiles,
+        "n_iterations": n_iterations,
+    }
+
 
 def calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds):
     """
