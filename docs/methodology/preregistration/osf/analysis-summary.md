@@ -72,7 +72,7 @@ FDR is appropriate for a screening study where the goal is identifying promising
 ### H1: Modality/Elaboration Level
 
 - **Design**: 5 conditions (image-only, brief-text, brief+image, verbose-text, verbose+image)
-- **Analysis**: One-way ANOVA across 5 levels
+- **Analysis**: Pairwise bootstrap comparisons across 5 levels (95% CIs, FDR-corrected)
 - **Planned contrasts**: Image-only vs Brief+image; Brief+image vs Verbose+image; Text-only vs Image-using
 
 ### H2: Two-Stage Pipeline
@@ -90,13 +90,13 @@ FDR is appropriate for a screening study where the goal is identifying promising
 ### H4: Example Ordering
 
 - **Design**: 3 conditions (canonical-first, canonical-last, random)
-- **Analysis**: One-way ANOVA; planned contrast canonical-first vs canonical-last
+- **Analysis**: Pairwise bootstrap comparisons (95% CIs, FDR-corrected); planned contrast canonical-first vs canonical-last
 - **Prediction**: Canonical-last > canonical-first (recency effect)
 
 ### H5: Negative Text Treatment
 
 - **Design**: 3 levels (minimal, terse, verbose) × 3 M/E levels
-- **Analysis**: Two-way ANOVA testing H5 main effect and M/E × H5 interaction
+- **Analysis**: Bootstrap interaction test (difference-of-differences) testing H5 main effect and M/E × H5 interaction
 - **Primary metric**: Precision (with recall as safety check)
 
 ### H6: Flash→Pro Transfer
@@ -108,13 +108,13 @@ FDR is appropriate for a screening study where the goal is identifying promising
 ### H7: Temperature
 
 - **Design**: 5 levels (0.0, 0.3, 0.7, 1.0, 1.3)
-- **Analysis**: One-way ANOVA; planned contrasts T=1.0 vs each other level
+- **Analysis**: Pairwise bootstrap comparisons (95% CIs, FDR-corrected); planned contrasts T=1.0 vs each other level
 - **Trigger**: Extend to T=1.6, 2.0 if T=1.3 outperforms T=1.0
 
 ### H8: Library Composition
 
 - **Design**: 7 library conditions (Pure Positive Canon → Scale-32)
-- **Analysis**: One-way ANOVA; sequential addition and scaling contrasts
+- **Analysis**: Pairwise bootstrap comparisons (95% CIs, FDR-corrected); sequential addition and scaling contrasts
 - **Output**: Diminishing returns curve (F1 vs hard example count)
 
 ### H9-H15: Exploratory

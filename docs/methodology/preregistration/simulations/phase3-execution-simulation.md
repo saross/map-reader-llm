@@ -413,12 +413,12 @@ python scripts/4_detect_mounds_batch.py \
 
 ### Documentation Updates Required
 
-The following `execution-plan.md` references need updating to match Phase 2 implementation:
+The following `execution-plan.md` references have been updated to match Phase 2 implementation (v4.7):
 
-| Issue | Location | Correction |
-|-------|----------|------------|
-| "2×2 ANOVA" for H9 | Line ~551 | Should be "bootstrapped CIs with planned contrasts" |
-| "One-way ANOVA" for Phase 2 | Lines 275, 302, etc. | Already implemented as `bootstrap_ci` in study YAMLs |
+| Issue | Location | Status |
+|-------|----------|--------|
+| "2×2 ANOVA" for H9 | Line ~551 | ✅ Updated to "2×2 bootstrap comparison results" |
+| "One-way ANOVA" for Phase 2 | Lines 275, 302, etc. | ✅ Updated to "pairwise bootstrap comparisons" |
 
 ---
 

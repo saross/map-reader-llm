@@ -270,7 +270,7 @@ Voting addresses stochastic variation in VLM outputs without assumptions about:
 
 3. **Interaction sensitivity**: If major interactions exist, OFAT will underestimate their effects — but preliminary testing suggests factor effects are largely additive.
 
-**Trade-off acknowledged**: OFAT cannot detect interactions. If H5 × M/E interaction is suspected, exploratory two-way ANOVA is included in Phase 2d analysis.
+**Trade-off acknowledged**: OFAT cannot detect interactions. If H5 × M/E interaction is suspected, exploratory bootstrap interaction test (difference-of-differences) is included in Phase 2d analysis.
 
 **Evidence**: Preregistration §8.3.1a, execution-plan.md dependency graph.
 

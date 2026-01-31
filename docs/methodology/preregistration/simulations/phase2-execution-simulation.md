@@ -25,7 +25,7 @@ Phase 2 executes the confirmatory factorial testing using a sequential One-Facto
 **Outputs**:
 
 - Detection results: K=10 runs × N=5 passes × 60 tiles per cell
-- Statistical analyses (one-way ANOVA per sub-phase)
+- Statistical analyses (pairwise bootstrap comparisons per sub-phase)
 - Optimal configuration for subsequent phases
 - Aggregated results in CSV format
 
@@ -194,7 +194,7 @@ done
 
 **Analysis**:
 
-- One-way ANOVA across 5 M/E levels
+- Pairwise bootstrap comparisons across 5 M/E levels (95% CIs, FDR-corrected)
 - Outcome: Optimal M/E → carried forward to Phase 2b
 
 **Gaps to fill before execution**:
@@ -202,7 +202,7 @@ done
 1. Validation manifest file (verify existence/create)
 2. Phase 2a study YAML
 3. Orchestration script to manage K×N loop
-4. ANOVA analysis script
+4. Bootstrap analysis script
 
 ---
 
@@ -253,7 +253,7 @@ prompts/configs/detect_{optimal_me}_T1.3.json
 
 **Analysis**:
 
-- One-way ANOVA across 5 temperature levels
+- Pairwise bootstrap comparisons across 5 temperature levels (95% CIs, FDR-corrected)
 - Planned contrasts: T=1.0 vs each other level
 - Outcome: Optimal T → carried forward to Phase 2c
 
@@ -261,7 +261,7 @@ prompts/configs/detect_{optimal_me}_T1.3.json
 
 1. Modify `4_detect_mounds_batch.py` to accept `--temperature` CLI override
 2. Phase 2b study YAML
-3. ANOVA analysis script
+3. Bootstrap analysis script
 
 ---
 
@@ -303,7 +303,7 @@ python scripts/4_detect_mounds_batch.py \
 
 **Analysis**:
 
-- One-way ANOVA across 7 library conditions
+- Pairwise bootstrap comparisons across 7 library conditions (95% CIs, FDR-corrected)
 - Planned contrasts: Sequential addition (C1-C3) and scaling (S1-S3)
 - Outcome: Optimal library → carried forward to Phase 2d
 
@@ -349,7 +349,7 @@ python scripts/4_detect_mounds_batch.py \
 
 **Analysis**:
 
-- Two-way ANOVA (3 M/E × 3 H5)
+- Bootstrap interaction test (3 M/E × 3 H5, difference-of-differences with 95% CI)
 - Test H5 main effect and M/E × H5 interaction
 - Planned contrasts: Minimal vs Terse, Terse vs Verbose
 - Outcome: Optimal H5 treatment → carried forward to Phase 2e
@@ -358,7 +358,7 @@ python scripts/4_detect_mounds_batch.py \
 
 1. Update H5 variant configs to use optimal library from Phase 2c
 2. Phase 2d study YAML
-3. Two-way ANOVA analysis capability
+3. Bootstrap interaction analysis capability
 
 ---
 
@@ -409,7 +409,7 @@ python scripts/4_detect_mounds_batch.py \
 
 **Analysis**:
 
-- One-way ANOVA across 3 orderings
+- Pairwise bootstrap comparisons across 3 orderings (95% CIs, FDR-corrected)
 - Planned contrasts: Canonical-first vs Canonical-last
 - Outcome: Optimal ordering → final optimal configuration
 

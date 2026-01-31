@@ -272,7 +272,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 **Fixed parameters**: T=1.0, Scale-8 library (17 examples), canonical-first ordering.
 
-**Analysis**: One-way ANOVA across 5 M/E levels. Identify optimal M/E for subsequent phases.
+**Analysis**: Pairwise bootstrap comparisons across 5 M/E levels (95% CIs, FDR-corrected). Identify optimal M/E for subsequent phases.
 
 ---
 
@@ -299,7 +299,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 **Fixed parameters**: Optimal M/E from Phase 2a, Scale-8 library, canonical-first ordering.
 
-**Analysis**: One-way ANOVA across 5 T levels. Planned contrasts: T=1.0 vs each other level.
+**Analysis**: Pairwise bootstrap comparisons across 5 T levels (95% CIs, FDR-corrected). Planned contrasts: T=1.0 vs each other level.
 
 ---
 
@@ -367,7 +367,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 **Fixed parameters**: Optimal T and library from previous phases.
 
-**Analysis**: Two-way ANOVA (3 M/E × 3 H5). Test H5 main effect and M/E × H5 interaction. Planned contrasts: Minimal vs Terse; Terse vs Verbose (pooled across M/E levels).
+**Analysis**: Bootstrap interaction test (3 M/E × 3 H5, difference-of-differences with 95% CI). Test H5 main effect and M/E × H5 interaction. Planned contrasts: Minimal vs Terse; Terse vs Verbose (pooled across M/E levels).
 
 ---
 
@@ -392,7 +392,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 **Fixed parameters**: Optimal M/E, T, library, and H5 from previous phases.
 
-**Analysis**: One-way ANOVA across 3 orderings. Planned contrasts: Canonical-first vs Canonical-last.
+**Analysis**: Pairwise bootstrap comparisons across 3 orderings (95% CIs, FDR-corrected). Planned contrasts: Canonical-first vs Canonical-last.
 
 **Triggered exploratory (H4b)**: If H4 significant (p < 0.05), test HP-first vs HN-first ordering within the hard block (+2 cells).
 
@@ -456,18 +456,18 @@ if h4_significant():
 
 - [ ] Raw JSON responses: `outputs/phase2-sequential/raw-responses/{hypothesis}/{condition_id}/{tile_id}_run{n}.json`
 - [ ] Aggregated results: `outputs/phase2-sequential/aggregated/{hypothesis}-results.csv`
-- [ ] Phase analyses: `outputs/phase2-sequential/{hypothesis}-anova.md`
+- [ ] Phase analyses: `outputs/phase2-sequential/{hypothesis}-analysis.md`
 - [ ] Final optimal configuration: `outputs/phase2-sequential/optimal-config.json`
 
 ### Analysis Summary
 
 | Phase | Primary Analysis | Key Output |
 |-------|------------------|------------|
-| 2a (H1) | One-way ANOVA (5 M/E levels) | Optimal M/E |
-| 2b (H7) | One-way ANOVA (5 temperatures) | Optimal temperature |
-| 2c (H8) | One-way ANOVA + planned contrasts | Optimal library composition |
-| 2d (H5) | One-way ANOVA (3 text levels) | Optimal negative text treatment |
-| 2e (H4) | One-way ANOVA (3 orderings) | Optimal ordering |
+| 2a (H1) | Bootstrap pairwise (5 M/E levels) | Optimal M/E |
+| 2b (H7) | Bootstrap pairwise (5 temperatures) | Optimal temperature |
+| 2c (H8) | Bootstrap pairwise + planned contrasts | Optimal library composition |
+| 2d (H5) | Bootstrap interaction (3 M/E × 3 H5) | Optimal negative text treatment |
+| 2e (H4) | Bootstrap pairwise (3 orderings) | Optimal ordering |
 
 ---
 
@@ -548,7 +548,7 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 
 #### Outputs
 
-- [ ] 2×2 ANOVA results
+- [ ] 2×2 bootstrap comparison results
 - [ ] Effect sizes for text diversity, image diversity, interaction
 
 ---

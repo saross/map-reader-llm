@@ -10,7 +10,7 @@ results/
 │   ├── failure-analysis.csv  # FN/FP frequency rankings
 │   └── library-selection.md  # Hard example selection rationale
 ├── phase2-factorial/         # Main factorial analysis
-│   ├── strand1-verbosity/    # M/E × H5 ANOVA results
+│   ├── strand1-verbosity/    # M/E × H5 bootstrap comparison results
 │   ├── strand2-h5-confirm/   # Full H5 3-level analysis
 │   ├── strand3-library/      # Library size (H8) analysis
 │   ├── strand4-interaction/  # M/E × Library interaction (if triggered)
@@ -32,7 +32,7 @@ results/
 │   ├── interaction-plots/    # Factor interaction visualisations
 │   └── transfer-plots/       # Cross-model comparison plots
 ├── tables/                   # Publication-ready tables
-│   ├── anova-summaries/      # ANOVA result tables
+│   ├── bootstrap-summaries/  # Bootstrap comparison result tables
 │   ├── pairwise-comparisons/ # Post-hoc comparison tables
 │   └── effect-sizes/         # Cohen's d and confidence intervals
 └── final-report/             # Synthesis documents
@@ -45,9 +45,9 @@ results/
 
 ### Analysis Outputs
 
-- `*-anova.csv` — ANOVA summary tables (SS, df, F, p, partial η²)
+- `*-bootstrap.csv` — Bootstrap comparison tables (effect size, 95% CI, pseudo-p, FDR-corrected p)
 - `*-posthoc.csv` — Post-hoc pairwise comparisons with FDR correction
-- `*-effects.csv` — Effect sizes (Cohen's d) with 95% confidence intervals
+- `*-effects.csv` — Effect sizes (F1 difference) with 95% bootstrap confidence intervals
 - `*-summary.md` — Human-readable analysis narrative
 
 ### Metrics Files
@@ -68,7 +68,7 @@ results/
 Results are generated from `outputs/` using scripts in `scripts/`:
 
 1. **Aggregation**: `scripts/aggregate_results.py` — Collates raw outputs into metrics CSVs
-2. **Statistical tests**: `scripts/run_anova.py` — Executes preregistered ANOVA designs
+2. **Statistical tests**: `scripts/analyse_phase2_results.py` — Executes preregistered bootstrap comparisons with FDR correction
 3. **Visualisation**: `scripts/generate_figures.py` — Creates publication figures
 4. **Reporting**: `scripts/compile_report.py` — Generates summary documents
 

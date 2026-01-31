@@ -433,7 +433,7 @@ All levels describe the same content categories (canonical symbols + hard positi
 
 **Analysis**:
 
-- Primary: One-way ANOVA across 5 M/E levels
+- Primary: Pairwise bootstrap comparisons across 5 M/E levels (95% CIs, FDR-corrected)
 - Planned contrasts:
   - Image-only vs Brief+image (does adding text help?)
   - Brief+image vs Verbose+image (does more detail help?)
@@ -567,7 +567,7 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 
 **Analysis**:
 
-- **Primary**: One-way ANOVA across 3 ordering conditions
+- **Primary**: Pairwise bootstrap comparisons across 3 ordering conditions (95% CIs, FDR-corrected)
 - **Planned contrasts**: Canonical-first vs Canonical-last; Optimal vs Random
 - **Secondary**: Effect size estimation for ordering benefit
 
@@ -629,7 +629,7 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 
 **Analysis**:
 
-- **Primary**: One-way ANOVA across 3 H5 levels on precision (within each M/E level)
+- **Primary**: Pairwise bootstrap comparisons across 3 H5 levels on precision (95% CIs, FDR-corrected; within each M/E level)
 - **Planned contrasts**: Minimal vs Terse; Terse vs Verbose
 - **Secondary**: Parallel analysis on recall to confirm no significant harm
 - **Tertiary**: Analysis on F1 to assess net benefit
@@ -637,10 +637,9 @@ If H4 shows a strong main effect and interaction is suspected, OFAT sensitivity 
 
 **M/E × H5 Interaction Analysis**:
 
-Beyond the primary one-way ANOVA for each M/E level separately, exploratory analysis will examine whether optimal H5 level varies by M/E condition:
+Beyond the primary pairwise comparisons for each M/E level separately, exploratory analysis will examine whether optimal H5 level varies by M/E condition:
 
-- **Two-way ANOVA**: M/E (3 levels) × H5 (3 levels) on precision and F1
-- **Interaction test**: Does the H5 effect (Minimal → Terse → Verbose) differ across M/E levels?
+- **Bootstrap interaction test**: For each M/E level, compute the H5 simple effect (e.g., Terse − Minimal on precision and F1). Test whether H5 effects differ across M/E levels via paired difference-of-differences bootstrap (95% CI). Interaction present if any pairwise CI excludes zero.
 - **Practical implication**: If interaction exists, optimal recommendations become conditional: "For M/E level X, use H5 level Y"
 
 This addresses the theoretical concern that positive and negative guidance may have asymmetric elaboration requirements.
@@ -725,7 +724,7 @@ If Phase 2 identifies factors needing adjustment:
 
 **Analysis**:
 
-- One-way ANOVA across 5 temperature levels
+- Pairwise bootstrap comparisons across 5 temperature levels (95% CIs, FDR-corrected)
 - Planned contrasts: T=1.0 vs each other level
 - Examine temperature × voting interaction via post-hoc analysis
 
@@ -819,7 +818,7 @@ H8 now addresses two distinct questions through a unified sequential design:
 
 **Analysis**:
 
-- **Primary**: One-way ANOVA across 7 library conditions
+- **Primary**: Pairwise bootstrap comparisons across 7 library conditions (95% CIs, FDR-corrected)
 - **Planned contrasts**: As specified above (sequential addition + scaling)
 - **Secondary**: Characterise diminishing returns curve (F1 vs hard example count)
 - **Tertiary**: Cost-efficiency analysis (F1 improvement per input token)
@@ -1154,10 +1153,10 @@ These mechanisms may operate independently, redundantly, or synergistically.
 | H2 (two-stage) | Neither architecture improves over single-stage | Compare F1 | Either direction shows ≥0.05 F1 improvement |
 | H3 (consensus voting) | Voting improves over single-pass | One-tailed | Significant improvement |
 | H4 (example ordering) | Canonical-last > canonical-first | One-tailed | Significant ordering effect |
-| H5 (negative text) | Terse helps, verbose diminishing returns; effect consistent across M/E | Two-way ANOVA (3 M/E × 3 H5) | Significant H5 main effect, recall stable, M/E × H5 interaction non-significant |
+| H5 (negative text) | Terse helps, verbose diminishing returns; effect consistent across M/E | Bootstrap interaction test (3 M/E × 3 H5) | Significant H5 main effect, recall stable, M/E × H5 interaction non-significant |
 | H6 (Flash→Pro transfer) | Effects replicate on Pro | OFAT sensitivity | Transfer confirmed |
-| H7 (temperature) | T=1.0 optimal | One-way ANOVA (5 levels) | Any temperature outperforms 1.0 |
-| H8 (library composition) | Sequential addition + diminishing returns | One-way ANOVA (7 levels) + contrasts | Significant composition effect identified |
+| H7 (temperature) | T=1.0 optimal | Bootstrap pairwise (5 levels) | Any temperature outperforms 1.0 |
+| H8 (library composition) | Sequential addition + diminishing returns | Bootstrap pairwise (7 levels) + contrasts | Significant composition effect identified |
 
 ### 7.2 Exploratory Hypotheses (H9-H15)
 
@@ -1647,13 +1646,13 @@ If library size k ≤ 10 and N ≥ 20, construct a Balanced Incomplete Block Des
 - Each example appears in exactly r passes (r ≈ N/2)
 - Each pair of examples co-occurs in exactly λ passes
 
-This enables ANOVA decomposition:
+This enables variance decomposition:
 
 ```text
 F1 = μ + Σᵢ(main effect of exampleᵢ) + Σᵢⱼ(interaction of exampleᵢ × exampleⱼ) + ε
 ```
 
-BIBD parameters will be determined post-library-construction and documented before holdout evaluation.
+Inference on individual example effects uses bootstrap CIs consistent with Section 3.5. BIBD parameters will be determined post-library-construction and documented before holdout evaluation.
 
 **Documentation commitment:**
 
@@ -2392,6 +2391,7 @@ This preregistration is accompanied by the following supplementary documents:
 
 **Changelog:**
 
+- v4.7: Statistical methodology reconciliation — All per-hypothesis ANOVA references updated to bootstrap CI + FDR, aligning Sections 5–6 with the statistical analysis plan (Section 3) and Decision 10; H1, H4, H7, H8 analysis sections now specify pairwise bootstrap comparisons (95% CIs, FDR-corrected) with planned contrasts; H5 interaction analysis updated from two-way ANOVA to bootstrap interaction test (difference-of-differences with 95% CI); Section 7.1 summary table test types updated; BIBD decomposition (Section 8.4.5) retained as mathematical model with bootstrap inference note; no change to hypotheses, predictions, or experimental design
 - v4.6: H5 scope expansion and cost correction — H5 now tests at all three image-based M/E levels (Image-only, Brief-text+image, Verbose-text+image) rather than optimal M/E only; adds 6 net new cells enabling direct test of M/E × H5 interaction; cost estimates corrected to ~$11/cell based on actual Gemini 3 Flash pricing (~$286 confirmatory vs previous ~$59 estimate); Section 5.5 updated (execution parameters, interaction analysis subsection, fourth prediction); Section 7.1 updated (H5 test type to two-way ANOVA); Section 8.3.1a added (H5 × M/E factorial structure); Section 8.4.7 updated (execution order, budget table with corrected costs and 26 confirmatory cells); instruction files standardised (terse template applied consistently, verbose sections use 6-subsection format)
 - v4.5: Major H5/H8/H4 redesign — H5 now tests text treatment only (Minimal/Terse/Verbose) given negatives are always present (moved "do negatives help?" to H8 contrast C3); H8 expanded to 7 conditions with sequential addition contrasts (C1-C3) and scaling contrasts (S1-S3); H4 simplified to optimal M/E only (3 cells vs 9); H7 temperatures expanded to 5 levels (added T=0.3); new triggered exploratory hypotheses H4b (HP/HN ordering), HN-only condition, and M/E sensitivity at H8-optimal (tests M/E robustness if H8 optimal differs from Scale-8 by ≥2 levels); budget 23 confirmatory cells (~$59), 29 maximum with triggered exploratories (~$76); detection configs updated to match (hypothesis H1, Scale-8 library with 17 examples); see h5-h8-redesign-consolidated.md for full rationale
 - v4.4: H8 "Pure" renamed to "Pure Positive Canon" for clarity; clarified that HP (4 examples) is present in ALL H5 conditions (H5 tests negative channel only); distinguished H5=None (11 examples, includes HP) from H8 Pure Positive Canon (7 examples, no hard examples); added note on HP to H5 section; updated Section 8.4.2 category ratios; appendix configs to be updated to match

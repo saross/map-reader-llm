@@ -23,7 +23,7 @@ This efficiently answers main effect questions. The v4.6 design directly tests *
 
 ### 1. M/E × H5 — NOW TESTED IN CONFIRMATORY DESIGN
 
-**Status:** ✅ Superseded — v4.6 tests H5 at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new). The M/E × H5 interaction is directly testable via two-way ANOVA in the confirmatory analysis.
+**Status:** ✅ Superseded — v4.6 tests H5 at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new). The M/E × H5 interaction is directly testable via bootstrap interaction test (difference-of-differences) in the confirmatory analysis.
 
 **What to look for in results:**
 - Significant M/E × H5 interaction term
