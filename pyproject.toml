@@ -1,0 +1,18 @@
+# Project tooling configuration
+# Python linting and formatting via ruff
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+# E: pycodestyle errors
+# F: pyflakes (unused imports, undefined names, etc.)
+# W: pycodestyle warnings
+# I: isort (import sorting)
+# UP: pyupgrade (modern Python syntax)
+select = ["E", "F", "W", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Test files may use assert statements and longer functions
+"tests/**/*.py" = ["S101"]

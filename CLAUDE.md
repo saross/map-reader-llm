@@ -34,6 +34,7 @@ This project uses structured CC session archiving for research transparency:
 - **Running experiments**: Invoke the `map-reader` skill for experiment execution guidance
 - **Testing**: Extend or update `tests/` when adding new scripts or significantly changing existing ones; follow the tier1/tier2 pytest marker pattern (see `tests/README.md` and `conftest.py`)
 - **Gap analysis**: Before implementing new workflow phases, run a "dry-run simulation"—mentally execute each step checking whether required inputs, scripts, and configs exist; document missing pieces before writing code
+- **Linting**: Run `ruff check` on modified Python files and `npx markdownlint-cli2` on modified Markdown files before committing. Config in `pyproject.toml` and `.markdownlint.json`. Pre-existing violations in untouched files are legacy debt — fix them when touching those files, not in bulk
 
 ## Working Notes and Observations
 

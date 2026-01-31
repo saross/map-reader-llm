@@ -68,7 +68,8 @@ results/
 Results are generated from `outputs/` using scripts in `scripts/`:
 
 1. **Aggregation**: `scripts/aggregate_results.py` — Collates raw outputs into metrics CSVs
-2. **Statistical tests**: `scripts/analyse_phase2_results.py` — Executes preregistered bootstrap comparisons with FDR correction
+2. **Statistical tests**: `scripts/analyse_phase2_results.py` — Bootstrap
+   comparisons with FDR correction
 3. **Visualisation**: `scripts/generate_figures.py` — Creates publication figures
 4. **Reporting**: `scripts/compile_report.py` — Generates summary documents
 
