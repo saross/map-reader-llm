@@ -1,0 +1,225 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "61e714b4-8350-4943-a18e-ab54a3ca06e1",
+    "started_at": "2026-01-26T07:23:32.413Z",
+    "ended_at": "2026-01-27T09:04:05.043Z",
+    "duration_minutes": 1540
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 85,
+    "total_tokens": 11390,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "495c12f0-8f9c-49ec-a92a-9a351f4f0a7e",
+    "continuedBy": "5214a86a-e7d3-414b-a0a8-8d2b587f4cc6",
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/candidate-observations-draft.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2025-12-22T03-05_vlm-pipeline-development-and-codebase/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2025-12-23T07-25_prompt-reorganisation-and-preregistration/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-06T22-04_tile-size-pilot-and-preregistration/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-17T03-43_osf-preparation-linting-tests-config/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-19T06-08_map-reader-skill-planning/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/pilot-tile-size/results/multiscale-voting-analysis.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/user_observations.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 121,
+    "human_messages": 121,
+    "assistant_messages": 233,
+    "thinking_blocks": 85,
+    "tool_calls": {
+      "total": 99,
+      "by_type": {
+        "Write": 5,
+        "Read": 23,
+        "Edit": 16,
+        "ExitPlanMode": 3,
+        "Glob": 7,
+        "Grep": 15,
+        "TaskCreate": 3,
+        "TaskUpdate": 6,
+        "Task": 7,
+        "Bash": 13,
+        "AskUserQuestion": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 461056,
+      "by_type": {
+        "Write": {
+          "count": 5,
+          "bytes": 25352
+        },
+        "Read": {
+          "count": 23,
+          "bytes": 272523
+        },
+        "Edit": {
+          "count": 16,
+          "bytes": 1630
+        },
+        "ExitPlanMode": {
+          "count": 3,
+          "bytes": 8025
+        },
+        "Glob": {
+          "count": 7,
+          "bytes": 13760
+        },
+        "Grep": {
+          "count": 15,
+          "bytes": 44363
+        },
+        "TaskCreate": {
+          "count": 3,
+          "bytes": 231
+        },
+        "TaskUpdate": {
+          "count": 6,
+          "bytes": 132
+        },
+        "Task": {
+          "count": 7,
+          "bytes": 85097
+        },
+        "Bash": {
+          "count": 13,
+          "bytes": 9223
+        },
+        "AskUserQuestion": {
+          "count": 1,
+          "bytes": 720
+        }
+      },
+      "largest_single_output_bytes": 34398
+    }
+  },
+  "auto_generated": {
+    "title": "LLM observations Phase 1 and working notes",
+    "purpose": "Create llm-observations.md with AI-perspective reflections on the collaboration, based on systematic review of session metadata and archives. Add new technical observations to working_notes.md.",
+    "tags": ["meta-reflection", "llm-observations", "working-notes", "collaboration-dynamics", "session-mining"],
+    "three_ps": {
+      "prompt_summary": "Review session archives and metadata to produce AI-perspective observations on the collaboration, then add technical observations from archive mining to working notes.",
+      "process_summary": "Mined session metadata (tool call distributions, thinking block counts, duration patterns) and transcript excerpts to identify collaboration dynamics. Created llm-observations.md with sections on trust development, scaffolding effects, domain observations, and subjective reflections. Added 12 observations on human-AI collaboration patterns and 9 technical observations to working_notes.md.",
+      "provenance_summary": "Meta-level documentation session contributing to the human-AI collaboration research strand — observations may inform future academic publication on AI-assisted research practices."
+    }
+  },
+  "three_ps": {
+    "prompt_summary": "Review session archives and metadata to produce AI-perspective observations on the collaboration, then add technical observations from archive mining to working notes.",
+    "process_summary": "Mined session metadata (tool call distributions, thinking block counts, duration patterns) and transcript excerpts to identify collaboration dynamics. Created llm-observations.md with sections on trust development, scaffolding effects, domain observations, and subjective reflections. Added 12 observations on human-AI collaboration patterns and 9 technical observations to working_notes.md.",
+    "provenance_summary": "Meta-level documentation session contributing to the human-AI collaboration research strand — observations may inform future academic publication on AI-assisted research practices."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "16fabd81f9020ccb8b6f9ff4fcb3985428b5bfa809a5bd52c8ec4dfd513996d9",
+    "jsonl_bytes": 3888265,
+    "archived_at": "2026-02-01T00:00:32.493000"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "495c12f0-8f9c-49ec-a92a-9a351f4f0a7e",
+      "61e714b4-8350-4943-a18e-ab54a3ca06e1"
+    ],
+    "detection_notes": [
+      "Found session ID reference: 495c12f0-8f9c-49ec-a92a-9a351f4f0a7e",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'last\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found session ID reference: 61e714b4-8350-4943-a18e-ab54a3ca06e1",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'previous\\s+session'"
+    ]
+  }
+}

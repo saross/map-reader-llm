@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "f5e8cd4f-019f-49b2-af94-05b011b8ef44",
+    "started_at": "2026-01-31T10:02:49.624Z",
+    "ended_at": "2026-01-31T13:00:33.985Z",
+    "duration_minutes": 177
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 40,
+    "total_tokens": 7354,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "5214a86a-e7d3-414b-a0a8-8d2b587f4cc6",
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": ".markdownlint.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "pyproject.toml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "tests/test_bootstrap_interaction.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-plan.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/analysis-summary.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/preregistration-coverage.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/simulations/phase2-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/simulations/phase3-execution-simulation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/planning/interaction-triggers-for-followup.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "results/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_config_uniqueness.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "pytest.ini",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "tests/conftest.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_analyse_phase2.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_f1_calculation.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 276,
+    "human_messages": 276,
+    "assistant_messages": 395,
+    "thinking_blocks": 40,
+    "tool_calls": {
+      "total": 253,
+      "by_type": {
+        "Task": 6,
+        "Read": 57,
+        "Glob": 10,
+        "Grep": 17,
+        "AskUserQuestion": 1,
+        "Write": 5,
+        "ExitPlanMode": 1,
+        "TaskCreate": 8,
+        "TaskUpdate": 18,
+        "Edit": 52,
+        "Bash": 73,
+        "TaskOutput": 3,
+        "mcp__ide__getDiagnostics": 2
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 356828,
+      "by_type": {
+        "Task": {
+          "count": 6,
+          "bytes": 50759
+        },
+        "Read": {
+          "count": 57,
+          "bytes": 185185
+        },
+        "Glob": {
+          "count": 10,
+          "bytes": 2337
+        },
+        "Grep": {
+          "count": 17,
+          "bytes": 11913
+        },
+        "AskUserQuestion": {
+          "count": 1,
+          "bytes": 588
+        },
+        "Write": {
+          "count": 5,
+          "bytes": 1099
+        },
+        "ExitPlanMode": {
+          "count": 1,
+          "bytes": 7379
+        },
+        "TaskCreate": {
+          "count": 8,
+          "bytes": 540
+        },
+        "TaskUpdate": {
+          "count": 18,
+          "bytes": 402
+        },
+        "Edit": {
+          "count": 52,
+          "bytes": 6419
+        },
+        "Bash": {
+          "count": 72,
+          "bytes": 55639
+        },
+        "TaskOutput": {
+          "count": 3,
+          "bytes": 34381
+        },
+        "mcp__ide__getDiagnostics": {
+          "count": 2,
+          "bytes": 187
+        }
+      },
+      "largest_single_output_bytes": 47261
+    }
+  },
+  "auto_generated": {
+    "title": "ANOVA-to-bootstrap reconciliation and preregistration submission",
+    "purpose": "Final housekeeping before OSF preregistration: reconcile ANOVA references to bootstrap CI + FDR across all documents, implement bootstrap interaction test for H5, set up linter configuration, and submit preregistration at v4.7.",
+    "tags": ["preregistration", "statistical-methodology", "bootstrap-ci", "fdr", "interaction-test", "linting", "osf-registration"],
+    "three_ps": {
+      "prompt_summary": "Audit and reconcile statistical methodology (ANOVA vs bootstrap CI + FDR) across all preregistration documents, implement bootstrap interaction test code for H5, configure ruff and markdownlint, fix test failures, and prepare final preregistration submission.",
+      "process_summary": "Audited 8 documents for ANOVA/bootstrap inconsistencies; updated 6 per-hypothesis sections from ANOVA to bootstrap pairwise comparisons; implemented bootstrap_interaction_ci() in lib_advanced_metrics.py with 9 tier 1 tests; created pyproject.toml and .markdownlint.json; fixed config count test; bumped all osf/ files to v4.7/2026-01-31; submitted preregistration at commit f037a9d.",
+      "provenance_summary": "Critical pre-registration session ensuring methodological consistency — the final session before OSF preregistration submission, resolving internal contradictions between Section 3 (bootstrap) and Section 5 (ANOVA) of the preregistration document."
+    }
+  },
+  "three_ps": {
+    "prompt_summary": "Audit and reconcile statistical methodology (ANOVA vs bootstrap CI + FDR) across all preregistration documents, implement bootstrap interaction test code for H5, configure ruff and markdownlint, fix test failures, and prepare final preregistration submission.",
+    "process_summary": "Audited 8 documents for ANOVA/bootstrap inconsistencies; updated 6 per-hypothesis sections from ANOVA to bootstrap pairwise comparisons; implemented bootstrap_interaction_ci() in lib_advanced_metrics.py with 9 tier 1 tests; created pyproject.toml and .markdownlint.json; fixed config count test; bumped all osf/ files to v4.7/2026-01-31; submitted preregistration at commit f037a9d.",
+    "provenance_summary": "Critical pre-registration session ensuring methodological consistency — the final session before OSF preregistration submission, resolving internal contradictions between Section 3 (bootstrap) and Section 5 (ANOVA) of the preregistration document."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl",
+    "jsonl_sha256": "b179a3b3970acfec4e9e76415263cb626f9d66d84c47aa62d1fc69f477f140c6",
+    "jsonl_bytes": 5470773,
+    "archived_at": "2026-02-01T00:00:35.590769"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "f5e8cd4f-019f-49b2-af94-05b011b8ef44"
+    ],
+    "detection_notes": [
+      "Found session ID reference: f5e8cd4f-019f-49b2-af94-05b011b8ef44",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}
