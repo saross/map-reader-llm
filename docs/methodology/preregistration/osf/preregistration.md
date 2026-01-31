@@ -2387,7 +2387,7 @@ This preregistration is accompanied by the following supplementary documents:
 
 *Document version: 4.6*
 *Created: 2025-12-22*
-*Updated: 2026-01-14*
+*Updated: 2026-01-31*
 
 **Changelog:**
 
