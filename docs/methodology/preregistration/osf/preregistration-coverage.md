@@ -249,12 +249,13 @@ Some factors are tested at a single optimal configuration with documented ration
 
 ---
 
-*Document version: 2.5*
+*Document version: 2.6*
 *Created: 2026-01-02*
-*Updated: 2026-01-14*
+*Updated: 2026-01-31*
 
 **Changelog:**
 
+- v2.6: Aligned with preregistration.md v4.7 — statistical methodology reconciliation (ANOVA → bootstrap CI + FDR throughout)
 - v2.5: Aligned with preregistration.md v4.6 — replaced stranded factorial design with sequential OFAT design (26 cells); updated H5 terminology from "None/Images-only/Text+Images" to "Minimal/Terse/Verbose"; H5 now tested at all 3 image-using M/E levels (3×3=9 cells, 6 net new); updated H7 temperature levels to 5 (added T=0.3); simplified H4 to optimal M/E only (3 conditions); updated pairwise coverage matrix for OFAT design
 - v2.4: Aligned with preregistration.md v4.4 — clarified HP (4 examples) included in ALL H5 conditions (H5 tests negative channel with positive guidance constant); distinguished H5=None (11 examples with HP) from H8 Pure Positive Canon (7 examples, no HP); added note on H5 factor explaining this distinction
 - v2.3: Aligned with preregistration.md v4.3 — H5=None is pure-positive baseline (canonical positives + null tiles only; no canonical negatives); canonical negatives included in H5=Images-only and H5=Text+Images only

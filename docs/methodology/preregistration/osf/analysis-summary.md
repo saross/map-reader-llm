@@ -2,7 +2,7 @@
 
 **Purpose**: Plain-language overview of the statistical analysis plan for non-specialist readers.
 
-**Last updated**: 2026-01-18
+**Last updated**: 2026-01-31
 
 ---
 
