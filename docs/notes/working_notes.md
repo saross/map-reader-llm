@@ -1408,3 +1408,24 @@ The progression across sessions reveals a maturation pattern: early exploration 
 **Comparative note**: This alignment was "outstanding in this model and harness compared to Gemini 3 Pro in Antigravity or earlier versions of CC." Without constant repetition of ground rules, Gemini 3 Pro went off rails—for example, with calibration/training tile use. The combination of Opus 4.5 and the Claude Code harness produced notably better goal alignment.
 
 **Implication**: Externalising knowledge into documents (preregistration, CLAUDE.md) helps, but the model's capacity to internalise and respect those constraints—rather than requiring constant reminders—is what enables productive collaboration. The question "does this model understand what I'm trying to accomplish?" matters more than "can this model write code?"
+
+## Observation 66: Silent Test Failures and Propagation Debt in Untested Pipelines (2026-02-01)
+
+Phase 1 execution exposed five distinct bugs (E1-E5 in protocol errata) in what was thought to be a validated pipeline. Each bug was individually minor, but they chained together to produce a misleading near-zero F1 score that could have been mistaken for poor model performance.
+
+**Key pattern — propagation debt**: Each pipeline stage quietly accepted bad input and produced subtly wrong output, making the root cause hard to isolate:
+
+1. Deprecated SDK → all API calls fail → script reports "0 detections" (not an error, just empty results)
+2. Wrong bounds metadata (minY treated as maxY) → bounds shifted south → references scoped to wrong area
+3. Wrong reference directory path → `load_data()` returns `None` → evaluation prints warning but returns silently
+4. Missing `source_tile` column → crash (the only loud failure)
+
+**Automation pipeline implications**: For the future automated pipeline (stretch goal S1), this experience highlights:
+
+- **Every stage boundary needs validation**: Input/output contracts should be enforced with assertions, not swallowed with try/except
+- **Bounds generation should cross-check against rasterio**: The metadata.json interpretation was never validated against the actual GeoTIFF transforms. A simple `assert abs(bounds.top - rasterio_bounds.top) < 1.0` would have caught E4 immediately
+- **Evaluation should fail loudly on zero references**: `load_data()` returning `None` should be an error in production, not a warning
+- **Model name resolution is essential**: Google's `-preview` naming convention will keep changing. An automated pipeline needs a resolution/alias layer
+- **The merge-to-evaluation column name contract is fragile**: `source_tile` vs `source_tiles` naming drift between pipeline stages suggests these should use a shared schema definition
+
+**Meta-observation**: We built comprehensive metadata tracking (LLMMetadataTracker, response hashing, cost estimation) before building basic input/output validation. The "research code quality floor" observation from Session 3 extends here — the monitoring infrastructure was more sophisticated than the plumbing.
