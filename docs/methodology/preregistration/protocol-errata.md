@@ -115,4 +115,30 @@ Additionally, the property names in the generated GeoJSON used `tile` and `map` 
 
 ---
 
+### E6: Pipeline contract validation (post-Phase 1 hardening)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-01 |
+| Type | Correction |
+| Files | `scripts/lib_advanced_metrics.py`, `scripts/6_accuracy_report.py`, `scripts/generate_tile_bounds.py`, `tests/test_integration_pipeline_contracts.py` |
+| Impact | Prevents recurrence of E4-E5 silent failures in Phase 2+ |
+
+**Description**: Phase 1 execution exposed five cascading silent failures (E3-E5) where pipeline stages accepted bad input and produced valid-looking but incorrect output. Each bug was individually minor but chained together to produce misleading near-zero F1 scores. To prevent recurrence in Phase 2 (~15,000 API calls per sub-phase, ~$286 total), three categories of contract validation were added:
+
+1. **Reference loading assertion** (`lib_advanced_metrics.py`, `6_accuracy_report.py`): `load_data()` now validates that the reference directory exists before attempting glob, logs directory contents on failure (elevated from `warning` to `error` level), and the accuracy report script fails loudly with a clear message when references are `None` or empty. Previously, a wrong reference path silently returned `None`, and evaluation reported near-zero metrics without error.
+
+2. **Bounds metadata validation** (`generate_tile_bounds.py`): Added `validate_bounds()` function that spot-checks generated tile polygons against source metadata after generation. Verifies that polygon minY equals `metadata[1]` (catching Y-axis inversions like E4), and that polygon dimensions equal `TILE_SIZE * pixel_size`. Script exits with error if validation fails.
+
+3. **Pipeline contract integration tests** (`tests/test_integration_pipeline_contracts.py`): Seven new pytest tests exercising stage-boundary contracts:
+   - `source_tiles` list → `source_tile` string normalisation (E5b regression)
+   - Reference loading fails loudly on missing/empty directory (E5a regression)
+   - Bounds metadata correctly interprets `metadata[1]` as minY (E4 regression)
+   - End-to-end merge → evaluate produces non-zero F1 on synthetic data
+   - Vote counts and threshold filtering work correctly through the full path
+
+**Protocol impact**: None. These are infrastructure hardening measures that do not change the preregistered methodology. The evaluation algorithms, spatial tolerance (20m), Hungarian matching, and statistical analysis are unchanged. The additions ensure that the same pipeline code will fail loudly rather than silently if similar interface bugs are introduced.
+
+---
+
 *End of errata. New entries should be appended above this line.*

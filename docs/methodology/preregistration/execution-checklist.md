@@ -75,6 +75,7 @@
 | 2026-02-01 | E3: SDK migration for ThinkingConfig | Correction — deprecated SDK didn't support ThinkingConfig; migrated to google-genai SDK |
 | 2026-02-01 | E4: Tile bounds Y-axis inversion | Correction — bounds generation misinterpreted metadata, shifted bounds ~2565m south |
 | 2026-02-01 | E5: Evaluation pipeline reference path bugs | Correction — wrong reference directory, column name mismatch in merged GeoJSON |
+| 2026-02-01 | E6: Pipeline contract validation | Correction — added assertions, bounds validation, and 7 integration tests to prevent E4-E5 recurrence |
 
 ---
 
