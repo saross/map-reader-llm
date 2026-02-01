@@ -9,6 +9,8 @@ Description:
 
     It can perform multiple iterations (voting) for robust consensus.
 
+    Uses the google-genai SDK with ThinkingConfig support for Gemini 3 models.
+
 Usage:
     python scripts/5_verify_crops.py \\
         --candidates outputs/results/v4.1/candidates.geojson \\
@@ -26,20 +28,20 @@ Author: Shawn Ross, Adela Sobotkova
 Licence: Apache 2.0
 """
 
-import os
 import sys
 import json
 import argparse
 import logging
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Tuple, Optional
 from datetime import datetime, timezone
 import geojson
 from geojson import FeatureCollection, Feature
 from shapely.geometry import shape
 import rasterio
 from rasterio.windows import Window
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from PIL import Image
 import concurrent.futures
 from threading import Lock
@@ -49,7 +51,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 try:
-    from config import TILES_DIR, CONTEXT_SIZE, EXAMPLES_DIR
+    from config import GOOGLE_API_KEY, TILES_DIR, CONTEXT_SIZE, EXAMPLES_DIR, BASE_DIR
 except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
@@ -65,12 +67,57 @@ from scripts.lib_llm_metadata import (
 )
 
 # Script Version
-__version__ = "5.1.0"  # Added comprehensive metadata tracking
+__version__ = "5.2.0"  # Migrated to google-genai SDK with ThinkingConfig support
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Global Lock for thread safety if needed (logging is thread-safe)
 file_lock = Lock()
+
+
+def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
+    """
+    Resolve a model name to its API-available form.
+
+    Configs use marketing names (e.g., 'gemini-3-flash') matching the preregistration,
+    but the API may require a '-preview' suffix until Google promotes the model to
+    stable. This function checks availability and falls back to the '-preview' variant.
+
+    Args:
+        client: Initialised google-genai Client.
+        model_name: Model name from config (e.g., 'gemini-3-flash').
+
+    Returns:
+        Resolved model name string, or None if the model cannot be found.
+    """
+    try:
+        available = {
+            m.name.removeprefix("models/") for m in client.models.list()
+        }
+    except Exception as e:
+        logging.warning("Could not list models: %s — proceeding with '%s' as-is.", e, model_name)
+        return model_name
+
+    # Exact match — model name is valid as-is
+    if model_name in available:
+        return model_name
+
+    # Try with '-preview' suffix
+    preview_name = f"{model_name}-preview"
+    if preview_name in available:
+        logging.info("Model '%s' not found; resolved to '%s'", model_name, preview_name)
+        return preview_name
+
+    # Neither found
+    logging.error(
+        "Model '%s' not found in API (also tried '%s').",
+        model_name,
+        preview_name,
+    )
+    flash_pro = sorted(m for m in available if "flash" in m or "pro" in m)
+    for m in flash_pro:
+        logging.error("  Available: %s", m)
+    return None
 
 def load_candidates(candidates_path: Path) -> List[Feature]:
     """Loads candidate features from GeoJSON."""
@@ -109,38 +156,49 @@ def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE
         except Exception:
             return None
 
-def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
-    """Constructs the Multimodal Prompt."""
-    prompt_parts = []
+def construct_verifier_prompt(
+    prompt_config: Dict,
+    refs_dir: Path,
+) -> Tuple[List[types.Part], str]:
+    """
+    Construct the multimodal reference prompt as types.Part objects.
 
-    # 1. Image Library (Federated)
+    Returns:
+        Tuple of (reference_parts list, system_instruction text).
+    """
+    reference_parts: List[types.Part] = []
+
+    # 1. Image Library (Federated) — build Part objects for the new SDK
     for ex in prompt_config.get("examples", []):
         img_path = refs_dir / ex["path"]
         if img_path.exists():
-            img = Image.open(img_path)
-            prompt_parts.append(f"Example: {ex['label']}")
-            prompt_parts.append(img)
+            reference_parts.append(
+                types.Part.from_text(text=f"Example: {ex['label']}")
+            )
+            with open(img_path, "rb") as f:
+                image_bytes = f.read()
+            suffix = img_path.suffix.lower()
+            mime_type = "image/png" if suffix == ".png" else "image/jpeg"
+            reference_parts.append(
+                types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+            )
         else:
-            logging.warning(f"Missing reference: {img_path}")
+            logging.warning("Missing reference: %s", img_path)
 
-    # 2. Instructions
-    # v4.6 Optimization: Load from external file if specified
+    # 2. Instructions — loaded as system instruction for the new SDK
     instruction_file = prompt_config.get("instruction_file")
+    system_instruction = ""
     if instruction_file:
-        instr_path = Path("prompts") / "system-instructions" / instruction_file
+        instr_path = Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
         if instr_path.exists():
             with open(instr_path) as f:
-                instructions = f.read()
-            # logging.info(f"Loaded instructions from {instr_path}")
+                system_instruction = f.read()
         else:
-            logging.warning(f"Instruction file not found: {instr_path}. Using default.")
-            instructions = None
-    else:
-        instructions = None
+            logging.warning("Instruction file not found: %s. Using default.", instr_path)
 
-    if not instructions:
+    if not system_instruction:
         # Fallback Default (v4.5 style)
-        instructions = """
+        system_instruction = """
         **Task:** Verification.
         **Process:**
         1. **SCAN**: List visual features of the candidate object in the center.
@@ -157,27 +215,37 @@ def construct_verifier_prompt(prompt_config: Dict, refs_dir: Path) -> List[Any]:
         Output JSON: {"reasoning": "...", "mound_probability": 0.X}
         """
 
-    prompt_parts.append(instructions)
-    return prompt_parts
+    return reference_parts, system_instruction
 
-def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List[LLMResponseMetadata]]:
+def process_single_candidate(
+    args_tuple: Tuple,
+) -> Tuple[Optional[Feature], List[LLMResponseMetadata]]:
     """
     Helper for parallel processing with comprehensive metadata capture.
 
+    Uses the google-genai SDK for API calls. The client is thread-safe.
+
     Args:
-        args_tuple: (feat, base_prompt, model_name, iterations, prompt_config, candidate_id)
+        args_tuple: (feat, reference_parts, client, model_name, gen_config,
+                      iterations, prompt_config, candidate_id)
 
     Returns:
         Tuple of (processed Feature or None, list of response metadata)
     """
-    feat, base_prompt, model_name, iterations, prompt_config, candidate_id = args_tuple
+    (
+        feat,
+        reference_parts,
+        client,
+        model_name,
+        gen_config,
+        iterations,
+        prompt_config,
+        candidate_id,
+    ) = args_tuple
 
     # Configurable thresholds (with backwards-compatible defaults)
     verification_threshold = prompt_config.get("verification_threshold", 0.5)
     majority_vote_fraction = prompt_config.get("majority_vote_fraction", 0.5)
-
-    # Instantiate model (stateless REST wrapper, thread-safe)
-    model = genai.GenerativeModel(model_name)
 
     props = feat.get("properties", {})
     tile_id = props.get("tile_id") or props.get("source_tile")
@@ -206,12 +274,26 @@ def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List
             pass
 
     try:
+        # Convert crop to bytes for the new SDK
+        import io
+        crop_buffer = io.BytesIO()
+        crop_img.save(crop_buffer, format="PNG")
+        crop_bytes = crop_buffer.getvalue()
+
         target_label = (
             "**Target Candidate (with 100m Grid):**"
             if prompt_config.get("grid_overlay")
             else "**Target Candidate:**"
         )
-        full_content = base_prompt + [target_label, crop_img]
+
+        # Build content parts using types.Part objects
+        content_parts = list(reference_parts)  # Copy to avoid mutating shared list
+        content_parts.append(types.Part.from_text(text=target_label))
+        content_parts.append(
+            types.Part.from_bytes(data=crop_bytes, mime_type="image/png")
+        )
+
+        content = types.Content(parts=content_parts)
 
         iteration_results = []
         votes = 0
@@ -222,7 +304,11 @@ def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List
             iteration_id = f"{candidate_id}_iter{iter_num + 1}"
 
             try:
-                response = model.generate_content(full_content)
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=content,
+                    config=gen_config,
+                )
 
                 # Extract comprehensive metadata
                 response_metadata = extract_gemini_metadata(
@@ -230,7 +316,7 @@ def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List
                     request_start=request_start,
                     model_requested=model_name,
                     item_id=iteration_id,
-                    attempt=1
+                    attempt=1,
                 )
                 metadata_list.append(response_metadata)
 
@@ -248,18 +334,18 @@ def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List
                 iteration_results.append({
                     "score": score,
                     "reason": reason,
-                    "verified": is_verified
+                    "verified": is_verified,
                 })
 
             except json.JSONDecodeError as e:
                 # Response received but parsing failed
-                if 'response' in locals():
+                if "response" in locals():
                     response_metadata = extract_gemini_metadata(
                         response=response,
                         request_start=request_start,
                         model_requested=model_name,
                         item_id=iteration_id,
-                        attempt=1
+                        attempt=1,
                     )
                     response_metadata.parse_success = False
                     response_metadata.parse_error = str(e)
@@ -274,7 +360,7 @@ def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List
                     provider=LLMProvider.GEMINI.value,
                     model_requested=model_name,
                     item_id=iteration_id,
-                    attempt=1
+                    attempt=1,
                 )
                 metadata_list.append(error_metadata)
                 continue
@@ -295,7 +381,7 @@ def process_single_candidate(args_tuple: Tuple) -> Tuple[Optional[Feature], List
         return feat, metadata_list
 
     except Exception as e:
-        logging.error(f"Inference failed for {candidate_id}: {e}")
+        logging.error("Inference failed for %s: %s", candidate_id, e)
         return None, metadata_list
 
 def run_verification(
@@ -304,10 +390,12 @@ def run_verification(
     config_path: str,
     workers: int = 5,
     iterations: int = 1,
-    model_override: str = None
+    model_override: str = None,
 ):
     """
     Main verification loop with parallelism and comprehensive metadata tracking.
+
+    Uses the google-genai SDK with ThinkingConfig support.
 
     Args:
         candidates_path: Path to input candidates GeoJSON
@@ -320,44 +408,86 @@ def run_verification(
     with open(config_path) as f:
         prompt_cfg = json.load(f)
 
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+    # Configure Gemini client (google-genai SDK)
+    if not GOOGLE_API_KEY:
+        logging.error("GOOGLE_API_KEY not found.")
+        return
+
+    # Use v1alpha API version for ThinkingConfig support
+    client = genai.Client(
+        api_key=GOOGLE_API_KEY,
+        http_options={"api_version": "v1alpha"},
+    )
+
     if model_override:
         model_name = model_override
-        logging.info(f"Model Overridden via CLI: {model_name}")
+        logging.info("Model overridden via CLI: %s", model_name)
     else:
-        model_name = prompt_cfg.get("model", "gemini-1.5-flash")
+        model_name = prompt_cfg.get("model", "gemini-3-flash")
+
+    # Resolve model name — configs use marketing names (e.g., 'gemini-3-flash')
+    # but the API may require the '-preview' suffix
+    model_name = _resolve_model_name(client, model_name)
+    if model_name is None:
+        return
 
     candidates = load_candidates(Path(candidates_path))
     logging.info(
-        f"Loaded {len(candidates)} candidates. "
-        f"Concurrent Workers: {workers}. Iterations per candidate: {iterations}"
+        "Loaded %d candidates. Concurrent Workers: %d. Iterations per candidate: %d",
+        len(candidates),
+        workers,
+        iterations,
     )
 
     refs_dir = EXAMPLES_DIR
-    base_prompt = construct_verifier_prompt(prompt_cfg, refs_dir)
+    reference_parts, system_instruction = construct_verifier_prompt(prompt_cfg, refs_dir)
 
-    # Load instruction file for hashing (metadata tracker needs it)
-    instruction_file = prompt_cfg.get("instruction_file", "")
-    system_instruction = ""
-    if instruction_file:
-        instr_path = Path("prompts") / "system-instructions" / instruction_file
-        if instr_path.exists():
-            with open(instr_path) as f:
-                system_instruction = f.read()
+    # Build generation config with ThinkingConfig support
+    thinking_config = None
+    if "thinking_level" in prompt_cfg:
+        thinking_config = types.ThinkingConfig(
+            thinking_level=prompt_cfg["thinking_level"]
+        )
+        logging.info("Thinking level: %s", prompt_cfg["thinking_level"])
+
+    gen_config = types.GenerateContentConfig(
+        temperature=prompt_cfg.get("temperature", 0.1),
+        max_output_tokens=prompt_cfg.get("max_output_tokens", 8192),
+        response_mime_type="application/json",
+        thinking_config=thinking_config,
+        system_instruction=system_instruction,
+        safety_settings=[
+            types.SafetySetting(
+                category="HARM_CATEGORY_HARASSMENT", threshold="OFF"
+            ),
+            types.SafetySetting(
+                category="HARM_CATEGORY_HATE_SPEECH", threshold="OFF"
+            ),
+            types.SafetySetting(
+                category="HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold="OFF"
+            ),
+            types.SafetySetting(
+                category="HARM_CATEGORY_DANGEROUS_CONTENT", threshold="OFF"
+            ),
+        ],
+    )
 
     # Initialise metadata tracker
     metadata_tracker = LLMMetadataTracker(
         config=prompt_cfg,
         system_instruction=system_instruction,
         script_name="5_verify_crops.py",
-        script_version=__version__
+        script_version=__version__,
     )
 
     verified_features = []
 
     # Prepare args with unique candidate IDs
     process_args = [
-        (c, base_prompt, model_name, iterations, prompt_cfg, f"cand_{i:04d}")
+        (
+            c, reference_parts, client, model_name, gen_config,
+            iterations, prompt_cfg, f"cand_{i:04d}",
+        )
         for i, c in enumerate(candidates)
     ]
 
@@ -375,7 +505,7 @@ def run_verification(
         for future in concurrent.futures.as_completed(future_to_cand):
             completed += 1
             if completed % 5 == 0:
-                logging.info(f"Progress: {completed}/{total}")
+                logging.info("Progress: %d/%d", completed, total)
 
             try:
                 result_feat, response_metadata_list = future.result()
@@ -395,13 +525,13 @@ def run_verification(
                     metadata_tracker.log_failure(f"cand_{completed:04d}", "No valid result")
 
             except Exception as e:
-                logging.error(f"Worker exception: {e}")
+                logging.error("Worker exception: %s", e)
                 metadata_tracker.log_failure(f"cand_{completed:04d}", str(e))
 
     # Save verified features
-    logging.info(f"Saving {len(verified_features)} verified results to {output_path}")
+    logging.info("Saving %d verified results to %s", len(verified_features), output_path)
     fc = FeatureCollection(verified_features)
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         geojson.dump(fc, f)
 
     # Update results summary
@@ -410,30 +540,30 @@ def run_verification(
         "features_with_results": len(verified_features),
         "verified_true": verified_count,
         "verified_false": rejected_count,
-        "iterations_per_candidate": iterations
+        "iterations_per_candidate": iterations,
     })
 
     # Estimate costs
     cost_estimate = estimate_cost(
         usage=metadata_tracker.usage,
         provider=LLMProvider.GEMINI.value,
-        model=model_name
+        model=model_name,
     )
 
     # Finalise and save metadata
     meta = metadata_tracker.finalise(include_per_item=True)
     meta["cost_estimate"] = cost_estimate
 
-    meta_file = Path(output_path).with_suffix('.meta.json')
-    with open(meta_file, 'w') as f:
+    meta_file = Path(output_path).with_suffix(".meta.json")
+    with open(meta_file, "w") as f:
         json.dump(meta, f, indent=2)
 
     # Print summary
-    logging.info(f"Metadata saved to {meta_file}")
-    logging.info(f"Candidates processed: {len(candidates)}")
-    logging.info(f"Verified: {verified_count}, Rejected: {rejected_count}")
-    logging.info(f"Tokens used: {meta['usage_stats']['total_tokens']:,}")
-    logging.info(f"Estimated cost: ${cost_estimate['total_cost_usd']:.4f}")
+    logging.info("Metadata saved to %s", meta_file)
+    logging.info("Candidates processed: %d", len(candidates))
+    logging.info("Verified: %d, Rejected: %d", verified_count, rejected_count)
+    logging.info("Tokens used: %s", f"{meta['usage_stats']['total_tokens']:,}")
+    logging.info("Estimated cost: $%.4f", cost_estimate["total_cost_usd"])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -442,7 +572,13 @@ if __name__ == "__main__":
     parser.add_argument("--config", required=True)
     parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--iterations", type=int, default=1)
-    parser.add_argument("--model", type=str, default=None, help="Override the model in the config (e.g. gemini-1.5-pro)")
+    parser.add_argument(
+        "--model", type=str, default=None,
+        help="Override the model in the config (e.g. gemini-3-flash)",
+    )
     args = parser.parse_args()
 
-    run_verification(args.candidates, args.output, args.config, args.workers, args.iterations, model_override=args.model)
+    run_verification(
+        args.candidates, args.output, args.config,
+        args.workers, args.iterations, model_override=args.model,
+    )
