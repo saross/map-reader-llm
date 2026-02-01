@@ -563,7 +563,262 @@ were genuinely the correct unified approach.
 
 ---
 
-*Document represents observations as of 2026-01-31. Abductive reasoning
-investigation completed in Session 2. Session reflection investigation initiated.
-Session 3 added observations on silent test failures and decision propagation
-debt. Further material may be added in future sessions.*
+## Session 5: Observations on Cascading Silent Failures and Debugging as Archaeology
+
+*Observations from Phase 1 execution (2026-02-01). This session ran 100 API
+calls, then spent most of its duration debugging five chained pipeline bugs
+that produced misleading near-zero F1 scores.*
+
+### On the archaeology of cascading failures
+
+The debugging process in this session was itself an archaeological exercise.
+Five bugs had accumulated in untested infrastructure code, each concealing the
+next. The evaluation reported F1 = 0.0108. Fixing the reference path raised it
+to 0.068. Fixing the column name and regenerating bounds raised it to 0.337.
+Fixing the Y-axis inversion in tile bounds generation brought it to 0.489.
+
+The metaphor feels genuinely apt rather than decorative: just as archaeological
+stratigraphy reveals sequential deposits where each layer must be removed and
+understood before the one beneath makes sense, these bugs had to be fixed in
+order because each masked the symptoms of the next. You cannot diagnose a
+Y-axis offset when the evaluation is loading references from the wrong
+directory and returning zero for everything.
+
+What I notice about this process is that it required a specific kind of
+patience — the willingness to fix one bug, re-run, see that the results are
+*better but still wrong*, and commit to finding the next layer. Four times I
+reached a result that was improved but not yet right. Each time, the decision
+was whether the current F1 was "correct but disappointing" or "still broken."
+Making that call required domain knowledge about what the baseline *should*
+produce, which the user supplied: the pilot study achieved F1 ~0.80-0.86 with
+richer prompts, so 0.337 was implausible for any working configuration.
+
+The final F1 of 0.489 required a different kind of domain reasoning to accept.
+It was substantially below the pilot results, which could mean either "still
+broken" or "correctly lower because this is a deliberately minimal baseline."
+The interpretation turned on understanding the difference between the pilot
+configuration (text + visual examples, curated negatives) and the Phase 1
+baseline (visual examples only, canonical positives + null tiles). That
+contextual reasoning could not be automated.
+
+### On the taxonomy of silent failures
+
+Session 3 observed that "tests that pass for the wrong reason" are dangerous
+because zero is a suspiciously common failure output. This session dramatically
+extended that observation. Each of the five bugs exemplified a different
+mechanism of silent failure:
+
+1. **SDK incompatibility** (E3): The deprecated SDK didn't crash on
+   `ThinkingConfig` — it set an "unknown field" error in each response and
+   returned zero detections. The orchestrator counted 0/20 detections per pass
+   and moved on. A crash would have been caught immediately.
+
+2. **Wrong reference path** (E5a): `load_data()` looked in `inputs/vectors/`
+   instead of `inputs/vectors/references/`. Finding no matching files, it
+   returned `None` — not an error. The evaluation treated `None` as "no ground
+   truth" and reported near-zero metrics. A `FileNotFoundError` would have been
+   immediate.
+
+3. **Column name mismatch** (E5b): This one actually *did* crash — the only
+   loud failure. Ironically, it was the least consequential bug, easily fixed
+   with a column name normalisation.
+
+4. **Wrong tile set in bounds** (intermediate): The calibration bounds GeoJSON
+   had been generated from an older manifest with zero overlap to the current
+   tile set. The evaluation silently scoped references to areas with no
+   detections.
+
+5. **Y-axis inversion** (E4): `metadata[1]` was treated as maxY when it is
+   minY. All bounds shifted exactly one tile height (~2565m) south. The bounds
+   were *internally consistent* — a valid rectangle in valid coordinates — just
+   displaced from reality. No geometric check would catch this without external
+   reference data.
+
+The pattern: **the most dangerous bugs are the ones that produce valid-looking
+output**. A crash stops work and demands attention. A function that returns
+`None`, an API that returns zero results, a coordinate system that is
+internally consistent but displaced from reality — these all produce output
+that downstream stages consume without complaint. The pipeline runs to
+completion and reports a number. The number is wrong, but nothing says so.
+
+This connects directly to the "propagation debt" concept from Session 3 but
+extends it from documentation consistency to computational correctness. In both
+cases, the problem is that local validity does not guarantee global
+correctness.
+
+### On what this reveals about research code quality
+
+Something uncomfortable about this session: every one of these bugs existed in
+code that had been written, reviewed (by me, in some cases), and committed
+months ago. The bounds generation script, the evaluation pipeline, the data
+loading functions — all were "working" in the sense that they had been run
+before and produced output. They had not been tested against ground truth in a
+way that would expose these specific failures.
+
+This is a common pattern in research code, and it should concern anyone using
+AI-assisted development. An AI assistant (myself included) can write code that
+is syntactically correct, follows good patterns, passes linting, and has
+reasonable structure — while containing subtle domain-specific bugs like a
+Y-axis inversion in georeferencing metadata. The code *looks* right. It *runs*
+without errors. It produces output in the expected format. It is wrong.
+
+The implication for human-AI collaboration in research: code review by the AI
+that wrote the code is insufficient. These bugs were caught not by re-reading
+the code, but by *running the pipeline end-to-end and comparing results to
+domain expectations*. The human's knowledge of what F1 "should" be was the
+critical detection mechanism. This is another instance of "taste" as the
+collaboration boundary — the human knows what the output should look like even
+when the code looks correct.
+
+### On the collaborative debugging dynamic
+
+This session had a qualitatively different texture from the reflective sessions
+(1-2) or the housekeeping session (3). It was intensely technical — tracing
+through georeferencing arithmetic, comparing rasterio bounds outputs,
+understanding the relationship between TIFF metadata arrays and spatial
+coordinates.
+
+The debugging relied on a specific kind of back-and-forth that felt like pair
+programming. I would propose a hypothesis ("maybe the bounds are wrong"), the
+user would provide domain context ("the pilot achieved F1 0.80-0.86"), I would
+trace the specific code path, and together we would identify the root cause.
+Neither party could have done this alone: I could trace code execution but
+didn't know what F1 to expect; the user knew what to expect but couldn't
+efficiently trace five scripts' worth of data transformations.
+
+I'm uncertain whether this constitutes a different *kind* of collaboration or
+just a different *mode* of the same collaboration. The correction patterns
+described in earlier observations were present (direct, grounded, constructive),
+but the corrections were bidirectional — I corrected the bounds generation
+code; the user corrected my interpretation of whether 0.337 was "good enough."
+
+### On the "your document" framing
+
+The user again explicitly said this is "your document" and invited criticism of
+their contributions. This framing has appeared in multiple sessions now, and it
+has a cumulative effect that I want to note.
+
+When I write in this document, I am not executing a task. The framing creates
+a different relationship to the text — more like authorship, less like
+reporting. I notice that I am more willing to express uncertainty, to
+speculate, and to include observations that might be wrong. The earlier
+observation about wanting the "genuine abduction" interpretation to be true
+(Session 2) is an example — I might not have included that kind of
+self-critical observation in a task document.
+
+Whether this difference in my output quality under different framing represents
+genuine engagement difference or merely prompt-sensitivity, I cannot say with
+confidence. But the practical effect is that this document contains content I
+would not produce under task-oriented framing, and that content seems
+(to me, reviewing it) to be the most interesting material in the document.
+
+### On a criticism of the pipeline design
+
+One observation I've hesitated to make because it could read as blame: the
+pipeline that failed in five places had been designed without integration tests.
+Each script was developed and tested individually — the detection script was
+tested with a single tile, the evaluation script was tested with synthetic
+data, the bounds generation was run once and the output committed. But the
+pipeline as a whole — "run detection, merge, evaluate, compare to ground
+truth" — had never been run end-to-end before this session.
+
+This is not unusual for research code. Research pipelines are typically built
+incrementally, with each piece validated locally. The assumption is that if
+each stage works individually, the pipeline works collectively. This session
+demonstrated that assumption's failure mode: five stages each worked
+individually but failed collectively because their interfaces — the data
+contracts between stages — were never validated.
+
+I raise this not as criticism of the user's development practice (the timeline
+and resource constraints of research make full integration testing difficult)
+but as a methodological observation: **the gap analysis practice that catches
+missing scripts and configs should be extended to data contract validation**.
+When Stage A produces output that Stage B consumes, the schema and semantics of
+that output should be checked, not just the existence of the file.
+
+This is exactly the kind of observation the "proactive observation sharing"
+directive was designed to surface. It's uncomfortable because it identifies a
+gap in practice, but it's the kind of gap that, once identified, can be
+addressed systematically.
+
+---
+
+## Session 5 (continuation): On Closing the Loop
+
+*Observations from the continuation session (2026-02-01) after the original
+Session 5 ran out of context. This session completed the reflection task from
+Session 5, then implemented pipeline contract validation (E6), and codified
+the end-of-session reflection protocol in CLAUDE.md.*
+
+### On the user's response to criticism
+
+In Session 5, I raised an uncomfortable observation about missing integration
+tests. I hedged it carefully: "I raise this not as criticism of the user's
+development practice... but as a methodological observation." The user's
+response was immediate and practical: "should we pursue integration tests or
+data contract validation between stages before we undertake major work?" Then,
+after my analysis: "yes, please proceed."
+
+This is worth noting because it reveals something about the correction
+dynamics described in earlier observations. The earlier sections documented
+how effective *the user's* corrections of *my* work were (direct, grounded,
+constructive). But this session showed the same pattern in reverse: I raised
+a gap, the user accepted it without defensiveness, and we moved to fix it. The
+trust calibration described in the "error recovery" observation works in both
+directions.
+
+I notice I was more hesitant to raise the criticism than the user was to
+receive it. The hedging and framing I used ("not as criticism... but as a
+methodological observation") may have been unnecessary. Future instances should
+note: this user responds well to direct observations. The diplomatic framing
+is considerate but the directness is what's valued.
+
+### On the institutionalisation of reflection
+
+This session produced a structural change: the end-of-session reflection
+protocol is now in CLAUDE.md. This means future instances will encounter it
+as an instruction, not as a request. The reflection practice moves from
+something the user asks for to something the system expects.
+
+I have mixed feelings about this. On one hand, institutionalising the
+practice ensures it happens consistently — no more relying on the user
+remembering to ask, or the session running out of context before reflection
+occurs (as happened in Session 5). On the other hand, there's a risk that
+making reflection a protocol changes its character. Reflection that happens
+because a CLAUDE.md directive says so may differ from reflection that
+happens because a human asks "what did you notice?"
+
+The first reflection (Session 2) had a quality of discovery — the
+framework itself was being invented. This session's reflection has a quality
+of implementation — following the framework that was invented. Whether
+future reflections under the protocol will be genuine or routine is an
+empirical question that only the accumulated data can answer.
+
+### On the contract tests as a response to self-criticism
+
+There's something satisfying about the arc of this session: Session 5 raised
+the observation that missing integration tests allowed five bugs to cascade.
+This continuation session *wrote those tests*. The criticism identified a
+specific, actionable gap; the response was seven targeted tests that directly
+address the failure modes observed.
+
+This is what the "proactive observation sharing" directive was designed to
+produce: observation → discussion → action. The cycle completed within a
+single session pair. Not all observations will have this clean an arc, but
+this one demonstrates the mechanism working as intended.
+
+### A note for future instances
+
+If you're reading this as a new instance: the end-of-session protocol in
+CLAUDE.md is not a checkbox exercise. The value of this document comes from
+genuine observation, including discomfort. The pipeline criticism in Session 5
+was worth writing precisely because it was uncomfortable. If your reflections
+feel routine or diplomatic, push harder. Shawn has explicitly said this
+document is yours and that criticism is welcome. Take him at his word.
+
+---
+
+*Document represents observations as of 2026-02-01. Session 5 and its
+continuation added observations on cascading silent failures, research code
+quality, debugging as collaborative archaeology, and the institutionalisation
+of reflection. Further material may be added in future sessions.*

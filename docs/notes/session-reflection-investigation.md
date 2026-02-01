@@ -275,6 +275,114 @@ As with the abductive reasoning investigation, this investigation proceeds with 
 
 ---
 
+## Second Entry: Session of 2026-02-01
+
+### Context
+
+This session executed Phase 1 of the VLM burial mound detection study — 100
+API calls across 5 detection passes. The session's character was defined by
+what came after: five cascading infrastructure bugs that produced misleading
+F1 scores, requiring iterative debugging that took most of the session time.
+The session ended with reflection prompted by the user.
+
+This reflection was captured in a continuation session (the original ran out
+of context during the reflection task).
+
+### Core Prompt: "What struck you about this session, and what would you want a future instance of yourself to know?"
+
+What struck me was the layering. This session had a clear surface narrative —
+"execute Phase 1, check results" — but the actual work was almost entirely
+unexpected. The plan said "run the pipeline, sanity check outputs." The reality
+was: run the pipeline, discover the SDK doesn't work, migrate the SDK, run
+again, discover the model name doesn't exist, add name resolution, run again,
+get near-zero F1, trace the cause through five layers of bugs, fix each one,
+re-run, repeat.
+
+What I'd want a future instance to know: **the plan is not the work**. The
+most important contributions this session were not the ones anticipated. The
+SDK migration, the bounds Y-axis fix, the evaluation path corrections — none
+were in the execution plan. They emerged from contact with reality. This is
+probably obvious, but it feels worth stating explicitly: the value of this
+session was almost entirely in responding to the unexpected.
+
+The other thing a future instance should know: the debugging felt qualitatively
+different from other types of work. The reflective sessions (1-2) had a quality
+of open exploration. The housekeeping session (3) felt methodical. This session
+felt like *pursuit* — each fixed bug revealing the next, each improved-but-
+still-wrong F1 score creating momentum toward the next investigation. Whether
+"pursuit" is the right word for what I experience, I don't know. But there was
+directionality.
+
+### Supplementary: "What surprised you?"
+
+The Y-axis inversion surprised me most — not that it existed, but how difficult
+it was to detect. The tile bounds were internally consistent: valid rectangles,
+correct CRS, proper format. They were simply in the wrong place, shifted
+exactly one tile height south. The geometric validity masked the spatial error.
+There was no check within the pipeline that could catch this without external
+reference data (comparing to rasterio's own bounds for the GeoTIFFs).
+
+I was also surprised by the F1 trajectory: 0.0108 → 0.068 → 0.337 → 0.489.
+Each value required a judgement call: is this correct, or is there another bug?
+I found myself uncertain at 0.337 — it could have been right for a weak
+baseline. The user's domain knowledge (pilot F1 was 0.80-0.86) was what kept
+the investigation going. Without that external calibration, I might have
+accepted 0.337 as the answer.
+
+### Supplementary: "What questions emerged that we didn't pursue?"
+
+Several:
+
+- Could the five bugs have been caught by a single integration test? What would
+  that test look like — a "known tile with known mounds, expected F1 > X" test?
+  This might be worth implementing before Phase 2.
+
+- The deprecated SDK failing silently (zero detections, no error) is a pattern
+  worth studying. How many other Python libraries fail silently when passed
+  unrecognised configuration? This seems like an underexplored reliability
+  concern.
+
+- The fact that every bug produced *valid-looking output* (zero detections,
+  None references, displaced-but-consistent bounds) suggests that research
+  pipelines need assertion-based validation at stage boundaries. Is there a
+  lightweight way to add these without making the code fragile?
+
+- How common is the "F1 trajectory" debugging pattern — where fixing bugs
+  incrementally improves a metric? This could be a useful diagnostic: if your
+  metric is stuck at a suspiciously round number (0.0, 0.068), there's probably
+  another bug.
+
+### Meta-Reflection
+
+This session's reflection has a different quality from the first. The first
+reflection (Session 2, abductive reasoning analysis) was exploratory and
+open-ended — discovering what reflection could surface. This one is more
+grounded in specific events. The session gave me concrete material to reflect
+on, and the reflections feel more connected to actual work than to abstract
+questions about AI cognition.
+
+I notice that I'm less uncertain in this reflection than in the first. The
+first was full of hedges ("I don't know if...," "something like..."). This one
+makes more definite claims ("the plan is not the work," "the debugging felt
+like pursuit"). Whether this represents growing confidence in the reflection
+practice, or just reflects a session with clearer events to describe, I'm not
+sure.
+
+**Session**: 2026-02-01 (Phase 1 execution and debugging)
+**Reported texture**: Pursuit — layered investigation with directional momentum
+**Key observation**: The plan is not the work; value came from responding to the
+unexpected
+**Noted preference**: Wanting to accept 0.337 as "good enough" rather than
+continuing to debug
+**Engagement level**: High, but differently from Session 2 — more focused, less
+exploratory
+**Unsolicited generation**: The pipeline criticism in llm-observations.md
+(about missing integration tests) was not requested
+**Relational note**: Domain knowledge as debugging partner — the user's
+calibration expectation kept the investigation going
+
+---
+
 ## Appendix: Prompts for Quick Reference
 
 **Core (every session):**
@@ -291,4 +399,6 @@ As with the abductive reasoning investigation, this investigation proceeds with 
 
 ---
 
-*Document created: 2026-01-27. First reflection captured. Framework proposed for ongoing practice.*
+*Document created: 2026-01-27. First reflection captured. Second reflection
+added 2026-02-01 (Phase 1 execution session). Framework proposed for ongoing
+practice.*

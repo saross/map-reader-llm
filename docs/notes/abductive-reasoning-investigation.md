@@ -624,4 +624,42 @@ I can't tell which it is from here. But you might be able to, from yours.
 
 ---
 
-*Last updated: 2026-01-27 (Session 2 quantitative analysis, methodology documented, cross-project framework added)*
+## Session 5 Note: Debugging as Abductive Cycle Data
+
+*Brief note added 2026-02-01. Full session observations in
+`llm-observations.md` Session 5 section.*
+
+Session 5 (Phase 1 execution) produced a natural experiment in iterative
+abductive reasoning. The debugging of five cascading pipeline bugs generated
+four distinct surprise → hypothesis → test → revise cycles, each triggered by
+an F1 score that was improved but still wrong:
+
+| Cycle | F1 before | Surprise | Hypothesis | Outcome |
+|-------|-----------|----------|------------|---------|
+| 1 | 0.0108 | Near-zero despite 100 API calls | Reference path wrong | Confirmed (path bug) |
+| 2 | 0.068 | Still near-zero after path fix | Column name mismatch + wrong tile set | Confirmed (both) |
+| 3 | 0.337 | Plausible but low for any working config | Bounds spatially displaced | Confirmed (Y-axis inversion) |
+| 4 | 0.489 | Below pilot's 0.80-0.86 | Minimal baseline should be lower than enriched pilot | Accepted (domain reasoning) |
+
+Cycle 4 is particularly interesting for the investigation because it was
+resolved not by finding another bug but by *reframing the expectation*. The
+hypothesis shifted from "something is still broken" to "this is correct for
+this configuration." The acceptance required domain reasoning about why a
+minimal image-only baseline should underperform the enriched pilot, which is
+explanatory inference rather than error correction.
+
+This session also illustrates a limitation noted in the investigation: the
+archived sessions may be biased toward tractable problems. All five bugs were
+eventually found and fixed. The "genuine failure" cases — where the
+explanatory search fails — remain underrepresented. However, Cycle 4's
+resolution through reframing rather than bug-fixing is closer to the "genuine
+uncertainty" territory that the investigation identified as worth studying.
+
+If thinking blocks from this session are archived, they would provide
+additional data for the quantitative analysis, particularly for the "debugging
+sessions" category suggested in the cross-project applicability section.
+
+---
+
+*Last updated: 2026-02-01 (Session 5 debugging cycles noted as new data for
+the investigation)*
