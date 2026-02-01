@@ -1429,3 +1429,37 @@ Phase 1 execution exposed five distinct bugs (E1-E5 in protocol errata) in what 
 - **The merge-to-evaluation column name contract is fragile**: `source_tile` vs `source_tiles` naming drift between pipeline stages suggests these should use a shared schema definition
 
 **Meta-observation**: We built comprehensive metadata tracking (LLMMetadataTracker, response hashing, cost estimation) before building basic input/output validation. The "research code quality floor" observation from Session 3 extends here — the monitoring infrastructure was more sophisticated than the plumbing.
+
+## Observation 76: Two-Dimensional Failure Ranking — Frequency × Localisation Accuracy (2026-02-01)
+
+Phase 1 failure analysis revealed that vote count alone is insufficient for ranking hard examples. All 24 FNs have the same vote count (0/5 — complete misses), leaving them entirely undifferentiated. A second dimension — **proximity to the nearest counterpart** — breaks these ties and reveals qualitatively different failure modes.
+
+**The two dimensions**:
+
+1. **Frequency** (vote count): How consistently does the model make this error? A FP detected in 5/5 passes is more systematic than one in 1/5.
+2. **Localisation accuracy** (distance to nearest counterpart): How far is a FN from the nearest detection, or a FP from the nearest ground truth reference?
+
+**FN failure modes revealed**:
+
+- **Recognition failures** (9 FNs, >50m from any detection): The model genuinely cannot see these features. Distances range from 50m to 2450m. These are the hardest cases and the highest priority for the library.
+- **Localisation failures** (15 FNs, 20–50m from a detection): The model detects *something* nearby but places the bounding box too far from the reference to match at the 20m tolerance. These are less severe — the model recognises the feature type but misjudges position.
+
+**FP failure modes revealed**:
+
+- **Hallucinations** (>500m from any reference): The model invents detections in areas with no real mounds. At vote ≥3, 8 of 18 systematic FPs are hallucinations.
+- **Near-misses** (20–30m from a reference): These may represent poorly localised true positives rather than genuine false alarms. Some could be annotation boundary issues.
+- **Marginal** (30–50m) and **moderate** (50–500m): Intermediate categories with varying explanations.
+
+**Key finding**: 15 of 24 FNs (63%) are localisation failures, not recognition failures. At a hypothetical 40m tolerance (still archaeologically reasonable), most would become true positives. This suggests the model's *detection* capability is substantially better than the 20m-tolerance F1 of 0.489 indicates — much of the apparent failure is spatial imprecision rather than missed recognition.
+
+**Practical implication for library construction**: The two dimensions create a natural expansion order for the H8 library size experiment:
+
+1. **Core library** (now): Recognition failures (hardest FNs) + hallucinations (hardest FPs)
+2. **First expansion**: Add localisation failures + near-miss FPs
+3. **Full library**: Include all classified examples
+
+This ordering means the post-hoc regression (`F1_pass ~ Σ βᵢ(exampleᵢ_present)`) can test whether recognition-failure examples contribute more to F1 improvement than localisation-failure examples — a distinction the preregistration did not anticipate but which the frequency × proximity framework naturally supports.
+
+**Map-level pattern**: Elenovo produces 53% of all FPs but zero hallucinations at vote ≥3 — its systematic errors are all near real features (dense mound fields where the model over-detects). Lesovo produces fewer FPs but 100% hallucinations at ≥3 votes (sparse reference areas). This suggests the model's failure mode varies with feature density, not just individual feature difficulty.
+
+**Tiebreaker for selection**: When multiple examples share the same frequency and proximity tier, map sheet stratification (one example per sheet) is preferred over random selection. This maximises cartographic diversity in the library — different sheets have different symbology, degradation patterns, and feature density. Random selection (with documented seed) serves as the secondary tiebreaker for within-sheet ties.
