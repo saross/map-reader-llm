@@ -7,6 +7,8 @@ Description:
     Designed for reproducibility, it uses a versioned configuration system and tracks
     comprehensive metadata (prompt hashes, model versions) for every run.
 
+    Uses the google-genai SDK with ThinkingConfig support for Gemini 3 models.
+
 Usage:
     python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
     python scripts/4_detect_mounds_batch.py --config <config> --manifest <manifest> --output-dir <dir>
@@ -31,8 +33,8 @@ import time
 import argparse
 from pathlib import Path
 from tqdm import tqdm
-import google.generativeai as genai
-from PIL import Image
+from google import genai
+from google.genai import types
 import geojson
 from shapely.geometry import box, mapping
 import rasterio
@@ -56,7 +58,51 @@ from scripts.lib_llm_metadata import (
 
 
 # Script Version
-__version__ = "4.3.0"  # Add temperature and ordering CLI overrides
+__version__ = "5.0.1"  # Add model name resolution for preview-suffix models
+
+
+def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
+    """
+    Resolve a model name to its API-available form.
+
+    Configs use marketing names (e.g., 'gemini-3-flash') matching the preregistration,
+    but the API may require a '-preview' suffix until Google promotes the model to
+    stable. This function checks availability and falls back to the '-preview' variant.
+
+    Args:
+        client: Initialised google-genai Client.
+        model_name: Model name from config (e.g., 'gemini-3-flash').
+
+    Returns:
+        Resolved model name string, or None if the model cannot be found.
+    """
+    # Build set of available model names (strip 'models/' prefix for comparison)
+    try:
+        available = {
+            m.name.removeprefix("models/") for m in client.models.list()
+        }
+    except Exception as e:
+        print(f"[Warning] Could not list models: {e}")
+        print(f"  Proceeding with '{model_name}' as-is.")
+        return model_name
+
+    # Exact match — model name is valid as-is
+    if model_name in available:
+        return model_name
+
+    # Try with '-preview' suffix
+    preview_name = f"{model_name}-preview"
+    if preview_name in available:
+        print(f"  Model '{model_name}' not found; resolved to '{preview_name}'")
+        return preview_name
+
+    # Neither found
+    print(f"[CRITICAL] Model '{model_name}' not found in API (also tried '{preview_name}').")
+    print("  Available flash/pro models:")
+    for m in sorted(available):
+        if "flash" in m or "pro" in m:
+            print(f"    {m}")
+    return None
 
 
 def reorder_examples(examples: list, ordering: str, seed: int = None) -> list:
@@ -133,28 +179,32 @@ class ResultsTracker:
 
 def process_single_tile(
     tile_path,
-    model,
+    client,
+    model_name_cfg,
+    gen_config,
     metadata_tracker,
     results_tracker,
-    reference_content,
+    reference_parts,
     base_wait,
     max_retries,
     config_version,
-    model_name_cfg
 ):
     """
     Worker function to process a single tile with comprehensive metadata capture.
 
+    Uses the google-genai SDK for API calls.
+
     Args:
         tile_path: Path to the tile image
-        model: The Gemini model instance
+        client: The genai.Client instance
+        model_name_cfg: Model name string (e.g., 'gemini-3-flash')
+        gen_config: types.GenerateContentConfig for generation parameters
         metadata_tracker: LLMMetadataTracker for API metadata
         results_tracker: ResultsTracker for detection counts
-        reference_content: List of reference images and labels
+        reference_parts: List of types.Part objects for reference examples
         base_wait: Base wait time for rate limit retries
         max_retries: Maximum retry attempts
         config_version: Version string from config
-        model_name_cfg: Model name from config
 
     Returns:
         List of GeoJSON features for detected mounds
@@ -163,17 +213,29 @@ def process_single_tile(
     features = []
 
     try:
-        img = Image.open(tile_path)
+        # Read tile image as bytes for the new SDK
+        with open(tile_path, "rb") as f:
+            tile_bytes = f.read()
 
+        # Build content parts using types.Part objects
         content_parts = [
-            "Here are the Reference Symbols you must find:",
+            types.Part.from_text(
+                text="Here are the Reference Symbols you must find:"
+            ),
         ]
-        content_parts.extend(reference_content)
+        content_parts.extend(reference_parts)
         content_parts.append(
-            "Now, find detection instances that visually match ANY of the "
-            "above Reference Examples in the Target Map Tile below:"
+            types.Part.from_text(
+                text="Now, find detection instances that visually match ANY of the "
+                "above Reference Examples in the Target Map Tile below:"
+            )
         )
-        content_parts.append(img)
+        content_parts.append(
+            types.Part.from_bytes(data=tile_bytes, mime_type="image/png")
+        )
+
+        # Build content object
+        content = types.Content(parts=content_parts)
 
         response = None
         response_metadata = None
@@ -182,12 +244,14 @@ def process_single_tile(
             request_start = datetime.now(timezone.utc)
 
             try:
-                response = model.generate_content(
-                    content_parts,
-                    request_options={'timeout': 900}
+                response = client.models.generate_content(
+                    model=model_name_cfg,
+                    contents=content,
+                    config=gen_config,
                 )
 
                 # Extract comprehensive metadata from response
+                # The new SDK response object has compatible attributes
                 response_metadata = extract_gemini_metadata(
                     response=response,
                     request_start=request_start,
@@ -197,22 +261,28 @@ def process_single_tile(
                 )
 
                 # Check Finish Reason
+                # New SDK uses string enum values (e.g., 'STOP', 'MAX_TOKENS')
                 if hasattr(response, 'candidates') and response.candidates:
                     reason = response.candidates[0].finish_reason
-                    if reason == 2:  # MAX_TOKENS
+                    reason_str = str(reason).upper()
+                    if "MAX" in reason_str or "TOKEN" in reason_str:
                         metadata_tracker.log_retry(
                             tile_filename,
                             attempt + 1,
-                            "MAX_TOKENS (Finish Reason 2)",
+                            f"MAX_TOKENS (Finish Reason: {reason})",
                             error_type="other"
                         )
                         time.sleep(5)
                         continue
-                    elif reason != 1:  # Not STOP (Success)
+                    elif "STOP" not in reason_str:
                         pass  # Log but continue
 
                 # Check content validity
-                if response.candidates and response.candidates[0].content.parts:
+                if (
+                    response.candidates
+                    and response.candidates[0].content
+                    and response.candidates[0].content.parts
+                ):
                     break  # Success
                 else:
                     if attempt < max_retries - 1:
@@ -263,12 +333,11 @@ def process_single_tile(
                         break
 
         # Check for valid response
-        valid_response = (
-            response and
-            hasattr(response, 'candidates') and
-            response.candidates and
-            response.candidates[0].finish_reason == 1
-        )
+        # New SDK uses string finish reasons (e.g., 'STOP')
+        valid_response = False
+        if response and hasattr(response, 'candidates') and response.candidates:
+            reason_str = str(response.candidates[0].finish_reason).upper()
+            valid_response = "STOP" in reason_str
 
         if not valid_response:
             if response_metadata:
@@ -372,14 +441,17 @@ def detect_mounds_versioned(
         tile_list (list, optional): List of specific Path objects to process (Manual override).
         output_name (str, optional): Custom filename for the output GeoJSON.
         output_dir (str, optional): Custom output directory (overrides default versioned directory).
-        export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles (debug feature).
+        export_bounds (bool, optional): If True, exports the bounding boxes of processed tiles
+            (debug feature).
         model_override (str, optional): Overrides the model defined in the JSON config.
-        temperature_override (float, optional): Overrides the temperature defined in the JSON config.
+        temperature_override (float, optional): Overrides the temperature defined in the JSON
+            config.
         ordering_override (str, optional): Overrides example ordering. Options: 'canonical-first',
             'canonical-last', 'random'. Canonical-first is the default in most configs.
         ordering_seed (int, optional): Random seed for reproducible ordering when using 'random'.
         workers (int, optional): Number of parallel workers. Defaults to 1.
-        dry_run (bool, optional): If True, validate config and show what would be processed without API calls.
+        dry_run (bool, optional): If True, validate config and show what would be processed
+            without API calls.
         limit (int, optional): Process only the first N tiles.
     """
     # Load Config
@@ -396,13 +468,18 @@ def detect_mounds_versioned(
 
     # Apply Model Override
     if model_override:
-        print(f"Overriding Config Model ({config.get('model')}) with CLI Argument: {model_override}")
+        print(
+            f"Overriding Config Model ({config.get('model')}) "
+            f"with CLI Argument: {model_override}"
+        )
         config["model"] = model_override
-        # Note: MetadataTracker uses 'config' object, so this change will be automatically recorded in metadata.
 
     # Apply Temperature Override
     if temperature_override is not None:
-        print(f"Overriding Config Temperature ({config.get('temperature', 0.1)}) with CLI Argument: {temperature_override}")
+        print(
+            f"Overriding Config Temperature ({config.get('temperature', 0.1)}) "
+            f"with CLI Argument: {temperature_override}"
+        )
         config["temperature"] = temperature_override
 
     print(f"Loaded Version: {config.get('version', 'unknown')}")
@@ -415,22 +492,33 @@ def detect_mounds_versioned(
 
     model_name_cfg = config.get("model")
 
-    # Configure Gemini
+    # Configure Gemini client (new google-genai SDK)
     if not GOOGLE_API_KEY:
         print("Error: GOOGLE_API_KEY not found.")
         return
 
-    genai.configure(api_key=GOOGLE_API_KEY)
+    # Use v1alpha API version for ThinkingConfig support
+    client = genai.Client(
+        api_key=GOOGLE_API_KEY,
+        http_options={"api_version": "v1alpha"},
+    )
 
-    # Load Prompt Text
-    instruction_file = config.get("instruction_file", "v3.0_system_instruction.md")
+    # Resolve model name — configs use marketing names (e.g., 'gemini-3-flash')
+    # but the API may require the '-preview' suffix until the model is promoted
+    # to stable. Try the exact name first, then fall back to '-preview'.
+    model_name_cfg = _resolve_model_name(client, model_name_cfg)
+    if model_name_cfg is None:
+        return
+
+    # Load Prompt Text (system instruction)
+    instruction_file = config.get("instruction_file", "detect_image-only.md")
     prompt_path = Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
 
-    print(f"System Instruction: {instruction_file}") # Feedback to user
+    print(f"System Instruction: {instruction_file}")
 
     try:
         with open(prompt_path, "r") as f:
-            v3_prompt_text = f.read()
+            system_instruction_text = f.read()
     except FileNotFoundError:
         print(f"Error: Prompt text not found at {prompt_path}")
         return
@@ -438,7 +526,7 @@ def detect_mounds_versioned(
     # Initialise metadata tracker for comprehensive API logging
     metadata_tracker = LLMMetadataTracker(
         config=config,
-        system_instruction=v3_prompt_text,
+        system_instruction=system_instruction_text,
         script_name="4_detect_mounds_batch.py",
         script_version=__version__
     )
@@ -446,17 +534,17 @@ def detect_mounds_versioned(
     # Initialise results tracker for detection counts
     results_tracker = ResultsTracker()
 
-    # Build Few-Shot Context from Config
+    # Build Few-Shot Context from Config using types.Part objects
     examples_dir = EXAMPLES_DIR
-    reference_content = []
+    reference_parts = []
 
     examples = config.get("examples", [])
 
     # Apply Ordering Override
     if ordering_override:
-        _original_order = [e.get("path", "") for e in examples]  # For debugging
+        _original_order = [e.get("path", "") for e in examples]
         examples = reorder_examples(examples, ordering_override, ordering_seed)
-        _new_order = [e.get("path", "") for e in examples]  # For debugging
+        _new_order = [e.get("path", "") for e in examples]
         print(f"Overriding example ordering with: {ordering_override}")
         if ordering_seed is not None:
             print(f"  Random seed: {ordering_seed}")
@@ -465,48 +553,55 @@ def detect_mounds_versioned(
         if ordering_seed is not None:
             config["ordering_seed"] = ordering_seed
 
+    example_count = 0
     for ex in examples:
         label = ex.get("label", "Example")
         path_str = ex.get("path", "")
         img_path = examples_dir / path_str
 
         if img_path.exists():
-            reference_content.append(label)
-            reference_content.append(Image.open(img_path))
+            # Build Part objects for the new SDK
+            reference_parts.append(types.Part.from_text(text=label))
+            with open(img_path, "rb") as f:
+                image_bytes = f.read()
+            suffix = img_path.suffix.lower()
+            mime_type = "image/png" if suffix == ".png" else "image/jpeg"
+            reference_parts.append(
+                types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+            )
+            example_count += 1
         else:
             print(f"Warning: Reference image {path_str} not found.")
 
-    # Initialize Model Configuration (Shared)
-    generation_config = {
-        "temperature": config.get("temperature", 0.1),
-        "top_p": config.get("top_p", 0.95),
-        "top_k": config.get("top_k", 40),
-        "max_output_tokens": config.get("max_output_tokens", 8192),
-        "response_mime_type": "application/json",
-    }
-
-    # Add thinking_level if specified (Gemini 3 reasoning depth control)
-    # Note: API uses camelCase 'thinkingLevel' in GenerationConfig
+    # Build generation config with ThinkingConfig support
+    thinking_config = None
     if "thinking_level" in config:
-        generation_config["thinkingLevel"] = config["thinking_level"]
-
-    safety_settings = [
-        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-    ]
-
-    try:
-        model = genai.GenerativeModel(
-            model_name=model_name_cfg,
-            generation_config=generation_config,
-            system_instruction=v3_prompt_text,
-            safety_settings=safety_settings
+        thinking_config = types.ThinkingConfig(
+            thinking_level=config["thinking_level"]
         )
-    except Exception as e:
-        print(f"Error initializing model {model_name_cfg}: {e}")
-        return
+        print(f"Thinking level: {config['thinking_level']}")
+
+    gen_config = types.GenerateContentConfig(
+        temperature=config.get("temperature", 0.1),
+        max_output_tokens=config.get("max_output_tokens", 8192),
+        response_mime_type="application/json",
+        thinking_config=thinking_config,
+        system_instruction=system_instruction_text,
+        safety_settings=[
+            types.SafetySetting(
+                category="HARM_CATEGORY_HARASSMENT", threshold="OFF"
+            ),
+            types.SafetySetting(
+                category="HARM_CATEGORY_HATE_SPEECH", threshold="OFF"
+            ),
+            types.SafetySetting(
+                category="HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold="OFF"
+            ),
+            types.SafetySetting(
+                category="HARM_CATEGORY_DANGEROUS_CONTENT", threshold="OFF"
+            ),
+        ],
+    )
 
     # Output file setup
     if output_name:
@@ -514,7 +609,12 @@ def detect_mounds_versioned(
     else:
         current_date = datetime.now().strftime("%Y-%m-%d")
         version_tag = config.get("version", "vX")
-        sanitized_model = model_name_cfg.replace("models/", "").replace("gemini-", "").replace("preview", "").strip("-")
+        sanitized_model = (
+            model_name_cfg.replace("models/", "")
+            .replace("gemini-", "")
+            .replace("preview", "")
+            .strip("-")
+        )
         filename = f"detections-{version_tag}-{sanitized_model}-{current_date}.geojson"
 
     # Output Directory: CLI override takes precedence
@@ -569,7 +669,11 @@ def detect_mounds_versioned(
                         tiles_to_process.append(all_tiles_map[fname])
                         found_count += 1
 
-                print(f"Manifest loaded. Found {found_count} of {len(target_filenames)} tiles ({len(tiles_to_process)} remaining to process).")
+                print(
+                    f"Manifest loaded. Found {found_count} of "
+                    f"{len(target_filenames)} tiles "
+                    f"({len(tiles_to_process)} remaining to process)."
+                )
 
         except Exception as e:
             print(f"Error reading manifest: {e}")
@@ -607,7 +711,7 @@ def detect_mounds_versioned(
         print(f"Version: {config.get('version', 'unknown')}")
         print(f"Model: {model_name_cfg}")
         print(f"System instruction: {instruction_file}")
-        print(f"Examples loaded: {len([x for x in reference_content if isinstance(x, Image.Image)])}")
+        print(f"Examples loaded: {example_count}")
         print(f"Output directory: {version_out_dir}")
         print(f"Output file: {output_file}")
         print(f"Tiles to process: {len(tiles_to_process)}")
@@ -633,18 +737,22 @@ def detect_mounds_versioned(
             executor.submit(
                 process_single_tile,
                 tile,
-                model,
+                client,
+                model_name_cfg,
+                gen_config,
                 metadata_tracker,
                 results_tracker,
-                reference_content,
+                reference_parts,
                 base_wait,
                 max_retries,
                 config_version,
-                model_name_cfg
             ): tile.name for tile in tiles_to_process
         }
 
-        for future in tqdm(concurrent.futures.as_completed(futures), total=len(tiles_to_process)):
+        for future in tqdm(
+            concurrent.futures.as_completed(futures),
+            total=len(tiles_to_process),
+        ):
             tile_name = futures[future]
             try:
                 new_features = future.result()
@@ -654,7 +762,10 @@ def detect_mounds_versioned(
 
     # Final Save
     collection = geojson.FeatureCollection(features)
-    collection["crs"] = {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::32635"}}
+    collection["crs"] = {
+        "type": "name",
+        "properties": {"name": "urn:ogc:def:crs:EPSG::32635"},
+    }
     with open(output_file, "w") as f:
         geojson.dump(collection, f)
 
@@ -706,19 +817,41 @@ Examples:
         """,
     )
     parser.add_argument("--config", required=True, help="Path to JSON prompt config")
-    parser.add_argument("--manifest", required=False, help="Path to JSON manifest of target tiles")
-    parser.add_argument("--output", required=False, help="Custom output filename (without extension)")
-    parser.add_argument("--output-dir", required=False, help="Custom output directory (overrides versioned dir)")
-    parser.add_argument("--model", required=False, help="Override model name (e.g. gemini-1.5-flash)")
-    parser.add_argument("--temperature", type=float, required=False,
-                        help="Override temperature from config (0.0-2.0)")
-    parser.add_argument("--ordering", required=False,
-                        choices=["canonical-first", "canonical-last", "random"],
-                        help="Override example ordering (canonical-first, canonical-last, random)")
-    parser.add_argument("--ordering-seed", type=int, required=False,
-                        help="Random seed for reproducible ordering when using --ordering random")
-    parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers")
-    parser.add_argument("--dry-run", action="store_true", help="Validate config without making API calls")
+    parser.add_argument(
+        "--manifest", required=False, help="Path to JSON manifest of target tiles"
+    )
+    parser.add_argument(
+        "--output", required=False,
+        help="Custom output filename (without extension)",
+    )
+    parser.add_argument(
+        "--output-dir", required=False,
+        help="Custom output directory (overrides versioned dir)",
+    )
+    parser.add_argument(
+        "--model", required=False,
+        help="Override model name (e.g. gemini-3-flash)",
+    )
+    parser.add_argument(
+        "--temperature", type=float, required=False,
+        help="Override temperature from config (0.0-2.0)",
+    )
+    parser.add_argument(
+        "--ordering", required=False,
+        choices=["canonical-first", "canonical-last", "random"],
+        help="Override example ordering (canonical-first, canonical-last, random)",
+    )
+    parser.add_argument(
+        "--ordering-seed", type=int, required=False,
+        help="Random seed for reproducible ordering when using --ordering random",
+    )
+    parser.add_argument(
+        "--workers", type=int, default=1, help="Number of parallel workers"
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true",
+        help="Validate config without making API calls",
+    )
     parser.add_argument("--limit", type=int, help="Process only first N tiles")
     args = parser.parse_args()
 
