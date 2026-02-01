@@ -4,7 +4,7 @@
 
 **Associated preregistration**: `preregistration.md` v4.7
 
-**Last updated**: 2026-01-31
+**Last updated**: 2026-02-01
 
 ---
 
@@ -37,16 +37,16 @@
   - Run FP analysis on training tiles
   - Select examples meeting ≥3/5 occurrence threshold
   - Record in library composition files
-- [ ] Commit analysis code to repository
+- [x] Commit analysis code to repository (2026-01-31)
   - `scripts/run_study.py`
   - `scripts/lib_*.py` modules
   - Evaluation and metrics code
-- [ ] Submit to OSF Registries
-  - Upload `preregistration.md` and companion documents
-  - Set embargo if needed
-- [ ] Obtain timestamp confirmation
-  - Record OSF registration URL
-  - Record timestamp
+- [x] Submit to OSF Registries (2026-01-31)
+  - Uploaded `preregistration.md` and companion documents
+  - No embargo set
+- [x] Obtain timestamp confirmation (2026-01-31)
+  - OSF registration URL: <https://osf.io/tybgq/overview>
+  - Timestamp: 2026-01-31 23:54 UTC
 
 ---
 
@@ -56,10 +56,11 @@
 
 | Field | Value |
 |-------|-------|
-| OSF Registration URL | |
-| Registration timestamp | |
+| OSF Registration URL | <https://osf.io/tybgq/overview> |
+| OSF Project URL | <https://osf.io/h9x4g> |
+| Registration timestamp | 2026-01-31 23:54 UTC |
 | DOI (if assigned) | |
-| Embargo end date (if any) | |
+| Embargo end date (if any) | None |
 
 ---
 
@@ -85,7 +86,7 @@
 
 | Phase | Start Date | End Date | Notes |
 |-------|------------|----------|-------|
-| Phase 1: Library + Text | | | |
+| Phase 1: Library + Text | 2026-02-01 | In progress | Detection passes complete (F1=0.489 baseline); hard example selection pending |
 | Phase 2a: H1 M/E Level | | | |
 | Phase 2b: H7 Temperature | | | |
 | Phase 2c: H8 Library Composition | | | |

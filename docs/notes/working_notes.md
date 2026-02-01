@@ -1102,7 +1102,7 @@ The preregistration document (now at v4.4) has undergone substantial revision th
 
 **A notable aspect of this project**: The degree of front-loading was unusual. Before running the main study, the research involved: carefully creating and reviewing hypotheses, determining statistical approaches, writing all scripts, testing infrastructure, running calibration pilots, and conducting dry-run simulations. Throughout this process, the preregistration document served as the touchstone—the central reference point that all other work aligned to.
 
-**Current status**: At time of writing, the preregistration has not yet been submitted to OSF, but all revisions have been captured in git version control with explicit changelog entries. OSF submission is the next step before running the preregistered experiment.
+**Current status**: The preregistration was registered on OSF on 2026-01-31 ([registration](https://osf.io/tybgq/overview), [project](https://osf.io/h9x4g)). All revisions were captured in git version control with explicit changelog entries prior to registration. Phase 1 (Library Construction) detection passes were executed on 2026-02-01; hard example selection is in progress.
 
 **Implication**: Treat preregistration as a living document during the planning phase. Use version control with explicit changelog entries. Freeze the document only when registering at OSF, then report any post-registration deviations transparently.
 
