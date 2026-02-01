@@ -71,11 +71,19 @@ def validate_file(
     # 2. Load Predictions
     try:
         gdf_pred = gpd.read_file(pred_path)
-        # Check source_tile
         if not gdf_pred.empty:
             # Force CRS because coordinates are clearly UTM;
             # defaulting to WGS84 causes reprojection errors
             gdf_pred.set_crs(target_crs, allow_override=True, inplace=True)
+
+            # Normalise column name: merged GeoJSON uses 'source_tiles' (list),
+            # per-pass GeoJSON uses 'source_tile' (string). Downstream code
+            # expects 'source_tile'.
+            if 'source_tile' not in gdf_pred.columns and 'source_tiles' in gdf_pred.columns:
+                gdf_pred['source_tile'] = gdf_pred['source_tiles'].apply(
+                    lambda x: x[0] if hasattr(x, '__getitem__') and len(x) > 0
+                    else str(x)
+                )
 
             print(f"Loaded Pred: {len(gdf_pred)} candidates. Sample Source: {gdf_pred.iloc[0].get('source_tile', 'Missing')}")
             print(f"Ref Bounds: {gdf_ref.total_bounds}")
@@ -189,6 +197,12 @@ def validate_file(
     gdf_all = gpd.read_file(pred_path)  # Reload full
     if not gdf_all.empty:
         gdf_all.set_crs(target_crs, allow_override=True, inplace=True)
+        # Normalise source_tile column (merged format uses 'source_tiles')
+        if 'source_tile' not in gdf_all.columns and 'source_tiles' in gdf_all.columns:
+            gdf_all['source_tile'] = gdf_all['source_tiles'].apply(
+                lambda x: x[0] if hasattr(x, '__getitem__') and len(x) > 0
+                else str(x)
+            )
     if gdf_all.crs != gdf_ref.crs:
         gdf_all = gdf_all.to_crs(gdf_ref.crs)
     p_base, r_base, f1_base = calculate_f1_internal(gdf_all, gdf_ref, gdf_bounds)

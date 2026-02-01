@@ -58,8 +58,9 @@ def load_data(
         gdf_det = gpd.read_file(detection_file)
         gdf_bounds = gpd.read_file(bounds_file)
 
-        # Load references
-        ref_files = list((inputs_dir / "vectors").glob("reference_*.geojson"))
+        # Load references from inputs/vectors/references/
+        ref_dir = inputs_dir / "vectors" / "references"
+        ref_files = list(ref_dir.glob("reference_*.geojson"))
         ref_gdfs = []
         for rf in ref_files:
             gdf = gpd.read_file(rf)
@@ -67,7 +68,7 @@ def load_data(
             ref_gdfs.append(gdf)
 
         if not ref_gdfs:
-            logger.warning("No reference vectors found in %s/vectors/", inputs_dir)
+            logger.warning("No reference vectors found in %s", ref_dir)
             return None, None, None
 
         gdf_ref = pd.concat(ref_gdfs, ignore_index=True)

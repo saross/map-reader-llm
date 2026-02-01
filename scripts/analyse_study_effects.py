@@ -169,7 +169,8 @@ def load_reference_data(inputs_dir: Path = None) -> gpd.GeoDataFrame:
     if inputs_dir is None:
         inputs_dir = PROJECT_ROOT / "inputs"
 
-    ref_files = list((inputs_dir / "vectors").glob("reference_*.geojson"))
+    ref_dir = inputs_dir / "vectors" / "references"
+    ref_files = list(ref_dir.glob("reference_*.geojson"))
     ref_gdfs = []
     for rf in ref_files:
         gdf = gpd.read_file(rf)
@@ -177,7 +178,7 @@ def load_reference_data(inputs_dir: Path = None) -> gpd.GeoDataFrame:
         ref_gdfs.append(gdf)
 
     if not ref_gdfs:
-        raise FileNotFoundError(f"No reference vectors found in {inputs_dir}/vectors/")
+        raise FileNotFoundError(f"No reference vectors found in {ref_dir}")
 
     gdf_ref = pd.concat(ref_gdfs, ignore_index=True)
 
