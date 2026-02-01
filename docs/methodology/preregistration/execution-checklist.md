@@ -33,10 +33,10 @@
   - All Gemini configs updated to `thinking_level: minimal`
   - See preregistration.md §8.9 for full results
 
-- [ ] Document hard negative examples (for H5)
-  - Run FP analysis on training tiles
-  - Select examples meeting ≥3/5 occurrence threshold
-  - Record in library composition files
+- [x] Document hard negative examples (for H5) (2026-02-01)
+  - FP/FN analysis in `outputs/phase1-library/fp-fn-register.md`
+  - 4 hard positives + 4 hard negatives selected (Decision 4 in decisions-log)
+  - Recorded in library composition files and MANIFEST.md
 - [x] Commit analysis code to repository (2026-01-31)
   - `scripts/run_study.py`
   - `scripts/lib_*.py` modules

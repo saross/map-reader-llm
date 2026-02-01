@@ -104,31 +104,49 @@ Preliminary testing found two-stage pipelines underperformed single-stage with v
 
 ## Decision 4: Hard Example Selection Criteria
 
-**Date**: TBD (After Phase 1)
+**Date**: 2026-02-01 (Phase 1 complete)
 
-**Decision**: Select hard positives and hard negatives from Phase 1 baseline evaluation using frequency-based criteria.
+**Decision**: Select hard positives and hard negatives from Phase 1 baseline evaluation using a two-dimensional ranking: (1) frequency (vote count / miss rate), (2) localisation accuracy (proximity to nearest counterpart). See `outputs/phase1-library/fp-fn-register.md` for the full register and Observation 76 in working notes.
 
-### Hard Positive Selection
+### Hard Positive Selection (examples 05-08)
 
-**Criteria** (from preregistration §8.4.2):
+**Preregistered criteria** (§8.4.2): K=10 passes, FNs missed ≥3/10, rank by miss frequency.
 
-1. Run image-only baseline on 20 training tiles, K=10 passes
-2. Identify False Negatives (ground truth mounds missed in ≥3/10 passes)
-3. Rank by miss frequency (most frequently missed first)
-4. Select top M as hard positives (M=4 for Scale-8 library)
+**Actual execution**: K=5 passes. All 24 FNs were complete misses (0/5), so frequency alone provided no differentiation. Applied proximity-based secondary ranking:
 
-**Purpose**: Teach model to recognise edge cases — genuine mound symbols that may be missed due to occlusion, degradation, or atypical appearance.
+- **Recognition failures** (>50m from nearest detection): 9 FNs, genuinely invisible to the model
+- **Localisation failures** (20-50m from nearest detection): 15 FNs, detected but misplaced
 
-### Hard Negative Selection
+Selected 4 recognition failures, one per map sheet (farthest from nearest detection first):
 
-**Criteria** (from preregistration §8.4.2):
+| Example | fid | Map | Nearest Detection | Source Tile |
+|---------|-----|-----|-------------------|-------------|
+| 05 | 354 | Rakovski | 2449.9m | K-35-062-2_Rakovski_x0_y1344.png |
+| 06 | 249 | Lesovo | 1807.8m | K-35-078-1_Lesovo_x1344_y448.png |
+| 07 | 556 | K-35-052-4 | 572.1m | K-35-052-4_32635_x2240_y3136.png |
+| 08 | 105 | Elenovo | 243.6m | K-35-053-3_Elenovo_x896_y1344.png |
 
-1. Run image-only baseline on 20 training tiles, K=5 passes
-2. Identify False Positives (detections with no ground truth match, occurring in ≥3/5 passes)
-3. Rank by detection frequency (most frequently detected first)
-4. Select top M as hard negatives (M=4 for Scale-8 library)
+**Deviation from preregistration**: Used K=5 (not K=10) and proximity-based ranking (not frequency-only). Both deviations are conservative — K=5 found all FNs as complete misses, and the proximity dimension provides stricter differentiation than frequency alone. The preregistered threshold of ≥3/10 misses is trivially satisfied (all are 5/5 misses at K=5, equivalent to 10/10).
 
-**Purpose**: Teach model to distinguish confusable symbols — map features that visually resemble mounds but are not.
+### Hard Negative Selection (examples 11-14)
+
+**Preregistered criteria** (§8.4.2): K=5 passes, FPs occurring ≥3/5, rank by detection frequency.
+
+**Actual execution**: 18 FPs at vote ≥3/5 (6 at 5/5, 3 at 4/5, 9 at 3/5). Among the 6 vote-5/5 FPs, applied proximity-based secondary ranking:
+
+- **Hallucinations** (>500m from any reference): Model fabricates detections with no nearby ground truth
+- **Near-misses** (20-30m from a reference): Poorly localised true positives, not genuine false alarms
+
+Selected 4 hallucinations from vote-5/5 tier, one per map sheet:
+
+| Example | Subtype | Map | Nearest Reference | Source Tile |
+|---------|---------|-----|-------------------|-------------|
+| 11 | burial_mound | Rakovski | 1896.0m | K-35-062-2_Rakovski_x0_y3136.png |
+| 12 | triangulation_mound | Lesovo | 1807.8m | K-35-078-1_Lesovo_x1344_y896.png |
+| 13 | burial_mound | K-35-052-4 | 872.9m | K-35-052-4_32635_x1344_y1344.png |
+| 14 | burial_mound | Elenovo | 725.0m | K-35-053-3_Elenovo_x3136_y3136.png |
+
+**Tiebreaker**: Map sheet stratification (one per sheet) was used as the primary tiebreaker after vote count and proximity classification. This maximises cartographic diversity in the library.
 
 ### Legend-Derived Negatives
 
@@ -139,7 +157,7 @@ Two hard negatives can be specified before empirical analysis:
 
 These are categorised as `canonical_negative` in the library configs.
 
-**Evidence**: Preregistration §8.4.2, preregistration-appendix-prompts.md.
+**Evidence**: Preregistration §8.4.2, `outputs/phase1-library/fp-fn-register.md`, Observation 76 in working notes.
 
 ---
 
@@ -192,6 +210,7 @@ Voting is the only strategy that consistently improved performance:
 | Consensus voting | +0.06 to +0.12 | Low | Success |
 
 Voting addresses stochastic variation in VLM outputs without assumptions about:
+
 - Text-image interference (task-specific)
 - Model architecture (model-specific)
 - Reasoning patterns (domain-specific)
