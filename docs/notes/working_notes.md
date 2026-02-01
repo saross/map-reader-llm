@@ -1463,3 +1463,19 @@ This ordering means the post-hoc regression (`F1_pass ~ Σ βᵢ(exampleᵢ_pres
 **Map-level pattern**: Elenovo produces 53% of all FPs but zero hallucinations at vote ≥3 — its systematic errors are all near real features (dense mound fields where the model over-detects). Lesovo produces fewer FPs but 100% hallucinations at ≥3 votes (sparse reference areas). This suggests the model's failure mode varies with feature density, not just individual feature difficulty.
 
 **Tiebreaker for selection**: When multiple examples share the same frequency and proximity tier, map sheet stratification (one example per sheet) is preferred over random selection. This maximises cartographic diversity in the library — different sheets have different symbology, degradation patterns, and feature density. Random selection (with documented seed) serves as the secondary tiebreaker for within-sheet ties.
+
+## Observation 77: Cooperative Discovery of Boundary-Effect FN Inflation (2026-02-01)
+
+The discovery of boundary-effect false negatives in Session 6 illustrates a collaboration pattern worth documenting. The issue emerged through a chain of contributions where neither human nor AI alone would likely have found it:
+
+1. **AI flags an anomaly**: During hard example extraction, the AI reported that 3 of 4 selected FN reference points sat 1–15m outside the nearest calibration tile. It initially framed this as a coverage gap and moved on to extract crops from the full 90-tile grid.
+
+2. **Human's domain instinct prickles**: Shawn asked to visually inspect the tiles. On seeing no mound symbols at the indicated positions for examples 05–07, he asked the direct question: "isn't it simply the case that these mounds fell outside the boundary, so they are not *really* FNs, just boundary-effect noise?"
+
+3. **Joint reframing**: The realisation that the evaluation pipeline's `intersects(union_of_tiles)` scoping is too permissive — it includes references near tile edges that the model was never actually shown. These aren't detection failures; they're coverage artefacts.
+
+**What made this work**: The AI had the spatial data to compute distances and flag the anomaly, but initially rationalised it ("the mound is probably partially visible at the edge"). The human had the domain knowledge to know that a mound 3 pixels outside a tile boundary is not visible to the model and the methodological instinct to question whether the FN classification was valid. Neither contribution alone was sufficient — the AI's spatial analysis surfaced the data, and the human's visual inspection and methodological challenge reframed what the data meant.
+
+**Pattern**: This mirrors the Session 5 F1 debugging, where the human's calibration expectation (pilot F1 was 0.80–0.86) kept the bug hunt going when the AI might have accepted 0.337 as correct. In both cases, human domain knowledge served as a reality check on computationally valid but substantively wrong results. The difference is that in Session 5 the human knew the answer was wrong; in Session 6 the human identified *why* the answer was wrong through a mechanism (boundary-effect scoping) that the AI had the data to verify but hadn't thought to question.
+
+**Implication for automated pipelines**: This is a cautionary example for fully automated evaluation. The `intersects(union)` scoping is mathematically reasonable and would pass any unit test. The error is conceptual — a mismatch between the evaluation scope (what the pipeline counts as "in scope") and the detection scope (what the model actually sees). Catching this required visual inspection by a domain expert, not a code review or test.
