@@ -196,13 +196,12 @@ def run_merge(
     if not merge_script.exists():
         return False, f"merge script not found: {merge_script}"
 
+    # Omit --passes to merge all pass_XX subdirectories found in input-dir
     cmd = [
         sys.executable,
         str(merge_script),
         "--input-dir", str(output_dir),
         "--output", str(output_dir / "merged_detections.geojson"),
-        "--passes", str(passes),
-        "--tolerance", "20.0",
     ]
 
     if dry_run:
