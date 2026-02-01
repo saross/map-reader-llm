@@ -62,6 +62,18 @@ Executed Phase 1 Library Construction: 5 detection passes on 20 calibration tile
 
 **Interpretation**: The F1 of 0.489 at threshold 3 is expected for the minimal image-only baseline (canonical positives + null tiles only, no hard examples or text guidance). The pilot study that achieved F1 ~0.80-0.86 used richer prompt configurations. The systematic failures identified here (18 FPs, 28 FNs at threshold 3) are exactly what Phase 1 needs for hard example selection.
 
+#### Spatial Tolerance Sensitivity (Vote Threshold 3)
+
+| Tolerance | TP | FP | FN | Precision | Recall | F1 | ΔF1 from 20m |
+|-----------|----|----|----|----|--------|-----|------|
+| 10m | 10 | 30 | 40 | 0.250 | 0.200 | 0.222 | −0.267 |
+| **20m** | **22** | **18** | **28** | **0.550** | **0.440** | **0.489** | **—** |
+| 30m | 26 | 14 | 24 | 0.650 | 0.520 | 0.578 | +0.089 |
+| 40m | 30 | 10 | 20 | 0.750 | 0.600 | 0.667 | +0.178 |
+| 50m | 30 | 10 | 20 | 0.750 | 0.600 | 0.667 | +0.178 |
+
+**Key finding**: Loosening from 20m to 50m reclassifies 8 FPs as TPs and resolves 8 FNs, raising F1 from 0.489 to 0.667. The 40m and 50m rows are identical, confirming all localisation failures cluster within 40m. Of the 28 FNs at 20m tolerance, 8 (29%) are localisation failures rather than recognition failures — the model detected something nearby but placed it too imprecisely to match. See `fp-fn-register.md` and Observation 76 in working notes for the full two-dimensional ranking framework.
+
 ### Bugs Found and Fixed (E3-E5)
 
 Five distinct infrastructure bugs were exposed during execution, each individually minor but chaining together to produce misleading results:
