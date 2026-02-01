@@ -62,11 +62,24 @@ def validate_file(
     #load_data
     try:
         det_dummy, gdf_bounds, gdf_ref = load_data(template_det_path, bounds_path)
-        print(f"Loaded Ref: {len(gdf_ref)} features. Maps: {gdf_ref['Map'].unique()}")
-        print(f"Loaded Bounds: {len(gdf_bounds)} tiles. Sample Tile: {gdf_bounds.iloc[0]['tile_name'] if not gdf_bounds.empty else 'None'}")
     except Exception as e:
         print(f"Error loading ground truth: {e}")
         return
+
+    # Validate references loaded successfully (catches path bugs like E5a)
+    if gdf_ref is None:
+        print("FATAL: Failed to load ground truth references. Cannot evaluate.")
+        print("Check that inputs/vectors/references/ contains reference_*.geojson files.")
+        return
+    if len(gdf_ref) == 0:
+        print("FATAL: Ground truth references loaded but contain 0 features.")
+        return
+    if gdf_bounds is None or gdf_bounds.empty:
+        print("FATAL: Failed to load tile bounds. Cannot scope evaluation.")
+        return
+
+    print(f"Loaded Ref: {len(gdf_ref)} features. Maps: {gdf_ref['Map'].unique()}")
+    print(f"Loaded Bounds: {len(gdf_bounds)} tiles. Sample Tile: {gdf_bounds.iloc[0]['tile_name'] if not gdf_bounds.empty else 'None'}")
 
     # 2. Load Predictions
     try:

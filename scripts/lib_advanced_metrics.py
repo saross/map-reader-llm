@@ -60,6 +60,16 @@ def load_data(
 
         # Load references from inputs/vectors/references/
         ref_dir = inputs_dir / "vectors" / "references"
+
+        # Validate reference directory exists (catches wrong-path bugs like E5a)
+        if not ref_dir.is_dir():
+            logger.error(
+                "Reference directory does not exist: %s. "
+                "Expected reference GeoJSON files at inputs/vectors/references/.",
+                ref_dir,
+            )
+            return None, None, None
+
         ref_files = list(ref_dir.glob("reference_*.geojson"))
         ref_gdfs = []
         for rf in ref_files:
@@ -68,7 +78,17 @@ def load_data(
             ref_gdfs.append(gdf)
 
         if not ref_gdfs:
-            logger.warning("No reference vectors found in %s", ref_dir)
+            # List directory contents for debugging — makes silent failures loud
+            try:
+                contents = [f.name for f in ref_dir.iterdir()]
+            except OSError:
+                contents = ["<unreadable>"]
+            logger.error(
+                "No reference files matching 'reference_*.geojson' in %s. "
+                "Directory contains: %s",
+                ref_dir,
+                contents,
+            )
             return None, None, None
 
         gdf_ref = pd.concat(ref_gdfs, ignore_index=True)

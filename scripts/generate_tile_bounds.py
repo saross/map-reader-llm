@@ -173,6 +173,95 @@ def create_bounds_geojson(
     }
 
 
+def validate_bounds(
+    geojson_data: dict,
+    metadata: dict,
+    n_samples: int = 3,
+) -> bool:
+    """
+    Validate generated bounds against tile metadata.
+
+    Spot-checks tiles by verifying that polygon corners match the expected
+    values from metadata. Catches Y-axis inversions (E4) and other
+    metadata misinterpretation bugs.
+
+    The check verifies:
+    - Polygon minX == metadata[0] (origin X)
+    - Polygon minY == metadata[1] (origin Y, the BOTTOM edge)
+    - Polygon width and height == TILE_SIZE * pixel_size
+
+    Args:
+        geojson_data: Generated GeoJSON FeatureCollection.
+        metadata: Tile georeferencing metadata dict.
+        n_samples: Number of tiles to spot-check.
+
+    Returns:
+        True if all checks pass, False if any fail.
+    """
+    features = geojson_data.get("features", [])
+    if not features:
+        print("  Validation skipped: no features to check")
+        return True
+
+    checked = 0
+    failed = False
+
+    for feature in features[:n_samples]:
+        tile_name = feature["properties"]["tile_name"]
+        if tile_name not in metadata:
+            continue
+
+        meta = metadata[tile_name]
+        expected_min_x = meta[0]
+        expected_min_y = meta[1]  # This is minY (bottom edge), NOT maxY
+        pixel_size = meta[2]
+        expected_extent = TILE_SIZE * pixel_size
+
+        # Extract polygon bounds from generated feature
+        coords = feature["geometry"]["coordinates"][0]  # Outer ring
+        xs = [c[0] for c in coords]
+        ys = [c[1] for c in coords]
+        actual_min_x = min(xs)
+        actual_max_x = max(xs)
+        actual_min_y = min(ys)
+        actual_max_y = max(ys)
+
+        # Check origin matches metadata
+        tol = 0.001  # Sub-millimetre tolerance for floating point
+        if abs(actual_min_x - expected_min_x) > tol:
+            print(f"  FAIL: {tile_name} minX={actual_min_x}, expected {expected_min_x}")
+            failed = True
+        if abs(actual_min_y - expected_min_y) > tol:
+            print(
+                f"  FAIL: {tile_name} minY={actual_min_y}, expected {expected_min_y} "
+                f"(Y-axis inversion?)"
+            )
+            failed = True
+
+        # Check dimensions
+        actual_width = actual_max_x - actual_min_x
+        actual_height = actual_max_y - actual_min_y
+        if abs(actual_width - expected_extent) > tol:
+            print(f"  FAIL: {tile_name} width={actual_width}, expected {expected_extent}")
+            failed = True
+        if abs(actual_height - expected_extent) > tol:
+            print(f"  FAIL: {tile_name} height={actual_height}, expected {expected_extent}")
+            failed = True
+
+        checked += 1
+
+    if checked == 0:
+        print("  Validation skipped: no tiles matched metadata")
+        return True
+
+    if failed:
+        print(f"  Bounds validation FAILED ({checked} tiles checked)")
+        return False
+
+    print(f"  Bounds validation passed ({checked} tiles checked)")
+    return True
+
+
 def main():
     """Generate bounds GeoJSONs for calibration and holdout tile sets."""
     parser = argparse.ArgumentParser(
@@ -261,6 +350,9 @@ Output Files:
         json.dump(calibration_geojson, f, indent=2)
     print(f"  Saved: {calibration_output}")
     print(f"  Features: {len(calibration_geojson['features'])}")
+    if not validate_bounds(calibration_geojson, metadata):
+        print("ERROR: Calibration bounds validation failed. Check metadata interpretation.")
+        sys.exit(1)
 
     # Generate holdout bounds
     print("\nGenerating holdout bounds GeoJSON...")
@@ -272,6 +364,9 @@ Output Files:
         json.dump(holdout_geojson, f, indent=2)
     print(f"  Saved: {holdout_output}")
     print(f"  Features: {len(holdout_geojson['features'])}")
+    if not validate_bounds(holdout_geojson, metadata):
+        print("ERROR: Holdout bounds validation failed. Check metadata interpretation.")
+        sys.exit(1)
 
     print("\nDone!")
 
