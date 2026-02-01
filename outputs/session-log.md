@@ -148,4 +148,75 @@ Continuation of Session 5 after context compaction. Completed the end-of-session
 
 ---
 
+## Session 6 — 2026-02-01 (Failure analysis, hard example selection, and boundary-effect discovery)
+
+### Overview
+
+Completed Phase 1 failure analysis: built a comprehensive FP/FN register with a two-dimensional ranking framework (frequency × localisation accuracy), computed spatial tolerance sensitivity curves, selected hard examples, and extracted 512×512 context crops. During visual inspection of the hard positive crops, discovered that 3 of 4 selected FN reference points fall outside all calibration tiles — a boundary-effect artefact in the evaluation scoping, not genuine recognition failures. Hard negative selection (FPs) is confirmed good; hard positive selection needs revision next session after fixing the evaluation scoping.
+
+### Key Results
+
+#### Spatial Tolerance Sensitivity (Vote Threshold 3)
+
+| Tolerance | TP | FP | FN | Precision | Recall | F1 |
+|-----------|----|----|----|----|--------|-----|
+| 20m | 22 | 18 | 28 | 0.550 | 0.440 | 0.489 |
+| 40m | 30 | 10 | 20 | 0.750 | 0.600 | 0.667 |
+| 50m | 30 | 10 | 20 | 0.750 | 0.600 | 0.667 |
+
+At 5.01 m/px: 20m = 4 pixels, 40m = 8 pixels, 50m = 10 pixels. The 40m and 50m rows are identical, confirming all localisation failures cluster within 40m.
+
+#### Two-Dimensional Failure Ranking
+
+FNs split into recognition failures (9, >50m from any detection) and localisation failures (15, 20-50m). FPs classified as hallucinations (>500m from reference), moderate, marginal, or near-misses. 63% of FNs are localisation failures rather than recognition failures. See Observation 76.
+
+#### Hard Example Selection
+
+**Hard negatives (confirmed good)**: 4 vote-5/5 hallucinations, one per sheet:
+
+| Example | Subtype | Map | Nearest Ref. |
+|---------|---------|-----|-------------|
+| 11 | burial_mound | Rakovski | 1896.0m |
+| 12 | triangulation_mound | Lesovo | 1807.8m |
+| 13 | burial_mound | K-35-052-4 | 872.9m |
+| 14 | burial_mound | Elenovo | 725.0m |
+
+**Hard positives (3 of 4 need replacement)**: Visual inspection revealed no mound symbols at the reference coordinates for examples 05-07. These FNs are boundary-effect artefacts — reference points that passed the evaluation scope check but fell outside all calibration tiles shown to the model. Example 08 (fid 105, Elenovo) is confirmed with a visible mound at the bottom-right edge.
+
+### Boundary-Effect Issue (E7 — pending)
+
+The evaluation pipeline scopes references using `intersects(union_of_tile_polygons)` per map sheet. With only 5 scattered calibration tiles per sheet (out of 90), there are large gaps. Reference mounds near tile edges can pass the union intersection test while falling outside every individual tile. The model never sees these mounds, so counting them as FNs inflates the FN count and deflates F1.
+
+**Fix needed**: Scope references against individual tile polygons (containment), not the union. Recalculate F1 after excluding boundary-effect FNs.
+
+### Accomplishments
+
+1. **Built FP/FN register** (`outputs/phase1-library/fp-fn-register.md`) with two-dimensional ranking
+2. **Computed spatial tolerance sensitivity** — F1 rises from 0.489 (20m) to 0.667 (40m/50m)
+3. **Recorded Observation 76** on frequency × localisation ranking framework
+4. **Extracted 8 hard example crops** (4 HP, 4 HN) with neutral-naming symlinks
+5. **Updated Decision 4** in decisions-log with full selection rationale and provenance
+6. **Marked hard example checklist item complete** in execution-checklist
+7. **Verified library configs** — all 5 active configs (pure-positive-canon through scale-8) resolve correctly
+8. **Discovered boundary-effect FN inflation** during visual inspection of hard positive crops
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `bc7ace1` | `data(phase1)`: Add FP/FN register with two-dimensional ranking |
+| `64cf830` | `docs(notes)`: Add Observation 76 on frequency × localisation ranking |
+| `6a12b1e` | `docs(outputs)`: Add spatial tolerance sensitivity to Phase 1 results |
+| `12898e9` | `data(library)`: Add hard positive and hard negative examples |
+| `6119298` | `docs(preregistration)`: Record hard example selection in Decision 4 |
+
+### Pending Work
+
+- [ ] **E7: Fix evaluation reference scoping** — scope against individual tiles, not union; recalculate F1
+- [ ] **Replace hard positives 05-07** — visually confirm mound symbols before selection
+- [ ] **Text description updates**: Add hard example descriptions to instruction files
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+
+---
+
 *New session entries should be appended above this line.*
