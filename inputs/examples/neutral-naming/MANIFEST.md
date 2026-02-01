@@ -34,17 +34,19 @@ Legend-derived exemplar mound symbols from official Soviet cartographic standard
 Edge cases: genuine mound symbols that may be missed due to occlusion, degradation, or
 atypical appearance. Derived from False Negatives in Phase 1 baseline analysis.
 
-**Selection criteria** (from preregistration §8.4.2):
+**Selection criteria** (adapted from preregistration §8.4.2):
 
-- Missed in ≥3/10 baseline passes
-- Top M ranked by miss frequency
+- All 24 FNs were complete misses (0/5 passes detected them)
+- Ranked by two dimensions: (1) frequency, (2) distance to nearest detection
+- Selected recognition failures (>50m from any detection), one per map sheet
+- See `outputs/phase1-library/fp-fn-register.md` for full ranking
 
-| Neutral Name | Actual File | Category | Provenance |
-|--------------|-------------|----------|------------|
-| example_05.png | *TBD after Phase 1* | hard_positive | Training tile FN analysis |
-| example_06.png | *TBD after Phase 1* | hard_positive | Training tile FN analysis |
-| example_07.png | *TBD after Phase 1* | hard_positive | Training tile FN analysis |
-| example_08.png | *TBD after Phase 1* | hard_positive | Training tile FN analysis |
+| Neutral Name | Actual File | Category | Source Tile | fid | Map | Nearest Det. |
+|--------------|-------------|----------|-------------|-----|-----|-------------|
+| example_05.png | hard-positive/example_05_rakovski.png | hard_positive | K-35-062-2_Rakovski_x0_y1344.png | 354 | Rakovski | 2449.9m |
+| example_06.png | hard-positive/example_06_lesovo.png | hard_positive | K-35-078-1_Lesovo_x1344_y448.png | 249 | Lesovo | 1807.8m |
+| example_07.png | hard-positive/example_07_k-35-052-4.png | hard_positive | K-35-052-4_32635_x2240_y3136.png | 556 | K-35-052-4 | 572.1m |
+| example_08.png | hard-positive/example_08_elenovo.png | hard_positive | K-35-053-3_Elenovo_x896_y1344.png | 105 | Elenovo | 243.6m |
 
 ---
 
@@ -65,17 +67,19 @@ survey markers (triangulation point, bench mark) without an associated mound.
 Confusable symbols identified from False Positives in Phase 1 analysis. These are map
 features that the model mistakenly identifies as mounds.
 
-**Selection criteria** (from preregistration §8.4.2):
+**Selection criteria** (adapted from preregistration §8.4.2):
 
-- Detected as mound in ≥3/5 baseline passes
-- Top M ranked by false detection frequency
+- Vote 5/5 (detected in all passes) — most systematic false alarms
+- Ranked by two dimensions: (1) vote count, (2) distance to nearest reference
+- Selected hallucinations (>500m from any ground truth reference), one per map sheet
+- See `outputs/phase1-library/fp-fn-register.md` for full ranking
 
-| Neutral Name | Actual File | Category | Provenance |
-|--------------|-------------|----------|------------|
-| example_11.png | *TBD after Phase 1* | hard_negative | Training tile FP analysis |
-| example_12.png | *TBD after Phase 1* | hard_negative | Training tile FP analysis |
-| example_13.png | *TBD after Phase 1* | hard_negative | Training tile FP analysis |
-| example_14.png | *TBD after Phase 1* | hard_negative | Training tile FP analysis |
+| Neutral Name | Actual File | Category | Source Tile | Subtype | Map | Nearest Ref. |
+|--------------|-------------|----------|-------------|---------|-----|-------------|
+| example_11.png | hard-negative/example_11_rakovski.png | hard_negative | K-35-062-2_Rakovski_x0_y3136.png | burial_mound | Rakovski | 1896.0m |
+| example_12.png | hard-negative/example_12_lesovo.png | hard_negative | K-35-078-1_Lesovo_x1344_y896.png | triangulation_mound | Lesovo | 1807.8m |
+| example_13.png | hard-negative/example_13_k-35-052-4.png | hard_negative | K-35-052-4_32635_x1344_y1344.png | burial_mound | K-35-052-4 | 872.9m |
+| example_14.png | hard-negative/example_14_elenovo.png | hard_negative | K-35-053-3_Elenovo_x3136_y3136.png | burial_mound | Elenovo | 725.0m |
 
 ---
 
@@ -123,12 +127,12 @@ H8 tests library composition effects by varying the number of hard examples. See
 | Examples | Status | Notes |
 |----------|--------|-------|
 | 01-04 | Created | Canonical positives from legend |
-| 05-08 | Pending | Awaiting Phase 1 FN analysis |
+| 05-08 | Created (2026-02-01) | Hard positives from Phase 1 FN analysis — recognition failures, one per sheet |
 | 09-10 | Created | Canonical negatives from legend |
-| 11-14 | Pending | Awaiting Phase 1 FP analysis |
+| 11-14 | Created (2026-02-01) | Hard negatives from Phase 1 FP analysis — vote 5/5 hallucinations, one per sheet |
 | 15-17 | Created | Null tiles selected |
 
-**Last updated**: 2026-01-20 (symlinks corrected to match documented scheme)
+**Last updated**: 2026-02-01 (hard examples populated from Phase 1 analysis)
 
 ---
 
