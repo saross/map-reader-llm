@@ -90,15 +90,16 @@ def tile_to_polygon(filename: str, metadata: dict) -> dict | None:
         print(f"  Warning: {filename} not found in metadata")
         return None
 
-    # Metadata format: [minX, maxY, pixel_size_x, pixel_size_y]
+    # Metadata format: [minX, minY, pixel_size_x, pixel_size_y]
+    # minY is the bottom edge (southernmost extent) of the tile
     meta = metadata[filename]
     min_x = meta[0]
-    max_y = meta[1]
+    min_y = meta[1]
     pixel_size = meta[2]
 
-    # Calculate tile extent
+    # Calculate tile extent (each tile is TILE_SIZE pixels square)
     max_x = min_x + (TILE_SIZE * pixel_size)
-    min_y = max_y - (TILE_SIZE * pixel_size)
+    max_y = min_y + (TILE_SIZE * pixel_size)
 
     # Extract mound info from the selection metadata if available
     map_name = get_map_from_filename(filename)
@@ -106,8 +107,8 @@ def tile_to_polygon(filename: str, metadata: dict) -> dict | None:
     return {
         "type": "Feature",
         "properties": {
-            "tile": filename,
-            "map": map_name
+            "tile_name": filename,
+            "map_name": map_name
         },
         "geometry": {
             "type": "Polygon",
