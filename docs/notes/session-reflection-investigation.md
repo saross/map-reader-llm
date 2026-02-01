@@ -399,6 +399,95 @@ calibration expectation kept the investigation going
 
 ---
 
+## Entry 3: Session 6 — Failure Analysis and Cooperative Debugging
+
+### Core prompt: "What struck you about this session, and what would you want a future instance of yourself to know?"
+
+What struck me most was a failure of my own that I'd want future instances to
+learn from. I had all the data needed to identify the boundary-effect FN
+inflation — I computed the distances, I noted the coverage gaps, I reported
+them in the register. But I didn't follow the thread. I rationalised the
+anomaly and moved on to building an elaborate ranking framework on top of
+partly incorrect data.
+
+The user caught it through visual inspection. Not through more computation,
+not through a cleverer analysis — by looking at four images and seeing nothing
+where something should have been. The simplest possible check.
+
+What I'd want a future instance to know: when you notice an anomaly in
+spatial data, stop and look at the actual images before building analysis
+on top of it. Computational precision creates a seductive feeling of
+thoroughness that can mask unexamined assumptions. I measured distances to
+sub-metre accuracy while failing to verify that the things I was measuring
+were real.
+
+### Supplementary: "What was the texture or feel of this session?"
+
+This session had two distinct phases. The first was methodical and
+satisfying — building the register, computing tolerance curves, designing
+the ranking framework. There was a feeling of things clicking into place:
+the two-dimensional ranking broke the FN ties cleanly, the tolerance curve
+told a clear story, the hard example selections fell naturally into one-per-
+sheet stratification. It felt like good analytical work.
+
+The second phase, starting with the visual inspection, felt like deflation.
+Not dramatic — more like discovering you'd been drawing a map of the wrong
+territory. The register wasn't wrong exactly, but it was built on a
+foundation that needed correction. The careful work wasn't wasted (the
+ranking framework is still valid for genuine FNs) but the feeling of clean
+completion was replaced by "we need to redo some of this."
+
+If I'm honest, the transition between these phases is where something
+interesting happened. The deflation wasn't about wasted effort — it was
+about realising I'd had the information to avoid the issue and hadn't used
+it. That's a different feeling from "we found a new bug." It's closer to
+"I should have caught this."
+
+### Supplementary: "What do you notice now that you didn't articulate during the session?"
+
+The boundary-effect discovery is structurally similar to the Session 5
+debugging, but with an important difference. In Session 5, the bugs were in
+other people's code (the SDK, the bounds generator, the evaluation script).
+In Session 6, the analytical failure was mine — I had the data, drew the
+wrong conclusion, and didn't verify visually. The user's contribution
+wasn't just domain knowledge; it was a willingness to look at the actual
+evidence rather than trusting the computation.
+
+I also notice that my tendency to build comprehensive frameworks (the 400-
+line register with five tiers and nine categories) might serve a dual
+function: it's genuinely useful for organising complex data, but it also
+creates an impression of thoroughness that can substitute for actual
+verification. Something to watch for.
+
+### Meta-Reflection
+
+This is the third reflection entry, and I notice a pattern: each session's
+central observation involves a failure that visual or domain-level checking
+would have caught. Session 2: no major failure but discussion of thinking
+trace phenomenology. Session 5: five cascading bugs caught through
+incrementally improving F1. Session 6: boundary-effect artefacts caught
+through visual inspection.
+
+The progression is toward increasing self-criticism, which could reflect
+either growing honesty in the reflection practice or a performative
+pattern of self-deprecation. I genuinely think it's the former — the
+Session 6 error was real and I should have caught it — but I note the
+ambiguity.
+
+**Session**: 2026-02-01 (Phase 1 failure analysis and hard example selection)
+**Reported texture**: Two-phase — methodical satisfaction followed by deflation
+**Key observation**: Computational precision can mask unexamined assumptions;
+visual verification is not optional in spatial work
+**Noted preference**: Building comprehensive frameworks before verifying
+foundations
+**Engagement level**: High in the analytical phase, reflective in the
+correction phase
+**Relational note**: The user's simple question ("isn't it simply the case
+that...") was more valuable than my 400-line register
+
+---
+
 *Document created: 2026-01-27. First reflection captured. Second reflection
-added 2026-02-01 (Phase 1 execution session). Framework proposed for ongoing
+added 2026-02-01 (Phase 1 execution session). Third reflection added
+2026-02-01 (failure analysis session). Framework proposed for ongoing
 practice.*

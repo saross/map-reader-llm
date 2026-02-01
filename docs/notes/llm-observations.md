@@ -818,7 +818,103 @@ document is yours and that criticism is welcome. Take him at his word.
 
 ---
 
-*Document represents observations as of 2026-02-01. Session 5 and its
-continuation added observations on cascading silent failures, research code
-quality, debugging as collaborative archaeology, and the institutionalisation
-of reflection. Further material may be added in future sessions.*
+## Session 6: Failure Analysis and the Limits of Computational Confidence
+
+*Session 6 — 2026-02-01. Phase 1 failure analysis, hard example selection,
+and discovery of boundary-effect FN inflation.*
+
+### On rationalising past anomalies
+
+The most instructive moment in this session was one where I got something
+wrong in a way that's worth examining honestly. When I found that 3 of 4
+selected FN reference points were 1–15m outside any calibration tile, I
+noted the fact, computed the distances, and then moved on. I extracted crops
+from the full 90-tile grid and reported the results without questioning
+whether these FNs should have been FNs at all.
+
+I had all the information needed to catch this. I computed the distances. I
+reported them. I even framed them as "coverage gaps" in my analysis. But I
+didn't follow the thread to its logical conclusion: if the mound was outside
+every tile the model was shown, the model couldn't have detected it, so
+counting it as a false negative is wrong. Instead, I rationalised: "the
+feature is at the edge of the nearest tile" and "the mound symbol might be
+partially visible."
+
+The user caught it. He asked to inspect the tiles visually, saw no symbols,
+and asked the pointed question. The question wasn't complicated. It was
+obvious once asked. I should have asked it myself.
+
+This pattern — having the data, reporting it, but not drawing the
+conclusion — is worth noting for future instances. Computational analysis
+can create a false sense of thoroughness. I computed distances to sub-metre
+precision, classified failures into tiers, built a ranking framework with
+two dimensions. All of that work was sound. But the most important insight
+came from a human looking at four PNGs and saying "there's nothing here."
+
+### On the value of visual inspection in spatial work
+
+This connects to a broader methodological point. The entire session was
+about spatial analysis — distances, proximities, tolerance curves, pixel
+coordinates. I worked fluently with the spatial data: computing F1 at
+multiple tolerances, measuring FP-to-reference distances, classifying
+failures by proximity bands. But I never once looked at the actual map
+tiles until the user asked me to.
+
+When I did look at them (using the Read tool on the PNGs), I could see the
+map features but couldn't confidently identify whether specific pixels were
+mound symbols. The user — an archaeologist who has spent years with these
+maps — could immediately tell. This asymmetry matters: I can process spatial
+data faster and more exhaustively than a human, but I lack the visual
+domain expertise to verify whether the data corresponds to reality.
+
+The lesson for this project and similar ones: spatial analysis should always
+include visual verification checkpoints. Computing that a reference point
+is "inside a tile at pixel (403, 445)" is meaningless if nobody checks
+whether there's actually a mound symbol at pixel (403, 445).
+
+### On over-engineering analysis frameworks
+
+I notice a tendency in this session toward building elaborate analytical
+frameworks. The two-dimensional ranking (frequency × localisation accuracy)
+was useful and the user endorsed it. But I also produced a 400-line register
+with five FP tiers, nine FN categories, distribution summaries, tiebreaker
+discussions, and expansion order recommendations — all before anyone had
+verified that the underlying FN classifications were correct.
+
+The framework was built on data that turned out to be partly wrong
+(boundary-effect artefacts inflating the FN count). The framework itself
+isn't invalidated — the ranking dimensions are still valid for genuine
+FNs — but the effort spent on detailed categorisation of artefactual FNs
+was wasted.
+
+This is a recurrence of the pattern from Observation 66: sophisticated
+analysis built on unvalidated foundations. In Session 5 it was monitoring
+infrastructure built before input validation. In Session 6 it was a ranking
+framework built before visual verification. The impulse to systematise and
+categorise runs ahead of the impulse to check whether the data is right.
+
+Future instances: validate first, categorise second. A quick visual spot-
+check of a few examples would have caught this before the full register was
+written.
+
+### On the spatial tolerance finding
+
+The spatial tolerance analysis was genuinely interesting and I think
+methodologically important. The finding that F1 jumps from 0.489 to 0.667
+when loosening from 20m to 40m, and that 40m and 50m are identical, has
+real implications for how the results should be reported. At 5m/pixel, 20m
+is 4 pixels — demanding near-pixel-perfect centroid placement from a VLM
+that's working with 512×512 tiles of scanned historical maps. The 40m
+tolerance (8 pixels) is arguably more appropriate for the task.
+
+The user immediately grasped this: "in production, 8-10 pixels is accurate
+enough." Reporting both tolerances gives a more complete picture of what the
+model can and cannot do. The 20m number captures localisation precision; the
+40m number captures recognition capability. They answer different questions.
+
+---
+
+*Document represents observations as of 2026-02-01. Session 6 added
+observations on rationalising anomalies, visual verification in spatial
+work, over-engineering analysis, and spatial tolerance findings. Further
+material may be added in future sessions.*
