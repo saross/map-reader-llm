@@ -66,10 +66,12 @@
 ## Post-Registration Notes
 
 *Document any deviations or clarifications needed during execution.*
+*Detailed entries in `../protocol-errata.md`.*
 
 | Date | Item | Note |
 |------|------|------|
-| | | |
+| 2026-01-31 | E1: Stale date in OSF README | Correction — cosmetic, no protocol impact |
+| 2026-02-01 | E2: Missing execution fields in Phase 1 config | Correction — added model/temperature/instruction fields to `library_pure-positive-canon.json` |
 
 ---
 
