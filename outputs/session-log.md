@@ -101,4 +101,39 @@ Five distinct infrastructure bugs were exposed during execution, each individual
 
 ---
 
+## Session 5b — 2026-02-01 (Reflection, contract validation, and protocol)
+
+### Overview
+
+Continuation of Session 5 after context compaction. Completed the end-of-session reflection that Session 5 ran out of context to finish, then implemented pipeline contract validation to prevent recurrence of the E3-E5 bugs before Phase 2. Codified the end-of-session reflection protocol in CLAUDE.md.
+
+### Accomplishments
+
+1. **Completed Session 5 reflections** — added observations to `llm-observations.md` (Session 5 section with 6 observations), `session-reflection-investigation.md` (second entry), and `abductive-reasoning-investigation.md` (debugging cycles as new abductive reasoning data)
+2. **Implemented pipeline contract validation (E6)** — three categories of hardening:
+   - Reference loading assertion in `lib_advanced_metrics.py` and `6_accuracy_report.py`
+   - Bounds metadata validation in `generate_tile_bounds.py`
+   - 7 new integration tests in `test_integration_pipeline_contracts.py`
+3. **Updated protocol errata** — E6 entry documenting the contract validation additions
+4. **Codified end-of-session protocol** — added reflection protocol to project CLAUDE.md pointing at the four reflection/observation documents
+
+### Tests
+
+| Suite | Result |
+|-------|--------|
+| Full test suite | 267 passed (260 existing + 7 new) |
+| New contract tests | 7/7 passed in 0.17s |
+| Regressions | None |
+
+### Pending Work
+
+- [ ] **Failure analysis**: Review the 18 FPs and 28 FNs to select hard examples for the library
+- [ ] **Hard example crops**: Extract 512x512 context crops using `analyse_fp_crops.py`
+- [ ] **Text description updates**: Add hard example descriptions to instruction files (`detect_brief-text.md`, `detect_verbose-text.md`)
+- [ ] **Config updates**: Add hard example paths to Scale-8+ library configs
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses the deprecated `google-generativeai` SDK
+- [ ] **Upload to OSF**: Library construction results should be uploaded before holdout evaluation
+
+---
+
 *New session entries should be appended above this line.*
