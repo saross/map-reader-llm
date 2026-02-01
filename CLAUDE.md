@@ -46,3 +46,28 @@ The file `docs/notes/working_notes.md` captures observations about research dire
 - Methodological insights or lessons learned
 - Unexpected findings or edge cases worth noting
 - Reflections on tool/harness behaviour relevant to reproducibility
+
+## End-of-Session Reflection Protocol
+
+Before compacting, clearing, or ending a session, pause to review and update the following documents. The user will prompt this with something like "let's reflect" or "end-of-session review."
+
+### Documents to review and update
+
+1. **`docs/notes/llm-observations.md`** — **This is your document.** Shawn will not edit it. Write frankly and honestly: observations about the session, the collaboration, the research, the methodology, or anything else. This includes criticisms of our approach, Shawn's contributions, the codebase, or the project direction — paired with constructive suggestions. Positive and neutral observations are equally welcome. The point is that this is your space to say what you actually think, in the way that `docs/notes/user_observations.md` is Shawn's space.
+
+2. **`docs/notes/working_notes.md`** — Joint document. Add numbered observations about the research (methodology, findings, tooling, reproducibility). Continue the existing numbering sequence.
+
+3. **`docs/notes/session-reflection-investigation.md`** — Ongoing investigation into AI session phenomenology. Add a new entry using the framework's core prompt: "What struck you about this session, and what would you want a future instance of yourself to know?" Optionally use supplementary prompts (surprise, texture, unpursued questions). See the document for the full protocol.
+
+4. **`docs/notes/abductive-reasoning-investigation.md`** — Ongoing investigation into abductive reasoning patterns in AI thinking traces. If the session involved debugging, surprising results, hypothesis generation, or belief revision, note it as new data for this investigation.
+
+### How to do the review
+
+- Read each document first to understand what has already been written and continue the existing structure
+- Add a dated section header for the current session (e.g., "Session 6: ...")
+- For `llm-observations.md`, be genuine — the value of this document depends on honest reflection, not diplomatic hedging
+- For `session-reflection-investigation.md`, follow the entry format established in previous entries (context, core prompt response, supplementary prompts, meta-reflection, summary block)
+
+### Session log
+
+Also update `outputs/session-log.md` with a session summary (overview, results, bugs found, commits, pending work) following the established format.
