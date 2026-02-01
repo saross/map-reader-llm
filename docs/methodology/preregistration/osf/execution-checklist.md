@@ -72,6 +72,9 @@
 |------|------|------|
 | 2026-01-31 | E1: Stale date in OSF README | Correction — cosmetic, no protocol impact |
 | 2026-02-01 | E2: Missing execution fields in Phase 1 config | Correction — added model/temperature/instruction fields to `library_pure-positive-canon.json` |
+| 2026-02-01 | E3: SDK migration for ThinkingConfig | Correction — deprecated SDK didn't support ThinkingConfig; migrated to google-genai SDK |
+| 2026-02-01 | E4: Tile bounds Y-axis inversion | Correction — bounds generation misinterpreted metadata, shifted bounds ~2565m south |
+| 2026-02-01 | E5: Evaluation pipeline reference path bugs | Correction — wrong reference directory, column name mismatch in merged GeoJSON |
 
 ---
 
