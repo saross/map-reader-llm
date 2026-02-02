@@ -1,0 +1,250 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "abe6f808-0b43-429a-af0a-69647470071f",
+    "started_at": "2026-02-01T11:43:39.971Z",
+    "ended_at": "2026-02-02T02:12:49.261Z",
+    "duration_minutes": 869
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 50,
+    "total_tokens": 14915,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "da3d0331-2956-4991-a7f0-95e6b85e01e5",
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": "Updated Decision 4 with revised hard positive selection and crop extraction method"
+      },
+      {
+        "path": "docs/methodology/preregistration/protocol-errata.md",
+        "type": "document",
+        "description": "Added E7 (boundary-effect scoping) and E8 (crop extraction from GeoTIFFs)"
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": "Session 7 entry on boundary-effect debugging"
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": "Session 7 observations"
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": "Session 7 reflection entry"
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": "Observations 78-80 (crop size, division of labour, crop extraction)"
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": "Updated provenance for replaced hard positives"
+      },
+      {
+        "path": "outputs/phase1-library/fp-fn-register.md",
+        "type": "document",
+        "description": "Updated to reflect revised hard positive selection"
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": "Added Session 7 entry"
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": "Fixed validate_file() to use per-tile scoping (E7)"
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": "Added scope_references_to_tiles() helper, fixed calculate_f1_internal() and error_taxonomy() (E7)"
+      },
+      {
+        "path": "tests/test_integration_pipeline_contracts.py",
+        "type": "code",
+        "description": "Added 7 TestReferenceScoping boundary-effect tests"
+      }
+    ],
+    "referenced": [
+      {
+        "path": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "type": "image",
+        "description": "Replaced hard positive: fid 399, recognition failure 5/5 (Rakovski)"
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_06_elenovo.png",
+        "type": "image",
+        "description": "Replaced hard positive: fid 99, recognition failure 4/5 (Elenovo)"
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_07_rakovski.png",
+        "type": "image",
+        "description": "Replaced hard positive: fid 15, recognition failure 4/5 (Rakovski)"
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_08_elenovo.png",
+        "type": "image",
+        "description": "Original hard positive: fid 105, visible mound at bottom-right edge (Elenovo)"
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 195,
+    "human_messages": 195,
+    "assistant_messages": 303,
+    "thinking_blocks": 50,
+    "tool_calls": {
+      "total": 164,
+      "by_type": {
+        "Read": 54,
+        "Task": 16,
+        "Grep": 7,
+        "Write": 3,
+        "ExitPlanMode": 1,
+        "TaskCreate": 9,
+        "TaskUpdate": 22,
+        "Edit": 35,
+        "Bash": 12,
+        "TaskOutput": 1,
+        "AskUserQuestion": 2,
+        "Glob": 2
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 968606,
+      "by_type": {
+        "Read": {
+          "count": 54,
+          "bytes": 829350
+        },
+        "Task": {
+          "count": 16,
+          "bytes": 81023
+        },
+        "Grep": {
+          "count": 7,
+          "bytes": 7190
+        },
+        "Write": {
+          "count": 3,
+          "bytes": 385
+        },
+        "ExitPlanMode": {
+          "count": 1,
+          "bytes": 7278
+        },
+        "TaskCreate": {
+          "count": 9,
+          "bytes": 642
+        },
+        "TaskUpdate": {
+          "count": 22,
+          "bytes": 502
+        },
+        "Edit": {
+          "count": 35,
+          "bytes": 3747
+        },
+        "Bash": {
+          "count": 12,
+          "bytes": 7349
+        },
+        "TaskOutput": {
+          "count": 1,
+          "bytes": 29904
+        },
+        "AskUserQuestion": {
+          "count": 2,
+          "bytes": 886
+        },
+        "Glob": {
+          "count": 2,
+          "bytes": 350
+        }
+      },
+      "largest_single_output_bytes": 74538
+    }
+  },
+  "auto_generated": {
+    "title": "Boundary-effect scoping fix and hard positive replacement",
+    "purpose": "Fixed the boundary-effect evaluation scoping bug (E7) — replaced union_all() with per-tile gpd.sjoin() at three sites in the evaluation pipeline, added 7 integration tests, and documented in protocol errata. Replaced three out-of-scope hard positive examples (fids 354, 249, 556) with genuine recognition failures (fids 399, 99, 15), prioritising recognition failures over localisation failures. Determined 128x128 crop size extracted from full map GeoTIFFs centred on target symbols (errata E8). Established documentation heuristic for decisions-log vs errata vs working-notes vs session-log.",
+    "tags": ["boundary-effect", "evaluation-scoping", "hard-examples", "crop-size", "geotiff", "bug-fix", "e7", "e8", "documentation-heuristics", "recognition-failures", "hard-positive-replacement"],
+    "three_ps": {
+      "prompt_summary": "Fix boundary-effect evaluation scoping (E7), replace out-of-scope hard positive examples with genuine recognition failures, determine crop extraction method and size for hard examples, and establish documentation conventions.",
+      "process_summary": "Extracted scope_references_to_tiles() helper using gpd.sjoin() replacing union_all() at three sites (calculate_f1_internal, error_taxonomy, validate_file); added 7 boundary-effect tests (274 total); confirmed Phase 1 metrics unchanged (non-adjacent tiles); replaced hard positives 05-07 with fids 399, 99, 15 (recognition failures); established 5px edge clearance rule; determined 128x128 crops from GeoTIFFs centred on target (option c); documented E7 and E8 in errata; recorded Observations 78-80.",
+      "provenance_summary": "Session 7 in the session log. Direct continuation of the boundary-effect discovery in Session 6. Crop size decision informed by external research (Opus web app query on VLM minimum input sizes). Human-AI cooperation: Shawn visually inspected tiles to confirm symbol presence/absence, CC performed spatial analysis and code changes. Changes not yet committed at session end."
+    }
+  },
+  "three_ps": {
+    "prompt_summary": "Fix boundary-effect evaluation scoping (E7), replace out-of-scope hard positive examples with genuine recognition failures, determine crop extraction method and size for hard examples, and establish documentation conventions.",
+    "process_summary": "Extracted scope_references_to_tiles() helper using gpd.sjoin() replacing union_all() at three sites (calculate_f1_internal, error_taxonomy, validate_file); added 7 boundary-effect tests (274 total); confirmed Phase 1 metrics unchanged (non-adjacent tiles); replaced hard positives 05-07 with fids 399, 99, 15 (recognition failures); established 5px edge clearance rule; determined 128x128 crops from GeoTIFFs centred on target (option c); documented E7 and E8 in errata; recorded Observations 78-80.",
+    "provenance_summary": "Session 7 in the session log. Direct continuation of the boundary-effect discovery in Session 6. Crop size decision informed by external research (Opus web app query on VLM minimum input sizes). Human-AI cooperation: Shawn visually inspected tiles to confirm symbol presence/absence, CC performed spatial analysis and code changes. Changes not yet committed at session end."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "8d08bbf6ab403422de300a7a473369856c1df7d5e24a4020b5998d30f8395215",
+    "jsonl_bytes": 7107193,
+    "archived_at": "2026-02-02T13:14:55.285444",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 1932601,
+    "jsonl_bytes_uncompressed": 7107193,
+    "jsonl_sha256_uncompressed": "29529f057795a3c3a000493da238cccebdef753acd327b3cf8c746c9ae7f2929"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "abe6f808-0b43-429a-af0a-69647470071f"
+    ],
+    "detection_notes": [
+      "Found session ID reference: abe6f808-0b43-429a-af0a-69647470071f",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

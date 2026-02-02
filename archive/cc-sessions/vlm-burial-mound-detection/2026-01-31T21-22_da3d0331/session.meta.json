@@ -1,0 +1,481 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "da3d0331-2956-4991-a7f0-95e6b85e01e5",
+    "started_at": "2026-01-31T21:22:43.624Z",
+    "ended_at": "2026-02-01T11:37:10.637Z",
+    "duration_minutes": 854
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 182,
+    "total_tokens": 41913,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": "f5e8cd4f-019f-49b2-af94-05b011b8ef44",
+    "continuedBy": "abe6f808-0b43-429a-af0a-69647470071f",
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "docs/methodology/preregistration/protocol-errata.md",
+        "type": "document",
+        "description": "Protocol errata tracking document (E1-E6)"
+      },
+      {
+        "path": "outputs/phase1-library/fp-fn-register.md",
+        "type": "document",
+        "description": "FP/FN register with two-dimensional ranking (frequency x localisation)"
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": "Session log for execution audit trail"
+      },
+      {
+        "path": "scripts/4_detect_mounds_batch.py",
+        "type": "code",
+        "description": "Migrated from deprecated google-generativeai to google-genai SDK"
+      },
+      {
+        "path": "tests/test_integration_pipeline_contracts.py",
+        "type": "code",
+        "description": "7 integration tests for pipeline data contracts (E6)"
+      }
+    ],
+    "modified": [
+      {
+        "path": ".markdownlint.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_pure-positive-canon.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "scripts/5_verify_crops.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/6_accuracy_report.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/analyse_study_effects.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/generate_tile_bounds.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_advanced_metrics.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_phase1.py",
+        "type": "code",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "archive/pilot-thinking/scripts/run_thinking_pilot_detection.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "config.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/inductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/planning/future-work.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x2240_y3136.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-053-3_Elenovo/K-35-053-3_Elenovo_x896_y1344.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-062-2_Rakovski/K-35-062-2_Rakovski_x0_y1344.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-062-2_Rakovski/metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-078-1_Lesovo/K-35-078-1_Lesovo_x1344_y448.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/calibration_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/tile_selection_metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/checkpoint.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/merged_detections.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/merged_detections_fn.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/merged_detections_fp.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/pass_01/detections-library_pure-positive-canon-3-flash-2026-02-01.geojson",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/pass_01/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/test/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/detect_image-only.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_plus-hp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-4.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/verify_brief.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/lib_llm_metadata.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/merge_passes.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/preflight_check.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "scripts/run_study.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "studies/phase1-library.yaml",
+        "type": "config",
+        "description": ""
+      },
+      {
+        "path": "tests/conftest.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "tests/test_integration_regression.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 575,
+    "human_messages": 575,
+    "assistant_messages": 987,
+    "thinking_blocks": 182,
+    "tool_calls": {
+      "total": 555,
+      "by_type": {
+        "Task": 11,
+        "Read": 139,
+        "Grep": 40,
+        "Glob": 12,
+        "Write": 9,
+        "ExitPlanMode": 2,
+        "TaskCreate": 20,
+        "TaskUpdate": 45,
+        "Edit": 65,
+        "Bash": 205,
+        "AskUserQuestion": 2,
+        "TaskOutput": 2,
+        "TaskStop": 1,
+        "WebSearch": 1,
+        "TaskList": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 1886660,
+      "by_type": {
+        "Task": {
+          "count": 11,
+          "bytes": 99575
+        },
+        "Read": {
+          "count": 137,
+          "bytes": 1423892
+        },
+        "Grep": {
+          "count": 40,
+          "bytes": 54391
+        },
+        "Glob": {
+          "count": 12,
+          "bytes": 5297
+        },
+        "Write": {
+          "count": 9,
+          "bytes": 77567
+        },
+        "ExitPlanMode": {
+          "count": 2,
+          "bytes": 9423
+        },
+        "TaskCreate": {
+          "count": 20,
+          "bytes": 1445
+        },
+        "TaskUpdate": {
+          "count": 45,
+          "bytes": 1043
+        },
+        "Edit": {
+          "count": 65,
+          "bytes": 6952
+        },
+        "Bash": {
+          "count": 203,
+          "bytes": 200373
+        },
+        "AskUserQuestion": {
+          "count": 2,
+          "bytes": 710
+        },
+        "TaskOutput": {
+          "count": 2,
+          "bytes": 270
+        },
+        "TaskStop": {
+          "count": 1,
+          "bytes": 144
+        },
+        "WebSearch": {
+          "count": 1,
+          "bytes": 5453
+        },
+        "TaskList": {
+          "count": 1,
+          "bytes": 125
+        }
+      },
+      "largest_single_output_bytes": 176774
+    }
+  },
+  "auto_generated": {
+    "title": "Phase 1 execution, pipeline bug fixing, and boundary-effect discovery",
+    "purpose": "Post-preregistration Phase 1 execution — ran 5 detection passes on 20 calibration tiles with Gemini 3 Flash, discovered and fixed 5 pipeline bugs (E3-E5: deprecated SDK, Y-axis inversion, reference path, column name, orchestrator args), implemented contract validation tests, performed failure analysis with two-dimensional ranking framework (frequency x localisation accuracy), computed spatial tolerance curves, and discovered boundary-effect FN inflation during visual inspection of hard positive crops.",
+    "tags": ["phase-1", "detection", "pipeline-bugs", "bug-fixing", "failure-analysis", "hard-examples", "boundary-effect", "contract-validation", "sdk-migration", "spatial-tolerance", "evaluation", "gemini-3-flash"],
+    "three_ps": {
+      "prompt_summary": "Execute Phase 1 Library Construction (5 passes x 20 tiles), diagnose and fix pipeline failures, analyse detection accuracy (F1 by vote threshold and spatial tolerance), rank FP/FN failures for hard example selection, implement integration tests for pipeline data contracts, and codify end-of-session reflection protocol.",
+      "process_summary": "Executed 100 API calls ($0.096); migrated google-generativeai to google-genai SDK; fixed Y-axis inversion, reference paths, column names, and orchestrator args (E3-E5); achieved F1=0.489 at threshold 3 (20m) rising to 0.667 at 40m; built FP/FN register with two-dimensional ranking; selected 4 hard negatives (vote-5/5 hallucinations) and 4 hard positives; added 7 contract validation tests (274 total); discovered 3 of 4 hard positives were boundary-effect artefacts during visual inspection.",
+      "provenance_summary": "Spans Sessions 4-6 in the session log. First post-preregistration execution session. Multiple context continuations due to session length. The boundary-effect discovery was a collaborative diagnosis — Claude flagged the spatial anomaly, Shawn performed visual inspection of tile images to confirm symbols were absent."
+    }
+  },
+  "three_ps": {
+    "prompt_summary": "Execute Phase 1 Library Construction (5 passes x 20 tiles), diagnose and fix pipeline failures, analyse detection accuracy (F1 by vote threshold and spatial tolerance), rank FP/FN failures for hard example selection, implement integration tests for pipeline data contracts, and codify end-of-session reflection protocol.",
+    "process_summary": "Executed 100 API calls ($0.096); migrated google-generativeai to google-genai SDK; fixed Y-axis inversion, reference paths, column names, and orchestrator args (E3-E5); achieved F1=0.489 at threshold 3 (20m) rising to 0.667 at 40m; built FP/FN register with two-dimensional ranking; selected 4 hard negatives (vote-5/5 hallucinations) and 4 hard positives; added 7 contract validation tests (274 total); discovered 3 of 4 hard positives were boundary-effect artefacts during visual inspection.",
+    "provenance_summary": "Spans Sessions 4-6 in the session log. First post-preregistration execution session. Multiple context continuations due to session length. The boundary-effect discovery was a collaborative diagnosis — Claude flagged the spatial anomaly, Shawn performed visual inspection of tile images to confirm symbols were absent."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "1866ed53b52af168e41e9e9502cda1a34a30d900c0bd015702667fb42ec4b830",
+    "jsonl_bytes": 12020392,
+    "archived_at": "2026-02-02T13:14:57.010381",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 2790083,
+    "jsonl_bytes_uncompressed": 12020392,
+    "jsonl_sha256_uncompressed": "aebd0d332356776a5f64d8d057a6faa3b2c2675435dd03cc4cfb23e39c77818c"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "da3d0331-2956-4991-a7f0-95e6b85e01e5"
+    ],
+    "detection_notes": [
+      "Found continuation language: 'last\\s+session'",
+      "Found session ID reference: da3d0331-2956-4991-a7f0-95e6b85e01e5",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'last\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'previous\\s+session'"
+    ]
+  }
+}
