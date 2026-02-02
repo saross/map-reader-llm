@@ -10,8 +10,10 @@ Contract tests:
 2. Reference loading (directory path + glob pattern)
 3. Bounds metadata interpretation (Y-axis orientation)
 4. End-to-end merge → evaluate with known synthetic data
+5. Reference scoping against individual tiles (boundary-effect prevention, E7)
 
 Created: 2026-02-01 (post-Phase 1 infrastructure hardening)
+Updated: 2026-02-01 (added boundary-effect scoping tests, E7)
 """
 
 import sys
@@ -29,6 +31,7 @@ from config import TILE_SIZE
 from scripts.lib_advanced_metrics import (
     calculate_f1_internal,
     load_data,
+    scope_references_to_tiles,
 )
 from scripts.merge_passes import (
     apply_threshold,
@@ -492,4 +495,219 @@ class TestMergeToEvaluateContract:
         )
         assert len(t3_features) >= 1, (
             "T>=3 should retain at least 1 detection (R1 and R2 areas have 3 votes)"
+        )
+
+
+# =============================================================================
+# Contract Test 5: Reference scoping against individual tiles (E7)
+# =============================================================================
+
+# Two non-adjacent tiles with a gap between them. The gap is where
+# boundary-effect references can slip through union-based scoping.
+TILE_A_NAME = f"{MAP_NAME}_x0_y0.png"
+TILE_B_NAME = f"{MAP_NAME}_x448_y0.png"
+TILE_EXTENT = 2565.0  # ~512px × 5.01 m/px
+GAP_OFFSET = 5000.0   # Tile B starts 5 km east — clear gap from Tile A
+
+
+@pytest.fixture
+def two_tile_bounds() -> gpd.GeoDataFrame:
+    """
+    Two non-adjacent tile polygons with a clear gap between them.
+
+    Tile A: [BASE_X, BASE_Y] to [BASE_X + TILE_EXTENT, BASE_Y + TILE_EXTENT]
+    Tile B: [BASE_X + GAP_OFFSET, BASE_Y] to [BASE_X + GAP_OFFSET + TILE_EXTENT, ...]
+
+    The gap between tile A's right edge and tile B's left edge is ~2435m.
+    """
+    return gpd.GeoDataFrame(
+        {
+            "tile_name": [TILE_A_NAME, TILE_B_NAME],
+            "map_name": [MAP_NAME, MAP_NAME],
+        },
+        geometry=[
+            box(BASE_X, BASE_Y,
+                BASE_X + TILE_EXTENT, BASE_Y + TILE_EXTENT),
+            box(BASE_X + GAP_OFFSET, BASE_Y,
+                BASE_X + GAP_OFFSET + TILE_EXTENT, BASE_Y + TILE_EXTENT),
+        ],
+        crs=CRS,
+    )
+
+
+@pytest.fixture
+def boundary_effect_references() -> gpd.GeoDataFrame:
+    """
+    References at various positions relative to the two tiles.
+
+    R1: Inside tile A (centre)
+    R2: Inside tile B (centre)
+    R3: In the gap between tiles (boundary-effect artefact)
+    R4: Outside all tiles, 15m beyond tile A's eastern edge
+    R5: On tile A's boundary (exactly on the edge)
+    """
+    return gpd.GeoDataFrame(
+        {
+            "Map": [MAP_NAME] * 5,
+            "Symbol": ["Burial mound"] * 5,
+            "fid": [101, 102, 103, 104, 105],
+        },
+        geometry=[
+            # R1: Centre of tile A
+            Point(BASE_X + TILE_EXTENT / 2, BASE_Y + TILE_EXTENT / 2),
+            # R2: Centre of tile B
+            Point(BASE_X + GAP_OFFSET + TILE_EXTENT / 2,
+                  BASE_Y + TILE_EXTENT / 2),
+            # R3: In the gap, midway between tiles
+            Point(BASE_X + TILE_EXTENT + 1200, BASE_Y + TILE_EXTENT / 2),
+            # R4: 15m beyond tile A's eastern edge
+            Point(BASE_X + TILE_EXTENT + 15, BASE_Y + TILE_EXTENT / 2),
+            # R5: Exactly on tile A's eastern boundary
+            Point(BASE_X + TILE_EXTENT, BASE_Y + TILE_EXTENT / 2),
+        ],
+        crs=CRS,
+    )
+
+
+@pytest.mark.tier1
+@pytest.mark.integration
+class TestReferenceScoping:
+    """
+    Verify that reference scoping uses individual tile polygons, not union.
+
+    The boundary-effect bug (E7) arose because union_all() of tile polygons
+    could include references in gaps between non-contiguous tiles. These
+    references were counted as false negatives even though the model never
+    saw those locations.
+    """
+
+    def test_reference_inside_tile_is_in_scope(
+        self, boundary_effect_references, two_tile_bounds
+    ):
+        """References inside either tile should be retained."""
+        result = scope_references_to_tiles(
+            boundary_effect_references, two_tile_bounds
+        )
+        in_scope_fids = set(result['fid'].tolist())
+
+        assert 101 in in_scope_fids, "R1 (centre of tile A) should be in scope"
+        assert 102 in in_scope_fids, "R2 (centre of tile B) should be in scope"
+
+    def test_reference_in_gap_between_tiles_is_excluded(
+        self, boundary_effect_references, two_tile_bounds
+    ):
+        """
+        A reference in the gap between two non-adjacent tiles must be
+        excluded. This is the core boundary-effect case that E7 fixes.
+        """
+        result = scope_references_to_tiles(
+            boundary_effect_references, two_tile_bounds
+        )
+        in_scope_fids = set(result['fid'].tolist())
+
+        assert 103 not in in_scope_fids, (
+            "R3 (in gap between tiles) should NOT be in scope"
+        )
+
+    def test_reference_outside_all_tiles_is_excluded(
+        self, boundary_effect_references, two_tile_bounds
+    ):
+        """A reference 15m beyond a tile edge should be excluded."""
+        result = scope_references_to_tiles(
+            boundary_effect_references, two_tile_bounds
+        )
+        in_scope_fids = set(result['fid'].tolist())
+
+        assert 104 not in in_scope_fids, (
+            "R4 (15m outside tile A) should NOT be in scope"
+        )
+
+    def test_reference_on_tile_boundary_is_in_scope(
+        self, boundary_effect_references, two_tile_bounds
+    ):
+        """
+        A reference exactly on a tile boundary should be in scope
+        (intersects includes touching geometries).
+        """
+        result = scope_references_to_tiles(
+            boundary_effect_references, two_tile_bounds
+        )
+        in_scope_fids = set(result['fid'].tolist())
+
+        assert 105 in in_scope_fids, (
+            "R5 (on tile A boundary) should be in scope"
+        )
+
+    def test_empty_references_returns_empty(self, two_tile_bounds):
+        """Empty reference input should return empty GeoDataFrame."""
+        empty_refs = gpd.GeoDataFrame(
+            {"Map": [], "Symbol": [], "fid": []},
+            geometry=[],
+            crs=CRS,
+        )
+        result = scope_references_to_tiles(empty_refs, two_tile_bounds)
+        assert len(result) == 0, "Empty input should produce empty output"
+
+    def test_empty_bounds_returns_empty(self, boundary_effect_references):
+        """With no tile bounds, no references should be in scope."""
+        empty_bounds = gpd.GeoDataFrame(
+            {"tile_name": [], "map_name": []},
+            geometry=[],
+            crs=CRS,
+        )
+        result = scope_references_to_tiles(
+            boundary_effect_references, empty_bounds
+        )
+        assert len(result) == 0, (
+            "No tile bounds means no references in scope"
+        )
+
+    def test_scoping_affects_f1_calculation(
+        self, two_tile_bounds
+    ):
+        """
+        F1 calculated with per-tile scoping should differ from naive
+        union scoping when boundary-effect references exist.
+
+        With one detection in tile A matching R1, and R3 in the gap:
+        - Per-tile scoping: R3 excluded → FN=0, TP=1, F1=1.0
+        - Union scoping would include R3 → FN=1, TP=1, F1=0.67
+        """
+        # Single reference inside tile A
+        refs = gpd.GeoDataFrame(
+            {
+                "Map": [MAP_NAME, MAP_NAME],
+                "Symbol": ["Burial mound", "Burial mound"],
+                "fid": [201, 202],
+            },
+            geometry=[
+                # R_in: Inside tile A
+                Point(BASE_X + 500, BASE_Y + 500),
+                # R_gap: In gap between tiles (should be excluded)
+                Point(BASE_X + TILE_EXTENT + 1200,
+                      BASE_Y + TILE_EXTENT / 2),
+            ],
+            crs=CRS,
+        )
+
+        # Detection matching R_in
+        dets = gpd.GeoDataFrame(
+            {
+                "source_tile": [TILE_A_NAME],
+                "subtype": ["burial_mound"],
+            },
+            geometry=[Point(BASE_X + 505, BASE_Y + 505)],
+            crs=CRS,
+        )
+
+        p, r, f1 = calculate_f1_internal(
+            dets, refs, two_tile_bounds, buffer_meters=20
+        )
+
+        # With correct per-tile scoping, R_gap is excluded:
+        # TP=1, FP=0, FN=0 → F1=1.0
+        assert f1 == pytest.approx(1.0, abs=0.01), (
+            f"With boundary-effect ref excluded, F1 should be 1.0, got {f1}. "
+            f"P={p}, R={r}. If F1 < 1.0, the gap reference was incorrectly "
+            f"included in scope (boundary-effect bug)."
         )

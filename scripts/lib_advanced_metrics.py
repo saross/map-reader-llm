@@ -202,6 +202,36 @@ def match_detections_to_references(det_geoms, ref_geoms, max_distance):
 
     return (matched_det, matched_ref, unmatched_det, unmatched_ref)
 
+
+def scope_references_to_tiles(
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> gpd.GeoDataFrame:
+    """
+    Return only references that intersect at least one individual tile polygon.
+
+    Uses per-tile spatial join rather than union_all(), which could include
+    references falling in gaps between non-contiguous tiles — a boundary-effect
+    artefact that inflates false negative counts (see errata E7).
+
+    Args:
+        gdf_ref: GeoDataFrame of ground truth reference points.
+        gdf_bounds: GeoDataFrame of tile boundary polygons.
+
+    Returns:
+        GeoDataFrame: Subset of gdf_ref intersecting at least one tile.
+    """
+    if gdf_ref.empty or gdf_bounds.empty:
+        return gdf_ref.iloc[0:0]  # Empty GeoDataFrame preserving schema
+
+    # Spatial join: each reference matched to every tile it intersects
+    in_scope = gpd.sjoin(gdf_ref, gdf_bounds, how='inner', predicate='intersects')
+
+    # Deduplicate: a reference intersecting multiple overlapping tiles
+    # appears once per tile in the join — keep unique reference indices only
+    return gdf_ref.loc[gdf_ref.index.isin(in_scope.index)].copy()
+
+
 def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     """
     Calculate global F1 using one-to-one matching via Hungarian algorithm.
@@ -231,11 +261,10 @@ def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
             continue
 
         map_bounds = gdf_bounds[gdf_bounds['tile_name'].str.startswith(map_name)]
-        search_area = map_bounds.geometry.union_all()
 
         ref_scope = gdf_ref[gdf_ref['Map'] == map_name]
         if not ref_scope.empty:
-            ref_scope = ref_scope[ref_scope.intersects(search_area)].copy()
+            ref_scope = scope_references_to_tiles(ref_scope, map_bounds)
 
         det_scope = gdf_det[gdf_det['source_tile'].str.startswith(map_name)]
 
@@ -947,7 +976,7 @@ def bootstrap_tile_effect_size_ci(
     }
 
 
-def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds, buffers=[10, 20, 30, 50]):
+def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds, buffers=[10, 20, 30, 40, 50]):
     results = []
     for b in buffers:
         p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=b)
@@ -994,9 +1023,8 @@ def error_taxonomy(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     """
     taxonomy = {"false_positives": {}, "false_negatives": {}}
 
-    # Scope references to processed area
-    processed_geometry = gdf_bounds.geometry.union_all()
-    refs_in_scope = gdf_ref[gdf_ref.intersects(processed_geometry)].copy()
+    # Scope references to individual tile polygons (not union — see errata E7)
+    refs_in_scope = scope_references_to_tiles(gdf_ref, gdf_bounds)
 
     if gdf_det.empty and refs_in_scope.empty:
         return taxonomy

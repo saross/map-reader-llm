@@ -33,6 +33,7 @@ try:
         calculate_f1_internal,
         calculate_tile_classification,
         load_data,
+        scope_references_to_tiles,
     )
 except ImportError:
     print("Error importing scripts.lib_advanced_metrics.")
@@ -171,9 +172,12 @@ def validate_file(
     fps = join_fp[join_fp.index_right.isna()].copy()
 
     # Identify FNs (Refs not hit by any Verified candidate)
-    # Filter refs to bounds first
-    processed_geometry = gdf_bounds.geometry.union_all()
-    refs_in_scope = gdf_ref_buf[gdf_ref_buf.intersects(processed_geometry)].copy()
+    # Scope unbuffered references against individual tiles (not union — see E7)
+    refs_in_scope_unbuf = scope_references_to_tiles(gdf_ref, gdf_bounds)
+    # Then select only the buffered versions of in-scope references for matching
+    refs_in_scope = gdf_ref_buf.loc[
+        gdf_ref_buf.index.isin(refs_in_scope_unbuf.index)
+    ].copy()
 
     join_fn = gpd.sjoin(refs_in_scope, gdf_verified, how='left', predicate='intersects')
     fns = join_fn[join_fn.index_right.isna()].copy()
