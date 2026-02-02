@@ -317,19 +317,39 @@ Selecting the 4 hardest: vote 5/5 AND hallucination (>500m from any reference).
 
 ### Hard Positives (from FNs): Recommended Top 4
 
-Selecting the 4 hardest: recognition failures, farthest from any detection, one per
-map sheet for diversity.
+~~Selecting the 4 hardest: recognition failures, farthest from any detection, one per
+map sheet for diversity.~~
 
-| Priority | Rank | fid | Map sheet | Nearest det. | Rationale |
-|----------|------|-----|-----------|-------------|-----------|
-| 1 | 1 | 354 | Rakovski | 2449.9m | Most isolated complete miss |
-| 2 | 2 | 249 | Lesovo | 1807.8m | Second most isolated, different sheet |
-| 3 | 5 | 556 | K-35-052-4 | 572.1m | Most isolated on this sheet |
-| 4 | 6 | 105 | Elenovo | 243.6m | Most isolated on this sheet |
+**SUPERSEDED (Session 7)**: The original selection below was based on distance from
+nearest detection with one-per-sheet stratification. Session 7 discovered that fids
+354, 249, and 556 are entirely outside all calibration tile polygons (boundary
+artefacts, see errata E7). Revised selection prioritises recognition failures with
+confirmed in-tile visibility, relaxing one-per-sheet in favour of genuine examples.
 
-Rank 3 (fid 399, bench mark on burial mound, Rakovski) is the only non-standard
-symbol type. It could replace priority 1 if subtype diversity is preferred over
-maximum isolation — this is a judgement call to document in Decision 4.
+#### Original selection (superseded)
+
+| Priority | Rank | fid | Map sheet | Nearest det. | Rationale | Status |
+|----------|------|-----|-----------|-------------|-----------|--------|
+| 1 | 1 | 354 | Rakovski | 2449.9m | Most isolated complete miss | **Out of scope** — outside all tiles |
+| 2 | 2 | 249 | Lesovo | 1807.8m | Second most isolated, different sheet | **Out of scope** — outside all tiles |
+| 3 | 5 | 556 | K-35-052-4 | 572.1m | Most isolated on this sheet | **Out of scope** — outside all tiles |
+| 4 | 6 | 105 | Elenovo | 243.6m | Most isolated on this sheet | Confirmed ✓ |
+
+#### Revised selection (Session 7)
+
+Selection criteria: recognition failures only (>50m from any detection), ranked by
+votes of nearest detection (descending) then distance (descending). One-per-sheet
+relaxed because Lesovo and K-35-052-4 had no recognition failures. Minimum ~5px
+edge clearance required (fid 161 excluded — symbol truncated at west edge of tile).
+
+| Priority | fid | Map sheet | Nearest det. | Source tile | Rationale |
+|----------|-----|-----------|-------------|-------------|-----------|
+| 1 | 399 | Rakovski | 1243.1m | x448_y2688 | Recognition failure, confirmed in-tile |
+| 2 | 99 | Elenovo | 1047.1m | x896_y1344 | Recognition failure, confirmed in-tile |
+| 3 | 15 | Rakovski | 905.6m | x896_y2688 | Recognition failure, confirmed in-tile |
+| 4 | 105 | Elenovo | 243.6m | x896_y1344 | Recognition failure, confirmed in-tile (retained from original) |
+
+See Decision 4 in `docs/methodology/preregistration/decisions-log.md` for full rationale.
 
 **Alternates** (for library expansion):
 

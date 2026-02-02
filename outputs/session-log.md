@@ -104,8 +104,8 @@ Five distinct infrastructure bugs were exposed during execution, each individual
 
 ### Pending Work
 
-- [ ] **Failure analysis**: Review the 18 FPs and 28 FNs to select hard examples for the library
-- [ ] **Hard example crops**: Extract 512x512 context crops using `analyse_fp_crops.py`
+- [x] **Failure analysis**: Review the 18 FPs and 28 FNs to select hard examples for the library *(completed Session 6)*
+- [x] **Hard example crops**: Extract context crops *(completed Session 7 — revised to 128×128 from full GeoTIFFs, see E8)*
 - [ ] **Text description updates**: Add hard example descriptions to instruction files (`detect_brief-text.md`, `detect_verbose-text.md`)
 - [ ] **Config updates**: Add hard example paths to Scale-8+ library configs
 - [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses the deprecated `google-generativeai` SDK
@@ -139,8 +139,8 @@ Continuation of Session 5 after context compaction. Completed the end-of-session
 
 ### Pending Work
 
-- [ ] **Failure analysis**: Review the 18 FPs and 28 FNs to select hard examples for the library
-- [ ] **Hard example crops**: Extract 512x512 context crops using `analyse_fp_crops.py`
+- [x] **Failure analysis**: Review the 18 FPs and 28 FNs to select hard examples for the library *(completed Session 6)*
+- [x] **Hard example crops**: Extract context crops *(completed Session 7 — revised to 128×128 from full GeoTIFFs, see E8)*
 - [ ] **Text description updates**: Add hard example descriptions to instruction files (`detect_brief-text.md`, `detect_verbose-text.md`)
 - [ ] **Config updates**: Add hard example paths to Scale-8+ library configs
 - [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses the deprecated `google-generativeai` SDK
@@ -215,6 +215,143 @@ The evaluation pipeline scopes references using `intersects(union_of_tile_polygo
 - [ ] **E7: Fix evaluation reference scoping** — scope against individual tiles, not union; recalculate F1
 - [ ] **Replace hard positives 05-07** — visually confirm mound symbols before selection
 - [ ] **Text description updates**: Add hard example descriptions to instruction files
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+
+---
+
+## Session 7 — 2026-02-02 (Boundary-effect scoping fix, hard positive replacement)
+
+### Overview
+
+Fixed the boundary-effect evaluation reference scoping bug (E7) identified in Session 6: replaced `union_all()` with per-tile `gpd.sjoin()` at three sites in the evaluation pipeline, added 7 new integration tests, and documented the fix in protocol errata. Phase 1 metrics were unchanged (non-adjacent calibration tiles make union equivalent to per-tile scoping), confirming the fix is preventive for Phase 2. Replaced three out-of-scope hard positive examples with genuine recognition failures, prioritising recognition failures over localisation failures based on domain judgement. Determined crop size (128×128) and extraction method (centred from full map GeoTIFFs, not detection tiles — see errata E8). Documented documentation heuristic for decisions-log vs errata vs working-notes vs session-log.
+
+### Accomplishments
+
+1. **Fixed evaluation reference scoping (E7)** — extracted `scope_references_to_tiles()` helper using `gpd.sjoin()`, replacing `union_all()` at three sites: `calculate_f1_internal()`, `error_taxonomy()`, and `validate_file()`
+2. **Added 7 boundary-effect tests** — `TestReferenceScoping` class covering: reference inside tile, reference in gap excluded, reference outside excluded, boundary in scope, empty inputs, and F1 impact
+3. **Updated `spatial_tolerance_curve()` defaults** — added 40m to buffer list: `[10, 20, 30, 40, 50]`
+4. **Documented E7 in protocol errata** — correction type, no impact on Phase 1 results
+5. **Diagnosed out-of-scope hard positives** — fids 354, 249, 556 are entirely outside all calibration tile polygons; never contributed to FN count
+6. **Replaced hard positives 05-07** with genuine recognition failures:
+   - example_05: fid 399 (Rakovski, recognition failure 5/5)
+   - example_06: fid 99 (Elenovo, recognition failure 4/5)
+   - example_07: fid 15 (Rakovski, recognition failure 4/5)
+7. **Established ~5px edge clearance rule** — symbols need minimum ~5px from tile edge to be fully visible (fid 161 excluded: ~2/3 truncated at west edge)
+8. **Recorded Observations 78-80** — crop size as empirical question (future OFAT experiment), human-AI division of labour in hard example curation, crop extraction decisions
+9. **Determined crop size and extraction method** — 128×128 crops centred from full map GeoTIFFs (option c), documented in Decision 4 and errata E8
+10. **Established documentation heuristic** — decisions-log for formal choices, errata for deviations, working-notes for observations, session-log for summaries
+
+### Issues
+
+- **Metrics unchanged after E7 fix**: Phase 1's 5 scattered tiles per sheet are non-adjacent, making `union_all()` geometrically equivalent to per-tile scoping. Fix is preventive for Phase 2 (60 tiles, likely adjacent).
+- **Hard positive crop size**: Resolved — 128×128 crops extracted from full map GeoTIFFs. See errata E8.
+- **One-per-sheet constraint broken**: Rakovski and Elenovo each have 2 hard positives because Lesovo and K-35-052-4 had no recognition failures.
+
+### Tests
+
+| Suite | Result |
+|-------|--------|
+| Full test suite | 274 passed (267 existing + 7 new) |
+| New scoping tests | 7/7 passed |
+| Regressions | None |
+
+### Commits
+
+Changes not yet committed at session end. Modified files:
+
+- `scripts/lib_advanced_metrics.py` — `scope_references_to_tiles()`, fixed `calculate_f1_internal()`, `error_taxonomy()`, updated `spatial_tolerance_curve()`
+- `scripts/6_accuracy_report.py` — fixed `validate_file()`, added import
+- `tests/test_integration_pipeline_contracts.py` — 7 new boundary-effect tests
+- `docs/methodology/preregistration/protocol-errata.md` — E7 entry
+- `docs/notes/working_notes.md` — Observations 78, 79
+- `inputs/examples/hard-positive/` — replaced example_05, 06, 07
+- `inputs/examples/neutral-naming/` — updated symlinks
+
+### Pending Work
+
+- [ ] **Commit Session 7 changes** — E7 fix, tests, errata, hard example replacements, reflections, crop extraction
+- [x] **Determine crop size** — 128×128 from full GeoTIFFs (errata E8, Decision 4)
+- [x] **Update MANIFEST.md** — new hard positive provenance (fids 399, 99, 15)
+- [x] **Update Decision 4** — revised selection rationale (recognition-failure prioritisation, broken one-per-sheet, crop extraction)
+- [x] **Update FP/FN register** — reflect revised hard positive selection
+- [ ] **Pending decision: prompt centring text** — whether to add "target symbols are centred" to text prompt variants (see Observation 80)
+- [ ] **Text description updates**: Add hard example descriptions to instruction files (`detect_brief-text.md`, `detect_verbose-text.md`)
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+
+---
+
+## Session 8 — 2026-02-02 (Session archiving, hard negative re-extraction, file preservation)
+
+### Overview
+
+Archived two unarchived Claude Code sessions with metadata, re-extracted hard negative crops as 128×128 from full map GeoTIFFs (replacing the 512×512 detection-tile crops), and established the archive-not-delete file preservation principle. A short, focused session centred on consistency and housekeeping rather than new analysis.
+
+### Accomplishments
+
+1. **Archived CC sessions** — da3d0331 (Sessions 4-6) and abe6f808 (Session 7) archived with gzip compression, metadata populated with titles, purposes, tags, three_ps, relationships, and artifact descriptions. Backfilled `continuedBy` link in predecessor session f5e8cd4f.
+2. **Re-extracted hard negative crops** — 4 crops (examples 11-14) re-extracted as 128×128 from full map GeoTIFFs centred on FP detection coordinates, consistent with the hard positive extraction method from Session 7. Extended errata E8 to cover hard negatives.
+3. **Archived superseded crops** — recovered old 512×512 HP and HN crops from git commit `12898e9` and placed in `archive/preliminary-work/references/prompt_example_images/superseded-hard-{positives,negatives}-512x512/` with explanatory READMEs.
+4. **Established file preservation principle** — added "Archive, never delete" section to project CLAUDE.md: superseded files must be browsable in the working tree, not just recoverable from git history.
+5. **Updated MANIFEST.md** — hard negative section updated with GeoTIFF extraction method, hallucination-prioritisation selection criteria.
+6. **Updated protocol errata E8** — expanded from "Hard positive crops" to "Hard example crops" covering both HPs and HNs with unified rationale.
+7. **Recorded Observations 81-82** — recognition-vs-localisation distinction transfers to FPs; recoverability vs discoverability in research archives.
+
+### Issues
+
+- **python vs python3**: System `python` not found; needed `python3` throughout.
+- **rasterio in venv**: Required `.venv` activation for rasterio-dependent crop extraction.
+- **JSONL parsing**: Session archives use `"type": "user"` not `"type": "human"`; piping through zcat failed — resolved via temp file.
+- **Files overwritten without archiving**: Replaced old HN crops in place, initially relying on git history. User corrected: archive to working tree for discoverability. Fixed by recovering from git and archiving.
+
+### Commits
+
+No commits made this session. All changes are staged/unstaged modifications spanning Sessions 7-8.
+
+### Pending Work
+
+- [ ] **Commit Sessions 7-8 changes** — E7 fix, tests, hard example replacements/re-extractions, errata, reflections, archive, CLAUDE.md
+- [ ] **Text description updates**: Add hard example descriptions to instruction files (`detect_brief-text.md`, `detect_verbose-text.md`)
+- [ ] **Pending decision: prompt centring text** — whether to add "target symbols are centred" to text prompt variants (recommended for HPs, not for HNs)
+- [ ] **Config updates**: Add hard example paths to Scale-16 and Scale-32 library configs
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated `google-generativeai` SDK
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+
+---
+
+## Session 9 — 2026-02-02 (Continuation: collaboration scaffolding and SHAWN.md)
+
+### Overview
+
+Short continuation session focused on collaboration meta-work rather than pipeline development. Completed remaining Session 8 reflections (abductive-reasoning-investigation.md and session-log.md), then created SHAWN.md — a counterpart to CLAUDE.md containing suggestions from the AI to the human. Reviewed all four reflection documents to identify additional patterns, expanding SHAWN.md from 3 to 6 suggestions. Elaborated on the four-element correction pattern (negation, grounding, redirection, stakes) at the user's request.
+
+### Accomplishments
+
+1. **Completed Session 8 reflections** — updated abductive-reasoning-investigation.md (Session 8 note on default assumptions as abduction blockers) and session-log.md (Session 8 entry)
+2. **Created SHAWN.md** — 6 suggestions for the human collaborator based on patterns from reflection documents:
+   - State expectations before results arrive
+   - Ask "what assumptions are you making?" at action points
+   - Flag when a "setup" task is actually a research task
+   - Ask "have you looked at it?" for spatial/visual outputs
+   - Ask for options rather than accepting a default
+   - Your correction style works — keep the "why" even when rushed
+3. **Recorded Observations 83-84** — bidirectional collaboration scaffolding; parallel default-following in human and AI collaborators
+4. **Updated all reflection documents** — llm-observations.md (Session 9 section), session-reflection-investigation.md (Entry 5), working_notes.md (Observations 83-84)
+
+### Issues
+
+None. No code or data work this session.
+
+### Commits
+
+No commits made. Pending work unchanged from Session 8 plus SHAWN.md and new reflection content.
+
+### Pending Work
+
+- [ ] **Commit Sessions 7-9 changes** — E7 fix, tests, hard example replacements/re-extractions, errata, reflections, archive, CLAUDE.md, SHAWN.md
+- [ ] **Text description updates**: Add hard example descriptions to instruction files (`detect_brief-text.md`, `detect_verbose-text.md`)
+- [ ] **Pending decision: prompt centring text** — whether to add "target symbols are centred" to text prompt variants (recommended for HPs, not for HNs)
+- [ ] **Config updates**: Add hard example paths to Scale-16 and Scale-32 library configs
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated `google-generativeai` SDK
 - [ ] **Upload to OSF**: Library construction results before holdout evaluation
 
 ---
