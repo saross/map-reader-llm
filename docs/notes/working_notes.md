@@ -1576,3 +1576,21 @@ This has practical implications beyond this study:
 3. **The scaling experiment redesign is itself evidence**: The fact that H8 Scale-16/Scale-32 conditions become unfillable due to HP exhaustion — while HN candidates are abundant — is a measurable consequence of the precision/recall imbalance. The preregistration anticipated this possibility (line 815), which validates the preregistered contingency plan.
 
 4. **Three-agent collaboration pattern**: This finding emerged from a three-way collaboration: CC (this instance) performed boundary/edge-clearance analysis and distance distribution computation, Opus (via the web chatbot) provided strategic framing (the 100m localisation threshold question, the advice on centre-pointing language, and the overall experimental sequencing), and the human researcher synthesised both into decisions. The planning document (`planning/hard-example-library-decisions.md`) is a visible artefact of this three-agent pattern.
+
+## Observation 86: Three-agent error correction — the H9 pool size miscalculation (2026-02-02)
+
+**Context**: Session 10. CC (this instance) concluded that 4 hard negative crops were sufficient for H9 diversity rotation, since the Scale-8 library specifies 4 HN examples. The user identified the error after discussing the design with Opus (web chatbot), who provided a clear mathematical explanation of why this was wrong.
+
+**The error**: H9-C tests whether rotating different hard negative images across voting passes improves detection. Each pass receives 4 HN examples. With only 4 HN crops in the pool, every pass receives the identical set — making H9-C mechanically identical to the baseline condition. The diversity manipulation has zero degrees of freedom. This is a constraint satisfaction problem with only one solution: the full set.
+
+**The correction chain**: The user discussed H9 design with Opus, who identified the combinatorial impossibility and provided a clear explanation (with C(16,4) = 1820 possible subsets at pool size 16). The user relayed this to CC with the framing "I believe you are incorrect." CC understood immediately and extracted 12 additional HN crops, expanding the pool from 4 to 16 — entirely mechanical, following the preregistered two-dimensional ranking (vote count descending, distance to nearest reference descending).
+
+**The observation**: This episode illustrates two things about three-agent collaboration in preregistered research:
+
+1. **Human review of AI plans remains essential**: The error passed through CC's analysis, an Explore agent's verification, and the planning document review without being caught. The human's role as synthesiser — discussing the design with a separate AI instance — broke the confirmation loop. The user notes: "while I still need to review plans to catch issues like the H9 misunderstanding, we resolved it quickly and efficiently (especially with help from Opus in the web app for me to express the problem and solution more clearly)."
+
+2. **Clear formal arguments cut through defaults efficiently**: Unlike the boundary-effect error (Session 6), which required visual inspection and domain reasoning to identify, the H9 error was resolved instantly once the mathematical argument was presented. The statement "4 items in 4 slots = 1 possible combination" admits no rationalisation. Formal arguments are effective correctives precisely because they leave no room for default-preserving explanations.
+
+3. **The preregistered ranking framework proved its value**: Once the pool size error was identified, the fix required zero judgement calls. Filter to >50m, rank by vote count and distance, take the next 12. The systematic ranking removed the need for post-hoc example selection, which is exactly what a preregistered framework is supposed to do.
+
+4. **Error type**: This is another instance of the "obvious default blocks questioning" pattern documented in Sessions 6-9. The default — "4 HN examples match the library specification" — was treated as sufficient without checking whether it enabled the specific experimental manipulation. The distinction between "enough for a fixed library" and "enough for a diversity rotation" is the kind of purpose-specific constraint that defaults obscure.

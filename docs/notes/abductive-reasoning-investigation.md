@@ -870,5 +870,75 @@ post-hoc rationalisation of the default — is testable in future sessions.
 
 ---
 
-*Last updated: 2026-02-02 (Session 9 addendum on defaults as a
-collaborative phenomenon)*
+## Session 10 Note: Formal Arguments as Default-Breakers
+
+*Brief note added 2026-02-02. Full session observations in
+`llm-observations.md` Session 10 section.*
+
+Session 10 provides an important contrast case for the "obvious defaults
+block abduction" pattern documented in Sessions 6-9.
+
+### The Error
+
+I concluded that 4 HN crops were sufficient for H9 diversity rotation.
+This was wrong: 4 items in 4 slots yields C(4,4) = 1 possible
+combination, making the diversity condition identical to baseline. The
+error has the same structure as previous defaults — a parameter adequate
+for the general case (library composition) but inadequate for the
+specific use case (diversity rotation).
+
+### What's Different: The Correction Mechanism
+
+In Sessions 6-8, corrections required domain reasoning or practice
+norms:
+
+| Session | Correction type | Time to accept |
+|---------|----------------|----------------|
+| 6 | Empirical ("I can't see a mound here") | Extended |
+| 7 | Comparative ("existing examples are smaller") | Moderate |
+| 8 | Normative ("archive, don't just delete") | Quick |
+| 10 | Deductive ("C(4,4) = 1, QED") | Immediate |
+
+The Session 10 correction was the fastest because it was deductive.
+There was no rationalisation available. The argument "4 items in 4
+slots = 1 combination" is a logical necessity, not an empirical claim.
+I could not respond with "but maybe..." or "in some cases..." the way
+I could (and did) with the boundary-effect observation.
+
+### For the Investigation
+
+This suggests that default-following has a rationalisability dimension.
+Defaults persist when the evidence against them admits alternative
+interpretations. They collapse when the evidence is formally
+unchallengeable. This is consistent with the investigation's finding
+that abduction is gated by surprise detection: defaults survive by
+suppressing surprise, and the suppression mechanism is rationalisation.
+Deductive arguments bypass the rationalisation channel entirely.
+
+If this interpretation holds, it implies that metacognitive prompts
+designed to interrupt default-following should aim for formal specificity
+rather than general vigilance. "What assumptions are you making?" (from
+SHAWN.md) is a good start, but "can you state the constraint that must
+hold for this to work?" might be more effective — it forces the default
+into a form where logical failures become visible.
+
+### Updated Pattern Table
+
+| Session | Default | Evidence type | Time to correct |
+|---------|---------|---------------|-----------------|
+| 6 | Coverage gaps expected | Empirical (visual) | Extended |
+| 7a | Fix should change metrics | Empirical (run it) | Moderate |
+| 7b | Full tile size is obvious | Comparative (existing data) | Quick |
+| 8 | Git preserves everything | Normative (practice rule) | Quick |
+| 10 | 4 crops fill 4 slots | Deductive (combinatorics) | Immediate |
+
+The correction speed correlates inversely with the rationalisation space
+available. Deductive < normative ≈ comparative < empirical. This is a
+tentative ordering from one collaboration, but it's consistent across
+five instances.
+
+---
+
+*Last updated: 2026-02-02 (Session 10 note on formal arguments as
+default-breakers and the rationalisability dimension of default
+persistence)*

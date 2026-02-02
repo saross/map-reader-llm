@@ -356,4 +356,52 @@ No commits made. Pending work unchanged from Session 8 plus SHAWN.md and new ref
 
 ---
 
+## Session 10 — 2026-02-02 (H9 pool correction, centre-pointing language, errata, and commit backlog)
+
+### Overview
+
+Continuation session implementing decisions from the Opus strategic review (`planning/hard-example-library-decisions.md`). Revised centre-pointing language across all 11 detection prompt files, wrote 5 new protocol errata entries (E9-E13), corrected a fundamental error in H9 diversity rotation pool sizing (4 HN crops → 16 via 12 new extractions), and pushed the accumulated commit backlog from Sessions 7-10 as 9 logical commits. The H9 pool size error — where 4 HN crops filling 4 slots per pass yields zero diversity — was the session's most consequential correction, identified by Opus via the user.
+
+### Accomplishments
+
+1. **Revised centre-pointing language (E9)** — replaced "centred on the relevant feature" with "centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples" across all 11 `detect_*.md` files. Applied uniformly including image-only condition to preserve H5 factor orthogonality.
+2. **Wrote protocol errata E9-E13** — E9 (centre-pointing language, clarification), E10 (50m threshold activation, clarification), E11 (Scale-16/32 capping, clarification), E12 (H9 frozen HP, clarification), E13 (H12 deferral, deviation).
+3. **Corrected H9 HN pool size** — identified that 4 HN crops in 4 slots = C(4,4) = 1 combination = zero diversity. Extracted 12 new HN crops (examples 18-29) from FP GeoJSON using the preregistered two-dimensional ranking (vote count desc, distance desc, >50m filter). Total pool now 16 HN crops.
+4. **Created neutral-naming symlinks** for examples 18-29.
+5. **Updated MANIFEST.md** — added "Expanded Hard Negative Pool (Examples 18-29)" section with full provenance table, pool composition summaries, H9 diversity rotation documentation.
+6. **Committed and pushed Sessions 7-10 changes** — 9 logical commits covering: pipeline fixes, hard example data, expanded HN pool, prompt revisions, config/planning updates, preregistration decisions and errata, outputs/session log, observation notes, and session archives.
+
+### Issues
+
+- **H9 pool size miscalculation**: The most significant error. Passed through CC analysis, Explore agent verification, and planning document review without being caught. Identified by Opus (web chatbot) via the user. Root cause: treating "enough for the library" as equivalent to "enough for the experiment."
+- **MultiPoint geometry in reference GeoJSON**: The extraction script initially failed because `mounds-reference.geojson` contains MultiPoint geometries. Fixed by handling both Point and MultiPoint types in the distance computation.
+- **Edit tool sequencing**: Attempted to edit 10 of 11 prompt files before reading them. Required reading all files first, then editing in parallel.
+
+### Commits
+
+9 logical commits pushed covering Sessions 7-10 (exact hashes available in `git log`):
+
+| Scope | Description |
+|-------|-------------|
+| `fix(pipeline)` | Harden evaluation reference scoping and contracts |
+| `data(library)` | Re-extract hard examples as 128×128 GeoTIFF crops |
+| `data(library)` | Add expanded HN pool for H9 diversity rotation |
+| `feat(prompts)` | Add centre-pointing language for label disambiguation |
+| `chore(configs)` | Mark Scale-16/32 deferred, add planning synopsis |
+| `docs(preregistration)` | Record Decisions 11-12 and errata E9-E13 |
+| `docs(outputs)` | Update FP-FN register and session log |
+| `docs(notes)` | Add Sessions 7-8 observations and reflections |
+| `chore(archive)` | Add Sessions 6-7 archives |
+
+### Pending Work
+
+- [ ] **Text description updates**: Add hard example descriptions to `detect_brief-text.md` and `detect_verbose-text.md`
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement the HN rotation assignment satisfying frequency constraints (each HN in ≥1 and ≤3 of 5 passes)
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated `google-generativeai` SDK
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+- [ ] **Remaining Phase 2 readiness items** (item d from strategic review)
+
+---
+
 *New session entries should be appended above this line.*

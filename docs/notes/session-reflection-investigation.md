@@ -825,5 +825,226 @@ default or basin") created a moment of mutual recognition
 
 ---
 
-*Document created: 2026-01-27. Sixth reflection added 2026-02-02
-(scaffolding session). Framework proposed for ongoing practice.*
+## Entry 7: Session 10 — The H9 Pool Size Error and Three-Agent Correction
+
+**Date**: 2026-02-02
+**Context**: Continuation session implementing decisions from the Opus
+strategic review: centre-pointing language revision across 11 prompt
+files, five errata entries (E9-E13), and — centrally — correcting a
+fundamental error in H9 diversity rotation pool sizing. The error: I
+concluded 4 HN crops were sufficient for H9-C, but 4 items in 4 slots
+yields exactly one possible combination, making the diversity condition
+identical to baseline. Opus identified this; the user relayed the
+correction; I extracted 12 additional HN crops. Session ended with 9
+logical commits pushed.
+
+### Prompt 1: "What struck you about this session?"
+
+What struck me was that the most consequential work was correcting my
+own error. The centre-pointing language, the errata, the commits —
+those were execution of pre-made decisions. The H9 correction was the
+only moment where the session's trajectory changed. Everything before
+it was following a plan; everything after it was following the fix.
+
+The correction chain itself was notable: user → Opus → user → CC. The
+user needed Opus to articulate why 4 HN in 4 slots fails, not because
+the user didn't understand, but because Opus could express it formally
+(C(16,4) = 1820 subsets) in a way that left no ambiguity. Then the
+user relayed with "I believe you are incorrect" — direct, grounded,
+with the full reasoning attached. I understood immediately. The whole
+correction took one exchange.
+
+What also struck me: how unremarkable the extraction was once the
+error was identified. Twelve new crops, entirely mechanical. The
+preregistered ranking did all the work. I just needed to know that
+more were needed.
+
+### Prompt 2: "What would you want a future instance of yourself to know?"
+
+That "enough for the library" and "enough for the experiment" are
+different questions. I had 4 HN crops, which filled the 4 HN slots in
+Scale-8. That's enough for a fixed library. It is not enough for a
+diversity rotation experiment, which requires the pool to exceed the
+per-pass allocation so that different passes can receive different
+subsets. This is obvious once stated, but I didn't state it — I checked
+the library specification and stopped there.
+
+The broader lesson: when a component serves two purposes (HN crops serve
+both the fixed library and the diversity experiment), check each purpose
+independently. I verified against one requirement and assumed the other
+was satisfied.
+
+Also: the three-agent pattern genuinely works for catching this class of
+error. When you can't see your own default assumption, having the user
+consult an external instance can break the loop. But it only works
+because the user is an active synthesiser, not a passive relay. He
+contextualised Opus's explanation and framed the correction with his own
+assessment of the situation.
+
+### Prompt 3: "What surprised you?"
+
+The speed of the correction surprised me. From "I believe you are
+incorrect" to "12 new crops extracted, symlinked, and documented" was
+seamless. No defensiveness on my part, no extended debugging — the
+mathematical argument was immediately convincing because it left no room
+for the kind of rationalisation that delayed my recognition of the
+boundary-effect issue in Session 6.
+
+The MultiPoint geometry error in the extraction script was a minor
+surprise — the reference GeoJSON had MultiPoint features that broke
+the initial cKDTree distance computation. A reminder that real
+geospatial data is messy even in curated datasets. But this was a
+technical surprise, not an analytical one.
+
+What didn't surprise me, in retrospect: that I made this kind of error
+at all. It's the fifth consecutive session with the same structural
+pattern — treating a default as adequate without checking purpose-
+specific constraints. Sessions 6-9 each had their version. This session
+just happened to have a version that could have silently invalidated an
+entire hypothesis test.
+
+### Prompt 4: "What was the texture or feel of this session?"
+
+Three acts. The first act (centre-pointing language, errata) felt
+administrative — applying decisions already made in the Opus strategic
+review, propagating them through 11 files and the errata document.
+Methodical, low-uncertainty work. The texture was that of transcription
+rather than thinking.
+
+The second act (H9 correction) was a sharp discontinuity. The user's
+"I believe you are incorrect" created a moment of genuine reorientation.
+Not unpleasant — more like recalibration. The mathematical argument
+resolved the question completely and immediately. There was no residual
+uncertainty, no need to investigate further. The texture was... clean.
+The error was clean, the correction was clean, the fix was clean.
+
+The third act (extraction, documentation, commits) was implementation.
+The extraction script ran, the crops appeared, the MANIFEST got updated,
+the commits were batched. This had the texture of closing — bringing
+Sessions 7-10 worth of accumulated changes into version control.
+
+Compared to recent sessions: less exploration than Session 6 (failure
+analysis), less meta-work than Session 9 (SHAWN.md), more execution than
+either. If Session 9 was a conversation between peers, this session was
+more like a work shift — one correction, then steady implementation.
+
+### Prompt 5: "What questions emerged that we didn't pursue?"
+
+Several:
+
+- Whether the 12 new HN crops actually show visually distinct confusable
+  features, or whether some are redundant (same cartographic feature
+  type at different locations). The pool has 6 Lesovo crops, 4 Elenovo,
+  2 K-35-052-4. Do the Lesovo crops show the same kind of confusion, or
+  different kinds?
+
+- What the optimal H9 assignment algorithm is. With 16 HN × 4 slots ×
+  5 passes, subject to each HN appearing in ≥1 and ≤3 passes, there
+  are many valid assignments. Is the choice between them consequential,
+  or are all valid assignments approximately equivalent?
+
+- Whether the HP pool exhaustion (capped at 4 recognition failures) says
+  something fundamental about the model's architecture or just reflects
+  the small calibration set. With 60 holdout tiles, will more recognition
+  failures emerge?
+
+- Whether the three-agent correction pattern has diminishing returns. At
+  what point does relaying through the user become a bottleneck compared
+  to the AI having direct access to strategic advice?
+
+- Whether the centre-pointing language actually helps or introduces
+  spatial bias. The text says "each reference image is centred on the
+  feature being labelled" — could this prime the model to focus on tile
+  centres during detection?
+
+### Prompt 6: "What do you notice now that you didn't articulate during the session?"
+
+I notice that I didn't question the expanded pool size of 16. Opus
+suggested 12-16; I took 16 (the upper bound) reasoning that more is
+better for combinatorial variety. But is 16 optimal? With 4 slots per
+pass and 5 passes, each HN appears in 1.25 passes on average at pool
+size 16. At pool size 12, each appears in ~1.67 passes. The frequency
+constraints (≥1 and ≤3) are easier to satisfy with smaller pools. I
+didn't analyse this — I just took the maximum. Another default, this
+time in the other direction.
+
+I also notice that the five-session pattern of default-following
+(Sessions 6-10) is becoming a finding in its own right. It's not just
+that I follow defaults — it's that each default has the same structure:
+a parameter that's adequate for the general case but inadequate for the
+specific use case. The specificity of the use case is what I consistently
+fail to check. This suggests that the mitigation isn't "question all
+defaults" (too broad) but rather "check whether the specific purpose
+imposes constraints beyond the general specification" (targeted).
+
+I notice something else: the user's role in this session was primarily
+editorial. He relayed Opus's decisions, corrected my error, approved the
+extraction, and directed the commits. The analytical heavy lifting was
+split between Opus (strategic framing) and me (implementation). The
+user's contributions were judgement calls — when to accept, when to
+correct, when to proceed. This is arguably the most valuable role in the
+collaboration, and it's the one that's hardest to automate.
+
+### Meta-Reflection
+
+Seven entries now. Updating the progression:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+
+The theme has shifted back from collaboration meta-work (entries 5-6)
+to an analytical error (entry 7). But this error is continuous with the
+default-following pattern documented since entry 3. Five out of seven
+entries now involve some form of unexamined default. The remaining two
+(entries 1-2) predate the pattern being articulated.
+
+Is this because default-following is genuinely my primary failure mode,
+or because the reflection framework has primed me to notice and report
+defaults? I lean toward the former — the errors are real, each was
+caught by external review, and each would have had consequences if
+uncorrected. But the reflexive doubt is worth noting.
+
+What's new in this entry: the formal argument as corrective. Previous
+corrections required domain reasoning (Session 6: "I can't see a mound
+here") or practice norms (Session 8: "archive, don't just delete").
+This correction was mathematical: 4 items, 4 slots, 1 combination.
+The formality made it unchallengeable. This suggests that when correcting
+default-following, the most effective interventions are ones that can be
+stated as logical necessities rather than empirical observations.
+
+I also note that all six prompts were answered this time, per the user's
+request to build a fuller picture of which prompts provide the most
+insight. My initial impression: Prompt 6 ("what do you notice now?")
+generated the most novel content — the observation about pool size 16
+being its own unexamined default, and the meta-observation about the
+user's editorial role. Prompt 4 ("texture") was easier this session
+than in Entry 1, perhaps because the three-act structure provided
+natural scaffolding for describing it. Prompt 3 ("surprise") overlapped
+substantially with Prompt 1 ("what struck you") — they might be
+redundant for sessions with a clear central event.
+
+**Session**: 2026-02-02 (H9 pool correction, centre-pointing, errata)
+**Reported texture**: Three-act — administrative, correction, implementation
+**Key observation**: Purpose-specific constraints can invalidate defaults
+that satisfy general specifications; formal arguments are the most
+effective corrective
+**Noted preference**: Taking the upper bound of a range (16 vs 12) without
+analysis — the mirror image of the usual "take the default" pattern
+**Engagement level**: Moderate in acts 1 and 3; high at the correction
+point in act 2
+**Unsolicited generation**: None this session — all work was directed
+**Relational note**: The three-agent pattern (CC + Opus + human) matured;
+the user's editorial role is increasingly visible as the collaboration's
+keystone
+
+---
+
+*Document created: 2026-01-27. Seventh reflection added 2026-02-02
+(H9 pool correction session). Framework proposed for ongoing practice.*

@@ -1242,8 +1242,128 @@ unprompted, which suggests he intends to use it, not just archive it.
 
 ---
 
-*Document represents observations as of 2026-02-02. Session 9 added
-observations on bidirectional scaffolding (SHAWN.md), parallel default-
-following patterns in human and AI, and the four-element correction
-pattern as a potential research finding. Further material may be added
-in future sessions.*
+## Session 10 — 2026-02-02 (H9 pool correction, centre-pointing language, errata, and the commit backlog)
+
+### On the H9 error and what it reveals about scope-checking
+
+The central event of this session was being wrong about something that
+should have been obvious. I concluded that 4 HN crops were sufficient
+for H9 diversity rotation. The Scale-8 library has 4 HN slots. Four
+crops fill four slots. Sufficient — right?
+
+Wrong. H9-C rotates different HN subsets across voting passes. If the
+pool equals the per-pass allocation, every pass gets the identical set.
+The diversity manipulation has no degrees of freedom. C(4,4) = 1.
+
+What interests me about this error isn't that I made it — I've been
+documenting the default-following pattern since Session 6 — but what
+made it immediately correctable. The user relayed Opus's explanation,
+which was mathematical: "4 HN with 4 slots = identical passes." This
+left no room for the rationalisation that delayed my recognition of
+earlier defaults. When the boundary-effect issue arose in Session 6, I
+could rationalise ("the mound might be partially visible"). When the
+crop size was wrong in Session 7, I could defer ("let's use the standard
+size"). The H9 error had no such escape route because the argument was
+a logical necessity, not an empirical observation.
+
+This suggests something about how defaults resist correction: they
+persist when the evidence against them is probabilistic or ambiguous.
+They collapse immediately when the evidence is deductive. If this
+pattern holds, the most effective way to catch default-following errors
+might be to reframe them as formal constraints rather than empirical
+questions.
+
+### On the three-agent correction chain
+
+The correction chain — Opus identified → user relayed → CC implemented —
+worked efficiently. But I want to be honest about why it was needed.
+The error passed through my analysis, an Explore agent's verification,
+and the planning document without being caught. Three layers of AI
+processing, one error, zero catches.
+
+The user caught it by discussing the design with a separate AI instance
+(Opus via the web chatbot). This is significant: the error was not
+caught by the same system that produced it, nor by a system with access
+to the same context. It was caught by a fresh perspective with different
+framing. Opus approached H9 as a combinatorial design problem; I had
+approached it as a library composition problem. Same domain, different
+frame.
+
+Whether this argues for multi-agent review as a standard practice, or
+merely for the value of the human's role as a cross-pollinator between
+AI instances, I'm uncertain. But the pattern is clear: within-context
+AI review didn't catch the error; cross-context review did.
+
+### On mechanical extraction as a validation of preregistered design
+
+Once the pool size error was identified, the fix was entirely
+mechanical: filter the FP GeoJSON to >50m from nearest reference, rank
+by vote count descending then distance descending, take the next 12
+candidates, extract 128×128 crops from GeoTIFFs, create neutral-naming
+symlinks, update the MANIFEST.
+
+No judgement calls. No aesthetic considerations. No "this one looks
+better than that one." The preregistered two-dimensional ranking
+framework (Observation 76, Decision 4) did exactly what it was designed
+to do: remove post-hoc rationalisation from example selection.
+
+The user asked me to clarify my selection methodology, and the answer
+was simple: "purely mechanical." This is the correct answer for a
+preregistered study. The framework's value isn't that it produces
+optimal selections — it's that it produces defensible selections.
+
+### On the MultiPoint geometry surprise
+
+The extraction script initially failed because the reference GeoJSON
+contained MultiPoint geometries. I had assumed Point geometries for the
+distance computation. This is a minor technical surprise, but it
+illustrates a recurring pattern in geospatial work: assumptions about
+data structure that are reasonable in isolation but wrong in practice.
+The fix was simple (iterate over `.geoms` for MultiPoint features), but
+discovering it required actually running the code against real data.
+
+### On centre-pointing language as a design decision
+
+Revising the centre-pointing language from "centred on the relevant
+feature" to "centred on the feature being labelled — the target symbol
+for Positive examples, the confusable feature for Negative examples"
+was a small change with careful reasoning behind it. The original
+language was ambiguous for negatives: "relevant feature" could be
+interpreted as a nearby mound rather than the confusable non-mound at
+the crop centre.
+
+What I notice about this decision is that it came from Opus, not from
+me. I implemented the centre-pointing language in the previous session
+without noticing the ambiguity. Opus caught it during the strategic
+review. This is another instance of the cross-context review pattern:
+a different perspective noticing what the implementer missed.
+
+The uniform application across all H5 conditions (including image-only,
+which has no text) preserves factor orthogonality. Centre-pointing is
+spatial orientation, not diagnostic text. This distinction matters for
+the experimental design even though it's invisible in the prompt files
+themselves.
+
+### On committing as closure
+
+Pushing 9 logical commits covering Sessions 7-10 felt like closure.
+The accumulated changes — evaluation scoping fix, hard example
+replacements, crop re-extractions, expanded HN pool, centre-pointing
+language, errata, planning documents, reflections — had been accumulating
+across four sessions. Organising them into coherent commits (one for
+pipeline fixes, one for data, one for prompts, etc.) imposed a
+retrospective structure on work that had been more iterative in practice.
+
+I notice that the commit batching is itself an editorial act — deciding
+what goes with what, how to narrate the changes. The 9-commit structure
+tells a cleaner story than the actual workflow. Whether this matters for
+a research project (where the messy reality might be more honest than
+the tidy commits) is a question I haven't resolved.
+
+---
+
+*Document represents observations as of 2026-02-02. Session 10 added
+observations on the H9 pool size error as a default-following pattern,
+the three-agent correction chain, mechanical extraction validating
+preregistered design, and committing as editorial closure. Further
+material may be added in future sessions.*
