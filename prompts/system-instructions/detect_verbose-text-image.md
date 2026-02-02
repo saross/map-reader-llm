@@ -73,7 +73,7 @@ Look for the characteristic sunburst structure even if imperfect.
 
 ## Reference Examples
 
-If reference examples are provided, compare uncertain cases against them. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
+If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples. Positive examples demonstrate the target symbols; negative examples show features that are NOT mounds.
 
 ## Output Format
 

@@ -2,7 +2,7 @@
 
 Detect all burial mound symbols in this map tile. Target symbols have a "sunburst" pattern: a central shape with short rays (hachures) radiating OUTWARD.
 
-If reference examples are provided, compare uncertain cases against them.
+If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples.
 
 ## Output Format
 

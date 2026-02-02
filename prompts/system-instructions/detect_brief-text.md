@@ -19,7 +19,7 @@ The **rays pointing outward** are essential. Symbols without visible rays are no
 
 1. Provide individual bounding boxes for each symbol, even in clusters.
 2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
-3. If reference examples are provided, compare uncertain cases against them.
+3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples.
 
 ## Output Format
 
