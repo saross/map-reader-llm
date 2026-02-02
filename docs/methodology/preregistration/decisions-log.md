@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-01-22
+**Last updated**: 2026-02-02
 
 ---
 
@@ -117,6 +117,8 @@ Preliminary testing found two-stage pipelines underperformed single-stage with v
 - **Recognition failures** (>50m from nearest detection): 9 FNs, genuinely invisible to the model
 - **Localisation failures** (20-50m from nearest detection): 15 FNs, detected but misplaced
 
+#### Initial selection (Session 6)
+
 Selected 4 recognition failures, one per map sheet (farthest from nearest detection first):
 
 | Example | fid | Map | Nearest Detection | Source Tile |
@@ -126,7 +128,34 @@ Selected 4 recognition failures, one per map sheet (farthest from nearest detect
 | 07 | 556 | K-35-052-4 | 572.1m | K-35-052-4_32635_x2240_y3136.png |
 | 08 | 105 | Elenovo | 243.6m | K-35-053-3_Elenovo_x896_y1344.png |
 
-**Deviation from preregistration**: Used K=5 (not K=10) and proximity-based ranking (not frequency-only). Both deviations are conservative — K=5 found all FNs as complete misses, and the proximity dimension provides stricter differentiation than frequency alone. The preregistered threshold of ≥3/10 misses is trivially satisfied (all are 5/5 misses at K=5, equivalent to 10/10).
+#### Revision (Session 7) — boundary artefact discovery
+
+Diagnostic analysis revealed that fids 354, 249, and 556 are entirely outside all calibration tile polygons — their reference coordinates fall in gaps between the 5 scattered tiles per sheet. They never contributed to the FN count and are not genuine recognition failures. The evaluation scoping bug (E7, see protocol errata) allowed these out-of-scope references to appear in the FN list because references were tested against `union_all()` of tile polygons rather than individual tiles. With non-adjacent calibration tiles, the union is geometrically equivalent to per-tile scoping, so the bug did not inflate the F1 metrics, but the register included these references in the unscoped crop analysis.
+
+#### Final selection approach
+
+**Priority**: Recognition failures over localisation failures. Localisation failures (detection within 20-50m of reference) would be hits at production tolerances (~50m / 10px at 5m/px). The core hard example library should teach the model to *recognise* mounds, not to place centroids more precisely. See Observation 79 in working notes.
+
+**Ranking**: Among recognition failures (>50m from nearest detection), rank by (1) vote count of nearest detection descending (more votes = more systematic miss), then (2) distance to nearest detection descending.
+
+**Edge clearance**: Candidates where the mound symbol is truncated at the tile edge are excluded. Minimum ~5px clearance from any tile edge is required for the symbol to be fully visible. Truncated symbols are not genuine recognition failures because the 64px tile overlap ensures the full symbol appears in an adjacent tile. Fid 161 (Elenovo, west edge, ~2/3 truncated) was excluded on this basis.
+
+**Map sheet stratification**: One-per-sheet diversity was used as a tiebreaker in the initial selection. In the revised selection, this constraint was relaxed because Lesovo and K-35-052-4 had zero recognition failures among their calibration FNs — all their FNs were either out-of-scope (boundary artefacts) or localisation failures. Requiring one-per-sheet would force inclusion of localisation failures on those sheets, contradicting the recognition-failure priority. The constraint is relaxed only for hard positives; hard negatives retain one-per-sheet stratification.
+
+**Final hard positives**:
+
+| Example | fid | Map | Votes | Nearest Det. | Source Tile |
+|---------|-----|-----|-------|-------------|-------------|
+| 05 | 399 | Rakovski | 0/5 | 1243.1m | K-35-062-2_Rakovski_x448_y2688.png |
+| 06 | 99 | Elenovo | 0/5 | 1047.1m | K-35-053-3_Elenovo_x896_y1344.png |
+| 07 | 15 | Rakovski | 0/5 | 905.6m | K-35-062-2_Rakovski_x896_y2688.png |
+| 08 | 105 | Elenovo | 0/5 | 243.6m | K-35-053-3_Elenovo_x896_y1344.png |
+
+**Note**: Examples 05 and 07 share Rakovski; examples 06 and 08 share Elenovo. This doubles up on two sheets while leaving Lesovo and K-35-052-4 unrepresented in hard positives. The trade-off is justified: prioritising genuine recognition failures provides more useful training signal than sheet diversity with inappropriate examples. The expanded library (Scale-16, Scale-32) will restore sheet diversity as more candidates are added.
+
+**Crop extraction** (Session 7, continued): 128×128 pixel crops, centred on the reference mound coordinate, extracted from the full map GeoTIFFs (`inputs/rasters/*.tif`) rather than from detection tiles. This ensures the target symbol is always at the crop centre with symmetric real map context, even when the reference point is near a tile edge. See errata E8 for rationale and alternatives considered, and Observation 80 in working notes. Crop size (128×128) is flagged as a future OFAT exploratory variable (see Observation 78).
+
+**Deviation from preregistration**: Used K=5 (not K=10) and proximity-based ranking (not frequency-only). Both deviations are conservative — K=5 found all FNs as complete misses, and the proximity dimension provides stricter differentiation than frequency alone. The preregistered threshold of ≥3/10 misses is trivially satisfied (all are 5/5 misses at K=5, equivalent to 10/10). The one-per-sheet tiebreaker and its relaxation are not preregistered — they are post-hoc selection criteria applied during library construction.
 
 ### Hard Negative Selection (examples 11-14)
 
@@ -331,14 +360,174 @@ This approach is not standard but is appropriate for CI-based inference where we
 
 ---
 
-## Future Decisions (TBD After Phase 1)
+## Decision 11: 50m Recognition/Localisation Threshold and HP Pool Exhaustion
 
-The following decisions will be documented after Phase 1 analysis:
+**Date**: 2026-02-02
 
-- [ ] Specific hard positive examples selected (with source tile, coordinates, miss frequency)
-- [ ] Specific hard negative examples selected (with source tile, coordinates, detection frequency)
-- [ ] Any adjustments to library composition based on available hard examples
-- [ ] Scale-32 feasibility (depends on number of distinct hard examples available)
+**Decision**: Formally adopt a 50m distance threshold to distinguish recognition failures
+from localisation failures. Exclude localisation errors (nearest detection <50m) from
+hard example libraries. Accept that the hard positive (HP) pool is structurally capped
+at 4 examples, and defer Scale-16/Scale-32 H8 conditions to post-H10.
+
+### 50m threshold rationale
+
+**Distributional evidence**: CC's boundary/edge-clearance analysis of all 24 FNs
+revealed a distributional cliff between 30m and 50m:
+
+| Threshold | Usable FNs | Selected | Available for expansion |
+|-----------|-----------|----------|------------------------|
+| >20m      | 18        | 4        | 14                     |
+| >30m      | 9         | 4        | 5                      |
+| >50m      | 4         | 4        | 0                      |
+| >100m     | 3         | 3        | 0                      |
+
+Below 30m: clear localisation territory. 30–50m: ambiguous. Above 50m: genuine
+recognition failures. The cliff itself is the empirical evidence for the threshold.
+
+**Conceptual rationale**: Few-shot libraries teach the model *what to look for*. A
+recognition failure (FN >50m from nearest detection) is a mound the model could not
+identify — showing it as an HP directly addresses that gap. A localisation failure
+(FN 20–50m from nearest detection) is a mound the model *did* recognise but placed
+incorrectly. Showing more examples of already-recognised mounds will not fix coordinate
+prediction — that is an architectural limitation, not a pattern-matching failure.
+
+Similarly, "phantom" FPs from localisation errors are not genuine confusable symbols.
+Including them as HNs would teach the model to avoid random map patches, which is
+uninformative.
+
+**Alternative considered**: 100m threshold (~25px, Opus suggestion). Rejected because it
+would disqualify fid 99 (96.4m), dropping the usable HP pool from 4 to 3 and leaving
+Scale-8 unfillable. The 50m boundary is supported by the distributional cliff and is the
+maximum threshold that retains all 4 selected HPs.
+
+### HP pool exhaustion
+
+Of 9 recognition failures (>50m) in the FN register:
+
+- 4 selected for Scale-8 (fids 399, 99, 15, 105)
+- 3 out of scope — boundary artefacts (fids 354, 249, 556; see errata E7)
+- 1 out of scope — newly discovered (fid 489, outside all calibration tiles)
+- 1 edge risk — symbol truncated (fid 161, 3.3px from tile edge)
+
+Zero recognition failures remain for library expansion. The expansion pool is entirely
+localisation failures (14 usable, 20–50m from nearest detection), which are excluded by
+this decision.
+
+### HN pool status
+
+The HN pool is not constrained. At the 50m threshold, 46 usable FPs are available for
+expansion (89 total, all in scope). At a stricter 100m threshold, 30 remain available.
+Vote-band distribution among available HN candidates: 2 at 4/5, 3 at 3/5, 5 at 2/5,
+36 at 1/5.
+
+### Implications for H8 library scaling
+
+| H8 Condition    | HP | HN | Status |
+|-----------------|----|----|--------|
+| Pure Pos. Canon | 0  | 0  | Runs as designed |
+| Canonical       | 0  | 0  | Runs as designed |
+| +HP             | 4  | 0  | Runs as designed |
+| Scale-4         | 2  | 2  | Runs as designed |
+| Scale-8         | 4  | 4  | Runs as designed |
+| Scale-16        | 8  | 8  | Deferred — capped at Scale-8 under 1:1 HP:HN |
+| Scale-32        | 16 | 16 | Deferred — capped at Scale-8 under 1:1 HP:HN |
+
+This is anticipated by the preregistration (line 815): "If fewer than 16 distinct HPs
+or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum
+available while preserving 1:1 ratio."
+
+Testable contrasts C1–C3, S1, and B1 are unaffected. Scaling contrasts S2 and S3 are
+deferred to post-H10 (calibration tile expansion).
+
+### Implications for H9 (diversity) and H12 (ratio)
+
+**H9**: Runs as HN-diversity-only test. HP channel is frozen (4 slots, 4 examples —
+every HP appears in every pass). HN rotation is the more important diversity dimension
+given that FPs outnumber FNs. HP diversity is untestable due to pool exhaustion.
+
+**H12**: Deferred to post-H10. With HP capped at 4, the only testable ratios are
+HP-constant with varying HN (e.g., 4:4, 4:8), which confounds ratio with total count.
+Deferring until H10 expands the HP pool enables the full symmetric ratio design.
+
+### Reportable finding
+
+The structural asymmetry between HP and HN pools is itself a finding. It indicates the
+model's primary weakness at baseline is **precision** (too many false alarms → abundant
+HN candidates) rather than **recall** (missing mounds → few HP candidates). A model that
+over-detects but needs human filtering is operationally different from one that silently
+misses features.
+
+**Evidence**: `outputs/phase1-library/fp-fn-register.md`, `planning/hard-example-library-decisions.md`, CC boundary/edge-clearance analysis (Session 8).
+
+---
+
+## Decision 12: Centre-Pointing Language in Prompts
+
+**Date**: 2026-02-02 (revised 2026-02-02)
+
+**Decision**: Add a descriptive centre-pointing statement to all detection prompt
+preambles, applied uniformly across all 11 prompt variants including all H5 conditions
+(Minimal, Terse, Verbose).
+
+**Language added** (single sentence, identical in all 11 files):
+
+> Each reference image is centred on the feature being labelled — the target symbol
+> for Positive examples, the confusable feature for Negative examples.
+
+**Revision note**: The initial wording ("Each reference image is centred on the relevant
+feature") was ambiguous for negative examples — "relevant feature" could be interpreted
+as a nearby mound rather than the confusable non-mound at the crop centre. The revised
+wording explicitly ties the label to the centred feature for both positive and negative
+cases.
+
+**Rationale**:
+
+1. At 128×128 crops, images may contain 2–3 mound symbols if they cluster. Without
+   centre-pointing, the model may latch onto an easy neighbouring mound instead of the
+   difficult target HP.
+
+2. For HNs, a crop centred on a confusable symbol may also contain a real mound at
+   the periphery. Labelling the whole image "Negative" without centre-pointing sends
+   a contradictory signal. The revised wording resolves this by making clear that the
+   negative label applies to the *centred* feature specifically.
+
+3. The Stage 2 verifier prompt already uses "candidate symbol in the centre" language,
+   so this is consistent with existing design.
+
+4. Framed as *descriptive* ("each image is centred on...") rather than *imperative*
+   ("look at the centre of...") to avoid biasing spatial scanning during detection.
+
+5. **Uniform across H5 conditions**: Centre-pointing is spatial orientation (telling the
+   model *where* to look), distinct from H5's diagnostic text (explaining *why* something
+   is or isn't a mound). Varying spatial language across H5 levels would co-vary spatial
+   instruction with diagnostic text, introducing a confound. Keeping the single sentence
+   identical across all H5 conditions preserves factor orthogonality.
+
+6. "Confusable" was chosen over the more neutral "non-target" because it primes the model
+   to understand these examples were selected specifically because they resemble mounds,
+   setting up a discrimination task rather than mere classification. This is a marginal
+   wording choice, not strong enough to constitute diagnostic content that would interfere
+   with H5.
+
+**Watch for**: Spatial bias in detections clustering toward tile centres. This would
+suggest the centering instruction bleeds from exemplar interpretation into detection
+behaviour. Low risk given that detection prompts explicitly say "scan the target image."
+
+**Files modified**: All 11 `detect_*.md` system instruction files in
+`prompts/system-instructions/`.
+
+**Evidence**: `planning/hard-example-library-decisions.md` §2.
+
+---
+
+## Phase 1 Decisions (Resolved)
+
+The following items from the original "Future Decisions" section are now resolved:
+
+- [x] Specific hard positive examples selected — Decision 4 (2026-02-01)
+- [x] Specific hard negative examples selected — Decision 4 (2026-02-01)
+- [x] Adjustments to library composition — Decision 11 (Scale-16/32 deferred)
+- [x] Scale-32 feasibility — Decision 11 (HP pool exhausted at 4)
 
 ---
 

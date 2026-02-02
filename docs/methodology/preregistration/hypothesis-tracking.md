@@ -2,7 +2,7 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-01-18
+**Last updated**: 2026-02-02
 
 ---
 
@@ -17,7 +17,7 @@
 | H5 | Negative Text Treatment | Text level | 3 × 3 | `detect_*_terse.json`, `detect_*_verbose.json` | 2d | Pending |
 | H6 | Flash→Pro Transfer | Model | OFAT | Same configs, different model | 4 | Pending |
 | H7 | Temperature | T | 5 | N/A (runtime parameter) | 2b | Pending |
-| H8 | Library Composition/Scaling | Library size | 7 | `library_*.json` | 2c | Pending |
+| H8 | Library Composition/Scaling | Library size | 5 (of 7) | `library_*.json` | 2c | Pending (Scale-16/32 deferred) |
 
 ---
 
@@ -25,10 +25,10 @@
 
 | ID | Hypothesis | Factor | Tier | Trigger | Status |
 |----|------------|--------|------|---------|--------|
-| H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | After Phase 2 | Pending |
+| H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | After Phase 2 | Pending (HN-diversity only; HP frozen) |
 | H10 | Training Pool Size | Pool size | B | Budget permits | Pending |
 | H11 | Tile Size Effects | Tile dimensions | B | F1 < 0.85 or speed concerns | Pending |
-| H12 | HP:HN Ratio | Hard example ratio | B | H8 shows library matters | Pending |
+| H12 | HP:HN Ratio | Hard example ratio | B | H8 shows library matters | Deferred (post-H10; HP pool exhausted) |
 | H13 | Overlap/Stride Effects | Tile overlap | B | Edge errors observed | Pending |
 | H14 | Cross-Model Consistency | Provider | C | Deferred to future work | Deferred |
 | H15 | Cross-Model Voting | Multi-provider voting | C | Deferred to future work | Deferred |
@@ -151,8 +151,14 @@ Tests library component effects and scaling.
 | +HP | H8-3 | 4 | 2 | 4 | 0 | 3 | 13 | `library_plus-hp.json` |
 | Scale-4 | H8-4 | 4 | 2 | 2 | 2 | 3 | 13 | `library_scale-4.json` |
 | Scale-8 | H8-5 | 4 | 2 | 4 | 4 | 3 | 17 | `library_scale-8.json` |
-| Scale-16 | H8-6 | 4 | 2 | 8 | 8 | 3 | 25 | `library_scale-16.json` |
-| Scale-32 | H8-7 | 4 | 2 | 16 | 16 | 3 | 41 | `library_scale-32.json` |
+| Scale-16 | H8-6 | 4 | 2 | 8 | 8 | 3 | 25 | `library_scale-16.json` | **DEFERRED** |
+| Scale-32 | H8-7 | 4 | 2 | 16 | 16 | 3 | 41 | `library_scale-32.json` | **DEFERRED** |
+
+**Note (2026-02-02)**: Scale-16 and Scale-32 are deferred because the HP pool is
+structurally exhausted at 4 recognition failures (>50m threshold). These conditions
+collapse to Scale-8 under the 1:1 HP:HN constraint. Deferred to post-H10 when
+calibration tile expansion may yield additional recognition failures. See Decision 11
+in decisions-log.md.
 
 **Planned contrasts**:
 
@@ -160,8 +166,8 @@ Tests library component effects and scaling.
 - C2: Canonical → +HP (HP effect)
 - C3: +HP → Scale-8 (HN effect)
 - S1: Scale-4 → Scale-8 (initial scaling)
-- S2: Scale-8 → Scale-16 (mid scaling)
-- S3: Scale-16 → Scale-32 (ceiling)
+- ~~S2: Scale-8 → Scale-16 (mid scaling)~~ — deferred (post-H10)
+- ~~S3: Scale-16 → Scale-32 (ceiling)~~ — deferred (post-H10)
 - B1: +HP vs Scale-4 (composition at matched size)
 
 ---
@@ -177,6 +183,12 @@ Tests whether diversity in prompts, images, or temperature improves voting.
 | H9-C | Fixed | Varied | Fixed | Image diversity only |
 | H9-D | Fixed | Fixed | Varied | Temperature diversity only |
 | H9-E | Varied | Varied | Varied | Full diversity |
+
+**Note (2026-02-02)**: H9 runs as **HN-diversity-only** for image diversity (H9-C).
+HP channel is frozen: 4 slots, 4 examples, every HP appears in every pass. Only HN
+examples rotate across passes. HP diversity is untestable due to pool exhaustion (only
+4 recognition failures exist). HN rotation is the more important diversity dimension
+given that FPs outnumber FNs ~23:1. See Decision 11 in decisions-log.md.
 
 ---
 

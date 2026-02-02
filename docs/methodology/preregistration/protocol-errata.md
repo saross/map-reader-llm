@@ -141,4 +141,154 @@ Additionally, the property names in the generated GeoJSON used `tile` and `map` 
 
 ---
 
+### E7: Evaluation reference scoping hardened against boundary effects
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-01 |
+| Type | Correction |
+| Files | `scripts/lib_advanced_metrics.py`, `scripts/6_accuracy_report.py`, `tests/test_integration_pipeline_contracts.py` |
+| Impact | Preventive — no change to Phase 1 calibration metrics; prevents latent bug from manifesting in denser tile configurations (Phase 2+) |
+
+**Description**: The evaluation pipeline scoped ground truth references against tile bounds using `union_all()` — merging all tile polygons into a single geometry and testing `intersects()`. This is semantically incorrect: references should be in scope only if they fall within at least one *individual* tile polygon, not within the union. With non-adjacent tiles, `union_all()` produces a MultiPolygon equivalent to per-tile checking, so the Phase 1 calibration results (5 scattered tiles per sheet) are unaffected. However, with denser tile configurations — such as the 60-tile validation set in Phase 2, which may include adjacent or overlapping tiles — the union could merge adjacent tile polygons and include references falling in inter-tile gaps.
+
+A secondary issue in `6_accuracy_report.py` compounded the risk: references were buffered by 20m *before* the scoping check, meaning a reference 15m outside a tile boundary would have its 20m-radius buffer circle overlap the tile polygon, passing the scope check even though the reference point itself is outside.
+
+Three locations were affected:
+
+1. `lib_advanced_metrics.py:calculate_f1_internal()` — per-map `union_all()` for F1/precision/recall
+2. `lib_advanced_metrics.py:error_taxonomy()` — global `union_all()` for FP/FN categorisation
+3. `6_accuracy_report.py:validate_file()` — global `union_all()` on buffered references for FP/FN GeoJSON generation
+
+**Fix**: Extracted a shared helper function `scope_references_to_tiles()` using `gpd.sjoin()` with `predicate='intersects'` against individual tile polygons, replacing all three `union_all()` sites. In `6_accuracy_report.py`, references are now scoped *unbuffered* against individual tiles, then only in-scope references are buffered for matching. Added 7 new integration tests covering: reference inside tile (in scope), reference in gap between tiles (excluded), reference outside all tiles (excluded), reference on tile boundary (in scope), empty inputs, and an end-to-end F1 test verifying that boundary-effect references don't inflate FN counts.
+
+Additionally, the `spatial_tolerance_curve()` default buffer list was updated from `[10, 20, 30, 50]` to `[10, 20, 30, 40, 50]` to include the 40m tolerance level used in the two-dimensional failure ranking framework.
+
+**Verification**: All 274 tests pass (267 existing + 7 new). Phase 1 calibration metrics are identical before and after the fix, confirming that the non-adjacent calibration tiles were unaffected by the union-based scoping.
+
+**Protocol impact**: None. The preregistered evaluation methodology (20m spatial tolerance, Hungarian matching) is unchanged. The fix corrects a latent scoping bug that could produce inflated FN counts with denser tile configurations. Phase 1 results stand as reported.
+
+---
+
+### E8: Hard example crops extracted from full map GeoTIFFs
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-02 |
+| Type | Clarification |
+| Files | `inputs/examples/hard-positive/example_05-08_*.png`, `inputs/examples/hard-negative/example_11-14_*.png` |
+| Impact | Crops may include map content from outside the detection tile boundary |
+
+**Description**: The preregistration (§8.4.2) specifies hard example selection criteria but does not prescribe how example crops are spatially extracted. The implicit assumption is that crops come from the detection tiles shown to the model. Instead, all hard example crops (both hard positives and hard negatives) were extracted as 128×128 pixel regions from the full map GeoTIFFs (`inputs/rasters/*.tif`), not from the 512×512 detection tiles.
+
+- **Hard positives**: Centred on the reference mound coordinate (the ground truth location of the missed symbol)
+- **Hard negatives**: Centred on the FP detection coordinate (the location where the model placed its hallucinated detection)
+
+Three options were evaluated (during hard positive extraction; the same rationale applies to hard negatives):
+
+1. **Tile-bounded crops**: Crop from the detection tile, clamping to tile boundaries. When the reference point is near a tile edge, the target symbol is off-centre — in 2 of 4 cases, the symbol was within 60 pixels of a tile corner, producing asymmetric crops that could teach the VLM to associate mounds with image edges.
+2. **Centred with padding**: Centre on the reference point, fill beyond-tile regions with black. Rejected because detection tiles already use black padding at map edges (`fill_value=0` in `preprocess_tiling.py`), so padding could be confused with genuine map features.
+3. **Centred from full map** (selected): Crop directly from the source GeoTIFF, always centred on the target coordinate with full real map context. The relevant feature is at or near the crop centre, surrounded by real terrain in all directions.
+
+**Rationale**: For hard positives, centring the target symbol disambiguates when multiple features appear in the same crop (observed in 2 of 4 hard positive examples). For hard negatives, centring on the hallucination location shows the model the map context that produced its false positive, focusing attention on the confusing feature. In both cases, the cross-tile-boundary content is from the same continuous map sheet and represents realistic context the model would see in adjacent tiles (which overlap by 64 pixels).
+
+**Crop size** (128×128): Selected based on VLM few-shot reference sizing research. At ~5m/px, a 15–20px mound symbol occupies ~1–2.5% of a 128×128 crop — sufficient context without drowning the feature. VLM minimum input size recommendations (typically ≥300px) apply to analysis targets, not reference exemplars which are internally upscaled. The canonical positive legend crops are ~64px; hard examples need more context to show difficult real-world conditions. Crop size is flagged as a future exploratory variable (64, 128, 256, 512px OFAT experiment).
+
+**Protocol impact**: Minor. Hard examples may show a few pixels of map content from outside the detection tile boundary. This is a conservative choice: it ensures the relevant feature is always centred and surrounded by realistic context, which better serves the reference exemplar's didactic purpose. The detection methodology (tile generation, model inference, evaluation) is unchanged.
+
+---
+
+### E9: Centre-pointing language added to detection prompts
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-02 |
+| Type | Clarification |
+| Files | All 11 `prompts/system-instructions/detect_*.md` files |
+| Impact | Adds instructional text not specified in preregistration |
+
+**Description**: A centre-pointing sentence was added to all detection prompt preambles:
+
+> Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples.
+
+This addresses an ambiguity in 128×128 hard example crops: when a crop centred on a confusable feature also contains a real mound at the periphery, the model needs to know which feature the label applies to. Without this, the model could interpret a "Negative" label as applying to a visible mound rather than the confusable non-mound at the centre.
+
+The sentence is applied uniformly across all H5 conditions (Minimal, Terse, Verbose) to preserve factor orthogonality — centre-pointing is spatial orientation, distinct from H5's diagnostic text treatment.
+
+**Protocol impact**: Minor. The preregistration specifies prompt structure and content at the section level but does not prescribe individual sentence-level phrasing. This adds a spatial orientation instruction that is consistent with the Stage 2 verifier's existing "candidate symbol in the centre" language. See Decision 12 in decisions-log.md.
+
+---
+
+### E10: 50m recognition/localisation threshold determined
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-02 |
+| Type | Clarification |
+| Files | `outputs/phase1-library/fp-fn-register.md`, `docs/methodology/preregistration/decisions-log.md` (Decision 11) |
+| Impact | Determines which FNs qualify as hard positive candidates |
+
+**Description**: The preregistration (§8.4.2) specifies that hard positive examples are drawn from recognition failures — false negatives where the model failed to detect a mound — rather than localisation errors where the model detected the mound but placed it inaccurately. The specific distance threshold separating these categories was left to empirical determination.
+
+Analysis of the Phase 1 FN distance distribution revealed a distributional cliff between 30m and 50m: below 30m, FNs cluster tightly (clear localisation errors); above 50m, FNs are sparse and widely dispersed (clear recognition failures). The 30–50m range is ambiguous. A 50m threshold was selected as the boundary, yielding 9 recognition failures and 15 localisation failures from 24 total FNs.
+
+**Protocol impact**: None. This is an empirical determination within the latitude granted by the preregistration. The threshold is documented with distributional evidence in Decision 11.
+
+---
+
+### E11: Scale-16 and Scale-32 library conditions capped
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-02 |
+| Type | Clarification |
+| Files | `prompts/configs/library_scale-16.json`, `prompts/configs/library_scale-32.json`, `docs/methodology/preregistration/hypothesis-tracking.md` |
+| Impact | H8 conditions 6–7 deferred; scaling contrasts S2 and S3 deferred to post-H10 |
+
+**Description**: The HP pool is structurally exhausted at 4 recognition failures (>50m threshold). Of 9 total recognition failures, 4 are selected for Scale-8, 3 are out-of-scope boundary artefacts, 1 is a newly discovered out-of-scope candidate (fid 489, outside all calibration tiles), and 1 is edge-truncated (fid 161). Zero recognition failures remain for library expansion.
+
+Scale-16 requires 8 HP and Scale-32 requires 16 HP. Under the preregistered 1:1 HP:HN constraint, both conditions collapse to Scale-8. This activates the contingency anticipated at preregistration line 815: "If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available while preserving 1:1 ratio."
+
+Both config files are marked `"status": "deferred"` with empty example arrays. H8 contrasts C1–C3, S1, and B1 remain fully testable. Scaling contrasts S2 and S3 are deferred to post-H10 (calibration tile expansion).
+
+**Protocol impact**: None. This is activation of a preregistered contingency path, not a deviation. See Decision 11 in decisions-log.md.
+
+---
+
+### E12: H9 image diversity runs as HN-diversity-only (HP frozen)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-02 |
+| Type | Clarification |
+| Files | `docs/methodology/preregistration/hypothesis-tracking.md` |
+| Impact | H9-C tests HN rotation only; HP diversity is untestable |
+
+**Description**: H9 (diversity mechanisms) tests whether varying prompt components across voting passes improves consensus performance. For H9-C (image diversity), the preregistration envisions rotating both HP and HN examples across passes.
+
+Due to HP pool exhaustion (E11), the HP channel is frozen: 4 slots, 4 examples, every HP appears in every pass. Only HN examples rotate across passes. HP diversity is untestable with the current pool. HN rotation is the more informative diversity dimension given the ~23:1 FP-to-FN asymmetry observed at baseline.
+
+**Protocol impact**: Minor. H9-C tests a subset of the intended image diversity factor. The HP-diversity component is deferred to post-H10 when calibration tile expansion may yield additional recognition failures. See Decision 11 in decisions-log.md.
+
+---
+
+### E13: H12 (HP:HN ratio) deferred to post-H10
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-02 |
+| Type | Deviation |
+| Files | `docs/methodology/preregistration/hypothesis-tracking.md` |
+| Impact | Exploratory hypothesis H12 postponed |
+
+**Description**: H12 tests the effect of varying the HP:HN ratio within hard example libraries. With HP capped at 4, the only testable ratios are HP-constant with varying HN counts (e.g., 4:4, 4:8, 4:12), which confounds ratio with total library size. Reducing HP below 4 discards known-useful information.
+
+The full symmetric ratio design (e.g., 4:8 vs 8:4) requires a larger HP pool, which may become available after H10 (training pool expansion via calibration tile expansion using reserve tiles).
+
+**Justification**: Running a confounded version of H12 now would produce ambiguous results — any observed effect could be attributed to either ratio or total count. Deferring to post-H10 preserves the possibility of an informative, symmetric test. See Decision 11 in decisions-log.md and `planning/hard-example-library-decisions.md` §5.
+
+**Protocol impact**: Moderate. H12 is a Tier B exploratory hypothesis, not confirmatory. Its trigger condition ("H8 shows library matters") may or may not be met. Deferral does not affect confirmatory hypotheses H1–H8.
+
+---
+
 *End of errata. New entries should be appended above this line.*
