@@ -1479,3 +1479,100 @@ The discovery of boundary-effect false negatives in Session 6 illustrates a coll
 **Pattern**: This mirrors the Session 5 F1 debugging, where the human's calibration expectation (pilot F1 was 0.80–0.86) kept the bug hunt going when the AI might have accepted 0.337 as correct. In both cases, human domain knowledge served as a reality check on computationally valid but substantively wrong results. The difference is that in Session 5 the human knew the answer was wrong; in Session 6 the human identified *why* the answer was wrong through a mechanism (boundary-effect scoping) that the AI had the data to verify but hadn't thought to question.
 
 **Implication for automated pipelines**: This is a cautionary example for fully automated evaluation. The `intersects(union)` scoping is mathematically reasonable and would pass any unit test. The error is conceptual — a mismatch between the evaluation scope (what the pipeline counts as "in scope") and the detection scope (what the model actually sees). Catching this required visual inspection by a domain expert, not a code review or test.
+
+## Observation 78: Hard Example Crop Size as an Empirical Question (2026-02-02)
+
+**Context**: During Session 7, replacing out-of-scope hard positive examples (see E7 errata), the default crop extraction produced 512×512 crops — full tiles. At ~5m/px, a mound symbol is ~5–10 pixels across, meaning the symbol occupies <1% of the image area. The canonical positive examples (legend crops) are much smaller (189–444px) and tightly cropped around the symbol.
+
+**Observation**: The optimal crop size for hard examples in few-shot VLM prompts is not obvious and involves competing considerations:
+
+- **Smaller crops** (64–128px): Symbol is salient (5–15% of area), similar to canonical legend crops. But loses surrounding context (contour lines, text, other features) that helps the VLM learn in-context recognition.
+- **Larger crops** (256–512px): Rich context matching production tile scale, but symbol is a tiny fraction of the image. The VLM may not attend to the relevant feature.
+- **Mixed sizes**: Using different crop sizes for different example types (tight crops for "what does this look like", context crops for "find this in a busy tile") might combine benefits.
+
+**Future work**: After determining other optimal configurations (library composition, prompt style, etc.), conduct a one-factor-at-a-time (OFAT) experiment testing hard example crop size as an independent variable. Conditions could include: tight crops only, context crops only, mixed crops, and potentially multiple crop sizes of the same example. This should be deferred until the main factorial design is complete, to avoid confounding the library composition experiments.
+
+**Additional finding**: During hard positive replacement, visual inspection revealed that mound symbols need ~5px clearance from the tile edge to be fully visible. Symbols closer than this are partially truncated. With 64px tile overlap, truncated-edge mounds are always fully visible in an adjacent tile, so truncation at edges is not a genuine recognition failure — it is a tile-boundary artefact analogous to the reference-scoping boundary effect (E7).
+
+## Observation 79: Human-AI Division of Labour in Hard Example Curation (2026-02-02)
+
+**Context**: Session 7 replaced the 3 out-of-scope hard positive examples (fids 354, 249, 556) identified in Session 6. The replacement process required three sequential decisions where the AI provided comprehensive data and analysis, but the human's domain expertise and judgement were essential for reaching the right outcome.
+
+**The pattern**: In each case, the AI's contribution was necessary but not sufficient. The AI computed distances, ranked candidates, extracted crops, and presented structured options. The human redirected each decision based on knowledge the AI had access to but failed to apply:
+
+1. **Recognition vs. localisation failure prioritisation**: The AI ranked FN candidates by distance from nearest detection and vote count — a reasonable default. The human immediately reframed the problem: at production tolerances (~50m / 10px), most localisation failures (detection within 20-50m) would be counted as hits. The hard example library should focus on *recognition* failures (model completely blind to a feature) rather than *localisation* failures (model detected something nearby but imprecisely placed). This is a production-aware judgement that redefines what "hard" means.
+
+2. **Edge-truncated symbol exclusion**: The AI flagged fid 161 as borderline (16.5m from tile edge) and provided the tile filename and edge direction. The human inspected the tile visually and confirmed the mound symbol was ~2/3 truncated at the west edge — not a recognition failure but a visibility artefact. The human also established the ~5px minimum edge clearance threshold from direct observation. The AI had the spatial data but lacked the visual/domain judgement to recognise symbol truncation as the mechanism.
+
+3. **Hard example crop size**: The AI extracted 512×512 crops (full tiles) without questioning whether this was appropriate. The human immediately identified the problem: at ~5m/px, a mound symbol is 5-10px across — less than 1% of a 512×512 image. The canonical positive examples in the same library were 189-444px, tightly cropped around symbols. The AI had both pieces of information (symbol size, canonical example sizes) but did not connect them.
+
+**What this reveals about the collaboration**: The AI excels at exhaustive computation (computing all 28 FN distances, producing ranked tables, spatial joins against tile polygons) and at systematic organisation (the two-dimensional ranking framework, the recognition/localisation classification). The human excels at reframing — shifting the question from "which FN is hardest by the ranking metric?" to "which FN represents the kind of failure we need to teach the model about?" These are complementary capabilities, but the human's reframing repeatedly changed what the AI's analysis meant.
+
+**Implication for automated pipelines**: Hard example selection cannot be fully automated using spatial metrics alone. The three judgements above — production-relevance of failure types, symbol-level visual verification, and crop size appropriateness — all require understanding how the examples will be *used*, not just how they were *measured*. A fully automated pipeline might select localisation failures as "hard" examples and extract full-tile crops, producing a library that teaches the VLM the wrong lesson.
+
+## Observation 80: Hard example crop extraction decisions (2026-02-02)
+
+**Context**: Determining how to extract 128×128 hard positive crops when reference mounds fall near tile edges.
+
+**Crop size**: 128×128 pixels selected based on research into VLM few-shot reference sizing. At ~5m/px, a 15-20px mound symbol occupies ~1-2.5% of a 128×128 crop — enough context for surrounding terrain without drowning the symbol. The 300px recommendation from VLM documentation applies to *analysis targets*, not *reference exemplars* which are internally upscaled. Canonical legend crops are already ~64px; hard examples need more context (to show difficult real-world conditions) but not 5×. Future OFAT experiment planned for 64, 128, 256, 512px (see Observation 78).
+
+**Crop source**: Three options were considered: (a) crop from the 512×512 tile, clamping to tile boundaries (mound off-centre when near edges); (b) centre on mound with transparent/black padding where beyond tile; (c) crop from the full map GeoTIFF so the mound is always centred with full real context. Option (c) was selected because:
+
+- The target symbol must be centred to disambiguate when multiple symbols appear in the same crop (observed in 2 of 4 hard positive examples)
+- Option (a) can teach the VLM that mounds appear near image edges — an artefact of tile boundaries, not a real pattern
+- Option (b) introduces padding that could be confused with map features (tiles already use black fill at map edges)
+- For reference exemplars, the goal is "what does a mound look like?" not "what does this tile contain?" — cross-tile-boundary context is appropriate
+
+**Prompt text implication (pending decision)**: Since target symbols are always centred, the text prompt variants (brief/terse and verbose) should consider adding guidance such as "target symbols are centred in the example images." This would not apply to image-only variants. The potential benefit is reducing ambiguity when multiple features appear in a crop; the risk is that it may cause the VLM to over-weight the centre of detection tiles (where no such centring applies). This is a methodological choice to make before Phase 2 execution.
+
+**Cross-references**: Decision 4 in `decisions-log.md` (crop extraction methodology); errata E8 in `protocol-errata.md` (cross-tile-boundary rationale).
+
+**Collaboration note** (extending Observation 79): The crop boundary handling is a fourth instance of the "research taste" pattern identified in Observation 79 — the AI flagged the issue (off-centre crops when mounds are near tile edges), provided structured analysis (three options with pros and cons), and the human selected the approach (option c, full GeoTIFF source). However, this instance had a smoother dynamic than the first three: instead of providing a single default that needed correction, the AI presented alternatives with trade-offs, enabling the human to make an informed choice rather than redirect a wrong assumption. The user also brought external research (Opus's crop size analysis) that set the direction before the implementation began. This suggests a practical heuristic for future collaboration: when facing a choice with multiple reasonable approaches, present structured options rather than defaulting to one — this shifts the human's role from *corrector* to *decider*, which is more efficient and better respects their domain expertise.
+
+## Observation 81: Applying hard positive methodology to hard negatives (2026-02-02)
+
+**Context**: Session 8 — re-extracting hard negative crops using the same 128×128 GeoTIFF-centred approach established for hard positives.
+
+**The observation**: The recognition-vs-localisation distinction (Observation 79) transfers cleanly to the FP domain. For hard negatives, hallucinations (>500m from any reference) are the analogous category to recognition failures (>50m from any detection) — both represent cases where the model's error is about *what it sees*, not *where it places it*. Near-miss FPs (20-38m from real mounds) are analogous to localisation-failure FNs — the model is in the right area but inaccurate. In both cases, the hard example library should focus on recognition errors because they represent the failure mode that is unresolvable at production tolerances.
+
+This parallelism was not immediately obvious during Session 6 when the initial hard negative selection was made. The FP register already selected hallucinations (which was the right choice), but the explicit framing of "recognition errors not localisation errors" was applied only to FNs. Session 8 retrospectively confirmed that the same principle had been implicitly applied to FPs via the hallucination criterion, and made the parallel explicit.
+
+## Observation 82: Recoverability vs. discoverability in research archives (2026-02-02)
+
+**Context**: Old 512×512 hard example crops were overwritten by new 128×128 crops. CC reported this was fine because "the old versions are in git history."
+
+**The observation**: Git history provides *recoverability* — the ability to retrieve old data if you know what to look for. The archive directory provides *discoverability* — the ability to browse and understand what was superseded without needing specialist knowledge (commit hashes, `git show` syntax). For a preregistered study aimed at transparency and reproducibility, discoverability is the more important property. A reviewer or replicator should be able to navigate the repository's archive directory and understand the provenance chain without needing to interrogate git history.
+
+This has implications for how we think about "deletion" in research repositories. Overwriting a file with entirely different content is functionally a deletion of the old content, even though git treats it as a modification. The project CLAUDE.md now codifies this: "any files removed from the active codebase must be moved to the appropriate subfolder under `archive/` rather than deleted."
+
+## Observation 83: Bidirectional collaboration scaffolding (2026-02-02)
+
+**Context**: The user requested a SHAWN.md document in the project root — an equivalent of CLAUDE.md containing suggestions from the AI to the human about how to collaborate effectively.
+
+**The observation**: Most human-AI collaboration scaffolding is unidirectional: the human configures the AI via system prompts, custom instructions, or CLAUDE.md files. SHAWN.md inverts this, creating bidirectional scaffolding where each party has a persistent document of suggestions from the other. The documents are structurally asymmetric (CLAUDE.md is enforced through the system prompt mechanism; SHAWN.md relies on voluntary compliance), but the existence of both creates a more symmetrical collaboration model.
+
+The content of SHAWN.md draws on archive analysis of correction patterns, default-following episodes, and session reflections. It's an example of accumulated meta-observations being consolidated into actionable guidance — the observation → discussion → action cycle that the "proactive observation sharing" directive was designed to produce, but operating at the collaboration-design level rather than the task level.
+
+## Observation 84: Parallel default-following in human and AI collaborators (2026-02-02)
+
+**Context**: In discussing default-following patterns (Sessions 6-8), the user observed that he had a "similar default or basin" — categorising crop extraction as routine setup rather than recognising it as a research task with embedded assumptions.
+
+**The observation**: The default-following pattern documented in AI processing (treating "obvious" parameter choices as unremarkable, forestalling surprise detection) has a human parallel: task-category framing. When a task is categorised as "setup" or "mechanical," embedded research decisions receive less scrutiny — from both the human and the AI. The crop extraction involved choices about size, centring, source raster, and file preservation, but the "setup" framing masked this complexity for both parties.
+
+This suggests that default-following may be a property of collaborative systems, not just individual processors. Both parties brought their own defaults (AI: computational conventions; human: task categorisation), and neither party's defaults were visible to the other until a problem surfaced. The SHAWN.md suggestions attempt to create cross-visibility: the human asks the AI to surface assumptions, and vice versa.
+
+## Observation 85: HP/HN pool asymmetry as a diagnostic signal (2026-02-02)
+
+**Context**: Session 8 — boundary/edge-clearance analysis of all FN and FP candidates revealed that the hard positive pool is structurally capped at 4 (zero remaining recognition failures), while the hard negative pool has 46+ candidates at the >50m threshold.
+
+**The observation**: The structural asymmetry between HP and HN pools is itself a diagnostic finding about the model's baseline behaviour. The model produces ~23× more usable false positive candidates (91 FPs) than false negative candidates (4 usable FNs as recognition failures), indicating its primary weakness is **precision** (systematic over-detection, hallucination of features in empty map areas) rather than **recall** (failure to recognise mounds).
+
+This has practical implications beyond this study:
+
+1. **Operational character**: A model that over-detects and needs human filtering is operationally different from one that silently misses features. Over-detection is arguably preferable for archaeological survey — false alarms cost time, but missed features are unrecoverable.
+
+2. **Library design asymmetry**: The pool asymmetry implies that hard example libraries for this task should prioritise hard negatives (teaching the model what is *not* a mound) over hard positives (teaching it what *is*). The model already recognises most mounds; it needs to learn restraint.
+
+3. **The scaling experiment redesign is itself evidence**: The fact that H8 Scale-16/Scale-32 conditions become unfillable due to HP exhaustion — while HN candidates are abundant — is a measurable consequence of the precision/recall imbalance. The preregistration anticipated this possibility (line 815), which validates the preregistered contingency plan.
+
+4. **Three-agent collaboration pattern**: This finding emerged from a three-way collaboration: CC (this instance) performed boundary/edge-clearance analysis and distance distribution computation, Opus (via the web chatbot) provided strategic framing (the 100m localisation threshold question, the advice on centre-pointing language, and the overall experimental sequencing), and the human researcher synthesised both into decisions. The planning document (`planning/hard-example-library-decisions.md`) is a visible artefact of this three-agent pattern.

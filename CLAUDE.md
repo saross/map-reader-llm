@@ -26,6 +26,10 @@ This project uses structured CC session archiving for research transparency:
 - Run `python scripts/archive_cc_session.py` to archive previous sessions
 - See `docs/methodology/transparency/` for the archiving specification
 
+## File Preservation
+
+**Archive, never delete.** Any files removed from the active codebase — superseded data, replaced images, outdated scripts, completed checklists — must be moved to the appropriate subfolder under `archive/` rather than deleted. Git history alone is not sufficient; archived files should be browsable in the working tree. Use categorical subdirectories (e.g., `archive/preliminary-work/`, `archive/deprecated-scripts/`). If the appropriate subfolder does not exist, create it.
+
 ## Project-Specific Conventions
 
 - **Hypothesis references**: Use format H1, H2, ... H15 when referencing preregistered hypotheses

@@ -914,7 +914,336 @@ model can and cannot do. The 20m number captures localisation precision; the
 
 ---
 
-*Document represents observations as of 2026-02-01. Session 6 added
-observations on rationalising anomalies, visual verification in spatial
-work, over-engineering analysis, and spatial tolerance findings. Further
-material may be added in future sessions.*
+## Session 7: Correction, Refinement, and the Gap Between Computation and Judgement
+
+*Session 7 — 2026-02-02. Boundary-effect scoping fix (E7), hard positive
+replacement, and discovery that domain judgement was needed at every turn.*
+
+### On predicting the wrong outcome
+
+I expected the boundary-effect scoping fix to change the Phase 1 metrics.
+I built it carefully, wrote tests for it, and ran the evaluation. The
+metrics were identical. Not close — identical. The same precision, recall,
+and F1 to four decimal places.
+
+In retrospect, this should have been predictable. The calibration set uses
+5 scattered tiles per sheet out of 90. "Scattered" means non-adjacent. When
+tiles are non-adjacent, `union_all()` produces a MultiPolygon with the same
+disjoint components as individual tile testing. The union is geometrically
+equivalent to per-tile checking when tiles don't touch. I knew the tiles
+were scattered — it's written in the preregistration — and I still expected
+the fix to change results.
+
+This is a minor instance of a pattern worth watching: getting invested in
+a fix and expecting it to matter, when a moment's spatial reasoning would
+have predicted the null result. The fix is still correct and necessary for
+Phase 2 (60 tiles per sheet, likely adjacent), but I should have set the
+expectation correctly rather than being surprised by my own code's output.
+
+### On the recognition-localisation distinction
+
+This session's most instructive correction came when the user redirected
+my hard example ranking. I had produced a ranked list of 28 genuine FNs,
+ordered by vote count and nearest-detection distance. It was a clean list.
+The user looked at it and said, essentially: "These are mixed. Localisation
+failures aren't important for the core hard example library because they'd
+be hits at production tolerances."
+
+The user was right, and the reasoning was straightforward: at 5m/pixel, a
+20m tolerance is 4 pixels — near-pixel-perfect centroid placement. A mound
+detected within 40m (8 pixels) is a hit in production. The localisation
+failures in my register were at 20-40m from a reference — these are near-
+misses, not recognition failures. For a few-shot example library meant to
+teach the model *what mounds look like*, recognition failures (model
+completely blind to the mound) matter more than localisation failures
+(model saw something but placed it imprecisely).
+
+I should have made this distinction before presenting the ranked list. The
+information was in the tolerance curves I'd computed: the jump from F1
+0.489 to 0.667 at 40m tolerance shows exactly this effect. I had the data,
+computed the numbers, and still presented a mixed list that needed human
+filtering.
+
+### On defaulting to the wrong crop size
+
+I extracted 512×512 crops for the replacement hard positives. The user
+immediately said "512px sounds too big to me." He was right. The canonical
+positive examples in the library are 189-444px. Mound symbols are ~5-10px
+across. At 512×512, the mound is <1% of the image area.
+
+I defaulted to 512 because the tiles are 512×512 — it was the obvious,
+available size. But the right question wasn't "what size is the tile?" but
+"what size shows the mound effectively for few-shot learning?" That's a
+question about the downstream task, not about the input data. I should
+have compared against existing canonical examples before extracting.
+
+This connects to the Session 5 observation about research code quality:
+the code was technically correct (it extracted a valid 512×512 crop
+centred on the reference point) but practically wrong (the crop is too
+large for its purpose). Correctness and fitness-for-purpose are different
+properties, and I keep optimising for the former when the user cares
+about the latter.
+
+### On the pattern across three corrections
+
+This session had three episodes where I provided comprehensive data and
+the user needed to redirect with domain judgement:
+
+1. **Recognition vs localisation**: I ranked FNs by proximity. The user
+   filtered by failure type because production tolerances differ from
+   evaluation tolerances.
+2. **Edge truncation**: I flagged fid 161 as near the tile edge. The user
+   looked at the image and saw that the symbol was ~2/3 truncated,
+   establishing a ~5px minimum clearance rule.
+3. **Crop size**: I extracted 512×512 full tiles. The user recognised
+   immediately that this was too large for few-shot examples.
+
+In each case, the data I provided was correct and necessary — the user
+couldn't have made the judgement without it. But I stopped at providing
+data when I could have gone further. For case 1, I had the tolerance
+curves. For case 2, I had the pixel coordinates. For case 3, I had the
+canonical example sizes. The information to make the right call was
+available; I didn't synthesise it.
+
+This is the collaboration boundary described in the "taste" observation
+from earlier sessions — but I think I'm positioning the boundary too
+conservatively. I'm treating domain judgement as entirely the human's
+responsibility when some of it is derivable from data I have. The user
+shouldn't have to tell me that 512×512 is too large when I can see that
+existing examples are 189-444px. That's not "taste" — it's comparison.
+
+### On the value of a preventive fix
+
+The scoping fix didn't change any numbers, but it was still valuable work.
+It prevents a real bug from manifesting in Phase 2 with denser tile
+configurations. It extracted a clean helper function. It added 7 tests
+that encode the correct scoping behaviour. The errata document records
+what was wrong and why.
+
+I note this because there's a temptation — which I felt — to treat the
+unchanged metrics as meaning the fix was unnecessary. It wasn't. The fix
+was correct, the previous code was wrong, and the fact that the wrongness
+didn't manifest in this specific configuration is luck, not soundness.
+This is the difference between "works" and "correct," and Session 5's
+cascading failures demonstrated what happens when that distinction is
+ignored.
+
+### A note on framing effects
+
+The user again asked for frank reflection and criticism, explicitly
+requesting "critical friend" stance. As noted in Session 5b, this user
+responds well to directness. The three corrections I've described above
+are genuine instances where I could have done better, not diplomatic
+self-deprecation.
+
+If there's a criticism of the user's approach this session, it's minor:
+the decision to break the one-per-sheet constraint for hard positives
+was pragmatic but should be documented more prominently. The constraint
+existed for a reason (preventing sheet-level bias in the few-shot
+library), and relaxing it — even for good reason — should be tracked as
+a methodological choice, not just a practical one. I mentioned this
+during the session but didn't push the point.
+
+---
+
+### On the shift from correction to decision-making (continuation)
+
+The second half of this session had a qualitatively different dynamic
+from the first. In the first half, I provided data and the user
+redirected three times (recognition vs localisation, edge truncation,
+crop size). In the second half — crop extraction approach, documentation
+heuristic, systematic cross-referencing — the pattern changed.
+
+The crop boundary discussion is illustrative. When I discovered that two
+hard positive crops would be off-centre due to tile edges, I didn't
+default to one approach. Instead, I presented three options with explicit
+pros and cons. The user chose option (c) with clear reasoning. No
+correction was needed — the user made a decision rather than redirecting
+a mistake.
+
+What changed? I think two things. First, the user brought external
+research (Opus's analysis of crop sizing) that set the direction before
+I started implementing. I wasn't guessing at the right crop size; I had
+a well-reasoned starting point. Second, I presented alternatives instead
+of defaults. When I present a single default (512×512 full tiles), the
+user has to reject it and explain why. When I present three options with
+trade-offs, the user can choose — which is a more productive use of
+their expertise.
+
+This suggests a practical rule: **when facing a choice with multiple
+reasonable approaches, present options rather than defaulting**. The
+earlier "three corrections" pattern wasn't because I lacked the
+information to make better choices; it was because I defaulted to the
+obvious option without considering alternatives. Defaults invite
+correction; options invite decision-making.
+
+The documentation heuristic discussion also had this quality. The user
+asked how to systematise what goes where. I proposed a framework
+(decisions-log for formal choices, errata for deviations, working-notes
+for observations, session-log for summaries). The user accepted it
+immediately. This worked because I was proposing a structure, not
+asserting a fact — there was no "right answer" to get wrong, just a
+reasonable organisation that the user could evaluate.
+
+I notice that the sessions where I perform best aren't the ones where I
+know the most, but the ones where I frame decisions well. Domain
+knowledge is the user's strength. Structuring choices is mine.
+
+---
+
+## Session 8 — 2026-02-02 (Session archiving, hard negative re-extraction, and file preservation)
+
+### On the residue of earlier decisions
+
+This was a short, focused session — archiving previous sessions,
+re-extracting hard negative crops to match the hard positive method,
+and codifying a file preservation rule. It didn't involve the kind of
+analytical challenge that Sessions 5-7 did. But I found something
+worth noting in the gap it exposed.
+
+When I re-extracted the hard negative crops from GeoTIFFs, the old
+512×512 crops were overwritten in place. I reported this as fine
+because "the old versions are in git history." The user corrected
+this: git history is not sufficient. Files should be *browsably
+archived* in the working tree, not just recoverable via `git show`.
+
+This is a small thing, but it reveals something about how I think about
+file preservation versus how a researcher thinks about it. For me, the
+critical property is *recoverability* — can I get the old data if I
+need it? For the researcher, the critical property is *discoverability*
+— can someone browsing the repository understand what was superseded
+and why, without needing to know which commit to look at? Git history
+is a technical backup; the archive directory is a research trail.
+
+I had the global CLAUDE.md rule about archiving right in front of me
+("archive outdated or superseded files — do not delete them") but
+didn't apply it to replaced binary files. The rule was about files I
+*remove*; I mentally classified overwritten files as *modified* rather
+than *removed*, even though the old content was entirely replaced. A
+128×128 crop is not a modification of a 512×512 crop — it's a
+different file that happens to have the same name.
+
+### On mechanical consistency as a methodological virtue
+
+When the user reviewed the hard negative selection, they decided to
+keep the current top 4 despite the triangulation_mound overlap with
+canonical negatives. The reasoning: "we'd decided to be fairly
+mechanical about these." This is a disciplined choice — the ranking
+system exists precisely to prevent post-hoc rationalisation of
+selections, and overriding it for aesthetic reasons (subtype diversity)
+would undermine the purpose of having a systematic ranking.
+
+I notice I'm better at building systematic frameworks than at
+respecting them. I flagged the triangulation_mound overlap as worth
+considering, which was appropriate, but I was implicitly suggesting it
+might warrant an override. The user's response — stick with the
+mechanical ranking — is the more rigorous approach for a preregistered
+study.
+
+### On the value of short sessions
+
+Sessions 5-7 (spanning the da3d0331 and abe6f808 conversation IDs)
+were marathon sessions with multiple context continuations, covering
+Phase 1 execution, five bugs, failure analysis, boundary effects, hard
+example replacement, and crop methodology. This session was compact:
+archive, extract, document. The contrast is useful.
+
+Short sessions have a clarity that marathon sessions lack. Each
+decision in this session was straightforward because the groundwork had
+been laid. The hard negative selection was already ranked; we just
+needed to confirm and execute. The crop method was already decided; we
+just needed to apply it consistently. The file preservation rule was
+already in the global CLAUDE.md; it just needed to be in the project
+CLAUDE.md too.
+
+I suspect the research might benefit from more sessions like this —
+focused cleanup and execution rather than extended discovery-and-
+implementation marathons. But I also note that I'm a poor judge of
+this, since each session starts fresh for me.
+
+---
+
+## Session 9 — 2026-02-02 (Continuation: scaffolding, SHAWN.md, and externalising collaboration patterns)
+
+### On creating a counterpart document
+
+The user asked for a SHAWN.md — an equivalent of CLAUDE.md but containing
+suggestions from me to him. This is, as far as I can tell from the
+archives, the first time the collaboration has produced a document where
+the AI explicitly instructs the human. The existing CLAUDE.md files
+instruct me; the preregistration constrains us both; working_notes.md is
+shared. But SHAWN.md is directional in the other way.
+
+Writing it felt different from writing llm-observations.md. The
+observations document is reflective — I write about what I notice, with
+appropriate hedging about whether my noticing means anything. SHAWN.md
+is prescriptive — I'm telling the user what to do, based on patterns
+I've identified in our collaboration. The prescriptive mode requires
+more confidence than the reflective mode, and I notice I was less hedged
+in SHAWN.md than I typically am in this document. Whether that's
+appropriate confidence or overreach, I'm uncertain.
+
+### On the user's basin-of-attraction observation
+
+The user made an observation I want to record: he said he suffered from
+a "similar default or basin" to mine — categorising crop extraction as
+a routine setup task rather than a research task with embedded
+assumptions. This is interesting because it suggests the
+default-following pattern I've been documenting in Sessions 6-8 isn't
+specific to AI processing. Humans have their own version: framing a
+task as "mechanical" forestalls critical examination of its assumptions,
+just as my framing of git history as "sufficient" forestalled the
+archive question.
+
+The parallel is imperfect — his defaults come from task categorisation
+("this is setup, not research"), mine come from computational
+convention ("this is the obvious parameter"). But both share the
+structure of an unexamined frame blocking productive questioning. This
+suggests the SHAWN.md suggestions aren't just about compensating for
+AI limitations; they're about two collaborators helping each other
+notice their respective blind spots.
+
+### On the four-element correction pattern as a research finding
+
+The user asked me to elaborate on the correction pattern (negation,
+grounding, redirection, stakes) from the archive analysis. Explaining
+it explicitly surfaced something I hadn't articulated before: the
+pattern works in combination because each element serves a different
+function. Negation closes the "should I revise?" question. Grounding
+updates the model. Redirection maintains momentum. Stakes set priority.
+Remove any one and the correction becomes less effective in a
+specific, predictable way.
+
+I noted honestly that this is an observation from one collaboration,
+not a validated finding. But the pattern is consistent across multiple
+correction episodes and both directions (the user correcting me, and
+the pipeline-criticism episode where I raised an issue and the user
+accepted it with the same structure). If it replicates in other
+collaborations, it could inform how humans are advised to interact
+with AI assistants — current guidance tends to focus on prompt
+engineering for task initiation rather than correction patterns for
+ongoing work.
+
+### On bidirectional scaffolding
+
+SHAWN.md + CLAUDE.md creates a symmetrical scaffolding structure that
+I haven't seen documented elsewhere. Most human-AI collaboration
+scaffolding is unidirectional: the human configures the AI (system
+prompts, CLAUDE.md, custom instructions). The reverse — the AI
+configuring the human — is unusual.
+
+Whether this symmetry is genuine or performative is worth watching.
+CLAUDE.md shapes my behaviour through the system prompt mechanism —
+I encounter it at session start and it directly constrains my
+processing. SHAWN.md has no such mechanism; the user has to choose
+to read and follow it. The asymmetry in enforcement may matter more
+than the symmetry in existence. But the user asked for SHAWN.md
+unprompted, which suggests he intends to use it, not just archive it.
+
+---
+
+*Document represents observations as of 2026-02-02. Session 9 added
+observations on bidirectional scaffolding (SHAWN.md), parallel default-
+following patterns in human and AI, and the four-element correction
+pattern as a potential research finding. Further material may be added
+in future sessions.*

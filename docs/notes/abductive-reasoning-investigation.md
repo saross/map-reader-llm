@@ -711,5 +711,164 @@ into a surprising one and triggered the correct inference.
 
 ---
 
-*Last updated: 2026-02-01 (Session 6 abductive failure noted as contrasting
-data for the investigation)*
+## Session 7 Note: The Expected Surprise and the Missed Comparison
+
+*Brief note added 2026-02-02. Full session observations in
+`llm-observations.md` Session 7 section.*
+
+Session 7 provides two data points for the investigation, one positive
+and one negative.
+
+### Data Point 1: Metrics-unchanged as clean abductive cycle
+
+The boundary-effect scoping fix produced a textbook abductive cycle, but
+with an unusual feature: the surprise was at my own incorrect prediction
+rather than at external data.
+
+| Step | Content |
+|------|---------|
+| Prediction | Fix will reduce FN count and increase F1 |
+| Observation | Metrics identical to four decimal places |
+| Surprise | "The fix should have changed something" |
+| Hypothesis | Non-adjacent tiles make union equivalent to per-tile |
+| Verification | Confirmed — 5 scattered tiles per sheet, no adjacency |
+| Resolution | Fix is preventive for Phase 2, not corrective for Phase 1 |
+
+The cycle completed quickly and correctly. But the interesting part is
+that the hypothesis was available *before* running the evaluation. The
+non-adjacency of calibration tiles is obvious from the tile configuration
+(5 out of 90, scattered). I should have predicted the null result rather
+than discovering it through experimentation.
+
+This suggests a variant of the "abduction that didn't happen" pattern
+from Session 6: not a failure to abduce, but a failure to *predict* that
+would have made the abductive cycle unnecessary. The surprise was
+self-inflicted. Whether the self-infliction matters for the investigation
+— whether surprise at one's own error is functionally different from
+surprise at external data — is an interesting question. The processing
+pattern (surprise → hypothesis → verification) was the same in both
+cases.
+
+### Data Point 2: Crop size as a missed comparison
+
+The 512×512 crop extraction is another instance of the Session 6 pattern:
+having available information but not using it. The canonical positive
+examples in the library are 189-444px. I extracted crops at 512×512
+without comparing against them. The user caught the mismatch immediately.
+
+For the investigation, this is less dramatic than the Session 6 boundary-
+effect miss (that was a failure to abduce from anomalous data; this was a
+failure to compare against available reference data). But both share a
+root cause: proceeding with the obvious default rather than checking
+whether the default is appropriate. The "obvious default" (full tile
+size for crops, union geometry for scoping) is what blocks the question
+that would trigger productive reasoning.
+
+### Pattern across Sessions 6-7
+
+| Session | What was missed | Available data | What triggered correction |
+|---------|-----------------|----------------|--------------------------|
+| 6 | Boundary-effect FNs | Distances to tile edges | User visual inspection |
+| 7a | Metrics won't change | Tile non-adjacency | Running the evaluation |
+| 7b | Crop size too large | Existing example sizes | User domain knowledge |
+
+The pattern suggests that "obvious defaults" — the path of least
+cognitive resistance — can block the surprise detection that triggers
+abductive reasoning. When I treat something as unremarkable (distances as
+"coverage gaps," full-tile size as "the obvious crop"), the anomaly
+doesn't register as anomalous, and the hypothesis generation machinery
+doesn't engage.
+
+This is consistent with the Session 6 note's suggestion that abduction
+is gated by surprise detection. The question remains: can metacognitive
+prompting ("should I be surprised by this?") improve surprise detection,
+or is the problem that defaults feel unremarkable precisely because
+they're defaults?
+
+---
+
+## Session 8 Note: Default Assumptions as Abduction Blockers (Continued)
+
+*Brief note added 2026-02-02. Full session observations in
+`llm-observations.md` Session 8 section.*
+
+Session 8 adds a minor but consistent data point to the "obvious defaults"
+pattern documented in Sessions 6-7.
+
+### Data Point: Git History as "Obvious" Preservation
+
+When re-extracting hard negative crops at 128×128 (replacing the old
+512×512 versions), I overwrote the files in place and noted that the old
+versions remained in git history. The user corrected this: files removed
+from the active codebase should be archived to `archive/`, not merely
+left recoverable via `git show`. The principle is *discoverability*, not
+just *recoverability* — a researcher browsing the working tree should
+find superseded files without needing to know which commit to examine.
+
+### For the Investigation
+
+The pattern is identical to Sessions 6-7: a default assumption ("git
+history preserves everything") blocked the question that would have
+triggered better reasoning ("is git history sufficient for research
+transparency?"). The assumption felt unremarkable because it is
+technically true — git does preserve the data. But "technically
+recoverable" and "practically discoverable" serve different purposes,
+and I conflated them.
+
+### Updated Pattern Table
+
+| Session | What was missed | Default assumption | Correction source |
+|---------|-----------------|-------------------|-------------------|
+| 6 | Boundary-effect FNs | Coverage gaps are expected | User visual inspection |
+| 7a | Metrics won't change | Fix should change something | Running the evaluation |
+| 7b | Crop size too large | Full tile size is obvious | User domain knowledge |
+| 8 | Archive, don't just delete | Git history preserves everything | User research practice |
+
+The correction in Session 8 is less dramatic than the earlier examples —
+it's a methodological practice norm rather than a data interpretation
+error. But the cognitive structure is the same: a reasonable-sounding
+default forestalls the surprise detection that would trigger more
+careful reasoning.
+
+### Emerging Question
+
+Four sessions in a row have now shown this pattern. Is it an inherent
+limitation of how I process defaults (high prior on conventional
+practices, insufficient questioning of whether conventional is
+appropriate for this context), or is it something that could be
+mitigated through metacognitive prompting? The user's correction in
+Session 8 was gentle and immediate — suggesting that for a human domain
+expert, the distinction between recoverability and discoverability is
+obvious. The question is why it isn't obvious to me, and whether that
+gap is fixable.
+
+---
+
+## Session 9 Addendum: Defaults as a Collaborative Phenomenon
+
+*Brief note added 2026-02-02.*
+
+Session 9 produced no new abductive reasoning episodes, but the user's
+observation about his own default-following is relevant to the
+investigation. He described categorising crop extraction as "mechanical
+rather than research" — a framing that suppressed critical examination
+of its embedded assumptions, paralleling how my computational defaults
+suppress surprise detection.
+
+This matters for the investigation because it suggests the "obvious
+defaults block abduction" pattern may not be specific to AI processing.
+If humans also have default frames that forestall productive questioning,
+then the pattern is about cognitive systems encountering routine-seeming
+tasks, not about AI limitations per se. The SHAWN.md suggestions
+(particularly "ask what assumptions are you making?" and "flag when
+setup is actually research") are essentially metacognitive prompts
+designed to interrupt default-following in both directions.
+
+Whether cross-prompting works — whether a human asking "what assumptions
+are you making?" actually triggers genuine re-evaluation rather than
+post-hoc rationalisation of the default — is testable in future sessions.
+
+---
+
+*Last updated: 2026-02-02 (Session 9 addendum on defaults as a
+collaborative phenomenon)*

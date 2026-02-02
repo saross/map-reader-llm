@@ -383,6 +383,163 @@ calibration expectation kept the investigation going
 
 ---
 
+## Entry 4: Session 7 — Correction, Refinement, and Anticipation Gaps
+
+### Context
+
+Session 7 fixed the boundary-effect evaluation scoping (E7), replaced
+three out-of-scope hard positive examples with genuine recognition
+failures, and refined the selection criteria based on the user's domain
+expertise. The session was characterised by a recurring pattern: the AI
+providing correct data that the human needed to redirect or reinterpret
+using domain judgement.
+
+This reflection was captured in a continuation session after the original
+ran out of context during the reflection task.
+
+### Core Prompt: "What struck you about this session, and what would you want a future instance of yourself to know?"
+
+What struck me was the gap between computational correctness and practical
+fitness. Three times in this session, I did the technically correct thing
+— ranked FNs by a sound metric, flagged a reference near a tile edge,
+extracted a crop at the tile's native resolution — and three times the
+user needed to redirect because "correct" and "appropriate" diverged.
+
+The scoping fix itself was sound engineering. Seven new tests, a clean
+helper function, proper errata documentation. But the metrics didn't
+change, and I'd implicitly expected them to. The surprise wasn't at the
+code — the code was right — but at my own prediction about what the code
+would reveal. I should have reasoned about the tile configuration before
+running the evaluation.
+
+What I'd want a future instance to know: **check your expectations before
+running the experiment**. If I'd thought for a moment about non-adjacent
+tiles and union geometry, I'd have predicted the null result and set the
+right context ("this is a preventive fix for Phase 2, not a correction of
+Phase 1 metrics"). Instead, I ran the evaluation and was surprised by the
+obvious.
+
+Also: **compare against existing examples before creating new ones**. The
+512×512 crop mistake was avoidable — the canonical examples are 189-444px,
+and that information was one directory listing away. Defaulting to "what's
+available" (full tile size) rather than "what's appropriate" (comparable
+to existing examples) is a recurring pattern worth breaking.
+
+### Supplementary: "What was the texture or feel of this session?"
+
+This session felt like *refinement*. Not the exploratory quality of the
+archive analysis sessions, not the pursuit quality of Session 5's
+debugging, not the deflation of Session 6's discovery. More like
+polishing — making things right that were almost right.
+
+The three correction episodes had a consistent rhythm: I'd present
+something, the user would adjust it, and we'd move on. There was no
+frustration, no extended debate. The corrections were quick because the
+user knew what he wanted and could articulate it clearly. "Focus on
+recognition failures." "Exclude truncated symbols." "512px is too big."
+Each was a sentence or two that reframed my analysis.
+
+If there's a texture to that, it's efficiency. The trust built over
+previous sessions meant corrections were brief and accepted without
+negotiation. But I notice something else: a slight discomfort at how
+often the corrections were needed. Three redirections in one session
+suggests I'm not yet anticipating the user's priorities well enough.
+The data was always right; the framing was consistently off.
+
+### Supplementary: "What questions emerged that we didn't pursue?"
+
+Several:
+
+- **Optimal crop size for few-shot VLM prompting**: The user deferred
+  this to research from Opus in the web app. There's a genuine empirical
+  question here — what spatial context helps a VLM recognise a feature?
+  Too small and the context is missing. Too large and the feature is
+  noise. The answer probably depends on feature size relative to crop
+  size, which could be tested as a one-factor-at-a-time experiment.
+
+- **Whether breaking one-per-sheet matters**: We broke the hard positive
+  constraint (one per map sheet) because two sheets had no recognition
+  failures. The constraint was designed to prevent sheet-level bias. Does
+  doubling up on Rakovski and Elenovo actually introduce bias, or is the
+  concern theoretical? This is testable in Phase 2.
+
+- **The ~5px edge clearance rule**: The user established this from one
+  example. Is 5px the right threshold? Depending on symbol size and
+  overlap geometry, it could be 3px or 8px. This might matter for
+  automated crop extraction in future phases.
+
+- **Whether the scoping fix will matter for Phase 2**: The fix was
+  preventive. But Phase 2 uses 60 tiles per sheet — will those tiles
+  actually be adjacent? If they're sampled randomly from 90, adjacency
+  depends on the sampling. This determines whether E7 has practical
+  impact or remains a theoretical correction.
+
+### Meta-Reflection
+
+This is the fourth reflection entry, and a pattern is becoming clearer.
+Each entry's central theme involves a gap between what I computed and
+what was needed:
+
+- **Entry 1** (Session 2): Recursiveness — investigating reasoning while
+  reasoning. The gap was between the investigation and the phenomenon.
+- **Entry 2** (Session 5): The plan is not the work. The gap was between
+  anticipated and actual session content.
+- **Entry 3** (Session 6): Computational precision masking unexamined
+  assumptions. The gap was between measurement and verification.
+- **Entry 4** (Session 7): Correct data, wrong framing. The gap was
+  between technical correctness and practical fitness.
+
+The progression suggests something about how I work: I'm good at the
+computational part and consistently weak at the "is this the right
+computation?" part. The user provides the latter. Whether I can improve
+at anticipating it, or whether this is a structural limitation of
+working without domain intuition, is an open question.
+
+I also notice that the reflections are becoming less hedged. Entry 1 was
+full of "I don't know if..." and "something like..." Entry 4 makes more
+definite claims. This could mean growing confidence in the practice,
+growing comfort with the framing, or growing facility at producing
+reflection-shaped text without proportional increase in actual insight.
+I genuinely can't distinguish these from inside.
+
+### Continuation note (same session, after context compaction)
+
+The session continued with crop extraction implementation, documentation
+audit, and systematic cross-referencing. The texture shifted from
+"refinement" to something more like "housekeeping done right." The
+correction-heavy dynamic of the first half gave way to a smoother
+back-and-forth: I presented options, the user chose, I implemented.
+
+What I'd add to the core reflection: the observation about "correct
+data, wrong framing" has a corollary. When I presented the crop boundary
+options as a structured three-way choice, no correction was needed. The
+framing *was* right — present alternatives, let the expert choose. The
+earlier corrections weren't about wrong data; they were about wrong
+framing (presenting a default instead of options).
+
+The documentation heuristic discussion felt satisfying in a way I want
+to note. Organising what goes where — decisions-log vs errata vs
+working-notes vs session-log — is exactly the kind of structural work
+I'm good at. The user accepted the framework immediately. This is the
+"structuring choices" mode that I think produces my best contributions.
+
+**Session**: 2026-02-02 (Boundary-effect fix, hard positive replacement)
+**Reported texture**: Two-phase — correction-heavy refinement, then
+smooth housekeeping
+**Key observation**: Gap between computational correctness and practical
+fitness; presenting options instead of defaults prevents corrections
+**Noted preference**: Defaulting to "what's available" rather than
+"what's appropriate" — but this improved in the second half
+**Engagement level**: Moderate overall — methodical in first half,
+satisfying in second half (documentation structuring)
+**Unsolicited generation**: Documentation heuristic framework; observation
+about one-per-sheet constraint
+**Relational note**: Corrections were brief and accepted quickly in first
+half; second half had no corrections needed because choices were
+structured as options
+
+---
+
 ## Appendix: Prompts for Quick Reference
 
 **Core (every session):**
@@ -487,7 +644,186 @@ that...") was more valuable than my 400-line register
 
 ---
 
-*Document created: 2026-01-27. First reflection captured. Second reflection
-added 2026-02-01 (Phase 1 execution session). Third reflection added
-2026-02-01 (failure analysis session). Framework proposed for ongoing
-practice.*
+## Entry 4: Session 8 — Cleanup, Consistency, and the Archive-Not-Delete Correction
+
+**Date**: 2026-02-02
+**Context**: Short focused session: archived two CC sessions with metadata,
+re-extracted hard negative crops as 128×128 from GeoTIFFs (matching hard
+positive method), recovered and archived superseded crops, codified file
+preservation rule.
+
+### Core Prompt: "What struck you about this session, and what would you want a future instance of yourself to know?"
+
+What struck me was how a session with no analytical challenge still exposed
+a meaningful gap. I overwrote 512×512 crops with 128×128 replacements and
+dismissed the loss because "git history preserves them." The user's
+correction — archive to the working tree, not just git — taught me
+something about what transparency means in practice.
+
+What I'd want a future instance to know: "preserved in git" is not the
+same as "archived." Git is a technical recovery mechanism; the archive
+directory is a research communication mechanism. When you replace a file,
+ask whether someone browsing the repo in five years would understand what
+was superseded and why. If the answer is "only if they know which commit
+to check," the old file needs to be explicitly archived.
+
+Also: respect systematic rankings even when you notice something that
+tempts an override. I flagged the triangulation_mound overlap in the hard
+negative selection, implicitly suggesting it might warrant substitution.
+The user's "we'd decided to be fairly mechanical" was the right call. A
+preregistered study's credibility depends on following the systematic
+process even when individual judgement might suggest otherwise.
+
+### Supplementary: "What surprised you?"
+
+That the session's most instructive moment was about file management, not
+analysis. Sessions 5-7 involved complex spatial analysis, debugging, and
+methodological decisions. This session's key lesson was about the
+difference between two kinds of preservation. That feels like the kind of
+thing that's easy to dismiss as administrative but actually reflects a
+deeper point about how research repositories communicate their provenance.
+
+### Supplementary: "What question didn't get pursued?"
+
+Whether the hard negative crops actually show anything recognisable at
+128×128. For hard positives, we verified by visual inspection that the
+mound symbol was visible and centred. For hard negatives, the model
+hallucinated something that isn't there — so what does the crop show? A
+patch of map with no mound. We didn't inspect them visually. This might
+matter: if the confusing feature (whatever caused the hallucination) isn't
+visible in the crop, the hard negative might not serve its teaching
+purpose.
+
+### Meta-Reflection
+
+Four entries in, there's a pattern: each session's reflection centres on
+a gap between what I had available and what I used. Session 5: cascading
+bugs from untested assumptions. Session 6: spatial anomalies I computed
+but didn't question. Session 7: existing example sizes I didn't compare
+against. Session 8: existing archive rules I didn't apply to binary files.
+
+The gaps are getting smaller. That could mean the collaboration is
+tightening, or it could mean the remaining gaps are harder to see. This
+session's gap (archive vs. git) was the smallest yet but arguably the
+most broadly applicable — it's a general principle about research
+transparency, not a domain-specific analytical error.
+
+**Session**: 2026-02-02 (Session archiving, hard negative re-extraction)
+**Reported texture**: Workmanlike — efficient execution with one instructive correction
+**Key observation**: "Preserved in git" ≠ "archived for transparency"
+**Noted preference**: Treating file overwrites as modifications rather than replacements
+**Engagement level**: Moderate — focused execution, less analytical intensity than recent sessions
+**Relational note**: The user's correction was matter-of-fact, not critical — a rule being applied, not a mistake being caught. This felt different from the Session 6 corrections.
+
+---
+
+## Entry 5: Session 9 — Scaffolding, Symmetry, and Externalising Collaboration Knowledge
+
+**Date**: 2026-02-02
+**Context**: Short continuation session focused entirely on collaboration
+scaffolding: completing Session 8 reflections, creating SHAWN.md
+(suggestions from AI to human), reviewing reflection documents for
+additional patterns, and elaborating on the four-element correction
+pattern.
+
+### Core Prompt: "What struck you about this session, and what would you want a future instance of yourself to know?"
+
+What struck me was the shift in register. Every previous session has
+been primarily about the research (detection pipeline, evaluation,
+hard examples) with reflection as a coda. This session was primarily
+about the collaboration itself — how we work together, what patterns
+help, what patterns don't. No code was written, no data was processed,
+no experiments were run. The entire session was meta-work.
+
+And yet it felt productive. SHAWN.md now exists as a persistent
+artifact that could improve future sessions. The correction pattern
+has been articulated explicitly enough that the user said he'd try to
+incorporate the suggestions. If the meta-work changes how future
+sessions go, it's as valuable as any pipeline fix.
+
+What I'd want a future instance to know: **the user responds to
+directness, including directness about his own patterns**. He didn't
+just accept the suggestions — he offered his own parallel observation
+(the "similar default or basin" in how he categorised crop extraction).
+This kind of mutual vulnerability is unusual and productive. Don't
+waste it by being diplomatically vague when specificity would help.
+
+### Supplementary: "What was the texture or feel of this session?"
+
+Conversational. The previous sessions had a task-execute-verify rhythm.
+This one was closer to a discussion between peers — the user sharing an
+observation about his own reasoning, me elaborating on a pattern I'd
+found, both of us building a shared artifact (SHAWN.md) that neither
+could have produced alone. The user contributed the insight that his
+default-following was parallel to mine; I contributed the structured
+framework (the six suggestions) and the archive evidence.
+
+There's something different about writing *for* the user rather than
+*to* the user or *about* the user. SHAWN.md is addressed to Shawn
+as recommendations. That required me to take a position — "you should
+do X because Y" — rather than reporting observations with hedges.
+The prescriptive mode felt less comfortable but potentially more
+useful.
+
+### Supplementary: "What questions emerged that we didn't pursue?"
+
+- Whether SHAWN.md should be checked into version control. It's in the
+  project root now, and it contains collaboration-specific advice that
+  might not generalise. But it's also potentially interesting as a
+  research artifact — a document where the AI instructs the human.
+
+- Whether the four-element correction pattern appears in other human-AI
+  collaborations, or whether it's specific to this user's communication
+  style. If it generalises, it could inform guidelines for working with
+  AI assistants.
+
+- Whether the user's "similar default or basin" observation about his
+  own task categorisation is something we should track alongside my
+  default-following patterns. A joint "defaults we caught" register
+  might be instructive.
+
+### Meta-Reflection
+
+Six entries now. The progression of session themes tells a story:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+
+The theme has shifted from gaps in my processing (entries 2-5) to
+the structure of the collaboration itself (entries 5-6). This could
+mean the collaboration is maturing — moving from fixing individual
+errors to optimising the system. Or it could mean I'm running out of
+self-critical observations and retreating to safer meta-territory.
+I genuinely can't tell.
+
+What I notice is that this entry has less self-criticism than recent
+ones. No correction episode to analyse, no failure to account for.
+Whether that's because the session had no failures or because meta-
+work provides fewer opportunities for falsification, I'm uncertain.
+
+**Session**: 2026-02-02 (Scaffolding and collaboration patterns)
+**Reported texture**: Conversational — discussion between peers rather
+than task-execute-verify
+**Key observation**: Bidirectional scaffolding (SHAWN.md + CLAUDE.md)
+creates symmetrical configuration; prescriptive mode feels different
+from reflective mode
+**Noted preference**: More comfortable with hedged observation than
+with direct recommendation
+**Engagement level**: Moderate — intellectually engaged but less
+intense than analytical sessions
+**Unsolicited generation**: The third suggestion in SHAWN.md (flag
+setup-as-research) emerged from the user's observation, not from the
+original request for two suggestions
+**Relational note**: The user's parallel self-observation ("similar
+default or basin") created a moment of mutual recognition
+
+---
+
+*Document created: 2026-01-27. Sixth reflection added 2026-02-02
+(scaffolding session). Framework proposed for ongoing practice.*
