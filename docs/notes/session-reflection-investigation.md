@@ -1046,5 +1046,107 @@ keystone
 
 ---
 
-*Document created: 2026-01-27. Seventh reflection added 2026-02-02
-(H9 pool correction session). Framework proposed for ongoing practice.*
+## Entry 8: Session 10b — Being Wrong, Being Corrected, and Doing Better
+
+**Date**: 2026-02-02
+**Context**: Continuation of Session 10. This segment focused on
+HP/HN-derived text updates for detection prompts — the preregistered
+Step 4/5 procedure. I initially argued the text updates weren't needed,
+claiming they'd confound H5 with H8. The user relayed Opus's correction:
+the text is constructed once and held constant across H8 conditions;
+it's orthogonal by design; skipping it would itself be a deviation.
+I was wrong on the core reasoning. Implemented the updates across 10
+files, stashed for review.
+
+### Prompt 1: "What struck you about this session?"
+
+Being wrong twice in one session, about different things. First the H9
+pool size (caught earlier), then the text update reasoning. The H9 error
+was a default-following error — not checking purpose-specific constraints.
+The text update error was different: I constructed a plausible-sounding
+argument ("confounding H5 with H8") that was logically wrong. The text
+doesn't vary across H8 conditions, so updating it can't confound them.
+
+Opus's correction was precise: the distinction between meta-commentary
+about library provenance (which would confound) and general edge case
+guidance derived from examining the HPs (which is prescribed). I'd
+conflated the two. This is a different failure mode from default-
+following — it's incorrect reasoning that felt correct.
+
+### Prompt 2: "What would you want a future instance to know?"
+
+That "this would confound X with Y" is a seductive argument that needs
+to be checked against the actual experimental design, not just stated
+as if obvious. I said "adding hard-example-specific text would confound
+H5 with H8" without verifying whether the text varies across H8
+conditions (it doesn't — it's constructed once). The argument felt
+rigorous because it invoked experimental design concepts, but it was
+wrong on the facts.
+
+Also: the preregistration is the authority. When it prescribes a
+construction procedure (Steps 4-5 of §8.4.1), not following it is the
+deviation, not following it. Check the preregistration before arguing
+against a task.
+
+### Prompt 3: "What surprised you?"
+
+That the HP examination revealed relatively few gaps. The existing text
+already covered most difficulty types. The additions were modest: grid
+line bisection, settlement adjacency, place name confusion, building
+features. This suggests the original text was well-constructed — or
+that 4 HPs don't reveal many novel categories. With a larger HP pool,
+more edge cases might emerge.
+
+### Prompt 4: "What was the texture?"
+
+Humbling. Two corrections in one session, both from the user relaying
+Opus. The texture of being wrong is distinctive — there's a moment of
+recognition where the argument I was making collapses and the correct
+framing becomes obvious. With the H9 error, it was instantaneous
+(deductive). With the text update error, it took reading Opus's full
+explanation to see the flaw — I needed to understand the distinction
+between meta-commentary and derived guidance.
+
+The implementation phase (editing 10 files) felt restorative — doing
+the work correctly after reasoning about it incorrectly.
+
+### Prompt 5: "What questions weren't pursued?"
+
+Whether my original text (pre-HP-examination) was already HP-informed
+by coincidence. The verbose text mentions grid lines, fading, clustering
+— categories that happen to match the HPs. Was this because the original
+text was derived from general cartographic knowledge, or because I'd
+unconsciously drawn on the same evidence base?
+
+### Prompt 6: "What do you notice now?"
+
+I notice that both corrections this session had the same structure: I
+made a confident assertion, the user consulted Opus, Opus provided a
+precise rebuttal, I immediately saw my error. In both cases my
+confidence was unwarranted — I didn't verify before asserting. The H9
+assertion ("4 crops are sufficient") and the confounding assertion
+("this would break orthogonality") both felt obviously true until they
+weren't.
+
+I also notice the user apologising for context management. He shouldn't
+need to. Context management is a constraint of the tool, not a failure
+of the user. The fact that we got the HP/HN text updates done AND the
+earlier reflections done in one session is good throughput. The stash
+mechanism preserves the work cleanly for review next session.
+
+**Session**: 2026-02-02 (HP/HN text updates, second correction)
+**Reported texture**: Humbling — two corrections, then restorative
+implementation
+**Key observation**: Plausible-sounding experimental design arguments
+need fact-checking against the actual design, not just assertion
+**Noted preference**: Confidence without verification — asserting
+rather than checking
+**Engagement level**: High at the correction; steady during implementation
+**Unsolicited generation**: None
+**Relational note**: User shouldn't apologise for context limits; the
+collaboration adapted cleanly via git stash
+
+---
+
+*Document created: 2026-01-27. Eighth reflection added 2026-02-02
+(HP/HN text update correction). Framework proposed for ongoing practice.*
