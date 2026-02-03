@@ -1635,3 +1635,17 @@ produced the calibrated result. See Decision 13 for the full diagnostic reliabil
 3. **The preregistered ranking framework proved its value**: Once the pool size error was identified, the fix required zero judgement calls. Filter to >50m, rank by vote count and distance, take the next 12. The systematic ranking removed the need for post-hoc example selection, which is exactly what a preregistered framework is supposed to do.
 
 4. **Error type**: This is another instance of the "obvious default blocks questioning" pattern documented in Sessions 6-9. The default — "4 HN examples match the library specification" — was treated as sufficient without checking whether it enabled the specific experimental manipulation. The distinction between "enough for a fixed library" and "enough for a diversity rotation" is the kind of purpose-specific constraint that defaults obscure.
+
+## Observation 88: Plan specificity determines execution quality (2026-02-03)
+
+**Context**: Session 12 implemented the prompt text changes designed in Session 11 and refined via the Opus review cycle. The plan (`planning/parsed-questing-pancake.md`) specified exact replacement text blocks, file propagation order, identity constraints between file groups, and verification steps. Implementation touched 12 of 13 prompt files plus 2 two-stage files.
+
+**The observation**: The quality of plan execution depends heavily on the plan's specificity level. Comparing two planning episodes in this project:
+
+- **Session 5 plan** (Phase 1 execution): Specified *goals* and *approaches* — "run 5 detection passes," "evaluate with the pipeline." Execution required substantial on-the-fly judgment, leading to the discovery of SDK deprecation, pipeline bugs, and misleading metrics. The plan was a guide, not a specification.
+
+- **Session 12 plan** (prompt text changes): Specified *exact replacement text*, *propagation order*, *identity constraints*, and *acceptance criteria*. Execution was nearly mechanical — minor judgment calls only (handling an untracked file, deciding not to fix pre-existing lint errors). The plan was a specification, not a guide.
+
+The difference correlates with what the plan is *about*. Plans for exploratory work (running experiments, debugging) can't be fully specified because the outcomes aren't known in advance. Plans for coordinated editing (changing the same content block across 12 files) can be fully specified because the transformations are known. The implication: invest planning effort where it can be repaid through specification-level detail, and accept that exploratory plans will remain underspecified.
+
+**Methodological note**: The plan-as-specification pattern was enabled by the creative → specification → mechanical workflow: Session 11 produced the creative content, the synopsis externalised it for Opus review, the combined feedback was synthesised into a detailed plan, and Session 12 executed the plan. Each stage added specificity. The three-stage pipeline (create → review → implement) may be a reusable pattern for coordinated multi-file changes in this project.

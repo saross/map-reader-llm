@@ -468,4 +468,44 @@ No commits this session. All prompt text changes exist as proposed text in the c
 
 ---
 
+## Session 12 — 2026-02-03 (Prompt text implementation + status review)
+
+### Overview
+
+Implemented the prompt text changes designed in Session 11 and refined via Opus review. Applied Changes 1–4 plus Opus Priorities 1–5 across 12 of 13 prompt files and 2 two-stage prompts, following the detailed plan in `planning/parsed-questing-pancake.md`. Archived superseded planning documents. Produced a project status briefing confirming Phase 2a readiness (pending only `GOOGLE_API_KEY`).
+
+### Accomplishments
+
+1. **Implemented prompt text changes across 12 files** — 6 editing passes: verbose shared content (4 files), terse exclusion (3 files), verbose exclusion (3 files), brief guidelines (4 files), two-stage prompts (2 files), no-change verification (1 file)
+2. **Verified all consistency constraints** — diff checks on file pairs (all passed), terminology audit (no "inward rays" or interpretive feature names), Guideline 2 consistency across 5 files, word count ratio 1:3.6 (target ~1:3)
+3. **Archived 3 superseded planning files** to `archive/planning/hard-example-review/`: `combined-prompt-review-feedback.md`, `prompt-text-review-synopsis.md`, `hard-example-library-decisions.md`
+4. **Produced Phase 2 status briefing** — Phase 1 complete, infrastructure ready, Phase 2a can begin when API key is configured
+5. **End-of-session reflections** — Entry 10 in session-reflection-investigation.md, Session 12 in llm-observations.md, Observation 88 in working_notes.md
+
+### Issues
+
+- **Untracked file archiving**: `combined-prompt-review-feedback.md` was never committed, so `git mv` failed. Used plain `mv` + `git add` instead.
+- **107 pre-existing markdownlint errors**: Found across all prompt files. Not fixed per CLAUDE.md policy (keep content changes reviewable; fix lint when touching files substantively).
+- **Context exhaustion**: Original instance ran out of context during reflections. Continuation session completed them. See llm-observations.md Session 12 entry for methodological implications.
+
+### Commits
+
+1. `2d46311` — `feat(prompts): Apply hard-example prompt text changes 1–4`
+2. `5e7601d` — `feat(prompts): Update two-stage prompts per Opus review`
+3. `b7d7238` — `chore(planning): Archive superseded hard-example review docs`
+
+### Pending Work
+
+- [x] ~~Implement prompt text changes~~ (this session)
+- [x] ~~Incorporate Opus review feedback~~ (this session)
+- [x] ~~Resolve marks vs rays terminology~~ (resolved in plan: "rays" outward, "marks" inward)
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement HN rotation assignment
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+- [ ] **Set `GOOGLE_API_KEY`**: Required for Phase 2a execution
+- [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
+
+---
+
 *New session entries should be appended above this line.*
