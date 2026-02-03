@@ -4,7 +4,7 @@
 
 **Associated preregistration**: `preregistration.md` v4.7
 
-**Last updated**: 2026-02-01
+**Last updated**: 2026-02-04
 
 ---
 
@@ -86,7 +86,7 @@
 
 | Phase | Start Date | End Date | Notes |
 |-------|------------|----------|-------|
-| Phase 1: Library + Text | 2026-02-01 | In progress | Detection passes complete (F1=0.489 baseline); hard example selection pending |
+| Phase 1: Library + Text | 2026-02-01 | 2026-02-03 | Detection passes complete (F1=0.489 baseline); hard examples selected (4 HP + 4 HN); two-stage prompts reviewed and updated |
 | Phase 2a: H1 M/E Level | | | |
 | Phase 2b: H7 Temperature | | | |
 | Phase 2c: H8 Library Composition | | | |

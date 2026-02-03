@@ -1,7 +1,7 @@
 # Phase 2 Remaining Tasks
 
 **Created**: 2026-01-21
-**Status**: Pre-Phase 2 (awaiting Phase 1 completion)
+**Status**: Phase 1 complete; prerequisites resolved
 
 This document tracks remaining tasks, dependencies, and decisions required for Phase 2 execution.
 
@@ -13,10 +13,10 @@ These tasks depend on Phase 1 completion.
 
 | Task | Blocker | Status | Notes |
 |------|---------|--------|-------|
-| Complete Phase 1 library construction | None | ☐ Pending | Must run first |
-| Create hard example symlinks (05-08 HP, 11-14 HN) | Phase 1 results | ☐ Pending | Manual step after Phase 1 analysis |
-| Assess Scale-16/32 feasibility | Phase 1 HP/HN pool size | ☐ Pending | May need extended extraction if <16 candidates |
-| Update library configs with actual hard examples | Phase 1 extraction | ☐ Pending | Currently use placeholder paths |
+| Complete Phase 1 library construction | None | ☑ Done (2026-02-01) | F1=0.489 baseline established |
+| Create hard example symlinks (05-08 HP, 11-14 HN) | Phase 1 results | ☑ Done (2026-02-01) | Using neutral-naming paths in `inputs/examples/neutral-naming/` |
+| Assess Scale-16/32 feasibility | Phase 1 HP/HN pool size | ☑ Done (2026-02-03) | Deferred — documented as E11 in protocol-errata |
+| Update library configs with actual hard examples | Phase 1 extraction | ☑ Done (2026-02-01) | Configs reference actual files |
 
 ---
 
@@ -83,4 +83,4 @@ Run before each sub-phase:
 
 ---
 
-*Last updated: 2026-01-21*
+*Last updated: 2026-02-04*
