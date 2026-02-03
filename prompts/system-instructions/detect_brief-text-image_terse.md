@@ -18,7 +18,7 @@ The **rays pointing outward** are essential. Symbols without visible rays are no
 ## Guidelines
 
 1. Provide individual bounding boxes for each symbol, even in clusters.
-2. Symbols may be partially occluded by roads, contours, or text. Include if rays are partially visible.
+2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.
 3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples.
 
 ## Exclusion Guidance
@@ -29,8 +29,10 @@ Rays are essential: shapes without visible radiating rays are not mounds.
 - Standalone triangulation points (black triangle, no rays)
 - Standalone benchmarks (black square/circle, no rays)
 - Spot heights (dot with elevation number, no rays)
-- Quarry/pit symbols (marks pointing INWARD, not outward)
-- Infrastructure markers (dots on roads, bridges, rivers)
+- Shapes with marks pointing INWARD toward centre, not outward — may appear in orange-brown, same colour family as mound symbols
+- Dots positioned along linear features (no rays)
+- Cyrillic map text (e.g., "могила", "кург.") near a shape does not confirm a mound — the sunburst pattern with outward-radiating rays is required
+- Round or ovoid shapes in mound-like colours without outward-radiating rays — dark marks may sit within the shape rather than extending outward
 
 ## Output Format
 

@@ -10,6 +10,8 @@ All mound symbols share one essential feature: **short rays (hachures) radiating
 
 The rays are the primary diagnostic. Any symbol with outward-radiating rays is a mound candidate, regardless of central shape.
 
+Base all detections on the visual sunburst diagnostic only. Map text, labels, and abbreviations near a candidate do not confirm or deny the presence of a mound.
+
 ## Target Symbols
 
 ### Burial Mound (Kurgan)
@@ -45,23 +47,23 @@ For each candidate feature:
 
 4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
 
-5. **Consider occlusion**: Roads (black/red lines), contour lines (brown), grid lines (blue), or text labels may partially obscure symbols. If some rays are visible and the pattern matches, include the detection.
+5. **Consider occlusion**: Lines in various colours (black, red, brown, blue) or text labels may partially obscure symbols. Interference ranges from a partial clip of one or two rays to a line splitting the symbol in half. If the sunburst pattern remains discernible, include the detection.
 
 6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
 
 ## Handling Edge Cases
 
 ### Partially Occluded Symbols
-Linear features frequently cross mound symbols:
-- Roads and tracks (black or red lines)
-- Contour lines (brown, may merge with orange-brown symbols)
-- Coordinate grid lines (blue)
-- Text labels and elevation numbers
+Lines and text frequently cross mound symbols:
+- Black or red lines may clip or split the symbol
+- Brown lines may merge with orange-brown symbols, obscuring the boundary
+- Blue lines may bisect the symbol, separating rays on either side
+- Text characters or numbers may overlap the central shape or rays
 
-If you can identify rays extending outward from a central point, even partially, mark the detection.
+Interference ranges from a partial clip of one or two rays to a line splitting the entire symbol in half. Look for rays on either side of the interfering feature — if the sunburst pattern remains discernible, mark the detection.
 
 ### Clustered Mounds
-Mounds often appear in groups (cemetery fields). Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
+Mounds commonly appear in groups where individual symbols vary in prominence — apply the ray diagnostic independently to each candidate. Each distinct sunburst centre is a separate mound. Provide individual bounding boxes even if symbols touch or overlap. Do not merge adjacent mounds into a single box.
 
 ### Faded or Degraded Symbols
 Scanning artefacts may cause:
@@ -70,6 +72,9 @@ Scanning artefacts may cause:
 - Slight geometric distortion
 
 Look for the characteristic sunburst structure even if imperfect.
+
+### Symbols Amid Dense Features
+Mound symbols may appear amid visually complex surroundings — near other map symbols, at intersections of lines, or in areas with dense annotation. Apply the outward-radiating ray diagnostic regardless of surrounding context. A symbol that satisfies the sunburst pattern is a detection even if neighbouring features are visually prominent.
 
 ## Reference Examples
 
