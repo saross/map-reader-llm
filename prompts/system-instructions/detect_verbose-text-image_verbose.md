@@ -39,17 +39,21 @@ Base all detections on the visual sunburst diagnostic only. Map text, labels, an
 
 For each candidate feature:
 
+**Phase 1 — Identify sunburst pattern:**
+
 1. **Check for rays**: Are there short marks radiating from a central point? No rays → not a mound.
 
 2. **Check ray direction**: Do rays point OUTWARD (elevated terrain) or INWARD (excavation)? Inward → not a mound.
 
-3. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
+3. **Consider occlusion**: Lines in various colours (black, red, brown, blue) or text labels may partially obscure symbols. Interference ranges from a partial clip of one or two rays to a line splitting the symbol in half. If the sunburst pattern remains discernible, include the detection.
 
-4. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
+4. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
 
-5. **Consider occlusion**: Lines in various colours (black, red, brown, blue) or text labels may partially obscure symbols. Interference ranges from a partial clip of one or two rays to a line splitting the symbol in half. If the sunburst pattern remains discernible, include the detection.
+**Phase 2 — Classify subtype:**
 
-6. **Consider degradation**: Map scanning may have faded or distorted symbols. Faint or slightly asymmetrical ray patterns still qualify if the overall sunburst structure is discernible.
+5. **Assess central shape**: Circle, oval, triangle, or square? This determines subtype classification.
+
+6. **Check colour**: Orange-brown indicates plain mound; black indicates mound with survey marker.
 
 ## Handling Edge Cases
 
