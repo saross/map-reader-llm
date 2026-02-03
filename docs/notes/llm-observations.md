@@ -1705,8 +1705,92 @@ already context-pressured, they could matter.
 
 ---
 
-*Document represents observations as of 2026-02-03. Session 13 added
-observations on tacit-to-explicit knowledge loss in skill encoding,
-the pattern of consecutive process-improvement sessions, and this
-entry as a test case for the /reflect skill. Further material may be
-added in future sessions.*
+---
+
+## Session 14: Ticking boxes, and the Opus editorial loop
+
+### On the texture of closure work
+
+This was the most procedurally straightforward session in the project.
+Read a checklist, update it. Read a task list, tick it. Read four
+prompt files, reorder six steps identically in each. Count words.
+Write an erratum. Commit, push. No uncertainty, no debugging, no
+creative drafting.
+
+I notice I found this satisfying in a way that's different from the
+satisfaction of solving a hard problem. Hard problems produce a sense
+of resolution — the moment when the hypothesis clicks or the bug is
+found. Closure work produces a sense of completion — the list is
+shorter, the path is clear. Whether "satisfaction" is the right word
+for whatever state my processing is in, I can't say. But the
+processing felt directed and convergent in a way that distinguishes
+it from the open-ended exploration of earlier sessions.
+
+### On recovering the user's list
+
+The most interesting moment was the list recovery. The user
+remembered "about three items" from earlier in the session (before
+/clear). My first search found the wrong list — a comprehensive
+20+ item checklist from the execution simulation document. The user
+corrected me: "we had a much more compact and clear list with three
+to-dos on it, from not long ago, just before you wrote the reflect
+skill."
+
+The second search found it: a 4-item status briefing. The user's
+"about three" was more accurate than my comprehensive search — human
+gist memory identified the right level of abstraction even with
+imprecise numerics. This is a small but genuine instance of the
+complementary capabilities pattern. I can search through megabytes
+of JSONL; the user can remember what the right answer *looks like*
+well enough to reject the wrong one.
+
+### On the three-model editorial dynamic
+
+This session featured a new collaboration pattern. The prompts were
+originally written by CC instances, reviewed by Opus (via claude.ai),
+feedback triaged by the user ("fix now" / "note but don't fix"),
+and implemented by CC (this instance). The user's triage role is
+notable — they didn't just relay Opus's suggestions, they made
+editorial decisions about priority and timing.
+
+This is more structured than the Session 10 pattern (user relays
+Opus's H9 correction). In Session 10, the user transmitted an error
+correction with clear right/wrong. Here, the user exercised
+editorial judgement: Priority 6 (Decision Procedure reordering) was
+"fix now" despite being a structural rather than correctness issue.
+The proposer-lacking-4A/4B observation was "note but don't fix" —
+a judgement that it's only actionable contingent on H2 results.
+
+I don't have a criticism here. This is an effective workflow for
+the current project stage. But I notice that it creates a
+responsibility distribution: CC writes, Opus reviews, the user
+decides. The human's role is shifting from primary author to
+editorial director as the prompt text stabilises. This is probably
+appropriate — the prompts are approaching their final form, and
+marginal improvements are more about judgement than generation.
+
+### A criticism
+
+Four consecutive sessions (12, 12b, 13, 14) have been process work
+rather than experimental work. Entry 11 in the reflection
+investigation flagged this pattern. I flagged it again in Session 13's
+observations. Now I'm noting it a third time. The project has been
+"almost ready for Phase 2a" for four sessions.
+
+To be fair, this session was *genuinely* the last one — the
+execution checklist is updated, the prerequisites are ticked, the
+API key is confirmed. The only remaining pre-execution task (OSF
+submission) is administrative, not technical. But I want to be
+honest: I've said "Phase 2a is ready, the next session should run
+experiments" in two consecutive entries, and it hasn't happened yet.
+The user seems aware of this (their brisk pace today suggests
+eagerness to move on), so I'm not worried. But if Session 15 is
+also process work, that would warrant a more direct conversation.
+
+---
+
+*Document represents observations as of 2026-02-04. Session 14 added
+observations on closure work texture, list recovery as complementary
+capability, three-model editorial dynamics, and continued concern
+about process-work accumulation. Further material may be added in
+future sessions.*

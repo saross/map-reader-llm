@@ -544,4 +544,44 @@ Short session continuing from Session 12's context exhaustion. Completed Session
 
 ---
 
+## Session 14 — 2026-02-04 (Pre-Phase 2 bookkeeping and prompt restructuring)
+
+### Overview
+
+Final housekeeping session before Phase 2a execution. Recovered a compact pre-Phase 2 task list from the session transcript after accidental `/clear`, completed all four items: updated execution checklist (Phase 1 complete), ticked pre-Phase 2 prerequisites, confirmed API key availability, and restructured the Decision Procedure in verbose instruction files per Opus review feedback. Added E14 erratum noting verbose word count overshoot. Ran word count pass across all instruction files.
+
+### Accomplishments
+
+1. **Recovered pre-Phase 2 task list** from session transcript JSONL after accidental `/clear` — the compact 4-item status briefing from the previous portion of the session
+2. **Updated execution checklist** (`execution-checklist.md`) — Phase 1 end date set to 2026-02-03, notes updated to reflect hard example selection and two-stage prompt review
+3. **Ticked pre-Phase 2 prerequisites** (`phase2-remaining-tasks.md`) — all four items marked ☑ Done with dates and resolution notes; status updated to "Phase 1 complete; prerequisites resolved"
+4. **Confirmed `GOOGLE_API_KEY`** present in `.env` and properly loaded via `config.py` → `load_dotenv()` across all active scripts (`4_detect_mounds_batch.py`, `5_verify_crops.py`, `preflight_check.py`)
+5. **Restructured Decision Procedure** in 4 verbose instruction files per Opus review — reordered into Phase 1 (identify sunburst: rays, direction, occlusion, degradation) then Phase 2 (classify subtype: shape, colour)
+6. **Ran word count pass** across all 11 instruction files — M/E scaling ratios consistent (image-only 91 → brief 213 → verbose 779 words)
+7. **Added E14 erratum** noting verbose instruction word count exceeds target by ~80 words (ratio 1:3.7 vs preregistered ~1:3); documented as conservative deviation
+
+### Issues
+
+- **Glob tool missed `.env`**: Dotfile filtering meant `Glob("**/.env")` returned no results, though `ls` confirmed the file exists. Bash `grep -rl` found it.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `e610b6f` | `chore(docs)`: Mark Phase 1 complete and tick pre-Phase 2 prerequisites |
+| `52d54e9` | `feat(prompts)`: Reorder Decision Procedure for detect-before-classify |
+| `7028e90` | `docs(errata)`: E14 — verbose instruction word count exceeds target |
+
+### Pending Work
+
+- [ ] **Compose OSF submission document**: Consolidate all errata (E1-E14), decisions, and protocol changes into a single paste-ready Markdown document for OSF open-ended registration update
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement HN rotation assignment
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] **Upload Phase 1 materials to OSF**: Library construction results
+- [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
+- [ ] **Begin Phase 2a execution**: H1 M/E level testing
+
+---
+
 *New session entries should be appended above this line.*

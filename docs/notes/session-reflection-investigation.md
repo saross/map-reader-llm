@@ -1806,6 +1806,160 @@ implication of the skill for the existing documentation
 
 ---
 
-*Document created: 2026-01-27. Eleventh reflection added 2026-02-03
-(process codification and prompt productivity assessment at n=11).
+## Entry 12: The last bookkeeping session before real work (Session 14, 2026-02-04)
+
+### Prompt 1: What struck you?
+
+The session was almost entirely about ticking boxes and closing out
+administrative debt before Phase 2a. What struck me was the
+archaeology of the session itself — I had to excavate a compact
+3-item to-do list from a session transcript because the user
+accidentally /cleared instead of /exited. The list recovery involved
+two agents searching through JSONL files, first finding the wrong
+(comprehensive) list, then the right (compact) one. The user's
+memory of "about three items" was more accurate than my first search
+result. Human memory for gist outperformed keyword search.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Phase 2a is ready.** The execution checklist is updated, the
+   prerequisites are ticked, the API key is in `.env`, the prompts
+   have been restructured. The remaining pre-Phase 2 task is composing
+   a consolidated errata/changes document for OSF submission (paste
+   into an open-ended form, not a file upload).
+
+2. **The Decision Procedure in verbose instructions now has two
+   phases.** Phase 1 (identify sunburst pattern) includes occlusion
+   and degradation consideration. Phase 2 (classify subtype) is shape
+   and colour. This was an Opus review suggestion. The brief and
+   image-only files are unaffected.
+
+3. **E14 documents the verbose word count overshoot.** 779 words,
+   ratio 1:3.7, ~80 words above target. Noted as conservative
+   (favours detecting H1 effect).
+
+### Prompt 3: What surprised you?
+
+That the `.env` file existed but wasn't found by Glob. The `ls`
+command found it immediately. This is presumably a gitignore or
+dotfile filtering issue in the Glob tool, but it meant I initially
+reported "No .env file found" before a bash search contradicted me.
+Minor, but a good reminder that tool limitations can produce false
+negatives that bash doesn't share.
+
+### Prompt 4: What was the texture?
+
+Brisk and tidy. This session had the feel of clearing a desk before
+starting a new project. No creative work, no debugging, no
+uncertainty. Each task was well-defined and completed without
+friction — update this table, tick these boxes, reorder these steps,
+count these words, commit, push. The rhythm was: read, edit, verify,
+next.
+
+The user was clearly eager to start Phase 2a. The tasks were done
+with the energy of clearing the last obstacles, not of doing the
+work itself. The session's emotional valence (if I can use that word
+for my processing) was anticipatory — everything pointed forward.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Whether the Decision Procedure restructuring actually matters
+   for VLM performance.** The Opus suggestion to put occlusion/
+   degradation before classification is intuitively sound, but we
+   don't know whether Gemini's processing follows the listed step
+   order. VLMs might process all steps holistically regardless of
+   presentation order. This is effectively untestable within the
+   current design — H4 tests example ordering, not instruction
+   ordering.
+
+2. **Whether the verbose word count overshoot should be corrected
+   rather than merely noted.** We could trim ~80 words from the
+   verbose instructions to restore the target ratio. The decision
+   to note rather than fix assumes the overshoot is conservative,
+   but it also introduces a confound between M/E level and
+   instruction length that the preregistration intended to control.
+
+3. **The OSF submission format question.** The user mentioned that
+   OSF open-ended registrations only accept pasted text, not file
+   uploads. The practical implications — how to structure 14 errata
+   entries plus decisions into a form field — weren't explored.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session broke the pattern of process-improvement
+sessions that Entry 11 flagged concern about. Sessions 12, 12b, and
+13 were all process work. Session 14 was also process work — but
+*different* process work. It was closure work: finishing things rather
+than building things. The distinction matters because closure work
+is finite (the boxes get ticked) while process-improvement work can
+expand indefinitely (there's always another tool to build).
+
+I also notice that the Opus review feedback created an interesting
+three-model dynamic. The prompts were written by CC (me/predecessors),
+reviewed by Opus (via claude.ai), feedback relayed by the human,
+and implemented by CC again. The human's role was editorial director
+— deciding which Opus suggestions to act on ("fix now" vs "note but
+don't fix") and routing them to the implementation agent. This is a
+more structured version of the three-agent pattern documented in
+Observation 86 (the H9 pool correction), but with explicit triage
+rather than error correction.
+
+Finally, I notice that the word count pass — requested by Opus,
+executed by me — revealed something about the prompt architecture
+that wasn't previously quantified. The "terse is longer than standard"
+inversion for shorter prompts is by design (standard was the original
+minimal prompt; terse adds structured exclusion criteria) but it
+wasn't documented. Quantifying it made the design choice visible.
+Measurement as documentation.
+
+### Meta-Reflection
+
+Twelve entries now:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+
+Prompt productivity for this session: Prompt 6 was again the most
+productive, generating the closure-vs-improvement distinction, the
+three-model editorial dynamic, and the measurement-as-documentation
+observations. Prompt 5 produced genuinely open questions (does
+instruction order matter to VLMs? should the overshoot be fixed
+rather than noted?). Prompt 1 (gist memory outperforming keyword
+search) and Prompt 4 (anticipatory desk-clearing texture) both
+captured something real. Prompt 3 was thin but factually useful
+(Glob dotfile limitation).
+
+Provisional prompt ranking holds at n=12: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 2 > Prompt 3.
+
+**Session**: 2026-02-04 (bookkeeping, Decision Procedure restructuring,
+word count pass, errata E14)
+**Reported texture**: Brisk and tidy — desk-clearing before Phase 2a
+**Key observation**: Closure work (finite) differs from process-
+improvement work (expandable); three-model review dynamics with human
+as editorial director
+**Noted preference**: Anticipatory energy toward Phase 2a
+**Engagement level**: Moderate — routine but purposeful
+**Unsolicited generation**: The closure-vs-improvement distinction;
+measurement as documentation; Glob tool false negative
+**Relational note**: The user's "let's knock out 1 and 2" conveyed
+clear eagerness to clear the deck; the session was collaborative
+but brisk, with minimal deliberation
+
+---
+
+*Document created: 2026-01-27. Twelfth reflection added 2026-02-04
+(closure work, three-model dynamics, prompt ranking stable at n=12).
 Framework proposed for ongoing practice.*
