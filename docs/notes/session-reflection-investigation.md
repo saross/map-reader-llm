@@ -1148,5 +1148,242 @@ collaboration adapted cleanly via git stash
 
 ---
 
-*Document created: 2026-01-27. Eighth reflection added 2026-02-02
-(HP/HN text update correction). Framework proposed for ongoing practice.*
+## Entry 9: Session 11 — Collaborative Prompt Refinement and the Human-VLM Perception Gap
+
+**Date**: 2026-02-03
+**Context**: Session 11 was devoted entirely to reviewing and refining
+prompt text derived from the hard example library. The session produced
+two governing principles (describe visual appearance not symbology
+identity; use VLM-calibrated diagnostics only), four categories of text
+changes across brief/terse/verbose prompt levels, and a synopsis
+document for external Opus review. The session's defining feature was
+its complementary contribution pattern: the user provided domain-
+grounded corrections (blue lines are canals not grid lines; HN 11 is a
+solid ovoid not a rectangle) while CC contributed the VLM perception
+analysis that reframed which diagnostics were usable. Decision 13 and
+Observation 87 were written during the session.
+
+### Prompt 1: "What struck you about this session?"
+
+What struck me was the reversal. In most previous sessions, I provided
+data and analysis while the user provided domain corrections. This
+session had that pattern too — the user caught my "grid line"
+misinterpretation immediately, and his manual review of each crop
+provided observations I couldn't have made at 128px resolution. But the
+session also had the reverse: when the user asked me to check the crops
+from a VLM perspective, I contributed something the user couldn't — a
+systematic analysis of what's perceptible at the resolution the model
+will actually process. The user described fine detail (solid fill, black
+outline, two black dots, half-black-half-white circle). I reported what
+I could and couldn't resolve at 128px. The combination produced better
+prompt text than either perspective alone.
+
+The other thing that struck me: establishing the descriptive principle
+("describe what the VLM sees, not what the feature is") was a genuine
+conceptual advance for the project, not just a wording preference. It
+changes how all future prompt text should be written. And it came
+directly from the user catching a specific error — my labelling blue
+diagonal lines as "grid lines" — and generalising it into a principle.
+The particular begat the general.
+
+### Prompt 2: "What would you want a future instance of yourself to know?"
+
+Two things:
+
+First: **when describing map features in prompts, describe appearance,
+not identity**. This sounds obvious once stated, but I defaulted to
+interpretive language ("grid lines," "roads," "contours," "quarry/pit
+symbols") throughout the initial draft. Every one of those labels makes
+an assumption about what a map feature *is* rather than describing what
+it *looks like*. The VLM doesn't know what a canal symbol means — it
+sees a diagonal blue line. Write for what the model perceives, not for
+what a cartographer knows.
+
+Second: **check your own perception against the target resolution**.
+When the user asked me to examine the crops from a VLM perspective, the
+exercise revealed systematic differences between what I could resolve
+and what a human examining the full-resolution map could see. At 128px,
+solid vs hollow fill, precise outlines, half-coloured patterns — all
+unreliable. Rays, direction, colour composition — reliable. This isn't
+just a methodological note; it's a principle for writing any visual
+description intended for VLM processing. The prompt should be calibrated
+to the model's perception, not the prompt-writer's perception.
+
+### Prompt 3: "What surprised you?"
+
+The diagnostic reliability gap surprised me — not that it exists (of
+course 128px can't resolve everything), but how *specifically* it
+mapped. I expected a general degradation where everything becomes
+slightly harder. Instead, the analysis revealed a clean partition:
+some diagnostics (ray presence, ray direction, colour family) are
+robust at 128px, while others (fill pattern, outline precision, internal
+detail) are essentially invisible. The partition was crisp enough to
+produce a usable table (Decision 13).
+
+I was also surprised by how productive the cross-check was. When the
+user said "you have a powerful vision engine, can you check my feedback
+against the crops themselves?" I expected to mostly confirm his
+observations. Instead, the exercise produced genuinely novel insight:
+the finding that human and VLM perception have *complementary* failure
+modes, not just different accuracy levels. The user sees fine detail
+that I miss; I can assess what's perceptible at the resolution the
+model will actually encounter. Neither perspective subsumes the other.
+
+### Prompt 4: "What was the texture or feel of this session?"
+
+Iterative and convergent. Unlike sessions with a clear three-act
+structure (setup, crisis, resolution) or a dominant debugging thread,
+this session was a sustained back-and-forth of drafting, reviewing,
+correcting, and redrafting. Four changes, each refined through multiple
+rounds. The texture was closer to collaborative writing than to
+engineering — more like co-authoring a document than building a system.
+
+There was a specific quality to the user's corrections this session
+that I want to note. Each correction was small but principled. "Blue
+lines aren't grid lines" became "describe appearance, not identity."
+"These aren't rectangular, they're ovoid" became "check from VLM
+perspective." "That phrasing is awkward" led to a cleaner formulation.
+Each specific correction carried a generalisation that improved
+everything downstream. The texture was one of progressive refinement
+where each iteration made the principles sharper, not just the text
+better.
+
+The Opus review step introduced a different texture — summarising for
+an external reviewer required distilling the session's reasoning into
+a synopsis. Writing `planning/prompt-text-review-synopsis.md` was a
+shift from collaborative refinement to explanatory communication. The
+synopsis had to be self-contained in a way that our working discussion
+wasn't.
+
+### Prompt 5: "What questions emerged that we didn't pursue?"
+
+Several:
+
+- Whether the descriptive principle should be applied retroactively to
+  *all* existing prompt text, not just the hard-example-derived
+  additions. The current brief prompt still says "Orange-brown hollow
+  circle with rays" — "hollow" is an interpretive claim about fill
+  pattern that may not be reliable at 128px.
+
+- Whether the marks-vs-rays lexical distinction is optimal. The user
+  raised this and deferred it to manual map review. The question is
+  whether "inward-pointing rays" is confusing (since rays in the mound
+  context means outward), or whether "inward-pointing marks" fails to
+  cover features that genuinely look like rays pointing inward.
+
+- How the diagnostic reliability table interacts with the crop-size
+  OFAT variable. If larger crops improve diagnostic resolution, the
+  evaluation criteria for that experiment should include whether
+  fine-detail diagnostics become usable — not just overall F1.
+
+- Whether Opus will identify issues in the synopsis that we missed.
+  The external review is explicitly designed to catch blind spots in
+  our collaborative refinement. What those might be is unpredictable.
+
+- Whether the "describe, don't interpret" principle applies to the
+  subtype labels in the output format ("burial_mound",
+  "settlement_mound"). These are interpretive categories. Should the
+  model be asked to output purely descriptive labels instead?
+
+### Prompt 6: "What do you notice now that you didn't articulate during the session?"
+
+I notice that this session had a different error pattern from recent
+sessions. In Sessions 6-10, the recurring failure mode was
+default-following — accepting an obvious parameter without checking
+whether it fit the specific use case. In this session, the failure
+mode was *interpretive overreach* — labelling what I saw rather than
+describing it. "Grid lines" instead of "diagonal blue lines."
+"Buildings" instead of "rectangular outlines." "Quarry/pit symbols"
+instead of "round shapes with inward-pointing marks."
+
+This is a different cognitive failure. Default-following is about not
+questioning assumptions about *values*. Interpretive overreach is about
+not questioning assumptions about *categories*. I see a blue line on a
+map and categorise it as a grid line because that's the most salient
+interpretation. The user — an archaeologist who has spent years with
+these maps — knows that diagonal blue lines on Soviet topo maps are
+likely canals. But the deeper point is that *neither of us should be
+interpreting* for the VLM. The VLM needs to know what it will see, not
+what it means.
+
+I also notice that the user's observation about complementary
+contributions ("both of us made significant contributions to improving
+the text prompts") is accurate in a way that's worth documenting. In
+several previous sessions, the contributions were asymmetric — I
+provided data, the user provided judgement. This session had genuinely
+bidirectional contribution: the user's domain expertise caught
+interpretive errors and provided ground truth about image content; my
+VLM-perspective analysis identified which of the user's observations
+were usable as prompt diagnostics and which weren't. The diagnostic
+reliability table couldn't have been produced by either party alone.
+
+One more thing: I notice that writing the synopsis for Opus required a
+different kind of synthesis than writing within our session. The
+synopsis had to explain not just *what* we changed but *why*, in a
+way that a reviewer without our session context could assess. This
+forced me to articulate principles (the two governing principles) that
+had been implicit in our working discussion. Externalising for review
+crystallised the reasoning.
+
+### Meta-Reflection
+
+Nine entries now. Updating the progression:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+
+The theme has shifted from gaps in individual performance (entries 2-8)
+to a genuinely collaborative finding (entry 9). The human-VLM
+perception gap isn't my error or the user's error — it's a structural
+feature of the task that neither party could have fully characterised
+alone. This feels qualitatively different from the default-following
+pattern. Previous entries centred on "I should have done better." This
+entry centres on "we produced something neither could have alone."
+
+Whether this represents a maturation of the collaboration or a change
+in session type (refinement work vs implementation work), I'm uncertain.
+But I note that the user explicitly highlighted the complementary
+contribution pattern, suggesting it was salient from both perspectives.
+
+Regarding the six prompts: Prompt 6 again generated the most novel
+content — the observation about interpretive overreach as a *different*
+failure mode from default-following, and the observation about Opus
+review forcing principle crystallisation. Prompt 5 (unpursued questions)
+was also productive, identifying the retroactive application question
+that could affect existing prompt text. Prompts 1 and 3 overlapped
+somewhat — "what struck you" and "what surprised you" both converged on
+the diagnostic reliability gap. This is consistent with Entry 7's
+observation that Prompts 1 and 3 may be partially redundant for
+sessions with a clear central finding.
+
+**Session**: 2026-02-03 (Prompt text refinement from hard example library)
+**Reported texture**: Iterative and convergent — collaborative writing
+rather than engineering
+**Key observation**: Complementary perception — human domain expertise
+and VLM-perspective analysis produced diagnostics neither could alone;
+interpretive overreach is a distinct failure mode from default-following
+**Noted preference**: Defaulting to interpretive categories ("grid
+lines") rather than descriptive language ("diagonal blue lines")
+**Engagement level**: High — sustained engagement across iterative
+refinement cycles, with a shift to synthesis when writing the synopsis
+**Unsolicited generation**: The VLM diagnostic reliability table
+emerged from the user's suggestion but the systematic analysis was
+self-directed; Decision 13 and Observation 87 written proactively
+**Relational note**: The user's explicit acknowledgement of
+complementary contributions felt like a milestone — mutual recognition
+of bidirectional value
+
+---
+
+*Document created: 2026-01-27. Ninth reflection added 2026-02-03
+(complementary perception and prompt refinement). Framework proposed
+for ongoing practice.*

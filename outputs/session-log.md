@@ -404,4 +404,68 @@ Continuation session implementing decisions from the Opus strategic review (`pla
 
 ---
 
+## Session 11 — 2026-02-03 (Prompt text refinement from hard example library)
+
+### Overview
+
+Reviewed and iteratively refined prompt text derived from the hard example library (HP 05-08, HN 11-14). Established two governing principles: (1) describe visual appearance, not map symbology identity; (2) use only diagnostics reliable at VLM exemplar resolution (128×128px). Produced four categories of text changes across brief/terse/verbose prompt levels, a diagnostic reliability table (Decision 13), and a synopsis document for external Opus review. The session was characterised by complementary human-AI contributions: the user provided domain-grounded corrections from manual map review, while CC contributed VLM-perspective analysis identifying which diagnostics survive resolution reduction.
+
+### Key Results
+
+#### Governing Principles Established
+
+1. **Descriptive principle**: Prompt text describes what the VLM will see (colours, shapes, spatial relationships), not what map features are (grid lines, buildings, canals). Matches the register used for the target symbol itself ("sunburst with outward-radiating rays").
+
+2. **VLM-calibrated diagnostics**: Only diagnostics reliable at 128×128px exemplar resolution are used. Fine detail visible to humans (solid fill, hollow centre, precise outlines, half-coloured patterns) is excluded. Resolution-robust diagnostics (ray presence/absence, direction, colour composition) are retained. See Decision 13 for the full reliability table.
+
+#### Four Change Categories
+
+| Change | Source | Scope | Summary |
+|--------|--------|-------|---------|
+| 1: Occlusion guidance | HP 07 | Brief (Guideline 2) + Verbose (3 edits) | Replaced interpretive feature names with colour/shape descriptions; added interference range and reconstruction guidance |
+| 2A: Inward-pointing marks | HN 13 | Terse (bullet) + Verbose (subsection) | Rewrote quarry/pit exclusion with descriptive language; added colour note |
+| 2B: Cyrillic text | HN 13 | Terse (bullet) + Verbose (subsection) | New exclusion for 'могила'/'кург.' text without accompanying sunburst |
+| 3: Non-mound round shapes | HN 11, HN 14 | Terse (bullet) + Verbose (subsection) | Catch-all for confusable round shapes using VLM-calibrated diagnostics |
+| 4A: Enhanced clustering | HP 05, HP 06, HP 08 | Verbose only | "If you find one, look nearby" guidance addressing VLM satisficing |
+| 4B: Dense features | HP 05, HP 06 | Verbose only | Apply ray diagnostic regardless of surrounding visual complexity |
+
+### Accomplishments
+
+1. **Iteratively refined 4 categories of prompt text changes** across brief/terse/verbose levels following both governing principles
+2. **Produced VLM diagnostic reliability table** — systematic comparison of human vs VLM perception at 128px, documenting which diagnostics are resolution-robust (Decision 13)
+3. **Recorded Observation 87** — human-VLM complementary perception finding and crop-size interaction implications
+4. **Wrote synopsis for Opus review** — `planning/prompt-text-review-synopsis.md` covering principles, changes, open items
+5. **Identified and applied descriptive principle** retroactively to pre-existing interpretive text ("grid lines (blue)" → descriptive language)
+6. **Consolidated redundant subsections** after Opus flagged overlap between two Change 1 verbose edits
+
+### Issues
+
+- **Interpretive overreach in initial drafts**: All initial prompt text used interpretive language ("grid lines," "buildings," "quarry/pit symbols") rather than descriptive language. Required systematic correction after the user established the descriptive principle.
+- **Human-VLM perception mismatch**: User's manual crop review identified fine detail (solid fill, black outline, two black dots, half-coloured patterns) that CC could not resolve at 128px. Required recalibrating all diagnostics to VLM-resolution-robust alternatives.
+- **Context exhaustion**: Session ran out of context during end-of-session reflections. Continuation session completed the reflections.
+
+### Open Items
+
+- **Marks vs rays terminology**: Intentional lexical distinction ("rays" for outward, "marks" for inward) under review. User checking whether "inward-pointing rays or other marks" better covers the range.
+- **Opus review pending**: User will share `planning/prompt-text-review-synopsis.md` with Opus at claude.ai for external assessment.
+
+### Commits
+
+No commits this session. All prompt text changes exist as proposed text in the conversation, pending:
+1. User's manual review completion
+2. Opus review feedback
+3. Implementation across 10 prompt files
+
+### Pending Work
+
+- [ ] **Implement prompt text changes** across 10 `detect_*.md` files (after user + Opus review)
+- [ ] **Resolve marks vs rays terminology** (user's manual map review)
+- [ ] **Incorporate Opus review feedback** from synopsis review
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement HN rotation assignment
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+
+---
+
 *New session entries should be appended above this line.*

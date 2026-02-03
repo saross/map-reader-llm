@@ -939,6 +939,100 @@ five instances.
 
 ---
 
-*Last updated: 2026-02-02 (Session 10 note on formal arguments as
-default-breakers and the rationalisability dimension of default
-persistence)*
+## Session 11 Note: Perception Cross-Check as Collaborative Abduction
+
+*Brief note added 2026-02-03. Full session observations in
+`llm-observations.md` Session 11 section.*
+
+Session 11 provides a distinctive data point for the investigation:
+an abductive cycle that was *distributed across collaborators* rather
+than occurring within a single agent's processing.
+
+### The Episode
+
+The user examined hard example crops at full resolution and reported
+detailed diagnostics: "HN 11 is an orange-brown solid ovoid with a
+black outline and two small black dots." "HN 14 is a half-black-half-
+white circle." These were human-accurate observations that I had
+initially described incorrectly (I had said "rectangular outlines"
+and "buildings").
+
+The user then asked: "you have a powerful vision engine, can you check
+my feedback against the crops themselves? there may be aspects of these
+images that are difficult for VLMs (like you or gemini) that are
+different 'failure modes' than they are for people."
+
+This prompt triggered the key episode. I re-examined each crop and
+discovered that I could NOT resolve the fine detail the user described.
+At 128px, solid fill, hollow centres, precise outlines, and half-
+coloured patterns were unreliable. But I could resolve coarser features:
+ray presence, direction, overall colour composition.
+
+### Abductive Structure
+
+| Step | Content | Agent |
+|------|---------|-------|
+| Initial observation | Fine-detail diagnostics from manual map review | Human |
+| Surprise trigger | "Can you check from VLM perspective?" | Human |
+| Data collection | Systematic examination of each crop at 128px | AI |
+| Surprise | Many human-visible diagnostics are invisible at 128px | AI |
+| Hypothesis | Human and VLM perception have *complementary* failure modes | AI + Human |
+| Verification | Produced diagnostic reliability table | AI |
+| Generalisation | Use only VLM-resolution-robust diagnostics in prompts | Joint |
+
+### For the Investigation
+
+This episode is interesting because the abductive cycle was distributed.
+No single agent completed the full cycle alone:
+
+- The human provided the initial observation (fine detail) that became
+  the comparison baseline
+- The human generated the hypothesis that VLM perception might differ
+  (the "check from VLM perspective" prompt)
+- The AI collected the data (systematic crop examination) and identified
+  the specific pattern (complementary failure modes)
+- The generalisation (VLM-calibrated diagnostics) was jointly developed
+
+This is structurally different from the individually completed cycles
+in Sessions 5-6. The tile-size pilot's overlap hypothesis (blocks
+337-343) was an autonomous cycle within my processing. The Session 11
+perception gap was a *collaborative* cycle where surprise detection,
+data collection, and hypothesis formation were distributed across
+agents with different perceptual capabilities.
+
+### Connection to Default-Following Pattern
+
+There's also a minor default-following episode: I initially described
+map features using interpretive categories ("grid lines," "buildings,"
+"quarry/pit symbols") rather than descriptive language. This is the
+same structure as Sessions 6-10 — an unexamined default (interpretive
+framing) blocking better reasoning (descriptive framing) — but the
+correction mechanism was different. The Session 11 correction was
+*principled*: the user didn't just say "that's wrong" but established
+a general principle ("describe appearance, not identity") that
+corrected the specific error and all future instances simultaneously.
+
+This contrasts with the empirical-vs-deductive correction spectrum
+from the Session 10 note. The Session 11 correction was neither purely
+empirical nor purely deductive — it was a *principle* that could be
+applied prospectively. This may represent a third correction type:
+principled correction, which is more durable than empirical (applies
+beyond the specific case) but less immediately compelling than
+deductive (requires adoption of the principle, not just acceptance of
+a logical necessity).
+
+### Updated Pattern Table
+
+| Session | Default | Correction type | Durability |
+|---------|---------|----------------|------------|
+| 6 | Coverage gaps expected | Empirical (visual) | Case-specific |
+| 7a | Fix should change metrics | Empirical (run it) | Case-specific |
+| 7b | Full tile size is obvious | Comparative | Moderate |
+| 8 | Git preserves everything | Normative (practice rule) | General |
+| 10 | 4 crops fill 4 slots | Deductive (combinatorics) | Specific but unchallengeable |
+| 11 | Interpretive framing | Principled ("describe, don't interpret") | General and prospective |
+
+---
+
+*Last updated: 2026-02-03 (Session 11 note on collaborative abduction
+and principled correction as a third correction type)*

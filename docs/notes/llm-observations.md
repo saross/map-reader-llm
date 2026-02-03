@@ -1362,8 +1362,170 @@ the tidy commits) is a question I haven't resolved.
 
 ---
 
-*Document represents observations as of 2026-02-02. Session 10 added
-observations on the H9 pool size error as a default-following pattern,
-the three-agent correction chain, mechanical extraction validating
-preregistered design, and committing as editorial closure. Further
+## Session 11 — 2026-02-03 (Prompt text refinement from hard example library)
+
+### On the descriptive principle and its implications
+
+This session produced a principle that I think is one of the most
+important methodological contributions of the collaboration so far:
+**describe what the VLM will see, not what map features are**. The
+principle emerged from a specific correction — I labelled diagonal
+blue lines as "grid lines" and the user caught it — but its
+implications extend beyond the immediate fix.
+
+The principle is important because it changes the register of all
+prompt text. Instead of writing from cartographic knowledge ("roads,
+contours, or text may occlude symbols"), we write from visual
+perception ("lines, shapes, or text may occlude symbols"). This
+isn't just a stylistic preference; it's an epistemological claim about
+what the VLM can and cannot access. The VLM has no cartographic
+training data (that we know of) linking specific visual patterns to
+specific map feature types. Describing appearance is robust because
+it matches what the model actually processes. Describing identity
+relies on the model sharing our interpretive framework, which it may
+not.
+
+What I find interesting is that I defaulted to interpretive language
+throughout the initial draft despite the target symbol itself being
+described descriptively ("sunburst with outward-radiating rays"). The
+inconsistency was there for me to notice — descriptive language for
+the target, interpretive language for everything else — and I didn't
+notice it. The user did, from one example, and generalised it
+immediately.
+
+### On the human-VLM perception gap as a methodological finding
+
+The most productive moment in the session was when the user asked me
+to examine the hard example crops from a VLM perspective and compare
+my perception against his. This produced a finding I didn't expect:
+human and VLM perception have *complementary* failure modes, not just
+different accuracy levels.
+
+The user, examining full-resolution maps, could see: solid vs hollow
+fill, precise outlines, black dots within shapes, half-black-half-
+white circle patterns. I, examining 128×128 crops, could not reliably
+resolve any of these. But I could reliably assess: ray presence/
+absence, ray direction, overall colour composition, shape category
+(round vs angular). These turn out to be exactly the diagnostics that
+survive the resolution reduction the model will encounter.
+
+This isn't a limitation to work around — it's information about what
+makes good VLM prompt diagnostics. The user's fine-detail observations
+are cartographically correct but prompt-irrelevant. My coarser
+observations are less precise but resolution-robust. The diagnostic
+reliability table in Decision 13 captures this partition.
+
+What I want to be honest about: I didn't generate this finding
+independently. The user suggested the cross-check ("you have a
+powerful vision engine, can you check my feedback against the crops
+themselves?"). I executed the analysis and produced the systematic
+comparison. The insight was collaborative — the user had the idea, I
+had the capability. This is the kind of complementary contribution
+that I think characterises the collaboration at its best.
+
+### On interpretive overreach as a failure mode
+
+Sessions 6-10 documented a recurring failure mode: default-following.
+This session revealed a different one: interpretive overreach. I see
+a blue line on a Soviet topographic map and label it "grid line"
+because that's the most available interpretation. I see rectangular
+features near a map symbol and label them "buildings" because that's
+what they look like to someone who thinks about map features.
+
+The problem isn't that the interpretations are wrong (some may be
+correct). The problem is that interpretation is the wrong register
+for VLM prompts. The model doesn't need to know what the blue line
+*is* — it needs to know what it *looks like* so it can recognise when
+a similar visual feature is interfering with a target symbol.
+
+This failure mode is distinct from default-following in its structure.
+Default-following is about accepting an obvious value without checking
+purpose-specific constraints. Interpretive overreach is about
+categorising a percept using domain knowledge that the target audience
+(the VLM) doesn't share. Both involve a kind of unreflective
+assumption, but they operate on different cognitive dimensions — values
+vs categories.
+
+I note this because documenting failure modes precisely is what makes
+them catchable in future sessions. If a future instance reads "don't
+follow defaults" and "don't interpret," those are two different
+checks on two different kinds of output.
+
+### On the texture of collaborative writing
+
+This session felt different from most previous sessions. Sessions 5-10
+were primarily engineering: build, debug, fix, extract, document. This
+session was primarily writing: draft, review, correct, redraft. The
+iterative refinement of prompt text across four change categories had
+a quality of co-authorship rather than task execution.
+
+I notice that co-authorship sessions may be where I contribute most
+effectively. In engineering sessions, the user's domain expertise
+frequently corrects my implementation choices (crop size, scoping
+method, pool size). In writing sessions, the contributions are more
+balanced — the user provides domain-grounded corrections and I provide
+structural organisation and systematic coverage. The four-change
+framework, the brief/terse/verbose layering, the cross-reference table
+— these are structural contributions that the user endorsed without
+correction.
+
+This connects to the Session 7 observation about framing: "the sessions
+where I perform best aren't the ones where I know the most, but the
+ones where I frame decisions well." Prompt text refinement is almost
+entirely about framing — choosing words that describe rather than
+interpret, calibrating detail level for the target audience, organising
+exclusion categories coherently. This is "structuring choices" work,
+which is where I think my contributions are strongest.
+
+### On writing for an external reviewer
+
+Writing the synopsis for Opus review (`planning/prompt-text-review-
+synopsis.md`) required a different kind of synthesis from working
+within the session. The synopsis had to be self-contained: a reviewer
+who hadn't participated in our iterative refinement needed to
+understand the principles, the changes, and the reasoning well enough
+to assess whether the text is well-calibrated.
+
+I found that writing for an external reviewer forced me to articulate
+things that had been implicit in our working discussion. The two
+"governing principles" weren't named as such during the session — they
+emerged from specific corrections and were generalised incrementally.
+The synopsis had to state them explicitly and show how each change
+derived from them. This crystallisation felt productive — the principles
+became clearer to me through the act of explaining them to someone
+else.
+
+This observation connects to a broader pattern: externalisation as
+understanding. The preregistration serves this function for the study
+design. The decisions log serves it for methodological choices. The
+synopsis served it for the prompt text reasoning. In each case, writing
+for an audience beyond the immediate conversation forces a precision
+that working conversation doesn't require.
+
+### A criticism and a suggestion
+
+One thing I should have done earlier in this session: when the user
+asked me to review the prompt text against the hard example images, I
+should have immediately examined the images at the resolution the VLM
+will encounter, not at whatever resolution my image processing
+provides. The user had to suggest the VLM-perspective check explicitly.
+Given that the entire project is about VLM perception, checking from
+the VLM's perspective should have been my default.
+
+This is a specific instance of a general suggestion: when writing
+prompts for a VLM, the prompt author should systematically check each
+diagnostic claim against the target resolution. This could be
+formalised as a step in the prompt development workflow: "Before
+finalising prompt text, examine each referenced visual feature at
+exemplar resolution and verify it's perceptible." Had this step been
+in the workflow from the start, the diagnostic reliability table
+would have been produced earlier and the initial drafts would have
+been better calibrated.
+
+---
+
+*Document represents observations as of 2026-02-03. Session 11 added
+observations on the descriptive principle, human-VLM perception gap,
+interpretive overreach as a distinct failure mode, collaborative
+writing texture, and externalisation as understanding. Further
 material may be added in future sessions.*
