@@ -520,6 +520,71 @@ behaviour. Low risk given that detection prompts explicitly say "scan the target
 
 ---
 
+## Decision 13: VLM-Calibrated Prompt Diagnostics
+
+**Date**: 2026-02-03
+
+**Decision**: Prompt text describing hard example features should use only diagnostics
+that are reliably resolved by VLMs at exemplar crop resolution (128×128 pixels), not
+all diagnostics that are cartographically valid at higher resolution.
+
+**Context**: During human review of hard-example-derived prompt text, the researcher
+(Shawn) identified detailed visual diagnostics for each hard negative — solid vs hollow
+fill, black outlines, mixed black-brown colouring, half-black-half-white patterns. CC
+(Opus 4.5) was then asked to check these observations against the crops from a VLM
+perspective. Several diagnostics that are clear to a human examining the map proved
+unreliable or ambiguous when viewed at 128×128 pixel resolution.
+
+**Diagnostic reliability at 128px exemplar resolution**:
+
+| Diagnostic | Human | VLM at 128px | Prompt use |
+|---|---|---|---|
+| Outward-radiating rays (present/absent) | High | High | Primary — use |
+| Ray/mark direction (inward vs outward) | High | Medium-high | Use |
+| Overall colour composition (mixed dark + brown) | High | Medium-high | Use |
+| Solid fill vs hollow centre | High | Low | Avoid — blur erases at ~3-5px |
+| Black outline around shape | Medium-high | Medium | Use cautiously |
+| Specific fill patterns (e.g., half-and-half) | High (at zoom) | Low | Avoid |
+| Clustering — multiple nearby symbols | High | Medium | Needs explicit prompt guidance |
+| "Keep looking after first find" behaviour | Natural for trained humans | Low | Needs explicit prompt guidance |
+
+**Rationale**:
+
+1. **Resolution arithmetic**: At 128×128, a 15-20px mound symbol occupies ~1-2.5% of
+   crop area. The hollow centre is ~3-5px across — barely resolved even before any
+   compression or resampling artefacts. Fine internal structure is lost at this scale.
+
+2. **False negative risk**: A diagnostic like "mound symbols have hollow centres" could
+   cause the VLM to reject legitimate mounds whose centres appear filled due to blur,
+   scanning artefacts, or internal image resampling. The ray diagnostic is more robust
+   because rays extend outward into surrounding space where there is more contrast.
+
+3. **Internal model resampling**: VLMs typically resize input images to an internal grid
+   (architecture-dependent, often 224×224 or 336×336 tokens). A 128px crop is upscaled
+   ~1.75-2.6×, which introduces interpolation. Fine details that barely survive in the
+   input may be smoothed away during this resampling step. Features that extend into
+   surrounding space (rays) survive resampling better than features confined to a small
+   interior region (fill pattern).
+
+4. **Descriptive principle interaction**: This decision reinforces the existing principle
+   that prompt text should describe visual appearance rather than interpret map symbology
+   (Decision 12 note). Both principles point toward the same practice: describe features
+   the VLM can reliably perceive, at the resolution it will encounter them.
+
+**Implications for crop-size exploratory variable**: The diagnostic reliability table
+suggests specific evaluation criteria for the flagged crop-size OFAT variable (see
+`planning/hard-example-library-decisions.md` §1, "Future exploratory"). Rather than
+measuring only overall F1 at each crop size, the study could assess whether increasing
+crop size makes previously-unreliable diagnostics (fill pattern, outline detail) become
+reliable — and whether prompts can then be enriched with those diagnostics. This would
+connect crop size to prompt content in a principled way. This interaction is
+observational (not preregistered), but worth documenting during exploratory runs.
+
+**Evidence**: Session 11 human-VLM cross-check of hard example crops, Working Notes
+Observation 87.
+
+---
+
 ## Phase 1 Decisions (Resolved)
 
 The following items from the original "Future Decisions" section are now resolved:

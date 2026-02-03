@@ -1577,6 +1577,47 @@ This has practical implications beyond this study:
 
 4. **Three-agent collaboration pattern**: This finding emerged from a three-way collaboration: CC (this instance) performed boundary/edge-clearance analysis and distance distribution computation, Opus (via the web chatbot) provided strategic framing (the 100m localisation threshold question, the advice on centre-pointing language, and the overall experimental sequencing), and the human researcher synthesised both into decisions. The planning document (`planning/hard-example-library-decisions.md`) is a visible artefact of this three-agent pattern.
 
+## Observation 87: Human vs VLM diagnostic reliability at exemplar resolution (2026-02-03)
+
+**Context**: Session 11. During review of hard-example-derived prompt text, CC (Opus 4.5)
+was asked to examine the hard example crops from a VLM perspective and compare its
+perception against the researcher's human observations. This produced a systematic
+assessment of which visual diagnostics are reliably perceived by VLMs at 128×128 pixel
+exemplar resolution versus which are clear to human experts at full zoom.
+
+**The observation**: Human and VLM perception of map features diverge significantly at
+low resolution. Diagnostics that are obvious to a trained archaeologist examining the
+full-resolution map — solid vs hollow fill, fine outline detail, specific internal colour
+patterns — become ambiguous or invisible to a VLM processing 128px crops. The mound
+symbol's hollow centre is ~3-5px across at this scale; blur, compression, and internal
+model resampling can erase it entirely.
+
+The diagnostics that survive resolution reduction are those involving **spatial extension**
+(rays projecting outward into surrounding space, where there is more contrast) and
+**colour composition** (the overall mix of colours in a region, which is resolution-robust).
+Diagnostics involving **fine internal structure** (fill patterns, small outline details)
+do not survive.
+
+This has a direct practical consequence: prompt text calibrated for human perception may
+cause VLM false negatives. A prompt saying "mound symbols have hollow centres" could
+cause the model to reject legitimate blurry mounds. The principle is: **prompt diagnostics
+should be calibrated for VLM visual processing at the resolution the model will encounter
+them, not for cartographic accuracy at full resolution.**
+
+**Implication for crop-size OFAT variable**: The diagnostic reliability boundary is not
+fixed — it depends on crop size and internal model resampling. The flagged crop-size
+exploratory variable (64, 128, 256, 512px) could be evaluated not just on overall F1 but
+on whether larger crops make fine-detail diagnostics reliable. If so, prompts could be
+conditionally enriched at larger crop sizes. This crop-size × prompt-content interaction
+is a potential exploratory finding worth watching for.
+
+**Collaboration note**: This finding emerged from the researcher's suggestion to "do a
+VLM-first check" — asking CC to examine the crops as a VLM would see them rather than
+relying solely on human domain expertise. The complementarity is notable: the human
+provides cartographic expertise (what the features actually ARE), the VLM reports what it
+can actually PERCEIVE at the given resolution. Neither perspective alone would have
+produced the calibrated result. See Decision 13 for the full diagnostic reliability table.
+
 ## Observation 86: Three-agent error correction — the H9 pool size miscalculation (2026-02-02)
 
 **Context**: Session 10. CC (this instance) concluded that 4 hard negative crops were sufficient for H9 diversity rotation, since the Scale-8 library specifies 4 HN examples. The user identified the error after discussing the design with Opus (web chatbot), who provided a clear mathematical explanation of why this was wrong.
