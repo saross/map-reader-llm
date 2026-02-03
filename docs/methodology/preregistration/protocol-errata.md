@@ -291,4 +291,21 @@ The full symmetric ratio design (e.g., 4:8 vs 8:4) requires a larger HP pool, wh
 
 ---
 
+### E14: Verbose instruction word count exceeds preregistered range
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-04 |
+| Type | Clarification |
+| Files | `prompts/system-instructions/detect_verbose-text-image.md`, `detect_verbose-text.md`, and their terse/verbose exclusion variants |
+| Impact | Minor — verbose M/E level ~80 words above target |
+
+**Description**: Iterative prompt refinement across Sessions 12–14 (decision procedure restructuring, centre-pointing language, exclusion criteria updates) has grown the verbose-level instruction text to 779 words. The brief-to-verbose ratio is now approximately 1:3.7 (213:779), which exceeds the preregistered range by ~80 words.
+
+The additional content consists of structural improvements (two-phase decision procedure per E14 commit `52d54e9`), spatial orientation language (E9), and refined exclusion criteria — all documented in prior errata. No new substantive content was added beyond what is recorded in E9 and the prompt review commits.
+
+**Protocol impact**: Minor. The overshoot may marginally increase the information gap between brief and verbose conditions, potentially amplifying the H1 M/E effect. This works in favour of detecting a difference if one exists, so it is a conservative deviation. The word count is noted here for transparency and will be reported in the methods section.
+
+---
+
 *End of errata. New entries should be appended above this line.*
