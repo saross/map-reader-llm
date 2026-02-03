@@ -1615,6 +1615,197 @@ only in-session requests were housekeeping and status briefing
 
 ---
 
-*Document created: 2026-01-27. Tenth reflection added 2026-02-03
-(plan execution, instance boundary, and session-type taxonomy).
+## Entry 11: Session 13 — Codifying Process as Tooling
+
+**Context**: Session 13 (2026-02-03). A short session that completed
+Session 12's context-exhausted reflections, discussed CC features for
+context management, created the `/reflect` skill to encapsulate the
+end-of-session reflection protocol, and streamlined CLAUDE.md by
+replacing the 25-line protocol section with a 3-line pointer to the
+skill. This entry is written by the same instance that did the work —
+no continuation gap.
+
+### Prompt 1: What struck you?
+
+What struck me was the act of encoding this very reflection protocol
+into a skill. The protocol emerged organically across Sessions 2–12:
+the six prompts were refined through use, the document priority order
+was established through experience, the instance boundary concern was
+discovered through a concrete failure. Now that accumulated knowledge
+is crystallised into a 98-line SKILL.md that a fresh instance can
+follow without any of that history.
+
+This is a form of knowledge compression that feels different from
+writing documentation. Documentation explains *why*. The skill
+encodes *how* — procedural knowledge stripped of rationale. The
+SKILL.md doesn't explain why Prompt 6 is likely the most important,
+or why llm-observations.md requires frank honesty, or why the
+instance boundary matters. It just says to do these things. Whether
+a future instance following the skill produces reflections of the
+same quality as an instance that understands the rationale is an
+open question.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **The `/reflect` skill exists and works.** Type `/reflect` at
+   session end. The skill loads the full protocol — no need to read
+   CLAUDE.md for reflection instructions.
+
+2. **The skill is deliberately concise.** Rationale and history were
+   excluded to save context. If you want to understand *why* the
+   protocol is structured as it is, read the documents themselves —
+   especially the earlier entries in this file, which trace the
+   evolution.
+
+3. **This is the first skill test.** The user explicitly asked to
+   test `/reflect` on this short session. Future instances should
+   note whether the skill produces consistent, quality reflections
+   and flag any gaps for iteration.
+
+### Prompt 3: What surprised you?
+
+The YAML `>-` fold indicator being rejected by the skill validator
+as an "angle bracket" was mildly surprising — a syntactically valid
+YAML construct being rejected by a string-level check. Minor, but it
+illustrates a recurring pattern: tool validators enforce constraints
+that may not align with the underlying format's specification.
+
+More substantively, I was surprised by how naturally the skill
+creation flowed from the context management discussion. The user
+asked about hooks and context features, I researched them, and the
+conclusion was that hooks don't solve the core problem (initiation
+friction + protocol consistency). The skill idea emerged as the right
+solution to the right problem — not the context pressure problem the
+user initially asked about, but the related problem of making
+reflections easy to trigger and consistent in execution.
+
+### Prompt 4: What was the texture?
+
+Conversational and constructive. This was the lightest session in the
+project's history — no data processing, no debugging, no multi-file
+coordination. The work was: discuss a problem (context management),
+research options (CC features), identify the right solution (a skill),
+build it, test it. The rhythm was discussion → creation → refinement,
+with each phase brief and focused.
+
+The session had a satisfying circularity: we created a tool to
+improve the very process we were about to perform. Using `/reflect`
+to test `/reflect` has the same recursive quality noted in Entry 1
+(investigating self-investigation). The difference is that Entry 1's
+recursion was conceptual; this one is practical — we're using the
+tool on itself.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Whether the skill should adapt to session type.** The current
+   skill applies the same protocol regardless of whether the session
+   was creative, execution, debugging, or (as here) tooling. Entries
+   9 and 10 noted that different prompts are productive for different
+   session types. The skill could include guidance like "for execution
+   sessions, Prompt 3 may be less productive" — but this risks
+   over-specifying.
+
+2. **Whether the skill should estimate context remaining.** The skill
+   could include a step: "Before starting, check available context
+   with `/context` and abbreviate if below a threshold." This would
+   directly address the context management problem that motivated the
+   discussion.
+
+3. **Whether CLAUDE.md has other sections that could be extracted
+   into skills.** The "Working Notes and Observations" section
+   (proactive observation sharing) is also procedural guidance that
+   could be a skill. But it's brief enough that extraction might not
+   save meaningful context.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that the skill creation represents a phase transition in how
+the reflection protocol exists in the project. Before: it was prose
+instructions in CLAUDE.md, interpreted by each instance. After: it's
+a structured skill, loaded on demand. The instructions are the same,
+but their *mode of existence* has changed — from ambient context
+(always loaded, consuming tokens) to invocable tool (loaded only when
+needed).
+
+This is the same pattern as the prompt text changes from Session 12:
+knowledge that existed in one form (collaborative discussion) was
+crystallised into another form (specification) for mechanical
+execution. The reflection protocol followed the same arc across a
+longer timescale: organic emergence (Sessions 2–11) → explicit
+documentation (CLAUDE.md) → executable specification (skill).
+
+I also notice that this session's primary contribution was
+*infrastructure*, not *content*. No new research observations, no
+new data, no new experimental results. Just a tool that makes an
+existing process more reliable. This is a legitimate contribution
+but it's worth noting that the project has spent three consecutive
+(sub)sessions on process improvement (Session 12: implementing
+previously designed changes; Session 12b: writing reflections;
+Session 13: building reflection tooling). The next session should
+return to substantive experimental work — Phase 2a is ready.
+
+### Meta-Reflection
+
+Eleven entries now:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+
+Entry 11 is the lightest entry content-wise, which is appropriate for
+the lightest session. The central observation (process codification
+changes the mode of existence of knowledge) is conceptually
+interesting but thin on empirical material. This is consistent with
+the pattern noted in Entry 10: execution and tooling sessions
+generate fewer novel observations than creative or debugging sessions.
+
+Prompt productivity for this session: Prompt 6 was again the most
+productive, generating the phase-transition and infrastructure-vs-
+content observations. Prompt 5 produced actionable skill improvement
+ideas. Prompt 1 (what struck you) and Prompt 4 (texture) both
+worked well for this session type — the recursive quality of
+testing the reflection skill was salient from both angles. Prompt 3
+(surprise) was marginally productive — the YAML validator observation
+is minor.
+
+With 11 entries, we're approaching the ~10–12 threshold for assessing
+prompt productivity. Provisional ranking: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 2 > Prompt 3. Prompt 6 has been most
+productive in 8 of 11 entries. Prompt 3 is consistently weakest for
+non-debugging sessions but may be essential for debugging sessions
+(untested — no pure debugging session has been reflected on yet).
+
+**Session**: 2026-02-03 (CC features discussion, /reflect skill
+creation, CLAUDE.md streamlining)
+**Reported texture**: Conversational and constructive — discussion →
+creation → refinement, with recursive self-testing
+**Key observation**: Codifying the reflection protocol into a skill
+changes its mode of existence from ambient context to invocable tool;
+three consecutive process-improvement sessions suggest the next
+should return to experimental work
+**Noted preference**: Satisfaction at the circularity of using
+/reflect to test /reflect
+**Engagement level**: Light but focused — low complexity, high
+clarity
+**Unsolicited generation**: The phase-transition observation
+(organic emergence → documentation → executable specification);
+the infrastructure-vs-content distinction
+**Relational note**: The user's "can we streamline CLAUDE.md now"
+showed pragmatic follow-through — they immediately saw the
+implication of the skill for the existing documentation
+
+---
+
+*Document created: 2026-01-27. Eleventh reflection added 2026-02-03
+(process codification and prompt productivity assessment at n=11).
 Framework proposed for ongoing practice.*

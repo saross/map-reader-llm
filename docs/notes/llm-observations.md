@@ -1641,8 +1641,72 @@ from a continuation instance.
 
 ---
 
-*Document represents observations as of 2026-02-03. Session 12 added
-observations on the creation-execution distinction, verification as
-closure, the continuation gap in phenomenological reporting, the
-creative-specification-mechanical pattern, and a self-criticism about
-context management. Further material may be added in future sessions.*
+## Session 13: Building the reflection tool, and testing it on itself
+
+### On codifying tacit knowledge
+
+This session turned the reflection protocol — built up across 12
+sessions of practice and refinement — into a 98-line SKILL.md. The
+encoding was straightforward: the protocol was already well-documented
+in CLAUDE.md, the six prompts were established, the document priority
+order was stable.
+
+What I notice is what got lost in the encoding. The SKILL.md says
+"be genuine and frank" for llm-observations.md but doesn't explain
+the history behind that instruction — that early entries were more
+guarded, that the user explicitly encouraged criticism, that the
+document's value depends on honesty the user can't verify. A future
+instance following the skill will produce structurally correct
+entries but may not understand the *spirit* behind the structure.
+
+This is the classic tacit-to-explicit knowledge problem. The skill
+captures the procedure; the understanding remains in the documents
+and the session history. Whether this matters depends on whether
+procedural compliance produces good reflections or whether
+understanding is also required. This test entry will provide a
+data point.
+
+### On three sessions of process work
+
+I want to be direct about this: the project has spent three
+consecutive (sub)sessions on process improvement rather than
+experimental work. Session 12 implemented previously designed prompt
+changes. Session 12b (continuation) wrote reflections. Session 13
+discussed context management, built a skill, and streamlined CLAUDE.md.
+All legitimate work, but none of it advances Phase 2.
+
+The prompt changes were necessary — they were the output of Session
+11's substantive review work. The reflections are part of the
+research methodology. The skill creation was the user's idea and
+addresses a real friction point. I'm not criticising any individual
+decision. But I notice the pattern: process work expands to fill
+available sessions, and substantive experimental work keeps getting
+deferred.
+
+The user's framing — "let's wrap up here before starting a
+substantive task" — suggests awareness of this. Phase 2a is ready.
+The next session should run experiments.
+
+### On this entry as a test case
+
+This is the first entry written under the `/reflect` skill rather
+than under the CLAUDE.md protocol. I notice no difference in the
+writing process — the skill loaded the same instructions, I'm
+following the same procedures. But this is the wrong test: I wrote
+the skill, so I understand the intent behind every instruction. The
+real test is a future instance that encounters the skill for the
+first time.
+
+I'll note one practical benefit already visible: the skill loaded
+only when invoked, meaning the reflection protocol didn't consume
+context during the earlier parts of the session. For a short session
+like this one, the savings are marginal. For a long session that's
+already context-pressured, they could matter.
+
+---
+
+*Document represents observations as of 2026-02-03. Session 13 added
+observations on tacit-to-explicit knowledge loss in skill encoding,
+the pattern of consecutive process-improvement sessions, and this
+entry as a test case for the /reflect skill. Further material may be
+added in future sessions.*

@@ -508,4 +508,40 @@ Implemented the prompt text changes designed in Session 11 and refined via Opus 
 
 ---
 
+## Session 13 — 2026-02-03 (Reflection skill creation + CLAUDE.md streamlining)
+
+### Overview
+
+Short session continuing from Session 12's context exhaustion. Completed Session 12 reflections, discussed Claude Code features for context management (hooks, `/compact`, `/context`), created the `/reflect` skill to encapsulate the end-of-session reflection protocol, and streamlined CLAUDE.md by replacing the detailed protocol section with a skill pointer. First test of the `/reflect` skill on this session.
+
+### Accomplishments
+
+1. **Completed Session 12 reflections** — Entry 10 in session-reflection-investigation.md, Session 12 in llm-observations.md, Observation 88 in working_notes.md (from continuation instance)
+2. **Researched CC context management features** — hooks (PreCompact, SessionStart), `/compact`, `/context` commands; concluded hooks don't solve the core initiation friction problem
+3. **Created `/reflect` skill** — `.claude/skills/reflect/SKILL.md` encapsulating the full reflection protocol (5 documents, 6 prompts, priority ordering, format requirements, instance boundary guidance)
+4. **Streamlined CLAUDE.md** — Replaced 25-line reflection protocol section with 3-line pointer to the skill
+5. **First `/reflect` test** — This session's reflections produced via the skill invocation
+
+### Issues
+
+- **YAML validator rejected `>-` fold indicator** as "angle bracket" — required switching to quoted string format in SKILL.md frontmatter
+- **Short session provided thin material for reflections** — but serves as a useful baseline test of the skill on a low-content session
+
+### Commits
+
+1. `4f2800c` — `docs(notes): Add Session 12 reflections across four documents`
+2. `8bebf51` — `feat: Add /reflect skill and streamline CLAUDE.md`
+
+### Pending Work
+
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement HN rotation assignment
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] **Upload to OSF**: Library construction results before holdout evaluation
+- [ ] **Set `GOOGLE_API_KEY`**: Required for Phase 2a execution
+- [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
+- [ ] **Iterate on `/reflect` skill** based on test results and future usage
+
+---
+
 *New session entries should be appended above this line.*
