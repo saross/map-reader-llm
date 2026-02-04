@@ -1,0 +1,190 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "b7b863ef-816d-41c9-bd99-7a4ff18f0c01",
+    "started_at": "2026-02-03T13:05:08.717Z",
+    "ended_at": "2026-02-03T22:58:32.586Z",
+    "duration_minutes": 593
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 14,
+    "total_tokens": 1737,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [],
+    "modified": [
+      {
+        "path": "docs/methodology/preregistration/execution-checklist.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/protocol-errata.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/tasks/phase2-remaining-tasks.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_verbose.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 83,
+    "human_messages": 83,
+    "assistant_messages": 114,
+    "thinking_blocks": 14,
+    "tool_calls": {
+      "total": 64,
+      "by_type": {
+        "Task": 5,
+        "Glob": 4,
+        "Bash": 16,
+        "Read": 22,
+        "Edit": 17
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 251784,
+      "by_type": {
+        "Task": {
+          "count": 5,
+          "bytes": 15289
+        },
+        "Glob": {
+          "count": 4,
+          "bytes": 671
+        },
+        "Bash": {
+          "count": 16,
+          "bytes": 16704
+        },
+        "Read": {
+          "count": 22,
+          "bytes": 217167
+        },
+        "Edit": {
+          "count": 17,
+          "bytes": 1953
+        }
+      },
+      "largest_single_output_bytes": 64065
+    }
+  },
+  "auto_generated": {
+    "title": "Pre-Phase 2 Checklist and Final Preparation",
+    "purpose": "Recover a lost pre-Phase 2 checklist and systematically verify all prerequisites for starting Phase 2 experiments.",
+    "tags": ["phase-2-prep", "checklist", "pre-experiment", "readiness", "verification"]
+  },
+  "three_ps": {
+    "prompt_summary": "Recover the lost preparation checklist and verify all prerequisites are met before Phase 2 experimental execution.",
+    "process_summary": "Regenerated the checklist from session context, systematically verified and completed remaining items across prompts, configs, and infrastructure.",
+    "provenance_summary": "Final preparation checkpoint ensuring all Phase 1 outputs and pipeline infrastructure are ready for Phase 2."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "ae0d5591db3103353a3ab58c0b8a104b68dec18d8c2e950e579f34e8e11c5d0f",
+    "jsonl_bytes": 2286048,
+    "archived_at": "2026-02-04T22:22:29.238460",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 524977,
+    "jsonl_bytes_uncompressed": 2286048,
+    "jsonl_sha256_uncompressed": "a70ccfd110dbd04057be0e02a68e0a9f7c8c3eccf41a2057e7305bfec2ef727e"
+  }
+}

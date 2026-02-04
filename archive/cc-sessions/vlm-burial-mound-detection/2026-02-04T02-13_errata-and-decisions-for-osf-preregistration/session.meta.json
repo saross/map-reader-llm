@@ -1,0 +1,206 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "82dcf7fd-fa17-49f8-92f1-bdaf96bfae88",
+    "started_at": "2026-02-04T02:13:10.303Z",
+    "ended_at": "2026-02-04T11:19:31.620Z",
+    "duration_minutes": 546
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 34,
+    "total_tokens": 7704,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "docs/methodology/preregistration/osf/description.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/phase1-errata-and-decisions.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/protocol-errata.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": ".markdownlint.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/planning/hard-example-review/prompt-text-review-synopsis.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/osf/preregistration.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/fp-fn-register.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 121,
+    "human_messages": 121,
+    "assistant_messages": 192,
+    "thinking_blocks": 34,
+    "tool_calls": {
+      "total": 100,
+      "by_type": {
+        "Task": 3,
+        "Read": 33,
+        "AskUserQuestion": 1,
+        "Bash": 33,
+        "Write": 2,
+        "Grep": 3,
+        "Edit": 24,
+        "Glob": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 321462,
+      "by_type": {
+        "Task": {
+          "count": 3,
+          "bytes": 23981
+        },
+        "Read": {
+          "count": 33,
+          "bytes": 234583
+        },
+        "AskUserQuestion": {
+          "count": 1,
+          "bytes": 579
+        },
+        "Bash": {
+          "count": 33,
+          "bytes": 35745
+        },
+        "Write": {
+          "count": 2,
+          "bytes": 3159
+        },
+        "Grep": {
+          "count": 3,
+          "bytes": 19686
+        },
+        "Edit": {
+          "count": 24,
+          "bytes": 3087
+        },
+        "Glob": {
+          "count": 1,
+          "bytes": 642
+        }
+      },
+      "largest_single_output_bytes": 40759
+    }
+  },
+  "auto_generated": {
+    "title": "Errata and Decisions for OSF Preregistration",
+    "purpose": "Compile all Phase 1 errata and methodological decisions into a single structured document for updating the OSF preregistration form.",
+    "tags": ["errata", "osf", "preregistration", "decisions", "documentation", "phase-1", "transparency"]
+  },
+  "three_ps": {
+    "prompt_summary": "Consolidate all Phase 1 errata and methodological decisions into a single Markdown document for the OSF preregistration update.",
+    "process_summary": "Verified individual errata (e.g., E7 union_all bug, E15\u2013E16) and decisions (e.g., D4 sample sizes, D14), compiled into structured Markdown with narrative summary.",
+    "provenance_summary": "Research transparency documentation linking Phase 1 protocol deviations back to the preregistered study design."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "16cdeb2fcd88ed877b9a698e3bfa7b006afa4b1e031802a3583b03738d1d66fe",
+    "jsonl_bytes": 3112954,
+    "archived_at": "2026-02-04T22:22:30.272492",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 751555,
+    "jsonl_bytes_uncompressed": 3112954,
+    "jsonl_sha256_uncompressed": "a835bc0e3080a4f2986aab3fbfaef71376ed03b504b323047bd72a7bb42a616f"
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "b859c083-c03e-44ed-b680-083d3f9f9457",
+    "started_at": "2026-02-02T05:07:58.910Z",
+    "ended_at": "2026-02-02T11:04:07.161Z",
+    "duration_minutes": 356
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 58,
+    "total_tokens": 21556,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "prompts/configs/library_scale-16.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-32.json",
+        "type": "data",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/hypothesis-tracking.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/protocol-errata.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/hard-example-library-decisions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "inputs/examples/hard-negative/example_11_rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_12_lesovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_13_k-35-052-4.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_14_elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_06_elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_07_rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_08_elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/K-35-062-2_Rakovski/metadata.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "inputs/tiles/calibration_manifest.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/fp-fn-register.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 277,
+    "human_messages": 277,
+    "assistant_messages": 417,
+    "thinking_blocks": 58,
+    "tool_calls": {
+      "total": 254,
+      "by_type": {
+        "Task": 8,
+        "Read": 90,
+        "TaskCreate": 8,
+        "TaskUpdate": 14,
+        "Glob": 7,
+        "Write": 6,
+        "Bash": 45,
+        "Edit": 72,
+        "Grep": 4
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 1242265,
+      "by_type": {
+        "Task": {
+          "count": 8,
+          "bytes": 104272
+        },
+        "Read": {
+          "count": 88,
+          "bytes": 1011967
+        },
+        "TaskCreate": {
+          "count": 8,
+          "bytes": 609
+        },
+        "TaskUpdate": {
+          "count": 14,
+          "bytes": 308
+        },
+        "Glob": {
+          "count": 7,
+          "bytes": 3199
+        },
+        "Write": {
+          "count": 6,
+          "bytes": 3017
+        },
+        "Bash": {
+          "count": 45,
+          "bytes": 89141
+        },
+        "Edit": {
+          "count": 72,
+          "bytes": 17416
+        },
+        "Grep": {
+          "count": 4,
+          "bytes": 12336
+        }
+      },
+      "largest_single_output_bytes": 94493
+    }
+  },
+  "auto_generated": {
+    "title": "Completing Hard Examples and Prompt Updates",
+    "purpose": "Complete hard example extraction and begin incorporating Opus web app back-channel feedback into prompt text updates.",
+    "tags": ["hard-examples", "prompt-updates", "opus-feedback", "phase-1", "prompt-refinement"]
+  },
+  "three_ps": {
+    "prompt_summary": "Finalise hard example extraction and begin updating prompts with Opus back-channel feedback from the claude.ai web app.",
+    "process_summary": "Completed tile extraction, received and processed Opus feedback document, began systematic prompt modifications across multiple variants.",
+    "provenance_summary": "Transitional session bridging Phase 1 hard example curation with prompt refinement based on external Opus review."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "9c0028e0a52461aea98897c1eee1b06467633b28e6dbb6a32c7b0617d9e81369",
+    "jsonl_bytes": 6503927,
+    "archived_at": "2026-02-04T22:22:26.854346",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 1849130,
+    "jsonl_bytes_uncompressed": 6503927,
+    "jsonl_sha256_uncompressed": "cf7922cfeaaf436b32be6628e1cffed9e9c52820946cf2c175190b6c846648f7"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "b859c083-c03e-44ed-b680-083d3f9f9457"
+    ],
+    "detection_notes": [
+      "Found session ID reference: b859c083-c03e-44ed-b680-083d3f9f9457",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

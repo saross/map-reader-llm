@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-02-02T13:14:57.011127",
-  "total_sessions": 79,
+  "generated_at": "2026-02-04T22:22:30.273208",
+  "total_sessions": 86,
   "projects": {
     "vlm-burial-mound-detection": {
       "name": "vlm-burial-mound-detection",
@@ -10,6 +10,69 @@
     }
   },
   "sessions": [
+    {
+      "id": "82dcf7fd-fa17-49f8-92f1-bdaf96bfae88",
+      "title": "Errata and Decisions for OSF Preregistration",
+      "directory": "vlm-burial-mound-detection/2026-02-04T02-13_errata-and-decisions-for-osf-preregistration",
+      "started_at": "2026-02-04T02:13:10.303Z",
+      "duration_minutes": 546,
+      "tags": ["errata", "osf", "preregistration", "decisions", "documentation", "phase-1", "transparency"],
+      "purpose": "Compile all Phase 1 errata and methodological decisions into a single structured document for updating the OSF preregistration form."
+    },
+    {
+      "id": "b7b863ef-816d-41c9-bd99-7a4ff18f0c01",
+      "title": "Pre-Phase 2 Checklist and Final Preparation",
+      "directory": "vlm-burial-mound-detection/2026-02-03T13-05_pre-phase-2-checklist-and-final-preparation",
+      "started_at": "2026-02-03T13:05:08.717Z",
+      "duration_minutes": 593,
+      "tags": ["phase-2-prep", "checklist", "pre-experiment", "readiness", "verification"],
+      "purpose": "Recover a lost pre-Phase 2 checklist and systematically verify all prerequisites for starting Phase 2 experiments."
+    },
+    {
+      "id": "6ba09033-9c21-4428-8031-92e3179bf344",
+      "title": "Executing Prompt Updates and Phase 2 Preparation",
+      "directory": "vlm-burial-mound-detection/2026-02-03T12-12_executing-prompt-updates-and-phase-2",
+      "started_at": "2026-02-03T12:12:52.181Z",
+      "duration_minutes": 52,
+      "tags": ["prompt-updates", "phase-2-prep", "file-archiving", "opus-feedback", "implementation"],
+      "purpose": "Execute the prompt update plan incorporating Changes 1\u20134 and Opus Priorities 1\u20135 across 12+ prompt files, then archive superseded planning files and brief on Phase 2 readiness."
+    },
+    {
+      "id": "2005225e-0e5e-4e04-91e0-a5c296a90f7a",
+      "title": "Processing Opus Feedback for Prompt Updates",
+      "directory": "vlm-burial-mound-detection/2026-02-03T11-29_processing-opus-feedback-for-prompt-updates",
+      "started_at": "2026-02-03T11:29:48.723Z",
+      "duration_minutes": 33,
+      "tags": ["opus-feedback", "prompt-review", "combined-feedback", "planning", "prompt-updates"],
+      "purpose": "Develop a plan to update all prompts based on consolidated Opus feedback from the claude.ai web app review."
+    },
+    {
+      "id": "79e3e2c9-0ad9-436b-8dcf-a59bd54f10cf",
+      "title": "Prompt-to-Image Audit and Review",
+      "directory": "vlm-burial-mound-detection/2026-02-02T11-04_prompt-to-image-audit-and-review",
+      "started_at": "2026-02-02T11:04:10.241Z",
+      "duration_minutes": 1464,
+      "tags": ["prompt-audit", "few-shot-library", "prompt-review", "text-image-mapping", "quality-assurance"],
+      "purpose": "Audit prompt text changes against the specific hard example images that inspired them, producing a mapping between prompt modifications and their empirical basis."
+    },
+    {
+      "id": "b859c083-c03e-44ed-b680-083d3f9f9457",
+      "title": "Completing Hard Examples and Prompt Updates",
+      "directory": "vlm-burial-mound-detection/2026-02-02T05-07_completing-hard-examples-and-prompt-updates",
+      "started_at": "2026-02-02T05:07:58.910Z",
+      "duration_minutes": 356,
+      "tags": ["hard-examples", "prompt-updates", "opus-feedback", "phase-1", "prompt-refinement"],
+      "purpose": "Complete hard example extraction and begin incorporating Opus web app back-channel feedback into prompt text updates."
+    },
+    {
+      "id": "d879bff4-956d-4a3d-b515-c1863b315ab5",
+      "title": "Hard Example Extraction and Prompt Preparation",
+      "directory": "vlm-burial-mound-detection/2026-02-02T02-13_hard-example-extraction-and-prompt",
+      "started_at": "2026-02-02T02:13:41.190Z",
+      "duration_minutes": 173,
+      "tags": ["hard-examples", "few-shot-library", "tile-extraction", "prompt-preparation", "phase-1"],
+      "purpose": "Extract hard positive and hard negative example tiles for the few-shot library, rank candidates, crop tiles, and resolve edge-of-tile issues for prompt refinement."
+    },
     {
       "id": "abe6f808-0b43-429a-af0a-69647470071f",
       "title": "Untitled Session",

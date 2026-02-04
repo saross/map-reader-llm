@@ -1,0 +1,291 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "d879bff4-956d-4a3d-b515-c1863b315ab5",
+    "started_at": "2026-02-02T02:13:41.190Z",
+    "ended_at": "2026-02-02T05:07:28.138Z",
+    "duration_minutes": 173
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 42,
+    "total_tokens": 7542,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "SHAWN.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/references/prompt_example_images/superseded-hard-negatives-512x512/README.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/preliminary-work/references/prompt_example_images/superseded-hard-positives-512x512/README.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "CLAUDE.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-31T10-02_anova-to-bootstrap-reconciliation-and/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-01-31T21-22_da3d0331/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "archive/cc-sessions/vlm-burial-mound-detection/2026-02-01T11-43_abe6f808/session.meta.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "docs/methodology/preregistration/protocol-errata.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "find-tile-edges.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "outputs/phase1-library/fp-fn-register.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_canonical.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_plus-hp.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_pure-positive-canon.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-16.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-32.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-4.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/configs/library_scale-8.json",
+        "type": "data",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "scripts/extract_candidates.py",
+        "type": "code",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 170,
+    "human_messages": 170,
+    "assistant_messages": 274,
+    "thinking_blocks": 42,
+    "tool_calls": {
+      "total": 158,
+      "by_type": {
+        "Task": 3,
+        "Bash": 53,
+        "Read": 50,
+        "Grep": 7,
+        "Edit": 24,
+        "Glob": 6,
+        "TaskCreate": 4,
+        "TaskUpdate": 8,
+        "Write": 3
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 532207,
+      "by_type": {
+        "Task": {
+          "count": 3,
+          "bytes": 17649
+        },
+        "Bash": {
+          "count": 53,
+          "bytes": 39725
+        },
+        "Read": {
+          "count": 50,
+          "bytes": 445824
+        },
+        "Grep": {
+          "count": 7,
+          "bytes": 23376
+        },
+        "Edit": {
+          "count": 24,
+          "bytes": 2977
+        },
+        "Glob": {
+          "count": 6,
+          "bytes": 1768
+        },
+        "TaskCreate": {
+          "count": 4,
+          "bytes": 303
+        },
+        "TaskUpdate": {
+          "count": 8,
+          "bytes": 189
+        },
+        "Write": {
+          "count": 3,
+          "bytes": 396
+        }
+      },
+      "largest_single_output_bytes": 89674
+    }
+  },
+  "auto_generated": {
+    "title": "Hard Example Extraction and Prompt Preparation",
+    "purpose": "Extract hard positive and hard negative example tiles for the few-shot library, rank candidates, crop tiles, and resolve edge-of-tile issues for prompt refinement.",
+    "tags": ["hard-examples", "few-shot-library", "tile-extraction", "prompt-preparation", "phase-1"]
+  },
+  "three_ps": {
+    "prompt_summary": "Extract hard positive/negative tiles for the few-shot library from Phase 1 results, ranking and cropping candidates.",
+    "process_summary": "Used tile extraction scripts to identify, rank, and crop hard example candidates; resolved edge-of-tile boundary issues; updated MANIFEST and library configs.",
+    "provenance_summary": "Phase 1 hard example curation feeding into prompt refinement before Phase 2 experimental execution."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "a157c44aca94156d268831823f885ac814635e6d195318212236e8d77e967cd4",
+    "jsonl_bytes": 3179720,
+    "archived_at": "2026-02-04T22:22:24.651109",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 746802,
+    "jsonl_bytes_uncompressed": 3179720,
+    "jsonl_sha256_uncompressed": "db6afc6c7261f96add596269550e5089ca00ae71b5a3dfe14c23f929839a1f7e"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "d879bff4-956d-4a3d-b515-c1863b315ab5"
+    ],
+    "detection_notes": [
+      "Found session ID reference: d879bff4-956d-4a3d-b515-c1863b315ab5",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}

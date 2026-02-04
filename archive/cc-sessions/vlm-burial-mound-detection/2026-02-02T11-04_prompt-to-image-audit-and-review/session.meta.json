@@ -1,0 +1,296 @@
+{
+  "schema_version": "1.1",
+  "session": {
+    "id": "79e3e2c9-0ad9-436b-8dcf-a59bd54f10cf",
+    "started_at": "2026-02-02T11:04:10.241Z",
+    "ended_at": "2026-02-03T11:28:45.127Z",
+    "duration_minutes": 1464
+  },
+  "project": {
+    "name": "vlm-burial-mound-detection",
+    "directory": "/home/shawn/Code/map-reader-llm"
+  },
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-opus-4-5-20251101",
+    "access_method": "claude-code-cli"
+  },
+  "thinking_blocks": {
+    "included": true,
+    "count": 34,
+    "total_tokens": 16108,
+    "token_count_method": "estimated",
+    "sharing_preference": "research-only",
+    "use_constraints": [
+      "analysis-for-improvement",
+      "research-publication-aggregated"
+    ],
+    "excluded_uses": [
+      "training-data",
+      "public-display-individual"
+    ],
+    "nature_note": "Work-in-progress reasoning traces, not polished output. May contain abandoned paths and self-corrections."
+  },
+  "relationships": {
+    "continues": null,
+    "continuedBy": null,
+    "isPartOf": [
+      "vlm-burial-mound-detection"
+    ],
+    "isParallelTo": [],
+    "supersedes": null,
+    "references": [],
+    "branchesFrom": null
+  },
+  "artifacts": {
+    "created": [
+      {
+        "path": "planning/prompt-text-review-synopsis.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "modified": [
+      {
+        "path": "docs/methodology/preregistration/decisions-log.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/abductive-reasoning-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/llm-observations.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/session-reflection-investigation.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "docs/notes/working_notes.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "outputs/session-log.md",
+        "type": "document",
+        "description": ""
+      }
+    ],
+    "referenced": [
+      {
+        "path": "SHAWN.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "find-tile-edges.py",
+        "type": "code",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_11_rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_12_lesovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_13_k-35-052-4.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-negative/example_14_elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_06_elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_07_rakovski.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/hard-positive/example_08_elenovo.png",
+        "type": "image",
+        "description": ""
+      },
+      {
+        "path": "inputs/examples/neutral-naming/MANIFEST.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "planning/hard-example-library-decisions.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_brief-text.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_image-only_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_terse.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text-image_verbose.md",
+        "type": "document",
+        "description": ""
+      },
+      {
+        "path": "prompts/system-instructions/detect_verbose-text.md",
+        "type": "document",
+        "description": ""
+      }
+    ]
+  },
+  "statistics": {
+    "turns": 115,
+    "human_messages": 115,
+    "assistant_messages": 177,
+    "thinking_blocks": 34,
+    "tool_calls": {
+      "total": 91,
+      "by_type": {
+        "Task": 1,
+        "Bash": 24,
+        "Read": 48,
+        "Grep": 3,
+        "TaskCreate": 3,
+        "TaskUpdate": 5,
+        "Edit": 6,
+        "Write": 1
+      }
+    },
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "tool_outputs": {
+      "total_bytes": 1332506,
+      "by_type": {
+        "Task": {
+          "count": 1,
+          "bytes": 7894
+        },
+        "Bash": {
+          "count": 24,
+          "bytes": 37428
+        },
+        "Read": {
+          "count": 47,
+          "bytes": 1275814
+        },
+        "Grep": {
+          "count": 3,
+          "bytes": 10247
+        },
+        "TaskCreate": {
+          "count": 3,
+          "bytes": 259
+        },
+        "TaskUpdate": {
+          "count": 5,
+          "bytes": 110
+        },
+        "Edit": {
+          "count": 6,
+          "bytes": 653
+        },
+        "Write": {
+          "count": 1,
+          "bytes": 101
+        }
+      },
+      "largest_single_output_bytes": 101766
+    }
+  },
+  "auto_generated": {
+    "title": "Prompt-to-Image Audit and Review",
+    "purpose": "Audit prompt text changes against the specific hard example images that inspired them, producing a mapping between prompt modifications and their empirical basis.",
+    "tags": ["prompt-audit", "few-shot-library", "prompt-review", "text-image-mapping", "quality-assurance"]
+  },
+  "three_ps": {
+    "prompt_summary": "Review and map prompt text changes to the specific hard example library images that motivated each modification.",
+    "process_summary": "Read prompt files and cross-referenced with hard example library images, producing an audit trail linking text to visual evidence.",
+    "provenance_summary": "Quality assurance step ensuring prompt refinements are traceable to their empirical basis in the example library."
+  },
+  "archive": {
+    "jsonl_path": "session.jsonl.gz",
+    "jsonl_sha256": "dc8efb4471d38b43acc2afe991e4a4bc4a85b5f967b03b987b712579cb83cfee",
+    "jsonl_bytes": 3992411,
+    "archived_at": "2026-02-04T22:22:25.582285",
+    "jsonl_compression": "gzip",
+    "jsonl_bytes_compressed": 1998492,
+    "jsonl_bytes_uncompressed": 3992411,
+    "jsonl_sha256_uncompressed": "a6ac1495a1102fed66ac84c7407691fc95d191961e3a8e9d4efec1cb3baf595f"
+  },
+  "_relationship_hints": {
+    "continues_hint": null,
+    "references_hints": [
+      "79e3e2c9-0ad9-436b-8dcf-a59bd54f10cf"
+    ],
+    "detection_notes": [
+      "Found session ID reference: 79e3e2c9-0ad9-436b-8dcf-a59bd54f10cf",
+      "Found continuation language: 'continu(?:e|ing|ed)\\s+from'"
+    ]
+  }
+}
