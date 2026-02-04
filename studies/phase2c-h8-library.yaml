@@ -1,6 +1,7 @@
 # Phase 2c: H8 Library Composition Testing
 # =========================================
-# Tests 7 library compositions at optimal M/E and temperature.
+# Tests 5 library compositions at optimal M/E and temperature.
+# (Scale-16 and Scale-32 deferred per E11: HP pool exhausted at 4.)
 #
 # Usage:
 #   python scripts/run_study.py studies/phase2c-h8-library.yaml
@@ -15,9 +16,10 @@ study:
   name: "Phase 2c: H8 Library Composition"
   version: "1.0"
   description: |
-    Tests 7 library compositions to determine optimal example set.
+    Tests 5 library compositions to determine optimal example set.
     Uses optimal M/E from Phase 2a and optimal temperature from Phase 2b.
     Results inform library used in subsequent phases (2d-2e).
+    Scale-16 and Scale-32 deferred per E11 (HP pool exhausted at 4).
   phase: "2c"
   hypothesis: "H8"
   created: "2026-01-21"
@@ -83,26 +85,32 @@ factors:
           hard_negative: 4
           null_examples: 3
           total: 17
-      - name: "scale-16"
-        config: "prompts/configs/library_scale-16.json"
-        description: "Canon+ (4), HP (8), Canon- (2), HN (8), null (3) = 25 examples"
-        composition:
-          canonical_positive: 4
-          canonical_negative: 2
-          hard_positive: 8
-          hard_negative: 8
-          null_examples: 3
-          total: 25
-      - name: "scale-32"
-        config: "prompts/configs/library_scale-32.json"
-        description: "Canon+ (4), HP (16), Canon- (2), HN (16), null (3) = 41 examples"
-        composition:
-          canonical_positive: 4
-          canonical_negative: 2
-          hard_positive: 16
-          hard_negative: 16
-          null_examples: 3
-          total: 41
+
+# DEFERRED per E11: HP pool exhausted at 4 hard positives.
+# Scale-16 requires 8 HP and Scale-32 requires 16 HP, which are unavailable.
+# These conditions remain in the preregistered design but cannot be executed
+# without additional training data. See protocol-errata.md E11.
+#
+#     - name: "scale-16"
+#       config: "prompts/configs/library_scale-16.json"
+#       description: "Canon+ (4), HP (8), Canon- (2), HN (8), null (3) = 25 examples"
+#       composition:
+#         canonical_positive: 4
+#         canonical_negative: 2
+#         hard_positive: 8
+#         hard_negative: 8
+#         null_examples: 3
+#         total: 25
+#     - name: "scale-32"
+#       config: "prompts/configs/library_scale-32.json"
+#       description: "Canon+ (4), HP (16), Canon- (2), HN (16), null (3) = 41 examples"
+#       composition:
+#         canonical_positive: 4
+#         canonical_negative: 2
+#         hard_positive: 16
+#         hard_negative: 16
+#         null_examples: 3
+#         total: 41
 
 # Fixed parameters
 fixed:
@@ -136,13 +144,11 @@ analysis:
   fdr_q: 0.05
   planned_contrasts:
     # Sequential addition contrasts (C1-C3)
-    - ["pure-positive-canon", "canonical"]
-    - ["canonical", "plus-hp"]
-    - ["plus-hp", "scale-4"]
-    # Scaling contrasts (S1-S3)
-    - ["scale-4", "scale-8"]
-    - ["scale-8", "scale-16"]
-    - ["scale-16", "scale-32"]
+    - ["pure-positive-canon", "canonical"]   # C1: effect of adding Canon-
+    - ["canonical", "plus-hp"]               # C2: effect of adding HP
+    - ["plus-hp", "scale-4"]                 # C3 / B1: HP-only vs balanced HP+HN at same total (13)
+    # Scaling contrast (S1) — S2/S3 deferred with Scale-16/32 per E11
+    - ["scale-4", "scale-8"]                 # S1: scaling from 13 to 17 examples
   metrics:
     - "f1"
     - "precision"
@@ -160,11 +166,11 @@ outputs:
     - "{output_dir}/analysis_report.json"
 
 estimates:
-  cells: 7
+  cells: 5                      # 7 preregistered, 2 deferred per E11
   api_calls_per_cell: 3000
-  total_api_calls: 21000
-  cost_usd: 77
-  time_hours: 7
+  total_api_calls: 15000
+  cost_usd: 55
+  time_hours: 5
 
 outcome:
   determines: "optimal_library"
@@ -173,4 +179,4 @@ outcome:
     Select library with highest mean F1.
     If multiple libraries have overlapping 95% CIs with the best,
     prefer smaller library (fewer examples) for parsimony.
-    Note: Scale-16/32 require extended HP/HN pools from Phase 1.
+    Note: Scale-16/32 deferred per E11 (HP pool exhausted at 4).
