@@ -308,4 +308,48 @@ The additional content consists of structural improvements (two-phase decision p
 
 ---
 
+### E15: Inconsistent pass count references in preregistration appendix
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-04 |
+| Type | Correction |
+| File | `docs/methodology/preregistration/osf/preregistration-appendix-prompts.md` |
+| Impact | None (internal inconsistency in submitted preregistration; execution used the correct value) |
+
+**Description**: The preregistration appendix contains inconsistent pass count references for the Phase 1 baseline calibration run. The operative procedure (lines 98–99) specifies "5 passes" with a "≥3/5 passes" threshold, consistent with the execution simulation and the v2.1 changelog ("aligned Phase 1 baseline with preregistration (5 passes, ≥3/5 threshold)"). However, two other locations retain stale values from an earlier draft:
+
+| Location | Text | Intended |
+|----------|------|----------|
+| Line 115 (HP selection) | "≥3/10 passes missed" | ≥3/5 |
+| Line 1694 (HN TBD table) | "≥3/10 runs" | ≥3/5 |
+
+The main preregistration (§8.4.2) does not specify a pass count, deferring to the appendix procedure.
+
+**Root cause**: The appendix v2.1 update aligned the HN procedure (lines 98–99) and HP TBD table (line 1695) to K=5 but missed the HP description (line 115) and HN TBD table (line 1694).
+
+**Protocol impact**: None. Phase 1 was executed with K=5 passes as specified by the operative procedure. The stale "≥3/10" references are residual from an earlier draft and do not reflect intended methodology. The threshold is moot in any case: all 24 FNs were complete misses (0/5) and all selected FPs occurred at 5/5 or ≥3/5 votes. Decisions-log Decision 4 has been corrected to reference K=5.
+
+---
+
+### E16: Prompt text shifted from cartographic naming to visual descriptions
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-03 |
+| Type | Clarification |
+| Commit | `2d46311` |
+| Files | All 10 `prompts/system-instructions/detect_*.md` files |
+| Impact | Changes wording of preregistered prompt text without altering prompt structure or factor design |
+
+**Description**: The preregistered prompt text (appendix v2.17) describes non-mound map features using cartographic identity names: "Contour Line Artefacts", "Infrastructure Markers", "Quarry and Pit Symbols", "Roads (black/red lines), contour lines (brown), grid lines (blue)". During hard example review (Session 11), these were systematically revised to use visual appearance descriptions: "Closed Curved Line Patterns", "Dots on Linear Features", "Inward-Pointing Marks", "Lines in various colours (black, red, brown, blue)". Interpretive glosses such as "(inward = excavation, outward = elevation)" were removed.
+
+**Rationale**: The VLM may not map cartographic feature names to the correct visual patterns. Visual descriptions (colours, shapes, spatial relationships) are robust because they describe what the model actually sees. This matches the register already used for the target symbol ("sunburst with outward-radiating rays"). See Decision 14 in decisions-log.md.
+
+**Scope of changes**: Section headings, exclusion category titles, and feature descriptions were reworded. The prompt structure (preamble, decision procedure, exclusion categories), factor design (H5 levels, M/E levels), and example library are unchanged. The changes were applied uniformly across all H5 conditions.
+
+**Protocol impact**: Minor. The wording of exclusion criteria and occlusion guidance changed, but the set of features being described and the diagnostic logic (ray presence/absence, direction of marks) are preserved. The changes are conservative: visual descriptions are a subset of what the cartographic names conveyed, avoiding assumptions about VLM cartographic knowledge.
+
+---
+
 *End of errata. New entries should be appended above this line.*

@@ -110,9 +110,9 @@ Preliminary testing found two-stage pipelines underperformed single-stage with v
 
 ### Hard Positive Selection (examples 05-08)
 
-**Preregistered criteria** (§8.4.2): K=10 passes, FNs missed ≥3/10, rank by miss frequency.
+**Preregistered criteria** (§8.4.2): K=5 passes, rank by miss frequency. The appendix (line 115) contains a stale "≥3/10 passes" reference from an earlier draft, but the operative procedure (appendix lines 98–99) and execution simulation both specify K=5 with ≥3/5 threshold. See errata E15.
 
-**Actual execution**: K=5 passes. All 24 FNs were complete misses (0/5), so frequency alone provided no differentiation. Applied proximity-based secondary ranking:
+**Actual execution**: K=5 passes as preregistered. All 24 FNs were complete misses (0/5), so frequency alone provided no differentiation. Applied proximity-based secondary ranking:
 
 - **Recognition failures** (>50m from nearest detection): 9 FNs, genuinely invisible to the model
 - **Localisation failures** (20-50m from nearest detection): 15 FNs, detected but misplaced
@@ -155,7 +155,7 @@ Diagnostic analysis revealed that fids 354, 249, and 556 are entirely outside al
 
 **Crop extraction** (Session 7, continued): 128×128 pixel crops, centred on the reference mound coordinate, extracted from the full map GeoTIFFs (`inputs/rasters/*.tif`) rather than from detection tiles. This ensures the target symbol is always at the crop centre with symmetric real map context, even when the reference point is near a tile edge. See errata E8 for rationale and alternatives considered, and Observation 80 in working notes. Crop size (128×128) is flagged as a future OFAT exploratory variable (see Observation 78).
 
-**Deviation from preregistration**: Used K=5 (not K=10) and proximity-based ranking (not frequency-only). Both deviations are conservative — K=5 found all FNs as complete misses, and the proximity dimension provides stricter differentiation than frequency alone. The preregistered threshold of ≥3/10 misses is trivially satisfied (all are 5/5 misses at K=5, equivalent to 10/10). The one-per-sheet tiebreaker and its relaxation are not preregistered — they are post-hoc selection criteria applied during library construction.
+**Departure from preregistered frequency-only ranking**: Proximity-based secondary ranking was applied because frequency alone provided no differentiation (all FNs were 0/5 complete misses). The proximity dimension provides stricter differentiation than frequency alone. K=5 passes were used as preregistered (see E15 regarding an inconsistent stale reference in the appendix). The one-per-sheet tiebreaker and its relaxation are not preregistered — they are post-hoc selection criteria applied during library construction.
 
 ### Hard Negative Selection (examples 11-14)
 
@@ -582,6 +582,66 @@ observational (not preregistered), but worth documenting during exploratory runs
 
 **Evidence**: Session 11 human-VLM cross-check of hard example crops, Working Notes
 Observation 87.
+
+---
+
+## Decision 14: Visual Appearance over Cartographic Identity in Prompts
+
+**Date**: 2026-02-03
+
+**Decision**: Prompt text describing map features should use visual appearance
+descriptions (colours, shapes, spatial relationships) rather than cartographic
+feature names (grid lines, contour lines, roads, infrastructure markers).
+
+**Alternatives considered**:
+
+- Cartographic naming (preregistered approach): "Contour Line Artefacts",
+  "Infrastructure Markers", "Roads (black/red lines), contour lines (brown),
+  grid lines (blue)"
+- Visual description (adopted): "Closed Curved Line Patterns", "Dots on
+  Linear Features", "Lines in various colours (black, red, brown, blue)"
+
+**Rationale**:
+
+1. **VLM perception mismatch**: The VLM may not interpret feature identities
+   the same way a human cartographer would. A human reads "grid line" and knows
+   what to look for; a VLM may not map that label to the correct visual pattern.
+   Visual descriptions ("vertical blue line") are robust because they describe
+   what the model actually sees in the image.
+
+2. **Consistency with target symbol register**: The target burial mound symbol
+   is already described visually ("sunburst with outward-radiating rays"), not
+   cartographically ("symbol 78 from the legend"). Exclusion criteria should use
+   the same descriptive register.
+
+3. **Interpretive glosses removed**: Phrases like "(inward = excavation,
+   outward = elevation)" assume cartographic knowledge the VLM does not have.
+   The visual distinction (marks pointing inward vs rays extending outward)
+   is sufficient and directly observable.
+
+**Distinction from Decision 13**: Decision 13 asks *which diagnostics are
+reliable at 128px resolution* (a resolution-dependent filtering question).
+Decision 14 asks *what register of description to use* (a conceptual framing
+question). Both principles were articulated in the same review session but
+address different aspects of prompt design. A diagnostic could be resolution-
+robust but still described in cartographic terms (e.g., "contour lines are
+brown" is reliable at 128px but assumes the VLM knows what a contour line is).
+
+**Changes to preregistered prompt text** (commit `2d46311`, 2026-02-03):
+
+| Preregistered text | Revised text |
+|--------------------|--------------|
+| "Contour Line Artefacts" | "Closed Curved Line Patterns" |
+| "Infrastructure Markers" | "Dots on Linear Features" |
+| "Quarry and Pit Symbols" | "Inward-Pointing Marks" |
+| "Roads (black/red lines), contour lines (brown), grid lines (blue)" | "Lines in various colours (black, red, brown, blue)" |
+| "(inward = excavation, outward = elevation)" | Removed |
+
+Applied across all 10 detection prompt files. See errata E16.
+
+**Evidence**: Session 11 prompt text review,
+`archive/planning/hard-example-review/prompt-text-review-synopsis.md` §1
+(Governing Principles), Working Notes Observation 87.
 
 ---
 
