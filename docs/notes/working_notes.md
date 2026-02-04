@@ -1689,3 +1689,33 @@ This suggests that quantitative metadata about experimental stimuli (word counts
 **The observation**: Documentation chains amplify errors through authority inheritance. Each downstream document treats its source as authoritative without re-verifying against the primary source. The preregistration appendix had K=5 in lines 98–99 (the operative procedure) and K=10 in line 115 (a stale reference). The decisions-log cited "§8.4.2" but actually drew from line 115. The OSF summary cited the decisions-log. At each step, the claim became more confident and less qualified — by the OSF draft, it was stated as a simple fact with no hedging about conflicting sources.
 
 This is analogous to the telephone game, but for documentation. The corrective mechanism was the user's domain memory — remembering the actual decision rather than what the documents said about it. For preregistered research, where the exact content of submitted documents has methodological weight, this chain-of-inheritance failure mode is particularly concerning. The mitigation is to verify claims against primary sources when consolidating, rather than trusting intermediate documents.
+
+## Observation 94: Propagation failures extend from documentation to configuration (2026-02-04)
+
+**Context**: Session 16. Cross-referencing study YAML files against the execution plan and preregistration during a Phase 2 readiness assessment. Three inconsistencies were found, all of the same type: a design document had been updated but a dependent configuration or documentation file had not.
+
+**The observation**: The documentation chain propagation failure documented in Observation 93 has an analogue at the configuration level. In Session 15, the failure was content-level (a numerical claim passed unchecked between documents). In Session 16, the failures were structural:
+
+1. **Scale-16/32 in Phase 2c YAML**: Erratum E11 documents that these conditions are deferred (HP pool exhausted), but the YAML still listed them as active levels. `run_study.py` would have attempted to execute them.
+2. **B1 contrast**: The execution plan names "Bonus: B1 (+HP vs Scale-4)" as a distinct contrast, but the YAML's planned_contrasts list didn't annotate it. (Turned out C3 and B1 are the same pair — the "gap" was a labelling difference, not a missing test.)
+3. **Stale README**: `studies/README.md` referenced filenames from the superseded stranded factorial design (`phase2a-strand1.yaml` etc.), not the current OFAT names.
+
+The common structure is: information changed in a source location but wasn't propagated to all dependent locations. This is a fundamental challenge in projects with multiple cross-referencing documents and configurations. Automated tests (like `test_preregistration_compliance.py`) catch some mismatches, but constraint-level inconsistencies (a YAML that is internally valid but doesn't encode an external constraint) require human or AI cross-referencing at phase boundaries.
+
+**Methodological note**: The readiness assessment itself was the mitigation. Systematic cross-reference reviews at phase transitions catch propagation failures that accumulate during iterative development. The cost is a dedicated verification session; the benefit is catching issues before they affect experimental execution.
+
+## Observation 95: Phase-boundary verification sessions as a distinct session type (2026-02-04)
+
+**Context**: Session 16. The entire session was devoted to archiving, readiness assessment, and verification — no creative work, no implementation, no discovery.
+
+**The observation**: This project has exhibited at least five distinct session types:
+
+1. **Exploratory/creative** (Sessions 1–3, 11): Design work, prompt engineering, hypothesis development
+2. **Implementation** (Sessions 5–6, 12): Executing plans, writing code, fixing bugs
+3. **Process codification** (Sessions 9, 13): Extracting patterns into tools, skills, and documentation
+4. **Documentation/closure** (Sessions 14–15): Consolidation, OSF submission, editorial review
+5. **Verification/gate-keeping** (Session 16): Cross-referencing, testing, readiness assessment
+
+The transition from type 1→5 over Sessions 11–16 tracks the project's movement from design to execution. Each type has a different texture (creative tension vs mechanical precision vs checklist satisfaction), different error modes (design flaws vs implementation bugs vs propagation failures), and different collaboration dynamics (deliberative vs delegated vs confirmatory).
+
+Recognising session types may help with planning. Verification sessions should be scheduled at phase boundaries. Creative sessions should not be interrupted with administrative tasks. Implementation sessions benefit from specification-level plans (Observation 88). This taxonomy isn't rigid, but it provides a vocabulary for discussing what kind of work a session is doing.

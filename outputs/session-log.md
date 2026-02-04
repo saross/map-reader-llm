@@ -621,6 +621,43 @@ Produced a consolidated errata/decisions document for the OSF open-ended preregi
 - [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
 - [ ] **Begin Phase 2a execution**: H1 M/E level testing
 
+## Session 16 — 2026-02-04 (Phase 2 readiness assessment and gate-keeping)
+
+### Overview
+
+Final verification session before Phase 2a execution. Archived 7 CC sessions (Feb 2–4), ran a comprehensive 10-area readiness assessment, verified pytest (258 tests pass), cross-referenced all 5 Phase 2 study YAML files against the preregistration and execution plan, and resolved three discrepancies. All readiness areas confirmed green.
+
+### Accomplishments
+
+1. **Archived 7 CC sessions** (Sessions 9–15, Feb 2–4) with gzip compression, human-readable directory names, and full v1.1 metadata (titles, tags, three_ps summaries); updated CATALOG.json
+2. **Ran 10-area readiness assessment** — execution plan, preregistration, checklists, prompts (13 instructions + 18 configs), scripts, inputs (60 tiles + 14 hard examples), tests, infrastructure, errata/decisions, and working notes all confirmed ready
+3. **Verified pytest** — 258 tier1 tests pass in `.venv/` (pytest 9.0.2)
+4. **Cross-referenced study YAMLs** — all 5 Phase 2 YAMLs (2a–2e) verified against execution plan v3.0 and preregistration; factor levels, cell counts, fixed parameters, planned contrasts, and decision rules all consistent
+5. **Fixed Scale-16/32 in Phase 2c YAML** — commented out deferred conditions with E11 reference; updated estimates from 7→5 cells (15,000 calls, ~$55); removed S2/S3 contrasts
+6. **Annotated B1 ≡ C3** — the "bonus" contrast is the same pair as sequential addition C3 (+HP vs Scale-4); added inline comment rather than duplicating
+7. **Updated studies/README.md** — replaced stale stranded-factorial filenames with current OFAT names; added hypothesis references and cell counts
+
+### Issues
+
+- **Propagation failures**: All three discrepancies were cases where a design document was updated but a dependent configuration or README file wasn't synchronised. Same class of error as Session 15's K=10 issue, but at the config-file level.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `b389a46` | `docs(notes)`: Add Session 15 reflections across five documents |
+| `5d45277` | `chore(archive)`: Archive 7 CC sessions (Feb 2–4) |
+
+### Pending Work
+
+- [x] ~~Compose OSF submission document~~ — completed and submitted (Session 15)
+- [ ] **Begin Phase 2a execution**: H1 M/E level testing — READY
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement HN rotation assignment
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] **Upload Phase 1 materials to OSF**: Library construction results
+- [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
+
 ---
 
 *New session entries should be appended above this line.*

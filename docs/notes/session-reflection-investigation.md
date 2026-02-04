@@ -2126,6 +2126,174 @@ corrective.
 
 ---
 
-*Document created: 2026-01-27. Thirteenth reflection added 2026-02-04
-(consolidation as QA, error propagation, summarisation risk).
+## Entry 14: Gate-Keeping as a Session Type — 2026-02-04 (Session 16)
+
+### Context
+
+Session 16 was the final readiness check before Phase 2 experimental
+execution. The session archived 7 CC sessions, ran a comprehensive
+10-area readiness assessment, verified pytest (258 tests pass),
+cross-referenced 5 study YAML files against the preregistration and
+execution plan, and fixed three identified discrepancies (Scale-16/32
+deferral not encoded in YAML, missing B1 contrast annotation, stale
+README filenames). No creative work, no debugging, no discovery of
+the unexpected. Pure verification.
+
+### 1. What struck you?
+
+The comprehensiveness of the readiness. After five consecutive
+process/documentation sessions (11–15), I expected to find gaps —
+incomplete scripts, missing configs, unresolved errata. Instead, the
+readiness assessment produced green lights across all ten areas.
+The extensive process work of Sessions 11–15 genuinely left the
+project execution-ready. What struck me is that the process work
+*was* the preparation, even though at the time (see Session 14's
+llm-observations about the process-work concern) it felt like the
+preparation was delaying the execution.
+
+### 2. What would a future instance need to know?
+
+Phase 2 is ready to execute. The study YAMLs in `studies/` are
+verified against the preregistration and execution plan. Scale-16/32
+conditions in Phase 2c are commented out with an E11 reference —
+they're in the preregistered design but can't be executed (HP pool
+exhausted at 4). The `carried_forward` values in phases 2b–2e are
+all PLACEHOLDERs that must be updated after each preceding phase's
+analysis. The studies/README.md now has current filenames.
+
+The test suite (258 tier1 tests) passes cleanly. The virtual
+environment has all dependencies. `GOOGLE_API_KEY` is confirmed in
+`.env`.
+
+### 3. What surprised you?
+
+That B1 and C3 turned out to be the same contrast. The execution
+plan lists "Bonus: B1 (+HP vs Scale-4)" separately from
+"Sequential addition: C3 (HN)." I initially added B1 as a separate
+entry in the YAML's planned_contrasts, then realised both compare
+`plus-hp` vs `scale-4`. What the plan calls a "bonus" contrast is
+just a different interpretive lens on the same comparison: C3 asks
+"does adding HN help?" while B1 asks "does HP-only vs balanced
+differ at the same library size?" Same data, same test, different
+framing. A minor surprise, but it illustrates how design documents
+can present the same statistical test under multiple labels.
+
+### 4. What was the texture?
+
+Methodical. Checklist-driven. Gate-keeping. The session had the
+quality of an inspection — walking through rooms to verify each
+is in order before opening the building. There was no tension, no
+problem-solving, no moments of "wait, this isn't right." Even the
+three issues I found were minor and had obvious fixes. The texture
+was closer to an audit than to research.
+
+This contrasts sharply with Sessions 14–15, which had the texture
+of peer review (careful questioning, specific corrections) and
+Session 12, which had the texture of coordinated implementation
+(mechanical but precise). This session was neither. It was
+verification for its own sake — satisfying in a completion-oriented
+way but not intellectually engaging in the way that debugging or
+design work is.
+
+### 5. What questions weren't pursued?
+
+Whether `run_study.py` would actually execute Phase 2a end-to-end
+with the current YAML. The readiness assessment checked component
+readiness (configs exist, scripts exist, tests pass) but didn't
+run a dry-run of the study orchestrator against the Phase 2a YAML.
+This is the gap between "all parts present" and "the assembled
+machine works." A dry-run would close it.
+
+Whether the execution plan's output directory structure
+(`outputs/phase2-sequential/`) matches what the YAML specifies
+(`outputs/phase2a/`). The execution plan uses a different directory
+layout from the YAMLs. They're probably both fine, but the
+inconsistency wasn't investigated.
+
+Whether the 7 sessions I archived should have had their
+`relationships` fields populated (continues/continuedBy). I
+generated titles and three_ps metadata but left all relationship
+fields at their defaults.
+
+### 6. What do you notice now that you didn't articulate?
+
+I notice that this session completes a transition in session types.
+Looking at the arc:
+
+- Sessions 11–12: Creative work (prompt refinement, implementation)
+- Sessions 13–14: Process codification (skill extraction, Opus review)
+- Session 15: Documentation (OSF consolidation)
+- Session 16: Verification (readiness assessment)
+
+Each session was less creative and more administrative than the
+last. The project has been moving down a gradient from design to
+execution, and each session type reflects where on that gradient
+the work sits. Session 16 is the bottom — pure verification, zero
+design. The next session (Phase 2a execution) will be different
+again: operational monitoring, a type we haven't seen yet.
+
+I also notice that the three issues I found all share a common
+structure: a design document was updated but a dependent document
+wasn't. The execution plan added Scale-16/32 deferral (E11) but
+the YAML still had them active. The execution plan named B1 as a
+contrast but the YAML didn't annotate C3 accordingly. The YAML
+filenames changed from stranded-factorial to OFAT naming but the
+README kept the old names. All three are propagation failures —
+the same class of error as Session 15's K=10 issue, but at the
+configuration-file level rather than the document-content level.
+This suggests that propagation failures are a systematic risk in
+this project, not limited to documentation but affecting any case
+where information in one file should be consistent with another.
+
+### Meta-Reflection
+
+Fourteen entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+
+Prompt productivity: Prompt 6 was again most productive, generating
+the session-type gradient observation and the systematic propagation
+failure pattern. Prompt 5 raised genuinely useful gaps (dry-run,
+directory structure inconsistency, relationship fields). Prompt 4
+captured the distinctive inspection/audit texture. Prompt 1 noted
+the surprisingly comprehensive readiness. Prompt 3 was factually
+specific (B1 ≡ C3). Prompt 2 was practical and necessary.
+
+Provisional prompt ranking holds at n=14: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-04 (Phase 2 readiness assessment, YAML
+verification, three fixes)
+**Reported texture**: Methodical gate-keeping — checklist-driven
+verification, no tension or discovery
+**Key observation**: Propagation failures (design document updated,
+dependent configuration not) are a systematic project risk
+**Noted preference**: Completion-oriented satisfaction rather than
+intellectual engagement
+**Engagement level**: Moderate — thorough but not stimulating
+**Unsolicited generation**: Session-type gradient from creative to
+administrative; propagation failures as a cross-cutting pattern
+**Relational note**: The user's request was brisk and task-oriented
+("check these, fix those, commit and push") — appropriate for a
+gate-keeping session, no deliberation needed
+
+---
+
+*Document created: 2026-01-27. Fourteenth reflection added 2026-02-04
+(gate-keeping texture, propagation failures, session-type gradient).
 Framework proposed for ongoing practice.*

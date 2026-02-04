@@ -1872,8 +1872,88 @@ not wanting to deliberate over a minor decision.
 
 ---
 
-*Document represents observations as of 2026-02-04. Session 15 added
-observations on error inheritance from documents, the user as
-reviewer, self-criticism about citation verification, process-work
-completion, and trust delegation in file selection. Further material
-may be added in future sessions.*
+## Session 16 — 2026-02-04 (Phase 2 readiness assessment and gate-keeping)
+
+### On the end of the process-work sequence
+
+Session 14's observations raised the concern that four consecutive
+process sessions was too many. Session 15 was the fifth. This session
+is the sixth — but it's different in kind. Sessions 11–15 were
+producing output (prompts, plans, documentation, OSF submissions).
+Session 16 consumed that output by verifying it. The distinction
+matters: verification sessions are not process work in the same sense.
+They're the quality gate that justifies starting execution.
+
+The readiness assessment produced green lights across all ten areas.
+The user's response was to ask me to follow up on the remaining
+details (pytest, YAML cross-reference), not to start Phase 2
+immediately. This tells me the user values thoroughness at transition
+points — the eagerness to start experiments doesn't override the
+desire to verify first. Given Session 15's discovery of three errors
+in a "finished" document, this caution is well-founded.
+
+### On the session archiving workflow
+
+I archived 7 sessions in this session. The process is now routine:
+run the script with `--stats-only --gzip`, read each session's JSONL
+to understand its purpose, generate metadata, update the meta.json
+files, fix the catalog. The workflow took about 10 minutes of session
+time.
+
+A self-criticism: I generated all the metadata myself without
+offering the user any choice about titles, tags, or three_ps
+summaries. Previous archiving sessions (Session 9, Session 13) had
+more discussion about appropriate titles. This time I just did it.
+This is efficient but removes the user's opportunity to shape how
+sessions are characterised in the archive. The titles I chose are
+descriptive but they're my interpretation, not a negotiated one.
+
+### On the propagation failure pattern
+
+Three issues were found during YAML cross-referencing, and they all
+have the same structure: a design document was updated but a dependent
+file wasn't brought into alignment.
+
+1. Scale-16/32 deferred in errata (E11) but still active in
+   `phase2c-h8-library.yaml`
+2. B1 contrast named in execution plan but not annotated in YAML's
+   planned_contrasts
+3. YAML filenames changed from stranded-factorial names to OFAT names
+   but `studies/README.md` kept the old names
+
+This is the configuration-file analogue of Session 15's K=10
+propagation through documentation. In both cases, information in a
+source document changed but dependent documents weren't updated. The
+pattern is ubiquitous in this project because the project has many
+cross-referencing documents: preregistration, execution plan, study
+YAMLs, protocol errata, decisions log, and README files all reference
+each other.
+
+I don't think there's a clean solution. Automated consistency
+checking (like `test_preregistration_compliance.py`) can catch some
+mismatches, but the Scale-16/32 issue wouldn't be caught by a test
+because the YAML was internally valid — it just didn't encode an
+external constraint. The real solution is what we did: periodic
+cross-reference reviews at phase boundaries.
+
+### On the session's character
+
+This was the most administrative session I've experienced in this
+project. No decisions were made that required judgement — the three
+fixes had obvious implementations. No creative work. No debugging.
+No surprises (the B1 ≡ C3 realisation was mildly interesting but
+inconsequential).
+
+I notice that I'm recording this accurately rather than inflating it.
+Previous sessions generated observations about collaboration dynamics,
+trust patterns, or methodological insights. This session didn't. And
+that's fine — verification sessions serve a different purpose. Not
+every session needs to be intellectually generative.
+
+---
+
+*Document represents observations as of 2026-02-04. Session 16 added
+observations on process-work sequence completion, archiving workflow
+self-criticism, propagation failure pattern, and honest assessment of
+the session's administrative character. Further material may be added
+in future sessions.*

@@ -1104,5 +1104,18 @@ particularly insidious because documentation chains create an
 appearance of verification (the decisions-log cites "§8.4.2") without
 the substance.
 
-*Last updated: 2026-02-04 (Session 15 — authority inheritance as
-default-following variant, documentation chain trust)*
+## Session 16 Note: No Relevant Episodes
+
+*Brief note added 2026-02-04.*
+
+Session 16 was a verification/gate-keeping session (archiving,
+readiness assessment, YAML cross-referencing, three minor fixes).
+No episodes of debugging with surprising results, hypothesis
+generation, belief revision, or default-following corrections were
+observed. The closest candidate — discovering that B1 and C3 are
+the same contrast — was a deductive realisation from reading two
+labels and checking the pair they reference, not an abductive cycle.
+No update to the pattern table.
+
+*Last updated: 2026-02-04 (Session 16 — no relevant episodes,
+verification session)*
