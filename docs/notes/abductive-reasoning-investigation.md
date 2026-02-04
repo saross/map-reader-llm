@@ -1052,5 +1052,57 @@ bash corrected. But this was a tool limitation, not an abductive
 cycle — there was no hypothesis generation or surprise-driven
 reasoning, just a fallback to a different search method.
 
-*Last updated: 2026-02-04 (Session 14 — no relevant episodes,
-bookkeeping session)*
+## Session 15 Note: Authority Inheritance as a Default-Following Variant
+
+*Brief note added 2026-02-04. Full session observations in
+`llm-observations.md` Session 15 section.*
+
+Session 15 provides a documentation-specific variant of the "obvious
+defaults block abduction" pattern.
+
+### The Episode
+
+I stated "Preregistered criteria (§8.4.2): K=10 passes" in the OSF
+summary, inheriting the claim from the decisions-log without verifying
+it against the preregistration. The user's memory ("I thought that was
+Phase 2?") triggered investigation, which revealed the preregistration
+appendix is internally inconsistent (K=5 in lines 98–99, K=10 in
+line 115). The correct value was K=5.
+
+### For the Investigation
+
+The default here was *authority of the existing document*. The
+decisions-log stated K=10 as fact, and I treated that as ground truth.
+This is structurally identical to the Sessions 6–10 defaults — a
+reasonable-seeming prior (the decisions-log is an authoritative
+project document) that suppressed the question that would have
+revealed the error ("does §8.4.2 actually say K=10?").
+
+The correction type was empirical (check the source document), but
+the trigger was the user's domain memory — a human-specific resource
+that document search cannot replicate. This adds to the pattern table:
+
+### Updated Pattern Table
+
+| Session | Default | Correction type | Trigger |
+|---------|---------|----------------|---------|
+| 6 | Coverage gaps expected | Empirical (visual) | User inspection |
+| 7a | Fix should change metrics | Empirical (run it) | Running evaluation |
+| 7b | Full tile size is obvious | Comparative | User domain knowledge |
+| 8 | Git preserves everything | Normative | User research practice |
+| 10 | 4 crops fill 4 slots | Deductive | Combinatorial argument |
+| 11 | Interpretive framing | Principled | User + joint reasoning |
+| 15 | Document is authoritative | Empirical (source check) | User domain memory |
+
+Session 15 is closest to Sessions 6–7 in correction type (empirical)
+but the default is different in kind. Previous defaults were about
+*how things work* (tile overlaps, file sizes, git behaviour). Session
+15's default is about *what a document says* — a claim about the
+project's own history. This is a meta-level default: trusting the
+documentation chain rather than the primary source. It may be
+particularly insidious because documentation chains create an
+appearance of verification (the decisions-log cites "§8.4.2") without
+the substance.
+
+*Last updated: 2026-02-04 (Session 15 — authority inheritance as
+default-following variant, documentation chain trust)*

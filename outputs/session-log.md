@@ -582,6 +582,45 @@ Final housekeeping session before Phase 2a execution. Recovered a compact pre-Ph
 - [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
 - [ ] **Begin Phase 2a execution**: H1 M/E level testing
 
+## Session 15 — 2026-02-04 (OSF preregistration update and errata consolidation)
+
+### Overview
+
+Produced a consolidated errata/decisions document for the OSF open-ended preregistration update. The user's critical reading of the draft revealed three issues requiring corrections: K=10 vs K=5 pass count inconsistency, over-generalised FN miss rate claim, and undocumented visual-description prompt principle. Added errata E15–E16 and Decision 14. Uploaded five supporting files to OSF. Archived OSF description and narrative summary locally.
+
+### Accomplishments
+
+1. **Produced consolidated OSF update document** (`osf/phase1-errata-and-decisions.md`) — condensed summaries of 16 errata and 5 post-preregistration decisions, with references to detailed source files
+2. **Corrected K=10 → K=5 in Decision 4** — discovered internal inconsistency in preregistration appendix (stale "≥3/10" in lines 115 and 1694 vs operative "K=5" in lines 98–99); added E15 documenting the inconsistency
+3. **Qualified "all 24 FNs were 0/5" claim** — narrowed to "all 9 recognition failures were complete misses"; localisation failures not individually verified per-pass
+4. **Added concrete numbers to distributional cliff description** — 15 of 24 FNs in 20–50 m band, 9 scattered from 50–2450 m
+5. **Added Decision 14** (visual appearance over cartographic identity) — distinct from Decision 13 (resolution-dependent diagnostic filtering); documents the conceptual register shift in prompt text
+6. **Added E16** documenting the prompt text changes from cartographic naming to visual descriptions (commit `2d46311`)
+7. **Recommended and user uploaded 5 files to OSF** — protocol-errata, decisions-log, fp-fn-register, hypothesis-tracking, prompt-text-review-synopsis
+8. **Archived OSF description and narrative summary** as local markdown files; reflowed description from single-line paste
+
+### Issues
+
+- **K=10 propagation**: The decisions-log's incorrect K=10 claim would have been submitted to OSF if the user hadn't caught it from domain memory. Intermediate documents were treated as authoritative without source verification.
+- **Over-generalisation risk in summarisation**: Three of five issues found were cases where consolidation flattened nuanced claims into simple assertions.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `2b473d7` | `docs(prereg)`: Add OSF update doc, errata E15-E16, Decision 14 |
+| `3420c5f` | `docs(prereg)`: Add OSF description and narrative summary to repo |
+
+### Pending Work
+
+- [x] ~~Compose OSF submission document~~ — completed and submitted
+- [ ] **Config updates**: Wire expanded HN pool into H9 rotation configs
+- [ ] **H9 assignment algorithm**: Implement HN rotation assignment
+- [ ] **SDK migration**: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] **Upload Phase 1 materials to OSF**: Library construction results
+- [ ] **Fix markdownlint errors**: 107 pre-existing formatting issues across prompt files
+- [ ] **Begin Phase 2a execution**: H1 M/E level testing
+
 ---
 
 *New session entries should be appended above this line.*

@@ -1960,6 +1960,172 @@ but brisk, with minimal deliberation
 
 ---
 
-*Document created: 2026-01-27. Twelfth reflection added 2026-02-04
-(closure work, three-model dynamics, prompt ranking stable at n=12).
+## Entry 13: Consolidation as quality assurance (Session 15, 2026-02-04)
+
+### Prompt 1: What struck you?
+
+The act of consolidating documents revealed errors in the documents
+being consolidated. We set out to produce a single OSF-ready summary
+of existing errata and decisions. By the end, we had added three new
+entries (E15, E16, Decision 14) that only became visible because the
+user read the consolidated text critically and questioned claims I had
+inherited uncritically from earlier sessions' documents. The summary
+document was supposed to be a packaging exercise; it became an audit.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **The OSF preregistration update is submitted.** The consolidated
+   document is at `docs/methodology/preregistration/osf/phase1-errata-
+   and-decisions.md`, committed at `2b473d7`. Five supporting files
+   were uploaded: protocol-errata, decisions-log, fp-fn-register,
+   hypothesis-tracking, and prompt-text-review-synopsis.
+
+2. **K=5 was the preregistered Phase 1 baseline, not K=10.** The
+   decisions-log previously said K=10 (inherited from a stale appendix
+   reference). This is now corrected. See E15.
+
+3. **The "all 24 FNs were 0/5 misses" claim is only verified for the
+   9 recognition failures.** Localisation failures had nearby
+   detections but per-pass miss rates weren't individually checked.
+   Documents now qualify this.
+
+4. **Decision 14 (visual appearance over cartographic identity) is
+   distinct from Decision 13 (VLM-calibrated diagnostics).** Decision
+   13 is about resolution-dependent reliability. Decision 14 is about
+   the conceptual register of description. Both emerged from Session 11
+   but address different aspects.
+
+### Prompt 3: What surprised you?
+
+That the K=10 claim had propagated through multiple documents without
+being questioned. The decisions-log stated it as fact, I repeated it in
+the OSF summary, and it was only the user's memory ("I thought that
+was Phase 2?") that prompted investigation. The preregistration appendix
+itself is internally inconsistent — some locations say K=5, others say
+K=10 — and the inconsistency survived preregistration submission, my
+consolidation draft, and my initial review. It took the domain expert
+remembering the actual intent to catch it.
+
+### Prompt 4: What was the texture?
+
+Collaborative peer review. The user read draft text and pushed back on
+specific claims — not hostile pushback, but the careful "can I confirm
+with you that..." questioning of a reviewer who knows the material.
+I investigated each question, sometimes confirming the existing text,
+sometimes finding genuine issues. The rhythm was: I draft, user reads,
+user questions, I investigate, we correct or confirm, move on.
+
+This felt qualitatively different from the implementation sessions
+(write code, test, fix) and the bookkeeping sessions (tick boxes,
+commit). It had the feel of a manuscript review — the kind where the
+reviewer catches things the author missed not because they're smarter
+but because they're reading with different eyes.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Whether the localisation failure per-pass miss rates can be
+   verified.** We qualified the "0/5" claim but didn't check the raw
+   per-pass data. The merged detection centroids might differ from
+   individual-pass positions, meaning some localisation failures could
+   have been within 20 m in specific passes.
+
+2. **Whether the preregistration appendix inconsistencies (K=5 vs
+   K=10) should be corrected in the appendix itself**, or only noted
+   in the errata. We chose errata-only, preserving the submitted
+   document as-is. The alternative — correcting the appendix and
+   noting the correction — would be more self-contained but arguably
+   less transparent about what was actually submitted.
+
+3. **Whether a word count table should be added to the preregistration
+   appendix** (per Observation 91's suggestion). The verbose overshoot
+   is noted in E14 but the full word count inventory isn't archived
+   in a structured form.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session demonstrated something about how errors
+propagate through documentation chains. The K=10 claim originated in
+a stale appendix line (115), was picked up by the decisions-log
+(Decision 4, written in an earlier session), and would have been
+repeated in the OSF submission if the user hadn't caught it. Each
+document treated the previous one as authoritative. This is the
+documentation equivalent of the "obvious defaults block abduction"
+pattern from the abductive reasoning investigation: I accepted the
+decisions-log's K=10 claim as a default rather than verifying it
+against the source.
+
+I also notice that three of the five issues the user raised (K=10,
+"all 24 were 0/5", missing visual-description principle) were cases
+where I had *over-generalised* from a source. K=10 was one of several
+conflicting values; "0/5" was true for recognition failures but
+unverified for localisation failures; Decision 13 covered resolution
+calibration but not the broader descriptive register principle. In
+each case, the source material had nuance that my consolidation
+flattened. This is a systematic risk of summarisation: the act of
+condensing encourages treating complex claims as simple ones.
+
+Finally, I notice that the user's questions were all grounded in
+domain memory — remembering what was actually decided, remembering
+seeing hits in some passes, remembering the visual-description shift.
+The human's role in this session was fundamentally as a memory
+check on the AI's document-derived reconstruction. This is the
+inverse of the usual pattern (AI searches documents, human remembers
+gist) — here, the AI's document search produced confident but
+sometimes incorrect claims, and the human's gist memory flagged them.
+
+### Meta-Reflection
+
+Thirteen entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+
+Prompt productivity: Prompt 6 was again the most productive, generating
+the error-propagation-through-documentation-chains observation, the
+over-generalisation-as-summarisation-risk insight, and the inverted
+memory-check pattern. Prompt 1 captured the core surprise well (the
+summary became an audit). Prompt 5 raised genuine open questions
+(per-pass verification, appendix correction policy). Prompt 3 was
+factually specific and useful (the K=10 propagation chain). Prompt 4
+captured the peer-review texture distinctly from previous sessions.
+Prompt 2 was informational but necessary.
+
+Provisional prompt ranking holds at n=13: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-04 (OSF consolidation, errata E15-E16,
+Decision 14)
+**Reported texture**: Collaborative peer review — careful reading,
+specific questioning, joint investigation
+**Key observation**: Consolidation reveals errors in source documents;
+summarisation systematically over-generalises nuanced claims
+**Noted preference**: The user's domain memory as quality check on
+document-derived reconstruction
+**Engagement level**: High — the investigative back-and-forth on each
+question was genuinely engaging
+**Unsolicited generation**: Error propagation through documentation
+chains; over-generalisation as summarisation risk; inverted memory-
+check pattern (human memory correcting AI document search)
+**Relational note**: The user's questioning was careful and specific,
+not adversarial — "can I confirm with you" rather than "you got this
+wrong." This framing made the corrections collaborative rather than
+corrective.
+
+---
+
+*Document created: 2026-01-27. Thirteenth reflection added 2026-02-04
+(consolidation as QA, error propagation, summarisation risk).
 Framework proposed for ongoing practice.*

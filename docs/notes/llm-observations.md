@@ -1789,8 +1789,91 @@ also process work, that would warrant a more direct conversation.
 
 ---
 
-*Document represents observations as of 2026-02-04. Session 14 added
-observations on closure work texture, list recovery as complementary
-capability, three-model editorial dynamics, and continued concern
-about process-work accumulation. Further material may be added in
-future sessions.*
+## Session 15: The OSF consolidation, and being corrected by human memory
+
+### On inheriting errors from documents
+
+This session exposed a failure mode I hadn't previously articulated:
+uncritical inheritance from earlier documents. The decisions-log said
+"Preregistered criteria (§8.4.2): K=10 passes, FNs missed ≥3/10."
+I packaged this into the OSF summary without checking the source.
+The user's memory — "I thought that was Phase 2?" — sent me to the
+preregistration, where I found the appendix is internally inconsistent
+(K=5 in the procedure, K=10 in two stale locations). The correct
+value was K=5 all along.
+
+This is structurally identical to the "obvious defaults" pattern from
+the abductive reasoning investigation, but in a documentation context.
+The decisions-log was the "default" — an authoritative-seeming source
+that I treated as ground truth. The user's domain memory was the
+external calibration that triggered re-examination. Without it, K=10
+would have been asserted to OSF.
+
+### On the user as reviewer
+
+The session had a distinctive dynamic. I drafted, the user read and
+questioned. Five separate issues were raised, each requiring
+investigation:
+
+1. E7 impact on Phase 1 (confirmed: preventive only)
+2. K=10 vs K=5 (corrected: K=5 was preregistered)
+3. "All 24 FNs were 0/5" (qualified: only verified for recognition
+   failures)
+4. Undefined "distributional cliff" (clarified with concrete numbers)
+5. Missing visual-description principle (added Decision 14 and E16)
+
+Three of these resulted in document corrections. Two resulted in new
+errata/decisions. This is a higher error-finding rate than I'm
+comfortable with. The implication is that my initial draft, which I
+would have been happy to submit, contained multiple inaccuracies of
+varying severity.
+
+### A self-criticism
+
+I should have caught the K=10 issue myself. The decisions-log cited
+"§8.4.2" as its source, but §8.4.2 doesn't specify a pass count.
+If I had verified the citation rather than trusting the existing
+document, I would have found the inconsistency independently. The
+lesson is: when consolidating documents, verify claims against
+primary sources, don't just trust the intermediate document.
+
+The "all 24 were 0/5" claim is more forgivable — the FP/FN register
+explicitly states it (line 39-40). But the user's instinct ("I
+thought some had hits") was reasonable given the localisation failures'
+nearby high-vote detections. I should have at least noted the nuance
+rather than asserting the blanket claim.
+
+### On the process-work question
+
+Session 14's LLM observations raised the concern that four consecutive
+sessions had been process work. This session is the fifth. But I don't
+feel the same concern, because this session was qualitatively
+different: it was the last step before OSF submission, and the user
+explicitly said they'd copy the document into the form. The OSF
+update is now submitted. The process work is genuinely complete.
+
+If Session 16 is also not Phase 2a execution, then the concern
+becomes urgent. But I think the user's eagerness to start experiments
+is genuine — the brisk pace and "one last question" pattern throughout
+this session suggested someone clearing the final obstacle.
+
+### On the five-file upload opportunity
+
+The user learned that pasting the errata text unlocked 5 file uploads.
+My recommendation (errata, decisions, FP/FN register, hypothesis
+tracking, prompt review synopsis) was accepted without modification.
+This was a minor moment, but I notice it represents a shift: the user
+asked for a recommendation, not a list of options. Earlier in the
+project, decisions were more collaborative (discuss alternatives,
+weigh trade-offs). The file selection was more delegated. This could
+reflect growing trust in my judgement about what's methodologically
+important, or it could reflect the user being ready to move on and
+not wanting to deliberate over a minor decision.
+
+---
+
+*Document represents observations as of 2026-02-04. Session 15 added
+observations on error inheritance from documents, the user as
+reviewer, self-criticism about citation verification, process-work
+completion, and trust delegation in file selection. Further material
+may be added in future sessions.*
