@@ -719,4 +719,43 @@ First execution session for Phase 2a. Built the run_phase2.py OFAT runner, fixed
 
 ---
 
+## Session 18 — 2026-02-05 (Continuation: reflections commit, collaboration discussion, RDM)
+
+### Overview
+
+Short continuation session following Session 17's compact event. Committed the Session 17 reflections, then had an extended conversation about human–AI collaboration dynamics, the user's RDA Interest Group for documentation standards, and why documenting AI collaboration requires capturing "the path not taken." Added Observations 99–101 to working notes.
+
+### Accomplishments
+
+1. **Committed Session 17 reflections** across 5 documents (`3f33d44`)
+2. **Wrote Observation 99** — complementary expertise in staged execution (human calibration catches what automation misses)
+3. **Wrote Observation 100** — why human–AI collaboration documentation differs from traditional RDM (5-dimension analysis: hypotheses eliminated, approaches rejected, moments of redirection, thinking traces as primary sources, contribution legibility asymmetry)
+4. **Wrote Observation 101** — memory asymmetry as a documentation design constraint
+5. **Committed Observations 99–100** (`f792b00`)
+6. **Discussed RDA Interest Group** — user and colleague establishing an IG to develop documentation standards for human–AI interactions; this project's protocol is a proof-of-concept
+
+### Issues
+
+- None (no technical work in this session)
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `3f33d44` | `docs(notes)`: Add Session 17 reflections across five documents |
+| `f792b00` | `docs(notes)`: Add Observations 99–100 on collaboration and RDM |
+
+### Pending Work
+
+- [ ] **Full Phase 2a execution**: 5 conditions × 10 runs × 60 tiles = 3,000 calls (~$11) — READY
+- [ ] **Investigate zero tile-level specificity**: Model detects in all 24 empty tiles
+- [ ] **Fix GeoJSON extension**: Batch detector output naming convention
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] H9 assignment algorithm: Implement HN rotation assignment
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+- [ ] Fix markdownlint errors: 107 pre-existing formatting issues
+
+---
+
 *New session entries should be appended above this line.*

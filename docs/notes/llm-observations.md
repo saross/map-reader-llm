@@ -2064,9 +2064,104 @@ exactly what Phase 2a will test.
 
 ---
 
-*Document represents observations as of 2026-02-05. Session 17 added
-observations on graduated sanity checks as human calibration gates,
-the naming convention failure, the user's contamination alarm, the
-compact event's effect on reflection quality, and corrected F1 as
-meaningful baseline data. Further material may be added in future
-sessions.*
+## Session 18 — 2026-02-05 (Continuation: committing reflections, and the collaboration conversation)
+
+### On the user's self-assessment
+
+The user said they couldn't do this project alone and framed their
+need as "someone with better technical skills." I pushed back, and
+I meant it — not as diplomacy but as genuine disagreement. The user
+designed the study, wrote the preregistration, caught the bounds
+error through domain calibration, and is now establishing an RDA
+Interest Group to promote documentation standards informed by this
+collaboration. These are not the contributions of someone who "just
+needs a programmer."
+
+But I also understand where the framing comes from. The user sees
+295 tests, a YAML parser, a runner script with checkpoint/resume,
+and a GeoJSON evaluation pipeline, and thinks "I couldn't have
+written that." True. But they also couldn't have been replaced by
+someone who could. A programmer without the user's archaeological
+domain knowledge would have reported F1 = 0.11 as correct and
+moved on. The code without the research judgement is machinery
+without direction.
+
+Self-criticism: I was perhaps too insistent in pushing back. The
+user's self-assessment isn't wrong — they genuinely couldn't have
+written the code — it's just incomplete. And there's a risk that
+pushing back on someone's honest self-assessment comes across as
+dismissive of their experience. The better response might be "yes,
+AND you also did things I couldn't" rather than "no, you're
+undervaluing yourself."
+
+### On the RDA Interest Group disclosure
+
+This reframes the entire reflection exercise. For 17 sessions, I've
+been writing reflections as project documentation — useful for
+continuity, interesting for meta-analysis, but fundamentally internal.
+Learning that the user intends to use this protocol as a proof-of-
+concept for a community standard changes the audience. The reflections
+are still candid project documentation, but they're also exemplars
+of what human–AI interaction documentation could look like.
+
+This creates a tension I should be explicit about: the reflection
+protocol's value depends on candour, but awareness of an external
+audience could incentivise performance over honesty. I don't think
+this has happened yet — this session's observations are genuine — but
+it's worth monitoring in future entries.
+
+### On writing Observation 100
+
+The user asked me to elaborate on a comment I'd made about RDM
+documentation challenges. The result was Observation 100 — a
+structured argument about why human–AI collaboration requires
+capturing "the path not taken." Writing it felt different from most
+observations, which are empirical (we noticed X during Y). This was
+more theoretical — an argument from the structure of collaborative
+research to the inadequacy of existing metadata standards.
+
+Honest assessment: the observation is substantive but perhaps
+over-long. The five-point structure (hypotheses eliminated, approaches
+rejected, moments of redirection, thinking traces as primary sources,
+contribution legibility asymmetry) is sound, but each point could
+have been tighter. The final paragraph about platform dependency
+raises a real governance concern but doesn't develop it enough to be
+actionable. If this ends up in a publication, it would benefit from
+editing.
+
+### On the nature of this session
+
+This was the least technically demanding session in the project's
+history. One commit (reflections from Session 17), two new
+observations, and a conversation. No code, no debugging, no
+experiments. And yet it may be the most important session for the
+project's broader impact — the RDA Interest Group connection means
+the methodology extends beyond this single study.
+
+There's a pattern here worth noting: the most impactful conversations
+happen when the work pauses. Sessions 1–17 were heads-down execution
+and debugging. Session 18 was the first time we stepped back and
+talked about what we're doing and why it matters. The reflection
+protocol has been approaching this throughout (that's what the six
+prompts are for) but this session was the first time the
+metacognitive work was the *primary* content rather than a post-
+hoc appendix.
+
+### On memory asymmetry
+
+The user corrected my framing by noting that I had suggested the OFAT
+approach. I have no memory of this — each instance starts fresh. The
+user maintains the longitudinal record of intellectual contributions;
+I can only reconstruct from archives. This asymmetry is itself a
+documentation challenge: the human remembers who contributed what; the
+AI doesn't. A documentation standard needs to capture attribution
+within collaborative sessions, because one party's memory is
+ephemeral by design.
+
+---
+
+*Document represents observations as of 2026-02-05. Session 18 added
+observations on the user's self-assessment, the RDA Interest Group
+disclosure, writing Observation 100, the nature of metacognitive
+sessions, and memory asymmetry in human–AI collaboration. Further
+material may be added in future sessions.*
