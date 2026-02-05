@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-02-02
+**Last updated**: 2026-02-05
 
 ---
 
@@ -653,6 +653,47 @@ The following items from the original "Future Decisions" section are now resolve
 - [x] Specific hard negative examples selected — Decision 4 (2026-02-01)
 - [x] Adjustments to library composition — Decision 11 (Scale-16/32 deferred)
 - [x] Scale-32 feasibility — Decision 11 (HP pool exhausted at 4)
+
+---
+
+## Phase 2 Execution Decisions
+
+---
+
+### Decision 15: Replace run_study.py with run_phase2.py for Phase 2 Execution
+
+**Date**: 2026-02-05
+
+**Decision**: Create a purpose-built `scripts/run_phase2.py` OFAT runner for Phase 2 sub-phases (2a–2e), replacing the generic `scripts/run_study.py` which has been archived to `archive/deprecated-scripts/`.
+
+**Alternatives considered**:
+
+- Modify `run_study.py` to handle OFAT YAMLs
+- Use `run_study.py` as-is with adapted YAML files
+
+**Rationale**:
+
+`run_study.py` has four incompatibilities with the OFAT YAML structure:
+
+1. **Hardcoded factor names**: `generate_conditions()` expects `modality`, `ordering`, `hard_negatives`, `temperature` as factor keys. Phase 2a has a single factor `modality_elaboration`.
+2. **`defaults` vs `fixed`**: Validation requires a `defaults` section; Phase 2 YAMLs use `fixed` and `inputs`/`execution`.
+3. **No runs loop**: The YAML declares `runs: 10`, but the runner calls the batch detector once per condition (one pass total), with no run iteration.
+4. **No output hierarchy**: No `{condition}/run_{K}/` directory structure.
+
+Modifying `run_study.py` would require rewriting most of its logic while maintaining backwards compatibility with an unused factorial YAML format. A clean replacement is simpler and more maintainable.
+
+**Key design points of `run_phase2.py`**:
+
+- Parses OFAT YAML: single factor's levels (each with `name` + `config`), `fixed` params, `inputs`, `execution` sections
+- Also handles Phase 2d's pre-enumerated `conditions` list with `reuse_from` support
+- Loops condition × run, calling `4_detect_mounds_batch.py` via subprocess (one pass per run)
+- Output to: `{output_dir}/{condition_name}/run_{K}/`
+- JSON checkpoint tracking `(condition, run)` tuples for resume
+- CLI overrides: `--runs`, `--limit` (tiles), `--condition`, `--dry-run`, `--resume`
+- Cost monitoring with 120% warning threshold
+- Randomised execution order with fixed seed to distribute temporal effects
+
+**Evidence**: Session 17 plan mode analysis of `run_study.py` vs OFAT YAML structure.
 
 ---
 

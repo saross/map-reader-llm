@@ -77,6 +77,9 @@
 | 2026-02-01 | E4: Tile bounds Y-axis inversion | Correction — bounds generation misinterpreted metadata, shifted bounds ~2565m south |
 | 2026-02-01 | E5: Evaluation pipeline reference path bugs | Correction — wrong reference directory, column name mismatch in merged GeoJSON |
 | 2026-02-01 | E6: Pipeline contract validation | Correction — added assertions, bounds validation, and 7 integration tests to prevent E4-E5 recurrence |
+| 2026-02-05 | E17: Passes multiplier correction | Correction — execution plan and all Phase 2 YAMLs contained erroneous N=5 passes; corrected to single-pass per §3.8 |
+| 2026-02-05 | E18: Config naming clarification | Clarification — unsuffixed configs are H5=Minimal variant; `_minimal` suffix omitted by convention |
+| 2026-02-05 | D15: run_phase2.py replaces run_study.py | New OFAT runner for Phase 2; run_study.py archived to archive/deprecated-scripts/ |
 
 ---
 
@@ -87,7 +90,7 @@
 | Phase | Start Date | End Date | Notes |
 |-------|------------|----------|-------|
 | Phase 1: Library + Text | 2026-02-01 | 2026-02-03 | Detection passes complete (F1=0.489 baseline); hard examples selected (4 HP + 4 HN); two-stage prompts reviewed and updated |
-| Phase 2a: H1 M/E Level | | | |
+| Phase 2a: H1 M/E Level | 2026-02-05 | | Infrastructure built (run_phase2.py); sanity checks in progress |
 | Phase 2b: H7 Temperature | | | |
 | Phase 2c: H8 Library Composition | | | |
 | Phase 2d: H5 Negative Text | | | |

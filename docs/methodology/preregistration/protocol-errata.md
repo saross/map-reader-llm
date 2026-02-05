@@ -352,4 +352,40 @@ The main preregistration (§8.4.2) does not specify a pass count, deferring to t
 
 ---
 
+### E17: Execution plan and Phase 2 YAMLs contained erroneous N=5 passes multiplier
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Correction |
+| Files | `docs/methodology/preregistration/execution-plan.md`, `studies/phase2a-h1-modality.yaml`, `studies/phase2b-h7-temperature.yaml`, `studies/phase2c-h8-library.yaml`, `studies/phase2d-h5-negtext.yaml`, `studies/phase2e-h4-ordering.yaml` |
+| Impact | Would have run 5× more API calls than preregistered, at 5× the cost |
+
+**Description**: The execution plan cost formula (line 271) and all five Phase 2 YAML files contained `passes: 5` and formulas like `5 × K=10 × 60 tiles × N=5 = 15,000 API calls`. The `× N=5` multiplier adds within-run consensus passes that **conflict** with the preregistration §3.8, which explicitly specifies "K=10 independent **single-pass** runs" and explains the rationale: "without assuming voting (which is itself under test in H3)."
+
+Under the preregistered protocol, voting analysis (H3) is performed post-hoc by re-pooling the same K=10 single-pass runs (N=5 from runs 1–5, N=10 from all runs) without additional API calls.
+
+**Fix**: Removed the `passes` field from all five Phase 2 YAML files. Corrected all cost formulas in the execution plan to use the single-pass formula (e.g., `5 × K=10 × 60 = 3,000` for Phase 2a). Corrected the evaluation protocol section to describe single-pass runs rather than N=5 consensus voting per run. Updated output path patterns from `run_{run}/pass_{pass}/` to `run_{run}/`.
+
+**Protocol impact**: None. The preregistered protocol (§3.8) is authoritative and specifies single-pass runs. This corrects the implementation artefacts to match the preregistration.
+
+---
+
+### E18: Config naming convention clarification (§8.7.4 _minimal suffix)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Clarification |
+| Files | `prompts/configs/detect_*.json` |
+| Impact | None (naming simplification only) |
+
+**Description**: The preregistration §8.7.4 references config files as `detect_image-only_minimal.json` (with an H5 suffix for the Minimal/default negative text treatment level). The actual implementation uses `detect_image-only.json` (no suffix) for the H5=Minimal variant, since Minimal is the default treatment. Configs for non-default H5 levels use explicit suffixes: `_terse` and `_verbose`.
+
+This is a naming simplification: the unsuffixed config IS the H5=Minimal variant. The convention is consistent across all five M/E levels and is documented in each config's `description` field (e.g., "H1 baseline. M/E=Image-only, H5=Minimal").
+
+**Protocol impact**: None. The config contents are identical to what the preregistration describes; only the filename omits the redundant `_minimal` suffix.
+
+---
+
 *End of errata. New entries should be appended above this line.*
