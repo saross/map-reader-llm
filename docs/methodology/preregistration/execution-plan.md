@@ -244,7 +244,7 @@ If <4 distinct FNs or <3 distinct FPs are found:
 ## Phase 2: Sequential Hypothesis Testing (H1, H7, H8, H5, H4)
 
 **Duration**: 2-3 days
-**Estimated cost**: ~$286 confirmatory (26 cells at ~$11/cell)
+**Estimated cost**: ~$57 confirmatory (26 cells at ~$2.20/cell)
 **Prerequisites**: Phase 1 complete, library and text uploaded to OSF
 
 The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 26 cells while ensuring each hypothesis runs at truly optimal parameters.
@@ -268,7 +268,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 **Phase 2a totals**:
 
 - 5 M/E levels = **5 cells**
-- 5 × K=10 × 60 tiles × N=5 = **15,000 API calls** (~$55)
+- 5 × K=10 × 60 tiles = **3,000 API calls** (~$11)
 
 **Fixed parameters**: T=1.0, Scale-8 library (17 examples), canonical-first ordering.
 
@@ -295,7 +295,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 **Phase 2b totals**:
 
 - 5 T levels = **5 cells**
-- 5 × K=10 × 60 × N=5 = **15,000 API calls** (~$55)
+- 5 × K=10 × 60 = **3,000 API calls** (~$11)
 
 **Fixed parameters**: Optimal M/E from Phase 2a, Scale-8 library, canonical-first ordering.
 
@@ -324,7 +324,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 **Phase 2c totals**:
 
 - 7 conditions = **7 cells**
-- 7 × K=10 × 60 × N=5 = **21,000 API calls** (~$77)
+- 7 × K=10 × 60 = **4,200 API calls** (~$15)
 
 **Fixed parameters**: Optimal M/E and T, canonical-first ordering.
 
@@ -363,7 +363,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 - 3 M/E × 3 H5 = **9 cells** total
 - 3 cells overlap with H1 baseline (each M/E at H5=Minimal)
 - Net new: **6 cells**
-- 6 × K=10 × 60 × N=5 = **18,000 API calls** (~$66)
+- 6 × K=10 × 60 = **3,600 API calls** (~$13)
 
 **Fixed parameters**: Optimal T and library from previous phases.
 
@@ -388,7 +388,7 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 **Phase 2e totals**:
 
 - 3 orderings = **3 cells**
-- 3 × K=10 × 60 × N=5 = **9,000 API calls** (~$33)
+- 3 × K=10 × 60 = **1,800 API calls** (~$7)
 
 **Fixed parameters**: Optimal M/E, T, library, and H5 from previous phases.
 
@@ -400,14 +400,13 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 ### Evaluation Protocol (All Phases)
 
-Each condition is evaluated using K=10 independent runs with N=5 consensus voting per run (see preregistration Section 3.8):
+Each condition is evaluated using K=10 independent single-pass runs (see preregistration Section 3.8):
 
-- Each run makes 5 independent API calls per tile (consensus voting)
-- Voting result (threshold-based) is the primary output per run
-- Post-hoc analysis also compares single-pass results to voted results
-- Results characterised statistically (mean F1, SD, 95% CI)
-- Post-hoc voting computed from runs (N=5 from runs 1-5 or 6-10; N=10 from all runs)
-- No circular application of voting when testing main effects
+- Each run makes 1 API call per tile (single-pass; voting is itself under test in H3)
+- Single-pass F1 is the primary output per run
+- Results characterised statistically (mean F1 across 10 runs, SD, 95% CI)
+- Post-hoc voting computed from the same runs (N=5 from runs 1-5 or 6-10; N=10 from all runs) without additional API calls
+- No within-run consensus voting during main effect testing
 
 ### Execution Order
 

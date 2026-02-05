@@ -4,8 +4,8 @@
 # This is the first sub-phase of the sequential OFAT design.
 #
 # Usage:
-#   python scripts/run_study.py studies/phase2a-h1-modality.yaml
-#   python scripts/run_study.py studies/phase2a-h1-modality.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase2a-h1-modality.yaml
+#   python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --dry-run
 #
 # Prerequisites:
 #   - Phase 1 complete (hard example library constructed)
@@ -54,8 +54,7 @@ inputs:
   bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
-  runs: 10          # K=10 independent runs
-  passes: 5         # N=5 consensus passes per run
+  runs: 10          # K=10 independent single-pass runs (§3.8)
   workers: 1        # Sequential execution (rate limit safe)
   output_dir: "outputs/phase2a"
   checkpoint_dir: "outputs/phase2a/checkpoints"
@@ -76,8 +75,8 @@ analysis:
 # Expected outputs per condition
 outputs:
   per_condition:
-    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
-    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
   aggregated:
     - "{output_dir}/results_summary.csv"
     - "{output_dir}/analysis_report.json"
@@ -85,10 +84,10 @@ outputs:
 # Cost and time estimates
 estimates:
   cells: 5
-  api_calls_per_cell: 3000    # 10 runs x 5 passes x 60 tiles
-  total_api_calls: 15000
-  cost_usd: 55                # ~$0.003/call for Flash
-  time_hours: 5               # ~1 hour per cell at conservative rate
+  api_calls_per_cell: 600     # 10 runs x 60 tiles (single-pass per §3.8)
+  total_api_calls: 3000
+  cost_usd: 11                # ~$0.003/call for Flash
+  time_hours: 1               # Conservative estimate
 
 # Outcome
 outcome:

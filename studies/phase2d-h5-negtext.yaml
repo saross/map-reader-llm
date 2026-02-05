@@ -3,8 +3,8 @@
 # Tests 3 negative text treatment levels across 3 M/E levels.
 #
 # Usage:
-#   python scripts/run_study.py studies/phase2d-h5-negtext.yaml
-#   python scripts/run_study.py studies/phase2d-h5-negtext.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase2d-h5-negtext.yaml
+#   python scripts/run_phase2.py studies/phase2d-h5-negtext.yaml --dry-run
 #
 # Prerequisites:
 #   - Phase 2a complete (optimal M/E determined)
@@ -118,8 +118,7 @@ inputs:
   bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
-  runs: 10
-  passes: 5
+  runs: 10          # K=10 independent single-pass runs (§3.8)
   workers: 1
   output_dir: "outputs/phase2d"
   checkpoint_dir: "outputs/phase2d/checkpoints"
@@ -159,18 +158,18 @@ analysis:
 
 outputs:
   per_condition:
-    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
-    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
   aggregated:
     - "{output_dir}/results_summary.csv"
     - "{output_dir}/analysis_report.json"
 
 estimates:
   cells: 6  # Net new cells (Terse + Verbose variants only)
-  api_calls_per_cell: 3000
-  total_api_calls: 18000
-  cost_usd: 66
-  time_hours: 6
+  api_calls_per_cell: 600     # 10 runs x 60 tiles (single-pass per §3.8)
+  total_api_calls: 3600
+  cost_usd: 13
+  time_hours: 1
 
 outcome:
   determines: "optimal_h5_treatment"

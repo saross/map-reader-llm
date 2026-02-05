@@ -3,8 +3,8 @@
 # Tests 3 example ordering strategies at optimal configuration.
 #
 # Usage:
-#   python scripts/run_study.py studies/phase2e-h4-ordering.yaml
-#   python scripts/run_study.py studies/phase2e-h4-ordering.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase2e-h4-ordering.yaml
+#   python scripts/run_phase2.py studies/phase2e-h4-ordering.yaml --dry-run
 #
 # Prerequisites:
 #   - Phases 2a-2d complete (all optimal parameters determined)
@@ -55,8 +55,7 @@ inputs:
   bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
-  runs: 10
-  passes: 5
+  runs: 10          # K=10 independent single-pass runs (§3.8)
   workers: 1
   output_dir: "outputs/phase2e"
   checkpoint_dir: "outputs/phase2e/checkpoints"
@@ -104,19 +103,19 @@ triggered_exploratory:
 
 outputs:
   per_condition:
-    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.geojson"
-    - "{output_dir}/{condition_name}/run_{run}/pass_{pass}/*.meta.json"
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
   aggregated:
     - "{output_dir}/results_summary.csv"
     - "{output_dir}/analysis_report.json"
 
 estimates:
   cells: 3
-  api_calls_per_cell: 3000
-  total_api_calls: 9000
-  cost_usd: 33
-  time_hours: 3
-  # If H4b triggered: +2 cells, +6000 calls, +$22, +2 hours
+  api_calls_per_cell: 600     # 10 runs x 60 tiles (single-pass per §3.8)
+  total_api_calls: 1800
+  cost_usd: 7
+  time_hours: 1
+  # If H4b triggered: +2 cells, +1200 calls, +$4
 
 outcome:
   determines: "optimal_ordering"
