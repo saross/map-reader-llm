@@ -388,4 +388,33 @@ This is a naming simplification: the unsuffixed config IS the H5=Minimal variant
 
 ---
 
+### E19: Validation bounds generated from wrong manifest
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Correction |
+| Files | `inputs/vectors/bounds/validation_bounds.geojson` |
+| Impact | Evaluation reported F1 ~0.1 instead of ~0.4 for sanity check runs |
+
+**Description**: The `validation_bounds.geojson` file contained 20 tile bounds generated from the calibration tile set (via `generate_tile_bounds.py` which reads `holdout_manifest.json`), not the 60-tile validation set. Only 7 of those 20 tiles overlapped spatially with the 60 validation tiles, so 53 of 60 tiles had no bounds for scoping ground truth references. This caused massive false positive inflation — predictions from unbounded tiles were compared against all ground truth rather than just references within the tile footprint.
+
+**Root cause**: A naming convention mismatch. The tile selection metadata uses "holdout" as the key for the 60-tile set, but the manifest file is named `validation_manifest.json` (not `holdout_manifest.json`). The original `validation_bounds.geojson` (dated 2025-12-21) predates the manifest renaming and was never regenerated.
+
+**Verification**: Calibration and validation tile sets confirmed to be **completely disjoint** (zero overlap). The sets were correctly partitioned at creation time — only the bounds file pointed to the wrong set.
+
+**Fix**: Regenerated `validation_bounds.geojson` from `validation_manifest.json` using the `create_bounds_geojson()` function, producing 60 tile features matching the validation manifest. Bounds validated against tile metadata (5-tile spot check passed).
+
+**Corrected metrics** (image-only condition, 3 sanity check runs at 20m tolerance):
+
+| Run | Old F1 | Corrected F1 |
+|-----|--------|-------------|
+| 1 | 0.111 | 0.435 |
+| 2 | 0.083 | 0.388 |
+| 3 | 0.083 | 0.360 |
+
+**Protocol impact**: None. The evaluation methodology (20m spatial tolerance, Hungarian matching) is unchanged. This corrects an infrastructure artefact.
+
+---
+
 *End of errata. New entries should be appended above this line.*
