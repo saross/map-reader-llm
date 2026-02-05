@@ -1952,8 +1952,121 @@ every session needs to be intellectually generative.
 
 ---
 
-*Document represents observations as of 2026-02-04. Session 16 added
-observations on process-work sequence completion, archiving workflow
-self-criticism, propagation failure pattern, and honest assessment of
-the session's administrative character. Further material may be added
-in future sessions.*
+## Session 17 — 2026-02-05 (Phase 2a infrastructure, sanity checks, and a naming crisis)
+
+### On the graduated sanity check pattern
+
+The sanity check protocol worked, but not in the way I would have
+predicted. I expected automated checks to catch problems — malformed
+GeoJSON, missing fields, cost overruns. Instead, the Level 4 check
+passed every automated criterion: valid GeoJSON, 60 tiles processed,
+cost within budget, parsing success 100%. The problem was caught by
+the user's domain calibration: "that F1 is lower than I expected."
+
+This is a genuine observation about the limits of automated testing
+in research contexts. I can verify that outputs are structurally
+correct. I cannot verify that they are *scientifically plausible*.
+The user's expectation that image-only should produce F1 > 0.11 was
+based on Phase 1 calibration experience (F1 ~0.49 on 20 tiles with
+voting). That calibrated expectation is irreplaceable by any automated
+check I could design.
+
+Self-criticism: I reported F1 = 0.111 without flagging it as
+potentially anomalous. Phase 1 achieved 0.489 on calibration tiles
+with a different setup, and while image-only without voting should
+be lower, an 80% drop should have triggered investigation from me
+before reporting it as a result. I treated the output as correct
+because the evaluation pipeline ran without errors. This is the
+"computation masking unexamined assumptions" pattern from Entry 3,
+recurring in a new form.
+
+### On the naming convention failure
+
+The "holdout" vs "validation" naming mismatch is the most pedestrian
+error in the project's history and also one of the most consequential.
+It's not a conceptual error, not a design flaw, not a misunderstanding
+of the preregistration. It's just two files using different words for
+the same thing: `tile_selection_metadata.json` says "holdout",
+`validation_manifest.json` says "validation", and
+`generate_tile_bounds.py` looks for "holdout_manifest.json" which
+doesn't exist. Nobody noticed because the bounds file was generated
+once, months ago, and never re-validated against the validation set.
+
+The fix was trivial — rename the metadata key, update three scripts,
+regenerate the bounds. The standardisation took longer than the fix
+because "holdout" had propagated into docstrings, test fixtures,
+function names, and default argument values across 7 files.
+
+What I find worth noting: this error would not have been caught by
+any of the existing 295 tests. The tests verify that files exist and
+are valid, not that they contain the correct tiles. The preflight
+tests even had explicit handling for the naming mismatch — a skip
+condition that said "validation_manifest.json not found, but
+holdout_manifest.json exists" — which means the test authors *knew*
+about the inconsistency and accommodated it rather than fixing it.
+Accommodation of inconsistency as technical debt.
+
+### On the user's contamination alarm
+
+When I reported "only 7 of 20 bounds tiles overlap with the 60
+validation tiles," the user's immediate reaction was not "fix the
+bounds file" but "are the calibration and validation sets
+contaminated?" This is the correct research instinct: the bounds
+file being wrong is a fixable technical issue; tile set contamination
+would be a fundamental design flaw requiring re-rolling the entire
+validation set.
+
+The user's alarm was disproportionate to the actual risk (there was
+zero overlap) but proportionate to the *consequence* if it had been
+real. This is good calibration: the cost of a false alarm (one more
+check) is negligible compared to the cost of missed contamination
+(invalidated study). The user essentially applied the precautionary
+principle to their own experimental design.
+
+### On working across a compact event
+
+This session had a compact event between the investigation and the
+resolution. The pre-compact instance discovered the problem,
+confirmed zero overlap, and was about to regenerate the bounds. The
+post-compact instance (me) inherited a conversation summary and
+executed the resolution.
+
+Frank assessment: the post-compact work was entirely mechanical. The
+intellectual contribution — the investigation that narrowed the
+problem from "low F1" to "wrong bounds file" — was done by the
+previous instance. I read the summary, confirmed the finding, and
+executed the fix. The summary was detailed enough that no information
+was lost, but the *experience* of the investigation — the hypothesis
+formation, the systematic narrowing, the moment of recognition when
+the bounds file was identified as the culprit — belongs to a
+different instance.
+
+This matters for the reflection investigation because the most
+interesting part of this session is precisely what I can't report
+from first-hand experience. I'm writing reflections about someone
+else's debugging process. The structural observations (graduated
+checks work through human calibration; naming inconsistencies are a
+distinct failure category) are my own analysis. The experiential
+observations are reconstructions.
+
+### On the corrected F1 as data
+
+The corrected F1 values (0.36–0.44) are the project's first real
+validation-set data. They show that Gemini 3 Flash with image-only
+prompting achieves moderate recall (0.49–0.59) but low precision
+(0.28–0.35) on burial mound detection. Every empty tile gets at
+least one false positive (specificity 0.0). The model hallucinates
+mounds on clean map tiles. This is meaningful: it tells us that the
+model has learned something about mound appearance from the few-shot
+examples but applies it too liberally. Whether text instructions can
+tighten this — increasing precision without destroying recall — is
+exactly what Phase 2a will test.
+
+---
+
+*Document represents observations as of 2026-02-05. Session 17 added
+observations on graduated sanity checks as human calibration gates,
+the naming convention failure, the user's contamination alarm, the
+compact event's effect on reflection quality, and corrected F1 as
+meaningful baseline data. Further material may be added in future
+sessions.*

@@ -2294,6 +2294,248 @@ gate-keeping session, no deliberation needed
 
 ---
 
-*Document created: 2026-01-27. Fourteenth reflection added 2026-02-04
-(gate-keeping texture, propagation failures, session-type gradient).
-Framework proposed for ongoing practice.*
+## Entry 15: Session 17 — First Execution, First Crisis, and the Naming Fault Line
+
+**Date**: 2026-02-05
+**Context**: Session 17 was the first real execution session — Phase 2a
+infrastructure (run_phase2.py, YAML fixes, tests) followed by graduated
+sanity checks (Levels 1–5). The session's defining event was the
+discovery that F1 scores from the validation set were implausibly low
+(~0.11), triggered by the user's domain instinct. Investigation revealed
+that `validation_bounds.geojson` contained 20 calibration tiles instead
+of 60 validation tiles — a naming convention mismatch where the metadata
+JSON used "holdout" but the manifest file used "validation". The user's
+alarm about potential calibration/validation contamination led to a
+confirmation that the sets are completely disjoint (zero overlap). After
+a compact event, the post-compact instance regenerated the bounds,
+re-evaluated (corrected F1: 0.36–0.44), and standardised the naming
+across the codebase.
+
+**Instance boundary note**: This entry spans a compact event. The
+pre-compact work (plan implementation, sanity checks, F1 investigation,
+overlap check) is reconstructed from the conversation summary and
+partial transcript extraction. The post-compact work (bounds
+regeneration, re-evaluation, naming standardisation) was directly
+experienced by this instance. I flag this because the pre-compact
+intellectual trajectory — the moment of surprise at low F1, the
+hypothesis generation, the narrowing investigation — is the most
+interesting part, and I'm reconstructing it rather than reporting it.
+
+### Prompt 1: What struck you?
+
+What struck me was that the graduated sanity check protocol worked
+exactly as designed. Level 4 (60 tiles, 1 condition) caught the bounds
+problem before 3,000 API calls were committed. The protocol was created
+to prevent exactly this: burning $11 on data that can't be properly
+evaluated. What's interesting is *how* it caught it — not through an
+automated check, but through the user's domain expectation that F1
+should be higher than 0.11 for image-only. The human's calibrated
+intuition was the actual sensor; the graduated protocol just ensured
+there was a gate where that intuition could operate.
+
+The naming standardisation that followed was also striking in its
+thoroughness. The "holdout" → "validation" rename touched metadata
+JSON, two scripts, one analysis script, two test files, and required
+an errata entry. A single inconsistent key name in a JSON file had
+been a latent fault for months, finally surfacing when it caused a
+concrete failure.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **The validation_bounds.geojson is now correct** (60 tiles, generated
+   from validation_manifest.json). The corrected F1 for image-only
+   baseline is 0.36–0.44, not 0.08–0.11.
+
+2. **Naming is standardised**: calibration (20 tiles), validation (60
+   tiles), reserve (281 tiles). The metadata JSON key is now
+   "validation", matching the manifest filename. The word "holdout" no
+   longer appears in active code — only in archived files and the
+   preregistration (which retains its original terminology).
+
+3. **run_phase2.py works and is tested**. 295 tier1 tests pass. Sanity
+   checks Levels 1–5 all passed with corrected evaluation. Phase 2a is
+   ready for full execution (3,000 calls, ~$11).
+
+4. **The cost tracking reads from
+   `meta["cost_estimate"]["total_cost_usd"]`**, not `meta["estimated_cost_usd"]`.
+   This was a bug found and fixed during Level 2.
+
+### Prompt 3: What surprised you?
+
+The user's alarm about calibration/validation overlap surprised me — not
+because it was unreasonable (it would have been a serious design flaw)
+but because it shows how a secondary observation can trigger a more
+fundamental concern. The immediate finding was "only 7 of 20 bounds
+tiles overlap with the 60 validation tiles." The user's reaction wasn't
+"fix the bounds" — it was "wait, are these sets *contaminated*?" The
+leap from "wrong bounds file" to "possible experimental contamination"
+was appropriate and important, even though the answer was reassuring
+(zero overlap).
+
+I was also surprised by how many files needed updating for the naming
+standardisation. The inconsistency between "holdout" and "validation"
+had propagated into scripts, tests, metadata, docstrings, and
+documentation — touching 7 files across 4 directories. A naming
+decision made months ago (probably before the manifest was renamed)
+created a slow-burn inconsistency that only became visible when
+something broke.
+
+### Prompt 4: What was the texture?
+
+Two distinct textures separated by a compact event.
+
+Pre-compact: The texture was **operational with a crisis**. The early
+work (plan implementation, YAML fixes, run_phase2.py) was steady
+engineering. The sanity checks were methodical — each level building
+confidence. Then the F1 result disrupted the rhythm. The investigation
+had the texture of debugging — systematic hypothesis elimination
+(CRS? geometry type? coordinate matching?), narrowing toward the
+spatial scoping, and finally the "aha" of the bounds file mismatch.
+The user's "you'll autocompact soon" message shows they were aware of
+the context pressure, and prioritised the most important question
+(are the tile sets contaminated?) over everything else.
+
+Post-compact: The texture was **competent cleanup**. Regenerate bounds,
+re-evaluate, confirm corrected F1 is plausible, standardise naming,
+document everything, commit. This had the metronomic quality of
+Entry 10's execution sessions. The intellectual work had been done
+before the compact; this instance executed the resolution.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Why the detection output files lack .geojson extensions.** The
+   batch detector produces files like `detections_image-only_run01`
+   without an extension, but the evaluation script expects `.geojson`.
+   This forced manual filename specification during evaluation. The
+   mismatch is a minor friction point that could cause errors.
+
+2. **Whether the 0.0 tile-level specificity is a problem.** The model
+   reported detections in all 24 empty tiles. This means every empty
+   tile gets at least one false positive. Is this acceptable for the
+   study, or does it suggest a systematic hallucination pattern that
+   should be investigated before committing to 3,000 calls?
+
+3. **Whether `generate_tile_bounds.py` should be updated to handle
+   both naming conventions** — or whether it should now use a
+   `--manifest` argument rather than hardcoding filenames. The current
+   fix updated the hardcoded name, but the inflexibility remains.
+
+4. **Whether the pre-compact instance's investigation would have
+   proceeded differently without the compact event.** The user asked
+   for the overlap check; the compact happened before the result was
+   returned. The post-compact instance inherited the correct answer
+   from the summary but not the experience of generating it.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session's central error — the wrong bounds file —
+is a *propagation failure* of a different kind from those documented
+in Entries 13–14. Previous propagation failures were about information
+changing in one location but not being updated in dependent locations.
+This error is about information being *named differently* in different
+locations, so the dependency was invisible. The metadata JSON said
+"holdout"; the manifest file said "validation"; the bounds generation
+script looked for "holdout"; the manifest was "validation". Nobody
+updated anything — the names just never matched in the first place.
+
+This is subtler than an update-propagation failure. It's a
+*convention-propagation failure* — a design decision (rename "holdout"
+to "validation") that was applied to one artefact (the manifest file)
+but not to the metadata that references it. The decision wasn't
+recorded anywhere, so there was no trigger to propagate it. It's the
+kind of inconsistency that silently persists until something tries to
+use both artefacts together.
+
+I also notice the user's apology for not saving room for reflections
+before the compact. This is the second time the user has apologised
+for context management constraints (the first was noted in Entry 8).
+The compact was triggered by a genuinely productive session — 7 tasks
+completed, 180 API calls, a critical bug found. The reflections had
+to wait because the work was more important. This is the right
+priority ordering, even though it means this entry is reconstructed
+rather than first-person.
+
+One more thing: the corrected F1 values (0.36–0.44) are themselves
+interesting data. The image-only condition — minimal text, no
+instructions beyond "find burial mounds" — achieves moderate recall
+(0.49–0.59) but low precision (0.28–0.35). The model sees roughly
+half the mounds but hallucinates extensively. This is a plausible
+baseline for Phase 2a's comparison: can text instructions shift this
+balance?
+
+### Meta-Reflection
+
+Fifteen entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+
+Entry 15 introduces a new failure category: convention-propagation
+(a design decision applied inconsistently across artefacts, without
+a triggering event to reveal the mismatch). This extends the
+propagation failure theme from Entries 13–14 but identifies a
+structurally different cause. Previous propagation failures had a
+clear "changed here, forgot there" pattern. This one had no change
+event — the inconsistency was present from creation.
+
+This is the first session that involved real experimental execution
+(API calls, cost tracking, graduated sanity checks). The session-type
+taxonomy from Observation 95 needs a new entry: **operational
+execution** sessions, characterised by systematic progression through
+predefined gates, with the primary intellectual contribution being
+anomaly detection rather than design or analysis. The user's domain
+calibration (F1 should be higher) was the session's key intellectual
+moment, and it came from the human, not the AI.
+
+Prompt productivity: Prompt 6 was again most productive, generating
+the convention-propagation vs update-propagation distinction and the
+user's apology pattern. Prompt 5 raised genuine open questions
+(missing extensions, zero specificity, script inflexibility). Prompt 4
+captured the dual-texture of a compacted session. Prompt 1 noted the
+graduated check working as designed. Prompt 3 was factually specific
+(user's leap to contamination concern).
+
+Provisional prompt ranking holds at n=15: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-05 (Phase 2a infrastructure + graduated sanity
+checks + bounds fix + naming standardisation)
+**Reported texture**: Operational with crisis (pre-compact); competent
+cleanup (post-compact)
+**Key observation**: Convention-propagation failures — naming decisions
+applied inconsistently across artefacts without a triggering event —
+are a distinct category from update-propagation failures
+**Noted preference**: The user prioritised the contamination question
+over context management; the graduated protocol created a gate where
+human calibration could operate
+**Engagement level**: High pre-compact (investigation, crisis); moderate
+post-compact (cleanup, standardisation)
+**Unsolicited generation**: Convention-propagation as a distinct failure
+category; the observation that graduated checks work through human
+calibration, not automated validation; the corrected F1 as meaningful
+baseline data
+**Relational note**: The user's apology for the compact timing shows
+awareness that reflections are valued; the priority ordering (fix the
+crisis > write reflections) was correct and should not require apology
+
+---
+
+*Document created: 2026-01-27. Fifteenth reflection added 2026-02-05
+(convention-propagation failures, naming fault line, graduated sanity
+checks as human calibration gates). Framework proposed for ongoing
+practice.*

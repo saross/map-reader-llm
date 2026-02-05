@@ -1719,3 +1719,27 @@ The common structure is: information changed in a source location but wasn't pro
 The transition from type 1→5 over Sessions 11–16 tracks the project's movement from design to execution. Each type has a different texture (creative tension vs mechanical precision vs checklist satisfaction), different error modes (design flaws vs implementation bugs vs propagation failures), and different collaboration dynamics (deliberative vs delegated vs confirmatory).
 
 Recognising session types may help with planning. Verification sessions should be scheduled at phase boundaries. Creative sessions should not be interrupted with administrative tasks. Implementation sessions benefit from specification-level plans (Observation 88). This taxonomy isn't rigid, but it provides a vocabulary for discussing what kind of work a session is doing.
+
+## Observation 96: Graduated sanity checks as human calibration gates (2026-02-05)
+
+**Context**: Session 17. Phase 2a execution began with graduated sanity checks (0 calls → 1 → 15 → 60 → 180). Level 4 (60 tiles, 1 condition) produced F1 = 0.111 — plausible-looking but anomalously low. The user flagged this based on domain calibration against Phase 1 results.
+
+**The observation**: Graduated sanity check protocols serve a dual purpose: (1) catching technical failures (API errors, malformed output, cost overruns) through automated verification, and (2) creating decision gates where human domain calibration can operate. In this case, all automated checks passed — the output was structurally valid and cost was on budget. The anomaly was detected because the user's expectation (F1 should be higher than 0.11 for a method that achieved 0.49 on calibration tiles) was calibrated by prior experience.
+
+This has implications for experimental protocol design: gate checks should include not just pass/fail criteria but plausibility checks that require domain expertise. "F1 in plausible range (0.2–0.8)" was in the plan, and 0.111 technically fails it, but neither the human nor the AI flagged this automatically — the human flagged it through intuition, and the AI accepted the result as given. Future sanity check protocols should make the plausibility criteria explicit and check them programmatically.
+
+## Observation 97: Convention-propagation failures as a distinct failure class (2026-02-05)
+
+**Context**: Session 17. `validation_bounds.geojson` contained 20 calibration tiles instead of 60 validation tiles because `generate_tile_bounds.py` looked for `holdout_manifest.json` (which didn't exist), while the actual manifest was `validation_manifest.json`. The metadata JSON used the key "holdout" for the 60-tile set.
+
+**The observation**: Observations 93–94 documented *update-propagation failures* — information changes in a source document but isn't propagated to dependent documents. This session revealed a structurally different failure: *convention-propagation failures* — a naming decision (rename "holdout" to "validation") is applied to one artefact (the manifest file) but not to the metadata or scripts that reference it. There is no "change event" to propagate; the inconsistency was present from creation.
+
+Convention-propagation failures are harder to catch because there's no diff to review. An update-propagation failure creates a visible change in version control (one file updated, dependent file not). A convention-propagation failure creates no change — it's a mismatch between artefacts that were *always* inconsistent. Detection requires cross-referencing naming conventions across the entire codebase, which is what the Session 17 standardisation exercise did.
+
+## Observation 98: Image-only baseline performance on validation tiles (2026-02-05)
+
+**Context**: Session 17. Three sanity check runs of the image-only condition on 60 validation tiles, evaluated at 20m spatial tolerance.
+
+**The observation**: The image-only condition (Gemini 3 Flash, Scale-8 library, no text instructions) achieves moderate recall (0.49–0.59) but low precision (0.28–0.35) on validation tiles. F1 ranges from 0.36 to 0.44 across 3 runs. Tile-level specificity is 0.0 — the model reports at least one detection on every empty tile.
+
+This baseline pattern — reasonable recall, poor precision, zero specificity — is consistent with a model that has learned mound-like visual features from the few-shot examples but applies them too broadly. The key question for Phase 2a (H1: modality/elaboration) is whether text instructions can tighten the precision without destroying recall. The zero specificity is particularly interesting: it means the false positive rate on empty tiles is 100%, which may be the primary metric that text instructions could improve.

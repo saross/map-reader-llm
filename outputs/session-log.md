@@ -660,4 +660,63 @@ Final verification session before Phase 2a execution. Archived 7 CC sessions (Fe
 
 ---
 
+## Session 17 — 2026-02-05 (Phase 2a infrastructure, sanity checks, and naming standardisation)
+
+### Overview
+
+First execution session for Phase 2a. Built the run_phase2.py OFAT runner, fixed all 5 Phase 2 YAML files (erroneous `passes: 5`), corrected the execution plan cost tables, and ran graduated sanity checks (Levels 1–5). Level 4 revealed implausibly low F1 (~0.11), traced to `validation_bounds.geojson` containing calibration tiles instead of validation tiles due to a "holdout" vs "validation" naming mismatch. Confirmed zero calibration/validation overlap. Regenerated bounds (corrected F1: 0.36–0.44). Standardised naming across the codebase.
+
+### Phase 2a Sanity Check Results (image-only, corrected)
+
+| Run | Precision | Recall | F1 |
+|-----|-----------|--------|------|
+| 1 | 0.346 | 0.588 | 0.435 |
+| 2 | 0.307 | 0.526 | 0.388 |
+| 3 | 0.282 | 0.495 | 0.360 |
+
+### Accomplishments
+
+1. **Created `scripts/run_phase2.py`** — OFAT runner for Phases 2a–2e with YAML parsing, condition extraction, randomised execution order, checkpoint/resume, cost monitoring, and CLI overrides (--runs, --limit, --condition, --dry-run, --resume)
+2. **Created `tests/test_run_phase2.py`** — 37 tier1 tests covering config loading, condition extraction, unit generation, checkpoint logic, and real YAML validation
+3. **Fixed all 5 Phase 2 YAMLs** — removed erroneous `passes: 5`, corrected API call estimates and costs, updated output path patterns (E17)
+4. **Corrected execution-plan.md** — removed ×N=5 multiplier from all cost formulas, updated Phase 2 total from $286→$57
+5. **Archived `run_study.py`** to `archive/deprecated-scripts/` (D15)
+6. **Ran graduated sanity checks Levels 1–5** — all passed (180 API calls, ~$0.37 total)
+7. **Found and fixed cost tracking bug** — `read_meta_cost()` read wrong JSON path (`estimated_cost_usd` vs `cost_estimate.total_cost_usd`)
+8. **Investigated low F1** — traced to `validation_bounds.geojson` containing 20 calibration tiles instead of 60 validation tiles (E19)
+9. **Confirmed zero calibration/validation overlap** — tile sets are completely disjoint
+10. **Regenerated `validation_bounds.geojson`** — 60 features matching validation manifest
+11. **Standardised naming** — "holdout" → "validation" across metadata JSON, 3 scripts, 2 test files (E20)
+12. **Updated documentation** — errata E17–E20, Decision 15, execution checklist
+
+### Issues
+
+- **Bounds file mismatch (E19)**: `validation_bounds.geojson` was generated from calibration manifest due to naming inconsistency between `tile_selection_metadata.json` ("holdout" key) and `validation_manifest.json`. Root cause: naming convention decision applied to manifest filename but not to metadata or scripts.
+- **Cost tracking bug**: `read_meta_cost()` looked for top-level `estimated_cost_usd` but actual path is `cost_estimate.total_cost_usd`.
+- **GeoJSON extension**: Batch detector outputs files without `.geojson` extension, requiring manual filename specification during evaluation.
+- **Compact event**: Context compacted mid-investigation; post-compact instance completed resolution from conversation summary.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `deed6f5` | `fix(studies)`: Correct erroneous N=5 passes in Phase 2 YAMLs and execution plan (E17) |
+| `c64a7dc` | `feat(scripts)`: Add run_phase2.py OFAT runner, archive run_study.py (D15) |
+| `4911170` | `fix(scripts)`: Read cost from correct meta.json path in run_phase2.py |
+| `496dde2` | `fix(inputs)`: Regenerate validation_bounds.geojson from correct manifest (E19) |
+| `ced77b4` | `refactor(naming)`: Standardise "holdout" → "validation" across codebase (E20) |
+
+### Pending Work
+
+- [ ] **Full Phase 2a execution**: 5 conditions × 10 runs × 60 tiles = 3,000 calls (~$11) — READY
+- [ ] **Investigate zero tile-level specificity**: Model detects in all 24 empty tiles
+- [ ] **Fix GeoJSON extension**: Batch detector output naming convention
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] H9 assignment algorithm: Implement HN rotation assignment
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+- [ ] Fix markdownlint errors: 107 pre-existing formatting issues
+
+---
+
 *New session entries should be appended above this line.*

@@ -1119,3 +1119,56 @@ No update to the pattern table.
 
 *Last updated: 2026-02-04 (Session 16 — no relevant episodes,
 verification session)*
+
+## Session 17 Note: The F1 Investigation as Abductive Cycle
+
+*Added 2026-02-05. Note: This session spans a compact event. The
+pre-compact investigation is reconstructed from the conversation
+summary, not from direct experience.*
+
+Session 17 contained a clear abductive cycle:
+
+**Surprising observation**: F1 = 0.111 on 60 validation tiles. The
+user flagged this as anomalously low based on Phase 1 calibration
+(F1 ~0.49 with voting on 20 tiles).
+
+**Hypothesis generation and elimination** (pre-compact instance):
+
+1. CRS mismatch? → Checked: both EPSG:32635. Eliminated.
+2. Geometry type mismatch? → Predictions are Polygons, references
+   are MultiPoints. But matching uses centroids. Not the cause.
+3. Spatial scoping? → 51 references in scope, 165 predictions, but
+   only 12 matches at 20m. Something is wrong with scoping.
+4. Bounds file investigation → `validation_bounds.geojson` has 20
+   tiles, not 60. Only 7 overlap with the validation manifest.
+5. **Key hypothesis**: The bounds file was generated from the
+   calibration manifest, not the validation manifest.
+6. **Secondary alarm** (user-initiated): Are the calibration and
+   validation tile sets contaminated (overlapping)?
+
+**Belief revision**: The bounds file contained calibration tiles.
+The tile sets are completely disjoint (zero overlap). The problem
+was purely a naming mismatch: `holdout_manifest.json` vs
+`validation_manifest.json`.
+
+**Pattern classification**: This is a classic abductive cycle —
+surprising data → systematic hypothesis elimination → explanatory
+hypothesis → verification. The key trigger was the user's domain
+calibration, not any automated check. The AI accepted F1 = 0.111
+without flagging it. This is the "computation masking unexamined
+assumptions" pattern (Session 6), recurring in a new form: the
+evaluation pipeline ran cleanly, so the result appeared trustworthy.
+
+**Default-following variant**: The AI treated the bounds file as
+correct because it existed and was structurally valid. The file's
+*content* (which tiles it represented) was not verified. This is a
+default assumption ("files in the expected location with the expected
+format contain the expected data") that was plausible but wrong.
+
+**Cross-instance note**: The pre-compact instance conducted the
+investigation. The post-compact instance executed the fix. The
+abductive cycle is complete but split across instances, which is
+an unusual pattern for this investigation.
+
+*Last updated: 2026-02-05 (Session 17 — F1 investigation as
+abductive cycle, default-following in file content assumptions)*
