@@ -449,4 +449,95 @@ This mismatch caused E19 (bounds generated from wrong manifest). Standardised to
 
 ---
 
+### E21: Stale `passes` parameter in analysis script
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Correction |
+| File | `scripts/analyse_phase2_results.py` |
+| Impact | Would have caused analysis to look for non-existent pass subdirectories |
+
+**Description**: The `load_condition_results()` function in the analysis script retained a `passes: int = 5` parameter from an earlier design that predated E17 (removal of per-run consensus passes from Phase 2 YAMLs). The function attempted to iterate `run_X/pass_Y/` subdirectories, but the actual output structure from `run_phase2.py` is flat `run_K/` directories with no pass level.
+
+Additionally, the function globbed for `*.geojson` files, but the batch detection script produces detection files without the `.geojson` extension (e.g., `detections_image-only_run01` not `detections_image-only_run01.geojson`).
+
+**Fix**: Removed `passes` parameter. Rewrote file discovery to iterate `run_*` directories directly and glob `detections_*` files with explicit exclusion of `.meta.json`, `_fp.*`, and `_fn.*` files. Function now returns `list[tuple[int, GeoDataFrame]]` (per-run results) instead of a single merged GeoDataFrame — see E22.
+
+**Protocol impact**: None. This corrects the implementation to match the output structure already produced by the runner.
+
+---
+
+### E22: Per-run evaluation architecture (was merged, now per-run)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Correction |
+| Files | `scripts/analyse_phase2_results.py`, `scripts/lib_advanced_metrics.py` |
+| Impact | Previous merged approach would have produced nonsensical precision values |
+
+**Description**: The analysis script's `analyse_phase_results()` function merged all K=10 runs' detections into a single GeoDataFrame before computing F1. With K=10 runs, this yields 10× the detection count per tile, making precision nonsensical — every run's detections are evaluated against the same ground truth, so 10 correct detections of the same reference mound count as 1 TP + 9 FPs.
+
+**Fix**: Rewrote evaluation to compute F1 per run independently:
+
+1. `load_condition_results()` returns per-run GeoDataFrames
+2. F1, precision, and recall are computed per run using `calculate_f1_internal()`
+3. Intermediate results saved to `per_run_metrics.csv`
+4. Two new bootstrap functions added to `lib_advanced_metrics.py`:
+   - `bootstrap_multi_run_ci()`: Resamples tiles (n=60 with replacement), computes F1 per run on the same tile sample, averages across runs. CI = 2.5th/97.5th percentiles.
+   - `bootstrap_multi_run_effect_size_ci()`: Same tile resampling for paired condition comparison.
+
+This preserves the tile as the resampling unit (per preregistration §3.5) while correctly handling the K=10 repeated-measures structure.
+
+**Validation**: Run against 3 existing image-only runs. Per-run F1 values: 0.435, 0.388, 0.360 — matching the expected ~0.36–0.44 range observed during sanity checks.
+
+**Protocol impact**: None. The preregistered statistical method (bootstrap with tile-level resampling) is unchanged. This corrects an implementation error that would have conflated runs.
+
+---
+
+### E23: Enhanced API metadata capture (citation, prompt block reason, prompt safety)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Correction |
+| File | `scripts/lib_llm_metadata.py` |
+| Impact | Three Gemini API fields were silently discarded; now captured |
+
+**Description**: The Gemini API provides three metadata fields that the metadata extraction function silently discarded:
+
+| Field | Where in API | Previous status | Fix |
+|-------|-------------|----------------|-----|
+| Citation metadata | `response.candidates[0].citation_metadata` | Not captured | Added `citation_metadata: dict` to dataclass |
+| Prompt block reason | `response.prompt_feedback.block_reason` | Existence checked but value discarded | Capture actual enum value as string |
+| Prompt-level safety ratings | `response.prompt_feedback.safety_ratings` | Not captured | Added `prompt_safety_ratings: list` to dataclass |
+
+All three fields default gracefully (None/empty list) when not present in the API response. The existing `LLMResponseMetadata` dataclass is serialised via `asdict()`, so the new fields flow through to `.meta.json` files without changes to the batch detection script.
+
+**Note**: The 3 existing image-only runs (completed before this fix) lack these fields. This is unavoidable as the data cannot be recovered retroactively. All subsequent runs capture them.
+
+**Protocol impact**: None. This captures additional API-provided metadata for transparency. The detection methodology is unchanged.
+
+---
+
+### E24: Dry-run checkpoint corruption bug in run_phase2.py
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Correction |
+| File | `scripts/run_phase2.py` |
+| Impact | Dry runs corrupted checkpoint state, preventing correct resume |
+
+**Description**: The `run_phase2.py` runner unconditionally appended execution units to `checkpoint["completed"]` and saved the checkpoint file, regardless of whether the run was a dry run. This meant that `--dry-run` would mark all units as "completed" in the checkpoint, corrupting the resume state.
+
+**Discovery**: During pre-flight validation (Step 1 of Phase 2a execution), a `--dry-run` command corrupted the checkpoint from 3 completed units to 50 completed units. The checkpoint had to be manually restored.
+
+**Fix**: Wrapped checkpoint updates in an `if not dry_run:` guard so that dry runs never modify the persistent checkpoint state.
+
+**Protocol impact**: None. This is a runner infrastructure bug that does not affect detection methodology or results. The 3 existing runs were unaffected (their results were on disk and the checkpoint was restored before data collection resumed).
+
+---
+
 *End of errata. New entries should be appended above this line.*
