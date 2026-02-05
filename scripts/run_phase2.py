@@ -313,8 +313,9 @@ def read_meta_cost(meta_path: Path) -> float:
     try:
         with open(meta_path, "r") as f:
             meta = json.load(f)
-        # The metadata tracker stores cost in 'estimated_cost_usd'
-        return float(meta.get("estimated_cost_usd", 0.0))
+        # The LLMMetadataTracker nests cost under 'cost_estimate.total_cost_usd'
+        cost_estimate = meta.get("cost_estimate", {})
+        return float(cost_estimate.get("total_cost_usd", 0.0))
     except (json.JSONDecodeError, ValueError, TypeError):
         return 0.0
 
