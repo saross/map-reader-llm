@@ -1,20 +1,32 @@
 """
 Tests for Phase 2 multi-condition analysis functionality.
 
-Tier 1 unit tests for the analyse_phase2_results.py script, focusing on
-the Benjamini-Hochberg FDR correction for multiple pairwise comparisons.
+Tier 1 unit tests for the analyse_phase2_results.py script, covering:
+- Benjamini-Hochberg FDR correction for multiple pairwise comparisons
+- Per-run file discovery (no .geojson extension, no pass subdirectories)
+- Per-run loading returning list of (run, GeoDataFrame) tuples
+- Multi-run bootstrap with synthetic data
+- Integration test against existing image-only runs (if available)
 """
 
+import json
 import sys
 from pathlib import Path
 
+import geopandas as gpd
+import numpy as np
 import pytest
+from shapely.geometry import Point, box
 
 # Add project root to path for imports
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from analyse_phase2_results import apply_fdr_correction
+from analyse_phase2_results import apply_fdr_correction, load_condition_results
+from lib_advanced_metrics import (
+    bootstrap_multi_run_ci,
+    bootstrap_multi_run_effect_size_ci,
+)
 
 
 @pytest.mark.tier1
@@ -326,3 +338,373 @@ def test_import_apply_fdr_correction() -> None:
     """Verify that apply_fdr_correction can be imported."""
     from analyse_phase2_results import apply_fdr_correction as imported_fn
     assert callable(imported_fn)
+
+
+# ============================================================================
+# File Discovery and Per-Run Loading Tests
+# ============================================================================
+
+def _make_detection_geojson(features: list[dict]) -> dict:
+    """Create a minimal GeoJSON FeatureCollection for testing."""
+    return {
+        "type": "FeatureCollection",
+        "crs": {
+            "type": "name",
+            "properties": {"name": "urn:ogc:def:crs:EPSG::32635"},
+        },
+        "features": features,
+    }
+
+
+def _make_detection_feature(
+    tile_name: str = "K-35-052-4_32635_tile_001.png",
+) -> dict:
+    """Create a minimal detection Feature for testing."""
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [500000, 4700000],
+                    [500020, 4700000],
+                    [500020, 4700020],
+                    [500000, 4700020],
+                    [500000, 4700000],
+                ]
+            ],
+        },
+        "properties": {
+            "source_tile": tile_name,
+            "label": "mound",
+            "subtype": "burial_mound",
+            "confidence": "high",
+        },
+    }
+
+
+@pytest.mark.tier1
+class TestLoadConditionResults:
+    """Tests for load_condition_results() per-run file discovery."""
+
+    def test_missing_condition_dir_returns_empty(self, tmp_path: Path) -> None:
+        """Missing condition directory should return empty list."""
+        result = load_condition_results(tmp_path, "nonexistent")
+        assert result == []
+
+    def test_no_run_dirs_returns_empty(self, tmp_path: Path) -> None:
+        """Condition dir with no run_* subdirectories should return empty."""
+        (tmp_path / "image-only").mkdir()
+        result = load_condition_results(tmp_path, "image-only")
+        assert result == []
+
+    def test_discovers_files_without_geojson_extension(
+        self, tmp_path: Path
+    ) -> None:
+        """Detection files without .geojson extension should be loaded."""
+        cond_dir = tmp_path / "image-only" / "run_1"
+        cond_dir.mkdir(parents=True)
+
+        # Create detection file without .geojson extension (as produced
+        # by the runner)
+        det_file = cond_dir / "detections_image-only_run01"
+        geojson_data = _make_detection_geojson([_make_detection_feature()])
+        det_file.write_text(json.dumps(geojson_data))
+
+        result = load_condition_results(tmp_path, "image-only")
+
+        assert len(result) == 1
+        run_num, gdf = result[0]
+        assert run_num == 1
+        assert len(gdf) == 1
+
+    def test_excludes_meta_fp_fn_files(self, tmp_path: Path) -> None:
+        """Should exclude .meta.json, _fp.*, and _fn.* files."""
+        cond_dir = tmp_path / "image-only" / "run_1"
+        cond_dir.mkdir(parents=True)
+
+        geojson_data = _make_detection_geojson([_make_detection_feature()])
+
+        # Main detection file
+        (cond_dir / "detections_image-only_run01").write_text(
+            json.dumps(geojson_data)
+        )
+        # Files that should be excluded
+        (cond_dir / "detections_image-only_run01.meta.json").write_text("{}")
+        (cond_dir / "detections_image-only_run01_fp.geojson").write_text(
+            json.dumps(geojson_data)
+        )
+        (cond_dir / "detections_image-only_run01_fn.geojson").write_text(
+            json.dumps(geojson_data)
+        )
+
+        result = load_condition_results(tmp_path, "image-only")
+
+        assert len(result) == 1
+        _, gdf = result[0]
+        assert len(gdf) == 1  # Only from the main file
+
+    def test_returns_sorted_by_run_number(self, tmp_path: Path) -> None:
+        """Results should be sorted by run number."""
+        geojson_data = _make_detection_geojson([_make_detection_feature()])
+
+        for run_num in [3, 1, 2]:
+            run_dir = tmp_path / "image-only" / f"run_{run_num}"
+            run_dir.mkdir(parents=True)
+            det_file = run_dir / f"detections_image-only_run{run_num:02d}"
+            det_file.write_text(json.dumps(geojson_data))
+
+        result = load_condition_results(tmp_path, "image-only")
+
+        assert len(result) == 3
+        assert [r[0] for r in result] == [1, 2, 3]
+
+    def test_adds_run_column_to_geodataframe(self, tmp_path: Path) -> None:
+        """Each GeoDataFrame should have a 'run' column with the run number."""
+        cond_dir = tmp_path / "image-only" / "run_5"
+        cond_dir.mkdir(parents=True)
+
+        geojson_data = _make_detection_geojson([_make_detection_feature()])
+        (cond_dir / "detections_image-only_run05").write_text(
+            json.dumps(geojson_data)
+        )
+
+        result = load_condition_results(tmp_path, "image-only")
+
+        assert len(result) == 1
+        run_num, gdf = result[0]
+        assert run_num == 5
+        assert (gdf["run"] == 5).all()
+
+    def test_no_pass_subdirectory_iteration(self, tmp_path: Path) -> None:
+        """Should NOT look for pass_N subdirectories inside run dirs."""
+        run_dir = tmp_path / "image-only" / "run_1"
+        run_dir.mkdir(parents=True)
+
+        # Put detection file in a pass_1 subdir — should NOT be found
+        pass_dir = run_dir / "pass_1"
+        pass_dir.mkdir()
+        geojson_data = _make_detection_geojson([_make_detection_feature()])
+        (pass_dir / "detections_image-only_run01.geojson").write_text(
+            json.dumps(geojson_data)
+        )
+
+        result = load_condition_results(tmp_path, "image-only")
+
+        # Should be empty — pass_1 subdir is not searched
+        assert len(result) == 0
+
+
+@pytest.mark.tier1
+class TestLoadConditionResultsIntegration:
+    """Integration test against existing image-only runs (if available)."""
+
+    @pytest.mark.skipif(
+        not (PROJECT_ROOT / "outputs" / "phase2a" / "image-only" / "run_1").exists(),
+        reason="Existing Phase 2a image-only runs not available",
+    )
+    def test_loads_existing_image_only_runs(self) -> None:
+        """Load existing image-only runs from outputs/phase2a/."""
+        study_dir = PROJECT_ROOT / "outputs" / "phase2a"
+        result = load_condition_results(study_dir, "image-only")
+
+        assert len(result) >= 3, "Expected at least 3 image-only runs"
+
+        for run_num, gdf in result:
+            assert run_num > 0
+            assert len(gdf) > 0, f"Run {run_num} has 0 features"
+            assert "source_tile" in gdf.columns
+            assert "run" in gdf.columns
+
+
+# ============================================================================
+# Multi-Run Bootstrap Tests
+# ============================================================================
+
+def _make_synthetic_runs(
+    n_runs: int = 3,
+    n_tiles: int = 10,
+    detections_per_tile: int = 2,
+    seed: int = 42,
+) -> tuple[
+    list[tuple[int, gpd.GeoDataFrame]],
+    gpd.GeoDataFrame,
+    gpd.GeoDataFrame,
+]:
+    """
+    Create synthetic per-run detection data for bootstrap testing.
+
+    Returns:
+        (run_gdfs, gdf_ref, gdf_bounds) for use with bootstrap functions.
+    """
+    rng = np.random.RandomState(seed)
+
+    # Create tile names and bounds
+    tile_names = [f"K-35-052-4_32635_tile_{i:03d}.png" for i in range(n_tiles)]
+
+    bounds_rows = []
+    for i, tname in enumerate(tile_names):
+        x0 = 500000 + i * 100
+        y0 = 4700000
+        geom = box(x0, y0, x0 + 100, y0 + 100)
+        bounds_rows.append({"tile_name": tname, "geometry": geom})
+    gdf_bounds = gpd.GeoDataFrame(bounds_rows, crs="EPSG:32635")
+
+    # Create reference points (one per tile for simplicity)
+    ref_rows = []
+    for i, tname in enumerate(tile_names):
+        x0 = 500000 + i * 100 + 50
+        y0 = 4700050
+        ref_rows.append({
+            "geometry": Point(x0, y0),
+            "Map": "K-35-052-4_32635",
+            "Symbol": "Burial Mound",
+        })
+    gdf_ref = gpd.GeoDataFrame(ref_rows, crs="EPSG:32635")
+
+    # Create per-run detections
+    run_gdfs = []
+    for run_num in range(1, n_runs + 1):
+        det_rows = []
+        for i, tname in enumerate(tile_names):
+            for d in range(detections_per_tile):
+                # Add some noise so runs differ
+                x0 = 500000 + i * 100 + 50 + rng.normal(0, 5)
+                y0 = 4700050 + rng.normal(0, 5)
+                det_rows.append({
+                    "source_tile": tname,
+                    "geometry": box(x0 - 5, y0 - 5, x0 + 5, y0 + 5),
+                    "label": "mound",
+                    "subtype": "burial_mound",
+                })
+        gdf_det = gpd.GeoDataFrame(det_rows, crs="EPSG:32635")
+        gdf_det["run"] = run_num
+        run_gdfs.append((run_num, gdf_det))
+
+    return run_gdfs, gdf_ref, gdf_bounds
+
+
+@pytest.mark.tier1
+class TestBootstrapMultiRunCi:
+    """Tests for bootstrap_multi_run_ci() with synthetic data."""
+
+    def test_returns_expected_structure(self) -> None:
+        """Output should have f1, precision, recall dicts with CIs."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(n_runs=3)
+
+        result = bootstrap_multi_run_ci(
+            run_gdfs, gdf_ref, gdf_bounds,
+            n_iterations=50,
+            random_seed=42,
+        )
+
+        for metric in ["f1", "precision", "recall"]:
+            assert metric in result, f"Missing '{metric}' in result"
+            assert "mean" in result[metric]
+            assert "ci_lower" in result[metric]
+            assert "ci_upper" in result[metric]
+            # CI lower should be <= mean <= CI upper
+            assert result[metric]["ci_lower"] <= result[metric]["mean"]
+            assert result[metric]["mean"] <= result[metric]["ci_upper"]
+
+        assert result["n_runs"] == 3
+        assert result["n_tiles"] == 10
+
+    def test_empty_run_list_returns_empty(self) -> None:
+        """Empty run list should return empty dict."""
+        _, gdf_ref, gdf_bounds = _make_synthetic_runs()
+        result = bootstrap_multi_run_ci(
+            [], gdf_ref, gdf_bounds,
+            n_iterations=10,
+        )
+        assert result == {}
+
+    def test_single_run_comparable_to_standard_bootstrap(self) -> None:
+        """With K=1 run, multi-run CI should approximate standard bootstrap CI."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(n_runs=1)
+
+        result = bootstrap_multi_run_ci(
+            run_gdfs, gdf_ref, gdf_bounds,
+            n_iterations=100,
+            random_seed=42,
+        )
+
+        # Just check it produces reasonable values
+        assert 0 <= result["f1"]["mean"] <= 1
+        assert result["f1"]["ci_lower"] >= 0
+
+    def test_reproducibility_with_seed(self) -> None:
+        """Same seed should produce identical results."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs()
+
+        result1 = bootstrap_multi_run_ci(
+            run_gdfs, gdf_ref, gdf_bounds,
+            n_iterations=50,
+            random_seed=123,
+        )
+        result2 = bootstrap_multi_run_ci(
+            run_gdfs, gdf_ref, gdf_bounds,
+            n_iterations=50,
+            random_seed=123,
+        )
+
+        assert result1["f1"]["mean"] == result2["f1"]["mean"]
+        assert result1["f1"]["ci_lower"] == result2["f1"]["ci_lower"]
+
+
+@pytest.mark.tier1
+class TestBootstrapMultiRunEffectSizeCi:
+    """Tests for bootstrap_multi_run_effect_size_ci() with synthetic data."""
+
+    def test_returns_expected_structure(self) -> None:
+        """Output should have f1_difference, precision_difference, recall_difference."""
+        run_gdfs_a, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=3, seed=42,
+        )
+        run_gdfs_b, _, _ = _make_synthetic_runs(
+            n_runs=3, seed=99,
+        )
+
+        result = bootstrap_multi_run_effect_size_ci(
+            run_gdfs_a, run_gdfs_b,
+            gdf_ref, gdf_bounds,
+            n_iterations=50,
+            random_seed=42,
+        )
+
+        for key in ["f1_difference", "precision_difference", "recall_difference"]:
+            assert key in result, f"Missing '{key}' in result"
+            assert "mean" in result[key]
+            assert "ci_lower" in result[key]
+            assert "ci_upper" in result[key]
+
+        assert result["n_tiles"] == 10
+        assert result["n_runs_a"] == 3
+        assert result["n_runs_b"] == 3
+
+    def test_identical_conditions_yield_zero_difference(self) -> None:
+        """Same data for both conditions should yield ~0 difference."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(n_runs=3)
+
+        result = bootstrap_multi_run_effect_size_ci(
+            run_gdfs, run_gdfs,
+            gdf_ref, gdf_bounds,
+            n_iterations=50,
+            random_seed=42,
+        )
+
+        # Mean difference should be exactly 0 (same data)
+        assert result["f1_difference"]["mean"] == pytest.approx(0, abs=1e-10)
+        # CI should contain 0
+        assert result["f1_difference"]["ci_lower"] <= 0
+        assert result["f1_difference"]["ci_upper"] >= 0
+
+    def test_empty_condition_returns_error(self) -> None:
+        """Empty run list for one condition should return error."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs()
+        result = bootstrap_multi_run_effect_size_ci(
+            run_gdfs, [],
+            gdf_ref, gdf_bounds,
+            n_iterations=10,
+        )
+        assert "error" in result

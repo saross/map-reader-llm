@@ -145,6 +145,13 @@ class LLMResponseMetadata:
     safety_blocked: bool = False
     safety_ratings: List[Dict[str, Any]] = field(default_factory=list)
 
+    # Prompt-level safety (Gemini) — errata E23
+    prompt_safety_ratings: List[Dict[str, Any]] = field(default_factory=list)
+    prompt_block_reason: Optional[str] = None
+
+    # Citation metadata (Gemini) — errata E23
+    citation_metadata: Optional[Dict[str, Any]] = None
+
     # Grounding (Gemini with Google Search)
     grounding_used: bool = False
     grounding_queries: List[str] = field(default_factory=list)
@@ -575,7 +582,7 @@ def extract_gemini_metadata(
             else:
                 metadata.finish_reason = FinishReason.UNKNOWN.value
 
-        # Safety ratings
+        # Safety ratings (candidate-level)
         if hasattr(candidate, 'safety_ratings') and candidate.safety_ratings:
             for rating in candidate.safety_ratings:
                 metadata.safety_ratings.append({
@@ -585,6 +592,24 @@ def extract_gemini_metadata(
                 })
                 if getattr(rating, 'blocked', False):
                     metadata.safety_blocked = True
+
+        # Citation metadata — errata E23
+        # Previously silently discarded; now captured for audit
+        if hasattr(candidate, 'citation_metadata') and candidate.citation_metadata:
+            try:
+                cm = candidate.citation_metadata
+                citations = []
+                for src in getattr(cm, 'citation_sources', []) or []:
+                    citations.append({
+                        "start_index": getattr(src, 'start_index', None),
+                        "end_index": getattr(src, 'end_index', None),
+                        "uri": getattr(src, 'uri', None),
+                        "license": getattr(src, 'license', None),
+                    })
+                if citations:
+                    metadata.citation_metadata = {"citations": citations}
+            except Exception:
+                pass  # Graceful default — citation_metadata stays None
 
         # Check for content
         if hasattr(candidate, 'content') and candidate.content:
@@ -607,9 +632,23 @@ def extract_gemini_metadata(
     # Prompt feedback (blocking at prompt level)
     if hasattr(response, 'prompt_feedback') and response.prompt_feedback:
         pf = response.prompt_feedback
+
+        # Capture prompt block reason value — errata E23
+        # Previously only checked existence, discarded actual value
         if hasattr(pf, 'block_reason') and pf.block_reason:
+            metadata.prompt_block_reason = str(pf.block_reason)
             metadata.safety_blocked = True
             metadata.finish_reason = FinishReason.SAFETY.value
+
+        # Capture prompt-level safety ratings — errata E23
+        # Previously only candidate-level ratings were captured
+        if hasattr(pf, 'safety_ratings') and pf.safety_ratings:
+            for rating in pf.safety_ratings:
+                metadata.prompt_safety_ratings.append({
+                    "category": str(getattr(rating, 'category', '')),
+                    "probability": str(getattr(rating, 'probability', '')),
+                    "blocked": getattr(rating, 'blocked', False),
+                })
 
     # Grounding metadata (if Google Search grounding was used)
     if hasattr(response, 'grounding_metadata') and response.grounding_metadata:

@@ -577,19 +577,26 @@ def run_phase2(
 
         if success:
             results["completed"].append(key)
-            checkpoint["completed"].append(key)
             if verbose:
                 cost_str = f" (${cost:.4f})" if cost > 0 else ""
                 print(f"         Status: OK{cost_str}")
         else:
             results["failed"].append({"unit": key, "error": message})
-            checkpoint["failed"].append({"unit": key, "error": message})
             if verbose:
                 print(f"         Status: FAILED ({message})")
 
-        # Update checkpoint cost and save
-        checkpoint["total_cost_usd"] = running_cost
-        save_checkpoint(checkpoint_path, checkpoint)
+        # Only update checkpoint for real (non-dry-run) executions
+        # Dry runs must not modify the checkpoint — doing so corrupts
+        # the resume state (see errata E24)
+        if not dry_run:
+            if success:
+                checkpoint["completed"].append(key)
+            else:
+                checkpoint["failed"].append(
+                    {"unit": key, "error": message}
+                )
+            checkpoint["total_cost_usd"] = running_cost
+            save_checkpoint(checkpoint_path, checkpoint)
 
         # Cost warning
         if running_cost > cost_warn_threshold and not dry_run:

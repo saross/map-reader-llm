@@ -508,6 +508,232 @@ def bootstrap_effect_size_ci(
     }
 
 
+def bootstrap_multi_run_ci(
+    run_gdfs: list[tuple[int, gpd.GeoDataFrame]],
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
+    """
+    Bootstrap 95% CIs for a condition with K independent runs.
+
+    For each bootstrap iteration:
+    1. Sample tiles with replacement (same tile set for all runs)
+    2. Compute F1, precision, recall for each run on the tile sample
+    3. Average metrics across runs
+    4. CI = 2.5th/97.5th percentiles of the mean-metric distribution
+
+    This preserves tiles as the resampling unit (per preregistration
+    section 3.5) while correctly handling the K=10 repeated-measures
+    structure. Errata E22: replaces the prior approach of merging all
+    runs and computing one F1, which inflated detection counts K-fold.
+
+    Args:
+        run_gdfs: List of (run_number, GeoDataFrame) tuples, one per run.
+            Each GeoDataFrame must have 'source_tile' column.
+        gdf_ref: GeoDataFrame of ground truth references (shared across runs).
+        gdf_bounds: GeoDataFrame of tile boundaries (shared across runs).
+            Must have 'tile_name' column.
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
+
+    Returns:
+        dict: Bootstrap CIs for F1, precision, and recall with structure
+            matching bootstrap_ci() output for downstream compatibility.
+    """
+    tiles = gdf_bounds['tile_name'].unique()
+    n_tiles = len(tiles)
+
+    if n_tiles == 0 or not run_gdfs:
+        return {}
+
+    rng = np.random.RandomState(random_seed)
+
+    f1_means = []
+    precision_means = []
+    recall_means = []
+
+    for _i in range(n_iterations):
+        # Sample tiles with replacement
+        sample_tiles = rng.choice(tiles, n_tiles, replace=True)
+
+        # Build resampled bounds
+        sample_bounds_parts = []
+        for t in sample_tiles:
+            b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
+            sample_bounds_parts.append(b)
+        gdf_sample_bounds = pd.concat(sample_bounds_parts, ignore_index=True)
+
+        # Compute metrics for each run on the same tile sample
+        run_f1s = []
+        run_precisions = []
+        run_recalls = []
+
+        for _run_num, gdf_det in run_gdfs:
+            # Filter detections to sampled tiles
+            sample_dets = []
+            for t in sample_tiles:
+                d = gdf_det[gdf_det['source_tile'] == t].copy()
+                sample_dets.append(d)
+
+            if sample_dets:
+                gdf_sample_det = pd.concat(sample_dets, ignore_index=True)
+            else:
+                gdf_sample_det = gdf_det.iloc[0:0]  # Empty with schema
+
+            try:
+                p, r, f1 = calculate_f1_internal(
+                    gdf_sample_det, gdf_ref, gdf_sample_bounds
+                )
+                run_f1s.append(f1)
+                run_precisions.append(p)
+                run_recalls.append(r)
+            except Exception as e:
+                logger.debug(
+                    "Bootstrap multi-run iteration %d, run failed: %s",
+                    _i, e,
+                )
+                run_f1s.append(0)
+                run_precisions.append(0)
+                run_recalls.append(0)
+
+        # Average across runs
+        f1_means.append(float(np.mean(run_f1s)))
+        precision_means.append(float(np.mean(run_precisions)))
+        recall_means.append(float(np.mean(run_recalls)))
+
+    return {
+        "f1": {
+            "mean": float(np.mean(f1_means)),
+            "ci_lower": float(np.percentile(f1_means, 2.5)),
+            "ci_upper": float(np.percentile(f1_means, 97.5)),
+        },
+        "precision": {
+            "mean": float(np.mean(precision_means)),
+            "ci_lower": float(np.percentile(precision_means, 2.5)),
+            "ci_upper": float(np.percentile(precision_means, 97.5)),
+        },
+        "recall": {
+            "mean": float(np.mean(recall_means)),
+            "ci_lower": float(np.percentile(recall_means, 2.5)),
+            "ci_upper": float(np.percentile(recall_means, 97.5)),
+        },
+        "n_iterations": n_iterations,
+        "n_runs": len(run_gdfs),
+        "n_tiles": n_tiles,
+    }
+
+
+def bootstrap_multi_run_effect_size_ci(
+    run_gdfs_a: list[tuple[int, gpd.GeoDataFrame]],
+    run_gdfs_b: list[tuple[int, gpd.GeoDataFrame]],
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
+    """
+    Bootstrap 95% CIs for effect size between two multi-run conditions.
+
+    For each bootstrap iteration:
+    1. Sample tiles with replacement (same tiles for both conditions)
+    2. Compute mean-F1 across runs for each condition on the tile sample
+    3. Compute paired difference: mean_F1_A - mean_F1_B
+    4. CI = 2.5th/97.5th percentiles of the difference distribution
+
+    Positive difference means Condition A outperforms Condition B.
+    Errata E22: uses per-run evaluation rather than merged detections.
+
+    Args:
+        run_gdfs_a: Per-run (run_number, GeoDataFrame) tuples for Condition A.
+        run_gdfs_b: Per-run (run_number, GeoDataFrame) tuples for Condition B.
+        gdf_ref: GeoDataFrame of ground truth references (shared).
+        gdf_bounds: GeoDataFrame of tile boundaries (shared).
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
+
+    Returns:
+        dict: Effect size CIs for F1, precision, recall differences.
+    """
+    tiles = gdf_bounds['tile_name'].unique()
+    n_tiles = len(tiles)
+
+    if n_tiles == 0 or not run_gdfs_a or not run_gdfs_b:
+        return {"error": "Insufficient data for effect size computation"}
+
+    rng = np.random.RandomState(random_seed)
+
+    f1_diffs = []
+    precision_diffs = []
+    recall_diffs = []
+
+    for _i in range(n_iterations):
+        # Paired sampling: same tiles for both conditions
+        sample_tiles = rng.choice(tiles, n_tiles, replace=True)
+
+        # Build resampled bounds
+        sample_bounds_parts = []
+        for t in sample_tiles:
+            b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
+            sample_bounds_parts.append(b)
+        gdf_sample_bounds = pd.concat(sample_bounds_parts, ignore_index=True)
+
+        # Helper: compute mean metrics across runs for a condition
+        def _mean_metrics(run_gdfs):
+            run_f1s = []
+            run_ps = []
+            run_rs = []
+            for _rn, gdf_det in run_gdfs:
+                sample_dets = []
+                for t in sample_tiles:
+                    d = gdf_det[gdf_det['source_tile'] == t].copy()
+                    sample_dets.append(d)
+                if sample_dets:
+                    gdf_sd = pd.concat(sample_dets, ignore_index=True)
+                else:
+                    gdf_sd = gdf_det.iloc[0:0]
+                try:
+                    p, r, f1 = calculate_f1_internal(
+                        gdf_sd, gdf_ref, gdf_sample_bounds
+                    )
+                except Exception:
+                    p, r, f1 = 0, 0, 0
+                run_f1s.append(f1)
+                run_ps.append(p)
+                run_rs.append(r)
+            return np.mean(run_f1s), np.mean(run_ps), np.mean(run_rs)
+
+        f1_a, p_a, r_a = _mean_metrics(run_gdfs_a)
+        f1_b, p_b, r_b = _mean_metrics(run_gdfs_b)
+
+        f1_diffs.append(f1_a - f1_b)
+        precision_diffs.append(p_a - p_b)
+        recall_diffs.append(r_a - r_b)
+
+    return {
+        "f1_difference": {
+            "mean": float(np.mean(f1_diffs)),
+            "ci_lower": float(np.percentile(f1_diffs, 2.5)),
+            "ci_upper": float(np.percentile(f1_diffs, 97.5)),
+        },
+        "precision_difference": {
+            "mean": float(np.mean(precision_diffs)),
+            "ci_lower": float(np.percentile(precision_diffs, 2.5)),
+            "ci_upper": float(np.percentile(precision_diffs, 97.5)),
+        },
+        "recall_difference": {
+            "mean": float(np.mean(recall_diffs)),
+            "ci_lower": float(np.percentile(recall_diffs, 2.5)),
+            "ci_upper": float(np.percentile(recall_diffs, 97.5)),
+        },
+        "n_tiles": n_tiles,
+        "n_iterations": n_iterations,
+        "n_runs_a": len(run_gdfs_a),
+        "n_runs_b": len(run_gdfs_b),
+    }
+
+
 def bootstrap_interaction_ci(
     conditions: dict,
     gdf_ref,

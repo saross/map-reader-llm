@@ -32,16 +32,14 @@ import sys
 from datetime import datetime, timezone
 from itertools import combinations
 from pathlib import Path
-from typing import Optional
-
 import geopandas as gpd
 import pandas as pd
 
 # Add scripts directory to path for lib imports
 sys.path.insert(0, str(Path(__file__).parent))
 from lib_advanced_metrics import (
-    bootstrap_ci,
-    bootstrap_effect_size_ci,
+    bootstrap_multi_run_ci,
+    bootstrap_multi_run_effect_size_ci,
     calculate_f1_internal,
 )
 
@@ -64,78 +62,106 @@ DEFAULT_BUFFER_M = 20
 def load_condition_results(
     study_dir: Path,
     condition: str,
-    runs: int = 10,
-    passes: int = 5,
-) -> tuple[Optional[gpd.GeoDataFrame], Optional[gpd.GeoDataFrame]]:
+) -> list[tuple[int, gpd.GeoDataFrame]]:
     """
-    Load merged detection results for a single condition.
+    Load per-run detection results for a single condition.
 
-    Searches for merged GeoJSON in the condition directory structure:
-    {study_dir}/{condition}/merged_detections.geojson
+    Iterates run_* directories under {study_dir}/{condition}/ and loads
+    detection files from each. Detection files are identified by matching
+    'detections_*' filenames while excluding '.meta.json', '_fp.*', and
+    '_fn.*' suffixes. Files may or may not have a .geojson extension.
 
-    If not found, attempts to merge from individual pass files.
+    Errata E21: Removed stale 'passes' parameter and pass_N subdirectory
+    iteration — the actual structure is run_K/ with no pass level (single
+    pass per run, per preregistration section 3.8).
 
     Args:
         study_dir: Base output directory for the phase
         condition: Condition name (e.g., 'image-only')
-        runs: Number of runs (for file discovery)
-        passes: Number of passes per run (for file discovery)
 
     Returns:
-        Tuple of (detections_gdf, bounds_gdf) or (None, None) if not found
+        List of (run_number, GeoDataFrame) tuples, sorted by run number.
+        Returns an empty list if no detection files are found.
     """
     condition_dir = study_dir / condition
 
     if not condition_dir.exists():
         logger.warning("Condition directory not found: %s", condition_dir)
-        return None, None
+        return []
 
-    # Try merged file first
-    merged_file = condition_dir / "merged_detections.geojson"
-    if merged_file.exists():
-        gdf_det = gpd.read_file(merged_file)
-        logger.info("Loaded merged detections: %s (%d features)", merged_file, len(gdf_det))
-    else:
-        # Attempt to aggregate from individual runs/passes
-        logger.info("Merged file not found, aggregating from runs/passes...")
-        all_dets = []
+    per_run_results: list[tuple[int, gpd.GeoDataFrame]] = []
 
-        for run in range(1, runs + 1):
-            for pass_num in range(1, passes + 1):
-                pass_dir = condition_dir / f"run_{run}" / f"pass_{pass_num}"
-                geojson_files = list(pass_dir.glob("*.geojson"))
+    # Iterate run_* directories
+    run_dirs = sorted(condition_dir.glob("run_*"))
 
-                for gf in geojson_files:
-                    if "bounds" not in gf.name.lower():
-                        try:
-                            gdf = gpd.read_file(gf)
-                            gdf["run"] = run
-                            gdf["pass"] = pass_num
-                            all_dets.append(gdf)
-                        except Exception as e:
-                            logger.debug("Error loading %s: %s", gf, e)
+    if not run_dirs:
+        logger.warning("No run_* directories found for condition: %s", condition)
+        return []
 
-        if not all_dets:
-            logger.warning("No detection files found for condition: %s", condition)
-            return None, None
+    for run_dir in run_dirs:
+        if not run_dir.is_dir():
+            continue
 
-        gdf_det = pd.concat(all_dets, ignore_index=True)
-        logger.info("Aggregated %d detections from %d files", len(gdf_det), len(all_dets))
+        # Extract run number from directory name (e.g., 'run_1' → 1)
+        try:
+            run_num = int(run_dir.name.split("_", 1)[1])
+        except (IndexError, ValueError):
+            logger.warning("Cannot parse run number from: %s", run_dir.name)
+            continue
 
-    # Load bounds (try merged first, then aggregate)
-    bounds_file = condition_dir / "merged_bounds.geojson"
-    if bounds_file.exists():
-        gdf_bounds = gpd.read_file(bounds_file)
-    else:
-        # Try to find any bounds file
-        bounds_files = list(condition_dir.rglob("*bounds*.geojson"))
-        if bounds_files:
-            gdf_bounds = gpd.read_file(bounds_files[0])
-        else:
-            logger.warning("No bounds file found for condition: %s", condition)
-            return gdf_det, None
+        # Find detection files: match 'detections_*' but exclude
+        # .meta.json, _fp.*, _fn.* files
+        detection_files = []
+        for f in run_dir.iterdir():
+            if not f.name.startswith("detections_"):
+                continue
+            if f.name.endswith(".meta.json"):
+                continue
+            if "_fp." in f.name or "_fn." in f.name:
+                continue
+            # Also skip if the name ends with _fp or _fn (no extension)
+            base_name = f.name.rsplit(".", 1)[0] if "." in f.name else f.name
+            if base_name.endswith("_fp") or base_name.endswith("_fn"):
+                continue
+            detection_files.append(f)
 
-    return gdf_det, gdf_bounds
+        if not detection_files:
+            logger.warning(
+                "No detection files in %s (found %d files total)",
+                run_dir,
+                len(list(run_dir.iterdir())),
+            )
+            continue
+
+        # Load the detection file (should be exactly one per run)
+        if len(detection_files) > 1:
+            logger.warning(
+                "Multiple detection files in %s, using first: %s",
+                run_dir,
+                [f.name for f in detection_files],
+            )
+
+        det_file = detection_files[0]
+        try:
+            gdf = gpd.read_file(det_file)
+            gdf["run"] = run_num
+            per_run_results.append((run_num, gdf))
+            logger.info(
+                "Loaded run %d: %s (%d features)",
+                run_num,
+                det_file.name,
+                len(gdf),
+            )
+        except Exception as e:
+            logger.warning("Error loading %s: %s", det_file, e)
+
+    logger.info(
+        "Condition '%s': loaded %d runs with %d total features",
+        condition,
+        len(per_run_results),
+        sum(len(gdf) for _, gdf in per_run_results),
+    )
+    return per_run_results
 
 
 def apply_fdr_correction(
@@ -273,80 +299,122 @@ def analyse_phase_results(
     if gdf_bounds_common.crs != target_crs:
         gdf_bounds_common = gdf_bounds_common.to_crs(target_crs)
 
-    # Load and analyse each condition
+    # Load and analyse each condition (per-run evaluation — errata E22)
     per_condition_metrics = {}
-    condition_data = {}  # Store for pairwise comparisons
+    condition_data = {}  # Store per-run GeoDataFrames for pairwise comparisons
+    per_run_metrics_rows = []  # For intermediate CSV output
 
     for condition in conditions:
         logger.info("Analysing condition: %s", condition)
 
-        gdf_det, gdf_bounds = load_condition_results(study_dir, condition)
+        run_results = load_condition_results(study_dir, condition)
 
-        if gdf_det is None:
+        if not run_results:
             logger.warning("Skipping condition %s: no data found", condition)
             per_condition_metrics[condition] = {"error": "No data found"}
             continue
 
-        # Use common bounds if condition-specific bounds not available
-        if gdf_bounds is None:
-            gdf_bounds = gdf_bounds_common
+        # Standardise CRS for each run's GeoDataFrame
+        standardised_runs: list[tuple[int, gpd.GeoDataFrame]] = []
+        for run_num, gdf in run_results:
+            if gdf.crs != target_crs:
+                gdf = gdf.to_crs(target_crs)
+            standardised_runs.append((run_num, gdf))
 
-        # Standardise CRS
-        if gdf_det.crs != target_crs:
-            gdf_det = gdf_det.to_crs(target_crs)
-        if gdf_bounds.crs != target_crs:
-            gdf_bounds = gdf_bounds.to_crs(target_crs)
-
-        # Store for pairwise comparisons
+        # Store per-run data for pairwise comparisons
         condition_data[condition] = {
-            "detections": gdf_det,
-            "bounds": gdf_bounds,
+            "runs": standardised_runs,
+            "bounds": gdf_bounds_common,
         }
 
-        # Calculate point metrics
-        precision, recall, f1 = calculate_f1_internal(
-            gdf_det, gdf_ref, gdf_bounds, buffer_meters=DEFAULT_BUFFER_M
-        )
+        # Compute F1 per run independently
+        run_f1s = []
+        run_precisions = []
+        run_recalls = []
+        n_total_detections = 0
 
-        # Bootstrap CIs
-        ci_results = bootstrap_ci(
-            gdf_det, gdf_ref, gdf_bounds,
+        for run_num, gdf_det in standardised_runs:
+            n_total_detections += len(gdf_det)
+            precision, recall, f1 = calculate_f1_internal(
+                gdf_det, gdf_ref, gdf_bounds_common,
+                buffer_meters=DEFAULT_BUFFER_M,
+            )
+            run_f1s.append(f1)
+            run_precisions.append(precision)
+            run_recalls.append(recall)
+
+            # Record for intermediate CSV
+            per_run_metrics_rows.append({
+                "condition": condition,
+                "run": run_num,
+                "f1": round(f1, 4),
+                "precision": round(precision, 4),
+                "recall": round(recall, 4),
+                "n_detections": len(gdf_det),
+            })
+
+            logger.info(
+                "  Run %d: F1=%.4f, P=%.4f, R=%.4f (%d features)",
+                run_num, f1, precision, recall, len(gdf_det),
+            )
+
+        # Mean across runs (point estimate)
+        import numpy as np
+        mean_f1 = float(np.mean(run_f1s))
+        mean_precision = float(np.mean(run_precisions))
+        mean_recall = float(np.mean(run_recalls))
+
+        # Multi-run bootstrap CIs (tile as resampling unit, averaged
+        # across K runs — see bootstrap_multi_run_ci docstring)
+        ci_results = bootstrap_multi_run_ci(
+            run_gdfs=standardised_runs,
+            gdf_ref=gdf_ref,
+            gdf_bounds=gdf_bounds_common,
             n_iterations=n_bootstrap,
             random_seed=random_seed,
         )
 
         per_condition_metrics[condition] = {
-            "n_detections": len(gdf_det),
+            "n_runs": len(standardised_runs),
+            "n_detections_total": n_total_detections,
+            "per_run_f1": [round(f, 4) for f in run_f1s],
             "point_estimate": {
-                "f1": round(f1, 4),
-                "precision": round(precision, 4),
-                "recall": round(recall, 4),
+                "f1": round(mean_f1, 4),
+                "precision": round(mean_precision, 4),
+                "recall": round(mean_recall, 4),
             },
             "bootstrap_ci": ci_results,
         }
 
         logger.info(
-            "  F1=%.4f [%.4f, %.4f], P=%.4f, R=%.4f",
-            f1,
+            "  Mean F1=%.4f [%.4f, %.4f], P=%.4f, R=%.4f (%d runs)",
+            mean_f1,
             ci_results.get("f1", {}).get("ci_lower", 0),
             ci_results.get("f1", {}).get("ci_upper", 0),
-            precision,
-            recall,
+            mean_precision,
+            mean_recall,
+            len(standardised_runs),
         )
 
-    # Compute all pairwise comparisons
+    # Save per-run metrics CSV
+    if per_run_metrics_rows:
+        csv_path = study_dir / "per_run_metrics.csv"
+        df_metrics = pd.DataFrame(per_run_metrics_rows)
+        df_metrics.to_csv(csv_path, index=False)
+        logger.info("Saved per-run metrics to: %s", csv_path)
+
+    # Compute all pairwise comparisons using multi-run bootstrap
     pairwise_comparisons = []
     valid_conditions = [c for c in conditions if c in condition_data]
 
     for cond_a, cond_b in combinations(valid_conditions, 2):
         logger.info("Computing effect size: %s vs %s", cond_a, cond_b)
 
-        effect = bootstrap_effect_size_ci(
-            gdf_det_a=condition_data[cond_a]["detections"],
-            gdf_bounds_a=condition_data[cond_a]["bounds"],
-            gdf_det_b=condition_data[cond_b]["detections"],
-            gdf_bounds_b=condition_data[cond_b]["bounds"],
+        effect = bootstrap_multi_run_effect_size_ci(
+            run_gdfs_a=condition_data[cond_a]["runs"],
+            run_gdfs_b=condition_data[cond_b]["runs"],
             gdf_ref=gdf_ref,
+            gdf_bounds=gdf_bounds_common,
             n_iterations=n_bootstrap,
             random_seed=random_seed,
         )
