@@ -1,8 +1,8 @@
 """
-Tests for Phase 4 tile selection (stratified subset from holdout).
+Tests for Phase 4 tile selection (stratified subset from validation).
 
 Tests the select_tiles_phase4.py script functions for selecting a 20-tile
-stratified subset from the 60 holdout tiles while preserving density distribution.
+stratified subset from the 60 validation tiles while preserving density distribution.
 """
 
 import pytest
@@ -23,9 +23,9 @@ from select_tiles_phase4 import (
 # =============================================================================
 
 @pytest.fixture
-def sample_holdout_tiles() -> list[dict]:
+def sample_validation_tiles() -> list[dict]:
     """
-    Create sample holdout tiles mimicking the 60-tile holdout set.
+    Create sample validation tiles mimicking the 60-tile validation set.
 
     Distribution: ~50% empty, ~30% sparse, ~20% dense (typical distribution)
     """
@@ -79,25 +79,25 @@ class TestSelectStratifiedSubset:
     """Tests for the stratified subset selection function."""
 
     @pytest.mark.tier1
-    def test_returns_correct_count(self, sample_holdout_tiles: list[dict]) -> None:
+    def test_returns_correct_count(self, sample_validation_tiles: list[dict]) -> None:
         """Selection should return exactly the target number of tiles."""
         target = 20
-        selected = select_stratified_subset(sample_holdout_tiles, target, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, target, seed=42)
 
         assert len(selected) == target
 
     @pytest.mark.tier1
     def test_preserves_density_distribution(
-        self, sample_holdout_tiles: list[dict]
+        self, sample_validation_tiles: list[dict]
     ) -> None:
         """Subset should approximately preserve density ratio from full set."""
         target = 20
-        selected = select_stratified_subset(sample_holdout_tiles, target, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, target, seed=42)
 
-        original_dist = get_density_distribution(sample_holdout_tiles)
+        original_dist = get_density_distribution(sample_validation_tiles)
         selected_dist = get_density_distribution(selected)
 
-        total_original = len(sample_holdout_tiles)
+        total_original = len(sample_validation_tiles)
         total_selected = len(selected)
 
         # Check each density category is within 15% of original proportion
@@ -111,24 +111,24 @@ class TestSelectStratifiedSubset:
             )
 
     @pytest.mark.tier1
-    def test_all_tiles_from_input_set(self, sample_holdout_tiles: list[dict]) -> None:
+    def test_all_tiles_from_input_set(self, sample_validation_tiles: list[dict]) -> None:
         """All selected tiles must be from the input set."""
         target = 20
-        selected = select_stratified_subset(sample_holdout_tiles, target, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, target, seed=42)
 
-        input_filenames = {t["filename"] for t in sample_holdout_tiles}
+        input_filenames = {t["filename"] for t in sample_validation_tiles}
         selected_filenames = {t["filename"] for t in selected}
 
         assert selected_filenames.issubset(input_filenames)
 
     @pytest.mark.tier1
-    def test_reproducible_with_seed(self, sample_holdout_tiles: list[dict]) -> None:
+    def test_reproducible_with_seed(self, sample_validation_tiles: list[dict]) -> None:
         """Same seed should produce identical selection."""
         target = 20
         seed = 12345
 
-        selected1 = select_stratified_subset(sample_holdout_tiles, target, seed=seed)
-        selected2 = select_stratified_subset(sample_holdout_tiles, target, seed=seed)
+        selected1 = select_stratified_subset(sample_validation_tiles, target, seed=seed)
+        selected2 = select_stratified_subset(sample_validation_tiles, target, seed=seed)
 
         filenames1 = sorted(t["filename"] for t in selected1)
         filenames2 = sorted(t["filename"] for t in selected2)
@@ -137,13 +137,13 @@ class TestSelectStratifiedSubset:
 
     @pytest.mark.tier1
     def test_different_seeds_produce_different_selections(
-        self, sample_holdout_tiles: list[dict]
+        self, sample_validation_tiles: list[dict]
     ) -> None:
         """Different seeds should (usually) produce different subsets."""
         target = 20
 
-        selected1 = select_stratified_subset(sample_holdout_tiles, target, seed=111)
-        selected2 = select_stratified_subset(sample_holdout_tiles, target, seed=222)
+        selected1 = select_stratified_subset(sample_validation_tiles, target, seed=111)
+        selected2 = select_stratified_subset(sample_validation_tiles, target, seed=222)
 
         filenames1 = set(t["filename"] for t in selected1)
         filenames2 = set(t["filename"] for t in selected2)
@@ -155,11 +155,11 @@ class TestSelectStratifiedSubset:
 
     @pytest.mark.tier1
     def test_no_duplicates_in_selection(
-        self, sample_holdout_tiles: list[dict]
+        self, sample_validation_tiles: list[dict]
     ) -> None:
         """Selection should not contain duplicate tiles."""
         target = 20
-        selected = select_stratified_subset(sample_holdout_tiles, target, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, target, seed=42)
 
         filenames = [t["filename"] for t in selected]
 
@@ -227,14 +227,14 @@ class TestGetDensityDistribution:
     """Tests for the density distribution helper function."""
 
     @pytest.mark.tier1
-    def test_counts_all_categories(self, sample_holdout_tiles: list[dict]) -> None:
+    def test_counts_all_categories(self, sample_validation_tiles: list[dict]) -> None:
         """Should count tiles in each density category."""
-        dist = get_density_distribution(sample_holdout_tiles)
+        dist = get_density_distribution(sample_validation_tiles)
 
         assert "empty" in dist
         assert "sparse" in dist
         assert "dense" in dist
-        assert sum(dist.values()) == len(sample_holdout_tiles)
+        assert sum(dist.values()) == len(sample_validation_tiles)
 
     @pytest.mark.tier1
     def test_empty_input_returns_zeros(self) -> None:

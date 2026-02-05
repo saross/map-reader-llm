@@ -2,9 +2,9 @@
 """
 Tile Selection Script (Phase 4)
 
-Selects a 20-tile stratified subset from the 60 holdout tiles for Phase 4
+Selects a 20-tile stratified subset from the 60 validation tiles for Phase 4
 (H6: Flash→Pro Transfer Testing). Preserves the density distribution
-(empty/sparse/dense ratio) from the full holdout set.
+(empty/sparse/dense ratio) from the full validation set.
 
 Usage:
     python scripts/select_tiles_phase4.py [--seed SEED]
@@ -34,9 +34,9 @@ INPUTS_DIR = Path("inputs")
 TILES_DIR = INPUTS_DIR / "tiles"
 VECTORS_DIR = INPUTS_DIR / "vectors"
 
-HOLDOUT_MANIFEST_PATH = TILES_DIR / "holdout_manifest.json"
+VALIDATION_MANIFEST_PATH = TILES_DIR / "validation_manifest.json"
 TILE_METADATA_PATH = TILES_DIR / "tile_selection_metadata.json"
-HOLDOUT_BOUNDS_PATH = VECTORS_DIR / "bounds" / "holdout_bounds.geojson"
+VALIDATION_BOUNDS_PATH = VECTORS_DIR / "bounds" / "validation_bounds.geojson"
 
 OUTPUT_MANIFEST_PATH = TILES_DIR / "phase4_validation_manifest.json"
 OUTPUT_BOUNDS_PATH = VECTORS_DIR / "bounds" / "phase4_validation_bounds.geojson"
@@ -49,24 +49,24 @@ PHASE4_SUBSET_SIZE = 20
 # Selection Logic
 # -----------------------------------------------------------------------------
 
-def load_holdout_with_metadata() -> list[dict]:
+def load_validation_with_metadata() -> list[dict]:
     """
-    Load holdout tiles with their density metadata.
+    Load validation tiles with their density metadata.
 
     Returns list of dicts with keys: filename, map, mound_count, density
     """
     # Load manifest
-    with open(HOLDOUT_MANIFEST_PATH) as f:
-        holdout_tiles = set(json.load(f))
+    with open(VALIDATION_MANIFEST_PATH) as f:
+        validation_tiles = set(json.load(f))
 
     # Load metadata
     with open(TILE_METADATA_PATH) as f:
         metadata = json.load(f)
 
-    # Extract holdout tile details
+    # Extract validation tile details
     tiles = []
-    for tile_info in metadata.get("holdout", {}).get("tiles", []):
-        if tile_info["filename"] in holdout_tiles:
+    for tile_info in metadata.get("validation", {}).get("tiles", []):
+        if tile_info["filename"] in validation_tiles:
             tiles.append(tile_info)
 
     return tiles
@@ -155,7 +155,7 @@ def create_bounds_geojson(
 
     Args:
         selected_tiles: List of selected tile dicts
-        source_bounds_path: Path to full holdout bounds GeoJSON
+        source_bounds_path: Path to full validation bounds GeoJSON
 
     Returns:
         GeoJSON dict for the subset bounds
@@ -219,8 +219,8 @@ def main() -> int:
     args = parser.parse_args()
 
     # Check input files exist
-    if not HOLDOUT_MANIFEST_PATH.exists():
-        print(f"Error: Holdout manifest not found: {HOLDOUT_MANIFEST_PATH}")
+    if not VALIDATION_MANIFEST_PATH.exists():
+        print(f"Error: Validation manifest not found: {VALIDATION_MANIFEST_PATH}")
         return 1
 
     if not TILE_METADATA_PATH.exists():
@@ -235,10 +235,10 @@ def main() -> int:
 
     print(f"Random seed: {seed}")
 
-    # Load holdout tiles with metadata
-    print("\nLoading holdout tiles...")
-    tiles = load_holdout_with_metadata()
-    print(f"  Found {len(tiles)} holdout tiles")
+    # Load validation tiles with metadata
+    print("\nLoading validation tiles...")
+    tiles = load_validation_with_metadata()
+    print(f"  Found {len(tiles)} validation tiles")
 
     original_distribution = get_density_distribution(tiles)
     print(f"  Original distribution: {original_distribution}")
@@ -286,21 +286,21 @@ def main() -> int:
     print(f"  Saved: {OUTPUT_MANIFEST_PATH}")
 
     # Save bounds GeoJSON
-    if HOLDOUT_BOUNDS_PATH.exists():
-        bounds_geojson = create_bounds_geojson(selected, HOLDOUT_BOUNDS_PATH)
+    if VALIDATION_BOUNDS_PATH.exists():
+        bounds_geojson = create_bounds_geojson(selected, VALIDATION_BOUNDS_PATH)
         OUTPUT_BOUNDS_PATH.parent.mkdir(parents=True, exist_ok=True)
         with open(OUTPUT_BOUNDS_PATH, "w") as f:
             json.dump(bounds_geojson, f, indent=2)
         print(f"  Saved: {OUTPUT_BOUNDS_PATH}")
     else:
-        print(f"  Warning: Source bounds not found: {HOLDOUT_BOUNDS_PATH}")
+        print(f"  Warning: Source bounds not found: {VALIDATION_BOUNDS_PATH}")
         print(f"  Skipped: {OUTPUT_BOUNDS_PATH}")
 
     # Save metadata for provenance
     metadata = {
         "created": datetime.now(timezone.utc).isoformat(),
         "random_seed": seed,
-        "source_manifest": str(HOLDOUT_MANIFEST_PATH),
+        "source_manifest": str(VALIDATION_MANIFEST_PATH),
         "target_size": PHASE4_SUBSET_SIZE,
         "actual_size": len(selected),
         "original_distribution": original_distribution,

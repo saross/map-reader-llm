@@ -63,11 +63,11 @@ def sample_phase2_results() -> dict:
 
 
 @pytest.fixture
-def sample_holdout_tiles() -> list[dict]:
+def sample_validation_tiles() -> list[dict]:
     """
-    Create sample holdout tiles for integration testing.
+    Create sample validation tiles for integration testing.
 
-    Mimics the 60-tile holdout set with realistic distribution.
+    Mimics the 60-tile validation set with realistic distribution.
     """
     tiles = []
 
@@ -181,14 +181,14 @@ class TestTileSelectionIntegration:
 
     @pytest.mark.tier2
     def test_selection_preserves_stratification(
-        self, sample_holdout_tiles: list[dict]
+        self, sample_validation_tiles: list[dict]
     ) -> None:
         """Selected subset should preserve density stratification."""
         # Select 20 tiles (Phase 4 target)
-        selected = select_stratified_subset(sample_holdout_tiles, 20, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, 20, seed=42)
 
         # Get distributions
-        original_dist = get_density_distribution(sample_holdout_tiles)
+        original_dist = get_density_distribution(sample_validation_tiles)
         selected_dist = get_density_distribution(selected)
 
         # Check each density has representation
@@ -196,7 +196,7 @@ class TestTileSelectionIntegration:
             assert selected_dist[density] > 0, f"No {density} tiles selected"
 
         # Check proportions are roughly maintained
-        total_orig = len(sample_holdout_tiles)
+        total_orig = len(sample_validation_tiles)
         total_sel = len(selected)
 
         for density in ["empty", "sparse", "dense"]:
@@ -209,10 +209,10 @@ class TestTileSelectionIntegration:
 
     @pytest.mark.tier2
     def test_selection_generates_valid_manifest(
-        self, sample_holdout_tiles: list[dict]
+        self, sample_validation_tiles: list[dict]
     ) -> None:
         """Selected tiles should form a valid manifest structure."""
-        selected = select_stratified_subset(sample_holdout_tiles, 20, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, 20, seed=42)
 
         # All selected tiles should have required fields
         required_fields = ["filename", "density"]
@@ -452,7 +452,7 @@ class TestCrossComponentIntegration:
 
     @pytest.mark.tier2
     def test_tile_selection_to_workflow(
-        self, sample_holdout_tiles: list[dict]
+        self, sample_validation_tiles: list[dict]
     ) -> None:
         """
         Test that selected tiles can be used in transfer workflow.
@@ -460,7 +460,7 @@ class TestCrossComponentIntegration:
         Verifies the pipeline from tile selection → results simulation → decision.
         """
         # Step 1: Select tiles
-        selected = select_stratified_subset(sample_holdout_tiles, 20, seed=42)
+        selected = select_stratified_subset(sample_validation_tiles, 20, seed=42)
         assert len(selected) == 20
 
         # Step 2: Simulate results (would come from actual API calls)

@@ -417,4 +417,36 @@ This is a naming simplification: the unsuffixed config IS the H5=Minimal variant
 
 ---
 
+### E20: Standardised "holdout" → "validation" naming across codebase
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-05 |
+| Type | Clarification |
+| Files | `inputs/tiles/tile_selection_metadata.json`, `scripts/generate_tile_bounds.py`, `scripts/select_tiles_phase4.py`, `scripts/analyse_phase2_results.py`, tests |
+| Impact | None (internal naming only) |
+
+**Description**: The codebase used inconsistent naming for the 60-tile evaluation set:
+
+- Preregistration uses "holdout tiles" (§2.1)
+- Manifest file was `validation_manifest.json`
+- Bounds file was `validation_bounds.geojson`
+- But metadata JSON used `"holdout"` as the key
+- Scripts referenced `holdout_manifest.json` which never existed
+
+This mismatch caused E19 (bounds generated from wrong manifest). Standardised to "validation" throughout:
+
+1. Changed `tile_selection_metadata.json` key from `"holdout"` to `"validation"`
+2. Changed `"holdout_samples_per_map"` to `"validation_samples_per_map"`
+3. Updated `generate_tile_bounds.py` to read `validation_manifest.json` and output `validation_bounds.geojson`
+4. Updated `select_tiles_phase4.py` to read from `validation_*` files
+5. Updated `analyse_phase2_results.py` default bounds path
+6. Updated test fixtures and docstrings
+
+**Rationale**: "Validation" is the conventional ML term for the evaluation set used during development. "Holdout" in ML typically refers to a completely withheld test set (our 281-tile reserve). The preregistration's use of "holdout" for the 60-tile set was a terminological choice; the implementation uses "validation" for clarity. The 281-tile reserve remains unnamed/untouched.
+
+**Protocol impact**: None. The tile sets are unchanged; only internal naming is standardised.
+
+---
+
 *End of errata. New entries should be appended above this line.*

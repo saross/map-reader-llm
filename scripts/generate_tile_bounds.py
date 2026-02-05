@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate GeoJSON bounds files for calibration and holdout tile sets.
+Generate GeoJSON bounds files for calibration and validation tile sets.
 
 Creates polygon features for each tile showing its geographic extent,
 useful for visualisation and spatial analysis of tile coverage.
@@ -136,7 +136,7 @@ def create_bounds_geojson(
         tile_filenames: List of tile filenames
         metadata: Tile georeferencing metadata
         selection_metadata: Tile selection metadata with mound counts
-        set_type: 'calibration' or 'holdout'
+        set_type: 'calibration' or 'validation'
 
     Returns:
         GeoJSON FeatureCollection dict
@@ -263,9 +263,9 @@ def validate_bounds(
 
 
 def main():
-    """Generate bounds GeoJSONs for calibration and holdout tile sets."""
+    """Generate bounds GeoJSONs for calibration and validation tile sets."""
     parser = argparse.ArgumentParser(
-        description="Generate GeoJSON bounds files for calibration and holdout tile sets",
+        description="Generate GeoJSON bounds files for calibration and validation tile sets",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -279,7 +279,7 @@ Examples:
 
 Output Files:
     calibration_bounds.geojson  - Polygon bounds for calibration tiles
-    holdout_bounds.geojson      - Polygon bounds for holdout tiles
+    validation_bounds.geojson   - Polygon bounds for validation tiles
         """,
     )
 
@@ -309,13 +309,13 @@ Output Files:
     # Load manifests
     print("Loading manifests...")
     calibration_path = tiles_dir / "calibration_manifest.json"
-    holdout_path = tiles_dir / "holdout_manifest.json"
+    validation_path = tiles_dir / "validation_manifest.json"
     selection_path = tiles_dir / "tile_selection_metadata.json"
 
     # Validate manifest files exist before loading
     required_files = [
         (calibration_path, "calibration manifest"),
-        (holdout_path, "holdout manifest"),
+        (validation_path, "validation manifest"),
         (selection_path, "tile selection metadata"),
     ]
     for path, description in required_files:
@@ -328,9 +328,9 @@ Output Files:
         calibration_tiles = json.load(f)
     print(f"  Calibration tiles: {len(calibration_tiles)}")
 
-    with open(holdout_path) as f:
-        holdout_tiles = json.load(f)
-    print(f"  Holdout tiles: {len(holdout_tiles)}")
+    with open(validation_path) as f:
+        validation_tiles = json.load(f)
+    print(f"  Validation tiles: {len(validation_tiles)}")
 
     with open(selection_path) as f:
         selection_metadata = json.load(f)
@@ -354,18 +354,18 @@ Output Files:
         print("ERROR: Calibration bounds validation failed. Check metadata interpretation.")
         sys.exit(1)
 
-    # Generate holdout bounds
-    print("\nGenerating holdout bounds GeoJSON...")
-    holdout_geojson = create_bounds_geojson(
-        holdout_tiles, metadata, selection_metadata, "holdout"
+    # Generate validation bounds
+    print("\nGenerating validation bounds GeoJSON...")
+    validation_geojson = create_bounds_geojson(
+        validation_tiles, metadata, selection_metadata, "validation"
     )
-    holdout_output = outputs_dir / "holdout_bounds.geojson"
-    with open(holdout_output, 'w') as f:
-        json.dump(holdout_geojson, f, indent=2)
-    print(f"  Saved: {holdout_output}")
-    print(f"  Features: {len(holdout_geojson['features'])}")
-    if not validate_bounds(holdout_geojson, metadata):
-        print("ERROR: Holdout bounds validation failed. Check metadata interpretation.")
+    validation_output = outputs_dir / "validation_bounds.geojson"
+    with open(validation_output, 'w') as f:
+        json.dump(validation_geojson, f, indent=2)
+    print(f"  Saved: {validation_output}")
+    print(f"  Features: {len(validation_geojson['features'])}")
+    if not validate_bounds(validation_geojson, metadata):
+        print("ERROR: Validation bounds validation failed. Check metadata interpretation.")
         sys.exit(1)
 
     print("\nDone!")

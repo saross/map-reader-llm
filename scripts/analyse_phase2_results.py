@@ -15,7 +15,7 @@ Usage:
     python scripts/analyse_phase2_results.py \\
         --study-dir outputs/phase2a \\
         --ground-truth inputs/vectors/references/mounds-reference.geojson \\
-        --bounds inputs/vectors/bounds/holdout_bounds.geojson \\
+        --bounds inputs/vectors/bounds/validation_bounds.geojson \\
         --conditions image-only brief-text brief-text-image verbose-text verbose-text-image
 
     python scripts/analyse_phase2_results.py --help
@@ -561,7 +561,7 @@ Examples:
   python scripts/analyse_phase2_results.py \\
       --study-dir outputs/phase2a \\
       --ground-truth inputs/vectors/references/mounds-reference.geojson \\
-      --bounds inputs/vectors/bounds/holdout_bounds.geojson \\
+      --bounds inputs/vectors/bounds/validation_bounds.geojson \\
       --conditions image-only brief-text brief-text-image verbose-text verbose-text-image
 
   # Analyse Phase 2b (H7 Temperature)
@@ -592,7 +592,7 @@ Examples:
     parser.add_argument(
         "--bounds",
         type=Path,
-        default=Path("inputs/vectors/bounds/holdout_bounds.geojson"),
+        default=Path("inputs/vectors/bounds/validation_bounds.geojson"),
         help="Path to evaluation bounds GeoJSON",
     )
     parser.add_argument(
