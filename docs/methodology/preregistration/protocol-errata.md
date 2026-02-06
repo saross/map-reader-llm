@@ -540,4 +540,80 @@ All three fields default gracefully (None/empty list) when not present in the AP
 
 ---
 
+### E25: Modality manipulation not implemented — text-only conditions received images
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-06 |
+| Type | Correction |
+| Files | `scripts/4_detect_mounds_batch.py`, `prompts/configs/detect_brief-text.json`, `prompts/configs/detect_verbose-text.json` |
+| Impact | 20 runs (brief-text × 10, verbose-text × 10) tested wrong modality; must be re-run |
+
+**Description**: The preregistration (Section 4.1.1, lines 412–418) specifies that the H1 modality/elaboration factor has 5 levels:
+
+| Level | Text | Images |
+|-------|------|--------|
+| Image-only | Minimal | Yes |
+| Brief-text | Brief | **No** |
+| Brief-text+image | Brief | Yes |
+| Verbose-text | Verbose | **No** |
+| Verbose-text+image | Verbose | Yes |
+
+The batch detection script (`4_detect_mounds_batch.py`) unconditionally loaded and sent all 17 example images from the config's `examples` array to the API, regardless of condition. No conditional logic existed to skip images for text-only conditions. All 5 conditions received identical image content.
+
+**Discovery**: During post-collection QA, the user noted that F1 outcomes were "surprisingly clustered" across conditions (range: 0.42–0.46). Based on prior experience where adding images made a noticeable difference, this triggered investigation. Cross-referencing the preregistration table revealed the implementation gap.
+
+**Cost**: 20 runs × 60 tiles = 1,200 API calls (~$2.60) executed with incorrect modality. The data has secondary value (tests text elaboration within image+text modality) but is invalid for the preregistered H1 modality question.
+
+**Fix**:
+
+1. Added `include_example_images` config field (default: `true` for backward compatibility)
+2. Added conditional logic to batch script: when `include_example_images: false`, skip the example image loading loop entirely
+3. Updated `detect_brief-text.json` and `detect_verbose-text.json` to set `include_example_images: false`
+
+**Re-run scope**: Only brief-text and verbose-text conditions (20 runs) require re-execution. The other 3 conditions (image-only, brief-text-image, verbose-text-image) correctly received images and are valid.
+
+**Protocol impact**: None. The preregistered design is unchanged. This corrects the implementation to match it. The affected runs will be re-executed with the corrected configs.
+
+**Lesson**: After creating experimental configs, explicitly verify each manipulated dimension with the question: "how does the code know to vary this?" Design-to-implementation gaps are not caught by unit tests that verify component correctness.
+
+---
+
+### E26: Bootstrap CI bias from reference de-duplication on resampled tiles
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-06 |
+| Type | Correction |
+| Files | `scripts/lib_advanced_metrics.py`, `tests/test_analyse_phase2.py` |
+| Impact | Bootstrap CIs were systematically deflated; point estimates unaffected |
+
+**Description**: All bootstrap confidence interval functions in `lib_advanced_metrics.py` produced CIs that did not contain the point estimates. For example, image-only had point estimate F1=0.4252 but bootstrap CI=[0.254, 0.373] — a ~34% precision deflation.
+
+**Root cause**: When tiles are resampled with replacement, detections are correctly duplicated (the inner loop appends per tile), but references are de-duplicated by `scope_references_to_tiles()` via `gdf_ref.index.isin()`. Because `isin()` returns unique index matches, duplicate tiles in the bootstrap sample do not produce duplicate reference entries. Extra detections for duplicated tiles therefore become unmatched false positives, systematically deflating precision.
+
+A secondary instance of the same bug affected `bootstrap_tile_classification_ci()` and `bootstrap_tile_effect_size_ci()`, where `gdf_bounds['tile_name'].isin(sample_tiles)` de-duplicated the bootstrap sample, converting bootstrap resampling into subsampling without replacement.
+
+**Fix**: Refactored all 7 bootstrap functions to use a per-tile pre-computation strategy:
+
+1. Added `compute_per_tile_tp_fp_fn()`: performs spatial matching once per tile and returns a DataFrame of [tile_name, tp, fp, fn]
+2. Added `aggregate_tile_metrics()`: looks up TP/FP/FN for each tile in the bootstrap sample (handling duplicates correctly) and computes precision, recall, F1 from the sums
+3. Refactored `bootstrap_ci()`, `bootstrap_effect_size_ci()`, `bootstrap_multi_run_ci()`, `bootstrap_multi_run_effect_size_ci()`, and `bootstrap_interaction_ci()` to pre-compute per-tile metrics once, then use `aggregate_tile_metrics()` in the inner loop
+4. Refactored `bootstrap_tile_classification_ci()` and `bootstrap_tile_effect_size_ci()` to pre-compute per-tile classifications and count them with duplicates
+
+**Approximation**: The fix uses per-tile matching rather than per-map matching (as `calculate_f1_internal()` does). Cross-tile matches within the 20 m buffer are negligible given tile sizes (hundreds of metres). For the synthetic test data with 100 m tiles spaced 100 m apart, per-tile and per-map matching produce identical results.
+
+**What was NOT affected**: Per-run F1 point estimates (in `per_run_metrics.csv`) were always correct — they use `calculate_f1_internal()` which does not resample tiles. Only the bootstrap CIs were biased.
+
+**Regression tests added**:
+
+- `test_bootstrap_mean_approximates_point_estimate`: Verifies bootstrap mean F1 is within 0.02 of the point estimate
+- `test_per_tile_metrics_sum_matches_global`: Verifies per-tile TP/FP/FN sums match `calculate_f1_internal()` output
+- `test_aggregate_with_duplicate_tiles`: Verifies a tile sampled 3× contributes 3× its TP/FP/FN
+- `test_bootstrap_ci_contains_point_estimate`: Verifies the 95% CI contains the point estimate
+
+**Protocol impact**: None. The preregistered statistical method (bootstrap with tile-level resampling, §3.5) is unchanged. This corrects an implementation bug in how resampled tiles were passed to the matching functions. The `analysis_report.json` was also regenerated from the current (valid) data after the fix.
+
+---
+
 *End of errata. New entries should be appended above this line.*
