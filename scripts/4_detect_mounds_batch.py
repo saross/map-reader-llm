@@ -540,6 +540,10 @@ def detect_mounds_versioned(
 
     examples = config.get("examples", [])
 
+    # Check whether to include example images (default: True for backward compatibility)
+    # Text-only conditions (H1: brief-text, verbose-text) set this to False
+    include_example_images = config.get("include_example_images", True)
+
     # Apply Ordering Override
     if ordering_override:
         _original_order = [e.get("path", "") for e in examples]
@@ -553,25 +557,30 @@ def detect_mounds_versioned(
         if ordering_seed is not None:
             config["ordering_seed"] = ordering_seed
 
-    example_count = 0
-    for ex in examples:
-        label = ex.get("label", "Example")
-        path_str = ex.get("path", "")
-        img_path = examples_dir / path_str
+    # Skip example images for text-only conditions
+    if not include_example_images:
+        print("Text-only modality: skipping example images")
+        example_count = 0
+    else:
+        example_count = 0
+        for ex in examples:
+            label = ex.get("label", "Example")
+            path_str = ex.get("path", "")
+            img_path = examples_dir / path_str
 
-        if img_path.exists():
-            # Build Part objects for the new SDK
-            reference_parts.append(types.Part.from_text(text=label))
-            with open(img_path, "rb") as f:
-                image_bytes = f.read()
-            suffix = img_path.suffix.lower()
-            mime_type = "image/png" if suffix == ".png" else "image/jpeg"
-            reference_parts.append(
-                types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
-            )
-            example_count += 1
-        else:
-            print(f"Warning: Reference image {path_str} not found.")
+            if img_path.exists():
+                # Build Part objects for the new SDK
+                reference_parts.append(types.Part.from_text(text=label))
+                with open(img_path, "rb") as f:
+                    image_bytes = f.read()
+                suffix = img_path.suffix.lower()
+                mime_type = "image/png" if suffix == ".png" else "image/jpeg"
+                reference_parts.append(
+                    types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+                )
+                example_count += 1
+            else:
+                print(f"Warning: Reference image {path_str} not found.")
 
     # Build generation config with ThinkingConfig support
     thinking_config = None
