@@ -1892,3 +1892,21 @@ This design feature eliminates the text richness confound that clouds the image-
 Zero standard deviation means the counts are deterministic — every tile in a given condition receives exactly the same number of tokens. This makes it physically impossible for images to "leak" into text-only conditions. Code review can miss edge cases; configuration inspection can miss defaults; but token counts are what the API actually consumed.
 
 **Methodological implication**: For any VLM experiment that varies input modality, include input token counts in the verification protocol. The token count is the strongest possible evidence of what the model actually received, stronger than configuration flags or code inspection. This should be standard practice — report per-condition token statistics as part of the experimental methods section.
+
+## Observation 107: Dual-track carry-forward as a pragmatic response to design-assumption failure (2026-02-06)
+
+**Context**: Session 22. Phase 2a's unexpected result (text-only outperforms image-using) exposed a structural assumption in the preregistered OFAT design: that the H1 winner would be image-using. Several downstream phases (H5 negative text, H8 library composition, H4 ordering) were designed exclusively for image-using M/E levels. The preregistered single-winner carry-forward rule would select brief-text, but brief-text is incompatible with Phases 2c–2e.
+
+**The observation**: The dual-track resolution — carry forward both brief-text (best overall) and brief-text-image (best image-using) — is a pragmatic deviation that preserves the preregistered pipeline while exploring the surprising finding. The key design choices: (1) each track maintains independent optimal parameters, so they can diverge at each phase; (2) the text-only track receives a *tailored* subset of tests rather than a reduced copy of the image track; (3) deferred phases (2d, 2e for text-only) are formally recorded with preliminary thinking but without commitment; (4) both tracks converge at Phase 3, where mixed-track voting ensembles become possible.
+
+This pattern — a preregistered design encountering an unexpected result and requiring pragmatic adaptation — is worth documenting because it illustrates the tension between preregistration (which commits to a plan) and adaptive research (which responds to findings). The resolution is transparency: document the deviation, explain the rationale, and maintain the original pipeline alongside the exploration. Decision 16 and Erratum E27 serve this transparency function.
+
+## Observation 108: Structured deferral in experimental planning (2026-02-06)
+
+**Context**: Session 22. The decisions log records Phases 2d and 2e for the text-only track as "deferred" with preliminary ideas but without commitment.
+
+**The observation**: Recording a decision as *explicitly deferred* is different from both making the decision and ignoring it. The deferred entries document: (a) that a decision point exists, (b) what the preliminary thinking is, (c) why the decision isn't ripe yet, and (d) what information would make it ripe. This creates an audit trail for future sessions while preserving optionality.
+
+For Phase 2d (text-only negative guidance): deferred because we need to see whether the FP rate is a problem worth addressing at this stage, and because "negative guidance" means something conceptually different for text-only prompts (explicit textual descriptions of what mounds are *not*) than for image-using prompts (how much text to attach to negative example images). For Phase 2e (text-only ordering): deferred because "ordering" means prompt section ordering rather than example library ordering, a different construct requiring separate design work.
+
+**Methodological implication**: In sequential experimental designs, explicitly marking decision points as "deferred" — with rationale — is better than either premature commitment or silent omission. It creates a checkpoint that future instances can revisit with additional data.

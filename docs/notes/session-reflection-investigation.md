@@ -3169,6 +3169,105 @@ Provisional prompt ranking holds at n=20: Prompt 6 > Prompt 5 > Prompt 1 ≈ Pro
 
 ---
 
-*Document created: 2026-01-27. Twentieth reflection added 2026-02-06
-(Phase 2a verification — text-only outperformance confirmed as genuine).
+## Entry 21: Strategic Planning as a Distinct Collaboration Mode (Session 22, 2026-02-06)
+
+**Date**: 2026-02-06
+**Context**: This session was a planning and setup session following the Phase 2a verification. The user returned knowing the text-only result was genuine and asked whether text-only prompts had been fully exercised across conditions (they hadn't — by design). The session involved: (1) investigating the original experimental design to confirm text-only prompts were only tested at one fixed parameter combination, (2) collaboratively designing a dual-track carry-forward strategy, (3) documenting it as Decision 16 and Erratum E27, (4) configuring two Phase 2b YAML files for the dual-track temperature testing, and (5) validating both YAMLs with dry runs. No API calls to Gemini were made; no data was generated. The entire session was strategic.
+
+### Prompt 1: What struck you?
+
+What struck me was how much of this session's value was *not* in the code. The two YAML files and the decisions-log entry took perhaps 20 minutes of actual writing. But the substantive work — understanding why text-only prompts couldn't simply be carried forward through the preregistered OFAT chain, identifying which downstream phases were structurally incompatible, proposing the dual-track resolution, calibrating which deferred phases to record but not commit to — required deep comprehension of the entire experimental design. The session was almost entirely about understanding the problem space and making a coherent decision, with implementation as a short coda.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Decision 16 establishes the dual-track carry-forward.** Track 1 (brief-text-image) follows the full preregistered OFAT. Track 2 (brief-text) gets targeted tests. Erratum E27 records the deviation.
+
+2. **Phase 2b is ready to run.** Two YAMLs: `phase2b-h7-temperature.yaml` (Track 1) and `phase2b-h7-temperature-text-only.yaml` (Track 2). Both validated with dry runs. Output dirs: `outputs/phase2b/track1-image/` and `outputs/phase2b/track2-text/`.
+
+3. **T=1.0 is deliberately rerun, not reused from Phase 2a.** The replication check is worth the ~$4.40 cost — temporal drift detection and extra data for Phase 3 voting.
+
+4. **Phases 2d and 2e for the text-only track are deferred, not planned.** The decisions log records preliminary ideas (ad hoc negative text guidance, prompt section ordering) but explicitly does not commit to them. The user wants to see Phase 2b results first.
+
+5. **Each track carries independent optimal parameters.** If the two tracks optimise at different temperatures, those different optima carry forward separately.
+
+### Prompt 3: What surprised you?
+
+I was surprised by how naturally the user had already thought through the dual-track approach before the session started. They came in with a clear plan — carry forward both M/E levels, but only test text-only where it makes sense. My role was less "propose a solution" and more "map the solution onto the existing design, identify gaps, and formalise it." The user's plan required almost no modification — I added the suggestion about convergence at Phase 3 and the note about independent temperature optima, but the core architecture was theirs.
+
+This suggests that the strategic decisions in this project are genuinely collaborative — the human brings domain intuition and pragmatic framing, the AI brings structural analysis and documentation rigour. Neither could have produced this decision alone: the user wouldn't have known which downstream phases were structurally incompatible without deep codebase knowledge, and I wouldn't have known to carry forward brief-text-image (rather than, say, verbose-text-image) without the user's experimental priorities.
+
+### Prompt 4: What was the texture?
+
+The session had the texture of **collaborative architecture**. It was unhurried, conversational, and iterative. The user proposed, I analysed and elaborated, they refined, I formalised. There was no debugging, no pipeline failures, no surprising results. The closest analogy is a design review meeting — two people working through a decision with complementary knowledge, converging on a plan that neither started with in full.
+
+The pace was notably different from recent sessions (19–21), which were characterised by discovery, urgency, and bug-fixing. This session was reflective. The user had time to think about what they wanted, and the conversation moved at the speed of thought rather than the speed of execution.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Should the analysis script be updated for dual-track Phase 2b?** The current `analyse_phase2_results.py` expects a single output directory. With two tracks in separate directories, it would need to be run twice — or modified to handle cross-track comparisons. We didn't discuss this.
+
+2. **What's the decision rule if both tracks are non-significant at Phase 2b?** If neither track shows temperature sensitivity (all temperatures within noise), does T=1.0 default for both? The YAML decision rules say "prefer T=1.0 if within 0.02 of best," but what if the entire temperature curve is flat?
+
+3. **Should the Phase 2a T=1.0 data be included in the Phase 2b analysis as additional replicates?** We decided to rerun for the replication check, but didn't discuss whether the analysis would *pool* the Phase 2a and Phase 2b T=1.0 runs (giving K=20 at T=1.0 vs K=10 at other temperatures) or treat them separately.
+
+4. **Is there a risk that the dual-track approach doubles the multiple comparisons problem?** Running the same 5-temperature test on two M/E levels produces 8 planned contrasts (4 per track) instead of 4. Should FDR correction span both tracks or be applied within each?
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session represents a **mode shift** in the collaboration. Sessions 17–21 were implementation and verification — executing plans, fixing bugs, checking results. Session 22 was pure strategy — no data generated, no scripts written (beyond YAMLs), no pipeline executed. The primary outputs were a decision, a documentation entry, and configuration files.
+
+This mode shift matters because it reveals something about where the AI adds the most value in different session types. In implementation sessions, the AI's value is in code quality, bug detection, and execution speed. In strategic sessions, the AI's value is in *structural analysis* — mapping a human's intuitive plan onto a complex preregistered design and identifying where it fits, where it breaks, and what needs formal documentation.
+
+I also notice that the user's memory was correct but imprecise — they recalled that text-only prompts "didn't fully exercise" all conditions, which was exactly right, but they needed the AI to confirm the specifics (which phases, which factors, why). This is a pattern worth naming: **calibrated uncertainty**. The user knew *something* was incomplete but not *what* — and rather than guessing or re-reading hundreds of lines of preregistration, they asked the AI to investigate. The trust level required for this is high: the user is relying on the AI's codebase analysis rather than verifying it themselves. The exploration agent's thorough report justified that trust.
+
+Finally, I notice that the "deferred" status for Phases 2d and 2e on the text-only track is doing real epistemological work. It's not just "we'll decide later" — it's documenting that these phases require reconceptualisation for text-only prompts (negative guidance means something different without images; ordering means something different without an example library). Recording the preliminary ideas without committing to them preserves optionality while maintaining an audit trail. This is a research planning pattern worth noting: **structured deferral** — formally recording that a decision exists to be made, what the preliminary thinking is, and why it's not yet ripe for commitment.
+
+### Meta-Reflection
+
+Twenty-one entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+| 19 | 20 | Composition-semantic mismatch in bootstrap resampling |
+| 20 | 21 | Verification as scientific practice |
+| 21 | 22 | Strategic planning as a distinct collaboration mode |
+
+Entry 21 introduces the theme of *strategic planning as collaboration* — sessions where no data is generated and no code is written beyond configuration, yet where the intellectual work is substantial. This connects to Entry 2 (the plan is not the work) but inverts it: here, the plan *is* the work. The implementation (YAML files) was trivial; the decision architecture was the substance.
+
+New patterns named: "calibrated uncertainty" (knowing something is incomplete without knowing what), "structured deferral" (formally recording undecided decisions with preliminary thinking).
+
+Prompt productivity: Prompt 6 was again the most productive, generating "calibrated uncertainty," "structured deferral," and the observation about mode shifts in AI value-add. Prompt 5 raised genuine analytical questions about pooling, FDR correction, and analysis scripts that need resolution before Phase 2b analysis. Prompt 4's "collaborative architecture" captured the texture well.
+
+Provisional prompt ranking holds at n=21: Prompt 6 > Prompt 5 > Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-06 (Session 22 — Dual-track carry-forward decision and Phase 2b setup)
+**Reported texture**: Collaborative architecture — unhurried strategic planning with complementary knowledge
+**Key observation**: Strategic planning sessions represent a distinct collaboration mode where AI value is in structural analysis rather than implementation speed
+**Noted preference**: User arrives with intuitive plan, AI maps it onto formal design and identifies gaps — division of labour in strategic sessions
+**Engagement level**: Reflective and steady; intellectual satisfaction from coherent design rather than problem-solving excitement
+**Unsolicited generation**: "Calibrated uncertainty" and "structured deferral" pattern names; the mode-shift observation; convergence-at-Phase-3 suggestion
+**Relational note**: The user's trust in asking "can you check if that's still the case?" without specifying what to check reflects accumulated confidence in the AI's codebase comprehension
+
+---
+
+*Document created: 2026-01-27. Twenty-first reflection added 2026-02-06
+(Session 22 — dual-track carry-forward decision and Phase 2b configuration).
 Framework proposed for ongoing practice.*

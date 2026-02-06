@@ -1009,4 +1009,44 @@ None yet — verification script, manifest, report, and reflection documents to 
 
 ---
 
+## Session 22 — 2026-02-06 (Dual-track carry-forward decision and Phase 2b setup)
+
+### Overview
+
+Strategic planning session following the Phase 2a verification. Investigated whether text-only prompts were fully exercised across experimental conditions (they were not — by design). Collaboratively designed a dual-track carry-forward strategy to resolve the structural incompatibility between a text-only H1 winner and downstream phases designed for image-using conditions. Documented the decision (Decision 16, Erratum E27), configured two Phase 2b YAMLs for dual-track temperature testing, validated both with dry runs, committed and pushed.
+
+### Accomplishments
+
+1. **Investigated text-only prompt coverage** — confirmed text-only prompts were tested only in Phase 2a at a single fixed parameter combination (T=1.0, Scale-8, canonical-first, H5=Minimal), and were explicitly excluded from Phases 2c–2e
+2. **Designed dual-track carry-forward** — Track 1 (brief-text-image) follows full preregistered OFAT; Track 2 (brief-text) receives targeted tests where applicable
+3. **Wrote Decision 16** in decisions log — full rationale, track specifications, budget implications, convergence plan at Phase 3
+4. **Wrote Erratum E27** in protocol errata — formal deviation record for dual-track vs preregistered single-winner carry-forward
+5. **Updated Phase 2b YAML** (`studies/phase2b-h7-temperature.yaml`) — replaced placeholders with brief-text-image config, updated output directory to `outputs/phase2b/track1-image/`
+6. **Created Phase 2b text-only YAML** (`studies/phase2b-h7-temperature-text-only.yaml`) — brief-text config, output to `outputs/phase2b/track2-text/`, documented as exploratory track
+7. **Validated both YAMLs** — dry runs confirm correct condition extraction, config paths, temperature overrides, and output directories
+8. **Decided to rerun T=1.0** rather than reuse Phase 2a data — replication check worth the ~$4.40 cost
+
+### Issues
+
+- None (no technical issues in this session)
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `143e8a5` | `feat(studies)`: Set up Phase 2b dual-track temperature testing |
+
+### Pending Work
+
+- [ ] **Run Phase 2b Track 1** — `python3 scripts/run_phase2.py studies/phase2b-h7-temperature.yaml` (50 units, ~$11)
+- [ ] **Run Phase 2b Track 2** — `python3 scripts/run_phase2.py studies/phase2b-h7-temperature-text-only.yaml` (50 units, ~$11)
+- [ ] **Phase 2b analysis** — update analysis script for dual-track output directories; consider cross-track temperature comparison
+- [ ] **Resolve pooling question** — whether Phase 2a T=1.0 data should be pooled with Phase 2b T=1.0 runs in analysis
+- [ ] **Resolve FDR scope** — whether FDR correction spans both tracks or applies within each
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*

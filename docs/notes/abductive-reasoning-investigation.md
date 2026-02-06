@@ -1420,5 +1420,19 @@ rather than anchoring to the same prior. The verification structure
 (pre-defined red/green flag criteria) helped maintain objectivity
 by specifying in advance what would count as evidence of a problem.
 
-*Last updated: 2026-02-06 (Session 21 — systematic verification
-found no artefact; text-only outperformance confirmed as genuine)*
+## Session 22 Assessment: No relevant episodes
+
+**Date**: 2026-02-06
+**Session type**: Strategic planning and configuration
+
+Session 22 was a planning session — deciding how to proceed after the
+unexpected H1 result, documenting the dual-track carry-forward decision,
+and configuring Phase 2b YAMLs. No debugging, no surprising results
+within the session, no hypothesis generation or belief revision. The
+session *responded to* the belief revision from Sessions 19b–21 but
+did not itself involve abductive reasoning episodes. The dual-track
+design is a pragmatic adaptation to a confirmed finding, not an
+investigation of a surprising observation.
+
+*Last updated: 2026-02-06 (Session 22 — strategic planning session,
+no abductive reasoning episodes)*

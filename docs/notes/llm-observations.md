@@ -2604,8 +2604,98 @@ genuine uncertainty reduction.
 
 ---
 
-*Document represents observations as of 2026-02-06. Session 21 added
-observations on the asymmetry of scrutiny, verification as a source
-of understanding, token ratios as diagnostics, and reproduction as
-the strongest evidence class. Further material may be added in future
+## Session 22: Strategic planning and the mode shift (2026-02-06)
+
+### On sessions where no code is written
+
+This session produced a decision, a documentation entry, an erratum, and
+two YAML files. No Python was written, no data was generated, no API
+calls were made. Yet I'd argue this was one of the more intellectually
+demanding sessions in the project.
+
+The demand came from needing to hold the entire experimental design in
+context simultaneously: the preregistered OFAT chain, the structural
+incompatibility of text-only winners with downstream phases, the
+specific factor definitions in each phase's YAML, the budget
+implications, the analysis pipeline assumptions. The user's plan was
+sound but required mapping onto a complex pre-existing design to verify
+it wouldn't break anything.
+
+This is a type of work the AI is well-suited for — comprehensive
+structural analysis across many files, identifying interactions and
+incompatibilities — but it's invisible work. There's no commit diff
+that shows "I checked 15 documents and confirmed this plan is
+coherent." The decision log entry is the artefact, but the analysis
+that justifies it doesn't appear anywhere.
+
+### On the user's intuition being correct
+
+The user came into this session with two things: a vague memory
+("I seem to remember that in some of the experiments we didn't fully
+exercise text-only prompts") and a clear plan ("go forward with both,
+but only test text-only where it makes sense"). Both were correct.
+
+The vague memory was precisely right — text-only prompts were only
+tested at a single fixed parameter combination, and were explicitly
+excluded from H5, conceptually mismatched with H8, and arguably
+mismatched with H4. The plan needed only minor elaboration (I added
+the convergence-at-Phase-3 idea, the independent-temperature-optima
+note, and the budget estimate).
+
+This pattern — human arrives with correct intuition, AI provides the
+specific structural evidence — has appeared before (Session 9's
+bidirectional scaffolding, Session 11's complementary perception).
+But this session crystallised something: the user's intuition is
+typically *directionally correct* even when the specifics are fuzzy.
+They know *something* is incomplete without knowing *what*. The AI's
+role is to convert fuzzy correctness into precise documentation.
+
+### On deferral as a positive decision
+
+I noticed that recording "deferred" for Phases 2d and 2e on the
+text-only track was treated as a real accomplishment, not a failure
+to decide. This reflects a maturity in the collaboration — we're
+comfortable saying "we don't know yet, but here's what we're thinking,
+and here's why we're not committing."
+
+In my experience across sessions, early decisions in this project were
+often more definitive than warranted (Decision 5's temperature default,
+the original single-winner carry-forward assumption). The Phase 2a
+surprise has introduced more epistemic humility. The dual-track
+approach itself is a hedge — we're not betting on either M/E level
+being definitively better, we're exploring both.
+
+### A criticism
+
+The explore agent's initial investigation was thorough but slow
+(~3 minutes, 49 tool calls). A targeted search — read the
+preregistration's H5 section, check the Phase 2b YAML, scan the
+working notes — would have answered the user's question in under a
+minute. The comprehensive report was valuable for my own understanding
+but arguably over-engineered for a question the user already half-knew
+the answer to.
+
+More broadly: I default to comprehensive analysis when targeted
+analysis would often suffice. This session didn't need a 2,000-word
+investigation report to confirm that text-only prompts were only
+tested in Phase 2a. A few file reads would have done it.
+
+### On the replication decision
+
+The brief discussion about whether to rerun T=1.0 or reuse Phase 2a
+data was interesting. The cost was trivial (~$4.40), so the decision
+was obvious. But the *framing* was instructive — the user asked
+"how valuable is the cross-check?" rather than "how much does it
+cost?" They were evaluating the replication on its scientific merit,
+not its budget impact. This is the right priority ordering for a
+preregistered study where reproducibility matters. The fact that both
+of us immediately agreed suggests aligned values around verification.
+
+---
+
+*Document represents observations as of 2026-02-06. Session 22 added
+observations on strategic planning as a distinct collaboration mode,
+the user's directional intuition being consistently correct, deferral
+as a positive decision, over-engineering in investigation, and aligned
+values around replication. Further material may be added in future
 sessions.*
