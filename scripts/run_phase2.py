@@ -327,6 +327,7 @@ def run_execution_unit(
     dry_run: bool = False,
     limit: int | None = None,
     timeout: int = 3600,
+    workers_override: int | None = None,
 ) -> tuple[bool, str, float]:
     """
     Execute a single (condition, run) unit via 4_detect_mounds_batch.py.
@@ -341,6 +342,7 @@ def run_execution_unit(
         dry_run: If True, print command without executing
         limit: Process only first N tiles (for sanity checks)
         timeout: Maximum seconds to wait for completion
+        workers_override: If set, override YAML workers count for parallelism
 
     Returns:
         Tuple of (success, message, cost_usd)
@@ -354,6 +356,9 @@ def run_execution_unit(
     # Determine output filename
     output_name = f"detections_{unit['condition_name']}_run{unit['run']:02d}"
 
+    # Use CLI override if provided, otherwise fall back to YAML value
+    workers = workers_override or execution.get("workers", 1)
+
     # Build command
     cmd = [
         sys.executable,
@@ -362,7 +367,7 @@ def run_execution_unit(
         "--manifest", str(PROJECT_ROOT / inputs["manifest"]),
         "--output-dir", str(run_dir),
         "--output", output_name,
-        "--workers", str(execution.get("workers", 1)),
+        "--workers", str(workers),
     ]
 
     # Add temperature override if specified
@@ -416,6 +421,7 @@ def run_phase2(
     condition_filter: str | None = None,
     verbose: bool = True,
     timeout: int = 3600,
+    workers_override: int | None = None,
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -429,6 +435,7 @@ def run_phase2(
         condition_filter: If specified, run only this condition name
         verbose: If True, print progress information
         timeout: Maximum seconds per execution unit
+        workers_override: If set, override YAML workers count for parallelism
 
     Returns:
         Summary dictionary with results
@@ -573,6 +580,7 @@ def run_phase2(
             dry_run=dry_run,
             limit=limit,
             timeout=timeout,
+            workers_override=workers_override,
         )
 
         running_cost += cost
@@ -684,6 +692,11 @@ Examples:
         help="Run only this specific condition name",
     )
     parser.add_argument(
+        "--workers",
+        type=int,
+        help="Override worker count for parallelism (default: from YAML)",
+    )
+    parser.add_argument(
         "--quiet",
         action="store_true",
         help="Minimal output",
@@ -712,6 +725,7 @@ Examples:
         condition_filter=args.condition,
         verbose=not args.quiet,
         timeout=args.timeout,
+        workers_override=args.workers,
     )
 
     # Exit code based on results

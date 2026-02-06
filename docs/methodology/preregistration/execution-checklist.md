@@ -4,7 +4,7 @@
 
 **Associated preregistration**: `preregistration.md` v4.7
 
-**Last updated**: 2026-02-04
+**Last updated**: 2026-02-07
 
 ---
 
@@ -96,8 +96,8 @@
 | Phase | Start Date | End Date | Notes |
 |-------|------------|----------|-------|
 | Phase 1: Library + Text | 2026-02-01 | 2026-02-03 | Detection passes complete (F1=0.489 baseline); hard examples selected (4 HP + 4 HN); two-stage prompts reviewed and updated |
-| Phase 2a: H1 M/E Level | 2026-02-05 | | Infrastructure built; sanity checks passed (3 runs, F1 0.36–0.44); analysis script fixed (E21–E22); metadata capture enhanced (E23); dry-run bug fixed (E24); data collection in progress |
-| Phase 2b: H7 Temperature | | | |
+| Phase 2a: H1 M/E Level | 2026-02-05 | 2026-02-06 | Infrastructure built; sanity checks passed (3 runs, F1 0.36–0.44); analysis script fixed (E21–E22); metadata capture enhanced (E23); dry-run bug fixed (E24); K=10 runs complete; surprising result — text-only brief-text (F1=0.5425) outperformed all image-using conditions; dual-track carry-forward established (Decision 16) |
+| Phase 2b: H7 Temperature | 2026-02-07 | | Dual-track: Track 1 (brief-text-image), Track 2 (brief-text); 5 temperatures × K=10 per track |
 | Phase 2c: H8 Library Composition | | | |
 | Phase 2d: H5 Negative Text | | | |
 | Phase 2e: H4 Ordering | | | |
