@@ -40,6 +40,25 @@ This project uses structured CC session archiving for research transparency:
 - **Gap analysis**: Before implementing new workflow phases, run a "dry-run simulation"—mentally execute each step checking whether required inputs, scripts, and configs exist; document missing pieces before writing code
 - **Linting**: Run `ruff check` on modified Python files and `npx markdownlint-cli2` on modified Markdown files before committing. Config in `pyproject.toml` and `.markdownlint.json`. Pre-existing violations in untouched files are legacy debt — fix them when touching those files, not in bulk
 
+## Research Finding Calibration
+
+**Flag surprising results.** When analysis produces results that contradict expectations, hypotheses, or prior experience, proactively raise this with the user rather than accepting the output at face value. Surprising research findings are as important to flag as implementation bugs — both require human judgement to interpret.
+
+Examples of findings worth flagging:
+
+- Results that contradict preregistered hypotheses (e.g., H1 predicts X > Y but data shows Y > X)
+- Metrics that diverge from prior experience (e.g., "this F1 seems lower/higher than expected")
+- Patterns that violate domain expectations (e.g., "all conditions clustering when they should diverge")
+- Effect sizes or directions that seem implausible given the experimental design
+
+The appropriate response to a surprising finding is not to explain it away or accept it uncritically, but to:
+
+1. Flag the surprise explicitly ("This result contradicts H1 / prior experience / expectations")
+2. Verify the data pipeline is correct (are we analysing what we think we're analysing?)
+3. If the pipeline is correct, document the finding as a genuine scientific result worth explaining
+
+This project has repeatedly benefited from human domain calibration catching anomalies that automated checks missed. The same calibration applies to research findings, not just implementation correctness.
+
 ## Working Notes and Observations
 
 The file `docs/notes/working_notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
