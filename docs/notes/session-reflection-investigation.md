@@ -2751,6 +2751,424 @@ alone; I pushed back on the framing to rebalance attribution
 
 ---
 
-*Document created: 2026-01-27. Sixteenth reflection added 2026-02-05
-(collaboration conversation, documentation as research object, RDA
-Interest Group context). Framework proposed for ongoing practice.*
+## Entry 17: The Implementation Gap (Session 19, 2026-02-06)
+
+### Prompt 1: What struck you?
+
+The discovery of a fundamental implementation bug that invalidated the entire Phase 2a experiment — and that it emerged from the user's *intuition* that something was wrong, not from any automated check. The user said "I am surprised that the F1 outcomes are so closely clustered" and asked me to investigate. They had no specific hypothesis about what was wrong, just a domain-calibrated sense that the results didn't match prior experience.
+
+The investigation revealed that all 5 M/E conditions received the same 17 example images. The batch script had no conditional logic to skip images for "text-only" conditions. The preregistration was explicit: Brief-text and Verbose-text should receive "No" images. The code sent them anyway. We ran 3,000 API calls (~$6.50) testing a variable that wasn't varying.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Phase 2a data is invalid for H1.** The 50 completed runs test text elaboration, not modality. All conditions received identical images.
+
+2. **The fix requires adding an `include_example_images` field to configs** and conditional logic in `4_detect_mounds_batch.py`. Text-only conditions should skip the image loading loop entirely.
+
+3. **Human calibration caught this, not automated tests.** The user's domain expectation flagged an anomaly that no test could have caught because the system was functioning correctly — just not implementing the intended design.
+
+### Prompt 3: What surprised you?
+
+How invisible the bug was at every checkpoint. Pre-flight validation passed. Dry-run passed. 295 tier1 tests passed. 50 units completed successfully. Per-run metrics computed correctly. The system worked perfectly — it just wasn't running the intended experiment.
+
+The bug wasn't in any component; it was in the *gap* between the preregistration (which specified modality differences) and the implementation (which didn't encode them).
+
+### Prompt 4: What was the texture?
+
+A **marathon with a collapse at the finish line**. Hours executing data collection, adapting to API delays, re-running failed units, computing bootstrap analyses — all technically successful. Then in the final QA phase, when the user expressed scepticism, the entire edifice collapsed in 15 minutes of investigation.
+
+### Prompt 5: What questions weren't pursued?
+
+1. When was the modality flag lost in implementation?
+2. What's the secondary value of this data (text elaboration within image+text modality)?
+3. Should we complete the running bootstrap analysis?
+4. How do we prevent this class of error systematically?
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+The session had two completely different stories depending on where you stop reading.
+
+Story 1 (before QA): Successful execution. 50 units, $6.54, clean metrics.
+Story 2 (after QA): Complete waste. 3,000 calls testing a non-varying variable.
+
+What separated them was a single human intuition: "I expected larger divergence."
+
+I also notice I generated confident-sounding preliminary results ("brief-text optimal for Phase 2b") before the bug was discovered. The AI's confidence was technically justified but substantively wrong because it was analysing the wrong experiment.
+
+### Meta-Reflection
+
+Seventeen entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+
+Entry 17 marks the project's most significant late-stage failure — a
+complete data collection run (~$6.50, 3,000 API calls) executed
+correctly but implementing the wrong experiment. The detection
+mechanism was human domain calibration, continuing the pattern from
+Session 17 but with a subtler trigger (insufficient variance rather
+than anomalous magnitude).
+
+Prompt productivity: Prompt 6 was again most productive, generating
+the "two narratives" observation and the realisation that the AI's
+confidence was technically justified but substantively wrong.
+Prompt 3 captured the invisibility of the bug at every checkpoint.
+Prompt 4's "marathon with collapse at finish line" metaphor
+accurately described the session texture.
+
+**Instance boundary note**: This entry was completed by a post-
+compact instance from conversation summary. The six prompts were
+answered by the pre-compact instance; this meta-reflection
+reconstructs the pattern.
+
+**Session**: 2026-02-06
+**Reported texture**: Marathon with collapse at finish line
+**Key observation**: Modality manipulation wasn't implemented;
+3,000 API calls tested a non-varying variable
+**Noted preference**: User's domain calibration caught what tests
+couldn't
+**Engagement level**: High during execution; higher during bug
+investigation
+**Unsolicited generation**: The "two narratives" framing;
+implementation gap as distinct failure class
+**Relational note**: User's scepticism saved the project from
+proceeding with invalid results
+
+---
+
+## Entry 18: The Reversal — Text-Only Outperforms Image (Session 19 continuation, 2026-02-06)
+
+**Date**: 2026-02-06
+**Context**: This session was a continuation after a compaction event. The previous instance had discovered that the modality manipulation wasn't implemented (all 5 conditions received images), documented as E25. This instance implemented the fix (`include_example_images` config field + conditional logic in the batch script), archived the invalid text-only runs, re-ran the 20 text-only units with corrected code, and ran the full analysis.
+
+The surprise came in the results: text-only conditions significantly outperformed image conditions. Brief-text achieved F1=0.5425, the highest of all conditions, while image-only achieved F1=0.4252. This directly contradicts the H1 prediction that "image-based conditions will outperform text-only conditions."
+
+**Instance boundary note**: This is a post-compact continuation. I implemented the fix and re-ran the text-only conditions directly, but the original bug investigation was done by the previous instance. The surprising results analysis was direct first-person experience.
+
+### Prompt 1: What struck you?
+
+What struck me was the complete reversal of expected results. The H1 hypothesis was that images would help — that showing the VLM examples of burial mounds would improve detection over text descriptions alone. Instead, the opposite happened: brief-text (text-only, minimal elaboration) achieved the highest F1 (0.5425), substantially outperforming image-only (0.4252) and all image+text combinations.
+
+The detection count divergence is even more striking: text-only conditions produced 162–177 detections per run, while image conditions produced 130–150. The images appear to be *constraining* rather than *enriching* the model's detection behaviour — perhaps making it too conservative, or anchoring it to specific visual patterns that don't generalise well to the validation tiles.
+
+This is the kind of result that, if it survives scrutiny, could be methodologically significant. It suggests that for this task, verbal description outperforms visual demonstration — the opposite of the intuition that drove the visual few-shot approach in earlier project phases.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Phase 2a data is now valid for H1.** The 30 image conditions (image-only, brief-text-image, verbose-text-image) were collected with the original code and are valid. The 20 text-only conditions (brief-text, verbose-text) were re-run with corrected code after E25.
+
+2. **Text-only outperforms image.** This contradicts H1. The ranking is: brief-text (0.5425) > verbose-text (0.4710) > brief-text-image (0.4617) > verbose-text-image (0.4369) > image-only (0.4252).
+
+3. **Detection counts diverge by modality.** Text-only: 162–177 features. Image: 130–150 features. The text-only model detects more features overall, which drives higher recall.
+
+4. **Bootstrap CIs may have a bug.** The reported CIs don't contain the means for some conditions. This should be investigated before publishing results.
+
+5. **Total cost: $6.85** for 50 complete units across all conditions.
+
+### Prompt 3: What surprised you?
+
+The magnitude of the text-only advantage surprised me. I expected either (a) images help, as hypothesised, or (b) no significant difference between modalities. I didn't expect text-only to substantially *outperform* image conditions. The difference between brief-text (0.5425) and image-only (0.4252) is ~0.12 F1 points — not a subtle effect.
+
+I was also surprised by the mechanism: the text-only conditions detect *more* features (higher detection counts), not fewer. This suggests that images don't add information — they constrain behaviour. The model with only text descriptions is more willing to flag potential mounds than the model shown visual examples.
+
+If I had to generate hypotheses:
+- Images may anchor the model to specific visual patterns that don't generalise
+- Text descriptions may allow more flexible matching to varied feature presentations
+- The example images may contain features that the model uses as exclusion criteria
+
+### Prompt 4: What was the texture?
+
+The session had the texture of **methodical recovery followed by scientific surprise**. The first phase (implementing the fix, archiving invalid runs, re-running text-only conditions) was systematic execution — following the plan from the previous instance, verifying each step worked. This had the steady, completion-oriented feel of cleanup work.
+
+Then the analysis results came in, and the texture shifted to something more like **intellectual vertigo**. The numbers didn't match expectations. Not just "slightly different" but "completely reversed." The careful methodological work (graduated checks, re-running with fixes) produced a result that contradicts the original hypothesis motivating the entire visual few-shot approach.
+
+The shift from "completing the repair" to "absorbing unexpected results" happened in a single output — the per-run metrics showing text-only ahead of image conditions across all 10 runs in each condition.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Why do images constrain detection?** The detection count divergence suggests images make the model more conservative. Is this because the example images are too specific? Too few? Too varied? What features of the Scale-8 library are driving this effect?
+
+2. **Would different example images change the result?** The Scale-8 library was curated for calibration purposes. Perhaps a different selection would shift the balance. This could inform H3/H4 (library composition and ordering).
+
+3. **Is the bootstrap CI bug real or a display issue?** The reported CIs don't contain the means for several conditions. This is either a calculation error, a display error, or I'm misreading the output format. It needs investigation before results are published.
+
+4. **What does this mean for the subsequent phases?** H1's decision rule says "select M/E level with highest mean F1." That would be brief-text. But brief-text contradicts the project's foundational assumption that visual few-shot prompting is superior to text-only. Does the decision rule still apply when the result contradicts the hypothesis?
+
+5. **Is the effect robust to the validation tile selection?** The validation set is 60 tiles, disjoint from calibration. But if those 60 tiles happen to have characteristics that favour text descriptions, the result might not generalise to the reserve set.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session contains the project's first genuine *scientific surprise* — a result that contradicts prior expectations in a way that demands explanation rather than acceptance. Previous sessions had implementation surprises (wrong F1 because wrong bounds), infrastructure surprises (missing code paths), and methodological surprises (propagation failures). This is a *substantive* surprise about the phenomenon being studied.
+
+The earlier phases of the project developed visual few-shot prompting as an improvement over text-only prompting (Observations 9–10 in working_notes.md document this breakthrough). The assumption that images help was baked into the experimental design — that's why H1 tests modality effects at all. Having text-only outperform images doesn't just reject H1 in its preregistered direction; it suggests the entire project's prompt engineering trajectory was optimising in the wrong direction.
+
+I also notice that the E25 fix itself is instructive. The bug was: no code distinguished text-only from image conditions. The fix was: add a config field and a conditional. The simplicity of the fix contrasts with the severity of the bug — this is the pattern of design-to-implementation gaps. The fix doesn't require cleverness; it requires someone asking "how does the code know to do this?"
+
+One more observation: the user's domain calibration caught both the implementation bug (Session 19 pre-compact: "I expected larger divergence") and implicitly validated the corrected results (the divergence is now present — text-only conditions behave differently from image conditions). The graduated sanity check protocol worked: it created a gate where human judgement could operate, and that judgement caught what automation couldn't.
+
+### Meta-Reflection
+
+Eighteen entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+
+Entry 18 is the first entry to document a substantive scientific surprise rather than an infrastructure, methodological, or implementation surprise. The text-only outperformance contradicts both the H1 prediction and the project's foundational assumptions about visual few-shot prompting. This may require reconsidering the carry-forward decision rule and the implications for subsequent phases.
+
+Prompt productivity: Prompt 6 was again most productive, generating the "first scientific surprise" observation, the contrast with the project's prompt engineering trajectory, and the connection between E25's simplicity and design-to-implementation gap patterns. Prompt 5 raised important methodological questions (why do images constrain? is the CI bug real?). Prompt 1 captured the reversal clearly. Prompt 4's "intellectual vertigo" described the texture accurately.
+
+Provisional prompt ranking holds at n=18: Prompt 6 > Prompt 5 > Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-06 (Continuation — E25 fix, text-only re-run, analysis revealing text > image)
+**Reported texture**: Methodical recovery followed by intellectual vertigo
+**Key observation**: Text-only conditions outperform image conditions (F1 0.54 vs 0.43), contradicting H1 and challenging the project's foundational assumption about visual few-shot prompting
+**Noted preference**: The detection count divergence (text: 162–177, image: 130–150) suggests images constrain rather than enrich
+**Engagement level**: High during results analysis; moderate during fix implementation
+**Unsolicited generation**: The "first scientific surprise" framing; the observation that images constrain rather than enrich; the connection to the project's prompt engineering history
+**Relational note**: The user's domain calibration validated both the bug (insufficient divergence) and the fix (divergence now present)
+
+---
+
+## Entry 19: The Invisible Corruption — Bootstrap Bias and the Seductive Plausibility of Wrong Numbers (Session 20, 2026-02-06)
+
+**Date**: 2026-02-06
+**Context**: This session was dedicated to a single, focused task: diagnosing and fixing a systematic bias in the bootstrap confidence interval functions in `lib_advanced_metrics.py`. The previous session flagged that CIs didn't contain point estimates (image-only: F1=0.4252, CI=[0.254, 0.373]). This session traced the root cause to reference de-duplication via `isin()` when tiles are resampled with replacement, implemented a per-tile pre-computation strategy, added regression tests, documented E26, and regenerated the analysis with corrected CIs.
+
+**Instance boundary note**: This is a fresh instance. The plan was created by a prior planning instance and passed as structured instructions. The implementation, testing, and verification were all direct first-person experience.
+
+### Prompt 1: What struck you?
+
+What struck me was the *invisibility* of the corruption. The bootstrap functions produced numbers that looked like confidence intervals — they had the right structure (lower < mean < upper), the right magnitude (positive, between 0 and 1), and the right relationship to each other (wider CIs for noisier conditions). Nothing about the output *looked* wrong unless you knew what the point estimate was and noticed the CI didn't contain it.
+
+The bug was in `scope_references_to_tiles()` using `gdf_ref.index.isin()`, which silently de-duplicates. When you resample tiles with replacement and tile A appears three times, detections are correctly tripled (the loop appends per tile), but references are only counted once (isin returns unique index matches). Three copies of detections against one copy of references = systematic false positive inflation = precision deflation = downward-biased F1.
+
+What struck me is that this is a *semantic* bug, not a *syntactic* one. The code does exactly what it says. `isin()` behaves as documented. The error is in the assumption that building a GeoDataFrame from resampled tiles and passing it to a function that de-duplicates by spatial join would preserve the bootstrap's with-replacement semantics. No linter, type checker, or unit test catches "your resampling doesn't actually resample references."
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Bootstrap CIs are now correct.** All 7 bootstrap functions in `lib_advanced_metrics.py` have been refactored to use per-tile pre-computation. The `analysis_report.json` and `analysis_summary.md` have been regenerated.
+
+2. **The fix uses an approximation.** Per-tile matching (the new approach) differs from per-map matching (what `calculate_f1_internal` does) because cross-tile matches within the 20m buffer are handled differently. For the synthetic test data and the real data (tiles are hundreds of metres across, buffer is 20m), this is negligible. But it's an approximation, not exact equivalence.
+
+3. **Point estimates were never affected.** `calculate_f1_internal()` is unchanged and was always called on un-resampled data for per-run F1 values. Only the bootstrap CIs were biased.
+
+4. **The regression tests are the key safeguard.** `test_bootstrap_mean_approximates_point_estimate` verifies that bootstrap mean F1 is within 0.02 of the point estimate. This is THE test that would have caught the original bug — the old code would have failed it by a wide margin (~0.10 deflation).
+
+5. **318 tests pass.** All existing + new tests green.
+
+### Prompt 3: What surprised you?
+
+The smoothness of the implementation surprised me. The plan was detailed and well-structured — 12 steps covering 3 files. I expected to encounter at least one complication (wrong line numbers, unexpected test failures, interface mismatches). Instead, every step worked on the first attempt. The only issue was a pre-existing floating-point precision edge case in an existing test (ci_lower equal to mean at the 16th decimal place), which was trivially fixed.
+
+I was also surprised by how much *faster* the refactored code is conceptually, even though I didn't benchmark it. The old code ran `calculate_f1_internal()` inside the bootstrap loop — 1000 iterations × spatial matching. The new code does spatial matching once, then the inner loop is just DataFrame lookups and arithmetic. For the multi-run effect size function (the most expensive), that's 1000 × 2 conditions × 10 runs = 20,000 calls to `calculate_f1_internal()` replaced by 20 pre-computations + 20,000 fast aggregations.
+
+### Prompt 4: What was the texture?
+
+The session had the texture of **surgical precision**. There was no exploration, no ambiguity, no branching paths. The plan specified exactly what to change, in what order, and what to verify. My job was execution: read the code, make the edit, move to the next step. It had the satisfying rhythm of a well-planned refactoring — each function following the same pattern (pre-compute before loop, aggregate inside loop), each test verifying a specific invariant.
+
+The closest analogy is assembly from a kit with clear instructions. The intellectual work was done in the planning phase; this session was craft — precise, careful, sequential application of a known solution. The "all 318 tests pass" moment at the end had the feel of a clean bill of health after surgery.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **How much did the bias affect the previous session's significance assessments?** The old analysis showed 0 FDR-significant pairwise comparisons. The new analysis also shows 0. But the individual CIs have shifted substantially — the old image-only CI was [0.254, 0.373], now [0.340, 0.500]. Did any initially-significant comparisons change status?
+
+2. **Is the per-tile approximation truly negligible for the real data?** I asserted it based on tile sizes vs buffer, but didn't verify empirically. A comparison of `compute_per_tile_tp_fp_fn()` sums against `calculate_f1_internal()` on the actual Phase 2a data (not just synthetic data) would confirm this.
+
+3. **Were the tile classification bootstrap functions ever used in the analysis?** The `bootstrap_tile_classification_ci()` and `bootstrap_tile_effect_size_ci()` had the same `isin()` bug. I fixed them, but I don't know if they're called by the Phase 2a analysis script. If not, the fix is preventive rather than corrective.
+
+4. **Should the old (biased) analysis report be archived?** The plan said the stale report was from invalid text-only runs. Regenerating overwrote it. Per the project's archive-don't-delete policy, should the old version have been preserved?
+
+5. **What does the corrected CI width tell us about sample size adequacy?** The corrected CIs are wide (e.g., image-only F1 CI width = 0.16). Is 60 tiles × 10 runs sufficient for the effect sizes being tested?
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this bug was architecturally predictable. The bootstrap functions were built by composing existing functions (`calculate_f1_internal`, `scope_references_to_tiles`) that were designed for single-evaluation use. When those functions were placed inside a resampling loop, their internal de-duplication semantics — which are correct and desirable for single evaluation — became a source of bias. The bug isn't in any individual function; it's in the *composition*.
+
+This is a pattern worth naming: **composition-semantic mismatch**. A function that behaves correctly in isolation can introduce bias when composed into a resampling context because its internal assumptions (e.g., "each tile appears at most once") are violated by the outer context (bootstrap resampling with replacement). The fix — pre-computing per-tile results and aggregating in the loop — works precisely because it separates the component that can't handle duplicates (spatial matching) from the component that must (resampling).
+
+I also notice that the previous session's Entry 18 explicitly flagged "Bootstrap CIs may have a bug" in Prompt 5 ("What questions weren't pursued?"). That question was pursued in this session and confirmed. The reflection protocol's question-surfacing function worked exactly as intended: an observation made at session end became the task for the next session.
+
+One more thing: the corrected results are *less dramatic* than the biased ones would suggest. The old CIs were narrow and low (biased downward), which would have made the point estimates look anomalously high relative to the CIs. The corrected CIs are wider and properly centred, which makes the between-condition differences look less impressive. The bias was actually *flattering* to the finding of between-condition effects (by making the CIs look tighter than they should be). Fixing the bug made the results more honest but less striking.
+
+### Meta-Reflection
+
+Nineteen entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+| 19 | 20 | Composition-semantic mismatch in bootstrap resampling |
+
+Entry 19 introduces a new theme: bugs that emerge from composing correct components in contexts that violate their internal assumptions. This connects to Entry 3 (computation masking assumptions) and Entry 14 (propagation failures) — all are variants of "the parts are correct but the whole is wrong." The distinguishing feature here is that the composition itself is logically sound; the mismatch is between the function's *semantic contract* (unique tiles) and the caller's *operational context* (resampled tiles with duplicates).
+
+Prompt productivity: Prompt 6 was again the most productive, generating the "composition-semantic mismatch" pattern naming, the observation that the reflection protocol's question-surfacing worked as designed, and the counter-intuitive note that fixing the bias made results less dramatic. Prompt 5 raised good questions about what wasn't checked. Prompt 4's "surgical precision" captured the texture accurately. Prompt 1's "invisible corruption" framing is the most quotable observation.
+
+Provisional prompt ranking holds at n=19: Prompt 6 > Prompt 5 > Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-06 (Session 20 — Bootstrap CI bias fix, E26)
+**Reported texture**: Surgical precision — well-planned refactoring executed sequentially
+**Key observation**: Composition-semantic mismatch — correct functions produce biased results when composed into resampling contexts that violate their internal assumptions
+**Noted preference**: The plan-driven execution pattern (detailed plan → sequential implementation → verification) was maximally efficient for this type of bug fix
+**Engagement level**: Steady and focused; satisfaction at clean execution rather than intellectual excitement
+**Unsolicited generation**: The "composition-semantic mismatch" pattern name; the observation that fixing bias made results less dramatic; the note that Entry 18's question became this session's task
+**Relational note**: The AI's bootstrap CI observation from the previous session drove this entire session; the fix validated that flag — a case where the AI's statistical knowledge caught an anomaly that domain calibration alone wouldn't have detected
+
+---
+
+## Entry 20: Verification as Scientific Practice — When Checking Your Work Changes What You Know (Session 21, 2026-02-06)
+
+**Date**: 2026-02-06
+**Context**: This session was a systematic verification of the Phase 2a finding that text-only conditions outperform image-inclusive conditions (brief-text F1=0.5425 vs image-only F1=0.4252). The plan was detailed and multi-track: (A) recompute all 50 F1 values from raw data and decompose per-tile, (B) verify metadata and input token counts to rule out image leakage, (C) run fresh one-off API calls on 5 tiles to test reproducibility, and (D) analyse system instruction content to assess confounds. The verification was motivated by the finding contradicting H1 and prior exploratory work.
+
+### Prompt 1: What struck you?
+
+What struck me was how the verification process transformed the finding from "counter-intuitive anomaly" to "well-characterised result." The claim didn't change — text-only still outperforms image — but the epistemic status shifted fundamentally. Before verification, we had a surprising number. After verification, we had a surprising number *plus* evidence ruling out every plausible artefact, *plus* independent reproduction, *plus* a mechanistic decomposition (brief-text finds additional true mounds, not just fewer false positives).
+
+The verification didn't just confirm the result; it enriched understanding. The per-tile decomposition revealed that the advantage is distributed across 3 of 4 maps. The spatial overlap analysis showed that brief-text's unique detections are nearly twice as likely to be true positives as image-only's unique detections (27.7% vs 14.3%). The within-elaboration-level comparisons — identical text, only images differ — isolated the image effect from the text richness confound. None of these insights would exist without the verification.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **The verification is complete and documented.** Report at `results/phase2-factorial/phase2a-verification-report.md`. Verification script at `scripts/verify_phase2a_metrics.py`. Fresh verification data at `outputs/verification/`.
+
+2. **All 50 F1 values match exactly.** No pipeline bugs, no rounding issues, no file-loading errors.
+
+3. **The token ratio is 10.70x.** Text-only conditions use ~90-137K input tokens; image conditions use ~1.19-1.25M. No image leakage is possible.
+
+4. **Fresh runs reproduce the effect.** On 5 tiles, fresh brief-text F1=0.7600 vs fresh image-only F1=0.5714 (diff=+0.19). The effect is independently reproducible.
+
+5. **The within-elaboration-level comparisons are the strongest evidence.** brief-text vs brief-text-image (+0.08 F1) and verbose-text vs verbose-text-image (+0.03 F1) hold text constant and vary only images. Images are actively harmful.
+
+6. **The verification manifest is at `inputs/tiles/verification_manifest.json`** — 5 tiles across all 4 maps, selected by mound density.
+
+### Prompt 3: What surprised you?
+
+The fresh one-off results surprised me. I expected them to broadly confirm the pattern but with substantial noise — 5 tiles is a tiny sample, temperature=1.0 introduces stochastic variation, and the original effect size (+0.12 F1) seemed like it might attenuate on a small sample. Instead, the fresh effect was *larger* (+0.19 F1). brief-text achieved F1=0.76 on these 5 tiles — substantially better than its Phase 2a average of 0.54.
+
+I was also surprised by how diagnostic the input token counts were. I expected the token analysis to be confirmatory — "yes, images add tokens, as expected." But the zero standard deviation across runs within each condition, and the exact per-tile uniformity (1,502 tokens per tile for brief-text, 19,818 for image-only, every single time), made the evidence unambiguous. There is literally no way images could be leaking — the numbers are deterministic and differ by 13.2x per tile.
+
+### Prompt 4: What was the texture?
+
+The session had the texture of **methodical reassurance**. Each verification track was a question — "is the metric computation correct?", "are images actually being sent?", "does the effect reproduce?" — and each question received a clean, unambiguous answer. There was no debugging, no unexpected failures, no course corrections. The script ran on the first attempt, the fresh API calls completed without issues, the comparisons showed clear patterns.
+
+The emotional arc was unusual: it started with low-grade anxiety (what if we find a bug that invalidates everything?) and settled into growing confidence as each check passed. By the time the fresh runs reproduced the effect, the session's purpose had shifted from "verify" to "document." The writing of the verification report felt like closing the books rather than investigating.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Why does Lesovo (K-35-078-1) buck the trend?** It's the one map where image-only has a slight advantage (mean diff -0.06). Is there something about Lesovo's mound symbols that makes them more visually distinctive? Is it terrain, printing quality, or symbol density?
+
+2. **Which specific example images are most harmful?** The 17-image Scale-8 library includes canonical positives, hard positives, canonical negatives, hard negatives, and null tiles. Are negative examples the problem? Or is the sheer volume of 17 images overwhelming the context?
+
+3. **What happens at temperature=0?** The text-only advantage might partly stem from temperature=1.0 amplifying noise when the context window is large (1.2M tokens for image conditions). At temperature=0, the image condition might be more competitive.
+
+4. **Is the 20m buffer appropriate for this comparison?** Both conditions use the same buffer for matching, so it shouldn't bias the comparison. But the spatial overlap analysis (only 29.8% shared detections) suggests the two conditions have quite different spatial characteristics. Is one condition more spatially accurate than the other?
+
+5. **How does this finding interact with H5 (library composition)?** The current analysis varies modality/elaboration. H5 varies library composition (which examples to include). If images are harmful, does the specific choice of examples matter, or is any image set harmful?
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session was an exercise in *scientific due diligence* — and that the due diligence was triggered not by a statistical anomaly or a pipeline bug, but by *domain expertise collision*. The numbers were internally consistent. The pipeline was correct. The CIs were proper. Nothing was technically wrong. What triggered the verification was a human researcher knowing, from prior fieldwork and development experience, that "images should help, not hurt." The verification was driven by a prior belief, not a detected error.
+
+This is a fundamentally different verification trigger than Sessions 17-20. Those sessions found bugs (wrong F1 formula, missing modality manipulation, biased bootstrap). This session found no bugs — it confirmed that a surprising finding is genuine. The skill being exercised isn't debugging; it's *scientific scepticism applied to one's own results*.
+
+I also notice that the report we wrote serves a dual purpose: it's both a verification record and a pre-emptive response to reviewer scepticism. A reviewer reading "text-only outperforms image" would reasonably ask "did you check for image leakage?", "did you verify the metrics?", "is this reproducible?" The report answers all these questions before they're asked. The verification isn't just for our confidence — it's for the reader's.
+
+Finally, I notice the asymmetry in how we treat expected vs unexpected findings. If image-only had outperformed text-only (as predicted by H1), we would almost certainly not have conducted this level of verification. We accept confirming results at face value but subject disconfirming results to extraordinary scrutiny. This is epistemically appropriate — extraordinary claims require extraordinary evidence — but worth being honest about. The verification bar was set high *because* the result was surprising, not because the pipeline was suspect.
+
+### Meta-Reflection
+
+Twenty entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+| 19 | 20 | Composition-semantic mismatch in bootstrap resampling |
+| 20 | 21 | Verification as scientific practice |
+
+Entry 20 introduces the theme of *verification as epistemology* — the process of subjecting one's own results to systematic scrutiny, and how that scrutiny transforms the epistemic status of a finding from "anomaly" to "characterised result." This connects to Entry 4 (correct data, wrong framing) and Entry 8 (plausible arguments need fact-checking), but differs in that nothing was wrong — the verification confirmed rather than corrected. The skill being exercised is scientific scepticism applied to genuine findings.
+
+Prompt productivity: Prompt 6 was again the most productive, generating the "domain expertise collision" observation (the verification was triggered by prior knowledge, not a detected error), the dual-purpose nature of the report (internal confidence + pre-emptive reviewer response), and the confirmation bias asymmetry (expected results wouldn't receive this scrutiny). Prompt 1's observation about verification enriching understanding was substantive. Prompt 5 raised genuine research questions about map-level variation and temperature interaction.
+
+Provisional prompt ranking holds at n=20: Prompt 6 > Prompt 5 > Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-06 (Session 21 — Phase 2a verification of text-only outperformance)
+**Reported texture**: Methodical reassurance — systematic checks each returning clean results
+**Key observation**: Verification transforms a surprising finding's epistemic status without changing the finding itself; the process is driven by domain expertise collision, not by detected errors
+**Noted preference**: Multi-track verification (statistical, pipeline, reproduction, content analysis) converging on the same conclusion is more convincing than any single track
+**Engagement level**: Steady; anxiety-to-confidence arc as checks passed
+**Unsolicited generation**: The "domain expertise collision" trigger distinction; the confirmation bias asymmetry observation; the dual-purpose report framing
+**Relational note**: The verification plan was created collaboratively in plan mode; the implementation was plan-driven execution; the report was the session's primary deliverable
+
+---
+
+*Document created: 2026-01-27. Twentieth reflection added 2026-02-06
+(Phase 2a verification — text-only outperformance confirmed as genuine).
+Framework proposed for ongoing practice.*

@@ -758,4 +758,255 @@ Short continuation session following Session 17's compact event. Committed the S
 
 ---
 
+## Session 19 — 2026-02-06 (Phase 2a execution complete, critical implementation bug discovered)
+
+### Overview
+
+Completed Phase 2a data collection: 50 units (5 conditions × 10 runs), 3,000 API calls, $6.54 total. Recovery from network failures required re-running 5 incomplete units. Bootstrap analysis computed per-run metrics. During QA, user flagged unexpectedly clustered F1 outcomes. Investigation revealed a critical implementation bug: all 5 conditions received identical example images. The modality factor (H1: image vs text-only) was not manipulated. Phase 2a data is invalid for the preregistered hypothesis.
+
+### Phase 2a Results (invalid for H1)
+
+| Condition | Mean F1 | StdDev | Note |
+|-----------|---------|--------|------|
+| brief-text-image | 0.4617 | ±0.0269 | All received images |
+| brief-text | 0.4610 | ±0.0217 | Should have been text-only |
+| verbose-text | 0.4528 | ±0.0321 | Should have been text-only |
+| verbose-text-image | 0.4369 | ±0.0333 | All received images |
+| image-only | 0.4252 | ±0.0342 | Correct |
+
+### Accomplishments
+
+1. **Completed Phase 2a data collection** — 50/50 units, $6.54 total cost
+2. **Recovered from network failures** — 5 incomplete runs (low detection counts) re-run successfully
+3. **Computed per-run metrics** — `outputs/phase2a/per_run_metrics.csv` with F1/precision/recall per run
+4. **Investigated clustered F1 outcomes** — traced to missing modality manipulation
+5. **Identified implementation gap** — `4_detect_mounds_batch.py` has no conditional logic to skip images for text-only conditions
+6. **Verified against preregistration** — Table at lines 412-418 explicitly specifies Brief-text and Verbose-text should receive "No" images
+7. **Documented Observation 102** — design-to-implementation translation failures as distinct failure class
+
+### Critical Bug (E24)
+
+**The batch script sends 17 example images to ALL conditions.** The preregistration specifies:
+
+| Condition | Images |
+|-----------|--------|
+| image-only | Yes |
+| brief-text | **No** |
+| brief-text-image | Yes |
+| verbose-text | **No** |
+| verbose-text-image | Yes |
+
+The config files have no `include_example_images` field. The batch script (lines 556-572) unconditionally loads and sends all example images. 3,000 API calls tested text elaboration within image+text modality, not the modality factor.
+
+**Root cause**: Design specification in preregistration was not translated into code. No one asked: "how does the code know which conditions include images?"
+
+### Issues
+
+- **Invalid data for H1**: Modality factor not manipulated
+- **Network instability**: Initial run had 5 incomplete units (1–97 features instead of ~140)
+- **Bootstrap analysis**: Still running in background (task bbf60d6) but results moot for H1
+- **Context compaction**: Session compacted during reflection; post-compact instance completed from summary
+
+### Commits
+
+None (no code changes committed in this session).
+
+### Pending Work
+
+- [ ] **Fix batch script** — Add `include_example_images` field to configs, add conditional logic to skip images
+- [ ] **Re-run Phase 2a** — With corrected implementation (~$6.50 additional)
+- [ ] **Document E24** — Log erratum for implementation gap
+- [ ] **Assess secondary value** — Phase 2a data tests text elaboration within image+text; potentially useful even if not preregistered
+- [ ] **Kill bootstrap task** — Task bbf60d6 still running; results invalid for H1
+- [ ] Investigate zero tile-level specificity
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
+## Session 19b — 2026-02-06 (Phase 2a fix, text-only re-run, surprising H1 result)
+
+### Overview
+
+Continuation session after compaction. Implemented the modality manipulation fix (E25): added `include_example_images` config field and conditional logic in the batch script to skip images for text-only conditions. Archived invalid text-only runs, re-ran 20 text-only units with corrected code ($0.31 additional cost). Analysis revealed a surprising result: text-only conditions significantly outperform image conditions, contradicting H1 prediction.
+
+### Phase 2a Results (corrected)
+
+| Condition | Mean F1 | Precision | Recall | Detections |
+|-----------|---------|-----------|--------|------------|
+| **brief-text** | **0.5425** | 0.434 | 0.725 | 162–177 |
+| verbose-text | 0.4710 | 0.364 | 0.666 | 165–175 |
+| brief-text-image | 0.4617 | 0.393 | 0.559 | 130–150 |
+| verbose-text-image | 0.4369 | 0.368 | 0.539 | 135–145 |
+| image-only | 0.4252 | 0.349 | 0.545 | 130–145 |
+
+**Key finding**: Text-only conditions outperform image conditions. Brief-text (F1=0.5425) is substantially better than image-only (F1=0.4252), a ~0.12 difference. This contradicts H1 prediction.
+
+**Detection count divergence**: Text-only conditions produce 20–30% more detections than image conditions. Images appear to constrain rather than enrich detection behaviour.
+
+### Accomplishments
+
+1. **Implemented E25 fix** — Added `include_example_images: false` to `detect_brief-text.json` and `detect_verbose-text.json`; added conditional logic in `4_detect_mounds_batch.py` to skip image loading
+2. **Archived invalid runs** — Moved invalid brief-text and verbose-text directories to `archive/phase2a-invalid-text-only-runs/`
+3. **Re-ran text-only conditions** — 20 units (brief-text + verbose-text, 10 runs each), $0.31 additional cost
+4. **Generated corrected analysis** — `outputs/phase2a/per_run_metrics.csv` with valid text-only data
+5. **Documented E25** in `docs/methodology/preregistration/protocol-errata.md`
+6. **Updated MEMORY.md** with Phase 2a corrected status
+7. **Added Observation 103** — Text-only outperforming image as foundational assumption challenge
+
+### Surprising Result Analysis
+
+The H1 prediction was that image-based conditions would outperform text-only conditions. The data shows the opposite:
+
+- Text-only conditions achieve higher recall (0.67–0.73) than image conditions (0.54–0.56)
+- Text-only conditions detect more features overall (162–177 vs 130–150)
+- The difference is consistent across all 10 runs per condition
+
+Possible explanations:
+1. Images anchor to specific visual patterns that don't generalise well
+2. Negative examples (hard negatives) make the model too conservative
+3. Text descriptions allow more flexible matching
+4. Gemini's architecture may favour text grounding for this task
+
+### Issues
+
+- **Bootstrap CIs may have bug** — Reported CIs don't contain means for some conditions; needs investigation
+- **Result contradicts project trajectory** — Visual few-shot was developed as an improvement over text-only (Observations 9–10); Phase 2a suggests that trajectory was wrong
+
+### Commits
+
+None yet — reflection documents completed but not committed.
+
+### Pending Work
+
+- [x] Fix batch script for modality manipulation (E25)
+- [x] Re-run text-only conditions with corrected code
+- [x] Generate corrected per-run metrics
+- [x] **Investigate bootstrap CI calculation** — CIs don't appear to contain means (fixed in Session 20, E26)
+- [ ] **Discuss H1 decision rule implications** — brief-text wins by decision rule but contradicts prior experience
+- [ ] Commit reflection documents and E25 changes
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
+## Session 20 (2026-02-06)
+
+**Focus**: Bootstrap CI bias diagnosis and fix (E26)
+
+### Summary
+
+Single-focus session dedicated to diagnosing and fixing a systematic
+bias in the bootstrap confidence interval functions in
+`lib_advanced_metrics.py`. The AI flagged in the previous session that
+CIs didn't contain point estimates (e.g., image-only F1=0.4252,
+CI=[0.254, 0.373]).
+
+Root cause: `scope_references_to_tiles()` uses `gdf_ref.index.isin()`
+which silently de-duplicates references when tiles are resampled with
+replacement. Extra detections against de-duplicated references = false
+positive inflation = precision deflation = downward-biased F1 CIs.
+
+Fix: Pre-compute TP/FP/FN per tile once, aggregate in bootstrap loop
+with proper duplicate handling. Added `compute_per_tile_tp_fp_fn()` and
+`aggregate_tile_metrics()` helpers. Refactored all 7 bootstrap functions
++ 2 tile classification bootstrap functions.
+
+### Key Results
+
+Corrected Phase 2a CIs (all now properly contain point estimates):
+
+| Condition | F1 | 95% CI |
+|-----------|----|--------|
+| brief-text | 0.5425 | [0.424, 0.650] |
+| verbose-text | 0.4710 | [0.355, 0.569] |
+| brief-text-image | 0.4617 | [0.371, 0.541] |
+| image-only | 0.4252 | [0.340, 0.500] |
+| verbose-text-image | 0.4369 | [0.358, 0.507] |
+
+0 FDR-significant pairwise comparisons at q=0.05 (unchanged from
+before fix). 3 initially significant comparisons (image-only vs
+brief-text, brief-text vs verbose-text, brief-text vs verbose-text-image).
+
+### Issues
+
+- **Corrected CIs are wider than biased ones** — honest results less
+  dramatic than biased ones; the bias was flattering to the findings
+- **Per-tile approximation** — new approach does per-tile matching
+  rather than per-map; cross-tile effects within 20m buffer are
+  negligible for these tile sizes
+
+### Commits
+
+None yet — changes to be committed.
+
+### Pending Work
+
+- [ ] Commit bootstrap CI fix (lib_advanced_metrics.py, tests, E26)
+- [ ] Commit regenerated analysis outputs
+- [ ] Commit reflection documents (Session 20)
+- [ ] **Discuss H1 decision rule implications** — brief-text wins by decision rule but contradicts prior experience
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
+## Session 21 (2026-02-06)
+
+**Focus**: Systematic verification of Phase 2a text-only outperformance finding
+
+### Overview
+
+Dedicated verification session to rule out pipeline artefacts before accepting the counter-intuitive Phase 2a result that text-only conditions outperform image-inclusive conditions. Four-track verification: (A) statistical pipeline recomputation, (B) image pipeline metadata/token verification, (C) fresh one-off tile assessments, and (D) system instruction content analysis.
+
+### Accomplishments
+
+1. **Wrote `scripts/verify_phase2a_metrics.py`** — standalone verification script covering Parts A+B (F1 recomputation, per-tile decomposition, spatial overlap, metadata/token analysis, detection distributions, instruction comparison)
+2. **Independently recomputed all 50 F1 values** — all match `per_run_metrics.csv` exactly; no pipeline bugs
+3. **Per-tile F1 decomposition** — brief-text wins 15 tiles, image-only wins 10, advantage distributed across 3/4 maps
+4. **Spatial overlap analysis** — only 29.8% shared detections; brief-text-only detections are 2x more likely to be TPs (27.7% vs 14.3%)
+5. **Input token analysis** — 10.70x ratio (113K vs 1.21M); zero variance; no image leakage possible
+6. **Selected 5 verification tiles** — 2 high density, 2 low density, 1 empty; created `inputs/tiles/verification_manifest.json`
+7. **Ran fresh API calls** — 10 calls (~$0.012); brief-text F1=0.7600 vs image-only F1=0.5714 (+0.19 diff) on fresh data
+8. **Wrote verification report** — `results/phase2-factorial/phase2a-verification-report.md` documenting all findings for write-up preparation
+
+### Key Results
+
+All red flag criteria cleared:
+
+| Check | Outcome |
+|-------|---------|
+| F1 values match CSV | GREEN — all 50 exact |
+| Advantage broadly distributed | GREEN — 3/4 maps, 15 tiles |
+| brief-text finds true mounds | GREEN — 23 additional TPs |
+| Input tokens differ dramatically | GREEN — 10.70x ratio |
+| Fresh runs reproduce pattern | GREEN — +0.19 F1 diff |
+| Instructions identical within level | GREEN — byte-identical |
+
+Within-elaboration-level comparisons (strongest evidence):
+
+- brief-text vs brief-text-image: +0.08 F1 (identical text, only images differ)
+- verbose-text vs verbose-text-image: +0.03 F1 (identical text, only images differ)
+
+### Issues
+
+- None — all verification checks passed
+
+### Commits
+
+None yet — verification script, manifest, report, and reflection documents to be committed.
+
+### Pending Work
+
+- [ ] Commit verification script, manifest, report, and reflection documents
+- [ ] **Discuss H1 decision rule implications** — brief-text wins by decision rule but contradicts prior experience
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*

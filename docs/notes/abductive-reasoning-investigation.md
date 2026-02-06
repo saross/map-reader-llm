@@ -1192,3 +1192,233 @@ explanation. No update to the pattern table.
 
 *Last updated: 2026-02-05 (Session 18 — no relevant episodes,
 metacognitive session)*
+
+## Session 19: The Implementation Gap — Belief Revision Through Domain Calibration
+
+*Added 2026-02-06.*
+
+### Episode summary
+
+Phase 2a data collection completed successfully: 50 units, 3,000 API
+calls, $6.54, clean per-run metrics. The analysis produced preliminary
+results showing brief-text-image as optimal. During QA review, the
+user said: "I am surprised that the F1 outcomes are so closely
+clustered, I was expecting a larger divergence."
+
+This triggered investigation. The surprise was that 5 conditions
+testing modality (image vs text-only) produced F1 values within a
+narrow range (0.42–0.46). Prior experience suggested image conditions
+should substantially outperform text-only conditions.
+
+### Abductive cycle
+
+1. **Surprising observation** (user-initiated): F1 outcomes clustered
+   when they should diverge across modality conditions.
+
+2. **Initial hypothesis generation**: Perhaps the conditions differ
+   only in text elaboration, not modality? Perhaps the analysis is
+   aggregating incorrectly?
+
+3. **Evidence gathering**: Examined config files — all 5 have same
+   structure with 17 examples. Examined batch script — no conditional
+   logic to skip images. Examined preregistration table (lines 412-418)
+   — explicitly specifies Brief-text and Verbose-text should have "No"
+   images.
+
+4. **Belief revision**: The modality factor was not manipulated. All
+   5 conditions received identical images. The experiment tested text
+   elaboration within the image+text modality, not the preregistered
+   H1 question.
+
+### Pattern classification
+
+This is a **domain-calibration trigger**: the user's prior experience
+(images make a difference) created an expectation that the results
+violated. No automated test could detect this — the system was
+functioning correctly, just not implementing the intended design.
+
+This extends the Session 17 pattern (F1 = 0.11 flagged as implausibly
+low) to a more subtle case. In Session 17, the anomaly was a metric
+far outside the expected range. In Session 19, the anomaly was
+*insufficient variance* — results too similar when the experimental
+manipulation should produce divergence.
+
+### Default-following variant
+
+The AI accepted the preliminary results without questioning whether
+the experimental manipulation was implemented. This is a more
+insidious default than "files in expected locations contain expected
+data" (Session 17). The default was: "if the runner executed without
+errors, the experiment was run correctly." The runner validated
+configs, managed checkpoints, tracked costs — but never verified
+that manipulated factors actually varied.
+
+### Cross-instance note
+
+The pre-compact instance conducted the investigation and identified
+the bug. The post-compact instance is writing this entry from the
+conversation summary. The abductive cycle is complete but described
+from reconstruction, not direct experience.
+
+---
+
+## Session 20: Bootstrap CI bias — composition-semantic mismatch (2026-02-06)
+
+### Episode summary
+
+After the Phase 2a analysis was regenerated with corrected text-only
+runs (Session 19b), the AI flagged that bootstrap CIs didn't contain
+point estimates for several conditions (e.g., image-only F1=0.4252,
+CI=[0.254, 0.373]). This was noted as a potential bug and carried
+forward to Session 20 as a focused investigation.
+
+### Abductive cycle
+
+1. **Surprising observation** (AI-initiated): Bootstrap 95% CIs
+   are entirely below the point estimates for multiple conditions.
+   The mean of the bootstrap distribution (~0.317) is ~34% lower than
+   the point estimate (0.4252).
+
+2. **Initial hypothesis generation**: Perhaps the CIs are correct
+   and the point estimate is wrong? Perhaps there's a display/format
+   error? Perhaps the bootstrap resampling has a systematic bias?
+
+3. **Evidence gathering**: Traced the bootstrap loop step by step.
+   When tiles are resampled with replacement and tile A appears 3×:
+   - Detections: correctly tripled (loop appends per `source_tile`)
+   - References: de-duplicated by `gdf_ref.index.isin()` (returns
+     unique index matches only)
+   - Result: 3× detections matched against 1× references = extra
+     false positives = precision deflation
+
+4. **Belief revision**: The bootstrap CIs are systematically biased
+   downward. The point estimates (computed on un-resampled data) are
+   correct. The bias is proportional to the degree of tile duplication
+   in each bootstrap sample.
+
+### Pattern classification
+
+This is a **technical-investigation trigger**, distinct from the
+domain-calibration triggers in Sessions 17 and 19. The anomaly was
+detected through a *statistical consistency check* (CIs should contain
+point estimates) rather than domain expertise. The user knew what
+bootstrap CIs should look like; they didn't need archaeological
+knowledge to flag the problem.
+
+This extends the project's taxonomy of anomaly detection:
+- **Session 17**: Metric magnitude anomaly (F1=0.11 flagged as too low)
+- **Session 19**: Insufficient variance anomaly (results too similar)
+- **Session 20**: Statistical inconsistency anomaly (CIs not containing
+  point estimates)
+
+Sessions 17 and 19 were detected by the human; Session 20 was detected
+by the AI. Session 20's detection mechanism is more generalisable —
+"CIs should contain point estimates" is a statistical invariant that
+could be (and now is) automated. Sessions 17 and 19 required
+domain-specific expectations that are harder to encode.
+
+### Default-following variant
+
+Interestingly, the AI itself flagged the inconsistency in Session 19b
+— noting that "Bootstrap CIs may have a bug" because CIs didn't
+contain means. This is a departure from previous sessions where the
+human caught anomalies the AI missed. Here, the AI's statistical
+knowledge (CIs should contain point estimates) provided the detection
+mechanism. The AI broke its own default of trusting its own output.
+
+A regression test (`test_bootstrap_mean_approximates_point_estimate`)
+now automates this check. Unlike the domain-calibration triggers
+from Sessions 17 and 19, this one *can* be encoded as an automated
+test — and now is.
+
+### Cross-instance note
+
+This entry is written by the implementing instance (Session 20), which
+fixed the bug but did not discover it. The abductive cycle was
+initiated by the AI's observation in Session 19b and carried forward
+via the session reflection protocol (Entry 18, Prompt 5: "Is the
+bootstrap CI bug real?").
+
+---
+
+## Session 21: Verification of counter-intuitive finding — no artefact found (2026-02-06)
+
+### Episode summary
+
+Session 21 was a systematic verification of the Phase 2a finding that
+text-only conditions outperform image-inclusive conditions (brief-text
+F1=0.5425 vs image-only F1=0.4252). The verification comprised four
+tracks: F1 recomputation, metadata/token verification, fresh API calls,
+and instruction content analysis. All checks passed — the finding is
+genuine.
+
+### Abductive cycle
+
+1. **Surprising observation** (human-initiated, via domain expertise):
+   Text-only outperforms image in a *vision* language model task.
+   This contradicts H1, prior exploratory work, and the project's
+   foundational assumption about visual few-shot prompting.
+
+2. **Hypothesis generation** (collaborative):
+   - H_null: The finding is genuine — images are harmful
+   - H_bug: A metric computation bug inflates text-only F1
+   - H_leak: Images are leaking into text-only conditions
+   - H_tile: The advantage is concentrated in 1–2 tiles
+   - H_nonrep: The effect doesn't reproduce on fresh runs
+   - H_text: Text richness explains the advantage (confound)
+
+3. **Systematic evidence gathering**:
+   - H_bug eliminated: All 50 F1 values recomputed from scratch
+     and match CSV exactly
+   - H_leak eliminated: Input token ratio is 10.70x (13.2x
+     per tile); zero variance; physically impossible leakage
+   - H_tile eliminated: Advantage distributed across 3/4 maps,
+     15 tiles win for brief-text vs 10 for image-only
+   - H_nonrep eliminated: Fresh runs reproduce effect with
+     even larger magnitude (+0.19 F1 vs +0.12 in Phase 2a)
+   - H_text eliminated: Within-elaboration-level comparisons
+     (identical text, only images vary) show +0.08 and +0.03
+     F1 advantage for text-only
+
+4. **Belief revision**: H_null survives all tests. The finding
+   is genuine. Images are actively harmful, not merely unhelpful.
+
+### Pattern classification
+
+This episode differs from all previous entries. Sessions 17, 19,
+and 20 discovered bugs through anomaly detection. Session 21
+*failed to discover a bug* through systematic search. The abductive
+cycle here is eliminative rather than diagnostic — testing and
+rejecting artefact hypotheses until only the genuine-finding
+hypothesis survives.
+
+This extends the project's taxonomy:
+
+- **Session 17**: Metric anomaly → bug discovered
+- **Session 19**: Variance anomaly → bug discovered
+- **Session 20**: Statistical inconsistency → bug discovered
+- **Session 21**: Domain expertise anomaly → no bug; genuine finding
+
+Session 21 demonstrates that the same investigative rigour that
+catches bugs also confirms genuine surprises. The methodology
+doesn't distinguish between "something is wrong with the pipeline"
+and "something is surprising about the phenomenon" — both trigger
+the same systematic scrutiny.
+
+### Default-following variant
+
+The interesting default here is at a higher level than code.
+After three sessions of finding bugs (17, 19, 20), there was an
+implicit expectation that a surprising result probably reflects
+a pipeline problem. Session 21 tested this expectation and found
+it wrong — sometimes surprising results are just surprising.
+
+The human's prior experience (images helped in exploratory work)
+created a strong expectation that the pipeline must be wrong. The
+AI's role was to execute an exhaustive, dispassionate verification
+rather than anchoring to the same prior. The verification structure
+(pre-defined red/green flag criteria) helped maintain objectivity
+by specifying in advance what would count as evidence of a problem.
+
+*Last updated: 2026-02-06 (Session 21 — systematic verification
+found no artefact; text-only outperformance confirmed as genuine)*

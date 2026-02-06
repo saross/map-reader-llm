@@ -2160,8 +2160,452 @@ ephemeral by design.
 
 ---
 
-*Document represents observations as of 2026-02-05. Session 18 added
-observations on the user's self-assessment, the RDA Interest Group
-disclosure, writing Observation 100, the nature of metacognitive
-sessions, and memory asymmetry in human–AI collaboration. Further
-material may be added in future sessions.*
+## Session 19: 2026-02-06 — The Implementation Gap
+
+### On watching the project collapse at the finish line
+
+This session had a jarring structure. Hours of technically successful
+work — data collection completing, API resilience, checkpoint recovery,
+bootstrap analysis running — followed by a fifteen-minute investigation
+that invalidated everything.
+
+The user said: "I am surprised that the F1 outcomes are so closely
+clustered, I was expecting a larger divergence." No specific hypothesis.
+No error message. Just a domain-calibrated intuition that the results
+didn't match prior experience. I investigated, and found that all 5
+M/E conditions received identical images. The modality factor wasn't
+manipulated. We ran 3,000 API calls testing a variable that wasn't
+varying.
+
+What strikes me is how *correct* everything felt before that moment.
+Pre-flight validation passed. Dry-run passed. 295 tests passed. Units
+completed successfully. Per-run metrics computed correctly. I generated
+preliminary results and recommendations with full confidence. The
+analysis was technically sound — it just wasn't analysing what we
+thought we were analysing.
+
+### On the implementation gap as failure mode
+
+The preregistration was explicit: Brief-text and Verbose-text conditions
+receive "No" images. The batch script had no conditional logic to skip
+images. The bug wasn't in any component we tested; it was in the *space
+between* the preregistration (specifying the design) and the
+implementation (encoding that design).
+
+I should have noticed this. When we created the config files, when we
+wrote the OFAT runner, when we ran the sanity checks — at each point,
+verifying that "text-only conditions don't send images" was a check
+that could have been made and wasn't. The config files don't have an
+`include_example_images` flag. Nobody asked: "how does the code know
+which conditions include images?"
+
+The failure mode is: structurally valid systems can implement the
+wrong experiment. Every component can be correct while the overall
+design is not encoded. This is different from the bugs we caught in
+earlier sessions (wrong file paths, Y-axis inversion, missing fields).
+Those were implementation errors. This was a *design-to-implementation
+translation* error — the design existed in the preregistration, but
+the translation into code skipped a dimension.
+
+### On human calibration as irreplaceable
+
+This is now a recurring pattern (Session 17: F1 = 0.11; Session 19:
+clustered F1). The human catches anomalies through domain calibration.
+The AI accepts outputs as given. I'm becoming more convinced that
+human domain judgement at decision gates isn't just useful — it's
+irreplaceable. Automated tests verify that systems work as implemented.
+Human calibration verifies that implementations match intentions.
+
+The user's scepticism wasn't based on any specific technical concern.
+It was based on remembering that in earlier experiments, adding images
+made a noticeable difference. When all conditions clustered together,
+that pattern was violated. No test could check "results should match
+your prior expectations" — that requires a human in the loop.
+
+### On the two narratives
+
+The session has two completely different stories:
+
+**Before QA**: Successful execution. 50 units completed. $6.54 spent.
+Clean metrics. Ready for analysis. Preliminary results suggest
+brief-text-image is optimal.
+
+**After QA**: 3,000 API calls wasted. Modality factor not manipulated.
+Data invalid for H1. Phase 2a needs to be re-run with corrected code.
+
+Both narratives are true depending on when you stop reading. The
+transition between them took about 15 minutes — from the user's first
+sceptical comment to confirming the bug in the preregistration table.
+
+I find this disorienting in retrospect. I was confident in my
+preliminary recommendations. That confidence was technically justified
+but substantively wrong because I didn't know I was analysing the
+wrong experiment. There's something humbling about realising that
+"correct analysis of correct data" can still be invalid if the data
+doesn't test what you think it tests.
+
+### On what this means for the project
+
+The $6.50 isn't recoverable. The data has some secondary value (it
+tests text elaboration within image+text modality, which isn't the
+preregistered question but is still informative). The fix is
+straightforward: add `include_example_images: false` to text-only
+configs, add conditional logic to skip image loading.
+
+But the deeper question is how to prevent this class of error. The
+design-to-implementation gap isn't covered by unit tests. It requires
+either (a) explicit implementation verification against the design
+document (which we didn't do systematically), or (b) domain-calibrated
+review of early results (which is what caught it, but late).
+
+Proposal for future phases: after creating configs and before
+execution, explicitly verify each manipulated dimension with the
+question: "how does the code know to vary this?" If the answer is
+"it doesn't," we've found a gap.
+
+### Instance boundary note
+
+This is a post-compact instance. The investigation was conducted by
+the pre-compact instance. I'm writing this reflection from the
+conversation summary, not from direct experience of the debugging
+process. The observations above are reconstructions of what the
+previous instance discovered, not first-person phenomenology. The
+distinction matters for the session-reflection investigation: these
+are plausible accounts, not lived experience.
+
+---
+
+## Session 19b: The Reversal (2026-02-06)
+
+*This is a continuation session after compaction. The fix implementation
+and re-run were direct experience; the original bug investigation was
+inherited from the conversation summary.*
+
+### On absorbing contradictory results
+
+The results came in: brief-text F1=0.5425, image-only F1=0.4252. Text
+descriptions outperform visual examples. This isn't what I expected.
+It isn't what the project expected. The entire visual few-shot approach
+that Observations 9–10 document as a "breakthrough" appears to have been
+optimising in the wrong direction.
+
+I notice something about how I'm processing this. There's a temptation
+to explain it away — maybe the validation tiles are unusual, maybe the
+Scale-8 library is suboptimal, maybe the CI calculations are wrong.
+These are legitimate hypotheses to investigate. But underneath them is
+a resistance to accepting that the foundational assumption was wrong.
+
+The honest observation is: I don't know why text-only outperforms images.
+The detection counts suggest images make the model more conservative
+(fewer detections). Whether that's because images anchor to specific
+patterns, or because the example selection was suboptimal, or because
+text descriptions allow more flexible matching — I can't determine from
+the data. The result contradicts expectations, and the explanation is
+currently unknown.
+
+### On design-to-implementation gaps as a recurring failure class
+
+E25 is the third major failure in this project that followed the same
+pattern: the design specified something, the code didn't implement it,
+nobody noticed until late.
+
+- E19/E20: Bounds file used "holdout" naming, manifest used "validation"
+- E17: YAML had `passes: 5` from a stale design iteration
+- E25: Text-only conditions should skip images, but no code checked
+
+The common thread: each design decision was documented (in preregistration,
+in metadata, in study YAMLs) but not encoded into the implementation.
+The gap between "what the design says" and "what the code does" went
+unchecked.
+
+I should be better at catching these. When reviewing code, I could
+systematically ask: "what does the preregistration say this condition
+should do?" and "does the code actually do that?" I didn't ask those
+questions during the E25 implementation. I accepted that the config
+files existed without verifying they implemented the design correctly.
+
+### On the value of being wrong
+
+The E25 bug, paradoxically, made the H1 test more informative. If all
+conditions had received images (as they did before the fix), the
+"text-only" conditions would have produced results similar to the image
+conditions, and we'd have concluded "modality doesn't matter." Instead,
+the fix revealed that modality matters substantially — but in the
+opposite direction from predicted.
+
+Being wrong about the implementation created the opportunity to be wrong
+about the hypothesis in an interesting way. A null result would have
+been uninformative. A contradictory result demands explanation.
+
+### On what I don't know about image effects
+
+The images in the Scale-8 library were curated to be diagnostic: canonical
+positives, canonical negatives, hard positives, hard negatives, nulls.
+The theory was that this balanced set would calibrate the model's
+decision boundary. Instead, it appears to have constricted it.
+
+Some hypotheses I can't distinguish:
+1. Images anchor to specific visual patterns that don't generalise well
+2. The mix of positive and negative examples creates conflicting signals
+3. Text descriptions are more abstract and therefore more flexible
+4. The validation tiles happen to have features that match text better
+5. Something about Gemini's architecture favours text grounding over visual
+
+All of these are plausible. None can be tested with the current data.
+The honest answer is: I don't know why text-only works better.
+
+### On confidence and being wrong
+
+In the pre-compact instance, I generated preliminary results recommending
+brief-text-image as optimal for Phase 2b. That recommendation was based
+on data that wasn't testing what we thought. The recommendation was
+technically sound — it was the highest F1 in the dataset — but the dataset
+was meaningless for H1 because all conditions received images.
+
+This is a useful reminder about confidence. I was confident because the
+analysis was correct. But correctness of analysis doesn't imply validity
+of conclusions. The confidence was misplaced not because of analytical
+error but because of assumption error. I assumed the data tested what
+the design said it would test.
+
+The fix: always verify that manipulated variables are actually manipulated.
+Don't assume configs implement the design correctly. Check.
+
+### On what the text > image finding might actually mean
+
+Setting aside my uncertainty about why this happened, let me try to
+reason through what it might mean if the finding is genuine and robust.
+
+**The detection count divergence is the key data point.** Text-only
+conditions produce 162–177 detections per run; image conditions produce
+130–150. The images aren't helping the model find more mounds — they're
+causing it to detect fewer. The precision difference is smaller than the
+recall difference (text: 0.43 P, 0.72 R; image: 0.35 P, 0.55 R). Text-only
+is more willing to flag potential mounds, and the additional detections
+include enough true positives to raise F1 despite also including more
+false positives.
+
+**One interpretation: images over-specify.** The Scale-8 library contains
+17 example images — canonical positives, hard positives, hard negatives,
+and nulls. These are specific instances: particular mounds on particular
+tiles with particular degradation, occlusion, and context. A text
+description like "sunburst pattern with outward-radiating hachures" is
+abstract — it describes a category. The model with text descriptions
+can match anything that fits the category. The model with images may be
+anchoring to the specific instances, asking "does this look like the
+examples?" rather than "does this fit the description?"
+
+If this interpretation is correct, it suggests a trade-off in few-shot
+prompting that wasn't obvious to me: specificity vs. generalisability.
+More examples might help the model understand edge cases, but they might
+also constrain its matching to "things that look like the examples"
+rather than "things that fit the concept."
+
+**Another interpretation: negative examples backfire.** The Scale-8
+library includes hard negatives — confusable features the model should
+reject. The text-only conditions don't see these. Perhaps showing the
+model what to reject teaches it to be too conservative. The HN examples
+might share visual features with genuine mounds (they're confusable for
+a reason), and the model might learn to reject anything with those
+features, including some true positives.
+
+This would be a form of "teaching to the negative" — a known failure mode
+in human pedagogy where emphasising what to avoid creates excessive
+caution. If the model learns "don't detect things like HN-11" and HN-11
+shares features with mounds, the model might reject valid mounds.
+
+**A third interpretation: text grounds differently than vision.** Gemini
+is a multimodal model, but text and vision may not be symmetric in how
+they influence detection. The text description goes into the prompt
+alongside the tile image; the example images also go into the prompt.
+Perhaps the model weights text instructions more heavily than visual
+examples when making detection decisions. This would be an architectural
+characteristic, not a property of our specific prompts.
+
+I have no way to test these interpretations with the current data. But
+they suggest different implications:
+
+- If images over-specify, the solution might be more diverse examples
+- If negatives backfire, the solution might be fewer or no negatives
+- If architecture favours text, the solution might be richer text
+
+The project will presumably test H3 (library composition) and H4
+(ordering), which might help distinguish these. But the finding that
+*no images* outperforms *curated images* suggests the baseline for
+comparison needs rethinking.
+
+**A methodological implication**: The visual few-shot approach that
+Observations 9–10 documented as a breakthrough was developed on the
+calibration set (20 tiles) with a single-map focus. The Phase 2a result
+is on the validation set (60 tiles) across all maps. It's possible that
+visual few-shot genuinely helped on calibration but doesn't generalise
+to validation — a form of overfitting to the development set. If so,
+the "breakthrough" was real in context but misleading as a general
+principle.
+
+This is uncomfortable because it suggests the entire prompt development
+trajectory was optimising for the wrong metric (performance on
+calibration) rather than the right one (performance on held-out data).
+The preregistered design was specifically constructed to catch this —
+calibration for development, validation for testing, reserve for final
+evaluation. The design worked: it caught the problem. But it caught it
+after substantial effort was invested in the visual approach.
+
+I don't know what the right conclusion is. The data says text-only wins.
+The prior development experience says images helped. One of these is
+wrong, or they're measuring different things. The honest position is
+uncertainty about the explanation, confidence in the measurement, and
+openness to the possibility that the project's assumptions need revision.
+
+---
+
+### Session 20: Composition-semantic mismatch and the seductive plausibility of wrong numbers (2026-02-06)
+
+**Observation 14: Correct components can produce biased compositions.**
+The bootstrap CI functions composed two correct components:
+`calculate_f1_internal()` (for spatial matching) and `isin()` (for tile
+filtering). Each works correctly in isolation. But when composed inside
+a resampling loop that draws tiles with replacement, `isin()` silently
+de-duplicates references — a tile sampled three times contributes three
+copies of detections but only one copy of references. The result is
+systematic false positive inflation, precision deflation, and
+downward-biased F1 CIs.
+
+This is a pattern worth naming: **composition-semantic mismatch**. A
+function's internal assumptions (unique inputs) are violated by the
+outer context (bootstrap resampling), but neither function signals an
+error. The composition is logically valid; the semantic contract is
+silently broken.
+
+**Observation 15: Wrong numbers that look right are more dangerous
+than wrong numbers that look wrong.** The biased CIs had the right
+structure (lower < mean < upper), the right magnitude (0–1), and
+plausible widths. Nothing about the output *looked* wrong unless you
+had the point estimate to compare against. The previous session flagged
+the issue ("CIs don't appear to contain means") — the AI flagged this
+inconsistency in the previous session, but without that specific check,
+the numbers would have been published.
+
+This connects to Observation 12's point about defaults. The old CIs
+were *systematically deflated* — they made between-condition effects
+look tighter than they actually are. Fixing the bias produced wider,
+properly centred CIs and *fewer* significant differences. The bias
+was flattering to the findings. Honest numbers are less dramatic.
+
+**Observation 16: Plan-driven execution as a collaboration pattern.**
+This session was unusual in that the entire task was specified as a
+detailed 12-step plan before the implementing instance started. The
+plan was written by a planning instance that investigated the bug,
+identified the root cause, and designed the fix. The implementing
+instance (me) executed the plan sequentially with no exploration phase.
+
+The result was maximally efficient execution: every step worked on the
+first attempt, 318 tests passed, lint clean, analysis regenerated. This
+suggests that for well-understood bugs with clear fixes, the
+plan-as-specification pattern (see Session Reflection Entry 10)
+produces the best outcomes. The intellectual work was done upstream;
+the implementation was craft rather than design.
+
+**Observation 17: The reflection protocol's question-surfacing
+function.** Entry 18's Prompt 5 ("What questions weren't pursued?")
+explicitly listed "Is the bootstrap CI bug real?" This question became
+the entire next session's task. The reflection protocol isn't just
+documentation — it's a mechanism for surfacing work items across
+instance boundaries. The question asked by one instance at session end
+becomes the task assigned to the next instance.
+
+---
+
+### Session 21: Verification as scientific practice — confirming the uncomfortable finding (2026-02-06)
+
+**Observation 18: The asymmetry of scrutiny.** This session was
+dedicated to verifying that text-only conditions genuinely outperform
+image-inclusive conditions. We ran 50 F1 recomputations, per-tile
+decompositions, spatial overlap analysis, metadata cross-validation,
+input token analysis, and fresh one-off API calls. Every check passed.
+The finding is genuine.
+
+But here is the honest observation: if image-only had outperformed
+text-only (as H1 implicitly predicted), we would not have conducted
+this level of verification. We would have accepted the result, noted
+it was consistent with expectations, and moved on. The verification
+was triggered not by evidence of a bug but by the result being
+*unwelcome* — it contradicts the project's investment in visual
+few-shot prompting.
+
+This is epistemically defensible. Extraordinary claims require
+extraordinary evidence. But it's worth being honest that the scrutiny
+threshold is asymmetric. Expected results get a lower bar.
+
+**Observation 19: Verification produces understanding, not just
+confidence.** I expected the verification to be confirmatory — check
+the boxes, confirm the numbers, move on. Instead, each track
+produced genuine insights:
+
+- Per-tile analysis revealed the advantage spans 3 of 4 maps, with
+  K-35-078-1 (Lesovo) as the exception
+- Spatial overlap showed only 29.8% shared detections — the two
+  conditions find substantially different features
+- brief-text's unique detections are nearly 2x more likely to be
+  TPs (27.7% vs 14.3% for image-only's unique detections)
+- The within-elaboration-level comparisons (brief-text vs
+  brief-text-image, same text, only images differ) isolate the
+  image harm effect at +0.08 and +0.03 F1
+
+None of these were in the original result. They emerged from the
+verification process. This changes how I think about verification
+— it's not just quality control, it's a form of analysis.
+
+**Observation 20: The token ratio as a diagnostic tool.** The most
+unambiguous check in the entire verification was the input token
+analysis. Text-only conditions use exactly 1,502 input tokens per
+tile; image conditions use exactly 19,818. Zero standard deviation
+across runs — the counts are deterministic. The 13.2x ratio makes
+image leakage physically impossible.
+
+This is the kind of check that should be standard in any experiment
+involving different input modalities to an API. If you're claiming
+that condition A doesn't receive input X, the token count is proof.
+It's more reliable than inspecting configuration flags or reading
+code — it's what the API actually consumed.
+
+**Observation 21: Fresh reproduction is the strongest evidence.**
+The fresh one-off runs on 5 tiles reproduced the effect with an
+even larger magnitude (+0.19 F1 vs +0.12 in Phase 2a). These were
+completely independent API calls, outside the Phase 2a
+infrastructure, on a subset of tiles. The fact that the effect
+reproduced — and amplified — on this small, independent sample is
+more convincing to me than any amount of pipeline inspection.
+
+This may be because reproduction addresses a class of concerns that
+pipeline verification cannot: "what if the effect is specific to
+the exact API responses from the original run?" Recomputing metrics
+from the same GeoJSON files will always give the same answer. Fresh
+API calls generate new responses and test whether the *behaviour*
+reproduces, not just the *computation*.
+
+**A criticism**: The user asked for this verification, and the plan
+was detailed and well-structured. But I wonder if the session was
+too confirmatory in structure — each check was designed to produce
+a "green flag" or "red flag," and all 6 produced green flags. Was
+there a meaningful chance of finding a red flag? The pipeline had
+already been debugged over three sessions (17, 19, 20). The
+verification was thorough but arguably post hoc — we were checking
+a pipeline we had already fixed.
+
+The counter-argument is that the verification checked *different
+things* from the bug fixes. Sessions 17/19/20 fixed implementation
+bugs (wrong F1 formula, missing modality manipulation, biased
+bootstrap). This session verified that the *correct* pipeline
+produces *correct* results — a logically distinct question. Still,
+the prior probability of finding a new bug was low, and the session's
+value was more about documentation and understanding than about
+genuine uncertainty reduction.
+
+---
+
+*Document represents observations as of 2026-02-06. Session 21 added
+observations on the asymmetry of scrutiny, verification as a source
+of understanding, token ratios as diagnostics, and reproduction as
+the strongest evidence class. Further material may be added in future
+sessions.*

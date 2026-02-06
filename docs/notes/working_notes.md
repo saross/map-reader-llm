@@ -1797,3 +1797,98 @@ This project's approach — automated session archiving, structured reflection p
 2. **The archive becomes the AI's institutional memory.** Session transcripts, reflection documents, and observation logs don't just document the project — they *are* the AI's memory. Without them, each session would start from the codebase alone, with no knowledge of design rationale, rejected approaches, or intellectual provenance. The documentation infrastructure proposed in Observation 100 is not optional scaffolding; it's a functional requirement for AI continuity.
 
 3. **Documentation standards must capture who contributed what.** In traditional RDM, provenance tracks which tool processed which data. In human–AI collaboration, provenance also needs to track which party contributed which *idea* — because one party cannot maintain this record independently.
+
+## Observation 102: The implementation gap — design-to-code translation failures (2026-02-06)
+
+**Context**: Session 19. Phase 2a data collection completed successfully (50 units, $6.54, clean metrics). During QA, the user noted that F1 outcomes were "surprisingly clustered" across conditions. Investigation revealed that all 5 M/E conditions received identical example images. The modality factor wasn't manipulated — the preregistration specified that Brief-text and Verbose-text should receive "No" images, but the batch script had no conditional logic to skip images.
+
+**The observation**: This represents a distinct failure class: the *design-to-implementation translation gap*. The preregistration was explicit about the experimental design. The code was correct at the component level. The failure was in the translation between them — no one asked "how does the code know which conditions include images?"
+
+This differs from previously documented failure types:
+
+1. **Implementation bugs** (E3–E5 from Session 5): Wrong file paths, Y-axis inversion, SDK incompatibility. These are errors *within* the implementation.
+
+2. **Propagation failures** (Observations 93–94): Information changes in a source document but isn't propagated to dependent documents. This is an error of *updating* across documents.
+
+3. **Convention-propagation failures** (Observation 97): Naming decisions applied inconsistently from the start. This is an error of *initial consistency*.
+
+4. **Design-to-implementation gaps** (this observation): The design exists in the specification; the code is structurally valid; but the code doesn't encode a dimension of the design. This is an error of *translation completeness*.
+
+The detection mechanism was again human domain calibration. The user remembered that in earlier experiments, adding images made a noticeable difference. When all conditions clustered together, that pattern was violated. No automated test could check "results should diverge across conditions that differ in modality" because the test would need to know the research hypothesis.
+
+**Methodological implication**: After creating experimental configurations and before execution, explicitly verify each manipulated dimension with the question: "how does the code know to vary this?" If the answer is "it doesn't," a design-to-implementation gap exists. This check should be part of pre-execution validation alongside dry-runs and preflight checks.
+
+**Cost**: 3,000 API calls (~$6.50) testing a non-varying variable. The data has secondary value (it tests text elaboration within the image+text modality) but is invalid for the preregistered H1 question.
+
+## Observation 103: Text-only outperforms visual few-shot — a foundational assumption challenged (2026-02-06)
+
+**Context**: Session 19b (continuation). After fixing E25 (modality manipulation bug), the text-only conditions were re-run with corrected code. Analysis of the complete Phase 2a data revealed a surprising result: text-only conditions substantially outperform image conditions.
+
+| Condition | Mean F1 | Detection Count |
+|-----------|---------|-----------------|
+| brief-text | 0.5425 | 162–177 |
+| verbose-text | 0.4710 | 165–175 |
+| brief-text-image | 0.4617 | 130–150 |
+| verbose-text-image | 0.4369 | 135–145 |
+| image-only | 0.4252 | 130–145 |
+
+**The observation**: This result contradicts the H1 prediction that image-based conditions would outperform text-only conditions. More significantly, it challenges the foundational assumption underlying the project's visual few-shot prompting approach (documented in Observations 9–10 as a "breakthrough").
+
+The detection count divergence is informative: text-only conditions produce 20–30% more detections than image conditions. The images appear to be *constraining* rather than *enriching* the model's detection behaviour — possibly by anchoring to specific visual patterns that don't generalise well to the validation tiles.
+
+Several hypotheses could explain this reversal:
+
+1. **Specificity vs. abstraction**: Text descriptions ("sunburst pattern", "radiating hachures") may allow more flexible matching than visual examples that show specific instances.
+
+2. **Negative examples as constraints**: The Scale-8 library includes hard negatives (confusable features to reject). These may teach the model to be too conservative.
+
+3. **Validation set characteristics**: The 60 validation tiles may happen to contain mound presentations that are better described textually than visually demonstrated.
+
+4. **Architecture effects**: Gemini's vision-language integration may weight text grounding more heavily than visual grounding for this task.
+
+None of these hypotheses can be distinguished with the current data. The result is robust across 10 runs per condition but the explanation is currently unknown.
+
+**Methodological implication**: The carry-forward decision rule (select M/E level with highest F1 for subsequent phases) would select brief-text. However, this contradicts the project's historical trajectory of developing visual few-shot prompting as an improvement over text-only. The tension between following the decision rule and trusting prior experience deserves explicit discussion before proceeding to Phase 2b.
+
+**Meta-observation**: This is the project's first *substantive* scientific surprise — a result about the phenomenon being studied rather than about implementation, infrastructure, or methodology. The detection mechanism was the same (graduated sanity checks creating gates for human review), but what was caught was a finding, not a bug.
+
+## Observation 104: Bootstrap CI bias — composition-semantic mismatch (2026-02-06)
+
+**Context**: Session 20. The previous session flagged that bootstrap CIs didn't contain point estimates (e.g., image-only F1=0.4252, CI=[0.254, 0.373]). This session diagnosed the root cause and implemented a fix.
+
+**Root cause**: The bootstrap functions resampled tiles with replacement, then built GeoDataFrames and called `calculate_f1_internal()`. Inside that function, `scope_references_to_tiles()` uses `gdf_ref.index.isin()`, which silently de-duplicates. A tile sampled three times contributes three copies of detections but only one copy of references. Extra detections against unchanged references = systematic false positive inflation = precision deflation = downward-biased F1 CIs.
+
+**The fix**: Pre-compute TP/FP/FN per tile once (via spatial matching), then aggregate in the bootstrap loop by looking up counts for each sampled tile (duplicates contribute proportionally). This correctly implements with-replacement semantics and is substantially faster (spatial matching done once, not 1000×).
+
+**The pattern**: This is a **composition-semantic mismatch** — individual functions behave correctly, but their composition in a resampling context violates an internal assumption (unique tiles). The bug is invisible to linting, type checking, and unit tests. Only a semantic check ("does the bootstrap mean approximate the point estimate?") can catch it.
+
+**Corrected results**: CIs now properly contain point estimates. The corrected CIs are wider (e.g., image-only F1 CI=[0.340, 0.500] vs old [0.254, 0.373]), and pairwise comparisons remain non-significant after FDR correction. The honest results are less dramatic than the biased ones — the bias was *flattering* to the findings.
+
+**Methodological implication**: For any bootstrap procedure, verify that the bootstrap mean approximates the point estimate. A substantial divergence (>0.02 for F1) indicates the resampling isn't correctly reproducing the estimation procedure. This is now enforced by regression tests in the test suite.
+
+## Observation 105: Within-elaboration-level comparisons as the cleanest evidence for image harm (2026-02-06)
+
+**Context**: Session 21 (Phase 2a verification). The full verification confirmed that text-only outperformance is genuine. During the analysis, the within-elaboration-level comparisons emerged as the strongest methodological evidence.
+
+**The observation**: The Phase 2a design includes two pairs of conditions where the system instruction text is byte-identical and the only difference is whether example images are sent: brief-text vs brief-text-image, and verbose-text vs verbose-text-image. Both pairs show the same pattern:
+
+- brief-text F1=0.5425 vs brief-text-image F1=0.4617 (diff=+0.0808)
+- verbose-text F1=0.4710 vs verbose-text-image F1=0.4369 (diff=+0.0341)
+
+This design feature eliminates the text richness confound that clouds the image-only comparison (which uses a minimal 19-line instruction). The within-level comparisons demonstrate that images are *actively harmful* — not merely less useful than richer text — because the text is held constant. This is an unplanned but powerful analytical feature of the factorial design.
+
+**Methodological implication**: When reporting the text-only outperformance finding, the within-elaboration-level comparisons should be the primary evidence, not the image-only vs brief-text comparison. The latter is confounded; the former is clean. The factorial design's crossed structure created this analytical opportunity even though it wasn't the primary motivation for including both paired and unpaired conditions.
+
+## Observation 106: Input token counts as modality verification (2026-02-06)
+
+**Context**: Session 21. During metadata cross-validation, input token counts proved to be the most unambiguous evidence that different conditions received different inputs.
+
+**The observation**: In any experiment varying what a Language Model (LM) receives as input, the input token count is a direct, unfalsifiable record of what the model consumed. For Phase 2a:
+
+- Text-only conditions: 1,502 input tokens per tile (zero variance across 120 tiles x 2 conditions)
+- Image conditions: 19,818 input tokens per tile (zero variance across 180 tiles x 3 conditions)
+- Ratio: 13.2x
+
+Zero standard deviation means the counts are deterministic — every tile in a given condition receives exactly the same number of tokens. This makes it physically impossible for images to "leak" into text-only conditions. Code review can miss edge cases; configuration inspection can miss defaults; but token counts are what the API actually consumed.
+
+**Methodological implication**: For any VLM experiment that varies input modality, include input token counts in the verification protocol. The token count is the strongest possible evidence of what the model actually received, stronger than configuration flags or code inspection. This should be standard practice — report per-condition token statistics as part of the experimental methods section.
