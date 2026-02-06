@@ -232,6 +232,131 @@ def scope_references_to_tiles(
     return gdf_ref.loc[gdf_ref.index.isin(in_scope.index)].copy()
 
 
+def compute_per_tile_tp_fp_fn(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: int = 20,
+) -> pd.DataFrame:
+    """
+    Pre-compute TP, FP, FN counts per tile via spatial matching.
+
+    Performs Hungarian-algorithm matching once per tile, returning a
+    DataFrame of per-tile counts. This avoids repeating expensive spatial
+    operations inside bootstrap loops.
+
+    The matching is per-tile rather than per-map (the approach used by
+    calculate_f1_internal). Cross-tile matches within the buffer zone
+    are negligible given tile sizes (hundreds of metres) relative to
+    the buffer (20 m), so the approximation is safe for bootstrap
+    resampling purposes.
+
+    Args:
+        gdf_det: GeoDataFrame of detections (must have 'source_tile').
+        gdf_ref: GeoDataFrame of ground truth references (must have 'Map').
+        gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name').
+        buffer_metres: Maximum distance for a valid match (default 20 m).
+
+    Returns:
+        DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
+    """
+    rows: list[dict] = []
+
+    for _, tile_row in gdf_bounds.iterrows():
+        tile_name = tile_row['tile_name']
+        tile_geom = tile_row.geometry
+        map_name = get_map_name(tile_name)
+
+        if map_name == "Unknown":
+            rows.append({"tile_name": tile_name, "tp": 0, "fp": 0, "fn": 0})
+            continue
+
+        # Detections for this tile
+        det_scope = gdf_det[gdf_det['source_tile'] == tile_name]
+
+        # References: filter by map name, then intersect with tile geometry
+        ref_for_map = gdf_ref[gdf_ref['Map'] == map_name]
+        if not ref_for_map.empty:
+            ref_scope = ref_for_map[ref_for_map.intersects(tile_geom)]
+        else:
+            ref_scope = ref_for_map.iloc[0:0]
+
+        if det_scope.empty and ref_scope.empty:
+            rows.append({"tile_name": tile_name, "tp": 0, "fp": 0, "fn": 0})
+        elif det_scope.empty:
+            rows.append({
+                "tile_name": tile_name,
+                "tp": 0, "fp": 0, "fn": len(ref_scope),
+            })
+        elif ref_scope.empty:
+            rows.append({
+                "tile_name": tile_name,
+                "tp": 0, "fp": len(det_scope), "fn": 0,
+            })
+        else:
+            det_geoms = list(det_scope.geometry)
+            ref_geoms = list(ref_scope.geometry)
+            matched_det, _matched_ref, unmatched_det, unmatched_ref = \
+                match_detections_to_references(det_geoms, ref_geoms, buffer_metres)
+            rows.append({
+                "tile_name": tile_name,
+                "tp": len(matched_det),
+                "fp": len(unmatched_det),
+                "fn": len(unmatched_ref),
+            })
+
+    return pd.DataFrame(rows)
+
+
+def aggregate_tile_metrics(
+    tile_metrics: pd.DataFrame,
+    sample_tiles: np.ndarray,
+) -> tuple[float, float, float]:
+    """
+    Aggregate TP/FP/FN from pre-computed per-tile metrics for a bootstrap sample.
+
+    Looks up each tile in sample_tiles (which may contain duplicates from
+    bootstrap resampling) and sums TP, FP, FN across the sample. A tile
+    sampled k times contributes k × its counts. Computes precision, recall,
+    and F1 from the aggregated totals.
+
+    Args:
+        tile_metrics: DataFrame with columns [tile_name, tp, fp, fn],
+            as returned by compute_per_tile_tp_fp_fn().
+        sample_tiles: Array of tile names (may contain duplicates).
+
+    Returns:
+        Tuple of (precision, recall, f1).
+    """
+    # Index by tile_name for fast lookup
+    indexed = tile_metrics.set_index('tile_name')
+
+    tp_total = 0
+    fp_total = 0
+    fn_total = 0
+
+    for tile_name in sample_tiles:
+        if tile_name in indexed.index:
+            row = indexed.loc[tile_name]
+            # If tile_name appears multiple times in tile_metrics
+            # (shouldn't happen, but handle gracefully), take first row
+            if isinstance(row, pd.DataFrame):
+                row = row.iloc[0]
+            tp_total += int(row['tp'])
+            fp_total += int(row['fp'])
+            fn_total += int(row['fn'])
+
+    precision = tp_total / (tp_total + fp_total) if (tp_total + fp_total) > 0 else 0.0
+    recall = tp_total / (tp_total + fn_total) if (tp_total + fn_total) > 0 else 0.0
+    f1 = (
+        2 * (precision * recall) / (precision + recall)
+        if (precision + recall) > 0
+        else 0.0
+    )
+
+    return precision, recall, f1
+
+
 def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     """
     Calculate global F1 using one-to-one matching via Hungarian algorithm.
@@ -322,43 +447,24 @@ def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=No
     if random_seed is not None:
         np.random.seed(random_seed)
 
+    # Pre-compute per-tile TP/FP/FN once (errata E26: fixes duplicate-tile
+    # reference de-duplication bias in bootstrap resampling)
+    tile_metrics = compute_per_tile_tp_fp_fn(
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+    )
+
     precision_scores = []
     recall_scores = []
     f1_scores = []
 
-    for i in range(n_iterations):
+    for _i in range(n_iterations):
         sample_tiles = np.random.choice(tiles, n_tiles, replace=True)
-
-        sample_dets = []
-        sample_bounds = []
-
-        for t in sample_tiles:
-            d = gdf_det[gdf_det['source_tile'] == t].copy()
-            sample_dets.append(d)
-            b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
-            sample_bounds.append(b)
-
-        if not sample_dets:
-            precision_scores.append(0)
-            recall_scores.append(0)
-            f1_scores.append(0)
-            continue
-
-        gdf_sample_det = pd.concat(sample_dets, ignore_index=True)
-        gdf_sample_bounds = pd.concat(sample_bounds, ignore_index=True)
-
-        try:
-            precision, recall, f1 = calculate_f1_internal(
-                gdf_sample_det, gdf_ref, gdf_sample_bounds
-            )
-            precision_scores.append(precision)
-            recall_scores.append(recall)
-            f1_scores.append(f1)
-        except Exception as e:
-            logger.debug("Bootstrap iteration %d failed: %s", i, e)
-            precision_scores.append(0)
-            recall_scores.append(0)
-            f1_scores.append(0)
+        precision, recall, f1 = aggregate_tile_metrics(
+            tile_metrics, sample_tiles
+        )
+        precision_scores.append(precision)
+        recall_scores.append(recall)
+        f1_scores.append(f1)
 
     return {
         "f1": {
@@ -429,63 +535,32 @@ def bootstrap_effect_size_ci(
     if random_seed is not None:
         np.random.seed(random_seed)
 
+    # Pre-compute per-tile TP/FP/FN for both conditions (errata E26)
+    # Filter bounds to common tiles for consistent scoping
+    common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
+    common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
+    tile_metrics_a = compute_per_tile_tp_fp_fn(
+        gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=20,
+    )
+    tile_metrics_b = compute_per_tile_tp_fp_fn(
+        gdf_det_b, gdf_ref, common_bounds_b, buffer_metres=20,
+    )
+
     f1_diffs = []
     precision_diffs = []
     recall_diffs = []
 
-    for i in range(n_iterations):
+    for _i in range(n_iterations):
         # Paired sampling: same tiles for both conditions
         sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
 
-        # Build sample for Condition A
-        sample_dets_a = []
-        sample_bounds_a = []
-        for t in sample_tiles:
-            d = gdf_det_a[gdf_det_a['source_tile'] == t].copy()
-            sample_dets_a.append(d)
-            b = gdf_bounds_a[gdf_bounds_a['tile_name'] == t].copy()
-            sample_bounds_a.append(b)
+        p_a, r_a, f1_a = aggregate_tile_metrics(tile_metrics_a, sample_tiles)
+        p_b, r_b, f1_b = aggregate_tile_metrics(tile_metrics_b, sample_tiles)
 
-        # Build sample for Condition B
-        sample_dets_b = []
-        sample_bounds_b = []
-        for t in sample_tiles:
-            d = gdf_det_b[gdf_det_b['source_tile'] == t].copy()
-            sample_dets_b.append(d)
-            b = gdf_bounds_b[gdf_bounds_b['tile_name'] == t].copy()
-            sample_bounds_b.append(b)
-
-        try:
-            # Condition A metrics
-            if sample_dets_a:
-                gdf_sample_det_a = pd.concat(sample_dets_a, ignore_index=True)
-                gdf_sample_bounds_a = pd.concat(sample_bounds_a, ignore_index=True)
-                p_a, r_a, f1_a = calculate_f1_internal(
-                    gdf_sample_det_a, gdf_ref, gdf_sample_bounds_a
-                )
-            else:
-                p_a, r_a, f1_a = 0, 0, 0
-
-            # Condition B metrics
-            if sample_dets_b:
-                gdf_sample_det_b = pd.concat(sample_dets_b, ignore_index=True)
-                gdf_sample_bounds_b = pd.concat(sample_bounds_b, ignore_index=True)
-                p_b, r_b, f1_b = calculate_f1_internal(
-                    gdf_sample_det_b, gdf_ref, gdf_sample_bounds_b
-                )
-            else:
-                p_b, r_b, f1_b = 0, 0, 0
-
-            # Effect sizes (A - B)
-            f1_diffs.append(f1_a - f1_b)
-            precision_diffs.append(p_a - p_b)
-            recall_diffs.append(r_a - r_b)
-
-        except Exception as e:
-            logger.debug("Bootstrap effect size iteration %d failed: %s", i, e)
-            f1_diffs.append(0)
-            precision_diffs.append(0)
-            recall_diffs.append(0)
+        # Effect sizes (A - B)
+        f1_diffs.append(f1_a - f1_b)
+        precision_diffs.append(p_a - p_b)
+        recall_diffs.append(r_a - r_b)
 
     return {
         "f1_difference": {
@@ -550,6 +625,14 @@ def bootstrap_multi_run_ci(
 
     rng = np.random.RandomState(random_seed)
 
+    # Pre-compute per-tile TP/FP/FN for each run (errata E26)
+    run_tile_metrics: list[pd.DataFrame] = []
+    for _run_num, gdf_det in run_gdfs:
+        tm = compute_per_tile_tp_fp_fn(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+        )
+        run_tile_metrics.append(tm)
+
     f1_means = []
     precision_means = []
     recall_means = []
@@ -558,45 +641,16 @@ def bootstrap_multi_run_ci(
         # Sample tiles with replacement
         sample_tiles = rng.choice(tiles, n_tiles, replace=True)
 
-        # Build resampled bounds
-        sample_bounds_parts = []
-        for t in sample_tiles:
-            b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
-            sample_bounds_parts.append(b)
-        gdf_sample_bounds = pd.concat(sample_bounds_parts, ignore_index=True)
-
         # Compute metrics for each run on the same tile sample
         run_f1s = []
         run_precisions = []
         run_recalls = []
 
-        for _run_num, gdf_det in run_gdfs:
-            # Filter detections to sampled tiles
-            sample_dets = []
-            for t in sample_tiles:
-                d = gdf_det[gdf_det['source_tile'] == t].copy()
-                sample_dets.append(d)
-
-            if sample_dets:
-                gdf_sample_det = pd.concat(sample_dets, ignore_index=True)
-            else:
-                gdf_sample_det = gdf_det.iloc[0:0]  # Empty with schema
-
-            try:
-                p, r, f1 = calculate_f1_internal(
-                    gdf_sample_det, gdf_ref, gdf_sample_bounds
-                )
-                run_f1s.append(f1)
-                run_precisions.append(p)
-                run_recalls.append(r)
-            except Exception as e:
-                logger.debug(
-                    "Bootstrap multi-run iteration %d, run failed: %s",
-                    _i, e,
-                )
-                run_f1s.append(0)
-                run_precisions.append(0)
-                run_recalls.append(0)
+        for tm in run_tile_metrics:
+            p, r, f1 = aggregate_tile_metrics(tm, sample_tiles)
+            run_f1s.append(f1)
+            run_precisions.append(p)
+            run_recalls.append(r)
 
         # Average across runs
         f1_means.append(float(np.mean(run_f1s)))
@@ -664,6 +718,18 @@ def bootstrap_multi_run_effect_size_ci(
 
     rng = np.random.RandomState(random_seed)
 
+    # Pre-compute per-tile TP/FP/FN for every run in both conditions (E26)
+    run_metrics_a: list[pd.DataFrame] = []
+    for _rn, gdf_det in run_gdfs_a:
+        run_metrics_a.append(
+            compute_per_tile_tp_fp_fn(gdf_det, gdf_ref, gdf_bounds, buffer_metres=20)
+        )
+    run_metrics_b: list[pd.DataFrame] = []
+    for _rn, gdf_det in run_gdfs_b:
+        run_metrics_b.append(
+            compute_per_tile_tp_fp_fn(gdf_det, gdf_ref, gdf_bounds, buffer_metres=20)
+        )
+
     f1_diffs = []
     precision_diffs = []
     recall_diffs = []
@@ -672,40 +738,18 @@ def bootstrap_multi_run_effect_size_ci(
         # Paired sampling: same tiles for both conditions
         sample_tiles = rng.choice(tiles, n_tiles, replace=True)
 
-        # Build resampled bounds
-        sample_bounds_parts = []
-        for t in sample_tiles:
-            b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
-            sample_bounds_parts.append(b)
-        gdf_sample_bounds = pd.concat(sample_bounds_parts, ignore_index=True)
-
-        # Helper: compute mean metrics across runs for a condition
-        def _mean_metrics(run_gdfs):
-            run_f1s = []
-            run_ps = []
-            run_rs = []
-            for _rn, gdf_det in run_gdfs:
-                sample_dets = []
-                for t in sample_tiles:
-                    d = gdf_det[gdf_det['source_tile'] == t].copy()
-                    sample_dets.append(d)
-                if sample_dets:
-                    gdf_sd = pd.concat(sample_dets, ignore_index=True)
-                else:
-                    gdf_sd = gdf_det.iloc[0:0]
-                try:
-                    p, r, f1 = calculate_f1_internal(
-                        gdf_sd, gdf_ref, gdf_sample_bounds
-                    )
-                except Exception:
-                    p, r, f1 = 0, 0, 0
+        # Mean metrics across runs for each condition
+        def _mean_metrics(run_tms: list[pd.DataFrame]):
+            run_f1s, run_ps, run_rs = [], [], []
+            for tm in run_tms:
+                p, r, f1 = aggregate_tile_metrics(tm, sample_tiles)
                 run_f1s.append(f1)
                 run_ps.append(p)
                 run_rs.append(r)
             return np.mean(run_f1s), np.mean(run_ps), np.mean(run_rs)
 
-        f1_a, p_a, r_a = _mean_metrics(run_gdfs_a)
-        f1_b, p_b, r_b = _mean_metrics(run_gdfs_b)
+        f1_a, p_a, r_a = _mean_metrics(run_metrics_a)
+        f1_b, p_b, r_b = _mean_metrics(run_metrics_b)
 
         f1_diffs.append(f1_a - f1_b)
         precision_diffs.append(p_a - p_b)
@@ -811,11 +855,20 @@ def bootstrap_interaction_ci(
         np.random.seed(random_seed)
 
     # Metric extraction index: maps metric name to position in
-    # (precision, recall, f1) tuple returned by calculate_f1_internal
+    # (precision, recall, f1) tuple returned by aggregate_tile_metrics
     metric_index = {"precision": 0, "recall": 1, "f1": 2}
     if metric not in metric_index:
         return {"error": f"Unknown metric '{metric}'. Use 'f1', 'precision', or 'recall'."}
     m_idx = metric_index[metric]
+
+    # Pre-compute per-tile TP/FP/FN for each cell (errata E26)
+    # Filter bounds to common tiles for each cell
+    cell_tile_metrics: dict[tuple, pd.DataFrame] = {}
+    for (a_level, b_level), (gdf_det, gdf_bounds) in conditions.items():
+        common_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(common_tiles)]
+        cell_tile_metrics[(a_level, b_level)] = compute_per_tile_tp_fp_fn(
+            gdf_det, gdf_ref, common_bounds, buffer_metres=20,
+        )
 
     # Storage for simple effect distributions per factor_a level
     # simple_effect = metric(factor_b last level) - metric(factor_b first level)
@@ -836,36 +889,10 @@ def bootstrap_interaction_ci(
 
         for a_level in factor_a_levels:
             for b_level in [b_first, b_last]:
-                gdf_det, gdf_bounds = conditions[(a_level, b_level)]
-
-                sample_dets = []
-                sample_bounds = []
-                for t in sample_tiles:
-                    d = gdf_det[gdf_det['source_tile'] == t].copy()
-                    sample_dets.append(d)
-                    b = gdf_bounds[gdf_bounds['tile_name'] == t].copy()
-                    sample_bounds.append(b)
-
-                try:
-                    if sample_dets:
-                        gdf_sample_det = pd.concat(
-                            sample_dets, ignore_index=True
-                        )
-                        gdf_sample_bounds = pd.concat(
-                            sample_bounds, ignore_index=True
-                        )
-                        result = calculate_f1_internal(
-                            gdf_sample_det, gdf_ref, gdf_sample_bounds
-                        )
-                        cell_metrics[(a_level, b_level)] = result[m_idx]
-                    else:
-                        cell_metrics[(a_level, b_level)] = 0.0
-                except Exception as e:
-                    logger.debug(
-                        "Bootstrap interaction iteration %d, cell (%s, %s) "
-                        "failed: %s", _i, a_level, b_level, e
-                    )
-                    cell_metrics[(a_level, b_level)] = 0.0
+                result = aggregate_tile_metrics(
+                    cell_tile_metrics[(a_level, b_level)], sample_tiles
+                )
+                cell_metrics[(a_level, b_level)] = result[m_idx]
 
         # Compute simple effect of factor_b at each factor_a level
         for a_level in factor_a_levels:
@@ -1077,27 +1104,40 @@ def bootstrap_tile_classification_ci(
     if random_seed is not None:
         np.random.seed(random_seed)
 
+    # Pre-compute per-tile classification once (errata E26: fixes isin()
+    # de-duplication that turned bootstrap into subsampling)
+    point_result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    tile_class_map: dict[str, str] = {}
+    for detail in point_result.get("tile_details", []):
+        tile_class_map[detail["tile_name"]] = detail["classification"]
+
     mcc_scores = []
     sensitivity_scores = []
     specificity_scores = []
 
-    for i in range(n_iterations):
+    for _i in range(n_iterations):
         # Resample tiles with replacement
         sample_tiles = np.random.choice(tiles, n_tiles, replace=True)
 
-        # Build resampled bounds
-        sample_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(sample_tiles)].copy()
+        # Count classifications from the sample (duplicates contribute)
+        tp = sum(1 for t in sample_tiles if tile_class_map.get(t) == "TP")
+        tn = sum(1 for t in sample_tiles if tile_class_map.get(t) == "TN")
+        fp = sum(1 for t in sample_tiles if tile_class_map.get(t) == "FP")
+        fn = sum(1 for t in sample_tiles if tile_class_map.get(t) == "FN")
 
-        # Calculate tile classification on resampled set
-        result = calculate_tile_classification(gdf_det, gdf_ref, sample_bounds)
+        # MCC
+        numerator = (tp * tn) - (fp * fn)
+        denom_parts = (tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)
+        if denom_parts > 0:
+            mcc_scores.append(numerator / np.sqrt(denom_parts))
 
-        # Collect scores (handle None values)
-        if result.get('mcc') is not None:
-            mcc_scores.append(result['mcc'])
-        if result.get('sensitivity') is not None:
-            sensitivity_scores.append(result['sensitivity'])
-        if result.get('specificity') is not None:
-            specificity_scores.append(result['specificity'])
+        # Sensitivity
+        if (tp + fn) > 0:
+            sensitivity_scores.append(tp / (tp + fn))
+
+        # Specificity
+        if (tn + fp) > 0:
+            specificity_scores.append(tn / (tn + fp))
 
     # Calculate CIs
     def compute_ci(scores):
@@ -1157,31 +1197,61 @@ def bootstrap_tile_effect_size_ci(
     if random_seed is not None:
         np.random.seed(random_seed)
 
+    # Pre-compute per-tile classifications for both conditions (errata E26)
+    common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
+    common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
+
+    result_a_full = calculate_tile_classification(gdf_det_a, gdf_ref, common_bounds_a)
+    result_b_full = calculate_tile_classification(gdf_det_b, gdf_ref, common_bounds_b)
+
+    tile_class_a: dict[str, str] = {}
+    for detail in result_a_full.get("tile_details", []):
+        tile_class_a[detail["tile_name"]] = detail["classification"]
+
+    tile_class_b: dict[str, str] = {}
+    for detail in result_b_full.get("tile_details", []):
+        tile_class_b[detail["tile_name"]] = detail["classification"]
+
+    def _compute_tile_metrics(tile_class_map, sample):
+        """Compute MCC, sensitivity, specificity from sample with duplicates."""
+        tp = sum(1 for t in sample if tile_class_map.get(t) == "TP")
+        tn = sum(1 for t in sample if tile_class_map.get(t) == "TN")
+        fp = sum(1 for t in sample if tile_class_map.get(t) == "FP")
+        fn = sum(1 for t in sample if tile_class_map.get(t) == "FN")
+
+        # MCC
+        numerator = (tp * tn) - (fp * fn)
+        denom_parts = (tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)
+        mcc = numerator / np.sqrt(denom_parts) if denom_parts > 0 else None
+
+        # Sensitivity
+        sensitivity = tp / (tp + fn) if (tp + fn) > 0 else None
+
+        # Specificity
+        specificity = tn / (tn + fp) if (tn + fp) > 0 else None
+
+        return mcc, sensitivity, specificity
+
     mcc_diffs = []
     sensitivity_diffs = []
     specificity_diffs = []
 
-    for i in range(n_iterations):
+    for _i in range(n_iterations):
         # Paired sampling: same tiles for both conditions
         sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
 
-        # Build sample bounds for each condition
-        sample_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(sample_tiles)].copy()
-        sample_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(sample_tiles)].copy()
-
-        # Calculate tile classification for each condition
-        result_a = calculate_tile_classification(gdf_det_a, gdf_ref, sample_bounds_a)
-        result_b = calculate_tile_classification(gdf_det_b, gdf_ref, sample_bounds_b)
+        mcc_a, sens_a, spec_a = _compute_tile_metrics(tile_class_a, sample_tiles)
+        mcc_b, sens_b, spec_b = _compute_tile_metrics(tile_class_b, sample_tiles)
 
         # Calculate differences (A - B) where both are defined
-        if result_a.get('mcc') is not None and result_b.get('mcc') is not None:
-            mcc_diffs.append(result_a['mcc'] - result_b['mcc'])
+        if mcc_a is not None and mcc_b is not None:
+            mcc_diffs.append(mcc_a - mcc_b)
 
-        if result_a.get('sensitivity') is not None and result_b.get('sensitivity') is not None:
-            sensitivity_diffs.append(result_a['sensitivity'] - result_b['sensitivity'])
+        if sens_a is not None and sens_b is not None:
+            sensitivity_diffs.append(sens_a - sens_b)
 
-        if result_a.get('specificity') is not None and result_b.get('specificity') is not None:
-            specificity_diffs.append(result_a['specificity'] - result_b['specificity'])
+        if spec_a is not None and spec_b is not None:
+            specificity_diffs.append(spec_a - spec_b)
 
     # Calculate CIs for differences
     def compute_ci(diffs):

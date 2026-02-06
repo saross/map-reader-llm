@@ -24,8 +24,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from analyse_phase2_results import apply_fdr_correction, load_condition_results
 from lib_advanced_metrics import (
+    aggregate_tile_metrics,
+    bootstrap_ci,
     bootstrap_multi_run_ci,
     bootstrap_multi_run_effect_size_ci,
+    calculate_f1_internal,
+    compute_per_tile_tp_fp_fn,
 )
 
 
@@ -603,9 +607,9 @@ class TestBootstrapMultiRunCi:
             assert "mean" in result[metric]
             assert "ci_lower" in result[metric]
             assert "ci_upper" in result[metric]
-            # CI lower should be <= mean <= CI upper
-            assert result[metric]["ci_lower"] <= result[metric]["mean"]
-            assert result[metric]["mean"] <= result[metric]["ci_upper"]
+            # CI lower should be <= mean <= CI upper (with floating-point tolerance)
+            assert result[metric]["ci_lower"] <= result[metric]["mean"] + 1e-12
+            assert result[metric]["mean"] <= result[metric]["ci_upper"] + 1e-12
 
         assert result["n_runs"] == 3
         assert result["n_tiles"] == 10
@@ -708,3 +712,193 @@ class TestBootstrapMultiRunEffectSizeCi:
             n_iterations=10,
         )
         assert "error" in result
+
+
+# ============================================================================
+# Bootstrap CI Bias Regression Tests (Errata E26)
+# ============================================================================
+
+@pytest.mark.tier1
+class TestBootstrapMeanApproximatesPointEstimate:
+    """Regression tests verifying bootstrap mean ≈ point estimate.
+
+    The key invariant: the mean of the bootstrap distribution should
+    approximate the point estimate computed from all tiles. A systematic
+    deflation would indicate the duplicate-tile de-duplication bias
+    that E26 fixes.
+    """
+
+    def test_single_run_bootstrap_mean_near_point_estimate(self) -> None:
+        """Bootstrap mean F1 should be within 0.02 of point estimate (K=1)."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _run_num, gdf_det = run_gdfs[0]
+
+        # Point estimate
+        _p, _r, f1_point = calculate_f1_internal(
+            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+        )
+
+        # Bootstrap CI
+        ci = bootstrap_ci(
+            gdf_det, gdf_ref, gdf_bounds,
+            n_iterations=500,
+            random_seed=42,
+        )
+
+        assert abs(ci["f1"]["mean"] - f1_point) < 0.02, (
+            f"Bootstrap mean F1 ({ci['f1']['mean']:.4f}) deviates from "
+            f"point estimate ({f1_point:.4f}) by more than 0.02"
+        )
+
+    def test_multi_run_bootstrap_mean_near_point_estimate(self) -> None:
+        """Multi-run bootstrap mean F1 ≈ mean of per-run point estimates."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=3, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+
+        # Per-run point estimates, then average
+        run_f1s = []
+        for _rn, gdf_det in run_gdfs:
+            _p, _r, f1 = calculate_f1_internal(
+                gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+            )
+            run_f1s.append(f1)
+        mean_f1_point = float(np.mean(run_f1s))
+
+        # Multi-run bootstrap CI
+        ci = bootstrap_multi_run_ci(
+            run_gdfs, gdf_ref, gdf_bounds,
+            n_iterations=500,
+            random_seed=42,
+        )
+
+        assert abs(ci["f1"]["mean"] - mean_f1_point) < 0.02, (
+            f"Multi-run bootstrap mean F1 ({ci['f1']['mean']:.4f}) deviates "
+            f"from mean of per-run point estimates ({mean_f1_point:.4f}) "
+            f"by more than 0.02"
+        )
+
+    def test_bootstrap_ci_contains_point_estimate(self) -> None:
+        """The 95% bootstrap CI should contain the point estimate."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _run_num, gdf_det = run_gdfs[0]
+
+        _p, _r, f1_point = calculate_f1_internal(
+            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+        )
+
+        ci = bootstrap_ci(
+            gdf_det, gdf_ref, gdf_bounds,
+            n_iterations=500,
+            random_seed=42,
+        )
+
+        assert ci["f1"]["ci_lower"] <= f1_point <= ci["f1"]["ci_upper"], (
+            f"Point estimate F1={f1_point:.4f} outside bootstrap CI "
+            f"[{ci['f1']['ci_lower']:.4f}, {ci['f1']['ci_upper']:.4f}]"
+        )
+
+
+@pytest.mark.tier1
+class TestPerTileMetrics:
+    """Tests for compute_per_tile_tp_fp_fn() and aggregate_tile_metrics()."""
+
+    def test_per_tile_sum_matches_global(self) -> None:
+        """Sum of per-tile TP/FP/FN should match calculate_f1_internal().
+
+        For synthetic data with well-separated tiles (100m apart, 20m buffer),
+        per-tile and per-map matching produce identical results.
+        """
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _run_num, gdf_det = run_gdfs[0]
+
+        # Per-tile metrics
+        tile_metrics = compute_per_tile_tp_fp_fn(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+        )
+        tile_tp = tile_metrics['tp'].sum()
+        tile_fp = tile_metrics['fp'].sum()
+        tile_fn = tile_metrics['fn'].sum()
+
+        # Compute metrics from tile sums
+        precision_tile = tile_tp / (tile_tp + tile_fp) if (tile_tp + tile_fp) > 0 else 0
+        recall_tile = tile_tp / (tile_tp + tile_fn) if (tile_tp + tile_fn) > 0 else 0
+        if (precision_tile + recall_tile) > 0:
+            f1_tile = 2 * precision_tile * recall_tile / (precision_tile + recall_tile)
+        else:
+            f1_tile = 0
+
+        # Global point estimate
+        p_global, r_global, f1_global = calculate_f1_internal(
+            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+        )
+
+        # Should match exactly for well-separated tiles
+        assert f1_tile == pytest.approx(f1_global, abs=1e-6), (
+            f"Per-tile F1={f1_tile:.6f} != global F1={f1_global:.6f}"
+        )
+        assert precision_tile == pytest.approx(p_global, abs=1e-6)
+        assert recall_tile == pytest.approx(r_global, abs=1e-6)
+
+    def test_aggregate_with_duplicate_tiles(self) -> None:
+        """A tile sampled 3× should contribute 3× its TP/FP/FN."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _run_num, gdf_det = run_gdfs[0]
+
+        tile_metrics = compute_per_tile_tp_fp_fn(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+        )
+
+        tiles = gdf_bounds['tile_name'].unique()
+        first_tile = tiles[0]
+        first_row = tile_metrics[tile_metrics['tile_name'] == first_tile].iloc[0]
+
+        # Sample the first tile 3 times
+        sample = np.array([first_tile, first_tile, first_tile])
+        p, r, f1 = aggregate_tile_metrics(tile_metrics, sample)
+
+        # With all-same tiles, TP/FP/FN scale by 3 but ratios are unchanged
+        expected_tp = int(first_row['tp']) * 3
+        expected_fp = int(first_row['fp']) * 3
+        expected_fn = int(first_row['fn']) * 3
+
+        if (expected_tp + expected_fp) > 0:
+            expected_p = expected_tp / (expected_tp + expected_fp)
+        else:
+            expected_p = 0
+        if (expected_tp + expected_fn) > 0:
+            expected_r = expected_tp / (expected_tp + expected_fn)
+        else:
+            expected_r = 0
+
+        assert p == pytest.approx(expected_p, abs=1e-10)
+        assert r == pytest.approx(expected_r, abs=1e-10)
+
+    def test_aggregate_all_tiles_matches_point_estimate(self) -> None:
+        """Aggregating all tiles (no duplicates) should match point estimate."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _run_num, gdf_det = run_gdfs[0]
+
+        tile_metrics = compute_per_tile_tp_fp_fn(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+        )
+        tiles = gdf_bounds['tile_name'].unique()
+
+        p_agg, r_agg, f1_agg = aggregate_tile_metrics(tile_metrics, tiles)
+        p_pt, r_pt, f1_pt = calculate_f1_internal(
+            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+        )
+
+        assert f1_agg == pytest.approx(f1_pt, abs=1e-6)
+        assert p_agg == pytest.approx(p_pt, abs=1e-6)
+        assert r_agg == pytest.approx(r_pt, abs=1e-6)
