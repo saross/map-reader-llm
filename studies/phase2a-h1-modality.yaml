@@ -55,7 +55,7 @@ inputs:
 
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
-  workers: 1        # Sequential execution (rate limit safe)
+  workers: 60       # Parallel tile processing (within 1k call/min limit)
   output_dir: "outputs/phase2a"
   checkpoint_dir: "outputs/phase2a/checkpoints"
 

@@ -382,10 +382,13 @@ def run_execution_unit(
         return True, "dry_run", 0.0
 
     try:
+        # Stream output to terminal (unbuffered) so progress is
+        # visible in real time rather than sitting in a buffer.
         result = subprocess.run(
             cmd,
             cwd=str(PROJECT_ROOT),
-            capture_output=True,
+            stdout=None,  # inherit — stream to terminal
+            stderr=None,  # inherit — stream to terminal
             text=True,
             timeout=timeout,
         )
@@ -396,8 +399,7 @@ def run_execution_unit(
             cost = read_meta_cost(meta_path)
             return True, "success", cost
         else:
-            error_msg = result.stderr[:500] if result.stderr else "Unknown error"
-            return False, f"exit_code_{result.returncode}: {error_msg}", 0.0
+            return False, f"exit_code_{result.returncode}", 0.0
 
     except subprocess.TimeoutExpired:
         return False, "timeout", 0.0
