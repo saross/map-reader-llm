@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-02-05
+**Last updated**: 2026-02-06
 
 ---
 
@@ -694,6 +694,101 @@ Modifying `run_study.py` would require rewriting most of its logic while maintai
 - Randomised execution order with fixed seed to distribute temporal effects
 
 **Evidence**: Session 17 plan mode analysis of `run_study.py` vs OFAT YAML structure.
+
+---
+
+## Decision 16: Dual-Track Carry-Forward After Unexpected H1 Result
+
+**Date**: 2026-02-06
+
+**Decision**: Carry forward two M/E levels from Phase 2a rather than the preregistered
+single winner: (1) **brief-text** (text-only, highest overall F1=0.5425) and
+(2) **brief-text-image** (best image-using condition, F1=0.4617). Each track
+follows an independent optimisation path through subsequent phases, with the
+text-only track receiving a tailored subset of tests.
+
+**Deviation from preregistration**: The preregistered OFAT design (§8.3.1a)
+specifies a single carry-forward: "select M/E level with highest F1" for all
+subsequent phases. This decision deviates by carrying two levels, because the
+preregistered design assumed the winner would be image-using and several
+downstream phases are structurally incompatible with a text-only winner.
+
+See erratum E27.
+
+### Rationale
+
+Phase 2a produced a counter-intuitive result: text-only conditions outperformed
+image-using conditions. Brief-text achieved the highest mean F1 (0.5425),
+exceeding brief-text-image by +0.08. However, no pairwise comparisons survived
+FDR correction (q=0.05), so the result is suggestive rather than conclusive.
+
+The preregistered single-winner carry-forward creates a structural problem:
+
+1. **Phase 2d (H5 negative text)**: Explicitly excludes text-only M/E levels
+   ("requires images to show"). No H5 variant configs exist for brief-text.
+2. **Phase 2c (H8 library composition)**: Tests which example *images* to
+   include. With `include_example_images: false`, the test is meaningless.
+3. **Phase 2e (H4 ordering)**: Tests example image ordering, a different
+   construct from prompt section ordering in text-only prompts.
+
+Carrying forward only brief-text would abandon the image-based pipeline
+entirely — despite it being the project's primary optimisation target and
+despite the non-significance of the H1 differences. Carrying forward only
+brief-text-image would ignore the best-performing condition.
+
+The dual-track approach resolves this by:
+
+- Preserving the image-based optimisation pipeline (brief-text-image through
+  all preregistered phases)
+- Exploring the text-only result with targeted tests where they make sense
+- Allowing potential convergence at Phase 3, where voting ensembles could
+  combine runs from both tracks
+
+### Track 1: brief-text-image (image-using)
+
+Follows the preregistered OFAT sequence as originally designed:
+
+| Phase | Factor | Status |
+|-------|--------|--------|
+| 2b | H7 Temperature (5 levels) | Planned |
+| 2c | H8 Library composition (7 cells) | Planned |
+| 2d | H5 Negative text treatment (6 cells) | Planned |
+| 2e | H4 Ordering (3 cells) | Planned |
+
+### Track 2: brief-text (text-only)
+
+Receives a tailored subset of tests:
+
+| Phase | Factor | Status | Notes |
+|-------|--------|--------|-------|
+| 2b | H7 Temperature (5 levels) | Planned | Same 5 temperature levels; may optimise at a different T than Track 1 |
+| 2c | H8 Library composition | **Skipped** | Meaningless without images |
+| 2d | Negative guidance text | **Deferred** | If FP rate warrants it, ad hoc testing of additional negative text guidance (distinct from preregistered H5 which is about text attached to negative *images*) |
+| 2e | Prompt section ordering | **Deferred** | If pursued, tests ordering of major prompt sections (positive guidance, negative guidance, task description) — a different construct from preregistered H4 (example library ordering) |
+
+### Independent optimisation
+
+Each track carries its own optimal parameters forward independently. If the
+two tracks optimise at different temperatures in Phase 2b, those different
+optima are carried forward into their respective subsequent phases rather than
+selecting a single global temperature.
+
+### Budget implications
+
+Track 1 runs the full preregistered sequence (21 cells beyond 2a). Track 2
+adds 5 cells for temperature testing, plus potential ad hoc cells for deferred
+items if pursued. Total additional cost from dual-track: ~$55 (5 cells × $11).
+
+### Convergence at Phase 3
+
+Both tracks feed into Phase 3a (H3 voting), where ensembles mixing text-only
+and image-using runs could be tested alongside single-track ensembles. The
+K=10 runs from Phase 2a already provide data for post-hoc voting analysis at
+both M/E levels.
+
+**Evidence**: Phase 2a analysis (`outputs/phase2a/analysis_summary.md`),
+Phase 2a verification report (`results/phase2-factorial/phase2a-verification-report.md`),
+Working Notes Observation 103.
 
 ---
 

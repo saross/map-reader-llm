@@ -1,0 +1,141 @@
+# Phase 2b: H7 Temperature Testing — Track 2 (Text-Only)
+# ========================================================
+# Tests 5 temperature levels at brief-text (best overall M/E from
+# Phase 2a, and best text-only condition). This is the exploratory
+# text-only track added after the unexpected H1 result.
+#
+# Part of the dual-track carry-forward (Decision 16, Erratum E27):
+#   Track 1 (phase2b-h7-temperature.yaml): brief-text-image — full preregistered OFAT
+#   Track 2 (this file): brief-text — targeted tests where applicable
+#
+# Usage:
+#   python scripts/run_phase2.py studies/phase2b-h7-temperature-text-only.yaml
+#   python scripts/run_phase2.py studies/phase2b-h7-temperature-text-only.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2a complete (optimal M/E determined)
+
+study:
+  name: "Phase 2b: H7 Temperature — Track 2 (brief-text)"
+  version: "1.0"
+  description: |
+    Tests 5 temperature levels at the best text-only M/E from Phase 2a
+    (brief-text, F1=0.5425). This track explores whether text-only
+    performance varies with temperature — particularly whether lower
+    temperatures improve precision (brief-text had P=0.43, R=0.72 at T=1.0).
+
+    Dual-track context: brief-text unexpectedly outperformed all image-using
+    conditions in Phase 2a, but no pairwise differences survived FDR correction.
+    This track runs in parallel with the image-using track (brief-text-image)
+    and maintains independent optimal parameters. See Decision 16.
+
+    Text-only prompts have a substantially smaller context window (no base64
+    images), which may cause different temperature sensitivity compared to the
+    image-using track.
+  phase: "2b"
+  hypothesis: "H7"
+  created: "2026-02-06"
+
+# Carried forward from Phase 2a
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2a — best overall M/E (F1=0.5425) and best text-only"
+
+# Factor under test
+factors:
+  temperature:
+    description: "Model temperature (controls output randomness)"
+    levels:
+      - name: "T0.0"
+        value: 0.0
+        description: "Minimum (deterministic)"
+      - name: "T0.3"
+        value: 0.3
+        description: "Low variance"
+      - name: "T0.7"
+        value: 0.7
+        description: "Moderate variance"
+      - name: "T1.0"
+        value: 1.0
+        description: "Vendor default (also tested in Phase 2a)"
+      - name: "T1.3"
+        value: 1.3
+        description: "Above default"
+
+# Fixed parameters
+fixed:
+  ordering: "canonical-first"
+  # M/E and library defined by optimal_me_config
+  # Note: brief-text config has include_example_images: false,
+  # so the example library is in the config but images are not sent
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10          # K=10 independent single-pass runs (§3.8)
+  workers: 1
+  output_dir: "outputs/phase2b/track2-text"
+  checkpoint_dir: "outputs/phase2b/track2-text/checkpoints"
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --temperature {factor_value}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+    - ["T1.0", "T0.0"]
+    - ["T1.0", "T0.3"]
+    - ["T1.0", "T0.7"]
+    - ["T1.0", "T1.3"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2b/track2-text/analysis_report.json"
+    summary: "outputs/phase2b/track2-text/analysis_summary.md"
+  notes: |
+    Phase 2a data for brief-text at T=1.0 is available in
+    outputs/phase2a/brief-text/run_* (K=10 runs). This can supplement
+    the T=1.0 condition here or serve as a replication check.
+
+    Cross-track comparison: after both tracks complete, compare optimal
+    temperatures. If they differ, this informs the interaction between
+    context window size (text-only vs image-using) and temperature.
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+estimates:
+  cells: 5
+  api_calls_per_cell: 600     # 10 runs x 60 tiles (single-pass per §3.8)
+  total_api_calls: 3000
+  cost_usd: 11                # Conservative; actual cost likely lower (no images in prompt)
+  time_hours: 1
+
+outcome:
+  determines: "optimal_temperature_text_track"
+  carries_forward_to: "deferred phases (2d negative guidance, 2e section ordering)"
+  decision_rule: |
+    Select temperature with highest mean F1.
+    If T=1.0 (default) is within 0.02 F1 of best, prefer T=1.0 for simplicity.
+    Optimal temperature is carried forward independently for the text-only track.
+
+    Note: subsequent phases for the text-only track are deferred pending
+    Phase 2b results. See Decision 16 for the text-only phase plan.

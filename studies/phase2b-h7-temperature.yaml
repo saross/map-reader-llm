@@ -1,6 +1,11 @@
-# Phase 2b: H7 Temperature Testing
-# =================================
-# Tests 5 temperature levels at the optimal M/E from Phase 2a.
+# Phase 2b: H7 Temperature Testing — Track 1 (Image-Using)
+# =========================================================
+# Tests 5 temperature levels at brief-text-image (best image-using M/E
+# from Phase 2a). This is the preregistered OFAT path.
+#
+# Part of the dual-track carry-forward (Decision 16, Erratum E27):
+#   Track 1 (this file): brief-text-image — full preregistered OFAT sequence
+#   Track 2 (phase2b-h7-temperature-text-only.yaml): brief-text — targeted tests
 #
 # Usage:
 #   python scripts/run_phase2.py studies/phase2b-h7-temperature.yaml
@@ -8,23 +13,29 @@
 #
 # Prerequisites:
 #   - Phase 2a complete (optimal M/E determined)
-#   - Update 'optimal_me_config' below with Phase 2a result
 
 study:
-  name: "Phase 2b: H7 Temperature"
-  version: "1.0"
+  name: "Phase 2b: H7 Temperature — Track 1 (brief-text-image)"
+  version: "2.0"
   description: |
-    Tests 5 temperature levels to determine optimal temperature setting.
-    Uses optimal M/E from Phase 2a. Results inform temperature used in
-    subsequent phases (2c-2e).
+    Tests 5 temperature levels at the best image-using M/E from Phase 2a
+    (brief-text-image, F1=0.4617). Results inform temperature used in
+    subsequent image-track phases (2c-2e).
+
+    Dual-track context: Phase 2a found text-only brief-text (F1=0.5425)
+    outperformed all image-using conditions, but no pairwise differences
+    survived FDR correction. Both the best text-only and best image-using
+    M/E levels are carried forward independently. See Decision 16.
   phase: "2b"
   hypothesis: "H7"
   created: "2026-01-21"
+  updated: "2026-02-06"
 
-# Carried forward from Phase 2a (UPDATE AFTER PHASE 2A ANALYSIS)
+# Carried forward from Phase 2a
 carried_forward:
-  optimal_me_config: "prompts/configs/detect_image-only.json"  # PLACEHOLDER - update after 2a
-  optimal_me_name: "image-only"                                 # PLACEHOLDER - update after 2a
+  optimal_me_config: "prompts/configs/detect_brief-text-image.json"
+  optimal_me_name: "brief-text-image"
+  source: "Phase 2a — best image-using M/E (F1=0.4617)"
 
 # Factor under test
 factors:
@@ -42,7 +53,7 @@ factors:
         description: "Moderate variance"
       - name: "T1.0"
         value: 1.0
-        description: "Vendor default"
+        description: "Vendor default (also tested in Phase 2a)"
       - name: "T1.3"
         value: 1.3
         description: "Above default"
@@ -60,9 +71,8 @@ inputs:
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
   workers: 1
-  output_dir: "outputs/phase2b"
-  checkpoint_dir: "outputs/phase2b/checkpoints"
-  # Use --temperature CLI flag to override config temperature
+  output_dir: "outputs/phase2b/track1-image"
+  checkpoint_dir: "outputs/phase2b/track1-image/checkpoints"
 
 # Command pattern for execution
 command_template: |
@@ -86,8 +96,12 @@ analysis:
     - "precision"
     - "recall"
   output:
-    report: "outputs/phase2b/analysis_report.json"
-    summary: "outputs/phase2b/analysis_summary.md"
+    report: "outputs/phase2b/track1-image/analysis_report.json"
+    summary: "outputs/phase2b/track1-image/analysis_summary.md"
+  notes: |
+    Phase 2a data for brief-text-image at T=1.0 is available in
+    outputs/phase2a/brief-text-image/run_* (K=10 runs). This can
+    supplement the T=1.0 condition here or serve as a replication check.
 
 outputs:
   per_condition:
@@ -105,8 +119,9 @@ estimates:
   time_hours: 1
 
 outcome:
-  determines: "optimal_temperature"
+  determines: "optimal_temperature_image_track"
   carries_forward_to: "phase2c"
   decision_rule: |
     Select temperature with highest mean F1.
     If T=1.0 (default) is within 0.02 F1 of best, prefer T=1.0 for simplicity.
+    Optimal temperature is carried forward independently for the image track.

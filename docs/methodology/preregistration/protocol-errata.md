@@ -614,6 +614,30 @@ A secondary instance of the same bug affected `bootstrap_tile_classification_ci(
 
 **Protocol impact**: None. The preregistered statistical method (bootstrap with tile-level resampling, §3.5) is unchanged. This corrects an implementation bug in how resampled tiles were passed to the matching functions. The `analysis_report.json` was also regenerated from the current (valid) data after the fix.
 
+### E27: Dual-track carry-forward from Phase 2a (OFAT deviation)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-06 |
+| Type | Deviation |
+| Decision | Decision 16 |
+| Impact | Phases 2b–2e carry two M/E levels instead of one; text-only track skips 2c, defers 2d/2e |
+
+**Description**: The preregistered OFAT design (§8.3.1a) specifies selecting a single optimal M/E level from Phase 2a and carrying it forward through all subsequent phases. Phase 2a produced a counter-intuitive result: text-only `brief-text` achieved the highest mean F1 (0.5425), exceeding the best image-using condition `brief-text-image` (F1=0.4617) by +0.08. However, no pairwise comparisons survived FDR correction (q=0.05).
+
+The single-winner carry-forward is structurally incompatible with a text-only winner: Phase 2d (H5) explicitly excludes text-only M/E levels, Phase 2c (H8) tests image library composition, and Phase 2e (H4) tests example image ordering.
+
+**Deviation**: Two M/E levels are carried forward:
+
+1. **brief-text-image** (Track 1): follows the full preregistered OFAT sequence (2b→2c→2d→2e)
+2. **brief-text** (Track 2): receives targeted tests — Phase 2b temperature testing; Phase 2c skipped; Phases 2d and 2e deferred pending results
+
+Each track maintains independent optimal parameters (e.g., different optimal temperatures carried forward separately).
+
+**Justification**: Carrying only brief-text would abandon the image-based pipeline despite non-significant H1 differences. Carrying only brief-text-image would ignore the best-performing condition. The dual-track approach preserves both optimisation paths at modest additional cost (~$55 for 5 extra temperature cells).
+
+**Protocol impact**: Adds ~5 cells to Phase 2b. Does not affect the image-using OFAT chain. Text-only results from deferred phases (if pursued) will be reported as exploratory.
+
 ---
 
 *End of errata. New entries should be appended above this line.*
