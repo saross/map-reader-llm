@@ -320,6 +320,32 @@ def read_meta_cost(meta_path: Path) -> float:
         return 0.0
 
 
+def read_meta_failures(meta_path: Path) -> int:
+    """
+    Read items_failed count from a .meta.json file.
+
+    Belt-and-braces validation: even if the batch script exits 0,
+    a non-zero items_failed count means the run is partial.
+
+    Args:
+        meta_path: Path to .meta.json file
+
+    Returns:
+        Number of failed items, or 0 if unavailable
+    """
+    if not meta_path.exists():
+        return 0
+
+    try:
+        with open(meta_path, "r") as f:
+            meta = json.load(f)
+        return int(
+            meta.get("execution_stats", {}).get("items_failed", 0)
+        )
+    except (json.JSONDecodeError, ValueError, TypeError):
+        return 0
+
+
 def run_execution_unit(
     unit: dict,
     config: dict,
@@ -402,9 +428,21 @@ def run_execution_unit(
             # Read cost from meta.json if available
             meta_path = run_dir / f"{output_name}.meta.json"
             cost = read_meta_cost(meta_path)
+
+            # Belt-and-braces: check for partial failures even
+            # when exit code is 0 (catches legacy script versions)
+            items_failed = read_meta_failures(meta_path)
+            if items_failed > 0:
+                return (
+                    False,
+                    f"partial_failure_{items_failed}_tiles",
+                    cost,
+                )
             return True, "success", cost
         else:
-            return False, f"exit_code_{result.returncode}", 0.0
+            meta_path = run_dir / f"{output_name}.meta.json"
+            cost = read_meta_cost(meta_path)
+            return False, f"exit_code_{result.returncode}", cost
 
     except subprocess.TimeoutExpired:
         return False, "timeout", 0.0
