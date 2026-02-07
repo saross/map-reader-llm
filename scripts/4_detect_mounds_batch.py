@@ -11,7 +11,8 @@ Description:
 
 Usage:
     python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_image-only.json
-    python scripts/4_detect_mounds_batch.py --config <config> --manifest <manifest> --output-dir <dir>
+    python scripts/4_detect_mounds_batch.py --config <config> \
+        --manifest <manifest> --output-dir <dir>
     python scripts/4_detect_mounds_batch.py --config <config> --dry-run
     python scripts/4_detect_mounds_batch.py --config <config> --limit 10
 
@@ -46,7 +47,10 @@ import threading
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
-from config import GOOGLE_API_KEY, TILES_DIR, RESULTS_DIR, TILE_SIZE, TEST_LIMIT, BASE_DIR, EXAMPLES_DIR
+from config import (
+    GOOGLE_API_KEY, TILES_DIR, RESULTS_DIR, TILE_SIZE,
+    TEST_LIMIT, BASE_DIR, EXAMPLES_DIR,
+)
 
 # Import comprehensive metadata tracking
 from scripts.lib_llm_metadata import (

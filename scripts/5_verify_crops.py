@@ -210,7 +210,8 @@ def construct_verifier_prompt(
         **Task:** Verification.
         **Process:**
         1. **SCAN**: List visual features of the candidate object in the center.
-        2. **DISCRIMINATE**: Check for Hard Negatives (Is it a Benchmark? Triangulation Point? Text?).
+        2. **DISCRIMINATE**: Check for Hard Negatives
+           (Is it a Benchmark? Triangulation Point? Text?).
         3. **FACTORS**: List 3 specific factors that REDUCE your confidence.
         4. **SCORE**: Assign a Probability Score (0.0 to 1.0) that this is a BURIAL MOUND.
 

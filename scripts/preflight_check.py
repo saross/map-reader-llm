@@ -253,7 +253,8 @@ def check_config(config_path: Path, verbose: bool = False) -> list[tuple[bool, s
     if missing_examples:
         results.append((
             False,
-            f"Config examples missing: {len(missing_examples)} ({', '.join(missing_examples[:3])}...)"
+            f"Config examples missing: {len(missing_examples)} "
+            f"({', '.join(missing_examples[:3])}...)"
         ))
     elif examples:
         results.append((True, f"Config examples: OK ({len(examples)} images)"))
