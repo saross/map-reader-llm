@@ -160,6 +160,8 @@ class TestMatchDetectionsToReferences:
         recall = tp / (tp + fn)  # 2/3 = 0.667
         f1 = _compute_f1(matched_det, unmatched_det, unmatched_ref)
 
-        assert precision == pytest.approx(0.5, abs=0.001), f"Expected precision=0.5, got {precision}"
+        assert precision == pytest.approx(0.5, abs=0.001), (
+            f"Expected precision=0.5, got {precision}"
+        )
         assert recall == pytest.approx(0.667, abs=0.001), f"Expected recall=0.667, got {recall}"
         assert f1 == pytest.approx(0.571, abs=0.01), f"Expected F1~0.571, got {f1}"

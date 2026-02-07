@@ -268,7 +268,8 @@ class TestApplyThreshold:
             {"centroid": (500000, 4700000), "label": "mound", "vote_count": 1,
              "contributing_passes": ["pass_01"], "source_tiles": [], "cluster_size": 1},
             {"centroid": (500100, 4700000), "label": "mound", "vote_count": 3,
-             "contributing_passes": ["pass_01", "pass_02", "pass_03"], "source_tiles": [], "cluster_size": 3},
+             "contributing_passes": ["pass_01", "pass_02", "pass_03"],
+             "source_tiles": [], "cluster_size": 3},
             {"centroid": (500200, 4700000), "label": "mound", "vote_count": 5,
              "contributing_passes": ["pass_01", "pass_02", "pass_03", "pass_04", "pass_05"],
              "source_tiles": [], "cluster_size": 5},
@@ -326,10 +327,16 @@ class TestVotingIntegration:
         """
         # Simulate 5 passes with 3 detecting the mound
         pass_detections = {
-            "pass_01": [{"centroid": (500000, 4700000), "label": "burial_mound", "source_tiles": ["t1"]}],
+            "pass_01": [
+                {"centroid": (500000, 4700000), "label": "burial_mound",
+                 "source_tiles": ["t1"]}],
             "pass_02": [],  # Missed
-            "pass_03": [{"centroid": (500008, 4700005), "label": "burial_mound", "source_tiles": ["t1"]}],
-            "pass_04": [{"centroid": (500003, 4700002), "label": "burial_mound", "source_tiles": ["t1"]}],
+            "pass_03": [
+                {"centroid": (500008, 4700005), "label": "burial_mound",
+                 "source_tiles": ["t1"]}],
+            "pass_04": [
+                {"centroid": (500003, 4700002), "label": "burial_mound",
+                 "source_tiles": ["t1"]}],
             "pass_05": [],  # Missed
         }
 
@@ -374,7 +381,9 @@ class TestVotingIntegration:
     def test_unanimous_detection(self) -> None:
         """Detection in all passes should have confidence=1.0."""
         pass_detections = {
-            f"pass_{i:02d}": [{"centroid": (500000 + i, 4700000), "label": "mound", "source_tiles": []}]
+            f"pass_{i:02d}": [
+                {"centroid": (500000 + i, 4700000),
+                 "label": "mound", "source_tiles": []}]
             for i in range(1, 6)
         }
 

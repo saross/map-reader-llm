@@ -154,7 +154,8 @@ class TestSpatialToleranceCompliance:
             det_geoms_21m, ref_geoms, PREREGISTERED_SPATIAL_TOLERANCE
         )
         assert len(matched_det) == 0, (
-            f"Detection at 21m should NOT match (outside {PREREGISTERED_SPATIAL_TOLERANCE}m tolerance)"
+            f"Detection at 21m should NOT match "
+            f"(outside {PREREGISTERED_SPATIAL_TOLERANCE}m tolerance)"
         )
 
 

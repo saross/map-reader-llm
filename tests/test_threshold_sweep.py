@@ -36,7 +36,12 @@ def mock_gdf_with_votes():
     vote_counts = [5, 5, 3, 3, 3, 1, 1, 1, 1, 1]
     mock_gdf.__getitem__ = MagicMock(side_effect=lambda key: MagicMock(
         max=MagicMock(return_value=5),
-        __ge__=MagicMock(return_value=[v >= key for v in vote_counts] if isinstance(key, int) else vote_counts),
+        __ge__=MagicMock(
+            return_value=(
+                [v >= key for v in vote_counts]
+                if isinstance(key, int) else vote_counts
+            )
+        ),
     ) if key == "vote_count" else MagicMock())
 
     return mock_gdf
@@ -226,7 +231,8 @@ class TestOptimalThresholdSelection:
         curves = [
             {"n": 5, "threshold": 1, "f1": 0.50, "precision": 0.40, "recall": 0.70, "count": 20},
             {"n": 5, "threshold": 2, "f1": 0.65, "precision": 0.60, "recall": 0.72, "count": 15},
-            {"n": 5, "threshold": 3, "f1": 0.75, "precision": 0.80, "recall": 0.70, "count": 10},  # Best
+            {"n": 5, "threshold": 3, "f1": 0.75, "precision": 0.80,
+             "recall": 0.70, "count": 10},  # Best
             {"n": 5, "threshold": 4, "f1": 0.70, "precision": 0.90, "recall": 0.58, "count": 5},
             {"n": 5, "threshold": 5, "f1": 0.60, "precision": 0.95, "recall": 0.45, "count": 2},
         ]
