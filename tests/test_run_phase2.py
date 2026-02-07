@@ -23,6 +23,7 @@ from scripts.run_phase2 import (
     generate_execution_units,
     load_checkpoint,
     load_study_config,
+    run_execution_unit,
     save_checkpoint,
     unit_key,
     validate_configs,
@@ -687,3 +688,211 @@ class TestRealYamlLoading:
         assert "passes" not in config.get("execution", {}), (
             "YAML should not contain 'passes' field — single-pass per §3.8"
         )
+
+
+# =============================================================================
+# Tests: Thread-safe checkpoint with lock
+# =============================================================================
+
+
+@pytest.mark.tier1
+class TestCheckpointWithLock:
+    """Tests for thread-safe save_checkpoint with optional lock parameter."""
+
+    def test_save_without_lock_works(self) -> None:
+        """save_checkpoint(lock=None) should behave identically to no lock."""
+        checkpoint = {
+            "completed": ["a/run_1"],
+            "failed": [],
+            "total_cost_usd": 0.0,
+            "last_updated": None,
+        }
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "checkpoint.json"
+            save_checkpoint(path, checkpoint, lock=None)
+
+            assert path.exists()
+            with open(path) as f:
+                saved = json.load(f)
+            assert saved["completed"] == ["a/run_1"]
+
+    def test_save_with_lock_works(self) -> None:
+        """save_checkpoint with a threading.Lock should succeed."""
+        import threading
+
+        checkpoint = {
+            "completed": ["a/run_1"],
+            "failed": [],
+            "total_cost_usd": 0.0,
+            "last_updated": None,
+        }
+        lock = threading.Lock()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "checkpoint.json"
+            save_checkpoint(path, checkpoint, lock=lock)
+
+            assert path.exists()
+            with open(path) as f:
+                saved = json.load(f)
+            assert saved["completed"] == ["a/run_1"]
+
+    def test_concurrent_saves_with_lock(self) -> None:
+        """Multiple threads saving with same lock should not corrupt data."""
+        import threading
+
+        lock = threading.Lock()
+        errors: list[str] = []
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "checkpoint.json"
+            checkpoint = {
+                "completed": [],
+                "failed": [],
+                "total_cost_usd": 0.0,
+                "last_updated": None,
+            }
+
+            def save_unit(unit_key_str: str) -> None:
+                """Worker thread: append to checkpoint and save."""
+                try:
+                    with lock:
+                        checkpoint["completed"].append(unit_key_str)
+                        checkpoint["total_cost_usd"] += 0.001
+                    save_checkpoint(path, checkpoint, lock=lock)
+                except Exception as e:
+                    errors.append(str(e))
+
+            threads = [
+                threading.Thread(
+                    target=save_unit, args=(f"cond/run_{i}",)
+                )
+                for i in range(10)
+            ]
+            for t in threads:
+                t.start()
+            for t in threads:
+                t.join()
+
+            assert not errors, f"Thread errors: {errors}"
+
+            # Verify final state
+            with open(path) as f:
+                saved = json.load(f)
+            assert len(saved["completed"]) == 10
+            assert saved["total_cost_usd"] == pytest.approx(0.01)
+
+
+# =============================================================================
+# Tests: run_execution_unit with log_file
+# =============================================================================
+
+
+@pytest.mark.tier1
+class TestRunExecutionUnitLogFile:
+    """Tests for run_execution_unit log_file parameter."""
+
+    def test_dry_run_ignores_log_file(self) -> None:
+        """Dry run should work regardless of log_file parameter."""
+        unit = {
+            "condition_name": "T0.0",
+            "run": 1,
+            "config": "prompts/configs/detect_brief-text.json",
+            "temperature": 0.0,
+            "ordering": None,
+        }
+        config = _make_phase2b_config()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            log_file = output_dir / "logs" / "test.log"
+
+            success, message, cost = run_execution_unit(
+                unit, config, output_dir,
+                dry_run=True, log_file=log_file,
+            )
+
+            assert success is True
+            assert message == "dry_run"
+            assert cost == 0.0
+            # Log file should NOT be created for dry runs
+            assert not log_file.exists()
+
+    def test_log_file_parent_dir_created(self) -> None:
+        """log_file with non-existent parent directory should be created."""
+        unit = {
+            "condition_name": "T0.0",
+            "run": 1,
+            "config": "prompts/configs/detect_brief-text.json",
+            "temperature": 0.0,
+            "ordering": None,
+        }
+        config = _make_phase2b_config()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            log_file = output_dir / "logs" / "nested" / "test.log"
+
+            # Run with a fake script that will fail —
+            # we just want to verify log_file parent creation
+            success, _msg, _cost = run_execution_unit(
+                unit, config, output_dir,
+                dry_run=False, log_file=log_file, timeout=10,
+            )
+
+            # The subprocess will fail (missing tiles, etc.), but the
+            # log file parent directory should exist
+            assert log_file.parent.exists()
+
+
+# =============================================================================
+# Tests: Parallel unit cap and concurrency warnings
+# =============================================================================
+
+
+@pytest.mark.tier1
+class TestParallelUnitsCap:
+    """Tests for parallel_units cap and warning logic."""
+
+    def test_parallel_units_capped_at_eight(self) -> None:
+        """parallel_units > 8 should be clamped to 8."""
+        config = _make_phase2b_config()
+        path = _write_yaml(config)
+
+        try:
+            from scripts.run_phase2 import run_phase2
+
+            # With dry_run, parallel_units is capped but not actually
+            # used (dry runs run sequentially). Verify the cap logic
+            # by checking the function accepts the parameter.
+            results = run_phase2(
+                study_path=path,
+                dry_run=True,
+                parallel_units=12,
+                verbose=False,
+            )
+            # Dry run should not error
+            assert results is not None
+        finally:
+            path.unlink()
+
+    def test_parallel_units_one_is_sequential(self) -> None:
+        """parallel_units=1 should produce identical behaviour to default."""
+        config = _make_phase2b_config()
+        path = _write_yaml(config)
+
+        try:
+            from scripts.run_phase2 import run_phase2
+
+            results = run_phase2(
+                study_path=path,
+                dry_run=True,
+                parallel_units=1,
+                verbose=False,
+            )
+            # Should complete normally with no units run
+            assert results is not None
+            assert "error" not in results
+        finally:
+            path.unlink()

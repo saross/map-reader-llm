@@ -17,6 +17,7 @@ Usage:
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --resume
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --condition image-only --runs 3
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --limit 3
+    python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --resume --parallel-units 4
 
 Inputs:
     - Study definition YAML file (OFAT structure with factors/levels)
@@ -34,21 +35,25 @@ Exit Codes:
     2 - Partial failure: Some units failed but execution completed
 
 Author: Shawn Ross, Claude Code
-Version: 1.0.0
+Version: 1.1.0
 Licence: Apache 2.0
 """
+
+from __future__ import annotations
 
 import argparse
 import json
 import random
 import subprocess
 import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 # Resolve project root as parent of the scripts/ directory
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -271,18 +276,33 @@ def load_checkpoint(checkpoint_path: Path) -> dict:
     }
 
 
-def save_checkpoint(checkpoint_path: Path, checkpoint: dict) -> None:
+def save_checkpoint(
+    checkpoint_path: Path,
+    checkpoint: dict,
+    lock: threading.Lock | None = None,
+) -> None:
     """
-    Save checkpoint to file.
+    Save checkpoint to file, optionally under a threading lock.
+
+    When parallel_units > 1, a lock is required to prevent race
+    conditions on both the in-memory checkpoint dict and the file.
 
     Args:
         checkpoint_path: Path to checkpoint JSON file
         checkpoint: Checkpoint dictionary to save
+        lock: Optional threading lock for thread-safe writes
     """
-    checkpoint["last_updated"] = datetime.now(timezone.utc).isoformat()
-    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(checkpoint_path, "w") as f:
-        json.dump(checkpoint, f, indent=2)
+    def _write() -> None:
+        checkpoint["last_updated"] = datetime.now(timezone.utc).isoformat()
+        checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(checkpoint_path, "w") as f:
+            json.dump(checkpoint, f, indent=2)
+
+    if lock:
+        with lock:
+            _write()
+    else:
+        _write()
 
 
 def unit_key(unit: dict) -> str:
@@ -355,6 +375,7 @@ def run_execution_unit(
     limit: int | None = None,
     timeout: int = 3600,
     workers_override: int | None = None,
+    log_file: Path | None = None,
 ) -> tuple[bool, str, float]:
     """
     Execute a single (condition, run) unit via 4_detect_mounds_batch.py.
@@ -370,6 +391,9 @@ def run_execution_unit(
         limit: Process only first N tiles (for sanity checks)
         timeout: Maximum seconds to wait for completion
         workers_override: If set, override YAML workers count for parallelism
+        log_file: If set, redirect subprocess output to this file
+            instead of inheriting the terminal. Used in parallel mode
+            to prevent interleaved output from concurrent units.
 
     Returns:
         Tuple of (success, message, cost_usd)
@@ -414,16 +438,29 @@ def run_execution_unit(
         return True, "dry_run", 0.0
 
     try:
-        # Stream output to terminal (unbuffered) so progress is
-        # visible in real time rather than sitting in a buffer.
-        result = subprocess.run(
-            cmd,
-            cwd=str(PROJECT_ROOT),
-            stdout=None,  # inherit — stream to terminal
-            stderr=None,  # inherit — stream to terminal
-            text=True,
-            timeout=timeout,
-        )
+        # When log_file is provided (parallel mode), redirect output
+        # to avoid interleaved terminal output from concurrent units.
+        # When None (sequential mode), inherit terminal for live output.
+        if log_file:
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(log_file, "w") as lf:
+                result = subprocess.run(
+                    cmd,
+                    cwd=str(PROJECT_ROOT),
+                    stdout=lf,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    timeout=timeout,
+                )
+        else:
+            result = subprocess.run(
+                cmd,
+                cwd=str(PROJECT_ROOT),
+                stdout=None,  # inherit — stream to terminal
+                stderr=None,  # inherit — stream to terminal
+                text=True,
+                timeout=timeout,
+            )
 
         if result.returncode == 0:
             # Read cost from meta.json if available
@@ -461,6 +498,7 @@ def run_phase2(
     verbose: bool = True,
     timeout: int = 3600,
     workers_override: int | None = None,
+    parallel_units: int = 1,
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -475,6 +513,10 @@ def run_phase2(
         verbose: If True, print progress information
         timeout: Maximum seconds per execution unit
         workers_override: If set, override YAML workers count for parallelism
+        parallel_units: Number of execution units to run concurrently.
+            Default 1 = sequential (backward compatible). When > 1,
+            units are dispatched via ThreadPoolExecutor with per-unit
+            log files to prevent interleaved terminal output.
 
     Returns:
         Summary dictionary with results
@@ -596,11 +638,106 @@ def run_phase2(
 
     # Cost monitoring
     estimated_cost = config.get("estimates", {}).get("cost_usd", 0)
-    cost_warn_threshold = estimated_cost * 1.2 if estimated_cost else float("inf")
+    cost_warn_threshold = (
+        estimated_cost * 1.2 if estimated_cost else float("inf")
+    )
     running_cost = checkpoint.get("total_cost_usd", 0.0)
 
     # Execute units
     results = {"completed": [], "failed": []}
+
+    # Cap parallel_units and warn about high combined concurrency
+    max_parallel = 8
+    if parallel_units > max_parallel:
+        print(
+            f"  WARNING: --parallel-units {parallel_units} exceeds "
+            f"cap of {max_parallel}. Clamping to {max_parallel}."
+        )
+        parallel_units = max_parallel
+
+    effective_workers = workers_override or execution.get("workers", 1)
+    if parallel_units > 1 and parallel_units * effective_workers > 60:
+        print(
+            f"  WARNING: {parallel_units} parallel units x "
+            f"{effective_workers} workers = "
+            f"{parallel_units * effective_workers} concurrent API "
+            f"calls. Consider reducing to avoid rate limits."
+        )
+
+    # Dry-run always runs sequentially (no benefit from parallelism)
+    use_parallel = parallel_units > 1 and not dry_run
+
+    if use_parallel:
+        results, running_cost = _execute_units_parallel(
+            units=units,
+            config=config,
+            output_dir=output_dir,
+            checkpoint=checkpoint,
+            checkpoint_path=checkpoint_path,
+            limit=limit,
+            timeout=timeout,
+            workers_override=workers_override,
+            parallel_units=parallel_units,
+            running_cost=running_cost,
+            cost_warn_threshold=cost_warn_threshold,
+            verbose=verbose,
+        )
+    else:
+        results, running_cost = _execute_units_sequential(
+            units=units,
+            config=config,
+            output_dir=output_dir,
+            checkpoint=checkpoint,
+            checkpoint_path=checkpoint_path,
+            dry_run=dry_run,
+            limit=limit,
+            timeout=timeout,
+            workers_override=workers_override,
+            running_cost=running_cost,
+            cost_warn_threshold=cost_warn_threshold,
+            verbose=verbose,
+        )
+
+    # Summary
+    if verbose:
+        print("=" * 70)
+        print(f"Phase {study_info.get('phase', '?')} Complete")
+        print("=" * 70)
+        total_completed = len(checkpoint.get("completed", []))
+        total_failed = len(results["failed"])
+        print(f"Completed: {total_completed} units")
+        print(f"Failed: {total_failed} units")
+        print(f"Running cost: ${running_cost:.4f}")
+        print(f"Checkpoint: {checkpoint_path}")
+        if use_parallel:
+            log_dir = output_dir / "logs"
+            print(f"Per-unit logs: {log_dir}/")
+        print()
+
+    return results
+
+
+def _execute_units_sequential(
+    units: list[dict],
+    config: dict,
+    output_dir: Path,
+    checkpoint: dict,
+    checkpoint_path: Path,
+    dry_run: bool,
+    limit: int | None,
+    timeout: int,
+    workers_override: int | None,
+    running_cost: float,
+    cost_warn_threshold: float,
+    verbose: bool,
+) -> tuple[dict, float]:
+    """
+    Execute units one at a time (original behaviour).
+
+    Returns:
+        Tuple of (results dict, updated running_cost)
+    """
+    results: dict = {"completed": [], "failed": []}
 
     for i, unit in enumerate(units, 1):
         key = unit_key(unit)
@@ -650,28 +787,124 @@ def run_phase2(
         # Cost warning
         if running_cost > cost_warn_threshold and not dry_run:
             print(
-                f"\n  WARNING: Running cost ${running_cost:.2f} exceeds "
-                f"120% of estimate ${estimated_cost:.2f}. "
+                f"\n  WARNING: Running cost ${running_cost:.2f} "
+                f"exceeds budget threshold "
+                f"${cost_warn_threshold:.2f}. "
                 f"Review before continuing.\n"
             )
 
         if verbose:
             print()
 
-    # Summary
+    return results, running_cost
+
+
+def _execute_units_parallel(
+    units: list[dict],
+    config: dict,
+    output_dir: Path,
+    checkpoint: dict,
+    checkpoint_path: Path,
+    limit: int | None,
+    timeout: int,
+    workers_override: int | None,
+    parallel_units: int,
+    running_cost: float,
+    cost_warn_threshold: float,
+    verbose: bool,
+) -> tuple[dict, float]:
+    """
+    Execute units concurrently via ThreadPoolExecutor.
+
+    Each unit's subprocess output is redirected to a per-unit log file
+    under {output_dir}/logs/ to prevent interleaved terminal output.
+    Checkpoint writes are protected by a threading lock.
+
+    Returns:
+        Tuple of (results dict, updated running_cost)
+    """
+    results: dict = {"completed": [], "failed": []}
+    lock = threading.Lock()
+    log_dir = output_dir / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    completed_count = 0
+
     if verbose:
-        print("=" * 70)
-        print(f"Phase {study_info.get('phase', '?')} Complete")
-        print("=" * 70)
-        total_completed = len(checkpoint.get("completed", []))
-        total_failed = len(results["failed"])
-        print(f"Completed: {total_completed} units")
-        print(f"Failed: {total_failed} units")
-        print(f"Running cost: ${running_cost:.4f}")
-        print(f"Checkpoint: {checkpoint_path}")
+        print(
+            f"Parallel execution: {parallel_units} units concurrently"
+        )
+        print(f"Per-unit logs: {log_dir}/")
         print()
 
-    return results
+    def _run_one(unit: dict) -> tuple[str, bool, str, float]:
+        """Worker: execute one unit and return its result."""
+        key = unit_key(unit)
+        unit_log = log_dir / f"{key.replace('/', '_')}.log"
+        success, message, cost = run_execution_unit(
+            unit, config, output_dir,
+            dry_run=False,
+            limit=limit,
+            timeout=timeout,
+            workers_override=workers_override,
+            log_file=unit_log,
+        )
+        return key, success, message, cost
+
+    try:
+        with ThreadPoolExecutor(
+            max_workers=parallel_units
+        ) as executor:
+            future_to_unit = {
+                executor.submit(_run_one, unit): unit
+                for unit in units
+            }
+
+            for future in as_completed(future_to_unit):
+                key, success, message, cost = future.result()
+
+                with lock:
+                    running_cost += cost
+                    completed_count += 1
+
+                    if success:
+                        results["completed"].append(key)
+                        checkpoint["completed"].append(key)
+                    else:
+                        results["failed"].append(
+                            {"unit": key, "error": message}
+                        )
+                        checkpoint["failed"].append(
+                            {"unit": key, "error": message}
+                        )
+                    checkpoint["total_cost_usd"] = running_cost
+                    save_checkpoint(
+                        checkpoint_path, checkpoint, lock=None
+                    )
+
+                # Print progress outside the lock
+                status = "OK" if success else f"FAILED ({message})"
+                cost_str = f" (${cost:.4f})" if cost > 0 else ""
+                if verbose:
+                    print(
+                        f"[{completed_count}/{len(units)}] "
+                        f"{key}: {status}{cost_str}"
+                    )
+
+                if (
+                    running_cost > cost_warn_threshold
+                ):
+                    print(
+                        f"\n  WARNING: Running cost "
+                        f"${running_cost:.2f} exceeds budget.\n"
+                    )
+
+    except KeyboardInterrupt:
+        print(
+            "\nInterrupted. Checkpoint saved for completed units. "
+            "Re-run with --resume to continue."
+        )
+
+    return results, running_cost
 
 
 def main() -> None:
@@ -697,6 +930,10 @@ Examples:
   # All conditions, 3 tiles each (small batch test)
   python scripts/run_phase2.py studies/phase2a-h1-modality.yaml \\
       --runs 1 --limit 3
+
+  # Resume with 4 parallel units and 8 workers each
+  python scripts/run_phase2.py studies/phase2a-h1-modality.yaml \\
+      --resume --parallel-units 4 --workers 8
         """,
     )
 
@@ -747,6 +984,15 @@ Examples:
         help="Timeout in seconds per execution unit (default: 3600)",
     )
     parser.add_argument(
+        "--parallel-units",
+        type=int,
+        default=1,
+        help=(
+            "Number of execution units to run concurrently "
+            "(default: 1 = sequential)"
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -764,6 +1010,7 @@ Examples:
         verbose=not args.quiet,
         timeout=args.timeout,
         workers_override=args.workers,
+        parallel_units=args.parallel_units,
     )
 
     # Exit code based on results
