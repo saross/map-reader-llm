@@ -2,12 +2,24 @@
 """
 Generate GeoJSON bounds files for calibration and validation tile sets.
 
-Creates polygon features for each tile showing its geographic extent,
-useful for visualisation and spatial analysis of tile coverage.
+Creates Geographic JavaScript Object Notation (GeoJSON) polygon features for
+each tile showing its geographic extent, useful for visualisation and spatial
+analysis of tile coverage.
 
-Usage:
+Usage::
+
     python scripts/generate_tile_bounds.py
     python scripts/generate_tile_bounds.py --tiles-dir inputs/tiles --output-dir outputs/results
+
+Inputs:
+    - Tile manifests: inputs/tiles/calibration_manifest.json,
+      inputs/tiles/validation_manifest.json
+    - Selection metadata: inputs/tiles/tile_selection_metadata.json
+    - Per-map metadata: inputs/tiles/{map_name}/metadata.json
+
+Outputs:
+    - calibration_bounds.geojson  - Polygon bounds for calibration tiles
+    - validation_bounds.geojson   - Polygon bounds for validation tiles
 
 Created: 2025-12-23
 Author: Shawn Ross, Claude Code
@@ -23,49 +35,48 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from config import TILE_SIZE
 
-
-# Constants (TILE_SIZE imported from config.py)
+# Map sheet directories containing tile metadata
 TILE_DIRS = [
     "K-35-052-4_32635",
     "K-35-053-3_Elenovo",
     "K-35-062-2_Rakovski",
-    "K-35-078-1_Lesovo"
+    "K-35-078-1_Lesovo",
 ]
 
-# CRS mapping based on map sheet names
-MAP_CRS = {
-    "K-35-052-4_32635": "EPSG:32635",
-    "K-35-053-3_Elenovo": "EPSG:32635",
-    "K-35-062-2_Rakovski": "EPSG:32635",
-    "K-35-078-1_Lesovo": "EPSG:32635"
-}
+# All map sheets use Universal Transverse Mercator (UTM) zone 35N
+# European Petroleum Survey Group (EPSG) code 32635
+CRS_URN = "urn:ogc:def:crs:EPSG::32635"
 
 
 def get_map_from_filename(filename: str) -> str:
-    """
-    Extract map name from tile filename.
+    """Extract map name from tile filename.
+
+    Splits on the ``_x`` separator that precedes the pixel coordinate portion
+    of the filename.
 
     Args:
-        filename: Tile filename like 'K-35-052-4_32635_x1344_y2240.png'
+        filename: Tile filename like ``K-35-052-4_32635_x1344_y2240.png``.
 
     Returns:
-        Map name like 'K-35-052-4_32635'
+        Map name like ``K-35-052-4_32635``.
     """
-    parts = filename.rsplit('_x', 1)
+    parts = filename.rsplit("_x", 1)
     return parts[0]
 
 
-def load_metadata(tiles_dir: Path) -> dict:
-    """
-    Load all tile metadata from map directories.
+def load_metadata(tiles_dir: Path) -> dict[str, list[float]]:
+    """Load all tile metadata from map directories.
+
+    Each map directory contains a ``metadata.json`` mapping tile filenames to
+    lists of ``[min_x, min_y, pixel_size_x, pixel_size_y]``.
 
     Args:
-        tiles_dir: Path to tiles directory
+        tiles_dir: Path to tiles directory.
 
     Returns:
-        Dictionary mapping tile filenames to [minX, maxY, pixel_size_x, pixel_size_y]
+        Dictionary mapping tile filenames to their georeferencing parameters.
     """
-    all_metadata = {}
+    all_metadata: dict[str, list[float]] = {}
     for map_name in TILE_DIRS:
         metadata_path = tiles_dir / map_name / "metadata.json"
         if metadata_path.exists():
@@ -75,40 +86,42 @@ def load_metadata(tiles_dir: Path) -> dict:
     return all_metadata
 
 
-def tile_to_polygon(filename: str, metadata: dict) -> dict | None:
-    """
-    Convert tile metadata to a GeoJSON polygon feature.
+def tile_to_polygon(filename: str, metadata: dict[str, list[float]]) -> dict | None:
+    """Convert tile metadata to a GeoJSON polygon feature.
+
+    Constructs a rectangular polygon whose corners are derived from the tile's
+    geographic origin and the tile dimensions in map units.
 
     Args:
-        filename: Tile filename
-        metadata: All tile metadata
+        filename: Tile filename.
+        metadata: All tile georeferencing metadata.
 
     Returns:
-        GeoJSON feature dict or None if tile not found in metadata
+        GeoJSON Feature dict, or ``None`` if tile not found in metadata.
     """
     if filename not in metadata:
         print(f"  Warning: {filename} not found in metadata")
         return None
 
-    # Metadata format: [minX, minY, pixel_size_x, pixel_size_y]
-    # minY is the bottom edge (southernmost extent) of the tile
+    # Metadata format: [min_x, min_y, pixel_size_x, pixel_size_y]
+    # min_y is the bottom edge (southernmost extent) of the tile
     meta = metadata[filename]
     min_x = meta[0]
     min_y = meta[1]
     pixel_size = meta[2]
 
     # Calculate tile extent (each tile is TILE_SIZE pixels square)
-    max_x = min_x + (TILE_SIZE * pixel_size)
-    max_y = min_y + (TILE_SIZE * pixel_size)
+    extent = TILE_SIZE * pixel_size
+    max_x = min_x + extent
+    max_y = min_y + extent
 
-    # Extract mound info from the selection metadata if available
     map_name = get_map_from_filename(filename)
 
     return {
         "type": "Feature",
         "properties": {
             "tile_name": filename,
-            "map_name": map_name
+            "map_name": map_name,
         },
         "geometry": {
             "type": "Polygon",
@@ -117,40 +130,43 @@ def tile_to_polygon(filename: str, metadata: dict) -> dict | None:
                 [max_x, max_y],
                 [max_x, min_y],
                 [min_x, min_y],
-                [min_x, max_y]
-            ]]
-        }
+                [min_x, max_y],
+            ]],
+        },
     }
 
 
 def create_bounds_geojson(
-    tile_filenames: list,
-    metadata: dict,
+    tile_filenames: list[str],
+    metadata: dict[str, list[float]],
     selection_metadata: dict,
-    set_type: str
+    set_type: str,
 ) -> dict:
-    """
-    Create a GeoJSON FeatureCollection for a set of tiles.
+    """Create a GeoJSON FeatureCollection for a set of tiles.
+
+    Builds polygon features for every tile in *tile_filenames* and enriches
+    each feature with mound count and density from the selection metadata
+    when available.
 
     Args:
-        tile_filenames: List of tile filenames
-        metadata: Tile georeferencing metadata
-        selection_metadata: Tile selection metadata with mound counts
-        set_type: 'calibration' or 'validation'
+        tile_filenames: List of tile filenames.
+        metadata: Tile georeferencing metadata.
+        selection_metadata: Tile selection metadata with mound counts.
+        set_type: ``"calibration"`` or ``"validation"``.
 
     Returns:
-        GeoJSON FeatureCollection dict
+        GeoJSON FeatureCollection dict.
     """
     # Build lookup from selection metadata
-    tile_info = {}
+    tile_info: dict[str, dict] = {}
     if set_type in selection_metadata:
         for tile in selection_metadata[set_type].get("tiles", []):
             tile_info[tile["filename"]] = {
                 "mound_count": tile.get("mound_count", 0),
-                "density": tile.get("density", "unknown")
+                "density": tile.get("density", "unknown"),
             }
 
-    features = []
+    features: list[dict] = []
     for filename in tile_filenames:
         feature = tile_to_polygon(filename, metadata)
         if feature:
@@ -165,27 +181,25 @@ def create_bounds_geojson(
         "name": f"{set_type}_tile_bounds",
         "crs": {
             "type": "name",
-            "properties": {
-                "name": "urn:ogc:def:crs:EPSG::32635"
-            }
+            "properties": {"name": CRS_URN},
         },
-        "features": features
+        "features": features,
     }
 
 
 def validate_bounds(
     geojson_data: dict,
-    metadata: dict,
+    metadata: dict[str, list[float]],
     n_samples: int = 3,
 ) -> bool:
-    """
-    Validate generated bounds against tile metadata.
+    """Validate generated bounds against tile metadata.
 
     Spot-checks tiles by verifying that polygon corners match the expected
     values from metadata. Catches Y-axis inversions (E4) and other
     metadata misinterpretation bugs.
 
     The check verifies:
+
     - Polygon minX == metadata[0] (origin X)
     - Polygon minY == metadata[1] (origin Y, the BOTTOM edge)
     - Polygon width and height == TILE_SIZE * pixel_size
@@ -205,6 +219,8 @@ def validate_bounds(
 
     checked = 0
     failed = False
+    # Sub-millimetre tolerance for floating-point comparison
+    tol = 0.001
 
     for feature in features[:n_samples]:
         tile_name = feature["properties"]["tile_name"]
@@ -227,7 +243,6 @@ def validate_bounds(
         actual_max_y = max(ys)
 
         # Check origin matches metadata
-        tol = 0.001  # Sub-millimetre tolerance for floating point
         if abs(actual_min_x - expected_min_x) > tol:
             print(f"  FAIL: {tile_name} minX={actual_min_x}, expected {expected_min_x}")
             failed = True
@@ -262,8 +277,44 @@ def validate_bounds(
     return True
 
 
-def main():
-    """Generate bounds GeoJSONs for calibration and validation tile sets."""
+def _generate_and_save_bounds(
+    set_type: str,
+    tile_filenames: list[str],
+    metadata: dict[str, list[float]],
+    selection_metadata: dict,
+    outputs_dir: Path,
+) -> None:
+    """Generate, save, and validate a GeoJSON bounds file for one tile set.
+
+    Args:
+        set_type: ``"calibration"`` or ``"validation"``.
+        tile_filenames: List of tile filenames for this set.
+        metadata: Tile georeferencing metadata.
+        selection_metadata: Tile selection metadata with mound counts.
+        outputs_dir: Directory to write the GeoJSON output file.
+
+    Raises:
+        SystemExit: If bounds validation fails.
+    """
+    print(f"\nGenerating {set_type} bounds GeoJSON...")
+    geojson_data = create_bounds_geojson(
+        tile_filenames, metadata, selection_metadata, set_type
+    )
+
+    output_path = outputs_dir / f"{set_type}_bounds.geojson"
+    with open(output_path, "w") as f:
+        json.dump(geojson_data, f, indent=2)
+    print(f"  Saved: {output_path}")
+    print(f"  Features: {len(geojson_data['features'])}")
+
+    if not validate_bounds(geojson_data, metadata):
+        print(f"ERROR: {set_type.capitalize()} bounds validation failed. "
+              f"Check metadata interpretation.")
+        sys.exit(1)
+
+
+def main() -> None:
+    """Generate bounds GeoJSON files for calibration and validation tile sets."""
     parser = argparse.ArgumentParser(
         description="Generate GeoJSON bounds files for calibration and validation tile sets",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -306,33 +357,28 @@ Output Files:
     # Ensure output directory exists
     outputs_dir.mkdir(parents=True, exist_ok=True)
 
-    # Load manifests
+    # Validate required input files exist before loading
     print("Loading manifests...")
-    calibration_path = tiles_dir / "calibration_manifest.json"
-    validation_path = tiles_dir / "validation_manifest.json"
-    selection_path = tiles_dir / "tile_selection_metadata.json"
-
-    # Validate manifest files exist before loading
-    required_files = [
-        (calibration_path, "calibration manifest"),
-        (validation_path, "validation manifest"),
-        (selection_path, "tile selection metadata"),
-    ]
-    for path, description in required_files:
+    manifest_paths = {
+        "calibration": (tiles_dir / "calibration_manifest.json", "calibration manifest"),
+        "validation": (tiles_dir / "validation_manifest.json", "validation manifest"),
+        "selection": (tiles_dir / "tile_selection_metadata.json", "tile selection metadata"),
+    }
+    for path, description in manifest_paths.values():
         if not path.exists():
             print(f"ERROR: Required file not found: {path}")
             print(f"  Missing: {description}")
             sys.exit(1)
 
-    with open(calibration_path) as f:
+    with open(manifest_paths["calibration"][0]) as f:
         calibration_tiles = json.load(f)
     print(f"  Calibration tiles: {len(calibration_tiles)}")
 
-    with open(validation_path) as f:
+    with open(manifest_paths["validation"][0]) as f:
         validation_tiles = json.load(f)
     print(f"  Validation tiles: {len(validation_tiles)}")
 
-    with open(selection_path) as f:
+    with open(manifest_paths["selection"][0]) as f:
         selection_metadata = json.load(f)
 
     # Load tile georeferencing metadata
@@ -340,33 +386,14 @@ Output Files:
     metadata = load_metadata(tiles_dir)
     print(f"  Total tiles with metadata: {len(metadata)}")
 
-    # Generate calibration bounds
-    print("\nGenerating calibration bounds GeoJSON...")
-    calibration_geojson = create_bounds_geojson(
-        calibration_tiles, metadata, selection_metadata, "calibration"
-    )
-    calibration_output = outputs_dir / "calibration_bounds.geojson"
-    with open(calibration_output, 'w') as f:
-        json.dump(calibration_geojson, f, indent=2)
-    print(f"  Saved: {calibration_output}")
-    print(f"  Features: {len(calibration_geojson['features'])}")
-    if not validate_bounds(calibration_geojson, metadata):
-        print("ERROR: Calibration bounds validation failed. Check metadata interpretation.")
-        sys.exit(1)
-
-    # Generate validation bounds
-    print("\nGenerating validation bounds GeoJSON...")
-    validation_geojson = create_bounds_geojson(
-        validation_tiles, metadata, selection_metadata, "validation"
-    )
-    validation_output = outputs_dir / "validation_bounds.geojson"
-    with open(validation_output, 'w') as f:
-        json.dump(validation_geojson, f, indent=2)
-    print(f"  Saved: {validation_output}")
-    print(f"  Features: {len(validation_geojson['features'])}")
-    if not validate_bounds(validation_geojson, metadata):
-        print("ERROR: Validation bounds validation failed. Check metadata interpretation.")
-        sys.exit(1)
+    # Generate, save, and validate bounds for each tile set
+    for set_type, tile_filenames in [
+        ("calibration", calibration_tiles),
+        ("validation", validation_tiles),
+    ]:
+        _generate_and_save_bounds(
+            set_type, tile_filenames, metadata, selection_metadata, outputs_dir
+        )
 
     print("\nDone!")
 

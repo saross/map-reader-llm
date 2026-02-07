@@ -1,158 +1,144 @@
+#!/usr/bin/env python3
 """
 Preprocess Tiling Script
 ========================
-Description:
-    Splits large GeoTIFF input maps into smaller, manageable tiles (default 512x512)
-    for processing by the VLM. Critically, it preserves geospatial metadata for each
-    tile by generating accompanying World Files (.pgw) and Aux XML (.aux.xml) files.
 
-Usage:
+Splits large GeoTIFF (Geographic Tagged Image File Format) input maps into
+smaller, manageable tiles (default 512x512) for processing by a Vision Language
+Model (VLM). Preserves geospatial metadata for each tile by generating
+accompanying World Files (.pgw) and Auxiliary Extensible Markup Language (XML)
+files (.aux.xml).
+
+Usage::
+
     python scripts/preprocess_tiling.py
 
 Inputs:
-    - scans from `inputs/*.tif`
+    - Raster scans from ``inputs/rasters/*.tif``
 
 Outputs:
-    - tiles in `inputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}`
+    - Tiles in ``inputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}``
 
 Author: Shawn Ross, Adela Sobotkova
 Licence: Apache 2.0
 """
 
 import json
-import rasterio
-from rasterio.windows import Window
-from PIL import Image
-from tqdm import tqdm
-from pathlib import Path
-import numpy as np
 import sys
+from pathlib import Path
 
-# Add parent directory to path
+import numpy as np
+import rasterio
+from PIL import Image
+from rasterio.windows import Window
+from tqdm import tqdm
+
+# Add parent directory to path so config module can be imported
 sys.path.append(str(Path(__file__).parent.parent))
-from config import RASTERS_DIR, TILES_DIR, TILE_SIZE, STRIDE
+from config import RASTERS_DIR, STRIDE, TILE_SIZE, TILES_DIR  # noqa: E402
 
-def tile_raster(input_path: Path):
+
+def tile_raster(input_path: Path) -> None:
     """
-    Splits a single GeoTIFF into tiles with geospatial sidecar files.
+    Split a single GeoTIFF into tiles with geospatial sidecar files.
 
     Process:
         1. Reads the source GeoTIFF.
         2. Iterates through the raster using STRIDE spacing (TILE_SIZE - OVERLAP).
-        3. Extracts the RGB pixel data (converting 1-band to RGB if necessary).
-        4. Saves the tile as a PNG.
+        3. Extracts the Red/Green/Blue (RGB) pixel data (converting single-band
+           to RGB if necessary).
+        4. Saves the tile as a Portable Network Graphics (PNG) file.
         5. Calculates the specific geotransform for that tile's top-left corner.
-        6. Writes a World File (.pgw) and Aux XML (.png.aux.xml) to preserve CRS/Transform.
+        6. Writes a World File (.pgw) and Aux XML (.png.aux.xml) to preserve
+           Coordinate Reference System (CRS) and transform information.
 
     Args:
-        input_path (Path): Path to the source .tif file.
+        input_path: Path to the source .tif file.
     """
-    input_path = Path(input_path)
     map_name = input_path.stem
 
     # Create output directory for this map
     map_output_dir = TILES_DIR / map_name
     map_output_dir.mkdir(parents=True, exist_ok=True)
 
-    metadata = {}
+    metadata: dict[str, list] = {}
 
     with rasterio.open(input_path) as src:
-        width = src.width
         height = src.height
+        width = src.width
 
-        # Generate windows using STRIDE (distance between tile origins)
-        windows = []
-        for y in range(0, height, STRIDE):
-            for x in range(0, width, STRIDE):
-                # Handle edge cases where window goes out of bounds
-                # Rasterio handles this automatically if we request a window larger than the image
-                # by padding or clipping? Let's be explicit to avoid black bars if possible,
-                # or just accept them.
-                # Actually, standard practice for VLM is padding or just clipping.
-                # Let's clip the window to the image bounds.
-
-                window = Window(x, y, TILE_SIZE, TILE_SIZE)
-
-                # Check if window is completely out of bounds (shouldn't happen with range)
-                # But we might want to clip the width/height if it goes over
-                # However, for the VLM, constant size is nicer.
-                # Let's stick to requesting the window and letting rasterio read it.
-                # If it's valid, we process it.
-
-                windows.append((x, y, window))
+        # Generate tile windows using STRIDE (distance between tile origins).
+        # Tiles at edges may extend beyond the raster boundary; rasterio's
+        # boundless read handles this by padding with fill_value.
+        windows = [
+            (x, y, Window(x, y, TILE_SIZE, TILE_SIZE))
+            for y in range(0, height, STRIDE)
+            for x in range(0, width, STRIDE)
+        ]
 
         print(f"Processing {len(windows)} tiles for {map_name}...")
 
         for x, y, window in tqdm(windows):
-            # Read the data from the window
-            # boundless=True pads with 0 (black) if window is outside image
+            # Read pixel data; boundless=True pads with 0 (black) beyond edges
             img_data = src.read(window=window, boundless=True, fill_value=0)
 
-            # Rasterio reads as (Bands, Height, Width). Convert to (H, W, B) for Pillow
+            # Rasterio reads as (bands, height, width); transpose to (H, W, B) for Pillow
             img_data = img_data.transpose(1, 2, 0)
 
-            # If 1 band (grayscale), convert to RGB for consistency
+            # Normalise to 3-band RGB
             if img_data.shape[2] == 1:
-                img_data = np.dstack([img_data]*3)
+                img_data = np.dstack([img_data] * 3)
             elif img_data.shape[2] > 3:
-                 # Drop alpha if present or take just first 3 bands
+                # Drop alpha channel or extra bands, keeping only RGB
                 img_data = img_data[:, :, :3]
 
-            # Create Image
-            img = Image.fromarray(img_data.astype('uint8'), 'RGB')
+            img = Image.fromarray(img_data.astype(np.uint8), "RGB")
 
-            # Filename
             tile_filename = f"{map_name}_x{x}_y{y}.png"
             tile_path = map_output_dir / tile_filename
             img.save(tile_path)
 
-            # --- SPATIAL METADATA REFACTOR ---
-            # 1. Get Transform for this specific window
-            # Rasterio returns transform for the window corner
+            # --- Spatial metadata sidecar files ---
+
+            # Compute the affine transform for this tile's window
             window_transform = rasterio.windows.transform(window, src.transform)
 
-            # 2. Write World File (.pgw)
-            # Format: A, D, B, E, C, F
-            # A: x-res, D: y-rot (0), B: x-rot (0), E: y-res (neg), C: x-center, F: y-center
-            # window_transform gives Top-Left CORNER.
-            # World File expects Center of Top-Left Pixel.
-            # CenterX = CornerX + (ResX / 2)
-            # CenterY = CornerY + (ResY / 2)
-
+            # World File (.pgw) expects the centre of the top-left pixel, not
+            # its corner. Offset by half a pixel in each axis.
             res_x = window_transform.a
-            res_y = window_transform.e # usually negative
+            res_y = window_transform.e  # Usually negative
+            centre_x = window_transform.c + (res_x / 2.0)
+            centre_y = window_transform.f + (res_y / 2.0)
 
-            center_x = window_transform.c + (res_x / 2.0)
-            center_y = window_transform.f + (res_y / 2.0)
+            pgw_content = f"{res_x}\n0.0\n0.0\n{res_y}\n{centre_x}\n{centre_y}"
+            tile_path.with_suffix(".pgw").write_text(pgw_content)
 
-            pgw_content = f"{res_x}\n0.0\n0.0\n{res_y}\n{center_x}\n{center_y}"
-            pgw_path = tile_path.with_suffix(".pgw")
-            with open(pgw_path, "w") as f:
-                f.write(pgw_content)
-
-            # 3. Write CRS to .aux.xml (PAMDataset format) for complete compatibility
-            # This allows QGIS/GDAL to recognize the CRS automatically.
-            aux_xml_path = tile_path.with_suffix(".png.aux.xml")
+            # PAMDataset XML (.aux.xml) stores the CRS so that
+            # Quantum GIS (QGIS) and Geospatial Data Abstraction Library (GDAL)
+            # can recognise it automatically.
             crs_wkt = src.crs.to_wkt()
-            # Minimal PAM XML
-            xml_content = f"""<PAMDataset>
-  <SRS>{crs_wkt}</SRS>
-</PAMDataset>"""
-            with open(aux_xml_path, "w") as f:
-                f.write(xml_content)
+            aux_xml_content = (
+                f"<PAMDataset>\n  <SRS>{crs_wkt}</SRS>\n</PAMDataset>"
+            )
+            tile_path.with_suffix(".png.aux.xml").write_text(aux_xml_content)
 
-            # Store legacy metadata just in case, but rely on sidecars now
-            w, s, e, n = rasterio.windows.bounds(window, src.transform)
-            metadata[tile_filename] = [w, s, src.res[0], src.res[1]]
+            # Store legacy metadata as backup (west bound, south bound, pixel resolution)
+            west, south, _east, _north = rasterio.windows.bounds(window, src.transform)
+            metadata[tile_filename] = [west, south, src.res[0], src.res[1]]
 
-    # Save legacy metadata as backup
-    with open(map_output_dir / "metadata.json", "w") as f:
-        json.dump(metadata, f, indent=2)
+    # Write legacy metadata JSON (JavaScript Object Notation)
+    metadata_path = map_output_dir / "metadata.json"
+    metadata_path.write_text(json.dumps(metadata, indent=2))
 
-    print(f"Finished tiling {map_name}. Saved {len(windows)*3} files (png+pgw+aux) to {map_output_dir}")
+    file_count = len(windows) * 3
+    print(
+        f"Finished tiling {map_name}. "
+        f"Saved {file_count} files (PNG + PGW + aux.xml) to {map_output_dir}"
+    )
 
-def main():
-    # Process all TIFs in inputs/rasters
+
+def main() -> None:
+    """Process all GeoTIFF files in the rasters input directory."""
     tif_files = list(RASTERS_DIR.glob("*.tif"))
 
     if not tif_files:
@@ -163,8 +149,9 @@ def main():
         print(f"Starting {tif_path.name}...")
         try:
             tile_raster(tif_path)
-        except Exception as e:
-            print(f"Error processing {tif_path.name}: {e}")
+        except Exception as exc:
+            print(f"Error processing {tif_path.name}: {exc}")
+
 
 if __name__ == "__main__":
     main()

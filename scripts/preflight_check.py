@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 """
-Pre-Flight Check Script
+Pre-flight Check Script
 =======================
 
 Validates that all required inputs are in place before running detection experiments.
 
-Usage:
+Usage::
+
     python scripts/preflight_check.py
     python scripts/preflight_check.py --phase 1
     python scripts/preflight_check.py --config prompts/configs/detect_image-only.json
     python scripts/preflight_check.py --verbose
 
 Checks:
-    - API key configured
+    - Application Programming Interface (API) key configured
     - Tile directories exist
     - Ground truth files present
     - Region bounds files present
     - Example library images present
-    - Config files valid
+    - Config files valid (JSON = JavaScript Object Notation)
 
 Exit Codes:
     0 - All checks passed
@@ -41,18 +42,28 @@ __version__ = "1.0.0"
 PROJECT_ROOT = Path(__file__).parent.parent
 
 
+def _format_status(passed: bool) -> str:
+    """Return a formatted status label for check output."""
+    return "OK" if passed else "FAIL"
+
+
 def check_api_key(verbose: bool = False) -> tuple[bool, str]:
     """
-    Check if Google API key is configured.
+    Check if the Google API key is configured.
+
+    Looks for the key in the GOOGLE_API_KEY environment variable first, then
+    falls back to importing it from the project's config.py module.
+
+    Args:
+        verbose: Reserved for future detailed output (currently unused).
 
     Returns:
-        Tuple of (passed: bool, message: str)
+        Tuple of (passed, message) indicating whether the key was found.
     """
-    # Check environment variable first
     api_key = os.environ.get("GOOGLE_API_KEY", "")
 
     if not api_key:
-        # Try loading from config.py
+        # Fall back to loading from config.py
         try:
             sys.path.insert(0, str(PROJECT_ROOT))
             from config import GOOGLE_API_KEY
@@ -60,28 +71,28 @@ def check_api_key(verbose: bool = False) -> tuple[bool, str]:
         except ImportError:
             pass
 
-    if api_key:
-        # Show first few characters for verification
-        preview = api_key[:10] + "..." if len(api_key) > 10 else api_key
-        return True, f"API key configured ({preview})"
-    else:
+    if not api_key:
         return False, "GOOGLE_API_KEY not set in environment or config.py"
+
+    # Show first few characters for verification
+    preview = api_key[:10] + "..." if len(api_key) > 10 else api_key
+    return True, f"API key configured ({preview})"
 
 
 def check_directory_exists(
     path: Path, description: str, min_files: int = 0, pattern: str = "*"
 ) -> tuple[bool, str]:
     """
-    Check if a directory exists and optionally has minimum files.
+    Check if a directory exists and optionally contains a minimum number of files.
 
     Args:
-        path: Directory path to check
-        description: Human-readable description
-        min_files: Minimum number of files expected (0 = just check exists)
-        pattern: Glob pattern for counting files
+        path: Directory path to check.
+        description: Human-readable description for the check output.
+        min_files: Minimum number of files expected (0 = just check existence).
+        pattern: Glob pattern for counting files.
 
     Returns:
-        Tuple of (passed: bool, message: str)
+        Tuple of (passed, message) indicating whether the directory meets the criteria.
     """
     if not path.exists():
         return False, f"{description}: Directory not found ({path})"
@@ -100,24 +111,30 @@ def check_file_exists(path: Path, description: str) -> tuple[bool, str]:
     Check if a file exists.
 
     Args:
-        path: File path to check
-        description: Human-readable description
+        path: File path to check.
+        description: Human-readable description for the check output.
 
     Returns:
-        Tuple of (passed: bool, message: str)
+        Tuple of (passed, message) indicating whether the file was found.
     """
     if path.exists():
         return True, f"{description}: OK"
-    else:
-        return False, f"{description}: File not found ({path})"
+    return False, f"{description}: File not found ({path})"
 
 
 def check_example_library(verbose: bool = False) -> list[tuple[bool, str]]:
     """
     Check that example library images exist.
 
+    Verifies the baseline example set (required for all experiments) and
+    reports any missing Scale-8 examples as informational rather than as
+    failures, since those are generated during Phase 1.
+
+    Args:
+        verbose: Reserved for future detailed output (currently unused).
+
     Returns:
-        List of (passed, message) tuples
+        List of (passed, message) tuples for each checked example.
     """
     results = []
     examples_dir = PROJECT_ROOT / "inputs" / "examples" / "neutral-naming"
@@ -173,14 +190,18 @@ def check_example_library(verbose: bool = False) -> list[tuple[bool, str]]:
 
 def check_config(config_path: Path, verbose: bool = False) -> list[tuple[bool, str]]:
     """
-    Validate a config file and check its referenced files exist.
+    Validate a config file and check that its referenced files exist.
+
+    Parses the JSON config, verifies required fields are present, and checks
+    that the referenced system instruction file and example images exist on
+    disc.
 
     Args:
-        config_path: Path to config JSON file
-        verbose: If True, show detailed checks
+        config_path: Path to the config JSON file.
+        verbose: If True, include per-field detail in the results.
 
     Returns:
-        List of (passed, message) tuples
+        List of (passed, message) tuples for each validation check.
     """
     results = []
 
@@ -191,7 +212,7 @@ def check_config(config_path: Path, verbose: bool = False) -> list[tuple[bool, s
 
     # Load and parse config
     try:
-        with open(config_path, "r") as f:
+        with open(config_path, encoding="utf-8") as f:
             config = json.load(f)
         results.append((True, f"Config syntax: OK ({config_path.name})"))
     except json.JSONDecodeError as e:
@@ -240,46 +261,55 @@ def check_config(config_path: Path, verbose: bool = False) -> list[tuple[bool, s
     return results
 
 
+def _print_result(passed: bool, msg: str) -> None:
+    """Print a single check result with a formatted status prefix."""
+    print(f"   [{_format_status(passed)}] {msg}")
+
+
+def _print_section(number: int, title: str) -> None:
+    """Print a numbered section header for the pre-flight report."""
+    print(f"{number}. {title}")
+    print("-" * 40)
+
+
 def run_preflight_checks(
     phase: int | None = None,
     config_path: Path | None = None,
     verbose: bool = False,
 ) -> tuple[int, int]:
     """
-    Run all pre-flight checks.
+    Run all pre-flight checks and print a formatted report.
 
     Args:
-        phase: Optional phase number to check (1, 2, 3, 4)
-        config_path: Optional specific config to validate
-        verbose: If True, show all check details
+        phase: Optional phase number to restrict checks to (1, 2, 3, 4).
+            Reserved for future phase-specific filtering; currently all
+            checks run regardless of this value.
+        config_path: Optional specific config file to validate.
+        verbose: If True, show all individual check details.
 
     Returns:
-        Tuple of (passed_count, failed_count)
+        Tuple of (passed_count, failed_count).
     """
-    all_results = []
+    all_results: list[tuple[bool, str]] = []
 
     print("=" * 60)
     print("PRE-FLIGHT CHECKS")
     print("=" * 60)
     print()
 
-    # 1. API Key
-    print("1. API Configuration")
-    print("-" * 40)
+    # 1. API key
+    _print_section(1, "API Configuration")
     passed, msg = check_api_key(verbose)
     all_results.append((passed, msg))
-    status = "OK" if passed else "FAIL"
-    print(f"   [{status}] {msg}")
+    _print_result(passed, msg)
     print()
 
-    # 2. Tile Directories
-    print("2. Tile Directories")
-    print("-" * 40)
+    # 2. Tile directories
+    _print_section(2, "Tile Directories")
     tiles_dir = PROJECT_ROOT / "inputs" / "tiles"
     passed, msg = check_directory_exists(tiles_dir, "Tiles base directory")
     all_results.append((passed, msg))
-    status = "OK" if passed else "FAIL"
-    print(f"   [{status}] {msg}")
+    _print_result(passed, msg)
 
     # Check for map subdirectories
     if tiles_dir.exists():
@@ -296,19 +326,16 @@ def run_preflight_checks(
             print("   [FAIL] No map directories found")
     print()
 
-    # 3. Ground Truth
-    print("3. Ground Truth")
-    print("-" * 40)
+    # 3. Ground truth
+    _print_section(3, "Ground Truth")
     gt_path = PROJECT_ROOT / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
     passed, msg = check_file_exists(gt_path, "Mounds reference")
     all_results.append((passed, msg))
-    status = "OK" if passed else "FAIL"
-    print(f"   [{status}] {msg}")
+    _print_result(passed, msg)
     print()
 
-    # 4. Region Bounds
-    print("4. Region Bounds")
-    print("-" * 40)
+    # 4. Region bounds
+    _print_section(4, "Region Bounds")
     bounds_files = [
         ("calibration_bounds.geojson", "Calibration bounds"),
         ("validation_bounds.geojson", "Validation bounds"),
@@ -317,13 +344,11 @@ def run_preflight_checks(
         bounds_path = PROJECT_ROOT / "inputs" / "vectors" / "bounds" / filename
         passed, msg = check_file_exists(bounds_path, desc)
         all_results.append((passed, msg))
-        status = "OK" if passed else "FAIL"
-        print(f"   [{status}] {msg}")
+        _print_result(passed, msg)
     print()
 
     # 5. Manifests
-    print("5. Tile Manifests")
-    print("-" * 40)
+    _print_section(5, "Tile Manifests")
     manifest_files = [
         ("calibration_manifest.json", "Calibration manifest"),
         ("validation_manifest.json", "Validation manifest"),
@@ -332,34 +357,29 @@ def run_preflight_checks(
         manifest_path = PROJECT_ROOT / "inputs" / "tiles" / filename
         passed, msg = check_file_exists(manifest_path, desc)
         all_results.append((passed, msg))
-        status = "OK" if passed else "FAIL"
-        print(f"   [{status}] {msg}")
+        _print_result(passed, msg)
     print()
 
-    # 6. Example Library
-    print("6. Example Library")
-    print("-" * 40)
+    # 6. Example library
+    _print_section(6, "Example Library")
     example_results = check_example_library(verbose)
     for passed, msg in example_results:
         all_results.append((passed, msg))
-        status = "OK" if passed else "FAIL"
         if verbose or not passed:
-            print(f"   [{status}] {msg}")
+            _print_result(passed, msg)
     # Summary if not verbose
     if not verbose:
         passed_examples = sum(1 for p, _ in example_results if p)
         print(f"   [OK] {passed_examples}/{len(example_results)} example checks passed")
     print()
 
-    # 7. Config Validation (if specified)
+    # 7. Config validation (if specified)
     if config_path:
-        print("7. Config Validation")
-        print("-" * 40)
+        _print_section(7, "Config Validation")
         config_results = check_config(config_path, verbose)
         for passed, msg in config_results:
             all_results.append((passed, msg))
-            status = "OK" if passed else "FAIL"
-            print(f"   [{status}] {msg}")
+            _print_result(passed, msg)
         print()
 
     # Summary
@@ -380,8 +400,8 @@ def run_preflight_checks(
     return passed_count, failed_count
 
 
-def main():
-    """Main entry point for pre-flight checks."""
+def main() -> None:
+    """Parse command-line arguments and run pre-flight checks."""
     parser = argparse.ArgumentParser(
         description="Pre-flight validation for detection experiments",
         formatter_class=argparse.RawDescriptionHelpFormatter,
