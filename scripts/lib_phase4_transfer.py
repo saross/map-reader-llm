@@ -1,9 +1,9 @@
 """
 Phase 4 Transfer Decision Logic
 
-Provides decision logic functions for H6 Flash→Pro transfer testing.
-These functions evaluate whether Flash-optimal parameters transfer to Pro
-and classify the transfer outcome.
+Provides decision logic functions for Hypothesis 6 (H6) Flash-to-Pro transfer
+testing. These functions evaluate whether Flash-optimal parameters transfer to
+the Pro Vision Language Model (VLM) and classify the transfer outcome.
 
 Usage:
     from lib_phase4_transfer import (
@@ -22,16 +22,17 @@ from enum import Enum
 # Constants (from preregistration)
 # =============================================================================
 
-# Phase 4a: Baseline transfer thresholds
-BASELINE_TRANSFER_THRESHOLD = 0.05  # |Δ F1| ≤ 0.05 → transfer success
-BASELINE_INVESTIGATE_THRESHOLD = 0.10  # |Δ F1| > 0.10 → investigate
+# Phase 4a: Baseline transfer thresholds (F1 = harmonic mean of precision and recall)
+BASELINE_TRANSFER_THRESHOLD = 0.05  # |delta F1| <= 0.05 -> transfer success
+BASELINE_INVESTIGATE_THRESHOLD = 0.10  # |delta F1| > 0.10 -> investigate
 
-# Phase 4b: OFAT factor sensitivity threshold
-FACTOR_ADJUSTMENT_THRESHOLD = 0.03  # Δ F1 ≥ 0.03 AND CI excludes 0 → flag
+# Phase 4b: One-Factor-At-a-Time (OFAT) sensitivity threshold
+# CI = Confidence Interval (95% bootstrap percentile)
+FACTOR_ADJUSTMENT_THRESHOLD = 0.03  # delta F1 >= 0.03 AND CI excludes 0 -> flag
 
 # Phase 4c: Voting threshold transfer
-VOTING_THRESHOLD_DIFFERENCE = 0.10  # >10% relative difference → flag
-VOTING_EXTENDED_TEST_THRESHOLD = 0.20  # >20% → run extended N=30 test
+VOTING_THRESHOLD_DIFFERENCE = 0.10  # >10% relative difference -> flag
+VOTING_EXTENDED_TEST_THRESHOLD = 0.20  # >20% -> run extended N=30 test
 
 
 # =============================================================================
@@ -40,7 +41,7 @@ VOTING_EXTENDED_TEST_THRESHOLD = 0.20  # >20% → run extended N=30 test
 
 @dataclass
 class BaselineTransferResult:
-    """Result of Phase 4a baseline transfer evaluation."""
+    """Result of Phase 4a baseline transfer evaluation (F1 comparison)."""
 
     flash_f1: float
     pro_f1: float
@@ -53,7 +54,7 @@ class BaselineTransferResult:
 
 @dataclass
 class FactorSensitivityResult:
-    """Result of Phase 4b OFAT factor sensitivity evaluation."""
+    """Result of Phase 4b OFAT (One-Factor-At-a-Time) sensitivity evaluation."""
 
     factor_name: str
     flash_optimal_level: str
@@ -155,6 +156,32 @@ def evaluate_baseline_transfer(
 
 
 # =============================================================================
+# Helpers
+# =============================================================================
+
+def ci_excludes_zero(
+    ci_lower: float | None,
+    ci_upper: float | None,
+) -> bool:
+    """
+    Check whether a Confidence Interval (CI) excludes zero.
+
+    A CI excludes zero when both bounds share the same sign, indicating a
+    statistically significant effect in that direction.
+
+    Args:
+        ci_lower: Lower bound of the CI (None if unavailable).
+        ci_upper: Upper bound of the CI (None if unavailable).
+
+    Returns:
+        True if CI excludes zero (both bounds same sign), False otherwise.
+    """
+    if ci_lower is None or ci_upper is None:
+        return False
+    return (ci_lower > 0 and ci_upper > 0) or (ci_lower < 0 and ci_upper < 0)
+
+
+# =============================================================================
 # Phase 4b: Factor Sensitivity Evaluation
 # =============================================================================
 
@@ -207,16 +234,9 @@ def evaluate_factor_sensitivity(
 
         delta = f1 - baseline_f1
 
-        # Check flagging criteria: Δ F1 ≥ threshold AND CI excludes zero
-        ci_excludes_zero = False
-        if ci_lower is not None and ci_upper is not None:
-            # CI for the difference (delta)
-            # If both bounds are positive, CI excludes zero (positive effect)
-            # If both bounds are negative, CI excludes zero (negative effect)
-            # For flagging, we want positive delta with CI excluding zero
-            ci_excludes_zero = ci_lower > 0 or ci_upper < 0
-
-        is_flagged = delta >= FACTOR_ADJUSTMENT_THRESHOLD and ci_excludes_zero
+        # Flagging criteria: delta F1 >= threshold AND CI excludes zero
+        ci_significant = ci_excludes_zero(ci_lower, ci_upper)
+        is_flagged = delta >= FACTOR_ADJUSTMENT_THRESHOLD and ci_significant
 
         tested_levels.append({
             "level": level,
@@ -256,22 +276,6 @@ def evaluate_factor_sensitivity(
         recommended_level=best_level,
         message=message,
     )
-
-
-def ci_excludes_zero(ci_lower: float, ci_upper: float) -> bool:
-    """
-    Check if a confidence interval excludes zero.
-
-    Args:
-        ci_lower: Lower bound of CI
-        ci_upper: Upper bound of CI
-
-    Returns:
-        True if CI excludes zero (both bounds same sign)
-    """
-    if ci_lower is None or ci_upper is None:
-        return False
-    return (ci_lower > 0 and ci_upper > 0) or (ci_lower < 0 and ci_upper < 0)
 
 
 # =============================================================================
@@ -361,14 +365,15 @@ def classify_transfer_outcome(
     flagged_factors = [r.factor_name for r in factor_results if r.flagged]
     num_flagged = len(flagged_factors)
 
-    # Build adjustments dict
-    pro_adjustments = {}
-    for result in factor_results:
-        if result.flagged:
-            pro_adjustments[result.factor_name] = result.recommended_level
+    # Build adjustments dict from flagged factors
+    pro_adjustments: dict = {
+        r.factor_name: r.recommended_level
+        for r in factor_results
+        if r.flagged
+    }
 
     voting_flagged = voting_result.flagged if voting_result else False
-    if voting_flagged and voting_result:
+    if voting_flagged:
         pro_adjustments["voting_threshold"] = voting_result.pro_optimal_threshold
 
     # Classify

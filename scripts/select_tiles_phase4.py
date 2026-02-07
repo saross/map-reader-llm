@@ -3,7 +3,7 @@
 Tile Selection Script (Phase 4)
 
 Selects a 20-tile stratified subset from the 60 validation tiles for Phase 4
-(H6: Flash→Pro Transfer Testing). Preserves the density distribution
+(H6: Flash to Pro Transfer Testing). Preserves the density distribution
 (empty/sparse/dense ratio) from the full validation set.
 
 Usage:
@@ -11,14 +11,15 @@ Usage:
     python scripts/select_tiles_phase4.py --dry-run  # Show selection without saving
 
 Output:
-    inputs/tiles/phase4_validation_manifest.json
-    inputs/vectors/bounds/phase4_validation_bounds.geojson
+    inputs/tiles/phase4_validation_manifest.json — JavaScript Object Notation (JSON) manifest
+    inputs/vectors/bounds/phase4_validation_bounds.geojson — GeoJSON bounds file
 """
 
 import argparse
 import json
 import random
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -49,23 +50,20 @@ def load_validation_with_metadata() -> list[dict]:
     """
     Load validation tiles with their density metadata.
 
-    Returns list of dicts with keys: filename, map, mound_count, density
+    Returns:
+        List of dicts with keys: filename, map, mound_count, density.
     """
-    # Load manifest
     with open(VALIDATION_MANIFEST_PATH) as f:
         validation_tiles = set(json.load(f))
 
-    # Load metadata
     with open(TILE_METADATA_PATH) as f:
         metadata = json.load(f)
 
-    # Extract validation tile details
-    tiles = []
-    for tile_info in metadata.get("validation", {}).get("tiles", []):
-        if tile_info["filename"] in validation_tiles:
-            tiles.append(tile_info)
-
-    return tiles
+    return [
+        tile_info
+        for tile_info in metadata.get("validation", {}).get("tiles", [])
+        if tile_info["filename"] in validation_tiles
+    ]
 
 
 def select_stratified_subset(
@@ -105,39 +103,30 @@ def select_stratified_subset(
         if not stratum:
             continue
 
-        # Calculate proportional count (at least 1 if stratum non-empty)
+        # Proportional count (at least 1 if stratum is non-empty)
         proportion = len(stratum) / total
         target = max(1, round(proportion * target_size))
-
-        # Don't exceed what's available
         take = min(target, len(stratum))
 
-        # Random shuffle and select
         stratum_copy = stratum.copy()
         random.shuffle(stratum_copy)
         selected.extend(stratum_copy[:take])
 
-    # If we have too many, trim from largest stratum
+    # Trim from the largest stratum if over target
     while len(selected) > target_size:
-        # Find which stratum has most selected
-        selected_densities = {}
-        for tile in selected:
-            d = tile.get("density", "empty")
-            selected_densities[d] = selected_densities.get(d, 0) + 1
+        counts = Counter(tile.get("density", "empty") for tile in selected)
+        largest = counts.most_common(1)[0][0]
 
-        largest = max(selected_densities, key=selected_densities.get)
-
-        # Remove one from largest stratum
         for i, tile in enumerate(selected):
             if tile.get("density") == largest:
                 selected.pop(i)
                 break
 
-    # If we have too few, add more from any stratum
+    # Fill from remaining tiles if under target
     if len(selected) < target_size:
         remaining_tiles = [t for t in tiles if t not in selected]
         random.shuffle(remaining_tiles)
-        selected.extend(remaining_tiles[: target_size - len(selected)])
+        selected.extend(remaining_tiles[:target_size - len(selected)])
 
     return selected[:target_size]
 
@@ -147,46 +136,38 @@ def create_bounds_geojson(
     source_bounds_path: Path,
 ) -> dict:
     """
-    Create a bounds GeoJSON containing only the selected tiles.
+    Create a GeoJSON (Geographic JSON) bounds file containing only the selected tiles.
 
     Args:
-        selected_tiles: List of selected tile dicts
-        source_bounds_path: Path to full validation bounds GeoJSON
+        selected_tiles: List of selected tile dicts.
+        source_bounds_path: Path to full validation bounds GeoJSON.
 
     Returns:
-        GeoJSON dict for the subset bounds
+        GeoJSON FeatureCollection dict for the subset bounds.
     """
-    # Load source bounds
     with open(source_bounds_path) as f:
         source = json.load(f)
 
-    # Get selected filenames
     selected_names = {t["filename"] for t in selected_tiles}
+    filtered_features = [
+        feature
+        for feature in source.get("features", [])
+        if feature.get("properties", {}).get("tile_name") in selected_names
+    ]
 
-    # Filter features
-    filtered_features = []
-    for feature in source.get("features", []):
-        tile_name = feature.get("properties", {}).get("tile_name")
-        if tile_name in selected_names:
-            filtered_features.append(feature)
-
-    # Build output GeoJSON
-    output = {
+    return {
         "type": "FeatureCollection",
         "name": "phase4_validation_bounds",
         "crs": source.get("crs"),
         "features": filtered_features,
     }
 
-    return output
-
 
 def get_density_distribution(tiles: list[dict]) -> dict[str, int]:
-    """Get counts by density category."""
+    """Return counts by density category (empty, sparse, dense)."""
     distribution = {"empty": 0, "sparse": 0, "dense": 0}
     for tile in tiles:
         density = tile.get("density", "empty")
-        # Only count known density categories
         if density in distribution:
             distribution[density] += 1
     return distribution
@@ -197,15 +178,15 @@ def get_density_distribution(tiles: list[dict]) -> dict[str, int]:
 # -----------------------------------------------------------------------------
 
 def main() -> int:
-    """Main entry point."""
+    """Main entry point for Phase 4 tile selection."""
     parser = argparse.ArgumentParser(
-        description="Select 20-tile stratified subset for Phase 4"
+        description="Select 20-tile stratified subset for Phase 4",
     )
     parser.add_argument(
         "--seed",
         type=int,
         default=None,
-        help="Random seed (default: current timestamp)",
+        help="Random seed (default: current Coordinated Universal Time (UTC) timestamp)",
     )
     parser.add_argument(
         "--dry-run",
@@ -214,21 +195,18 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    # Check input files exist
-    if not VALIDATION_MANIFEST_PATH.exists():
-        print(f"Error: Validation manifest not found: {VALIDATION_MANIFEST_PATH}")
-        return 1
+    # Validate that required input files exist
+    for label, path in [
+        ("Validation manifest", VALIDATION_MANIFEST_PATH),
+        ("Tile metadata", TILE_METADATA_PATH),
+    ]:
+        if not path.exists():
+            print(f"Error: {label} not found: {path}")
+            return 1
 
-    if not TILE_METADATA_PATH.exists():
-        print(f"Error: Tile metadata not found: {TILE_METADATA_PATH}")
-        return 1
-
-    # Set random seed
-    if args.seed is None:
-        seed = int(datetime.now(timezone.utc).timestamp())
-    else:
-        seed = args.seed
-
+    seed = args.seed if args.seed is not None else int(
+        datetime.now(timezone.utc).timestamp()
+    )
     print(f"Random seed: {seed}")
 
     # Load validation tiles with metadata
@@ -247,23 +225,23 @@ def main() -> int:
     selected_distribution = get_density_distribution(selected)
     print(f"  Subset distribution: {selected_distribution}")
 
-    # Check proportions preserved
+    # Report density proportion preservation
     print("\nDensity proportion check:")
     for density in ["dense", "sparse", "empty"]:
         orig_prop = original_distribution[density] / len(tiles) if tiles else 0
-        sel_prop = selected_distribution[density] / len(selected) if selected else 0
+        sel_prop = (
+            selected_distribution[density] / len(selected) if selected else 0
+        )
         diff = abs(orig_prop - sel_prop)
-        status = "✓" if diff <= 0.15 else "⚠"  # Allow 15% deviation
-        print(f"  {density}: {orig_prop:.1%} → {sel_prop:.1%} ({status})")
+        status = "OK" if diff <= 0.15 else "WARN"  # Allow 15% deviation
+        print(f"  {density}: {orig_prop:.1%} -> {sel_prop:.1%} ({status})")
 
-    # Show selected tiles by map
+    # Show selected tiles grouped by map
     print("\nSelected tiles by map:")
     by_map: dict[str, list[str]] = {}
     for tile in selected:
         map_id = tile.get("map", "unknown")
-        if map_id not in by_map:
-            by_map[map_id] = []
-        by_map[map_id].append(tile["filename"])
+        by_map.setdefault(map_id, []).append(tile["filename"])
 
     for map_id, tile_names in sorted(by_map.items()):
         print(f"  {map_id}: {len(tile_names)} tiles")
@@ -274,7 +252,7 @@ def main() -> int:
 
     # Save manifest
     print("\nSaving outputs...")
-    manifest_data = sorted([t["filename"] for t in selected])
+    manifest_data = sorted(t["filename"] for t in selected)
 
     OUTPUT_MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_MANIFEST_PATH, "w") as f:
