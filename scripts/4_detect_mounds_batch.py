@@ -64,6 +64,15 @@ from scripts.lib_tpm_governor import TPMGovernor
 # Script Version
 __version__ = "6.0.0"  # TPM governor, jittered backoff, tile manifests, early warnings
 
+# Maximum backoff wait time in seconds (5 minutes) to prevent multi-hour waits
+# when exponential backoff grows beyond useful delays.
+MAX_BACKOFF_SECONDS = 300
+
+# Consecutive failure counts that trigger progress bar warnings.
+# Uses specific thresholds instead of every-iteration warnings to avoid
+# flooding the output during sustained outages.
+CONSECUTIVE_FAILURE_THRESHOLDS = (5, 10, 20, 30)
+
 
 def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
     """
@@ -330,10 +339,11 @@ def process_single_tile(
                         tile_filename, attempt + 1, error_str,
                         error_type="rate_limit"
                     )
-                    wait = (
+                    jittered_wait = (
                         base_wait * (2 ** attempt)
                         + random.uniform(0, base_wait)
                     )
+                    wait = min(jittered_wait, MAX_BACKOFF_SECONDS)
                     time.sleep(wait)
                 elif "503" in error_str or "InternalServerError" in error_str:
                     metadata_tracker.log_retry(
@@ -857,10 +867,10 @@ def detect_mounds_versioned(
                     "\nWARNING: 10 tiles failed. "
                     "Consider stopping (Ctrl+C)."
                 )
-            if consecutive_failures >= 5:
+            if consecutive_failures in CONSECUTIVE_FAILURE_THRESHOLDS:
                 tqdm.write(
-                    f"\nWARNING: {consecutive_failures} "
-                    f"consecutive failures!"
+                    f"\nWARNING: {consecutive_failures}"
+                    " consecutive failures!"
                 )
 
     # Final Save
