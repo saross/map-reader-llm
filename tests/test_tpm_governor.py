@@ -244,10 +244,10 @@ class TestConcurrencyAdaptation:
         # effective semaphore capacity matches the new target by
         # acquiring up to _concurrency slots (should not block).
         target = governor._concurrency
-        acquired_count = sum(
-            1 for _ in range(target)
-            if governor._semaphore.acquire(blocking=False)
-        )
+        acquired_count = 0
+        for _ in range(target):
+            if governor._semaphore.acquire(blocking=False):
+                acquired_count += 1
 
         assert acquired_count == target
 
@@ -255,8 +255,8 @@ class TestConcurrencyAdaptation:
         for _ in range(acquired_count):
             governor._semaphore.release()
 
-    def test_concurrency_respects_min_max(self) -> None:
-        """Concurrency never goes below min or above max."""
+    def test_concurrency_respects_min(self) -> None:
+        """Concurrency never goes below min_concurrency."""
         governor = TPMGovernor(
             tpm_limit=100,  # Very low limit
             target_utilisation=0.80,
@@ -274,8 +274,9 @@ class TestConcurrencyAdaptation:
 
         assert governor._concurrency >= 2
 
-        # Reset and test max
-        governor2 = TPMGovernor(
+    def test_concurrency_respects_max(self) -> None:
+        """Concurrency never goes above max_concurrency."""
+        governor = TPMGovernor(
             tpm_limit=999_999_999,
             target_utilisation=0.80,
             initial_concurrency=5,
@@ -285,11 +286,11 @@ class TestConcurrencyAdaptation:
         )
 
         for _ in range(20):
-            governor2.acquire()
-            governor2.release(1)
+            governor.acquire()
+            governor.release(1)
             time.sleep(0.01)
 
-        assert governor2._concurrency <= 8
+        assert governor._concurrency <= 8
 
 
 @pytest.mark.tier1

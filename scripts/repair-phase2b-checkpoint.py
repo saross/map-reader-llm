@@ -157,29 +157,23 @@ def clean_damaged_outputs(
     files_deleted = 0
 
     for run in damaged_runs:
-        run_dir = run.get("run_dir")
-        if not run_dir or not run_dir.exists():
+        run_dir = run["run_dir"]
+        if not run_dir.exists():
             continue
 
         # Skip subdirectories — only delete regular files
         files = [f for f in run_dir.iterdir() if f.is_file()]
-        if not files:
-            continue
 
-        if dry_run:
-            for f in files:
+        for f in files:
+            if dry_run:
                 print(f"  [DRY RUN] Would delete: {f}")
                 files_deleted += 1
-        else:
-            for f in files:
+            else:
                 try:
                     f.unlink()
                     files_deleted += 1
-                except PermissionError:
-                    print(
-                        f"  WARNING: Cannot delete {f} "
-                        f"(permission denied)"
-                    )
+                except OSError as e:
+                    print(f"  WARNING: Cannot delete {f} ({e})")
 
     return files_deleted
 

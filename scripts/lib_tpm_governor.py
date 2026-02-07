@@ -52,7 +52,6 @@ import threading
 import time
 from collections import deque
 from dataclasses import dataclass
-from typing import Deque
 
 logger = logging.getLogger(__name__)
 
@@ -128,7 +127,7 @@ class TPMGovernor:
 
         # Sliding window token ledger (thread-safe via _lock)
         self._lock = threading.Lock()
-        self._ledger: Deque[TokenRecord] = deque()
+        self._ledger: deque[TokenRecord] = deque()
 
         # Adjustment state
         self._last_adjust_time = time.monotonic()

@@ -869,8 +869,7 @@ def detect_mounds_versioned(
                 )
             if consecutive_failures in CONSECUTIVE_FAILURE_THRESHOLDS:
                 tqdm.write(
-                    f"\nWARNING: {consecutive_failures}"
-                    " consecutive failures!"
+                    f"\nWARNING: {consecutive_failures} consecutive failures!"
                 )
 
     # Final Save
