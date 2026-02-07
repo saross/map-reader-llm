@@ -14,8 +14,9 @@ Description:
     1. Scans all runs under both track directories
     2. Reads each .meta.json to check items_processed and items_failed
     3. Classifies runs as healthy (60 processed, 0 failed) or damaged
-    4. Rewrites checkpoint.json to include only healthy runs
-    5. Prints a summary of what was kept and what was removed
+    4. Deletes output files from damaged runs (so --resume starts fresh)
+    5. Rewrites checkpoint.json to include only healthy runs
+    6. Prints a summary of what was kept and what was removed
 
     After running this, use --resume on the study YAML to re-queue only
     the damaged runs.
@@ -85,10 +86,12 @@ def scan_track(
                 continue
 
             # Find the meta.json file
+            key = f"{cond_dir.name}/{run_dir.name}"
             meta_files = list(run_dir.glob("*.meta.json"))
             if not meta_files:
                 damaged_runs.append({
-                    "key": f"{cond_dir.name}/{run_dir.name}",
+                    "key": key,
+                    "run_dir": run_dir,
                     "reason": "no_meta_json",
                     "processed": 0,
                     "failed": 0,
@@ -102,7 +105,8 @@ def scan_track(
                     meta = json.load(f)
             except (json.JSONDecodeError, OSError) as e:
                 damaged_runs.append({
-                    "key": f"{cond_dir.name}/{run_dir.name}",
+                    "key": key,
+                    "run_dir": run_dir,
                     "reason": f"meta_read_error: {e}",
                     "processed": 0,
                     "failed": 0,
@@ -113,13 +117,12 @@ def scan_track(
             processed = stats.get("items_processed", 0)
             failed = stats.get("items_failed", 0)
 
-            key = f"{cond_dir.name}/{run_dir.name}"
-
             if processed == expected_tiles and failed == 0:
                 healthy_keys.append(key)
             else:
                 damaged_runs.append({
                     "key": key,
+                    "run_dir": run_dir,
                     "reason": (
                         f"processed={processed}, failed={failed} "
                         f"(expected {expected_tiles})"
@@ -129,6 +132,49 @@ def scan_track(
                 })
 
     return healthy_keys, damaged_runs
+
+
+def clean_damaged_outputs(
+    damaged_runs: list[dict],
+    dry_run: bool = False,
+) -> int:
+    """
+    Delete output files from damaged runs so --resume starts fresh.
+
+    The batch script's resume logic loads existing features from the
+    output GeoJSON file. If partial output files remain on disk, the
+    re-run would resume from partial data rather than starting clean.
+    This function removes all files in damaged run directories so the
+    batch script treats them as new runs.
+
+    Args:
+        damaged_runs: List of damaged run dicts (with 'run_dir' key)
+        dry_run: If True, print what would be deleted without acting
+
+    Returns:
+        Number of files deleted (or that would be deleted in dry run)
+    """
+    files_deleted = 0
+
+    for run in damaged_runs:
+        run_dir = run.get("run_dir")
+        if not run_dir or not run_dir.exists():
+            continue
+
+        files_in_dir = list(run_dir.iterdir())
+        if not files_in_dir:
+            continue
+
+        if dry_run:
+            for f in files_in_dir:
+                print(f"  [DRY RUN] Would delete: {f}")
+                files_deleted += 1
+        else:
+            for f in files_in_dir:
+                f.unlink()
+                files_deleted += 1
+
+    return files_deleted
 
 
 def repair_checkpoint(
@@ -237,6 +283,7 @@ Examples:
 
     total_healthy = 0
     total_damaged = 0
+    total_files_cleaned = 0
 
     for track_name, track_dir in TRACKS.items():
         print(f"Track: {track_name}")
@@ -259,6 +306,16 @@ Examples:
             if len(damaged_runs) > 10:
                 print(f"    ... and {len(damaged_runs) - 10} more")
 
+        # Clean output files from damaged runs so --resume starts fresh
+        if damaged_runs:
+            print()
+            files_cleaned = clean_damaged_outputs(
+                damaged_runs, dry_run=args.dry_run
+            )
+            total_files_cleaned += files_cleaned
+            action = "Would delete" if args.dry_run else "Deleted"
+            print(f"  {action} {files_cleaned} output files from damaged runs")
+
         print()
         repair_checkpoint(track_dir, healthy_keys, dry_run=args.dry_run)
         print()
@@ -269,6 +326,7 @@ Examples:
     print(f"  Total healthy: {total_healthy}")
     print(f"  Total damaged: {total_damaged}")
     print(f"  Total runs: {total_healthy + total_damaged}")
+    print(f"  Output files cleaned: {total_files_cleaned}")
     print()
 
     if args.dry_run:
