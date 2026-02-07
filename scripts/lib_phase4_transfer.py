@@ -16,7 +16,6 @@ Usage:
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 
 # =============================================================================
@@ -46,8 +45,8 @@ class BaselineTransferResult:
     flash_f1: float
     pro_f1: float
     delta_f1: float
-    ci_lower: Optional[float] = None
-    ci_upper: Optional[float] = None
+    ci_lower: float | None = None
+    ci_upper: float | None = None
     decision: str = ""  # "proceed", "proceed_with_caution", "investigate"
     message: str = ""
 
@@ -104,8 +103,8 @@ class TransferOutcome:
 def evaluate_baseline_transfer(
     flash_f1: float,
     pro_f1: float,
-    ci_lower: Optional[float] = None,
-    ci_upper: Optional[float] = None,
+    ci_lower: float | None = None,
+    ci_upper: float | None = None,
 ) -> BaselineTransferResult:
     """
     Evaluate Phase 4a baseline transfer.
@@ -347,7 +346,7 @@ def evaluate_voting_threshold_transfer(
 
 def classify_transfer_outcome(
     factor_results: list[FactorSensitivityResult],
-    voting_result: Optional[VotingTransferResult] = None,
+    voting_result: VotingTransferResult | None = None,
 ) -> TransferOutcome:
     """
     Classify overall transfer outcome based on Phase 4b-4c results.

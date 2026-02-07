@@ -21,10 +21,6 @@ import random
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
-
-# Add parent directory to path for config import
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # -----------------------------------------------------------------------------
 # Configuration
@@ -75,7 +71,7 @@ def load_validation_with_metadata() -> list[dict]:
 def select_stratified_subset(
     tiles: list[dict],
     target_size: int,
-    seed: Optional[int] = None,
+    seed: int | None = None,
 ) -> list[dict]:
     """
     Select a stratified subset that preserves density distribution.
