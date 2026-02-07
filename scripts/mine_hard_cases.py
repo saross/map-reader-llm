@@ -20,7 +20,6 @@ Licence: Apache 2.0
 
 import sys
 from pathlib import Path
-from typing import Optional
 
 import geopandas as gpd
 import rasterio
@@ -39,7 +38,7 @@ except ImportError:
     sys.exit(1)
 
 
-def get_tile_path(tile_id: str) -> Optional[Path]:
+def get_tile_path(tile_id: str) -> Path | None:
     """
     Resolve tile ID to absolute file path.
 
@@ -59,7 +58,7 @@ def get_tile_path(tile_id: str) -> Optional[Path]:
     return found[0] if found else None
 
 
-def crop_candidate(raster_path: Path, geom, context_px: int = CONTEXT_SIZE) -> Optional[Image.Image]:
+def crop_candidate(raster_path: Path, geom, context_px: int = CONTEXT_SIZE) -> Image.Image | None:
     """
     Crop a region around the candidate geometry from a raster tile.
 
@@ -94,7 +93,7 @@ def mine_crops(
     geojson_path: Path | str,
     output_dir: Path | str,
     label: str,
-    bounds_path: Optional[Path | str] = None
+    bounds_path: Path | str | None = None
 ) -> None:
     """
     Extract image crops for detections in a GeoJSON file.

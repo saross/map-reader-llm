@@ -22,7 +22,6 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 import numpy as np
 from PIL import Image
@@ -69,7 +68,7 @@ DENSITY_DENSE = 3  # 3 or more
 # Tile Utilities
 # -----------------------------------------------------------------------------
 
-def parse_tile_coords(tile_name: str) -> Tuple[int, int]:
+def parse_tile_coords(tile_name: str) -> tuple[int, int]:
     """
     Extract pixel coordinates from tile filename.
 
@@ -81,7 +80,7 @@ def parse_tile_coords(tile_name: str) -> Tuple[int, int]:
     raise ValueError(f"Could not parse coordinates from: {tile_name}")
 
 
-def get_tile_grid_position(tile_name: str) -> Tuple[int, int]:
+def get_tile_grid_position(tile_name: str) -> tuple[int, int]:
     """
     Convert tile coordinates to grid position (tile indices).
 
@@ -129,7 +128,7 @@ def check_tile_content(tile_path: Path, max_background: float) -> bool:
 # Ground Truth Loading
 # -----------------------------------------------------------------------------
 
-def load_ground_truth() -> Dict[str, List[Tuple[float, float]]]:
+def load_ground_truth() -> dict[str, list[tuple[float, float]]]:
     """
     Load ground truth mounds and group by map.
 
@@ -138,7 +137,7 @@ def load_ground_truth() -> Dict[str, List[Tuple[float, float]]]:
     with open(GROUND_TRUTH_PATH) as f:
         data = json.load(f)
 
-    mounds_by_map: Dict[str, List[Tuple[float, float]]] = {}
+    mounds_by_map: dict[str, list[tuple[float, float]]] = {}
 
     for feature in data["features"]:
         map_id = feature["properties"]["Map"]
@@ -158,7 +157,7 @@ def load_ground_truth() -> Dict[str, List[Tuple[float, float]]]:
     return mounds_by_map
 
 
-def load_map_georef(map_id: str) -> Dict:
+def load_map_georef(map_id: str) -> dict | None:
     """
     Load georeferencing info for a map to convert pixel coords to geographic.
 
@@ -197,8 +196,8 @@ def load_map_georef(map_id: str) -> Dict:
 def count_mounds_in_tile(
     tile_name: str,
     map_id: str,
-    mounds: List[Tuple[float, float]],
-    georef: Dict,
+    mounds: list[tuple[float, float]],
+    georef: dict | None,
     map_pixel_width: int,
     map_pixel_height: int,
 ) -> int:
@@ -240,7 +239,7 @@ def count_mounds_in_tile(
     return count
 
 
-def get_map_dimensions(map_id: str) -> Tuple[int, int]:
+def get_map_dimensions(map_id: str) -> tuple[int, int]:
     """
     Estimate map dimensions by finding the maximum tile coordinates.
     """
@@ -273,9 +272,9 @@ def categorise_density(mound_count: int) -> str:
 
 
 def select_calibration_tiles(
-    candidates: Dict[str, List[dict]],
+    candidates: dict[str, list[dict]],
     samples_per_map: int,
-) -> Tuple[List[str], Dict[str, List[str]]]:
+) -> tuple[list[str], dict[str, list[str]]]:
     """
     Select calibration tiles with density stratification.
 
@@ -336,11 +335,11 @@ def select_calibration_tiles(
 
 
 def select_holdout_tiles(
-    candidates: Dict[str, List[dict]],
-    calibration_tiles: List[str],
+    candidates: dict[str, list[dict]],
+    calibration_tiles: list[str],
     samples_per_map: int,
     adjacency_distance: int,
-) -> Tuple[List[str], Dict[str, List[str]], bool]:
+) -> tuple[list[str], dict[str, list[str]], bool]:
     """
     Select holdout tiles with spatial separation from calibration tiles.
 
@@ -453,7 +452,7 @@ def main():
 
     # Build candidate list with content filtering and mound counts
     print("\nBuilding candidate list...")
-    candidates: Dict[str, List[dict]] = {}
+    candidates: dict[str, list[dict]] = {}
 
     for map_id in MAPS:
         map_dir = TILES_DIR / map_id
