@@ -29,6 +29,7 @@ Licence: Apache 2.0
 """
 
 import json
+import random
 import time
 import argparse
 from pathlib import Path
@@ -56,9 +57,12 @@ from scripts.lib_llm_metadata import (
     LLMProvider
 )
 
+# Import TPM-aware concurrency governor
+from scripts.lib_tpm_governor import TPMGovernor
+
 
 # Script Version
-__version__ = "5.0.1"  # Add model name resolution for preview-suffix models
+__version__ = "6.0.0"  # TPM governor, jittered backoff, tile manifests, early warnings
 
 
 def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
@@ -188,11 +192,13 @@ def process_single_tile(
     base_wait,
     max_retries,
     config_version,
+    governor=None,
 ):
     """
     Worker function to process a single tile with comprehensive metadata capture.
 
-    Uses the google-genai SDK for API calls.
+    Uses the google-genai SDK for API calls. When a TPMGovernor is provided,
+    each API attempt is gated through acquire/release to stay within TPM limits.
 
     Args:
         tile_path: Path to the tile image
@@ -205,9 +211,11 @@ def process_single_tile(
         base_wait: Base wait time for rate limit retries
         max_retries: Maximum retry attempts
         config_version: Version string from config
+        governor: Optional TPMGovernor for adaptive concurrency control
 
     Returns:
-        List of GeoJSON features for detected mounds
+        List of GeoJSON features for detected mounds, or None if all
+        retries were exhausted (distinguishes failure from zero detections).
     """
     tile_filename = tile_path.name
     features = []
@@ -242,6 +250,11 @@ def process_single_tile(
 
         for attempt in range(max_retries):
             request_start = datetime.now(timezone.utc)
+            actual_tokens = 0  # Default for governor release on error
+
+            # Gate through TPM governor if available
+            if governor:
+                governor.acquire()
 
             try:
                 response = client.models.generate_content(
@@ -249,6 +262,12 @@ def process_single_tile(
                     contents=content,
                     config=gen_config,
                 )
+
+                # Report actual tokens to governor
+                actual_tokens = getattr(
+                    getattr(response, 'usage_metadata', None),
+                    'total_token_count', 0
+                ) or 0
 
                 # Extract comprehensive metadata from response
                 # The new SDK response object has compatible attributes
@@ -290,6 +309,9 @@ def process_single_tile(
                         continue
 
             except Exception as e:
+                # Report zero tokens on error
+                actual_tokens = 0
+
                 error_str = str(e)
 
                 # Create error metadata
@@ -302,35 +324,50 @@ def process_single_tile(
                     attempt=attempt + 1
                 )
 
-                # Categorise and log retry
+                # Categorise and log retry with jittered backoff
                 if "429" in error_str or "ResourceExhausted" in error_str:
                     metadata_tracker.log_retry(
-                        tile_filename, attempt + 1, error_str, error_type="rate_limit"
+                        tile_filename, attempt + 1, error_str,
+                        error_type="rate_limit"
                     )
-                    wait = base_wait * (2 ** attempt) + (attempt * 2)
+                    wait = (
+                        base_wait * (2 ** attempt)
+                        + random.uniform(0, base_wait)
+                    )
                     time.sleep(wait)
                 elif "503" in error_str or "InternalServerError" in error_str:
                     metadata_tracker.log_retry(
-                        tile_filename, attempt + 1, error_str, error_type="server_error"
+                        tile_filename, attempt + 1, error_str,
+                        error_type="server_error"
                     )
-                    time.sleep(30)
+                    time.sleep(30 + random.uniform(0, 10))
                 elif "DeadlineExceeded" in error_str:
                     metadata_tracker.log_retry(
-                        tile_filename, attempt + 1, error_str, error_type="timeout"
+                        tile_filename, attempt + 1, error_str,
+                        error_type="timeout"
                     )
-                    time.sleep(30)
+                    time.sleep(30 + random.uniform(0, 10))
                 elif "404" in error_str and "models/" in error_str:
-                    print(f"\n[CRITICAL] Model '{model_name_cfg}' not found. Terminating.")
-                    return []  # Fatal
+                    print(
+                        f"\n[CRITICAL] Model '{model_name_cfg}' "
+                        f"not found. Terminating."
+                    )
+                    return None  # Fatal
                 else:
                     metadata_tracker.log_retry(
-                        tile_filename, attempt + 1, error_str, error_type="other"
+                        tile_filename, attempt + 1, error_str,
+                        error_type="other"
                     )
                     print(f"\n[Error] {tile_filename}: {e}")
                     if attempt < 2:
-                        time.sleep(20)
+                        time.sleep(20 + random.uniform(0, 10))
                     else:
                         break
+
+            finally:
+                # Always release governor slot (even on exceptions)
+                if governor:
+                    governor.release(actual_tokens)
 
         # Check for valid response
         # New SDK uses string finish reasons (e.g., 'STOP')
@@ -342,10 +379,13 @@ def process_single_tile(
         if not valid_response:
             if response_metadata:
                 response_metadata.parse_success = False
-            metadata_tracker.log_failure(tile_filename, "Retries Exhausted / Invalid Finish Reason")
+            metadata_tracker.log_failure(
+                tile_filename,
+                "Retries Exhausted / Invalid Finish Reason"
+            )
             if response_metadata:
                 metadata_tracker.log_response(tile_filename, response_metadata)
-            return []
+            return None
 
         # Log successful response metadata
         if response_metadata:
@@ -372,8 +412,10 @@ def process_single_tile(
             results_tracker.update(detections)
         except Exception as e:
             print(f"Failed to parse response for {tile_filename}: {e}")
-            metadata_tracker.log_failure(tile_filename, f"JSON Parse Error: {e}")
-            return []
+            metadata_tracker.log_failure(
+                tile_filename, f"JSON Parse Error: {e}"
+            )
+            return None
 
         with rasterio.open(tile_path) as src:
             transform = src.transform
@@ -415,7 +457,7 @@ def process_single_tile(
     except Exception as e:
         print(f"Error processing {tile_filename}: {e}")
         metadata_tracker.log_failure(tile_filename, str(e))
-        return []
+        return None
 
 def detect_mounds_versioned(
     config_path,
@@ -431,6 +473,8 @@ def detect_mounds_versioned(
     workers=1,
     dry_run=False,
     limit=None,
+    max_retries=15,
+    base_wait=30,
 ):
     """
     Executes the detection pipeline using a specific versioned configuration.
@@ -453,6 +497,13 @@ def detect_mounds_versioned(
         dry_run (bool, optional): If True, validate config and show what would be processed
             without API calls.
         limit (int, optional): Process only the first N tiles.
+        max_retries (int, optional): Maximum retry attempts per tile. Defaults to 15.
+        base_wait (int, optional): Base wait time in seconds for exponential backoff.
+            Defaults to 30.
+
+    Returns:
+        Dict with items_processed and items_failed counts, or None if
+        setup failed before processing could begin.
     """
     # Load Config
     try:
@@ -736,9 +787,23 @@ def detect_mounds_versioned(
 
     # --- PARALLEL EXECUTION ---
     # Prepare Arguments
-    max_retries = 5
-    base_wait = 30
     config_version = config.get("version", "vX")
+
+    # Create TPM governor for multi-worker runs to prevent rate limiting
+    include_images = config.get("include_example_images", True)
+    tokens_per_request = 20_000 if include_images else 1_500
+    governor = None
+    if workers > 1:
+        governor = TPMGovernor(
+            tokens_per_request=tokens_per_request,
+            initial_concurrency=min(4, workers),
+            max_concurrency=workers,
+        )
+        print(
+            f"TPM Governor: initial_concurrency={min(4, workers)}, "
+            f"max_concurrency={workers}, "
+            f"tokens_per_request={tokens_per_request}"
+        )
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         # Submit all tasks
@@ -755,8 +820,13 @@ def detect_mounds_versioned(
                 base_wait,
                 max_retries,
                 config_version,
+                governor,
             ): tile.name for tile in tiles_to_process
         }
+
+        # Early warning system — track failures during execution
+        failure_count = 0
+        consecutive_failures = 0
 
         for future in tqdm(
             concurrent.futures.as_completed(futures),
@@ -765,9 +835,33 @@ def detect_mounds_versioned(
             tile_name = futures[future]
             try:
                 new_features = future.result()
-                features.extend(new_features)
+                if new_features is None:
+                    # Tile failed (distinct from zero detections)
+                    failure_count += 1
+                    consecutive_failures += 1
+                else:
+                    consecutive_failures = 0
+                    features.extend(new_features)
             except Exception as e:
                 print(f"Exception in worker for {tile_name}: {e}")
+                failure_count += 1
+                consecutive_failures += 1
+
+            # Early warnings (use tqdm.write to avoid corrupting bar)
+            if failure_count == 3:
+                tqdm.write(
+                    "\nWARNING: 3 tiles have failed. Check API status."
+                )
+            if failure_count == 10:
+                tqdm.write(
+                    "\nWARNING: 10 tiles failed. "
+                    "Consider stopping (Ctrl+C)."
+                )
+            if consecutive_failures >= 5:
+                tqdm.write(
+                    f"\nWARNING: {consecutive_failures} "
+                    f"consecutive failures!"
+                )
 
     # Final Save
     collection = geojson.FeatureCollection(features)
@@ -777,6 +871,19 @@ def detect_mounds_versioned(
     }
     with open(output_file, "w") as f:
         geojson.dump(collection, f)
+
+    # Write tile completion manifest
+    manifest_path = output_file.with_suffix('.tiles.json')
+    tile_manifest = {
+        "total_tiles": len(tiles_to_process),
+        "completed": list(metadata_tracker.stats.completed_items),
+        "failed": [
+            fi["item_id"] for fi in metadata_tracker.stats.failed_items
+        ],
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+    with open(manifest_path, "w") as f:
+        json.dump(tile_manifest, f, indent=2)
 
     # Add results summary to metadata tracker
     metadata_tracker.update_results_summary(results_tracker.get_summary())
@@ -788,20 +895,29 @@ def detect_mounds_versioned(
         model=model_name_cfg
     )
 
-    # Finalise and save metadata
+    # Finalise and save metadata — include governor stats if used
     meta = metadata_tracker.finalise(include_per_item=True)
     meta["cost_estimate"] = cost_estimate
+    if governor:
+        meta["tpm_governor"] = governor.get_stats()
 
     with open(meta_file, "w") as f:
         json.dump(meta, f, indent=2)
 
     # Print summary
     print(f"\nFinished. Saved to {output_file}")
+    print(f"Tile manifest: {manifest_path}")
     print(f"Metadata saved to {meta_file}")
     print(f"Tiles processed: {meta['execution_stats']['items_processed']}")
+    print(f"Tiles failed: {meta['execution_stats']['items_failed']}")
     print(f"Total detections: {results_tracker.get_summary()['total_detections']}")
     print(f"Tokens used: {meta['usage_stats']['total_tokens']:,}")
     print(f"Estimated cost: ${cost_estimate['total_cost_usd']:.4f}")
+
+    return {
+        "items_processed": metadata_tracker.stats.items_processed,
+        "items_failed": metadata_tracker.stats.items_failed,
+    }
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -858,13 +974,21 @@ Examples:
         "--workers", type=int, default=1, help="Number of parallel workers"
     )
     parser.add_argument(
+        "--max-retries", type=int, default=15,
+        help="Maximum retry attempts per tile (default: 15)",
+    )
+    parser.add_argument(
+        "--base-wait", type=int, default=30,
+        help="Base wait time in seconds for exponential backoff (default: 30)",
+    )
+    parser.add_argument(
         "--dry-run", action="store_true",
         help="Validate config without making API calls",
     )
     parser.add_argument("--limit", type=int, help="Process only first N tiles")
     args = parser.parse_args()
 
-    detect_mounds_versioned(
+    result = detect_mounds_versioned(
         args.config,
         manifest_path=args.manifest,
         output_name=args.output,
@@ -876,4 +1000,14 @@ Examples:
         workers=args.workers,
         dry_run=args.dry_run,
         limit=args.limit,
+        max_retries=args.max_retries,
+        base_wait=args.base_wait,
     )
+
+    # Exit code: 0 = success, 1 = setup error, 2 = partial failure
+    if result is None:
+        sys.exit(1)
+    elif result["items_failed"] > 0:
+        sys.exit(2)
+    else:
+        sys.exit(0)
