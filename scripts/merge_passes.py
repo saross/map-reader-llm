@@ -4,14 +4,15 @@ Merge Detection Passes with Consensus Voting
 =============================================
 
 Implements the voting algorithm from preregistration Section 8.5:
-1. Within-pass deduplication (20m tolerance) — handles overlapping tiles
-2. Cross-pass clustering (20m tolerance)
+
+1. Within-pass deduplication (20 m tolerance) -- handles overlapping tiles
+2. Cross-pass clustering (20 m tolerance)
 3. Count votes per cluster (distinct passes contributing)
 4. Apply vote threshold
 5. Output: centroid, majority label, confidence (votes/N), source passes
 
-Supports K=10 to N=5 conversion by splitting runs 1-5 and 6-10 into separate pools
-(preregistration Section 3.8).
+Supports K=10 to N=5 conversion by splitting runs 1-5 and 6-10 into
+separate pools (preregistration Section 3.8).
 
 Usage:
     # Merge all passes in directory with threshold 3
@@ -59,8 +60,12 @@ def centroid_from_geometry(geom_dict: dict) -> tuple[float, float]:
     """
     Extract centroid coordinates from a GeoJSON geometry.
 
+    Uses Shapely for robust centroid computation, with a fallback for
+    malformed geometries that cannot be parsed.
+
     Args:
-        geom_dict: GeoJSON geometry dictionary.
+        geom_dict: GeoJSON (Geographic JavaScript Object Notation) geometry
+            dictionary.
 
     Returns:
         Tuple of (x, y) centroid coordinates.
@@ -78,26 +83,32 @@ def centroid_from_geometry(geom_dict: dict) -> tuple[float, float]:
 
 
 def euclidean_distance(p1: tuple[float, float], p2: tuple[float, float]) -> float:
-    """Calculate Euclidean distance between two points."""
+    """Calculate Euclidean distance between two projected coordinate points."""
     return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
 
 def deduplicate_within_pass(
-    features: list[dict], distance_thresh: float = DISTANCE_THRESHOLD_METRES
+    features: list[dict],
+    distance_thresh: float = DISTANCE_THRESHOLD_METRES,
 ) -> list[dict]:
     """
-    Deduplicate detections within a single pass using 20m tolerance.
+    Deduplicate detections within a single pass using 20 m tolerance.
 
     Implements preregistration Section 8.5 Step 1: "Within-pass deduplication".
     Prevents overlapping tiles from contributing multiple votes for the same
     physical location within a single pass.
 
+    Uses greedy clustering: each unvisited detection seeds a new cluster,
+    absorbing all remaining detections within the distance threshold.
+
     Args:
         features: List of GeoJSON features from a single pass.
-        distance_thresh: Maximum distance for considering detections as duplicates.
+        distance_thresh: Maximum distance (metres) for considering detections
+            as duplicates.
 
     Returns:
-        List of deduplicated features (one per cluster centroid).
+        List of deduplicated detection dicts, each containing centroid
+        coordinates, majority label, source tiles, and cluster size.
     """
     if not features:
         return []
@@ -115,8 +126,8 @@ def deduplicate_within_pass(
         })
 
     # Greedy clustering
-    clusters = []
-    used = set()
+    clusters: list[list[dict]] = []
+    used: set[int] = set()
 
     for i, det in enumerate(detections):
         if i in used:
@@ -149,7 +160,7 @@ def deduplicate_within_pass(
         majority_label = Counter(labels).most_common(1)[0][0]
 
         # Source tiles (for provenance)
-        source_tiles = list(set(d["source_tile"] for d in cluster))
+        source_tiles = sorted(set(d["source_tile"] for d in cluster))
 
         deduped.append({
             "centroid": mean_centroid,
@@ -166,22 +177,25 @@ def cluster_across_passes(
     distance_thresh: float = DISTANCE_THRESHOLD_METRES,
 ) -> list[dict]:
     """
-    Cluster detections across passes using 20m tolerance.
+    Cluster detections across passes using 20 m tolerance.
 
     Implements preregistration Section 8.5 Steps 2-5:
+
     - Pool deduplicated detections from all passes
     - Cluster using distance threshold
     - Count votes (distinct passes per cluster)
 
     Args:
-        pass_detections: Dict mapping pass_id to list of deduplicated detections.
-        distance_thresh: Maximum distance for clustering.
+        pass_detections: Dict mapping pass_id to list of deduplicated
+            detections.
+        distance_thresh: Maximum distance (metres) for clustering.
 
     Returns:
-        List of clusters with vote counts and metadata.
+        List of cluster dicts, each containing centroid, majority label,
+        vote count, contributing passes, source tiles, and cluster size.
     """
-    # Pool all detections with pass IDs
-    pool = []
+    # Pool all detections with pass identifiers
+    pool: list[dict] = []
     for pass_id, detections in pass_detections.items():
         for det in detections:
             pool.append({
@@ -195,8 +209,8 @@ def cluster_across_passes(
         return []
 
     # Greedy clustering
-    clusters = []
-    used = set()
+    clusters: list[list[dict]] = []
+    used: set[int] = set()
 
     for i, det in enumerate(pool):
         if i in used:
@@ -233,7 +247,7 @@ def cluster_across_passes(
         majority_label = Counter(labels).most_common(1)[0][0]
 
         # Source tiles (provenance)
-        all_tiles = []
+        all_tiles: list[str] = []
         for d in cluster:
             all_tiles.extend(d.get("source_tiles", []))
         source_tiles = sorted(set(all_tiles))
@@ -251,16 +265,19 @@ def cluster_across_passes(
 
 
 def apply_threshold(
-    clusters: list[dict], threshold: int, total_passes: int
+    clusters: list[dict],
+    threshold: int,
+    total_passes: int,
 ) -> FeatureCollection:
     """
     Apply vote threshold and create output GeoJSON.
 
-    Implements preregistration Section 8.5 Step 6.
+    Implements preregistration Section 8.5 Step 6: retain only clusters
+    whose vote count meets or exceeds the specified threshold.
 
     Args:
         clusters: List of cluster dictionaries from cluster_across_passes().
-        threshold: Minimum vote count to retain cluster.
+        threshold: Minimum vote count to retain a cluster.
         total_passes: Total number of passes (for confidence calculation).
 
     Returns:
@@ -290,16 +307,20 @@ def apply_threshold(
 
 
 def load_pass_detections(
-    input_dir: Path, pass_filter: list[int] | None = None
+    input_dir: Path,
+    pass_filter: list[int] | None = None,
 ) -> dict[str, list[dict]]:
     """
-    Load detection GeoJSONs from pass directories.
+    Load detection GeoJSON files from pass directories.
 
-    Expected structure:
+    Expected directory structure::
+
         input_dir/
             pass_01/*.geojson
             pass_02/*.geojson
             ...
+
+    Also supports ``run_*`` directory naming as an alternative.
 
     Args:
         input_dir: Directory containing pass_XX subdirectories.
@@ -318,7 +339,7 @@ def load_pass_detections(
         print(f"Warning: No pass_* or run_* directories found in {input_dir}")
         return {}
 
-    result = {}
+    result: dict[str, list[dict]] = {}
 
     for pass_dir in pass_dirs:
         # Extract pass number from directory name
@@ -338,7 +359,7 @@ def load_pass_detections(
             continue
 
         # Load all GeoJSON files in pass directory
-        features = []
+        features: list[dict] = []
         for geojson_file in pass_dir.glob("*.geojson"):
             # Skip metadata files
             if ".meta" in geojson_file.name:
@@ -366,16 +387,19 @@ def merge_passes(
     pass_filter: list[int] | None = None,
 ) -> dict:
     """
-    Main merge function implementing the full voting pipeline.
+    Execute the full voting pipeline: load, deduplicate, cluster, threshold.
+
+    This is the main merge function that orchestrates all steps of the
+    preregistration Section 8.5 voting algorithm.
 
     Args:
         input_dir: Directory containing pass subdirectories.
-        output_path: Path for output GeoJSON.
-        threshold: Vote threshold.
+        output_path: Path for output GeoJSON file.
+        threshold: Minimum vote count to retain a detection.
         pass_filter: Optional list of pass numbers to include.
 
     Returns:
-        Summary statistics dictionary.
+        Summary statistics dictionary with counts at each pipeline stage.
     """
     print(f"Loading passes from {input_dir}...")
     raw_passes = load_pass_detections(input_dir, pass_filter)
@@ -387,14 +411,14 @@ def merge_passes(
     total_passes = len(raw_passes)
     total_raw_detections = sum(len(feats) for feats in raw_passes.values())
 
-    print("\nStep 1: Within-pass deduplication (20m tolerance)...")
-    deduped_passes = {}
+    print("\nStep 1: Within-pass deduplication (20 m tolerance)...")
+    deduped_passes: dict[str, list[dict]] = {}
     total_deduped = 0
     for pass_id, features in raw_passes.items():
         deduped = deduplicate_within_pass(features)
         deduped_passes[pass_id] = deduped
         total_deduped += len(deduped)
-        print(f"  {pass_id}: {len(features)} → {len(deduped)} detections")
+        print(f"  {pass_id}: {len(features)} -> {len(deduped)} detections")
 
     print("\nStep 2-5: Cross-pass clustering and vote counting...")
     clusters = cluster_across_passes(deduped_passes)
@@ -404,7 +428,7 @@ def merge_passes(
     vote_counts = Counter(c["vote_count"] for c in clusters)
     print(f"  Vote distribution: {dict(sorted(vote_counts.items()))}")
 
-    print(f"\nStep 6: Applying threshold T≥{threshold}...")
+    print(f"\nStep 6: Applying threshold T>={threshold}...")
     consensus = apply_threshold(clusters, threshold, total_passes)
     retained = len(consensus["features"])
     print(f"  Retained {retained}/{len(clusters)} clusters")
@@ -434,7 +458,10 @@ def merge_passes(
 
 def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
     """
-    Generate outputs for all possible thresholds.
+    Generate consensus outputs for every possible threshold value.
+
+    Iterates from T=1 to T=total_passes, writing a separate GeoJSON file
+    for each threshold along with a JSON summary of detection counts.
 
     Args:
         input_dir: Directory containing pass subdirectories.
@@ -450,7 +477,7 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
     total_passes = len(raw_passes)
 
     print("\nStep 1: Within-pass deduplication...")
-    deduped_passes = {}
+    deduped_passes: dict[str, list[dict]] = {}
     for pass_id, features in raw_passes.items():
         deduped_passes[pass_id] = deduplicate_within_pass(features)
 
@@ -461,7 +488,7 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\nGenerating outputs for thresholds 1 to {total_passes}...")
-    summary = {"total_passes": total_passes, "thresholds": {}}
+    summary: dict = {"total_passes": total_passes, "thresholds": {}}
 
     for t in range(1, total_passes + 1):
         consensus = apply_threshold(clusters, t, total_passes)
@@ -472,7 +499,7 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
             geojson.dump(consensus, f, indent=2)
 
         summary["thresholds"][t] = retained
-        print(f"  T≥{t}: {retained} detections → {output_path.name}")
+        print(f"  T>={t}: {retained} detections -> {output_path.name}")
 
     # Write summary
     summary_path = output_dir / "voting_summary.json"
@@ -481,10 +508,13 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
     print(f"\nSummary saved to {summary_path}")
 
 
-def main():
-    """Command-line interface."""
+def main() -> None:
+    """Command-line interface (CLI) for the merge-passes voting pipeline."""
     parser = argparse.ArgumentParser(
-        description="Merge detection passes with consensus voting (preregistration Section 8.5)",
+        description=(
+            "Merge detection passes with consensus voting "
+            "(preregistration Section 8.5)"
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -509,9 +539,9 @@ Examples:
 
 Notes:
     - Implements preregistration Section 8.5 voting algorithm
-    - Uses 20m spatial tolerance (matches F1 evaluation)
+    - Uses 20 m spatial tolerance (matches F1 evaluation)
     - Within-pass deduplication handles overlapping tiles
-    - Output includes confidence (vote_count/total_passes)
+    - Output includes confidence (vote_count / total_passes)
         """,
     )
 
@@ -545,7 +575,10 @@ Notes:
     parser.add_argument(
         "--passes",
         type=str,
-        help="Comma-separated pass numbers to include (e.g., '1,2,3,4,5' for N=5 pool A)",
+        help=(
+            "Comma-separated pass numbers to include "
+            "(e.g., '1,2,3,4,5' for N=5 pool A)"
+        ),
     )
 
     parser.add_argument(
@@ -565,7 +598,7 @@ Notes:
             print("Error: --passes must be comma-separated integers")
             sys.exit(1)
 
-    # Validate arguments
+    # Validate arguments and dispatch
     if args.sweep:
         if not args.output_dir:
             print("Error: --sweep requires --output-dir")

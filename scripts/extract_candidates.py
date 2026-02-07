@@ -9,20 +9,22 @@ Description:
     proposer and verifier stages for analysis and ablation studies.
 
 Usage:
-    python scripts/extract_candidates.py \
-        --proposer outputs/phase2/proposer_detections.geojson \
-        --tiles-dir inputs/tiles \
-        --output-dir outputs/phase3d/candidates \
+    python scripts/extract_candidates.py \\
+        --proposer outputs/phase2/proposer_detections.geojson \\
+        --tiles-dir inputs/tiles \\
+        --output-dir outputs/phase3d/candidates \\
         --padding 75
 
-    python scripts/extract_candidates.py \
-        --proposer outputs/merged_detections.geojson \
-        --output-dir outputs/candidates \
+    python scripts/extract_candidates.py \\
+        --proposer outputs/merged_detections.geojson \\
+        --output-dir outputs/candidates \\
         --dry-run
 
 Inputs:
-    - Proposer GeoJSON with detection geometries and 'source_tile' property
-    - Tiles directory containing georeferenced PNG tiles
+    - Proposer GeoJSON (Geographic JavaScript Object Notation) with detection
+      geometries and "source_tile" property
+    - Tiles directory containing georeferenced Portable Network Graphics (PNG)
+      tiles
 
 Outputs:
     - Cropped candidate images in output directory
@@ -62,11 +64,11 @@ def get_tile_path(tile_id: str, tiles_dir: Path) -> Path | None:
     matches and subdirectory structures.
 
     Args:
-        tile_id: Tile filename (e.g., 'K-35-052-4_32635_x1344_y1344.png')
-        tiles_dir: Base directory containing tile subdirectories
+        tile_id: Tile filename (e.g., "K-35-052-4_32635_x1344_y1344.png").
+        tiles_dir: Base directory containing tile subdirectories.
 
     Returns:
-        Path to tile file, or None if not found
+        Path to tile file, or None if not found.
     """
     # Try direct match in tiles_dir
     direct_path = tiles_dir / tile_id
@@ -78,7 +80,7 @@ def get_tile_path(tile_id: str, tiles_dir: Path) -> Path | None:
     if found:
         return found[0]
 
-    # Try adding .png extension if not present
+    # Try adding PNG extension if not present
     if not tile_id.endswith(".png"):
         found = list(tiles_dir.glob(f"**/{tile_id}.png"))
         if found:
@@ -94,19 +96,19 @@ def crop_region(
     output_path: Path,
 ) -> bool:
     """
-    Crop region around centroid from georeferenced tile.
+    Crop region around centroid from a georeferenced tile.
 
     Uses rasterio to handle coordinate transformation from projected
     coordinates (in the GeoJSON) to pixel coordinates in the tile.
 
     Args:
-        tile_path: Path to georeferenced PNG tile
-        centroid: Detection centroid in projected coordinates (x, y)
-        padding: Number of pixels of context around centroid
-        output_path: Path to save cropped image
+        tile_path: Path to georeferenced PNG tile.
+        centroid: Detection centroid in projected coordinates (x, y).
+        padding: Number of pixels of context around centroid.
+        output_path: Path to save cropped image.
 
     Returns:
-        True if crop was successful, False otherwise
+        True if crop was successful, False otherwise.
     """
     try:
         with rasterio.open(tile_path) as src:
@@ -131,18 +133,17 @@ def crop_region(
 
             window = Window(col_start, row_start, window_width, window_height)
 
-            # Read and transpose to RGB
+            # Read and transpose to Red Green Blue (RGB)
             arr = src.read(window=window)
             if arr.shape[0] == 0:
                 return False
 
-            # Handle both RGB and RGBA
+            # Handle both RGB and RGBA (RGB with Alpha channel)
             if arr.shape[0] >= 3:
                 img_data = arr[:3].transpose(1, 2, 0)
             else:
                 img_data = arr.transpose(1, 2, 0)
 
-            # Save as PNG
             img = Image.fromarray(img_data)
             output_path.parent.mkdir(parents=True, exist_ok=True)
             img.save(output_path, "PNG")
@@ -164,17 +165,18 @@ def extract_candidates(
     Extract candidate regions from proposer detections.
 
     Reads a GeoJSON file containing proposer detections, crops image regions
-    around each detection centroid, and generates a manifest for verifier input.
+    around each detection centroid, and generates a manifest for verifier
+    input.
 
     Args:
-        proposer_geojson: Path to proposer output GeoJSON
-        tiles_dir: Directory containing source tiles
-        output_dir: Directory for cropped candidate images
-        padding: Pixels of context around detection centroid
-        dry_run: If True, only validate inputs without extracting
+        proposer_geojson: Path to proposer output GeoJSON.
+        tiles_dir: Directory containing source tiles.
+        output_dir: Directory for cropped candidate images.
+        padding: Pixels of context around detection centroid.
+        dry_run: If True, only validate inputs without extracting.
 
     Returns:
-        Path to generated candidate_manifest.json, or None on failure
+        Path to generated candidate_manifest.json, or None on failure.
     """
     proposer_geojson = Path(proposer_geojson)
     tiles_dir = Path(tiles_dir)
@@ -305,9 +307,11 @@ def extract_candidates(
 
 
 def _write_empty_manifest(
-    output_dir: Path, source_geojson: Path, padding: int
+    output_dir: Path,
+    source_geojson: Path,
+    padding: int,
 ) -> Path:
-    """Write an empty manifest for empty proposer input."""
+    """Write an empty manifest when the proposer input contains no features."""
     output_dir.mkdir(parents=True, exist_ok=True)
     manifest = {
         "version": "1.0",
@@ -325,8 +329,8 @@ def _write_empty_manifest(
     return manifest_path
 
 
-def main():
-    """Main entry point for candidate extraction."""
+def main() -> None:
+    """Parse command-line arguments and run candidate extraction."""
     parser = argparse.ArgumentParser(
         description="Extract candidate crops from proposer detections",
         formatter_class=argparse.RawDescriptionHelpFormatter,
