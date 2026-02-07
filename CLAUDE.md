@@ -70,6 +70,10 @@ The file `docs/notes/working_notes.md` captures observations about research dire
 - Unexpected findings or edge cases worth noting
 - Reflections on tool/harness behaviour relevant to reproducibility
 
+## Experiment Execution
+
+- **Never hard-code worker counts in study YAML files.** Parallelisation is the job of the TPM governor in `4_detect_mounds_batch.py`, not the study definition. When running experiments, pass `--workers N` via the CLI to set concurrency; the governor will dynamically manage throughput within API limits. Study YAML files should set `workers: 1` as the safe default and let the operator choose the appropriate parallelism at runtime.
+
 ## Google API Quota Notes
 
 - **Gemini API daily quotas reset at midnight US Pacific Time** (midnight PT = 7:00 PM AEDT / 6:00 PM AEST next day)
