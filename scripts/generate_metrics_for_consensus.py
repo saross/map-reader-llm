@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Metrics Generator for Consensus Runs
 =====================================
@@ -18,12 +19,8 @@ Licence: Apache 2.0
 
 import argparse
 import json
-import sys
+import traceback
 from pathlib import Path
-
-# Add parent directory to path
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR))
 
 from scripts.lib_advanced_metrics import calculate_f1_internal, calculate_per_class_f1, load_data
 
@@ -55,7 +52,6 @@ def generate_metrics(
     run_files = [
         f for f in all_files
         if f.is_file()
-        and not f.is_dir()
         and 'meta' not in f.name
         and '_metrics' not in f.name
         and '_advanced_metrics' not in f.name
@@ -100,7 +96,6 @@ def generate_metrics(
             print(f"Saved metrics for {run_name}")
 
         except Exception as e:
-            import traceback
             traceback.print_exc()
             print(f"Error processing {run_name}: {e}")
 

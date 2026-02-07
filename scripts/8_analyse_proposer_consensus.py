@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Proposer Consensus Analysis Script
 ==================================
@@ -17,20 +18,11 @@ Licence: Apache 2.0
 """
 
 import argparse
-import sys
 from pathlib import Path
 
 import geopandas as gpd
 
-# Setup Path
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR))
-
-try:
-    from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
-except ImportError:
-    print("Error importing scripts.lib_advanced_metrics.")
-    sys.exit(1)
+from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
 
 
 def analyse_proposer(union_path: Path | str, bounds_path: Path | str, template_path: Path | str) -> None:

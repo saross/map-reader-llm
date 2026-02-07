@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Consensus Analysis & Scoring Script
 ===================================
@@ -50,21 +51,21 @@ Licence: Apache 2.0
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
 import geopandas as gpd
 import pandas as pd
 
-# Setup Path
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR))
+from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
 
-try:
-    from scripts.lib_advanced_metrics import calculate_f1_internal, load_data
-except ImportError:
-    print("Error importing scripts.lib_advanced_metrics.")
-    sys.exit(1)
+
+def _check_first_pass(row: pd.Series) -> bool:
+    """Check if the first verifier pass returned verified=True."""
+    res = row.get("verifier_results")
+    if not res or not isinstance(res, list) or len(res) == 0:
+        return False
+    return res[0].get("verified", False)
+
 
 def analyse_consensus(
     pred_path: Path | str,
@@ -125,19 +126,8 @@ def analyse_consensus(
         if subset_p.empty:
             continue
 
-        # 2. Simulate Single-Pass Verifier
-        # logic: verified=True in result[0]
-        # We need to parse 'verifier_results' which is a list of dicts or a string
-        # It's likely a list of dicts if loaded from GeoJSON
-
-        def check_first_pass(row: pd.Series) -> bool:
-            """Check if the first verifier pass returned verified=True."""
-            res = row.get('verifier_results')
-            if not res or not isinstance(res, list) or len(res) == 0:
-                return False
-            return res[0].get('verified', False)
-
-        subset_verified = subset_p[subset_p.apply(check_first_pass, axis=1)].copy()
+        # 2. Simulate Single-Pass Verifier (verified=True in first result)
+        subset_verified = subset_p[subset_p.apply(_check_first_pass, axis=1)].copy()
 
         count = len(subset_verified)
         p, r, f1 = 0.0, 0.0, 0.0
@@ -182,7 +172,7 @@ def analyse_consensus(
                 print(f"{p_thresh:<10} | {v_thresh:<10} | {r:.4f}     | {p:.4f}     | {f1:.4f} {best_mark}   | {count}")
 
     print("-" * 80)
-    print("Optimization Result:")
+    print("Optimisation Result:")
     print(f"Global Best: {best_overall['desc']} -> F1 {best_overall['f1']:.4f}")
     if best_overall['f1'] > 0:
         p, r, f1 = best_overall['metrics']
