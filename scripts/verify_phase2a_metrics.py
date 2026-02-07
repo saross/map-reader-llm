@@ -23,32 +23,21 @@ Licence: Apache 2.0
 """
 
 import json
-import logging
-import sys
 from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
 import pandas as pd
 
-# Add scripts directory to path for lib imports
-sys.path.insert(0, str(Path(__file__).parent))
-from lib_advanced_metrics import (
+from scripts.lib_advanced_metrics import (
     calculate_f1_internal,
     compute_per_tile_tp_fp_fn,
-    match_detections_to_references,
     get_map_name,
+    match_detections_to_references,
 )
 
 # Script version
 __version__ = "1.0.0"
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
-logger = logging.getLogger(__name__)
 
 # Project paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -73,11 +62,35 @@ TEXT_ONLY_CONDITIONS = {"brief-text", "verbose-text"}
 IMAGE_CONDITIONS = {"image-only", "brief-text-image", "verbose-text-image"}
 # Tolerance for floating-point comparison after rounding
 TOLERANCE = 0.0001
+# Pairs of conditions sharing the same text but differing only in image inclusion
+ELABORATION_PAIRS = [
+    ("brief-text", "brief-text-image"),
+    ("verbose-text", "verbose-text-image"),
+]
+
+
+def parse_run_number(run_dir: Path) -> int | None:
+    """
+    Extract the integer run number from a directory named ``run_N``.
+
+    Args:
+        run_dir: Path whose final component is expected to be ``run_<number>``.
+
+    Returns:
+        The run number as an integer, or None if the name does not match.
+    """
+    try:
+        return int(run_dir.name.split("_", 1)[1])
+    except (IndexError, ValueError):
+        return None
 
 
 def load_ground_truth_and_bounds() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
     """
     Load and standardise ground truth references and tile bounds.
+
+    Both GeoDataFrames are reprojected to the target Coordinate Reference
+    System (CRS) EPSG:32635 if not already in that CRS.
 
     Returns:
         Tuple of (references GeoDataFrame, bounds GeoDataFrame) in EPSG:32635.
@@ -121,8 +134,7 @@ def find_detection_file(run_dir: Path) -> Path | None:
             continue
         if "_fp." in f.name or "_fn." in f.name:
             continue
-        base_name = f.name.rsplit(".", 1)[0] if "." in f.name else f.name
-        if base_name.endswith("_fp") or base_name.endswith("_fn"):
+        if f.stem.endswith(("_fp", "_fn")):
             continue
         return f
     return None
@@ -146,7 +158,7 @@ def find_meta_file(run_dir: Path) -> Path | None:
 
 def load_detection_gdf(det_path: Path) -> gpd.GeoDataFrame:
     """
-    Load a detection GeoJSON and standardise its Coordinate Reference System (CRS).
+    Load a detection GeoJSON and standardise its CRS to EPSG:32635.
 
     Args:
         det_path: Path to the detection GeoJSON file.
@@ -208,10 +220,8 @@ def verify_all_runs(
             if not run_dir.is_dir():
                 continue
 
-            # Extract run number
-            try:
-                run_num = int(run_dir.name.split("_", 1)[1])
-            except (IndexError, ValueError):
+            run_num = parse_run_number(run_dir)
+            if run_num is None:
                 continue
 
             # Find and load detection file
@@ -586,18 +596,24 @@ def spatial_overlap_analysis(
     print(f"\n{'TOTALS':<45} {total_shared:>6} {total_bt_only:>7} {total_io_only:>7}")
 
     if total_all > 0:
+        def pct(count: int) -> str:
+            """Format a count with its percentage of total_all."""
+            return f"{count:>4} ({100 * count / total_all:.1f}%)"
+
         print("\nOverlap percentages:")
-        print(f"  Shared (found by both):   {total_shared:>4} ({100 * total_shared / total_all:.1f}%)")
-        print(f"  Brief-text only:          {total_bt_only:>4} ({100 * total_bt_only / total_all:.1f}%)")
-        print(f"  Image-only only:          {total_io_only:>4} ({100 * total_io_only / total_all:.1f}%)")
+        print(f"  Shared (found by both):   {pct(total_shared)}")
+        print(f"  Brief-text only:          {pct(total_bt_only)}")
+        print(f"  Image-only only:          {pct(total_io_only)}")
+
+    def fmt_tp(label: str, tp_count: int, total: int) -> str:
+        """Format a true positive count with optional percentage."""
+        suffix = f" ({100 * tp_count / total:.1f}%)" if total > 0 else ""
+        return f"  {label:<16} {tp_count:>4}{suffix}"
 
     print("\nTrue positive breakdown (how many in each category match ground truth):")
-    print(f"  Shared TPs:      {total_shared_tp:>4}" +
-          (f" ({100 * total_shared_tp / total_shared:.1f}%)" if total_shared > 0 else ""))
-    print(f"  BT-only TPs:     {total_bt_only_tp:>4}" +
-          (f" ({100 * total_bt_only_tp / total_bt_only:.1f}%)" if total_bt_only > 0 else ""))
-    print(f"  IO-only TPs:     {total_io_only_tp:>4}" +
-          (f" ({100 * total_io_only_tp / total_io_only:.1f}%)" if total_io_only > 0 else ""))
+    print(fmt_tp("Shared TPs:", total_shared_tp, total_shared))
+    print(fmt_tp("BT-only TPs:", total_bt_only_tp, total_bt_only))
+    print(fmt_tp("IO-only TPs:", total_io_only_tp, total_io_only))
 
     # Diagnostic interpretation
     if total_bt_only_tp > total_io_only_tp:
@@ -657,7 +673,10 @@ def metadata_verification() -> None:
             if include_images is False:
                 print("    CHECK: include_example_images=false (correct for text-only)")
             else:
-                print(f"    RED FLAG: Text-only condition has include_example_images={include_images}")
+                print(
+                    f"    RED FLAG: Text-only condition has "
+                    f"include_example_images={include_images}"
+                )
         else:
             if include_images == "NOT SET (defaults to true)" or include_images is True:
                 print("    CHECK: Images enabled (correct for image condition)")
@@ -679,7 +698,9 @@ def metadata_verification() -> None:
             if not run_dir.is_dir():
                 continue
 
-            run_num = int(run_dir.name.split("_", 1)[1])
+            run_num = parse_run_number(run_dir)
+            if run_num is None:
+                continue
             meta_path = find_meta_file(run_dir)
             if meta_path is None:
                 continue
@@ -794,8 +815,7 @@ def detection_count_analysis() -> None:
 
     # Highlight the key within-elaboration-level comparisons
     print("\nWithin-elaboration-level comparisons (text constant, only images differ):")
-    for text_cond, image_cond in [("brief-text", "brief-text-image"),
-                                   ("verbose-text", "verbose-text-image")]:
+    for text_cond, image_cond in ELABORATION_PAIRS:
         t_df = csv_df[csv_df["condition"] == text_cond]
         i_df = csv_df[csv_df["condition"] == image_cond]
         if t_df.empty or i_df.empty:
@@ -809,12 +829,8 @@ def detection_count_analysis() -> None:
         )
 
     print(
-        "\nNote: Within each elaboration level, the system instructions are IDENTICAL."
-    )
-    print(
-        "The ONLY difference is whether example images are sent. In both cases,"
-    )
-    print(
+        "\nNote: Within each elaboration level, the system instructions are IDENTICAL.\n"
+        "The ONLY difference is whether example images are sent. In both cases,\n"
         "removing images IMPROVES F1 — suggesting images are actively harmful."
     )
 
@@ -858,8 +874,7 @@ def instruction_content_analysis() -> None:
 
     # Check text identity within elaboration levels
     print("\nText identity checks (same text, different image setting):")
-    for text_cond, image_cond in [("brief-text", "brief-text-image"),
-                                   ("verbose-text", "verbose-text-image")]:
+    for text_cond, image_cond in ELABORATION_PAIRS:
         text_file = instructions_dir / instruction_files[text_cond]
         image_file = instructions_dir / instruction_files[image_cond]
         if text_file.exists() and image_file.exists():
@@ -873,11 +888,13 @@ def instruction_content_analysis() -> None:
         else:
             print(f"  {text_cond} vs {image_cond}: FILE(S) MISSING")
 
-    print("\nKey insight: The image-only instruction (~20 lines) provides minimal")
-    print("guidance — just 'detect sunburst patterns' plus output format. But the")
-    print("within-elaboration-level comparisons (brief vs brief-image, verbose vs")
-    print("verbose-image) hold text CONSTANT. In both cases, removing images still")
-    print("improves F1, ruling out text richness as the sole explanation.")
+    print(
+        "\nKey insight: The image-only instruction (~20 lines) provides minimal\n"
+        "guidance — just 'detect sunburst patterns' plus output format. But the\n"
+        "within-elaboration-level comparisons (brief vs brief-image, verbose vs\n"
+        "verbose-image) hold text CONSTANT. In both cases, removing images still\n"
+        "improves F1, ruling out text richness as the sole explanation."
+    )
 
 
 # ============================================================================
@@ -898,7 +915,7 @@ def main() -> None:
     print(f"  Bounds:     {len(gdf_bounds)} tiles")
 
     # Part A1: Independent F1 recomputation
-    recomputed_df, all_match = verify_all_runs(gdf_ref, gdf_bounds)
+    _recomputed_df, all_match = verify_all_runs(gdf_ref, gdf_bounds)
 
     # Part A2: Per-tile decomposition
     per_tile_decomposition(gdf_ref, gdf_bounds)
