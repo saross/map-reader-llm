@@ -220,6 +220,7 @@ class ExecutionStats:
     empty_responses: int = 0
 
     # Detailed logs
+    completed_items: List[str] = field(default_factory=list)
     failed_items: List[Dict[str, Any]] = field(default_factory=list)
     retry_details: List[Dict[str, Any]] = field(default_factory=list)
 
@@ -343,6 +344,7 @@ class LLMMetadataTracker:
         """Log a successful item processing."""
         with self._lock:
             self.stats.items_processed += 1
+            self.stats.completed_items.append(item_id)
 
     def log_failure(self, item_id: str, reason: str) -> None:
         """Log a failed item."""
