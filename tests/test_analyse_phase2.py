@@ -2,15 +2,15 @@
 Tests for Phase 2 multi-condition analysis functionality.
 
 Tier 1 unit tests for the analyse_phase2_results.py script, covering:
-- Benjamini-Hochberg FDR correction for multiple pairwise comparisons
-- Per-run file discovery (no .geojson extension, no pass subdirectories)
-- Per-run loading returning list of (run, GeoDataFrame) tuples
-- Multi-run bootstrap with synthetic data
-- Integration test against existing image-only runs (if available)
+
+- Benjamini-Hochberg FDR correction for multiple pairwise comparisons.
+- Per-run file discovery (no .geojson extension, no pass subdirectories).
+- Per-run loading returning list of (run, GeoDataFrame) tuples.
+- Multi-run bootstrap with synthetic data.
+- Integration test against existing image-only runs (if available).
 """
 
 import json
-import sys
 from pathlib import Path
 
 import geopandas as gpd
@@ -18,12 +18,10 @@ import numpy as np
 import pytest
 from shapely.geometry import Point, box
 
-# Add project root to path for imports
 PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from analyse_phase2_results import apply_fdr_correction, load_condition_results
-from lib_advanced_metrics import (
+from scripts.analyse_phase2_results import apply_fdr_correction, load_condition_results
+from scripts.lib_advanced_metrics import (
     aggregate_tile_metrics,
     bootstrap_ci,
     bootstrap_multi_run_ci,
@@ -340,7 +338,7 @@ class TestApplyFdrCorrectionEdgeCases:
 # Import check
 def test_import_apply_fdr_correction() -> None:
     """Verify that apply_fdr_correction can be imported."""
-    from analyse_phase2_results import apply_fdr_correction as imported_fn
+    from scripts.analyse_phase2_results import apply_fdr_correction as imported_fn
     assert callable(imported_fn)
 
 
@@ -349,7 +347,14 @@ def test_import_apply_fdr_correction() -> None:
 # ============================================================================
 
 def _make_detection_geojson(features: list[dict]) -> dict:
-    """Create a minimal GeoJSON FeatureCollection for testing."""
+    """Create a minimal GeoJSON FeatureCollection for testing.
+
+    Args:
+        features: List of GeoJSON Feature dictionaries.
+
+    Returns:
+        GeoJSON FeatureCollection dictionary.
+    """
     return {
         "type": "FeatureCollection",
         "crs": {
@@ -363,7 +368,14 @@ def _make_detection_geojson(features: list[dict]) -> dict:
 def _make_detection_feature(
     tile_name: str = "K-35-052-4_32635_tile_001.png",
 ) -> dict:
-    """Create a minimal detection Feature for testing."""
+    """Create a minimal GeoJSON detection Feature for testing.
+
+    Args:
+        tile_name: Source tile identifier for the detection.
+
+    Returns:
+        GeoJSON Feature dictionary.
+    """
     return {
         "type": "Feature",
         "geometry": {
@@ -538,8 +550,14 @@ def _make_synthetic_runs(
     """
     Create synthetic per-run detection data for bootstrap testing.
 
+    Args:
+        n_runs: Number of runs to generate.
+        n_tiles: Number of tiles per run.
+        detections_per_tile: Number of detections per tile.
+        seed: Random seed for reproducibility.
+
     Returns:
-        (run_gdfs, gdf_ref, gdf_bounds) for use with bootstrap functions.
+        Tuple of (run_gdfs, gdf_ref, gdf_bounds) for bootstrap functions.
     """
     rng = np.random.RandomState(seed)
 
@@ -556,7 +574,7 @@ def _make_synthetic_runs(
 
     # Create reference points (one per tile for simplicity)
     ref_rows = []
-    for i, tname in enumerate(tile_names):
+    for i, _tname in enumerate(tile_names):
         x0 = 500000 + i * 100 + 50
         y0 = 4700050
         ref_rows.append({
@@ -571,7 +589,7 @@ def _make_synthetic_runs(
     for run_num in range(1, n_runs + 1):
         det_rows = []
         for i, tname in enumerate(tile_names):
-            for d in range(detections_per_tile):
+            for _d in range(detections_per_tile):
                 # Add some noise so runs differ
                 x0 = 500000 + i * 100 + 50 + rng.normal(0, 5)
                 y0 = 4700050 + rng.normal(0, 5)

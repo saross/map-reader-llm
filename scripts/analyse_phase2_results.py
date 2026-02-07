@@ -32,7 +32,9 @@ import sys
 from datetime import datetime, timezone
 from itertools import combinations
 from pathlib import Path
+
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 
 # Add scripts directory to path for lib imports
@@ -66,22 +68,22 @@ def load_condition_results(
     """
     Load per-run detection results for a single condition.
 
-    Iterates run_* directories under {study_dir}/{condition}/ and loads
+    Iterate run_* directories under {study_dir}/{condition}/ and load
     detection files from each. Detection files are identified by matching
     'detections_*' filenames while excluding '.meta.json', '_fp.*', and
     '_fn.*' suffixes. Files may or may not have a .geojson extension.
 
     Errata E21: Removed stale 'passes' parameter and pass_N subdirectory
-    iteration — the actual structure is run_K/ with no pass level (single
+    iteration -- the actual structure is run_K/ with no pass level (single
     pass per run, per preregistration section 3.8).
 
     Args:
-        study_dir: Base output directory for the phase
-        condition: Condition name (e.g., 'image-only')
+        study_dir: Base output directory for the phase.
+        condition: Condition name (e.g., 'image-only').
 
     Returns:
         List of (run_number, GeoDataFrame) tuples, sorted by run number.
-        Returns an empty list if no detection files are found.
+        Return an empty list if no detection files are found.
     """
     condition_dir = study_dir / condition
 
@@ -110,7 +112,7 @@ def load_condition_results(
             continue
 
         # Find detection files: match 'detections_*' but exclude
-        # .meta.json, _fp.*, _fn.* files
+        # .meta.json, _fp.*, and _fn.* files
         detection_files = []
         for f in run_dir.iterdir():
             if not f.name.startswith("detections_"):
@@ -119,9 +121,9 @@ def load_condition_results(
                 continue
             if "_fp." in f.name or "_fn." in f.name:
                 continue
-            # Also skip if the name ends with _fp or _fn (no extension)
-            base_name = f.name.rsplit(".", 1)[0] if "." in f.name else f.name
-            if base_name.endswith("_fp") or base_name.endswith("_fn"):
+            # Skip _fp or _fn suffixes without extension
+            stem = f.stem if "." in f.name else f.name
+            if stem.endswith(("_fp", "_fn")):
                 continue
             detection_files.append(f)
 
@@ -176,11 +178,11 @@ def apply_fdr_correction(
 
     Args:
         pairwise_results: List of pairwise comparison dictionaries,
-            each containing 'f1_difference' with 'ci_lower' and 'ci_upper'
-        q: FDR control level (default 0.05)
+            each containing 'f1_difference' with 'ci_lower' and 'ci_upper'.
+        q: FDR control level (default 0.05).
 
     Returns:
-        Updated pairwise_results with 'fdr_significant' field added
+        Updated pairwise_results with 'fdr_significant' field added.
     """
     if not pairwise_results:
         return pairwise_results
@@ -254,23 +256,22 @@ def analyse_phase_results(
     """
     Analyse results across multiple conditions.
 
-    Computes:
-    - Per-condition metrics (F1, precision, recall) with bootstrapped 95% CIs
-    - All pairwise comparisons with effect sizes and CIs
-    - FDR-corrected significance determinations
-    - Recommendation for optimal condition
+    Compute per-condition metrics (F1, precision, recall) with bootstrapped
+    95% CIs, all pairwise comparisons with effect sizes and CIs,
+    FDR-corrected significance determinations, and a recommendation for the
+    optimal condition.
 
     Args:
-        study_dir: Base output directory for the phase
-        conditions: List of condition names to compare
-        ground_truth_path: Path to ground truth GeoJSON
-        bounds_path: Path to evaluation bounds GeoJSON
-        n_bootstrap: Number of bootstrap iterations
-        fdr_q: FDR control level (q-value)
-        random_seed: Seed for reproducibility
+        study_dir: Base output directory for the phase.
+        conditions: List of condition names to compare.
+        ground_truth_path: Path to ground truth GeoJSON.
+        bounds_path: Path to evaluation bounds GeoJSON.
+        n_bootstrap: Number of bootstrap iterations.
+        fdr_q: FDR control level (q-value).
+        random_seed: Seed for reproducibility.
 
     Returns:
-        Analysis results dictionary
+        Analysis results dictionary.
     """
     logger.info("Starting multi-condition analysis")
     logger.info("Study directory: %s", study_dir)
@@ -359,7 +360,6 @@ def analyse_phase_results(
             )
 
         # Mean across runs (point estimate)
-        import numpy as np
         mean_f1 = float(np.mean(run_f1s))
         mean_precision = float(np.mean(run_precisions))
         mean_recall = float(np.mean(run_recalls))
@@ -448,7 +448,10 @@ def analyse_phase_results(
     # Build recommendation
     recommendation = f"Optimal condition: {best_condition} (mean F1 = {best_f1:.4f})"
     if n_fdr_sig > 0:
-        recommendation += f"\n{n_fdr_sig}/{n_comparisons} pairwise differences significant after FDR correction."
+        recommendation += (
+            f"\n{n_fdr_sig}/{n_comparisons} pairwise differences"
+            f" significant after FDR correction."
+        )
     else:
         recommendation += f"\nNo pairwise differences significant after FDR correction (q={fdr_q})."
 
@@ -474,10 +477,10 @@ def generate_markdown_summary(results: dict) -> str:
     Generate a markdown summary of the analysis results.
 
     Args:
-        results: Analysis results dictionary
+        results: Analysis results dictionary.
 
     Returns:
-        Markdown-formatted summary string
+        Markdown-formatted summary string.
     """
     lines = [
         "# Phase 2 Analysis Summary",
@@ -546,7 +549,7 @@ def generate_markdown_summary(results: dict) -> str:
 
 
 def print_summary(results: dict) -> None:
-    """Print a formatted console summary of the analysis results."""
+    """Print a formatted console summary of the analysis results to stdout."""
     print("\n" + "=" * 70)
     print(" Phase 2 Multi-Condition Analysis Results")
     print("=" * 70)
@@ -607,7 +610,9 @@ def print_summary(results: dict) -> None:
     print("-" * 70)
     print(f"  Total comparisons: {results.get('n_comparisons', 0)}")
     print(f"  Initially significant (α=0.05): {results.get('n_initially_significant', 0)}")
-    print(f"  FDR significant (q={results.get('fdr_q', 0.05)}): {results.get('n_fdr_significant', 0)}")
+    fdr_q = results.get('fdr_q', 0.05)
+    n_fdr_sig = results.get('n_fdr_significant', 0)
+    print(f"  FDR significant (q={fdr_q}): {n_fdr_sig}")
 
     print("\n" + "-" * 70)
     print(" Recommendation")
@@ -618,8 +623,8 @@ def print_summary(results: dict) -> None:
     print("\n" + "=" * 70 + "\n")
 
 
-def main():
-    """Main entry point for Phase 2 analysis."""
+def main() -> int:
+    """Run the Phase 2 multi-condition analysis from command-line arguments."""
     parser = argparse.ArgumentParser(
         description="Analyse Phase 2 results across multiple conditions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
