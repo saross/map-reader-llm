@@ -28,25 +28,26 @@ Author: Shawn Ross, Adela Sobotkova
 Licence: Apache 2.0
 """
 
-import sys
-import json
 import argparse
+import concurrent.futures
+import io
+import json
 import logging
-from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+import sys
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
 import geojson
-from geojson import FeatureCollection, Feature
-from shapely.geometry import shape
 import rasterio
-from rasterio.windows import Window
+from geojson import Feature, FeatureCollection
 from google import genai
 from google.genai import types
 from PIL import Image
-import concurrent.futures
-from threading import Lock
+from rasterio.windows import Window
+from shapely.geometry import shape
 
-# Setup Project Path
+# Add project root to path so config and scripts modules are importable
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
@@ -56,23 +57,19 @@ except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
 
-# Import comprehensive metadata tracking
 from scripts.lib_llm_metadata import (
     LLMMetadataTracker,
     LLMResponseMetadata,
     extract_gemini_metadata,
     create_error_metadata,
     estimate_cost,
-    LLMProvider
+    LLMProvider,
 )
 
 # Script Version
 __version__ = "5.2.0"  # Migrated to google-genai SDK with ThinkingConfig support
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Global Lock for thread safety if needed (logging is thread-safe)
-file_lock = Lock()
 
 
 def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
@@ -119,25 +116,31 @@ def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
         logging.error("  Available: %s", m)
     return None
 
-def load_candidates(candidates_path: Path) -> List[Feature]:
-    """Loads candidate features from GeoJSON."""
-    with open(candidates_path, 'r') as f:
+
+def load_candidates(candidates_path: Path) -> list[Feature]:
+    """Load candidate features from GeoJSON."""
+    with open(candidates_path) as f:
         fc = geojson.load(f)
     return fc.get("features", [])
 
-def get_tile_path(tile_id: str) -> Path:
-    """Resolves tile ID to absolute path."""
-    tiles_dir = TILES_DIR
-    found = list(tiles_dir.glob(f"**/{tile_id}"))
+
+def get_tile_path(tile_id: str) -> Path | None:
+    """Resolve tile ID to absolute path."""
+    found = list(TILES_DIR.glob(f"**/{tile_id}"))
     if not found:
-        found = list(tiles_dir.glob(f"**/{tile_id}.png"))
+        found = list(TILES_DIR.glob(f"**/{tile_id}.png"))
 
     if found:
         return found[0]
     return None
 
-def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE) -> Image.Image:
-    """Crops the raster around the candidate geometry."""
+
+def crop_candidate(
+    raster_path: Path,
+    geom: dict[str, Any],
+    context_px: int = CONTEXT_SIZE,
+) -> Image.Image | None:
+    """Crop the raster around the candidate geometry."""
     with rasterio.open(raster_path) as src:
         bounds = shape(geom).bounds
         cx = (bounds[0] + bounds[2]) / 2
@@ -156,17 +159,22 @@ def crop_candidate(raster_path: Path, geom: Dict, context_px: int = CONTEXT_SIZE
         except Exception:
             return None
 
+
 def construct_verifier_prompt(
-    prompt_config: Dict,
+    prompt_config: dict[str, Any],
     refs_dir: Path,
-) -> Tuple[List[types.Part], str]:
+) -> tuple[list[types.Part], str]:
     """
     Construct the multimodal reference prompt as types.Part objects.
+
+    Args:
+        prompt_config: Verification prompt configuration dictionary.
+        refs_dir: Path to the directory containing reference example images.
 
     Returns:
         Tuple of (reference_parts list, system_instruction text).
     """
-    reference_parts: List[types.Part] = []
+    reference_parts: list[types.Part] = []
 
     # 1. Image Library (Federated) — build Part objects for the new SDK
     for ex in prompt_config.get("examples", []):
@@ -217,20 +225,21 @@ def construct_verifier_prompt(
 
     return reference_parts, system_instruction
 
+
 def process_single_candidate(
-    args_tuple: Tuple,
-) -> Tuple[Optional[Feature], List[LLMResponseMetadata]]:
+    args_tuple: tuple,
+) -> tuple[Feature | None, list[LLMResponseMetadata]]:
     """
     Helper for parallel processing with comprehensive metadata capture.
 
     Uses the google-genai SDK for API calls. The client is thread-safe.
 
     Args:
-        args_tuple: (feat, reference_parts, client, model_name, gen_config,
-                      iterations, prompt_config, candidate_id)
+        args_tuple: Packed tuple of (feat, reference_parts, client, model_name,
+            gen_config, iterations, prompt_config, candidate_id).
 
     Returns:
-        Tuple of (processed Feature or None, list of response metadata)
+        Tuple of (processed Feature or None, list of response metadata).
     """
     (
         feat,
@@ -275,7 +284,6 @@ def process_single_candidate(
 
     try:
         # Convert crop to bytes for the new SDK
-        import io
         crop_buffer = io.BytesIO()
         crop_img.save(crop_buffer, format="PNG")
         crop_bytes = crop_buffer.getvalue()
@@ -384,13 +392,14 @@ def process_single_candidate(
         logging.error("Inference failed for %s: %s", candidate_id, e)
         return None, metadata_list
 
+
 def run_verification(
     candidates_path: str,
     output_path: str,
     config_path: str,
     workers: int = 5,
     iterations: int = 1,
-    model_override: str = None,
+    model_override: str | None = None,
 ):
     """
     Main verification loop with parallelism and comprehensive metadata tracking.
@@ -398,12 +407,12 @@ def run_verification(
     Uses the google-genai SDK with ThinkingConfig support.
 
     Args:
-        candidates_path: Path to input candidates GeoJSON
-        output_path: Path for output verified GeoJSON
-        config_path: Path to verification config JSON
-        workers: Number of parallel workers
-        iterations: Number of voting iterations per candidate
-        model_override: Optional model name to override config
+        candidates_path: Path to input candidates GeoJSON.
+        output_path: Path for output verified GeoJSON.
+        config_path: Path to verification config JSON.
+        workers: Number of parallel workers.
+        iterations: Number of voting iterations per candidate.
+        model_override: Optional model name to override config.
     """
     with open(config_path) as f:
         prompt_cfg = json.load(f)
@@ -439,14 +448,15 @@ def run_verification(
         iterations,
     )
 
-    refs_dir = EXAMPLES_DIR
-    reference_parts, system_instruction = construct_verifier_prompt(prompt_cfg, refs_dir)
+    reference_parts, system_instruction = construct_verifier_prompt(
+        prompt_cfg, EXAMPLES_DIR,
+    )
 
     # Build generation config with ThinkingConfig support
     thinking_config = None
     if "thinking_level" in prompt_cfg:
         thinking_config = types.ThinkingConfig(
-            thinking_level=prompt_cfg["thinking_level"]
+            thinking_level=prompt_cfg["thinking_level"],
         )
         logging.info("Thinking level: %s", prompt_cfg["thinking_level"])
 
@@ -458,16 +468,20 @@ def run_verification(
         system_instruction=system_instruction,
         safety_settings=[
             types.SafetySetting(
-                category="HARM_CATEGORY_HARASSMENT", threshold="OFF"
+                category="HARM_CATEGORY_HARASSMENT",
+                threshold="OFF",
             ),
             types.SafetySetting(
-                category="HARM_CATEGORY_HATE_SPEECH", threshold="OFF"
+                category="HARM_CATEGORY_HATE_SPEECH",
+                threshold="OFF",
             ),
             types.SafetySetting(
-                category="HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold="OFF"
+                category="HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                threshold="OFF",
             ),
             types.SafetySetting(
-                category="HARM_CATEGORY_DANGEROUS_CONTENT", threshold="OFF"
+                category="HARM_CATEGORY_DANGEROUS_CONTENT",
+                threshold="OFF",
             ),
         ],
     )
@@ -485,8 +499,14 @@ def run_verification(
     # Prepare args with unique candidate IDs
     process_args = [
         (
-            c, reference_parts, client, model_name, gen_config,
-            iterations, prompt_cfg, f"cand_{i:04d}",
+            c,
+            reference_parts,
+            client,
+            model_name,
+            gen_config,
+            iterations,
+            prompt_cfg,
+            f"cand_{i:04d}",
         )
         for i, c in enumerate(candidates)
     ]
@@ -573,12 +593,18 @@ if __name__ == "__main__":
     parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--iterations", type=int, default=1)
     parser.add_argument(
-        "--model", type=str, default=None,
+        "--model",
+        type=str,
+        default=None,
         help="Override the model in the config (e.g. gemini-3-flash)",
     )
     args = parser.parse_args()
 
     run_verification(
-        args.candidates, args.output, args.config,
-        args.workers, args.iterations, model_override=args.model,
+        args.candidates,
+        args.output,
+        args.config,
+        args.workers,
+        args.iterations,
+        model_override=args.model,
     )

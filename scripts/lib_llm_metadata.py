@@ -31,18 +31,19 @@ Author: Shawn Ross
 Licence: Apache 2.0
 """
 
-from dataclasses import dataclass, field, asdict
-from datetime import datetime, timezone
-from typing import Optional, List, Dict, Any
-from enum import Enum
-import threading
 import hashlib
 import subprocess
+import threading
 import uuid
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any
 
 
 class LLMProvider(Enum):
-    """Supported LLM providers."""
+    """Supported Large Language Model (LLM) providers."""
+
     GEMINI = "google_gemini"
     CLAUDE = "anthropic_claude"
     OPENAI = "openai"
@@ -54,10 +55,12 @@ class FinishReason(Enum):
     Normalised finish/stop reasons across providers.
 
     Maps provider-specific values to standardised categories:
+
     - Gemini: STOP=1, MAX_TOKENS=2, SAFETY=3, RECITATION=4, OTHER=5
     - Claude: end_turn, max_tokens, stop_sequence, tool_use
     - OpenAI: stop, length, content_filter, tool_calls
     """
+
     SUCCESS = "success"           # Natural completion (STOP, end_turn, stop)
     MAX_TOKENS = "max_tokens"     # Hit token limit
     SAFETY = "safety"             # Safety/content filter blocked
@@ -70,11 +73,12 @@ class FinishReason(Enum):
 @dataclass
 class TokenUsage:
     """
-    Token usage breakdown for a single API response.
+    Token usage breakdown for a single Application Programming Interface (API) response.
 
     Fields are provider-agnostic; providers that don't support
     certain fields will have them set to 0 or None.
     """
+
     # Core token counts (all providers)
     input_tokens: int = 0
     output_tokens: int = 0
@@ -103,6 +107,7 @@ class TokenUsage:
 @dataclass
 class SafetyRating:
     """Safety rating for a single category (Gemini-specific)."""
+
     category: str
     probability: str  # NEGLIGIBLE, LOW, MEDIUM, HIGH
     blocked: bool = False
@@ -116,26 +121,27 @@ class LLMResponseMetadata:
     This dataclass captures all available metadata from any supported
     provider. Fields not applicable to a provider are left as defaults.
     """
+
     # Identification
-    request_id: Optional[str] = None      # Provider-assigned ID (Claude, OpenAI)
-    item_id: Optional[str] = None         # Our identifier (tile_id, candidate_id)
+    request_id: str | None = None      # Provider-assigned ID (Claude, OpenAI)
+    item_id: str | None = None         # Our identifier (tile_id, candidate_id)
 
     # Model information
     provider: str = "unknown"             # google_gemini, anthropic_claude, openai
     model_requested: str = ""             # Model we asked for
     model_used: str = ""                  # Model actually used (from response)
-    model_version: Optional[str] = None   # Gemini: modelVersion field
-    system_fingerprint: Optional[str] = None  # OpenAI: backend config fingerprint
+    model_version: str | None = None   # Gemini: modelVersion field
+    system_fingerprint: str | None = None  # OpenAI: backend config fingerprint
 
     # Token usage
     tokens: TokenUsage = field(default_factory=TokenUsage)
 
     # Token modality breakdown (Gemini: TEXT, IMAGE, AUDIO, VIDEO, DOCUMENT)
     # Each key maps to a list of {"modality": str, "count": int} dicts
-    modality_breakdown: Dict[str, List[Dict[str, Any]]] = field(default_factory=dict)
+    modality_breakdown: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
 
     # Traffic type (Gemini: ON_DEMAND vs PROVISIONED_THROUGHPUT)
-    traffic_type: Optional[str] = None
+    traffic_type: str | None = None
 
     # Completion status
     finish_reason: str = "unknown"        # Normalised: success, max_tokens, safety, etc.
@@ -143,46 +149,46 @@ class LLMResponseMetadata:
 
     # Safety (Gemini)
     safety_blocked: bool = False
-    safety_ratings: List[Dict[str, Any]] = field(default_factory=list)
+    safety_ratings: list[dict[str, Any]] = field(default_factory=list)
 
     # Prompt-level safety (Gemini) — errata E23
-    prompt_safety_ratings: List[Dict[str, Any]] = field(default_factory=list)
-    prompt_block_reason: Optional[str] = None
+    prompt_safety_ratings: list[dict[str, Any]] = field(default_factory=list)
+    prompt_block_reason: str | None = None
 
     # Citation metadata (Gemini) — errata E23
-    citation_metadata: Optional[Dict[str, Any]] = None
+    citation_metadata: dict[str, Any] | None = None
 
     # Grounding (Gemini with Google Search)
     grounding_used: bool = False
-    grounding_queries: List[str] = field(default_factory=list)
-    grounding_sources: List[Dict[str, str]] = field(default_factory=list)
+    grounding_queries: list[str] = field(default_factory=list)
+    grounding_sources: list[dict[str, str]] = field(default_factory=list)
 
     # Timing
-    request_timestamp: Optional[str] = None   # ISO format
-    response_timestamp: Optional[str] = None  # ISO format
+    request_timestamp: str | None = None   # ISO format
+    response_timestamp: str | None = None  # ISO format
     latency_ms: int = 0
 
     # Retry information
     attempt_number: int = 1
-    retry_reason: Optional[str] = None
+    retry_reason: str | None = None
 
     # Response quality
     response_empty: bool = False
     parse_success: bool = True
-    parse_error: Optional[str] = None
+    parse_error: str | None = None
 
     # Raw response text (optional, for debugging)
     raw_response_length: int = 0
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary, handling nested dataclasses."""
-        result = asdict(self)
-        return result
+        return asdict(self)
 
 
 @dataclass
 class AggregatedUsage:
     """Aggregated token usage across all responses in a run."""
+
     total_input_tokens: int = 0
     total_output_tokens: int = 0
     total_cached_tokens: int = 0
@@ -192,12 +198,13 @@ class AggregatedUsage:
     total_tokens: int = 0
 
     # Per-provider breakdown (if mixed providers used)
-    by_provider: Dict[str, Dict[str, int]] = field(default_factory=dict)
+    by_provider: dict[str, dict[str, int]] = field(default_factory=dict)
 
 
 @dataclass
 class ExecutionStats:
     """Execution statistics for a run."""
+
     items_processed: int = 0
     items_failed: int = 0
     items_skipped: int = 0
@@ -210,7 +217,7 @@ class ExecutionStats:
     retries_other: int = 0
 
     # Finish reason distribution
-    finish_reason_counts: Dict[str, int] = field(default_factory=dict)
+    finish_reason_counts: dict[str, int] = field(default_factory=dict)
 
     # Safety
     safety_blocks: int = 0
@@ -220,9 +227,9 @@ class ExecutionStats:
     empty_responses: int = 0
 
     # Detailed logs
-    completed_items: List[str] = field(default_factory=list)
-    failed_items: List[Dict[str, Any]] = field(default_factory=list)
-    retry_details: List[Dict[str, Any]] = field(default_factory=list)
+    completed_items: list[str] = field(default_factory=list)
+    failed_items: list[dict[str, Any]] = field(default_factory=list)
+    retry_details: list[dict[str, Any]] = field(default_factory=list)
 
 
 class LLMMetadataTracker:
@@ -245,19 +252,19 @@ class LLMMetadataTracker:
 
     def __init__(
         self,
-        config: Dict[str, Any],
+        config: dict[str, Any],
         system_instruction: str,
         script_name: str = "unknown",
-        script_version: str = "unknown"
-    ):
+        script_version: str = "unknown",
+    ) -> None:
         """
         Initialise the metadata tracker.
 
         Args:
-            config: The prompt/experiment configuration dict
-            system_instruction: The system instruction text (for hashing)
-            script_name: Name of the calling script
-            script_version: Version of the calling script
+            config: The prompt/experiment configuration dict.
+            system_instruction: The system instruction text (for hashing).
+            script_name: Name of the calling script.
+            script_version: Version of the calling script.
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
@@ -275,25 +282,25 @@ class LLMMetadataTracker:
         self.stats = ExecutionStats()
 
         # Per-item metadata (optional detailed logging)
-        self.response_metadata: List[LLMResponseMetadata] = []
+        self.response_metadata: list[LLMResponseMetadata] = []
         self._store_per_item = True  # Can be disabled for memory efficiency
 
         # Results summary (task-specific)
-        self.results_summary: Dict[str, Any] = {}
+        self.results_summary: dict[str, Any] = {}
 
     def log_response(
         self,
         item_id: str,
         metadata: LLMResponseMetadata,
-        store_detailed: bool = True
+        store_detailed: bool = True,
     ) -> None:
         """
         Log metadata from a single API response.
 
         Args:
-            item_id: Identifier for the item processed (e.g., tile_id)
-            metadata: The extracted response metadata
-            store_detailed: Whether to store full per-item metadata
+            item_id: Identifier for the item processed (e.g., tile_id).
+            metadata: The extracted response metadata.
+            store_detailed: Whether to store full per-item metadata.
         """
         with self._lock:
             # Update item ID if not set
@@ -316,7 +323,7 @@ class LLMMetadataTracker:
                     "input_tokens": 0,
                     "output_tokens": 0,
                     "total_tokens": 0,
-                    "request_count": 0
+                    "request_count": 0,
                 }
             self.usage.by_provider[provider]["input_tokens"] += metadata.tokens.input_tokens
             self.usage.by_provider[provider]["output_tokens"] += metadata.tokens.output_tokens
@@ -325,8 +332,9 @@ class LLMMetadataTracker:
 
             # Finish reason distribution
             reason = metadata.finish_reason
-            self.stats.finish_reason_counts[reason] = \
+            self.stats.finish_reason_counts[reason] = (
                 self.stats.finish_reason_counts.get(reason, 0) + 1
+            )
 
             # Track issues
             if metadata.safety_blocked:
@@ -353,7 +361,7 @@ class LLMMetadataTracker:
             self.stats.failed_items.append({
                 "item_id": item_id,
                 "reason": reason,
-                "timestamp": datetime.now(timezone.utc).isoformat()
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             })
 
     def log_skip(self, item_id: str, reason: str = "already_processed") -> None:
@@ -366,16 +374,16 @@ class LLMMetadataTracker:
         item_id: str,
         attempt: int,
         reason: str,
-        error_type: str = "other"
+        error_type: str = "other",
     ) -> None:
         """
         Log a retry attempt.
 
         Args:
-            item_id: The item being retried
-            attempt: Attempt number (1-indexed)
-            reason: Description of why retry was needed
-            error_type: Category: "rate_limit", "server_error", "timeout", "other"
+            item_id: The item being retried.
+            attempt: Attempt number (1-indexed).
+            reason: Description of why retry was needed.
+            error_type: Category: "rate_limit", "server_error", "timeout", "other".
         """
         with self._lock:
             self.stats.retries_total += 1
@@ -394,17 +402,18 @@ class LLMMetadataTracker:
                 "attempt": attempt,
                 "reason": reason,
                 "error_type": error_type,
-                "timestamp": datetime.now(timezone.utc).isoformat()
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             })
 
-    def update_results_summary(self, summary: Dict[str, Any]) -> None:
+    def update_results_summary(self, summary: dict[str, Any]) -> None:
         """Update the task-specific results summary."""
         with self._lock:
             self.results_summary.update(summary)
 
     def set_per_item_storage(self, enabled: bool) -> None:
         """Enable or disable per-item metadata storage."""
-        self._store_per_item = enabled
+        with self._lock:
+            self._store_per_item = enabled
 
     @staticmethod
     def get_git_revision() -> str:
@@ -412,54 +421,59 @@ class LLMMetadataTracker:
         try:
             return subprocess.check_output(
                 ['git', 'rev-parse', 'HEAD'],
-                stderr=subprocess.DEVNULL
+                stderr=subprocess.DEVNULL,
             ).decode('ascii').strip()
         except Exception:
             return "unknown"
 
-    def finalise(self, include_per_item: bool = False) -> Dict[str, Any]:
+    def finalise(self, include_per_item: bool = False) -> dict[str, Any]:
         """
         Finalise and return the complete metadata for the run.
 
+        Acquires the internal lock to ensure a consistent snapshot of
+        aggregated statistics, even if called before worker threads have
+        fully drained (defensive; callers should join workers first).
+
         Args:
             include_per_item: Include detailed per-item metadata
-                             (can be large; default False)
+                (can be large; default False).
 
         Returns:
-            Complete metadata dictionary suitable for JSON serialisation
+            Complete metadata dictionary suitable for JSON serialisation.
         """
         end_time = datetime.now(timezone.utc)
         duration = (end_time - self.start_time).total_seconds()
 
-        result = {
-            "run_id": self.run_id,
-            "timestamp": {
-                "start": self.start_time.isoformat(),
-                "end": end_time.isoformat(),
-                "duration_seconds": duration
-            },
-            "environment": {
-                "git_commit": self.get_git_revision(),
-                "script": self.script_name,
-                "script_version": self.script_version
-            },
-            "configuration": {
-                "version": self.config.get("version"),
-                "model": self.config.get("model"),
-                "instruction_file": self.config.get("instruction_file", "unknown"),
-                "prompt_hash": self.system_instruction_hash,
-                "temperature": self.config.get("temperature"),
-                "full_config_snapshot": self.config
-            },
-            "execution_stats": asdict(self.stats),
-            "usage_stats": asdict(self.usage),
-            "results_summary": self.results_summary
-        }
+        with self._lock:
+            result = {
+                "run_id": self.run_id,
+                "timestamp": {
+                    "start": self.start_time.isoformat(),
+                    "end": end_time.isoformat(),
+                    "duration_seconds": duration,
+                },
+                "environment": {
+                    "git_commit": self.get_git_revision(),
+                    "script": self.script_name,
+                    "script_version": self.script_version,
+                },
+                "configuration": {
+                    "version": self.config.get("version"),
+                    "model": self.config.get("model"),
+                    "instruction_file": self.config.get("instruction_file", "unknown"),
+                    "prompt_hash": self.system_instruction_hash,
+                    "temperature": self.config.get("temperature"),
+                    "full_config_snapshot": self.config,
+                },
+                "execution_stats": asdict(self.stats),
+                "usage_stats": asdict(self.usage),
+                "results_summary": self.results_summary,
+            }
 
-        if include_per_item and self.response_metadata:
-            result["per_item_metadata"] = [
-                m.to_dict() for m in self.response_metadata
-            ]
+            if include_per_item and self.response_metadata:
+                result["per_item_metadata"] = [
+                    m.to_dict() for m in self.response_metadata
+                ]
 
         return result
 
@@ -473,20 +487,20 @@ def extract_gemini_metadata(
     request_start: datetime,
     model_requested: str = "",
     item_id: str = "",
-    attempt: int = 1
+    attempt: int = 1,
 ) -> LLMResponseMetadata:
     """
     Extract metadata from a Google Gemini API response.
 
     Args:
-        response: The GenerateContentResponse from google.generativeai
-        request_start: Timestamp when request was initiated
-        model_requested: The model name we requested
-        item_id: Identifier for the item being processed
-        attempt: Attempt number (for retries)
+        response: The GenerateContentResponse from google.generativeai.
+        request_start: Timestamp when request was initiated.
+        model_requested: The model name we requested.
+        item_id: Identifier for the item being processed.
+        attempt: Attempt number (for retries).
 
     Returns:
-        LLMResponseMetadata with all available fields populated
+        LLMResponseMetadata with all available fields populated.
     """
     response_time = datetime.now(timezone.utc)
     latency_ms = int((response_time - request_start).total_seconds() * 1000)
@@ -498,7 +512,7 @@ def extract_gemini_metadata(
         request_timestamp=request_start.isoformat(),
         response_timestamp=response_time.isoformat(),
         latency_ms=latency_ms,
-        attempt_number=attempt
+        attempt_number=attempt,
     )
 
     # Token usage
@@ -510,7 +524,7 @@ def extract_gemini_metadata(
             total_tokens=getattr(um, 'total_token_count', 0) or 0,
             cached_input_tokens=getattr(um, 'cached_content_token_count', 0) or 0,
             thoughts_tokens=getattr(um, 'thoughts_token_count', 0) or 0,
-            tool_use_tokens=getattr(um, 'tool_use_prompt_token_count', 0) or 0
+            tool_use_tokens=getattr(um, 'tool_use_prompt_token_count', 0) or 0,
         )
 
         # Traffic type (ON_DEMAND vs PROVISIONED_THROUGHPUT)
@@ -566,7 +580,7 @@ def extract_gemini_metadata(
             2: FinishReason.MAX_TOKENS,
             3: FinishReason.SAFETY,
             4: FinishReason.RECITATION,
-            5: FinishReason.UNKNOWN
+            5: FinishReason.UNKNOWN,
         }
         if isinstance(raw_reason, int):
             metadata.finish_reason = reason_map.get(
@@ -590,7 +604,7 @@ def extract_gemini_metadata(
                 metadata.safety_ratings.append({
                     "category": str(getattr(rating, 'category', '')),
                     "probability": str(getattr(rating, 'probability', '')),
-                    "blocked": getattr(rating, 'blocked', False)
+                    "blocked": getattr(rating, 'blocked', False),
                 })
                 if getattr(rating, 'blocked', False):
                     metadata.safety_blocked = True
@@ -606,7 +620,7 @@ def extract_gemini_metadata(
                         "start_index": getattr(src, 'start_index', None),
                         "end_index": getattr(src, 'end_index', None),
                         "uri": getattr(src, 'uri', None),
-                        "license": getattr(src, 'license', None),
+                        "licence": getattr(src, 'license', None),
                     })
                 if citations:
                     metadata.citation_metadata = {"citations": citations}
@@ -663,7 +677,7 @@ def extract_gemini_metadata(
                 if hasattr(chunk, 'web'):
                     metadata.grounding_sources.append({
                         "title": getattr(chunk.web, 'title', ''),
-                        "uri": getattr(chunk.web, 'uri', '')
+                        "uri": getattr(chunk.web, 'uri', ''),
                     })
 
     return metadata
@@ -674,20 +688,20 @@ def extract_claude_metadata(
     request_start: datetime,
     model_requested: str = "",
     item_id: str = "",
-    attempt: int = 1
+    attempt: int = 1,
 ) -> LLMResponseMetadata:
     """
     Extract metadata from an Anthropic Claude API response.
 
     Args:
-        response: The Message response from anthropic client
-        request_start: Timestamp when request was initiated
-        model_requested: The model name we requested
-        item_id: Identifier for the item being processed
-        attempt: Attempt number (for retries)
+        response: The Message response from anthropic client.
+        request_start: Timestamp when request was initiated.
+        model_requested: The model name we requested.
+        item_id: Identifier for the item being processed.
+        attempt: Attempt number (for retries).
 
     Returns:
-        LLMResponseMetadata with all available fields populated
+        LLMResponseMetadata with all available fields populated.
     """
     response_time = datetime.now(timezone.utc)
     latency_ms = int((response_time - request_start).total_seconds() * 1000)
@@ -699,7 +713,7 @@ def extract_claude_metadata(
         request_timestamp=request_start.isoformat(),
         response_timestamp=response_time.isoformat(),
         latency_ms=latency_ms,
-        attempt_number=attempt
+        attempt_number=attempt,
     )
 
     # Request ID
@@ -719,7 +733,7 @@ def extract_claude_metadata(
             input_tokens=getattr(usage, 'input_tokens', 0) or 0,
             output_tokens=getattr(usage, 'output_tokens', 0) or 0,
             cached_input_tokens=getattr(usage, 'cache_read_input_tokens', 0) or 0,
-            cache_creation_tokens=getattr(usage, 'cache_creation_input_tokens', 0) or 0
+            cache_creation_tokens=getattr(usage, 'cache_creation_input_tokens', 0) or 0,
         )
         # Calculate total
         metadata.tokens.total_tokens = (
@@ -737,7 +751,7 @@ def extract_claude_metadata(
             "end_turn": FinishReason.SUCCESS,
             "max_tokens": FinishReason.MAX_TOKENS,
             "stop_sequence": FinishReason.SUCCESS,
-            "tool_use": FinishReason.TOOL_USE
+            "tool_use": FinishReason.TOOL_USE,
         }
         metadata.finish_reason = reason_map.get(
             raw_reason, FinishReason.UNKNOWN
@@ -762,20 +776,20 @@ def extract_openai_metadata(
     request_start: datetime,
     model_requested: str = "",
     item_id: str = "",
-    attempt: int = 1
+    attempt: int = 1,
 ) -> LLMResponseMetadata:
     """
     Extract metadata from an OpenAI API response.
 
     Args:
-        response: The ChatCompletion response from openai client
-        request_start: Timestamp when request was initiated
-        model_requested: The model name we requested
-        item_id: Identifier for the item being processed
-        attempt: Attempt number (for retries)
+        response: The ChatCompletion response from openai client.
+        request_start: Timestamp when request was initiated.
+        model_requested: The model name we requested.
+        item_id: Identifier for the item being processed.
+        attempt: Attempt number (for retries).
 
     Returns:
-        LLMResponseMetadata with all available fields populated
+        LLMResponseMetadata with all available fields populated.
     """
     response_time = datetime.now(timezone.utc)
     latency_ms = int((response_time - request_start).total_seconds() * 1000)
@@ -787,7 +801,7 @@ def extract_openai_metadata(
         request_timestamp=request_start.isoformat(),
         response_timestamp=response_time.isoformat(),
         latency_ms=latency_ms,
-        attempt_number=attempt
+        attempt_number=attempt,
     )
 
     # Request ID
@@ -809,7 +823,7 @@ def extract_openai_metadata(
         tokens = TokenUsage(
             input_tokens=getattr(usage, 'prompt_tokens', 0) or 0,
             output_tokens=getattr(usage, 'completion_tokens', 0) or 0,
-            total_tokens=getattr(usage, 'total_tokens', 0) or 0
+            total_tokens=getattr(usage, 'total_tokens', 0) or 0,
         )
 
         # Prompt token details
@@ -841,7 +855,7 @@ def extract_openai_metadata(
                 "length": FinishReason.MAX_TOKENS,
                 "content_filter": FinishReason.SAFETY,
                 "tool_calls": FinishReason.TOOL_USE,
-                "function_call": FinishReason.TOOL_USE
+                "function_call": FinishReason.TOOL_USE,
             }
             metadata.finish_reason = reason_map.get(
                 raw_reason, FinishReason.UNKNOWN
@@ -872,21 +886,21 @@ def create_error_metadata(
     provider: str,
     model_requested: str,
     item_id: str,
-    attempt: int
+    attempt: int,
 ) -> LLMResponseMetadata:
     """
     Create metadata for a failed API request.
 
     Args:
-        error: The exception that occurred
-        request_start: When the request started
-        provider: The LLM provider
-        model_requested: The model we tried to use
-        item_id: The item being processed
-        attempt: Attempt number
+        error: The exception that occurred.
+        request_start: When the request started.
+        provider: The LLM provider.
+        model_requested: The model we tried to use.
+        item_id: The item being processed.
+        attempt: Attempt number.
 
     Returns:
-        LLMResponseMetadata representing the error
+        LLMResponseMetadata representing the error.
     """
     response_time = datetime.now(timezone.utc)
     latency_ms = int((response_time - request_start).total_seconds() * 1000)
@@ -904,7 +918,7 @@ def create_error_metadata(
         raw_finish_reason=type(error).__name__,
         parse_success=False,
         parse_error=str(error),
-        response_empty=True
+        response_empty=True,
     )
 
 
@@ -921,39 +935,39 @@ PRICING = {
         "gemini-2.0-flash": {"input": 0.10, "output": 0.40},
         "gemini-3-flash": {"input": 0.10, "output": 0.40},
         "gemini-3-pro": {"input": 2.50, "output": 10.00},
-        "default": {"input": 0.10, "output": 0.40}
+        "default": {"input": 0.10, "output": 0.40},
     },
     "anthropic_claude": {
         "claude-3-5-sonnet": {"input": 3.00, "output": 15.00},
         "claude-sonnet-4-5": {"input": 3.00, "output": 15.00},
         "claude-opus-4-5": {"input": 15.00, "output": 75.00},
-        "default": {"input": 3.00, "output": 15.00}
+        "default": {"input": 3.00, "output": 15.00},
     },
     "openai": {
         "gpt-4o": {"input": 2.50, "output": 10.00},
         "gpt-4o-mini": {"input": 0.15, "output": 0.60},
         "gpt-5": {"input": 5.00, "output": 20.00},
         "gpt-5.2": {"input": 5.00, "output": 20.00},
-        "default": {"input": 2.50, "output": 10.00}
-    }
+        "default": {"input": 2.50, "output": 10.00},
+    },
 }
 
 
 def estimate_cost(
     usage: AggregatedUsage,
     provider: str,
-    model: str
-) -> Dict[str, float]:
+    model: str,
+) -> dict[str, float]:
     """
     Estimate cost from aggregated token usage.
 
     Args:
-        usage: Aggregated token usage stats
-        provider: The LLM provider
-        model: The model name
+        usage: Aggregated token usage stats.
+        provider: The LLM provider.
+        model: The model name.
 
     Returns:
-        Dict with input_cost, output_cost, total_cost (in USD)
+        Dict with input_cost, output_cost, total_cost (in USD).
     """
     pricing_table = PRICING.get(provider, PRICING.get("google_gemini"))
 
@@ -975,6 +989,6 @@ def estimate_cost(
         "pricing_used": {
             "model": model,
             "input_per_1m": rates["input"],
-            "output_per_1m": rates["output"]
-        }
+            "output_per_1m": rates["output"],
+        },
     }
