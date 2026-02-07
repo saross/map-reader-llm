@@ -737,7 +737,7 @@ class TestBootstrapMeanApproximatesPointEstimate:
 
         # Point estimate
         _p, _r, f1_point = calculate_f1_internal(
-            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
         )
 
         # Bootstrap CI
@@ -762,7 +762,7 @@ class TestBootstrapMeanApproximatesPointEstimate:
         run_f1s = []
         for _rn, gdf_det in run_gdfs:
             _p, _r, f1 = calculate_f1_internal(
-                gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+                gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
             )
             run_f1s.append(f1)
         mean_f1_point = float(np.mean(run_f1s))
@@ -788,7 +788,7 @@ class TestBootstrapMeanApproximatesPointEstimate:
         _run_num, gdf_det = run_gdfs[0]
 
         _p, _r, f1_point = calculate_f1_internal(
-            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
         )
 
         ci = bootstrap_ci(
@@ -836,7 +836,7 @@ class TestPerTileMetrics:
 
         # Global point estimate
         p_global, r_global, f1_global = calculate_f1_internal(
-            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
         )
 
         # Should match exactly for well-separated tiles
@@ -896,7 +896,7 @@ class TestPerTileMetrics:
 
         p_agg, r_agg, f1_agg = aggregate_tile_metrics(tile_metrics, tiles)
         p_pt, r_pt, f1_pt = calculate_f1_internal(
-            gdf_det, gdf_ref, gdf_bounds, buffer_meters=20,
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
         )
 
         assert f1_agg == pytest.approx(f1_pt, abs=1e-6)

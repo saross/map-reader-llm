@@ -701,7 +701,7 @@ class TestReferenceScoping:
         )
 
         p, r, f1 = calculate_f1_internal(
-            dets, refs, two_tile_bounds, buffer_meters=20
+            dets, refs, two_tile_bounds, buffer_metres=20
         )
 
         # With correct per-tile scoping, R_gap is excluded:

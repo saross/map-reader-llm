@@ -6,25 +6,18 @@ lib_advanced_metrics.py. Uses synthetic GeoDataFrames to verify correct
 detection of two-way interaction effects via difference-of-differences
 bootstrap.
 
-These tests support preregistration Section 5.5 (M/E × H5 interaction
+These tests support preregistration Section 5.5 (M/E x H5 interaction
 analysis), which uses bootstrap interaction testing instead of two-way
-ANOVA.
+Analysis of Variance (ANOVA).
 """
-
-import sys
-from pathlib import Path
 
 import geopandas as gpd
 import pytest
 from shapely.geometry import Point, box
 
-# Add project root to path for imports
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
 from scripts.lib_advanced_metrics import bootstrap_interaction_ci
 
-# Standard CRS used throughout the project (UTM Zone 35N)
+# Standard Coordinate Reference System (CRS) used throughout the project (UTM Zone 35N)
 CRS = "EPSG:32635"
 
 
@@ -67,11 +60,10 @@ def _make_references(n_tiles: int) -> gpd.GeoDataFrame:
         GeoDataFrame with Point geometries at tile centres and Map column.
     """
     base_x, base_y = 500000, 4700000
-    points = []
-    for i in range(n_tiles):
-        x = base_x + i * 200 + 50  # Centre of the 100m tile
-        points.append(Point(x, base_y + 50))
-    # Map column must match get_map_name() output for the tile prefix
+    points = [
+        Point(base_x + i * 200 + 50, base_y + 50)
+        for i in range(n_tiles)
+    ]
     return gpd.GeoDataFrame(
         {"Map": ["K-35-052-4_32635"] * n_tiles},
         geometry=points,
@@ -133,11 +125,10 @@ def _build_conditions(
         Dict mapping (factor_a, factor_b) to (gdf_det, gdf_bounds).
     """
     bounds = _make_tile_bounds(n_tiles)
-    conditions = {}
-    for key, hits in hit_map.items():
-        dets = _make_detections(n_tiles, hits)
-        conditions[key] = (dets, bounds.copy())
-    return conditions
+    return {
+        key: (_make_detections(n_tiles, hits), bounds.copy())
+        for key, hits in hit_map.items()
+    }
 
 
 @pytest.mark.tier1
@@ -149,11 +140,11 @@ class TestBootstrapInteractionCi:
         no interaction should be detected.
 
         Setup (20 tiles, 1 mound each):
-        - (A1, B1): hits tiles 0-15 → recall 16/20 = 0.80
-        - (A1, B2): hits tiles 0-9  → recall 10/20 = 0.50
-        - (A2, B1): hits tiles 0-15 → recall 16/20 = 0.80
-        - (A2, B2): hits tiles 0-9  → recall 10/20 = 0.50
-        Simple effect of B at A1 = same as at A2 → no interaction.
+        - (A1, B1): hits tiles 0-15 -> recall 16/20 = 0.80
+        - (A1, B2): hits tiles 0-9  -> recall 10/20 = 0.50
+        - (A2, B1): hits tiles 0-15 -> recall 16/20 = 0.80
+        - (A2, B2): hits tiles 0-9  -> recall 10/20 = 0.50
+        Simple effect of B at A1 = same as at A2 -> no interaction.
         """
         n_tiles = 20
         hit_map = {
@@ -190,11 +181,11 @@ class TestBootstrapInteractionCi:
         interaction should be detected.
 
         Setup (20 tiles, 1 mound each):
-        - (A1, B1): hits tiles 0-17 → recall 18/20 = 0.90
-        - (A1, B2): hits tiles 0-3  → recall 4/20  = 0.20
-        - (A2, B1): hits tiles 0-17 → recall 18/20 = 0.90
-        - (A2, B2): hits tiles 0-17 → recall 18/20 = 0.90
-        Simple effect of B at A1 = -0.70, at A2 = 0.0 → strong interaction.
+        - (A1, B1): hits tiles 0-17 -> recall 18/20 = 0.90
+        - (A1, B2): hits tiles 0-3  -> recall 4/20  = 0.20
+        - (A2, B1): hits tiles 0-17 -> recall 18/20 = 0.90
+        - (A2, B2): hits tiles 0-17 -> recall 18/20 = 0.90
+        Simple effect of B at A1 = -0.70, at A2 = 0.0 -> strong interaction.
         """
         n_tiles = 20
         hit_map = {
@@ -227,7 +218,7 @@ class TestBootstrapInteractionCi:
         )
 
     def test_three_by_three_design(self) -> None:
-        """Test with a 3×3 factorial (matching H5's 3 M/E × 3 H5 design).
+        """Test with a 3x3 factorial (matching H5's 3 M/E x 3 H5 design).
 
         With 3 factor_a levels, there should be 3 pairwise interaction
         contrasts (A1-A2, A1-A3, A2-A3).
@@ -259,7 +250,7 @@ class TestBootstrapInteractionCi:
         )
 
         assert "error" not in result
-        # 3 factor_a levels → C(3,2) = 3 pairwise contrasts
+        # 3 factor_a levels -> C(3,2) = 3 pairwise contrasts
         assert len(result["interaction_contrasts"]) == 3
         assert result["factor_a_levels"] == ["M1", "M2", "M3"]
         assert result["factor_b_levels"] == ["H5_min", "H5_terse", "H5_verbose"]

@@ -5,17 +5,15 @@ Provides common test data and utilities used across test modules.
 """
 
 import json
-import sys
 from pathlib import Path
 
 import geopandas as gpd
 import pytest
 
-# Add project root to path for imports
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
 from config import INPUTS_DIR, TILES_DIR, VECTORS_DIR
+
+# Project root for path fixtures
+PROJECT_ROOT = Path(__file__).parent.parent
 
 
 # =============================================================================

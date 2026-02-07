@@ -6,22 +6,14 @@ Tests verify correct filtering by proposer_votes and verifier_votes thresholds,
 and the check_first_pass helper function.
 """
 
-import sys
-from pathlib import Path
-
 import geopandas as gpd
 import pandas as pd
 import pytest
 from shapely.geometry import Point
 
-# Add project root to path for imports
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
 
 def check_first_pass(row: pd.Series) -> bool:
-    """
-    Check if the first verifier pass returned verified=True.
+    """Check if the first verifier pass returned verified=True.
 
     Extracted from 7_analyse_consensus.py for testing.
 
@@ -37,17 +29,17 @@ def check_first_pass(row: pd.Series) -> bool:
     return res[0].get("verified", False)
 
 
-def create_predictions_gdf(
+def _make_predictions_gdf(
     records: list[dict],
     crs: str = "EPSG:32635",
 ) -> gpd.GeoDataFrame:
-    """
-    Create a GeoDataFrame of predictions for testing.
+    """Create a GeoDataFrame of predictions for testing.
 
     Args:
         records: List of dicts with prediction attributes.
-            Required keys: x, y, proposer_votes, verifier_votes
-            Optional: verifier_results
+            Required keys: x, y, proposer_votes, verifier_votes.
+            Optional: verifier_results.
+        crs: Coordinate reference system.
 
     Returns:
         GeoDataFrame with prediction geometries and attributes.
@@ -154,9 +146,8 @@ class TestProposerVotesFiltering:
             {"x": 500300, "y": 4700000, "proposer_votes": 4, "verifier_votes": 5},
             {"x": 500400, "y": 4700000, "proposer_votes": 5, "verifier_votes": 5},
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
-        # Filter for proposer_votes >= 3
         filtered = gdf_pred[gdf_pred["proposer_votes"] >= 3]
 
         assert len(filtered) == 3
@@ -168,19 +159,14 @@ class TestProposerVotesFiltering:
             {"x": 500000, "y": 4700000, "proposer_votes": 1, "verifier_votes": 5},
             {"x": 500100, "y": 4700000, "proposer_votes": 5, "verifier_votes": 5},
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
         # Threshold = 1 should include all
-        filtered_1 = gdf_pred[gdf_pred["proposer_votes"] >= 1]
-        assert len(filtered_1) == 2
-
+        assert len(gdf_pred[gdf_pred["proposer_votes"] >= 1]) == 2
         # Threshold = 5 should include only unanimous
-        filtered_5 = gdf_pred[gdf_pred["proposer_votes"] >= 5]
-        assert len(filtered_5) == 1
-
+        assert len(gdf_pred[gdf_pred["proposer_votes"] >= 5]) == 1
         # Threshold = 6 should include none
-        filtered_6 = gdf_pred[gdf_pred["proposer_votes"] >= 6]
-        assert len(filtered_6) == 0
+        assert len(gdf_pred[gdf_pred["proposer_votes"] >= 6]) == 0
 
 
 @pytest.mark.tier1
@@ -196,9 +182,8 @@ class TestVerifierVotesFiltering:
             {"x": 500300, "y": 4700000, "proposer_votes": 5, "verifier_votes": 4},
             {"x": 500400, "y": 4700000, "proposer_votes": 5, "verifier_votes": 5},
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
-        # Filter for verifier_votes >= 3
         filtered = gdf_pred[gdf_pred["verifier_votes"] >= 3]
 
         assert len(filtered) == 3
@@ -210,24 +195,23 @@ class TestVerifierVotesFiltering:
         This tests the 2D grid search logic used in analyse_consensus.
         """
         records = [
-            # Low proposer, low verifier (should be filtered by both)
+            # Low proposer, low verifier (filtered by both)
             {"x": 500000, "y": 4700000, "proposer_votes": 1, "verifier_votes": 1},
             # High proposer, low verifier (filtered by verifier)
             {"x": 500100, "y": 4700000, "proposer_votes": 5, "verifier_votes": 1},
             # Low proposer, high verifier (filtered by proposer)
             {"x": 500200, "y": 4700000, "proposer_votes": 1, "verifier_votes": 5},
-            # High proposer, high verifier (should pass both)
+            # High proposer, high verifier (passes both)
             {"x": 500300, "y": 4700000, "proposer_votes": 5, "verifier_votes": 5},
-            # Moderate both (should pass moderate thresholds)
+            # Moderate both (passes moderate thresholds)
             {"x": 500400, "y": 4700000, "proposer_votes": 3, "verifier_votes": 3},
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
         # P>=3, V>=3 should return 2 records
-        p_thresh = 3
-        v_thresh = 3
-        subset = gdf_pred[gdf_pred["proposer_votes"] >= p_thresh]
-        subset = subset[subset["verifier_votes"] >= v_thresh]
+        subset = gdf_pred[
+            (gdf_pred["proposer_votes"] >= 3) & (gdf_pred["verifier_votes"] >= 3)
+        ]
 
         assert len(subset) == 2
 
@@ -238,9 +222,8 @@ class TestVerifierVotesFiltering:
             {"x": 500100, "y": 4700000, "proposer_votes": 5, "verifier_votes": 4},
             {"x": 500200, "y": 4700000, "proposer_votes": 5, "verifier_votes": 5},
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
-        # Only unanimous (5,5) should pass
         subset = gdf_pred[
             (gdf_pred["proposer_votes"] >= 5) & (gdf_pred["verifier_votes"] >= 5)
         ]
@@ -282,9 +265,8 @@ class TestSinglePassVerifierSimulation:
                 "verifier_results": [{"verified": True}, {"verified": False}],
             },
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
-        # Apply check_first_pass filter
         verified_mask = gdf_pred.apply(check_first_pass, axis=1)
         filtered = gdf_pred[verified_mask]
 
@@ -294,7 +276,7 @@ class TestSinglePassVerifierSimulation:
         """Filter by proposer votes first, then by first pass verification.
 
         This matches the experiment in analyse_consensus:
-        'Proposer Consensus + Single-Pass Verifier (v4.5)'
+        'Proposer Consensus + Single-Pass Verifier (v4.5)'.
         """
         records = [
             # P=2 (filtered by proposer), first pass True
@@ -322,7 +304,7 @@ class TestSinglePassVerifierSimulation:
                 "verifier_results": [{"verified": True}],
             },
         ]
-        gdf_pred = create_predictions_gdf(records)
+        gdf_pred = _make_predictions_gdf(records)
 
         # Step 1: Filter by proposer threshold (P>=3)
         subset_p = gdf_pred[gdf_pred["proposer_votes"] >= 3]

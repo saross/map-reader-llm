@@ -1,37 +1,30 @@
 """
 Tests for tile-level classification functions in lib_advanced_metrics.py.
 
-Tier 1 unit tests for MCC calculation and tile-level discrimination as specified
-in preregistration Section 4.2. Uses synthetic GeoDataFrames to verify correct
-classification of tiles as empty vs populated.
+Tier 1 unit tests for Matthews Correlation Coefficient (MCC) calculation and
+tile-level discrimination as specified in preregistration Section 4.2. Uses
+synthetic GeoDataFrames to verify correct classification of tiles as empty
+vs populated.
 """
-
-import sys
-from pathlib import Path
 
 import geopandas as gpd
 import pytest
 from shapely.geometry import Point, box
 
-# Add project root to path for imports
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
 from scripts.lib_advanced_metrics import (
-    calculate_tile_classification,
     bootstrap_tile_classification_ci,
+    calculate_tile_classification,
 )
 
 
-def create_tile_bounds(
+def _make_tile_bounds(
     tile_names: list[str],
     origin_x: float = 500000,
     origin_y: float = 4700000,
     tile_size: float = 100,
     crs: str = "EPSG:32635",
 ) -> gpd.GeoDataFrame:
-    """
-    Create a GeoDataFrame of tile boundaries for testing.
+    """Create a GeoDataFrame of tile boundaries for testing.
 
     Args:
         tile_names: List of tile name strings.
@@ -43,14 +36,11 @@ def create_tile_bounds(
     Returns:
         GeoDataFrame with tile_name and geometry columns.
     """
-    geometries = []
-    for i, name in enumerate(tile_names):
-        # Arrange tiles in a row
-        x = origin_x + i * tile_size
-        y = origin_y
-        geom = box(x, y, x + tile_size, y + tile_size)
-        geometries.append(geom)
-
+    geometries = [
+        box(origin_x + i * tile_size, origin_y,
+            origin_x + i * tile_size + tile_size, origin_y + tile_size)
+        for i in range(len(tile_names))
+    ]
     return gpd.GeoDataFrame(
         {"tile_name": tile_names},
         geometry=geometries,
@@ -58,26 +48,24 @@ def create_tile_bounds(
     )
 
 
-def create_detections(
+def _make_detections(
     source_tiles: list[str],
     coords: list[tuple[float, float]] | None = None,
     crs: str = "EPSG:32635",
 ) -> gpd.GeoDataFrame:
-    """
-    Create a GeoDataFrame of detections for testing.
+    """Create a GeoDataFrame of detections for testing.
 
     Args:
         source_tiles: List of source tile names for each detection.
-        coords: Optional list of (x, y) coordinates. If None, generates default coords.
+        coords: Optional list of (x, y) coordinates. If None, generates
+            default coords at the centre of each tile (assuming 100m tiles).
         crs: Coordinate reference system.
 
     Returns:
         GeoDataFrame with source_tile and geometry columns.
     """
     if coords is None:
-        # Generate default coordinates (centre of each tile, assuming 100m tiles)
         coords = [(500050 + i * 100, 4700050) for i in range(len(source_tiles))]
-
     points = [Point(x, y) for x, y in coords]
     return gpd.GeoDataFrame(
         {"source_tile": source_tiles},
@@ -86,12 +74,11 @@ def create_detections(
     )
 
 
-def create_references(
+def _make_references(
     coords: list[tuple[float, float]],
     crs: str = "EPSG:32635",
 ) -> gpd.GeoDataFrame:
-    """
-    Create a GeoDataFrame of reference mounds for testing.
+    """Create a GeoDataFrame of reference mounds for testing.
 
     Args:
         coords: List of (x, y) coordinates for reference mounds.
@@ -102,9 +89,17 @@ def create_references(
     """
     if not coords:
         return gpd.GeoDataFrame(geometry=[], crs=crs)
-
     points = [Point(x, y) for x, y in coords]
     return gpd.GeoDataFrame(geometry=points, crs=crs)
+
+
+def _make_empty_detections(crs: str = "EPSG:32635") -> gpd.GeoDataFrame:
+    """Create an empty detections GeoDataFrame with the expected schema."""
+    return gpd.GeoDataFrame(
+        {"source_tile": []},
+        geometry=[],
+        crs=crs,
+    )
 
 
 @pytest.mark.tier1
@@ -118,14 +113,10 @@ class TestCalculateTileClassification:
         Expected: TP=3, TN=0, FP=0, FN=0, MCC=undefined (no negatives).
         """
         tile_names = ["tile_001", "tile_002", "tile_003"]
-        gdf_bounds = create_tile_bounds(tile_names)
-
-        # Detections in each tile
-        gdf_det = create_detections(tile_names)
-
-        # References in each tile (one per tile at tile centre)
+        gdf_bounds = _make_tile_bounds(tile_names)
+        gdf_det = _make_detections(tile_names)
         ref_coords = [(500050, 4700050), (500150, 4700050), (500250, 4700050)]
-        gdf_ref = create_references(ref_coords)
+        gdf_ref = _make_references(ref_coords)
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -145,17 +136,9 @@ class TestCalculateTileClassification:
         Expected: TP=0, TN=3, FP=0, FN=0, MCC=undefined (no positives).
         """
         tile_names = ["tile_001", "tile_002", "tile_003"]
-        gdf_bounds = create_tile_bounds(tile_names)
-
-        # No detections
-        gdf_det = gpd.GeoDataFrame(
-            {"source_tile": []},
-            geometry=[],
-            crs="EPSG:32635",
-        )
-
-        # No references
-        gdf_ref = create_references([])
+        gdf_bounds = _make_tile_bounds(tile_names)
+        gdf_det = _make_empty_detections()
+        gdf_ref = _make_references([])
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -175,13 +158,9 @@ class TestCalculateTileClassification:
         Expected: TP=0, TN=0, FP=3, FN=0.
         """
         tile_names = ["tile_001", "tile_002", "tile_003"]
-        gdf_bounds = create_tile_bounds(tile_names)
-
-        # Detections in each tile (hallucinations)
-        gdf_det = create_detections(tile_names)
-
-        # No references
-        gdf_ref = create_references([])
+        gdf_bounds = _make_tile_bounds(tile_names)
+        gdf_det = _make_detections(tile_names)
+        gdf_ref = _make_references([])
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -199,18 +178,10 @@ class TestCalculateTileClassification:
         Expected: TP=0, TN=0, FP=0, FN=3.
         """
         tile_names = ["tile_001", "tile_002", "tile_003"]
-        gdf_bounds = create_tile_bounds(tile_names)
-
-        # No detections
-        gdf_det = gpd.GeoDataFrame(
-            {"source_tile": []},
-            geometry=[],
-            crs="EPSG:32635",
-        )
-
-        # References in each tile
+        gdf_bounds = _make_tile_bounds(tile_names)
+        gdf_det = _make_empty_detections()
         ref_coords = [(500050, 4700050), (500150, 4700050), (500250, 4700050)]
-        gdf_ref = create_references(ref_coords)
+        gdf_ref = _make_references(ref_coords)
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -233,17 +204,14 @@ class TestCalculateTileClassification:
         Expected: TP=1, TN=1, FP=1, FN=1.
         """
         tile_names = ["tile_001", "tile_002", "tile_003", "tile_004"]
-        gdf_bounds = create_tile_bounds(tile_names)
+        gdf_bounds = _make_tile_bounds(tile_names)
 
-        # Detections only in tile_001 and tile_003
-        gdf_det = create_detections(
+        gdf_det = _make_detections(
             ["tile_001", "tile_003"],
             coords=[(500050, 4700050), (500250, 4700050)],
         )
-
-        # References only in tile_001 and tile_002
         ref_coords = [(500050, 4700050), (500150, 4700050)]
-        gdf_ref = create_references(ref_coords)
+        gdf_ref = _make_references(ref_coords)
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -254,10 +222,8 @@ class TestCalculateTileClassification:
 
         # MCC = (1*1 - 1*1) / sqrt((1+1)(1+1)(1+1)(1+1)) = 0 / 4 = 0
         assert result["mcc"] == pytest.approx(0.0, abs=0.001)
-
         # Sensitivity = TP / (TP + FN) = 1 / 2 = 0.5
         assert result["sensitivity"] == pytest.approx(0.5, abs=0.001)
-
         # Specificity = TN / (TN + FP) = 1 / 2 = 0.5
         assert result["specificity"] == pytest.approx(0.5, abs=0.001)
 
@@ -267,17 +233,14 @@ class TestCalculateTileClassification:
         Scenario: 2 populated tiles with detections, 2 empty tiles without.
         """
         tile_names = ["tile_001", "tile_002", "tile_003", "tile_004"]
-        gdf_bounds = create_tile_bounds(tile_names)
+        gdf_bounds = _make_tile_bounds(tile_names)
 
-        # Detections only in tile_001 and tile_002 (the populated ones)
-        gdf_det = create_detections(
+        gdf_det = _make_detections(
             ["tile_001", "tile_002"],
             coords=[(500050, 4700050), (500150, 4700050)],
         )
-
-        # References only in tile_001 and tile_002
         ref_coords = [(500050, 4700050), (500150, 4700050)]
-        gdf_ref = create_references(ref_coords)
+        gdf_ref = _make_references(ref_coords)
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -296,8 +259,8 @@ class TestCalculateTileClassification:
             geometry=[],
             crs="EPSG:32635",
         )
-        gdf_det = create_detections([], coords=[])
-        gdf_ref = create_references([])
+        gdf_det = _make_detections([], coords=[])
+        gdf_ref = _make_references([])
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
@@ -306,17 +269,15 @@ class TestCalculateTileClassification:
     def test_tile_details_populated(self) -> None:
         """Tile details should be populated with per-tile information."""
         tile_names = ["tile_001", "tile_002"]
-        gdf_bounds = create_tile_bounds(tile_names)
-        gdf_det = create_detections(["tile_001"], coords=[(500050, 4700050)])
-        ref_coords = [(500050, 4700050)]
-        gdf_ref = create_references(ref_coords)
+        gdf_bounds = _make_tile_bounds(tile_names)
+        gdf_det = _make_detections(["tile_001"], coords=[(500050, 4700050)])
+        gdf_ref = _make_references([(500050, 4700050)])
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
 
         assert "tile_details" in result
         assert len(result["tile_details"]) == 2
 
-        # Check tile_001 details
         tile_001 = next(t for t in result["tile_details"] if t["tile_name"] == "tile_001")
         assert tile_001["has_mounds"] is True
         assert tile_001["has_detections"] is True
@@ -330,16 +291,15 @@ class TestBootstrapTileClassificationCi:
     def test_bootstrap_with_fixed_seed(self) -> None:
         """Bootstrap with fixed seed should be reproducible."""
         tile_names = ["tile_001", "tile_002", "tile_003", "tile_004"]
-        gdf_bounds = create_tile_bounds(tile_names)
+        gdf_bounds = _make_tile_bounds(tile_names)
 
-        gdf_det = create_detections(
+        gdf_det = _make_detections(
             ["tile_001", "tile_002"],
             coords=[(500050, 4700050), (500150, 4700050)],
         )
         ref_coords = [(500050, 4700050), (500150, 4700050)]
-        gdf_ref = create_references(ref_coords)
+        gdf_ref = _make_references(ref_coords)
 
-        # Run twice with same seed
         result1 = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=100,
@@ -357,9 +317,9 @@ class TestBootstrapTileClassificationCi:
     def test_bootstrap_returns_valid_structure(self) -> None:
         """Bootstrap should return expected dict structure."""
         tile_names = ["tile_001", "tile_002"]
-        gdf_bounds = create_tile_bounds(tile_names)
-        gdf_det = create_detections(["tile_001"], coords=[(500050, 4700050)])
-        gdf_ref = create_references([(500050, 4700050)])
+        gdf_bounds = _make_tile_bounds(tile_names)
+        gdf_det = _make_detections(["tile_001"], coords=[(500050, 4700050)])
+        gdf_ref = _make_references([(500050, 4700050)])
 
         result = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
@@ -367,14 +327,12 @@ class TestBootstrapTileClassificationCi:
             random_seed=42,
         )
 
-        # Check structure
         assert "mcc" in result
         assert "sensitivity" in result
         assert "specificity" in result
         assert "n_iterations" in result
         assert result["n_iterations"] == 50
 
-        # Check nested structure
         for metric in ["mcc", "sensitivity", "specificity"]:
             assert "mean" in result[metric]
             assert "ci_lower" in result[metric]
@@ -387,8 +345,8 @@ class TestBootstrapTileClassificationCi:
             geometry=[],
             crs="EPSG:32635",
         )
-        gdf_det = create_detections([], coords=[])
-        gdf_ref = create_references([])
+        gdf_det = _make_detections([], coords=[])
+        gdf_ref = _make_references([])
 
         result = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
