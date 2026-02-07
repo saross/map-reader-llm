@@ -3,12 +3,13 @@
 Phase 2 Runner: One-Factor-At-a-Time (OFAT) Sequential Experiments
 ===================================================================
 
-Executes Phase 2 sub-phases (2a–2e) of the preregistered study. Each sub-phase
+Executes Phase 2 sub-phases (2a-2e) of the preregistered study. Each sub-phase
 tests one factor at a time, carrying optimal parameters forward from prior phases.
 
-Parses the OFAT YAML structure (single factor with named levels, each pointing to
-a config file), then loops condition x run, calling 4_detect_mounds_batch.py via
-subprocess for each execution unit (one pass per run, per preregistration section 3.8).
+Parses the OFAT YAML (Yet Another Markup Language) structure (single factor with
+named levels, each pointing to a config file), then loops condition x run, calling
+4_detect_mounds_batch.py via subprocess for each execution unit (one pass per run,
+per preregistration section 3.8).
 
 Usage:
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml
@@ -24,7 +25,7 @@ Inputs:
 
 Outputs:
     - Per-run detection results: {output_dir}/{condition_name}/run_{K}/
-    - Checkpoint file for resumption
+    - JSON (JavaScript Object Notation) checkpoint file for resumption
     - Study manifest documenting all execution units
 
 Exit Codes:
@@ -47,10 +48,9 @@ from pathlib import Path
 
 import yaml
 
-# Script version
 __version__ = "1.0.0"
 
-# Project root (parent of scripts/)
+# Resolve project root as parent of the scripts/ directory
 PROJECT_ROOT = Path(__file__).parent.parent
 
 
@@ -75,7 +75,7 @@ def load_study_config(yaml_path: Path) -> dict:
     if not yaml_path.exists():
         raise FileNotFoundError(f"Study config not found: {yaml_path}")
 
-    with open(yaml_path, "r") as f:
+    with open(yaml_path) as f:
         config = yaml.safe_load(f)
 
     # Validate required sections
@@ -189,7 +189,8 @@ def generate_execution_units(
     Generate the full list of execution units (condition x run).
 
     Units are randomised with a fixed seed to distribute temporal effects
-    (API latency, model version changes) evenly across conditions.
+    (Application Programming Interface (API) latency, model version changes)
+    evenly across conditions.
 
     Args:
         conditions: List of condition dictionaries
@@ -260,7 +261,7 @@ def load_checkpoint(checkpoint_path: Path) -> dict:
         Checkpoint dictionary with completed/failed units
     """
     if checkpoint_path.exists():
-        with open(checkpoint_path, "r") as f:
+        with open(checkpoint_path) as f:
             return json.load(f)
     return {
         "completed": [],
@@ -305,13 +306,13 @@ def read_meta_cost(meta_path: Path) -> float:
         meta_path: Path to .meta.json file
 
     Returns:
-        Estimated cost in USD, or 0.0 if unavailable
+        Estimated cost in United States Dollars (USD), or 0.0 if unavailable
     """
     if not meta_path.exists():
         return 0.0
 
     try:
-        with open(meta_path, "r") as f:
+        with open(meta_path) as f:
             meta = json.load(f)
         # The LLMMetadataTracker nests cost under 'cost_estimate.total_cost_usd'
         cost_estimate = meta.get("cost_estimate", {})
@@ -337,7 +338,7 @@ def read_meta_failures(meta_path: Path) -> int:
         return 0
 
     try:
-        with open(meta_path, "r") as f:
+        with open(meta_path) as f:
             meta = json.load(f)
         return int(
             meta.get("execution_stats", {}).get("items_failed", 0)
@@ -673,7 +674,7 @@ def run_phase2(
     return results
 
 
-def main():
+def main() -> None:
     """Main entry point for Phase 2 OFAT runner."""
     parser = argparse.ArgumentParser(
         description="Run Phase 2 OFAT experiments from YAML study definitions",
@@ -753,7 +754,6 @@ Examples:
 
     args = parser.parse_args()
 
-    # Run study
     results = run_phase2(
         study_path=args.study_file,
         dry_run=args.dry_run,

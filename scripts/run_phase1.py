@@ -6,7 +6,8 @@ Phase 1 Runner: Library Construction
 Executes Phase 1 of the preregistered study, which constructs the hard example
 library through repeated baseline detection and failure analysis.
 
-Usage:
+Usage::
+
     python scripts/run_phase1.py
     python scripts/run_phase1.py --dry-run
     python scripts/run_phase1.py --resume
@@ -14,7 +15,9 @@ Usage:
 
 Inputs:
     - Study definition: studies/phase1-library.yaml
+      (YAML = Yet Another Markup Language)
     - Config: prompts/configs/library_pure-positive-canon.json
+      (JSON = JavaScript Object Notation)
     - Manifest: inputs/tiles/calibration_manifest.json
 
 Outputs:
@@ -33,6 +36,7 @@ Licence: Apache 2.0
 """
 
 import argparse
+import copy
 import json
 import subprocess
 import sys
@@ -46,6 +50,60 @@ __version__ = "1.0.0"
 
 # Project root (parent of scripts/)
 PROJECT_ROOT = Path(__file__).parent.parent
+
+# Default checkpoint structure used when no checkpoint file exists or when
+# starting a fresh (non-resume) run.
+_DEFAULT_CHECKPOINT: dict = {
+    "completed_passes": [],
+    "failed_passes": [],
+    "last_updated": None,
+    "merge_complete": False,
+    "evaluation_complete": False,
+}
+
+
+def _run_subprocess(
+    cmd: list[str],
+    dry_run: bool = False,
+    timeout: int = 300,
+) -> tuple[bool, str]:
+    """
+    Execute a subprocess command with standardised error handling.
+
+    Wraps the common pattern of running a subprocess, checking its return
+    code, and handling timeout/exception errors.
+
+    Args:
+        cmd: Command and arguments to execute.
+        dry_run: If True, print command without executing.
+        timeout: Maximum seconds to wait for completion.
+
+    Returns:
+        Tuple of (success, message) describing the outcome.
+    """
+    if dry_run:
+        print(f"  [DRY RUN] Would execute: {' '.join(cmd)}")
+        return True, "dry_run"
+
+    try:
+        result = subprocess.run(
+            cmd,
+            cwd=str(PROJECT_ROOT),
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+        if result.returncode == 0:
+            return True, "success"
+
+        error_msg = result.stderr[:500] if result.stderr else "Unknown error"
+        return False, f"exit_code_{result.returncode}: {error_msg}"
+
+    except subprocess.TimeoutExpired:
+        return False, "timeout"
+    except Exception as e:
+        return False, f"exception: {e}"
 
 
 def load_study_config(yaml_path: Path) -> dict:
@@ -65,7 +123,7 @@ def load_study_config(yaml_path: Path) -> dict:
     if not yaml_path.exists():
         raise FileNotFoundError(f"Study config not found: {yaml_path}")
 
-    with open(yaml_path, "r") as f:
+    with open(yaml_path, encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     # Validate required sections
@@ -88,15 +146,10 @@ def load_checkpoint(checkpoint_path: Path) -> dict:
         Checkpoint dictionary with completed passes, or empty structure
     """
     if checkpoint_path.exists():
-        with open(checkpoint_path, "r") as f:
+        with open(checkpoint_path, encoding="utf-8") as f:
             return json.load(f)
-    return {
-        "completed_passes": [],
-        "failed_passes": [],
-        "last_updated": None,
-        "merge_complete": False,
-        "evaluation_complete": False,
-    }
+    # Return a deep copy so callers can mutate without affecting the template
+    return copy.deepcopy(_DEFAULT_CHECKPOINT)
 
 
 def save_checkpoint(checkpoint_path: Path, checkpoint: dict) -> None:
@@ -109,7 +162,7 @@ def save_checkpoint(checkpoint_path: Path, checkpoint: dict) -> None:
     """
     checkpoint["last_updated"] = datetime.now(timezone.utc).isoformat()
     checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(checkpoint_path, "w") as f:
+    with open(checkpoint_path, "w", encoding="utf-8") as f:
         json.dump(checkpoint, f, indent=2)
 
 
@@ -146,29 +199,7 @@ def run_detection_pass(
         "--workers", str(config["execution"].get("workers", 1)),
     ]
 
-    if dry_run:
-        print(f"  [DRY RUN] Would execute: {' '.join(cmd)}")
-        return True, "dry_run"
-
-    try:
-        result = subprocess.run(
-            cmd,
-            cwd=str(PROJECT_ROOT),
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-        )
-
-        if result.returncode == 0:
-            return True, "success"
-        else:
-            error_msg = result.stderr[:500] if result.stderr else "Unknown error"
-            return False, f"exit_code_{result.returncode}: {error_msg}"
-
-    except subprocess.TimeoutExpired:
-        return False, "timeout"
-    except Exception as e:
-        return False, f"exception: {str(e)}"
+    return _run_subprocess(cmd, dry_run=dry_run, timeout=timeout)
 
 
 def run_merge(
@@ -179,7 +210,7 @@ def run_merge(
     timeout: int = 300,
 ) -> tuple[bool, str]:
     """
-    Merge detection passes into single GeoJSON.
+    Merge detection passes into single GeoJSON (Geographic JSON).
 
     Args:
         config: Study configuration dictionary
@@ -204,29 +235,7 @@ def run_merge(
         "--output", str(output_dir / "merged_detections.geojson"),
     ]
 
-    if dry_run:
-        print(f"  [DRY RUN] Would execute: {' '.join(cmd)}")
-        return True, "dry_run"
-
-    try:
-        result = subprocess.run(
-            cmd,
-            cwd=str(PROJECT_ROOT),
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-        )
-
-        if result.returncode == 0:
-            return True, "success"
-        else:
-            error_msg = result.stderr[:500] if result.stderr else "Unknown error"
-            return False, f"exit_code_{result.returncode}: {error_msg}"
-
-    except subprocess.TimeoutExpired:
-        return False, "timeout"
-    except Exception as e:
-        return False, f"exception: {str(e)}"
+    return _run_subprocess(cmd, dry_run=dry_run, timeout=timeout)
 
 
 def run_evaluation(
@@ -264,29 +273,7 @@ def run_evaluation(
         "--template", str(ground_truth),
     ]
 
-    if dry_run:
-        print(f"  [DRY RUN] Would execute: {' '.join(cmd)}")
-        return True, "dry_run"
-
-    try:
-        result = subprocess.run(
-            cmd,
-            cwd=str(PROJECT_ROOT),
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-        )
-
-        if result.returncode == 0:
-            return True, "success"
-        else:
-            error_msg = result.stderr[:500] if result.stderr else "Unknown error"
-            return False, f"exit_code_{result.returncode}: {error_msg}"
-
-    except subprocess.TimeoutExpired:
-        return False, "timeout"
-    except Exception as e:
-        return False, f"exception: {str(e)}"
+    return _run_subprocess(cmd, dry_run=dry_run, timeout=timeout)
 
 
 def preflight_check(config: dict, verbose: bool = True) -> tuple[bool, list[str]]:
@@ -322,9 +309,15 @@ def preflight_check(config: dict, verbose: bool = True) -> tuple[bool, list[str]
 
     # Check example library
     examples_dir = PROJECT_ROOT / "inputs" / "examples" / "neutral-naming"
-    required_examples = ["example_01.png", "example_02.png", "example_03.png",
-                        "example_04.png", "example_15.png", "example_16.png",
-                        "example_17.png"]
+    required_examples = [
+        "example_01.png",
+        "example_02.png",
+        "example_03.png",
+        "example_04.png",
+        "example_15.png",
+        "example_16.png",
+        "example_17.png",
+    ]
 
     for example in required_examples:
         example_path = examples_dir / example
@@ -388,15 +381,12 @@ def run_phase1(
     # Determine number of passes
     num_passes = passes or config["execution"].get("passes", 5)
 
-    # Load checkpoint if resuming
+    # Load checkpoint if resuming; otherwise start fresh
     checkpoint_path = output_dir / "checkpoint.json"
-    checkpoint = load_checkpoint(checkpoint_path) if resume else {
-        "completed_passes": [],
-        "failed_passes": [],
-        "last_updated": None,
-        "merge_complete": False,
-        "evaluation_complete": False,
-    }
+    if resume:
+        checkpoint = load_checkpoint(checkpoint_path)
+    else:
+        checkpoint = copy.deepcopy(_DEFAULT_CHECKPOINT)
 
     completed_passes = set(checkpoint.get("completed_passes", []))
 
@@ -517,7 +507,7 @@ def run_phase1(
     return results
 
 
-def main():
+def main() -> None:
     """Main entry point for Phase 1 runner."""
     parser = argparse.ArgumentParser(
         description="Run Phase 1: Library Construction",
