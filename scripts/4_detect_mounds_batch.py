@@ -33,6 +33,7 @@ import json
 import random
 import time
 import argparse
+import traceback
 from pathlib import Path
 from tqdm import tqdm
 from google import genai
@@ -438,7 +439,15 @@ def process_single_tile(
         for det in detections:
             if "box_2d" not in det:
                 continue
-            ymin_n, xmin_n, ymax_n, xmax_n = det["box_2d"]
+            box_coords = det["box_2d"]
+            if not isinstance(box_coords, (list, tuple)) or len(box_coords) != 4:
+                print(
+                    f"  Skipping detection with malformed box_2d "
+                    f"(length={len(box_coords) if isinstance(box_coords, (list, tuple)) else 'N/A'})"
+                    f" in {tile_filename}"
+                )
+                continue
+            ymin_n, xmin_n, ymax_n, xmax_n = box_coords
             px_min_x = (xmin_n / 1000.0) * TILE_SIZE
             px_max_x = (xmax_n / 1000.0) * TILE_SIZE
             px_min_y = (ymin_n / 1000.0) * TILE_SIZE
@@ -470,6 +479,7 @@ def process_single_tile(
 
     except Exception as e:
         print(f"Error processing {tile_filename}: {e}")
+        traceback.print_exc()
         metadata_tracker.log_failure(tile_filename, str(e))
         return None
 
