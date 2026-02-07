@@ -98,6 +98,15 @@ class TPMGovernor:
         window_seconds: float = 60.0,
         adjust_interval: float = 10.0,
     ):
+        # Validate concurrency bounds early to surface configuration
+        # errors before any threads are spawned
+        if min_concurrency < 1:
+            raise ValueError("min_concurrency must be >= 1")
+        if max_concurrency < min_concurrency:
+            raise ValueError(
+                "max_concurrency must be >= min_concurrency"
+            )
+
         self._tpm_limit = tpm_limit
         self._tokens_per_request = tokens_per_request
         self._target_tpm = int(tpm_limit * target_utilisation)
@@ -106,9 +115,16 @@ class TPMGovernor:
         self._window_seconds = window_seconds
         self._adjust_interval = adjust_interval
 
-        # Concurrency control — semaphore is the actual throttle
+        # Concurrency control — semaphore is the actual throttle.
+        # initial_concurrency is clamped to max_concurrency but not
+        # to min_concurrency, allowing a conservative cold start.
         self._concurrency = min(initial_concurrency, max_concurrency)
         self._semaphore = threading.Semaphore(self._concurrency)
+
+        # Number of workers currently holding a semaphore slot.
+        # Used by the drain logic in release() to decide whether
+        # to absorb a returned slot when concurrency is reduced.
+        self._active_count = 0
 
         # Sliding window token ledger (thread-safe via _lock)
         self._lock = threading.Lock()
@@ -134,6 +150,8 @@ class TPMGovernor:
         controls how many API calls can be in-flight simultaneously.
         """
         self._semaphore.acquire()
+        with self._lock:
+            self._active_count += 1
 
     def release(self, actual_tokens: int) -> None:
         """
@@ -144,13 +162,18 @@ class TPMGovernor:
 
         Args:
             actual_tokens: Actual token count from the API response.
-                Pass 0 if the request failed and no tokens were consumed.
+                Pass 0 if the request failed and no tokens were
+                consumed.
         """
         now = time.monotonic()
 
         with self._lock:
+            self._active_count -= 1
+
             # Record this request in the sliding window
-            self._ledger.append(TokenRecord(timestamp=now, tokens=actual_tokens))
+            self._ledger.append(
+                TokenRecord(timestamp=now, tokens=actual_tokens)
+            )
             self._total_tokens += actual_tokens
             self._total_requests += 1
             self._completed_since_adjust += 1
@@ -158,15 +181,28 @@ class TPMGovernor:
             # Prune stale entries outside the window
             self._prune_ledger(now)
 
-            # Check if it's time to adjust concurrency
+            # Check if it is time to adjust concurrency.
+            # Require at least 3 completed requests since the last
+            # adjustment to avoid reacting to noise during ramp-up.
             should_adjust = (
                 now - self._last_adjust_time >= self._adjust_interval
                 and self._completed_since_adjust >= 3
             )
 
-        # Release the semaphore slot (outside lock to avoid holding
-        # both lock and semaphore simultaneously)
-        self._semaphore.release()
+            # Drain logic: when _adjust_concurrency() lowers the
+            # target, it does not manipulate the semaphore directly.
+            # Instead, workers returning slots check whether there
+            # are still more active workers than the new target. If
+            # so, the slot is absorbed (not released back to the
+            # semaphore), naturally reducing effective concurrency
+            # as workers finish their in-flight requests.
+            absorb_slot = self._active_count >= self._concurrency
+
+        # Release the semaphore slot only if not absorbing.
+        # Performed outside the lock to avoid holding both the lock
+        # and the semaphore simultaneously.
+        if not absorb_slot:
+            self._semaphore.release()
 
         # Adjust concurrency if needed (acquires lock internally)
         if should_adjust:
@@ -176,26 +212,34 @@ class TPMGovernor:
         """
         Return governor statistics for metadata/logging.
 
+        All field reads are performed inside the lock to ensure a
+        consistent snapshot -- without this, concurrent adjustments
+        could produce internally contradictory stats (e.g.,
+        total_requests from before an adjustment paired with
+        current_tpm from after).
+
         Returns:
             Dictionary with current state and lifetime statistics.
         """
         with self._lock:
-            current_tpm = self._calculate_tpm(time.monotonic())
-
-        elapsed = time.monotonic() - self._start_time
-        return {
-            "tpm_limit": self._tpm_limit,
-            "target_tpm": self._target_tpm,
-            "current_tpm": current_tpm,
-            "current_concurrency": self._concurrency,
-            "peak_concurrency": self._peak_concurrency,
-            "min_observed_concurrency": self._min_observed_concurrency,
-            "total_tokens": self._total_tokens,
-            "total_requests": self._total_requests,
-            "adjustments": len(self._adjustments),
-            "adjustment_history": self._adjustments[-20:],  # Last 20
-            "elapsed_seconds": round(elapsed, 1),
-        }
+            now = time.monotonic()
+            current_tpm = self._calculate_tpm(now)
+            elapsed = now - self._start_time
+            return {
+                "tpm_limit": self._tpm_limit,
+                "target_tpm": self._target_tpm,
+                "current_tpm": current_tpm,
+                "current_concurrency": self._concurrency,
+                "peak_concurrency": self._peak_concurrency,
+                "min_observed_concurrency": (
+                    self._min_observed_concurrency
+                ),
+                "total_tokens": self._total_tokens,
+                "total_requests": self._total_requests,
+                "adjustments": len(self._adjustments),
+                "adjustment_history": self._adjustments[-20:],
+                "elapsed_seconds": round(elapsed, 1),
+            }
 
     # ------------------------------------------------------------------
     # Internal methods
@@ -319,31 +363,25 @@ class TPMGovernor:
 
         Must be called with self._lock held.
 
-        To increase concurrency: release extra slots.
-        To decrease concurrency: acquire slots (non-blocking; if slots
-        are all in use, the lower concurrency takes effect as workers
-        finish).
+        To increase: release extra slots into the semaphore so
+        blocked workers can proceed immediately.
+
+        To decrease: only update self._concurrency (the target).
+        The drain logic in release() compares _active_count against
+        _concurrency and absorbs returned slots when workers still
+        exceed the new target, naturally reducing capacity without
+        needing to acquire semaphore slots here.
 
         Args:
             old_concurrency: Previous concurrency level.
             new_concurrency: Desired concurrency level.
         """
-        delta = new_concurrency - old_concurrency
-
-        if delta > 0:
-            # Increase: release additional slots
-            for _ in range(delta):
+        if new_concurrency > old_concurrency:
+            # Increase: release additional slots into the semaphore
+            for _ in range(new_concurrency - old_concurrency):
                 self._semaphore.release()
-        elif delta < 0:
-            # Decrease: try to acquire slots (non-blocking)
-            # Workers finishing will effectively reduce concurrency
-            # even if we can't acquire all slots immediately
-            for _ in range(-delta):
-                acquired = self._semaphore.acquire(blocking=False)
-                if not acquired:
-                    # Slot is in use — it will become unavailable when
-                    # the worker finishes (since we've updated the
-                    # target). We track the actual concurrency level.
-                    break
+        # Decrease: no semaphore manipulation needed. The drain
+        # logic in release() handles it once self._concurrency is
+        # updated below.
 
         self._concurrency = new_concurrency
