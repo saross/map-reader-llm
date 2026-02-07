@@ -48,7 +48,6 @@ __version__ = "1.0.0"
 
 # Project root
 PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.append(str(PROJECT_ROOT))
 
 # Default configuration
 DEFAULT_PADDING = 75  # pixels of context around centroid

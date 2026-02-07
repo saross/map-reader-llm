@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Generate Union Candidates from Multiple Detection Runs
 =======================================================
@@ -19,10 +20,11 @@ import argparse
 import json
 import math
 from pathlib import Path
-from shapely.geometry import shape
-import numpy as np
+
 import geojson
+import numpy as np
 from geojson import FeatureCollection
+from shapely.geometry import shape
 
 
 def get_centroid(geom_bounds):

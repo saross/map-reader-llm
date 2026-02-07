@@ -43,7 +43,6 @@ import math
 import sys
 from collections import Counter
 from pathlib import Path
-from typing import Optional
 
 import geojson
 from geojson import Feature, FeatureCollection, Point
@@ -291,7 +290,7 @@ def apply_threshold(
 
 
 def load_pass_detections(
-    input_dir: Path, pass_filter: Optional[list[int]] = None
+    input_dir: Path, pass_filter: list[int] | None = None
 ) -> dict[str, list[dict]]:
     """
     Load detection GeoJSONs from pass directories.
@@ -364,7 +363,7 @@ def merge_passes(
     input_dir: Path,
     output_path: Path,
     threshold: int,
-    pass_filter: Optional[list[int]] = None,
+    pass_filter: list[int] | None = None,
 ) -> dict:
     """
     Main merge function implementing the full voting pipeline.
