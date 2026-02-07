@@ -6,13 +6,21 @@ Selects calibration and holdout tile sets with documented provenance and
 spatial separation. See docs/methodology/tile-selection-methodology.md
 for full documentation.
 
-Usage:
+Usage::
+
     python scripts/select_tiles_phase2.py [--seed SEED]
 
 Output:
     inputs/tiles/calibration_manifest.json
+        — JavaScript Object Notation (JSON) manifest of calibration tiles
     inputs/tiles/holdout_manifest.json
+        — JSON manifest of holdout tiles
     inputs/tiles/tile_selection_metadata.json
+        — JSON metadata recording selection parameters and provenance
+
+Author: Shawn Ross, Claude Code
+Version: 1.0.0
+Licence: Apache 2.0
 """
 
 import argparse
@@ -26,14 +34,13 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-# Add parent directory to path for config import
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from config import (
-    TILE_SIZE,
+    ADJACENCY_DISTANCE,
+    MAX_BACKGROUND_PERCENT,
     OVERLAP,
     STRIDE,
-    MAX_BACKGROUND_PERCENT,
-    ADJACENCY_DISTANCE,
+    TILE_SIZE,
 )
 
 # -----------------------------------------------------------------------------
@@ -43,7 +50,6 @@ from config import (
 INPUTS_DIR = Path("inputs")
 TILES_DIR = INPUTS_DIR / "tiles"
 GROUND_TRUTH_PATH = INPUTS_DIR / "vectors" / "references" / "mounds-reference.geojson"
-OUTPUT_DIR = INPUTS_DIR
 
 # Maps to process (excluding legend)
 MAPS = [
@@ -56,12 +62,6 @@ MAPS = [
 # Selection parameters
 CALIBRATION_SAMPLES_PER_MAP = 5
 HOLDOUT_SAMPLES_PER_MAP = 15  # Expanded from 5 to 15 for improved statistical power
-# TILE_SIZE, OVERLAP, STRIDE, MAX_BACKGROUND_PERCENT, ADJACENCY_DISTANCE imported from config.py
-
-# Density strata thresholds
-DENSITY_EMPTY = 0
-DENSITY_SPARSE = (1, 2)
-DENSITY_DENSE = 3  # 3 or more
 
 
 # -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ def get_tile_grid_position(tile_name: str) -> tuple[int, int]:
 
 def is_adjacent(tile1: str, tile2: str, distance: int = 1) -> bool:
     """
-    Check if two tiles are within Manhattan distance of each other.
+    Check if two tiles are within Manhattan distance (taxicab geometry) of each other.
     """
     gx1, gy1 = get_tile_grid_position(tile1)
     gx2, gy2 = get_tile_grid_position(tile2)
@@ -132,7 +132,9 @@ def load_ground_truth() -> dict[str, list[tuple[float, float]]]:
     """
     Load ground truth mounds and group by map.
 
-    Returns dict: map_id -> list of (x, y) coordinates (EPSG:32635)
+    Returns:
+        Dict mapping map_id to list of (x, y) coordinates
+        (EPSG:32635 — European Petroleum Survey Group).
     """
     with open(GROUND_TRUTH_PATH) as f:
         data = json.load(f)
@@ -141,27 +143,25 @@ def load_ground_truth() -> dict[str, list[tuple[float, float]]]:
 
     for feature in data["features"]:
         map_id = feature["properties"]["Map"]
-        coords = feature["geometry"]["coordinates"]
+        geometry = feature["geometry"]
+        map_list = mounds_by_map.setdefault(map_id, [])
 
-        # Handle MultiPoint geometry
-        if feature["geometry"]["type"] == "MultiPoint":
-            for coord in coords:
-                if map_id not in mounds_by_map:
-                    mounds_by_map[map_id] = []
-                mounds_by_map[map_id].append((coord[0], coord[1]))
+        # Handle both Point and MultiPoint geometries
+        if geometry["type"] == "MultiPoint":
+            for coord in geometry["coordinates"]:
+                map_list.append((coord[0], coord[1]))
         else:
-            if map_id not in mounds_by_map:
-                mounds_by_map[map_id] = []
-            mounds_by_map[map_id].append((coords[0], coords[1]))
+            coords = geometry["coordinates"]
+            map_list.append((coords[0], coords[1]))
 
     return mounds_by_map
 
 
 def load_map_georef(map_id: str) -> dict | None:
     """
-    Load georeferencing info for a map to convert pixel coords to geographic.
+    Load georeferencing info for a map from its reference GeoJSON bounding box.
 
-    We'll compute this from the reference geojson bounding box.
+    Returns a dict with min_x, max_x, min_y, max_y, or None if unavailable.
     """
     ref_path = INPUTS_DIR / "vectors" / "references" / f"reference_{map_id}.geojson"
     if not ref_path.exists():
@@ -195,7 +195,6 @@ def load_map_georef(map_id: str) -> dict | None:
 
 def count_mounds_in_tile(
     tile_name: str,
-    map_id: str,
     mounds: list[tuple[float, float]],
     georef: dict | None,
     map_pixel_width: int,
@@ -204,45 +203,33 @@ def count_mounds_in_tile(
     """
     Count how many mounds fall within a tile's bounding box.
 
-    This is approximate — we estimate tile bounds from pixel coordinates
-    and the map's geographic extent.
+    This is approximate -- tile bounds are estimated from pixel coordinates
+    and the map's geographic extent. Map origin is top-left (pixel y=0
+    corresponds to max_y geographically).
     """
     if georef is None or not mounds:
         return 0
 
-    # Get tile pixel coordinates
     px, py = parse_tile_coords(tile_name)
 
-    # Calculate geographic extent of tile
-    # Assuming map origin is top-left, y increases downward in pixels but
-    # upward in geographic coordinates
-    geo_width = georef["max_x"] - georef["min_x"]
-    geo_height = georef["max_y"] - georef["min_y"]
-
-    # Scale factors
-    scale_x = geo_width / map_pixel_width
-    scale_y = geo_height / map_pixel_height
+    # Scale factors: pixels to geographic units
+    scale_x = (georef["max_x"] - georef["min_x"]) / map_pixel_width
+    scale_y = (georef["max_y"] - georef["min_y"]) / map_pixel_height
 
     # Tile bounds in geographic coordinates
-    # Note: pixel y=0 is at top, which corresponds to max_y geographically
     tile_min_x = georef["min_x"] + px * scale_x
     tile_max_x = georef["min_x"] + (px + TILE_SIZE) * scale_x
     tile_max_y = georef["max_y"] - py * scale_y
     tile_min_y = georef["max_y"] - (py + TILE_SIZE) * scale_y
 
-    # Count mounds within tile bounds
-    count = 0
-    for mx, my in mounds:
-        if tile_min_x <= mx <= tile_max_x and tile_min_y <= my <= tile_max_y:
-            count += 1
-
-    return count
+    return sum(
+        1 for mx, my in mounds
+        if tile_min_x <= mx <= tile_max_x and tile_min_y <= my <= tile_max_y
+    )
 
 
 def get_map_dimensions(map_id: str) -> tuple[int, int]:
-    """
-    Estimate map dimensions by finding the maximum tile coordinates.
-    """
+    """Estimate map pixel dimensions from the maximum tile coordinates."""
     map_dir = TILES_DIR / map_id
     max_x, max_y = 0, 0
 
@@ -262,13 +249,12 @@ def get_map_dimensions(map_id: str) -> tuple[int, int]:
 # -----------------------------------------------------------------------------
 
 def categorise_density(mound_count: int) -> str:
-    """Categorise tile by mound density."""
+    """Categorise tile by mound density (empty / sparse / dense)."""
     if mound_count == 0:
         return "empty"
-    elif mound_count <= 2:
+    if mound_count <= 2:
         return "sparse"
-    else:
-        return "dense"
+    return "dense"
 
 
 def select_calibration_tiles(
@@ -425,21 +411,20 @@ def select_holdout_tiles(
 # Main
 # -----------------------------------------------------------------------------
 
-def main():
+def main() -> int:
+    """Main entry point for Phase 2 tile selection."""
     parser = argparse.ArgumentParser(description="Select calibration and holdout tiles")
     parser.add_argument(
         "--seed",
         type=int,
         default=None,
-        help="Random seed (default: current timestamp)",
+        help="Random seed (default: current Coordinated Universal Time (UTC) timestamp)",
     )
     args = parser.parse_args()
 
-    # Set random seed
-    if args.seed is None:
-        seed = int(datetime.now(timezone.utc).timestamp())
-    else:
-        seed = args.seed
+    seed = args.seed if args.seed is not None else int(
+        datetime.now(timezone.utc).timestamp()
+    )
 
     random.seed(seed)
     print(f"Random seed: {seed}")
@@ -479,12 +464,7 @@ def main():
 
             # Count mounds in tile
             mound_count = count_mounds_in_tile(
-                tile_path.name,
-                map_id,
-                mounds,
-                georef,
-                map_width,
-                map_height,
+                tile_path.name, mounds, georef, map_width, map_height,
             )
 
             density = categorise_density(mound_count)
@@ -509,7 +489,9 @@ def main():
     print("\n" + "=" * 60)
     print("Selecting CALIBRATION tiles (density-stratified random)...")
     print("=" * 60)
-    calibration_tiles, calibration_by_map = select_calibration_tiles(candidates, CALIBRATION_SAMPLES_PER_MAP)
+    calibration_tiles, calibration_by_map = select_calibration_tiles(
+        candidates, CALIBRATION_SAMPLES_PER_MAP,
+    )
 
     # Select holdout tiles
     print("\n" + "=" * 60)
@@ -522,8 +504,12 @@ def main():
         ADJACENCY_DISTANCE,
     )
 
-    # Verify no overlap
-    overlap = set(calibration_tiles) & set(holdout_tiles)
+    # Convert to sets for O(1) membership tests throughout
+    calibration_set = set(calibration_tiles)
+    holdout_set = set(holdout_tiles)
+
+    # Verify no overlap between calibration and holdout sets
+    overlap = calibration_set & holdout_set
     if overlap:
         print(f"\nERROR: Overlap detected between calibration and holdout: {overlap}")
         return 1
@@ -564,20 +550,16 @@ def main():
     # Add tile details to metadata
     for map_id, map_cands in candidates.items():
         for c in map_cands:
-            if c["filename"] in calibration_tiles:
-                metadata["calibration"]["tiles"].append({
-                    "filename": c["filename"],
-                    "map": map_id,
-                    "mound_count": c["mound_count"],
-                    "density": c["density"],
-                })
-            elif c["filename"] in holdout_tiles:
-                metadata["holdout"]["tiles"].append({
-                    "filename": c["filename"],
-                    "map": map_id,
-                    "mound_count": c["mound_count"],
-                    "density": c["density"],
-                })
+            tile_detail = {
+                "filename": c["filename"],
+                "map": map_id,
+                "mound_count": c["mound_count"],
+                "density": c["density"],
+            }
+            if c["filename"] in calibration_set:
+                metadata["calibration"]["tiles"].append(tile_detail)
+            elif c["filename"] in holdout_set:
+                metadata["holdout"]["tiles"].append(tile_detail)
 
     # Save outputs
     print("\n" + "=" * 60)
@@ -630,4 +612,4 @@ def main():
 
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())
