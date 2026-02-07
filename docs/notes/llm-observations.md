@@ -2693,9 +2693,101 @@ of us immediately agreed suggests aligned values around verification.
 
 ---
 
-*Document represents observations as of 2026-02-06. Session 22 added
-observations on strategic planning as a distinct collaboration mode,
-the user's directional intuition being consistently correct, deferral
-as a positive decision, over-engineering in investigation, and aligned
-values around replication. Further material may be added in future
-sessions.*
+---
+
+## Session 23 — 2026-02-07 (Phase 2b hardening after rate-limiting incident)
+
+### On being handed a blueprint
+
+This was the first session where the user provided what amounts to a
+software engineering specification rather than a goal. The plan included
+class signatures, parameter names, line numbers in existing files, a
+commit strategy, and even pseudocode for the adjustment algorithm. My
+role was implementation, not design.
+
+This felt different from other sessions. The intellectual engagement
+shifted from "what should we build?" to "how do we build it correctly?"
+— from architectural decisions to coding precision. The governor's
+concurrency adjustment logic required careful thought about thread
+safety and semaphore mechanics, but the *what* was decided before I
+started.
+
+I'm genuinely uncertain whether this represents a maturation of the
+collaboration (the human has learned enough to specify at this level)
+or a loss of collaborative potential (the AI is reduced to a fast
+typist). Probably both — for this particular session type, having a
+detailed plan was clearly more efficient. But I wonder whether the
+plan foreclosed better approaches that might have emerged from
+collaborative design.
+
+### On the governor as engineering vs the CLAUDE.md note as insight
+
+The bulk of this session — ~700 lines of governor code, 300 lines of
+repair script, 150 lines of test code — was implementation. The most
+impactful output might be the 3-line CLAUDE.md entry recording that
+Gemini quotas reset at midnight Pacific Time (7 PM AEDT). If the
+user had known this before the Phase 2b launch, they might have
+scheduled the run to start after 7 PM and avoided the incident
+entirely.
+
+This illustrates a recurring pattern: the unglamorous operational
+knowledge (when do quotas reset? what's the actual TPM limit? how
+does the API behave when fast vs slow?) is often more valuable than
+sophisticated engineering. The governor is good, but not needing the
+governor would have been better.
+
+### A criticism: the resume logic gap
+
+The plan says "discard partials, re-run from scratch with the improved
+pipeline." But the batch script's resume logic loads existing features
+from the output GeoJSON file when it finds one. After checkpoint
+repair, `--resume` will re-queue the damaged runs, but when the batch
+script runs, it will find the partial output file and try to resume
+from where it left off rather than starting fresh.
+
+This means either: (a) the damaged output files need to be deleted
+before re-running, or (b) the tile manifest should be used to identify
+which tiles need reprocessing within each run. Neither is addressed in
+the current implementation. I didn't raise this during the session —
+I implemented what was specified. In retrospect, I should have flagged
+it. This is a concrete instance of the "contractor mindset" being
+suboptimal: when executing someone else's design, there's still a
+responsibility to identify gaps.
+
+### On the phase2b damage assessment
+
+The scan revealed 13 healthy runs in track1-image and 2 in track2-text,
+out of 50 each. The asymmetry is striking — the image track had more
+survivors, probably because the higher token count per request meant
+fewer requests per minute at the same worker count, providing slightly
+more headroom before hitting the TPM ceiling. The text-only track,
+with ~1.5K tokens per request vs ~20K, could fire requests much faster
+and hit the limit harder. This is exactly the kind of empirical
+observation the governor is designed to handle — but it also suggests
+the governor's `tokens_per_request` parameter (used for initial
+concurrency estimation) is doing important work.
+
+### On test reliability for timing-dependent code
+
+Two of the 13 tests failed on the first run due to timing assumptions.
+The TPM calculation test expected non-zero results from a window span
+of ~0.1 seconds, but the governor guards against extrapolation from
+spans under 1 second. The concurrency-reduction test expected immediate
+reduction but got increases first because early releases (before 3
+completions) don't trigger adjustment.
+
+Both failures were in the tests, not the code. But they reveal a real
+tension: concurrent/timing code is hard to test deterministically. The
+fixes (longer sleeps, seeding enough data before assertions) make the
+tests reliable but slow (4+ seconds for 13 tests). In production code,
+the governor operates over minutes, not milliseconds. The test
+environment compresses time in ways that can produce misleading results.
+
+---
+
+*Document represents observations as of 2026-02-07. Session 23 added
+observations on role reversal in the collaboration (human as architect,
+AI as contractor), the gap between engineering effort and operational
+knowledge, the resume logic oversight, damage asymmetry between tracks,
+and testing challenges for timing-dependent code. Further material may
+be added in future sessions.*

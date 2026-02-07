@@ -70,6 +70,12 @@ The file `docs/notes/working_notes.md` captures observations about research dire
 - Unexpected findings or edge cases worth noting
 - Reflections on tool/harness behaviour relevant to reproducibility
 
+## Google API Quota Notes
+
+- **Gemini API daily quotas reset at midnight US Pacific Time** (midnight PT = 7:00 PM AEDT / 6:00 PM AEST next day)
+- The user is in Sydney, Australia — plan experiment runs around the local evening reset window
+- Free-tier and pay-as-you-go rate limits (Tokens Per Minute (TPM), Requests Per Minute (RPM)) are rolling and do not have a fixed reset time, but daily quotas do
+
 ## End-of-Session Reflection
 
 Invoke the `/reflect` skill to run the end-of-session reflection protocol. The user will prompt with "let's reflect", `/reflect`, or similar. Reflections are most valuable when written by the instance that did the work — trigger before compacting rather than after.

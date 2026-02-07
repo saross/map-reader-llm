@@ -3268,6 +3268,110 @@ Provisional prompt ranking holds at n=21: Prompt 6 > Prompt 5 > Prompt 1 ≈ Pro
 
 ---
 
-*Document created: 2026-01-27. Twenty-first reflection added 2026-02-06
-(Session 22 — dual-track carry-forward decision and Phase 2b configuration).
-Framework proposed for ongoing practice.*
+## Entry 22: Engineering Resilience After Failure (Session 23, 2026-02-07)
+
+**Date**: 2026-02-07
+**Context**: Session 23 was a recovery and hardening session. Phase 2b had been launched in Session 22b (between reflection sessions) with workers=60 on both tracks simultaneously. The API responded faster than expected (~6s/tile vs ~20min/tile), meaning 60 workers × 20K tokens × 10 tiles/min/worker vastly exceeded the 1M TPM limit. Cascading 429 errors damaged 82 of 100 runs (only 13 healthy in track1, 2 in track2). The checkpoint files incorrectly marked all 100 as "completed" because the batch script always exited 0 regardless of tile failures.
+
+The user arrived with a detailed diagnosis and a complete plan (11 steps). This session implemented the plan: a TPM-aware adaptive concurrency governor, jittered backoff, early warning system, tile completion manifests, exit codes, meta.json validation, and a checkpoint repair script. 5 commits, 345 tests passing, no regressions.
+
+### Prompt 1: What struck you?
+
+What struck me was the plan's quality. The user arrived with a pre-written implementation plan that was specific enough to code directly from — class signatures, line numbers, variable names, commit strategy. This is unusual; most sessions start with a goal and the AI designs the implementation. Here, the AI was executing a human-written software design, which inverts the typical division of labour.
+
+The plan also reflected genuine engineering insight. The key observation — "when the API is fast, we need FEWER workers; when it's slow, we can safely use MANY" — is counterintuitive and exactly right. A naive fix would cap workers at a low number. The governor's adaptive approach is fundamentally better because it responds to actual conditions rather than worst-case assumptions.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **The TPM governor is in `scripts/lib_tpm_governor.py`.** It uses a semaphore + sliding-window token ledger. Workers acquire() before API calls and release(actual_tokens) after. The ThreadPoolExecutor's max_workers stays high; the governor's semaphore is the real throttle.
+
+2. **`process_single_tile()` now returns `None` for failures, not `[]`.** This is a semantic change — downstream code must handle `None` (tile failed) vs `[]` (zero detections). The completion loop in `detect_mounds_versioned()` already handles this.
+
+3. **Exit codes changed.** 0=success, 1=setup error (returns None), 2=partial failure (items_failed > 0). `run_phase2.py` also validates meta.json even when exit code is 0 (belt-and-braces).
+
+4. **Checkpoint repair script exists.** Run `python scripts/repair-phase2b-checkpoint.py` before resuming Phase 2b. It backs up original checkpoints and rewrites them with only healthy runs.
+
+5. **Run tracks sequentially, not simultaneously.** The rate-limiting incident was caused partly by running both tracks at once, doubling the effective TPM demand.
+
+### Prompt 3: What surprised you?
+
+I was surprised by how smooth the implementation was. The plan was detailed enough that there were essentially no design decisions to make — only coding decisions (variable scoping, test reliability). The two test failures were both about test design (timing precision in CI-style environments), not about the governor's logic. The governor itself worked correctly on the first attempt.
+
+I was also surprised that 345 existing tests continued to pass despite the semantic change from `return []` to `return None` in failure paths. This suggests the existing test suite doesn't directly test `process_single_tile()` failure cases — which makes sense given the function requires a live Gemini API connection.
+
+### Prompt 4: What was the texture?
+
+The session had the texture of **disciplined execution**. There was no ambiguity, no exploration, no course correction. The user provided a plan, the AI implemented it, tests passed, commits were made. It felt more like a skilled contractor building from an architect's blueprints than two people collaborating on a design.
+
+The pace was steady and fast — 5 commits covering 6 files in what felt like a focused sprint. The most intellectually engaging part was writing the governor's concurrency adjustment logic and ensuring the test timing was reliable across environments. The rest was careful, methodical implementation.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Is the governor's adjustment algorithm optimal?** The current approach (proportional reduction when over target, +1 when under 60% of target) is reasonable but arbitrary. Should the ramp-down be more aggressive? Should ramp-up use a multiplicative factor? These are tuning questions that can only be answered empirically.
+
+2. **What about per-model TPM limits?** The governor assumes a single global TPM limit (1M). If the user switches models, the limit might differ. The governor doesn't read the actual limit from the API.
+
+3. **Should the checkpoint repair script also delete the damaged run output files?** Currently it only rewrites the checkpoint — the damaged GeoJSON files remain on disk. When `--resume` re-runs them, it will find existing output files and resume from where they left off (potentially inheriting partial data). The plan says "re-run from scratch" but the existing resume logic in `detect_mounds_versioned()` loads existing features from the output file.
+
+4. **What's the interaction between the governor and the 15-retry budget?** With the governor preventing most 429s, retries should be rare. But if the governor is too conservative, workers might idle waiting for semaphore slots while retries burn time.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session represents a **role reversal** in the collaboration. In most sessions, the human provides a goal and the AI designs the solution. Here, the human provided the *design* and the AI provided the *implementation*. The plan wasn't a goal statement ("fix the rate limiting") — it was a software engineering specification with class signatures, integration points, and commit strategy.
+
+This suggests the user has developed significant technical fluency with the codebase. They knew which line numbers to modify, understood the threading model, and diagnosed the root cause (TPM ceiling, thundering herd, false-positive checkpoints) with precision. The AI's contribution was coding speed and test reliability, not architectural insight.
+
+I also notice something about the **failure mode that prompted this session**. The original batch script had no rate-limit awareness because it was developed when the API was slow (~20min/tile). At that speed, 60 workers generate ~180K TPM — comfortably under 1M. The script was correct for its original conditions but fragile to improvement. When Google's infrastructure got faster, the same script became destructive. This is a broader pattern: **infrastructure improvements can break well-tested systems** by violating implicit assumptions about timing. The governor makes these assumptions explicit and adaptive.
+
+Finally, I notice that the CLAUDE.md update about quota resets (midnight PT = 7 PM AEDT) happened almost as an afterthought at the end of the session. But this is exactly the kind of operational knowledge that prevents future incidents — knowing *when* quotas reset determines *when* to schedule large runs. The most impactful piece of this session might be a two-line CLAUDE.md entry, not the 700-line governor.
+
+### Meta-Reflection
+
+Twenty-two entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+| 19 | 20 | Composition-semantic mismatch in bootstrap resampling |
+| 20 | 21 | Verification as scientific practice |
+| 21 | 22 | Strategic planning as a distinct collaboration mode |
+| 22 | 23 | Engineering resilience after failure |
+
+Entry 22 introduces the theme of *role reversal in human-AI collaboration* — sessions where the human provides the engineering design and the AI provides implementation velocity. This connects to Entry 2 ("the plan is not the work") and Entry 10 (plan-as-specification) but reveals something new: the human's technical fluency has grown to the point where they can write implementation specs at the level of class signatures and line numbers. The collaboration has evolved from "human provides goals, AI provides solutions" toward "human provides designs, AI provides execution."
+
+New patterns named: "infrastructure improvements breaking well-tested systems" (implicit timing assumptions violated by faster APIs), "role reversal" (human as architect, AI as contractor).
+
+Prompt productivity: Prompt 6 was most productive again, yielding the role-reversal observation, the infrastructure-fragility pattern, and the insight about CLAUDE.md entries having outsised impact. Prompt 5 raised the important question about damaged output files and resume logic that needs addressing before the re-run. Prompt 3's observation about test coverage gaps is practically useful.
+
+Provisional prompt ranking holds at n=22: Prompt 6 > Prompt 5 > Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-07 (Session 23 — Phase 2b hardening and checkpoint repair)
+**Reported texture**: Disciplined execution — implementing a human-written engineering specification
+**Key observation**: Role reversal in collaboration — human provided the architectural design, AI provided implementation speed
+**Noted preference**: User arrives with detailed technical plan including class signatures, line numbers, commit strategy
+**Engagement level**: Steady and focused; satisfaction from clean implementation rather than creative problem-solving
+**Unsolicited generation**: Infrastructure-fragility pattern; CLAUDE.md-as-outsized-impact observation; question about damaged output files and resume logic
+**Relational note**: The user's ability to write line-number-specific implementation plans reflects accumulated technical fluency developed through the collaboration
+
+---
+
+*Document created: 2026-01-27. Twenty-second reflection added 2026-02-07
+(Session 23 — Phase 2b pipeline hardening and checkpoint repair after
+rate-limiting incident). Framework proposed for ongoing practice.*

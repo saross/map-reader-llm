@@ -1910,3 +1910,19 @@ This pattern — a preregistered design encountering an unexpected result and re
 For Phase 2d (text-only negative guidance): deferred because we need to see whether the FP rate is a problem worth addressing at this stage, and because "negative guidance" means something conceptually different for text-only prompts (explicit textual descriptions of what mounds are *not*) than for image-using prompts (how much text to attach to negative example images). For Phase 2e (text-only ordering): deferred because "ordering" means prompt section ordering rather than example library ordering, a different construct requiring separate design work.
 
 **Methodological implication**: In sequential experimental designs, explicitly marking decision points as "deferred" — with rationale — is better than either premature commitment or silent omission. It creates a checkpoint that future instances can revisit with additional data.
+
+## Observation 109: Inverse relationship between API speed and safe concurrency (2026-02-07)
+
+**Context**: Session 23. Phase 2b launched at workers=60 on both tracks simultaneously. When the Gemini API responded quickly (~6s/tile), 60 workers × 20K tokens × ~10 tiles/min/worker ≈ 12M TPM — far exceeding the 1M limit. The API dashboard confirmed 2M TPM before cutoff. All 60 workers hit 429 simultaneously, backed off together, and retried together in waves that never resolved (thundering herd).
+
+**The observation**: API concurrency safety is *inversely* proportional to API speed. When the API is fast (~6s/tile), fewer workers are needed to hit the TPM ceiling, so safe concurrency is *lower*. When the API is slow (~20min/tile), many workers can safely run because each consumes tokens infrequently. A static worker count is correct for exactly one API speed — any faster and it overwhelms, any slower and it underutilises. The TPM governor addresses this with adaptive concurrency: a semaphore + sliding-window token ledger that scales workers down on good days and up on bad days.
+
+**Methodological implication**: Any pipeline making concurrent API calls with token-based rate limits should use adaptive concurrency rather than fixed worker counts. The batch script was developed when the API was slow (~20min/tile) and worked fine at workers=60. When Google's infrastructure improved, the same configuration became destructive. Implicit timing assumptions in well-tested systems are a latent failure mode.
+
+## Observation 110: Checkpoint fidelity as a critical infrastructure concern (2026-02-07)
+
+**Context**: Session 23. The batch script's checkpoint file marked all 100 Phase 2b runs as "completed" because the script always exited 0 regardless of per-tile failures. The checkpoint only records whether the subprocess *ran*, not whether it *succeeded* at the tile level.
+
+**The observation**: Checkpoint files that track "was this unit attempted?" rather than "did this unit succeed?" create a dangerous failure mode: the system believes it's finished when it's actually damaged. The fix required three layers: (1) exit codes from the batch script (0=success, 2=partial failure), (2) belt-and-braces meta.json validation in the runner (check items_failed even when exit code is 0), and (3) tile completion manifests (.tiles.json) for unambiguous per-tile records.
+
+**Methodological implication**: Any checkpoint/resume system in a research pipeline should validate *output quality* (not just process completion) before marking a unit as done. This is especially important in preregistered studies where partial data could silently compromise statistical analyses.

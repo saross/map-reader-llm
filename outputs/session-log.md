@@ -1049,4 +1049,47 @@ Strategic planning session following the Phase 2a verification. Investigated whe
 
 ---
 
+## Session 23 — 2026-02-07 (Phase 2b pipeline hardening and checkpoint repair)
+
+### Overview
+
+Recovery session after the Phase 2b rate-limiting incident. Both tracks had been launched simultaneously at workers=60, overwhelming the 1M TPM limit when the API responded quickly (~6s/tile). 82 of 100 runs were damaged (13 healthy in track1-image, 2 in track2-text). Checkpoint files incorrectly marked all 100 as "completed." The user arrived with a detailed 11-step engineering plan. Session implemented the plan across 6 files (3 new, 3 modified), all 345 tests passing.
+
+### Accomplishments
+
+1. **Created TPM-aware adaptive concurrency governor** (`scripts/lib_tpm_governor.py`) — semaphore + sliding-window token ledger that scales workers down when the API is fast and up when it's slow
+2. **Hardened batch detection script** (`scripts/4_detect_mounds_batch.py`) — governor integration, jittered exponential backoff, 15 retries (CLI-configurable), `None` failure sentinel, early warning system, tile completion manifests, exit codes, `--max-retries` and `--base-wait` CLI args
+3. **Added completed_items tracking** to `ExecutionStats` in `scripts/lib_llm_metadata.py`
+4. **Added meta.json validation** in `scripts/run_phase2.py` — `read_meta_failures()` helper catches partial failures even when exit code is 0
+5. **Created checkpoint repair script** (`scripts/repair-phase2b-checkpoint.py`) — scans runs, classifies healthy vs damaged, backs up and rewrites checkpoints
+6. **Wrote 13 tier1 unit tests** for TPM governor covering semaphore behaviour, sliding window, concurrency adaptation, and thread safety
+7. **Added Google API quota reset note** to project CLAUDE.md — midnight PT = 7 PM AEDT
+
+### Issues
+
+- Resume logic gap: damaged output files remain on disk; `--resume` may load partial features from existing GeoJSON rather than starting fresh. Needs resolution before re-run.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `140ed78` | `feat(scripts)`: Add TPM-aware adaptive concurrency governor |
+| `d9782a6` | `fix(scripts)`: Harden batch detection against rate limiting |
+| `64b72f3` | `fix(scripts)`: Track completed tiles in metadata |
+| `7485766` | `fix(scripts)`: Validate tile completeness in run_phase2.py |
+| `29c114e` | `chore(scripts)`: Add Phase 2b checkpoint repair script |
+
+### Pending Work
+
+- [ ] **Resolve resume logic gap** — damaged output files may need deletion before re-run, or batch script needs option to start fresh
+- [ ] **Run checkpoint repair** — `python scripts/repair-phase2b-checkpoint.py`
+- [ ] **Re-run Phase 2b Track 1** — `scripts/run_phase2.py studies/phase2b-h7-temperature.yaml --workers 30 --resume`
+- [ ] **Re-run Phase 2b Track 2** — `scripts/run_phase2.py studies/phase2b-h7-temperature-text-only.yaml --workers 30 --resume`
+- [ ] **Phase 2b analysis** — update analysis script for dual-track output directories
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*

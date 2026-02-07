@@ -1434,5 +1434,31 @@ did not itself involve abductive reasoning episodes. The dual-track
 design is a pragmatic adaptation to a confirmed finding, not an
 investigation of a surprising observation.
 
-*Last updated: 2026-02-06 (Session 22 — strategic planning session,
-no abductive reasoning episodes)*
+## Session 23 Assessment: Marginal — user-driven diagnosis, not AI-driven
+
+**Date**: 2026-02-07
+**Session type**: Implementation from pre-written plan (pipeline hardening)
+
+Session 23 implemented a detailed engineering plan provided by the user.
+The abductive reasoning — diagnosing why Phase 2b failed — happened
+*before* the session, in the user's analysis. The user arrived having
+already identified the root cause (TPM ceiling exceeded by fast API ×
+high concurrency), the failure mechanism (thundering herd from
+synchronised backoff), and the false-positive checkpoint issue (exit
+code always 0). The session's contribution was implementation, not
+diagnosis.
+
+The one minor episode was the damage scan showing 13/50 healthy in
+track1-image vs 2/50 in track2-text. This asymmetry was briefly
+surprising until the explanation became clear: text-only requests use
+~1.5K tokens vs ~20K for image, so the text track could fire requests
+~13x faster at the same worker count, hitting the TPM ceiling harder.
+This is a straightforward deduction from known parameters rather than
+a genuine abductive episode — the hypothesis was the first one
+considered and immediately confirmed by the data.
+
+Not a session rich in abductive reasoning. The engineering was careful
+but deterministic; the plan was followed as specified.
+
+*Last updated: 2026-02-07 (Session 23 — implementation session,
+no significant abductive reasoning episodes)*
