@@ -224,7 +224,7 @@ def verify_all_runs(
 
             # Recompute F1
             precision, recall, f1 = calculate_f1_internal(
-                gdf_det, gdf_ref, gdf_bounds, buffer_meters=BUFFER_METRES,
+                gdf_det, gdf_ref, gdf_bounds, buffer_metres=BUFFER_METRES,
             )
 
             recomputed_rows.append({

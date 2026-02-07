@@ -22,7 +22,7 @@ Factorial interaction testing (preregistration Section 5.5, M/E × H5):
 import json
 import logging
 from pathlib import Path
-from typing import Optional, Tuple, Any
+from typing import Any
 
 import geopandas as gpd
 import numpy as np
@@ -36,12 +36,24 @@ logger = logging.getLogger(__name__)
 INPUTS_DIR = Path("inputs")
 DEFAULT_CRS = "EPSG:32635"  # UTM Zone 35N (Bulgaria)
 
+
+def _compute_ci(scores: list[float]) -> dict[str, float | None]:
+    """Compute mean and 95% percentile CI from a list of bootstrap scores."""
+    if not scores:
+        return {"mean": None, "ci_lower": None, "ci_upper": None}
+    return {
+        "mean": float(np.mean(scores)),
+        "ci_lower": float(np.percentile(scores, 2.5)),
+        "ci_upper": float(np.percentile(scores, 97.5)),
+    }
+
+
 def load_data(
     detection_file: Path | str,
     bounds_file: Path | str,
     inputs_dir: Path = INPUTS_DIR,
     target_crs: str = DEFAULT_CRS,
-) -> Tuple[Optional[gpd.GeoDataFrame], Optional[gpd.GeoDataFrame], Optional[gpd.GeoDataFrame]]:
+) -> tuple[gpd.GeoDataFrame | None, gpd.GeoDataFrame | None, gpd.GeoDataFrame | None]:
     """
     Load detection, bounds, and reference GeoDataFrames for metrics calculation.
 
@@ -117,6 +129,7 @@ def load_data(
         logger.error("Error loading metrics data: %s", e)
         return None, None, None
 
+
 def get_map_name(tile_name: str) -> str:
     """
     Extract map name from tile filename.
@@ -148,7 +161,11 @@ def normalise_ref_class(symbol: Any) -> str:
     return "unknown"
 
 
-def match_detections_to_references(det_geoms, ref_geoms, max_distance):
+def match_detections_to_references(
+    det_geoms: list,
+    ref_geoms: list,
+    max_distance: float,
+) -> tuple[list[int], list[int], list[int], list[int]]:
     """
     Perform one-to-one matching between detections and references using
     the Hungarian algorithm.
@@ -157,13 +174,13 @@ def match_detections_to_references(det_geoms, ref_geoms, max_distance):
     Matches are only valid if within max_distance metres.
 
     Args:
-        det_geoms: List/array of detection geometries (points or centroids)
-        ref_geoms: List/array of reference geometries (points or centroids)
-        max_distance: Maximum distance in metres for a valid match
+        det_geoms: List of detection geometries (points or centroids).
+        ref_geoms: List of reference geometries (points or centroids).
+        max_distance: Maximum distance in metres for a valid match.
 
     Returns:
-        tuple: (matched_det_indices, matched_ref_indices, unmatched_det_indices,
-                unmatched_ref_indices)
+        Tuple of (matched_det_indices, matched_ref_indices,
+        unmatched_det_indices, unmatched_ref_indices).
     """
     n_det = len(det_geoms)
     n_ref = len(ref_geoms)
@@ -357,7 +374,12 @@ def aggregate_tile_metrics(
     return precision, recall, f1
 
 
-def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
+def calculate_f1_internal(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: int = 20,
+) -> tuple[float, float, float]:
     """
     Calculate global F1 using one-to-one matching via Hungarian algorithm.
 
@@ -366,20 +388,20 @@ def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     it counts as 1 TP + 1 FN.
 
     Args:
-        gdf_det: GeoDataFrame of detections
-        gdf_ref: GeoDataFrame of ground truth references
-        gdf_bounds: GeoDataFrame of tile boundaries (defines evaluation scope)
-        buffer_meters: Maximum distance for a valid match (default 20m)
+        gdf_det: GeoDataFrame of detections.
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries (defines evaluation scope).
+        buffer_metres: Maximum distance for a valid match (default 20 m).
 
     Returns:
-        tuple: (precision, recall, f1)
+        Tuple of (precision, recall, f1).
     """
     tp = 0
     fp = 0
     fn = 0
 
     # Scope by processed maps
-    processed_maps = set([get_map_name(n) for n in gdf_bounds['tile_name'].unique()])
+    processed_maps = {get_map_name(n) for n in gdf_bounds['tile_name'].unique()}
 
     for map_name in processed_maps:
         if map_name == "Unknown":
@@ -406,7 +428,7 @@ def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
             ref_geoms = list(ref_scope.geometry)
 
             matched_det, matched_ref, unmatched_det, unmatched_ref = \
-                match_detections_to_references(det_geoms, ref_geoms, buffer_meters)
+                match_detections_to_references(det_geoms, ref_geoms, buffer_metres)
 
             tp += len(matched_det)
             fp += len(unmatched_det)
@@ -418,7 +440,14 @@ def calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
 
     return precision, recall, f1
 
-def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=None):
+
+def bootstrap_ci(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
     """
     Bootstrap resampling for 95% confidence intervals on precision, recall, and F1.
 
@@ -430,22 +459,21 @@ def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=No
     - CI calculation: 2.5th and 97.5th percentiles (95% CI)
 
     Args:
-        gdf_det: GeoDataFrame of detections
-        gdf_ref: GeoDataFrame of ground truth references
-        gdf_bounds: GeoDataFrame of tile boundaries (defines tiles for resampling)
-        n_iterations: Number of bootstrap iterations (default 1000)
-        random_seed: Optional seed for reproducibility
+        gdf_det: GeoDataFrame of detections.
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries (defines tiles for resampling).
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
 
     Returns:
-        dict: Bootstrap results with CIs for F1, precision, and recall
+        Bootstrap results with CIs for F1, precision, and recall.
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
     if n_tiles == 0:
         return {}
 
-    if random_seed is not None:
-        np.random.seed(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Pre-compute per-tile TP/FP/FN once (errata E26: fixes duplicate-tile
     # reference de-duplication bias in bootstrap resampling)
@@ -458,7 +486,7 @@ def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=No
     f1_scores = []
 
     for _i in range(n_iterations):
-        sample_tiles = np.random.choice(tiles, n_tiles, replace=True)
+        sample_tiles = rng.choice(tiles, n_tiles, replace=True)
         precision, recall, f1 = aggregate_tile_metrics(
             tile_metrics, sample_tiles
         )
@@ -491,12 +519,14 @@ def bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=1000, random_seed=No
 
 
 def bootstrap_effect_size_ci(
-    gdf_det_a, gdf_bounds_a,
-    gdf_det_b, gdf_bounds_b,
-    gdf_ref,
-    n_iterations=1000,
-    random_seed=None
-):
+    gdf_det_a: gpd.GeoDataFrame,
+    gdf_bounds_a: gpd.GeoDataFrame,
+    gdf_det_b: gpd.GeoDataFrame,
+    gdf_bounds_b: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
     """
     Bootstrap confidence intervals for effect size (difference) between two conditions.
 
@@ -512,16 +542,16 @@ def bootstrap_effect_size_ci(
     - CI calculation: 2.5th and 97.5th percentiles
 
     Args:
-        gdf_det_a: GeoDataFrame of detections for Condition A
-        gdf_bounds_a: GeoDataFrame of tile boundaries for Condition A
-        gdf_det_b: GeoDataFrame of detections for Condition B
-        gdf_bounds_b: GeoDataFrame of tile boundaries for Condition B
-        gdf_ref: GeoDataFrame of ground truth references (shared)
-        n_iterations: Number of bootstrap iterations (default 1000)
-        random_seed: Optional seed for reproducibility
+        gdf_det_a: GeoDataFrame of detections for Condition A.
+        gdf_bounds_a: GeoDataFrame of tile boundaries for Condition A.
+        gdf_det_b: GeoDataFrame of detections for Condition B.
+        gdf_bounds_b: GeoDataFrame of tile boundaries for Condition B.
+        gdf_ref: GeoDataFrame of ground truth references (shared).
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
 
     Returns:
-        dict: Effect size estimates with 95% CIs for F1, precision, recall differences
+        Effect size estimates with 95% CIs for F1, precision, recall differences.
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -532,8 +562,7 @@ def bootstrap_effect_size_ci(
     if n_tiles == 0:
         return {"error": "No common tiles between conditions"}
 
-    if random_seed is not None:
-        np.random.seed(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Pre-compute per-tile TP/FP/FN for both conditions (errata E26)
     # Filter bounds to common tiles for consistent scoping
@@ -552,7 +581,7 @@ def bootstrap_effect_size_ci(
 
     for _i in range(n_iterations):
         # Paired sampling: same tiles for both conditions
-        sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
+        sample_tiles = rng.choice(common_tiles, n_tiles, replace=True)
 
         p_a, r_a, f1_a = aggregate_tile_metrics(tile_metrics_a, sample_tiles)
         p_b, r_b, f1_b = aggregate_tile_metrics(tile_metrics_b, sample_tiles)
@@ -623,7 +652,7 @@ def bootstrap_multi_run_ci(
     if n_tiles == 0 or not run_gdfs:
         return {}
 
-    rng = np.random.RandomState(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Pre-compute per-tile TP/FP/FN for each run (errata E26)
     run_tile_metrics: list[pd.DataFrame] = []
@@ -716,7 +745,7 @@ def bootstrap_multi_run_effect_size_ci(
     if n_tiles == 0 or not run_gdfs_a or not run_gdfs_b:
         return {"error": "Insufficient data for effect size computation"}
 
-    rng = np.random.RandomState(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Pre-compute per-tile TP/FP/FN for every run in both conditions (E26)
     run_metrics_a: list[pd.DataFrame] = []
@@ -730,6 +759,19 @@ def bootstrap_multi_run_effect_size_ci(
             compute_per_tile_tp_fp_fn(gdf_det, gdf_ref, gdf_bounds, buffer_metres=20)
         )
 
+    def _mean_metrics(
+        run_tms: list[pd.DataFrame],
+        sample: np.ndarray,
+    ) -> tuple[float, float, float]:
+        """Average precision, recall, F1 across runs for a bootstrap sample."""
+        run_f1s, run_ps, run_rs = [], [], []
+        for tm in run_tms:
+            p, r, f1 = aggregate_tile_metrics(tm, sample)
+            run_f1s.append(f1)
+            run_ps.append(p)
+            run_rs.append(r)
+        return float(np.mean(run_f1s)), float(np.mean(run_ps)), float(np.mean(run_rs))
+
     f1_diffs = []
     precision_diffs = []
     recall_diffs = []
@@ -738,18 +780,8 @@ def bootstrap_multi_run_effect_size_ci(
         # Paired sampling: same tiles for both conditions
         sample_tiles = rng.choice(tiles, n_tiles, replace=True)
 
-        # Mean metrics across runs for each condition
-        def _mean_metrics(run_tms: list[pd.DataFrame]):
-            run_f1s, run_ps, run_rs = [], [], []
-            for tm in run_tms:
-                p, r, f1 = aggregate_tile_metrics(tm, sample_tiles)
-                run_f1s.append(f1)
-                run_ps.append(p)
-                run_rs.append(r)
-            return np.mean(run_f1s), np.mean(run_ps), np.mean(run_rs)
-
-        f1_a, p_a, r_a = _mean_metrics(run_metrics_a)
-        f1_b, p_b, r_b = _mean_metrics(run_metrics_b)
+        f1_a, p_a, r_a = _mean_metrics(run_metrics_a, sample_tiles)
+        f1_b, p_b, r_b = _mean_metrics(run_metrics_b, sample_tiles)
 
         f1_diffs.append(f1_a - f1_b)
         precision_diffs.append(p_a - p_b)
@@ -780,7 +812,7 @@ def bootstrap_multi_run_effect_size_ci(
 
 def bootstrap_interaction_ci(
     conditions: dict,
-    gdf_ref,
+    gdf_ref: gpd.GeoDataFrame,
     factor_a_name: str = "factor_a",
     factor_b_name: str = "factor_b",
     metric: str = "f1",
@@ -832,8 +864,8 @@ def bootstrap_interaction_ci(
             - "n_iterations": Number of bootstrap iterations
     """
     # Extract factor levels from condition keys
-    factor_a_levels = sorted(set(k[0] for k in conditions.keys()))
-    factor_b_levels = sorted(set(k[1] for k in conditions.keys()))
+    factor_a_levels = sorted({k[0] for k in conditions})
+    factor_b_levels = sorted({k[1] for k in conditions})
 
     if len(factor_a_levels) < 2:
         return {"error": "Need at least 2 levels of factor_a for interaction test"}
@@ -851,8 +883,7 @@ def bootstrap_interaction_ci(
     if n_tiles == 0:
         return {"error": "No common tiles across all conditions"}
 
-    if random_seed is not None:
-        np.random.seed(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Metric extraction index: maps metric name to position in
     # (precision, recall, f1) tuple returned by aggregate_tile_metrics
@@ -881,7 +912,7 @@ def bootstrap_interaction_ci(
 
     for _i in range(n_iterations):
         # Paired sampling: same tiles for all conditions
-        sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
+        sample_tiles = rng.choice(common_tiles, n_tiles, replace=True)
 
         # Compute metric for each cell needed (first and last factor_b levels
         # at each factor_a level)
@@ -958,7 +989,11 @@ def bootstrap_interaction_ci(
     }
 
 
-def calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds):
+def calculate_tile_classification(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> dict:
     """
     Binary classification of tiles as empty vs populated for MCC calculation.
 
@@ -967,24 +1002,19 @@ def calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds):
     and whether the model detected any mounds in that tile.
 
     Classification matrix:
-    - True Positive:  Has mounds + Detected ≥1 mound
+    - True Positive:  Has mounds + Detected >=1 mound
     - True Negative:  Empty + Detected nothing
-    - False Positive: Empty + Detected ≥1 mound (hallucination)
+    - False Positive: Empty + Detected >=1 mound (hallucination)
     - False Negative: Has mounds + Detected nothing
 
     Args:
-        gdf_det: GeoDataFrame of detections (must have 'source_tile' column)
-        gdf_ref: GeoDataFrame of ground truth references
-        gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name' column)
+        gdf_det: GeoDataFrame of detections (must have 'source_tile' column).
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name' column).
 
     Returns:
-        dict: Classification results including:
-            - tp, tn, fp, fn: Confusion matrix counts
-            - mcc: Matthews Correlation Coefficient
-            - sensitivity: P(detect ≥1 | tile has mounds)
-            - specificity: P(detect 0 | tile is empty)
-            - n_tiles, n_empty, n_populated: Tile counts
-            - tile_details: Per-tile classification list
+        Classification results including tp, tn, fp, fn counts; mcc;
+        sensitivity; specificity; tile counts; and per-tile details.
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
@@ -1076,24 +1106,26 @@ def calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds):
 
 
 def bootstrap_tile_classification_ci(
-    gdf_det, gdf_ref, gdf_bounds,
-    n_iterations=1000,
-    random_seed=None
-):
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
     """
     Bootstrap 95% confidence intervals for tile-level MCC, sensitivity, and specificity.
 
     Aligned with preregistration Section 3.5: tile-level resampling with replacement.
 
     Args:
-        gdf_det: GeoDataFrame of detections
-        gdf_ref: GeoDataFrame of ground truth references
-        gdf_bounds: GeoDataFrame of tile boundaries
-        n_iterations: Number of bootstrap iterations (default 1000)
-        random_seed: Optional seed for reproducibility
+        gdf_det: GeoDataFrame of detections.
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries.
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
 
     Returns:
-        dict: Bootstrap CIs for MCC, sensitivity, and specificity
+        Bootstrap CIs for MCC, sensitivity, and specificity.
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
@@ -1101,8 +1133,7 @@ def bootstrap_tile_classification_ci(
     if n_tiles == 0:
         return {"error": "No tiles in bounds"}
 
-    if random_seed is not None:
-        np.random.seed(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Pre-compute per-tile classification once (errata E26: fixes isin()
     # de-duplication that turned bootstrap into subsampling)
@@ -1117,7 +1148,7 @@ def bootstrap_tile_classification_ci(
 
     for _i in range(n_iterations):
         # Resample tiles with replacement
-        sample_tiles = np.random.choice(tiles, n_tiles, replace=True)
+        sample_tiles = rng.choice(tiles, n_tiles, replace=True)
 
         # Count classifications from the sample (duplicates contribute)
         tp = sum(1 for t in sample_tiles if tile_class_map.get(t) == "TP")
@@ -1139,20 +1170,10 @@ def bootstrap_tile_classification_ci(
         if (tn + fp) > 0:
             specificity_scores.append(tn / (tn + fp))
 
-    # Calculate CIs
-    def compute_ci(scores):
-        if not scores:
-            return {"mean": None, "ci_lower": None, "ci_upper": None}
-        return {
-            "mean": float(np.mean(scores)),
-            "ci_lower": float(np.percentile(scores, 2.5)),
-            "ci_upper": float(np.percentile(scores, 97.5)),
-        }
-
     return {
-        "mcc": compute_ci(mcc_scores),
-        "sensitivity": compute_ci(sensitivity_scores),
-        "specificity": compute_ci(specificity_scores),
+        "mcc": _compute_ci(mcc_scores),
+        "sensitivity": _compute_ci(sensitivity_scores),
+        "specificity": _compute_ci(specificity_scores),
         "n_iterations": n_iterations,
         "n_valid_mcc": len(mcc_scores),
         "n_valid_sensitivity": len(sensitivity_scores),
@@ -1161,12 +1182,14 @@ def bootstrap_tile_classification_ci(
 
 
 def bootstrap_tile_effect_size_ci(
-    gdf_det_a, gdf_bounds_a,
-    gdf_det_b, gdf_bounds_b,
-    gdf_ref,
-    n_iterations=1000,
-    random_seed=None
-):
+    gdf_det_a: gpd.GeoDataFrame,
+    gdf_bounds_a: gpd.GeoDataFrame,
+    gdf_det_b: gpd.GeoDataFrame,
+    gdf_bounds_b: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    n_iterations: int = 1000,
+    random_seed: int | None = None,
+) -> dict:
     """
     Bootstrap 95% CIs for tile-level MCC difference between two conditions.
 
@@ -1174,16 +1197,16 @@ def bootstrap_tile_effect_size_ci(
     valid effect size estimation.
 
     Args:
-        gdf_det_a: GeoDataFrame of detections for Condition A
-        gdf_bounds_a: GeoDataFrame of tile boundaries for Condition A
-        gdf_det_b: GeoDataFrame of detections for Condition B
-        gdf_bounds_b: GeoDataFrame of tile boundaries for Condition B
-        gdf_ref: GeoDataFrame of ground truth references (shared)
-        n_iterations: Number of bootstrap iterations (default 1000)
-        random_seed: Optional seed for reproducibility
+        gdf_det_a: GeoDataFrame of detections for Condition A.
+        gdf_bounds_a: GeoDataFrame of tile boundaries for Condition A.
+        gdf_det_b: GeoDataFrame of detections for Condition B.
+        gdf_bounds_b: GeoDataFrame of tile boundaries for Condition B.
+        gdf_ref: GeoDataFrame of ground truth references (shared).
+        n_iterations: Number of bootstrap iterations (default 1000).
+        random_seed: Optional seed for reproducibility.
 
     Returns:
-        dict: Effect size CIs for MCC, sensitivity, and specificity differences
+        Effect size CIs for MCC, sensitivity, and specificity differences.
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -1194,8 +1217,7 @@ def bootstrap_tile_effect_size_ci(
     if n_tiles == 0:
         return {"error": "No common tiles between conditions"}
 
-    if random_seed is not None:
-        np.random.seed(random_seed)
+    rng = np.random.default_rng(random_seed)
 
     # Pre-compute per-tile classifications for both conditions (errata E26)
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
@@ -1212,7 +1234,10 @@ def bootstrap_tile_effect_size_ci(
     for detail in result_b_full.get("tile_details", []):
         tile_class_b[detail["tile_name"]] = detail["classification"]
 
-    def _compute_tile_metrics(tile_class_map, sample):
+    def _compute_tile_metrics(
+        tile_class_map: dict[str, str],
+        sample: np.ndarray,
+    ) -> tuple[float | None, float | None, float | None]:
         """Compute MCC, sensitivity, specificity from sample with duplicates."""
         tp = sum(1 for t in sample if tile_class_map.get(t) == "TP")
         tn = sum(1 for t in sample if tile_class_map.get(t) == "TN")
@@ -1238,7 +1263,7 @@ def bootstrap_tile_effect_size_ci(
 
     for _i in range(n_iterations):
         # Paired sampling: same tiles for both conditions
-        sample_tiles = np.random.choice(common_tiles, n_tiles, replace=True)
+        sample_tiles = rng.choice(common_tiles, n_tiles, replace=True)
 
         mcc_a, sens_a, spec_a = _compute_tile_metrics(tile_class_a, sample_tiles)
         mcc_b, sens_b, spec_b = _compute_tile_metrics(tile_class_b, sample_tiles)
@@ -1253,69 +1278,111 @@ def bootstrap_tile_effect_size_ci(
         if spec_a is not None and spec_b is not None:
             specificity_diffs.append(spec_a - spec_b)
 
-    # Calculate CIs for differences
-    def compute_ci(diffs):
-        if not diffs:
-            return {"mean": None, "ci_lower": None, "ci_upper": None}
-        return {
-            "mean": float(np.mean(diffs)),
-            "ci_lower": float(np.percentile(diffs, 2.5)),
-            "ci_upper": float(np.percentile(diffs, 97.5)),
-        }
-
     return {
-        "mcc_difference": compute_ci(mcc_diffs),
-        "sensitivity_difference": compute_ci(sensitivity_diffs),
-        "specificity_difference": compute_ci(specificity_diffs),
+        "mcc_difference": _compute_ci(mcc_diffs),
+        "sensitivity_difference": _compute_ci(sensitivity_diffs),
+        "specificity_difference": _compute_ci(specificity_diffs),
         "n_tiles": n_tiles,
         "n_iterations": n_iterations,
     }
 
 
-def spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds, buffers=[10, 20, 30, 40, 50]):
+def spatial_tolerance_curve(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffers: list[int] | None = None,
+) -> list[dict]:
+    """
+    Compute F1, precision, and recall at multiple spatial tolerance buffers.
+
+    Evaluates detection performance at increasing match distances to show
+    how metrics change with spatial tolerance.
+
+    Args:
+        gdf_det: GeoDataFrame of detections.
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries.
+        buffers: List of buffer distances in metres (default [10, 20, 30, 40, 50]).
+
+    Returns:
+        Per-buffer results with 'buffer', 'precision', 'recall', 'f1' keys.
+    """
+    if buffers is None:
+        buffers = [10, 20, 30, 40, 50]
     results = []
     for b in buffers:
-        p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=b)
+        p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_metres=b)
         results.append({
             "buffer": b,
             "precision": round(p, 4),
             "recall": round(r, 4),
-            "f1": round(f1, 4)
+            "f1": round(f1, 4),
         })
     return results
 
-def calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
-    gdf_ref['normalised_class'] = gdf_ref['Symbol'].apply(normalise_ref_class)
+
+def calculate_per_class_f1(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: int = 20,
+) -> list[dict]:
+    """
+    Calculate F1, precision, and recall per mound class.
+
+    Classifies reference mounds by symbol type (burial, benchmark,
+    triangulation) and computes metrics for each class independently.
+
+    Args:
+        gdf_det: GeoDataFrame of detections (must have 'subtype' column).
+        gdf_ref: GeoDataFrame of ground truth references (must have 'Symbol' column).
+        gdf_bounds: GeoDataFrame of tile boundaries.
+        buffer_metres: Maximum distance for a valid match (default 20 m).
+
+    Returns:
+        Per-class results with 'class', 'precision', 'recall', 'f1' keys.
+    """
+    # Operate on a copy to avoid mutating the caller's DataFrame
+    ref = gdf_ref.copy()
+    ref['normalised_class'] = ref['Symbol'].apply(normalise_ref_class)
     classes = ["burial_mound", "benchmark_mound", "triangulation_mound"]
 
     results = []
     for cls in classes:
         det_cls = gdf_det[gdf_det['subtype'] == cls].copy()
-        ref_cls = gdf_ref[gdf_ref['normalised_class'] == cls].copy()
+        ref_cls = ref[ref['normalised_class'] == cls].copy()
 
-        p, r, f1 = calculate_f1_internal(det_cls, ref_cls, gdf_bounds, buffer_meters)
+        p, r, f1 = calculate_f1_internal(det_cls, ref_cls, gdf_bounds, buffer_metres)
         results.append({
             "class": cls,
             "precision": round(p, 4),
             "recall": round(r, 4),
-            "f1": round(f1, 4)
+            "f1": round(f1, 4),
         })
     return results
 
-def error_taxonomy(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
+
+def error_taxonomy(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: int = 20,
+) -> dict:
     """
     Categorise false positives and false negatives by symbol type.
 
     Uses one-to-one matching to ensure consistent error attribution.
 
     Args:
-        gdf_det: GeoDataFrame of detections
-        gdf_ref: GeoDataFrame of ground truth references
-        gdf_bounds: GeoDataFrame of tile boundaries
-        buffer_meters: Maximum distance for a valid match (default 20m)
+        gdf_det: GeoDataFrame of detections.
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries.
+        buffer_metres: Maximum distance for a valid match (default 20 m).
 
     Returns:
-        dict: {'false_positives': {subtype: count}, 'false_negatives': {class: count}}
+        Dict with 'false_positives' (subtype: count) and
+        'false_negatives' (class: count).
     """
     taxonomy = {"false_positives": {}, "false_negatives": {}}
 
@@ -1330,7 +1397,7 @@ def error_taxonomy(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
     ref_geoms = list(refs_in_scope.geometry) if not refs_in_scope.empty else []
 
     matched_det, matched_ref, unmatched_det, unmatched_ref = \
-        match_detections_to_references(det_geoms, ref_geoms, buffer_meters)
+        match_detections_to_references(det_geoms, ref_geoms, buffer_metres)
 
     # Categorise false positives by detection subtype
     if unmatched_det and not gdf_det.empty:
@@ -1346,7 +1413,29 @@ def error_taxonomy(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20):
 
     return taxonomy
 
-def generate_report(detection_path, bounds_path, output_path=None, bootstrap_iterations=1000):
+
+def generate_report(
+    detection_path: Path | str,
+    bounds_path: Path | str,
+    output_path: Path | str | None = None,
+    bootstrap_iterations: int = 1000,
+) -> dict:
+    """
+    Generate a comprehensive metrics report for a detection run.
+
+    Computes global F1/precision/recall, bootstrapped CIs, spatial tolerance
+    curve, per-class performance, and error taxonomy. Optionally writes
+    results to a JSON file.
+
+    Args:
+        detection_path: Path to the detection GeoJSON file.
+        bounds_path: Path to the bounds GeoJSON file.
+        output_path: Optional path to write JSON report.
+        bootstrap_iterations: Number of bootstrap iterations (default 1000).
+
+    Returns:
+        Report dictionary, or empty dict on load failure.
+    """
     print("Generating Advanced Metrics Report...")
     gdf_det, gdf_bounds, gdf_ref = load_data(detection_path, bounds_path)
 
@@ -1356,23 +1445,29 @@ def generate_report(detection_path, bounds_path, output_path=None, bootstrap_ite
     report = {}
 
     # 1. Global metrics (at standard 20m buffer)
-    p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_meters=20)
+    p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds, buffer_metres=20)
     report["global_metrics"] = {
         "precision": round(p, 4),
         "recall": round(r, 4),
-        "f1": round(f1, 4)
+        "f1": round(f1, 4),
     }
 
-    # 2. Bootstrap
-    report["bootstrap_ci"] = bootstrap_ci(gdf_det, gdf_ref, gdf_bounds, n_iterations=bootstrap_iterations)
+    # 2. Bootstrap CIs
+    report["bootstrap_ci"] = bootstrap_ci(
+        gdf_det, gdf_ref, gdf_bounds, n_iterations=bootstrap_iterations,
+    )
 
-    # 3. Spatial
-    report["spatial_tolerance"] = spatial_tolerance_curve(gdf_det, gdf_ref, gdf_bounds)
+    # 3. Spatial tolerance curve
+    report["spatial_tolerance"] = spatial_tolerance_curve(
+        gdf_det, gdf_ref, gdf_bounds,
+    )
 
-    # 4. Per Class
-    report["per_class_performance"] = calculate_per_class_f1(gdf_det, gdf_ref, gdf_bounds)
+    # 4. Per-class performance
+    report["per_class_performance"] = calculate_per_class_f1(
+        gdf_det, gdf_ref, gdf_bounds,
+    )
 
-    # 5. Taxonomy
+    # 5. Error taxonomy
     report["error_taxonomy"] = error_taxonomy(gdf_det, gdf_ref, gdf_bounds)
 
     if output_path:
@@ -1383,13 +1478,13 @@ def generate_report(detection_path, bounds_path, output_path=None, bootstrap_ite
     return report
 
 
-def print_report_summary(report, title="Metrics Summary"):
+def print_report_summary(report: dict, title: str = "Metrics Summary") -> None:
     """
-    Prints a formatted summary of the metrics report to console.
+    Print a formatted summary of the metrics report to console.
 
     Args:
-        report (dict): The report dictionary from generate_report().
-        title (str): Header title for the summary.
+        report: The report dictionary from generate_report().
+        title: Header title for the summary.
     """
     print(f"\n{'='*60}")
     print(f" {title}")
@@ -1430,7 +1525,11 @@ def print_report_summary(report, title="Metrics Summary"):
         print(f"  {'Class':<22} {'F1':>8} {'Prec':>8} {'Rec':>8}")
         print(f"  {'-'*22} {'-'*8} {'-'*8} {'-'*8}")
         for cls in pcp:
-            print(f"  {cls['class']:<22} {cls['f1']:>8.4f} {cls['precision']:>8.4f} {cls['recall']:>8.4f}")
+            name = cls['class']
+            print(
+                f"  {name:<22} {cls['f1']:>8.4f}"
+                f" {cls['precision']:>8.4f} {cls['recall']:>8.4f}"
+            )
 
     # Spatial tolerance
     st = report.get("spatial_tolerance", [])
@@ -1439,7 +1538,10 @@ def print_report_summary(report, title="Metrics Summary"):
         print(f"  {'Buffer (m)':<12} {'F1':>8} {'Prec':>8} {'Rec':>8}")
         print(f"  {'-'*12} {'-'*8} {'-'*8} {'-'*8}")
         for row in st:
-            print(f"  {row['buffer']:<12} {row['f1']:>8.4f} {row['precision']:>8.4f} {row['recall']:>8.4f}")
+            print(
+                f"  {row['buffer']:<12} {row['f1']:>8.4f}"
+                f" {row['precision']:>8.4f} {row['recall']:>8.4f}"
+            )
 
     # Error taxonomy
     et = report.get("error_taxonomy", {})
@@ -1455,14 +1557,18 @@ def print_report_summary(report, title="Metrics Summary"):
     print(f"\n{'='*60}\n")
 
 
-def print_effect_size_summary(effect_sizes, condition_a="Condition A", condition_b="Condition B"):
+def print_effect_size_summary(
+    effect_sizes: dict,
+    condition_a: str = "Condition A",
+    condition_b: str = "Condition B",
+) -> None:
     """
     Print a formatted summary of effect size comparisons between two conditions.
 
     Args:
-        effect_sizes (dict): Output from bootstrap_effect_size_ci()
-        condition_a (str): Name/label for first condition
-        condition_b (str): Name/label for second condition
+        effect_sizes: Output from bootstrap_effect_size_ci().
+        condition_a: Name/label for first condition.
+        condition_b: Name/label for second condition.
     """
     if "error" in effect_sizes:
         print(f"Error: {effect_sizes['error']}")
@@ -1501,13 +1607,16 @@ def print_effect_size_summary(effect_sizes, condition_a="Condition A", condition
     print(f"\n{'='*70}\n")
 
 
-def print_tile_classification_summary(results, title="Tile-Level Classification"):
+def print_tile_classification_summary(
+    results: dict,
+    title: str = "Tile-Level Classification",
+) -> None:
     """
     Print a formatted summary of tile-level classification results.
 
     Args:
-        results (dict): Output from calculate_tile_classification()
-        title (str): Header title for the summary
+        results: Output from calculate_tile_classification().
+        title: Header title for the summary.
     """
     if "error" in results:
         print(f"Error: {results['error']}")
@@ -1546,14 +1655,18 @@ def print_tile_classification_summary(results, title="Tile-Level Classification"
     print(f"\n{'='*60}\n")
 
 
-def print_tile_classification_ci_summary(results, ci_results, title="Tile-Level Classification"):
+def print_tile_classification_ci_summary(
+    results: dict,
+    ci_results: dict,
+    title: str = "Tile-Level Classification",
+) -> None:
     """
     Print a formatted summary of tile-level classification with bootstrap CIs.
 
     Args:
-        results (dict): Output from calculate_tile_classification()
-        ci_results (dict): Output from bootstrap_tile_classification_ci()
-        title (str): Header title for the summary
+        results: Output from calculate_tile_classification().
+        ci_results: Output from bootstrap_tile_classification_ci().
+        title: Header title for the summary.
     """
     if "error" in results:
         print(f"Error: {results['error']}")
@@ -1575,7 +1688,11 @@ def print_tile_classification_ci_summary(results, ci_results, title="Tile-Level 
     print(f"  {'Metric':<12} {'Value':>10} {'95% CI':>24}")
     print(f"  {'-'*12} {'-'*10} {'-'*24}")
 
-    for metric, label in [("mcc", "MCC"), ("sensitivity", "Sensitivity"), ("specificity", "Specificity")]:
+    for metric, label in [
+        ("mcc", "MCC"),
+        ("sensitivity", "Sensitivity"),
+        ("specificity", "Specificity"),
+    ]:
         val = results.get(metric)
         ci = ci_results.get(metric, {})
         ci_low = ci.get('ci_lower')
@@ -1598,17 +1715,17 @@ def print_tile_classification_ci_summary(results, ci_results, title="Tile-Level 
 
 
 def print_tile_effect_size_summary(
-    effect_sizes,
-    condition_a="Condition A",
-    condition_b="Condition B"
-):
+    effect_sizes: dict,
+    condition_a: str = "Condition A",
+    condition_b: str = "Condition B",
+) -> None:
     """
     Print a formatted summary of tile-level effect size comparisons.
 
     Args:
-        effect_sizes (dict): Output from bootstrap_tile_effect_size_ci()
-        condition_a (str): Name/label for first condition
-        condition_b (str): Name/label for second condition
+        effect_sizes: Output from bootstrap_tile_effect_size_ci().
+        condition_a: Name/label for first condition.
+        condition_b: Name/label for second condition.
     """
     if "error" in effect_sizes:
         print(f"Error: {effect_sizes['error']}")

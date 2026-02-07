@@ -337,7 +337,7 @@ def analyse_phase_results(
             n_total_detections += len(gdf_det)
             precision, recall, f1 = calculate_f1_internal(
                 gdf_det, gdf_ref, gdf_bounds_common,
-                buffer_meters=DEFAULT_BUFFER_M,
+                buffer_metres=DEFAULT_BUFFER_M,
             )
             run_f1s.append(f1)
             run_precisions.append(precision)
