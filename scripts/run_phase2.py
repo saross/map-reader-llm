@@ -151,7 +151,7 @@ def extract_conditions(config: dict) -> list[dict]:
     factors = config["factors"]
     carried = config.get("carried_forward", {})
 
-    for _factor_name, factor_def in factors.items():
+    for factor_name, factor_def in factors.items():
         for level in factor_def.get("levels", []):
             # Skip levels explicitly marked as not running in this phase
             if level.get("run_in_phase2d") is False:
@@ -164,10 +164,10 @@ def extract_conditions(config: dict) -> list[dict]:
                 config_path = carried.get("optimal_me_config", "")
 
             # Determine temperature override
-            temperature = level.get("value") if _factor_name == "temperature" else None
+            temperature = level.get("value") if factor_name == "temperature" else None
 
             # Determine ordering override
-            ordering = level.get("value") if _factor_name == "ordering" else None
+            ordering = level.get("value") if factor_name == "ordering" else None
 
             conditions.append({
                 "name": level["name"],
