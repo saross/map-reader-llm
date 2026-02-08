@@ -2,7 +2,7 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-02-02
+**Last updated**: 2026-02-08
 
 ---
 
@@ -10,13 +10,13 @@
 
 | ID | Hypothesis | Factor | # Conditions | Config Pattern | Phase | Status |
 |----|------------|--------|--------------|----------------|-------|--------|
-| H1 | Modality/Elaboration Level | M/E | 5 | `detect_{modality}.json` | 2a | Pending |
+| H1 | Modality/Elaboration Level | M/E | 5 | `detect_{modality}.json` | 2a | Complete |
 | H2 | Two-Stage Pipelines | Architecture | 3 | `propose_*.json`, `verify_*.json` | 3d | Pending (Exploratory) |
 | H3 | Consensus Voting | N, threshold | Multiple | N/A (runtime) | 3a | Pending |
 | H4 | Example Ordering | Ordering | 3 | `detect_*_canonical-last.json`, `detect_*_random-order.json` | 2e | Pending |
 | H5 | Negative Text Treatment | Text level | 3 × 3 | `detect_*_terse.json`, `detect_*_verbose.json` | 2d | Pending |
 | H6 | Flash→Pro Transfer | Model | OFAT | Same configs, different model | 4 | Pending |
-| H7 | Temperature | T | 5 | N/A (runtime parameter) | 2b | Pending |
+| H7 | Temperature | T | 5 | N/A (runtime parameter) | 2b | Complete |
 | H8 | Library Composition/Scaling | Library size | 5 (of 7) | `library_*.json` | 2c | Pending (Scale-16/32 deferred) |
 
 ---
@@ -37,9 +37,12 @@
 
 ## Detailed Condition Mapping
 
-### H1: Modality/Elaboration Level (Phase 2a)
+### H1: Modality/Elaboration Level (Phase 2a) — COMPLETE
 
 Tests how text presence and detail level affect detection performance.
+
+**Status (2026-02-08)**: Phase 2a complete. Optimal modality/elaboration level
+identified and carried forward into subsequent phases.
 
 | Condition | M/E Level | Text | Images | Config File | Instruction File |
 |-----------|-----------|------|--------|-------------|------------------|
@@ -124,7 +127,7 @@ Tests whether Flash-optimal config transfers to Pro. OFAT sensitivity testing.
 
 ---
 
-### H7: Temperature (Phase 2b)
+### H7: Temperature (Phase 2b) — COMPLETE
 
 Tests temperature effect on detection performance.
 
@@ -137,6 +140,10 @@ Tests temperature effect on detection performance.
 | H7-5 | 1.3 | Above default |
 
 **Temperature is a runtime parameter** — no separate config files needed.
+
+**Result (2026-02-08)**: T=0.0 optimal for both tracks. FDR-significant pairwise
+differences: 6/10 comparisons (Track 1), 4/10 comparisons (Track 2). T=0.0 carried
+forward as the optimal temperature setting for subsequent phases.
 
 ---
 
@@ -199,9 +206,9 @@ Phase 0: Preparation
     ↓
 Phase 1: Library + Text Construction
     ↓
-Phase 2a: H1 (M/E) → optimal M/E
+Phase 2a: H1 (M/E) → optimal M/E ✓ COMPLETE
     ↓
-Phase 2b: H7 (Temperature) → optimal T
+Phase 2b: H7 (Temperature) → optimal T ✓ COMPLETE (T=0.0)
     ↓
 Phase 2c: H8 (Library) → optimal library
     ↓

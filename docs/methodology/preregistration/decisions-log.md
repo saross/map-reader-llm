@@ -795,6 +795,6 @@ Working Notes Observation 103.
 ## Related Documents
 
 - **Preregistration**: `preregistration.md` — Full study design
-- **Working notes**: `docs/notes/working_notes.md` — Observations and evidence
+- **Working notes**: `docs/notes/reflections/working-notes.md` — Observations and evidence
 - **Hypothesis tracking**: `hypothesis-tracking.md` — Condition mappings
 - **Example manifest**: `inputs/examples/neutral-naming/MANIFEST.md` — Library composition
