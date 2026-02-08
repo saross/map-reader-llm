@@ -1,11 +1,12 @@
 {
-    "version": "library_canonical",
-    "description": "H8 Condition 2: Canonical library. Canon+ and Canon- (no hard examples). Image-using track (brief-text-image).",
+    "version": "library_canonical-text",
+    "description": "H8 Condition 2: Canonical library. Canon+ and Canon- (no hard examples). Text-only track (brief-text).",
     "hypothesis": "H8-2",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_brief-text-image.md",
+    "instruction_file": "detect_brief-text.md",
     "temperature": 0.0,
     "max_output_tokens": 8192,
+    "include_example_images": false,
     "thinking_level": "minimal",
     "composition": {
         "canonical_positive": 4,
@@ -27,5 +28,5 @@
         {"path": "neutral-naming/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral-naming/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "note": "Tests +Canon- effect (contrast C1). Legend-derived negatives only."
+    "note": "Tests +Canon- effect (contrast C1). Legend-derived negatives only. Text-only variant."
 }

@@ -1,31 +1,36 @@
 {
-    "version": "library_canonical",
-    "description": "H8 Condition 2: Canonical library. Canon+ and Canon- (no hard examples). Image-using track (brief-text-image).",
-    "hypothesis": "H8-2",
+    "version": "library_scale-4-text",
+    "description": "H8 Condition 4: Scale-4 library. 1:1 floor (2 HP, 2 HN). Text-only track (brief-text).",
+    "hypothesis": "H8-4",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_brief-text-image.md",
+    "instruction_file": "detect_brief-text.md",
     "temperature": 0.0,
     "max_output_tokens": 8192,
+    "include_example_images": false,
     "thinking_level": "minimal",
     "composition": {
         "canonical_positive": 4,
         "canonical_negative": 2,
-        "hard_positive": 0,
-        "hard_negative": 0,
+        "hard_positive": 2,
+        "hard_negative": 2,
         "null": 3
     },
-    "total_examples": 9,
-    "hard_examples": 0,
+    "total_examples": 13,
+    "hard_examples": 4,
     "examples": [
         {"path": "neutral-naming/example_01.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral-naming/example_02.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral-naming/example_03.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral-naming/example_04.png", "label": "Positive", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_05.png", "label": "Positive", "category": "hard_positive"},
+        {"path": "neutral-naming/example_06.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral-naming/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral-naming/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral-naming/example_12.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral-naming/example_15.png", "label": "Negative", "category": "null"},
         {"path": "neutral-naming/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral-naming/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "note": "Tests +Canon- effect (contrast C1). Legend-derived negatives only."
+    "note": "1:1 HP:HN floor. Comparison with +HP tests composition vs pure HP at matched size. Text-only variant."
 }

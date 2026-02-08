@@ -1,21 +1,22 @@
 {
-    "version": "library_plus-hp",
-    "description": "H8 Condition 3: +HP library. Adds hard positives (no hard negatives). Image-using track (brief-text-image).",
-    "hypothesis": "H8-3",
+    "version": "library_scale-8-text",
+    "description": "H8 Condition 5: Scale-8 library. 4 HP, 4 HN. Text-only track (brief-text).",
+    "hypothesis": "H8-5",
     "model": "gemini-3-flash",
-    "instruction_file": "detect_brief-text-image.md",
+    "instruction_file": "detect_brief-text.md",
     "temperature": 0.0,
     "max_output_tokens": 8192,
+    "include_example_images": false,
     "thinking_level": "minimal",
     "composition": {
         "canonical_positive": 4,
         "canonical_negative": 2,
         "hard_positive": 4,
-        "hard_negative": 0,
+        "hard_negative": 4,
         "null": 3
     },
-    "total_examples": 13,
-    "hard_examples": 4,
+    "total_examples": 17,
+    "hard_examples": 8,
     "examples": [
         {"path": "neutral-naming/example_01.png", "label": "Positive", "category": "canonical_positive"},
         {"path": "neutral-naming/example_02.png", "label": "Positive", "category": "canonical_positive"},
@@ -27,9 +28,13 @@
         {"path": "neutral-naming/example_08.png", "label": "Positive", "category": "hard_positive"},
         {"path": "neutral-naming/example_09.png", "label": "Negative", "category": "canonical_negative"},
         {"path": "neutral-naming/example_10.png", "label": "Negative", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_11.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral-naming/example_12.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral-naming/example_13.png", "label": "Negative", "category": "hard_negative"},
+        {"path": "neutral-naming/example_14.png", "label": "Negative", "category": "hard_negative"},
         {"path": "neutral-naming/example_15.png", "label": "Negative", "category": "null"},
         {"path": "neutral-naming/example_16.png", "label": "Negative", "category": "null"},
         {"path": "neutral-naming/example_17.png", "label": "Negative", "category": "null"}
     ],
-    "note": "Tests +HP effect (contrast C2). Hard positives improve recall for degraded/occluded mounds."
+    "note": "Tests +HN effect (contrast C3) and serves as scaling baseline (S1). Default for H5 testing. Text-only variant."
 }

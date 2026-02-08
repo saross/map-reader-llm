@@ -1,7 +1,12 @@
 {
     "version": "library_scale-4",
-    "description": "H8 Condition 4: Scale-4 library. 1:1 floor (2 HP, 2 HN).",
+    "description": "H8 Condition 4: Scale-4 library. 1:1 floor (2 HP, 2 HN). Image-using track (brief-text-image).",
     "hypothesis": "H8-4",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image.md",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
     "composition": {
         "canonical_positive": 4,
         "canonical_negative": 2,

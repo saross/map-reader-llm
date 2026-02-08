@@ -1,46 +1,47 @@
-# Phase 2c: H8 Library Composition Testing — Track 1 (Image-Using)
-# =================================================================
-# Tests 5 library compositions at optimal M/E and temperature.
+# Phase 2c: H8 Library Composition Testing — Track 2 (Text-Only)
+# ================================================================
+# Tests 5 library compositions at optimal text-only M/E and temperature.
 # (Scale-16 and Scale-32 deferred per E11: HP pool exhausted at 4.)
 #
 # Part of the dual-track carry-forward (Decision 16, Erratum E27):
-#   Track 1 (this file): brief-text-image — full preregistered OFAT sequence
-#   Track 2 (phase2c-h8-library-text-only.yaml): brief-text — targeted tests
+#   Track 1 (phase2c-h8-library.yaml): brief-text-image — full preregistered OFAT
+#   Track 2 (this file): brief-text — targeted tests where applicable
 #
 # Usage:
-#   python scripts/run_phase2.py studies/phase2c-h8-library.yaml
-#   python scripts/run_phase2.py studies/phase2c-h8-library.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase2c-h8-library-text-only.yaml
+#   python scripts/run_phase2.py studies/phase2c-h8-library-text-only.yaml --dry-run
 #
 # Prerequisites:
-#   - Phase 2a complete (optimal M/E determined: brief-text-image for image track)
+#   - Phase 2a complete (optimal M/E determined: brief-text for text track)
 #   - Phase 2b complete (optimal temperature determined: T=0.0 for both tracks)
 
 study:
-  name: "Phase 2c: H8 Library Composition — Track 1 (brief-text-image)"
-  version: "2.0"
+  name: "Phase 2c: H8 Library Composition — Track 2 (brief-text)"
+  version: "1.0"
   description: |
-    Tests 5 library compositions to determine optimal example set.
-    Uses optimal M/E from Phase 2a (brief-text-image, F1=0.4617) and
-    optimal temperature from Phase 2b (T=0.0, F1=0.5574).
-    Results inform library used in subsequent phases (2d-2e).
-    Scale-16 and Scale-32 deferred per E11 (HP pool exhausted at 4).
+    Tests 5 library compositions at the best text-only M/E from Phase 2a
+    (brief-text, F1=0.5425) and optimal temperature from Phase 2b (T=0.0,
+    F1=0.6602). This track explores whether library composition effects
+    differ between text-only and image-using modalities.
 
-    Dual-track context: Phase 2a found text-only brief-text (F1=0.5425)
-    outperformed all image-using conditions, but no pairwise differences
-    survived FDR correction. Both M/E levels are carried forward
-    independently. See Decision 16, Erratum E27.
+    Dual-track context: brief-text unexpectedly outperformed all image-using
+    conditions in Phase 2a, but no pairwise differences survived FDR correction.
+    Both M/E levels are carried forward independently. See Decision 16.
+
+    Text-only prompts have a substantially smaller context window (no base64
+    images), which may cause different sensitivity to library composition
+    compared to the image-using track.
   phase: "2c"
   hypothesis: "H8"
-  created: "2026-01-21"
-  updated: "2026-02-08"
+  created: "2026-02-08"
 
 # Carried forward from prior phases
 carried_forward:
-  optimal_me_config: "prompts/configs/detect_brief-text-image.json"
-  optimal_me_name: "brief-text-image"
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
   optimal_temperature: 0.0
-  source_2a: "Phase 2a — best image-using M/E (F1=0.4617)"
-  source_2b: "Phase 2b Track 1 — optimal temperature (T=0.0, F1=0.5574)"
+  source_2a: "Phase 2a — best overall M/E (F1=0.5425) and best text-only"
+  source_2b: "Phase 2b Track 2 — optimal temperature (T=0.0, F1=0.6602)"
 
 # Factor under test
 factors:
@@ -48,7 +49,7 @@ factors:
     description: "Example library composition and scaling"
     levels:
       - name: "pure-positive-canon"
-        config: "prompts/configs/library_pure-positive-canon.json"
+        config: "prompts/configs/library_pure-positive-canon-text.json"
         description: "Canon+ (4), null (3) = 7 examples"
         composition:
           canonical_positive: 4
@@ -58,7 +59,7 @@ factors:
           null_examples: 3
           total: 7
       - name: "canonical"
-        config: "prompts/configs/library_canonical.json"
+        config: "prompts/configs/library_canonical-text.json"
         description: "Canon+ (4), Canon- (2), null (3) = 9 examples"
         composition:
           canonical_positive: 4
@@ -68,7 +69,7 @@ factors:
           null_examples: 3
           total: 9
       - name: "plus-hp"
-        config: "prompts/configs/library_plus-hp.json"
+        config: "prompts/configs/library_plus-hp-text.json"
         description: "Canon+ (4), HP (4), Canon- (2), null (3) = 13 examples"
         composition:
           canonical_positive: 4
@@ -78,7 +79,7 @@ factors:
           null_examples: 3
           total: 13
       - name: "scale-4"
-        config: "prompts/configs/library_scale-4.json"
+        config: "prompts/configs/library_scale-4-text.json"
         description: "Canon+ (4), HP (2), Canon- (2), HN (2), null (3) = 13 examples"
         composition:
           canonical_positive: 4
@@ -88,7 +89,7 @@ factors:
           null_examples: 3
           total: 13
       - name: "scale-8"
-        config: "prompts/configs/library_scale-8.json"
+        config: "prompts/configs/library_scale-8-text.json"
         description: "Canon+ (4), HP (4), Canon- (2), HN (4), null (3) = 17 examples"
         composition:
           canonical_positive: 4
@@ -104,30 +105,18 @@ factors:
 # without additional training data. See protocol-errata.md E11.
 #
 #     - name: "scale-16"
-#       config: "prompts/configs/library_scale-16.json"
+#       config: "prompts/configs/library_scale-16-text.json"
 #       description: "Canon+ (4), HP (8), Canon- (2), HN (8), null (3) = 25 examples"
-#       composition:
-#         canonical_positive: 4
-#         canonical_negative: 2
-#         hard_positive: 8
-#         hard_negative: 8
-#         null_examples: 3
-#         total: 25
 #     - name: "scale-32"
-#       config: "prompts/configs/library_scale-32.json"
+#       config: "prompts/configs/library_scale-32-text.json"
 #       description: "Canon+ (4), HP (16), Canon- (2), HN (16), null (3) = 41 examples"
-#       composition:
-#         canonical_positive: 4
-#         canonical_negative: 2
-#         hard_positive: 16
-#         hard_negative: 16
-#         null_examples: 3
-#         total: 41
 
 # Fixed parameters
 fixed:
   ordering: "canonical-first"
   # M/E and temperature defined by carried_forward values
+  # Note: brief-text configs have include_example_images: false,
+  # so the example library is in the config but images are not sent
 
 inputs:
   manifest: "inputs/tiles/validation_manifest.json"
@@ -137,8 +126,8 @@ inputs:
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
   workers: 1
-  output_dir: "outputs/phase2c/track1-image"
-  checkpoint_dir: "outputs/phase2c/track1-image/checkpoints"
+  output_dir: "outputs/phase2c/track2-text"
+  checkpoint_dir: "outputs/phase2c/track2-text/checkpoints"
 
 # Command pattern for execution
 # Note: Library configs embed the example library; use --temperature to override
@@ -165,8 +154,13 @@ analysis:
     - "precision"
     - "recall"
   output:
-    report: "outputs/phase2c/track1-image/analysis_report.json"
-    summary: "outputs/phase2c/track1-image/analysis_summary.md"
+    report: "outputs/phase2c/track2-text/analysis_report.json"
+    summary: "outputs/phase2c/track2-text/analysis_summary.md"
+  notes: |
+    Cross-track comparison: after both tracks complete, compare library
+    composition effects. If optimal library differs between tracks, this
+    informs whether text-only and image-using modalities have different
+    sensitivity to example library composition.
 
 outputs:
   per_condition:
@@ -180,15 +174,15 @@ estimates:
   cells: 5                      # 7 preregistered, 2 deferred per E11
   api_calls_per_cell: 600       # 10 runs x 60 tiles (single-pass per §3.8)
   total_api_calls: 3000
-  cost_usd: 11
+  cost_usd: 7                   # Lower than image track (no images in prompt)
   time_hours: 1
 
 outcome:
-  determines: "optimal_library_image_track"
-  carries_forward_to: "phase2d"
+  determines: "optimal_library_text_track"
+  carries_forward_to: "deferred text-only phases"
   decision_rule: |
     Select library with highest mean F1.
     If multiple libraries have overlapping 95% CIs with the best,
     prefer smaller library (fewer examples) for parsimony.
     Note: Scale-16/32 deferred per E11 (HP pool exhausted at 4).
-    Optimal library is carried forward independently for the image track.
+    Optimal library is carried forward independently for the text-only track.
