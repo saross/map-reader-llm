@@ -264,7 +264,16 @@ def process_single_tile(
 
         for attempt in range(max_retries):
             request_start = datetime.now(timezone.utc)
+            api_start = time.monotonic()
             actual_tokens = 0  # Default for governor release on error
+            got_rate_limited = False
+            api_latency = None
+            # Backoff state — set inside try/except, executed after
+            # governor release so 429 signals reach the governor
+            # immediately rather than after a 30–300s delay.
+            backoff_seconds = 0.0
+            is_fatal = False
+            should_break = False
 
             # Gate through TPM governor if available
             if governor:
@@ -276,6 +285,8 @@ def process_single_tile(
                     contents=content,
                     config=gen_config,
                 )
+
+                api_latency = time.monotonic() - api_start
 
                 # Report actual tokens to governor
                 actual_tokens = getattr(
@@ -305,6 +316,11 @@ def process_single_tile(
                             f"MAX_TOKENS (Finish Reason: {reason})",
                             error_type="other"
                         )
+                        # Sleep before continue — the deferred sleep
+                        # pattern doesn't work with continue (finally
+                        # runs but post-finally code is skipped). This
+                        # isn't a 429, so holding the governor slot
+                        # during 5s is harmless.
                         time.sleep(5)
                         continue
                     elif "STOP" not in reason_str:
@@ -319,12 +335,15 @@ def process_single_tile(
                     break  # Success
                 else:
                     if attempt < max_retries - 1:
+                        # Sleep before continue — same rationale as
+                        # the MAX_TOKENS case above.
                         time.sleep(5)
                         continue
 
             except Exception as e:
                 # Report zero tokens on error
                 actual_tokens = 0
+                api_latency = time.monotonic() - api_start
 
                 error_str = str(e)
 
@@ -338,8 +357,10 @@ def process_single_tile(
                     attempt=attempt + 1
                 )
 
-                # Categorise and log retry with jittered backoff
+                # Categorise and log retry — backoff sleeps are
+                # deferred to after governor release
                 if "429" in error_str or "ResourceExhausted" in error_str:
+                    got_rate_limited = True
                     metadata_tracker.log_retry(
                         tile_filename, attempt + 1, error_str,
                         error_type="rate_limit"
@@ -348,26 +369,27 @@ def process_single_tile(
                         base_wait * (2 ** attempt)
                         + random.uniform(0, base_wait)
                     )
-                    wait = min(jittered_wait, MAX_BACKOFF_SECONDS)
-                    time.sleep(wait)
+                    backoff_seconds = min(
+                        jittered_wait, MAX_BACKOFF_SECONDS
+                    )
                 elif "503" in error_str or "InternalServerError" in error_str:
                     metadata_tracker.log_retry(
                         tile_filename, attempt + 1, error_str,
                         error_type="server_error"
                     )
-                    time.sleep(30 + random.uniform(0, 10))
+                    backoff_seconds = 30 + random.uniform(0, 10)
                 elif "DeadlineExceeded" in error_str:
                     metadata_tracker.log_retry(
                         tile_filename, attempt + 1, error_str,
                         error_type="timeout"
                     )
-                    time.sleep(30 + random.uniform(0, 10))
+                    backoff_seconds = 30 + random.uniform(0, 10)
                 elif "404" in error_str and "models/" in error_str:
                     print(
                         f"\n[CRITICAL] Model '{model_name_cfg}' "
                         f"not found. Terminating."
                     )
-                    return None  # Fatal
+                    is_fatal = True
                 else:
                     metadata_tracker.log_retry(
                         tile_filename, attempt + 1, error_str,
@@ -375,14 +397,39 @@ def process_single_tile(
                     )
                     print(f"\n[Error] {tile_filename}: {e}")
                     if attempt < 2:
-                        time.sleep(20 + random.uniform(0, 10))
+                        backoff_seconds = 20 + random.uniform(0, 10)
                     else:
-                        break
+                        should_break = True
 
             finally:
-                # Always release governor slot (even on exceptions)
+                # Release governor slot BEFORE backoff sleep so the
+                # rate-limit signal reaches the governor immediately.
+                # Only pass latency for successful requests (non-429,
+                # tokens > 0) to avoid polluting the average.
                 if governor:
-                    governor.release(actual_tokens)
+                    governor.release(
+                        actual_tokens,
+                        was_rate_limited=got_rate_limited,
+                        latency_seconds=(
+                            api_latency
+                            if actual_tokens > 0
+                            and not got_rate_limited
+                            else None
+                        ),
+                    )
+
+            # Handle fatal errors and breaks after governor release
+            if is_fatal:
+                return None
+            if should_break:
+                break
+
+            # Backoff sleep AFTER governor release — the worker
+            # re-acquires at the top of the next iteration. If the
+            # governor halved concurrency in response to a 429,
+            # the worker may block at acquire(), which is desirable.
+            if backoff_seconds > 0:
+                time.sleep(backoff_seconds)
 
         # Check for valid response
         # New SDK uses string finish reasons (e.g., 'STOP')

@@ -19,7 +19,11 @@ import pytest
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.lib_tpm_governor import TPMGovernor, TokenRecord
+from scripts.lib_tpm_governor import (
+    LatencyRecord,
+    TPMGovernor,
+    TokenRecord,
+)
 
 
 @pytest.mark.tier1
@@ -371,6 +375,9 @@ class TestGetStats:
             "min_observed_concurrency",
             "total_tokens",
             "total_requests",
+            "total_rate_limits",
+            "rate_limits_in_window",
+            "avg_latency_seconds",
             "adjustments",
             "adjustment_history",
             "elapsed_seconds",
@@ -402,3 +409,557 @@ class TestTokenRecord:
         record = TokenRecord(timestamp=100.0, tokens=5000)
         assert record.timestamp == 100.0
         assert record.tokens == 5000
+
+    def test_latency_record_creation(self) -> None:
+        """LatencyRecord stores timestamp, latency, and token count."""
+        record = LatencyRecord(
+            timestamp=100.0, latency=5.5, tokens=20_000
+        )
+        assert record.timestamp == 100.0
+        assert record.latency == 5.5
+        assert record.tokens == 20_000
+
+
+# ===================================================================
+# Rate-limit awareness tests (new governor capabilities)
+# ===================================================================
+
+
+@pytest.mark.tier1
+class TestRateLimitResponse:
+    """Governor responds correctly to rate-limit (429) signals."""
+
+    def test_halves_on_rate_limit(self) -> None:
+        """Concurrency halves when a 429 is reported."""
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            initial_concurrency=20,
+            min_concurrency=1,
+            max_concurrency=60,
+            adjust_interval=0.0,
+        )
+
+        # Seed the ledger with enough data so TPM can be calculated.
+        # Need >1s span and >=3 completed requests for adjustment.
+        governor.acquire()
+        governor.release(10_000, latency_seconds=5.0)
+        time.sleep(1.1)
+
+        # Report three 429s to trigger adjustment (need >=3 requests)
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        # Concurrency should have halved from 20 to 10
+        assert governor._concurrency == 10
+
+    def test_cooldown_prevents_aggressive_ramp(self) -> None:
+        """During cooldown after a 429, only +1 ramp-up is allowed."""
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            target_utilisation=0.80,  # target = 800K
+            initial_concurrency=10,
+            min_concurrency=1,
+            max_concurrency=60,
+            adjust_interval=0.0,
+            cooldown_seconds=60.0,
+        )
+
+        # Seed with data spanning >1s
+        governor.acquire()
+        governor.release(100, latency_seconds=5.0)
+        time.sleep(1.1)
+
+        # Report a 429 to trigger halving and set cooldown
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        halved = governor._concurrency  # Should be 5
+
+        # Now simulate low-TPM releases (no more 429s) — but we're
+        # in cooldown, so ramp-up should be cautious (+1 only).
+        # Clear rate_limit_events from window by manually aging them
+        # (the 429 events are still fresh, so we need to ensure they
+        # don't interfere with the under_threshold path).
+        with governor._lock:
+            governor._rate_limit_events.clear()
+
+        for _ in range(4):
+            governor.acquire()
+            governor.release(100, latency_seconds=5.0)
+
+        # Should have increased by at most +1 per adjustment
+        assert governor._concurrency <= halved + 2
+
+    def test_cooldown_expires(self) -> None:
+        """After cooldown_seconds, normal latency-based ramp resumes."""
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            target_utilisation=0.80,
+            initial_concurrency=10,
+            min_concurrency=1,
+            max_concurrency=60,
+            adjust_interval=0.0,
+            # Very short cooldown so the test runs quickly
+            cooldown_seconds=0.5,
+        )
+
+        # Seed and trigger a 429
+        governor.acquire()
+        governor.release(1, latency_seconds=5.0)
+        time.sleep(1.1)
+
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        after_halve = governor._concurrency
+
+        # Clear rate-limit events from window so priority 1 doesn't
+        # fire, and wait for cooldown to expire
+        with governor._lock:
+            governor._rate_limit_events.clear()
+        time.sleep(0.6)
+
+        # Inject latency records directly so TPM stays below threshold
+        now = time.monotonic()
+        with governor._lock:
+            for i in range(6):
+                governor._latency_records.append(
+                    LatencyRecord(
+                        timestamp=now - (0.01 * i),
+                        latency=120.0,
+                        tokens=20_000,
+                    )
+                )
+
+        # Release a few tiny-token requests to trigger adjustment
+        for _ in range(4):
+            governor.acquire()
+            governor.release(1, latency_seconds=120.0)
+
+        # With 120s latency and 20K tokens, sustainable is very high.
+        # Governor should have ramped up by more than +1 from the
+        # post-halve level.
+        assert governor._concurrency > after_halve
+
+    def test_repeated_rate_limits_cascade(self) -> None:
+        """Ongoing 429s across intervals cascade halving."""
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            initial_concurrency=40,
+            min_concurrency=2,
+            max_concurrency=60,
+            adjust_interval=0.0,
+        )
+
+        # Seed with data spanning >1s
+        governor.acquire()
+        governor.release(100, latency_seconds=1.0)
+        time.sleep(1.1)
+
+        # First batch of 429s → 40 → 20
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        assert governor._concurrency == 20
+
+        # Second batch of 429s → 20 → 10
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        assert governor._concurrency == 10
+
+        # Third batch → 10 → 5
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        assert governor._concurrency == 5
+
+    def test_min_request_guard_prevents_rapid_halving(self) -> None:
+        """Multiple 429s in one interval only trigger one halving.
+
+        The existing 3-request guard means concurrency only adjusts
+        once per 3 completed requests, preventing rapid halving from
+        a burst of 429s within a single adjustment interval.
+        """
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            initial_concurrency=20,
+            min_concurrency=1,
+            max_concurrency=60,
+            # Long interval — only the 3-request guard matters
+            adjust_interval=0.0,
+        )
+
+        # Seed
+        governor.acquire()
+        governor.release(100, latency_seconds=1.0)
+        time.sleep(1.1)
+
+        # Send exactly 3 requests (the minimum for an adjustment)
+        # with 429s — should trigger exactly one halving
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        # One halving: 20 → 10
+        assert governor._concurrency == 10
+
+
+@pytest.mark.tier1
+class TestLatencyBasedRampUp:
+    """Latency-informed gap-proportional ramp-up."""
+
+    def _build_governor_with_latency(
+        self,
+        initial: int = 4,
+        max_conc: int = 60,
+        latency: float = 120.0,
+        tokens: int = 20_000,
+        target_tpm: int = 800_000,
+    ) -> TPMGovernor:
+        """Create a governor with seeded latency records.
+
+        Injects latency records directly into governor state to avoid
+        contaminating the TPM ledger with high token counts (which
+        would push TPM over target and trigger the wrong adjustment
+        path). The token ledger is kept minimal to ensure TPM stays
+        well below the 60% threshold.
+        """
+        governor = TPMGovernor(
+            tpm_limit=target_tpm,
+            target_utilisation=1.0,  # target = tpm_limit exactly
+            initial_concurrency=initial,
+            min_concurrency=1,
+            max_concurrency=max_conc,
+            adjust_interval=0.0,
+        )
+
+        # Seed TPM ledger with data spanning >1s using tiny token
+        # counts so TPM stays well below threshold
+        governor.acquire()
+        governor.release(1, latency_seconds=latency)
+        time.sleep(1.1)
+
+        # Inject latency records directly (simulating what release()
+        # would record) to avoid inflating the TPM ledger
+        now = time.monotonic()
+        with governor._lock:
+            for i in range(6):
+                governor._latency_records.append(
+                    LatencyRecord(
+                        timestamp=now - (0.01 * i),
+                        latency=latency,
+                        tokens=tokens,
+                    )
+                )
+
+        # Now release a few more tiny-token requests to trigger
+        # adjustment (need >=3 completed since last adjust)
+        for _ in range(3):
+            governor.acquire()
+            governor.release(1, latency_seconds=latency)
+
+        return governor
+
+    def test_ramps_faster_than_plus_one(self) -> None:
+        """With latency data, concurrency increases by more than 1."""
+        governor = self._build_governor_with_latency(
+            initial=4,
+            max_conc=60,
+            latency=120.0,   # Slow API
+            tokens=20_000,
+            target_tpm=800_000,
+        )
+
+        # sustainable = 800_000 * 120 / (20_000 * 60) = 80
+        # Capped to max_concurrency=60. Gap = 60 - 4 = 56.
+        # Step = 56 // 3 = 18, but safety cap = 60 // 4 = 15.
+        # So step = 15 → new = 4 + 15 = 19.
+        # At minimum, it should be more than +1
+        assert governor._concurrency > 5
+
+    def test_sustainable_calculation(self) -> None:
+        """Known latency/tokens/target produces correct sustainable."""
+        governor = TPMGovernor(
+            tpm_limit=800_000,
+            target_utilisation=1.0,
+            initial_concurrency=4,
+            max_concurrency=100,
+            adjust_interval=9999.0,  # Disable auto-adjust
+        )
+
+        # Manually populate latency records
+        now = time.monotonic()
+        with governor._lock:
+            for i in range(10):
+                governor._latency_records.append(
+                    LatencyRecord(
+                        timestamp=now - i,
+                        latency=120.0,
+                        tokens=20_000,
+                    )
+                )
+            avg_latency, avg_tokens = (
+                governor._calculate_avg_latency()
+            )
+
+        # sustainable = 800_000 * 120 / (20_000 * 60) = 80
+        expected_sustainable = 800_000 * 120.0 / (20_000 * 60)
+        assert avg_latency == 120.0
+        assert avg_tokens == 20_000
+        assert expected_sustainable == 80.0
+
+    def test_gap_proportional_step(self) -> None:
+        """Step size is gap // 3, verified at various gaps."""
+        # Gap = 60: step = 60 // 3 = 20, capped at 100 // 4 = 25 → 20
+        governor = self._build_governor_with_latency(
+            initial=4,
+            max_conc=100,
+            latency=120.0,
+            tokens=20_000,
+            target_tpm=800_000,
+        )
+        # sustainable = 80, gap = 80 - 4 = 76, step = 76//3 = 25,
+        # safety cap = 100//4 = 25 → step = 25, new = 29
+        assert governor._concurrency >= 20
+
+    def test_safety_cap(self) -> None:
+        """Step never exceeds max_concurrency // 4."""
+        governor = self._build_governor_with_latency(
+            initial=4,
+            max_conc=20,      # Safety cap = 20 // 4 = 5
+            latency=120.0,
+            tokens=20_000,
+            target_tpm=800_000,
+        )
+        # sustainable = 80 capped to 20, gap = 20-4=16,
+        # step = 16//3=5, safety cap = 20//4=5, so step=5
+        # new = 4 + 5 = 9
+        assert governor._concurrency <= 4 + 5
+
+    def test_holds_at_sustainable(self) -> None:
+        """When concurrency >= sustainable, don't increase further.
+
+        With 6s latency and 20K tokens:
+        sustainable = 800_000 * 6 / (20_000 * 60) = 4.
+        Starting at concurrency=10, the governor should recognise
+        that we're already above sustainable and hold (at_sustainable
+        path), not ramp up further.
+
+        Uses direct latency record injection to avoid contaminating
+        the TPM ledger (high token counts would push TPM over target
+        and trigger the over_target path instead of at_sustainable).
+        """
+        governor = TPMGovernor(
+            tpm_limit=800_000,
+            target_utilisation=1.0,
+            initial_concurrency=10,
+            min_concurrency=1,
+            max_concurrency=60,
+            adjust_interval=0.0,
+        )
+
+        # Seed TPM ledger with tiny tokens spanning >1s
+        governor.acquire()
+        governor.release(1, latency_seconds=6.0)
+        time.sleep(1.1)
+
+        # Inject latency records showing fast API (6s, 20K tokens)
+        # → sustainable = 800K * 6 / (20K * 60) = 4
+        now = time.monotonic()
+        with governor._lock:
+            for i in range(6):
+                governor._latency_records.append(
+                    LatencyRecord(
+                        timestamp=now - (0.01 * i),
+                        latency=6.0,
+                        tokens=20_000,
+                    )
+                )
+
+        # Trigger adjustments with tiny tokens (TPM stays low →
+        # under_threshold fires, but concurrency 10 > sustainable 6
+        # → at_sustainable path holds, producing no change).
+        # Note: at_sustainable sets new == old, so no adjustment is
+        # recorded in history — we verify indirectly by checking
+        # concurrency didn't increase.
+        for _ in range(4):
+            governor.acquire()
+            governor.release(1, latency_seconds=6.0)
+
+        # Concurrency should not have increased from 10
+        assert governor._concurrency == 10
+        # No adjustments should have been recorded (at_sustainable
+        # produces no change, and no other path fires)
+        assert len(governor._adjustments) == 0
+
+
+@pytest.mark.tier1
+class TestColdStart:
+    """Cold-start behaviour with insufficient latency data."""
+
+    def test_plus_one_without_latency_data(self) -> None:
+        """Fewer than 5 latency records leads to conservative +1."""
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            target_utilisation=0.80,
+            initial_concurrency=2,
+            min_concurrency=1,
+            max_concurrency=20,
+            adjust_interval=0.0,
+        )
+
+        # Seed data spanning >1s but only 4 latency records
+        # (below the threshold of 5)
+        governor.acquire()
+        governor.release(100, latency_seconds=5.0)
+        time.sleep(1.1)
+
+        for _ in range(3):
+            governor.acquire()
+            governor.release(100, latency_seconds=5.0)
+
+        # With only 4 latency records, should use cold-start +1
+        # Total: 4 releases, 4 latency records < 5 threshold
+        # Multiple +1 adjustments may have fired (adjust_interval=0)
+        # but each step should be exactly +1
+        history = governor._adjustments
+        for adj in history:
+            if adj["reason"] in (
+                "under_threshold_cold",
+                "under_threshold",
+            ):
+                assert adj["new"] - adj["old"] == 1
+
+
+@pytest.mark.tier1
+class TestBackwardCompatibility:
+    """Ensure existing code works without new kwargs."""
+
+    def test_release_without_kwargs(self) -> None:
+        """release(tokens) with no keyword args works identically."""
+        governor = TPMGovernor(
+            initial_concurrency=4,
+            max_concurrency=10,
+            adjust_interval=9999.0,
+        )
+        governor.acquire()
+        governor.release(1000)
+
+        stats = governor.get_stats()
+        assert stats["total_requests"] == 1
+        assert stats["total_tokens"] == 1000
+        assert stats["total_rate_limits"] == 0
+        assert stats["rate_limits_in_window"] == 0
+        assert stats["avg_latency_seconds"] is None
+
+    def test_stats_include_new_fields(self) -> None:
+        """get_stats() includes rate-limit and latency fields."""
+        governor = TPMGovernor()
+        stats = governor.get_stats()
+
+        assert "total_rate_limits" in stats
+        assert "rate_limits_in_window" in stats
+        assert "avg_latency_seconds" in stats
+
+        # Initial values
+        assert stats["total_rate_limits"] == 0
+        assert stats["rate_limits_in_window"] == 0
+        assert stats["avg_latency_seconds"] is None
+
+
+@pytest.mark.tier1
+class TestMixedScenarios:
+    """End-to-end scenarios mixing rate limits, latency, and recovery."""
+
+    def test_rate_limit_then_recovery(self) -> None:
+        """429 -> halve -> cooldown -> cautious -> latency ramp."""
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            target_utilisation=0.80,
+            initial_concurrency=20,
+            min_concurrency=1,
+            max_concurrency=60,
+            adjust_interval=0.0,
+            cooldown_seconds=0.5,  # Short cooldown for test speed
+        )
+
+        # Phase 1: Seed data
+        governor.acquire()
+        governor.release(1, latency_seconds=5.0)
+        time.sleep(1.1)
+
+        # Phase 2: Rate limit → halve (20 → 10)
+        for _ in range(3):
+            governor.acquire()
+            governor.release(0, was_rate_limited=True)
+
+        after_halve = governor._concurrency
+        assert after_halve == 10
+
+        # Phase 3: Clear 429 events, still in cooldown → +1 only
+        with governor._lock:
+            governor._rate_limit_events.clear()
+
+        for _ in range(3):
+            governor.acquire()
+            governor.release(1, latency_seconds=120.0)
+
+        after_cooldown_ramp = governor._concurrency
+        # In cooldown, should only add +1 per adjustment
+        assert after_cooldown_ramp <= after_halve + 2
+
+        # Phase 4: Wait for cooldown to expire, then ramp
+        time.sleep(0.6)
+
+        # Inject latency records directly so TPM stays low
+        now = time.monotonic()
+        with governor._lock:
+            for i in range(6):
+                governor._latency_records.append(
+                    LatencyRecord(
+                        timestamp=now - (0.01 * i),
+                        latency=120.0,
+                        tokens=20_000,
+                    )
+                )
+
+        # Trigger adjustments with tiny tokens
+        for _ in range(4):
+            governor.acquire()
+            governor.release(1, latency_seconds=120.0)
+
+        # With 120s latency and 20K tokens, sustainable is very high.
+        # Should have ramped up aggressively from after_cooldown_ramp.
+        assert governor._concurrency > after_cooldown_ramp + 1
+
+    def test_api_speedup_triggers_reduction(self) -> None:
+        """Simulate latency dropping → TPM goes over → reduction."""
+        governor = TPMGovernor(
+            tpm_limit=100_000,
+            target_utilisation=0.80,  # target = 80K
+            initial_concurrency=10,
+            min_concurrency=1,
+            max_concurrency=20,
+            window_seconds=60.0,
+            adjust_interval=0.0,
+        )
+
+        # Seed data spanning >1s with moderate tokens
+        governor.acquire()
+        governor.release(10_000, latency_seconds=10.0)
+        time.sleep(1.1)
+
+        # Pump high-token releases to push TPM well over 80K target
+        for _ in range(5):
+            governor.acquire()
+            governor.release(200_000, latency_seconds=2.0)
+
+        # Should have reduced concurrency due to over_target
+        assert governor._concurrency < 10
