@@ -1,0 +1,23 @@
+Overriding Config Temperature (1.0) with CLI Argument: 0.0
+Loaded Version: detect_brief-text-image
+Model: gemini-3-flash
+Workers: 8
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Output: /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01
+Metadata: /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T0.0/run_1/detections_T0.meta.json
+Using Manifest: /home/shawn/Code/map-reader-llm/inputs/tiles/validation_manifest.json
+Manifest loaded. Found 60 of 60 tiles (60 remaining to process).
+Processing 60 new tiles...
+TPM Governor: initial_concurrency=4, max_concurrency=8, tokens_per_request=20000
+  0%|          | 0/60 [00:00<?, ?it/s]  2%|▏         | 1/60 [00:05<05:09,  5.24s/it]  3%|▎         | 2/60 [00:05<02:17,  2.36s/it]  5%|▌         | 3/60 [00:06<01:28,  1.56s/it]  7%|▋         | 4/60 [00:08<01:41,  1.80s/it]  8%|▊         | 5/60 [00:08<01:08,  1.24s/it] 10%|█         | 6/60 [00:09<00:58,  1.09s/it] 12%|█▏        | 7/60 [00:09<00:47,  1.11it/s] 13%|█▎        | 8/60 [00:12<01:08,  1.31s/it] 15%|█▌        | 9/60 [00:12<00:48,  1.04it/s] 17%|█▋        | 10/60 [00:12<00:36,  1.36it/s] 18%|█▊        | 11/60 [00:13<00:34,  1.43it/s] 20%|██        | 12/60 [00:16<01:12,  1.51s/it] 22%|██▏       | 13/60 [00:16<00:53,  1.13s/it] 23%|██▎       | 14/60 [00:20<01:27,  1.90s/it] 25%|██▌       | 15/60 [00:21<01:08,  1.53s/it] 27%|██▋       | 16/60 [01:04<10:20, 14.10s/it] 28%|██▊       | 17/60 [01:04<07:07,  9.94s/it] 30%|███       | 18/60 [01:07<05:33,  7.95s/it] 33%|███▎      | 20/60 [01:12<03:31,  5.28s/it] 35%|███▌      | 21/60 [01:12<02:37,  4.04s/it] 37%|███▋      | 22/60 [01:15<02:26,  3.86s/it] 38%|███▊      | 23/60 [01:17<01:57,  3.18s/it] 40%|████      | 24/60 [01:17<01:27,  2.42s/it] 42%|████▏     | 25/60 [01:20<01:27,  2.49s/it] 43%|████▎     | 26/60 [01:21<01:09,  2.05s/it] 45%|████▌     | 27/60 [01:21<00:52,  1.59s/it] 47%|████▋     | 28/60 [01:23<00:52,  1.65s/it] 48%|████▊     | 29/60 [01:25<00:48,  1.55s/it] 52%|█████▏    | 31/60 [01:26<00:30,  1.07s/it] 53%|█████▎    | 32/60 [02:13<05:51, 12.56s/it] 55%|█████▌    | 33/60 [02:14<04:16,  9.50s/it] 57%|█████▋    | 34/60 [02:18<03:29,  8.05s/it] 58%|█████▊    | 35/60 [02:19<02:30,  6.01s/it] 60%|██████    | 36/60 [02:19<01:45,  4.38s/it] 62%|██████▏   | 37/60 [02:20<01:16,  3.32s/it] 63%|██████▎   | 38/60 [02:21<00:55,  2.54s/it] 65%|██████▌   | 39/60 [02:22<00:49,  2.35s/it] 68%|██████▊   | 41/60 [02:23<00:26,  1.42s/it] 70%|███████   | 42/60 [02:59<02:58,  9.94s/it] 72%|███████▏  | 43/60 [03:00<02:09,  7.62s/it] 73%|███████▎  | 44/60 [03:02<01:38,  6.15s/it] 75%|███████▌  | 45/60 [03:04<01:11,  4.79s/it] 77%|███████▋  | 46/60 [03:04<00:48,  3.46s/it] 78%|███████▊  | 47/60 [03:06<00:38,  2.98s/it] 82%|████████▏ | 49/60 [03:07<00:21,  1.97s/it] 83%|████████▎ | 50/60 [03:07<00:15,  1.52s/it] 85%|████████▌ | 51/60 [03:07<00:10,  1.19s/it] 87%|████████▋ | 52/60 [03:09<00:10,  1.31s/it] 88%|████████▊ | 53/60 [03:09<00:07,  1.02s/it] 90%|█████████ | 54/60 [03:11<00:07,  1.30s/it] 92%|█████████▏| 55/60 [03:12<00:05,  1.07s/it] 95%|█████████▌| 57/60 [03:12<00:01,  1.54it/s] 97%|█████████▋| 58/60 [03:13<00:01,  1.66it/s] 98%|█████████▊| 59/60 [03:15<00:00,  1.01it/s]100%|██████████| 60/60 [03:24<00:00,  3.32s/it]100%|██████████| 60/60 [03:24<00:00,  3.41s/it]
+
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01
+Tile manifest: /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T0.0/run_1/detections_T0.tiles.json
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T0.0/run_1/detections_T0.meta.json
+Tiles processed: 60
+Tiles failed: 0
+Total detections: 134
+Tokens used: 1,210,025
+Estimated cost: $0.1237

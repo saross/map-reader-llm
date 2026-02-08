@@ -1,0 +1,23 @@
+Overriding Config Temperature (1.0) with CLI Argument: 1.3
+Loaded Version: detect_brief-text-image
+Model: gemini-3-flash
+Workers: 8
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Output: /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T1.3/run_4/detections_T1.3_run04
+Metadata: /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T1.3/run_4/detections_T1.meta.json
+Using Manifest: /home/shawn/Code/map-reader-llm/inputs/tiles/validation_manifest.json
+Manifest loaded. Found 3 of 60 tiles (3 remaining to process).
+Processing 3 new tiles...
+TPM Governor: initial_concurrency=4, max_concurrency=8, tokens_per_request=20000
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:04<00:09,  4.98s/it] 67%|██████▋   | 2/3 [00:05<00:02,  2.46s/it]100%|██████████| 3/3 [00:06<00:00,  1.63s/it]100%|██████████| 3/3 [00:06<00:00,  2.10s/it]
+
+Finished. Saved to /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T1.3/run_4/detections_T1.3_run04
+Tile manifest: /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T1.3/run_4/detections_T1.tiles.json
+Metadata saved to /home/shawn/Code/map-reader-llm/outputs/phase2b/track1-image/T1.3/run_4/detections_T1.meta.json
+Tiles processed: 3
+Tiles failed: 0
+Total detections: 4
+Tokens used: 60,339
+Estimated cost: $0.0061

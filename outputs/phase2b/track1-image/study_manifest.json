@@ -1,0 +1,27 @@
+{
+  "study": {
+    "name": "Phase 2b: H7 Temperature \u2014 Track 1 (brief-text-image)",
+    "version": "2.0",
+    "description": "Tests 5 temperature levels at the best image-using M/E from Phase 2a\n(brief-text-image, F1=0.4617). Results inform temperature used in\nsubsequent image-track phases (2c-2e).\n\nDual-track context: Phase 2a found text-only brief-text (F1=0.5425)\noutperformed all image-using conditions, but no pairwise differences\nsurvived FDR correction. Both the best text-only and best image-using\nM/E levels are carried forward independently. See Decision 16.\n",
+    "phase": "2b",
+    "hypothesis": "H7",
+    "created": "2026-01-21",
+    "updated": "2026-02-06"
+  },
+  "generated": "2026-02-08T00:12:56.112301+00:00",
+  "conditions": [
+    "T0.0",
+    "T0.3",
+    "T0.7",
+    "T1.0",
+    "T1.3"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 3,
+  "tile_limit": null,
+  "execution_order": [
+    "T0.7/run_6",
+    "T1.0/run_4",
+    "T1.3/run_9"
+  ]
+}
