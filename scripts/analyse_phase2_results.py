@@ -112,12 +112,12 @@ def load_condition_results(
             continue
 
         # Find detection files: match 'detections_*' but exclude
-        # .meta.json, _fp.*, and _fn.* files
+        # .meta.json, .tiles.json, _fp.*, and _fn.* files
         detection_files = []
         for f in run_dir.iterdir():
             if not f.name.startswith("detections_"):
                 continue
-            if f.name.endswith(".meta.json"):
+            if f.name.endswith((".meta.json", ".tiles.json")):
                 continue
             if "_fp." in f.name or "_fn." in f.name:
                 continue
