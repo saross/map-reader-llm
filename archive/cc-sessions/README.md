@@ -64,51 +64,37 @@ Session directories use a human-readable format that sorts chronologically:
 
 ### Archiving Sessions
 
-Archive CC sessions using the provided script:
+Archive CC sessions using `cc-session`
+(installed via [cc-session-toolkit](https://github.com/saross/cc-session-toolkit)):
 
 ```bash
 # Archive the latest session
-python scripts/archive_cc_session.py
+cc-session archive
 
 # Archive a specific session
-python scripts/archive_cc_session.py --session-id UUID
+cc-session archive --session-id UUID
 
 # Archive all unarchived sessions
-python scripts/archive_cc_session.py --all
+cc-session archive --all
 
 # List sessions and archive status
-python scripts/archive_cc_session.py --list
+cc-session list
 
 # Preview without archiving
-python scripts/archive_cc_session.py --dry-run
+cc-session archive --dry-run
 ```
 
-**Note**: The current/active session cannot be archived until it ends. Run the archive script in a new session to archive previous ones.
+**Note**: The current/active session cannot be archived until it ends. Run the archive command in a new session to archive previous ones.
 
-### Converting to Markdown
+### Regenerating the Catalogue
 
-Convert JSONL sessions to readable Markdown:
+After archiving sessions, regenerate the catalogue:
 
 ```bash
-# Basic conversion
-python scripts/convert_session_to_markdown.py session.jsonl > session.md
-
-# Include thinking blocks
-python scripts/convert_session_to_markdown.py session.jsonl --include-thinking
-
-# Include full tool output
-python scripts/convert_session_to_markdown.py session.jsonl --include-tool-output
+cc-session catalogue --rebuild --markdown
 ```
 
-### Regenerating the Catalog
-
-After archiving sessions, regenerate the catalog:
-
-```bash
-python scripts/generate_session_catalog.py
-```
-
-This updates both `CATALOG.json` and `CATALOG.md`.
+This updates both `catalog.json` and `CATALOG.md`.
 
 ### Querying Sessions with LLMs
 

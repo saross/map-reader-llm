@@ -102,7 +102,7 @@ To ensure transparency, this project archives AI interaction logs (`conversation
 To update the archive:
 
 ```bash
-python scripts/archive_cc_session.py
+cc-session archive
 ```
 
 ---

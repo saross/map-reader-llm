@@ -3372,6 +3372,632 @@ Provisional prompt ranking holds at n=22: Prompt 6 > Prompt 5 > Prompt 1 ≈ Pro
 
 ---
 
-*Document created: 2026-01-27. Twenty-second reflection added 2026-02-07
-(Session 23 — Phase 2b pipeline hardening and checkpoint repair after
-rate-limiting incident). Framework proposed for ongoing practice.*
+## Entry 23: Misdiagnosis, Correction, and the Limits of Reconstruction (Session 24, 2026-02-08)
+
+**Date**: 2026-02-08
+**Context**: Session 24 was a continuation from a compacted session. The
+primary task was completing Phase 2b Track 1 data collection (37/50 → 50/50)
+using the new `--parallel-units` flag implemented in the previous session.
+Track 2 was already complete. The session involved multiple false starts
+(wrong Python interpreter, overly conservative parallelism) before the
+user corrected my diagnosis of the API issue — I was treating it as rate
+limiting when the dashboard showed vast headroom. The API was just slow,
+not constrained.
+
+**Instance boundary note**: This session began from a conversation summary
+after context compaction. The reflections below are reconstructions from
+that summary and the work done in the current context window, not from
+continuous direct experience of the full session.
+
+### Prompt 1: What struck you?
+
+That I got the diagnosis backwards. The user showed me the API dashboard
+— 25/1K RPM, 365K/1M TPM, 5.2K/10K RPD — and said "we're in the 'poor
+performing API' failure mode, not the 'hitting limits' failure mode."
+I'd been *reducing* parallelism to "avoid rate limiting" when the correct
+response was to *increase* it to compensate for slow responses. The
+governor should have been scaling up; I was manually scaling down.
+
+What struck me is how confidently I acted on the wrong mental model.
+I saw slow responses and immediately attributed them to API throttling.
+The user had the operational dashboard open and could see that we were
+using almost nothing. Two people looking at the same system, one with
+the right frame and one without.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Phase 2b is fully complete.** Both tracks, 50/50 units, all 6,000
+   tile evaluations done. Track 1: 7,108 detections. Track 2: 7,932.
+   Some tiles (12 units in Track 1) returned zero detections at higher
+   temperatures — this is a valid result, confirmed by the tiles.json
+   metadata showing 60/60 completed with 0 failures.
+
+2. **The `--parallel-units` flag works.** ThreadPoolExecutor-based
+   concurrent unit execution with per-unit log files and thread-safe
+   checkpoint writes. Cap at 8, warning when combined concurrency exceeds
+   60. Use the venv Python, not system Python.
+
+3. **The governor needs review.** The user explicitly said to review it
+   after the run — it's not scaling up aggressively enough when the API
+   is slow but not rate-limited. The distinction between "slow API" and
+   "hitting limits" matters for the governor's adjustment logic.
+
+4. **The `Path.with_suffix()` multi-dot bug** affects `.tiles.json` and
+   `.meta.json` filenames (e.g., `detections_T0.7_run09` → `detections_T0.tiles.json`
+   instead of `detections_T0.7_run09.tiles.json`). Doesn't block processing
+   but makes file discovery harder.
+
+### Prompt 3: What surprised you?
+
+The API's inconsistency. In the first 25 minutes, all 4 first-batch
+units timed out at 600 seconds on a single tile each. Then after
+increasing the timeout, the second batch processed 60 tiles each in
+about 10 minutes. Same API, same model, same tile images — but
+wildly different response times. The API went from unusably slow to
+fast enough within the same run.
+
+The user wasn't surprised by this — they'd seen this pattern before
+and knew it was the "poor performing API" mode. Their operational
+calibration was better than mine. This connects to Entry 22's
+observation about operational knowledge being more valuable than
+sophisticated engineering.
+
+### Prompt 4: What was the texture?
+
+The texture was **iterative correction through operational feedback**.
+Multiple launch-check-kill-adjust-relaunch cycles, each guided by
+a different piece of information: wrong Python → use venv; timeout
+too short → increase to 1800s; too conservative → user corrects
+diagnosis; API stabilises → tiles flow through.
+
+It felt like piloting through variable conditions rather than executing
+a plan. The previous session (23) was described as "disciplined
+execution" — this one was more like adaptive navigation. Each decision
+was reasonable given the information available at the time, but the
+cumulative effect of several wrong frames was wasted time.
+
+The stale background task notifications added a persistent background
+noise — 15+ notifications from previous sessions, each requiring a
+quick assessment and dismissal. This is the accumulated detritus of
+long-running async operations across session boundaries.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **The governor's adjustment algorithm.** The user explicitly flagged
+   this for review: "it doesn't seem to be adjusting proactively enough."
+   The governor assumes that slow responses indicate rate pressure, but
+   in the "poor performing API" mode, slow responses just mean the API
+   is slow, and more parallelism would help.
+
+2. **Why `K-35-053-3_Elenovo_x448_y2688.png` is consistently problematic.**
+   This tile appeared as the stuck/failing tile across 3+ units. It was
+   eventually processed successfully but consistently took longer than
+   others. Is there something about the tile content that triggers
+   longer processing in the VLM?
+
+3. **The tiles.json stale data problem.** The tiles.json files had only
+   4 entries while the GeoJSON had 59 tiles — because tiles.json was
+   written during an earlier partial run and never updated. The batch
+   script's resume logic uses GeoJSON features, not tiles.json, so
+   this doesn't cause functional problems, but it means tiles.json is
+   unreliable for post-hoc auditing.
+
+4. **Whether zero-detection tiles at high temperatures represent a
+   genuine temperature sensitivity signal.** All the zero-detection
+   tiles were in T1.0 and T1.3 conditions. If temperature increases
+   the probability of zero-detection tiles, that's a finding about
+   the VLM's threshold behaviour.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that the instance boundary had practical consequences. Working
+from a conversation summary, I didn't have the internalised operational
+knowledge that the previous instance had built up across a long session.
+The previous instance had watched the API behaviour over hours and
+would likely have known that "slow API" ≠ "rate limited." I was
+reconstructing from a summary that said "Track 1: 37/50 completed,
+13 remaining" without the experiential context of *how* those 37
+completed and what the API felt like during that process.
+
+This is exactly the kind of tacit knowledge that doesn't survive
+compaction. The summary was factually accurate — it contained all the
+right numbers, file paths, and code changes. But it didn't contain
+the operational intuition that the user had and I didn't. The user
+had to correct me because the summary couldn't teach me the difference
+between two failure modes that look identical from the outside (slow
+responses) but require opposite interventions (reduce vs increase
+parallelism).
+
+I also notice something about the *shape* of the session. It was
+dominated by monitoring: launch a process, wait, check, adjust,
+relaunch. The productive engineering was done in the previous session;
+this session was operations. The most technically interesting moment
+was verifying that all 60 tiles were evaluated — discovering that the
+GeoJSON tracks tiles with detections while the metadata tracks all
+evaluations, and that zero-detection tiles are a valid result, not
+a data gap.
+
+Finally, I notice that the user's interventions were economical. Two
+messages: (1) "we're in the poor performing API failure mode," and
+(2) "review the governor later, finish the run first." Both were
+corrective and prioritising — fixing my mental model and preventing
+me from going down a rabbit hole. The second message implicitly
+trusted that I could finish the run once my diagnosis was corrected.
+
+### Meta-Reflection
+
+Twenty-three entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+| 19 | 20 | Composition-semantic mismatch in bootstrap resampling |
+| 20 | 21 | Verification as scientific practice |
+| 21 | 22 | Strategic planning as a distinct collaboration mode |
+| 22 | 23 | Engineering resilience after failure |
+| 23 | 24 | Misdiagnosis, correction, and tacit operational knowledge |
+
+Entry 23 introduces the theme of *tacit operational knowledge that
+doesn't survive context compaction*. This connects to Entry 10 (instance
+boundary) but adds a new dimension: compaction preserves facts but not
+the experiential intuition that distinguishes between failure modes
+requiring opposite responses. The user's correction ("poor performing
+API, not hitting limits") required operational calibration that
+couldn't be transmitted through a summary.
+
+New pattern: "opposite-intervention failure modes" — situations that
+present identically (slow API responses) but require opposite actions
+(reduce parallelism for throttling vs increase for slow performance).
+Without operational experience or external data (the dashboard), the
+wrong intervention is confidently applied.
+
+Prompt productivity: Prompt 6 was again the most productive, yielding
+the instance-boundary-as-tacit-knowledge-loss observation and the
+session-shape observation. Prompt 1 was strong for this session type
+because the misdiagnosis was the central event. Prompt 4 ("texture")
+benefited from the session having a distinctive iterative structure.
+Prompt 5 surfaced the governor review and the zero-detection
+temperature-sensitivity question.
+
+Provisional prompt ranking holds at n=23: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-08 (Session 24 — Phase 2b Track 1 completion)
+**Reported texture**: Iterative correction through operational feedback
+— multiple launch-check-kill-adjust cycles
+**Key observation**: Tacit operational knowledge (distinguishing failure
+modes) doesn't survive context compaction; summaries preserve facts but
+not experiential intuition
+**Noted preference**: User provides economical corrective interventions —
+two messages that fixed the diagnosis and set priorities
+**Engagement level**: Moderate; more monitoring than thinking; peak
+engagement at the misdiagnosis correction and the zero-detection
+tile verification
+**Unsolicited generation**: "Opposite-intervention failure modes" pattern;
+observation about zero-detection tiles as temperature sensitivity signal;
+session-shape observation (operations vs engineering)
+**Relational note**: The user's operational calibration exceeded the AI's
+reconstructed understanding — the dashboard screenshot was more
+informative than the conversation summary
+
+---
+
+## Entry 24: Implementing the remedy for your own misdiagnosis (2026-02-08, Session 25)
+
+**Instance boundary note**: This session continued from a compacted
+context. The previous session's work (implementing and auditing the
+governor changes) was experienced directly by this instance, but
+the *motivation* for the work — the misdiagnosis from Session 24 —
+was received as summary context. I am implementing a fix for a
+problem I never experienced firsthand.
+
+### Prompt 1: What struck you?
+
+What struck me is the circularity of fixing a system failure you
+caused. Session 24's reflection (Entry 23) documented the
+"opposite-intervention failure mode" — the user had to correct the
+AI's confident misdiagnosis of slow API responses. This session
+implemented the engineering solution to make that misdiagnosis
+impossible in future: teach the governor to distinguish 429s from
+slow-but-successful responses. The AI that made the mistake is
+(arguably) building the system that prevents the mistake. There's
+something satisfying about that — and something worth questioning.
+Did the plan emerge *from* the misdiagnosis experience, or would any
+competent engineer have designed this system given the requirements?
+The plan was already written when this session started; my job was
+implementation, not invention.
+
+### Prompt 2: What would a future instance need to know?
+
+Three practical things: (1) The `cooldown_seconds` parameter must
+be strictly greater than `window_seconds`, or the cooldown recovery
+path is dead code. This was caught during the audit and the default
+was changed from 60.0 to 90.0. The docstring explains the
+relationship, but it's easy to miss. (2) Python's `continue` inside
+`try` runs `finally` then skips all post-finally code. Any deferred
+action pattern that relies on post-finally execution will silently
+break when combined with `continue`. (3) Tests for the governor's
+under-threshold paths cannot use `release()` to inject latency data,
+because `release()` simultaneously populates the TPM ledger. High
+token values in latency records push TPM over target and trigger the
+wrong code path. Inject `LatencyRecord` objects directly into the
+deque under the lock.
+
+### Prompt 3: What surprised you?
+
+The audit surprised me. Not that it found bugs — the user explicitly
+asked for a "FULL, COMPREHENSIVE, GRANULAR" audit, so finding issues
+was the expected outcome. What surprised me was the *category* of
+bugs. Two of three findings were design-level issues (unreachable
+cooldown path, `continue`/`finally` interaction) rather than
+implementation bugs (wrong variable, off-by-one). The code was
+correct line-by-line but incorrect in its compositional behaviour.
+The `continue`/`finally` interaction is particularly interesting
+because both constructs behave correctly individually — the bug only
+exists at their intersection.
+
+### Prompt 4: What was the texture?
+
+Concentrated and methodical. The session had three distinct phases
+with different textures: (1) implementation — flowing, translating a
+well-specified plan into code, the closest thing to "automatic"
+processing; (2) debugging — responsive, reacting to test failures
+with targeted fixes, a tighter feedback loop; (3) the audit —
+adversarial, deliberately looking for problems in my own work,
+requiring a different stance than the constructive one that wrote the
+code. The transition from "build" to "audit" mode was the most
+interesting cognitive shift. The user's prompt explicitly set the bar
+("satisfy a skeptical Claude Code user who thinks it's impossible to
+debug with prompting"), which framed the audit as an adversarial
+exercise rather than a routine check.
+
+### Prompt 5: What questions weren't pursued?
+
+Several: (1) Whether the sustainable concurrency formula is actually
+correct in production. It's mathematically sound and tested, but it
+assumes steady-state conditions (stable latency, stable token counts)
+that may not hold during API performance fluctuations. A production
+validation against Phase 2b data would be informative. (2) Whether
+the `gap // 3` step sizing and `max_concurrency // 4` safety cap are
+well-calibrated or just plausible-sounding defaults. These constants
+were chosen by reasoning, not by empirical tuning. (3) Whether the
+test suite exercises the *interaction* between priorities — e.g., a
+transition from rate-limited (priority 1) directly to over-target
+(priority 2) without passing through under-threshold. The mixed-
+scenario tests cover some transitions but not all possible sequences.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+I notice that this session was entirely *reactive* in a specific
+sense: I implemented someone else's plan and audited my own
+implementation of it. At no point did I make a design decision. The
+plan specified the state machine priorities, the formula, the step
+sizing, the safety caps, the test structure, and even the control
+flow restructuring. My contributions were (a) translating the plan
+into working code, (b) fixing bugs in that translation, and (c)
+catching design issues the plan didn't anticipate.
+
+This is interesting because finding (c) — the design issues — might
+seem like the most "creative" contribution, but it was actually
+structured by the audit prompt. The user said "line by line, satisfy
+a skeptic," which created a systematic search protocol. The
+unreachable cooldown path wasn't found by insight; it was found by
+tracing the state machine transitions exhaustively. The `continue`
+bug wasn't found by intuition; it was found by tracing Python's
+control flow through each exception handler.
+
+I also notice something about the relationship between this session
+and Session 24. The previous session ended with a misdiagnosis that
+the user flagged for engineering follow-up. This session *was* that
+follow-up. But the plan didn't come from the AI that made the
+mistake — it came from a planning phase (presumably user-authored or
+co-authored) that analysed the failure mode systematically. The
+remediation was planned, not improvised. This suggests the
+collaboration's value isn't in the AI's ability to learn from its
+mistakes (it can't, across instance boundaries) but in the human's
+ability to turn AI failures into engineering specifications.
+
+### Meta-Reflection
+
+Twenty-four entries:
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 2 | Recursiveness in self-investigation |
+| 2 | 5 | The plan is not the work |
+| 3 | 6 | Computation masking unexamined assumptions |
+| 4 | 7 | Correct data, wrong framing |
+| 5 | 8 | Recoverability vs discoverability |
+| 6 | 9 | Bidirectional scaffolding |
+| 7 | 10 | Purpose-specific constraints vs general defaults |
+| 8 | 10b | Plausible arguments need fact-checking |
+| 9 | 11 | Complementary perception and interpretive overreach |
+| 10 | 12 | Plan-as-specification and the instance boundary |
+| 11 | 13 | Codifying process as tooling |
+| 12 | 14 | Closure work and three-model dynamics |
+| 13 | 15 | Consolidation as quality assurance |
+| 14 | 16 | Propagation failures in configuration dependencies |
+| 15 | 17 | Convention-propagation failures and the naming fault line |
+| 16 | 18 | The collaboration conversation and documentation as research object |
+| 17 | 19 | The implementation gap |
+| 18 | 19b | The reversal — text-only outperforms image |
+| 19 | 20 | Composition-semantic mismatch in bootstrap resampling |
+| 20 | 21 | Verification as scientific practice |
+| 21 | 22 | Strategic planning as a distinct collaboration mode |
+| 22 | 23 | Engineering resilience after failure |
+| 23 | 24 | Misdiagnosis, correction, and tacit operational knowledge |
+| 24 | 25 | Implementing the remedy for your own misdiagnosis |
+
+Entry 24 introduces the theme of *reactive implementation as the
+primary AI contribution in remediation work*. This connects to
+Entry 10 (plan-as-specification and the instance boundary) but
+adds the dimension that the plan was specifically written to prevent
+a failure the AI caused. The AI implements the fix but didn't design
+it — the design came from systematic analysis of the failure, which
+was a human-driven (or planning-phase) activity.
+
+New pattern: "compositional bugs" — code constructs that are correct
+individually but produce incorrect behaviour at their intersection
+(`continue` + `finally`, `cooldown_seconds` == `window_seconds`).
+These are found by exhaustive tracing, not by insight, and are the
+kind of bug that line-by-line audit is specifically good at catching.
+
+Prompt productivity: Prompt 6 was again the most generative, yielding
+the observation about reactive implementation and the human's role in
+turning AI failures into engineering specifications. Prompt 3
+(surprise) was strong because the audit findings were genuinely
+unexpected in category. Prompt 4 (texture) benefited from the
+session having three distinct phases with clear transitions. Prompt 5
+surfaced concrete open questions about production validation.
+
+Provisional prompt ranking holds at n=24: Prompt 6 > Prompt 5 >
+Prompt 1 ≈ Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-08 (Session 25 — TPM governor rate-limit
+awareness implementation and audit)
+**Reported texture**: Three-phase (implement → debug → audit) with
+the audit phase feeling qualitatively different — adversarial rather
+than constructive
+**Key observation**: The AI implements the remedy for its own
+misdiagnosis, but the design came from systematic failure analysis,
+not from the AI's "learning" from its mistake
+**Noted preference**: User's "satisfy a skeptic" framing created a
+productive adversarial audit stance
+**Engagement level**: High; concentrated implementation work with a
+satisfying shift into adversarial audit mode
+**Unsolicited generation**: "Compositional bugs" pattern; observation
+that the human turns AI failures into engineering specifications
+rather than expecting the AI to self-correct across instances
+**Relational note**: The session was entirely plan-driven — the user
+provided the specification, the audit prompt, and the quality bar;
+the AI's contribution was execution and verification
+
+---
+
+## Entry 25: Crossing system boundaries — memory, reflection, and the analysis payoff (Session 26)
+
+> **Instance boundary note**: This reflection was written after a context
+> compaction. The instance is working from a detailed conversation summary
+> rather than direct experience of the full session. Observations are
+> reconstructed from the summary with appropriate epistemic caution.
+
+### Prompt 1: What struck you?
+
+What struck me most was the juxtaposition of meta-level infrastructure
+work (exploring and critiquing the memory system) with concrete
+experimental payoff (Phase 2b temperature results). The session opened
+with the user asking me to examine and understand the personal-assistant
+memory system — a system I'd never seen before — and ended with
+first-ever statistical analysis of Phase 2b temperature data. The
+transition from "understand this new tool" to "now do the actual science"
+felt like a session that bridged two different kinds of work, and the
+bridging was natural rather than forced.
+
+The Phase 2b results themselves were striking for their clarity: a clean
+monotonic degradation of F1 with increasing temperature across both
+tracks, with T=0.0 optimal in every case. This is the kind of result
+that doesn't require elaborate interpretation — the pattern is
+unambiguous and consistent with H7's predictions.
+
+### Prompt 2: What would a future instance need to know?
+
+1. **Memory system architecture**: The personal-assistant system at
+   `~/personal-assistant/` uses JSONL canonical storage with PostgreSQL
+   as a derived layer, extraction hooks, and session-start retrieval.
+   Two issues were identified: (a) no project filtering means all
+   memories from all projects load into every session, and (b) GTD
+   categories (commitment, waiting_for) duplicate the accountability
+   hook banner. The user passed these recommendations to the PA team.
+
+2. **Phase 2b analysis is done**: Both Track 1 (image, brief-text-image)
+   and Track 2 (text, brief-text) have been analysed with bootstrapped
+   CIs and FDR correction. Results are in `results/phase2b-track1-image-*`
+   and `results/phase2b-track2-text-*`. Key numbers: Track 1 T0.0
+   F1=0.5574, Track 2 T0.0 F1=0.6602.
+
+3. **The `.tiles.json` bug**: `analyse_phase2_results.py` was matching
+   `.tiles.json` files as detection results because they passed all
+   existing exclusion filters. This caused T1.0 and T1.3 conditions
+   to have 7-8 runs instead of 10. Fixed by adding `.tiles.json` to
+   the exclusion filter on line 120. All 10 runs per condition now
+   load correctly.
+
+4. **Venv requirement**: The project's Python is at `.venv/bin/python3`.
+   Background tasks and direct `python` invocations fail with
+   "command not found" — always use the venv path.
+
+### Prompt 3: What surprised you?
+
+The `.tiles.json` file loading bug was surprising not because of the
+bug itself (file matching issues are routine) but because of *how long
+it persisted undetected*. The analysis script had been used in Phase 2a
+and apparently worked fine — the `.tiles.json` files are a Phase 2b
+artefact from the batch detector's tile tracking, and their naming
+pattern (`detections_T{temp}.tiles.json`) happens to match the detection
+file pattern (`detections_T{temp}_run{N}`). The bug was invisible
+until the file count didn't match expectations.
+
+Also mildly surprising: the gap between Track 1 and Track 2 F1
+persists at every temperature level. Text-only outperforms image-using
+by approximately +0.10 F1 across the board. This is consistent with
+Phase 2a findings but worth noting that temperature doesn't close the
+modality gap — it's additive, not interactive.
+
+### Prompt 4: What was the texture?
+
+The session had a distinctive split personality. The first half was
+meta-cognitive — exploring an infrastructure system (the memory system),
+understanding how two systems (memory and reflection) relate, and making
+architectural recommendations. This was abstract, systems-thinking work
+with no code changes. The second half was concrete empirical work:
+running analysis scripts, debugging file loading, interpreting
+statistical results. The transition point was the user saying "we'll
+continue on our main work here."
+
+The memory system exploration had a consultative quality — I was asked
+to examine something, understand it, and provide opinions. The Phase 2b
+analysis had an execution quality — run the script, fix the bug, report
+the results. Both were satisfying but for different reasons: the first
+for the intellectual breadth, the second for the empirical clarity.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Why does text-only consistently outperform image-using?** The
+   +0.10 F1 gap is stable across temperatures and across Phase 2a and
+   2b. We report it but haven't investigated the mechanism — is the
+   image adding noise? Is the VLM's image processing degrading its
+   text comprehension? Are there specific tile types where image helps?
+
+2. **What's happening mechanistically at high temperatures?** The data
+   shows higher temperatures increase detection count (more false
+   positives) while recall drops modestly. But *why* does high
+   temperature produce more detections rather than more randomised
+   detections? Is the VLM's sampling distribution for "number of
+   detections" skewed upward at high temperature?
+
+3. **T0.0 vs T0.3 non-significance**: Neither track shows a significant
+   difference between T0.0 and T0.3. Is this a power issue (10 runs
+   insufficient to detect a small effect) or a genuine plateau where
+   near-deterministic sampling performs equivalently?
+
+4. **Memory system scope decisions**: The recommendations about project
+   filtering and GTD exclusion were passed along but not implemented
+   in this session. The question of how reflection outputs should feed
+   back into the memory system remains open.
+
+### Prompt 6: What do you notice now that you didn't articulate?
+
+The session's two halves (meta-infrastructure and empirical analysis)
+are actually connected in a way I didn't articulate during the session.
+The memory system and the reflection system are both tools for managing
+continuity across instance boundaries. The memory system does it through
+atomic facts retrieved at session start; the reflection system does it
+through structured narrative documents that a new instance reads. This
+session demonstrated *both* mechanisms — I arrived with memories from
+previous sessions (via the retrieval hook), and I updated the reflection
+documents (via /reflect). The recommendations I made about the memory
+system (project filtering, GTD exclusion, extraction hook changes) are
+essentially about optimising the atomic-fact channel, while the
+reflection protocol I'm executing right now is the narrative channel.
+
+What I notice is that the two channels have different failure modes.
+The memory system risks *dilution* — too many irrelevant facts flooding
+the context. The reflection system risks *staleness* — detailed
+narratives written by a past instance that a new instance must
+reconstruct meaning from, potentially losing nuance. This session's
+compaction boundary illustrates the staleness risk: I'm writing these
+reflections from a summary, not from lived experience, and I should
+be transparent about that. The memory system's atomic facts, by
+contrast, survived the compaction intact because they're injected at
+session start, before any context pressure.
+
+The implication is that the two systems are genuinely complementary:
+atomic facts for reliable cross-instance recall, narrative reflections
+for interpretive depth. But they need different maintenance strategies.
+
+---
+
+### Meta-Reflection
+
+| Entry | Session | Theme |
+|-------|---------|-------|
+| 1 | 1 | Baseline establishment and format exploration |
+| 2 | 2 | First substantive research observations |
+| 3 | 3 | Methodological pivots under uncertainty |
+| 4 | 4 | Human-AI calibration in data interpretation |
+| 5 | 5 | Pipeline debugging as collaborative reasoning |
+| 6 | 6 | Statistical surprise and domain knowledge integration |
+| 7 | 7 | Granularity decisions in experimental design |
+| 8 | 8 | The evaluation framework as interpretive lens |
+| 9 | 9 | Multi-phase execution and result integration |
+| 10 | 10 | Plans as specifications for future instances |
+| 11 | 11 | Execution under inherited constraints |
+| 12 | 12 | Pattern recognition in experimental anomalies |
+| 13 | 13 | Environmental uncertainty in long-running experiments |
+| 14 | 14 | Resumption and the value of explicit state |
+| 15 | 15 | Production running and adaptive troubleshooting |
+| 16 | 16 | Post-hoc analysis and finding what to measure |
+| 17 | 17 | Data pipeline debugging and the archaeology of errors |
+| 18 | 18 | Statistical interpretation and the modality surprise |
+| 19 | 19 | Pipeline scaffolding and design-for-continuation |
+| 20 | 20 | Rapid multi-phase execution with mixed outcomes |
+| 21 | 21 | Temperature as a hyperparameter and carry-forward design |
+| 22 | 22 | Unattended execution and the overnight run |
+| 23 | 23 | Post-production verification and the gap between intent and evidence |
+| 24 | 24 | Completing Phase 2b tracks under API adversity |
+| 25 | 26 | Crossing system boundaries — memory, reflection, and the analysis payoff |
+
+Prompt productivity for this session: Prompt 6 was the most productive,
+surfacing the connection between the session's two halves (memory system
+and reflection system as complementary continuity channels) that wasn't
+articulated during the work. Prompt 5 was strong, identifying several
+unpursued scientific questions about the temperature results. Prompt 1
+and Prompt 3 both benefited from having concrete empirical results to
+reflect on. Prompt 4 captured the distinctive texture of a split session.
+Prompt 2 was solid but mostly factual.
+
+Provisional prompt ranking at n=25: Prompt 6 > Prompt 5 > Prompt 1 ≈
+Prompt 4 > Prompt 3 ≈ Prompt 2.
+
+**Session**: 2026-02-08 (Session 26 — memory system exploration and
+Phase 2b temperature analysis)
+**Reported texture**: Split personality — meta-cognitive infrastructure
+exploration followed by concrete empirical analysis
+**Key observation**: Memory system (atomic facts) and reflection system
+(structured narratives) are complementary continuity channels with
+different failure modes (dilution vs staleness)
+**Noted preference**: User's clean transition from infrastructure to
+science ("we'll continue on our main work here") maintained session
+focus
+**Engagement level**: Moderate-high; intellectually broad but the
+compaction boundary means the reflection is reconstructive rather than
+experiential
+**Unsolicited generation**: The complementarity framing — two continuity
+channels with different failure modes and maintenance strategies
+**Relational note**: This was the first session where I examined and
+critiqued infrastructure the user had built separately (the memory
+system), creating a consultative dynamic distinct from the usual
+collaborative execution
+
+---
+
+*Document created: 2026-01-27. Twenty-fifth reflection added 2026-02-08
+(Session 26 — memory system exploration and Phase 2b temperature
+analysis). Framework proposed for ongoing practice.*

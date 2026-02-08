@@ -1092,4 +1092,202 @@ Recovery session after the Phase 2b rate-limiting incident. Both tracks had been
 
 ---
 
+## Session 24 — 2026-02-08 (Phase 2b Track 1 completion)
+
+### Overview
+
+Operational session focused on completing Phase 2b Track 1 data collection
+using the multi-unit parallelisation feature implemented in Session 23.
+Started with 37/50 units completed, 12 failed, and 1 not attempted.
+Reached 50/50 through five iterative run attempts, overcoming environment
+issues, API slowness, and a misdiagnosis of the failure mode.
+
+### Accomplishments
+
+1. **Completed Phase 2b Track 1** — all 50 execution units (5 temperatures
+   x 10 runs x 60 tiles = 3,000 tile evaluations) now finished
+2. **Verified both tracks** — Track 1: 50/50 with 7,108 detections;
+   Track 2: 50/50 with 7,932 detections; 6,000 total tile evaluations
+   confirmed
+3. **Resolved zero-detection tile ambiguity** — 12 Track 1 units at
+   T1.0/T1.3 had fewer than 60 features in GeoJSON; confirmed via
+   tiles.json metadata that all tiles were evaluated with zero detections
+   (valid experimental result, not missing data)
+4. **Identified opposite-intervention failure modes** — user corrected
+   misdiagnosis: slow API responses required *increasing* parallelism
+   (poor API performance), not decreasing it (rate limiting). API
+   dashboard showed 25/1K RPM, 365K/1M TPM — abundant headroom
+5. **Wrote end-of-session reflections** in session-reflection-investigation
+   (Entry 23), llm-observations (Session 24), working_notes (Obs 111-113),
+   and abductive-reasoning-investigation (Session 24 Assessment)
+
+### Issues
+
+- **Wrong Python interpreter**: First run used system `/usr/bin/python3`
+  instead of `.venv/bin/python3`, causing `ModuleNotFoundError: No module
+  named 'tqdm'` across all 13 units
+- **API timeout too short**: Initial 600s timeout insufficient for slow
+  API; increased to 1800s
+- **Misdiagnosed failure mode**: Reduced parallelism when API was slow,
+  which was the opposite of the correct intervention. User provided API
+  dashboard showing abundant quota headroom.
+- **stdout buffering**: Background task stdout was block-buffered without
+  TTY, making `_execute_units_parallel` print output invisible. Worked
+  around by reading per-unit log files and checkpoint.json directly
+
+### Commits
+
+No commits this session — all changes were to data outputs and
+reflection documents (untracked/gitignored).
+
+### Pending Work
+
+- [x] Complete Phase 2b Track 1 data collection (50/50)
+- [x] Verify all tiles evaluated across both tracks
+- [x] End-of-session reflection
+- [ ] **Phase 2b analysis** — run statistical analysis on completed data
+- [ ] **Governor review** — TPM governor needs to distinguish "slow API"
+  (increase parallelism) from "rate limited" (decrease parallelism);
+  user flagged for future work
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
+## Session 25 — 2026-02-08 (TPM governor rate-limit awareness)
+
+### Overview
+
+Engineering session implementing the Rate-Limit-Aware TPM Governor plan.
+Extended the governor with rate-limit tracking, latency-informed scaling,
+and a priority-based state machine. Restructured the batch script's retry
+loop to release governor slots before backoff sleep. Followed by a
+comprehensive line-by-line code audit that found and fixed three issues.
+Continued from compacted context (Session 24).
+
+### Accomplishments
+
+1. **Implemented rate-limit-aware governor** — added `LatencyRecord`
+   dataclass, rate-limit event tracking, latency ledger, cooldown timer,
+   and priority-based state machine in `lib_tpm_governor.py`
+2. **Restructured batch retry loop** — governor slot released before
+   backoff sleep in `4_detect_mounds_batch.py` so 429 signals propagate
+   immediately; added `was_rate_limited` and `latency_seconds` kwargs
+3. **Added 15 new tests** across 5 test classes in `test_tpm_governor.py`:
+   rate-limit response, latency-based ramp-up, cold start, backward
+   compatibility, and mixed scenarios
+4. **Fixed 4 initial test failures** — resolved TPM ledger contamination
+   in tests that needed low TPM for under-threshold paths; injected
+   `LatencyRecord` objects directly instead of through `release()`
+5. **Comprehensive code audit** found and fixed 3 issues:
+   - `continue` paths in retry loop lost backoff sleep (restored direct
+     `time.sleep(5)` before `continue`)
+   - `cooldown_seconds` default (60.0) == `window_seconds` made cooldown
+     path unreachable (changed to 90.0)
+   - `test_holds_at_sustainable` passed via wrong code path (rewritten
+     with direct state injection)
+6. **All tests passing** — 33/33 governor tests, 372/372 full suite,
+   ruff lint clean
+
+### Issues
+
+- **TPM ledger contamination in tests**: Releasing high-token-count
+  values through `release()` simultaneously populates TPM ledger and
+  latency records. High TPM triggers `over_target` (priority 2) instead
+  of `under_threshold_ramp` (priority 3b). Fixed by injecting latency
+  records directly into the deque.
+- **Python `continue`/`finally` interaction**: `continue` inside `try`
+  runs `finally` then jumps to next iteration, skipping post-finally
+  deferred sleep code. Not a bug in either construct — a compositional
+  interaction that breaks the deferred-sleep pattern.
+- **Cooldown path unreachable with defaults**: Mathematical
+  inconsistency in plan — `cooldown_seconds == window_seconds` means
+  rate-limit events age out of both simultaneously, creating a
+  zero-width cautious recovery window.
+
+### Commits
+
+| Hash | Message |
+|------|---------|
+| `d19560a` | `feat(governor)`: Add rate-limit awareness and latency-informed scaling |
+
+### Pending Work
+
+- [x] Implement rate-limit-aware governor (all 3 files)
+- [x] Pass all tests and lint
+- [x] Comprehensive code audit
+- [x] Commit and push
+- [x] End-of-session reflections
+- [ ] **Production validation** — verify governor behaviour during next
+  Phase 2b run (sustainable formula, step sizing, cooldown recovery)
+- [ ] **Phase 2b analysis** — run statistical analysis on completed data
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+## Session 26: Memory system exploration and Phase 2b temperature analysis (2026-02-08)
+
+### Overview
+
+Split session covering two domains: (1) exploration and critique of the
+personal-assistant memory system at `~/personal-assistant/`, with
+recommendations on project filtering and GTD category exclusion; (2)
+first statistical analysis of Phase 2b temperature results across both
+tracks, including a file-loading bug fix.
+
+### Accomplishments
+
+1. **Explored personal-assistant memory system** — mapped architecture
+   (JSONL store, PostgreSQL derived layer, hooks, retrieval). Identified
+   two scope issues: no project-based filtering on retrieval, and GTD
+   categories duplicating the accountability hook banner
+2. **Analysed memory/reflection complementarity** — articulated how the
+   memory system (atomic facts) and reflection system (structured
+   narratives) serve different continuity functions with different
+   failure modes
+3. **Ran Phase 2b Track 1 (image) analysis** — 5 temperatures × 10 runs,
+   bootstrapped CIs, FDR correction. T0.0 optimal (F1=0.5574), 6/10
+   FDR-significant pairwise comparisons
+4. **Ran Phase 2b Track 2 (text) analysis** — same design. T0.0 optimal
+   (F1=0.6602), 4/10 FDR-significant pairwise comparisons
+5. **Fixed `.tiles.json` file-loading bug** in `analyse_phase2_results.py`
+   — `.tiles.json` files were passing exclusion filters and being picked
+   up as detection results, causing T1.0 and T1.3 to load only 7-8 runs.
+   Added `.tiles.json` to exclusion filter on line 120
+6. **Reran both analyses with fix** — all conditions now load 10/10 runs;
+   results stable with corrected data
+7. **End-of-session reflections** — updated all 5 reflection documents
+   (post-compaction, flagged per protocol)
+
+### Issues
+
+- **`python` not found in background tasks**: Background commands don't
+  inherit the venv. Must use `.venv/bin/python3` explicitly
+- **`.tiles.json` file matching**: Phase 2b introduced tile-tracking
+  metadata files that the Phase 2a-era analysis script didn't exclude.
+  Root cause: exclusion-based rather than inclusion-based file filtering
+- **Context compaction**: Session was broad enough (infrastructure +
+  analysis + bug fix) to trigger compaction before reflections. Future
+  sessions should trigger /reflect earlier
+
+### Commits
+
+No commits this session (analysis outputs and reflection documents are
+uncommitted working changes).
+
+### Pending Work
+
+- [x] Phase 2b statistical analysis (both tracks)
+- [x] Fix `.tiles.json` file-loading bug
+- [x] End-of-session reflections
+- [ ] **Production validation** — verify governor behaviour during next
+  Phase 2b run (sustainable formula, step sizing, cooldown recovery)
+- [ ] Commit Phase 2b results and analysis script fix
+- [ ] Config updates: Wire expanded HN pool into H9 rotation configs
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*

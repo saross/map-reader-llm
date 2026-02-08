@@ -1462,3 +1462,92 @@ but deterministic; the plan was followed as specified.
 
 *Last updated: 2026-02-07 (Session 23 — implementation session,
 no significant abductive reasoning episodes)*
+
+## Session 24 Assessment: Instructive failure — misdiagnosis from wrong mental model
+
+**Date**: 2026-02-08
+**Session type**: Operational execution (Phase 2b Track 1 completion)
+
+Session 24 contains one notable anti-example of abductive reasoning: a
+confident misdiagnosis that the user had to correct. When API responses
+were slow (tiles taking 10+ minutes), I applied the "rate limiting"
+mental model and reduced parallelism — the standard intervention for
+hitting API quotas. The user checked the API dashboard (25/1K RPM,
+365K/1M TPM) and immediately identified the actual failure mode: poor
+API performance, where the correct intervention is the *opposite* —
+increase parallelism to compensate for slow individual requests.
+
+This is interesting for the investigation because it shows a failure of
+abductive reasoning rather than a success. The surprise (slow responses)
+was correctly identified, but the hypothesis selection drew on the wrong
+prior. Both "rate limited" and "slow API" produce the same observable
+symptom (tiles not completing), but require opposite interventions. The
+discriminating evidence (API dashboard metrics) was available but not
+consulted. Instead, the more familiar hypothesis was applied without
+testing.
+
+The second minor episode involved "missing" tiles in GeoJSON output for
+12 Track 1 units. The initial observation (some units had fewer than 60
+features in their GeoJSON) could have indicated incomplete evaluation.
+Investigation of tiles.json metadata confirmed all 60/60 tiles were
+evaluated — the "missing" tiles had zero detections, a valid
+experimental result that simply produces no GeoJSON features. This was
+resolved through systematic evidence-gathering rather than a flash of
+insight, but the distinction between "evaluated with no detections" vs
+"not evaluated" is worth noting as a domain-specific inference.
+
+Neither episode represents strong abductive reasoning. The first is a
+cautionary example of applying the wrong schema; the second is
+methodical verification rather than hypothesis generation.
+
+## Session 25 Assessment: No relevant episodes
+
+**Date**: 2026-02-08
+**Session type**: Implementation and code audit (governor enhancement)
+
+Session 25 implemented a pre-written plan and then audited the
+implementation. No debugging with surprising results, no hypothesis
+generation, no belief revision. The three audit findings (unreachable
+cooldown path, `continue`/`finally` interaction, test testing wrong
+path) were found by exhaustive tracing, not by abductive reasoning —
+each was identified by systematically following control flow and
+checking whether the intended behaviour actually occurred. This is
+deductive verification, not hypothesis generation from surprise.
+
+The session's connection to abductive reasoning is indirect: the
+plan being implemented was *motivated by* the misdiagnosis in
+Session 24 (Entry in the abductive reasoning investigation), and the
+governor redesign specifically addresses the ambiguous-signal problem
+that caused that misdiagnosis. But the session itself was engineering
+execution, not investigation.
+
+## Session 26 Assessment: Minor diagnostic episode
+
+**Date**: 2026-02-08
+**Session type**: Infrastructure review and statistical analysis
+
+> **Instance boundary note**: Assessment reconstructed from conversation
+> summary, not direct experience.
+
+Session 26 had one minor diagnostic episode worth noting. When running
+the Phase 2b analysis, some temperature conditions (T1.0, T1.3) loaded
+only 7-8 of 10 expected runs. The diagnosis involved identifying that
+`.tiles.json` files were being matched as detection results by the
+file-loading function. The discriminating evidence was the log output
+showing tile filenames being attempted and failing to parse.
+
+This is modest abductive reasoning: the observable surprise (wrong run
+count) generated a hypothesis (file matching too broadly), which was
+confirmed by examining the loading logic and log output. The fix
+(adding `.tiles.json` to the exclusion filter) was straightforward once
+the cause was identified.
+
+The episode doesn't reach the threshold of the Session 24 examples
+(ambiguous signals requiring opposite interventions) but demonstrates
+the basic pattern: surprise → hypothesis → evidence → correction.
+The key discriminating evidence was the run count discrepancy —
+without expecting exactly 10 runs per condition, the bug would have
+gone unnoticed.
+
+*Last updated: 2026-02-08 (Session 26 — minor file-matching diagnostic,
+no strong abductive reasoning episodes)*

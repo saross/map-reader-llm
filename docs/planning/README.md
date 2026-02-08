@@ -15,4 +15,4 @@ The preregistered study hypotheses and execution plan are documented in `docs/me
 
 ## Working Notes
 
-For ongoing observations, methodological insights, and human-AI collaboration reflections, see `docs/notes/working_notes.md`.
+For ongoing observations, methodological insights, and human-AI collaboration reflections, see `docs/notes/reflections/working-notes.md`.

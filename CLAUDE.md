@@ -23,7 +23,7 @@ This repository contains a preregistered study using Vision Language Models (VLM
 This project uses structured CC session archiving for research transparency:
 
 - Sessions are archived to `archive/cc-sessions/vlm-burial-mound-detection/`
-- Run `python scripts/archive_cc_session.py` to archive previous sessions
+- Run `cc-session archive` to archive previous sessions
 - See `docs/methodology/transparency/` for the archiving specification
 
 ## File Preservation
@@ -61,7 +61,7 @@ This project has repeatedly benefited from human domain calibration catching ano
 
 ## Working Notes and Observations
 
-The file `docs/notes/working_notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
+The file `docs/notes/reflections/working-notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
 
 **Proactive observation sharing**: If you notice something interesting about how we work together, about the research process, or about findings that might inform future work, you should proactively raise it with the user. If they agree it's worth documenting, we'll add it to `working_notes.md`. This includes:
 

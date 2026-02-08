@@ -1005,4 +1005,4 @@
 ---
 
 *This catalog is auto-generated. Do not edit manually.*
-*Regenerate with: `python scripts/generate_session_catalog.py`*
+*Regenerate with: `cc-session catalogue --rebuild --markdown`*

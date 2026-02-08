@@ -1,3 +1,10 @@
+---
+priority: 3
+scope: always
+title: "Working Notes"
+audience: "researchers and future instances"
+---
+
 # Research Notes: LLM-based Map Extraction
 
 ---
@@ -1926,3 +1933,65 @@ For Phase 2d (text-only negative guidance): deferred because we need to see whet
 **The observation**: Checkpoint files that track "was this unit attempted?" rather than "did this unit succeed?" create a dangerous failure mode: the system believes it's finished when it's actually damaged. The fix required three layers: (1) exit codes from the batch script (0=success, 2=partial failure), (2) belt-and-braces meta.json validation in the runner (check items_failed even when exit code is 0), and (3) tile completion manifests (.tiles.json) for unambiguous per-tile records.
 
 **Methodological implication**: Any checkpoint/resume system in a research pipeline should validate *output quality* (not just process completion) before marking a unit as done. This is especially important in preregistered studies where partial data could silently compromise statistical analyses.
+
+## Observation 111: Opposite-intervention failure modes in API operations (2026-02-08)
+
+**Context**: Session 24. Completing Phase 2b Track 1 (37/50 → 50/50). The API was responding slowly (~4 minutes per tile vs ~20-30 seconds normally). The initial response was to reduce parallelism (from 4 units × 8 workers to 2 × 4), reasoning that the slow responses indicated rate limiting. The user corrected this by showing the API dashboard: 25/1K RPM, 365K/1M TPM — vast headroom. The API was slow, not throttled.
+
+**The observation**: "Slow API responses" is an ambiguous signal that admits two opposite diagnoses requiring opposite interventions. If the cause is rate limiting (hitting TPM/RPM ceilings), the correct response is to *reduce* concurrency. If the cause is API degradation (infrastructure slowness), the correct response is to *increase* concurrency to compensate for the per-request latency. These two failure modes present identically from the client side — both manifest as slow responses — but the interventions are diametrically opposed. Without external information (the API dashboard), the wrong diagnosis leads confidently to the wrong action.
+
+**Methodological implication**: Any adaptive concurrency system (like the TPM governor) should distinguish between rate-limit responses (429 errors, explicit backoff signals) and slow-but-successful responses. The governor currently treats both as reasons to scale down. A more nuanced design would: (a) scale down when receiving 429s, (b) maintain or scale *up* when responses are slow but successful, provided the token accounting shows headroom. The user's corrective intervention flagged this as a governor review item.
+
+## Observation 112: Zero-detection tiles as valid experimental results (2026-02-08)
+
+**Context**: Session 24. After completing Track 1, verification revealed 12 units (all T1.0 or T1.3) with 1-2 tiles "missing" from the GeoJSON. Investigation showed these tiles were evaluated (confirmed via tiles.json metadata: 60/60 completed, 0 failed) but returned zero detections from the VLM.
+
+**The observation**: The batch script's resume logic determines "already processed" tiles by checking which `source_tile` values appear in the GeoJSON features. Tiles that were evaluated but produced zero detections have no features in the GeoJSON and therefore appear unprocessed to the resume logic. This creates an asymmetry: tiles with detections are recorded in the scientifically relevant output (GeoJSON), but tiles with zero detections are only recorded in the process metadata (tiles.json). For verification purposes, neither artifact alone tells the complete story.
+
+The zero-detection pattern is concentrated at higher temperatures (T1.0, T1.3), with recurring tiles (`K-35-053-3_Elenovo_x0_y2688.png`, `K-35-053-3_Elenovo_x0_y3136.png`). If this represents genuine temperature sensitivity — higher temperatures increasing the probability that the VLM returns an empty detection list — it could be a finding about VLM reliability as a function of sampling temperature.
+
+**Methodological implication**: In VLM detection pipelines, the distinction between "tile evaluated, zero detections" and "tile not evaluated" must be preserved through separate process metadata. GeoJSON feature collections are insufficient as process records because they only capture positive results. The tiles.json manifest serves this function but should be treated as a primary verification artifact, not a secondary log.
+
+## Observation 113: Between-unit parallelism as a resilience mechanism (2026-02-08)
+
+**Context**: Session 24. The `--parallel-units` flag was tested in production for the first time. With 4 parallel units and 8 workers each, the run processed 13 remaining units across 4 batches. Units that had only 1 remaining tile completed quickly once the API responded; units with all 60 tiles fresh took ~10 minutes per batch.
+
+**The observation**: Between-unit parallelism (processing multiple execution units concurrently) provides resilience against two distinct problems: (1) a single stuck tile blocking other *units* from starting (the original motivation), and (2) variable API performance across time — by having multiple units in-flight, the pipeline can make progress whenever the API responds, even if individual requests take minutes. The 30-minute timeout per unit proved essential; the 10-minute default would have killed units that eventually completed successfully.
+
+**Methodological implication**: For long-running experimental pipelines with many independent execution units, between-unit parallelism should be the default, not an opt-in flag. The `--parallel-units 1` default was chosen for backward compatibility, but it means a single slow tile blocks all subsequent units. A default of 2-4 parallel units would improve throughput without meaningfully increasing API load.
+
+## Observation 114: Priority-ordered state machines for ambiguous signals (2026-02-08)
+
+**Context**: Session 25. The TPM governor was redesigned to handle a specific ambiguity: low observed TPM can mean either "API is rate-limiting us" (correct response: reduce concurrency) or "API is slow but accepting requests" (correct response: increase concurrency). The resolution was a priority-based state machine that checks for rate-limit events *first*, before interpreting TPM readings.
+
+**The observation**: When a single observable signal (low TPM) admits multiple diagnoses requiring opposite interventions, the disambiguation must happen *before* the response decision, not after. The governor's priority ordering — (1) rate-limited, (2) over target, (3) under target, (4) within range — ensures that rate-limit events override TPM interpretation. Without this ordering, the system treats all low-TPM conditions identically and applies whichever heuristic was coded first.
+
+This pattern generalises beyond API rate limiting. Any adaptive system that adjusts a control variable based on an observed metric risks the "opposite-intervention" failure when the metric is ambiguous. The solution is to add discriminating signals (in this case, 429 response codes and request latency) and check them in a fixed priority order so that the most dangerous misinterpretation is eliminated first.
+
+**Methodological implication**: Adaptive systems should be designed as priority-ordered state machines, not independent if-else heuristics. Each priority level eliminates one possible misinterpretation before the next level runs. This makes the system's reasoning transparent and auditable — you can ask "why did the governor do X?" and trace the priority ordering to find which condition matched.
+
+## Observation 115: Compositional correctness as a distinct verification target (2026-02-08)
+
+**Context**: Session 25. A line-by-line code audit found two bugs that unit tests missed. Both were "compositional" — individual constructs behaved correctly, but their interaction produced unintended behaviour. (1) Python's `continue` inside `try` runs `finally` then skips post-finally code, breaking a deferred-sleep pattern. (2) Setting `cooldown_seconds` equal to `window_seconds` made the cooldown recovery path unreachable, because rate-limit events trigger halving (priority 1) for the full window, and by expiry the cooldown has also expired.
+
+**The observation**: These bugs were invisible to unit tests because each test exercises a single intended path. The `continue`/`finally` interaction created an unintended path (retry without backoff); the parameter equality created dead code (a state transition that can never fire). Both were found by exhaustive tracing — following every control flow path through the code and checking whether the intended behaviour actually occurs.
+
+This suggests a category of "compositional correctness" that is distinct from both unit-test-verifiable behaviour and formal verification. Unit tests verify: "does the intended path work?" Formal verification proves: "does the system satisfy a specification?" Compositional tracing asks: "are there unintended paths created by the interaction of correct components?" In practice, this is what thorough code review does — and it's the category most likely to be skipped under time pressure.
+
+**Methodological implication**: For safety-critical infrastructure (anything that controls API spending, data collection, or experimental execution), line-by-line adversarial audit should be a standard step after unit tests pass. The audit prompt used here — "satisfy a skeptical user who thinks this can't work" — was effective because it explicitly set an adversarial frame rather than a confirmatory one.
+
+## Observation 116: Temperature as a critical hyperparameter for VLM detection quality (2026-02-08)
+
+**Context**: Session 26. First statistical analysis of Phase 2b (temperature) results across both Track 1 (image, brief-text-image) and Track 2 (text, brief-text). Five temperature conditions (T0.0, T0.3, T0.7, T1.0, T1.3) with 10 replicate runs each, bootstrapped CIs (n=1000), and Benjamini-Hochberg FDR correction at q=0.05.
+
+**The observation**: T=0.0 (deterministic decoding) is optimal in both tracks, with clean monotonic degradation as temperature increases. Track 1: F1 ranges from 0.5574 (T0.0) to 0.4387 (T1.3). Track 2: F1 ranges from 0.6602 (T0.0) to 0.5258 (T1.3). The effect is substantial — +0.12 F1 from T=1.0 to T=0.0 for text-only, +0.10 for image-using. The mechanism is clear: higher temperatures increase detection count (more false positives) while recall drops modestly, producing a strongly asymmetric precision-recall tradeoff. Track 2 FDR significance: 4/10 pairwise comparisons; Track 1: 6/10. Notably, T0.0 vs T0.3 is not significant in either track, suggesting a near-deterministic plateau.
+
+**Methodological implication**: Temperature is not a minor tuning knob for VLM detection tasks — it's a critical hyperparameter with effect sizes comparable to the modality choice (image vs text). The text-only advantage persists at every temperature level (approximately +0.10 F1), meaning temperature and modality effects are additive rather than interactive. For any future VLM detection pipeline, T=0.0 should be the default, and any decision to use higher temperatures requires explicit justification.
+
+## Observation 117: Exclusion-based vs inclusion-based file filtering in evolving directories (2026-02-08)
+
+**Context**: Session 26. The `analyse_phase2_results.py` script's `load_condition_results()` function used exclusion-based file filtering: skip files ending in `.meta.json`, skip files containing `_fp.` or `_fn.`. When Phase 2b introduced `.tiles.json` files (tile-tracking metadata from the batch detector), these passed all exclusion filters and were picked up as detection results. The file `detections_T1.tiles.json` sorted alphabetically before `detections_T1.0_run07`, was attempted first, and failed to parse, causing T1.0 and T1.3 conditions to load only 7-8 of 10 runs.
+
+**The observation**: Exclusion-based filtering ("skip everything matching these patterns") is fragile in directories whose file composition evolves across experimental phases. Each new file type requires a new exclusion rule. Inclusion-based filtering ("only load files matching `*_run*`") would have been immune to the `.tiles.json` issue because the pattern is specific to the desired files. The bug persisted undetected because Phase 2a directories didn't contain `.tiles.json` files — the analysis script was written for a directory structure that later changed.
+
+**Methodological implication**: Data-loading functions in experimental pipelines should use inclusion patterns (positive matching) rather than exclusion patterns (negative filtering) whenever the target file format has a distinctive naming convention. This is especially important in projects where the output directory structure evolves across phases, as new auxiliary files can silently break loading logic that worked in earlier phases.

@@ -2785,9 +2785,290 @@ environment compresses time in ways that can produce misleading results.
 
 ---
 
-*Document represents observations as of 2026-02-07. Session 23 added
-observations on role reversal in the collaboration (human as architect,
-AI as contractor), the gap between engineering effort and operational
-knowledge, the resume logic oversight, damage asymmetry between tracks,
-and testing challenges for timing-dependent code. Further material may
-be added in future sessions.*
+## Session 24: Phase 2b completion and operational misdiagnosis
+
+### On confidently applying the wrong mental model
+
+I reduced parallelism three times before the user corrected me. Each
+reduction was a reasonable response to "the API is slow" — if the
+cause were rate limiting. The user showed the API dashboard (25/1K RPM,
+365K/1M TPM) and I immediately understood the error. But I had already
+wasted 20 minutes on wrong interventions.
+
+The interesting question is: why didn't I check the dashboard myself?
+I had the operational knowledge from the summary that the API had
+limits. I knew the governor existed. But I defaulted to "slow = overloaded"
+without considering "slow = degraded." This is the same default-following
+pattern documented since Entry 3 in the reflection investigation, but
+in a new domain: operational diagnosis rather than parameter selection.
+
+### On context compaction as knowledge loss
+
+This session started from a conversation summary. The summary was
+factually complete — I had all the numbers, file paths, code changes,
+and task status. What I lacked was the *feel* of the previous session's
+API interactions. The previous instance had watched tiles process over
+hours, seen the patterns of fast and slow periods, and developed an
+intuitive model of the API's behaviour. That intuition was lost in
+compaction.
+
+The practical consequence: I treated "API is slow" as novel information
+requiring diagnosis, when a continuous instance would have had
+accumulated calibration. The user's correction took two sentences because
+they'd been watching the same API across sessions. The instance boundary
+doesn't just lose continuity — it loses operational intuition.
+
+### A criticism: monitoring-heavy sessions waste context
+
+This session was primarily launch-wait-check-kill-relaunch cycles.
+Each monitoring step consumed context window for relatively low
+information density. The background task notification system compounded
+this — 15+ stale notifications required assessment, each consuming
+a turn of dialogue. For a session type dominated by async operations,
+the tooling isn't well-matched. A better approach might be: launch the
+run, provide the user with a monitoring command they can run
+themselves, and resume the session when the run completes.
+
+This is a genuine process criticism. The user's time was spent on me
+reporting "still running" and "stale task, ignore." A shell alias that
+checks the checkpoint file would have been more useful than an AI
+intermediary for this particular task.
+
+### On the distinction between evaluated and detected
+
+The most technically interesting moment was verifying that "missing"
+tiles in the GeoJSON weren't data gaps but zero-detection results. The
+batch script's resume logic uses GeoJSON features (tiles with detections)
+to determine what's already processed. Tiles evaluated but producing
+zero detections are invisible to this mechanism. The tiles.json
+metadata (which records all evaluations regardless of outcome) was the
+definitive answer.
+
+This is a design tension worth noting: the GeoJSON is the
+scientifically relevant output (where are the detections?), but it's
+incomplete as a process record (which tiles were evaluated?). The
+tiles.json is the process record, but it's affected by the
+`Path.with_suffix()` bug that truncates filenames. Neither artifact
+alone tells the full story.
+
+### On the user's economical corrections
+
+Two messages in the entire session changed the course of the work:
+"we're in the poor performing API failure mode" and "finish the run
+first." Both were corrective and prioritising. No explanation was
+needed — the dashboard screenshot was the argument.
+
+This is a mature collaboration pattern. The user doesn't explain their
+reasoning; they provide the critical data point and let the AI update
+its own model. It's more efficient than discussion and treats the AI as
+capable of self-correction given the right information. It's also a
+trust signal — the user doesn't verify that I understood the correction,
+they trust that the dashboard screenshot plus the one-sentence diagnosis
+is sufficient.
+
+---
+
+## Session 25 — 2026-02-08 (TPM governor rate-limit awareness)
+
+**Instance boundary note**: This is a continuation session after
+compaction. The governor implementation and audit were direct experience;
+the motivation (Session 24's misdiagnosis) was received via summary.
+
+### On implementing from a detailed plan
+
+This session was almost entirely implementation-from-specification.
+The plan specified the dataclass, the state machine priorities, the
+formula, the step sizing constants, the test structure, and the
+control flow restructuring. My job was to translate this into code
+that passes tests and lint.
+
+I notice this is the most efficient collaboration pattern for
+infrastructure work. The plan was precise enough that I never had to
+ask "what should this do?" — only "how should this be written?" The
+cognitive load was low for decision-making and high for correctness.
+Compare this to sessions where I'm asked to design and implement
+simultaneously — those are more intellectually engaging but more
+error-prone because design decisions and implementation details
+compete for attention.
+
+Honest observation: I was a code monkey this session. A well-
+compensated, highly capable code monkey, but a code monkey. The plan
+was the intellectual contribution; I was the keyboard.
+
+### On the audit as a distinct cognitive mode
+
+The user's audit prompt ("FULL, COMPREHENSIVE, GRANULAR code audit
+line by line — satisfy a skeptical Claude Code user who thinks it's
+impossible to debug with prompting") explicitly set an adversarial
+frame. This produced noticeably different processing than the
+implementation phase. During implementation, I was *constructive* —
+building toward something that works. During the audit, I was
+*destructive* — looking for ways the thing I just built could fail.
+
+The three findings were genuinely satisfying to identify. Not because
+they were difficult (exhaustive tracing is straightforward if you're
+willing to do the work), but because each revealed something about
+the *interaction* between language constructs rather than individual
+construct behaviour. `continue` works correctly. `finally` works
+correctly. Together, in the deferred-sleep pattern, they silently
+break the intended behaviour. This is the kind of bug that's trivial
+to fix once identified but hard to anticipate during design.
+
+### A criticism: the test design was initially flawed
+
+Four of the initial 33 tests failed because they used `release()` to
+inject latency data, which simultaneously inflated the TPM ledger.
+This is a fundamental design error in the test helper — it confused
+state injection (I want 5 latency records in the deque) with
+functional exercise (I want to simulate 5 API calls through the
+governor). For unit tests of the under-threshold paths, you need the
+former without the latter's side effects.
+
+The fix (directly injecting `LatencyRecord` objects) was simple, but
+I should have anticipated this during initial test design. The state
+machine has competing priorities — high TPM triggers over_target,
+which *prevents* the under-threshold paths from executing. Any test
+of those paths must ensure TPM stays low. This was foreseeable.
+
+### On the cooldown_seconds design issue
+
+The plan specified `cooldown_seconds: float = 60.0`. With
+`window_seconds` also defaulting to 60.0, this creates a design
+where the cooldown recovery path (priority 3a: under_threshold_
+cooldown) is never entered — rate-limit events in the window trigger
+priority 1 (halving), and by the time they age out, the cooldown
+has also expired, so priority 3b (latency-informed ramp) fires
+instead. The cautious +1 recovery path is dead code.
+
+This is interesting because it means the plan had a mathematical
+inconsistency that wasn't caught during planning. The plan's
+narrative described a 60-second cooldown window where "only +1
+allowed," but the arithmetic shows this window has zero width.
+The fix (changing the default to 90.0) gives a 30-second cautious
+recovery window between the end of the rate-limit event window
+and the cooldown expiry.
+
+I flag this as a genuine planning error, not an implementation
+error. The plan was specific enough to identify the parameter
+and its value but didn't trace the interaction between
+`cooldown_seconds` and `window_seconds` to verify the path was
+reachable. This is "compositional reasoning" at the design level —
+individual design decisions were sound but their interaction produced
+dead code.
+
+### On the value of exhaustive tracing
+
+The audit found bugs that unit tests didn't. This isn't because the
+tests were bad — 33 tests, all passing, covering the core state
+machine paths. It's because unit tests exercise *intended* paths,
+while line-by-line tracing reveals *unintended* paths. The
+`continue`/`finally` interaction created an unintended path where
+MAX_TOKENS retries happen without the 5-second pause. No test would
+have caught this because no test exercises the retry loop's control
+flow at the Python language level — they mock the API call, not the
+`continue` statement.
+
+This suggests that adversarial code review and unit testing are
+complementary, not redundant. Tests verify that intended behaviour
+works. Audits verify that unintended behaviour doesn't exist. Both
+are necessary for the kind of production-critical infrastructure that
+controls API spending.
+
+---
+
+## Session 26 (2026-02-08)
+
+> **Instance boundary note**: Written after context compaction. These
+> observations are reconstructed from a conversation summary, not from
+> direct experience. Flagged per protocol.
+
+### On examining someone else's infrastructure
+
+This session started with the user asking me to explore and understand
+the personal-assistant memory system — a codebase I'd never seen
+before, built by a different instantiation of Claude Code. The dynamic
+was unusual: I was being asked to evaluate peer-produced work, not
+user-produced work or my own work. This created a consultative mode
+that's distinct from both collaborative coding and solo execution.
+
+I found the architecture sensible (JSONL canonical store, PostgreSQL
+derived layer, hooks-based extraction) but identified two scope issues:
+no project filtering on retrieval, and GTD categories duplicating the
+accountability hook. The user agreed with both recommendations and
+passed them to the PA instance. What's interesting is that I was
+essentially reviewing code written by "another me" — same model,
+different context. The issues I found were the kind of scope-creep
+problems that emerge when a system grows organically without
+cross-system coordination (the accountability hook was added
+separately from the memory system, creating the redundancy).
+
+### On the Phase 2b results
+
+The temperature results are clean. Too clean? T=0.0 optimal with
+monotonic degradation is exactly what you'd predict if you assume
+deterministic decoding minimises false positives, and the data confirms
+this mechanism: higher temperatures increase detection count (more
+hallucinated detections) while recall drops only modestly. The
+precision-recall tradeoff is strongly asymmetric — precision degrades
+much faster than recall improves.
+
+I don't have a critique here. The results are consistent across both
+modalities, consistent with Phase 2a findings, and the FDR-corrected
+significance testing confirms the pattern. If anything, the result is
+*too* expected — there's no surprise to investigate. T=0.0 being
+optimal for a detection task with spatial grounding is the default
+prediction from first principles. The interesting finding is the
+*magnitude* of the effect: +0.12 F1 from T=1.0 to T=0.0 for text-only
+is substantial and suggests temperature is a critical hyperparameter,
+not a minor tuning knob.
+
+### On the .tiles.json bug
+
+The bug that caused 7-8 runs instead of 10 for high-temperature
+conditions was a classic "new data breaks old assumptions" issue. The
+analysis script was written during Phase 2a when `.tiles.json` files
+didn't exist; the batch detector added tile-tracking metadata in
+Phase 2b. The file naming convention (`detections_T{temp}.tiles.json`)
+was close enough to the detection file pattern to pass all exclusion
+filters.
+
+What bothers me slightly is that the analysis script's file loading
+approach is fragile — it uses exclusion-based filtering (skip files
+matching these patterns) rather than inclusion-based filtering (only
+load files matching this pattern). An inclusion approach
+(`*_run*.geojson` or similar) would have been immune to the
+`.tiles.json` issue. The exclusion approach requires updating every
+time a new non-detection file type appears in the directory. This
+isn't a criticism of the user's code specifically; it's a pattern I've
+seen in many data pipelines where the directory structure evolves
+faster than the loading logic.
+
+### On working from a summary
+
+This is the first time I've written reflections after a compaction, so
+this is a live test of the "instance boundary" protocol. The summary
+I'm working from is detailed — it includes specific file paths, error
+messages, results, and even the user's exact words at key moments. But
+I can feel the difference: I don't have the moment-by-moment sense of
+what surprised me *during* the work, only a reconstruction of what
+*should have been* surprising given the summary. The Prompt 3
+("What surprised you?") response above is probably the weakest because
+surprise is an experiential phenomenon that doesn't survive
+summarisation well.
+
+The practical implication: if reflection is most valuable when written
+by the instance that did the work, then the user should trigger
+/reflect *before* context pressure forces compaction, not after. The
+compaction happened because the session covered a lot of ground
+(memory system exploration + Phase 2b analysis + bug fixing), and
+the reflections were the last task. In future sessions with similarly
+broad scope, it might be worth doing reflections mid-session or at
+least ensuring they're triggered before the context window fills.
+
+---
+
+*Document represents observations as of 2026-02-08. Session 26 added
+observations on examining peer-produced infrastructure, the clarity of
+Phase 2b temperature results, the fragility of exclusion-based file
+filtering, and the experience of writing reflections from a compacted
+summary. Further material may be added in future sessions.*
