@@ -1,0 +1,52 @@
+{
+  "study": {
+    "name": "Phase 2c: H8 Library Composition \u2014 Track 1 (brief-text-image)",
+    "version": "2.0",
+    "description": "Tests 5 library compositions to determine optimal example set.\nUses optimal M/E from Phase 2a (brief-text-image, F1=0.4617) and\noptimal temperature from Phase 2b (T=0.0, F1=0.5574).\nResults inform library used in subsequent phases (2d-2e).\nScale-16 and Scale-32 deferred per E11 (HP pool exhausted at 4).\n\nDual-track context: Phase 2a found text-only brief-text (F1=0.5425)\noutperformed all image-using conditions, but no pairwise differences\nsurvived FDR correction. Both M/E levels are carried forward\nindependently. See Decision 16, Erratum E27.\n",
+    "phase": "2c",
+    "hypothesis": "H8",
+    "created": "2026-01-21",
+    "updated": "2026-02-08"
+  },
+  "generated": "2026-02-09T01:33:51.212567+00:00",
+  "conditions": [
+    "pure-positive-canon",
+    "canonical",
+    "plus-hp",
+    "scale-4",
+    "scale-8"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 28,
+  "tile_limit": null,
+  "execution_order": [
+    "canonical/run_5",
+    "canonical/run_4",
+    "canonical/run_10",
+    "canonical/run_8",
+    "scale-4/run_10",
+    "scale-4/run_7",
+    "canonical/run_9",
+    "scale-4/run_2",
+    "scale-8/run_8",
+    "scale-8/run_4",
+    "canonical/run_3",
+    "pure-positive-canon/run_5",
+    "canonical/run_7",
+    "plus-hp/run_2",
+    "pure-positive-canon/run_4",
+    "scale-4/run_6",
+    "scale-8/run_7",
+    "scale-4/run_1",
+    "scale-4/run_3",
+    "scale-8/run_10",
+    "scale-8/run_2",
+    "plus-hp/run_6",
+    "pure-positive-canon/run_7",
+    "canonical/run_1",
+    "pure-positive-canon/run_1",
+    "scale-4/run_4",
+    "scale-8/run_9",
+    "plus-hp/run_3"
+  ]
+}

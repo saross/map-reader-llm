@@ -2,7 +2,7 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-02-08
+**Last updated**: 2026-02-09
 
 ---
 
@@ -17,7 +17,7 @@
 | H5 | Negative Text Treatment | Text level | 3 × 3 | `detect_*_terse.json`, `detect_*_verbose.json` | 2d | Pending |
 | H6 | Flash→Pro Transfer | Model | OFAT | Same configs, different model | 4 | Pending |
 | H7 | Temperature | T | 5 | N/A (runtime parameter) | 2b | Complete |
-| H8 | Library Composition/Scaling | Library size | 5 (of 7) | `library_*.json` | 2c | Pending (Scale-16/32 deferred) |
+| H8 | Library Composition/Scaling | Library size | 5 (of 7) | `library_*.json` | 2c | Complete |
 
 ---
 
@@ -147,9 +147,15 @@ forward as the optimal temperature setting for subsequent phases.
 
 ---
 
-### H8: Library Composition and Scaling (Phase 2c)
+### H8: Library Composition and Scaling (Phase 2c) — COMPLETE
 
 Tests library component effects and scaling.
+
+**Status (2026-02-09)**: Phase 2c complete (Track 1 image-using only; Track 2
+text-only skipped because library composition is inherently visual). plus-hp
+selected as optimal library (F1=0.609). No pairwise comparisons significant
+after FDR correction, but consistent directional gradient: more positive
+examples = better performance. Carried forward to Phase 2d.
 
 | Condition | ID | Canon+ | Canon- | HP | HN | Null | Total | Config File |
 |-----------|----|--------|--------|----|----|------|-------|-------------|
@@ -158,8 +164,8 @@ Tests library component effects and scaling.
 | +HP | H8-3 | 4 | 2 | 4 | 0 | 3 | 13 | `library_plus-hp.json` |
 | Scale-4 | H8-4 | 4 | 2 | 2 | 2 | 3 | 13 | `library_scale-4.json` |
 | Scale-8 | H8-5 | 4 | 2 | 4 | 4 | 3 | 17 | `library_scale-8.json` |
-| Scale-16 | H8-6 | 4 | 2 | 8 | 8 | 3 | 25 | `library_scale-16.json` | **DEFERRED** |
-| Scale-32 | H8-7 | 4 | 2 | 16 | 16 | 3 | 41 | `library_scale-32.json` | **DEFERRED** |
+| Scale-16 | H8-6 | 4 | 2 | 8 | 8 | 3 | 25 | **DEFERRED** |
+| Scale-32 | H8-7 | 4 | 2 | 16 | 16 | 3 | 41 | **DEFERRED** |
 
 **Note (2026-02-02)**: Scale-16 and Scale-32 are deferred because the HP pool is
 structurally exhausted at 4 recognition failures (>50m threshold). These conditions
@@ -210,7 +216,7 @@ Phase 2a: H1 (M/E) → optimal M/E ✓ COMPLETE
     ↓
 Phase 2b: H7 (Temperature) → optimal T ✓ COMPLETE (T=0.0)
     ↓
-Phase 2c: H8 (Library) → optimal library
+Phase 2c: H8 (Library) → optimal library ✓ COMPLETE (plus-hp)
     ↓
 Phase 2d: H5 (Negative Text) → optimal text treatment
     ↓
