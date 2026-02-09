@@ -156,13 +156,38 @@ class TPMGovernor:
         self._min_concurrency = min_concurrency
         self._max_concurrency = max_concurrency
         self._window_seconds = window_seconds
+        # Latency records use a longer window so the governor can
+        # compute sustainable concurrency even when API latency
+        # exceeds the TPM sliding window (e.g. 120s tiles vs 60s
+        # TPM window).  5× the TPM window gives enough headroom.
+        self._latency_window_seconds = window_seconds * 5
         self._adjust_interval = adjust_interval
         self._cooldown_seconds = cooldown_seconds
 
+        # Compute a token-aware safe ceiling for initial concurrency.
+        # Assumes ~5s avg latency as a cold-start estimate:
+        #   safe = target_tpm * assumed_latency / (tokens_per_request * 60)
+        assumed_latency = 5.0
+        safe_initial = int(
+            self._target_tpm * assumed_latency
+            / (tokens_per_request * 60)
+        )
+        safe_initial = max(safe_initial, min_concurrency)
+
         # Concurrency control — semaphore is the actual throttle.
-        # initial_concurrency is clamped to max_concurrency but not
-        # to min_concurrency, allowing a conservative cold start.
-        self._concurrency = min(initial_concurrency, max_concurrency)
+        # initial_concurrency is clamped to the token-aware safe
+        # ceiling and max_concurrency.
+        effective_initial = min(
+            initial_concurrency, safe_initial, max_concurrency
+        )
+        if effective_initial < initial_concurrency:
+            logger.info(
+                "Clamped initial_concurrency from %d to %d "
+                "(token-aware safe limit at %d TPR)",
+                initial_concurrency, effective_initial,
+                tokens_per_request,
+            )
+        self._concurrency = effective_initial
         self._semaphore = threading.Semaphore(self._concurrency)
 
         # Number of workers currently holding a semaphore slot.
@@ -355,9 +380,13 @@ class TPMGovernor:
             and self._rate_limit_events[0] < cutoff
         ):
             self._rate_limit_events.popleft()
+        # Latency records use a longer window so the governor
+        # can estimate sustainable concurrency even when API
+        # latency exceeds the TPM window.
+        latency_cutoff = now - self._latency_window_seconds
         while (
             self._latency_records
-            and self._latency_records[0].timestamp < cutoff
+            and self._latency_records[0].timestamp < latency_cutoff
         ):
             self._latency_records.popleft()
 
@@ -407,7 +436,7 @@ class TPMGovernor:
             fewer than 5 latency records are in the sliding window —
             too few samples for a reliable estimate.
         """
-        if len(self._latency_records) < 5:
+        if len(self._latency_records) < 2:
             return (None, None)
         total_latency = sum(
             r.latency for r in self._latency_records
@@ -442,7 +471,7 @@ class TPMGovernor:
             self._completed_since_adjust = 0
 
             target = self._target_tpm
-            low_threshold = int(target * 0.60)
+            low_threshold = int(target * 0.90)
 
             # Determine whether we're in post-429 cooldown
             in_cooldown = (
@@ -453,8 +482,10 @@ class TPMGovernor:
 
             # --- Priority 1: Rate limited ---
             if len(self._rate_limit_events) > 0:
+                # Reduce by ~10% (at least -1) rather than halving
+                reduction = max(old_concurrency // 10, 1)
                 new_concurrency = max(
-                    old_concurrency // 2,
+                    old_concurrency - reduction,
                     self._min_concurrency,
                 )
                 reason = "rate_limited"
@@ -522,6 +553,21 @@ class TPMGovernor:
             else:
                 new_concurrency = old_concurrency
                 reason = "within_range"
+
+            # Diagnostic: log every adjustment evaluation
+            avg_lat, avg_tok = self._calculate_avg_latency()
+            n_lat = len(self._latency_records)
+            lat_str = (
+                f"{avg_lat:.1f}s" if avg_lat is not None
+                else "None"
+            )
+            print(
+                f"  [Governor] concurrency={old_concurrency}->"
+                f"{new_concurrency} TPM={current_tpm:,}/"
+                f"{target:,} lat_records={n_lat} "
+                f"avg_lat={lat_str} reason={reason}",
+                flush=True,
+            )
 
             if new_concurrency != old_concurrency:
                 self._apply_concurrency_change(

@@ -867,16 +867,19 @@ def detect_mounds_versioned(
     if workers > 1:
         governor = TPMGovernor(
             tokens_per_request=tokens_per_request,
-            initial_concurrency=min(4, workers),
-            max_concurrency=workers,
+            initial_concurrency=workers,
+            max_concurrency=60,
         )
         print(
-            f"TPM Governor: initial_concurrency={min(4, workers)}, "
-            f"max_concurrency={workers}, "
+            f"TPM Governor: initial_concurrency={workers}, "
+            f"max_concurrency=60, "
             f"tokens_per_request={tokens_per_request}"
         )
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+    # Thread pool ceiling matches governor max; the governor semaphore
+    # is the actual throttle, not the pool size.
+    pool_size = 60 if governor else workers
+    with concurrent.futures.ThreadPoolExecutor(max_workers=pool_size) as executor:
         # Submit all tasks
         futures = {
             executor.submit(
@@ -1041,7 +1044,9 @@ Examples:
         help="Random seed for reproducible ordering when using --ordering random",
     )
     parser.add_argument(
-        "--workers", type=int, default=1, help="Number of parallel workers"
+        "--workers", type=int, default=12,
+        help="Initial concurrency for TPM governor (default: 12). "
+        "Governor adapts dynamically within [1, 60] based on API conditions."
     )
     parser.add_argument(
         "--max-retries", type=int, default=15,
