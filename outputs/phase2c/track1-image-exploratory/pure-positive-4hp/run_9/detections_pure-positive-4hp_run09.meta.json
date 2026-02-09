@@ -1,0 +1,3605 @@
+{
+  "run_id": "f19ac540-be6e-4945-a35d-b0c7ee8f3b5e",
+  "timestamp": {
+    "start": "2026-02-09T09:07:28.407513+00:00",
+    "end": "2026-02-09T09:10:07.333043+00:00",
+    "duration_seconds": 158.92553
+  },
+  "environment": {
+    "git_commit": "112b38299a06d4c7ea267b146b17ed45cf308e82",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "6.0.0"
+  },
+  "configuration": {
+    "version": "library_pure-positive-4hp",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image.md",
+    "prompt_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+    "temperature": 0.0,
+    "full_config_snapshot": {
+      "version": "library_pure-positive-4hp",
+      "description": "H8 Exploratory: Pure positive + 4 HP. Canon+ and all 4 hard positives, no negatives. Image-using track (brief-text-image).",
+      "hypothesis": "H8-exploratory",
+      "model": "gemini-3-flash",
+      "instruction_file": "detect_brief-text-image.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 0,
+        "hard_positive": 4,
+        "hard_negative": 0,
+        "null": 3
+      },
+      "total_examples": 11,
+      "hard_examples": 4,
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_05.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_06.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_07.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_08.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_15.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_16.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_17.png",
+          "label": "Negative",
+          "category": "null"
+        }
+      ],
+      "note": "Exploratory follow-up to Phase 2c. Tests maximum HP enrichment in pure-positive context (no Canon-). Motivated by finding that negatives degrade performance. Related to preregistered H12 (HP:HN Ratio).",
+      "manifest_path": "/home/shawn/Code/map-reader-llm/inputs/tiles/validation_manifest.json"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 60,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 60
+    },
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [
+      "K-35-052-4_32635_x0_y0.png",
+      "K-35-052-4_32635_x0_y2240.png",
+      "K-35-052-4_32635_x0_y1344.png",
+      "K-35-052-4_32635_x1344_y3136.png",
+      "K-35-052-4_32635_x2240_y1344.png",
+      "K-35-052-4_32635_x3136_y0.png",
+      "K-35-052-4_32635_x2688_y0.png",
+      "K-35-052-4_32635_x3136_y2240.png",
+      "K-35-052-4_32635_x3136_y3584.png",
+      "K-35-052-4_32635_x448_y1344.png",
+      "K-35-052-4_32635_x3584_y3136.png",
+      "K-35-052-4_32635_x896_y3136.png",
+      "K-35-052-4_32635_x448_y3136.png",
+      "K-35-053-3_Elenovo_x0_y0.png",
+      "K-35-052-4_32635_x3584_y3584.png",
+      "K-35-052-4_32635_x448_y896.png",
+      "K-35-053-3_Elenovo_x0_y3136.png",
+      "K-35-053-3_Elenovo_x448_y2688.png",
+      "K-35-053-3_Elenovo_x896_y448.png",
+      "K-35-053-3_Elenovo_x0_y1344.png",
+      "K-35-053-3_Elenovo_x0_y2688.png",
+      "K-35-053-3_Elenovo_x896_y2240.png",
+      "K-35-062-2_Rakovski_x3136_y3136.png",
+      "K-35-053-3_Elenovo_x1792_y448.png",
+      "K-35-053-3_Elenovo_x3136_y1344.png",
+      "K-35-053-3_Elenovo_x3584_y2240.png",
+      "K-35-053-3_Elenovo_x448_y448.png",
+      "K-35-053-3_Elenovo_x448_y3136.png",
+      "K-35-053-3_Elenovo_x2688_y1344.png",
+      "K-35-062-2_Rakovski_x1792_y0.png",
+      "K-35-053-3_Elenovo_x2240_y448.png",
+      "K-35-062-2_Rakovski_x2240_y2240.png",
+      "K-35-062-2_Rakovski_x1792_y3584.png",
+      "K-35-062-2_Rakovski_x3136_y896.png",
+      "K-35-053-3_Elenovo_x448_y0.png",
+      "K-35-062-2_Rakovski_x3584_y1344.png",
+      "K-35-078-1_Lesovo_x1344_y2240.png",
+      "K-35-062-2_Rakovski_x3136_y1792.png",
+      "K-35-062-2_Rakovski_x2240_y448.png",
+      "K-35-078-1_Lesovo_x2688_y1792.png",
+      "K-35-062-2_Rakovski_x448_y896.png",
+      "K-35-062-2_Rakovski_x2688_y2688.png",
+      "K-35-078-1_Lesovo_x3584_y0.png",
+      "K-35-062-2_Rakovski_x2688_y2240.png",
+      "K-35-062-2_Rakovski_x3136_y1344.png",
+      "K-35-062-2_Rakovski_x2688_y1344.png",
+      "K-35-062-2_Rakovski_x3136_y2240.png",
+      "K-35-078-1_Lesovo_x0_y2688.png",
+      "K-35-078-1_Lesovo_x0_y3136.png",
+      "K-35-078-1_Lesovo_x2688_y896.png",
+      "K-35-078-1_Lesovo_x3584_y448.png",
+      "K-35-078-1_Lesovo_x896_y1792.png",
+      "K-35-078-1_Lesovo_x2240_y1344.png",
+      "K-35-078-1_Lesovo_x3136_y448.png",
+      "K-35-078-1_Lesovo_x2240_y3136.png",
+      "K-35-062-2_Rakovski_x3584_y448.png",
+      "K-35-078-1_Lesovo_x3584_y1344.png",
+      "K-35-078-1_Lesovo_x3136_y1344.png",
+      "K-35-078-1_Lesovo_x448_y1792.png",
+      "K-35-078-1_Lesovo_x3136_y1792.png"
+    ],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 808680,
+    "total_output_tokens": 8828,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 817508,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 808680,
+        "output_tokens": 8828,
+        "total_tokens": 817508,
+        "request_count": 60
+      }
+    }
+  },
+  "results_summary": {
+    "total_detections": 132,
+    "class_counts": {
+      "burial_mound": 93,
+      "triangulation_mound": 15,
+      "benchmark_mound": 20,
+      "settlement_mound": 4
+    }
+  },
+  "per_item_metadata": [
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x0_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.416061+00:00",
+      "response_timestamp": "2026-02-09T09:07:38.329644+00:00",
+      "latency_ms": 9913,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x0_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 758,
+        "total_tokens": 14236,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.420938+00:00",
+      "response_timestamp": "2026-02-09T09:07:40.673557+00:00",
+      "latency_ms": 12252,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 1795
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x0_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 262,
+        "total_tokens": 13740,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.426221+00:00",
+      "response_timestamp": "2026-02-09T09:07:40.815809+00:00",
+      "latency_ms": 12389,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 619
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x1344_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.437216+00:00",
+      "response_timestamp": "2026-02-09T09:07:47.918277+00:00",
+      "latency_ms": 19481,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 174
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x2240_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 73,
+        "total_tokens": 13551,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.452519+00:00",
+      "response_timestamp": "2026-02-09T09:07:49.414555+00:00",
+      "latency_ms": 20962,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 169
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x3136_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 73,
+        "total_tokens": 13551,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.503661+00:00",
+      "response_timestamp": "2026-02-09T09:07:49.533236+00:00",
+      "latency_ms": 21029,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 164
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x2688_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.503963+00:00",
+      "response_timestamp": "2026-02-09T09:08:16.730644+00:00",
+      "latency_ms": 48226,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 174
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x3136_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 196,
+        "total_tokens": 13674,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.504401+00:00",
+      "response_timestamp": "2026-02-09T09:08:19.308831+00:00",
+      "latency_ms": 50804,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 461
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x3136_y3584.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.504575+00:00",
+      "response_timestamp": "2026-02-09T09:08:47.300803+00:00",
+      "latency_ms": 78796,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 174
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x448_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 259,
+        "total_tokens": 13737,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.505727+00:00",
+      "response_timestamp": "2026-02-09T09:08:50.679026+00:00",
+      "latency_ms": 82173,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 616
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x3584_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.504727+00:00",
+      "response_timestamp": "2026-02-09T09:08:52.220121+00:00",
+      "latency_ms": 83715,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x896_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.505954+00:00",
+      "response_timestamp": "2026-02-09T09:08:52.227604+00:00",
+      "latency_ms": 83721,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 174
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x448_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.505379+00:00",
+      "response_timestamp": "2026-02-09T09:08:53.153913+00:00",
+      "latency_ms": 84648,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x0_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 138,
+        "total_tokens": 13616,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.506327+00:00",
+      "response_timestamp": "2026-02-09T09:08:54.037908+00:00",
+      "latency_ms": 85531,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 325
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x3584_y3584.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 71,
+        "total_tokens": 13549,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.505522+00:00",
+      "response_timestamp": "2026-02-09T09:08:54.147851+00:00",
+      "latency_ms": 85642,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x448_y896.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 261,
+        "total_tokens": 13739,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.505836+00:00",
+      "response_timestamp": "2026-02-09T09:08:54.387489+00:00",
+      "latency_ms": 85881,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 624
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x0_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.506746+00:00",
+      "response_timestamp": "2026-02-09T09:09:01.925545+00:00",
+      "latency_ms": 93418,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x448_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 259,
+        "total_tokens": 13737,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.508663+00:00",
+      "response_timestamp": "2026-02-09T09:09:02.752066+00:00",
+      "latency_ms": 94243,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 614
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x896_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 135,
+        "total_tokens": 13613,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.508894+00:00",
+      "response_timestamp": "2026-02-09T09:09:11.926054+00:00",
+      "latency_ms": 103417,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 316
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x0_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 132,
+        "total_tokens": 13610,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.506585+00:00",
+      "response_timestamp": "2026-02-09T09:09:14.600675+00:00",
+      "latency_ms": 106094,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 307
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x0_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 76,
+        "total_tokens": 13554,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.506981+00:00",
+      "response_timestamp": "2026-02-09T09:09:16.400979+00:00",
+      "latency_ms": 107893,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 178
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x896_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 73,
+        "total_tokens": 13551,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.508842+00:00",
+      "response_timestamp": "2026-02-09T09:09:17.024051+00:00",
+      "latency_ms": 108515,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 169
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3136_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.510909+00:00",
+      "response_timestamp": "2026-02-09T09:09:22.468581+00:00",
+      "latency_ms": 113957,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x1792_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 134,
+        "total_tokens": 13612,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.507247+00:00",
+      "response_timestamp": "2026-02-09T09:09:23.746782+00:00",
+      "latency_ms": 115239,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 321
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3136_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 73,
+        "total_tokens": 13551,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.507596+00:00",
+      "response_timestamp": "2026-02-09T09:09:24.057995+00:00",
+      "latency_ms": 115550,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 164
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 446,
+        "total_tokens": 13924,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.507698+00:00",
+      "response_timestamp": "2026-02-09T09:09:24.802683+00:00",
+      "latency_ms": 116294,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 1058
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x448_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 258,
+        "total_tokens": 13736,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.508566+00:00",
+      "response_timestamp": "2026-02-09T09:09:27.059940+00:00",
+      "latency_ms": 118551,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 617
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x448_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 73,
+        "total_tokens": 13551,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.508352+00:00",
+      "response_timestamp": "2026-02-09T09:09:27.588211+00:00",
+      "latency_ms": 119079,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 169
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x2688_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 138,
+        "total_tokens": 13616,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.507655+00:00",
+      "response_timestamp": "2026-02-09T09:09:33.771272+00:00",
+      "latency_ms": 125263,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 325
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x1792_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 283,
+        "total_tokens": 13761,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.509112+00:00",
+      "response_timestamp": "2026-02-09T09:09:34.191035+00:00",
+      "latency_ms": 125681,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 574
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x2240_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 72,
+        "total_tokens": 13550,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.507439+00:00",
+      "response_timestamp": "2026-02-09T09:09:37.200693+00:00",
+      "latency_ms": 128693,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 172
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 321,
+        "total_tokens": 13799,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.509473+00:00",
+      "response_timestamp": "2026-02-09T09:09:39.299222+00:00",
+      "latency_ms": 130789,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 760
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x1792_y3584.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.509223+00:00",
+      "response_timestamp": "2026-02-09T09:09:40.742340+00:00",
+      "latency_ms": 132233,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3136_y896.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.510999+00:00",
+      "response_timestamp": "2026-02-09T09:09:45.327523+00:00",
+      "latency_ms": 136816,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x448_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 317,
+        "total_tokens": 13795,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.508761+00:00",
+      "response_timestamp": "2026-02-09T09:09:47.128571+00:00",
+      "latency_ms": 138619,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 761
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3584_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 256,
+        "total_tokens": 13734,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.511033+00:00",
+      "response_timestamp": "2026-02-09T09:09:49.156775+00:00",
+      "latency_ms": 140645,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 615
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 76,
+        "total_tokens": 13554,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512023+00:00",
+      "response_timestamp": "2026-02-09T09:09:51.831969+00:00",
+      "latency_ms": 143319,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 176
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3136_y1792.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 200,
+        "total_tokens": 13678,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.510355+00:00",
+      "response_timestamp": "2026-02-09T09:09:53.060194+00:00",
+      "latency_ms": 144549,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 472
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.509700+00:00",
+      "response_timestamp": "2026-02-09T09:09:54.136271+00:00",
+      "latency_ms": 145626,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 175
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512358+00:00",
+      "response_timestamp": "2026-02-09T09:09:54.315394+00:00",
+      "latency_ms": 145803,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 170
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x448_y896.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 321,
+        "total_tokens": 13799,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.511517+00:00",
+      "response_timestamp": "2026-02-09T09:09:57.560168+00:00",
+      "latency_ms": 149048,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 757
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 192,
+        "total_tokens": 13670,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.509981+00:00",
+      "response_timestamp": "2026-02-09T09:09:58.004335+00:00",
+      "latency_ms": 149494,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 447
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3584_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 199,
+        "total_tokens": 13677,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513296+00:00",
+      "response_timestamp": "2026-02-09T09:09:58.452186+00:00",
+      "latency_ms": 149938,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 465
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2688_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 72,
+        "total_tokens": 13550,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.510263+00:00",
+      "response_timestamp": "2026-02-09T09:09:59.375922+00:00",
+      "latency_ms": 150865,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 172
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3136_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.510113+00:00",
+      "response_timestamp": "2026-02-09T09:09:59.617593+00:00",
+      "latency_ms": 151107,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 252,
+        "total_tokens": 13730,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.509560+00:00",
+      "response_timestamp": "2026-02-09T09:09:59.950809+00:00",
+      "latency_ms": 151441,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 590
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3136_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.510444+00:00",
+      "response_timestamp": "2026-02-09T09:10:00.611544+00:00",
+      "latency_ms": 152101,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 176
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 135,
+        "total_tokens": 13613,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.511802+00:00",
+      "response_timestamp": "2026-02-09T09:10:00.944802+00:00",
+      "latency_ms": 152433,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 316
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x0_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 199,
+        "total_tokens": 13677,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512123+00:00",
+      "response_timestamp": "2026-02-09T09:10:02.297722+00:00",
+      "latency_ms": 153785,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 465
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512485+00:00",
+      "response_timestamp": "2026-02-09T09:10:02.972678+00:00",
+      "latency_ms": 154460,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3584_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513551+00:00",
+      "response_timestamp": "2026-02-09T09:10:03.082942+00:00",
+      "latency_ms": 154569,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 170
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x896_y1792.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 71,
+        "total_tokens": 13549,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513800+00:00",
+      "response_timestamp": "2026-02-09T09:10:03.193392+00:00",
+      "latency_ms": 154679,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 167
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2240_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512155+00:00",
+      "response_timestamp": "2026-02-09T09:10:04.172286+00:00",
+      "latency_ms": 155660,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3136_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 74,
+        "total_tokens": 13552,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513178+00:00",
+      "response_timestamp": "2026-02-09T09:10:04.746706+00:00",
+      "latency_ms": 156233,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 174
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512243+00:00",
+      "response_timestamp": "2026-02-09T09:10:05.549474+00:00",
+      "latency_ms": 157037,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 171
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3584_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 134,
+        "total_tokens": 13612,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.511169+00:00",
+      "response_timestamp": "2026-02-09T09:10:05.586046+00:00",
+      "latency_ms": 157074,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 315
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3584_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 68,
+        "total_tokens": 13546,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513376+00:00",
+      "response_timestamp": "2026-02-09T09:10:05.886528+00:00",
+      "latency_ms": 157373,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 161
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 135,
+        "total_tokens": 13613,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.512937+00:00",
+      "response_timestamp": "2026-02-09T09:10:05.892080+00:00",
+      "latency_ms": 157379,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 316
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x448_y1792.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 75,
+        "total_tokens": 13553,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513601+00:00",
+      "response_timestamp": "2026-02-09T09:10:06.730587+00:00",
+      "latency_ms": 158216,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 175
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3136_y1792.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 13478,
+        "output_tokens": 73,
+        "total_tokens": 13551,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 424
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 13054
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-09T09:07:28.513054+00:00",
+      "response_timestamp": "2026-02-09T09:10:07.320266+00:00",
+      "latency_ms": 158807,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 164
+    }
+  ],
+  "cost_estimate": {
+    "input_cost_usd": 0.080868,
+    "output_cost_usd": 0.003531,
+    "total_cost_usd": 0.084399,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.1,
+      "output_per_1m": 0.4
+    }
+  },
+  "tpm_governor": {
+    "tpm_limit": 1000000,
+    "target_tpm": 800000,
+    "current_tpm": 619327,
+    "current_concurrency": 55,
+    "peak_concurrency": 55,
+    "min_observed_concurrency": 2,
+    "total_tokens": 817508,
+    "total_requests": 60,
+    "total_rate_limits": 0,
+    "rate_limits_in_window": 0,
+    "avg_latency_seconds": 114.95,
+    "adjustments": 9,
+    "adjustment_history": [
+      {
+        "time_offset": 12.4,
+        "old": 3,
+        "new": 2,
+        "current_tpm": 1002265,
+        "target_tpm": 800000,
+        "reason": "over_target"
+      },
+      {
+        "time_offset": 48.3,
+        "old": 2,
+        "new": 8,
+        "current_tpm": 149582,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 82.3,
+        "old": 8,
+        "new": 16,
+        "current_tpm": 96349,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 93.5,
+        "old": 16,
+        "new": 29,
+        "current_tpm": 198644,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 106.2,
+        "old": 29,
+        "new": 39,
+        "current_tpm": 197603,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 116.4,
+        "old": 39,
+        "new": 46,
+        "current_tpm": 392153,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 128.8,
+        "old": 46,
+        "new": 50,
+        "current_tpm": 376740,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 140.7,
+        "old": 50,
+        "new": 53,
+        "current_tpm": 377787,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      },
+      {
+        "time_offset": 151.0,
+        "old": 53,
+        "new": 55,
+        "current_tpm": 398887,
+        "target_tpm": 800000,
+        "reason": "under_threshold_ramp"
+      }
+    ],
+    "elapsed_seconds": 158.9
+  }
+}

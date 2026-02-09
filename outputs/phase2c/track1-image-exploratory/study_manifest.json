@@ -1,0 +1,22 @@
+{
+  "study": {
+    "name": "Phase 2c Exploratory: Pure-Positive HP Scaling",
+    "version": "1.0",
+    "description": "Exploratory follow-up to Phase 2c (H8). Tests whether adding hard\npositives to a pure-positive library (no Canon-) yields further\nimprovement over plus-hp (F1=0.609, the Phase 2c winner).\n\nThree conditions test HP scaling in a negative-free context:\n  - pure-positive-canon: 4 Canon+ only (baseline, reused from Phase 2c)\n  - pure-positive-2hp: 4 Canon+ + 2 HP (one Rakovski, one Elenovo)\n  - pure-positive-4hp: 4 Canon+ + 4 HP (all available hard positives)\n\nThe pure-positive-canon condition (10 runs) can be copied from the\nmain Phase 2c output directory to avoid redundant API calls.\n",
+    "phase": "2c-exploratory",
+    "hypothesis": "H8-exploratory (related to H12)",
+    "created": "2026-02-09"
+  },
+  "generated": "2026-02-09T13:50:04.611730+00:00",
+  "conditions": [
+    "pure-positive-canon",
+    "pure-positive-2hp",
+    "pure-positive-4hp"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 1,
+  "tile_limit": null,
+  "execution_order": [
+    "pure-positive-2hp/run_2"
+  ]
+}
