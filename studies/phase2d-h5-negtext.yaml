@@ -119,7 +119,6 @@ inputs:
 
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
-  workers: 1
   output_dir: "outputs/phase2d"
   checkpoint_dir: "outputs/phase2d/checkpoints"
   cells_to_run: 6  # Only Terse and Verbose variants; Minimal reused from 2a

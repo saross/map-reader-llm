@@ -58,7 +58,6 @@ inputs:
 
 execution:
   runs: 1               # Single run (not repeated K times)
-  workers: 1            # Sequential execution (rate limit safe)
   output_dir: "outputs/phase3a"
   checkpoint_dir: "outputs/phase3a/checkpoints"
   # Note: Total passes = 5 + 10 + 30 = 45 per tile

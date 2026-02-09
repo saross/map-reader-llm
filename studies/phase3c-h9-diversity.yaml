@@ -72,7 +72,6 @@ inputs:
 
 execution:
   runs: 10              # K=10 independent runs for statistical power
-  workers: 1            # Sequential execution
   output_dir: "outputs/phase3c"
   checkpoint_dir: "outputs/phase3c/checkpoints"
 

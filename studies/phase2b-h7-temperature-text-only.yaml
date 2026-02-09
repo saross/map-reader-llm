@@ -77,7 +77,6 @@ inputs:
 
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
-  workers: 1
   output_dir: "outputs/phase2b/track2-text"
   checkpoint_dir: "outputs/phase2b/track2-text/checkpoints"
 

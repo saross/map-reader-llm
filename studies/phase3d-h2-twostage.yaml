@@ -85,7 +85,6 @@ inputs:
 
 execution:
   runs: 10              # K=10 independent runs
-  workers: 1            # Sequential execution
   output_dir: "outputs/phase3d"
   checkpoint_dir: "outputs/phase3d/checkpoints"
 

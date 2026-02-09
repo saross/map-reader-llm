@@ -136,7 +136,6 @@ inputs:
 
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
-  workers: 1
   output_dir: "outputs/phase2c/track1-image"
   checkpoint_dir: "outputs/phase2c/track1-image/checkpoints"
 
