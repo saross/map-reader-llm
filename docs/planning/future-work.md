@@ -83,6 +83,39 @@ Prioritise ambiguous cases for human review:
 - Request human annotation
 - Update training set iteratively
 
+### 3.4 Null Tile Count and Negative Example Composition
+
+Null tiles (currently fixed at 3 per library) were introduced as necessary
+infrastructure — without them the model generates detections until output tokens
+fill up. This is well-attested in traditional CV/ML literature (training sets need
+negative examples), and 3 is relatively few by ML standards. However, the Phase 2c
+P:N ratio analysis (see `reports/phase2c-pn-ratio-analysis.md`) revealed that
+negative example *composition* matters more than negative example *count*:
+
+- Canon- examples (clear, informative negatives) redirect false positives to true
+  positives when paired with hard positives
+- Hard negatives (ambiguous, near-boundary negatives) degrade performance regardless
+  of context
+- Null tiles provide no discriminative information but are functionally necessary
+
+**Open questions**:
+
+1. Is 3 nulls the right count, or would fewer (1-2) or more (4-5) change results?
+2. Does the Canon- + null combination represent a "sweet spot" for negative
+   composition, or would Canon- alone (without nulls) work if the model's runaway
+   detection behaviour has been addressed by other prompt changes?
+3. Can the original runaway detection effect (pre-null) be reproduced under
+   controlled conditions to confirm it's still active?
+
+**Motivation**: The 2x2 HP x Canon- interaction analysis showed that both factors
+reverse their effect depending on the other's presence. Null tiles may participate
+in a similar three-way interaction that is currently invisible because null count
+has been held constant.
+
+**Design**: OFAT probe varying null count (0, 1, 3, 5) at the plus-hp library
+composition (the current optimum). ~4 cells, cost ~$44 at current rates. Deferred
+until after other parameters (modality, text treatment, ordering) are finalised.
+
 ---
 
 ## Stretch Goals
