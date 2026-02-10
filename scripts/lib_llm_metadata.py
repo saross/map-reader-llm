@@ -262,16 +262,19 @@ class LLMMetadataTracker:
 
         Args:
             config: The prompt/experiment configuration dict.
-            system_instruction: The system instruction text (for hashing).
+            system_instruction: The system instruction text (for hashing and
+                persisting in output metadata).
             script_name: Name of the calling script.
             script_version: Version of the calling script.
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
         self.config = config
+        self.system_instruction_text = system_instruction
         self.system_instruction_hash = hashlib.sha256(
             system_instruction.encode('utf-8')
         ).hexdigest()
+        self.library_hash = self._compute_library_hash(config)
         self.script_name = script_name
         self.script_version = script_version
 
@@ -287,6 +290,39 @@ class LLMMetadataTracker:
 
         # Results summary (task-specific)
         self.results_summary: dict[str, Any] = {}
+
+    @staticmethod
+    def _compute_library_hash(config: dict[str, Any]) -> str:
+        """
+        Compute a SHA-256 hash of the example library composition.
+
+        Hashes the list of examples (path, label, category) from the config
+        to produce a unique fingerprint for each library variant. This
+        distinguishes conditions that share the same system instruction but
+        use different example sets.
+
+        Args:
+            config: The prompt/experiment configuration dict, expected to
+                contain an 'examples' key with a list of example dicts.
+
+        Returns:
+            Hex digest of the library hash, or "no_examples" if the config
+            has no examples list.
+        """
+        import json
+
+        examples = config.get("examples", [])
+        if not examples:
+            return "no_examples"
+
+        # Normalise to a stable representation: sorted list of (path, label, category)
+        # tuples serialised as JSON. Sorting ensures order-independence.
+        normalised = sorted(
+            (ex.get("path", ""), ex.get("label", ""), ex.get("category", ""))
+            for ex in examples
+        )
+        canonical = json.dumps(normalised, sort_keys=True)
+        return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
     def log_response(
         self,
@@ -460,9 +496,23 @@ class LLMMetadataTracker:
                 "configuration": {
                     "version": self.config.get("version"),
                     "model": self.config.get("model"),
-                    "instruction_file": self.config.get("instruction_file", "unknown"),
-                    "prompt_hash": self.system_instruction_hash,
+                    "instruction_file": self.config.get(
+                        "instruction_file", "unknown"
+                    ),
+                    "system_instruction_hash": self.system_instruction_hash,
+                    "system_instruction_text": self.system_instruction_text,
+                    "library_hash": self.library_hash,
                     "temperature": self.config.get("temperature"),
+                    "max_output_tokens": self.config.get(
+                        "max_output_tokens"
+                    ),
+                    "thinking_level": self.config.get("thinking_level"),
+                    "include_example_images": self.config.get(
+                        "include_example_images", True
+                    ),
+                    "example_count": len(
+                        self.config.get("examples", [])
+                    ),
                     "full_config_snapshot": self.config,
                 },
                 "execution_stats": asdict(self.stats),

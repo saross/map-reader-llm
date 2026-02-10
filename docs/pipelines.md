@@ -190,8 +190,14 @@ All pipeline scripts capture comprehensive metadata for reproducibility and cost
     "version": "detect_image-only",
     "model": "gemini-3-flash",
     "instruction_file": "detect_image-only.md",
-    "prompt_hash": "sha256-of-system-instruction",
+    "system_instruction_hash": "sha256-of-system-instruction",
+    "system_instruction_text": "You are an expert analyst...",
+    "library_hash": "sha256-of-example-library-composition",
     "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "include_example_images": true,
+    "example_count": 9,
     "full_config_snapshot": { ... }
   },
   "execution_stats": {
@@ -252,12 +258,67 @@ All pipeline scripts capture comprehensive metadata for reproducibility and cost
 | Field | Description |
 |-------|-------------|
 | `run_id` | Unique identifier for this execution |
-| `prompt_hash` | SHA-256 hash of system instruction (for reproducibility) |
+| `system_instruction_hash` | SHA-256 hash of system instruction text (for reproducibility) |
+| `system_instruction_text` | Full system instruction text sent to the model |
+| `library_hash` | SHA-256 hash of example library (paths + labels + categories) |
+| `temperature` | Sampling temperature (0.0 = near-deterministic) |
+| `max_output_tokens` | Maximum output tokens per API call |
+| `thinking_level` | Model reasoning level (e.g., `minimal`, `medium`, `high`; Gemini ThinkingConfig) |
+| `include_example_images` | Whether example images were sent (`true` for image tracks, `false` for text-only) |
+| `example_count` | Number of examples in the library (from config, before image loading) |
 | `git_commit` | Repository state at execution time |
 | `finish_reason_counts` | Distribution of API completion statuses |
 | `retries_*` | Breakdown by error category (rate limit, server, timeout) |
 | `cost_estimate` | Calculated from token usage and current pricing |
 | `per_item_metadata` | Detailed per-tile/per-candidate response data |
+
+### Reconstructing the Full API Prompt
+
+The meta.json captures all components needed to reconstruct the exact prompt sent to the
+Gemini API. The prompt is not stored verbatim because it includes binary image data, but it
+can be reconstructed deterministically from the metadata.
+
+The API call structure (see `scripts/4_detect_mounds_batch.py`, lines 274–318) is:
+
+```text
+generate_content(
+    model=<configuration.model>,
+    contents=<content>,
+    config=GenerateContentConfig(
+        temperature=<configuration.temperature>,
+        max_output_tokens=<configuration.max_output_tokens>,
+        response_mime_type="application/json",
+        thinking_config=ThinkingConfig(thinking_level=<configuration.thinking_level>),
+        system_instruction=<configuration.system_instruction_text>,
+        safety_settings=[all categories set to OFF],
+    ),
+)
+```
+
+The `contents` parameter is assembled as follows:
+
+1. **Preamble text**: `"Here are the Reference Symbols you must find:"`
+2. **Example pairs** (for each example in `full_config_snapshot.examples`, in order):
+   - Text part: the `label` field (e.g., `"Positive"` or `"Negative"`)
+   - Image part: the image file at `prompts/examples/<path>` (PNG bytes)
+   - If `include_example_images` is `false`, this step is skipped entirely
+3. **Transition text**: `"Now, find detection instances that visually match ANY of the above Reference Examples in the Target Map Tile below:"`
+4. **Target tile image**: the tile being analysed (PNG bytes from `inputs/tiles/`)
+
+To verify a specific run's prompt:
+
+- The system instruction is in `configuration.system_instruction_text`
+- The example images are at `prompts/examples/<full_config_snapshot.examples[N].path>`
+- The example order matches the config order (unless `ordering_override` is set in the
+  snapshot, in which case the reordered sequence was used)
+- The target tile is identified by `per_item_metadata[N].item_id`
+
+**Not captured in metadata** (hardcoded in the script):
+
+- `response_mime_type` is always `"application/json"` (JSON mode)
+- All four safety categories (`HARASSMENT`, `HATE_SPEECH`, `SEXUALLY_EXPLICIT`,
+  `DANGEROUS_CONTENT`) are set to `OFF`
+- The preamble and transition text strings shown above
 
 ### Shared Metadata Module
 
