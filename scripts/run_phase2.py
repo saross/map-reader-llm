@@ -44,6 +44,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import signal
 import subprocess
 import sys
 import threading
@@ -437,43 +438,62 @@ def run_execution_unit(
         print(f"  [DRY RUN] {' '.join(cmd)}")
         return True, "dry_run", 0.0
 
+    # Grace period (seconds) between SIGTERM and SIGKILL on timeout.
+    # Gives the batch script time to finish its incremental save.
+    grace_seconds = 30
+
     try:
         # When log_file is provided (parallel mode), redirect output
         # to avoid interleaved terminal output from concurrent units.
         # When None (sequential mode), inherit terminal for live output.
         if log_file:
             log_file.parent.mkdir(parents=True, exist_ok=True)
-            with open(log_file, "w") as lf:
-                result = subprocess.run(
-                    cmd,
-                    cwd=str(PROJECT_ROOT),
-                    stdout=lf,
-                    stderr=subprocess.STDOUT,
-                    text=True,
-                    timeout=timeout,
-                )
+            lf = open(log_file, "w")  # noqa: SIM115
+            proc = subprocess.Popen(
+                cmd,
+                cwd=str(PROJECT_ROOT),
+                stdout=lf,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
         else:
-            result = subprocess.run(
+            lf = None
+            proc = subprocess.Popen(
                 cmd,
                 cwd=str(PROJECT_ROOT),
                 stdout=None,  # inherit — stream to terminal
                 stderr=None,  # inherit — stream to terminal
                 text=True,
-                timeout=timeout,
             )
+
+        try:
+            proc.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            # Graceful shutdown: SIGTERM first so the batch script can
+            # finish its incremental save, then SIGKILL if it lingers.
+            proc.send_signal(signal.SIGTERM)
+            try:
+                proc.wait(timeout=grace_seconds)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait()
+            return False, "timeout", 0.0
+        finally:
+            if lf:
+                lf.close()
 
         meta_path = run_dir / f"{output_name}.meta.json"
         cost = read_meta_cost(meta_path)
         items_failed = read_meta_failures(meta_path)
 
-        if result.returncode == 0 and items_failed == 0:
+        if proc.returncode == 0 and items_failed == 0:
             return True, "success", cost
 
         # Exit code 2 = partial failure (some tiles failed).
         # Accept runs where only a small number of tiles failed
         # (e.g. 1 tile with a known JSON parse issue out of 60).
         max_acceptable_failures = 2
-        if result.returncode in (0, 2) and items_failed <= max_acceptable_failures:
+        if proc.returncode in (0, 2) and items_failed <= max_acceptable_failures:
             if items_failed > 0:
                 print(
                     f"  Accepting partial result: {items_failed} tile(s) "
@@ -487,10 +507,8 @@ def run_execution_unit(
                 f"partial_failure_{items_failed}_tiles",
                 cost,
             )
-        return False, f"exit_code_{result.returncode}", cost
+        return False, f"exit_code_{proc.returncode}", cost
 
-    except subprocess.TimeoutExpired:
-        return False, "timeout", 0.0
     except Exception as e:
         return False, f"exception: {str(e)}", 0.0
 

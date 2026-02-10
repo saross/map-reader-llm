@@ -79,6 +79,38 @@ MAX_BACKOFF_SECONDS = 300
 CONSECUTIVE_FAILURE_THRESHOLDS = (5, 10, 20, 30)
 
 
+def _save_geojson(
+    features: list,
+    output_file: Path,
+    processed_tiles: set | None = None,
+) -> None:
+    """
+    Write features to a GeoJSON FeatureCollection.
+
+    Called incrementally after each tile so that partial results survive
+    if the process is killed (e.g. by a SIGKILL timeout). The resume
+    logic in detect_mounds_versioned() reads this file on restart and
+    skips already-processed tiles.
+
+    Args:
+        features: List of GeoJSON Feature dicts.
+        output_file: Path to write the FeatureCollection.
+        processed_tiles: Optional set of tile filenames that have been
+            successfully processed (including those with zero detections).
+            Stored as a top-level property so resume can skip them even
+            when no features were generated.
+    """
+    collection = geojson.FeatureCollection(features)
+    collection["crs"] = {
+        "type": "name",
+        "properties": {"name": "urn:ogc:def:crs:EPSG::32635"},
+    }
+    if processed_tiles is not None:
+        collection["processed_tiles"] = sorted(processed_tiles)
+    with open(output_file, "w") as f:
+        geojson.dump(collection, f)
+
+
 def _resolve_model_name(client: genai.Client, model_name: str) -> str | None:
     """
     Resolve a model name to its API-available form.
@@ -761,6 +793,9 @@ def detect_mounds_versioned(
     print(f"Metadata: {meta_file}")
 
     # Load existing results (Resume capability)
+    # Reads any incrementally-saved geojson from a prior (possibly killed)
+    # run.  The processed_tiles set tracks ALL successfully-processed tiles
+    # including those with zero detections, so they aren't re-queried.
     features = []
     processed_tiles = set()
     if output_file.exists():
@@ -768,9 +803,16 @@ def detect_mounds_versioned(
             with open(output_file, 'r') as f:
                 data = geojson.load(f)
                 features = data.get("features", [])
-                for feat in features:
-                    if "source_tile" in feat["properties"]:
-                        processed_tiles.add(feat["properties"]["source_tile"])
+                # Primary source: explicit list (handles zero-detection tiles)
+                if "processed_tiles" in data:
+                    processed_tiles = set(data["processed_tiles"])
+                # Fallback: scan features (for older output files)
+                else:
+                    for feat in features:
+                        if "source_tile" in feat["properties"]:
+                            processed_tiles.add(
+                                feat["properties"]["source_tile"]
+                            )
         except Exception:
             features = []
 
@@ -796,15 +838,21 @@ def detect_mounds_versioned(
 
                 found_count = 0
                 for fname in target_filenames:
-                    if fname in all_tiles_map and fname not in processed_tiles:
-                        tiles_to_process.append(all_tiles_map[fname])
+                    if fname in all_tiles_map:
                         found_count += 1
+                        if fname not in processed_tiles:
+                            tiles_to_process.append(all_tiles_map[fname])
 
                 print(
                     f"Manifest loaded. Found {found_count} of "
                     f"{len(target_filenames)} tiles "
                     f"({len(tiles_to_process)} remaining to process)."
                 )
+                if processed_tiles:
+                    print(
+                        f"  Resuming: {len(processed_tiles)} tiles "
+                        f"already processed."
+                    )
 
         except Exception as e:
             print(f"Error reading manifest: {e}")
@@ -916,6 +964,11 @@ def detect_mounds_versioned(
                 else:
                     consecutive_failures = 0
                     features.extend(new_features)
+                    processed_tiles.add(tile_name)
+
+                    # Incremental save — ensures partial results survive
+                    # if the process is killed by a timeout (SIGKILL).
+                    _save_geojson(features, output_file, processed_tiles)
             except Exception as e:
                 print(f"Exception in worker for {tile_name}: {e}")
                 failure_count += 1
@@ -936,14 +989,9 @@ def detect_mounds_versioned(
                     f"\nWARNING: {consecutive_failures} consecutive failures!"
                 )
 
-    # Final Save
-    collection = geojson.FeatureCollection(features)
-    collection["crs"] = {
-        "type": "name",
-        "properties": {"name": "urn:ogc:def:crs:EPSG::32635"},
-    }
-    with open(output_file, "w") as f:
-        geojson.dump(collection, f)
+    # Final save (also written incrementally above, but ensures
+    # the file reflects the complete run including any late arrivals).
+    _save_geojson(features, output_file, processed_tiles)
 
     # Write tile completion manifest
     manifest_path = output_file.with_suffix('.tiles.json')
