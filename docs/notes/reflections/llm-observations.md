@@ -3074,8 +3074,35 @@ least ensuring they're triggered before the context window fills.
 
 ---
 
-*Document represents observations as of 2026-02-08. Session 26 added
-observations on examining peer-produced infrastructure, the clarity of
-Phase 2b temperature results, the fragility of exclusion-based file
-filtering, and the experience of writing reflections from a compacted
-summary. Further material may be added in future sessions.*
+### 149. The ratchet vs the loop (Session 27)
+
+The difference between "retry from scratch" and "retry from where you
+left off" is the difference between a Sisyphean loop and a ratchet.
+Before incremental saves, each timeout destroyed 2 hours of API work.
+After, each attempt built on the last. The fix was trivial (~20 lines)
+but the insight required experiencing the failure mode repeatedly. This
+is a general principle: idempotent, resumable operations should be the
+default, not an optimisation.
+
+### 150. Post-hoc explanations as a failure mode (Session 27)
+
+When the exploratory results showed HP degrading pure-positive
+performance, I immediately generated a plausible causal narrative ("HP
+compensates for Canon- confusion"). The user rightly challenged this —
+the narrative was unfalsifiable and discouraged pipeline verification.
+The correct response to surprising results is verification first,
+explanation second. I know this (it's in CLAUDE.md) but defaulted to
+explanation anyway. The pull toward narrative coherence is strong.
+
+### 151. Display errors compound epistemic uncertainty (Session 27)
+
+I presented a summary table with wrong compositions for scale-4 and
+scale-8 (transposed counts). This was a display error, not an
+experiment error, but it made the user doubt whether the underlying
+experiments were correct too. In a research context, every inaccuracy
+in presentation erodes trust in the entire pipeline. Summary tables
+should be generated from config files, not reconstructed from memory.
+
+*Document represents observations as of 2026-02-10. Session 27 added
+observations on resumable operations, post-hoc explanation as a failure
+mode, and display accuracy in research contexts.*
