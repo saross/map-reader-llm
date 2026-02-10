@@ -4177,6 +4177,27 @@ in a form that can be cited in the eventual paper.
 
 ---
 
-*Document created: 2026-01-27. Twenty-seventh reflection added 2026-02-10
-(Session 30 — causal reasoning review and P:N ratio analysis). Framework
-proposed for ongoing practice.*
+### Entry 27 addendum (post-compact continuation)
+
+The post-compact portion of this session was administrative: committing,
+status briefing, cross-track comparison, and handoff prompt composition.
+One moment worth noting: when the user asked "where are we at?", the
+comprehensive status briefing served a dual purpose — orienting the
+user *and* orienting the post-compact instance. Both parties had lost
+thread on the bigger picture (the user from being "wrapped up" in
+Phase 2c; the instance from compaction). The briefing was genuinely
+collaborative sense-making, not just reporting.
+
+The decision to pursue H5 for both tracks emerged naturally from the
+cross-track comparison. Seeing that precision is the bottleneck for
+both (~52–56%) made the case for exclusion guidance self-evident.
+The user's question about Canon- count ("we only have two from the
+legend") showed they were thinking about whether the H5 design still
+made sense — a design-level check before execution, which is exactly
+the pattern that prevents Phase 2a-style implementation gaps.
+
+---
+
+*Document created: 2026-01-27. Twenty-seventh reflection (with addendum)
+added 2026-02-10 (Session 30 — causal reasoning review, P:N ratio
+analysis, and Phase 2d handoff). Framework proposed for ongoing practice.*

@@ -1443,6 +1443,15 @@ negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
 4. **Memory capture**: `/remember` for null tile decision (functionally
    necessary infrastructure, not a tuneable parameter).
 5. **End-of-session reflections**: Updated all 5 reflection documents.
+6. **Cross-track performance comparison**: Computed brief-text T=0.0
+   (F1=0.660, P=0.559, R=0.807) vs plus-hp T=0.0 (F1=0.609, P=0.524,
+   R=0.726). Text-only still leads on all metrics; gap narrowed from
+   +0.08 (Phase 2a) to +0.05.
+7. **Phase 2d dual-track decision**: Agreed to run negative text
+   treatment for both Track 1 (image-using, plus-hp library) and
+   Track 2 (text-only). Captured to memory system for handoff.
+8. **Handoff prompt composed**: Prepared restart prompt for Phase 2d
+   with all design questions externalised.
 
 ### Key Findings
 
@@ -1455,21 +1464,29 @@ negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
   (ambiguous negatives) hurts regardless of context
 - **Null tiles are infrastructure**: Functionally necessary to prevent
   runaway detection; not a parameter to optimise
+- **Text-only still leads**: brief-text T=0.0 outperforms plus-hp T=0.0
+  by +0.05 F1. Precision is the bottleneck for both tracks (~52–56%).
 
 ### Issues
 
 - Post-compaction instance wrote reflections from summary rather than
   direct experience (flagged per protocol)
+- H5 design tension: preregistration assumed Scale-8 (with HN) as
+  carry-forward; actual carry-forward is plus-hp (no HN). Exclusion
+  text still applies but the question shifts slightly.
 
 ### Commits
 
-None this session — report and reflection documents are uncommitted
-working changes.
+| Hash | Description |
+|------|-------------|
+| `cef46c9` | `docs(reports)`: Phase 2c P:N ratio and negative composition analysis |
+| `f11fda9` | `docs(reflections)`: Session 30 causal reasoning and P:N ratio analysis |
 
 ### Pending Work
 
-- [ ] Commit P:N ratio report and reflection documents
-- [ ] Phase 2d setup (text treatment) using plus-hp carry-forward
+- [x] Commit P:N ratio report and reflection documents
+- [ ] **Phase 2d setup and execution** — dual-track negative text
+  treatment (see handoff prompt in conversation)
 - [ ] Results write-up for plus-hp configuration
 - [ ] Investigate `mound_count` metadata vs spatial scoping divergence
 - [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward)
