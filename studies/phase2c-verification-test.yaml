@@ -1,0 +1,166 @@
+# Phase 2c Verification Test: Independent Directional Check
+# ==========================================================
+# Designed (not executed) as part of the adversarial review of Phase 2c
+# results. Tests whether the key directional pattern holds on 5
+# independent tiles not used in the Phase 2c validation set.
+#
+# Expected pattern: plus-hp > pure-positive-canon > pure-positive-4hp
+#
+# Usage:
+#   # First, generate verification bounds:
+#   python scripts/generate_bounds.py \
+#     --manifest inputs/tiles/verification_manifest.json \
+#     --output inputs/vectors/bounds/verification_bounds.geojson
+#
+#   # Then run the verification:
+#   python scripts/run_phase2.py studies/phase2c-verification-test.yaml
+#
+#   # Or dry-run first:
+#   python scripts/run_phase2.py studies/phase2c-verification-test.yaml --dry-run
+#
+# Prerequisites:
+#   - verification_bounds.geojson must exist (see command above)
+#   - Phase 2c library configs must be in prompts/configs/
+#   - API key configured for Gemini
+
+study:
+  name: "Phase 2c Verification: HP + Canon- Interaction"
+  version: "1.0"
+  description: |
+    Independent directional verification of Phase 2c finding that HP
+    examples degrade performance without Canon- negatives but improve
+    it with them. Uses 5 tiles from the verification manifest (disjoint
+    from the 60-tile validation set).
+
+    Three conditions test the critical contrasts:
+      - pure-positive-canon: 4C+ + 3 null (baseline, no HP, no Canon-)
+      - pure-positive-4hp:   4C+ + 4HP + 3 null (HP without Canon-)
+      - plus-hp:             4C+ + 4HP + 2C- + 3 null (HP with Canon-)
+
+    Expected result if Phase 2c findings are genuine:
+      F1(plus-hp) > F1(pure-positive-canon) > F1(pure-positive-4hp)
+
+    Contamination note: verification tiles may overlap with the
+    calibration set used during prompt development, but NOT with the
+    validation set used for Phase 2c evaluation. Results are for
+    directional sanity checking only, not formal hypothesis testing.
+  phase: "2c-verification"
+  hypothesis: "H8-verification"
+  created: "2026-02-10"
+
+# Carried forward from Phase 2c
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text-image.json"
+  optimal_me_name: "brief-text-image"
+  optimal_temperature: 0.0
+  source_2a: "Phase 2a — best image-using M/E (F1=0.4617)"
+  source_2b: "Phase 2b Track 1 — optimal temperature (T=0.0, F1=0.5574)"
+  source_2c: "Phase 2c — plus-hp best overall (F1=0.609)"
+
+# Factor under test
+factors:
+  library_composition:
+    description: "Three critical contrasts from Phase 2c"
+    levels:
+      - name: "pure-positive-canon"
+        config: "prompts/configs/library_pure-positive-canon.json"
+        description: "Canon+ (4), null (3) = 7 examples. Baseline."
+        composition:
+          canonical_positive: 4
+          canonical_negative: 0
+          hard_positive: 0
+          hard_negative: 0
+          null_examples: 3
+          total: 7
+      - name: "pure-positive-4hp"
+        config: "prompts/configs/library_pure-positive-4hp.json"
+        description: "Canon+ (4), HP (4), null (3) = 11 examples. HP without Canon-."
+        composition:
+          canonical_positive: 4
+          canonical_negative: 0
+          hard_positive: 4
+          hard_negative: 0
+          null_examples: 3
+          total: 11
+      - name: "plus-hp"
+        config: "prompts/configs/library_plus-hp.json"
+        description: "Canon+ (4), HP (4), Canon- (2), null (3) = 13 examples. HP with Canon-."
+        composition:
+          canonical_positive: 4
+          canonical_negative: 2
+          hard_positive: 4
+          hard_negative: 0
+          null_examples: 3
+          total: 13
+
+# Fixed parameters
+fixed:
+  ordering: "canonical-first"
+
+inputs:
+  manifest: "inputs/tiles/verification_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/verification_bounds.geojson"
+
+execution:
+  runs: 1             # K=1 — T=0.0 is near-deterministic
+  workers: 1          # Safe default; use --workers N at runtime
+  output_dir: "outputs/phase2c/verification-test"
+  checkpoint_dir: "outputs/phase2c/verification-test/checkpoints"
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {factor_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --temperature {carried_forward.optimal_temperature}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+    - ["pure-positive-canon", "pure-positive-4hp"]
+    - ["pure-positive-canon", "plus-hp"]
+    - ["pure-positive-4hp", "plus-hp"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "results/phase2c-verification-test.json"
+    summary: "results/phase2c-verification-test.md"
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
+  aggregated:
+    - "results/phase2c-verification-test.json"
+    - "results/phase2c-verification-test.md"
+
+estimates:
+  cells: 3
+  new_cells: 3
+  api_calls_per_cell: 5        # 1 run x 5 tiles
+  total_new_api_calls: 15
+  cost_usd: 0.05
+  time_minutes: 2
+
+outcome:
+  determines: "directional_verification"
+  comparison_baseline: "Phase 2c main results"
+  carries_forward_to: "N/A — verification only"
+  decision_rule: |
+    Check whether the directional pattern holds:
+      F1(plus-hp) > F1(pure-positive-canon) > F1(pure-positive-4hp)
+
+    If the full ordering holds: strong support for Phase 2c findings.
+    If plus-hp > pure-positive-4hp but ordering of canon varies:
+      partial support (the critical HP+Canon- interaction confirmed).
+    If no directional consistency: raises concerns about generalisability
+      of Phase 2c results beyond the specific validation tile set.
+
+    Note: With only 5 tiles and K=1, formal significance testing is not
+    meaningful. This is a directional sanity check only.
