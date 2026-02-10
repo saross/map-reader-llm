@@ -1335,11 +1335,48 @@ negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
 
 ### Pending Work
 
-- [ ] Adversarial review of Phase 2c results (user suspects something
-  may be wrong — HP helping with Canon- but hurting without doesn't
-  make intuitive sense)
-- [ ] Verify each config actually loaded the right example images
-- [ ] Check detection outputs for anomalies across conditions
+- [x] Adversarial review of Phase 2c results *(completed Session 28)*
+- [x] Verify each config actually loaded the right example images *(completed Session 28)*
+- [x] Check detection outputs for anomalies across conditions *(completed Session 28)*
+
+## Session 28 — 2026-02-10 (Adversarial review + metadata improvements)
+
+**Phase**: 2c verification / infrastructure
+
+### Accomplishments
+
+1. **Adversarial review**: 8-step systematic verification of Phase 2c
+   results. All steps passed — no pipeline bugs, configuration errors,
+   or scoring anomalies found. Report: `reports/phase2c-adversarial-review.md`
+2. **Key mechanistic finding**: plus-hp and pure-positive-4hp produce
+   identical detection counts (132) but Canon- negatives redirect 8
+   detections from FPs to TPs. Canon- improves placement, not volume.
+3. **Verification test designed**: `studies/phase2c-verification-test.yaml`
+   (5 tiles, 3 conditions, K=1, ~$0.05). Not yet executed.
+4. **Metadata improvements** in `lib_llm_metadata.py`:
+   - Renamed `prompt_hash` → `system_instruction_hash`
+   - Added `library_hash`, `system_instruction_text`
+   - Added `thinking_level`, `max_output_tokens`,
+     `include_example_images`, `example_count`
+5. **Documentation**: Prompt reconstruction instructions added to
+   `docs/pipelines.md`
+
+### Issues
+
+- `prompt_hash` was misleadingly named (hashed system instruction only,
+  identical across all 7 conditions). Renamed and augmented.
+- Pre-existing test bug found: `test_ramp_up_stability` fails because
+  token-aware clamping (added later) reduces initial_concurrency=4 to 3
+
+### Pending Work (next session)
+
+- [ ] Commit all changes (nothing committed this session)
+- [ ] Discuss and potentially run verification test (needs
+  `verification_bounds.geojson` generated first)
+- [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` — raise
+  `tpm_limit` or set `tokens_per_request=1` in test fixture
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
 
 ---
 

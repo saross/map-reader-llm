@@ -1590,5 +1590,45 @@ should have requested an adversarial review *before* committing results,
 not after. (3) Display errors in summary tables (wrong compositions)
 can compound confusion about whether results are genuine.
 
-*Last updated: 2026-02-10 (Session 27 — user-driven anomaly detection
-in Phase 2c exploratory results, adversarial review pending)*
+## Session 28 Assessment: Resolution — adversarial review vindicates user's intuition
+
+**Date**: 2026-02-10
+**Trigger**: Systematic 8-step adversarial review of Phase 2c results
+
+**Episode summary**: Session 27 ended with the user suspecting a pipeline
+error; Session 28 executed the adversarial review. All 6 verification
+steps passed. The result is genuine — but the mechanism is subtler than
+either the AI's initial narrative or the user's initial suspicion.
+
+**Resolution of the paradox**: The key finding (Step 6) is that plus-hp
+and pure-positive-4hp make *identical* numbers of detections (132 each)
+but Canon- negatives redirect 8 detections from false positives to true
+positives. Canon- doesn't suppress detection volume — it improves
+detection *placement*. HP without Canon- expands the positive class
+boundary indiscriminately; HP with Canon- does so selectively because
+the model has informative examples of "what a mound is NOT."
+
+**Abductive quality**: This is a successful resolution of an abductive
+cycle initiated by the user in Session 27. The cycle was: (1) surprising
+observation (HP hurts without Canon-), (2) hypothesis generation (either
+pipeline error or genuine interaction), (3) systematic testing (8-step
+review), (4) mechanistic explanation grounded in TP/FP decomposition.
+The final explanation — that Canon- provides discriminative anchoring —
+was not available to either party before the Step 6 analysis.
+
+**AI self-correction**: In Session 27, I accepted surprising results and
+generated plausible-sounding post-hoc explanations. In Session 28, the
+structured adversarial protocol forced verification-first reasoning: no
+explanation was permitted until Steps 1–6 all passed. This is a genuine
+improvement in reasoning discipline, though it was imposed by the prompt
+design rather than arising spontaneously.
+
+**Pattern**: The user's design of the adversarial review prompt —
+procedural (what to check, in what order) rather than attitudinal
+(assume error) — was critical. The 8-step pipeline forced sequential
+verification where each step had to produce concrete evidence before
+the next. This prevented the premature narrative synthesis that
+characterised Session 27's AI behaviour.
+
+*Last updated: 2026-02-10 (Session 28 — adversarial review completed,
+paradox resolved via TP/FP decomposition)*
