@@ -1,0 +1,319 @@
+{
+  "metadata": {
+    "script": "standalone_verification.py",
+    "model": "gemini-3-flash-preview",
+    "api_version": "v1alpha",
+    "match_buffer_m": 20.0,
+    "matching_algorithm": "greedy_nearest_neighbour",
+    "tile_count": 10,
+    "conditions": [
+      "library_pure-positive-canon",
+      "library_pure-positive-4hp",
+      "library_plus-hp"
+    ],
+    "timestamp": "2026-02-10T16:02:52+1100"
+  },
+  "tiles": [
+    {
+      "map_dir": "K-35-052-4_32635",
+      "tile_name": "K-35-052-4_32635_x0_y2240.png",
+      "expected_refs": 13
+    },
+    {
+      "map_dir": "K-35-052-4_32635",
+      "tile_name": "K-35-052-4_32635_x3136_y2240.png",
+      "expected_refs": 3
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x448_y2688.png",
+      "expected_refs": 4
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x896_y2240.png",
+      "expected_refs": 1
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x1792_y448.png",
+      "expected_refs": 2
+    },
+    {
+      "map_dir": "K-35-062-2_Rakovski",
+      "tile_name": "K-35-062-2_Rakovski_x1792_y0.png",
+      "expected_refs": 5
+    },
+    {
+      "map_dir": "K-35-062-2_Rakovski",
+      "tile_name": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "expected_refs": 5
+    },
+    {
+      "map_dir": "K-35-062-2_Rakovski",
+      "tile_name": "K-35-062-2_Rakovski_x3136_y3136.png",
+      "expected_refs": 2
+    },
+    {
+      "map_dir": "K-35-078-1_Lesovo",
+      "tile_name": "K-35-078-1_Lesovo_x0_y3136.png",
+      "expected_refs": 3
+    },
+    {
+      "map_dir": "K-35-078-1_Lesovo",
+      "tile_name": "K-35-078-1_Lesovo_x3584_y0.png",
+      "expected_refs": 2
+    }
+  ],
+  "per_tile_results": {
+    "library_pure-positive-canon": {
+      "K-35-052-4_32635_x0_y2240.png": {
+        "n_detections": 12,
+        "n_references": 13,
+        "tp": 11,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-052-4_32635_x3136_y2240.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-053-3_Elenovo_x448_y2688.png": {
+        "n_detections": 4,
+        "n_references": 4,
+        "tp": 2,
+        "fp": 2,
+        "fn": 2
+      },
+      "K-35-053-3_Elenovo_x896_y2240.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x1792_y448.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x1792_y0.png": {
+        "n_detections": 5,
+        "n_references": 5,
+        "tp": 4,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x2688_y1344.png": {
+        "n_detections": 3,
+        "n_references": 5,
+        "tp": 2,
+        "fp": 1,
+        "fn": 3
+      },
+      "K-35-062-2_Rakovski_x3136_y3136.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-078-1_Lesovo_x0_y3136.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 0,
+        "fp": 3,
+        "fn": 3
+      },
+      "K-35-078-1_Lesovo_x3584_y0.png": {
+        "n_detections": 3,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 2,
+        "fn": 1
+      }
+    },
+    "library_pure-positive-4hp": {
+      "K-35-052-4_32635_x0_y2240.png": {
+        "n_detections": 12,
+        "n_references": 13,
+        "tp": 10,
+        "fp": 2,
+        "fn": 3
+      },
+      "K-35-052-4_32635_x3136_y2240.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-053-3_Elenovo_x448_y2688.png": {
+        "n_detections": 4,
+        "n_references": 4,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x896_y2240.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x1792_y448.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-062-2_Rakovski_x1792_y0.png": {
+        "n_detections": 5,
+        "n_references": 5,
+        "tp": 4,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x2688_y1344.png": {
+        "n_detections": 4,
+        "n_references": 5,
+        "tp": 3,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-062-2_Rakovski_x3136_y3136.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-078-1_Lesovo_x0_y3136.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 0,
+        "fp": 3,
+        "fn": 3
+      },
+      "K-35-078-1_Lesovo_x3584_y0.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 0,
+        "fp": 2,
+        "fn": 2
+      }
+    },
+    "library_plus-hp": {
+      "K-35-052-4_32635_x0_y2240.png": {
+        "n_detections": 12,
+        "n_references": 13,
+        "tp": 11,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-052-4_32635_x3136_y2240.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-053-3_Elenovo_x448_y2688.png": {
+        "n_detections": 4,
+        "n_references": 4,
+        "tp": 2,
+        "fp": 2,
+        "fn": 2
+      },
+      "K-35-053-3_Elenovo_x896_y2240.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x1792_y448.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x1792_y0.png": {
+        "n_detections": 5,
+        "n_references": 5,
+        "tp": 4,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x2688_y1344.png": {
+        "n_detections": 4,
+        "n_references": 5,
+        "tp": 3,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-062-2_Rakovski_x3136_y3136.png": {
+        "n_detections": 3,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 2,
+        "fn": 1
+      },
+      "K-35-078-1_Lesovo_x0_y3136.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 0,
+        "fp": 3,
+        "fn": 3
+      },
+      "K-35-078-1_Lesovo_x3584_y0.png": {
+        "n_detections": 3,
+        "n_references": 2,
+        "tp": 0,
+        "fp": 3,
+        "fn": 2
+      }
+    }
+  },
+  "condition_summaries": {
+    "library_pure-positive-canon": {
+      "label": "pp-canon",
+      "tp": 25,
+      "fp": 13,
+      "fn": 15,
+      "n_detections": 38,
+      "precision": 0.6578947368421053,
+      "recall": 0.625,
+      "f1": 0.6410256410256411
+    },
+    "library_pure-positive-4hp": {
+      "label": "pp-4hp",
+      "tp": 26,
+      "fp": 12,
+      "fn": 14,
+      "n_detections": 38,
+      "precision": 0.6842105263157895,
+      "recall": 0.65,
+      "f1": 0.6666666666666667
+    },
+    "library_plus-hp": {
+      "label": "plus-hp",
+      "tp": 25,
+      "fp": 15,
+      "fn": 15,
+      "n_detections": 40,
+      "precision": 0.625,
+      "recall": 0.625,
+      "f1": 0.625
+    }
+  },
+  "directional_pattern_holds": false
+}

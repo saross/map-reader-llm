@@ -1,0 +1,319 @@
+{
+  "metadata": {
+    "script": "standalone_verification.py",
+    "model": "gemini-3-flash-preview",
+    "api_version": "v1alpha",
+    "match_buffer_m": 20.0,
+    "matching_algorithm": "greedy_nearest_neighbour",
+    "tile_count": 10,
+    "conditions": [
+      "library_pure-positive-canon",
+      "library_pure-positive-4hp",
+      "library_plus-hp"
+    ],
+    "timestamp": "2026-02-10T16:47:44+1100"
+  },
+  "tiles": [
+    {
+      "map_dir": "K-35-052-4_32635",
+      "tile_name": "K-35-052-4_32635_x448_y1344.png",
+      "expected_refs": 4
+    },
+    {
+      "map_dir": "K-35-062-2_Rakovski",
+      "tile_name": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "expected_refs": 3
+    },
+    {
+      "map_dir": "K-35-062-2_Rakovski",
+      "tile_name": "K-35-062-2_Rakovski_x3136_y1792.png",
+      "expected_refs": 3
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x0_y0.png",
+      "expected_refs": 2
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x2688_y1344.png",
+      "expected_refs": 2
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x448_y3136.png",
+      "expected_refs": 2
+    },
+    {
+      "map_dir": "K-35-053-3_Elenovo",
+      "tile_name": "K-35-053-3_Elenovo_x896_y448.png",
+      "expected_refs": 2
+    },
+    {
+      "map_dir": "K-35-052-4_32635",
+      "tile_name": "K-35-052-4_32635_x0_y0.png",
+      "expected_refs": 1
+    },
+    {
+      "map_dir": "K-35-052-4_32635",
+      "tile_name": "K-35-052-4_32635_x3136_y3584.png",
+      "expected_refs": 1
+    },
+    {
+      "map_dir": "K-35-052-4_32635",
+      "tile_name": "K-35-052-4_32635_x896_y3136.png",
+      "expected_refs": 1
+    }
+  ],
+  "per_tile_results": {
+    "library_pure-positive-canon": {
+      "K-35-052-4_32635_x448_y1344.png": {
+        "n_detections": 3,
+        "n_references": 4,
+        "tp": 2,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-062-2_Rakovski_x2688_y2688.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-062-2_Rakovski_x3136_y1792.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-053-3_Elenovo_x0_y0.png": {
+        "n_detections": 1,
+        "n_references": 2,
+        "tp": 0,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-053-3_Elenovo_x2688_y1344.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x448_y3136.png": {
+        "n_detections": 1,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 0,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x896_y448.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-052-4_32635_x0_y0.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-052-4_32635_x3136_y3584.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-052-4_32635_x896_y3136.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    },
+    "library_pure-positive-4hp": {
+      "K-35-052-4_32635_x448_y1344.png": {
+        "n_detections": 4,
+        "n_references": 4,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x2688_y2688.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 2,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x3136_y1792.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-053-3_Elenovo_x0_y0.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x2688_y1344.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 0,
+        "fp": 2,
+        "fn": 2
+      },
+      "K-35-053-3_Elenovo_x448_y3136.png": {
+        "n_detections": 1,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 0,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x896_y448.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-052-4_32635_x0_y0.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-052-4_32635_x3136_y3584.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-052-4_32635_x896_y3136.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    },
+    "library_plus-hp": {
+      "K-35-052-4_32635_x448_y1344.png": {
+        "n_detections": 4,
+        "n_references": 4,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-062-2_Rakovski_x2688_y2688.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-062-2_Rakovski_x3136_y1792.png": {
+        "n_detections": 3,
+        "n_references": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-053-3_Elenovo_x0_y0.png": {
+        "n_detections": 1,
+        "n_references": 2,
+        "tp": 0,
+        "fp": 1,
+        "fn": 2
+      },
+      "K-35-053-3_Elenovo_x2688_y1344.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 0,
+        "fp": 2,
+        "fn": 2
+      },
+      "K-35-053-3_Elenovo_x448_y3136.png": {
+        "n_detections": 1,
+        "n_references": 2,
+        "tp": 1,
+        "fp": 0,
+        "fn": 1
+      },
+      "K-35-053-3_Elenovo_x896_y448.png": {
+        "n_detections": 2,
+        "n_references": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-052-4_32635_x0_y0.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "K-35-052-4_32635_x3136_y3584.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "K-35-052-4_32635_x896_y3136.png": {
+        "n_detections": 1,
+        "n_references": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  "condition_summaries": {
+    "library_pure-positive-canon": {
+      "label": "pp-canon",
+      "tp": 12,
+      "fp": 6,
+      "fn": 9,
+      "n_detections": 18,
+      "precision": 0.6666666666666666,
+      "recall": 0.5714285714285714,
+      "f1": 0.6153846153846153
+    },
+    "library_pure-positive-4hp": {
+      "label": "pp-4hp",
+      "tp": 13,
+      "fp": 7,
+      "fn": 8,
+      "n_detections": 20,
+      "precision": 0.65,
+      "recall": 0.6190476190476191,
+      "f1": 0.6341463414634146
+    },
+    "library_plus-hp": {
+      "label": "plus-hp",
+      "tp": 14,
+      "fp": 5,
+      "fn": 7,
+      "n_detections": 19,
+      "precision": 0.7368421052631579,
+      "recall": 0.6666666666666666,
+      "f1": 0.7
+    }
+  },
+  "directional_pattern_holds": false
+}
