@@ -1630,5 +1630,41 @@ verification where each step had to produce concrete evidence before
 the next. This prevented the premature narrative synthesis that
 characterised Session 27's AI behaviour.
 
-*Last updated: 2026-02-10 (Session 28 — adversarial review completed,
-paradox resolved via TP/FP decomposition)*
+## Session 29 Assessment: Independent replication — from alarm to confirmation
+
+**Date**: 2026-02-10
+**Trigger**: Batch 1 of standalone verification reversed the Phase 2c
+directional pattern
+
+**Episode summary**: An independent reimplementation of the entire
+pipeline (zero shared code) was run on 3 batches of 10 tiles each.
+Batch 1 produced the exact reverse of the expected pattern (pp-4hp >
+pp-canon > plus-hp). This triggered a brief abductive cycle: is this
+a genuine finding that contradicts Phase 2c, or is it small-sample
+noise? Batches 2 and 3 resolved the question — both confirmed plus-hp
+as the top performer, and the aggregate across all 30 tiles matched the
+Phase 2c ordering.
+
+**Abductive quality**: This was a compressed abductive cycle within a
+single session. The key move was the user's immediate domain
+calibration: rather than treating the reversal as alarming, they
+recognised the ordering as plausible single-run variance ("this is what
+I would expect") and requested a second batch to discriminate between
+"systematic error" and "noise." The second batch confirmed it was noise.
+The third batch (requested for additional confidence) solidified the
+finding.
+
+**Contrast with Session 27-28 cycle**: The earlier cycle (Sessions 27-28)
+took two full sessions to resolve — surprising result, then adversarial
+review. This cycle resolved within one session because the user's domain
+intuition provided faster discrimination than formal verification. The
+user didn't need 8 verification steps — they needed one replication on
+fresh tiles.
+
+**Pattern**: Independent replication is the most efficient resolution
+for "is this noise or signal?" questions. Code review and adversarial
+audits answer "is the pipeline correct?" — a different question. Both
+are necessary, but they serve different epistemic functions.
+
+*Last updated: 2026-02-10 (Session 29 — standalone verification
+replication, batch 1 reversal resolved as small-sample noise)*

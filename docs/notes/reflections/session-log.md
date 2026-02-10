@@ -1378,6 +1378,45 @@ negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
 - [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
 - [ ] Upload Phase 1 materials to OSF
 
+## Session 29 — 2026-02-10 (Standalone pipeline verification)
+
+**Phase**: 2c verification (independent replication)
+
+### Accomplishments
+
+1. **Built standalone verification script**:
+   `scripts/standalone_verification.py` (900 lines, zero project imports).
+   Independent reimplementation of prompt assembly, coordinate transforms,
+   spatial scoping, and detection matching (greedy NN instead of Hungarian).
+2. **Ran 3 verification batches** (90 API calls total, ~$0.06):
+   - Batch 1 (10 tiles, 40 refs): reversed pattern (pp-4hp > pp-canon > plus-hp)
+   - Batch 2 (10 tiles, 39 refs): confirmed pattern (plus-hp > pp-canon > pp-4hp)
+   - Batch 3 (10 tiles, 21 refs): partial (plus-hp > pp-4hp > pp-canon)
+   - Aggregate: plus-hp (0.686) > pp-4hp (0.662) > pp-canon (0.658)
+3. **Refactored script for reuse**: Added `--tiles` (JSON file) and
+   `--output-dir` CLI arguments for running arbitrary tile batches.
+4. **Discovered metadata divergence**: `mound_count` in validation bounds
+   doesn't match independent spatial scoping for several tiles.
+
+### Issues
+
+- Batch 1 reversal initially alarming but resolved as small-sample noise
+- Two planned tiles had zero references under independent scoping;
+  replaced with alternatives from same maps
+- Model resolved as `gemini-3-flash-preview` (may differ from Phase 2c
+  model version)
+
+### Pending Work (next session)
+
+- [ ] Causal reasoning review: why does plus-hp outperform? What is the
+  mechanism behind the Canon- negative effect?
+- [ ] Results write-up for the plus-hp configuration being advanced
+- [ ] Documentation of the full scrutiny chain (adversarial review →
+  standalone verification → 3-batch replication)
+- [ ] Investigate `mound_count` metadata vs spatial scoping divergence
+- [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward)
+- [ ] Commit standalone verification script and outputs
+
 ---
 
 *New session entries should be appended above this line.*

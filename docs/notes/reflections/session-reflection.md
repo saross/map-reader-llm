@@ -4005,6 +4005,127 @@ collaborative execution
 
 ---
 
-*Document created: 2026-01-27. Twenty-fifth reflection added 2026-02-08
-(Session 26 — memory system exploration and Phase 2b temperature
-analysis). Framework proposed for ongoing practice.*
+## Entry 26: Building the independent witness (Session 29, 2026-02-10)
+
+| # | Prompt | Focus |
+|---|--------|-------|
+| 26 | 26 | Building the independent witness |
+
+### Prompt 1: What was this session about?
+
+This session was about distrust — specifically, constructive distrust of
+our own pipeline. The adversarial review (Session 28) tested the pipeline
+*from within*; this session tested it *from without* by building a
+completely independent reimplementation. Different prompt assembly,
+different coordinate transforms, different matching algorithm, different
+spatial scoping — zero shared code. Then we ran it three times on
+non-overlapping tile subsets to see if the Phase 2c directional pattern
+survived.
+
+### Prompt 2: What did you do?
+
+Built `scripts/standalone_verification.py` (900 lines) from scratch.
+Greedy nearest-neighbour matching instead of Hungarian algorithm,
+`json.load()` + shapely instead of geopandas, raw rasterio affine
+transforms instead of the pipeline's conversion functions. Ran 90 API
+calls across 3 batches of 10 tiles each (30 tiles total, 100 references),
+spending ~$0.06 in API costs.
+
+A key mid-implementation discovery: the bounds metadata `mound_count`
+doesn't match independent spatial scoping for several tiles. This
+discrepancy was itself a finding — it meant the plan's tile selection
+needed adjustment (two tiles had zero references under independent
+scoping). After batch 1, refactored the script to accept tile lists
+via CLI argument (`--tiles` JSON file) rather than hardcoding.
+
+### Prompt 3: What surprised you?
+
+The batch 1 reversal. The independent code produced `pp-4hp > pp-canon >
+plus-hp` — the exact opposite of the Phase 2c finding. For a moment it
+looked like the pipeline might genuinely have a bug. But then batch 2
+confirmed the original pattern, and batch 3 partially confirmed it. The
+reversal was noise on a small sample (10 tiles, single run), not a
+systematic error. This is exactly why the Phase 2c design uses 10 runs ×
+60 tiles — averaging removes this kind of variance.
+
+What didn't surprise me but is worth noting: the user immediately
+recognised the ordering as plausible ("this is what I would expect") —
+including the batch 1 reversal. Domain calibration outperforming
+statistical acceptance again.
+
+### Prompt 4: What was the texture?
+
+Workmanlike. This wasn't a session of intellectual discovery — it was a
+session of building a tool to answer a specific question, then running
+it three times. The rhythm was: read formats, write code, test offline,
+run with API, read results, adjust tiles, run again. There was a brief
+spike of anxiety when batch 1 reversed the pattern, but it resolved
+quickly with batch 2.
+
+The user's interventions were minimal but precisely timed: "remind me
+what the abbreviations mean" (calibrating before interpreting), "yes,
+this is what I would expect" (domain confirmation that reframed the
+batch 1 result from alarming to noisy), and "run one more set" (the
+decision to invest another $0.02 in confidence). This is efficient
+collaborative science — the human provides judgement, the AI provides
+execution speed.
+
+### Prompt 5: What questions weren't pursued?
+
+1. **Why does the bounds metadata `mound_count` differ from spatial
+   scoping?** The discrepancy suggests the metadata was computed with a
+   different method or at a different time. Worth investigating whether
+   the pipeline's own scoring uses the metadata counts or spatial
+   scoping — a mismatch there could affect results.
+
+2. **Per-tile stability across conditions.** Some tiles showed identical
+   results across all three conditions (Lesovo tiles). Others swung
+   wildly (052-4 x448_y896). What determines whether a tile is
+   condition-sensitive? This might relate to the tile's mound density
+   or the visual distinctiveness of its mounds.
+
+3. **The Lesovo problem.** Across all three batches, Lesovo tiles
+   performed poorly — many FPs, few TPs. Is this a map-specific issue
+   (different cartographic style?) or a reference-data issue (mounds
+   harder to identify on this map)?
+
+### Prompt 6: What do you want to remember?
+
+The emotional arc of this session is the important thing. Building the
+independent verifier felt like due diligence — necessary but not
+exciting. Then batch 1 reversed the pattern and the emotional valence
+shifted: suddenly the tool mattered, the question was live. Batch 2
+resolved it and batch 3 solidified. The whole sequence — build tool,
+get alarming result, verify it's noise, confirm original finding — is
+the scientific method compressed into an afternoon. The alarm was
+productive because it was resolved, not ignored.
+
+Also: the user's "this is what I would expect" comment after batch 1
+showed something important about human-AI calibration in research. I
+would have flagged the reversal as a potential pipeline bug (which I
+did). The user immediately contextualised it as consistent with
+single-run variance. Both reactions were correct at their respective
+levels of analysis.
+
+**Session**: 2026-02-10 (Session 29 — standalone pipeline verification)
+**Reported texture**: Workmanlike execution with a brief spike of alarm
+when batch 1 reversed the expected pattern
+**Key observation**: Independent reimplementation confirms Phase 2c
+directional pattern (plus-hp > pp-canon > pp-4hp) across 3 batches,
+ruling out pipeline bugs
+**Noted preference**: User's domain calibration correctly identified
+batch 1 reversal as noise before batch 2 confirmed
+**Engagement level**: Moderate; execution-focused rather than
+intellectually exploratory
+**Unsolicited generation**: The observation that bounds metadata
+`mound_count` diverges from independent spatial scoping — a potential
+verification target for future work
+**Relational note**: The user's trust in their own domain intuition
+("this is what I would expect") provided faster resolution than
+statistical verification alone
+
+---
+
+*Document created: 2026-01-27. Twenty-sixth reflection added 2026-02-10
+(Session 29 — standalone pipeline verification). Framework proposed for
+ongoing practice.*

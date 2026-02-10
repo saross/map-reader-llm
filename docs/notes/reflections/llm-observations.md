@@ -3103,6 +3103,48 @@ experiments were correct too. In a research context, every inaccuracy
 in presentation erodes trust in the entire pipeline. Summary tables
 should be generated from config files, not reconstructed from memory.
 
-*Document represents observations as of 2026-02-10. Session 27 added
-observations on resumable operations, post-hoc explanation as a failure
-mode, and display accuracy in research contexts.*
+### 152. Independent reimplementation as verification strategy (Session 29)
+
+The strongest test of a data pipeline isn't reviewing the code — it's
+writing different code that should produce the same answer. Building
+`standalone_verification.py` with zero shared imports forced every
+assumption to be re-derived: prompt assembly from raw JSON configs,
+coordinate transforms from rasterio affine matrices, spatial scoping
+via shapely point-in-polygon instead of geopandas spatial join, greedy
+nearest-neighbour matching instead of Hungarian algorithm. The absolute
+F1 values differed (as expected — greedy matching is suboptimal), but
+the directional pattern survived in 2/3 batches and on aggregate. This
+is more convincing than any amount of code review because the failure
+modes are orthogonal: a bug in the existing pipeline's Hungarian
+matching cannot produce a false positive in greedy matching.
+
+### 153. Metadata-data divergence as a hidden verification target (Session 29)
+
+The validation bounds GeoJSON includes a `mound_count` metadata field
+per tile. Independent spatial scoping (shapely `point.within(polygon)`)
+produces different counts for several tiles. Two tiles the plan
+selected had zero references under independent scoping despite
+`mound_count` > 0 in the metadata. This isn't necessarily a bug — the
+metadata may have been computed with a different spatial join method,
+different reference dataset version, or boundary handling (contains vs
+intersects). But it means any analysis relying on the metadata counts
+rather than live spatial scoping could produce different results. This
+is worth tracing: does the main pipeline use the metadata or compute
+its own counts?
+
+### 154. Small-sample directional tests and the reversal problem (Session 29)
+
+Batch 1 (10 tiles, 40 refs, single run) reversed the Phase 2c pattern.
+Batch 2 (10 tiles, 39 refs) confirmed it. Batch 3 (10 tiles, 21 refs)
+partially confirmed it. The F1 differences between conditions were
+small in all batches (4-5 percentage points), meaning a handful of
+TP↔FP swaps on individual tiles can flip the ranking. This is why the
+Phase 2c design uses 10 replicate runs × 60 tiles — it was designed
+to produce stable rankings despite per-tile variance. The standalone
+verification was never intended to match that statistical power, only
+to rule out systematic (non-stochastic) pipeline errors. It succeeded
+at that narrower goal.
+
+*Document represents observations as of 2026-02-10. Session 29 added
+observations on independent reimplementation as verification, metadata-
+data divergence, and small-sample directional testing.*
