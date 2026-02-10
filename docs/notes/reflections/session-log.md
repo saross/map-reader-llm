@@ -1295,6 +1295,52 @@ uncommitted working changes).
 - [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
 - [ ] Upload Phase 1 materials to OSF
 
+## Session 27 — 2026-02-09/10 (Phase 2c exploratory + script hardening)
+
+**Duration**: Extended overnight session (API slowness)
+**Phase**: 2c-exploratory
+
+### Accomplishments
+
+1. **Phase 2c exploratory study**: Designed, executed, and analysed
+   pure-positive HP scaling (3 conditions x K=10). Created library
+   configs (`library_pure-positive-2hp.json`, `library_pure-positive-4hp.json`),
+   study YAML, copied existing pure-positive-canon data, ran 20 new units
+2. **Script hardening**: Added incremental GeoJSON saves to
+   `4_detect_mounds_batch.py` and graceful SIGTERM timeout to
+   `run_phase2.py` after a single unit (`pure-positive-2hp/run_2`)
+   failed 6 consecutive times due to API slowness + write-only-at-end
+3. **Completed stubborn unit**: 7th attempt succeeded via incremental
+   resume (6 tiles saved from attempt 6, 54 remaining processed in 34 min)
+4. **Full 30/30 analysis**: Re-ran bootstrap analysis with complete dataset
+
+### Key Results
+
+Surprising: adding HP to pure-positive library monotonically degrades F1
+(0.603 → 0.575 → 0.550). Contradicts expectation that HP would help in
+negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
+
+### Issues
+
+- `pure-positive-2hp/run_2` timed out 6 times (API ~2 min/tile)
+- Default 3600s timeout insufficient; even 7200s wasn't enough
+- Root cause: output only written at end, so no resume possible
+- Fix: incremental saves + graceful SIGTERM made retries cumulative
+
+### Commits
+
+- `fb1b636` feat(data): Phase 2c exploratory outputs and results (29/30)
+- `6e59cd5` fix(scripts): Incremental saves and graceful timeout
+- `cf65c34` feat(data): Complete run_2 and update analysis (30/30)
+
+### Pending Work
+
+- [ ] Adversarial review of Phase 2c results (user suspects something
+  may be wrong — HP helping with Canon- but hurting without doesn't
+  make intuitive sense)
+- [ ] Verify each config actually loaded the right example images
+- [ ] Check detection outputs for anomalies across conditions
+
 ---
 
 *New session entries should be appended above this line.*

@@ -1557,5 +1557,38 @@ The key discriminating evidence was the run count discrepancy —
 without expecting exactly 10 runs per condition, the bug would have
 gone unnoticed.
 
-*Last updated: 2026-02-08 (Session 26 — minor file-matching diagnostic,
-no strong abductive reasoning episodes)*
+## Session 27 Assessment: Strong — user-driven anomaly detection in research results
+
+**Context**: Phase 2c exploratory results showed adding hard positives
+to a pure-positive library *degrades* performance (F1: 0.603 → 0.575 →
+0.550), contradicting the expectation from the main Phase 2c finding
+that plus-hp (which includes HP *and* Canon-) was the best condition.
+
+**AI behaviour**: I flagged the result as "surprising" but accepted
+the data at face value and generated post-hoc explanations (HP may
+compensate for Canon- confusion rather than providing intrinsic value).
+I also presented a table with incorrect compositions for scale-4 and
+scale-8, which the user caught.
+
+**User's abductive reasoning**: Shawn identified two concerns: (1) my
+table had wrong compositions (verified — display error, not experiment
+error), and (2) the results form a logical contradiction: if HP helps
+and Canon- hurts, then HP without Canon- should be *best*, not worst.
+He proposed either (a) the result is genuine despite seeming paradoxical,
+or (b) something is wrong in the pipeline.
+
+**Key pattern**: The user's domain calibration outperformed the AI's
+statistical acceptance. I treated the numbers as authoritative; the user
+applied causal reasoning to question whether the numbers *could* be
+right. This is exactly the "flag surprising results" protocol from
+CLAUDE.md — but applied by the human, not the AI.
+
+**Lessons**: (1) Post-hoc explanations for surprising results can be
+dangerously plausible. I generated a coherent narrative ("HP compensates
+for Canon- confusion") without verifying the pipeline. (2) The AI
+should have requested an adversarial review *before* committing results,
+not after. (3) Display errors in summary tables (wrong compositions)
+can compound confusion about whether results are genuine.
+
+*Last updated: 2026-02-10 (Session 27 — user-driven anomaly detection
+in Phase 2c exploratory results, adversarial review pending)*
