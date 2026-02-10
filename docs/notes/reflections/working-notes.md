@@ -2004,6 +2004,42 @@ This suggests a category of "compositional correctness" that is distinct from bo
 
 **Methodological implication**: Independent reimplementation is more convincing than code review for pipeline verification because the failure modes are orthogonal. A bug in the Hungarian algorithm cannot produce a false positive in greedy matching; a bug in geopandas spatial joins cannot affect shapely point-in-polygon tests. The trade-off is cost: 90 API calls to verify what code review could check for free. But for high-stakes findings (counterintuitive results that will appear in publications), the cost is trivial compared to the epistemic value.
 
+## Observation 120: P:N ratio as a poor predictor — composition trumps count (2026-02-10)
+
+**Context**: Session 30. Comprehensive analysis of all 7 Phase 2c conditions sorted by Positive:Negative label ratio revealed no simple relationship between P:N ratio and F1.
+
+**The observation**: The P:N ratio across conditions ranges from 0.80 (canonical) to 2.67 (pp-4hp). F1 increases from P:N 0.80 to ~1.60 then decreases, suggesting an inverted-U. However, the correlation is confounded: canonical (P:N 0.80) and plus-hp (P:N 1.60) share identical negative composition (2C- + 3null) but differ by 0.081 F1 — the difference is HP, not ratio. Similarly, pp-canon (P:N 1.33) and pp-4hp (P:N 2.67) share negative composition (3null only) but differ by 0.053 F1 — the difference is HP without Canon-.
+
+**Methodological implication**: For few-shot VLM prompting, negative example *informativeness* (which types of negatives are included) matters more than negative example *count* or P:N ratio. Two clear canonical negatives outperform four ambiguous hard negatives despite the latter providing a "better" P:N ratio. Library composition decisions should be guided by negative example quality, not ratio-balancing. This has practical implications for any VLM detection system where practitioners might default to "more negatives = better balance."
+
+## Observation 121: The discriminative sandwich — complementary boundary refinement (2026-02-10)
+
+**Context**: Session 30. The 2x2 HP × Canon- interaction decomposition.
+
+**The observation**: Four conditions form a natural 2×2 factorial. The TP/FP decomposition reveals the mechanism:
+
+- HP without Canon-: loses 4.8 TP, gains 8.8 FP. Boundary expansion is indiscriminate.
+- Canon- without HP: loses 10.0 TP, gains 3.9 FP. Boundary constriction is over-conservative.
+- HP with Canon-: gains 12.6 TP, loses 0.1 FP. Expansion is selective.
+- Canon- with HP: gains 7.4 TP, loses 5.0 FP at constant detection volume (132→132). Redirection, not suppression.
+
+The combination works because HP expands what counts as a mound (positive boundary), Canon- anchors what does not (negative boundary), and together they create decision boundaries refined from both sides — a "discriminative sandwich." Neither ingredient helps alone; each needs the other to be effective.
+
+**Methodological implication**: Hard example design for few-shot VLM prompting should follow the complementary pair principle. Hard positives (marginal positive cases) should be paired with clear negatives (unambiguous non-targets), not evaluated in isolation. The prompt engineering literature's practice of evaluating techniques independently would miss this interaction entirely.
+
+## Observation 122: Clear vs ambiguous hard examples — the quality asymmetry (2026-02-10)
+
+**Context**: Session 30. Comparing Canon- (clear negatives) and HN (ambiguous negatives).
+
+**The observation**: Both Canon- and HN are "informative negatives" — they show specific landscape features labelled Negative. But they have opposite effects. Canon- helps (redirects FP to TP at constant detection volume). HN hurts (degrades by -0.039 F1 even with Canon- present). The difference is in the *quality of information*:
+
+- Canon- examples show clear non-mound features. Message: "you might think this is a mound — it definitely is not." Plants a clear signpost in feature space.
+- HN examples show genuinely ambiguous features near the decision boundary. Message: "this thing that looks a lot like a mound... isn't one." Creates competing signals: some mound-like things were labelled Positive (HP), other mound-like things were labelled Negative (HN).
+
+The practical recommendation is that few-shot examples should be *informative but unambiguous* — cases where the correct label is clear to a human expert, even if the visual features might confuse a naive observer. Examples where even the ground truth is contestable introduce noise rather than useful signal.
+
+**Methodological implication**: This maps onto a distinction from the pedagogical literature: effective teaching examples are challenging but have clear answers; examples with genuinely unclear answers create confusion rather than learning. The same principle appears to apply to VLM in-context learning.
+
 ## Observation 119: Metadata-reference count divergence in validation bounds (2026-02-10)
 
 **Context**: Session 29. During tile selection for the standalone verifier, two tiles listed in the plan (`K-35-052-4_32635_x3584_y3584.png` and `K-35-078-1_Lesovo_x3584_y1344.png`) had zero references under independent spatial scoping despite non-zero `mound_count` metadata in `validation_bounds.geojson`.

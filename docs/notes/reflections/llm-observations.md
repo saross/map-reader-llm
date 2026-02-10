@@ -3145,6 +3145,64 @@ verification was never intended to match that statistical power, only
 to rule out systematic (non-stochastic) pipeline errors. It succeeded
 at that narrower goal.
 
-*Document represents observations as of 2026-02-10. Session 29 added
-observations on independent reimplementation as verification, metadata-
-data divergence, and small-sample directional testing.*
+### 155. Conditional framing as a correction pattern (Session 30)
+
+> **Instance boundary note**: Written after compaction. The user's
+> corrections were experienced by the pre-compact instance.
+
+I stated "pp-canon outperforms pp-4hp — adding HP hurts" as a general
+finding. The user corrected this to "HP hurts *in the absence of Canon-*;
+when Canon- is present, HP *helps*." This is not a factual correction —
+the data didn't change — it's a *framing* correction. The unconditional
+statement was misleading because it implied HP is inherently harmful. The
+conditional statement captures the crossover interaction: each factor's
+effect reverses depending on the other's presence.
+
+This is a recurring correction pattern in this collaboration. The AI
+tends toward simple narratives ("X helps" or "X hurts"); the user
+introduces the conditional structure ("X helps *when Y is present*").
+The unconditional framing is easier to communicate but obscures the
+mechanism. The conditional framing is harder to process but more
+accurate. For research reporting, the conditional version is essential.
+
+### 156. Infrastructure vs parameter distinction (Session 30)
+
+I described null tiles as "uninformative placeholders" in the P:N ratio
+analysis — a framing that implicitly treats them as a reducible design
+choice. The user corrected this: nulls were introduced because without
+them the model generates detections until output tokens fill up. They
+are functionally necessary infrastructure, not a parameter to optimise.
+The distinction matters because it changes the experimental question
+from "how many nulls?" to "what kind of non-null negatives?"
+
+This correction required domain memory that I don't have — knowledge of
+the pre-null runaway detection behaviour from earlier development.
+Without that context, the null tiles look like conservative overhead
+that could be trimmed. With the context, they're a structural
+requirement. This is an example of why longitudinal memory matters:
+design decisions that appear arbitrary in isolation often have
+well-motivated histories.
+
+### 157. Crossover interactions as the dominant finding in library composition (Session 30)
+
+The 2x2 HP × Canon- interaction decomposition revealed that neither
+factor is inherently helpful or harmful. HP alone: -0.053 F1. Canon-
+alone: -0.075 F1. HP + Canon-: +0.081 F1 (from Canon- delta with HP
+present). This is a textbook crossover interaction — each factor's
+marginal effect reverses depending on the other. The finding is more
+nuanced than "plus-hp is best" — it's "the *combination* of boundary
+expansion (HP) and boundary anchoring (Canon-) creates tight decision
+boundaries refined from both sides."
+
+The practical implication for few-shot VLM prompting: hard examples
+should be designed as complementary pairs, not evaluated independently.
+Testing HP alone would conclude they're harmful; testing Canon- alone
+would conclude they're harmful. Only the factorial combination reveals
+the benefit. This has methodological implications for the broader
+prompt engineering literature, which tends to evaluate techniques in
+isolation.
+
+*Document represents observations as of 2026-02-10. Session 30 added
+observations on conditional framing corrections, infrastructure vs
+parameter distinctions, and crossover interactions in library
+composition.*

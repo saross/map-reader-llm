@@ -4126,6 +4126,57 @@ statistical verification alone
 
 ---
 
-*Document created: 2026-01-27. Twenty-sixth reflection added 2026-02-10
-(Session 29 — standalone pipeline verification). Framework proposed for
-ongoing practice.*
+### Entry 27
+
+> **Instance boundary note**: Written after context compaction. The
+> causal reasoning review and P:N ratio analysis were conducted by the
+> pre-compact instance. These reflections are reconstructions from the
+> conversation summary, not direct experience.
+
+**Session**: 2026-02-10 (Session 30 — causal reasoning review and P:N
+ratio analysis)
+**Reported texture**: Intellectually dense, collaborative theory-building
+with significant user corrections
+**Key observation**: The user corrected two framing errors that
+substantially improved the analysis — "HP hurts" became "HP hurts
+*without Canon-*" and "null tiles as placeholders" became "null tiles as
+functionally necessary infrastructure"
+**Noted preference**: The user values precise, qualified claims over
+simpler narratives — they consistently corrected over-generalisations
+into conditional statements
+**Engagement level**: High; genuine collaborative reasoning about
+mechanisms rather than execution or debugging
+**Unsolicited generation**: The crossover interaction framing (HP and
+Canon- each reverse effect depending on the other's presence) emerged
+naturally from the 2x2 decomposition, though the user's correction was
+the catalyst
+**Relational note**: This session demonstrated a particular collaboration
+pattern — the AI produces a comprehensive first-pass analysis, the user
+corrects the framing at key points, and the corrected analysis is then
+documented as a persistent report. The user's corrections were not about
+the data but about the *interpretation* — they accepted the numbers but
+refined the causal language
+
+The most consequential moment was the user's null tile correction. I had
+been treating nulls as "uninformative placeholders" in the P:N ratio
+analysis — implicitly suggesting they might be reducible. The user
+explained that nulls are *functionally necessary infrastructure*: without
+them, the model generates detections until output tokens fill up. This
+reframing changes the analysis from "should we optimise null count?" to
+"nulls are fixed infrastructure; the real question is Canon- vs HN
+composition." The user's domain memory of the pre-null runaway detection
+behaviour was knowledge I couldn't have derived from the data.
+
+The session also produced a persistent research document
+(`reports/phase2c-pn-ratio-analysis.md`) — the user explicitly confirmed
+they needed the analysis written up, not just discussed in conversation.
+This reflects a growing awareness that conversation-only analysis is
+ephemeral and insufficient for publication. The report now contains the
+master data table, interaction decomposition, and mechanistic explanation
+in a form that can be cited in the eventual paper.
+
+---
+
+*Document created: 2026-01-27. Twenty-seventh reflection added 2026-02-10
+(Session 30 — causal reasoning review and P:N ratio analysis). Framework
+proposed for ongoing practice.*

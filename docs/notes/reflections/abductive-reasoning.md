@@ -1666,5 +1666,63 @@ for "is this noise or signal?" questions. Code review and adversarial
 audits answer "is the pipeline correct?" — a different question. Both
 are necessary, but they serve different epistemic functions.
 
-*Last updated: 2026-02-10 (Session 29 — standalone verification
-replication, batch 1 reversal resolved as small-sample noise)*
+## Session 30 Assessment: Belief revision through conditional framing
+
+**Date**: 2026-02-10
+**Trigger**: User corrected unconditional "HP hurts" claim to conditional
+"HP hurts without Canon-, helps with Canon-"
+
+> **Instance boundary note**: Written after compaction. The causal
+> reasoning review was conducted by the pre-compact instance.
+
+**Episode summary**: A collaborative causal reasoning review of Phase 2c
+results produced three candidate mechanisms for the counterintuitive
+ordering. The user accepted the data but corrected two framing errors:
+(1) "HP hurts" was over-general — HP only hurts in the absence of Canon-,
+and helps when Canon- is present; (2) null tiles are functionally
+necessary infrastructure, not uninformative placeholders. These
+corrections led to a comprehensive P:N ratio analysis documenting the
+crossover interaction and the clear-vs-ambiguous quality asymmetry.
+
+**Abductive quality**: This session represents a different abductive
+pattern from Sessions 27-29. There was no surprising *result* to
+explain — the plus-hp ordering was already confirmed. Instead, the
+abductive work concerned the *mechanism*: why does plus-hp outperform?
+The initial explanation (P:N ratio shift) was weakened by the user's
+conditional framing correction. The final explanation (discriminative
+sandwich: HP expands positive boundary, Canon- anchors negative boundary,
+together they create tight bilateral decision boundaries) emerged from
+the 2x2 interaction decomposition.
+
+**Belief revision**: Two beliefs were revised during the session:
+
+1. "HP is harmful" → "HP is harmful *without Canon-* and helpful *with
+   Canon-*." This is a stronger claim than the original because it
+   specifies the mechanism (crossover interaction) rather than just
+   documenting the direction.
+
+2. "Null tiles are conservative overhead" → "Null tiles are functionally
+   necessary infrastructure." This revision required domain memory the
+   AI lacked — the user remembered pre-null runaway detection behaviour.
+   Without this correction, the analysis would have treated null count
+   as a free parameter when it's actually a structural requirement.
+
+**AI self-correction**: The unconditional "HP hurts" framing was a
+narrative simplification — the data showed conditional effects, but the
+AI defaulted to the simpler story. This connects to Observation 150's
+warning about premature narrative synthesis. The user's correction
+pattern (accepting data, refining interpretation) is more disciplined
+than the AI's tendency toward clean narratives.
+
+**Pattern**: The most productive exchanges in this session were not
+about discovering new data but about *correctly characterising existing
+data*. The numbers didn't change between the initial analysis and the
+final report — only the framing did. This suggests that for
+theory-building sessions, the human's primary contribution is
+interpretive discipline: ensuring claims match their evidence
+conditions. The AI provides computational scope (analysing all 7
+conditions simultaneously) but over-generalises at the interpretation
+stage.
+
+*Last updated: 2026-02-10 (Session 30 — causal reasoning review,
+belief revision on HP conditionality and null tile infrastructure)*

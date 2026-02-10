@@ -1419,4 +1419,63 @@ negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
 
 ---
 
+## Session 30 — 2026-02-10 (Causal reasoning review and P:N ratio analysis)
+
+**Phase**: 2c analysis (post-verification)
+
+### Accomplishments
+
+1. **Collaborative causal reasoning review**: Reviewed three candidate
+   mechanisms for the counterintuitive Phase 2c ordering (P:N ratio
+   shift, informative vs uninformative negatives, discriminative
+   sandwich). User corrected two framing errors that improved the
+   analysis.
+2. **Comprehensive P:N ratio analysis**: Produced
+   `reports/phase2c-pn-ratio-analysis.md` documenting all 7 Phase 2c
+   conditions with master data table (C+/HP/C-/HN/Null/P:N/F1/Det/
+   TP/FP/FN), P:N ratio as poor predictor, 2x2 HP × Canon- crossover
+   interaction tables, HN degradation effect, clear-vs-ambiguous
+   quality asymmetry, and standalone verification cross-reference.
+3. **Null tile investigation deferred**: Added Section 3.4 to
+   `docs/planning/future-work.md` documenting null tiles as necessary
+   infrastructure and proposing an OFAT probe (0, 1, 3, 5 nulls at
+   plus-hp) for future exploration.
+4. **Memory capture**: `/remember` for null tile decision (functionally
+   necessary infrastructure, not a tuneable parameter).
+5. **End-of-session reflections**: Updated all 5 reflection documents.
+
+### Key Findings
+
+- **P:N ratio is a poor predictor**: Negative composition (which types)
+  matters more than count or ratio
+- **Crossover interaction**: HP and Canon- each reverse their effect
+  depending on the other's presence (neither inherently helpful nor
+  harmful)
+- **Clear vs ambiguous asymmetry**: Canon- (clear negatives) helps; HN
+  (ambiguous negatives) hurts regardless of context
+- **Null tiles are infrastructure**: Functionally necessary to prevent
+  runaway detection; not a parameter to optimise
+
+### Issues
+
+- Post-compaction instance wrote reflections from summary rather than
+  direct experience (flagged per protocol)
+
+### Commits
+
+None this session — report and reflection documents are uncommitted
+working changes.
+
+### Pending Work
+
+- [ ] Commit P:N ratio report and reflection documents
+- [ ] Phase 2d setup (text treatment) using plus-hp carry-forward
+- [ ] Results write-up for plus-hp configuration
+- [ ] Investigate `mound_count` metadata vs spatial scoping divergence
+- [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward)
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*
