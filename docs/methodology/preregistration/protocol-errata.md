@@ -640,4 +640,30 @@ Each track maintains independent optimal parameters (e.g., different optimal tem
 
 ---
 
+### E28: H5 instruction text adapted for Phase 2d (HN image references removed, OFAT simplification)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-11 |
+| Type | Deviation |
+| Decision | Decision 17 |
+| Files | `prompts/system-instructions/detect_brief-text-image_terse.md`, `detect_brief-text-image_verbose.md`, `detect_brief-text_terse.md` (new), `detect_brief-text_verbose.md` (new) |
+| Impact | Changes wording of preregistered instruction text; simplifies Phase 2d design |
+
+**Description**: Three changes to the Phase 2d (H5 negative text treatment) design:
+
+1. **Instruction text adaptation**: Guideline 3 in terse and verbose instruction files was trimmed from two sentences to one, removing "Each reference image is centred on the feature being labelled — the target symbol for Positive examples, the confusable feature for Negative examples." This sentence described HN (hard negative) reference image content, but HN images were excluded from the library after Phase 2c determined plus-hp (no HN) as optimal. The verbose exclusion intro was also trimmed: "Study any negative reference images carefully." removed for the same reason.
+
+   The minimal instruction (`detect_brief-text-image.md`, `detect_brief-text.md`) is **not** modified — it serves as the Phase 2c/2b baseline and the cost of re-running 1,200 API calls to fix a conditional sentence the model mostly ignores outweighs the minor confound.
+
+2. **OFAT simplification**: The preregistered 3×3 factorial (3 M/E levels × 3 H5 levels) is replaced by single-factor OFAT testing H5 at the carried-forward optimal M/E level per track. Since Phase 2a determined brief-text-image as optimal image-using M/E, the factorial collapses to 3 H5 levels × 1 M/E = 3 cells (1 reused, 2 new) per track.
+
+3. **Dual-track execution**: Track 2 (text-only brief-text) was deferred for Phase 2d in Decision 16 but is now activated. Precision is the bottleneck for both tracks (~52–56% for text-only at T=0.0), so testing whether exclusion guidance text reduces false positives is justified in both modalities.
+
+**Cross-references**: Decision 17, E27 (dual-track carry-forward).
+
+**Protocol impact**: Moderate. The instruction text changes are conservative (removing references to non-existent images rather than adding new content). The OFAT simplification reduces statistical power for detecting M/E × H5 interactions but is consistent with the sequential OFAT design used throughout Phase 2. Dual-track addition is exploratory for the text-only track.
+
+---
+
 *End of errata. New entries should be appended above this line.*

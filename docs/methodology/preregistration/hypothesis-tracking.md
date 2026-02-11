@@ -2,7 +2,7 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-02-09
+**Last updated**: 2026-02-11
 
 ---
 
@@ -14,7 +14,7 @@
 | H2 | Two-Stage Pipelines | Architecture | 3 | `propose_*.json`, `verify_*.json` | 3d | Pending (Exploratory) |
 | H3 | Consensus Voting | N, threshold | Multiple | N/A (runtime) | 3a | Pending |
 | H4 | Example Ordering | Ordering | 3 | `detect_*_canonical-last.json`, `detect_*_random-order.json` | 2e | Pending |
-| H5 | Negative Text Treatment | Text level | 3 × 3 | `detect_*_terse.json`, `detect_*_verbose.json` | 2d | Pending |
+| H5 | Negative Text Treatment | Text level | 3 levels × 2 tracks (OFAT) | `library_plus-hp_*.json`, `detect_brief-text_*.json` | 2d | Pending |
 | H6 | Flash→Pro Transfer | Model | OFAT | Same configs, different model | 4 | Pending |
 | H7 | Temperature | T | 5 | N/A (runtime parameter) | 2b | Complete |
 | H8 | Library Composition/Scaling | Library size | 5 (of 7) | `library_*.json` | 2c | Complete |
@@ -96,21 +96,31 @@ Tests positioning of canonical vs hard examples.
 
 ### H5: Negative Text Treatment (Phase 2d)
 
-Tests text elaboration for negative examples. Crossed with 3 image-using M/E levels.
+Tests whether exclusion guidance text in the system instruction reduces false
+positives. Three levels tested at the carried-forward optimal M/E per track
+(OFAT, not full factorial). See Decision 17 and Erratum E28.
 
-| Condition | H5 Level | Exclusion Text | Config Pattern |
-|-----------|----------|----------------|----------------|
-| H5-A | Minimal | "Negative" label only | `detect_*.json` (base configs) |
-| H5-B | Terse | Brief guidance | `detect_*_terse.json` |
-| H5-C | Verbose | Detailed guidance | `detect_*_verbose.json` |
+**Instruction text adaptation**: Terse and verbose instruction files were
+modified to remove references to non-existent HN reference images (HN
+excluded after Phase 2c). Exclusion *descriptions* (what not to detect)
+retained as domain knowledge. Minimal instruction unchanged (serves as
+baseline from prior phases).
 
-**Full factorial** (9 cells, 6 net new after H1 overlap):
+| Condition | H5 Level | Exclusion Text | Track 1 Config (image) | Track 2 Config (text-only) |
+|-----------|----------|----------------|------------------------|---------------------------|
+| H5-A | Minimal | No exclusion text | `library_plus-hp.json` | `detect_brief-text.json` |
+| H5-B | Terse | Brief "do not mark" list | `library_plus-hp_terse.json` | `detect_brief-text_terse.json` |
+| H5-C | Verbose | Detailed per-type criteria | `library_plus-hp_verbose.json` | `detect_brief-text_verbose.json` |
 
-| M/E Level | H5=Minimal | H5=Terse | H5=Verbose |
-|-----------|------------|----------|------------|
-| Image-only | `detect_image-only.json` | `detect_image-only_terse.json` | `detect_image-only_verbose.json` |
-| Brief-text+image | `detect_brief-text-image.json` | `detect_brief-text-image_terse.json` | `detect_brief-text-image_verbose.json` |
-| Verbose-text+image | `detect_verbose-text-image.json` | `detect_verbose-text-image_terse.json` | `detect_verbose-text-image_verbose.json` |
+**Dual-track OFAT design** (4 net new cells, 2 per track):
+
+| Track | M/E Level | H5=Minimal | H5=Terse | H5=Verbose |
+|-------|-----------|------------|----------|------------|
+| Track 1 (image) | brief-text-image | Reuse Phase 2c | **New** | **New** |
+| Track 2 (text) | brief-text | Reuse Phase 2b T=0.0 | **New** | **New** |
+
+**Preregistered design was**: 3×3 factorial (3 image-using M/E × 3 H5).
+Simplified to single-factor OFAT at carried-forward M/E per Decision 17.
 
 ---
 

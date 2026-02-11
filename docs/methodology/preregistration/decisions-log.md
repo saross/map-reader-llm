@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-02-06
+**Last updated**: 2026-02-11
 
 ---
 
@@ -789,6 +789,87 @@ both M/E levels.
 **Evidence**: Phase 2a analysis (`outputs/phase2a/analysis_summary.md`),
 Phase 2a verification report (`results/phase2-factorial/phase2a-verification-report.md`),
 Working Notes Observation 103.
+
+---
+
+### Decision 17: Phase 2d Design — Plus-hp Carry-Forward, Instruction Adaptation, Dual-Track OFAT
+
+**Date**: 2026-02-11
+
+**Decision**: Phase 2d tests H5 (exclusion guidance levels) using an OFAT
+single-factor design across two tracks, with instruction text adapted to
+remove references to non-existent hard negative (HN) reference images.
+
+### Design changes from preregistration
+
+| Aspect | Preregistered | Actual |
+|--------|---------------|--------|
+| Library | Scale-8 (17 examples, incl. 4 HN) | plus-hp (13 examples, no HN) |
+| Design | 3×3 factorial (M/E × H5) | Single-factor OFAT (H5 at optimal M/E) |
+| Tracks | Image-using only | Dual-track (image-using + text-only) |
+| Instruction text | References HN images | HN image references removed |
+
+### Library carry-forward
+
+Phase 2c determined plus-hp (4C+ 4HP 2C- 3null, no HN) as the optimal
+library. The preregistered H5 design assumed Scale-8 (including 4 HN) would
+be the library, but HN were found to be counterproductive — they hurt
+performance rather than helping. The exclusion *guidance text* (describing
+what not to detect) remains valuable regardless of library contents; it is
+domain knowledge that applies independently of whether HN examples are shown.
+
+### Instruction text adaptation
+
+Two edits to terse and verbose instruction files:
+
+1. **Guideline 3** (shared across terse/verbose): Removed the second sentence
+   describing negative reference image content. Canon- examples are legend
+   entries (triangulation point, benchmark), not "confusable features"; HN
+   images that were confusable features no longer exist in the library.
+
+2. **Verbose exclusion intro**: Removed "Study any negative reference images
+   carefully." — no negative reference images exist to study.
+
+The minimal instruction is **not** modified. It serves as the Phase 2c
+baseline for Track 1 and Phase 2b baseline for Track 2. Re-running 1,200
+API calls to fix a conditional sentence ("If reference examples are provided")
+that the model ignores when no negative images are present is not justified
+by the minor confound it introduces.
+
+### OFAT simplification
+
+The preregistered 3×3 M/E × H5 factorial (9 cells) collapsed because the
+OFAT chain selected a single optimal M/E per track. Testing H5 at only
+the carried-forward M/E level gives 3 cells per track (1 reused baseline,
+2 new), totalling 4 new cells across both tracks.
+
+This sacrifices the ability to detect M/E × H5 interactions but is
+consistent with the OFAT design philosophy applied throughout Phase 2.
+
+### Track 2 activation
+
+Decision 16 deferred Phase 2d for the text-only track. Activation is
+justified because:
+
+1. Precision is the bottleneck for both tracks (~52–56% for text-only at
+   T=0.0 vs ~56–61% for image-using at T=0.0)
+2. Exclusion guidance is purely textual — it does not depend on example
+   images and applies identically in both modalities
+3. Cost is low (~$2.50 for 1,200 API calls, no images in prompt)
+
+### Implementation
+
+| Track | M/E | Library | Baseline | New cells |
+|-------|-----|---------|----------|-----------|
+| Track 1 (image) | brief-text-image | plus-hp (13 ex.) | Phase 2c | terse, verbose |
+| Track 2 (text) | brief-text | Scale-8 metadata (17 ex., none sent) | Phase 2b T=0.0 | terse, verbose |
+
+**Total new API calls**: 2,400 (4 cells × 600)
+**Estimated cost**: ~$6.90 ($4.40 Track 1 + $2.50 Track 2)
+
+**Evidence**: Phase 2c analysis (plus-hp optimal), Phase 2b Track 2
+analysis (precision bottleneck), Session 31 plan mode analysis of
+instruction text confounds.
 
 ---
 
