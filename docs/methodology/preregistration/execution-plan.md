@@ -377,22 +377,24 @@ The sequential OFAT design tests one factor at a time, carrying optimal paramete
 
 **Prerequisite**: All optimal parameters from Phases 2a-2d.
 
-**Design**: 3 ordering conditions at optimal M/E only:
+**Design**: 4 ordering conditions at optimal M/E only (see Decision 18, E29, E30):
 
-| Condition | Canonical Position | Hard Position |
-| --------- | ------------------ | ------------- |
-| Canonical-first | Positions 1-6 | Final positions |
-| Canonical-last | Final positions | Positions 1-N |
-| Random | Shuffled | Shuffled |
+| Condition | Example Order | Notes |
+| --------- | ------------- | ----- |
+| Config-default | `[C+, HP, C−, null]` | JSON config-file order; baseline reused from Phase 2c via symlinks |
+| Canonical-first | `[C+, C−, HP, null]` | True canonical grouping (E29 fix) |
+| Canonical-last | `[HP, null, C+, C−]` | Canonical examples in final positions |
+| Random | Seeded shuffle per run | Per-run seed from `random_seed_base` |
 
 **Phase 2e totals**:
 
-- 3 orderings = **3 cells**
-- 3 × K=10 × 60 = **1,800 API calls** (~$7)
+- 4 orderings = **4 cells** (1 reused, 3 new)
+- Net new: 3 × K=10 × 60 = **1,800 API calls** (~$7)
+- Total units: 4 × K=10 = 40 (10 config-default pre-checkpointed)
 
-**Fixed parameters**: Optimal M/E, T, library, and H5 from previous phases.
+**Fixed parameters**: Optimal M/E (brief-text-image), T (0.0), library (plus-hp), and H5 (minimal) from previous phases. Image-using track only — text-only track cannot test ordering (no in-context examples sent).
 
-**Analysis**: Pairwise bootstrap comparisons across 3 orderings (95% CIs, FDR-corrected). Planned contrasts: Canonical-first vs Canonical-last.
+**Analysis**: Pairwise bootstrap comparisons across 4 orderings (95% CIs, FDR-corrected). Planned contrasts: Canonical-first vs Canonical-last; Config-default vs Canonical-first.
 
 **Triggered exploratory (H4b)**: If H4 significant (p < 0.05), test HP-first vs HN-first ordering within the hard block (+2 cells).
 
@@ -466,7 +468,7 @@ if h4_significant():
 | 2b (H7) | Bootstrap pairwise (5 temperatures) | Optimal temperature |
 | 2c (H8) | Bootstrap pairwise + planned contrasts | Optimal library composition |
 | 2d (H5) | Bootstrap interaction (3 M/E × 3 H5) | Optimal negative text treatment |
-| 2e (H4) | Bootstrap pairwise (3 orderings) | Optimal ordering |
+| 2e (H4) | Bootstrap pairwise (4 orderings) | Optimal ordering |
 
 ---
 
@@ -712,7 +714,7 @@ Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time 
 | Phase 2b: H7 — Temperature | 5 | 15,000 | ~$55 |
 | Phase 2c: H8 — Library Composition | 7 | 21,000 | ~$77 |
 | Phase 2d: H5 — Negative Text | 6 | 18,000 | ~$66 |
-| Phase 2e: H4 — Ordering | 3 | 9,000 | ~$33 |
+| Phase 2e: H4 — Ordering | 4 (1 reused) | 1,800 net new | ~$7 |
 | **Phase 2 Confirmatory** | **26** | **78,000** | **~$286** |
 | Phase 3a: H3 N=30 Extension | — | ~12,000 | ~$44 |
 | Phase 3c: H9 Diversity (exploratory) | — | ~6,000 | ~$22 |

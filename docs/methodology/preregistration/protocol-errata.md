@@ -666,4 +666,61 @@ Each track maintains independent optimal parameters (e.g., different optimal tem
 
 ---
 
+### E29: `reorder_examples()` canonical-first was a no-op
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-12 |
+| Type | Correction |
+| File | `scripts/4_detect_mounds_batch.py` |
+| Impact | All prior phases used config-file order unknowingly; no results affected |
+
+**Description**: The `reorder_examples()` function's `canonical-first` ordering was a no-op — it returned examples in config-file order `[C+, HP, C−, null]` rather than true canonical-first `[C+, C−, HP, null]`. The config-file order already places canonical positives first, so the function appeared to work, but the interleaving of hard positives before canonical negatives was not the intended grouping.
+
+**Discovery**: During Phase 2e (H4 ordering) design review, comparison of the intended canonical-first grouping `[C+, C−, HP, null]` against the function output revealed the ordering was unchanged from config-file order.
+
+**Fix**: Split the single `canonical-first` ordering into two distinct conditions:
+
+1. **`config-default`**: Explicit no-op returning examples in JSON config-file order (the ordering all prior phases actually used)
+2. **`canonical-first`**: True grouped ordering `[C+, C−, HP, null]` with category-based sorting and safety assertions against example loss
+
+Additionally, `canonical-last` and `random` orderings were implemented with exhaustive category filtering using three filter conditions (`startswith('canonical')`, `startswith('hard')`, `== 'null'`) and a defensive assertion to catch any future miscategorised examples.
+
+**Protocol impact**: None. All prior phases (2a–2d) used the default ordering from the config file, which is what they were intended to use — the `canonical-first` flag was never explicitly set in those phases. The fix enables Phase 2e to properly test the ordering hypothesis (H4) by providing distinct orderings to compare.
+
+**Cross-references**: E30, Decision 18.
+
+---
+
+### E30: Phase 2e tests 4 ordering conditions instead of preregistered 3
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-02-12 |
+| Type | Deviation |
+| Decision | Decision 18 |
+| Files | `studies/phase2e-h4-ordering.yaml` |
+| Impact | Adds 1 condition (10 runs, 600 API calls) to Phase 2e |
+
+**Description**: The execution plan (§Phase 2e) specifies 3 ordering conditions: canonical-first, canonical-last, and random. Phase 2e now tests 4 conditions by adding `config-default` as an explicit baseline distinct from `canonical-first`.
+
+The 4 conditions are:
+
+| Condition | Order | Source |
+|-----------|-------|--------|
+| config-default | `[C+, HP, C−, null]` | JSON config-file order (no-op) |
+| canonical-first | `[C+, C−, HP, null]` | True canonical grouping |
+| canonical-last | `[HP, null, C+, C−]` | Canonical examples last |
+| random | Seeded shuffle per run | Randomised ordering |
+
+**Rationale**: The bug documented in E29 revealed that the baseline ordering all prior phases used (`config-default`) was never truly `canonical-first`. Both orderings are scientifically informative: `config-default` preserves continuity with prior phases, while `canonical-first` tests the intended grouping. The `config-default` baseline is reused from Phase 2c plus-hp outputs via symlinks, adding no additional API cost for those 10 runs.
+
+**Cost impact**: Net new API calls increase from 1,800 (3 × 10 × 60) to 1,800 (only 3 new conditions run; config-default reused). Total Phase 2e units increase from 30 to 40, but the 10 config-default units are pre-checkpointed.
+
+**Protocol impact**: Minor. Adds one condition that reuses existing data. The additional condition strengthens the design by providing an explicit baseline that matches all prior phases, enabling direct comparison between the ordering all prior phases used and the intended canonical-first grouping.
+
+**Cross-references**: E29, Decision 18.
+
+---
+
 *End of errata. New entries should be appended above this line.*

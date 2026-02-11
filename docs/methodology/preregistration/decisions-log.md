@@ -873,6 +873,62 @@ instruction text confounds.
 
 ---
 
+### Decision 18: Add Config-Default as 4th Ordering Condition in Phase 2e
+
+**Date**: 2026-02-12
+
+**Decision**: Add `config-default` as an explicit 4th ordering condition in Phase 2e
+(H4 — Example Ordering), distinct from the true `canonical-first` ordering.
+
+**Context**: During Phase 2e setup, review of the `reorder_examples()` function
+revealed that the `canonical-first` ordering was a no-op — it returned examples
+in config-file order `[C+, HP, C−, null]` rather than the intended canonical-first
+grouping `[C+, C−, HP, null]` (see E29). All prior phases (2a–2d) therefore used
+config-file order as their baseline, not true canonical-first.
+
+**Alternatives considered**:
+
+1. **Proceed with 3 conditions** (fix canonical-first, drop config-default): Would
+   lose the ability to compare against the ordering all prior phases used.
+2. **Treat config-default as canonical-first** (keep the no-op): Would conflate two
+   meaningfully different orderings and miss the opportunity to test whether
+   interleaving HP before C− matters.
+3. **Add config-default as 4th condition** (selected): Preserves continuity with
+   prior phases whilst enabling the intended canonical-first test.
+
+**Rationale**:
+
+The two orderings differ in HP placement relative to canonical negatives:
+
+| Condition | Order | HP position |
+|-----------|-------|-------------|
+| config-default | `[C+, HP, C−, null]` | Between C+ and C− |
+| canonical-first | `[C+, C−, HP, null]` | After all canonicals |
+
+This difference is scientifically informative: if example ordering matters (H4),
+the relative position of hard positives versus canonical negatives could affect
+whether the model learns from the hard examples before or after seeing the
+canonical baseline.
+
+**Cost**: Zero additional API calls. The 10 config-default runs are reused from
+Phase 2c plus-hp outputs via symlinks and are pre-checkpointed.
+
+**Design**:
+
+| Condition | Runs | API calls | Source |
+|-----------|------|-----------|--------|
+| config-default | 10 | 0 (reused) | Phase 2c plus-hp symlinks |
+| canonical-first | 10 | 600 | New |
+| canonical-last | 10 | 600 | New |
+| random | 10 | 600 | New |
+| **Total** | **40** | **1,800** | |
+
+**Cross-references**: E29 (canonical-first bug), E30 (4th condition deviation).
+
+**Evidence**: Session 32 Phase 2e setup analysis, `studies/phase2e-h4-ordering.yaml`.
+
+---
+
 ## Related Documents
 
 - **Preregistration**: `preregistration.md` — Full study design
