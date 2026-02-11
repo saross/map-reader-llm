@@ -18,16 +18,21 @@ Description:
     automatically to current API conditions.
 
 Rate-limit awareness:
-    The governor distinguishes between two failure modes that produce
+    The governor distinguishes between three failure modes that produce
     identical TPM readings (low throughput):
 
-    1. Slow API (high latency, no 429s): ramp up aggressively using
-       latency-informed gap-proportional scaling.
-    2. Rate limited (429 errors): halve immediately, enter cooldown
-       to prevent re-escalation.
+    1. Slow API (high latency, no 429s): ramp up using latency-informed
+       gap-proportional scaling.
+    2. API degradation (intermittent 429s, <25% of requests): treat as
+       transient — hold steady or ramp cautiously. Individual retries
+       handle the 429s via backoff in the batch script.
+    3. Genuine rate limiting (sustained 429s, >=25% of requests): reduce
+       concurrency, enter cooldown to prevent re-escalation.
 
     Workers pass `was_rate_limited` and `latency_seconds` to release()
     so the governor can distinguish these cases and respond correctly.
+    Only sustained 429 patterns trigger concurrency reduction; isolated
+    429s are treated as API noise/degradation.
 
 Architecture:
     The governor wraps API calls inside process_single_tile(), not at
@@ -101,10 +106,13 @@ class TPMGovernor:
     with priority given to rate-limit signals over throughput signals.
 
     Priority-based adjustment rules:
-        1. Rate limited (429s in window) -> halve, enter cooldown
+        1. Genuine rate limit (>=25% of requests in window are 429s)
+           -> reduce by ~10%, enter cooldown
         2. Over target (TPM > target) -> proportional reduction
-        3. Under 60% of target -> latency-informed ramp-up (or +1
-           during cooldown / cold start)
+        3. Under 90% of target -> latency-informed ramp-up (or +1
+           during cooldown / cold start). Intermittent 429s (<25%
+           rate) are treated as API degradation and do NOT block
+           ramp-up.
         4. Within range -> hold steady
 
     Args:
@@ -200,8 +208,14 @@ class TPMGovernor:
         self._ledger: deque[TokenRecord] = deque()
 
         # Rate-limit tracking — timestamps of 429 events within
-        # the sliding window, plus the most recent for cooldown
+        # the sliding window
         self._rate_limit_events: deque[float] = deque()
+        # Tracks last time *genuine* rate limiting was detected
+        # (sustained 429s >=25% of requests), not intermittent 429s.
+        # Used for cooldown logic — cooldown only applies after
+        # genuine rate limiting, not API degradation.
+        self._last_genuine_rate_limit_time: float = 0.0
+        # Legacy field kept for backward compatibility in stats
         self._last_rate_limit_time: float = 0.0
 
         # Latency tracking — successful request latencies within
@@ -473,22 +487,44 @@ class TPMGovernor:
             target = self._target_tpm
             low_threshold = int(target * 0.90)
 
-            # Determine whether we're in post-429 cooldown
+            # Determine whether we're in post-429 cooldown.
+            # Only genuine rate limiting (sustained 429s) triggers
+            # cooldown. Intermittent 429s (API degradation) do not.
             in_cooldown = (
-                self._last_rate_limit_time > 0
-                and (now - self._last_rate_limit_time)
+                self._last_genuine_rate_limit_time > 0
+                and (now - self._last_genuine_rate_limit_time)
                 < self._cooldown_seconds
             )
 
-            # --- Priority 1: Rate limited ---
-            if len(self._rate_limit_events) > 0:
-                # Reduce by ~10% (at least -1) rather than halving
+            # --- Priority 1: Genuine rate limiting ---
+            # Only trigger if 429s are a significant fraction of
+            # recent requests (>=25%). Intermittent 429s (<25%) are
+            # API degradation/noise — the batch script's per-request
+            # backoff handles those; the governor should not reduce
+            # concurrency for transient issues.
+            n_429s = len(self._rate_limit_events)
+            n_requests_in_window = len(self._ledger)
+            rate_limit_rate = (
+                n_429s / n_requests_in_window
+                if n_requests_in_window > 0
+                else 0.0
+            )
+            if n_429s >= 2 and rate_limit_rate >= 0.25:
+                # Sustained rate limiting — reduce by ~10%
                 reduction = max(old_concurrency // 10, 1)
                 new_concurrency = max(
                     old_concurrency - reduction,
                     self._min_concurrency,
                 )
+                self._last_genuine_rate_limit_time = now
                 reason = "rate_limited"
+
+            elif n_429s > 0:
+                # Intermittent 429s — API degradation, not quota.
+                # Hold steady; don't reduce. The per-request backoff
+                # handles retries. Log as degradation for diagnostics.
+                new_concurrency = old_concurrency
+                reason = "api_degradation"
 
             # --- Priority 2: Over target ---
             elif current_tpm > target:
@@ -561,11 +597,18 @@ class TPMGovernor:
                 f"{avg_lat:.1f}s" if avg_lat is not None
                 else "None"
             )
+            rate_429_str = (
+                f" 429_rate={rate_limit_rate:.0%}"
+                f"({n_429s}/{n_requests_in_window})"
+                if n_429s > 0
+                else ""
+            )
             print(
                 f"  [Governor] concurrency={old_concurrency}->"
                 f"{new_concurrency} TPM={current_tpm:,}/"
                 f"{target:,} lat_records={n_lat} "
-                f"avg_lat={lat_str} reason={reason}",
+                f"avg_lat={lat_str}{rate_429_str} "
+                f"reason={reason}",
                 flush=True,
             )
 

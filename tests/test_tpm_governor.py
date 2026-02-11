@@ -199,6 +199,7 @@ class TestConcurrencyAdaptation:
         """No adjustment before minimum completed requests (3)."""
         governor = TPMGovernor(
             tpm_limit=1_000_000,
+            tokens_per_request=10_000,  # Low enough to avoid safe_initial clamp
             initial_concurrency=4,
             adjust_interval=0.0,  # Would adjust immediately if allowed
         )
@@ -216,6 +217,7 @@ class TestConcurrencyAdaptation:
         """Concurrency decrease takes effect as workers finish (drain)."""
         governor = TPMGovernor(
             tpm_limit=100_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
             target_utilisation=0.80,  # target = 80K TPM
             initial_concurrency=5,
             min_concurrency=1,
@@ -304,6 +306,7 @@ class TestThreadSafety:
     def test_thread_safety(self) -> None:
         """Multiple threads can acquire/release without deadlocks."""
         governor = TPMGovernor(
+            tokens_per_request=10_000,  # Avoid safe_initial clamp
             initial_concurrency=4,
             max_concurrency=10,
             adjust_interval=0.1,
@@ -388,6 +391,7 @@ class TestGetStats:
         """Initial stats have sensible defaults."""
         governor = TPMGovernor(
             tpm_limit=500_000,
+            tokens_per_request=1_000,  # Low enough to avoid safe_initial clamp
             initial_concurrency=3,
         )
 
@@ -429,10 +433,11 @@ class TestTokenRecord:
 class TestRateLimitResponse:
     """Governor responds correctly to rate-limit (429) signals."""
 
-    def test_halves_on_rate_limit(self) -> None:
-        """Concurrency halves when a 429 is reported."""
+    def test_reduces_on_rate_limit(self) -> None:
+        """Concurrency reduces by ~10% on sustained 429s."""
         governor = TPMGovernor(
             tpm_limit=1_000_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
             initial_concurrency=20,
             min_concurrency=1,
             max_concurrency=60,
@@ -445,13 +450,15 @@ class TestRateLimitResponse:
         governor.release(10_000, latency_seconds=5.0)
         time.sleep(1.1)
 
-        # Report three 429s to trigger adjustment (need >=3 requests)
+        # Report three 429s to trigger adjustment (need >=3 requests).
+        # The 3-request guard fires on the 2nd 429 (seed + 2 429s = 3),
+        # with 429 rate = 2/3 = 67% (above 25% threshold).
         for _ in range(3):
             governor.acquire()
             governor.release(0, was_rate_limited=True)
 
-        # Concurrency should have halved from 20 to 10
-        assert governor._concurrency == 10
+        # 10% reduction: max(20 // 10, 1) = 2, so 20 - 2 = 18
+        assert governor._concurrency == 18
 
     def test_cooldown_prevents_aggressive_ramp(self) -> None:
         """During cooldown after a 429, only +1 ramp-up is allowed."""
@@ -545,9 +552,10 @@ class TestRateLimitResponse:
         assert governor._concurrency > after_halve
 
     def test_repeated_rate_limits_cascade(self) -> None:
-        """Ongoing 429s across intervals cascade halving."""
+        """Ongoing 429s across intervals cascade ~10% reductions."""
         governor = TPMGovernor(
             tpm_limit=1_000_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
             initial_concurrency=40,
             min_concurrency=2,
             max_concurrency=60,
@@ -559,36 +567,39 @@ class TestRateLimitResponse:
         governor.release(100, latency_seconds=1.0)
         time.sleep(1.1)
 
-        # First batch of 429s → 40 → 20
+        # First batch of 429s: adjustment fires on 2nd 429
+        # (seed + 2 = 3 completed). 10% of 40 = 4 → 36
         for _ in range(3):
             governor.acquire()
             governor.release(0, was_rate_limited=True)
 
-        assert governor._concurrency == 20
+        assert governor._concurrency == 36
 
-        # Second batch of 429s → 20 → 10
+        # Second batch: fires on 2nd 429 (3 more completed since
+        # last adjust). 10% of 36 = 3 → 33
         for _ in range(3):
             governor.acquire()
             governor.release(0, was_rate_limited=True)
 
-        assert governor._concurrency == 10
+        assert governor._concurrency == 33
 
-        # Third batch → 10 → 5
+        # Third batch: 10% of 33 = 3 → 30
         for _ in range(3):
             governor.acquire()
             governor.release(0, was_rate_limited=True)
 
-        assert governor._concurrency == 5
+        assert governor._concurrency == 30
 
-    def test_min_request_guard_prevents_rapid_halving(self) -> None:
-        """Multiple 429s in one interval only trigger one halving.
+    def test_min_request_guard_prevents_rapid_reduction(self) -> None:
+        """Multiple 429s in one interval only trigger one ~10% reduction.
 
         The existing 3-request guard means concurrency only adjusts
-        once per 3 completed requests, preventing rapid halving from
+        once per 3 completed requests, preventing rapid reduction from
         a burst of 429s within a single adjustment interval.
         """
         governor = TPMGovernor(
             tpm_limit=1_000_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
             initial_concurrency=20,
             min_concurrency=1,
             max_concurrency=60,
@@ -602,13 +613,52 @@ class TestRateLimitResponse:
         time.sleep(1.1)
 
         # Send exactly 3 requests (the minimum for an adjustment)
-        # with 429s — should trigger exactly one halving
+        # with 429s — should trigger exactly one reduction
         for _ in range(3):
             governor.acquire()
             governor.release(0, was_rate_limited=True)
 
-        # One halving: 20 → 10
-        assert governor._concurrency == 10
+        # One 10% reduction: 20 → 18
+        assert governor._concurrency == 18
+
+    def test_intermittent_429s_hold_steady(self) -> None:
+        """Isolated 429s (API degradation) do not reduce concurrency.
+
+        When only a small fraction of requests get 429s (<25%), the
+        governor treats this as transient API degradation rather than
+        genuine rate limiting. Concurrency should hold steady.
+        """
+        governor = TPMGovernor(
+            tpm_limit=1_000_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
+            initial_concurrency=20,
+            min_concurrency=1,
+            max_concurrency=60,
+            adjust_interval=0.0,
+        )
+
+        # Seed the ledger with enough normal requests to dilute
+        # the 429 rate below 25%. Use tiny tokens to avoid
+        # triggering the over_target path.
+        governor.acquire()
+        governor.release(1, latency_seconds=5.0)
+        time.sleep(1.1)
+
+        # 8 normal requests + 1 429 = 10% 429 rate (below 25%).
+        # The adjustment fires every 3 completed requests, so after
+        # 9 total releases (seed + 8 normal + 1 429), we get 3
+        # adjustments. At each, the single 429 is <25% of requests
+        # → api_degradation, not rate_limited.
+        for _ in range(8):
+            governor.acquire()
+            governor.release(1, latency_seconds=5.0)
+
+        governor.acquire()
+        governor.release(0, was_rate_limited=True)
+
+        # Concurrency should not have reduced (api_degradation path
+        # holds steady, under_threshold path may ramp up)
+        assert governor._concurrency >= 20
 
 
 @pytest.mark.tier1
@@ -758,6 +808,7 @@ class TestLatencyBasedRampUp:
         """
         governor = TPMGovernor(
             tpm_limit=800_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
             target_utilisation=1.0,
             initial_concurrency=10,
             min_concurrency=1,
@@ -784,7 +835,7 @@ class TestLatencyBasedRampUp:
                 )
 
         # Trigger adjustments with tiny tokens (TPM stays low →
-        # under_threshold fires, but concurrency 10 > sustainable 6
+        # under_threshold fires, but concurrency 10 > sustainable 4
         # → at_sustainable path holds, producing no change).
         # Note: at_sustainable sets new == old, so no adjustment is
         # recorded in history — we verify indirectly by checking
@@ -879,9 +930,10 @@ class TestMixedScenarios:
     """End-to-end scenarios mixing rate limits, latency, and recovery."""
 
     def test_rate_limit_then_recovery(self) -> None:
-        """429 -> halve -> cooldown -> cautious -> latency ramp."""
+        """429 -> ~10% reduce -> cooldown -> cautious -> latency ramp."""
         governor = TPMGovernor(
             tpm_limit=1_000_000,
+            tokens_per_request=1_000,  # Avoid safe_initial clamp
             target_utilisation=0.80,
             initial_concurrency=20,
             min_concurrency=1,
@@ -895,13 +947,13 @@ class TestMixedScenarios:
         governor.release(1, latency_seconds=5.0)
         time.sleep(1.1)
 
-        # Phase 2: Rate limit → halve (20 → 10)
+        # Phase 2: Rate limit → ~10% reduce (20 → 18)
         for _ in range(3):
             governor.acquire()
             governor.release(0, was_rate_limited=True)
 
-        after_halve = governor._concurrency
-        assert after_halve == 10
+        after_reduce = governor._concurrency
+        assert after_reduce == 18
 
         # Phase 3: Clear 429 events, still in cooldown → +1 only
         with governor._lock:
@@ -913,7 +965,7 @@ class TestMixedScenarios:
 
         after_cooldown_ramp = governor._concurrency
         # In cooldown, should only add +1 per adjustment
-        assert after_cooldown_ramp <= after_halve + 2
+        assert after_cooldown_ramp <= after_reduce + 2
 
         # Phase 4: Wait for cooldown to expire, then ramp
         time.sleep(0.6)
