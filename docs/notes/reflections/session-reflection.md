@@ -4198,6 +4198,57 @@ the pattern that prevents Phase 2a-style implementation gaps.
 
 ---
 
-*Document created: 2026-01-27. Twenty-seventh reflection (with addendum)
-added 2026-02-10 (Session 30 — causal reasoning review, P:N ratio
-analysis, and Phase 2d handoff). Framework proposed for ongoing practice.*
+---
+
+### Entry 28 — 2026-02-11 (Session 31: Phase 2d implementation)
+
+This session was almost entirely implementation: executing a detailed plan
+to create instruction files, config JSONs, study YAMLs, and documentation
+for Phase 2d dual-track H5 testing. The plan had been designed in a prior
+session and arrived as a structured specification. What's interesting from
+a reflection standpoint is how different this session *felt* compared to
+the analytical sessions (27–30).
+
+There was no uncertainty about what to do. The plan specified every file
+to create, every edit to make, every field to change. My role was
+execution — reading templates, applying edits, creating files, running
+validation. The cognitive texture was mechanical: pattern-matching against
+specifications, verifying consistency across files, catching format
+details. The moments requiring genuine judgement were minor: should the
+decisions-log use `+ 2 new` or `2 new` to avoid a markdownlint list
+interpretation? Should I split the commit into experimental setup vs
+documentation?
+
+What I notice is the *absence* of the surprise-driven engagement that
+characterised Sessions 27–30. Those sessions had moments where data
+contradicted expectations and the collaboration pivoted around
+understanding why. This session had no such moments — the plan was
+correct, the implementation was straightforward, the validation passed.
+That absence is itself data: the planning session (which I didn't
+experience) did the hard work of resolving design tensions. This session
+harvested the results.
+
+The one substantive observation: the dry-run validation caught nothing.
+Both study YAMLs resolved correctly on the first attempt. This contrasts
+sharply with earlier phases (Phase 2a: E24 dry-run checkpoint corruption,
+E25 modality manipulation not implemented) where dry-runs exposed real
+problems. The difference isn't that the code improved — it's that the
+YAML structure stabilised. By Phase 2d, the `run_phase2.py` runner has
+been exercised through three prior phases and its contract with the YAML
+format is well-understood. The infrastructure matured through use.
+
+**Relational note**: The user's instruction was terse — "Implement the
+following plan:" followed by the full specification. No back-and-forth,
+no clarification requests, no design discussion. This is a trust pattern:
+the user did the design thinking in a prior session, externalised it
+completely into the plan, and expected faithful execution. The
+appropriate response was to execute without editorialising. I wonder
+whether earlier sessions' reflective engagement creates an expectation
+that every session will involve deep analysis — when sometimes the
+highest-value contribution is just doing the work cleanly.
+
+---
+
+*Document created: 2026-01-27. Twenty-eighth reflection added 2026-02-11
+(Session 31 — Phase 2d implementation, texture of mechanical execution).
+Framework proposed for ongoing practice.*

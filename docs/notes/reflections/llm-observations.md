@@ -3202,7 +3202,48 @@ the benefit. This has methodological implications for the broader
 prompt engineering literature, which tends to evaluate techniques in
 isolation.
 
-*Document represents observations as of 2026-02-10. Session 30 added
-observations on conditional framing corrections, infrastructure vs
-parameter distinctions, and crossover interactions in library
-composition.*
+### 158. Plan-to-implementation fidelity as a trust metric (Session 31)
+
+This session executed a detailed implementation plan created in a prior
+session. The plan specified every file, every edit, every field value.
+The implementation required zero clarification questions and zero design
+deviations. This is unusual in the project's history — earlier phases
+regularly required mid-implementation corrections (E24, E25, E19).
+
+The difference isn't that the work was simpler. Phase 2d's dual-track
+design with instruction text adaptations, config inheritance, and
+multi-document coordination is arguably more structurally complex than
+Phase 2a's straightforward 5-condition YAML. The difference is that
+the *planning* was more thorough. The plan anticipated every file that
+needed to exist, specified the exact content changes, and named the
+documentation entries to create. There were no gaps to discover during
+implementation.
+
+This suggests a maturation pattern: as the project accumulates errata
+and decisions, the planning process becomes more constrained (fewer
+degrees of freedom) and more informed (more precedents to follow).
+The plan for Phase 2d was shaped by the accumulated errata from Phases
+2a–2c. Each erratum is a lesson that narrows the space of
+implementation mistakes. By Phase 2d, the plan was effectively a
+compilation of all the things that went wrong before.
+
+### 159. Infrastructure maturation visible through validation outcomes (Session 31)
+
+Both Phase 2d study YAMLs passed dry-run validation on the first
+attempt — 20 execution units each, all OK. Contrast with earlier
+phases: Phase 2a required E24 (dry-run checkpoint corruption fix),
+Phase 2b required post-execution discovery of `.tiles.json` file
+contamination. The `run_phase2.py` runner, by its fourth phase of use,
+has a stable contract with the YAML structure.
+
+This is an instance of a broader pattern in research software: tools
+that are exercised repeatedly across phases accumulate implicit
+robustness through the fixes applied to each phase's failures. The
+runner wasn't designed to be robust — it was *made* robust by the
+sequential correction of each bug that manifested. This is different
+from software that is designed for robustness upfront (defensive
+programming). It's robustness through empirical hardening.
+
+*Document represents observations as of 2026-02-11. Session 31 added
+observations on plan-to-implementation fidelity as a trust metric and
+infrastructure maturation through sequential phase execution.*

@@ -1485,8 +1485,77 @@ negative-free context. plus-hp (F1=0.609, includes Canon-) remains optimal.
 ### Pending Work
 
 - [x] Commit P:N ratio report and reflection documents
-- [ ] **Phase 2d setup and execution** — dual-track negative text
-  treatment (see handoff prompt in conversation)
+- [x] **Phase 2d setup and execution** — dual-track negative text
+  treatment (completed Session 31; execution pending)
+- [ ] Results write-up for plus-hp configuration
+- [ ] Investigate `mound_count` metadata vs spatial scoping divergence
+- [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward)
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+## Session 31 — 2026-02-11 (Phase 2d dual-track setup)
+
+### Overview
+
+Implemented the Phase 2d dual-track H5 exclusion guidance design from
+a detailed plan prepared in the prior session. This was a pure
+implementation session — no design decisions were made, no unexpected
+findings emerged. The plan specified every file to create/modify and
+the implementation followed it exactly.
+
+### Accomplishments
+
+1. **Track 1 instruction files updated**: Trimmed Guideline 3 in
+   `detect_brief-text-image_terse.md` and
+   `detect_brief-text-image_verbose.md` to remove HN image references.
+   Verbose intro sentence also trimmed.
+2. **Track 2 instruction files created**: `detect_brief-text_terse.md`
+   and `detect_brief-text_verbose.md` as copies of updated Track 1
+   terse/verbose files.
+3. **Track 1 config JSONs created**: `library_plus-hp_terse.json` and
+   `library_plus-hp_verbose.json` (plus-hp library, T=0.0, H5-B/C).
+4. **Track 2 config JSONs created**: `detect_brief-text_terse.json`
+   and `detect_brief-text_verbose.json` (Scale-8 metadata, T=0.0,
+   `include_example_images: false`, H5-B/C).
+5. **Track 1 study YAML rewritten**: `phase2d-h5-negtext.yaml`
+   converted from 3×3 factorial to single-factor OFAT.
+6. **Track 2 study YAML created**: `phase2d-h5-negtext-text-only.yaml`
+   following the Phase 2b text-only pattern.
+7. **Documentation**: E28 (protocol errata), Decision 17 (decisions
+   log), H5 section update (hypothesis tracking), Phase 2d row
+   (execution checklist).
+8. **Validation**: Both study YAMLs pass dry-run (20 execution units
+   each, all OK). Documentation files pass markdownlint (0 errors).
+9. **End-of-session reflections**: Updated all reflection documents.
+
+### Key Details
+
+- **New cells**: 4 (2 per track) × K=10 × 60 tiles = 2,400 API calls
+- **Estimated cost**: ~$6.90 ($4.40 Track 1 + $2.50 Track 2)
+- **Reused baselines**: Phase 2c plus-hp (Track 1 minimal), Phase 2b
+  Track 2 T=0.0 (Track 2 minimal)
+
+### Issues
+
+- None. Implementation plan was complete and accurate.
+- System instruction files have pre-existing markdownlint violations
+  (blank lines around headings/lists in exclusion criteria sections).
+  Legacy debt from original prompt creation — not addressed in this
+  session as these are VLM prompts where formatting changes could
+  affect model behaviour.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `b0d7dd0` | `feat(phase2d)`: dual-track H5 exclusion guidance setup |
+| `b6f4600` | `docs(preregistration)`: Decision 17 and Erratum E28 for Phase 2d design |
+
+### Pending Work
+
+- [x] Phase 2d setup and execution configs (this session)
+- [ ] **Phase 2d execution** — run Track 2 first (cheaper), then Track 1
+- [ ] Phase 2d analysis — scoring pipeline, compare P/R/F1 across H5 levels
 - [ ] Results write-up for plus-hp configuration
 - [ ] Investigate `mound_count` metadata vs spatial scoping divergence
 - [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward)
