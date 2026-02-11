@@ -190,6 +190,7 @@ def generate_execution_units(
     conditions: list[dict],
     num_runs: int,
     seed: int = 20260205,
+    random_seed_base: int | None = None,
 ) -> list[dict]:
     """
     Generate the full list of execution units (condition x run).
@@ -202,6 +203,9 @@ def generate_execution_units(
         conditions: List of condition dictionaries
         num_runs: Number of independent runs per condition (K)
         seed: Random seed for unit ordering
+        random_seed_base: Base seed for random ordering conditions. When set,
+            units with ordering='random' receive a per-run seed computed as
+            base + (run - 1), ensuring reproducible but distinct orderings.
 
     Returns:
         List of execution unit dictionaries, each containing:
@@ -210,17 +214,27 @@ def generate_execution_units(
         - config: Path to config file
         - temperature: Temperature override (or None)
         - ordering: Ordering override (or None)
+        - ordering_seed: Per-run seed for random ordering (or None)
     """
     units = []
 
     for condition in conditions:
         for run in range(1, num_runs + 1):
+            # Compute per-run ordering seed for random conditions
+            ordering_seed = None
+            if (
+                condition.get("ordering") == "random"
+                and random_seed_base is not None
+            ):
+                ordering_seed = random_seed_base + (run - 1)
+
             units.append({
                 "condition_name": condition["name"],
                 "run": run,
                 "config": condition["config"],
                 "temperature": condition.get("temperature"),
                 "ordering": condition.get("ordering"),
+                "ordering_seed": ordering_seed,
             })
 
     # Randomise unit order with fixed seed
@@ -430,6 +444,10 @@ def run_execution_unit(
     if unit.get("ordering") is not None:
         cmd.extend(["--ordering", str(unit["ordering"])])
 
+    # Add ordering seed for reproducible random orderings
+    if unit.get("ordering_seed") is not None:
+        cmd.extend(["--ordering-seed", str(unit["ordering_seed"])])
+
     # Add tile limit for sanity checks
     if limit and limit > 0:
         cmd.extend(["--limit", str(limit)])
@@ -614,7 +632,10 @@ def run_phase2(
         print()
 
     # Generate execution units
-    units = generate_execution_units(conditions, num_runs)
+    random_seed_base = execution.get("random_seed_base")
+    units = generate_execution_units(
+        conditions, num_runs, random_seed_base=random_seed_base,
+    )
 
     # Set up output directory
     output_dir = PROJECT_ROOT / execution["output_dir"]
@@ -772,7 +793,10 @@ def _execute_units_sequential(
             if unit.get("temperature") is not None:
                 extras.append(f"T={unit['temperature']}")
             if unit.get("ordering") is not None:
-                extras.append(f"ordering={unit['ordering']}")
+                ordering_str = f"ordering={unit['ordering']}"
+                if unit.get("ordering_seed") is not None:
+                    ordering_str += f", seed={unit['ordering_seed']}"
+                extras.append(ordering_str)
             extra_str = f" ({', '.join(extras)})" if extras else ""
             print(f"[{i}/{len(units)}] {key}{extra_str}")
 

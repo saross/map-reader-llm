@@ -161,7 +161,11 @@ def reorder_examples(examples: list, ordering: str, seed: int = None) -> list:
 
     Args:
         examples: List of example dictionaries with 'category' field.
-        ordering: Ordering strategy - 'canonical-first', 'canonical-last', or 'random'.
+        ordering: Ordering strategy — one of:
+            'config-default': Return examples in their JSON config order (no-op).
+            'canonical-first': Group all canonical examples first, then hard, then null.
+            'canonical-last': Group all canonical examples last, after hard and null.
+            'random': Reproducibly shuffle all examples using the given seed.
         seed: Random seed for reproducible ordering when using 'random'.
 
     Returns:
@@ -174,15 +178,47 @@ def reorder_examples(examples: list, ordering: str, seed: int = None) -> list:
     """
     import random as rand_module
 
-    if ordering == "canonical-first":
-        # Default ordering: canonical examples first, then hard, then null
-        # Already the default in most configs, so return as-is
+    if ordering == "config-default":
+        # Return examples in their JSON config file order (no reordering).
+        # This is the ordering used in all phases prior to Phase 2e.
         return examples
 
+    elif ordering == "canonical-first":
+        # Group all canonical examples first, then hard examples, then null.
+        # Within each group, preserve the original config order.
+        canonical = [
+            e for e in examples
+            if e.get("category", "").startswith("canonical")
+        ]
+        hard = [
+            e for e in examples
+            if e.get("category", "").startswith("hard")
+        ]
+        null = [
+            e for e in examples
+            if e.get("category") == "null"
+        ]
+        result = canonical + hard + null
+        if len(result) != len(examples):
+            dropped = len(examples) - len(result)
+            raise ValueError(
+                f"canonical-first ordering lost {dropped} example(s). "
+                f"Check that all examples have a recognised category "
+                f"(canonical_*, hard_*, or null)."
+            )
+        return result
+
     elif ordering == "canonical-last":
-        # Move canonical examples to the end
-        canonical = [e for e in examples if e.get("category", "").startswith("canonical")]
-        non_canonical = [e for e in examples if not e.get("category", "").startswith("canonical")]
+        # Move all canonical examples to the end, after hard and null.
+        # Within each group, preserve the original config order.
+        canonical = [
+            e for e in examples
+            if e.get("category", "").startswith("canonical")
+        ]
+        non_canonical = [
+            e for e in examples
+            if not e.get("category", "").startswith("canonical")
+        ]
         return non_canonical + canonical
 
     elif ordering == "random":
@@ -1084,8 +1120,8 @@ Examples:
     )
     parser.add_argument(
         "--ordering", required=False,
-        choices=["canonical-first", "canonical-last", "random"],
-        help="Override example ordering (canonical-first, canonical-last, random)",
+        choices=["config-default", "canonical-first", "canonical-last", "random"],
+        help="Override example ordering (config-default, canonical-first, canonical-last, random)",
     )
     parser.add_argument(
         "--ordering-seed", type=int, required=False,
