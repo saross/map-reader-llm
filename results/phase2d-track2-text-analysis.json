@@ -1,0 +1,215 @@
+{
+  "analysis_timestamp": "2026-02-11T07:13:49.556896+00:00",
+  "study_dir": "outputs/phase2d/track2-text",
+  "n_conditions": 3,
+  "n_bootstrap": 1000,
+  "fdr_q": 0.05,
+  "per_condition_metrics": {
+    "minimal": {
+      "n_runs": 10,
+      "n_detections_total": 1402,
+      "per_run_f1": [
+        0.6582,
+        0.6582,
+        0.6582,
+        0.6695,
+        0.6582,
+        0.6667,
+        0.6498,
+        0.6582,
+        0.6611,
+        0.6639
+      ],
+      "point_estimate": {
+        "f1": 0.6602,
+        "precision": 0.5585,
+        "recall": 0.8072
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6621126923062578,
+          "ci_lower": 0.5331355046960068,
+          "ci_upper": 0.7586370823568453
+        },
+        "precision": {
+          "mean": 0.5820108549574285,
+          "ci_lower": 0.43700475777422587,
+          "ci_upper": 0.7021035550967126
+        },
+        "recall": {
+          "mean": 0.7715423451889519,
+          "ci_lower": 0.6701120689655172,
+          "ci_upper": 0.856702424073558
+        },
+        "n_iterations": 1000,
+        "n_runs": 10,
+        "n_tiles": 60
+      }
+    },
+    "terse": {
+      "n_runs": 10,
+      "n_detections_total": 1423,
+      "per_run_f1": [
+        0.6,
+        0.6025,
+        0.6025,
+        0.6025,
+        0.6,
+        0.6025,
+        0.6,
+        0.6025,
+        0.6025,
+        0.6025
+      ],
+      "point_estimate": {
+        "f1": 0.6018,
+        "precision": 0.506,
+        "recall": 0.7423
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5973131777339693,
+          "ci_lower": 0.45008005621124864,
+          "ci_upper": 0.7285907109322601
+        },
+        "precision": {
+          "mean": 0.5244908710132229,
+          "ci_lower": 0.35599181306771943,
+          "ci_upper": 0.687459708874836
+        },
+        "recall": {
+          "mean": 0.7009468362883374,
+          "ci_lower": 0.5765689418231792,
+          "ci_upper": 0.8165234526424603
+        },
+        "n_iterations": 1000,
+        "n_runs": 10,
+        "n_tiles": 60
+      }
+    },
+    "verbose": {
+      "n_runs": 10,
+      "n_detections_total": 1293,
+      "per_run_f1": [
+        0.5487,
+        0.5487,
+        0.5463,
+        0.5487,
+        0.5487,
+        0.5463,
+        0.5487,
+        0.5463,
+        0.5487,
+        0.5487
+      ],
+      "point_estimate": {
+        "f1": 0.5479,
+        "precision": 0.4795,
+        "recall": 0.6392
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5481214602503438,
+          "ci_lower": 0.43127090433992277,
+          "ci_upper": 0.6455406460134486
+        },
+        "precision": {
+          "mean": 0.4997669107664425,
+          "ci_lower": 0.3610721520012964,
+          "ci_upper": 0.6170315130683336
+        },
+        "recall": {
+          "mean": 0.610250279670578,
+          "ci_lower": 0.5,
+          "ci_upper": 0.7126493683851144
+        },
+        "n_iterations": 1000,
+        "n_runs": 10,
+        "n_tiles": 60
+      }
+    }
+  },
+  "pairwise_comparisons": [
+    {
+      "condition_a": "minimal",
+      "condition_b": "terse",
+      "f1_difference": {
+        "mean": 0.06479951457228862,
+        "ci_lower": -0.010864226661328927,
+        "ci_upper": 0.14734309125871292
+      },
+      "precision_difference": {
+        "mean": 0.05751998394420564,
+        "ci_lower": -0.028237577924376638,
+        "ci_upper": 0.15850921125563897
+      },
+      "recall_difference": {
+        "mean": 0.07059550890061456,
+        "ci_lower": -0.009125733137829859,
+        "ci_upper": 0.15546776850993707
+      },
+      "n_tiles": 60,
+      "n_iterations": 1000,
+      "n_runs_a": 10,
+      "n_runs_b": 10,
+      "initially_significant": false,
+      "fdr_significant": false
+    },
+    {
+      "condition_a": "minimal",
+      "condition_b": "verbose",
+      "f1_difference": {
+        "mean": 0.11399123205591405,
+        "ci_lower": 0.048102590238449115,
+        "ci_upper": 0.17411126024355417
+      },
+      "precision_difference": {
+        "mean": 0.08224394419098614,
+        "ci_lower": 0.022798475998744537,
+        "ci_upper": 0.13764859650731143
+      },
+      "recall_difference": {
+        "mean": 0.16129206551837388,
+        "ci_lower": 0.08086550245098033,
+        "ci_upper": 0.24135915283257642
+      },
+      "n_tiles": 60,
+      "n_iterations": 1000,
+      "n_runs_a": 10,
+      "n_runs_b": 10,
+      "initially_significant": true,
+      "fdr_significant": true
+    },
+    {
+      "condition_a": "terse",
+      "condition_b": "verbose",
+      "f1_difference": {
+        "mean": 0.04919171748362545,
+        "ci_lower": -0.04094274809160269,
+        "ci_upper": 0.13008037163770167
+      },
+      "precision_difference": {
+        "mean": 0.0247239602467805,
+        "ci_lower": -0.0817127746346941,
+        "ci_upper": 0.12072851263084924
+      },
+      "recall_difference": {
+        "mean": 0.09069655661775933,
+        "ci_lower": 0.01123595505617991,
+        "ci_upper": 0.16240310077519388
+      },
+      "n_tiles": 60,
+      "n_iterations": 1000,
+      "n_runs_a": 10,
+      "n_runs_b": 10,
+      "initially_significant": false,
+      "fdr_significant": false
+    }
+  ],
+  "n_comparisons": 3,
+  "n_initially_significant": 1,
+  "n_fdr_significant": 1,
+  "optimal_condition": "minimal",
+  "optimal_f1": 0.6621126923062578,
+  "recommendation": "Optimal condition: minimal (mean F1 = 0.6621)\n1/3 pairwise differences significant after FDR correction."
+}
