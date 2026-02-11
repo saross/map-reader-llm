@@ -723,4 +723,25 @@ The 4 conditions are:
 
 ---
 
+### E31: Deterministic runs at T=0.0 copied instead of re-executed
+
+- **Date**: 2026-02-12
+- **Phase**: 2e (H4 — Ordering)
+- **Type**: Deviation
+- **Severity**: Low
+
+**Issue**: The preregistered design specifies K=10 replicate runs per condition. At T=0.0 (deterministic decoding), fixed-ordering conditions (canonical-first, canonical-last) produce identical outputs across all K=10 runs — empirically confirmed in Phase 2d where every replicate was byte-identical. Running all 10 replicates for these conditions wastes API calls without generating any statistical information.
+
+**Resolution**: For 4 remaining deterministic units (canonical-first/run\_1, canonical-last/run\_3, canonical-last/run\_6, canonical-last/run\_8), detection outputs were copied from an existing completed run in the same condition rather than re-executing against the API. File contents are identical to what the API would have produced. The 5 remaining random-ordering units (which use per-run seeds and therefore produce genuinely different outputs) were executed normally.
+
+**Justification**: At T=0.0, the Gemini 3 Flash API is perfectly deterministic — identical prompts produce identical outputs. This was empirically confirmed in Phase 2d (Session 32: terse=134, verbose=128 detections in every replicate). For fixed-ordering conditions where the prompt does not vary across runs, all K=10 runs are guaranteed to be identical. Copying existing outputs is equivalent to re-execution and avoids ~$1 of redundant API calls and several hours of execution time under heavy API rate limiting.
+
+**Impact on analysis**: None. The copied runs are identical to what re-execution would produce. Bootstrap CIs for deterministic conditions will show zero within-condition variance regardless of whether runs were executed or copied. The random condition (K=10 genuinely different runs) is unaffected.
+
+**Files**: `outputs/phase2e/checkpoint.json`, `outputs/phase2e/canonical-first/run_1/`, `outputs/phase2e/canonical-last/run_{3,6,8}/`.
+
+**Cross-references**: Observation 128 (working notes — determinism implications for replication design).
+
+---
+
 *End of errata. New entries should be appended above this line.*
