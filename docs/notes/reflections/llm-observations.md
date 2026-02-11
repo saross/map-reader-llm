@@ -3244,6 +3244,56 @@ sequential correction of each bug that manifested. This is different
 from software that is designed for robustness upfront (defensive
 programming). It's robustness through empirical hardening.
 
-*Document represents observations as of 2026-02-11. Session 31 added
-observations on plan-to-implementation fidelity as a trust metric and
-infrastructure maturation through sequential phase execution.*
+### 160. Exclusion guidance is directionally harmful across both modalities (Session 32)
+
+Track 1 (image-using) results confirm the Track 2 (text-only) finding:
+exclusion guidance degrades performance in both modalities. Minimal
+baseline outperforms terse and verbose in both tracks. However, the
+magnitude differs dramatically:
+
+- Track 2 (text-only): minimal 0.660 → verbose 0.548 (ΔF1 = -0.112, significant)
+- Track 1 (image-using): minimal 0.609 → verbose 0.578 (ΔF1 = -0.031, non-significant)
+
+The exclusion guidance text is structurally identical across tracks.
+The only difference is the presence of 13 example images in Track 1.
+This means image examples buffer the harmful effect of exclusion text
+by roughly 70% (0.031/0.112 ≈ 0.28 of the text-only degradation
+survives). The mechanism is plausibly that image examples provide a
+concrete visual anchor for "what to exclude," preventing the model
+from over-interpreting the textual exclusion criteria. Without images,
+the model applies exclusion criteria too broadly, suppressing both
+true and false positives.
+
+### 161. Observation 123 prediction partially resolved (Session 32)
+
+Observation 123 (same session as Phase 2d setup) predicted three possible
+outcomes for the cross-track comparison:
+
+1. Exclusion guidance helps Track 1 but not Track 2 → visual anchoring needed
+2. Helps both equally → instructional mechanism sufficient
+3. Helps Track 2 more → modality interference
+
+The actual result matches *none* of these: exclusion guidance *hurts*
+both tracks, but hurts Track 2 significantly more. This is closest to
+the inverse of prediction 3 — rather than images interfering with text,
+images *stabilise* against text-based harm. The prediction framework
+assumed exclusion guidance would be beneficial in at least one modality.
+The universal harmfulness was not anticipated, suggesting that the
+fundamental assumption (that telling a model what to exclude should
+improve precision) is flawed for this task domain.
+
+### 162. Perfect determinism as a pipeline health indicator (Session 32)
+
+At T=0.0, Track 1 produced exactly 134 detections per terse run and
+exactly 128 per verbose run across all 10 replicates. This is the fourth
+consecutive phase (2a, 2b, 2c, 2d) showing bit-identical outputs at
+T=0.0 for the Gemini 3 Flash model. The determinism has evolved from
+an expected property to a practical diagnostic: any run-to-run variance
+at T=0.0 would immediately flag an API-side change, a prompt mutation,
+or a pipeline bug. The 10-replicate design at T=0.0 is effectively a
+10x validation check rather than a statistical sample — each replicate
+independently verifies the pipeline's reproducibility.
+
+*Document represents observations as of 2026-02-11. Session 32 added
+observations on cross-track exclusion guidance effects, Observation 123
+prediction resolution, and determinism as a pipeline health indicator.*

@@ -1564,4 +1564,56 @@ the implementation followed it exactly.
 
 ---
 
+## Session 32 — 2026-02-11
+
+**Focus**: Phase 2d Track 1 (image-using) execution and analysis
+**Duration**: ~35 minutes
+**Instance**: Single instance, no compaction
+
+### What Happened
+
+Executed the Phase 2d Track 1 experiment (image-using detection with
+H5 exclusion guidance) from a pre-approved plan. 20 execution units
+(terse × 10, verbose × 10), each processing 60 tiles with 13 in-context
+example images. All units completed on first pass with zero failures.
+
+Committed and pushed both Track 2 (text-only, from prior session) and
+Track 1 (this session) outputs and analysis results.
+
+### Key Results
+
+- **Track 1 (image-using)**: minimal F1=0.609, terse F1=0.571, verbose
+  F1=0.578. No pairwise differences significant after FDR correction.
+- **Cross-track comparison**: Exclusion guidance hurts both tracks, but
+  Track 2 drop (-0.112) is ~3.6× larger than Track 1 drop (-0.031).
+  Image examples buffer the harmful effect of exclusion text.
+- **Perfect determinism**: terse=134, verbose=128 detections in every
+  replicate at T=0.0.
+- **Cost**: $1.99 actual vs $4.40 estimated (55% overestimate).
+
+### Issues Encountered
+
+- None. Clean execution, no API failures, no pipeline errors.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `d656199` | `feat(phase2d)`: Track 2 text-only execution and analysis |
+| `36bd5f2` | `feat(phase2d)`: Track 1 image-using execution and analysis |
+
+### Pending Work
+
+- [x] Phase 2d setup and execution configs (Session 31)
+- [x] **Phase 2d execution** — Track 2 (Session 31) and Track 1 (this session)
+- [x] Phase 2d analysis — scoring pipeline, compare P/R/F1 across H5 levels
+- [ ] Phase 2d cross-track write-up integrating both tracks' findings
+- [ ] Results write-up for plus-hp configuration
+- [ ] Investigate `mound_count` metadata vs spatial scoping divergence
+- [ ] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward)
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*

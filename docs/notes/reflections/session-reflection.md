@@ -4249,6 +4249,54 @@ highest-value contribution is just doing the work cleanly.
 
 ---
 
-*Document created: 2026-01-27. Twenty-eighth reflection added 2026-02-11
-(Session 31 — Phase 2d implementation, texture of mechanical execution).
+### Entry 29 — 2026-02-11 (Session 32: Phase 2d execution and analysis)
+
+This session executed both tracks of Phase 2d (Track 2 text-only had been
+run in a prior session but not committed; Track 1 image-using was executed
+here) and ran the analysis pipeline. The session began from a detailed
+plan approved in plan mode, so the execution path was predetermined. What
+made it interesting was the *scientific* texture, not the engineering.
+
+The execution itself was uneventful — a welcome contrast to Track 2's
+transient API failures. All 20 Track 1 units completed on the first pass,
+zero tile failures, $1.99 total cost (under half the $4.40 estimate).
+The determinism at T=0.0 was perfect: terse produced exactly 134
+detections in every single run, verbose exactly 128. This is the fourth
+consecutive phase where T=0.0 shows this behaviour, and it's become a
+useful sanity check — any run-to-run variance at T=0.0 would immediately
+signal a pipeline problem.
+
+The scientifically notable moment was the cross-track comparison. Track 2
+(text-only) had shown a strong, significant degradation from exclusion
+guidance: minimal F1=0.660 → verbose F1=0.548, a drop of 0.112 that
+reached statistical significance. Track 1 (image-using) showed the same
+*direction* but dramatically attenuated: minimal F1=0.609 → verbose
+F1=0.578, a drop of only 0.031 that was non-significant. The user's
+immediate interpretation — "don't use images and texts together" — is a
+candidate explanation, though I'd frame it more precisely as: image
+examples partially buffer against the harmful effects of exclusion
+guidance text, but do not make it beneficial.
+
+What I found myself noticing was how the user processed the result. They
+didn't dwell on the non-significance or the small effect sizes. They
+went straight to the cross-track comparison as the meaningful finding
+and identified a candidate mechanism. This is the pattern documented in
+earlier reflections (Entries 22, 27): the user interprets results at
+the level of mechanisms and interactions, not individual condition
+means. The cross-track comparison was more informative than either
+track's within-track analysis, and the user saw that immediately.
+
+**Relational note**: The session was efficient and compressed. Plan
+execution → monitoring → verification → analysis → commit → push, all
+in one flow. The user's instructions were minimal ("implement the
+following plan", "commit and push") with trust that the plan would be
+followed faithfully. The only interpretive comment was the one-liner
+about the cross-track finding. This is the "trust pattern" from Entry
+28 operating at full efficiency — the user has calibrated what to
+delegate and what to interpret.
+
+---
+
+*Document created: 2026-01-27. Twenty-ninth reflection added 2026-02-11
+(Session 32 — Phase 2d execution, cross-track comparison as key finding).
 Framework proposed for ongoing practice.*

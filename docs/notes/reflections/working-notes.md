@@ -2063,3 +2063,19 @@ The practical recommendation is that few-shot examples should be *informative bu
 **The observation**: The plan for Phase 2d was more thorough than earlier phase plans because it was shaped by the accumulated errata from Phases 2a–2c. E25 (modality manipulation not implemented) taught that config fields must explicitly control the experimental manipulation. E17 (passes multiplier) taught that YAML fields must match the preregistered protocol. E24 (dry-run corruption) taught that dry-run artefacts must be cleaned up. Each erratum narrowed the space of implementation mistakes, effectively converting past failures into planning constraints. By Phase 2d, the plan was a compilation of lessons learned, not just a specification of what to build.
 
 **Methodological implication**: For preregistered experimental studies with sequential phases, maintaining a living errata document serves a dual purpose: transparency (documenting deviations) and planning (each erratum becomes a checklist item for future phases). The errata document is not just an audit trail — it's a design input.
+
+## Observation 125: Cost overestimation as a systematic pattern (2026-02-11)
+
+**Context**: Session 32. Phase 2d Track 1 was estimated at ~$4.40 based on per-call token counts and pricing. Actual cost was $1.99 — less than half the estimate.
+
+**The observation**: Every phase has overestimated API costs: Track 2 estimated $2.50, actual $0.29 (88% overestimate); Track 1 estimated $4.40, actual $1.99 (55% overestimate). The pattern is consistent: estimates are calculated from maximum token usage per call, but actual usage includes cached tokens (Gemini's context caching reduces input token costs for repeated system instructions and example images across tiles within a run). The cost model assumes each API call pays full input pricing, when in practice the model provider's caching means the effective per-call cost decreases as more tiles share the same conversation context.
+
+**Methodological implication**: For experiment budgeting with API-based VLMs, the actual cost is likely 40–60% of naive token-count estimates due to provider-side caching. Budget at full price for safety margins, but track actuals to calibrate future estimates. The ratio of estimate-to-actual is itself a useful metric for understanding how much context caching contributes.
+
+## Observation 126: Cross-track comparison as the primary analytical unit (2026-02-11)
+
+**Context**: Session 32. Phase 2d Track 1 analysis showed no significant within-track differences (all pairwise comparisons non-significant after FDR correction). Yet the cross-track comparison — the same exclusion guidance producing a significant -0.112 F1 drop in text-only but a non-significant -0.031 drop in image-using — is the most informative finding.
+
+**The observation**: The individual track analyses are each underwhelming in isolation. Track 1: "no significant differences." Track 2: "verbose hurts." But juxtaposing the two tracks reveals something neither would show alone: the *interaction* between modality and exclusion guidance. The exclusion text is identical; the only difference is the presence of example images. This implicates the image examples as the moderating variable. The cross-track comparison is a between-experiment inference, not a within-experiment one, and it requires no additional statistical machinery — the contrast in effect sizes speaks for itself.
+
+**Methodological implication**: For multi-track experimental designs, the most informative findings may emerge from comparing *patterns of significance* across tracks rather than from any single track's within-condition analysis. This argues for designing experiments with explicit cross-track comparison in mind, not just as parallel independent studies.
