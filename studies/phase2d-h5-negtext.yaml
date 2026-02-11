@@ -1,116 +1,81 @@
-# Phase 2d: H5 Negative Text Treatment Testing
-# =============================================
-# Tests 3 negative text treatment levels across 3 M/E levels.
+# Phase 2d: H5 Negative Text Treatment — Track 1 (Image-Using)
+# ==============================================================
+# Tests 3 exclusion guidance levels (Minimal, Terse, Verbose) at the
+# carried-forward brief-text-image M/E with plus-hp library.
+#
+# Part of the dual-track Phase 2d design (Decision 17, Erratum E28):
+#   Track 1 (this file): brief-text-image — image-using OFAT
+#   Track 2 (phase2d-h5-negtext-text-only.yaml): brief-text — text-only OFAT
+#
+# OFAT simplification: original preregistered design was 3×3 factorial
+# (M/E × H5). Since Phase 2a determined brief-text-image as optimal
+# image-using M/E, we test H5 at that level only (single-factor OFAT).
+#
+# Instruction text adaptation: Guideline 3 and verbose exclusion intro
+# trimmed to remove references to negative reference images (HN images
+# excluded after Phase 2c). Exclusion descriptions retained as domain
+# knowledge. See Decision 17 and Erratum E28.
 #
 # Usage:
 #   python scripts/run_phase2.py studies/phase2d-h5-negtext.yaml
 #   python scripts/run_phase2.py studies/phase2d-h5-negtext.yaml --dry-run
 #
 # Prerequisites:
-#   - Phase 2a complete (optimal M/E determined)
-#   - Phase 2b complete (optimal temperature determined)
-#   - Phase 2c complete (optimal library determined)
-#   - Update 'carried_forward' below with prior phase results
+#   - Phase 2a complete (optimal M/E: brief-text-image)
+#   - Phase 2b complete (optimal T=0.0)
+#   - Phase 2c complete (optimal library: plus-hp)
 
 study:
-  name: "Phase 2d: H5 Negative Text Treatment"
-  version: "1.0"
+  name: "Phase 2d: H5 Negative Text Treatment — Track 1 (brief-text-image)"
+  version: "2.0"
   description: |
-    Tests 3 negative text treatment levels (Minimal, Terse, Verbose) across
-    3 image-using M/E levels. Minimal treatment already tested in Phase 2a,
-    so only Terse and Verbose variants need execution (6 net new cells).
-    Results inform negative text treatment in Phase 2e.
+    Tests 3 exclusion guidance levels (Minimal, Terse, Verbose) at the
+    carried-forward brief-text-image M/E with plus-hp library and T=0.0.
+
+    Minimal is the Phase 2c baseline (no exclusion text beyond basic
+    "Negative" label). Terse adds a brief "do not mark" list. Verbose
+    adds detailed per-type exclusion criteria with visual/key-difference/
+    test structure.
+
+    This is an OFAT simplification of the preregistered 3×3 M/E × H5
+    factorial: we test H5 at the carried-forward optimal M/E only.
+    See Decision 17.
   phase: "2d"
   hypothesis: "H5"
   created: "2026-01-21"
+  updated: "2026-02-11"
 
-# Carried forward from prior phases (UPDATE AFTER PHASES 2A-2C ANALYSIS)
+# Carried forward from prior phases
 carried_forward:
-  optimal_temperature: 1.0            # PLACEHOLDER - update after 2b
-  optimal_library: "scale-8"          # PLACEHOLDER - update after 2c
+  optimal_temperature: 0.0
+  optimal_library: "plus-hp"
+  optimal_me: "brief-text-image"
+  source: "Phase 2a (M/E), Phase 2b (T=0.0), Phase 2c (plus-hp)"
 
-# Factors under test (2-way design: M/E × H5)
+# Factor under test (single-factor OFAT)
 factors:
-  modality_elaboration:
-    description: "Image-using M/E levels (text-only excluded from H5 testing)"
-    levels:
-      - name: "image-only"
-        description: "No text guidance, images only"
-      - name: "brief-text-image"
-        description: "Concise text with images"
-      - name: "verbose-text-image"
-        description: "Detailed text with images"
-
   negative_text_treatment:
-    description: "Text treatment for negative examples"
+    description: "Exclusion guidance level in system instruction"
     levels:
       - name: "minimal"
-        description: "\"Negative\" label only (baseline from Phase 2a)"
-        run_in_phase2d: false  # Already tested in Phase 2a
+        description: "No exclusion text — baseline from Phase 2c"
+        config: "prompts/configs/library_plus-hp.json"
+        run_in_phase2d: false  # Reuse Phase 2c plus-hp results
       - name: "terse"
-        description: "Brief exclusion guidance"
+        description: "Brief exclusion guidance (do-not-mark list)"
+        config: "prompts/configs/library_plus-hp_terse.json"
         run_in_phase2d: true
       - name: "verbose"
-        description: "Detailed exclusion guidance"
+        description: "Detailed per-type exclusion criteria"
+        config: "prompts/configs/library_plus-hp_verbose.json"
         run_in_phase2d: true
-
-# Full factorial design (9 cells, 3 reuse from 2a, 6 new)
-conditions:
-  # Baseline (H5=Minimal) - reuse Phase 2a results
-  - name: "image-only_minimal"
-    me: "image-only"
-    h5: "minimal"
-    config: "prompts/configs/detect_image-only.json"
-    reuse_from: "phase2a"
-  - name: "brief-text-image_minimal"
-    me: "brief-text-image"
-    h5: "minimal"
-    config: "prompts/configs/detect_brief-text-image.json"
-    reuse_from: "phase2a"
-  - name: "verbose-text-image_minimal"
-    me: "verbose-text-image"
-    h5: "minimal"
-    config: "prompts/configs/detect_verbose-text-image.json"
-    reuse_from: "phase2a"
-
-  # Terse variants (6 new cells to run)
-  - name: "image-only_terse"
-    me: "image-only"
-    h5: "terse"
-    config: "prompts/configs/detect_image-only_terse.json"
-    run: true
-  - name: "brief-text-image_terse"
-    me: "brief-text-image"
-    h5: "terse"
-    config: "prompts/configs/detect_brief-text-image_terse.json"
-    run: true
-  - name: "verbose-text-image_terse"
-    me: "verbose-text-image"
-    h5: "terse"
-    config: "prompts/configs/detect_verbose-text-image_terse.json"
-    run: true
-
-  # Verbose variants
-  - name: "image-only_verbose"
-    me: "image-only"
-    h5: "verbose"
-    config: "prompts/configs/detect_image-only_verbose.json"
-    run: true
-  - name: "brief-text-image_verbose"
-    me: "brief-text-image"
-    h5: "verbose"
-    config: "prompts/configs/detect_brief-text-image_verbose.json"
-    run: true
-  - name: "verbose-text-image_verbose"
-    me: "verbose-text-image"
-    h5: "verbose"
-    config: "prompts/configs/detect_verbose-text-image_verbose.json"
-    run: true
 
 # Fixed parameters
 fixed:
   ordering: "canonical-first"
-  # Temperature and library from carried_forward
+  temperature: 0.0
+  library: "plus-hp"
+  me_level: "brief-text-image"
 
 inputs:
   manifest: "inputs/tiles/validation_manifest.json"
@@ -119,41 +84,33 @@ inputs:
 
 execution:
   runs: 10          # K=10 independent single-pass runs (§3.8)
-  output_dir: "outputs/phase2d"
-  checkpoint_dir: "outputs/phase2d/checkpoints"
-  cells_to_run: 6  # Only Terse and Verbose variants; Minimal reused from 2a
+  output_dir: "outputs/phase2d/track1-image"
+  checkpoint_dir: "outputs/phase2d/track1-image/checkpoints"
+  cells_to_run: 2   # Terse and Verbose only; Minimal reused from Phase 2c
 
 # Command pattern for execution
 command_template: |
   python scripts/4_detect_mounds_batch.py \
     --config {condition_config} \
     --manifest {inputs.manifest} \
-    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
+    --output-dir {output_dir}/{condition_name}/run_{run} \
     --temperature {carried_forward.optimal_temperature}
 
 analysis:
   method: "bootstrap_ci"
   n_iterations: 1000
   fdr_q: 0.05
-  design: "two_way"  # M/E × H5 factorial
+  design: "one_way"  # Single-factor OFAT (H5 levels only)
   planned_contrasts:
-    # H5 main effect contrasts (collapsed across M/E)
     - ["minimal", "terse"]
     - ["terse", "verbose"]
-    # Per-M/E contrasts if interaction significant
-    - ["image-only_minimal", "image-only_terse"]
-    - ["image-only_terse", "image-only_verbose"]
-    - ["brief-text-image_minimal", "brief-text-image_terse"]
-    - ["brief-text-image_terse", "brief-text-image_verbose"]
-    - ["verbose-text-image_minimal", "verbose-text-image_terse"]
-    - ["verbose-text-image_terse", "verbose-text-image_verbose"]
   metrics:
     - "f1"
     - "precision"
     - "recall"
   output:
-    report: "outputs/phase2d/analysis_report.json"
-    summary: "outputs/phase2d/analysis_summary.md"
+    report: "outputs/phase2d/track1-image/analysis_report.json"
+    summary: "outputs/phase2d/track1-image/analysis_summary.md"
 
 outputs:
   per_condition:
@@ -164,20 +121,19 @@ outputs:
     - "{output_dir}/analysis_report.json"
 
 estimates:
-  cells: 6  # Net new cells (Terse + Verbose variants only)
-  api_calls_per_cell: 600     # 10 runs x 60 tiles (single-pass per §3.8)
-  total_api_calls: 3600
-  cost_usd: 13
-  time_hours: 1
+  cells: 2          # Net new cells (Terse + Verbose)
+  api_calls_per_cell: 600     # 10 runs × 60 tiles (single-pass per §3.8)
+  total_api_calls: 1200
+  cost_usd: 4.40
+  time_hours: 0.5
 
 outcome:
-  determines: "optimal_h5_treatment"
+  determines: "optimal_h5_treatment_image_track"
   carries_forward_to: "phase2e"
   decision_rule: |
-    Test H5 main effect and M/E × H5 interaction.
-    If H5 main effect significant:
-      Select H5 level with highest mean F1 (collapsed across M/E).
-    If M/E × H5 interaction significant:
-      Select H5 level that performs best at optimal M/E from Phase 2a.
-    If neither significant:
-      Use Minimal (simplest) as default.
+    Compare F1 across 3 H5 levels (minimal, terse, verbose).
+    If terse or verbose significantly improves F1 over minimal:
+      Select level with highest mean F1.
+    If no significant differences:
+      Use Minimal (simplest) as default — Occam's razor.
+    Optimal H5 level carried forward to Phase 2e (ordering).

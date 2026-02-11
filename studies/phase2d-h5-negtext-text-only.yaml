@@ -1,0 +1,150 @@
+# Phase 2d: H5 Negative Text Treatment — Track 2 (Text-Only)
+# ============================================================
+# Tests 3 exclusion guidance levels (Minimal, Terse, Verbose) at the
+# carried-forward brief-text (text-only) M/E with T=0.0.
+#
+# Part of the dual-track Phase 2d design (Decision 17, Erratum E28):
+#   Track 1 (phase2d-h5-negtext.yaml): brief-text-image — image-using OFAT
+#   Track 2 (this file): brief-text — text-only OFAT
+#
+# Track 2 was deferred in Decision 16 but activated for Phase 2d because
+# precision is the bottleneck for both tracks (~52-56% for text-only at
+# T=0.0). Testing whether exclusion guidance text reduces false positives
+# is worthwhile in both modalities.
+#
+# Text-only mode: include_example_images=false means no example images are
+# sent to the model. The library in configs is pure metadata/bookkeeping.
+# The model sees only the system instruction markdown + target tile image.
+#
+# Usage:
+#   python scripts/run_phase2.py studies/phase2d-h5-negtext-text-only.yaml
+#   python scripts/run_phase2.py studies/phase2d-h5-negtext-text-only.yaml --dry-run
+#
+# Prerequisites:
+#   - Phase 2a complete (brief-text as best text-only M/E)
+#   - Phase 2b Track 2 complete (optimal T=0.0)
+
+study:
+  name: "Phase 2d: H5 Negative Text Treatment — Track 2 (brief-text)"
+  version: "1.0"
+  description: |
+    Tests 3 exclusion guidance levels (Minimal, Terse, Verbose) at the
+    carried-forward brief-text (text-only) M/E with T=0.0.
+
+    This is a text-only analogue of the preregistered H5 test. Since no
+    example images are sent, the exclusion guidance is purely instructional
+    — it tells the model what NOT to detect based on visual descriptions,
+    without reference image anchoring.
+
+    Minimal is the Phase 2b Track 2 T=0.0 baseline. Terse adds a brief
+    "do not mark" list. Verbose adds detailed per-type exclusion criteria.
+
+    See Decision 16 (dual-track), Decision 17 (Phase 2d design).
+  phase: "2d"
+  hypothesis: "H5"
+  created: "2026-02-11"
+
+# Carried forward from prior phases
+carried_forward:
+  optimal_temperature: 0.0
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2a (M/E), Phase 2b Track 2 (T=0.0)"
+
+# Factor under test (single-factor OFAT)
+factors:
+  negative_text_treatment:
+    description: "Exclusion guidance level in system instruction"
+    levels:
+      - name: "minimal"
+        description: "No exclusion text — baseline from Phase 2b Track 2 T=0.0"
+        config: "prompts/configs/detect_brief-text.json"
+        run_in_phase2d: false  # Reuse Phase 2b Track 2 T=0.0 results
+      - name: "terse"
+        description: "Brief exclusion guidance (do-not-mark list)"
+        config: "prompts/configs/detect_brief-text_terse.json"
+        run_in_phase2d: true
+      - name: "verbose"
+        description: "Detailed per-type exclusion criteria"
+        config: "prompts/configs/detect_brief-text_verbose.json"
+        run_in_phase2d: true
+
+# Fixed parameters
+fixed:
+  ordering: "canonical-first"
+  temperature: 0.0
+  me_level: "brief-text"
+  # Note: brief-text configs have include_example_images: false,
+  # so example library is metadata only — images are never sent
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10          # K=10 independent single-pass runs (§3.8)
+  output_dir: "outputs/phase2d/track2-text"
+  checkpoint_dir: "outputs/phase2d/track2-text/checkpoints"
+  cells_to_run: 2   # Terse and Verbose only; Minimal reused from Phase 2b Track 2
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {condition_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run} \
+    --temperature {carried_forward.optimal_temperature}
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  design: "one_way"  # Single-factor OFAT (H5 levels only)
+  planned_contrasts:
+    - ["minimal", "terse"]
+    - ["terse", "verbose"]
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "outputs/phase2d/track2-text/analysis_report.json"
+    summary: "outputs/phase2d/track2-text/analysis_summary.md"
+  notes: |
+    Phase 2b Track 2 data for brief-text at T=0.0 is available in
+    outputs/phase2b/track2-text/T0.0/run_* (K=10 runs). This serves
+    as the minimal baseline.
+
+    Cross-track comparison: after both tracks complete, compare whether
+    exclusion guidance has differential impact on text-only vs image-using
+    conditions.
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
+  aggregated:
+    - "{output_dir}/results_summary.csv"
+    - "{output_dir}/analysis_report.json"
+
+estimates:
+  cells: 2          # Net new cells (Terse + Verbose)
+  api_calls_per_cell: 600     # 10 runs × 60 tiles (single-pass per §3.8)
+  total_api_calls: 1200
+  cost_usd: 2.50    # Lower than Track 1 — no images in prompt
+  time_hours: 0.5
+
+outcome:
+  determines: "optimal_h5_treatment_text_track"
+  carries_forward_to: "deferred phases (2e section ordering)"
+  decision_rule: |
+    Compare F1 across 3 H5 levels (minimal, terse, verbose).
+    If terse or verbose significantly improves F1 over minimal:
+      Select level with highest mean F1.
+    If no significant differences:
+      Use Minimal (simplest) as default — Occam's razor.
+    Optimal H5 level carried forward independently for text-only track.
+
+    Note: subsequent phases for the text-only track are deferred pending
+    Phase 2d results. See Decision 16 for the text-only phase plan.
