@@ -1,46 +1,51 @@
 # Phase 2e: H4 Example Ordering Testing
 # ======================================
-# Tests 3 example ordering strategies at optimal configuration.
+# Tests 4 example ordering strategies at optimal configuration.
 #
 # Usage:
-#   python scripts/run_phase2.py studies/phase2e-h4-ordering.yaml
+#   python scripts/run_phase2.py studies/phase2e-h4-ordering.yaml --resume
 #   python scripts/run_phase2.py studies/phase2e-h4-ordering.yaml --dry-run
 #
 # Prerequisites:
 #   - Phases 2a-2d complete (all optimal parameters determined)
-#   - Update 'carried_forward' below with prior phase results
+#   - Baseline symlinks set up for config-default (see checkpoint.json)
 
 study:
   name: "Phase 2e: H4 Example Ordering"
-  version: "1.0"
+  version: "2.0"
   description: |
-    Tests 3 example ordering strategies to determine if position of canonical
-    vs hard examples affects detection performance.
+    Tests 4 example ordering strategies to determine if position of canonical
+    vs hard examples affects detection performance. Includes the config-default
+    baseline (reused from Phase 2c) plus 3 reordering variants.
     Uses all optimal parameters from Phases 2a-2d.
     Final phase before Phase 3 validation.
   phase: "2e"
   hypothesis: "H4"
   created: "2026-01-21"
+  updated: "2026-02-12"
 
-# Carried forward from all prior phases (UPDATE AFTER PHASES 2A-2D ANALYSIS)
+# Carried forward from all prior phases (updated 2026-02-12)
 carried_forward:
-  optimal_me_config: "prompts/configs/detect_image-only.json"  # PLACEHOLDER - update after 2a
-  optimal_me_name: "image-only"                                 # PLACEHOLDER - update after 2a
-  optimal_temperature: 1.0                                      # PLACEHOLDER - update after 2b
-  optimal_library: "scale-8"                                    # PLACEHOLDER - update after 2c
-  optimal_h5_treatment: "minimal"                               # PLACEHOLDER - update after 2d
+  optimal_me_config: "prompts/configs/library_plus-hp.json"     # Phase 2a → brief-text-image; Phase 2c → plus-hp library
+  optimal_me_name: "brief-text-image"                           # Phase 2a: highest image-using F1
+  optimal_temperature: 0.0                                      # Phase 2b: monotonic degradation with higher T
+  optimal_library: "plus-hp"                                    # Phase 2c: 13 examples (4C+, 2C−, 4HP, 0HN, 3null)
+  optimal_h5_treatment: "minimal"                               # Phase 2d: exclusion guidance hurts both tracks
 
 # Factor under test
 factors:
   ordering:
     description: "Position of canonical vs hard examples in the prompt"
     levels:
+      - name: "config-default"
+        value: "config-default"
+        description: "JSON config file order [C+, HP, C−, null] — baseline used in all prior phases"
       - name: "canonical-first"
         value: "canonical-first"
-        description: "Canonical examples at start, hard examples at end"
+        description: "All canonical examples grouped first [C+, C−, HP, null]"
       - name: "canonical-last"
         value: "canonical-last"
-        description: "Hard examples at start, canonical examples at end"
+        description: "All canonical examples grouped last [HP, null, C+, C−]"
       - name: "random"
         value: "random"
         description: "Examples in shuffled order (seeded for reproducibility)"
@@ -61,13 +66,12 @@ execution:
   # Random ordering uses per-run seeds for reproducibility
   random_seed_base: 42  # run_1 uses seed 42, run_2 uses 43, etc.
 
-# Command pattern for execution
+# Command pattern for execution (documentation only — run_phase2.py builds commands)
 command_template: |
   python scripts/4_detect_mounds_batch.py \
     --config {carried_forward.optimal_me_config} \
     --manifest {inputs.manifest} \
-    --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \
-    --temperature {carried_forward.optimal_temperature} \
+    --output-dir {output_dir}/{condition_name}/run_{run} \
     --ordering {factor_value} \
     --ordering-seed {random_seed}
 
@@ -76,9 +80,9 @@ analysis:
   n_iterations: 1000
   fdr_q: 0.05
   planned_contrasts:
+    - ["config-default", "canonical-first"]
     - ["canonical-first", "canonical-last"]
-    - ["canonical-first", "random"]
-    - ["canonical-last", "random"]
+    - ["config-default", "random"]
   metrics:
     - "f1"
     - "precision"
@@ -109,10 +113,10 @@ outputs:
     - "{output_dir}/analysis_report.json"
 
 estimates:
-  cells: 3
+  cells: 4
   api_calls_per_cell: 600     # 10 runs x 60 tiles (single-pass per §3.8)
-  total_api_calls: 1800
-  cost_usd: 7
+  total_api_calls: 2400       # 4 conditions, but config-default reused (net new: 1800)
+  cost_usd: 9                 # ~$7 net new + $0 reused baseline
   time_hours: 1
   # If H4b triggered: +2 cells, +1200 calls, +$4
 
@@ -121,8 +125,8 @@ outcome:
   carries_forward_to: "phase3"
   decision_rule: |
     Select ordering with highest mean F1.
-    If canonical-first (current default) is within 0.02 F1 of best,
-    prefer canonical-first for consistency with prior work.
+    If config-default (prior phases' ordering) is within 0.02 F1 of best,
+    prefer config-default for consistency with prior work.
     If H4 significant, document effect size for reporting.
   final_configuration: |
     After Phase 2e, the optimal configuration is:
