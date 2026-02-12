@@ -1,0 +1,1341 @@
+{
+  "run_id": "7faaf566-5377-45f7-add2-17f66df6b8cc",
+  "timestamp": {
+    "start": "2026-02-11T22:11:24.009402+00:00",
+    "end": "2026-02-11T22:55:31.747180+00:00",
+    "duration_seconds": 2647.737778
+  },
+  "environment": {
+    "git_commit": "fa3043f8e9e62bbc0959c26790cb544b6bb0aca3",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "6.0.0"
+  },
+  "configuration": {
+    "version": "library_plus-hp",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image.md",
+    "system_instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+    "system_instruction_text": "# Mound Detection\n\nDetect all burial mound symbols in this Soviet topographic map tile.\n\n## Target Symbols\n\nAll mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a \"sunburst\" or \"gear\" pattern. This indicates elevated terrain.\n\n**Subtypes to detect:**\n\n- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or \"\u043a\u0443\u0440\u0433.\" label.\n- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).\n- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.\n- **Benchmark on mound**: Black square with central dot, surrounded by black rays.\n\nThe **rays pointing outward** are essential. Symbols without visible rays are not mounds.\n\n## Guidelines\n\n1. Provide individual bounding boxes for each symbol, even in clusters.\n2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.\n3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled \u2014 the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
+    "library_hash": "3f7f028c2eb90b2dfe4ff06b2bbfef75a35d93c22a16e756dd63da37c97ea3cb",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "include_example_images": true,
+    "example_count": 13,
+    "full_config_snapshot": {
+      "version": "library_plus-hp",
+      "description": "H8 Condition 3: +HP library. Adds hard positives (no hard negatives). Image-using track (brief-text-image).",
+      "hypothesis": "H8-3",
+      "model": "gemini-3-flash",
+      "instruction_file": "detect_brief-text-image.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 4,
+        "hard_negative": 0,
+        "null": 3
+      },
+      "total_examples": 13,
+      "hard_examples": 4,
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_05.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_06.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_07.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_08.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_15.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_16.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_17.png",
+          "label": "Negative",
+          "category": "null"
+        }
+      ],
+      "note": "Tests +HP effect (contrast C2). Hard positives improve recall for degraded/occluded mounds.",
+      "manifest_path": "/home/shawn/Code/map-reader-llm/inputs/tiles/validation_manifest.json",
+      "ordering_override": "canonical-first"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 12,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 66,
+    "retries_rate_limit": 66,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 12
+    },
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [
+      "K-35-053-3_Elenovo_x448_y448.png",
+      "K-35-062-2_Rakovski_x448_y896.png",
+      "K-35-062-2_Rakovski_x3584_y1344.png",
+      "K-35-062-2_Rakovski_x3136_y2240.png",
+      "K-35-062-2_Rakovski_x1792_y0.png",
+      "K-35-062-2_Rakovski_x2240_y448.png",
+      "K-35-078-1_Lesovo_x0_y2688.png",
+      "K-35-078-1_Lesovo_x2688_y1792.png",
+      "K-35-078-1_Lesovo_x1344_y2240.png",
+      "K-35-078-1_Lesovo_x3136_y1344.png",
+      "K-35-078-1_Lesovo_x2688_y896.png",
+      "K-35-062-2_Rakovski_x2688_y1344.png"
+    ],
+    "failed_items": [],
+    "retry_details": [
+      {
+        "item_id": "K-35-062-2_Rakovski_x1792_y0.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:25.401721+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:25.425539+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3136_y2240.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:26.422228+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:26.455992+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x448_y896.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:27.288975+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3584_y1344.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:27.460022+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:28.174376+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:28.370895+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:29.186712+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:29.375533+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 1,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:11:30.225126+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3136_y2240.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:00.183399+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:02.075959+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x1792_y0.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:02.977697+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:03.733092+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:04.940702+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:06.002383+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:12.022477+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:16.818464+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3584_y1344.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:21.246367+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 2,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:12:26.258417+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3136_y2240.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:03.880147+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:05.146828+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:09.694749+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:10.423013+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x1792_y0.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:14.257871+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:19.594390+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:24.969060+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:41.394735+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 3,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:13:42.411711+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:15.994099+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:23.116797+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x1792_y0.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:26.559878+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:32.762754+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:34.685988+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:45.193107+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:53.117051+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 4,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:15:57.145634+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:19:39.181590+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:19:40.195917+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:19:44.428743+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:19:54.848491+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:20:01.976452+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:20:11.153462+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 5,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:20:19.909428+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+        "attempt": 6,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:24:48.088049+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 6,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:24:49.117780+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 6,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:24:55.960603+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 6,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:25:03.116587+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 6,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:25:12.265746+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 6,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:25:21.063860+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "attempt": 7,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:29:56.723037+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 7,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:29:57.786931+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 7,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:30:04.227551+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 7,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:30:13.501732+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 7,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:30:22.595951+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "attempt": 8,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:35:03.838204+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 8,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:35:05.240333+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 8,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:35:14.628878+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 8,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:35:23.711774+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "attempt": 9,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:40:12.558348+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 9,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:40:15.685391+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 9,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:40:24.718318+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+        "attempt": 10,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:45:19.596543+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 10,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:45:25.712572+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "attempt": 11,
+        "reason": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource has been exhausted (e.g. check quota).', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "error_type": "rate_limit",
+        "timestamp": "2026-02-11T22:50:26.762719+00:00"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 187896,
+    "total_output_tokens": 2080,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 189976,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 187896,
+        "output_tokens": 2080,
+        "total_tokens": 189976,
+        "request_count": 12
+      }
+    }
+  },
+  "results_summary": {
+    "total_detections": 32,
+    "class_counts": {
+      "benchmark_mound": 8,
+      "burial_mound": 21,
+      "triangulation_mound": 1,
+      "settlement_mound": 2
+    }
+  },
+  "per_item_metadata": [
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x448_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 244,
+        "total_tokens": 15902,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:11:24.073886+00:00",
+      "response_timestamp": "2026-02-11T22:11:31.975435+00:00",
+      "latency_ms": 7901,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 537
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x448_y896.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 321,
+        "total_tokens": 15979,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:12:24.405233+00:00",
+      "response_timestamp": "2026-02-11T22:12:32.418602+00:00",
+      "latency_ms": 8013,
+      "attempt_number": 2,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 757
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3584_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 249,
+        "total_tokens": 15907,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:13:32.105625+00:00",
+      "response_timestamp": "2026-02-11T22:13:40.386827+00:00",
+      "latency_ms": 8281,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 575
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3136_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 75,
+        "total_tokens": 15733,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:15:06.957830+00:00",
+      "response_timestamp": "2026-02-11T22:15:15.106868+00:00",
+      "latency_ms": 8149,
+      "attempt_number": 4,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 177
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x1792_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 312,
+        "total_tokens": 15970,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:19:29.854296+00:00",
+      "response_timestamp": "2026-02-11T22:19:38.164081+00:00",
+      "latency_ms": 8309,
+      "attempt_number": 5,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 724
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2240_y448.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 75,
+        "total_tokens": 15733,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:24:39.182047+00:00",
+      "response_timestamp": "2026-02-11T22:24:47.014074+00:00",
+      "latency_ms": 7832,
+      "attempt_number": 6,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 175
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x0_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 197,
+        "total_tokens": 15855,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:29:48.088538+00:00",
+      "response_timestamp": "2026-02-11T22:29:55.694842+00:00",
+      "latency_ms": 7606,
+      "attempt_number": 7,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 463
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2688_y1792.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 74,
+        "total_tokens": 15732,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:34:56.723196+00:00",
+      "response_timestamp": "2026-02-11T22:35:02.803185+00:00",
+      "latency_ms": 6079,
+      "attempt_number": 8,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 170
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x1344_y2240.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 76,
+        "total_tokens": 15734,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:40:03.838627+00:00",
+      "response_timestamp": "2026-02-11T22:40:11.536505+00:00",
+      "latency_ms": 7697,
+      "attempt_number": 9,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 176
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x3136_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 135,
+        "total_tokens": 15793,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:45:12.558445+00:00",
+      "response_timestamp": "2026-02-11T22:45:18.702371+00:00",
+      "latency_ms": 6143,
+      "attempt_number": 10,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 316
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2688_y896.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 70,
+        "total_tokens": 15728,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:50:19.597135+00:00",
+      "response_timestamp": "2026-02-11T22:50:24.015701+00:00",
+      "latency_ms": 4418,
+      "attempt_number": 11,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 170
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15658,
+        "output_tokens": 252,
+        "total_tokens": 15910,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          }
+        ]
+      },
+      "traffic_type": null,
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-02-11T22:55:26.763315+00:00",
+      "response_timestamp": "2026-02-11T22:55:31.737597+00:00",
+      "latency_ms": 4974,
+      "attempt_number": 12,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 590
+    }
+  ],
+  "cost_estimate": {
+    "input_cost_usd": 0.01879,
+    "output_cost_usd": 0.000832,
+    "total_cost_usd": 0.019622,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.1,
+      "output_per_1m": 0.4
+    }
+  },
+  "tpm_governor": {
+    "tpm_limit": 1000000,
+    "target_tpm": 800000,
+    "current_tpm": 0,
+    "current_concurrency": 1,
+    "peak_concurrency": 3,
+    "min_observed_concurrency": 1,
+    "total_tokens": 189976,
+    "total_requests": 78,
+    "total_rate_limits": 66,
+    "rate_limits_in_window": 0,
+    "avg_latency_seconds": null,
+    "adjustments": 2,
+    "adjustment_history": [
+      {
+        "time_offset": 36.1,
+        "old": 3,
+        "new": 2,
+        "current_tpm": 27431,
+        "target_tpm": 800000,
+        "reason": "rate_limited"
+      },
+      {
+        "time_offset": 48.0,
+        "old": 2,
+        "new": 1,
+        "current_tpm": 20465,
+        "target_tpm": 800000,
+        "reason": "rate_limited"
+      }
+    ],
+    "elapsed_seconds": 2647.7
+  }
+}
