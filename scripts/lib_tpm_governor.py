@@ -18,7 +18,7 @@ Description:
     automatically to current API conditions.
 
 Rate-limit awareness:
-    The governor distinguishes between three failure modes that produce
+    The governor distinguishes between four failure modes that produce
     identical TPM readings (low throughput):
 
     1. Slow API (high latency, no 429s): ramp up using latency-informed
@@ -26,13 +26,20 @@ Rate-limit awareness:
     2. API degradation (intermittent 429s, <25% of requests): treat as
        transient — hold steady or ramp cautiously. Individual retries
        handle the 429s via backoff in the batch script.
-    3. Genuine rate limiting (sustained 429s, >=25% of requests): reduce
-       concurrency, enter cooldown to prevent re-escalation.
+    3. Genuine rate limiting (sustained 429s, >=25% of requests, AND
+       current TPM >= 10% of target): reduce concurrency, enter cooldown
+       to prevent re-escalation.
+    4. False-positive rate limiting (sustained 429s, but TPM < 10% of
+       target): the API cannot be quota-limiting us at negligible
+       utilisation — reclassify as transient errors and ramp up +1.
+       This prevents the governor from getting stuck at minimum
+       concurrency when the API returns 429s for reasons other than
+       quota exhaustion (e.g., server overload, transient errors).
 
     Workers pass `was_rate_limited` and `latency_seconds` to release()
     so the governor can distinguish these cases and respond correctly.
-    Only sustained 429 patterns trigger concurrency reduction; isolated
-    429s are treated as API noise/degradation.
+    Only sustained 429 patterns at significant TPM trigger concurrency
+    reduction; isolated 429s and low-TPM 429s are treated as API noise.
 
 Architecture:
     The governor wraps API calls inside process_single_tile(), not at
@@ -196,6 +203,7 @@ class TPMGovernor:
                 tokens_per_request,
             )
         self._concurrency = effective_initial
+        self._initial_concurrency = effective_initial
         self._semaphore = threading.Semaphore(self._concurrency)
 
         # Number of workers currently holding a semaphore slot.
@@ -466,9 +474,13 @@ class TPMGovernor:
         Adjust concurrency using a priority-based state machine.
 
         Priority order:
-            1. Rate limited (429s in window) -> halve immediately
+            1a. False-positive rate limit (429s in window BUT TPM <10%
+                of target) -> ramp +1 (can't be quota-limited at
+                negligible utilisation)
+            1b. Genuine rate limit (429s in window AND TPM >=10% of
+                target) -> reduce by ~10%, enter cooldown
             2. Over target (TPM > target) -> proportional reduction
-            3. Under 60% of target -> latency-informed ramp-up
+            3. Under 90% of target -> latency-informed ramp-up
                (or +1 during cooldown / cold start)
             4. Within range -> hold steady
 
@@ -510,14 +522,39 @@ class TPMGovernor:
                 else 0.0
             )
             if n_429s >= 2 and rate_limit_rate >= 0.25:
-                # Sustained rate limiting — reduce by ~10%
-                reduction = max(old_concurrency // 10, 1)
-                new_concurrency = max(
-                    old_concurrency - reduction,
-                    self._min_concurrency,
-                )
-                self._last_genuine_rate_limit_time = now
-                reason = "rate_limited"
+                # Check for false-positive rate limiting: if our
+                # estimated TPM is well below the target, these 429s
+                # are transient server errors, not genuine quota
+                # exhaustion. The API cannot be rate-limiting us at
+                # <10% utilisation — reclassify as degradation and
+                # ramp up cautiously to test recovery.
+                if current_tpm < target * 0.10:
+                    # Cap override ramp at 3× initial concurrency
+                    # (floor of 10). Without a cap, persistent
+                    # transient 429s cause unbounded ramp-up to
+                    # max_concurrency, flooding the API with
+                    # all-failing requests. The cap lets us probe
+                    # for recovery without overwhelming it.
+                    override_cap = max(
+                        self._initial_concurrency * 3, 10
+                    )
+                    override_cap = min(
+                        override_cap, self._max_concurrency
+                    )
+                    new_concurrency = min(
+                        old_concurrency + 1,
+                        override_cap,
+                    )
+                    reason = "low_tpm_override_ramp"
+                else:
+                    # Sustained rate limiting — reduce by ~10%
+                    reduction = max(old_concurrency // 10, 1)
+                    new_concurrency = max(
+                        old_concurrency - reduction,
+                        self._min_concurrency,
+                    )
+                    self._last_genuine_rate_limit_time = now
+                    reason = "rate_limited"
 
             elif n_429s > 0:
                 # Intermittent 429s — API degradation, not quota.
