@@ -744,4 +744,25 @@ The 4 conditions are:
 
 ---
 
+### E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0
+
+- **Date**: 2026-02-12
+- **Phase**: 3a (H3 — Consensus Voting Validation)
+- **Type**: Deviation
+- **Severity**: Low
+
+**Issue**: The preregistered design (Section 8.3.1a) carries forward the optimal temperature from Phase 2b through subsequent phases. For both tracks, T=0.0 was optimal. However, consensus voting requires run-to-run variation to function — at T=0.0, the plus-hp library configuration produces near-deterministic output (empirically confirmed in Phases 2d–2e, where every replicate was byte-identical for fixed-ordering conditions). Applying consensus voting to identical runs is meaningless: all vote thresholds x=1..N produce the same result as a single run.
+
+**Resolution**: Phase 3a tests consensus voting at T=0.3 and T=0.7 instead of the carry-forward T=0.0. These temperatures introduce sufficient stochasticity for consensus voting to operate while remaining in the low-to-moderate variance range. The key question shifts from "does consensus at T=0.0 help?" to "does consensus at T>0 beat the T=0.0 single-run ceiling?"
+
+**Justification**: Phase 2b retroactive consensus analysis (canonical library) showed that consensus voting at T=0.3 with N=10, x=8 achieved F1=0.642, exceeding the T=0.0 single-run F1=0.557. This suggests consensus can recover or exceed deterministic performance by filtering false positives through vote thresholds. Phase 3a validates this finding on the actual carry-forward configurations (plus-hp for image track, brief-text for text-only track).
+
+**Baselines**: Track 1 (image) F1=0.609, Track 2 (text-only) F1=0.660 — both T=0.0 single-run means from Phase 2.
+
+**Impact on analysis**: The consensus voting comparison is against the T=0.0 single-run baseline, not against single-run performance at the same temperature. This is the scientifically relevant comparison: consensus voting must justify its additional API cost by exceeding the cheapest achievable performance (one run at T=0.0).
+
+**Cross-references**: E27 (dual-track carry-forward), E31 (deterministic run shortcuts confirming T=0.0 reproducibility).
+
+---
+
 *End of errata. New entries should be appended above this line.*

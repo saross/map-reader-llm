@@ -1,0 +1,141 @@
+# Phase 3a: H3 Consensus Voting Validation — Track 1 (Image)
+# ===========================================================
+# Tests consensus voting at T=0.3 and T=0.7 using the carry-forward
+# plus-hp library config (optimal from Phase 2c). K=30 runs per
+# temperature enable pool sizes N=5, N=10, N=30.
+#
+# T=0.0 is excluded because plus-hp produces near-deterministic output
+# at zero temperature, making consensus voting meaningless (see E32).
+#
+# Part of the dual-track validation (Decision 16, Erratum E27):
+#   Track 1 (this file): image-using — library_plus-hp.json
+#   Track 2 (phase3a-h3-voting-track2.yaml): text-only — detect_brief-text.json
+#
+# Staged execution:
+#   Stage 1: Set execution.runs to 10, run, analyse variation
+#   Stage 2: Change runs to 30, run with --resume (20 new per cell)
+#
+# Usage:
+#   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --workers 12
+#   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --resume --workers 12
+#
+# Prerequisites:
+#   - Phase 2 complete (optimal M/E, temperature, library determined)
+
+study:
+  name: "Phase 3a: H3 Consensus Voting — Track 1 (Image)"
+  version: "1.0"
+  description: |
+    Tests consensus voting at elevated temperatures (T=0.3, T=0.7) using
+    the carry-forward plus-hp library configuration (F1=0.609 at T=0.0).
+    T=0.0 is excluded because the plus-hp library produces near-deterministic
+    output at zero temperature, making consensus voting meaningless (Erratum E32).
+
+    Consensus voting is evaluated post-hoc by pooling K independent single-pass
+    runs (per preregistration Section 3.8) at pool sizes N=5, N=10, and N=30,
+    sweeping vote threshold x=1..N for each. The key question: does any
+    (T, N, x) configuration beat the T=0.0 single-run baseline (F1=0.609)?
+  phase: "3a"
+  hypothesis: "H3"
+  created: "2026-02-12"
+
+# Carried forward from Phases 2a-2e
+carried_forward:
+  optimal_me_config: "prompts/configs/library_plus-hp.json"
+  optimal_me_name: "plus-hp (brief-text-image)"
+  source: "Phase 2c — optimal library (F1=0.609 at T=0.0)"
+
+# Factor under test
+factors:
+  temperature:
+    description: "Model temperature (controls output randomness for consensus voting diversity)"
+    levels:
+      - name: "T0.3"
+        value: 0.3
+        description: "Low variance — tests whether modest stochasticity enables FP filtering"
+      - name: "T0.7"
+        value: 0.7
+        description: "Moderate variance — tests diversity vs noise trade-off"
+
+# Fixed parameters
+fixed:
+  ordering: "config-default"
+  # M/E, library, and instruction defined by optimal_me_config
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 10           # Stage 1: K=10 (change to 30 for Stage 2)
+  workers: 1         # Safe default; pass --workers N at CLI for parallelism
+  output_dir: "outputs/phase3a/track1-image"
+  checkpoint_dir: "outputs/phase3a/track1-image/checkpoints"
+
+# Command pattern for execution
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run} \
+    --temperature {factor_value}
+
+analysis:
+  method: "consensus_sweep"
+  script: "scripts/analyse_consensus_sweep.py"
+  args:
+    - "--study-dir"
+    - "outputs/phase3a/track1-image"
+    - "--output-dir"
+    - "results/phase3a-consensus/track1-image"
+    - "--temperatures"
+    - "T0.3"
+    - "T0.7"
+    - "--pool-sizes"
+    - "5"
+    - "10"
+    - "30"
+    - "--baseline-f1"
+    - "0.609"
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "results/phase3a-consensus/track1-image/consensus-analysis-report.json"
+    summary: "results/phase3a-consensus/track1-image/consensus-analysis-summary.md"
+  notes: |
+    Stage 1 (K=10): Use --pool-sizes 5 10 only.
+    Stage 2 (K=30): Use --pool-sizes 5 10 30.
+    Baseline F1=0.609 is the T=0.0 single-run mean from Phase 2d.
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
+  aggregated:
+    - "results/phase3a-consensus/track1-image/consensus-sweep-results.csv"
+    - "results/phase3a-consensus/track1-image/consensus-analysis-report.json"
+
+estimates:
+  cells: 2
+  api_calls_per_cell_stage1: 600     # 10 runs x 60 tiles
+  api_calls_per_cell_stage2: 1800    # 30 runs x 60 tiles
+  total_api_calls_stage1: 1200       # 2 cells x 600
+  total_api_calls_stage2: 3600       # 2 cells x 1800
+  cost_usd_stage1: 3
+  cost_usd_stage2: 8
+  time_hours: 1
+
+outcome:
+  determines: "consensus_voting_value_image_track"
+  carries_forward_to: "phase3b (if consensus improves over baseline)"
+  decision_rule: |
+    If the best (T, N, x) consensus configuration exceeds the T=0.0
+    single-run baseline (F1=0.609), consensus voting is validated for the
+    image track. The optimal configuration is carried forward.
+
+    Success threshold: any consensus F1 > 0.609 (the T=0.0 ceiling).
+    Cost-efficiency: report F1 per additional API dollar for each (T, N, x).
