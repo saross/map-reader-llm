@@ -1,6 +1,6 @@
 # Phase 3a: H3 Consensus Voting Validation — Track 2 (Text-Only)
 # ================================================================
-# Tests consensus voting at T=0.3 and T=0.7 using the carry-forward
+# Tests consensus voting at T=0.3, T=0.7, and T=1.0 using the carry-forward
 # text-only config (detect_brief-text.json). K=30 runs per temperature
 # enable pool sizes N=5, N=10, N=30.
 #
@@ -31,7 +31,7 @@ study:
   name: "Phase 3a: H3 Consensus Voting — Track 2 (Text-Only)"
   version: "1.0"
   description: |
-    Tests consensus voting at elevated temperatures (T=0.3, T=0.7) using
+    Tests consensus voting at elevated temperatures (T=0.3, T=0.7, T=1.0) using
     the carry-forward text-only configuration (F1=0.660 at T=0.0).
     T=0.0 is excluded because the model produces near-deterministic output
     at zero temperature, making consensus voting meaningless (Erratum E32).
@@ -64,6 +64,9 @@ factors:
       - name: "T0.7"
         value: 0.7
         description: "Moderate variance — tests diversity vs noise trade-off"
+      - name: "T1.0"
+        value: 1.0
+        description: "Vendor default — tests whether high diversity improves consensus"
 
 # Fixed parameters
 fixed:
@@ -78,7 +81,7 @@ inputs:
   bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
-  runs: 10           # Stage 1: K=10 (change to 30 for Stage 2)
+  runs: 30           # Stage 2: K=30 (extended from 10; --resume skips completed runs)
   workers: 1         # Safe default; pass --workers N at CLI for parallelism
   output_dir: "outputs/phase3a/track2-text"
   checkpoint_dir: "outputs/phase3a/track2-text/checkpoints"
@@ -102,6 +105,7 @@ analysis:
     - "--temperatures"
     - "T0.3"
     - "T0.7"
+    - "T1.0"
     - "--pool-sizes"
     - "5"
     - "10"
@@ -130,14 +134,14 @@ outputs:
     - "results/phase3a-consensus/track2-text/consensus-analysis-report.json"
 
 estimates:
-  cells: 2
-  api_calls_per_cell_stage1: 600     # 10 runs x 60 tiles
-  api_calls_per_cell_stage2: 1800    # 30 runs x 60 tiles
-  total_api_calls_stage1: 1200       # 2 cells x 600
-  total_api_calls_stage2: 3600       # 2 cells x 1800
-  cost_usd_stage1: 3
-  cost_usd_stage2: 8
-  time_hours: 1
+  cells: 3                             # T0.3, T0.7, T1.0
+  api_calls_per_cell: 1800             # 30 runs x 60 tiles
+  total_api_calls: 5400                # 3 cells x 1800
+  stage1_completed: 1200               # 2 cells x 10 runs x 60 tiles (already done)
+  stage2_remaining: 4200               # 70 units x 60 tiles
+  cost_usd_total: 1.17
+  cost_usd_stage2_remaining: 0.91
+  time_hours: 0.5
 
 outcome:
   determines: "consensus_voting_value_text_track"
