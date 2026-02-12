@@ -1705,4 +1705,158 @@ required retry after API conditions improved.
 
 ---
 
+## Session 34 — 2026-02-12 (Phase 2b retroactive consensus voting analysis)
+
+**Focus**: Retrospective consensus voting sweep on Phase 2b temperature data
+**Duration**: ~1 hour
+**Instance**: Two instances (context compaction mid-session)
+
+### What Happened
+
+Built and ran a retroactive consensus voting analysis on Phase 2b
+temperature sweep data (5 temperatures × 10 runs = 50 detection sets,
+zero additional API calls). The hypothesis was that aggregating multiple
+runs via majority voting at elevated temperature might outperform the
+best single-run T=0.0 result (F1=0.557). Created a standalone analysis
+script, ran a full sweep of 75 configurations (5 temps × 2 pool sizes ×
+variable thresholds), and discovered that consensus voting beats the
+single-run baseline at every temperature.
+
+A critical caveat emerged during interpretation: T=0.0 consensus results
+(F1=0.657, the best overall) exploit run-to-run variation that only
+exists in the canonical library used for Phase 2b. Phase 2c/2d/2e showed
+that the current plus-hp library produces near-perfect determinism at
+T=0.0, making consensus voting ineffective at that temperature. The
+actionable finding is therefore restricted to T≥0.3.
+
+### Key Results
+
+**Consensus voting improves over single-run baseline at all temperatures:**
+
+| Temp | Best N | Best x | F1 | ΔF1 vs baseline |
+|------|-------:|-------:|----:|----------------:|
+| T0.0 | 5 | 4 | 0.657 | +0.099 |
+| T0.3 | 10 | 8 | 0.642 | +0.085 |
+| T0.7 | 10 | 6 | 0.619 | +0.061 |
+| T1.0 | 10 | 6 | 0.605 | +0.048 |
+| T1.3 | 10 | 5 | 0.586 | +0.029 |
+
+**Actionable findings for Phase 3a** (excluding T=0.0):
+
+- **T=0.3 is the optimal consensus temperature**: F1=0.642 at N=10 x=8,
+  with optimal threshold x=8 indicating strong inter-run agreement
+- **Pool size has diminishing returns**: T0.3 N=5 x=4 (F1=0.639) vs
+  N=10 x=8 (F1=0.642) — only +0.003 from doubling the pool
+- **Consensus primarily filters false positives**: detection counts drop
+  from ~229 (x=1) to ~93 (x=8) at T=0.3, with precision rising from
+  0.34 to 0.66 while recall drops from 0.79 to 0.63
+- **Plus-hp single-run baseline (F1=0.609) is already close**: best
+  Phase 2b consensus (0.642) exceeds it by only +0.033, suggesting
+  modest but real headroom for consensus on plus-hp data
+
+**Mechanism insight**: consensus voting works as a noise-reduction tool
+(filtering inconsistent FPs) rather than a diversity exploiter (capturing
+complementary TPs). Lower temperatures produce better consensus because
+consistent high-confidence detections matter more than coverage of
+diverse hypotheses.
+
+### Accomplishments
+
+1. **Created `scripts/analyse_consensus_sweep.py`** — standalone script
+   combining functions from `merge_passes.py` (spatial clustering),
+   `analyse_phase2_results.py` (data loading), and
+   `lib_advanced_metrics.py` (F1 evaluation with bootstrap CIs).
+   Parallelised evaluation across 75 configurations using
+   ProcessPoolExecutor.
+2. **Ran full analysis** — 75 configurations × 1000 bootstrap iterations
+   in ~8 seconds. All results with 95% CIs.
+3. **Generated output files** in `results/phase2b-consensus/`:
+   - `consensus-sweep-results.csv` — full 75-row results table
+   - `consensus-analysis-report.json` — structured results with metadata
+   - `consensus-analysis-summary.md` — human-readable summary
+4. **Added T=0.0 non-transferability caveat** — edited summary to
+   document that T=0.0 consensus results depend on canonical library's
+   run-to-run variation, which doesn't exist in plus-hp. Reframed the
+   key finding to focus on T=0.3.
+5. **Cross-library comparison** — compared Phase 2b consensus results
+   against plus-hp single-run baseline (mean F1=0.609 from Phase
+   2c/2d/2e), establishing the +0.033 headroom estimate.
+
+### Issues
+
+- **T=0.0 determinism artefact**: Initial results highlighted T=0.0 as
+  the best consensus temperature. User correctly flagged that plus-hp
+  achieves near-perfect determinism at T=0.0, making this result
+  non-transferable. The improvement mechanism (filtering across 4 unique
+  run patterns) doesn't exist in plus-hp (only 2 patterns, and those
+  differ only due to minor API non-determinism).
+- **Script re-run would overwrite caveat**: The `generate_summary_md()`
+  function in the script still generates the original key finding text
+  without the caveat. If re-run, the manually-added caveat would be
+  lost. Not yet fixed programmatically.
+
+**Spatial tolerance sensitivity analysis** (post-compaction):
+
+After the consensus analysis, the user requested a tolerance sensitivity
+check before committing to Phase 3a. Created
+`scripts/analyse_tolerance_sensitivity.py` — iterates over all 33 Phase
+2 conditions and computes F1/precision/recall at 10, 20, 30, 40, and
+50m buffer sizes using the existing `spatial_tolerance_curve()` function.
+
+Key findings:
+
+| Tolerance | Plus-hp F1 | Text-only T0.0 F1 | Plus-hp rank |
+|-----------|-----------|-------------------|--------------|
+| 10m | 0.323 | 0.506 | ~15th |
+| 20m | 0.620 | 0.658 | 3rd-5th |
+| 30m | 0.716 | 0.700 | 1st-3rd |
+| 40m | 0.751 | 0.709 | 1st-3rd |
+| 50m | 0.769 | 0.726 | 1st-3rd |
+
+The carry-forward configuration holds its ranking or improves across all
+tolerances. At 50m (10 pixels, ~3-4 px from symbol edge given 14-16 px
+mound symbols), F1=0.769 — competitive with traditional CV approaches.
+
+The user noted that 20m is appropriate for internal optimisation but
+30-40m is fair for paper reporting given the symbol geometry. At these
+tolerances, single-run F1 is already 0.716-0.751, and consensus voting
+could push beyond 0.80.
+
+**Phase 3a planning** (in progress):
+
+Drafted a Phase 3a plan: K=30 runs at T=0.3 and T=0.7 with plus-hp
+configuration, deriving N=5, N=10, and N=30 from the same runs.
+3,600 API calls, ~$6-8 estimated cost. Contingent T=1.0 if results
+suggest higher temperature + larger N could help. Plan saved but not
+yet approved — session ended for context clearing.
+
+### Accomplishments (continued)
+
+6. **Created `scripts/analyse_tolerance_sensitivity.py`** — spatial
+   tolerance sweep across all 33 Phase 2 conditions at 5 buffer sizes
+7. **Generated tolerance sensitivity outputs** in
+   `results/tolerance-sensitivity/`:
+   - `tolerance-sensitivity.csv` — 165-row results table
+   - `tolerance-sensitivity.json` — structured results
+8. **Drafted Phase 3a plan** — K=30 at T=0.3/T=0.7 with plus-hp,
+   erratum E32 for temperature deviation, saved to plan file
+
+### Commits
+
+None yet — all new files are unstaged.
+
+### Pending Work
+
+- [ ] Commit consensus voting analysis script and results
+- [ ] Commit tolerance sensitivity script and results
+- [ ] **Phase 3a execution** — approve plan and run (3,600 API calls)
+- [ ] Phase 2d cross-track write-up integrating both tracks' findings
+- [ ] Fix bootstrap mean vs point estimate discrepancy in analysis script
+- [ ] Results write-up for plus-hp configuration
+- [ ] Investigate `mound_count` metadata vs spatial scoping divergence
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+
+---
+
 *New session entries should be appended above this line.*

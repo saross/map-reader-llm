@@ -2118,3 +2118,29 @@ For Phase 2e specifically: canonical-first vs canonical-last will produce an exa
 The trend suggests the modality gap is not fixed — it's a function of how well the few-shot library teaches the model. The Phase 2a result (text-only wins) was measured against a canonical library that included hard negatives (HN), which Observation 122 later showed are actively harmful. Removing HN and adding HP reduced image-using FP rate while increasing TP rate, accounting for most of the +0.05 F1 gain. If future library refinements (crop size optimisation, additional hard positives, ordering effects) continue this trajectory, the modality gap could close or reverse.
 
 **Methodological implication**: When reporting modality comparisons in VLM detection studies, the library composition should be treated as a moderating variable, not held constant. A "text vs image" comparison is incomplete without specifying which images — the same modality can perform very differently with different few-shot examples. The Phase 2a finding that "text-only outperforms image-using" is accurate for the canonical library but may not generalise to optimised libraries. This argues for reporting modality effects as conditional on library quality, and for presenting the optimisation trajectory (how the gap changes across phases) rather than a single-phase snapshot.
+
+## Observation 130: Consensus voting improvement is primarily FP filtering (2026-02-12)
+
+**Context**: Session 34. Retroactive consensus analysis on Phase 2b data. At T=0.3, raising the vote threshold from x=1 to x=8 of 10 runs drops detections from 265 to 93 while precision rises from 0.30 to 0.66 and recall drops from 0.81 to 0.63.
+
+**The observation**: The consensus voting improvement (+0.085 F1) is driven almost entirely by filtering out false positives that appear inconsistently across runs. True positives — genuine mounds detected by the model — tend to appear in most or all runs (high inter-run agreement). False positives are more idiosyncratic, appearing in only a subset of runs. Raising the vote threshold exploits this asymmetry. The mechanism is not diversity exploitation (capturing complementary TPs) but noise reduction (filtering inconsistent FPs).
+
+**Methodological implication**: For VLM detection ensemble design, the primary value of multiple runs is not diversity of detection hypotheses but consistency filtering. This suggests that the optimal ensemble temperature is the lowest temperature that produces sufficient run-to-run variation for voting to discriminate TPs from FPs — not the highest temperature that maximises detection diversity. The Phase 2b data confirms this: T=0.3 (best consensus F1=0.642) outperforms T=1.3 (best consensus F1=0.586) despite the latter producing far more diverse individual runs.
+
+## Observation 131: Spatial tolerance reveals modality-specific localisation precision (2026-02-12)
+
+**Context**: Session 34. Spatial tolerance sensitivity analysis across all 33 Phase 2 conditions at buffer sizes 10-50m.
+
+**The observation**: Image-using conditions gain +0.15 to +0.24 F1 between 20m and 50m tolerance, while text-only conditions gain only +0.07 to +0.10. At the strict 10m tolerance, text-only conditions outperform image-using conditions by an even larger margin than at 20m, while at 50m the gap narrows substantially. This indicates that image-using detections have systematically larger spatial offsets from reference centroids.
+
+The likely mechanism: image examples anchor the model to specific visual patterns (the mound symbol shape) which may have slight positional offsets in the model's coordinate output. Text-only descriptions produce more precise centroid predictions, perhaps because the model identifies the geometric centre of the described abstract shape rather than template-matching against a visual exemplar.
+
+**Methodological implication**: When choosing spatial tolerance for reporting VLM detection results, the tolerance should be justified relative to feature size. For 14-16 pixel symbols at ~5m/pixel (70-80m diameter), a 30-40m tolerance captures detections within or at the symbol boundary — defensible for comparison with traditional computer vision (CV) approaches. At 50m (10 pixels), plus-hp achieves F1=0.769 — competitive with the mid-0.70s F1 range of traditional CV methods. The 20m tolerance used for internal optimisation is appropriately conservative (within 4 pixels of centre), but paper-ready results should use a tolerance justified by the symbol geometry.
+
+## Observation 132: Phase 2 optimisation trajectory is tolerance-robust (2026-02-12)
+
+**Context**: Session 34. Tolerance sensitivity check before Phase 3a.
+
+**The observation**: The OFAT carry-forward configuration (plus-hp, config-default) holds its ranking or improves across all tolerance levels. At 20m it ranks #3-5 (behind text-only T=0.0); at 50m it ranks #1-3. No Phase 2 condition that was rejected during OFAT shows dramatically different performance at larger tolerances that would warrant revisiting the decision. Two conditions (pure-positive-4hp, terse) enter the top 5 at 50m but still rank below plus-hp. The stability of rankings across tolerances provides confidence that the OFAT decisions are not artefacts of the 20m evaluation scale.
+
+**Methodological implication**: Running a tolerance sensitivity sweep before investing in follow-up experiments (like Phase 3a) is a low-cost robustness check. If condition rankings had shifted dramatically at larger tolerances, it would have signalled that the evaluation framework needed revisiting before committing to 3,600 additional API calls. The ~5-second compute time for 33 conditions × 5 tolerances is negligible compared to the experiment cost it validates.

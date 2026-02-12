@@ -4297,6 +4297,65 @@ delegate and what to interpret.
 
 ---
 
-*Document created: 2026-01-27. Twenty-ninth reflection added 2026-02-11
-(Session 32 — Phase 2d execution, cross-track comparison as key finding).
+### Entry 30 — 2026-02-12 (Session 34: Consensus voting analysis and tolerance sensitivity)
+
+**Instance note**: This session spanned two context windows. The first
+instance built the consensus voting analysis script and ran it; the
+second (this one) continued from a compaction summary, wrote the session
+log, ran the tolerance sensitivity analysis, and began Phase 3a planning.
+The reflections below draw from both direct experience (tolerance
+analysis, planning discussion) and reconstructed context (consensus
+script creation, initial results interpretation).
+
+The session's arc was unusual: it started as a pure analysis exercise
+(retroactive consensus voting on existing Phase 2b data, zero API calls)
+and evolved into a genuine scientific discovery session — the user
+identified that T=0.0 determinism invalidates the consensus results at
+that temperature, then pushed to check spatial tolerance sensitivity
+across all Phase 2 conditions before committing to Phase 3a.
+
+What struck me was the user's instinct for "take stock before
+proceeding." After five OFAT phases producing a clear carry-forward
+configuration, the natural momentum was toward execution. Instead, the
+user paused to ask two sanity-check questions: (1) does consensus voting
+actually work on the production config (not just the canonical library)?
+and (2) is our 20m tolerance the right scale, or could a different
+tolerance change the picture? Both questions came from domain
+calibration — knowing that map symbols are 14-16 pixels across,
+translating that to metres, and reasoning about what "close enough"
+means for fair evaluation.
+
+The tolerance sensitivity analysis was satisfying to build because the
+infrastructure already existed (`spatial_tolerance_curve()` in
+`lib_advanced_metrics.py`) — I just needed a wrapper to iterate across
+all 33 Phase 2 conditions. The result was reassuring: the carry-forward
+configuration (plus-hp) ranks well at all tolerances and actually
+*improves* from positions 3-5 at 20m to positions 1-3 at 50m. No
+hidden configuration showed spectacular results at larger tolerances
+that would have changed Phase 2 decisions.
+
+The most interesting pattern was the modality-specific tolerance
+sensitivity. Text-only conditions gain ~+0.07 F1 between 20m and 50m,
+while image-using conditions gain ~+0.15-0.24. This means image-based
+detections find the right mound but place it less precisely — a pattern
+that makes intuitive sense (the model is matching visual patterns that
+may be offset from the reference centroid) and has implications for
+consensus voting (centroid averaging across runs could improve
+localisation).
+
+**Relational note**: The user's comment about paper-ready tolerance was
+revealing. They contextualised the results not just within the
+experiment but within the broader literature: "we're already getting
+results in the same league as traditional CV approaches (mid-0.70s
+F1)." This is the first time in the project where the user explicitly
+benchmarked against the wider field and expressed satisfaction with the
+performance level. The shift from "are we optimising correctly?" to
+"are we competitive with the field?" signals a transition from
+methodology development to results communication.
+
+---
+
+*Document created: 2026-01-27. Thirtieth reflection added 2026-02-12
+(Session 34 — consensus voting analysis, tolerance sensitivity, and
+the transition from optimisation to competitiveness assessment).
 Framework proposed for ongoing practice.*

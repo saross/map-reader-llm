@@ -3294,6 +3294,70 @@ or a pipeline bug. The 10-replicate design at T=0.0 is effectively a
 10x validation check rather than a statistical sample — each replicate
 independently verifies the pipeline's reproducibility.
 
-*Document represents observations as of 2026-02-11. Session 32 added
-observations on cross-track exclusion guidance effects, Observation 123
-prediction resolution, and determinism as a pipeline health indicator.*
+### 163. Consensus voting primarily filters false positives, not captures true positive diversity (Session 34)
+
+The retroactive consensus analysis on Phase 2b data revealed a clear
+mechanism: as the vote threshold increases from x=1 to x=8 (of 10
+runs), detection counts drop dramatically (265 → 93 at T=0.3) while
+precision rises from 0.30 to 0.66 and recall drops from 0.81 to 0.63.
+The F1 improvement (+0.085) comes overwhelmingly from FP elimination,
+not from capturing diverse TPs across runs. This contradicts the
+intuitive framing of consensus as "diversity exploitation" — it's
+better characterised as noise reduction. The implication for Phase 3a
+is that the value of higher temperature for consensus is not that it
+explores more detection hypotheses, but that it introduces enough
+variation for the FP-filtering mechanism to operate.
+
+### 164. Lower temperatures produce better consensus because consistency beats diversity (Session 34)
+
+Across all five temperatures tested (T=0.0-1.3), the best consensus F1
+monotonically decreases with temperature: T=0.0 (0.657), T=0.3 (0.642),
+T=0.7 (0.619), T=1.0 (0.605), T=1.3 (0.586). Higher temperature
+produces more diverse detections but also more diverse *noise* — and
+the voting mechanism cannot distinguish between a TP that appears in
+only 3/10 runs (low-confidence true feature) and an FP that appears
+in 3/10 runs (coincidental false positive). The sweet spot is the
+lowest temperature that produces sufficient run-to-run variation for
+voting to operate. For canonical library data, T=0.3 provides 9/10
+unique runs with minimal quality degradation per run.
+
+### 165. Image-using conditions have more spatial offset than text-only conditions (Session 34)
+
+The spatial tolerance sensitivity analysis across all 33 Phase 2
+conditions revealed a systematic modality difference. Text-only
+conditions gain ~+0.07 F1 between 20m and 50m tolerance, while
+image-using conditions gain ~+0.15-0.24 F1. This means image-based
+detections consistently find the correct mound but place the detection
+centroid less precisely than text-only detections.
+
+The mechanism is plausibly that image examples anchor the model to
+specific visual patterns (the symbol shape) which may be offset from
+the cartographic reference point. Text descriptions like "small circle
+with a dot" provide a more abstract matching criterion that
+paradoxically produces better centroid placement — perhaps because the
+model identifies the geometric centre of the described pattern rather
+than matching a visual template at a slightly offset position.
+
+This has implications for consensus voting: if multiple runs detect the
+same mound with slight positional offsets, the consensus centroid
+(average of cluster members) could improve localisation beyond any
+single run's precision.
+
+### 166. Tolerance sensitivity validates the Phase 2 optimisation trajectory (Session 34)
+
+The plus-hp carry-forward configuration ranks #3-5 at 20m (behind
+text-only T=0.0) but rises to #1-3 at 50m. This means Phase 2
+decisions were not an artefact of the 20m tolerance — the chosen
+configuration holds or improves its relative position at all
+tolerances. Two conditions that were rejected in Phase 2 (pure-positive-4hp
+rank 20→4, terse rank 17→5) enter the top 5 at 50m, but both still rank
+below plus-hp at 50m (0.751 and 0.745 vs 0.769). The tolerance analysis
+provides a useful robustness check: if condition rankings had been
+unstable across tolerances, it would have suggested the 20m evaluation
+was fragile. The stability confirms that the OFAT decisions are
+tolerance-robust.
+
+*Document represents observations as of 2026-02-12. Session 34 added
+observations on consensus voting as FP filtering, temperature-consistency
+trade-off, modality-specific spatial offset, and tolerance sensitivity
+validation.*

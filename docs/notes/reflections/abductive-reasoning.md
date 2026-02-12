@@ -1724,5 +1724,62 @@ conditions. The AI provides computational scope (analysing all 7
 conditions simultaneously) but over-generalises at the interpretation
 stage.
 
-*Last updated: 2026-02-10 (Session 30 — causal reasoning review,
-belief revision on HP conditionality and null tile infrastructure)*
+---
+
+### Session 34 Assessment — 2026-02-12 (Consensus voting mechanism and tolerance reframing)
+
+**Instance note**: Second context window (working from compaction
+summary for consensus analysis; direct experience for tolerance
+analysis and planning).
+
+**Surprising observation**: The consensus voting analysis produced a
+clear result — consensus beats single-run baseline at every temperature
+— but the *mechanism* was unexpected. The initial framing was "diversity
+exploitation": higher temperatures produce diverse detection hypotheses
+that complement each other. The data showed the opposite: lower
+temperatures produce *better* consensus (T=0.0 > T=0.3 > T=0.7 >
+T=1.0 > T=1.3). Consensus works through *consistency filtering*, not
+diversity capture. False positives are idiosyncratic (appearing in
+subsets of runs); true positives are consistent (appearing in most or
+all runs). The vote threshold exploits this asymmetry.
+
+**Belief revision**: Two revisions occurred:
+
+1. "Consensus voting exploits detection diversity" → "Consensus voting
+   exploits the *consistency asymmetry* between TPs (consistent) and
+   FPs (idiosyncratic)." This is a stronger mechanistic claim. It
+   predicts that consensus improvement will plateau when the threshold
+   exceeds the TP consistency rate, and that very high temperatures will
+   degrade consensus by making TPs less consistent.
+
+2. "T=0.0 is the best consensus temperature" → "T=0.0 consensus results
+   are artefacts of canonical library imperfection, not transferable to
+   plus-hp." The user flagged this — they knew from recent experience
+   that plus-hp produces near-perfect determinism at T=0.0. Without
+   this domain memory, the T=0.0 result would have been reported as
+   the headline finding. The correction redirected focus to T=0.3 as
+   the actionable temperature.
+
+**Abductive quality**: The FP-filtering mechanism emerged from
+examining the precision/recall/detection-count trajectories across
+thresholds — not from the F1 numbers alone. The F1 curve is roughly
+parabolic (rising then falling with threshold), which could support
+either mechanism. But the *components* tell the story: precision rises
+monotonically (FPs being eliminated), recall falls monotonically (TPs
+being lost at high thresholds), and the detection count drops steeply
+(most detections fail high-threshold voting). The mechanistic inference
+required looking at the three metrics jointly, not just the composite F1.
+
+**User correction pattern**: The T=0.0 correction follows the same
+pattern as Sessions 28-30: the user accepts the computational result
+but challenges the *interpretation* based on domain knowledge the AI
+lacks. The AI produced correct numbers but framed them within a
+narrative ("T=0.0 is best for consensus") that ignored a known
+constraint (plus-hp determinism). The correction was immediate and
+specific: "but isn't it the case that in newer runs, T0.0 hasn't shown
+any variation?" This is the same calibration function documented in
+Entry 30 — the user's primary contribution to analysis sessions is
+interpretive discipline, not computation.
+
+*Last updated: 2026-02-12 (Session 34 — consensus voting mechanism
+revision, T=0.0 non-transferability correction, tolerance reframing)*
