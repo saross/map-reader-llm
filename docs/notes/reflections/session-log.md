@@ -1616,4 +1616,93 @@ Track 1 (this session) outputs and analysis results.
 
 ---
 
+## Session 33 — 2026-02-12
+
+**Focus**: Phase 2e (H4 — Example Ordering) execution and analysis
+**Duration**: ~4 hours (mostly API wait time; split across two context windows)
+**Instance**: Two instances (context compaction mid-session)
+
+### What Happened
+
+Completed the full Phase 2e lifecycle: governor improvement, test fixes,
+experiment execution, analysis, and documentation. This was the final
+OFAT phase before Phase 3 validation.
+
+The session began with infrastructure work — fixing the TPM governor's
+429 handling — then pivoted to experiment execution. Mid-execution, we
+discovered that K=10 replication at T=0.0 produces identical outputs for
+fixed-ordering conditions, allowing 4 of the remaining 10 units to be
+satisfied by copying existing outputs (documented as E31). API rate
+limiting (Gemini returning 429s at 88–95% rate despite 5% quota usage)
+was the primary bottleneck; one unit (random/run_2) timed out and
+required retry after API conditions improved.
+
+### Key Results
+
+**H4 Ordering — No significant effect after FDR correction:**
+
+| Condition | Ordering | F1 | 95% CI |
+|-----------|----------|---:|:------:|
+| config-default | [C+, HP, C−, null] | 0.609 | [0.485, 0.701] |
+| canonical-last | [HP, null, C+, C−] | 0.609 | [0.529, 0.722] |
+| canonical-first | [C+, C−, HP, null] | 0.579 | [0.463, 0.671] |
+| random | shuffled per-run | 0.529 | [0.440, 0.616] |
+
+- Two comparisons initially significant at α=0.05 (config-default vs
+  random ΔF1=+0.067; canonical-last vs random ΔF1=+0.094) but neither
+  survives Benjamini-Hochberg FDR correction across 6 comparisons.
+- Fixed orderings outperform random, but specific ordering among fixed
+  strategies has minimal effect.
+- **Carry-forward**: config-default ordering (no change from prior phases).
+
+**Infrastructure:**
+
+- Governor now distinguishes intermittent 429s (API degradation, hold
+  steady) from sustained 429s (genuine rate limiting, reduce concurrency).
+  Requires ≥25% 429 rate and n≥2 to classify as rate limiting.
+- All 34 governor tests pass (8 fixed, 1 new test added).
+- Deterministic run optimisation saved ~$1 and several hours of API time.
+
+### Issues Encountered
+
+- **Governor spiralling**: Pre-fix governor reduced concurrency to 1 on
+  any single 429, even at 5% quota usage. Fixed by rate-based threshold.
+- **Test suite deadlocks**: safe_initial clamping reduced semaphore
+  capacity below what thread tests tried to acquire. Fixed by adding
+  explicit `tokens_per_request` to avoid clamping.
+- **random/run_2 timeout**: First attempt timed out at 27/60 tiles due
+  to 88–95% 429 rate during peak API load. Retried successfully after
+  API conditions improved (33 tiles in 40 seconds).
+- **Bootstrap mean ≠ point estimate**: Analysis recommendation reported
+  bootstrap mean F1=0.631 for canonical-last, but point estimate is
+  0.609. Tile-level resampling on zero-variance data introduces upward
+  bias. Minor reporting inconsistency to address in analysis script.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `7a038b6` | `docs(phase2e)`: errata E29/E30, Decision 18, execution plan updates |
+| `fa3043f` | `fix(governor)`: distinguish intermittent 429s from genuine rate limiting |
+| `8c292af` | `docs(phase2e)`: E31 deterministic run shortcut, observations 128–129 |
+| `de6ac2e` | `feat(phase2e)`: H4 ordering experiment execution (40/40 units) |
+| `8f34ed4` | `feat(phase2e)`: H4 ordering analysis — no significant effect after FDR |
+
+### Pending Work
+
+- [x] Phase 2e setup (Session 32.5)
+- [x] Governor fix for 429 handling
+- [x] **Phase 2e execution** — 40/40 units complete
+- [x] Phase 2e analysis — bootstrap CIs, pairwise comparisons
+- [x] Fix `test_tpm_governor.py::test_ramp_up_stability` (carried forward, fixed)
+- [ ] Phase 2d cross-track write-up integrating both tracks' findings
+- [ ] Fix bootstrap mean vs point estimate discrepancy in analysis script
+- [ ] Results write-up for plus-hp configuration
+- [ ] Investigate `mound_count` metadata vs spatial scoping divergence
+- [ ] SDK migration: `scripts/5_verify_crops.py` still uses deprecated SDK
+- [ ] Upload Phase 1 materials to OSF
+- [ ] **Phase 3 validation** — next major milestone
+
+---
+
 *New session entries should be appended above this line.*
