@@ -18,6 +18,7 @@ Usage:
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --condition image-only --runs 3
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --limit 3
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --resume --parallel-units 4
+    python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --mode batch
 
 Inputs:
     - Study definition YAML file (OFAT structure with factors/levels)
@@ -35,7 +36,7 @@ Exit Codes:
     2 - Partial failure: Some units failed but execution completed
 
 Author: Shawn Ross, Claude Code
-Version: 1.1.0
+Version: 1.2.0
 Licence: Apache 2.0
 """
 
@@ -43,6 +44,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import random
 import signal
 import subprocess
@@ -54,7 +56,9 @@ from pathlib import Path
 
 import yaml
 
-__version__ = "1.1.0"
+logger = logging.getLogger(__name__)
+
+__version__ = "1.3.0"
 
 # Resolve project root as parent of the scripts/ directory
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -542,6 +546,7 @@ def run_phase2(
     timeout: int = 3600,
     workers_override: int | None = None,
     parallel_units: int = 1,
+    mode: str = "concurrent",
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -560,6 +565,11 @@ def run_phase2(
             Default 1 = sequential (backward compatible). When > 1,
             units are dispatched via ThreadPoolExecutor with per-unit
             log files to prevent interleaved terminal output.
+        mode: Execution mode — 'concurrent' (default, existing pipeline
+            via subprocess) or 'batch' (Gemini Batch API via
+            lib_batch_api). Batch mode bypasses the subprocess model
+            and rate limiter, submitting all tiles per unit as a single
+            JSONL file.
 
     Returns:
         Summary dictionary with results
@@ -713,7 +723,20 @@ def run_phase2(
     # Dry-run always runs sequentially (no benefit from parallelism)
     use_parallel = parallel_units > 1 and not dry_run
 
-    if use_parallel:
+    if mode == "batch":
+        results, running_cost = _execute_units_batch(
+            units=units,
+            config=config,
+            output_dir=output_dir,
+            checkpoint=checkpoint,
+            checkpoint_path=checkpoint_path,
+            dry_run=dry_run,
+            limit=limit,
+            running_cost=running_cost,
+            cost_warn_threshold=cost_warn_threshold,
+            verbose=verbose,
+        )
+    elif use_parallel:
         results, running_cost = _execute_units_parallel(
             units=units,
             config=config,
@@ -956,6 +979,235 @@ def _execute_units_parallel(
     return results, running_cost
 
 
+def _execute_units_batch(
+    units: list[dict],
+    config: dict,
+    output_dir: Path,
+    checkpoint: dict,
+    checkpoint_path: Path,
+    dry_run: bool,
+    limit: int | None,
+    running_cost: float,
+    cost_warn_threshold: float,
+    verbose: bool,
+) -> tuple[dict, float]:
+    """
+    Execute units via the Gemini Batch API.
+
+    Each unit is submitted as a single JSONL file containing all tiles.
+    The Batch API processes them asynchronously with 50% cost reduction
+    and separate (higher) rate limits.
+
+    Batch-pending jobs are recorded in the checkpoint immediately after
+    submission to prevent orphaned or duplicate submissions on resume.
+
+    Args:
+        units: List of execution unit dicts.
+        config: Full study configuration.
+        output_dir: Base output directory.
+        checkpoint: Checkpoint dict (may contain batch_pending).
+        checkpoint_path: Path to checkpoint file.
+        dry_run: If True, build JSONL without submitting.
+        limit: Optional tile limit per unit.
+        running_cost: Accumulated cost so far.
+        cost_warn_threshold: Cost warning threshold.
+        verbose: Print progress information.
+
+    Returns:
+        Tuple of (results dict, updated running_cost).
+    """
+    # Lazy import — only needed in batch mode, avoids import errors
+    # when google-genai batch features are not available
+    from google import genai
+
+    from config import BASE_DIR, GOOGLE_API_KEY
+    from scripts.lib_batch_api import run_batch_unit
+
+    results: dict = {"completed": [], "failed": []}
+
+    if verbose:
+        print("Execution mode: BATCH (Gemini Batch API)")
+        print()
+
+    # Initialise Gemini client
+    if not GOOGLE_API_KEY:
+        print("ERROR: GOOGLE_API_KEY not found.")
+        return {"completed": [], "failed": [{"unit": "all", "error": "no_api_key"}]}, running_cost
+
+    client = genai.Client(
+        api_key=GOOGLE_API_KEY,
+        http_options={"api_version": "v1alpha"},
+    )
+
+    # Initialise batch_pending in checkpoint (backward-compatible)
+    batch_pending = checkpoint.get("batch_pending", {})
+
+    # Poll any previously submitted but incomplete batch jobs first
+    if batch_pending and verbose:
+        print(
+            f"Found {len(batch_pending)} pending batch job(s) "
+            f"from previous run"
+        )
+
+    # Inject project root into config so lib_batch_api can resolve paths
+    config_with_root = dict(config)
+    config_with_root["_project_root"] = str(PROJECT_ROOT)
+
+    # Cache available models for name resolution — avoids one
+    # models.list() call per unit. Configs use marketing names
+    # (e.g. 'gemini-3-flash') but the API may require '-preview'.
+    available_models: set[str] | None = None
+    try:
+        available_models = {
+            m.name.removeprefix("models/")
+            for m in client.models.list()
+        }
+    except Exception as e:
+        logger.warning("Could not list models for resolution: %s", e)
+
+    # Factory for write-ahead checkpoint callbacks. Each unit gets its
+    # own closure that captures the unit key and writes the batch job
+    # name to the checkpoint immediately after submission — before the
+    # long polling phase begins. This is the "write-ahead" step that
+    # prevents job loss on crash.
+    def _make_on_submit(key: str) -> callable:
+        """Create an on_submit callback that persists job metadata."""
+        def _on_submit(job_name: str, tile_keys: list[str]) -> None:
+            batch_pending[key] = {
+                "batch_job_name": job_name,
+                "submitted_at": datetime.now(timezone.utc).isoformat(),
+                "tile_count": len(tile_keys),
+            }
+            checkpoint["batch_pending"] = batch_pending
+            save_checkpoint(checkpoint_path, checkpoint)
+            logger.info(
+                "Write-ahead checkpoint: persisted %s → %s",
+                key, job_name,
+            )
+        return _on_submit
+
+    for i, unit in enumerate(units, 1):
+        key = unit_key(unit)
+
+        if verbose:
+            extras = []
+            if unit.get("temperature") is not None:
+                extras.append(f"T={unit['temperature']}")
+            if unit.get("ordering") is not None:
+                extras.append(f"ordering={unit['ordering']}")
+            extra_str = f" ({', '.join(extras)})" if extras else ""
+            print(f"[{i}/{len(units)}] {key}{extra_str}")
+
+        # Check for a pending batch job from a previous interrupted run
+        pending_info = batch_pending.get(key)
+        resume_job: str | None = None
+        if pending_info:
+            resume_job = pending_info.get("batch_job_name")
+            if verbose and resume_job:
+                print(f"  Resuming pending batch job: {resume_job}")
+
+        # Load the prompt config to get system instruction and examples
+        prompt_config_path = PROJECT_ROOT / unit["config"]
+        try:
+            with open(prompt_config_path) as f:
+                prompt_config = json.load(f)
+        except Exception as e:
+            results["failed"].append({"unit": key, "error": f"config_load: {e}"})
+            if verbose:
+                print(f"         Status: FAILED (config load: {e})")
+            continue
+
+        # Load system instruction
+        instruction_file = prompt_config.get(
+            "instruction_file", "detect_image-only.md",
+        )
+        instruction_path = (
+            Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
+        )
+        try:
+            with open(instruction_path) as f:
+                system_instruction = f.read()
+        except Exception as e:
+            results["failed"].append(
+                {"unit": key, "error": f"instruction_load: {e}"}
+            )
+            if verbose:
+                print(f"         Status: FAILED (instruction load: {e})")
+            continue
+
+        model_name = prompt_config.get("model", "gemini-3-flash")
+
+        # Resolve model name via cached available models list
+        if available_models and model_name not in available_models:
+            preview_name = f"{model_name}-preview"
+            if preview_name in available_models:
+                if verbose:
+                    print(
+                        f"  Model '{model_name}' not found; "
+                        f"resolved to '{preview_name}'"
+                    )
+                model_name = preview_name
+
+        config_version = prompt_config.get("version", "vX")
+        examples = prompt_config.get("examples", [])
+
+        success, message, cost = run_batch_unit(
+            unit=unit,
+            config=config_with_root,
+            output_dir=output_dir,
+            client=client,
+            model_name=model_name,
+            system_instruction=system_instruction,
+            examples=examples,
+            config_version=config_version,
+            limit=limit,
+            dry_run=dry_run,
+            on_submit=_make_on_submit(key),
+            resume_job_name=resume_job,
+        )
+
+        running_cost += cost
+
+        if success:
+            results["completed"].append(key)
+            if verbose:
+                cost_str = f" (${cost:.4f})" if cost > 0 else ""
+                print(f"         Status: OK{cost_str}")
+        else:
+            results["failed"].append({"unit": key, "error": message})
+            if verbose:
+                print(f"         Status: FAILED ({message})")
+
+        # Update checkpoint (skip for dry runs per errata E24)
+        if not dry_run:
+            if success:
+                checkpoint["completed"].append(key)
+                # Remove from batch_pending if it was there
+                batch_pending.pop(key, None)
+            else:
+                checkpoint["failed"].append(
+                    {"unit": key, "error": message}
+                )
+                batch_pending.pop(key, None)
+            checkpoint["batch_pending"] = batch_pending
+            checkpoint["total_cost_usd"] = running_cost
+            save_checkpoint(checkpoint_path, checkpoint)
+
+        # Cost warning
+        if running_cost > cost_warn_threshold and not dry_run:
+            print(
+                f"\n  WARNING: Running cost ${running_cost:.2f} "
+                f"exceeds budget threshold "
+                f"${cost_warn_threshold:.2f}. "
+                f"Review before continuing.\n"
+            )
+
+        if verbose:
+            print()
+
+    return results, running_cost
+
+
 def main() -> None:
     """Main entry point for Phase 2 OFAT runner."""
     parser = argparse.ArgumentParser(
@@ -983,6 +1235,10 @@ Examples:
   # Resume with 4 parallel units and 8 workers each
   python scripts/run_phase2.py studies/phase2a-h1-modality.yaml \\
       --resume --parallel-units 4 --workers 8
+
+  # Batch mode (Gemini Batch API — 50%% cost reduction)
+  python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
+      --mode batch
         """,
     )
 
@@ -1042,6 +1298,17 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--mode",
+        type=str,
+        choices=["batch", "concurrent"],
+        default="concurrent",
+        help=(
+            "Execution mode: 'concurrent' (default, per-tile via "
+            "subprocess) or 'batch' (Gemini Batch API, 50%% cost "
+            "reduction)"
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -1060,6 +1327,7 @@ Examples:
         timeout=args.timeout,
         workers_override=args.workers,
         parallel_units=args.parallel_units,
+        mode=args.mode,
     )
 
     # Exit code based on results

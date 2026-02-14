@@ -354,6 +354,32 @@ Text-only pipelines (Brief-Text, Verbose-Text) have no H5 variants because negat
 
 ---
 
+## Execution Modes
+
+All detection pipelines can be executed via `run_phase2.py` in one of two modes:
+
+| Mode | Flag | Engine | Rate Limiting | Cost |
+|------|------|--------|---------------|------|
+| **Concurrent** | `--mode concurrent` (default) | Per-tile API calls via `4_detect_mounds_batch.py` subprocess | Token-bucket governor (`lib_token_bucket.py`) | Standard pricing |
+| **Batch** | `--mode batch` | Single JSONL file per unit via Gemini Batch API (`lib_batch_api.py`) | Server-side (separate, higher limits) | 50% discount |
+
+Both modes produce identical output files (GeoJSON, `.meta.json`, `.tiles.json`), so downstream analysis scripts work without modification regardless of execution mode.
+
+### When to use batch mode
+
+- Large studies where cost matters (50% savings)
+- Studies that can tolerate multi-hour latency per unit (batch jobs run asynchronously)
+- Runs that don't need real-time progress monitoring
+- **Crash-safe recovery**: If the process crashes during polling, re-run with `--resume` — pending batch jobs are recovered from the checkpoint and polled to completion instead of being resubmitted
+
+### When to use concurrent mode
+
+- Iterative development and debugging (immediate per-tile feedback)
+- Small studies or sanity checks (faster turnaround for few tiles)
+- When fine-grained retry control is needed (per-tile retries with backoff)
+
+---
+
 ## Related Documents
 
 - **Config schema**: `prompts/README.md` — Full configuration documentation

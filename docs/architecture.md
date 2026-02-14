@@ -66,6 +66,23 @@ graph TD
   - Cost estimation with configurable pricing tables
   - Categorised retry tracking (rate limit, server error, timeout)
 
+### 6. Rate Limiting (Token Bucket)
+
+- **Module**: `scripts/lib_token_bucket.py`
+- **Function**: Proactive token-bucket rate limiter with dual RPM + TPM constraints and continuous capacity replenishment. Workers block in `acquire()` until both budgets allow dispatch.
+- **Used by**: `4_detect_mounds_batch.py` in concurrent mode (multi-worker runs).
+- **Not used by**: Batch mode — the Batch API has separate (higher) rate limits and handles throttling server-side.
+
+### 7. Batch API Module
+
+- **Module**: `scripts/lib_batch_api.py`
+- **Function**: Standalone module for the Google Gemini Batch API. Provides an alternative execution mode (`--mode batch` on `run_phase2.py`) that submits all tiles per execution unit as a single JSONL file, offering 50% cost reduction over synchronous requests.
+- **Lifecycle**: Build JSONL → upload via Files API → create batch job → poll `batches.get()` → download results → parse and validate → write output files.
+- **Output contract**: Produces GeoJSON, `.meta.json`, and `.tiles.json` files identical to the concurrent pipeline, ensuring downstream analysis scripts work without modification.
+- **Key safety mechanism**: Response validation matches every submitted tile key against response keys, detecting silent data loss that would otherwise appear as zero-detection tiles.
+- **Crash recovery**: Write-ahead checkpoint persistence records the batch job name to the checkpoint file immediately after submission (before the hours-long polling phase). On resume, pending jobs are recovered and polled to completion instead of being resubmitted.
+
 ## Directory Structure Strategy
-*   **`prompts/configs/`**: Enables "Time Travel". Any past experiment can be reproduced by loading its specific JSON config.
-*   **`inputs/manifests/`**: Defines the "Scope" of a run. Instead of running on absolute paths, scripts take a manifest (list of tile IDs) to ensure consistent data subsets (e.g., "Training Set" vs "Test Set").
+
+- **`prompts/configs/`**: Enables "Time Travel". Any past experiment can be reproduced by loading its specific JSON config.
+- **`inputs/manifests/`**: Defines the "Scope" of a run. Instead of running on absolute paths, scripts take a manifest (list of tile IDs) to ensure consistent data subsets (e.g., "Training Set" vs "Test Set").
