@@ -148,7 +148,7 @@ class TPMGovernor:
         self,
         tpm_limit: int = 1_000_000,
         tokens_per_request: int = 20_000,
-        target_utilisation: float = 0.80,
+        target_utilisation: float = 0.72,
         initial_concurrency: int = 4,
         min_concurrency: int = 1,
         max_concurrency: int = 60,
