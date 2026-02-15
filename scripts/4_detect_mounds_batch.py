@@ -62,8 +62,9 @@ from scripts.lib_llm_metadata import (
     LLMProvider
 )
 
-# Import TPM-aware concurrency governor
-from scripts.lib_tpm_governor import TPMGovernor
+# Import proactive token-bucket rate limiter (replaced reactive
+# TPMGovernor — see lib_token_bucket.py for design rationale)
+from scripts.lib_token_bucket import TokenBucketGovernor
 
 
 # Script Version
@@ -944,19 +945,20 @@ def detect_mounds_versioned(
     # Prepare Arguments
     config_version = config.get("version", "vX")
 
-    # Create TPM governor for multi-worker runs to prevent rate limiting
+    # Create token-bucket rate limiter for multi-worker runs.
+    # Proactive capacity gating: only dispatches when both RPM and TPM
+    # budgets allow. No adaptive concurrency — the bucket IS the throttle.
     include_images = config.get("include_example_images", True)
     tokens_per_request = 20_000 if include_images else 1_500
     governor = None
     if workers > 1:
-        governor = TPMGovernor(
+        governor = TokenBucketGovernor(
             tokens_per_request=tokens_per_request,
-            initial_concurrency=workers,
-            max_concurrency=60,
         )
+        stats = governor.get_stats()
         print(
-            f"TPM Governor: initial_concurrency={workers}, "
-            f"max_concurrency=60, "
+            f"Token Bucket: target_rpm={stats['target_rpm']}, "
+            f"target_tpm={stats['target_tpm']:,}, "
             f"tokens_per_request={tokens_per_request}"
         )
 
@@ -1129,8 +1131,10 @@ Examples:
     )
     parser.add_argument(
         "--workers", type=int, default=12,
-        help="Initial concurrency for TPM governor (default: 12). "
-        "Governor adapts dynamically within [1, 60] based on API conditions."
+        help="Enable rate-limited parallel execution (default: 12). "
+        "Values > 1 activate the token-bucket governor, which paces "
+        "requests within RPM/TPM API limits. The pool ceiling is 60 "
+        "threads; the capacity budget is the actual throttle."
     )
     parser.add_argument(
         "--max-retries", type=int, default=15,
