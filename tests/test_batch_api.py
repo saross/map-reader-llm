@@ -273,10 +273,16 @@ class TestJSONLConstruction:
 
             gen_config = line["request"]["generation_config"]
             assert "thinking_config" in gen_config
-            assert gen_config["thinking_config"]["thinking_level"] == "minimal"
+            # Config stores lowercase; JSONL uppercases for protobuf
+            assert gen_config["thinking_config"]["thinking_level"] == "MINIMAL"
 
-    def test_jsonl_safety_settings(self) -> None:
-        """Safety settings should be present and set to OFF."""
+    def test_jsonl_safety_settings_excluded(self) -> None:
+        """Safety settings must NOT be in batch JSONL.
+
+        The Gemini Batch API rejects requests containing
+        safety_settings with INVALID_ARGUMENT. Verified
+        empirically 2026-02.
+        """
         config = _make_prompt_config()
         config["include_example_images"] = False
 
@@ -296,10 +302,7 @@ class TestJSONLConstruction:
             with open(output) as f:
                 line = json.loads(f.readline())
 
-            safety = line["request"]["safety_settings"]
-            assert len(safety) == 4
-            for setting in safety:
-                assert setting["threshold"] == "BLOCK_NONE"
+            assert "safety_settings" not in line["request"]
 
 
 # ═════════════════════════════════════════════════════════════════════

@@ -229,13 +229,25 @@ def build_jsonl_file(
         "response_mime_type": "application/json",
     }
 
-    # Note: safety_settings and thinking_config are NOT included in
-    # batch JSONL. The Gemini Batch API (as of 2026-02) rejects
-    # requests containing these fields with INVALID_ARGUMENT. The
-    # batch backend applies default safety settings (no blocking)
-    # and does not support thinking mode. This is an API-level
-    # limitation, not a config choice — the concurrent pipeline
-    # does set both, but the batch path cannot.
+    # Thinking config: must be nested INSIDE generation_config for
+    # batch JSONL (unlike the standard SDK where it's a sibling).
+    # Empirically verified 2026-02-15: request-level placement is
+    # rejected with INVALID_ARGUMENT, but generation_config nesting
+    # is accepted and produces thoughtsTokenCount in the response.
+    # Config files store lowercase (e.g. "minimal"); the JSONL
+    # protobuf schema requires uppercase enum names ("MINIMAL").
+    thinking_level = config.get("thinking_level")
+    if thinking_level:
+        generation_config["thinking_config"] = {
+            "thinking_level": thinking_level.upper(),
+        }
+
+    # Note: safety_settings are NOT included in batch JSONL.
+    # The Gemini Batch API rejects requests containing
+    # safety_settings with INVALID_ARGUMENT. The batch backend
+    # applies default safety settings (no blocking). The
+    # concurrent pipeline sets safety_settings via the SDK, but
+    # the batch path cannot.
 
     line_count = 0
     output_path.parent.mkdir(parents=True, exist_ok=True)
