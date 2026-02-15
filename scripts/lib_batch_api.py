@@ -41,6 +41,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import base64
+import dataclasses
 import json
 import logging
 import time
@@ -75,7 +76,31 @@ _TERMINAL_STATES = frozenset({
 })
 
 # Script metadata for metadata tracker
-__version__ = "1.1.0"
+__version__ = "1.2.0"
+
+
+@dataclasses.dataclass
+class BatchUnitContext:
+    """
+    Per-unit state carried between prepare/submit/complete phases.
+
+    Created by ``prepare_batch_unit()`` and consumed by ``submit_batch_unit()``
+    and ``complete_batch_unit()``. Decouples the three lifecycle phases so
+    they can be orchestrated independently — e.g. prepare all units first,
+    submit all, then poll all in a unified loop.
+    """
+
+    unit_key: str               # "T1.0/run_21"
+    unit: dict                  # Original execution unit dict
+    output_file: Path           # Target .geojson path
+    jsonl_path: Path            # Built JSONL file path
+    submitted_keys: list[str]   # Tile filenames (keys in batch response)
+    tile_paths: list[Path]      # Full tile paths (for georeferencing)
+    prompt_config: dict         # Prompt config with temperature overrides applied
+    model_name: str             # Resolved model name
+    system_instruction: str     # System instruction text
+    config_version: str         # Config version string (for GeoJSON properties)
+    line_count: int             # Lines written to JSONL
 
 
 def _get_state_name(state: Any) -> str:
@@ -204,23 +229,13 @@ def build_jsonl_file(
         "response_mime_type": "application/json",
     }
 
-    # Safety settings matching the concurrent pipeline's intent (all OFF).
-    # The concurrent pipeline passes threshold="OFF" through the SDK which
-    # serialises it. For raw JSONL, use "BLOCK_NONE" — the REST API enum
-    # value — to ensure the Batch API backend accepts it without SDK
-    # type translation.
-    safety_settings = [
-        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-    ]
-
-    # ThinkingConfig support — serialise if present
-    if "thinking_level" in config:
-        generation_config["thinking_config"] = {
-            "thinking_level": config["thinking_level"],
-        }
+    # Note: safety_settings and thinking_config are NOT included in
+    # batch JSONL. The Gemini Batch API (as of 2026-02) rejects
+    # requests containing these fields with INVALID_ARGUMENT. The
+    # batch backend applies default safety settings (no blocking)
+    # and does not support thinking mode. This is an API-level
+    # limitation, not a config choice — the concurrent pipeline
+    # does set both, but the batch path cannot.
 
     line_count = 0
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -271,7 +286,6 @@ def build_jsonl_file(
                         "parts": [{"text": system_instruction}],
                     },
                     "generation_config": generation_config,
-                    "safety_settings": safety_settings,
                 },
             }
 
@@ -332,19 +346,14 @@ def submit_batch_job(
     Returns:
         BatchJob object from the API.
     """
-    from google.genai import types
-
-    src = types.BatchJobSource(
-        file_name=uploaded_file_name,
-        format="JSONL",
-    )
-
+    # SDK v1.x accepts the uploaded file name directly as src,
+    # inferring JSONL format from the file metadata. The older
+    # BatchJobSource(format="JSONL") was removed in recent SDK
+    # versions — passing the string is the current API contract.
     batch_job = client.batches.create(
         model=model,
-        src=src,
-        config=types.CreateBatchJobConfig(
-            display_name=display_name or "batch-unit",
-        ),
+        src=uploaded_file_name,
+        config={"display_name": display_name or "batch-unit"},
     )
     logger.info("Submitted batch job: %s", batch_job.name)
     return batch_job
@@ -403,6 +412,106 @@ def poll_batch_job(
         sleep_time = min(interval_seconds, remaining)
         if sleep_time > 0:
             time.sleep(sleep_time)
+
+
+def poll_all_batch_jobs(
+    client: Any,
+    jobs: dict[str, str],
+    interval_seconds: float = 30.0,
+    max_hours: float = 25.0,
+    on_complete: Callable[[str, str, Any], None] | None = None,
+    progress_callback: Callable[[int, int, float], None] | None = None,
+) -> dict[str, Any]:
+    """
+    Poll multiple batch jobs in a unified loop until all reach terminal states.
+
+    This is the core of the parallel batch approach — instead of polling one
+    job at a time (blocking), it checks all pending jobs each cycle and
+    processes completions incrementally via the ``on_complete`` callback.
+
+    Rate limit safety: 70 jobs × ~200ms per ``get()`` ≈ 14s per cycle.
+    With 30s sleep, ~95 Requests Per Minute (RPM) for ``batches.get()``
+    — well within API limits.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        jobs: Mapping of unit_key → batch job resource name.
+        interval_seconds: Seconds between poll cycles.
+        max_hours: Maximum hours before raising ``TimeoutError``.
+        on_complete: Callback invoked when a job reaches a terminal state.
+            Signature: ``(unit_key, job_name, batch_job) → None``.
+            Called once per job, in the order jobs complete.
+        progress_callback: Optional callback for cycle-level reporting.
+            Signature: ``(n_completed, n_total, elapsed_seconds) → None``.
+
+    Returns:
+        Dict mapping unit_key → terminal ``BatchJob`` object for all jobs.
+
+    Raises:
+        TimeoutError: If ``max_hours`` exceeded with jobs still pending.
+            Unfinished jobs remain in the caller's checkpoint for resume.
+    """
+    if not jobs:
+        return {}
+
+    max_seconds = max_hours * 3600
+    start = time.monotonic()
+
+    pending = dict(jobs)  # Copy — entries removed as they complete
+    completed: dict[str, Any] = {}
+
+    while pending:
+        # Poll each pending job once per cycle. Transient API errors
+        # (503, network timeout, etc.) are logged and the job is treated
+        # as still pending — it will be retried next cycle rather than
+        # crashing the entire polling loop.
+        for key, job_name in list(pending.items()):
+            try:
+                job = client.batches.get(name=job_name)
+            except Exception as e:
+                logger.warning(
+                    "Transient error polling %s (%s), will retry: %s",
+                    job_name, key, e,
+                )
+                continue
+
+            state = _get_state_name(job.state)
+
+            if state in _TERMINAL_STATES:
+                completed[key] = job
+                del pending[key]
+                logger.info(
+                    "Batch job %s (%s) reached terminal state: %s",
+                    job_name, key, state,
+                )
+                if on_complete:
+                    on_complete(key, job_name, job)
+
+        # If all done after this cycle, exit before sleeping
+        if not pending:
+            break
+
+        # Progress report
+        elapsed = time.monotonic() - start
+        if progress_callback:
+            progress_callback(
+                len(completed), len(completed) + len(pending), elapsed,
+            )
+
+        # Timeout check
+        if elapsed >= max_seconds:
+            pending_keys = list(pending.keys())
+            raise TimeoutError(
+                f"{len(pending)} batch job(s) did not complete within "
+                f"{max_hours} hours: {pending_keys[:5]}"
+            )
+
+        remaining = max_seconds - elapsed
+        sleep_time = min(interval_seconds, remaining)
+        if sleep_time > 0:
+            time.sleep(sleep_time)
+
+    return completed
 
 
 def retrieve_batch_results(client: Any, batch_job: Any) -> list[dict]:
@@ -813,56 +922,36 @@ def _resolve_tile_paths(manifest_path: Path) -> list[Path]:
     return paths
 
 
-def run_batch_unit(
+def prepare_batch_unit(
     unit: dict,
     config: dict,
     output_dir: Path,
-    client: Any,
     model_name: str,
     system_instruction: str,
     examples: list[dict],
     config_version: str,
-    poll_interval: float = 30.0,
-    max_poll_hours: float = 25.0,
     limit: int | None = None,
-    dry_run: bool = False,
-    on_submit: Callable[[str, list[str]], None] | None = None,
-    resume_job_name: str | None = None,
-) -> tuple[bool, str, float]:
+) -> BatchUnitContext | None:
     """
-    Orchestrate the full batch lifecycle for one execution unit.
+    Prepare one execution unit for batch submission (Phase 1).
 
-    This is the batch-mode equivalent of ``run_execution_unit()`` in
-    ``run_phase2.py``. It builds the JSONL, uploads it, submits a
-    batch job, polls to completion, retrieves results, and writes
-    output files matching the concurrent pipeline's contract.
-
-    Supports write-ahead checkpoint persistence via the ``on_submit``
-    callback, and crash recovery via ``resume_job_name``.
+    Handles path resolution, tile manifest loading, prompt config loading
+    with temperature overrides, and JSONL file construction. No API calls
+    — pure filesystem I/O.
 
     Args:
         unit: Execution unit dict with condition_name, run, config, etc.
-        config: Full study configuration dict.
+        config: Full study configuration dict (must include ``_project_root``).
         output_dir: Base output directory.
-        client: Initialised ``google.genai.Client``.
         model_name: Resolved model name for the batch job.
         system_instruction: System instruction text.
         examples: List of example dicts from prompt config.
         config_version: Version string from prompt config.
-        poll_interval: Seconds between poll attempts.
-        max_poll_hours: Maximum hours to poll.
         limit: Optional tile limit for testing.
-        dry_run: If True, build JSONL but don't submit.
-        on_submit: Optional callback invoked with ``(job_name, tile_keys)``
-            immediately after successful submission, before polling begins.
-            Used by the caller to persist the job name to a checkpoint
-            (write-ahead pattern) so the job can be recovered on crash.
-        resume_job_name: If provided, skip upload and submission — go
-            straight to polling this existing batch job. Used on resume
-            after a crash during the polling phase.
 
     Returns:
-        Tuple of (success, message, cost_usd).
+        A ``BatchUnitContext`` carrying all state needed for submission
+        and completion, or ``None`` if no tiles were found.
     """
     inputs = config["inputs"]
     manifest_path = Path(config.get("_project_root", ".")) / inputs["manifest"]
@@ -878,7 +967,7 @@ def run_batch_unit(
         tile_paths = tile_paths[:limit]
 
     if not tile_paths:
-        return False, "no_tiles_found", 0.0
+        return None
 
     # Load prompt config for generation settings
     prompt_config_path = (
@@ -905,31 +994,254 @@ def run_batch_unit(
         output_path=jsonl_path,
     )
 
-    print(f"  Built JSONL: {line_count} lines ({jsonl_path})")
+    key = f"{unit['condition_name']}/run_{unit['run']}"
+
+    return BatchUnitContext(
+        unit_key=key,
+        unit=unit,
+        output_file=output_file,
+        jsonl_path=jsonl_path,
+        submitted_keys=submitted_keys,
+        tile_paths=tile_paths,
+        prompt_config=prompt_config,
+        model_name=model_name,
+        system_instruction=system_instruction,
+        config_version=config_version,
+        line_count=line_count,
+    )
+
+
+def submit_batch_unit(
+    ctx: BatchUnitContext,
+    client: Any,
+    on_submit: Callable[[str, list[str]], None] | None = None,
+) -> str:
+    """
+    Upload JSONL and submit a batch job for one execution unit (Phase 2).
+
+    Args:
+        ctx: Context from ``prepare_batch_unit()``.
+        client: Initialised ``google.genai.Client``.
+        on_submit: Optional write-ahead callback invoked with
+            ``(job_name, tile_keys)`` immediately after successful
+            submission. Used to persist the job name to a checkpoint
+            before the long polling phase begins.
+
+    Returns:
+        The batch job resource name (e.g. ``"batches/abc123"``).
+
+    Raises:
+        Exception: On upload or submission failure (caller handles).
+    """
+    display_name = f"{ctx.unit['condition_name']}_run{ctx.unit['run']:02d}"
+    uploaded_name = upload_jsonl(client, ctx.jsonl_path, display_name)
+    batch_job = submit_batch_job(
+        client, ctx.model_name, uploaded_name, display_name,
+    )
+    job_name = batch_job.name
+    print(f"  Submitted batch job: {job_name}")
+
+    # Write-ahead checkpoint: persist job name before polling
+    if on_submit:
+        on_submit(job_name, ctx.submitted_keys)
+
+    return job_name
+
+
+def complete_batch_unit(
+    ctx: BatchUnitContext,
+    client: Any,
+    completed_job: Any,
+) -> tuple[bool, str, float]:
+    """
+    Process results from a completed batch job (Phase 3 completion).
+
+    Given a terminal ``BatchJob`` object, retrieves results, validates
+    tile coverage, parses detections to GeoJSON, and writes output files.
+
+    Args:
+        ctx: Context from ``prepare_batch_unit()``.
+        client: Initialised ``google.genai.Client``.
+        completed_job: The ``BatchJob`` in a terminal state.
+
+    Returns:
+        Tuple of ``(success, message, cost_usd)``.
+    """
+    # Check terminal state
+    job_state = _get_state_name(completed_job.state)
+    if job_state not in (
+        "JOB_STATE_SUCCEEDED", "JOB_STATE_PARTIALLY_SUCCEEDED",
+    ):
+        return False, f"batch_job_{job_state}", 0.0
+
+    if job_state == "JOB_STATE_PARTIALLY_SUCCEEDED":
+        print(
+            "  WARNING: Batch job partially succeeded "
+            "— some tiles may have failed"
+        )
+
+    # Retrieve and parse results
+    try:
+        results = retrieve_batch_results(client, completed_job)
+    except Exception as e:
+        return False, f"retrieve_error: {e}", 0.0
+
+    # Validate — detect silent data loss
+    matched, missing_tiles, errored = validate_batch_results(
+        ctx.submitted_keys, results,
+    )
+
+    if missing_tiles:
+        print(
+            f"  WARNING: {len(missing_tiles)} tiles missing from "
+            f"batch results: {missing_tiles[:5]}"
+        )
+
+    # Build tile path lookup for georeferencing
+    tile_paths_by_name = {t.name: t for t in ctx.tile_paths}
+
+    # Parse detections to GeoJSON
+    features, total_detections, parse_failures = (
+        parse_detections_to_geojson(
+            matched_results=matched,
+            tile_paths_by_name=tile_paths_by_name,
+            config_version=ctx.config_version,
+            model_name=ctx.model_name,
+        )
+    )
+
+    # Build processed/failed tile sets
+    processed_tiles = set(matched.keys())
+    failed_tiles = missing_tiles + errored
+
+    # Extract usage stats from batch job metadata if available
+    usage_stats = None
+    if hasattr(completed_job, "usage_metadata"):
+        um = completed_job.usage_metadata
+        usage_stats = {
+            "input_tokens": getattr(um, "prompt_token_count", 0) or 0,
+            "output_tokens": (
+                getattr(um, "candidates_token_count", 0) or 0
+            ),
+            "total_tokens": getattr(um, "total_token_count", 0) or 0,
+        }
+
+    # Write outputs
+    cost_estimate = write_batch_outputs(
+        features=features,
+        processed_tiles=processed_tiles,
+        failed_tiles=failed_tiles,
+        output_file=ctx.output_file,
+        config=ctx.prompt_config,
+        model_name=ctx.model_name,
+        system_instruction=ctx.system_instruction,
+        total_detections=total_detections,
+        usage_stats=usage_stats,
+    )
+
+    cost = cost_estimate.get("total_cost_usd", 0.0)
+
+    print(
+        f"  Batch complete: {len(processed_tiles)} tiles, "
+        f"{total_detections} detections, "
+        f"{len(failed_tiles)} failed, "
+        f"${cost:.4f}"
+    )
+
+    # Accept with small failure count (matching concurrent pipeline
+    # tolerance)
+    max_acceptable_failures = 2
+    if len(failed_tiles) <= max_acceptable_failures:
+        if failed_tiles:
+            print(
+                f"  Accepting partial result: "
+                f"{len(failed_tiles)} tile(s) "
+                f"failed (≤ {max_acceptable_failures} threshold)"
+            )
+        return True, "success", cost
+
+    return False, f"partial_failure_{len(failed_tiles)}_tiles", cost
+
+
+def run_batch_unit(
+    unit: dict,
+    config: dict,
+    output_dir: Path,
+    client: Any,
+    model_name: str,
+    system_instruction: str,
+    examples: list[dict],
+    config_version: str,
+    poll_interval: float = 30.0,
+    max_poll_hours: float = 25.0,
+    limit: int | None = None,
+    dry_run: bool = False,
+    on_submit: Callable[[str, list[str]], None] | None = None,
+    resume_job_name: str | None = None,
+) -> tuple[bool, str, float]:
+    """
+    Orchestrate the full batch lifecycle for one execution unit.
+
+    Backward-compatible wrapper that composes ``prepare_batch_unit()``,
+    ``submit_batch_unit()``, ``poll_batch_job()``, and
+    ``complete_batch_unit()`` into a single blocking call. This preserves
+    the original serial interface while the decomposed functions enable
+    parallel orchestration in ``_execute_units_batch()``.
+
+    Args:
+        unit: Execution unit dict with condition_name, run, config, etc.
+        config: Full study configuration dict.
+        output_dir: Base output directory.
+        client: Initialised ``google.genai.Client``.
+        model_name: Resolved model name for the batch job.
+        system_instruction: System instruction text.
+        examples: List of example dicts from prompt config.
+        config_version: Version string from prompt config.
+        poll_interval: Seconds between poll attempts.
+        max_poll_hours: Maximum hours to poll.
+        limit: Optional tile limit for testing.
+        dry_run: If True, build JSONL but don't submit.
+        on_submit: Optional callback invoked with ``(job_name, tile_keys)``
+            immediately after successful submission, before polling begins.
+            Used by the caller to persist the job name to a checkpoint
+            (write-ahead pattern) so the job can be recovered on crash.
+        resume_job_name: If provided, skip upload and submission — go
+            straight to polling this existing batch job. Used on resume
+            after a crash during the polling phase.
+
+    Returns:
+        Tuple of (success, message, cost_usd).
+    """
+    # Phase 1: Prepare
+    ctx = prepare_batch_unit(
+        unit=unit,
+        config=config,
+        output_dir=output_dir,
+        model_name=model_name,
+        system_instruction=system_instruction,
+        examples=examples,
+        config_version=config_version,
+        limit=limit,
+    )
+    if ctx is None:
+        return False, "no_tiles_found", 0.0
+
+    print(f"  Built JSONL: {ctx.line_count} lines ({ctx.jsonl_path})")
 
     if dry_run:
-        print(f"  [DRY RUN] Would submit batch job for {line_count} tiles")
+        print(
+            f"  [DRY RUN] Would submit batch job for "
+            f"{ctx.line_count} tiles"
+        )
         return True, "dry_run", 0.0
 
-    # Upload and submit — or resume an existing job
+    # Phase 2: Submit (or resume existing job)
     if resume_job_name:
-        # Resume path: skip upload+submit, go straight to polling
         job_name = resume_job_name
         print(f"  Resuming batch job: {job_name}")
     else:
-        # Normal path: upload JSONL and submit a new batch job
         try:
-            display_name = f"{unit['condition_name']}_run{unit['run']:02d}"
-            uploaded_name = upload_jsonl(client, jsonl_path, display_name)
-            batch_job = submit_batch_job(
-                client, model_name, uploaded_name, display_name,
-            )
-            job_name = batch_job.name
-            print(f"  Submitted batch job: {job_name}")
-
-            # Write-ahead checkpoint: persist job name before polling
-            if on_submit:
-                on_submit(job_name, submitted_keys)
+            job_name = submit_batch_unit(ctx, client, on_submit)
         except Exception as e:
             return False, f"submit_error: {e}", 0.0
 
@@ -950,86 +1262,5 @@ def run_batch_unit(
     except Exception as e:
         return False, f"poll_error: {e}", 0.0
 
-    # Check terminal state
-    job_state = _get_state_name(completed_job.state)
-    if job_state not in ("JOB_STATE_SUCCEEDED", "JOB_STATE_PARTIALLY_SUCCEEDED"):
-        return False, f"batch_job_{job_state}", 0.0
-
-    if job_state == "JOB_STATE_PARTIALLY_SUCCEEDED":
-        print("  WARNING: Batch job partially succeeded — some tiles may have failed")
-
-    # Retrieve and parse results
-    try:
-        results = retrieve_batch_results(client, completed_job)
-    except Exception as e:
-        return False, f"retrieve_error: {e}", 0.0
-
-    # Validate — detect silent data loss
-    matched, missing_tiles, errored = validate_batch_results(
-        submitted_keys, results,
-    )
-
-    if missing_tiles:
-        print(
-            f"  WARNING: {len(missing_tiles)} tiles missing from "
-            f"batch results: {missing_tiles[:5]}"
-        )
-
-    # Build tile path lookup for georeferencing
-    tile_paths_by_name = {t.name: t for t in tile_paths}
-
-    # Parse detections to GeoJSON
-    features, total_detections, parse_failures = parse_detections_to_geojson(
-        matched_results=matched,
-        tile_paths_by_name=tile_paths_by_name,
-        config_version=config_version,
-        model_name=model_name,
-    )
-
-    # Build processed/failed tile sets
-    processed_tiles = set(matched.keys())
-    failed_tiles = missing_tiles + errored
-
-    # Extract usage stats from batch job metadata if available
-    usage_stats = None
-    if hasattr(completed_job, "usage_metadata"):
-        um = completed_job.usage_metadata
-        usage_stats = {
-            "input_tokens": getattr(um, "prompt_token_count", 0) or 0,
-            "output_tokens": getattr(um, "candidates_token_count", 0) or 0,
-            "total_tokens": getattr(um, "total_token_count", 0) or 0,
-        }
-
-    # Write outputs
-    cost_estimate = write_batch_outputs(
-        features=features,
-        processed_tiles=processed_tiles,
-        failed_tiles=failed_tiles,
-        output_file=output_file,
-        config=prompt_config,
-        model_name=model_name,
-        system_instruction=system_instruction,
-        total_detections=total_detections,
-        usage_stats=usage_stats,
-    )
-
-    cost = cost_estimate.get("total_cost_usd", 0.0)
-
-    print(
-        f"  Batch complete: {len(processed_tiles)} tiles, "
-        f"{total_detections} detections, "
-        f"{len(failed_tiles)} failed, "
-        f"${cost:.4f}"
-    )
-
-    # Accept with small failure count (matching concurrent pipeline tolerance)
-    max_acceptable_failures = 2
-    if len(failed_tiles) <= max_acceptable_failures:
-        if failed_tiles:
-            print(
-                f"  Accepting partial result: {len(failed_tiles)} tile(s) "
-                f"failed (≤ {max_acceptable_failures} threshold)"
-            )
-        return True, "success", cost
-
-    return False, f"partial_failure_{len(failed_tiles)}_tiles", cost
+    # Phase 3: Complete
+    return complete_batch_unit(ctx, client, completed_job)
