@@ -26,12 +26,15 @@ from scripts.lib_batch_api import (
     BatchUnitContext,
     _get_state_name,
     _parse_detections_from_response,
+    audit_file_storage,
     build_jsonl_file,
+    cleanup_batch_files,
     complete_batch_unit,
     poll_all_batch_jobs,
     prepare_batch_unit,
     run_batch_unit,
     submit_batch_unit,
+    sweep_stale_files,
     validate_batch_results,
     write_batch_outputs,
 )
@@ -625,6 +628,7 @@ class TestCheckpointIntegration:
             "batch_pending": {
                 "cond_a/run_1": {
                     "batch_job_name": "batches/123",
+                    "uploaded_file_name": "files/up_001",
                     "submitted_at": "2026-02-14T10:30:00Z",
                     "tile_count": 60,
                 },
@@ -636,6 +640,7 @@ class TestCheckpointIntegration:
         pending = checkpoint.get("batch_pending", {})
         assert "cond_a/run_1" in pending
         assert pending["cond_a/run_1"]["batch_job_name"] == "batches/123"
+        assert pending["cond_a/run_1"]["uploaded_file_name"] == "files/up_001"
 
     def test_old_checkpoint_backward_compatible(self) -> None:
         """Checkpoints without batch_pending should work via .get()."""
@@ -1079,6 +1084,7 @@ class TestWriteAheadCheckpoint:
 
             callback.assert_called_once_with(
                 "batches/test_999", ["tile_001.png"],
+                "files/up_001",
             )
 
     @patch("scripts.lib_batch_api.build_jsonl_file", return_value=1)
@@ -1518,9 +1524,10 @@ class TestSubmitBatchUnit:
             line_count=1,
         )
 
-        job_name = submit_batch_unit(ctx, MagicMock())
+        job_name, uploaded_name = submit_batch_unit(ctx, MagicMock())
 
         assert job_name == "batches/new_123"
+        assert uploaded_name == "files/up"
         mock_upload.assert_called_once()
         mock_submit.assert_called_once()
 
@@ -1554,7 +1561,7 @@ class TestSubmitBatchUnit:
         submit_batch_unit(ctx, MagicMock(), on_submit=callback)
 
         callback.assert_called_once_with(
-            "batches/xyz", ["a.png", "b.png"],
+            "batches/xyz", ["a.png", "b.png"], "files/up",
         )
 
     @patch("scripts.lib_batch_api.upload_jsonl")
@@ -1892,6 +1899,194 @@ class TestPollAllBatchJobs:
         )
         assert result == {}
         mock_client.batches.get.assert_not_called()
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: File Storage Management
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestCleanupBatchFiles:
+    """Tests for cleanup_batch_files() file deletion."""
+
+    def test_deletes_all_files(self) -> None:
+        """Should delete all given files and return correct counts."""
+        mock_client = MagicMock()
+
+        deleted, errors = cleanup_batch_files(
+            mock_client, ["files/a", "files/b", "files/c"],
+        )
+
+        assert deleted == 3
+        assert errors == 0
+        assert mock_client.files.delete.call_count == 3
+
+    def test_continues_on_error(self) -> None:
+        """Should continue deleting after individual failures."""
+        mock_client = MagicMock()
+        mock_client.files.delete.side_effect = [
+            None,  # files/a succeeds
+            RuntimeError("delete failed"),  # files/b fails
+            None,  # files/c succeeds
+        ]
+
+        deleted, errors = cleanup_batch_files(
+            mock_client, ["files/a", "files/b", "files/c"],
+        )
+
+        assert deleted == 2
+        assert errors == 1
+        assert mock_client.files.delete.call_count == 3
+
+    def test_skips_empty_names(self) -> None:
+        """Should skip empty or falsy file names."""
+        mock_client = MagicMock()
+
+        deleted, errors = cleanup_batch_files(
+            mock_client, ["", "files/a", None, "files/b"],
+        )
+
+        assert deleted == 2
+        assert errors == 0
+        assert mock_client.files.delete.call_count == 2
+
+    def test_empty_list_returns_zeros(self) -> None:
+        """Empty input should return (0, 0) without API calls."""
+        mock_client = MagicMock()
+
+        deleted, errors = cleanup_batch_files(mock_client, [])
+
+        assert deleted == 0
+        assert errors == 0
+        mock_client.files.delete.assert_not_called()
+
+    def test_label_does_not_affect_behaviour(self) -> None:
+        """Label parameter is for logging only — should not affect logic."""
+        mock_client = MagicMock()
+
+        deleted, errors = cleanup_batch_files(
+            mock_client, ["files/a"], label="test-label",
+        )
+
+        assert deleted == 1
+        assert errors == 0
+
+
+@pytest.mark.tier1
+class TestAuditFileStorage:
+    """Tests for audit_file_storage() storage enumeration."""
+
+    def test_sums_file_sizes(self) -> None:
+        """Should return correct count and total GB."""
+        mock_client = MagicMock()
+
+        # Simulate 3 files, 1 GB each
+        file_a = MagicMock()
+        file_a.size_bytes = 1024 ** 3  # 1 GB
+        file_b = MagicMock()
+        file_b.size_bytes = 1024 ** 3  # 1 GB
+        file_c = MagicMock()
+        file_c.size_bytes = 1024 ** 3  # 1 GB
+
+        mock_client.files.list.return_value = [file_a, file_b, file_c]
+
+        count, total_gb = audit_file_storage(mock_client)
+
+        assert count == 3
+        assert abs(total_gb - 3.0) < 0.01
+
+    def test_empty_storage(self) -> None:
+        """No files should return (0, 0.0)."""
+        mock_client = MagicMock()
+        mock_client.files.list.return_value = []
+
+        count, total_gb = audit_file_storage(mock_client)
+
+        assert count == 0
+        assert total_gb == 0.0
+
+    def test_handles_missing_size_bytes(self) -> None:
+        """Files without size_bytes should be counted but contribute 0."""
+        mock_client = MagicMock()
+
+        file_a = MagicMock(spec=[])  # No attributes
+        file_b = MagicMock()
+        file_b.size_bytes = 1024 ** 3
+
+        mock_client.files.list.return_value = [file_a, file_b]
+
+        count, total_gb = audit_file_storage(mock_client)
+
+        assert count == 2
+        assert abs(total_gb - 1.0) < 0.01
+
+
+@pytest.mark.tier1
+class TestSweepStaleFiles:
+    """Tests for sweep_stale_files() orphan cleanup."""
+
+    def test_deletes_stale_files(self) -> None:
+        """Should delete files not in the active set."""
+        mock_client = MagicMock()
+
+        file_a = MagicMock()
+        file_a.name = "files/active_1"
+        file_a.size_bytes = 100_000_000  # 100 MB
+
+        file_b = MagicMock()
+        file_b.name = "files/stale_1"
+        file_b.size_bytes = 200_000_000  # 200 MB
+
+        file_c = MagicMock()
+        file_c.name = "files/stale_2"
+        file_c.size_bytes = 300_000_000  # 300 MB
+
+        mock_client.files.list.return_value = [file_a, file_b, file_c]
+
+        active = {"files/active_1"}
+        deleted, freed_gb = sweep_stale_files(mock_client, active)
+
+        assert deleted == 2
+        assert freed_gb > 0
+
+    def test_no_stale_files(self) -> None:
+        """Should return (0, 0.0) when all files are active."""
+        mock_client = MagicMock()
+
+        file_a = MagicMock()
+        file_a.name = "files/active_1"
+        file_a.size_bytes = 100_000_000
+
+        mock_client.files.list.return_value = [file_a]
+
+        active = {"files/active_1"}
+        deleted, freed_gb = sweep_stale_files(mock_client, active)
+
+        assert deleted == 0
+        assert freed_gb == 0.0
+        # delete should not have been called
+        mock_client.files.delete.assert_not_called()
+
+    def test_handles_list_failure(self) -> None:
+        """Should return (0, 0.0) if files.list() fails."""
+        mock_client = MagicMock()
+        mock_client.files.list.side_effect = RuntimeError("quota exceeded")
+
+        deleted, freed_gb = sweep_stale_files(mock_client, set())
+
+        assert deleted == 0
+        assert freed_gb == 0.0
+
+    def test_empty_storage(self) -> None:
+        """Empty file list should return (0, 0.0)."""
+        mock_client = MagicMock()
+        mock_client.files.list.return_value = []
+
+        deleted, freed_gb = sweep_stale_files(mock_client, set())
+
+        assert deleted == 0
+        assert freed_gb == 0.0
 
 
 # ═════════════════════════════════════════════════════════════════════

@@ -51,6 +51,7 @@ import signal
 import subprocess
 import sys
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -59,7 +60,7 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 # Resolve project root as parent of the scripts/ directory
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -1183,10 +1184,12 @@ def _execute_units_batch(
 
     from config import BASE_DIR, GOOGLE_API_KEY
     from scripts.lib_batch_api import (
+        cleanup_batch_files,
         complete_batch_unit,
         poll_all_batch_jobs,
         prepare_batch_unit,
         submit_batch_unit,
+        sweep_stale_files,
     )
 
     results: dict = {"completed": [], "failed": []}
@@ -1245,17 +1248,23 @@ def _execute_units_batch(
     # long polling phase begins.
     def _make_on_submit(key: str):
         """Create an on_submit callback that persists job metadata."""
-        def _on_submit(job_name: str, tile_keys: list[str]) -> None:
+        def _on_submit(
+            job_name: str,
+            tile_keys: list[str],
+            uploaded_file_name: str,
+        ) -> None:
             batch_pending[key] = {
                 "batch_job_name": job_name,
+                "uploaded_file_name": uploaded_file_name,
                 "submitted_at": datetime.now(timezone.utc).isoformat(),
                 "tile_count": len(tile_keys),
             }
             checkpoint["batch_pending"] = batch_pending
             save_checkpoint(checkpoint_path, checkpoint)
             logger.info(
-                "Write-ahead checkpoint: persisted %s → %s",
-                key, job_name,
+                "Write-ahead checkpoint: persisted %s → %s "
+                "(input file: %s)",
+                key, job_name, uploaded_file_name,
             )
         return _on_submit
 
@@ -1390,6 +1399,10 @@ def _execute_units_batch(
         )
         print()
 
+    # Maximum retries for file_storage_bytes quota errors.
+    # On RESOURCE_EXHAUSTED, sweep stale files and retry.
+    max_submit_retries = 3
+
     for key, ctx in contexts.items():
         pending_info = batch_pending.get(key)
         if pending_info:
@@ -1400,17 +1413,49 @@ def _execute_units_batch(
                     f"  {key}: resuming pending job {job_name}"
                 )
         else:
-            try:
-                job_name = submit_batch_unit(
-                    ctx, client, _make_on_submit(key),
-                )
-                jobs_to_poll[key] = job_name
-            except Exception as e:
-                results["failed"].append(
-                    {"unit": key, "error": f"submit_error: {e}"}
-                )
-                if verbose:
-                    print(f"  {key}: FAILED (submit: {e})")
+            for attempt in range(max_submit_retries):
+                try:
+                    job_name, _uploaded = submit_batch_unit(
+                        ctx, client, _make_on_submit(key),
+                    )
+                    jobs_to_poll[key] = job_name
+                    break
+                except Exception as e:
+                    if (
+                        "file_storage_bytes" in str(e)
+                        and attempt < max_submit_retries - 1
+                    ):
+                        # Storage quota hit — sweep orphaned
+                        # files and retry
+                        if verbose:
+                            print(
+                                f"  {key}: storage quota hit "
+                                f"(attempt {attempt + 1}/"
+                                f"{max_submit_retries}), "
+                                f"sweeping stale files..."
+                            )
+                        active = {
+                            v["uploaded_file_name"]
+                            for v in batch_pending.values()
+                            if "uploaded_file_name" in v
+                        }
+                        swept, freed = sweep_stale_files(
+                            client, active,
+                        )
+                        if verbose:
+                            print(
+                                f"  Swept {swept} stale files "
+                                f"({freed:.2f} GB freed)"
+                            )
+                        time.sleep(5)
+                        continue
+                    # Non-storage error or retries exhausted
+                    results["failed"].append(
+                        {"unit": key, "error": f"submit: {e}"}
+                    )
+                    if verbose:
+                        print(f"  {key}: FAILED (submit: {e})")
+                    break
 
     if not jobs_to_poll:
         if verbose:
@@ -1451,6 +1496,32 @@ def _execute_units_batch(
                 False, f"processing_error: {e}", 0.0,
             )
         running_cost += cost
+
+        # Clean up Files API storage — delete input and output
+        # files now that results are downloaded locally. Errors
+        # are logged but do not affect the completion status;
+        # files auto-expire after 48h as a fallback.
+        files_to_delete: list[str] = []
+        pending_info = batch_pending.get(key, {})
+        uploaded_name = pending_info.get("uploaded_file_name", "")
+        if uploaded_name:
+            files_to_delete.append(uploaded_name)
+        # Output file from the completed batch job
+        try:
+            output_file_name = batch_job.dest.file_name
+            if output_file_name:
+                files_to_delete.append(output_file_name)
+        except (AttributeError, TypeError):
+            pass  # No output file (e.g. job failed before producing one)
+        if files_to_delete:
+            deleted, errors = cleanup_batch_files(
+                client, files_to_delete, label=key,
+            )
+            if verbose and (deleted or errors):
+                print(
+                    f"    Cleaned up {deleted} file(s)"
+                    + (f" ({errors} errors)" if errors else "")
+                )
 
         if success:
             results["completed"].append(key)
