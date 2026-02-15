@@ -116,6 +116,7 @@ python scripts/merge_passes.py \
 Core metrics library providing F1, precision, recall calculations with one-to-one matching using the Hungarian algorithm. Includes bootstrapped confidence interval functions aligned with preregistration Section 3.5.
 
 **Key functions**:
+
 - `calculate_f1_internal()` — Symbol-level F1 with 20m spatial tolerance
 - `bootstrap_ci()` — 95% CIs for absolute metrics
 - `bootstrap_effect_size_ci()` — 95% CIs for condition differences
@@ -147,11 +148,88 @@ Computes bootstrapped 95% CIs for effect sizes between experimental conditions, 
 
 ---
 
+### `run_phase2.py`
+
+Study runner for Phase 2/3 One-Factor-At-a-Time (OFAT) experiments. Parses study YAML definitions, generates execution units (condition × run), and dispatches them via one of two execution modes:
+
+- **Concurrent** (default): Spawns `4_detect_mounds_batch.py` as a subprocess per unit, with per-tile API calls governed by the token-bucket rate limiter.
+- **Batch**: Submits all tiles per unit as a single JSONL file to the Gemini Batch API (50% cost reduction, separate rate limits). Uses `lib_batch_api.py` for the batch lifecycle.
+
+Supports checkpoint-based resumption, parallel unit execution, cost monitoring, and condition filtering. Batch mode polling is configurable via `--poll-interval` and `--max-poll-hours` for long-running overnight jobs.
+
+**Usage**:
+
+```bash
+# Concurrent mode (default)
+python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml
+
+# Batch mode (Gemini Batch API)
+python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --mode batch
+
+# Resume from checkpoint
+python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --resume
+
+# Batch mode: overnight monitoring with hourly polls
+python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \
+    --mode batch --resume --poll-interval 3600
+
+# Batch mode: quick status check (poll once, then exit)
+python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \
+    --mode batch --resume --max-poll-hours 0.01
+```
+
+**Output**: Per-run results in `{output_dir}/{condition_name}/run_{K}/`, checkpoint JSON
+
+### `batch-monitor.py`
+
+Standalone monitoring tool for Gemini Batch API jobs. Reads checkpoint state and queries the Batch API to report job progress without running the full pipeline. This script is read-only — it never modifies the checkpoint.
+
+**Usage**:
+
+```bash
+# One-shot status check
+python scripts/batch-monitor.py studies/phase3a-h3-voting-track2.yaml
+
+# Continuous monitoring (default: hourly checks)
+python scripts/batch-monitor.py studies/phase3a-h3-voting-track2.yaml --watch
+
+# Watch with custom interval (30 minutes)
+python scripts/batch-monitor.py studies/phase3a-h3-voting-track2.yaml \
+    --watch --interval 1800
+
+# Auto-trigger pipeline when all jobs complete
+python scripts/batch-monitor.py studies/phase3a-h3-voting-track2.yaml \
+    --watch --auto-resume
+
+# Machine-readable JSON output
+python scripts/batch-monitor.py studies/phase3a-h3-voting-track2.yaml --json
+```
+
+**Output**: Status report (text or JSON) showing completed/pending/failed units, per-condition breakdown, and submission timing
+
+---
+
 ## Support Libraries
 
 ### `lib_llm_metadata.py`
 
 Standardised metadata capture for LLM API responses across multiple providers (Gemini, Claude, OpenAI). Tracks tokens, costs, timing, and response quality metrics.
+
+### `lib_token_bucket.py`
+
+Proactive token-bucket rate limiter with dual Requests Per Minute (RPM) + Tokens Per Minute (TPM) constraints for the Google Gemini API. Uses continuous capacity replenishment matching how APIs enforce rolling limits. Workers block in `acquire()` until both RPM and TPM budgets allow dispatch. Used by `4_detect_mounds_batch.py` in concurrent mode.
+
+### `lib_batch_api.py`
+
+Standalone module for the Google Gemini Batch API. Encapsulates the full batch lifecycle: JSONL construction, file upload, job submission, polling, result retrieval, validation, and output writing. Produces output files (GeoJSON, `.meta.json`, `.tiles.json`) identical to the concurrent pipeline for downstream compatibility. Used by `run_phase2.py` in `--mode batch`.
+
+**Key functions**:
+
+- `build_jsonl_file()` — Serialise tile requests to Batch API JSONL format
+- `submit_batch_job()` — Upload JSONL and create a batch job
+- `poll_batch_job()` — Poll until terminal state (SUCCEEDED/FAILED/CANCELLED/EXPIRED)
+- `validate_batch_results()` — Verify every submitted tile has a response (detects silent data loss)
+- `run_batch_unit()` — Orchestrate the full lifecycle for one execution unit
 
 ---
 
