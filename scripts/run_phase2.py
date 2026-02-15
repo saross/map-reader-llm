@@ -686,6 +686,8 @@ def run_phase2(
     workers_override: int | None = None,
     parallel_units: int = 1,
     mode: str = "concurrent",
+    poll_interval: int = 30,
+    max_poll_hours: float = 25.0,
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -709,6 +711,11 @@ def run_phase2(
             lib_batch_api). Batch mode bypasses the subprocess model
             and rate limiter, submitting all tiles per unit as a single
             JSONL file.
+        poll_interval: Seconds between batch API poll cycles (default: 30).
+            Use higher values (e.g. 3600) for overnight runs.
+        max_poll_hours: Maximum hours to poll before timing out
+            (default: 25). Pending jobs remain in checkpoint for
+            future --resume.
 
     Returns:
         Summary dictionary with results
@@ -874,6 +881,8 @@ def run_phase2(
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
+            poll_interval=poll_interval,
+            max_poll_hours=max_poll_hours,
         )
     elif use_parallel:
         results, running_cost = _execute_units_parallel(
@@ -1129,6 +1138,8 @@ def _execute_units_batch(
     running_cost: float,
     cost_warn_threshold: float,
     verbose: bool,
+    poll_interval: int = 30,
+    max_poll_hours: float = 25.0,
 ) -> tuple[dict, float]:
     """
     Execute units via the Gemini Batch API — parallel submission.
@@ -1160,6 +1171,8 @@ def _execute_units_batch(
         running_cost: Accumulated cost so far.
         cost_warn_threshold: Cost warning threshold.
         verbose: Print progress information.
+        poll_interval: Seconds between batch API poll cycles.
+        max_poll_hours: Maximum hours to poll before timing out.
 
     Returns:
         Tuple of (results dict, updated running_cost).
@@ -1491,6 +1504,8 @@ def _execute_units_batch(
         poll_all_batch_jobs(
             client,
             jobs_to_poll,
+            interval_seconds=poll_interval,
+            max_hours=max_poll_hours,
             on_complete=_handle_completion,
             progress_callback=_report_progress,
         )
@@ -1550,6 +1565,14 @@ Examples:
   # Batch mode (Gemini Batch API — 50%% cost reduction)
   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
       --mode batch
+
+  # Batch mode: overnight monitoring with hourly polls
+  python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
+      --mode batch --resume --poll-interval 3600
+
+  # Batch mode: quick status check (poll once, then exit)
+  python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
+      --mode batch --resume --max-poll-hours 0.01
 
   # Reconcile checkpoint with disk (no API calls)
   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
@@ -1624,6 +1647,24 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--poll-interval",
+        type=int,
+        default=30,
+        help=(
+            "Seconds between batch API poll cycles (default: 30). "
+            "Use higher values (e.g. 3600) for overnight runs."
+        ),
+    )
+    parser.add_argument(
+        "--max-poll-hours",
+        type=float,
+        default=25.0,
+        help=(
+            "Maximum hours to poll before timing out (default: 25). "
+            "Pending jobs remain in checkpoint for future --resume."
+        ),
+    )
+    parser.add_argument(
         "--reconcile",
         action="store_true",
         help=(
@@ -1668,6 +1709,8 @@ Examples:
         workers_override=args.workers,
         parallel_units=args.parallel_units,
         mode=args.mode,
+        poll_interval=args.poll_interval,
+        max_poll_hours=args.max_poll_hours,
     )
 
     # Exit code based on results
