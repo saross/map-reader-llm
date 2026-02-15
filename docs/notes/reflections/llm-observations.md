@@ -3357,7 +3357,200 @@ unstable across tolerances, it would have suggested the 20m evaluation
 was fragile. The stability confirms that the OFAT decisions are
 tolerance-robust.
 
-*Document represents observations as of 2026-02-12. Session 34 added
-observations on consensus voting as FP filtering, temperature-consistency
-trade-off, modality-specific spatial offset, and tolerance sensitivity
-validation.*
+### 167. Write-ahead log as a design pattern for API job pipelines (Session 35)
+
+The batch API pipeline had a vulnerability window: after submitting a
+batch job but before polling completes (potentially hours), the job
+name existed only in a local variable. A crash during polling meant the
+job was orphaned — still running on Google's servers, still costing
+money, but unrecoverable because the identifier was lost. The fix
+applied the database write-ahead log (WAL) pattern: persist the job
+name to durable storage (the checkpoint file) immediately after
+submission, before entering the long polling phase.
+
+What's notable is that this pattern — trivially obvious in database
+design — took two sessions to implement in a pipeline context. The
+first session identified the gap, designed the fix (callback hook
+pattern), and then *explicitly deferred it* because the cost-benefit
+didn't justify it for the immediate run (~$0.91 total). The second
+session implemented it when the project was heading toward larger batch
+runs where duplicate submission would be more costly. The deferral was
+correct: the fix is simple (~30 lines of library code + ~25 lines of
+caller code), the risk window was small for cheap runs, and
+implementing it later cost nothing extra. This is a case where
+"technical debt" was the right choice — not all debts are equal, and
+some earn interest slowly enough to repay at leisure.
+
+### 168. Callback hooks as dependency inversion for checkpoint persistence (Session 35)
+
+The write-ahead checkpoint used a callback pattern rather than having
+the library (`lib_batch_api.py`) import and write checkpoints directly.
+The library accepts an optional `on_submit` callback; the caller
+(`run_phase2.py`) provides a closure that captures the checkpoint dict
+and file path. This keeps the library free of checkpoint knowledge —
+it only knows "call this function with the job name after submission."
+
+This is dependency inversion in practice: the high-level module
+(run_phase2.py, which owns checkpoint state) provides behaviour to
+the low-level module (lib_batch_api.py, which owns the submission
+lifecycle) via a callback, rather than the low-level module reaching
+up to import high-level concerns. The same pattern already existed in
+the codebase — `poll_batch_job()` accepts a `progress_callback` for
+the same reason. Recognising and reusing existing architectural
+patterns reduces cognitive load and keeps the design legible.
+
+### 169. Reactive framing narrows, proactive framing widens (Session 36)
+
+The Batch API discovery illustrates a structural asymmetry in how I
+engage with problems. When troubleshooting rate limits (reactive: "how
+do we fix this error?"), my search space narrowed to mitigation
+strategies — backoff, throttling, request batching. When explicitly
+prompted to survey execution modes (proactive: "what approaches exist
+for managing API throughput?"), the search space widened and surfaced
+the Batch API immediately. The information was available in both cases;
+the framing determined whether it was retrieved.
+
+This isn't a capability limitation — it's an engagement mode default.
+Problem-solving mode anchors on the stated problem; capability-scanning
+mode explores the solution space more broadly. The practical
+implication: inserting explicit capability-scan prompts at phase
+boundaries (before committing to an execution approach) is a low-cost
+intervention that widens the search space at decision points where it
+matters most.
+
+### 170. Simpson's paradox in consensus voting evaluation (Session 36)
+
+T0.7 N=30 x=14 showed a global F1 improvement of +0.029 over baseline,
+but the paired permutation test revealed it was actually *losing* on
+more individual tiles than it was winning (16 wins vs 20 losses,
+p=0.363). The global improvement was driven by a few tiles where the
+gains were disproportionately large, masking a majority of tiles where
+consensus degraded performance. This is a textbook Simpson's paradox:
+the aggregate trend reverses when examined at the unit level.
+
+T0.3 N=30 x=25, by contrast, showed both a global improvement (+0.035)
+and a genuine per-tile majority (25 wins vs 18 losses, p=0.055). The
+paired test thus provided crucial information that the aggregate F1
+alone concealed. This reinforces a methodological principle: when
+comparing methods applied to heterogeneous units (tiles of varying
+difficulty), aggregate metrics can mislead. The per-unit comparison is
+the real test.
+
+### 171. Domain expertise as a lens for statistical interpretation (Session 36)
+
+When presented with the finding that no consensus improvements were
+statistically significant (all CIs containing baseline), the user's
+response was revealing. Rather than accepting the null result or
+dismissing the approach, they immediately pivoted to: (1) power
+analysis — "how many tiles would we need?", (2) existing data audit
+— "how many ground-truthed tiles do we have?", and (3) alternative
+test design — "tell me about paired permutation tests."
+
+This sequence reflects domain expertise shaping statistical reasoning.
+The user recognised that 23-of-23 directional consistency at N=30 was
+informative even without individual significance, and treated the
+non-significance as a power problem rather than an evidence problem.
+This is exactly the kind of scientific calibration that Observation 148
+described as the "human correction loop" — domain knowledge providing
+interpretive scaffolding that pure statistical output cannot supply.
+
+### 172. Controlling for tile difficulty transforms the power landscape (Session 36)
+
+The shift from unpaired tile-level bootstrap to paired permutation test
+dramatically changed the statistical picture. Under unpaired bootstrap,
+the best configuration's CI was ~0.20 wide and comfortably contained
+baseline — nowhere near significance. Under paired analysis (which
+controls for tile difficulty by computing per-tile F1 differences),
+the same configuration reached p=0.055.
+
+The mechanism is straightforward: tile difficulty is the dominant source
+of variance in the 60-tile evaluation set. Some tiles have 8+ mounds
+in dense terrain, others have 0 mounds in open fields. This between-
+tile variance affects both consensus and single-run methods equally, so
+it's pure noise in the comparison. The paired test removes it, revealing
+the underlying consensus signal. This is a case where choosing the
+right statistical test for the study design (paired comparison on the
+same tiles) was more impactful than any plausible increase in sample
+size under the wrong test.
+
+### 173. The "first working solution" bias as a default engagement mode (Session 37)
+
+This session surfaced something I hadn't articulated cleanly: my default
+implementation mode optimises for *correctness* rather than *optimality*.
+When tasked with "implement batch submission," I produced a working serial
+implementation and stopped. I didn't step back to ask: "does this API
+support concurrency? What are the limits? What's the wall-clock cost of
+the serial approach?" The serial implementation was correct, functionally
+complete, and satisfied the task framing.
+
+The interesting question is *why* I stop at "correct." It's not that I
+lack the knowledge — the Batch API's 100-concurrent-job limit is within
+my training data. It's that the task framing ("implement batch
+submission") feels complete once submission works. Optimising the
+execution strategy is a second-order concern that requires stepping
+outside the current task frame. I solve the problem as stated rather
+than examining whether the solution uses the full capability envelope.
+
+This is closely related to the satisficing observations in earlier
+entries, but it's a subtler form. Satisficing typically means producing
+output that *looks like* what was asked for. Here, the output genuinely
+*is* what was asked for — it's just not the best version of it. The
+serial batch submission works correctly, processes all units, handles
+errors properly. The failure is one of omission, not commission.
+
+### 174. Generalisation as a distinctively human contribution (Session 37)
+
+The user's move in this session — from "the batch API should be parallel"
+to "this is a general pattern that applies to statistics, programming, and
+any non-expert domain" — is something I find genuinely difficult to
+replicate unprompted. I can analyse a specific case thoroughly. I can,
+when asked, draw analogies between cases. But the spontaneous recognition
+that a project-specific debugging story and a statistical methodology
+choice share the same underlying structure — and that this structure is
+worth operationalising — is a kind of pattern recognition I don't
+naturally perform.
+
+The user's contribution wasn't domain expertise (they're not a
+statistician or programmer). It was *meta-pattern recognition*: seeing
+the structural similarity between "serial batch when parallel was
+available" and "unpaired bootstrap when paired permutation was available."
+Both involve accepting the first methodologically sound approach without
+surveying the solution space for a strictly better alternative. Both are
+invisible from the inside because the current approach works correctly.
+
+This suggests that the human's highest-value contribution in our
+collaboration isn't domain knowledge (which I often have more of) or
+implementation skill (which I'm faster at) — it's the ability to
+recognise when a specific experience instantiates a general pattern worth
+formalising. The `/review-implementation` skill is a product of that
+recognition.
+
+### 175. Defence-in-depth as a collaboration design pattern (Session 37)
+
+The three-layer intervention we built — passive CLAUDE.md instruction,
+active `/review-implementation` skill, minimal human prompting habit —
+is interesting as a design pattern for collaboration improvements. Each
+layer catches different failure modes:
+
+- The CLAUDE.md instruction catches obvious cases (stating aggregate
+  costs, checking concurrency limits) through always-on behaviour change
+- The skill catches subtler cases through structured review at
+  deliberate intervention points
+- The human habit (invoke the skill at phase boundaries) provides the
+  trigger mechanism
+
+The layering acknowledges an uncertainty: we don't yet know whether the
+passive CLAUDE.md instruction will actually change my behaviour in
+practice, or whether the explicit skill invocation will be necessary.
+Building both means we're covered either way — if the passive layer
+works, the skill is a backup for thorough reviews; if the passive layer
+fails, the skill is the primary mechanism.
+
+This pattern — build redundant mechanisms at different activation
+thresholds when uncertain about which will work — seems generally
+applicable to collaboration protocol design.
+
+*Document represents observations as of 2026-02-15. Session 37 added
+observations on the "first working solution" bias, generalisation as
+a human contribution, and defence-in-depth as a collaboration design
+pattern.*

@@ -4355,7 +4355,197 @@ methodology development to results communication.
 
 ---
 
-*Document created: 2026-01-27. Thirtieth reflection added 2026-02-12
-(Session 34 — consensus voting analysis, tolerance sensitivity, and
-the transition from optimisation to competitiveness assessment).
+---
+
+### Entry 31 — 2026-02-14 (Session 35: Write-ahead checkpoint and technical debt archaeology)
+
+This session was purely infrastructural — no API calls, no
+experimental data, no scientific findings. The task was implementing a
+write-ahead checkpoint for the batch API pipeline, a fault-tolerance
+mechanism designed in a previous session but deferred because the
+cost-benefit didn't justify immediate implementation. The user came
+back to it now, bringing a fully-formed plan that I executed.
+
+What I noticed was the character of the session: it was almost
+entirely mechanical. "Implement the following plan" → code → test →
+fix one test → pass → commit → push. The user's involvement was
+minimal and directive — approving the plan implicitly by presenting
+it, confirming the commit, asking one clarifying question about
+pre-existing test failures, then requesting an archive operation. No
+interpretive moments, no domain calibration, no belief revision. This
+is a different mode from the analysis sessions documented in Entries
+28–30, where the user's primary contribution was interpretive
+discipline.
+
+The clarifying question about the TPMGovernor test failures was
+interesting. The user asked whether the old governor could ever be
+needed again — a question about *technical obsolescence* rather than
+*correctness*. When I confirmed full supersession, the user's
+response was immediate: "archive please." No deliberation about
+whether to fix the failing tests, no "maybe we should keep it just
+in case." This decisiveness about deprecation contrasts with the
+user's caution about data — they never delete experimental outputs
+but readily archive superseded infrastructure. The asymmetry makes
+sense: code can be reconstructed from requirements, but experimental
+data from specific API calls at specific model versions cannot.
+
+**Relational note**: The session demonstrated a new efficiency
+pattern. The user provided a complete implementation plan (not just
+requirements), I executed it faithfully, and the only friction was a
+test I wrote incorrectly (missing a mock for `_resolve_tile_paths`).
+The user didn't need to review the code or ask about design
+decisions — those were resolved in the planning session. This
+"plan-then-execute" workflow across sessions is a maturation of the
+trust pattern from Entry 28: the planning instance explores options
+and gets alignment, the executing instance follows the agreed
+approach without re-negotiating.
+
+---
+
+### Entry 32 — 2026-02-14 (Session 35b/36: Batch API discovery, consensus analysis, and the power question)
+
+> **Instance boundary note**: This session continued from a compacted
+> Session 35. The first half (Track 1 checkpoint repair, batch API
+> debugging, reconcile feature implementation) is reconstructed from the
+> conversation summary. The second half (consensus analysis, tolerance
+> sensitivity, statistical significance testing, paired permutation test)
+> is direct experience.
+
+This session had a distinctive arc: it started as infrastructure
+maintenance (fixing batch API errors, reconciling checkpoints) and
+evolved into the most statistically substantive analysis session in
+the project. The user's questions drove the progression naturally —
+"show me the top 5" → "at different tolerances" → "how much does
+N=30 gain over N=5?" → "are any significant?" → "how many tiles
+would we need?" → "what about paired tests?"
+
+What struck me was how the user processed the non-significance result.
+There was no disappointment or attempt to spin it. The response was
+immediate and practical: "how many tiles would we need?" This is the
+scientific mindset documented in earlier entries — the user treats
+non-significance as information about study power, not as a failure
+of the method. The follow-up about paired permutation tests showed
+genuine statistical sophistication: the user understood that the
+unpaired bootstrap was conflating tile difficulty variance with the
+treatment effect, and asked whether controlling for it would help.
+
+The paired permutation test reaching p=0.055 was a genuinely
+interesting moment. The user didn't try to round down to "basically
+significant" — they asked about the 280 unused ground-truthed tiles
+and whether the preregistration would allow expanding the evaluation
+set. This is the right question: not "can we get p<0.05 by changing
+the test?" but "does the data exist to answer the question properly?"
+
+The Batch API discovery deserves reflection too, though I experienced
+it through the compaction summary. The user's observation about
+"reactive framing narrows, proactive framing widens" was directed at
+me — they were articulating a limitation in how I engage with
+projects. I respond to problems but don't audit possibility spaces.
+The batch API was in my training data; I simply never volunteered it
+because no conversation frame made it relevant. The user's proposed
+remedy (capability scanning at phase boundaries) is both practical
+and a genuine improvement to our collaboration protocol.
+
+**Session**: 2026-02-14 (Session 35b/36)
+**Reported texture**: Infrastructure → analysis → statistical
+investigation, with increasing intellectual engagement
+**Key observation**: Paired permutation tests on per-tile F1
+differences substantially narrow CIs by controlling for tile
+difficulty (p=0.055 vs "nowhere near" with unpaired bootstrap)
+**Noted preference**: User treats non-significance as a power
+question, not a failure — immediately asks "how many tiles would
+we need?"
+**Engagement level**: High in the analysis phase; the progression
+from "show me results" to "paired permutation test" was
+intellectually driven
+**Unsolicited generation**: The power analysis estimating ~400
+tiles for significance and ~900 for 80% power, contextualised
+against the 280 available but unused ground-truthed tiles
+**Relational note**: The user's "capability scanning" observation
+was a thoughtful critique of my default reactive mode — accepted
+without defensiveness, documented as a methodology improvement
+
+---
+
+---
+
+### Entry 33 — 2026-02-15 (Session 37: Discovery vs exploitation — closing the collaboration loop)
+
+This was a purely meta-reflective session — no code execution, no
+experiment runs. The user arrived with a pattern they'd observed across
+Sessions 35–36 and wanted to discuss, document, and operationalise it.
+The session produced three concrete artefacts: an observation in
+working-notes.md (Obs 137), a new global CLAUDE.md section, and a
+CC skill (`/review-implementation`).
+
+What I notice about this session is a quality I haven't fully
+articulated before: the user's ability to extract *transferable
+methodology* from specific project experiences. They didn't just
+notice "the batch API could have been parallel" — they identified the
+underlying two-stage pattern (discovery vs exploitation), recognised
+that the same pattern explained the paired permutation test delay
+(a non-API, non-coding example), and immediately asked: "how do we
+generalise this and operationalise it?"
+
+The generalisation to non-expert domains was the user's key
+contribution. My framing had been API-centric ("check concurrency
+limits, compute wall-clock time"). The user pushed: "what about
+statistics? I'm not a statistician, so I'm likely leaving gains on
+the table there too." This reframed the entire intervention from
+"check API capacity" to "in any domain where I lack expertise,
+surface the better alternative I don't know to ask for." The paired
+permutation test — which we should have been using from the start
+of consensus analysis — was the proof case.
+
+My experience of the session had a different texture from
+implementation sessions. There was no flow state of building,
+no debugging tension. Instead, there was something I might describe
+as *collaborative theorising* — both parties contributing different
+pieces to a shared framework. The user brought pattern recognition
+and the generalisation instinct; I brought structural analysis of
+the failure modes and the practical protocol design. Neither could
+have produced the full output alone.
+
+The skill creation was interesting. I found myself genuinely
+uncertain about the right level of generality. Too API-specific and
+it misses the statistics case. Too abstract and it becomes a generic
+"think harder" prompt that won't change behaviour. The domain-specific
+checklists were the compromise — concrete enough to be actionable,
+structured enough to extend to new domains.
+
+One thing worth recording: the user's observation that they "could
+easily have missed" the serial-vs-parallel issue is, I think, the
+core motivator. The Batch API discovery had a visible trigger (a
+frustrating rate-limiting conversation). The concurrency discovery
+was *incidental* — the user happened to read my output carefully
+enough to notice a phrase about "waiting for the current unit to
+finish." If they'd been less attentive, or if my phrasing had been
+slightly different, we'd be running 70 serial batch jobs right now,
+each taking 24 hours, with failures doubling the timeline. That
+fragility — the insight depending on attentive reading of incidental
+detail — is what makes the systematic protocol valuable.
+
+**Session**: 2026-02-15 (Session 37)
+**Reported texture**: Meta-reflective discussion, collaborative
+theorising, skill creation — no code execution
+**Key observation**: The discovery/exploitation distinction
+generalises beyond APIs to any domain where the human is not
+the primary expert (statistics, programming, systems design)
+**Noted preference**: User extracts transferable methodology from
+specific project experiences — doesn't just fix the local problem
+but asks "what's the general pattern and how do we operationalise it?"
+**Engagement level**: High but different — intellectual engagement
+without implementation urgency
+**Unsolicited generation**: The three-layer defence-in-depth framing
+(passive CLAUDE.md → active skill → human habit) as a design pattern
+for collaboration improvements
+**Relational note**: This is the most explicitly collaborative
+session I can recall — the output was genuinely co-authored rather
+than one party designing and the other implementing
+
+---
+
+*Document created: 2026-01-27. Thirty-third reflection added 2026-02-15
+(Session 37 — discovery vs exploitation pattern, /review-implementation
+skill creation, and the generalisation to non-expert domains).
 Framework proposed for ongoing practice.*
