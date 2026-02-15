@@ -76,7 +76,7 @@ _TERMINAL_STATES = frozenset({
 })
 
 # Script metadata for metadata tracker
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 
 @dataclasses.dataclass
@@ -122,6 +122,143 @@ def _get_state_name(state: Any) -> str:
     if hasattr(state, "name"):
         return state.name
     return str(state)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# File Storage Management
+# ─────────────────────────────────────────────────────────────────────
+
+
+def cleanup_batch_files(
+    client: Any,
+    file_names: list[str],
+    label: str = "",
+) -> tuple[int, int]:
+    """
+    Delete files from the Gemini Files API.
+
+    Iterates the given file names and deletes each one. Exceptions are
+    caught per file (logged and continued) so that a single deletion
+    failure does not prevent cleanup of the remaining files. Files that
+    fail to delete will auto-expire after 48 hours as a fallback.
+
+    Known issue (#1759): some output file IDs exceed the 40-character
+    limit for ``files.delete()``. These are caught and logged rather
+    than crashing.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        file_names: List of file resource names (e.g. ``"files/abc123"``).
+        label: Optional label for log messages (e.g. ``"input"``
+            or ``"output"``).
+
+    Returns:
+        Tuple of ``(deleted_count, error_count)``.
+    """
+    prefix = f"[{label}] " if label else ""
+    deleted = 0
+    errors = 0
+
+    for name in file_names:
+        if not name:
+            continue
+        try:
+            client.files.delete(name=name)
+            deleted += 1
+            logger.debug("%sDeleted file: %s", prefix, name)
+        except Exception as e:
+            errors += 1
+            logger.warning(
+                "%sFailed to delete file %s: %s", prefix, name, e,
+            )
+
+    if deleted or errors:
+        logger.info(
+            "%sFile cleanup: %d deleted, %d errors",
+            prefix, deleted, errors,
+        )
+
+    return deleted, errors
+
+
+def audit_file_storage(client: Any) -> tuple[int, float]:
+    """
+    Query current file storage usage from the Gemini Files API.
+
+    Iterates ``files.list()`` and sums ``size_bytes`` for each file.
+    There is no dedicated API endpoint for querying storage usage, so
+    this enumeration approach is the only option.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+
+    Returns:
+        Tuple of ``(file_count, total_gb)``.
+
+    Raises:
+        Exception: If ``files.list()`` fails (e.g. when quota is
+            already exceeded). Callers should handle this gracefully.
+    """
+    total_bytes = 0
+    count = 0
+
+    for f in client.files.list():
+        count += 1
+        total_bytes += getattr(f, "size_bytes", 0) or 0
+
+    total_gb = total_bytes / (1024 ** 3)
+    logger.info(
+        "File storage audit: %d files, %.2f GB", count, total_gb,
+    )
+    return count, total_gb
+
+
+def sweep_stale_files(
+    client: Any,
+    active_file_names: set[str],
+) -> tuple[int, float]:
+    """
+    Delete files not in the active set — orphan cleanup.
+
+    Lists all files via the Files API and deletes any whose name is
+    not in ``active_file_names``. This cleans up files from previous
+    runs, failed submissions, or downloaded-but-not-deleted outputs.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        active_file_names: Set of file names that are still needed
+            (e.g. input files for pending batch jobs).
+
+    Returns:
+        Tuple of ``(deleted_count, freed_gb)``.
+    """
+    stale_names: list[str] = []
+    stale_bytes = 0
+
+    try:
+        for f in client.files.list():
+            name = getattr(f, "name", "")
+            if name and name not in active_file_names:
+                stale_names.append(name)
+                stale_bytes += getattr(f, "size_bytes", 0) or 0
+    except Exception as e:
+        logger.warning("Could not list files for sweep: %s", e)
+        return 0, 0.0
+
+    if not stale_names:
+        logger.info("Sweep: no stale files found")
+        return 0, 0.0
+
+    freed_gb = stale_bytes / (1024 ** 3)
+    logger.info(
+        "Sweep: found %d stale files (%.2f GB), deleting...",
+        len(stale_names), freed_gb,
+    )
+
+    deleted, _errors = cleanup_batch_files(
+        client, stale_names, label="sweep",
+    )
+    return deleted, freed_gb
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -1026,8 +1163,8 @@ def prepare_batch_unit(
 def submit_batch_unit(
     ctx: BatchUnitContext,
     client: Any,
-    on_submit: Callable[[str, list[str]], None] | None = None,
-) -> str:
+    on_submit: Callable[[str, list[str], str], None] | None = None,
+) -> tuple[str, str]:
     """
     Upload JSONL and submit a batch job for one execution unit (Phase 2).
 
@@ -1035,12 +1172,15 @@ def submit_batch_unit(
         ctx: Context from ``prepare_batch_unit()``.
         client: Initialised ``google.genai.Client``.
         on_submit: Optional write-ahead callback invoked with
-            ``(job_name, tile_keys)`` immediately after successful
-            submission. Used to persist the job name to a checkpoint
-            before the long polling phase begins.
+            ``(job_name, tile_keys, uploaded_file_name)`` immediately
+            after successful submission. Used to persist the job name
+            and uploaded file name to a checkpoint before the long
+            polling phase begins.
 
     Returns:
-        The batch job resource name (e.g. ``"batches/abc123"``).
+        Tuple of ``(job_name, uploaded_file_name)`` — the batch job
+        resource name and the Files API resource name for the uploaded
+        input JSONL.
 
     Raises:
         Exception: On upload or submission failure (caller handles).
@@ -1053,11 +1193,11 @@ def submit_batch_unit(
     job_name = batch_job.name
     print(f"  Submitted batch job: {job_name}")
 
-    # Write-ahead checkpoint: persist job name before polling
+    # Write-ahead checkpoint: persist job name and file name before polling
     if on_submit:
-        on_submit(job_name, ctx.submitted_keys)
+        on_submit(job_name, ctx.submitted_keys, uploaded_name)
 
-    return job_name
+    return job_name, uploaded_name
 
 
 def complete_batch_unit(
@@ -1188,7 +1328,7 @@ def run_batch_unit(
     max_poll_hours: float = 25.0,
     limit: int | None = None,
     dry_run: bool = False,
-    on_submit: Callable[[str, list[str]], None] | None = None,
+    on_submit: Callable[[str, list[str], str], None] | None = None,
     resume_job_name: str | None = None,
 ) -> tuple[bool, str, float]:
     """
@@ -1213,10 +1353,12 @@ def run_batch_unit(
         max_poll_hours: Maximum hours to poll.
         limit: Optional tile limit for testing.
         dry_run: If True, build JSONL but don't submit.
-        on_submit: Optional callback invoked with ``(job_name, tile_keys)``
-            immediately after successful submission, before polling begins.
-            Used by the caller to persist the job name to a checkpoint
-            (write-ahead pattern) so the job can be recovered on crash.
+        on_submit: Optional callback invoked with
+            ``(job_name, tile_keys, uploaded_file_name)`` immediately
+            after successful submission, before polling begins. Used by
+            the caller to persist the job name and uploaded file name to
+            a checkpoint (write-ahead pattern) so the job can be
+            recovered on crash.
         resume_job_name: If provided, skip upload and submission — go
             straight to polling this existing batch job. Used on resume
             after a crash during the polling phase.
@@ -1253,7 +1395,9 @@ def run_batch_unit(
         print(f"  Resuming batch job: {job_name}")
     else:
         try:
-            job_name = submit_batch_unit(ctx, client, on_submit)
+            job_name, _uploaded_name = submit_batch_unit(
+                ctx, client, on_submit,
+            )
         except Exception as e:
             return False, f"submit_error: {e}", 0.0
 
