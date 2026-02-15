@@ -23,10 +23,15 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from google.genai.types import JobState
 
 from scripts.lib_batch_api import (
+    BatchUnitContext,
     _get_state_name,
     _parse_detections_from_response,
     build_jsonl_file,
+    complete_batch_unit,
+    poll_all_batch_jobs,
+    prepare_batch_unit,
     run_batch_unit,
+    submit_batch_unit,
     validate_batch_results,
     write_batch_outputs,
 )
@@ -1297,3 +1302,742 @@ class TestWriteAheadCheckpoint:
             assert success is False
             assert "poll_timeout" in message
             assert cost == 0.0
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: prepare_batch_unit()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestPrepareBatchUnit:
+    """Tests for prepare_batch_unit() context creation."""
+
+    @patch("scripts.lib_batch_api.build_jsonl_file", return_value=5)
+    @patch("scripts.lib_batch_api._resolve_tile_paths")
+    def test_returns_context_with_correct_fields(
+        self,
+        mock_resolve: MagicMock,
+        mock_build: MagicMock,
+    ) -> None:
+        """Should return a BatchUnitContext with all fields populated."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            config = _make_study_config(tmp)
+
+            tiles = [_make_tile_image(tmp, f"tile_{i}.png") for i in range(5)]
+            mock_resolve.return_value = tiles
+
+            prompt_dir = tmp / "prompts" / "configs"
+            prompt_dir.mkdir(parents=True)
+            prompt_config = _make_prompt_config()
+            prompt_config_path = prompt_dir / "detect_image-only.json"
+            prompt_config_path.write_text(json.dumps(prompt_config))
+
+            unit = _make_unit()
+            unit["config"] = str(
+                prompt_config_path.relative_to(tmp)
+            )
+
+            ctx = prepare_batch_unit(
+                unit=unit,
+                config=config,
+                output_dir=tmp / "output",
+                model_name="gemini-3-flash",
+                system_instruction="Test instruction",
+                examples=[],
+                config_version="test_v1",
+            )
+
+            assert ctx is not None
+            assert isinstance(ctx, BatchUnitContext)
+            assert ctx.unit_key == "cond_a/run_1"
+            assert ctx.model_name == "gemini-3-flash"
+            assert ctx.system_instruction == "Test instruction"
+            assert ctx.config_version == "test_v1"
+            assert ctx.line_count == 5
+            assert len(ctx.submitted_keys) == 5
+            assert len(ctx.tile_paths) == 5
+
+    @patch("scripts.lib_batch_api.build_jsonl_file", return_value=2)
+    @patch("scripts.lib_batch_api._resolve_tile_paths")
+    def test_temperature_override_applied(
+        self,
+        mock_resolve: MagicMock,
+        mock_build: MagicMock,
+    ) -> None:
+        """Temperature from unit should override prompt config value."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            config = _make_study_config(tmp)
+
+            tiles = [_make_tile_image(tmp, f"tile_{i}.png") for i in range(2)]
+            mock_resolve.return_value = tiles
+
+            prompt_dir = tmp / "prompts" / "configs"
+            prompt_dir.mkdir(parents=True)
+            prompt_config = _make_prompt_config()
+            prompt_config["temperature"] = 1.0  # Original value
+            prompt_config_path = prompt_dir / "detect_image-only.json"
+            prompt_config_path.write_text(json.dumps(prompt_config))
+
+            unit = _make_unit()
+            unit["config"] = str(
+                prompt_config_path.relative_to(tmp)
+            )
+            unit["temperature"] = 0.3  # Override
+
+            ctx = prepare_batch_unit(
+                unit=unit,
+                config=config,
+                output_dir=tmp / "output",
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                examples=[],
+                config_version="test_v1",
+            )
+
+            assert ctx is not None
+            assert ctx.prompt_config["temperature"] == 0.3
+
+    @patch("scripts.lib_batch_api.build_jsonl_file", return_value=2)
+    @patch("scripts.lib_batch_api._resolve_tile_paths")
+    def test_tile_limit_applied(
+        self,
+        mock_resolve: MagicMock,
+        mock_build: MagicMock,
+    ) -> None:
+        """Tile limit should truncate the tile list."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            config = _make_study_config(tmp)
+
+            tiles = [
+                _make_tile_image(tmp, f"tile_{i}.png")
+                for i in range(10)
+            ]
+            mock_resolve.return_value = tiles
+
+            prompt_dir = tmp / "prompts" / "configs"
+            prompt_dir.mkdir(parents=True)
+            prompt_config = _make_prompt_config()
+            prompt_config_path = prompt_dir / "detect_image-only.json"
+            prompt_config_path.write_text(json.dumps(prompt_config))
+
+            unit = _make_unit()
+            unit["config"] = str(
+                prompt_config_path.relative_to(tmp)
+            )
+
+            ctx = prepare_batch_unit(
+                unit=unit,
+                config=config,
+                output_dir=tmp / "output",
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                examples=[],
+                config_version="test_v1",
+                limit=3,
+            )
+
+            assert ctx is not None
+            assert len(ctx.tile_paths) == 3
+            assert len(ctx.submitted_keys) == 3
+
+    @patch("scripts.lib_batch_api._resolve_tile_paths")
+    def test_returns_none_when_no_tiles(
+        self,
+        mock_resolve: MagicMock,
+    ) -> None:
+        """Should return None when no tiles are found."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            config = _make_study_config(tmp)
+            mock_resolve.return_value = []
+
+            prompt_dir = tmp / "prompts" / "configs"
+            prompt_dir.mkdir(parents=True)
+            prompt_config_path = prompt_dir / "detect_image-only.json"
+            prompt_config_path.write_text(
+                json.dumps(_make_prompt_config())
+            )
+
+            unit = _make_unit()
+            unit["config"] = str(
+                prompt_config_path.relative_to(tmp)
+            )
+
+            ctx = prepare_batch_unit(
+                unit=unit,
+                config=config,
+                output_dir=tmp / "output",
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                examples=[],
+                config_version="test_v1",
+            )
+
+            assert ctx is None
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: submit_batch_unit()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestSubmitBatchUnit:
+    """Tests for submit_batch_unit() upload and submission."""
+
+    @patch("scripts.lib_batch_api.upload_jsonl", return_value="files/up")
+    @patch("scripts.lib_batch_api.submit_batch_job")
+    def test_upload_and_create_called(
+        self,
+        mock_submit: MagicMock,
+        mock_upload: MagicMock,
+    ) -> None:
+        """Should call upload_jsonl and submit_batch_job."""
+        mock_job = MagicMock()
+        mock_job.name = "batches/new_123"
+        mock_submit.return_value = mock_job
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=["tile_001.png"],
+            tile_paths=[Path("/tmp/tile_001.png")],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=1,
+        )
+
+        job_name = submit_batch_unit(ctx, MagicMock())
+
+        assert job_name == "batches/new_123"
+        mock_upload.assert_called_once()
+        mock_submit.assert_called_once()
+
+    @patch("scripts.lib_batch_api.upload_jsonl", return_value="files/up")
+    @patch("scripts.lib_batch_api.submit_batch_job")
+    def test_on_submit_fires_with_correct_args(
+        self,
+        mock_submit: MagicMock,
+        mock_upload: MagicMock,
+    ) -> None:
+        """on_submit callback should receive job_name and tile keys."""
+        mock_job = MagicMock()
+        mock_job.name = "batches/xyz"
+        mock_submit.return_value = mock_job
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=["a.png", "b.png"],
+            tile_paths=[Path("/tmp/a.png"), Path("/tmp/b.png")],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=2,
+        )
+
+        callback = MagicMock()
+        submit_batch_unit(ctx, MagicMock(), on_submit=callback)
+
+        callback.assert_called_once_with(
+            "batches/xyz", ["a.png", "b.png"],
+        )
+
+    @patch("scripts.lib_batch_api.upload_jsonl")
+    def test_upload_error_propagates(
+        self,
+        mock_upload: MagicMock,
+    ) -> None:
+        """Upload failure should raise to the caller."""
+        mock_upload.side_effect = RuntimeError("upload failed")
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=["tile.png"],
+            tile_paths=[Path("/tmp/tile.png")],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=1,
+        )
+
+        with pytest.raises(RuntimeError, match="upload failed"):
+            submit_batch_unit(ctx, MagicMock())
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: complete_batch_unit()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestCompleteBatchUnit:
+    """Tests for complete_batch_unit() result processing."""
+
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_success_path(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+    ) -> None:
+        """Successful job should return (True, 'success', cost)."""
+        mock_retrieve.return_value = [
+            _make_batch_response("tile_001.png", detections=[]),
+        ]
+        mock_write.return_value = {"total_cost_usd": 0.005}
+
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_SUCCEEDED
+        completed_job.usage_metadata = None
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=["tile_001.png"],
+            tile_paths=[Path("/tmp/tile_001.png")],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=1,
+        )
+
+        success, message, cost = complete_batch_unit(
+            ctx, MagicMock(), completed_job,
+        )
+
+        assert success is True
+        assert message == "success"
+        assert cost == 0.005
+
+    def test_failed_state_returns_failure(self) -> None:
+        """Non-success terminal state should return failure."""
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_FAILED
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=["tile.png"],
+            tile_paths=[Path("/tmp/tile.png")],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=1,
+        )
+
+        success, message, cost = complete_batch_unit(
+            ctx, MagicMock(), completed_job,
+        )
+
+        assert success is False
+        assert "JOB_STATE_FAILED" in message
+        assert cost == 0.0
+
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_partial_success_accepted(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+    ) -> None:
+        """PARTIALLY_SUCCEEDED with ≤2 failures should be accepted."""
+        # 59 tiles succeed, 1 tile has error
+        keys = [f"tile_{i:03d}.png" for i in range(60)]
+        responses = [
+            _make_batch_response(k, detections=[]) for k in keys[:59]
+        ]
+        responses.append(
+            _make_batch_response(keys[59], error="model_error")
+        )
+        mock_retrieve.return_value = responses
+        mock_write.return_value = {"total_cost_usd": 0.01}
+
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_PARTIALLY_SUCCEEDED
+        completed_job.usage_metadata = None
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=keys,
+            tile_paths=[Path(f"/tmp/{k}") for k in keys],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=60,
+        )
+
+        success, message, cost = complete_batch_unit(
+            ctx, MagicMock(), completed_job,
+        )
+
+        # 1 failure ≤ 2 threshold → accepted
+        assert success is True
+        assert message == "success"
+
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    def test_retrieve_error_returns_failure(
+        self,
+        mock_retrieve: MagicMock,
+    ) -> None:
+        """Retrieval failure should return a clean failure tuple."""
+        mock_retrieve.side_effect = RuntimeError("download failed")
+
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_SUCCEEDED
+
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1",
+            unit=_make_unit(),
+            output_file=Path("/tmp/out.geojson"),
+            jsonl_path=Path("/tmp/batch.jsonl"),
+            submitted_keys=["tile.png"],
+            tile_paths=[Path("/tmp/tile.png")],
+            prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash",
+            system_instruction="Test",
+            config_version="test_v1",
+            line_count=1,
+        )
+
+        success, message, cost = complete_batch_unit(
+            ctx, MagicMock(), completed_job,
+        )
+
+        assert success is False
+        assert "retrieve_error" in message
+        assert cost == 0.0
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: poll_all_batch_jobs()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestPollAllBatchJobs:
+    """Tests for poll_all_batch_jobs() unified polling loop."""
+
+    def test_single_job_completes(self) -> None:
+        """Single job reaching terminal state should be returned."""
+        mock_client = MagicMock()
+        mock_job = MagicMock()
+        mock_job.state = JobState.JOB_STATE_SUCCEEDED
+        mock_job.name = "batches/123"
+        mock_client.batches.get.return_value = mock_job
+
+        result = poll_all_batch_jobs(
+            mock_client,
+            {"unit_a": "batches/123"},
+            interval_seconds=0.01,
+            max_hours=1.0,
+        )
+
+        assert "unit_a" in result
+        assert (
+            _get_state_name(result["unit_a"].state)
+            == "JOB_STATE_SUCCEEDED"
+        )
+
+    def test_incremental_completion(self) -> None:
+        """Jobs completing at different times should all be returned."""
+        mock_client = MagicMock()
+
+        # First cycle: job_a completes, job_b still pending
+        # Second cycle: job_b completes
+        call_count = {"n": 0}
+
+        def _mock_get(name: str) -> MagicMock:
+            call_count["n"] += 1
+            job = MagicMock()
+            job.name = name
+            if name == "batches/a":
+                job.state = JobState.JOB_STATE_SUCCEEDED
+            elif name == "batches/b":
+                if call_count["n"] <= 2:
+                    # First cycle: still running
+                    job.state = JobState.JOB_STATE_RUNNING
+                else:
+                    job.state = JobState.JOB_STATE_SUCCEEDED
+            return job
+
+        mock_client.batches.get.side_effect = _mock_get
+
+        result = poll_all_batch_jobs(
+            mock_client,
+            {"unit_a": "batches/a", "unit_b": "batches/b"},
+            interval_seconds=0.01,
+            max_hours=1.0,
+        )
+
+        assert len(result) == 2
+        assert "unit_a" in result
+        assert "unit_b" in result
+
+    def test_mixed_terminal_states(self) -> None:
+        """Jobs with different terminal states should all be returned."""
+        mock_client = MagicMock()
+
+        def _mock_get(name: str) -> MagicMock:
+            job = MagicMock()
+            job.name = name
+            if name == "batches/ok":
+                job.state = JobState.JOB_STATE_SUCCEEDED
+            elif name == "batches/fail":
+                job.state = JobState.JOB_STATE_FAILED
+            elif name == "batches/expired":
+                job.state = JobState.JOB_STATE_EXPIRED
+            return job
+
+        mock_client.batches.get.side_effect = _mock_get
+
+        result = poll_all_batch_jobs(
+            mock_client,
+            {
+                "ok_unit": "batches/ok",
+                "fail_unit": "batches/fail",
+                "expired_unit": "batches/expired",
+            },
+            interval_seconds=0.01,
+            max_hours=1.0,
+        )
+
+        assert len(result) == 3
+        assert (
+            _get_state_name(result["ok_unit"].state)
+            == "JOB_STATE_SUCCEEDED"
+        )
+        assert (
+            _get_state_name(result["fail_unit"].state)
+            == "JOB_STATE_FAILED"
+        )
+        assert (
+            _get_state_name(result["expired_unit"].state)
+            == "JOB_STATE_EXPIRED"
+        )
+
+    def test_on_complete_callback_invoked(self) -> None:
+        """on_complete should be called for each terminal job."""
+        mock_client = MagicMock()
+        mock_job = MagicMock()
+        mock_job.state = JobState.JOB_STATE_SUCCEEDED
+        mock_job.name = "batches/123"
+        mock_client.batches.get.return_value = mock_job
+
+        callback = MagicMock()
+        poll_all_batch_jobs(
+            mock_client,
+            {"unit_a": "batches/123"},
+            interval_seconds=0.01,
+            max_hours=1.0,
+            on_complete=callback,
+        )
+
+        callback.assert_called_once()
+        call_args = callback.call_args[0]
+        assert call_args[0] == "unit_a"
+        assert call_args[1] == "batches/123"
+
+    def test_timeout_raises_with_pending_keys(self) -> None:
+        """TimeoutError should list pending unit keys."""
+        mock_client = MagicMock()
+        mock_job = MagicMock()
+        mock_job.state = JobState.JOB_STATE_RUNNING
+        mock_job.name = "batches/stuck"
+        mock_client.batches.get.return_value = mock_job
+
+        with pytest.raises(
+            TimeoutError, match="did not complete"
+        ):
+            poll_all_batch_jobs(
+                mock_client,
+                {"stuck_unit": "batches/stuck"},
+                interval_seconds=0.01,
+                max_hours=0.0001,
+            )
+
+    def test_empty_jobs_dict_returns_empty(self) -> None:
+        """Empty input should return empty dict without polling."""
+        mock_client = MagicMock()
+        result = poll_all_batch_jobs(
+            mock_client, {}, interval_seconds=0.01,
+        )
+        assert result == {}
+        mock_client.batches.get.assert_not_called()
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: run_batch_unit() backward-compat wrapper
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestRunBatchUnitWrapper:
+    """Tests verifying the wrapper composes the decomposed functions."""
+
+    @patch("scripts.lib_batch_api.build_jsonl_file", return_value=1)
+    @patch("scripts.lib_batch_api._resolve_tile_paths")
+    @patch("scripts.lib_batch_api.upload_jsonl", return_value="files/up")
+    @patch("scripts.lib_batch_api.submit_batch_job")
+    @patch("scripts.lib_batch_api.poll_batch_job")
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_wrapper_calls_all_phases(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+        mock_poll: MagicMock,
+        mock_submit: MagicMock,
+        mock_upload: MagicMock,
+        mock_resolve: MagicMock,
+        mock_build: MagicMock,
+    ) -> None:
+        """Wrapper should call prepare, submit, poll, and complete."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            config = _make_study_config(tmp)
+
+            tile = _make_tile_image(tmp, "tile_001.png")
+            mock_resolve.return_value = [tile]
+
+            mock_job = MagicMock()
+            mock_job.name = "batches/wrapper_test"
+            mock_submit.return_value = mock_job
+
+            completed_job = MagicMock()
+            completed_job.state = JobState.JOB_STATE_SUCCEEDED
+            completed_job.usage_metadata = None
+            mock_poll.return_value = completed_job
+
+            mock_retrieve.return_value = [
+                _make_batch_response("tile_001.png", detections=[]),
+            ]
+            mock_write.return_value = {"total_cost_usd": 0.002}
+
+            prompt_dir = tmp / "prompts" / "configs"
+            prompt_dir.mkdir(parents=True)
+            prompt_config_path = prompt_dir / "detect_image-only.json"
+            prompt_config_path.write_text(
+                json.dumps(_make_prompt_config())
+            )
+
+            unit = _make_unit()
+            unit["config"] = str(
+                prompt_config_path.relative_to(tmp)
+            )
+
+            success, message, cost = run_batch_unit(
+                unit=unit,
+                config=config,
+                output_dir=tmp / "output",
+                client=MagicMock(),
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                examples=[],
+                config_version="test_v1",
+            )
+
+            assert success is True
+            assert message == "success"
+            assert cost == 0.002
+
+            # All lifecycle functions should have been called
+            mock_resolve.assert_called_once()
+            mock_build.assert_called_once()
+            mock_upload.assert_called_once()
+            mock_submit.assert_called_once()
+            mock_poll.assert_called_once()
+            mock_retrieve.assert_called_once()
+            mock_write.assert_called_once()
+
+    @patch("scripts.lib_batch_api.build_jsonl_file", return_value=1)
+    @patch("scripts.lib_batch_api._resolve_tile_paths")
+    @patch("scripts.lib_batch_api.poll_batch_job")
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_wrapper_resume_path(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+        mock_poll: MagicMock,
+        mock_resolve: MagicMock,
+        mock_build: MagicMock,
+    ) -> None:
+        """Resume should skip upload/submit, prepare context, then poll."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            config = _make_study_config(tmp)
+
+            tile = _make_tile_image(tmp, "tile_001.png")
+            mock_resolve.return_value = [tile]
+
+            completed_job = MagicMock()
+            completed_job.state = JobState.JOB_STATE_SUCCEEDED
+            completed_job.usage_metadata = None
+            mock_poll.return_value = completed_job
+
+            mock_retrieve.return_value = [
+                _make_batch_response("tile_001.png", detections=[]),
+            ]
+            mock_write.return_value = {"total_cost_usd": 0.001}
+
+            prompt_dir = tmp / "prompts" / "configs"
+            prompt_dir.mkdir(parents=True)
+            prompt_config_path = prompt_dir / "detect_image-only.json"
+            prompt_config_path.write_text(
+                json.dumps(_make_prompt_config())
+            )
+
+            unit = _make_unit()
+            unit["config"] = str(
+                prompt_config_path.relative_to(tmp)
+            )
+
+            success, message, cost = run_batch_unit(
+                unit=unit,
+                config=config,
+                output_dir=tmp / "output",
+                client=MagicMock(),
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                examples=[],
+                config_version="test_v1",
+                resume_job_name="batches/resume_test",
+            )
+
+            assert success is True
+            # Preparation should still happen (for context)
+            mock_resolve.assert_called_once()
+            mock_build.assert_called_once()
+            # Poll should use the resume job name
+            mock_poll.assert_called_once()
+            poll_args = mock_poll.call_args
+            assert (
+                poll_args[0][1] == "batches/resume_test"
+                or poll_args[1].get("job_name") == "batches/resume_test"
+            )
