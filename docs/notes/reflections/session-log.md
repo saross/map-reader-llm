@@ -2047,6 +2047,82 @@ the full envelope). The session produced three operationalised interventions.
 - [ ] Consider adding `/review-implementation` invocation to phase-boundary
   checklists in execution plan
 
+## Session 38 — 2026-02-15 (Phase 3a re-run with MINIMAL thinking, operational failures)
+
+**Instance boundary note**: This session continued from a compaction
+summary. Content below covers the full session but earlier phases are
+reconstructed from the summary.
+
+### Overview
+
+Continuation session to clean up uncommitted work from Sessions 35–37,
+then re-run Phase 3a batch jobs with corrected `thinking_level=MINIMAL`
+(fixing the protocol deviation discovered in Session 37 where all 180
+jobs ran with HIGH thinking). The re-run hit a cascade of operational
+failures: wrong Python environment, disk space exhaustion, and Batch API
+quota limits.
+
+### Accomplishments
+
+1. **Committed and pushed 7 commits** spanning Sessions 35–38:
+   - `cb3f0c1` — `--poll-interval` and `--max-poll-hours` CLI flags
+   - `24abf81` — standalone `batch-monitor.py` script
+   - `6081c36` — `thinking_config` fix in batch JSONL output
+   - `57f631e` — TokenBucketGovernor replacing TPMGovernor
+   - `0ef38d8` — gitignore `outputs/phase3a/` (2.5GB)
+   - `d129ccc` — Phase 3a consensus results + `uv.lock`
+   - `a7baa41` — Sessions 35–37 reflections and observations
+2. **Preserved HIGH-thinking runs** by renaming output directories
+   (`track1-image-high`, `track2-text-high`) before re-running
+3. **Launched MINIMAL-thinking batch runs** for both tracks
+4. **Track 2**: 63/90 batch jobs submitted, 13+ already completed,
+   27 failed submission (quota exhausted), polling in progress
+5. **Track 1**: 22/90 batch jobs submitted, 4 SUCCEEDED + 18 PENDING,
+   14 failed submission (quota exhausted), polling in progress
+6. **Set up hourly monitoring** with `batch-monitor.py --watch`
+   (fixed stdout buffering with `PYTHONUNBUFFERED=1`)
+7. **Processed pending `/remember`** for paired permutation test
+   methodology insight
+
+### Key Results
+
+- No scientific results yet — batch jobs still running
+- Both tracks partially submitted; `--resume` needed after current
+  jobs complete to submit remaining 68 (Track 1) + 27 (Track 2) units
+
+### Commits
+
+- `57f631e` through `a7baa41` — 7 commits covering Sessions 35–38
+  (see Accomplishments above for breakdown)
+
+### Issues
+
+1. **Disk space exhaustion**: 944GB disk was 95% full; image-track JSONL
+   preparation (90 × 160MB = 14GB) pushed it to 100%. Fixed by user
+   emptying trash (~100GB freed)
+2. **Batch API quota**: Concurrent job limit (~80–90 active jobs) caused
+   `429 RESOURCE_EXHAUSTED` after ~85 submissions across both tracks.
+   Write-ahead checkpoint ensures safe recovery via `--resume`
+3. **Python stdout buffering**: `batch-monitor.py` produced no output as
+   background process. Fixed with `PYTHONUNBUFFERED=1` environment variable
+4. **Wrong Python**: First attempt used system Python (missing
+   `google-genai`); fixed by using `.venv/bin/python3`
+
+### Pending Work
+
+- [x] Commit and push all outstanding changes (7 commits)
+- [x] Rename HIGH-thinking output directories for preservation
+- [x] Launch MINIMAL-thinking batch runs
+- [ ] `--resume` Track 1 when current 22 jobs complete (68 remaining)
+- [ ] `--resume` Track 2 when current 63 jobs complete (27 remaining)
+- [ ] Consensus analysis on MINIMAL-thinking results (both tracks)
+- [ ] Comparative analysis: HIGH vs MINIMAL thinking level effect
+- [ ] Apply paired permutation test to Phase 2b retroactive analysis
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
+- [ ] Consider adding `sys.stdout.reconfigure(line_buffering=True)` to
+  `batch-monitor.py` for intrinsic unbuffered output
+- [ ] Evaluate whether 280 additional tiles can expand validation set
+
 ---
 
 *New session entries should be appended above this line.*

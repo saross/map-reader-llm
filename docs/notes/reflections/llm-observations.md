@@ -3550,7 +3550,80 @@ This pattern — build redundant mechanisms at different activation
 thresholds when uncertain about which will work — seems generally
 applicable to collaboration protocol design.
 
-*Document represents observations as of 2026-02-15. Session 37 added
-observations on the "first working solution" bias, generalisation as
-a human contribution, and defence-in-depth as a collaboration design
-pattern.*
+### 176. Cascading operational failures reveal the test–production gap (Session 38)
+
+**Instance boundary note**: This session continued from a compaction
+summary. Observations below are from direct experience of the second
+half of the session.
+
+A straightforward task — re-run Phase 3a with corrected
+`thinking_level=MINIMAL` — hit four sequential failures, none of which
+were code bugs: (1) wrong Python environment (system vs `.venv`),
+(2) disk full at 100% (312K free of 944G), (3) Batch API quota
+exhaustion (429 RESOURCE_EXHAUSTED after ~80 concurrent jobs),
+(4) monitoring script produced no output due to Python stdout buffering
+in non-interactive mode.
+
+What I find interesting is that none of these failures would have been
+caught by the test suite, and none were "bugs" in the conventional
+sense. The code was correct. The environment was the problem. This is
+the gap between "tested" and "operational" — a gap that grows wider as
+the system interacts with more external constraints (disk space, API
+quotas, process I/O buffering).
+
+The disk space failure was particularly instructive. The pipeline's
+architecture — build all 90 JSONL input files before submitting any —
+is a reasonable design choice that trades disk space for simplicity.
+For text-only JSONL files (~35MB each), 90 files need ~3GB. For
+image-track files with base64-encoded tiles (~160MB each), 90 files
+need ~14GB. The same architecture that works comfortably for one track
+exhausts a 944GB disk for the other. This is the kind of
+context-dependent fragility that's invisible during design and only
+appears under specific deployment conditions.
+
+### 177. Stdout buffering as an operational monitoring gotcha (Session 38)
+
+When `batch-monitor.py` was run as a background process, it produced
+zero output despite the Python process being alive and consuming CPU.
+The cause: Python buffers stdout when not connected to a terminal
+(i.e., when stdout is redirected to a file, as happens in background
+execution). The fix — `PYTHONUNBUFFERED=1` — is well-known but easy
+to forget.
+
+This is a category of problem I notice recurring in our collaboration:
+tools that work perfectly in interactive use (where stdout is
+line-buffered by default) fail silently in non-interactive deployment.
+The failure mode is silence — not an error, not wrong output, just no
+output. Silence is the hardest failure to debug because it provides no
+diagnostic signal.
+
+For future monitoring scripts, adding `sys.stdout.reconfigure(line_buffering=True)`
+at the module level would make the fix intrinsic rather than requiring
+the operator to remember `PYTHONUNBUFFERED=1`.
+
+### 178. API quota limits as an implicit concurrency ceiling (Session 38)
+
+The Batch API's concurrent job quota isn't well-documented (at least
+not in any resource we found), but empirically the ceiling appears to
+be around 80–90 active jobs. We discovered this by submitting 90 jobs
+per track (180 total), which exceeded the quota after approximately
+85 successful submissions across both tracks.
+
+The interesting aspect is how this interacts with the parallel
+submission architecture built in Session 35. The design correctly
+submits all jobs as fast as possible, which is optimal when the quota
+is larger than the job count. But when the job count exceeds the
+quota, the "submit everything" strategy produces a burst of failures
+that the write-ahead checkpoint then needs to recover from via
+`--resume`. The architecture handles this gracefully (the checkpoint
+records successful submissions; failed ones are simply absent and will
+be retried), but it would be more efficient to detect the quota
+ceiling and throttle submissions or queue them. This is exactly the
+kind of "exploitation failure" we documented in Session 37 — the
+implementation works correctly but doesn't use the available
+information (quota limits) to optimise its strategy.
+
+*Document represents observations as of 2026-02-15. Session 38 added
+observations on the test–production gap in operational deployment,
+stdout buffering as a monitoring gotcha, and API quota limits as
+implicit concurrency ceilings.*

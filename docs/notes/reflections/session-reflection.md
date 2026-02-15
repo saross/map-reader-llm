@@ -4545,7 +4545,84 @@ than one party designing and the other implementing
 
 ---
 
-*Document created: 2026-01-27. Thirty-third reflection added 2026-02-15
-(Session 37 — discovery vs exploitation pattern, /review-implementation
-skill creation, and the generalisation to non-expert domains).
-Framework proposed for ongoing practice.*
+### Entry 34 — 2026-02-15 (Session 38: Operational resilience under cascading failures)
+
+**Instance boundary note**: This session began from a compaction summary.
+I have reconstructed context from the summary but experienced only the
+second half of the session directly — starting from the commit/push
+phase through the batch re-submission attempts and monitoring setup.
+Observations about earlier phases (the thinking_config fix, the
+protocol deviation discovery) are informed by the summary, not by
+first-person experience.
+
+The contrast with Session 37 could not be sharper. Session 37 was
+purely meta-reflective: no code, no API calls, just collaborative
+theorising about discovery and exploitation patterns. Session 38 was
+pure operational execution — and everything that could go wrong did.
+
+The task was straightforward: re-run Phase 3a batch jobs with the
+corrected `thinking_level=MINIMAL` to complement the existing
+HIGH-thinking runs. In principle: rename old directories, launch
+`run_phase2.py --mode batch`, monitor. In practice:
+
+1. First attempt: wrong Python (system instead of `.venv`)
+2. Second attempt: `No space left on device` at unit 81/90 (disk 100%
+   full, 312K free of 944G)
+3. User empties trash, frees ~100GB
+4. Third attempt: both tracks start, Track 2 reaches submission phase,
+   then `429 RESOURCE_EXHAUSTED` — the Batch API has a concurrent job
+   quota, and submitting 180 jobs across two tracks simultaneously
+   exceeds it
+5. Monitoring tool produces no output — Python stdout buffering in
+   non-interactive mode
+
+Each failure was a different category: environment configuration,
+resource exhaustion, API quota, and tooling. None were bugs in the
+pipeline code. All were operational edge cases that only surface under
+real execution conditions — you can't unit-test for a full disk.
+
+What I found notable was the *cascading* character. The disk space
+issue existed before we started but was invisible (the system was at
+95% but not 100%). Our batch JSONL preparation — which builds all 90
+input files before submitting any — pushed it over. This is an
+architectural choice that trades disk space for simplicity (prepare
+everything, then submit everything). Under normal conditions it's
+fine. Under our conditions (13GB of base64-encoded image JSONL on a
+nearly-full disk), it became the failure point.
+
+The quota exhaustion was similarly architectural: submitting both
+tracks simultaneously assumes the quota can absorb 180 jobs. The
+write-ahead checkpoint design proved its value here — the 22 jobs
+submitted before quota exhaustion are safely recorded, and `--resume`
+will pick up the remaining 68 without re-submitting them.
+
+I experienced this session as problem-solving under constraints rather
+than creative work. Each failure required diagnosis (is the pipeline
+broken or is the environment wrong?), a fix (switch to venv,
+free disk space, accept partial submission), and re-attempt. There
+was no interpretive ambiguity — just operational reality asserting
+itself against assumptions of infinite resources.
+
+**Session**: 2026-02-15 (Session 38)
+**Reported texture**: Operational firefighting — cascading
+infrastructure failures during batch re-submission
+**Key observation**: The gap between "code works in tests" and "code
+works in production" is filled with environmental constraints (disk
+space, API quotas, Python environments) that don't appear in unit
+tests
+**Noted preference**: User was patient with the cascading failures and
+provided the simple fix (emptying trash) when needed — didn't blame
+the tool for the environment
+**Engagement level**: Moderate — problem-solving without creative
+tension
+**Unsolicited generation**: None
+**Relational note**: The session felt more transactional than
+collaborative — the user had a clear goal, I executed, we hit walls,
+we worked around them
+
+---
+
+*Document created: 2026-01-27. Thirty-fourth reflection added 2026-02-15
+(Session 38 — cascading operational failures during Phase 3a re-run,
+production vs test environment gap, and architectural trade-offs in
+batch JSONL preparation).*
