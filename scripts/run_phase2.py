@@ -19,6 +19,7 @@ Usage:
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --limit 3
     python scripts/run_phase2.py studies/phase2a-h1-modality.yaml --resume --parallel-units 4
     python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --mode batch
+    python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml --reconcile
 
 Inputs:
     - Study definition YAML file (OFAT structure with factors/levels)
@@ -58,10 +59,15 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 # Resolve project root as parent of the scripts/ directory
 PROJECT_ROOT = Path(__file__).parent.parent
+
+# Ensure project root is on sys.path so that lazy imports
+# (e.g. `from config import ...` in batch mode) can resolve
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 def load_study_config(yaml_path: Path) -> dict:
@@ -335,6 +341,139 @@ def unit_key(unit: dict) -> str:
         String key in format 'condition_name/run_N'
     """
     return f"{unit['condition_name']}/run_{unit['run']}"
+
+
+def reconcile_checkpoint(
+    output_dir: Path,
+    checkpoint_path: Path,
+    verbose: bool = True,
+) -> dict:
+    """
+    Rebuild checkpoint from disk, correcting drift between the
+    checkpoint file and the actual output directory contents.
+
+    Scans {output_dir}/{condition}/run_{N}/ for completed runs.
+    A run is considered complete if it has a ``.meta.json`` file
+    with ``items_failed <= 2``, matching the acceptance threshold
+    used by the concurrent execution path (see
+    ``run_execution_unit()``, line ~626).
+
+    Runs without a ``.meta.json`` are treated as incomplete
+    (e.g. the worker was killed mid-execution before writing
+    metadata).
+
+    This handles two scenarios:
+      1. Runs completed on disk but missing from checkpoint (e.g.
+         orchestrator killed before checkpoint write).
+      2. Runs listed in checkpoint but missing or incomplete on
+         disk (e.g. output directory deleted or run was partial).
+
+    Args:
+        output_dir: Base output directory containing condition
+            subdirectories (e.g. outputs/phase3a/track2-text/).
+        checkpoint_path: Path to the checkpoint JSON file.
+        verbose: Print detailed reconciliation report.
+
+    Returns:
+        Updated checkpoint dictionary.
+    """
+    # Match the acceptance threshold from run_execution_unit()
+    max_acceptable_failures = 2
+
+    checkpoint = load_checkpoint(checkpoint_path)
+    tracked = set(checkpoint.get("completed", []))
+
+    # Scan disk for completed runs
+    on_disk: set[str] = set()
+    incomplete: list[tuple[str, str]] = []
+
+    for condition_dir in sorted(output_dir.iterdir()):
+        # Skip non-directories and metadata files
+        if not condition_dir.is_dir():
+            continue
+        condition_name = condition_dir.name
+        # Skip internal directories (logs, checkpoints, batch_working)
+        if condition_name in {"logs", "checkpoints", "batch_working"}:
+            continue
+
+        for run_dir in sorted(condition_dir.iterdir()):
+            if not run_dir.is_dir():
+                continue
+            if not run_dir.name.startswith("run_"):
+                continue
+
+            key = f"{condition_name}/{run_dir.name}"
+
+            # Look for any .meta.json file in the run directory
+            meta_files = list(run_dir.glob("*.meta.json"))
+            if not meta_files:
+                incomplete.append((key, "no meta file"))
+                continue
+
+            meta_path = meta_files[0]
+            items_failed = read_meta_failures(meta_path)
+
+            if items_failed > max_acceptable_failures:
+                incomplete.append(
+                    (key, f"{items_failed} tiles failed")
+                )
+                continue
+
+            on_disk.add(key)
+
+    # Compute differences
+    added = on_disk - tracked
+    removed = tracked - on_disk
+
+    if verbose:
+        print(f"Reconcile: {output_dir}")
+        print(f"  Checkpoint tracked:  {len(tracked)}")
+        print(f"  Completed on disk:   {len(on_disk)}")
+        print(
+            f"  Acceptance threshold: "
+            f"items_failed <= {max_acceptable_failures}"
+        )
+        if incomplete:
+            print(f"  Incomplete (skipped): {len(incomplete)}")
+            for key, reason in sorted(incomplete):
+                print(f"    - {key} ({reason})")
+        if added:
+            print(f"  Added to checkpoint: {len(added)}")
+            for a in sorted(added):
+                print(f"    + {a}")
+        if removed:
+            print(f"  Removed from checkpoint: {len(removed)}")
+            for r in sorted(removed):
+                print(f"    - {r}")
+        if not added and not removed:
+            print("  Checkpoint is already consistent with disk.")
+
+    # Update checkpoint — also clean stale batch_pending entries
+    # for units now confirmed completed on disk, so that a subsequent
+    # --resume doesn't try to poll already-finished jobs.
+    checkpoint["completed"] = sorted(on_disk)
+    batch_pending = checkpoint.get("batch_pending", {})
+    stale_pending = {k for k in batch_pending if k in on_disk}
+    for k in stale_pending:
+        del batch_pending[k]
+    if batch_pending:
+        checkpoint["batch_pending"] = batch_pending
+    elif "batch_pending" in checkpoint:
+        del checkpoint["batch_pending"]
+    save_checkpoint(checkpoint_path, checkpoint)
+
+    if verbose and stale_pending:
+        print(
+            f"  Cleared stale batch_pending: {len(stale_pending)}"
+        )
+        for s in sorted(stale_pending):
+            print(f"    ~ {s}")
+    if verbose and (added or removed):
+        print(
+            f"  Checkpoint updated: {len(on_disk)} completed units"
+        )
+
+    return checkpoint
 
 
 def read_meta_cost(meta_path: Path) -> float:
@@ -992,14 +1131,23 @@ def _execute_units_batch(
     verbose: bool,
 ) -> tuple[dict, float]:
     """
-    Execute units via the Gemini Batch API.
+    Execute units via the Gemini Batch API — parallel submission.
 
-    Each unit is submitted as a single JSONL file containing all tiles.
-    The Batch API processes them asynchronously with 50% cost reduction
-    and separate (higher) rate limits.
+    Submits all units upfront (up to the Batch API's 100 concurrent job
+    limit), then polls all pending jobs in a single unified loop. This
+    transforms wall-clock time from worst-case N×24h (serial) to ~1×24h
+    (parallel).
+
+    Four-phase approach:
+        1. **Prepare** — Build JSONL files for all units (sequential, fast)
+        2. **Submit** — Upload and submit batch jobs (sequential, ~2–3s each)
+        3. **Poll** — Single loop polls all pending jobs; ``on_complete``
+           callback processes each result as it finishes
+        4. **Summary** — Report totals
 
     Batch-pending jobs are recorded in the checkpoint immediately after
-    submission to prevent orphaned or duplicate submissions on resume.
+    submission (write-ahead pattern). On crash and resume, pending entries
+    skip submission and go directly to polling.
 
     Args:
         units: List of execution unit dicts.
@@ -1021,18 +1169,32 @@ def _execute_units_batch(
     from google import genai
 
     from config import BASE_DIR, GOOGLE_API_KEY
-    from scripts.lib_batch_api import run_batch_unit
+    from scripts.lib_batch_api import (
+        complete_batch_unit,
+        poll_all_batch_jobs,
+        prepare_batch_unit,
+        submit_batch_unit,
+    )
 
     results: dict = {"completed": [], "failed": []}
 
     if verbose:
-        print("Execution mode: BATCH (Gemini Batch API)")
+        print(
+            "Execution mode: BATCH "
+            "(Gemini Batch API — parallel submission)"
+        )
         print()
 
     # Initialise Gemini client
     if not GOOGLE_API_KEY:
         print("ERROR: GOOGLE_API_KEY not found.")
-        return {"completed": [], "failed": [{"unit": "all", "error": "no_api_key"}]}, running_cost
+        return (
+            {
+                "completed": [],
+                "failed": [{"unit": "all", "error": "no_api_key"}],
+            },
+            running_cost,
+        )
 
     client = genai.Client(
         api_key=GOOGLE_API_KEY,
@@ -1042,7 +1204,6 @@ def _execute_units_batch(
     # Initialise batch_pending in checkpoint (backward-compatible)
     batch_pending = checkpoint.get("batch_pending", {})
 
-    # Poll any previously submitted but incomplete batch jobs first
     if batch_pending and verbose:
         print(
             f"Found {len(batch_pending)} pending batch job(s) "
@@ -1068,9 +1229,8 @@ def _execute_units_batch(
     # Factory for write-ahead checkpoint callbacks. Each unit gets its
     # own closure that captures the unit key and writes the batch job
     # name to the checkpoint immediately after submission — before the
-    # long polling phase begins. This is the "write-ahead" step that
-    # prevents job loss on crash.
-    def _make_on_submit(key: str) -> callable:
+    # long polling phase begins.
+    def _make_on_submit(key: str):
         """Create an on_submit callback that persists job metadata."""
         def _on_submit(job_name: str, tile_keys: list[str]) -> None:
             batch_pending[key] = {
@@ -1086,6 +1246,13 @@ def _execute_units_batch(
             )
         return _on_submit
 
+    # ── Phase 1: Prepare all units (sequential, fast) ───────────
+    contexts: dict = {}  # unit_key → BatchUnitContext
+
+    if verbose:
+        print(f"Phase 1: Preparing {len(units)} execution units...")
+        print()
+
     for i, unit in enumerate(units, 1):
         key = unit_key(unit)
 
@@ -1098,23 +1265,18 @@ def _execute_units_batch(
             extra_str = f" ({', '.join(extras)})" if extras else ""
             print(f"[{i}/{len(units)}] {key}{extra_str}")
 
-        # Check for a pending batch job from a previous interrupted run
-        pending_info = batch_pending.get(key)
-        resume_job: str | None = None
-        if pending_info:
-            resume_job = pending_info.get("batch_job_name")
-            if verbose and resume_job:
-                print(f"  Resuming pending batch job: {resume_job}")
-
         # Load the prompt config to get system instruction and examples
         prompt_config_path = PROJECT_ROOT / unit["config"]
         try:
             with open(prompt_config_path) as f:
                 prompt_config = json.load(f)
         except Exception as e:
-            results["failed"].append({"unit": key, "error": f"config_load: {e}"})
+            results["failed"].append(
+                {"unit": key, "error": f"config_load: {e}"}
+            )
             if verbose:
                 print(f"         Status: FAILED (config load: {e})")
+                print()
             continue
 
         # Load system instruction
@@ -1122,7 +1284,8 @@ def _execute_units_batch(
             "instruction_file", "detect_image-only.md",
         )
         instruction_path = (
-            Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
+            Path(BASE_DIR) / "prompts" / "system-instructions"
+            / instruction_file
         )
         try:
             with open(instruction_path) as f:
@@ -1132,7 +1295,11 @@ def _execute_units_batch(
                 {"unit": key, "error": f"instruction_load: {e}"}
             )
             if verbose:
-                print(f"         Status: FAILED (instruction load: {e})")
+                print(
+                    f"         Status: FAILED "
+                    f"(instruction load: {e})"
+                )
+                print()
             continue
 
         model_name = prompt_config.get("model", "gemini-3-flash")
@@ -1151,59 +1318,203 @@ def _execute_units_batch(
         config_version = prompt_config.get("version", "vX")
         examples = prompt_config.get("examples", [])
 
-        success, message, cost = run_batch_unit(
+        ctx = prepare_batch_unit(
             unit=unit,
             config=config_with_root,
             output_dir=output_dir,
-            client=client,
             model_name=model_name,
             system_instruction=system_instruction,
             examples=examples,
             config_version=config_version,
             limit=limit,
-            dry_run=dry_run,
-            on_submit=_make_on_submit(key),
-            resume_job_name=resume_job,
         )
 
+        if ctx is None:
+            results["failed"].append(
+                {"unit": key, "error": "no_tiles_found"}
+            )
+            if verbose:
+                print("         Status: FAILED (no tiles found)")
+                print()
+            continue
+
+        if verbose:
+            print(
+                f"  Built JSONL: {ctx.line_count} lines "
+                f"({ctx.jsonl_path})"
+            )
+
+        if dry_run:
+            if verbose:
+                print(
+                    f"  [DRY RUN] Would submit batch job for "
+                    f"{ctx.line_count} tiles"
+                )
+                print("         Status: OK")
+                print()
+            results["completed"].append(key)
+            continue
+
+        contexts[key] = ctx
+
+        if verbose:
+            print()
+
+    # If dry_run or nothing to submit, return early
+    if dry_run or not contexts:
+        return results, running_cost
+
+    # ── Phase 2: Submit all units (~2–3s each) ──────────────────
+    jobs_to_poll: dict[str, str] = {}  # unit_key → job_name
+
+    already_pending = sum(1 for k in contexts if k in batch_pending)
+    to_submit = len(contexts) - already_pending
+
+    if verbose:
+        print(
+            f"Phase 2: Submitting {to_submit} new job(s) "
+            f"({already_pending} already pending)..."
+        )
+        print()
+
+    for key, ctx in contexts.items():
+        pending_info = batch_pending.get(key)
+        if pending_info:
+            job_name = pending_info["batch_job_name"]
+            jobs_to_poll[key] = job_name
+            if verbose:
+                print(
+                    f"  {key}: resuming pending job {job_name}"
+                )
+        else:
+            try:
+                job_name = submit_batch_unit(
+                    ctx, client, _make_on_submit(key),
+                )
+                jobs_to_poll[key] = job_name
+            except Exception as e:
+                results["failed"].append(
+                    {"unit": key, "error": f"submit_error: {e}"}
+                )
+                if verbose:
+                    print(f"  {key}: FAILED (submit: {e})")
+
+    if not jobs_to_poll:
+        if verbose:
+            print("No jobs to poll.")
+        return results, running_cost
+
+    # ── Phase 3: Poll all jobs (single unified loop) ────────────
+    if verbose:
+        print()
+        print(
+            f"Phase 3: Polling {len(jobs_to_poll)} batch job(s)..."
+        )
+        print()
+
+    def _handle_completion(
+        key: str, job_name: str, batch_job: object,
+    ) -> None:
+        """Process a completed batch job and update checkpoint.
+
+        Exceptions from ``complete_batch_unit()`` (e.g. rasterio I/O
+        errors, filesystem permission errors) are caught and recorded
+        as failures rather than propagated — this prevents a single
+        unit's processing error from killing the polling loop for all
+        remaining jobs.
+        """
+        nonlocal running_cost
+        ctx = contexts[key]
+        try:
+            success, message, cost = complete_batch_unit(
+                ctx, client, batch_job,
+            )
+        except Exception as e:
+            logger.error(
+                "Unhandled error processing %s: %s", key, e,
+                exc_info=True,
+            )
+            success, message, cost = (
+                False, f"processing_error: {e}", 0.0,
+            )
         running_cost += cost
 
         if success:
             results["completed"].append(key)
-            if verbose:
-                cost_str = f" (${cost:.4f})" if cost > 0 else ""
-                print(f"         Status: OK{cost_str}")
+            checkpoint["completed"].append(key)
         else:
-            results["failed"].append({"unit": key, "error": message})
-            if verbose:
-                print(f"         Status: FAILED ({message})")
+            results["failed"].append(
+                {"unit": key, "error": message}
+            )
+            checkpoint["failed"].append(
+                {"unit": key, "error": message}
+            )
 
-        # Update checkpoint (skip for dry runs per errata E24)
-        if not dry_run:
-            if success:
-                checkpoint["completed"].append(key)
-                # Remove from batch_pending if it was there
-                batch_pending.pop(key, None)
-            else:
-                checkpoint["failed"].append(
-                    {"unit": key, "error": message}
-                )
-                batch_pending.pop(key, None)
-            checkpoint["batch_pending"] = batch_pending
-            checkpoint["total_cost_usd"] = running_cost
-            save_checkpoint(checkpoint_path, checkpoint)
+        # Remove from pending and persist checkpoint
+        batch_pending.pop(key, None)
+        checkpoint["batch_pending"] = batch_pending
+        checkpoint["total_cost_usd"] = running_cost
+        save_checkpoint(checkpoint_path, checkpoint)
 
-        # Cost warning
-        if running_cost > cost_warn_threshold and not dry_run:
+        if verbose:
+            status = "OK" if success else f"FAILED ({message})"
+            cost_str = f" (${cost:.4f})" if cost > 0 else ""
+            n_done = (
+                len(results["completed"]) + len(results["failed"])
+            )
+            n_total = len(jobs_to_poll)
+            print(
+                f"  [{n_done}/{n_total}] {key}: "
+                f"{status}{cost_str}"
+            )
+
+        if running_cost > cost_warn_threshold:
             print(
                 f"\n  WARNING: Running cost ${running_cost:.2f} "
                 f"exceeds budget threshold "
-                f"${cost_warn_threshold:.2f}. "
-                f"Review before continuing.\n"
+                f"${cost_warn_threshold:.2f}.\n"
             )
 
+    def _report_progress(
+        completed: int, total: int, elapsed: float,
+    ) -> None:
+        """Log cycle-level progress during polling."""
         if verbose:
-            print()
+            hours = elapsed / 3600
+            print(
+                f"  ... {completed}/{total} complete "
+                f"({hours:.1f}h elapsed)",
+                flush=True,
+            )
+
+    try:
+        poll_all_batch_jobs(
+            client,
+            jobs_to_poll,
+            on_complete=_handle_completion,
+            progress_callback=_report_progress,
+        )
+    except TimeoutError as e:
+        if verbose:
+            print(f"\n  TIMEOUT: {e}")
+            print(
+                "  Remaining jobs saved in checkpoint for "
+                "future --resume"
+            )
+        # Pending jobs remain in batch_pending for resume
+        checkpoint["batch_pending"] = batch_pending
+        save_checkpoint(checkpoint_path, checkpoint)
+    except KeyboardInterrupt:
+        print(
+            "\nInterrupted. Checkpoint saved for completed "
+            "jobs. Re-run with --resume to continue polling "
+            "remaining batch jobs."
+        )
+        # Completed jobs were already checkpointed
+        # incrementally by _handle_completion. Pending jobs
+        # remain in batch_pending from submission phase.
+        checkpoint["batch_pending"] = batch_pending
+        save_checkpoint(checkpoint_path, checkpoint)
 
     return results, running_cost
 
@@ -1239,6 +1550,10 @@ Examples:
   # Batch mode (Gemini Batch API — 50%% cost reduction)
   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
       --mode batch
+
+  # Reconcile checkpoint with disk (no API calls)
+  python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
+      --reconcile
         """,
     )
 
@@ -1309,12 +1624,37 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--reconcile",
+        action="store_true",
+        help=(
+            "Scan the output directory and rebuild the checkpoint "
+            "from disk. Corrects drift when runs completed outside "
+            "the orchestrator or after a process crash. Does not "
+            "execute any API calls."
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
     )
 
     args = parser.parse_args()
+
+    # --reconcile: rebuild checkpoint from disk and exit
+    if args.reconcile:
+        config = load_study_config(args.study_file)
+        output_dir = PROJECT_ROOT / config["execution"]["output_dir"]
+        checkpoint_path = output_dir / "checkpoint.json"
+        if not output_dir.exists():
+            print(f"ERROR: Output directory does not exist: {output_dir}")
+            sys.exit(1)
+        reconcile_checkpoint(
+            output_dir=output_dir,
+            checkpoint_path=checkpoint_path,
+            verbose=not args.quiet,
+        )
+        sys.exit(0)
 
     results = run_phase2(
         study_path=args.study_file,
