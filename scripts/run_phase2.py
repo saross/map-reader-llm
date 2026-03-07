@@ -96,15 +96,22 @@ def load_study_config(yaml_path: Path) -> dict:
         config = yaml.safe_load(f)
 
     # Validate required sections
-    required_sections = ["study", "factors", "inputs", "execution"]
+    required_sections = ["study", "inputs", "execution"]
     for section in required_sections:
         if section not in config:
             raise ValueError(f"Missing required section: {section}")
 
-    # Validate factors structure
-    factors = config["factors"]
-    if not factors:
-        raise ValueError("'factors' section is empty")
+    # Validate that either 'factors' or 'conditions' is present
+    if "factors" not in config and "conditions" not in config:
+        raise ValueError(
+            "Must have either 'factors' or 'conditions' section"
+        )
+
+    # Validate factors structure (if using OFAT format)
+    if "factors" in config:
+        factors = config["factors"]
+        if not factors:
+            raise ValueError("'factors' section is empty")
 
     # Validate inputs
     inputs = config["inputs"]
@@ -159,8 +166,8 @@ def extract_conditions(config: dict) -> list[dict]:
                 "name": cond["name"],
                 "config": cond["config"],
                 "description": cond.get("description", ""),
-                "temperature": None,
-                "ordering": None,
+                "temperature": cond.get("temperature"),
+                "ordering": cond.get("ordering"),
             })
         return conditions
 

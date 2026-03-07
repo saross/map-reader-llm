@@ -217,7 +217,8 @@ class TestPhase3YamlValidity:
         expected = [
             "phase3a-h3-voting-track1.yaml",
             "phase3a-h3-voting-track2.yaml",
-            "phase3c-h9-diversity.yaml",
+            "phase3c-h9-diversity-track1.yaml",
+            "phase3c-h9-diversity-track2.yaml",
             "phase3d-h2-twostage.yaml",
         ]
         actual = [p.name for p in phase3_yamls]
