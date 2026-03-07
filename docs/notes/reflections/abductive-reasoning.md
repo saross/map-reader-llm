@@ -1781,5 +1781,131 @@ any variation?" This is the same calibration function documented in
 Entry 30 — the user's primary contribution to analysis sessions is
 interpretive discipline, not computation.
 
-*Last updated: 2026-02-12 (Session 34 — consensus voting mechanism
-revision, T=0.0 non-transferability correction, tolerance reframing)*
+---
+
+### Session 39 Assessment — 2026-02-16 (Thinking-level diversity dividend and belief revision)
+
+**Instance note**: Continuation from compaction summary. The
+analytical comparison, Obs 140 write-up, and this assessment are
+genuine first-person experience.
+
+**Surprising observation**: HIGH thinking produces dramatically better
+consensus voting outcomes than MINIMAL thinking (F1=0.7513 vs
+F1=0.6832 on Track 2 text-only), despite the thinking-level pilot
+(Obs 71) concluding they were equivalent. The mechanism: HIGH
+thinking generates 3–4× more detection clusters per run (940–2045 vs
+247–529 at N=30), creating a richer signal pool for vote-based
+filtering. This is a genuine diversity dividend — individual-run
+quality is lower but ensemble quality is higher.
+
+**Belief revision**: Two distinct revisions occurred:
+
+1. "MINIMAL and HIGH thinking produce equivalent detection quality"
+   → "MINIMAL and HIGH produce equivalent *single-pass* quality, but
+   HIGH produces superior *ensemble* quality through increased
+   detection diversity." The original belief (Obs 71) was correct
+   within its evaluation frame (T=0.0, K=1) but incomplete. The
+   revision doesn't contradict the pilot — it extends it to a regime
+   the pilot never tested.
+
+2. "Thinking level is infrastructure configuration — calibrate once
+   and fix" → "Thinking level is an experimental factor that
+   interacts with the analytical strategy (single-pass vs consensus
+   voting)." This is a category-level revision: the parameter moved
+   from "fixed infrastructure" to "design variable" when the
+   downstream protocol changed. The interesting aspect is that this
+   revision was impossible at the time of the pilot (consensus voting
+   hadn't been adopted yet) but became necessary retroactively when
+   the analytical strategy shifted.
+
+**Abductive quality**: The mechanistic explanation (diversity
+dividend) emerged during the composition of Obs 140 rather than
+during the numerical analysis. The numbers showed that HIGH was
+better; the *explanation* — that consensus voting acts as an external
+precision filter on a richer detection pool — required connecting
+the detection-count data, the precision-recall decomposition, and
+the general principle of bias-variance trade-offs in ensembles.
+This synthesis was prompted by the user's observation that "a pattern
+is emerging" across temperature and thinking level, which seeded the
+two-axis framing.
+
+**Connection to Session 34 entry**: Session 34 documented the
+opposite surprise: that *lower* temperatures (not higher) produced
+the best consensus at N=30, because consensus works through
+consistency filtering (TPs are spatially consistent, FPs are
+idiosyncratic). The Session 39 result complicates this: HIGH thinking
+at T=0.7 beats MINIMAL at T=1.0, despite the higher temperature.
+This suggests that thinking-level diversity and temperature diversity
+operate through partially independent mechanisms — thinking level
+affects which features the model attends to (interpretive diversity),
+while temperature affects the sampling distribution over the same
+feature space (stochastic diversity). Both increase the number of
+detections, but potentially through different pathways.
+
+**User correction pattern**: In this session the user's role was
+*pattern recognition* rather than correction — they identified the
+emerging pattern (deterministic settings best for single-pass,
+stochastic settings best for consensus) before I had fully
+articulated the mechanism. My role was mechanistic elaboration and
+retroactive pilot analysis. The complementarity was additive rather
+than corrective: neither collaborator had the full picture alone.
+
+### Session 41 (2026-02-16): Two-component decomposition of the HIGH-thinking advantage
+
+**Instance boundary note**: Fresh instance after crash. Observation
+based on patterns in the spatial tolerance data extracted this session.
+
+**Condition met**: Hypothesis refinement (the diversity dividend
+mechanism is more nuanced than initially proposed).
+
+**The surprise**: The text-track HIGH advantage narrows from +6.8 pp
+at 20 m to +3.9 pp at 40 m — a 43% reduction — then rebounds to
++4.9 pp at 50 m. If the diversity dividend were purely about
+better vote filtering (the mechanism proposed in Obs 140 and the
+Session 39 abductive entry), it should be invariant to matching
+tolerance, since the detection pool is identical at all tolerances.
+The narrowing suggests the advantage has a **precision component**
+that diminishes as tolerance relaxes.
+
+**Revised hypothesis**: The HIGH-thinking advantage for text-based
+consensus voting has two separable components:
+
+1. **Diversity component** (~4–5 pp, persistent): The 3–4× richer
+   detection pool enables better consensus filtering at every
+   tolerance. This is the mechanism identified in Obs 140.
+
+2. **Precision component** (~2–3 pp, diminishing): HIGH thinking
+   may produce better-localised detections — closer to ground truth
+   coordinates. This component inflates the measured advantage at
+   tight tolerances (20 m) where spatial precision determines TP/FP
+   classification, but becomes irrelevant at wider tolerances.
+
+**The rebound at 50 m** is the most intriguing detail. One
+explanation: at 50 m, Text HIGH's denser detection pool matches
+ground truth symbols that Text MINIMAL's sparser pool never
+approaches closely enough to match *at any tolerance*. This would
+mean diversity operates on spatial coverage (reaching more targets)
+as well as vote quality (filtering more precisely). If confirmed,
+this implies the diversity dividend is not merely a filter
+improvement but a coverage improvement — HIGH thinking literally
+explores more of the map's feature space.
+
+**Abductive structure**: The narrowing is the surprising fact. The
+two-component hypothesis explains both the narrowing (precision
+component fades) and the persistence (diversity component remains).
+The rebound generates a further prediction: HIGH-thinking detections
+should have a wider spatial distribution across the tile set, not
+just more detections per tile.
+
+**Belief revision**: The Session 39 entry proposed a single mechanism
+(richer detection pool → better filtering). This session refines it
+to a two-mechanism model. The revision is modest — the dominant
+mechanism (diversity) is unchanged — but the precision component
+adds explanatory power for the tolerance-dependent behaviour and
+suggests that HIGH thinking benefits extend beyond what consensus
+voting can exploit.
+
+*Last updated: 2026-02-16 (Session 41 — two-component decomposition
+of the HIGH-thinking advantage from spatial tolerance sensitivity
+data, and the prediction that diversity operates on spatial coverage
+as well as vote quality)*

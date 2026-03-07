@@ -2113,15 +2113,226 @@ quota limits.
 - [x] Commit and push all outstanding changes (7 commits)
 - [x] Rename HIGH-thinking output directories for preservation
 - [x] Launch MINIMAL-thinking batch runs
-- [ ] `--resume` Track 1 when current 22 jobs complete (68 remaining)
-- [ ] `--resume` Track 2 when current 63 jobs complete (27 remaining)
-- [ ] Consensus analysis on MINIMAL-thinking results (both tracks)
-- [ ] Comparative analysis: HIGH vs MINIMAL thinking level effect
+- [x] `--resume` Track 2 when current 63 jobs complete (27 remaining) — completed 90/90 (2026-02-15)
+- [ ] `--resume` Track 1 when current 22 jobs complete (68 remaining) — in progress (34 completed + 41 pending, governance active)
+- [x] Consensus analysis on MINIMAL-thinking results — Track 2 complete (2026-02-15); Track 1 pending (awaiting 90/90)
+- [ ] Comparative analysis: HIGH vs MINIMAL thinking level effect — preliminary comparison in Obs 140; formal paired test pending
+- [ ] Run T × thinking-level factorial within consensus framework — test whether
+  temperature and thinking level are additive or substitutable diversity sources
+  (motivated by Obs 140: both axes increase stochasticity through independent
+  mechanisms, but may saturate the same diversity ceiling)
 - [ ] Apply paired permutation test to Phase 2b retroactive analysis
 - [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
 - [ ] Consider adding `sys.stdout.reconfigure(line_buffering=True)` to
   `batch-monitor.py` for intrinsic unbuffered output
 - [ ] Evaluate whether 280 additional tiles can expand validation set
+
+---
+
+## Session 39 — 2026-02-16 (File governance deployment, consensus comparison, diversity dividend)
+
+**Instance boundary note**: This session is a continuation from a
+compacted summary. The commit/push and initial background task setup
+are reconstructed; the consensus analyses, comparative write-up, and
+reflections are genuine first-person experience.
+
+### Overview
+
+Deployed the file storage governance code (committed in Session 38.5
+as two logical commits), monitored background batch processing for
+both tracks, ran consensus analyses on three completed tracks
+(Track 2 MINIMAL, Track 1 Image HIGH, Track 2 Text HIGH), and
+discovered that HIGH thinking dramatically outperforms MINIMAL for
+consensus voting — the diversity dividend (Obs 140).
+
+### Accomplishments
+
+1. **Committed and pushed file storage governance** in two logical
+   commits:
+   - `edc798d` — library layer: `cleanup_batch_files()`,
+     `audit_file_storage()`, `sweep_stale_files()`, modified
+     `submit_batch_unit()` return type
+   - `d3d6e1b` — pipeline integration: checkpoint tracking of
+     `uploaded_file_name`, completion cleanup, retry-with-sweep,
+     plus 15 new tests (77/77 passing)
+2. **Track 2 MINIMAL completed**: 90/90 units, 0 failures. File
+   governance confirmed working — input files deleted successfully,
+   output file deletion fails universally due to bug #1759 (file ID
+   > 40 chars), auto-expires in 48h
+3. **Ran three consensus analyses** in parallel:
+   - Track 2 Text MINIMAL: best F1=0.6832 (T1.0 N=30 x=22)
+   - Track 1 Image HIGH: best F1=0.6444 (T0.3 N=30 x=25)
+   - Track 2 Text HIGH: best F1=0.7513 (T0.7 N=30 x=22)
+4. **Discovered the diversity dividend** (Obs 140): HIGH thinking
+   generates 3–4× more detection clusters than MINIMAL, giving
+   consensus voting richer signal to filter. HIGH consensus
+   outperforms MINIMAL by +6.8 pp F1 on Track 2
+5. **Wrote Observation 140** documenting the finding, the pilot
+   blind spot, and the bias-variance trade-off mechanism
+6. **Added to-do** for T × thinking-level factorial experiment
+
+### Key Results
+
+| Track | Thinking | Best Config | Best F1 | Baseline | Delta |
+|-------|----------|-------------|---------|----------|-------|
+| Track 2 Text | MINIMAL | T1.0 N=30 x=22 | 0.6832 | 0.660 | +0.023 |
+| Track 2 Text | HIGH | T0.7 N=30 x=22 | 0.7513 | 0.660 | +0.091 |
+| Track 1 Image | HIGH | T0.3 N=30 x=25 | 0.6444 | 0.609 | +0.035 |
+| Track 1 Image | MINIMAL | *(34/90)* | — | 0.609 | — |
+
+### Commits
+
+- `edc798d` — `feat(batch-api): add file storage governance functions`
+- `d3d6e1b` — `feat(pipeline): integrate file cleanup and quota retry`
+
+### Issues
+
+1. **Bug #1759 confirmed universal**: All batch output file IDs exceed
+   40-char limit for `files.delete()`. Input file deletion works
+   correctly (1 per unit). Output files auto-expire in 48h — acceptable
+   fallback
+2. **Track 1 MINIMAL still in progress**: 34 completed + 41 pending
+   as of session end. Will need additional `--resume` cycle(s)
+
+### Pending Work
+
+- [x] Track 1 MINIMAL: complete remaining ~56 units via `--resume` — completed 90/90 (2026-02-16)
+- [x] Re-run Track 1 MINIMAL consensus analysis once 90/90 complete — completed (2026-02-16): best F1=0.6497 (T0.7 N=10 x=6)
+- [ ] Paired permutation test: HIGH vs MINIMAL (Track 2) for formal
+  statistical comparison
+- [x] Full 2×2 comparison (Image/Text × HIGH/MINIMAL) — completed (2026-02-16): academic draft in `results/phase3a-consensus/phase3a-thinking-level-comparison.md`
+- [ ] Run T × thinking-level factorial within consensus framework
+- [ ] Apply paired permutation test to Phase 2b retroactive analysis
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
+
+---
+
+## Session 40 — 2026-02-16 (Academic draft: 2×2 thinking-level comparison)
+
+**Instance boundary note**: Continuation from compacted context. The
+Track 1 MINIMAL completion and 2×2 comparison analysis occurred before
+compaction. The academic document writing is genuine first-person
+experience.
+
+### Overview
+
+Created a formal academic-style draft document capturing the full 2×2
+(modality × thinking level) Phase 3a consensus analysis, suitable for
+inclusion in the paper. The document covers H3 confirmation, the
+modality-specific diversity dividend, and mechanistic interpretation.
+
+### Accomplishments
+
+1. **Completed Track 1 Image MINIMAL analysis**: 90/90 units completed,
+   consensus sweep run. Best F1=0.6497 (T0.7 N=10 x=6, +0.041 vs
+   baseline 0.609)
+2. **Ran full 2×2 comparison** across all four conditions, identifying
+   the modality-specific interaction: Track 2 Text shows +6.8 pp
+   advantage for HIGH thinking; Track 1 Image shows negligible difference
+3. **Wrote academic draft document**: 6 sections plus appendices at
+   `results/phase3a-consensus/phase3a-thinking-level-comparison.md`:
+   - Section 3: Five data tables (global optima, interaction summary,
+     per-temperature optima, cluster diversity, precision-recall)
+   - Section 4: Discussion of H3 confirmation, modality-specific
+     diversity dividend, calibration methodology implications,
+     temperature-thinking interaction, and cross-modality gap
+   - Section 5: Limitations (power, single model, post-hoc status)
+4. **Markdown lint**: Document passes clean
+
+### Key Results
+
+Complete 2×2 comparison:
+
+| Track | Thinking | Best Config | Best F1 | Baseline | Delta |
+|-------|----------|-------------|---------|----------|-------|
+| Track 1 Image | MINIMAL | T0.7 N=10 x=6 | 0.6497 | 0.609 | +0.041 |
+| Track 1 Image | HIGH | T0.3 N=30 x=25 | 0.6444 | 0.609 | +0.035 |
+| Track 2 Text | MINIMAL | T1.0 N=30 x=22 | 0.6832 | 0.660 | +0.023 |
+| Track 2 Text | HIGH | T0.7 N=30 x=22 | 0.7513 | 0.660 | +0.091 |
+
+### Commits
+
+*(No commits this session — document creation only)*
+
+### Issues
+
+None.
+
+### Pending Work
+
+- [ ] Paired permutation test: HIGH vs MINIMAL (Track 2) for formal
+  statistical comparison
+- [ ] Paired permutation test: HIGH vs MINIMAL (Track 1) to confirm
+  null effect on image modality
+- [ ] Run T × thinking-level factorial within consensus framework
+- [ ] Apply paired permutation test to Phase 2b retroactive analysis
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
+- [ ] Commit academic draft document and session reflections
+
+## Session 41 — 2026-02-16: Spatial tolerance sensitivity and comprehensive report
+
+### Overview
+
+Fresh instance after Session 40 crashed with context length error.
+Resumed Phase 3a spatial tolerance analysis from on-disk artefacts.
+All 16 analyses (4 conditions × 4 tolerances) were already complete;
+this session focused on extraction, synthesis, and documentation.
+
+### Work Completed
+
+1. **Verified completeness**: Confirmed all 16 consensus analysis
+   report JSON files exist with valid data
+2. **Created spatial tolerance sensitivity document**:
+   `results/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md`
+   — analyses how F1 changes as evaluation buffer widens from 20→50 m
+3. **Created comprehensive results report**:
+   `results/phase3a-consensus/phase3a-comprehensive-results-report.md`
+   — consolidates all three analytical dimensions (temperature ×
+   thinking level × spatial tolerance) with quotable results for
+   paper drafting
+4. **Updated working notes**: Added Observations 142–145 covering
+   image-track spatial imprecision, configuration stability as
+   robustness diagnostic, thinking-level persistence across
+   tolerances, and image-track convergence at 50 m
+5. **Checked next experiment readiness**: Phase 3c (H9 Diversity) is
+   next; prompt variants are designed (V1–V5 in prompts/README.md)
+   but instruction files not yet created
+6. **Updated reflections**: Session reflection, LLM observations,
+   session log
+
+### Key Results
+
+Full 4×4 matrix (condition × tolerance):
+
+| Condition | 20 m | 30 m | 40 m | 50 m |
+|-----------|------|------|------|------|
+| T1 Img MIN | 0.650 | 0.734 | 0.785 | 0.794 |
+| T1 Img HIGH | 0.644 | 0.726 | 0.775 | 0.794 |
+| T2 Txt MIN | 0.683 | 0.753 | 0.782 | 0.782 |
+| T2 Txt HIGH | 0.751 | 0.804 | 0.821 | 0.831 |
+
+Key findings:
+- Image tracks gain 14–15 pp from 20→50 m (spatial imprecision)
+- Text tracks gain 8–10 pp (better localisation)
+- Thinking-level interaction robust across all tolerances
+- Text MINIMAL plateaus at 40 m; image conditions converge at 50 m
+
+### Commits
+
+*(No commits this session — document creation only)*
+
+### Issues
+
+- Subagent Task tool summarised instead of returning raw data
+  (twice) — required fallback to direct Bash execution
+
+### Pending Work
+
+- [ ] Create H9 prompt variant instruction files (V1–V5)
+- [ ] Scaffold Phase 3c study configs and submit batch job
+- [ ] Commit spatial tolerance and comprehensive report documents
+- [ ] Paired permutation tests (carried forward from Session 40)
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
 
 ---
 

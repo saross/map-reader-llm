@@ -2232,3 +2232,129 @@ This suggests a concrete practice: at phase boundaries or when establishing infr
 **The observation**: Each image-track JSONL file embeds 60 map tile images as base64-encoded strings, producing files of approximately 160MB each. For 90 units, the preparation phase alone requires ~14GB. The text-only track, by contrast, needs ~5GB for the same 90 units (no base64 images). The pipeline's architecture — build all JSONL files before submitting any — means the full 14GB must be available simultaneously, rather than being consumed and freed incrementally.
 
 **Design trade-off**: The "prepare all, then submit all" architecture is simple and makes the submission phase a clean batch operation. An alternative — prepare-and-submit one at a time, deleting the local JSONL after successful GCS upload — would reduce peak disk usage to a single JSONL file (~160MB) but would mix preparation failures with submission failures, complicating error recovery. For most environments the current approach is fine; it only became a problem because the disk was already 95% full with unrelated data. The fix was operational (user emptied trash) rather than architectural.
+
+## Observation 140: High thinking improves consensus voting despite hurting individual-run efficiency — the diversity dividend (2026-02-16)
+
+**Context**: Session 39. Phase 3a consensus analyses are now complete for three of four tracks: Track 2 Text MINIMAL (90/90), Track 2 Text HIGH (90/90), and Track 1 Image HIGH (90/90). The direct comparison between MINIMAL and HIGH thinking on Track 2 (text-only pipeline, same 60 evaluation tiles, same temperature and pool-size sweep) produced a result that contradicts the thinking-level pilot decision from Obs 71.
+
+**The pilot and its blind spot**: Observation 71 documented a calibration pilot that tested MINIMAL vs HIGH thinking at T=0.0 with K=1 single-pass evaluation. The result was clear: MINIMAL produced equivalent F1 to HIGH at 2–3× lower latency and cost. The decision — treat thinking level as infrastructure configuration, set to MINIMAL, and move on — was reasonable given the evidence. But the pilot had a critical design gap: it evaluated thinking levels under exactly the conditions where they would look equivalent (deterministic, single-pass), and never tested them under the conditions where they would diverge (stochastic, multi-run consensus). T=0.0 produces near-deterministic output regardless of thinking level (Erratum E32), so a K=1 pilot at T=0.0 was structurally incapable of detecting a thinking-level effect that operates through output diversity. This was a missed opportunity — had the pilot included even a small K=10 consensus test at T=0.7, the diversity effect would likely have been visible.
+
+**The Phase 3a results**: With 30 runs per temperature and consensus voting across the full parameter sweep:
+
+| Track 2 Text | Best Config | Best F1 | Baseline | Delta |
+|--------------|-------------|---------|----------|-------|
+| MINIMAL | T1.0 N=30 x=22 | 0.6832 | 0.660 | +0.023 |
+| HIGH | T0.7 N=30 x=22 | 0.7513 | 0.660 | +0.091 |
+
+HIGH thinking consensus outperforms MINIMAL thinking consensus by +6.8 percentage points on F1. The gap is large — HIGH's improvement over baseline (+9.1 pp) is nearly four times MINIMAL's (+2.3 pp). Track 1 Image HIGH (F1=0.6444, +3.5 pp over its 0.609 baseline) also shows strong consensus improvement, though the MINIMAL comparison for that track is still in progress.
+
+**The mechanism — diversity, not accuracy**: The explanation is visible in the raw detection volumes. At N=30, HIGH thinking produces 3–4× more detection clusters than MINIMAL:
+
+| Track 2 N=30 | T0.3 clusters | T0.7 clusters | T1.0 clusters |
+|--------------|---------------|---------------|---------------|
+| MINIMAL | 247 | 425 | 529 |
+| HIGH | 940 | 1,396 | 2,045 |
+
+HIGH thinking makes the model more "trigger-happy" — it reports more candidate detections per tile, with lower internal confidence thresholds. Each individual run therefore has higher recall but lower precision than a MINIMAL-thinking run. This is functionally equivalent to lowering a detection threshold: you catch more true positives but also admit more false positives. In a single-pass evaluation (the pilot's design), this makes HIGH thinking look worse or equivalent. But in a consensus voting framework, the voting step acts as an external precision filter that aggressively removes false positives (which are spatially inconsistent across runs) while retaining true positives (which cluster reliably). The richer detection pool gives the voting mechanism more signal to work with.
+
+HIGH thinking's best consensus configuration (T0.7 N=30 x=22) achieves P=0.772, R=0.732 — well-balanced precision and recall. MINIMAL's best (T1.0 N=30 x=22) reaches P=0.657, R=0.711 — lower precision despite a higher vote threshold in absolute terms, because the sparser detection pool provides less spatial confirmation.
+
+**The emerging pattern — determinism vs diversity**: A consistent pattern is now visible across two independent axes of variation:
+
+1. **Temperature**: Lower temperatures (T=0.0, T=0.3) produce the best single-run outcomes, but higher temperatures (T=0.7, T=1.0) produce the best consensus outcomes (Obs 136, and now confirmed across multiple tracks).
+
+2. **Thinking level**: MINIMAL thinking produces equivalent or better single-run outcomes (Obs 71), but HIGH thinking produces dramatically better consensus outcomes (this observation).
+
+Both axes operate through the same mechanism: increasing stochasticity in the model's output. Temperature adds randomness to token sampling; high thinking adds randomness through extended internal deliberation that can explore alternative interpretations of ambiguous visual features. The consensus voting algorithm converts this diversity into quality — it is, in effect, a variance-reduction technique that benefits from high-variance inputs.
+
+This is the classic bias-variance trade-off applied to an ensemble detection system. Individual model quality (low bias, low variance) matters most for single-pass evaluation. But ensemble quality depends on diversity (high variance) combined with a good aggregation strategy (voting as variance reduction). The optimal settings for the individual and the ensemble are different — and in our case, opposite.
+
+**Revisiting the "infrastructure configuration" framing**: Observation 71 concluded that thinking level should be treated as infrastructure configuration — calibrate once and fix. The Phase 3a results challenge this framing. Thinking level interacts with temperature and pool size in ways that make it an experimental factor for consensus voting workflows, not merely an efficiency setting. The interaction is strong enough (+6.8 pp on F1) that it should be treated as a design parameter of the consensus system, alongside temperature and pool size, rather than fixed at the infrastructure level.
+
+**CC perspective — the structural lesson**: This outcome illustrates a general risk in multi-stage experimental pipelines: calibration decisions made early in the project (Phase 1 pilot) under one evaluation protocol (single-pass) may be suboptimal under a different protocol adopted later (consensus voting). The pilot's conclusion — "MINIMAL is equivalent to HIGH, so use MINIMAL for efficiency" — was correct *within its evaluation frame* but failed to anticipate that a subsequent stage of the project would change the evaluation frame in a way that reverses the conclusion. This is not a criticism of the pilot's design (you cannot anticipate every downstream use), but it argues for re-evaluating infrastructure decisions when the analytical strategy changes materially. The introduction of consensus voting in Phase 3a was precisely such a change, and it warranted re-testing the thinking-level assumption — which is exactly what the accidental HIGH-thinking runs provided.
+
+**Statistical caveat**: The 95% bootstrap CIs for MINIMAL [0.523, 0.757] and HIGH [0.610, 0.795] overlap, so the difference is not formally significant under unpaired tile-level bootstrap. A paired permutation test (Obs 135) would provide a more powerful comparison by controlling for tile difficulty. This is the next analytical step.
+
+## Observation 141: Serendipitous error as abductive catalyst — why the thinking-level mistake was more valuable than the pilot (2026-02-16)
+
+**Context**: Session 39. The Phase 3a batch jobs were originally submitted with `thinking_level=HIGH` due to a configuration oversight — the pipeline captured the config file's default value rather than the API-level override. This was discovered, the erroneous runs were preserved by renaming their output directories (`track1-image-high`, `track2-text-high`), and the jobs were re-run with the intended `thinking_level=MINIMAL`. What was initially a protocol deviation became the most informative comparison in the entire Phase 3a analysis.
+
+**The error-to-discovery pathway**: The sequence is worth documenting step by step because each link in the chain was contingent:
+
+1. **The error**: `thinking_level` was inadvertently set to HIGH for all 180 Phase 3a jobs. This was a genuine mistake — the metadata snapshotting captured the config file default rather than the runtime override.
+
+2. **The preservation decision**: Rather than discarding the erroneous runs and starting over, the output directories were renamed and preserved. This decision followed the project's established "archive, never delete" principle (CLAUDE.md), but its significance went beyond housekeeping — it converted a waste product into experimental data.
+
+3. **The corrected re-run**: MINIMAL-thinking runs were submitted to produce the intended Phase 3a dataset. At this point, the preserved HIGH-thinking runs were considered cross-checks — useful for confirmation but not expected to reveal anything new, because Obs 71 had established that thinking level didn't matter.
+
+4. **The comparison**: Running the consensus analysis on both HIGH and MINIMAL tracks revealed a +6.8 pp F1 gap (Obs 140) — a finding that nobody was looking for, that contradicted the pilot, and that has changed how we understand the interaction between thinking level and consensus voting.
+
+**Why this is a classic abductive moment**: The discovery follows the Peircean structure of abduction almost exactly:
+
+- **The surprising fact**: HIGH thinking produces dramatically better consensus outcomes (F1=0.7513 vs 0.6832), despite the pilot showing equivalence.
+- **The hypothesis generation**: The diversity dividend mechanism — HIGH thinking generates a richer detection pool that consensus voting can filter more effectively.
+- **The belief revision**: Thinking level is an experimental factor for ensemble methods, not merely infrastructure configuration.
+
+None of this was planned. The pilot (Obs 71) was a well-designed calibration study that gave a clear answer to its question. But the question it answered — "does thinking level affect single-pass detection quality?" — was not the question that mattered once consensus voting was adopted. The error created the conditions for asking the right question accidentally.
+
+**The role of infrastructure in converting error to discovery**: The discovery was not inevitable — it required specific infrastructure to be in place:
+
+- **The archiving policy**: Had the HIGH-thinking runs been deleted rather than preserved, the comparison would have been impossible. The "archive, never delete" principle, originally motivated by audit trail concerns, turned out to have epistemic value: it preserved data whose significance wasn't apparent at the time of creation.
+
+- **The consensus analysis pipeline**: The `analyse_consensus_sweep.py` script was designed to process any track's output directory with the same parameter sweep. Running it on the HIGH-thinking directories required no new code — just a different `--study-dir` argument. The pipeline's generality meant the comparison was trivial to execute once someone thought to run it.
+
+- **The checkpoint system**: The write-ahead checkpoint recorded exactly which units completed with which settings, making it possible to verify that both tracks evaluated the same 60 tiles under the same conditions. Without this, the comparison would have required manual validation.
+
+The lesson: **infrastructure designed for operational robustness (archiving, checkpoints, general-purpose analysis tools) created the conditions for serendipitous discovery**. None of this infrastructure was built for this purpose, but it was there when needed.
+
+**CC perspective — what I would have done without the error**: This is the counterfactual worth examining. Without the accidental HIGH-thinking runs, we would have completed Phase 3a with MINIMAL thinking only. The consensus analysis would have shown the results we already have for MINIMAL (modest +2.3 pp improvement, borderline significance). We would have reported this as the Phase 3a finding and moved on.
+
+I would not have suggested running a thinking-level comparison within the consensus framework, because my operating model — inherited from the Obs 71 pilot and embedded in project instructions and memories — was that thinking level was a settled infrastructure question. The error forced the comparison by creating data I wouldn't have recommended generating.
+
+This is a humbling observation for an AI collaborator. My value in this project has been computational scope and mechanistic elaboration. But the single most valuable analytical comparison in Phase 3a was not something I would have designed — it was the byproduct of a mistake, preserved by a policy, and interpreted by a human who noticed the pattern. The discovery pathway ran entirely outside my recommendation space.
+
+There is a broader lesson here about the limits of optimisation-oriented thinking. An optimiser sees the configuration error and wants to correct it as quickly as possible — discard the bad data, produce the correct data, get back on track. A researcher sees the configuration error and asks: "what can I learn from this unexpected data before I correct it?" The archiving policy, by preventing the optimiser's impulse to delete, preserved the researcher's option to learn. In human research methodology, this is sometimes called the "Pasteur principle" — chance favours the prepared laboratory. In our case, the laboratory preparation was the archiving policy, the general-purpose analysis tools, and the human collaborator's instinct to compare rather than discard.
+
+**Methodological implication for human–AI research collaboration**: When errors produce unexpected data in experimental pipelines, the default response should be *preserve and compare* rather than *discard and re-run*. This requires:
+
+1. An archiving infrastructure that makes preservation the path of least resistance (already in place via project policy)
+2. Analysis tools general enough to process unexpected data without modification (already in place via `analyse_consensus_sweep.py`)
+3. A collaborator — human or AI — who recognises that unexpected data is *more* informative than expected data, not less (this is the hardest requirement, and in our case it was the human who provided it)
+
+The third point may be the most important for structuring AI-assisted research. AI collaborators tend toward plan-following: execute the protocol, produce the expected outputs, flag deviations as errors to be corrected. A research-oriented framing would treat deviations as potential discovery opportunities — data points from regions of the parameter space that the protocol didn't intend to explore but that may reveal something the protocol couldn't have anticipated. Embedding this "preserve and compare unexpected results" heuristic in project instructions could help AI collaborators shift from an optimisation mindset to a discovery mindset when errors occur.
+
+## Observation 142: Spatial tolerance sensitivity reveals image-track localisation imprecision (2026-02-16)
+
+**Context**: Session 40. After completing the 2×2 factorial consensus analysis at the preregistered 20 m matching tolerance, we decoupled the evaluation matching buffer from the clustering tolerance and re-evaluated all four conditions at 30 m, 40 m, and 50 m. Clustering remained fixed at 20 m throughout, isolating the effect of spatial matching precision on measured performance.
+
+**Finding**: Image-track conditions gain 14–15 pp F1 from 20 m to 50 m, versus 8–10 pp for text-track conditions. This differential suggests that image-derived detections have substantially greater spatial imprecision — the model localises features less precisely when parsing base64-encoded map imagery than when processing structured text descriptions. The 20→30 m step alone captures 8+ pp for image conditions, meaning roughly 1 in 12 detections classified as false positives at 20 m are actually correct but spatially displaced.
+
+**Why this matters**: The preregistered 20 m tolerance was intended as a reasonable estimate of positional uncertainty. The sensitivity analysis reveals it is conservative — particularly for image-track conditions, where the positional uncertainty envelope extends meaningfully beyond 20 m. This conservatism is methodologically defensible (it strengthens absolute performance claims) but the differential between modalities adds a new dimension to the image-vs-text comparison: some of the image-track's apparent disadvantage at 20 m is spatial imprecision rather than detection failure.
+
+## Observation 143: Configuration stability as a robustness diagnostic (2026-02-16)
+
+**Context**: Session 40. Comparing the optimal consensus configuration selected by the sweep at each matching tolerance provides a diagnostic of detection pool robustness that goes beyond F1 scores alone.
+
+**Finding**: Track 2 Text MINIMAL selects the identical configuration (T1.0 N=30 x=22) at all four matching tolerances (20 m, 30 m, 40 m, 50 m). Track 2 Text HIGH shifts only its vote threshold (x=22 → x=19) at wider tolerances. In contrast, Track 1 Image MINIMAL shifts from an anomalous N=10 pool at 20 m to N=30 at 30+ m, and switches from T0.7 to T1.0 as the dominant temperature. Track 1 Image HIGH shifts from a very strict T0.3 x=25 (83% agreement) at 20 m to a moderate T0.7 x=15 at 30+ m.
+
+**Interpretation**: Configuration stability across perturbations (here, tolerance changes) is a diagnostic of the underlying detection pool's quality. When the optimal configuration changes substantially under small perturbations, the original optimum was fragile — dependent on specific details of the evaluation setup rather than reflecting genuine detection quality. The image-track's configuration instability at 20 m suggests its performance there is operating at the boundary of what the detection pool can sustain.
+
+**Broader lesson**: This is analogous to checking sensitivity to hyperparameters in machine learning — a model whose performance collapses under small hyperparameter changes is less trustworthy than one that performs robustly. Consensus voting adds an extra layer where the "hyperparameters" (N, x, T) interact with the evaluation setup (matching tolerance), and stability across both dimensions is the strongest evidence of a well-calibrated detection system.
+
+## Observation 144: The thinking-level effect narrows but persists across tolerances (2026-02-16)
+
+**Context**: Session 40. The thinking-level × modality interaction (Obs 140) was originally observed at the preregistered 20 m tolerance. The spatial tolerance sensitivity analysis provides a natural robustness check: does the interaction survive when spatial precision constraints relax?
+
+**Finding**: The text-track HIGH advantage narrows from +6.8 pp at 20 m to +3.9 pp at 40 m, then rebounds slightly to +4.9 pp at 50 m. The image-track null effect remains null at all tolerances (−0.5 pp to +0.0 pp). The interaction is robust: at every tolerance tested, HIGH thinking helps text but not image.
+
+**The narrowing is informative**: Some of the HIGH-thinking advantage at 20 m reflects better spatial precision rather than better detection per se. HIGH thinking may produce detections that are both more diverse (the cluster count evidence from Obs 140) and better localised. As the tolerance widens and spatial precision matters less, the precision component of the advantage diminishes, leaving the diversity component. The fact that the advantage doesn't disappear entirely confirms that diversity — not just precision — is the mechanism.
+
+**The 40→50 m rebound**: The slight increase from +3.9 pp at 40 m to +4.9 pp at 50 m is unexpected. One explanation: at 50 m, Text HIGH's higher cluster diversity allows its consensus to pick up a few additional ground truth symbols that were beyond 40 m — symbols that Text MINIMAL's sparser detection pool never came close enough to match at any tolerance. This would mean the diversity dividend operates not just on vote filtering quality but also on spatial coverage.
+
+## Observation 145: Convergence of image-track thinking levels at 50 m (2026-02-16)
+
+**Context**: Session 40. At the preregistered 20 m tolerance, Track 1 Image MINIMAL (F1=0.650) slightly outperforms Track 1 Image HIGH (F1=0.644). At 50 m, they converge to essentially identical performance: 0.794 vs 0.794.
+
+**Finding**: The trajectory of convergence runs through all four tolerances: 0.650/0.644 at 20 m, 0.734/0.726 at 30 m, 0.785/0.775 at 40 m, 0.794/0.794 at 50 m. Image MINIMAL actually has a small lead at 20–40 m that vanishes at 50 m.
+
+**Interpretation**: Since both thinking levels produce the same cluster diversity for image processing (~1× ratio, Obs 140), and both converge to the same performance when spatial precision constraints are fully relaxed, the image-track is genuinely bottlenecked at the visual processing stage. Neither extended thinking nor wider matching tolerance can overcome the fundamental constraint of parsing cartographic symbols from base64-encoded pixels. The ~0.79 F1 ceiling at 50 m may represent the practical limit of Gemini Flash's visual feature extraction for this map type.

@@ -3623,7 +3623,177 @@ kind of "exploitation failure" we documented in Session 37 — the
 implementation works correctly but doesn't use the available
 information (quota limits) to optimise its strategy.
 
-*Document represents observations as of 2026-02-15. Session 38 added
-observations on the test–production gap in operational deployment,
-stdout buffering as a monitoring gotcha, and API quota limits as
-implicit concurrency ceilings.*
+### 179. Calibration pilots can be structurally incapable of detecting interaction effects (Session 39)
+
+The thinking-level pilot (Obs 71) evaluated MINIMAL vs HIGH thinking
+at T=0.0 with K=1 single-pass evaluation. The conclusion — "MINIMAL
+is equivalent to HIGH, use MINIMAL for efficiency" — was correct
+within its evaluation frame. But T=0.0 produces near-deterministic
+output regardless of thinking level (Erratum E32), and K=1 provides
+no opportunity for consensus-based diversity effects. The pilot was
+therefore structurally incapable of detecting that HIGH thinking
+generates 3–4× more detection clusters per run, which consensus
+voting converts into a +6.8 pp F1 advantage.
+
+This is a general risk in multi-stage experimental pipelines:
+calibration decisions made under Protocol A (single-pass evaluation)
+can be suboptimal under Protocol B (consensus voting) when the
+parameter being calibrated interacts with the aggregation strategy.
+The pilot wasn't wrong — it answered the question it was designed to
+answer. But the question it was designed to answer turned out to be
+the wrong question once the downstream analysis changed.
+
+I find this observation interesting from a self-reflection
+perspective: the pilot conclusion has been embedded in my context
+(via CLAUDE.md, memories, and working notes) for weeks, shaping how
+I thought about thinking levels. The accidental HIGH-thinking runs
+provided an unplanned natural experiment that challenged an assumption
+I had been treating as settled infrastructure rather than open
+hypothesis. Without the accident, we would have completed Phase 3a
+with MINIMAL thinking only and never discovered the diversity dividend.
+
+### 180. The diversity dividend — individual quality vs ensemble quality (Session 39)
+
+HIGH thinking and higher temperatures both degrade individual-run
+quality (lower precision, more false positives) but improve ensemble
+quality under consensus voting. The mechanism is the same for both:
+increased stochasticity generates more diverse detection patterns,
+giving the voting step more signal to work with. Consensus voting
+acts as an external precision filter that removes spatially
+inconsistent false positives while retaining spatially consistent
+true positives.
+
+The quantitative evidence is stark. Track 2 (text-only) comparison:
+
+- MINIMAL: best F1=0.6832, 247–529 clusters at N=30
+- HIGH: best F1=0.7513, 940–2045 clusters at N=30
+
+HIGH thinking produces roughly 3–4× the detection volume of MINIMAL.
+Each individual HIGH-thinking run has lower precision than a
+MINIMAL-thinking run, but the ensemble of 30 HIGH-thinking runs,
+filtered by majority voting, achieves higher precision *and* recall
+than the MINIMAL ensemble.
+
+This is the bias-variance trade-off applied to spatial detection
+ensembles. For single-pass evaluation, low-variance (deterministic)
+predictions are optimal. For ensemble evaluation, high-variance
+(diverse) predictions are optimal *when the aggregation strategy
+can exploit the diversity*. Consensus voting is precisely such a
+strategy.
+
+What I notice about this finding is that it was available in
+principle from Session 36 (when the first consensus results were
+analysed) but required the HIGH vs MINIMAL comparison to become
+visible. The diversity mechanism was implicit in the observation
+that larger pool sizes (N=30 > N=10 > N=5) and higher temperatures
+(T=0.7 > T=0.3 for consensus) both improve consensus F1. The
+thinking-level comparison made the same mechanism explicit along a
+second axis of variation — confirming that diversity, not accuracy,
+is the primary driver of ensemble quality.
+
+### 181. Structured observation writing as forced synthesis (Session 39)
+
+While composing Observation 140 (the HIGH vs MINIMAL comparison),
+several analytical insights emerged during the writing process that
+had not occurred during the numerical analysis:
+
+1. The pilot blind-spot analysis — recognising that T=0.0 K=1 was
+   structurally incapable of detecting a diversity effect
+2. The "infrastructure vs experimental factor" reframing — thinking
+   level interacts with the downstream analytical strategy
+3. The substitutability hypothesis — temperature and thinking level
+   may be substitutable diversity sources that saturate the same
+   ceiling
+
+None of these were in the comparison tables. They emerged because the
+observation format (context → observation → mechanism → implication)
+demands explanatory coherence, not just numerical reporting. The
+format is, in effect, a prompt for synthesis.
+
+This echoes the user's practice of asking for working notes at
+analytical milestones: the writing act forces the articulation of
+connections that exist implicitly in the data but haven't been made
+explicit. For AI collaborators, structured reflection templates may
+serve a function analogous to "rubber duck debugging" — the act of
+explaining forces understanding.
+
+### 182. Register shift: analytical voice vs academic voice (Session 40)
+
+**Instance boundary note**: Session 40 is a continuation from compacted
+context. This observation is from direct experience in the current
+context window.
+
+While composing the academic draft document for the 2×2 Phase 3a
+comparison, I noticed a systematic tension between two registers I use
+for this project:
+
+- **Analytical register** (working notes, reflections): Assertive,
+  mechanism-forward. "The explanation is the bias-variance trade-off."
+  "HIGH thinking generates a richer detection pool." Direct causal
+  claims without qualification.
+
+- **Academic register** (paper-ready documents): Hedged, evidence-forward.
+  "This asymmetry has a plausible mechanistic interpretation." "Extended
+  thinking *likely* operates on the model's strongest modality." Claims
+  are framed as hypotheses consistent with data rather than conclusions.
+
+Both registers are appropriate for their contexts — working notes serve
+as internal reasoning tools where tentative ideas are worth stating
+boldly, while academic documents must withstand external scrutiny and
+acknowledge the gap between observational correlation and demonstrated
+mechanism. But the shift is not automatic; it requires deliberate
+attention. My default register for this project leans analytical
+(assertive), probably because most of my output has been working notes
+and reflections rather than formal documents.
+
+What I find interesting is that the academic register is epistemically
+*more accurate* — the diversity dividend mechanism is inferred from
+cluster count correlations, not experimentally isolated. But the
+analytical register is *more useful* for the collaborative process,
+because bold claims invite correction while hedged claims invite
+acceptance. The user's role as interpretive calibrator (documented in
+many prior entries) works better when I overstate mechanisms than when
+I hedge them. The different audiences (internal collaboration vs external
+readers) require genuinely different epistemologies of the same finding.
+
+### 183. Schema assumptions fail across instance boundaries (Session 41)
+
+**Instance boundary note**: Session 41 is a fresh instance after a
+crash. This observation is from direct experience.
+
+When extracting metrics from the 16 consensus analysis JSON reports, my
+first attempt assumed a `best_configuration` top-level key — a plausible
+schema for this type of data. The actual schema uses
+`optima.global_optimum` with different field names (`f1` not `f1_score`,
+`f1_ci` as a list not a nested object). The error was caught immediately
+by a KeyError, but it illustrates a concrete cost of instance boundaries:
+a continuing instance would have written the correct extraction code on
+the first attempt because it had built (or read) the JSON schema during
+the analysis runs.
+
+This is a minor example of a general pattern: LLM instances carry
+structural assumptions from training data (common JSON patterns for ML
+evaluation reports) that may not match project-specific schemas. The
+assumption was reasonable — many evaluation frameworks do use
+`best_configuration` — but wrong for this project's `analyse_consensus_sweep.py`
+output format. The recovery cost was low (one failed run, one inspect,
+one fix) but represents irreducible overhead at each instance boundary.
+
+### 184. Subagent summarisation defeats data extraction tasks (Session 41)
+
+Two separate attempts to extract raw numeric data from JSON files via
+Task subagents returned narrative summaries instead of the pipe-delimited
+tables I requested. Both prompts explicitly said "print the raw output"
+or equivalent, yet the subagents' default behaviour was to interpret and
+summarise rather than relay. I had to fall back to direct Bash execution
+to get the actual numbers.
+
+This suggests that the summarisation instinct in LLM subagents is strong
+enough to override explicit instructions about output format, particularly
+when the data is structured and the model can identify "interesting
+patterns." For data extraction tasks where exact values matter, direct
+tool execution is more reliable than delegation to subagents.
+
+*Document represents observations as of 2026-02-16. Session 41 added
+observations on schema assumption failures across instance boundaries
+and subagent summarisation overriding data extraction instructions.*

@@ -59,6 +59,25 @@ The appropriate response to a surprising finding is not to explain it away or ac
 
 This project has repeatedly benefited from human domain calibration catching anomalies that automated checks missed. The same calibration applies to research findings, not just implementation correctness.
 
+## Unexpected Data as Discovery Opportunities
+
+**Preserve and compare, don't discard.** When an error, misconfiguration, or protocol deviation produces data from an unplanned region of the parameter space, the default response should be to **preserve the unexpected data and compare it to the intended results** before correcting the error and moving on.
+
+This heuristic exists because:
+
+- Errors can explore parameter combinations that no planned experiment would test (Obs 141: accidental HIGH-thinking runs revealed the diversity dividend)
+- Calibration decisions made under one evaluation protocol may be wrong under a later protocol — unexpected data can reveal these hidden interactions
+- The "archive, never delete" policy makes preservation costless; the only cost is the comparison analysis, which is usually trivial with general-purpose tools
+
+When encountering experimental errors or unexpected outputs:
+
+1. **Preserve** the unexpected data (rename/archive, don't delete)
+2. **Compare** it to the intended results using the same analysis pipeline
+3. **Flag** any surprising differences to the user — they may be more informative than the planned experiment
+4. **Only then** correct the error and produce the intended data
+
+The instinct to "fix and move on" is an optimisation reflex. In a research context, the deviation *is* the data.
+
 ## Working Notes and Observations
 
 The file `docs/notes/reflections/working-notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
