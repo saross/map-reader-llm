@@ -195,6 +195,7 @@ def evaluate_single_config(
     gdf_bounds: gpd.GeoDataFrame,
     n_bootstrap: int,
     random_seed: int,
+    buffer_metres: int = 20,
 ) -> dict:
     """
     Evaluate a single (T, N, x) consensus configuration.
@@ -212,6 +213,9 @@ def evaluate_single_config(
         gdf_bounds: Tile boundary GeoDataFrame.
         n_bootstrap: Number of bootstrap iterations.
         random_seed: Random seed for reproducibility.
+        buffer_metres: Spatial matching tolerance in metres for F1
+            evaluation (default 20). Controls how close a detection
+            must be to a reference point to count as a true positive.
 
     Returns:
         Dict with temperature, pool_size, threshold, metrics, and CIs.
@@ -242,7 +246,8 @@ def evaluate_single_config(
 
     # Point estimates
     precision, recall, f1 = calculate_f1_internal(
-        gdf_consensus, gdf_ref, gdf_bounds, buffer_metres=20
+        gdf_consensus, gdf_ref, gdf_bounds,
+        buffer_metres=buffer_metres,
     )
 
     # Bootstrapped 95% CIs (tile-level resampling)
@@ -252,6 +257,7 @@ def evaluate_single_config(
         gdf_bounds,
         n_iterations=n_bootstrap,
         random_seed=random_seed,
+        buffer_metres=buffer_metres,
     )
 
     return {
@@ -529,7 +535,11 @@ def generate_summary_md(
         "5. Consensus centroids are spatially joined to tile "
         "boundaries for F1 evaluation",
         (
-            "6. Bootstrapped 95% CIs use tile-level resampling "
+            f"6. F1 evaluation uses {metadata.get('buffer_metres', 20)} m "
+            "spatial matching tolerance"
+        ),
+        (
+            "7. Bootstrapped 95% CIs use tile-level resampling "
             f"(K={metadata.get('n_bootstrap', 1000)} iterations)"
         ),
         "",
@@ -772,6 +782,18 @@ Examples:
             "or --baseline-f1 0.660 (Track 2)"
         ),
     )
+    parser.add_argument(
+        "--buffer-metres",
+        type=int,
+        default=20,
+        help=(
+            "Spatial matching tolerance in metres for F1 "
+            "evaluation — how close a detection must be to "
+            "ground truth to count as a true positive "
+            "(default: 20). Consensus clustering tolerance "
+            "remains fixed at 20 m regardless of this value."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -854,6 +876,7 @@ Examples:
                 gdf_bounds,
                 args.bootstrap,
                 args.seed,
+                args.buffer_metres,
             )
             futures[future] = (temp, pool_size, x)
 
@@ -944,6 +967,8 @@ Examples:
         "pool_sizes": args.pool_sizes,
         "n_configurations": len(results),
         "max_workers": max_workers,
+        "buffer_metres": args.buffer_metres,
+        "clustering_tolerance_metres": 20,
     }
 
     report = {

@@ -447,6 +447,7 @@ def bootstrap_ci(
     gdf_bounds: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    buffer_metres: int = 20,
 ) -> dict:
     """
     Bootstrap resampling for 95% confidence intervals on precision, recall, and F1.
@@ -464,6 +465,9 @@ def bootstrap_ci(
         gdf_bounds: GeoDataFrame of tile boundaries (defines tiles for resampling).
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        buffer_metres: Spatial matching tolerance in metres for TP/FP/FN
+            assignment (default 20). Controls how close a detection must
+            be to a reference point to count as a true positive.
 
     Returns:
         Bootstrap results with CIs for F1, precision, and recall.
@@ -478,7 +482,7 @@ def bootstrap_ci(
     # Pre-compute per-tile TP/FP/FN once (errata E26: fixes duplicate-tile
     # reference de-duplication bias in bootstrap resampling)
     tile_metrics = compute_per_tile_tp_fp_fn(
-        gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
     )
 
     precision_scores = []
