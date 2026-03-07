@@ -1,0 +1,239 @@
+# Phase 3c: H9 Diversity Testing — Track 1 (Image)
+# =================================================
+# Tests whether introducing diversity across consensus voting passes
+# (text, image, temperature, or all combined) improves detection accuracy
+# compared to identical passes.
+#
+# Preregistered 5-condition design (H9-A through H9-E):
+#   A: Baseline — all 5 passes use identical config
+#   B: Text diversity — instruction V1-V5 cycled across passes
+#   C: Image diversity — HN rotation across passes
+#   D: Temperature diversity — T_opt +/- offsets across passes
+#   E: Full diversity — text + image + temperature combined
+#
+# Each condition has 5 sub-conditions (one per pass within a consensus
+# set). K=5 replications per condition: run_1 from each sub-condition
+# forms replication 1, run_2 forms replication 2, etc.
+#
+# Part of the dual-track validation (Decision 16):
+#   Track 1 (this file): image-using, Scale-8 composition
+#   Track 2: text-only (phase3c-h9-diversity-track2.yaml)
+#
+# Usage:
+#   python scripts/run_phase2.py studies/phase3c-h9-diversity-track1.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase3c-h9-diversity-track1.yaml --mode batch
+#   python scripts/run_phase2.py studies/phase3c-h9-diversity-track1.yaml --mode batch --resume
+
+study:
+  name: "Phase 3c: H9 Diversity — Track 1 (Image)"
+  version: "1.0"
+  description: |
+    Tests whether introducing diversity across consensus voting passes
+    improves detection accuracy compared to identical passes (H9).
+
+    Uses Scale-8 composition (17 examples: 4 Canon+, 4 HP, 2 Canon-,
+    4 HN, 3 null) for all conditions. The Track 1 baseline (library_plus-hp)
+    had 0 HN; core HN (11-14) are added here for fair cross-condition
+    comparison — the HN rotation in Conditions C and E requires all
+    conditions to start from the same example count.
+
+    All conditions use HIGH thinking level. Temperature is fixed at T=0.7
+    (Phase 3a optimum) except where varied as the diversity dimension.
+  phase: "3c"
+  hypothesis: "H9"
+  created: "2026-03-07"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/library_plus-hp.json"
+  optimal_me_name: "plus-hp (brief-text-image)"
+  optimal_temperature: 0.7
+  optimal_thinking: "high"
+  source: "Phase 3a — T=0.7 best for image track"
+  note: |
+    H9 configs use Scale-8 composition (adds HN 11-14 to plus-hp) for
+    fair comparison. The carry-forward config is retained as reference.
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 5              # K=5 replications per sub-condition
+  workers: 1           # Safe default; pass --workers N at CLI
+  output_dir: "outputs/phase3c/track1-image"
+  checkpoint_dir: "outputs/phase3c/track1-image/checkpoints"
+
+# Pre-enumerated conditions (25 sub-conditions = 5 conditions x 5 passes)
+conditions:
+
+  # ── Condition A: Baseline (identical passes) ──────────────────────
+  # All 5 sub-conditions use the same config. Post-hoc, any grouping
+  # of 5 runs forms a valid consensus set since passes are identical.
+  - name: "h9-A-p1"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    description: "Baseline — identical pass 1"
+  - name: "h9-A-p2"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    description: "Baseline — identical pass 2"
+  - name: "h9-A-p3"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    description: "Baseline — identical pass 3"
+  - name: "h9-A-p4"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    description: "Baseline — identical pass 4"
+  - name: "h9-A-p5"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    description: "Baseline — identical pass 5"
+
+  # ── Condition B: Text diversity (V1-V5 instruction variants) ──────
+  - name: "h9-B-v1"
+    config: "prompts/configs/phase3c-t1-h9B-v1.json"
+    description: "Text diversity — instruction variant 1 (burial mound / radiating lines)"
+  - name: "h9-B-v2"
+    config: "prompts/configs/phase3c-t1-h9B-v2.json"
+    description: "Text diversity — instruction variant 2 (tumulus / hachure strokes)"
+  - name: "h9-B-v3"
+    config: "prompts/configs/phase3c-t1-h9B-v3.json"
+    description: "Text diversity — instruction variant 3 (kurgan / ray marks)"
+  - name: "h9-B-v4"
+    config: "prompts/configs/phase3c-t1-h9B-v4.json"
+    description: "Text diversity — instruction variant 4 (cartographic symbol / hachures)"
+  - name: "h9-B-v5"
+    config: "prompts/configs/phase3c-t1-h9B-v5.json"
+    description: "Text diversity — instruction variant 5 (mound features / tick marks)"
+
+  # ── Condition C: Image diversity (HN rotation) ────────────────────
+  # Each pass uses a different 4-HN subset from the 16-HN pool.
+  # HP (05-08), Canon+/- and null are frozen across all passes.
+  - name: "h9-C-img1"
+    config: "prompts/configs/phase3c-t1-h9C-img1.json"
+    description: "Image diversity — HN rotation 1 (HN 11, 18, 22, 26)"
+  - name: "h9-C-img2"
+    config: "prompts/configs/phase3c-t1-h9C-img2.json"
+    description: "Image diversity — HN rotation 2 (HN 12, 19, 23, 27)"
+  - name: "h9-C-img3"
+    config: "prompts/configs/phase3c-t1-h9C-img3.json"
+    description: "Image diversity — HN rotation 3 (HN 13, 20, 24, 28)"
+  - name: "h9-C-img4"
+    config: "prompts/configs/phase3c-t1-h9C-img4.json"
+    description: "Image diversity — HN rotation 4 (HN 14, 21, 25, 29)"
+  - name: "h9-C-img5"
+    config: "prompts/configs/phase3c-t1-h9C-img5.json"
+    description: "Image diversity — HN rotation 5 (HN 11, 19, 24, 29)"
+
+  # ── Condition D: Temperature diversity ────────────────────────────
+  # Same config as A; temperature overridden per sub-condition.
+  # Sequence: T_opt +/- offsets = [0.4, 0.55, 0.7, 0.85, 1.0]
+  - name: "h9-D-t1"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    temperature: 0.4
+    description: "Temperature diversity — T=0.4 (T_opt - 0.30)"
+  - name: "h9-D-t2"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    temperature: 0.55
+    description: "Temperature diversity — T=0.55 (T_opt - 0.15)"
+  - name: "h9-D-t3"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    temperature: 0.7
+    description: "Temperature diversity — T=0.7 (T_opt)"
+  - name: "h9-D-t4"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    temperature: 0.85
+    description: "Temperature diversity — T=0.85 (T_opt + 0.15)"
+  - name: "h9-D-t5"
+    config: "prompts/configs/phase3c-t1-h9A.json"
+    temperature: 1.0
+    description: "Temperature diversity — T=1.0 (T_opt + 0.30)"
+
+  # ── Condition E: Full diversity (text + image + temperature) ──────
+  # Combines V1-V5 instructions, HN rotation, and temperature offsets.
+  - name: "h9-E-p1"
+    config: "prompts/configs/phase3c-t1-h9E-p1.json"
+    temperature: 0.4
+    description: "Full diversity — pass 1 (V1 + HN 11,18,22,26 + T=0.4)"
+  - name: "h9-E-p2"
+    config: "prompts/configs/phase3c-t1-h9E-p2.json"
+    temperature: 0.55
+    description: "Full diversity — pass 2 (V2 + HN 12,19,23,27 + T=0.55)"
+  - name: "h9-E-p3"
+    config: "prompts/configs/phase3c-t1-h9E-p3.json"
+    temperature: 0.7
+    description: "Full diversity — pass 3 (V3 + HN 13,20,24,28 + T=0.7)"
+  - name: "h9-E-p4"
+    config: "prompts/configs/phase3c-t1-h9E-p4.json"
+    temperature: 0.85
+    description: "Full diversity — pass 4 (V4 + HN 14,21,25,29 + T=0.85)"
+  - name: "h9-E-p5"
+    config: "prompts/configs/phase3c-t1-h9E-p5.json"
+    temperature: 1.0
+    description: "Full diversity — pass 5 (V5 + HN 11,19,24,29 + T=1.0)"
+
+# Analysis specification
+analysis:
+  method: "consensus_diversity"
+  description: |
+    Post-hoc consensus analysis: for each condition, group runs into
+    replications (run_k from each sub-condition forms replication k),
+    then compute consensus detections using vote threshold sweep.
+    Compare F1 across conditions using paired permutation test on
+    tile-level F1 scores.
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  output:
+    report: "results/phase3c-diversity/track1-image/diversity-analysis-report.json"
+    summary: "results/phase3c-diversity/track1-image/diversity-analysis-summary.md"
+
+outputs:
+  per_condition:
+    - "{output_dir}/{condition_name}/run_{run}/*.geojson"
+    - "{output_dir}/{condition_name}/run_{run}/*.meta.json"
+  aggregated:
+    - "results/phase3c-diversity/track1-image/diversity-analysis-report.json"
+
+# Cost estimates (batch mode, 50% discount)
+estimates:
+  sub_conditions: 25
+  runs_per_sub_condition: 5
+  total_execution_units: 125          # 25 sub-conditions x 5 runs
+  tiles_per_unit: 60
+  total_api_calls: 7500               # 125 x 60
+  cost_per_call_usd: 0.001            # Flash image-using, estimated
+  cost_batch_discount: 0.50
+  cost_usd_total: 3.75                # 7500 x 0.001 x 0.5
+  time_hours: 2                       # Batch mode, ~1h submission + 1h polling
+
+# Consensus grouping metadata (for analysis script)
+consensus_design:
+  passes_per_replication: 5
+  replications: 5
+  grouping_rule: |
+    Replication k = {run_k from sub-condition p1, run_k from p2, ..., run_k from p5}
+    For Condition A, any 5 runs form a valid replication (all identical).
+  conditions:
+    A:
+      sub_conditions: ["h9-A-p1", "h9-A-p2", "h9-A-p3", "h9-A-p4", "h9-A-p5"]
+      diversity_dimensions: []
+    B:
+      sub_conditions: ["h9-B-v1", "h9-B-v2", "h9-B-v3", "h9-B-v4", "h9-B-v5"]
+      diversity_dimensions: ["text"]
+    C:
+      sub_conditions: ["h9-C-img1", "h9-C-img2", "h9-C-img3", "h9-C-img4", "h9-C-img5"]
+      diversity_dimensions: ["image"]
+    D:
+      sub_conditions: ["h9-D-t1", "h9-D-t2", "h9-D-t3", "h9-D-t4", "h9-D-t5"]
+      diversity_dimensions: ["temperature"]
+    E:
+      sub_conditions: ["h9-E-p1", "h9-E-p2", "h9-E-p3", "h9-E-p4", "h9-E-p5"]
+      diversity_dimensions: ["text", "image", "temperature"]
+
+outcome:
+  determines: "diversity_benefit_image_track"
+  decision_rule: |
+    For each diversity dimension (B, C, D, E), compare consensus F1
+    against Condition A (identical baseline) using paired permutation
+    test on tile-level F1 scores. If any diverse condition shows
+    significantly higher F1 (p < 0.05), adopt that diversity mechanism
+    for operational use.

@@ -2358,3 +2358,32 @@ The third point may be the most important for structuring AI-assisted research. 
 **Finding**: The trajectory of convergence runs through all four tolerances: 0.650/0.644 at 20 m, 0.734/0.726 at 30 m, 0.785/0.775 at 40 m, 0.794/0.794 at 50 m. Image MINIMAL actually has a small lead at 20–40 m that vanishes at 50 m.
 
 **Interpretation**: Since both thinking levels produce the same cluster diversity for image processing (~1× ratio, Obs 140), and both converge to the same performance when spatial precision constraints are fully relaxed, the image-track is genuinely bottlenecked at the visual processing stage. Neither extended thinking nor wider matching tolerance can overcome the fundamental constraint of parsing cartographic symbols from base64-encoded pixels. The ~0.79 F1 ceiling at 50 m may represent the practical limit of Gemini Flash's visual feature extraction for this map type.
+
+## Observation 146: VLM error profile is the mirror image of human error profile (2026-03-07)
+
+**Context**: Session 41. During Phase 3c setup, the structural asymmetry between hard positive (HP) and hard negative (HN) pools crystallised a broader insight about VLM vs human error modes.
+
+**Finding — VLM error profile**: The HP pool is structurally exhausted at 4 recognition failures (>50 m threshold) from the 20-tile calibration set, while 46 usable HN candidates remain available. This ~23:1 FP-to-FN asymmetry (Decision 11) reveals the model's dominant weakness is **precision** — it over-detects, producing abundant false alarms (confusing other map symbols for mounds) while missing relatively few genuine mounds. The scarcity of HPs means there are few mounds the model cannot recognise at all.
+
+**Finding — Human error profile**: The human-generated ground truth dataset (student fieldwork) exhibits the *opposite* asymmetry. There is approximately 1 false positive in the entire reference dataset we are using, but a substantial rate of false negatives — students miss mound symbols that are genuinely present on the maps. Humans have near-perfect precision (if a student marks something as a mound, it almost certainly is one) but imperfect recall (they fail to spot symbols, especially degraded, occluded, or densely clustered ones).
+
+**The complementarity**:
+
+| Error dimension | VLM (Gemini Flash) | Human students |
+|---|---|---|
+| Precision | Low (~many FPs) | Very high (~0 FPs) |
+| Recall | High (~few FNs) | Moderate (~many FNs) |
+| Dominant error | Over-detection | Under-detection |
+| HN-like confusables | Abundant | Essentially absent |
+| HP-like misses | Scarce | Common |
+
+**Implication for pipeline design**: These complementary error profiles suggest an optimised **VLM → human verification pipeline** could combine the strengths of both:
+
+1. VLM performs initial detection (high recall, catches symbols humans miss)
+2. Human reviewer filters VLM detections (high precision, removes false alarms)
+
+This would exploit VLM recall to compensate for human under-detection while exploiting human precision to compensate for VLM over-detection. The pipeline cost would be substantially lower than full manual survey (humans review candidate detections rather than scanning entire maps) while achieving higher combined recall than either approach alone.
+
+**Future work**: This is a natural extension for the paper or a follow-up study — characterising the complementarity quantitatively and testing whether the combined pipeline outperforms either individual approach. The consensus voting mechanism already partially addresses VLM precision (vote thresholds filter FPs), but human verification could provide a second filtering stage for cases where consensus voting still admits false alarms.
+
+**Note**: The specific FP count in the human reference data should be verified against the ground truth provenance documentation before citing in a publication.

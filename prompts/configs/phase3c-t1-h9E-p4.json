@@ -1,0 +1,106 @@
+{
+    "version": "phase3c-t1-h9E-p4",
+    "description": "Phase 3c H9-E \u2014 Track 1 (Image). Full diversity: pass 4 (V4 + HN 14, 21, 25, 29 + T=0.85).",
+    "hypothesis": "H9-E",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image_v4.md",
+    "temperature": 0.7,
+    "max_output_tokens": 8192,
+    "thinking_level": "high",
+    "composition": {
+        "canonical_positive": 4,
+        "hard_positive": 4,
+        "canonical_negative": 2,
+        "hard_negative": 4,
+        "null": 3
+    },
+    "total_examples": 17,
+    "examples": [
+        {
+            "path": "neutral-naming/example_01.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_02.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_03.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_04.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_05.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_06.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_07.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_08.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_09.png",
+            "label": "Negative",
+            "category": "canonical_negative"
+        },
+        {
+            "path": "neutral-naming/example_10.png",
+            "label": "Negative",
+            "category": "canonical_negative"
+        },
+        {
+            "path": "neutral-naming/example_14.png",
+            "label": "Negative",
+            "category": "hard_negative"
+        },
+        {
+            "path": "neutral-naming/example_21.png",
+            "label": "Negative",
+            "category": "hard_negative"
+        },
+        {
+            "path": "neutral-naming/example_25.png",
+            "label": "Negative",
+            "category": "hard_negative"
+        },
+        {
+            "path": "neutral-naming/example_29.png",
+            "label": "Negative",
+            "category": "hard_negative"
+        },
+        {
+            "path": "neutral-naming/example_15.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral-naming/example_16.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral-naming/example_17.png",
+            "label": "Negative",
+            "category": "null"
+        }
+    ],
+    "note": "Full diversity pass 4: instruction V4, HN rotation [14, 21, 25, 29]. Temperature set via YAML override."
+}
