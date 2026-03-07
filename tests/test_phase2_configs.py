@@ -215,7 +215,8 @@ class TestPhase3YamlValidity:
     def test_phase3_yamls_exist(self, phase3_yamls: list[Path]) -> None:
         """Verify expected Phase 3 YAML files exist."""
         expected = [
-            "phase3a-h3-voting.yaml",
+            "phase3a-h3-voting-track1.yaml",
+            "phase3a-h3-voting-track2.yaml",
             "phase3c-h9-diversity.yaml",
             "phase3d-h2-twostage.yaml",
         ]
@@ -277,34 +278,35 @@ class TestPhase3YamlValidity:
 class TestPhase3aStructure:
     """Tests for Phase 3a (H3 Voting) specific structure."""
 
-    @pytest.fixture
-    def phase3a_yaml(self) -> dict:
-        """Load Phase 3a study definition."""
-        return load_yaml(STUDIES_DIR / "phase3a-h3-voting.yaml")
+    @pytest.fixture(params=["phase3a-h3-voting-track1.yaml",
+                              "phase3a-h3-voting-track2.yaml"])
+    def phase3a_yaml(self, request: pytest.FixtureRequest) -> dict:
+        """Load Phase 3a study definition (parametrised over both tracks)."""
+        return load_yaml(STUDIES_DIR / request.param)
 
-    def test_phase3a_has_voting_factor(self, phase3a_yaml: dict) -> None:
-        """Verify Phase 3a defines voting pool sizes as factor."""
+    def test_phase3a_has_temperature_factor(self, phase3a_yaml: dict) -> None:
+        """Verify Phase 3a defines temperature as factor."""
         factors = phase3a_yaml.get("factors", {})
-        assert "voting_pool_size" in factors, (
-            "Phase 3a missing factors.voting_pool_size"
+        assert "temperature" in factors, (
+            "Phase 3a missing factors.temperature"
         )
 
-        levels = factors["voting_pool_size"].get("levels", [])
+        levels = factors["temperature"].get("levels", [])
         level_names = [lvl.get("name") for lvl in levels]
 
-        # Should include at least N=5 and N=30
-        assert any("5" in name for name in level_names), (
-            "Phase 3a should include N=5 voting level"
+        # Should include T0.3 and T1.0 at minimum
+        assert any("0.3" in name for name in level_names), (
+            "Phase 3a should include T0.3 temperature level"
         )
-        assert any("30" in name for name in level_names), (
-            "Phase 3a should include N=30 voting level"
+        assert any("1.0" in name for name in level_names), (
+            "Phase 3a should include T1.0 temperature level"
         )
 
-    def test_phase3a_analysis_is_threshold_sweep(self, phase3a_yaml: dict) -> None:
-        """Verify Phase 3a uses threshold sweep analysis method."""
+    def test_phase3a_analysis_is_consensus_sweep(self, phase3a_yaml: dict) -> None:
+        """Verify Phase 3a uses consensus sweep analysis method."""
         analysis = phase3a_yaml.get("analysis", {})
-        assert analysis.get("method") == "threshold_sweep", (
-            "Phase 3a should use threshold_sweep analysis method"
+        assert analysis.get("method") == "consensus_sweep", (
+            "Phase 3a should use consensus_sweep analysis method"
         )
 
 
