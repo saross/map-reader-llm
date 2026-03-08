@@ -122,6 +122,33 @@ Track 1, p=0.63). All p-values are far from significance.
 | Track 2 | D vs A | −0.034 | 0.496 | No |
 | Track 2 | E vs A | −0.038 | 0.245 | No |
 
+### 2.4 Additivity and Redundancy (Preregistered Analyses)
+
+The preregistration specifies two further analyses:
+
+1. **Additivity vs synergy**: whether the combined condition (E) exceeds the sum
+   of individual diversity effects (B, C, D)
+2. **Redundancy**: whether multiple diversity mechanisms produce similar gains
+
+Both analyses are uninformative given the null primary result. All individual
+diversity effects are indistinguishable from zero (|ΔF1| ≤ 0.014 on Track 1,
+≤ 0.038 on Track 2; all p > 0.12), leaving no individual effects to sum or
+compare. Condition E (full combined diversity) likewise shows no improvement
+over baseline (ΔF1 = −0.000 on Track 1, −0.038 on Track 2), consistent with
+additivity of null effects rather than evidence of synergy or redundancy.
+
+The underlying reason these tests have no discriminative power is that VLM
+outputs are remarkably stable across all tested diversity perturbations.
+Instruction rephrasing, example rotation, and temperature variation each fail
+to shift mean consensus F1 by more than 1.4 percentage points on either track.
+The model's detection behaviour — including its systematic errors — is robust
+to all three diversity axes, leaving no signal for additivity or redundancy
+analyses to detect.
+
+**Preregistered advance criterion** ("Any diversity mechanism significantly
+improves F1 over baseline"): **Not met.** No further diversity exploration is
+triggered.
+
 ---
 
 ## 3. Per-Replication Detail
