@@ -694,6 +694,7 @@ def run_phase2(
     workers_override: int | None = None,
     parallel_units: int = 1,
     mode: str = "concurrent",
+    max_batch_jobs: int = 50,
     poll_interval: int = 30,
     max_poll_hours: float = 25.0,
 ) -> dict:
@@ -719,6 +720,10 @@ def run_phase2(
             lib_batch_api). Batch mode bypasses the subprocess model
             and rate limiter, submitting all tiles per unit as a single
             JSONL file.
+        max_batch_jobs: Maximum concurrent batch API jobs in flight
+            (default: 50). The Gemini Batch API supports up to 100
+            concurrent jobs; this cap prevents RESOURCE_EXHAUSTED
+            errors when running large experiments.
         poll_interval: Seconds between batch API poll cycles (default: 30).
             Use higher values (e.g. 3600) for overnight runs.
         max_poll_hours: Maximum hours to poll before timing out
@@ -889,6 +894,7 @@ def run_phase2(
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
+            max_batch_jobs=max_batch_jobs,
             poll_interval=poll_interval,
             max_poll_hours=max_poll_hours,
         )
@@ -1146,23 +1152,25 @@ def _execute_units_batch(
     running_cost: float,
     cost_warn_threshold: float,
     verbose: bool,
+    max_batch_jobs: int = 50,
     poll_interval: int = 30,
     max_poll_hours: float = 25.0,
 ) -> tuple[dict, float]:
     """
-    Execute units via the Gemini Batch API — parallel submission.
+    Execute units via the Gemini Batch API — throttled submission.
 
-    Submits all units upfront (up to the Batch API's 100 concurrent job
-    limit), then polls all pending jobs in a single unified loop. This
-    transforms wall-clock time from worst-case N×24h (serial) to ~1×24h
-    (parallel).
+    Submits units in waves up to ``max_batch_jobs`` concurrent jobs,
+    then polls until slots free up before submitting more. This
+    prevents RESOURCE_EXHAUSTED errors from exceeding the Batch API's
+    100-concurrent-job limit while still parallelising wall-clock time
+    from worst-case N×24h (serial) to ~1×24h.
 
-    Four-phase approach:
-        1. **Prepare** — Build JSONL files for all units (sequential, fast)
-        2. **Submit** — Upload and submit batch jobs (sequential, ~2–3s each)
-        3. **Poll** — Single loop polls all pending jobs; ``on_complete``
-           callback processes each result as it finishes
-        4. **Summary** — Report totals
+    Three-phase approach:
+        1. **Prepare** — Build JSONL files for all units (sequential)
+        2. **Submit + Poll** — Interleaved loop: submit up to
+           ``max_batch_jobs``, poll until slots free, submit more.
+           Completions are processed incrementally via callback.
+        3. **Summary** — Report totals
 
     Batch-pending jobs are recorded in the checkpoint immediately after
     submission (write-ahead pattern). On crash and resume, pending entries
@@ -1179,6 +1187,9 @@ def _execute_units_batch(
         running_cost: Accumulated cost so far.
         cost_warn_threshold: Cost warning threshold.
         verbose: Print progress information.
+        max_batch_jobs: Maximum concurrent batch API jobs in flight
+            (default: 50). Capped at 95 to leave headroom below the
+            Batch API's hard 100-job limit.
         poll_interval: Seconds between batch API poll cycles.
         max_poll_hours: Maximum hours to poll before timing out.
 
@@ -1193,7 +1204,6 @@ def _execute_units_batch(
     from scripts.lib_batch_api import (
         cleanup_batch_files,
         complete_batch_unit,
-        poll_all_batch_jobs,
         prepare_batch_unit,
         submit_batch_unit,
         sweep_stale_files,
@@ -1393,102 +1403,109 @@ def _execute_units_batch(
     if dry_run or not contexts:
         return results, running_cost
 
-    # ── Phase 2: Submit all units (~2–3s each) ──────────────────
-    jobs_to_poll: dict[str, str] = {}  # unit_key → job_name
+    # ── Phase 2: Throttled submit + poll loop ─────────────────
+    # Interleaves submission and polling to keep in-flight jobs
+    # at or below max_batch_jobs. This replaces the old
+    # "submit all, then poll all" pattern that could exceed the
+    # Batch API's 100-concurrent-job limit.
 
-    already_pending = sum(1 for k in contexts if k in batch_pending)
-    to_submit = len(contexts) - already_pending
+    # Hard-cap at 95 to leave headroom below the API's 100 limit
+    effective_cap = min(max_batch_jobs, 95)
+
+    # Separate already-pending (from resume) vs new submissions
+    already_pending_keys: list[str] = []
+    submission_queue: list[str] = []  # keys to submit, in order
+
+    for key in contexts:
+        if key in batch_pending:
+            already_pending_keys.append(key)
+        else:
+            submission_queue.append(key)
+
+    # Track all in-flight jobs: unit_key → job_name
+    in_flight: dict[str, str] = {}
+
+    # Re-register already-pending jobs (skip submission, go to poll)
+    for key in already_pending_keys:
+        job_name = batch_pending[key]["batch_job_name"]
+        in_flight[key] = job_name
+        if verbose:
+            print(f"  {key}: resuming pending job {job_name}")
+
+    total_units = len(contexts)
+    n_submitted = len(already_pending_keys)
+    n_completed = 0  # completed + failed (terminal)
 
     if verbose:
         print(
-            f"Phase 2: Submitting {to_submit} new job(s) "
-            f"({already_pending} already pending)..."
+            f"Phase 2: {len(submission_queue)} new job(s) to "
+            f"submit, {len(already_pending_keys)} already "
+            f"pending (cap: {effective_cap} concurrent)"
         )
         print()
 
-    # Maximum retries for file_storage_bytes quota errors.
-    # On RESOURCE_EXHAUSTED, sweep stale files and retry.
+    # Maximum retries for file_storage_bytes quota errors
     max_submit_retries = 3
 
-    for key, ctx in contexts.items():
-        pending_info = batch_pending.get(key)
-        if pending_info:
-            job_name = pending_info["batch_job_name"]
-            jobs_to_poll[key] = job_name
-            if verbose:
-                print(
-                    f"  {key}: resuming pending job {job_name}"
+    def _submit_one(key: str) -> bool:
+        """Submit a single unit. Returns True on success."""
+        ctx = contexts[key]
+        for attempt in range(max_submit_retries):
+            try:
+                job_name, _uploaded = submit_batch_unit(
+                    ctx, client, _make_on_submit(key),
                 )
-        else:
-            for attempt in range(max_submit_retries):
-                try:
-                    job_name, _uploaded = submit_batch_unit(
-                        ctx, client, _make_on_submit(key),
-                    )
-                    jobs_to_poll[key] = job_name
-                    break
-                except Exception as e:
-                    if (
-                        "file_storage_bytes" in str(e)
-                        and attempt < max_submit_retries - 1
-                    ):
-                        # Storage quota hit — sweep orphaned
-                        # files and retry
-                        if verbose:
-                            print(
-                                f"  {key}: storage quota hit "
-                                f"(attempt {attempt + 1}/"
-                                f"{max_submit_retries}), "
-                                f"sweeping stale files..."
-                            )
-                        active = {
-                            v["uploaded_file_name"]
-                            for v in batch_pending.values()
-                            if "uploaded_file_name" in v
-                        }
-                        swept, freed = sweep_stale_files(
-                            client, active,
+                in_flight[key] = job_name
+                return True
+            except Exception as e:
+                if (
+                    "file_storage_bytes" in str(e)
+                    and attempt < max_submit_retries - 1
+                ):
+                    # Storage quota hit — sweep orphaned files
+                    if verbose:
+                        print(
+                            f"  {key}: storage quota hit "
+                            f"(attempt {attempt + 1}/"
+                            f"{max_submit_retries}), "
+                            f"sweeping stale files..."
                         )
-                        if verbose:
-                            print(
-                                f"  Swept {swept} stale files "
-                                f"({freed:.2f} GB freed)"
-                            )
-                        time.sleep(5)
-                        continue
-                    # Non-storage error or retries exhausted
-                    results["failed"].append(
-                        {"unit": key, "error": f"submit: {e}"}
+                    active = {
+                        v["uploaded_file_name"]
+                        for v in batch_pending.values()
+                        if "uploaded_file_name" in v
+                    }
+                    swept, freed = sweep_stale_files(
+                        client, active,
                     )
                     if verbose:
-                        print(f"  {key}: FAILED (submit: {e})")
-                    break
-
-    if not jobs_to_poll:
-        if verbose:
-            print("No jobs to poll.")
-        return results, running_cost
-
-    # ── Phase 3: Poll all jobs (single unified loop) ────────────
-    if verbose:
-        print()
-        print(
-            f"Phase 3: Polling {len(jobs_to_poll)} batch job(s)..."
-        )
-        print()
+                        print(
+                            f"  Swept {swept} stale files "
+                            f"({freed:.2f} GB freed)"
+                        )
+                    time.sleep(5)
+                    continue
+                # Non-storage error or retries exhausted
+                results["failed"].append(
+                    {"unit": key, "error": f"submit: {e}"}
+                )
+                if verbose:
+                    print(f"  {key}: FAILED (submit: {e})")
+                return False
+        return False
 
     def _handle_completion(
         key: str, job_name: str, batch_job: object,
     ) -> None:
         """Process a completed batch job and update checkpoint.
 
-        Exceptions from ``complete_batch_unit()`` (e.g. rasterio I/O
-        errors, filesystem permission errors) are caught and recorded
-        as failures rather than propagated — this prevents a single
-        unit's processing error from killing the polling loop for all
-        remaining jobs.
+        Exceptions from ``complete_batch_unit()`` (e.g. rasterio
+        I/O errors, filesystem permission errors) are caught and
+        recorded as failures rather than propagated — this prevents
+        a single unit's processing error from killing the polling
+        loop for all remaining jobs.
         """
-        nonlocal running_cost
+        nonlocal running_cost, n_completed
         ctx = contexts[key]
         try:
             success, message, cost = complete_batch_unit(
@@ -1506,11 +1523,13 @@ def _execute_units_batch(
 
         # Clean up Files API storage — delete input and output
         # files now that results are downloaded locally. Errors
-        # are logged but do not affect the completion status;
-        # files auto-expire after 48h as a fallback.
+        # are logged but do not affect completion status; files
+        # auto-expire after 48h as a fallback.
         files_to_delete: list[str] = []
         pending_info = batch_pending.get(key, {})
-        uploaded_name = pending_info.get("uploaded_file_name", "")
+        uploaded_name = pending_info.get(
+            "uploaded_file_name", "",
+        )
         if uploaded_name:
             files_to_delete.append(uploaded_name)
         # Output file from the completed batch job
@@ -1519,7 +1538,7 @@ def _execute_units_batch(
             if output_file_name:
                 files_to_delete.append(output_file_name)
         except (AttributeError, TypeError):
-            pass  # No output file (e.g. job failed before producing one)
+            pass  # No output file (job failed before producing)
         if files_to_delete:
             deleted, errors = cleanup_batch_files(
                 client, files_to_delete, label=key,
@@ -1527,7 +1546,10 @@ def _execute_units_batch(
             if verbose and (deleted or errors):
                 print(
                     f"    Cleaned up {deleted} file(s)"
-                    + (f" ({errors} errors)" if errors else "")
+                    + (
+                        f" ({errors} errors)"
+                        if errors else ""
+                    )
                 )
 
         if success:
@@ -1541,8 +1563,10 @@ def _execute_units_batch(
                 {"unit": key, "error": message}
             )
 
-        # Remove from pending and persist checkpoint
+        # Remove from pending/in-flight and persist checkpoint
         batch_pending.pop(key, None)
+        in_flight.pop(key, None)
+        n_completed += 1
         checkpoint["batch_pending"] = batch_pending
         checkpoint["total_cost_usd"] = running_cost
         save_checkpoint(checkpoint_path, checkpoint)
@@ -1550,43 +1574,130 @@ def _execute_units_batch(
         if verbose:
             status = "OK" if success else f"FAILED ({message})"
             cost_str = f" (${cost:.4f})" if cost > 0 else ""
-            n_done = (
-                len(results["completed"]) + len(results["failed"])
-            )
-            n_total = len(jobs_to_poll)
             print(
-                f"  [{n_done}/{n_total}] {key}: "
+                f"  [{n_completed}/{total_units}] {key}: "
                 f"{status}{cost_str}"
             )
 
         if running_cost > cost_warn_threshold:
             print(
-                f"\n  WARNING: Running cost ${running_cost:.2f} "
-                f"exceeds budget threshold "
+                f"\n  WARNING: Running cost "
+                f"${running_cost:.2f} exceeds budget "
+                f"threshold "
                 f"${cost_warn_threshold:.2f}.\n"
             )
 
-    def _report_progress(
-        completed: int, total: int, elapsed: float,
-    ) -> None:
-        """Log cycle-level progress during polling."""
-        if verbose:
-            hours = elapsed / 3600
-            print(
-                f"  ... {completed}/{total} complete "
-                f"({hours:.1f}h elapsed)",
-                flush=True,
-            )
+    # ── Initial submission wave ───────────────────────────────
+    # Fill up to effective_cap, accounting for already-pending
+    slots_available = max(
+        0, effective_cap - len(in_flight),
+    )
+    initial_batch = submission_queue[:slots_available]
+    submission_queue = submission_queue[slots_available:]
+
+    for key in initial_batch:
+        if _submit_one(key):
+            n_submitted += 1
+
+    if verbose and initial_batch:
+        print(
+            f"  Submitted initial wave: {len(initial_batch)} "
+            f"job(s), {len(in_flight)} in flight, "
+            f"{len(submission_queue)} queued"
+        )
+        print()
+
+    # ── Interleaved poll + submit loop ────────────────────────
+    # Poll in-flight jobs; as they complete, submit more from
+    # the queue until all units are processed.
+
+    max_seconds = max_poll_hours * 3600
+    loop_start = time.monotonic()
 
     try:
-        poll_all_batch_jobs(
-            client,
-            jobs_to_poll,
-            interval_seconds=poll_interval,
-            max_hours=max_poll_hours,
-            on_complete=_handle_completion,
-            progress_callback=_report_progress,
-        )
+        while in_flight or submission_queue:
+            # Poll each in-flight job once per cycle
+            for key, job_name in list(in_flight.items()):
+                try:
+                    job = client.batches.get(name=job_name)
+                except Exception as e:
+                    logger.warning(
+                        "Transient error polling %s (%s), "
+                        "will retry: %s",
+                        job_name, key, e,
+                    )
+                    continue
+
+                state_name = getattr(
+                    job.state, "name",
+                    str(job.state),
+                ).upper()
+
+                terminal_states = {
+                    "JOB_STATE_SUCCEEDED",
+                    "JOB_STATE_FAILED",
+                    "JOB_STATE_CANCELLED",
+                    "SUCCEEDED", "FAILED", "CANCELLED",
+                }
+
+                if state_name in terminal_states:
+                    logger.info(
+                        "Batch job %s (%s) reached: %s",
+                        job_name, key, state_name,
+                    )
+                    _handle_completion(key, job_name, job)
+
+            # Submit more if slots are available
+            slots_available = max(
+                0, effective_cap - len(in_flight),
+            )
+            newly_submitted = 0
+            while submission_queue and slots_available > 0:
+                next_key = submission_queue.pop(0)
+                if _submit_one(next_key):
+                    n_submitted += 1
+                    newly_submitted += 1
+                slots_available = max(
+                    0, effective_cap - len(in_flight),
+                )
+
+            if verbose and newly_submitted > 0:
+                print(
+                    f"  Submitted {newly_submitted} more "
+                    f"job(s), {len(in_flight)} in flight, "
+                    f"{len(submission_queue)} queued"
+                )
+
+            # Exit if nothing left to process
+            if not in_flight and not submission_queue:
+                break
+
+            # Progress report
+            elapsed = time.monotonic() - loop_start
+            if verbose:
+                hours = elapsed / 3600
+                print(
+                    f"  ... {n_completed}/{total_units} "
+                    f"complete, {len(in_flight)} in flight "
+                    f"({hours:.1f}h elapsed)",
+                    flush=True,
+                )
+
+            # Timeout check
+            if elapsed >= max_seconds:
+                pending_keys = list(in_flight.keys())
+                raise TimeoutError(
+                    f"{len(in_flight)} batch job(s) did not "
+                    f"complete within {max_poll_hours} hours: "
+                    f"{pending_keys[:5]}"
+                )
+
+            # Sleep before next poll cycle
+            remaining = max_seconds - elapsed
+            sleep_time = min(poll_interval, remaining)
+            if sleep_time > 0:
+                time.sleep(sleep_time)
+
     except TimeoutError as e:
         if verbose:
             print(f"\n  TIMEOUT: {e}")
@@ -1594,7 +1705,6 @@ def _execute_units_batch(
                 "  Remaining jobs saved in checkpoint for "
                 "future --resume"
             )
-        # Pending jobs remain in batch_pending for resume
         checkpoint["batch_pending"] = batch_pending
         save_checkpoint(checkpoint_path, checkpoint)
     except KeyboardInterrupt:
@@ -1603,9 +1713,6 @@ def _execute_units_batch(
             "jobs. Re-run with --resume to continue polling "
             "remaining batch jobs."
         )
-        # Completed jobs were already checkpointed
-        # incrementally by _handle_completion. Pending jobs
-        # remain in batch_pending from submission phase.
         checkpoint["batch_pending"] = batch_pending
         save_checkpoint(checkpoint_path, checkpoint)
 
@@ -1644,9 +1751,9 @@ Examples:
   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
       --mode batch
 
-  # Batch mode: overnight monitoring with hourly polls
+  # Batch mode: overnight with conservative concurrency
   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
-      --mode batch --resume --poll-interval 3600
+      --mode batch --max-batch-jobs 30 --poll-interval 3600
 
   # Batch mode: quick status check (poll once, then exit)
   python scripts/run_phase2.py studies/phase3a-h3-voting-track1.yaml \\
@@ -1725,6 +1832,19 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--max-batch-jobs",
+        type=int,
+        default=50,
+        help=(
+            "Maximum concurrent batch API jobs in flight "
+            "(default: 50). The Gemini Batch API supports up to "
+            "100 concurrent jobs; this cap prevents "
+            "RESOURCE_EXHAUSTED errors when running large "
+            "experiments. Set lower for safety margin, higher "
+            "for throughput."
+        ),
+    )
+    parser.add_argument(
         "--poll-interval",
         type=int,
         default=30,
@@ -1787,6 +1907,7 @@ Examples:
         workers_override=args.workers,
         parallel_units=args.parallel_units,
         mode=args.mode,
+        max_batch_jobs=args.max_batch_jobs,
         poll_interval=args.poll_interval,
         max_poll_hours=args.max_poll_hours,
     )
