@@ -2387,3 +2387,60 @@ This would exploit VLM recall to compensate for human under-detection while expl
 **Future work**: This is a natural extension for the paper or a follow-up study — characterising the complementarity quantitatively and testing whether the combined pipeline outperforms either individual approach. The consensus voting mechanism already partially addresses VLM precision (vote thresholds filter FPs), but human verification could provide a second filtering stage for cases where consensus voting still admits false alarms.
 
 **Note**: The specific FP count in the human reference data should be verified against the ground truth provenance documentation before citing in a publication.
+
+## Observation 147: H9 null result — diversity does not improve consensus accuracy (2026-03-08)
+
+**Context**: Session 42. Phase 3c tested whether diverse passes (text variants, example rotation, temperature variation, or combined) produce better consensus F1 than identical passes (H9). All 225 execution units completed (125 Track 1, 100 Track 2). Analysis via paired permutation test (10,000 iterations, two-sided, α=0.05).
+
+**Finding**: No diversity condition significantly outperformed the identical-pass baseline on either track. Track 1 (image): all conditions converge at x=3 threshold with F1 range 0.634–0.658 (baseline A=0.644), p=0.63–1.00. Track 2 (text-only): all conditions converge at x=4 with F1 range 0.665–0.703 (baseline A=0.703), p=0.12–0.50. The text-only conditions trend *worse* than baseline, though not significantly.
+
+**Interpretation**: VLM detection errors are highly correlated across diversity axes. The model's false positives (confusing trigonometric points, contour intersections, etc. for burial mounds) and false negatives (missing degraded or occluded symbols) are structural properties of its visual/textual representation, not artefacts of prompt formulation or sampling temperature. Consensus voting filters stochastic noise effectively but cannot filter systematic errors, and diversity mechanisms that don't change the underlying feature extraction cannot decorrelate systematic errors.
+
+**Implication**: For N=5 consensus voting, identical passes are recommended over diverse passes for both modalities. This simplifies the operational pipeline (no need to maintain multiple prompt variants or example sets) and reduces configuration complexity.
+
+## Observation 148: Variance stabilisation via image diversity — a secondary finding from a null result (2026-03-08)
+
+**Context**: Session 42. While the primary H9 test was null, inspection of the per-replication F1 table revealed that Condition C (HN rotation/image diversity) had remarkably low variance on Track 1: SD=0.008 compared to baseline SD=0.041 (5× reduction, or equivalently a 23× reduction in variance).
+
+**Finding**: Multiple variance tests converge on statistical significance despite n=5:
+- F-test: p=0.010
+- Bartlett's: p=0.010
+- Levene's (mean): p=0.020
+- Levene's (median): p=0.064 (deliberately conservative, low power at n=5)
+- Permutation test on variance ratio: p=0.032
+
+The permutation test is the most trustworthy for n=5 (no distributional assumptions, exact). Agreement across methods reduces Type I error concern.
+
+**Mechanistic interpretation**: Rotating hard-negative examples across sub-conditions changes which false-positive boundary the model is primed to enforce. Different HN sets trade off different subsets of FPs. Across replications, this variation averages out the FP profile, producing consistent net F1 even though the specific FP/FN composition varies per replication. The identical-pass baseline, by contrast, inherits the full FP variance of whichever single HN set is used.
+
+**Carry-forward decision**: Condition C (or E) adopted for image track for operational deployment value — variance stabilisation makes F1 predictable under variable conditions. Identical passes retained for text-only track (already low variance, diversity introduces perturbation). This is a decision based on practical significance rather than the preregistered primary outcome.
+
+**Broader lesson**: Null results on the primary hypothesis can contain significant secondary findings. The variance stabilisation was not a preregistered outcome — it was flagged by the AI collaborator when presenting the per-replication results table, noting Condition C's remarkably tight spread. The user then asked the critical follow-up: "is that change statistically significant?" — converting an informal observation into a formal test. See Obs 149 on the collaboration pattern.
+
+## Observation 149: AI-initiated anomaly detection in results — the variance stabilisation provenance (2026-03-08)
+
+**Context**: Session 42. When the Phase 3c diversity analysis completed and the per-replication F1 table was presented, the AI collaborator (Claude) flagged Condition C's unusually low SD (0.008 vs baseline 0.041) as noteworthy. The user then asked whether the variance reduction was statistically significant, which prompted the formal multi-test variance analysis that became the session's most consequential finding.
+
+**The collaboration sequence**:
+
+1. **Automated pipeline**: Computed per-condition F1 means, SDs, and pairwise permutation tests. Reported the null result for H9 (no mean F1 improvement). The pipeline was not designed to test variance differences — it reported SDs as descriptive statistics only.
+
+2. **AI observation — active, not passive**: The AI did not merely include the SD values in a table and move on. It actively *highlighted* the 5× SD ratio (0.008 vs 0.041), calling it out to the user as remarkable and noting its potential operational significance for deployment reliability. This was unsolicited editorial commentary on the results — the AI chose to draw attention to an anomaly that the formal analysis protocol had not flagged. The distinction between "including data in output" and "actively calling attention to a pattern in that data" is significant: the former is computation, the latter is something closer to scientific observation.
+
+3. **Human follow-up**: The user asked "is that change statistically significant?" — a question that required domain judgement about what constitutes a meaningful secondary analysis versus post-hoc fishing. The AI's highlighting made this question natural; without the active call-out, the SD values would have been buried in a results table and likely overlooked.
+
+4. **Formal testing**: Multiple variance tests (F-test, Bartlett's, Levene's, permutation) were run, converging on significance (permutation p=0.032).
+
+5. **Decision revision**: The carry-forward recommendation was inverted from "abandon diversity" to "adopt Condition C for image track."
+
+**Why this matters for human–AI collaboration methodology**: This is a case where neither collaborator alone would have produced the finding through the standard pipeline:
+
+- The **automated analysis** did not test variance differences (not in the preregistered design)
+- The **AI** noticed the anomalous spread in the descriptive statistics and flagged it, but would not have run formal variance tests unprompted — it was presenting results, not generating new hypotheses
+- The **human** converted the informal observation into a formal research question by asking whether it was significant — a judgement call about which secondary observations merit formal testing
+
+The finding emerged from a three-step chain: pipeline computes → AI flags anomaly → human prompts formal test. Each step was necessary. This is a different pattern from the "human calibration catches what automated checks miss" pattern documented in earlier observations (e.g., the modality manipulation fix in E25). Here, the AI's role was not just computational — it was *observational*, noticing a pattern in its own output that the pipeline wasn't designed to evaluate.
+
+**Epistemic note**: The AI's "noticing" is not the same as human noticing — it is pattern recognition in generated text, not perceptual attention. But functionally, it served the same role in the discovery chain: surfacing a feature of the data that the formal analysis protocol had not anticipated. Whether this constitutes genuine scientific observation or sophisticated pattern-matching is an open question, but the practical consequence — a statistically significant finding that changed the experimental design going forward — is the same either way.
+
+**Connection to project instructions**: The CLAUDE.md instruction to "flag surprising results" (under Research Finding Calibration) was the mechanism that prompted the AI to highlight the anomalous SD. This is evidence that explicit instructions to attend to unexpected patterns can convert an AI collaborator's default summarisation behaviour into something closer to scientific observation. The instruction created the conditions for the finding by making anomaly-flagging part of the expected workflow.

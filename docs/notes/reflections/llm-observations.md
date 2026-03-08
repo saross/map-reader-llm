@@ -3794,6 +3794,80 @@ when the data is structured and the model can identify "interesting
 patterns." For data extraction tasks where exact values matter, direct
 tool execution is more reliable than delegation to subagents.
 
-*Document represents observations as of 2026-02-16. Session 41 added
-observations on schema assumption failures across instance boundaries
-and subagent summarisation overriding data extraction instructions.*
+### 185. VLM error correlation defeats diversity-based consensus improvement (Session 42)
+
+**Instance boundary note**: Continuation instance; observation
+reconstructed from summary and on-disk results.
+
+The central finding of Phase 3c is that VLM detection errors are highly
+correlated across all tested diversity axes: instruction rephrasing
+(Condition B), example image rotation (Condition C), temperature
+variation (Condition D), and full combined diversity (Condition E). None
+of these diversity mechanisms produced a statistically significant
+improvement in consensus F1 over the identical-pass baseline (Condition A)
+on either track (9 pairwise tests, p=0.12 to 1.00).
+
+This is a strong empirical constraint on VLM ensemble design. The errors
+that consensus voting filters — false positives from map symbol
+confusion, missed detections from visual ambiguity — appear to be
+structural features of the model's representation rather than artefacts
+of any particular prompt formulation, example set, or sampling
+temperature. When the model misidentifies a trigonometric point as a
+burial mound, it does so consistently regardless of how the prompt is
+phrased or what examples it was shown.
+
+**Implication for ensemble methods**: Consensus voting benefits from
+redundancy (multiple independent evaluations of the same evidence) but
+the "independence" assumption is violated when the underlying model is
+the same. The vote threshold filters stochastic noise (detections that
+appear in some passes but not others) but cannot filter systematic
+errors (detections that appear in all passes because the model's visual
+feature extraction consistently misclassifies them). Diversity mechanisms
+that don't change the model's visual feature extraction cannot
+decorrelate the errors that matter.
+
+### 186. Variance stabilisation as a separate mechanism from accuracy improvement (Session 42)
+
+Condition C (HN rotation) reduced Track 1 F1 replication SD from 0.041
+to 0.008 (23× reduction, permutation p=0.032) without changing mean F1.
+This dissociation is informative: the diversity mechanism is doing
+*something* — it's reducing sensitivity to which specific examples are
+shown — but what it's doing is stabilising performance, not improving it.
+
+One mechanistic explanation: rotating the hard-negative examples changes
+the model's false-positive boundary (which confusable symbols it's
+primed to reject), and different HN sets trade off different subsets of
+false positives. Across replications, the variation in which HNs are
+shown averages out the FP profile, producing consistent net F1 even
+though the specific FP/FN composition varies. The identical-pass
+baseline, by contrast, inherits the full FP variance of whichever single
+HN set happens to be used.
+
+This pattern — diversity improving reliability without improving mean
+performance — may be common in applied VLM settings and is worth
+reporting as a practical finding. Operational deployments may value
+predictable performance more than marginally better mean performance.
+
+### 187. Asymmetric diversity effects across modalities (Session 42)
+
+Track 1 (image): diversity conditions are statistically indistinguishable
+from baseline (all ΔF1 within ±0.014, p>0.6). Track 2 (text-only):
+all diversity conditions perform *worse* than baseline (ΔF1 = −0.034 to
+−0.038), though not significantly so (p=0.12 to 0.50).
+
+The asymmetry suggests that text-only inference is inherently more
+consistent than image-based inference — the model's text-based spatial
+reasoning produces more uniform outputs across runs than its visual
+processing does. When baseline variance is already low, introducing
+diversity perturbs a well-calibrated system rather than decorrelating
+its errors. Diversity is only useful when there is variance to stabilise.
+
+This has implications for modality-specific ensemble design: image-based
+VLM pipelines may benefit from diversity mechanisms (for variance
+reduction), while text-only pipelines should prefer identical passes
+(for consistency preservation).
+
+*Document represents observations as of 2026-03-08. Session 42 added
+observations on VLM error correlation defeating diversity-based consensus
+improvement, variance stabilisation as a separate mechanism from accuracy
+improvement, and asymmetric diversity effects across modalities.*

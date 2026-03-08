@@ -1905,7 +1905,70 @@ adds explanatory power for the tolerance-dependent behaviour and
 suggests that HIGH thinking benefits extend beyond what consensus
 voting can exploit.
 
-*Last updated: 2026-02-16 (Session 41 — two-component decomposition
-of the HIGH-thinking advantage from spatial tolerance sensitivity
-data, and the prediction that diversity operates on spatial coverage
-as well as vote quality)*
+### Session 42 (2026-03-08): Null primary result yields significant secondary finding — variance stabilisation
+
+**Instance boundary note**: Continuation instance; reasoning
+reconstructed from summary and on-disk analysis outputs.
+
+**Condition met**: Surprising result (null primary hypothesis with
+significant secondary finding), hypothesis generation (variance
+stabilisation mechanism), and belief revision (carry-forward decision
+inverted from "abandon diversity" to "adopt for operational reliability").
+
+**The surprise**: H9 predicted that diverse passes would produce better
+consensus F1 than identical passes. The result was unambiguously null
+(9 pairwise tests, p=0.12–1.00). But within this null result, Condition
+C's replication SD was 5× lower than baseline (0.008 vs 0.041). The
+user asked: "is that variance change significant?" — and it was
+(permutation p=0.032). This is a textbook case of a secondary finding
+being more consequential than the primary hypothesis test.
+
+**The belief revision sequence**:
+
+1. "Diversity will improve consensus accuracy" (H9 prediction)
+   → **Rejected**: no mean F1 improvement on either track
+
+2. "Diversity is useless for consensus voting; carry forward
+   identical passes" (natural conclusion from null H9)
+   → **Revised**: Condition C adopted for image track based on
+   variance stabilisation (p=0.032)
+
+3. "The value of diversity is accuracy" → "The value of diversity
+   is predictability" (reframing)
+
+**Abductive structure**: The tight SD for Condition C is the surprising
+fact. The explanatory hypothesis: rotating HN examples across
+sub-conditions diversifies the false-positive boundary, averaging out
+FP profile variance across replications. This explains both the null
+mean effect (different FP/FN compositions cancel out to the same net
+F1) and the reduced variance (the averaging process produces more
+consistent net performance). The hypothesis makes a testable prediction:
+the *composition* of errors (which specific FPs and FNs) should vary
+more across Condition C replications than across baseline replications,
+even though the *aggregate* F1 is equally stable.
+
+**Connection to prior entries**: This follows the pattern from Session 34
+(Obs 131 and the extended discussion) where an experimental error
+produced unexpected data that proved more informative than the planned
+experiment. Here, the finding wasn't from an error but from a null
+result — the diversity conditions were working as designed, they just
+weren't doing what was predicted. The user's question about variance
+significance is the pivotal moment: without it, the session would have
+concluded with a straightforward negative result and moved on.
+
+**The user's role**: Once again, human domain calibration proved decisive.
+The automated analysis pipeline reported the null result correctly.
+Nothing in the pipeline was designed to flag variance reduction as
+noteworthy. The user's question reflected an intuition that low variance
+in a 5-replication design is unusual and potentially meaningful — a
+judgement that required both statistical awareness (knowing that n=5
+makes any variance test underpowered) and practical awareness (knowing
+that operational reliability is valuable independently of mean
+performance). This is the same "pattern recognition complementarity"
+noted in the Session 39 entry.
+
+*Last updated: 2026-03-08 (Session 42 — null primary hypothesis yielding
+significant secondary finding via user-prompted variance testing, belief
+revision from "abandon diversity" to "adopt for operational reliability",
+and the mechanistic hypothesis that HN rotation diversifies the FP
+boundary)*

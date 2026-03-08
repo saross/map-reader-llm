@@ -2334,6 +2334,90 @@ Key findings:
 - [ ] Paired permutation tests (carried forward from Session 40)
 - [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
 
+## Session 42 — 2026-03-08: Phase 3c diversity analysis, batch throttling, and variance stabilisation
+
+### Overview
+
+Full-cycle Phase 3c session: infrastructure improvement (batch throttling),
+data collection monitoring, analysis script development, execution on
+both tracks, comprehensive results write-up, and formal variance testing.
+The primary H9 hypothesis (diversity improves consensus F1) was null, but
+a significant secondary finding — variance stabilisation via image
+diversity — changed the carry-forward decision.
+
+**Instance note**: Reflection written by continuation instance from
+compacted summary.
+
+### Work Completed
+
+1. **Batch API concurrency throttling**: Replaced sequential submit-all /
+   poll-all pattern in `run_phase2.py` with interleaved submit+poll loop.
+   Added `--max-batch-jobs` CLI flag (default 50, hard cap 95). Preserves
+   all checkpoint, error handling, and resume semantics
+2. **Built `analyse_diversity.py`**: ~700-line analysis script for Phase 3c
+   consensus diversity evaluation. Reuses clustering/evaluation primitives
+   from `merge_passes.py` and `lib_advanced_metrics.py`. Includes paired
+   permutation test, bootstrap CIs, and configurable vote threshold sweep
+3. **Retried 4 failed Track 2 tiles**: All Elenovo sheet tiles that failed
+   via Batch API were successfully re-run via real-time API and patched
+   into the output directory
+4. **Monitored Track 1 completion**: Set up cron-based monitoring (30-min
+   interval) that auto-triggered analysis when 125/125 units completed
+5. **Ran diversity analysis on both tracks**: Track 1 (5 conditions ×
+   5 replications) and Track 2 (4 conditions × 5 replications, C omitted
+   as degenerate for text-only)
+6. **Wrote comprehensive results report**:
+   `results/phase3c-diversity/phase3c-comprehensive-results-report.md`
+   — 10 sections matching Phase 3a report format
+7. **Formal variance testing**: Added multiple variance tests (F-test,
+   Bartlett's, Levene's, permutation) to assess Condition C's SD reduction.
+   Permutation test p=0.032 confirmed statistical significance
+8. **Updated carry-forward decision**: Condition C adopted for image track
+   (variance stabilisation); identical passes for text-only track
+
+### Key Results
+
+**Primary (H9 — mean F1)**:
+
+| Track | Baseline F1 | Best Diversity F1 | ΔF1 | p-value | Significant? |
+|-------|-------------|-------------------|-----|---------|:------------:|
+| Track 1 Image (A vs D) | 0.644 | 0.658 | +0.014 | 0.626 | No |
+| Track 2 Text (A vs B) | 0.703 | 0.668 | −0.035 | 0.121 | No |
+
+H9 not supported on either track. All 9 pairwise comparisons non-significant.
+
+**Secondary (variance stabilisation)**:
+
+| Condition | SD (Track 1) | Variance test p |
+|-----------|-------------|-----------------|
+| A (baseline) | 0.041 | — |
+| C (HN rotation) | 0.008 | 0.032 (permutation) |
+
+23× variance reduction, statistically significant at α=0.05.
+
+### Commits
+
+- `d3d6e1b feat(pipeline): integrate file cleanup and quota retry`
+- `edc798d feat(batch-api): add file storage governance functions`
+
+### Issues
+
+- 1 JSON parse error in Track 1 (h9-C-img4/run_3, tile K-35-052-4) —
+  handled gracefully, unit completed with 60 tiles
+- File cleanup errors for 2 batch output files ("File ID cannot be more
+  than 40 characters") — non-blocking, files auto-expire after 48h
+- 4 Track 2 tile failures required real-time API retry — all patched
+  successfully but meta.json files overwritten with single-tile metadata
+
+### Pending Work
+
+- [ ] Commit Phase 3c results and analysis script
+- [ ] Commit batch throttling changes to run_phase2.py
+- [ ] Commit reflection updates
+- [ ] Phase 3d preparation (next experimental phase)
+- [ ] Paired permutation tests from Session 40 (carried forward)
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
+
 ---
 
 *New session entries should be appended above this line.*

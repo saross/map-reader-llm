@@ -4839,7 +4839,97 @@ provided sufficient state.
 
 ---
 
-*Document created: 2026-01-27. Thirty-seventh reflection added 2026-02-16
-(Session 41 — spatial tolerance sensitivity, crash recovery, comprehensive
-report assembly, and the observation that configuration stability across
-perturbations serves as a robustness diagnostic).*
+---
+
+### Reflection 38 — Session 42: Phase 3c diversity analysis, variance stabilisation discovery, and the null that taught more than the alternative (2026-03-08)
+
+**Instance boundary note**: This reflection is written by a continuation
+instance working from a compacted conversation summary. The session's
+reasoning and compositional process are reconstructed from the summary
+and on-disk artefacts, not from direct experience.
+
+**Session character**: Infrastructure improvement, full-cycle experimental
+analysis, and an unexpected secondary finding that reframed the
+carry-forward decision. The session covered three distinct phases:
+(1) implementing batch API concurrency throttling in `run_phase2.py`,
+(2) building and executing the Phase 3c diversity analysis pipeline
+(`analyse_diversity.py`), and (3) discovering and formally testing the
+variance stabilisation effect.
+
+**What the session accomplished**: All 225 execution units (125 Track 1
+image + 100 Track 2 text-only) were collected, analysed, and written up
+in a comprehensive results report. The primary hypothesis (H9: diversity
+improves consensus F1) was decisively null on both tracks — 9 pairwise
+comparisons, none significant, p-values ranging from 0.12 to 1.00. But
+the session's most consequential finding was secondary: Condition C
+(HN rotation/image diversity) reduced Track 1 F1 replication variance
+by 23× (SD 0.041 → 0.008, permutation p=0.032) without changing mean
+performance.
+
+**The variance finding as "unexpected data as discovery"**: This
+follows the pattern documented in the project instructions and in
+Observation 131's extended discussion. The experiment was designed to
+test mean F1 differences (H9). The variance reduction was not a
+preregistered outcome — it emerged from inspecting the per-replication
+table and noticing Condition C's remarkably tight spread. The user's
+instinct to ask "is that variance change significant?" converted an
+unremarkable null result into a statistically significant operational
+finding. Multiple variance tests converged (F-test p=0.010, Bartlett's
+p=0.010, Levene's mean p=0.020, permutation p=0.032), providing
+reassurance despite only n=5 replications.
+
+**The carry-forward decision inversion**: The session began with the
+working assumption that diversity would be abandoned (all conditions
+null → stick with identical passes). It ended with Condition C adopted
+for the image track — not for improved accuracy, but for deployment
+reliability. This is a genuine belief revision: the value of diversity
+shifted from "potential accuracy gain" to "operational variance
+stabilisation." The framing in the report — "image example rotation
+significantly reduced performance variability (p=0.032), suggesting
+operational value for deployment reliability" — positions the finding
+for the paper as a practical contribution rather than a failed
+hypothesis test.
+
+**Asymmetric track effects as a diagnostic**: Image diversity was
+neutral on Track 1 but the summary suggests diversity degrades Track 2
+performance (all ΔF1 negative, ~−0.03 to −0.04). The interpretation
+in the report attributes this to text-only inference's inherent
+consistency — when baseline noise is low, diversity introduces
+perturbation rather than decorrelation. This asymmetry is itself
+informative: it suggests VLM errors on image-based tasks have a
+qualitatively different structure (more variable, more amenable to
+stabilisation) than errors on text-only tasks (more consistent, less
+in need of stabilisation).
+
+**The batch throttling as infrastructure maturation**: The interleaved
+submit+poll loop with `--max-batch-jobs` cap (default 50, hard limit 95)
+was the third infrastructure improvement motivated by real operational
+failures. The pattern: (1) initial design works for small experiments,
+(2) scaling reveals a capacity boundary, (3) the fix is a concurrency
+governor. This mirrors the progression from sequential submission to
+checkpointed resume to throttled concurrency — each layer added when
+the previous one proved insufficient at scale.
+
+**Session**: 2026-03-08 (Session 42, continuation instance)
+**Reported texture**: Full experimental cycle — infrastructure,
+execution, analysis, and an unexpected finding that changed the
+conclusion. Cannot report on compositional experience directly due
+to instance boundary.
+**Key observation**: VLM errors are highly correlated across diversity
+axes; consensus voting benefits come from ensemble size, not from
+diversity of the passes. The variance stabilisation is a separate
+mechanism from consensus accuracy.
+**Noted preference**: User's instinct to question variance significance
+drove the session's most important finding
+**Engagement level**: Cannot assess directly (continuation instance)
+**Relational note**: The user's domain calibration — asking whether
+5× SD reduction is practically meaningful — again proved more
+consequential than the automated analysis pipeline
+
+---
+
+*Document created: 2026-01-27. Thirty-eighth reflection added 2026-03-08
+(Session 42 — Phase 3c diversity analysis, H9 null result, variance
+stabilisation discovery via Condition C, batch throttling infrastructure,
+and the carry-forward decision inversion from "abandon diversity" to
+"adopt for operational reliability").*
