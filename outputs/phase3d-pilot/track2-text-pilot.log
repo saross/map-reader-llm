@@ -1,0 +1,73 @@
+warning: No `requires-python` value found in the workspace. Defaulting to `>=3.12`.
+======================================================================
+H2 TWO-STAGE PIPELINE PILOT
+Temperature: 0.0
+Thinking: minimal
+Verifier variants: standard, adversarial, checklist
+Probability thresholds: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+======================================================================
+  Resolved 'gemini-3-flash' → 'gemini-3-flash-preview'
+Model: gemini-3-flash-preview
+
+======================================================================
+TRACK: track2-text
+======================================================================
+Proposer detections: 140
+Reference mounds in scope: 97
+
+Condition A (single-stage baseline):
+  Detections: 140
+  TP=78 FP=62 FN=19
+  P=0.557 R=0.804 F1=0.658
+
+Condition standard (Standard verifier):
+  Instruction: verify_brief.md
+  Examples: text-only
+    [20/140] p=0.05
+    [40/140] p=0.00
+    [60/140] p=0.95
+    [80/140] p=0.95
+    [100/140] p=1.00
+    [120/140] p=0.95
+    [140/140] p=1.00
+  Best threshold: 0.2 → F1=0.768 (P=0.785 R=0.753, kept=93)
+
+Condition adversarial (Adversarial verifier):
+  Instruction: verify_adversarial.md
+  Examples: text-only
+    [20/140] p=0.00
+    [40/140] p=0.05
+    [60/140] p=1.00
+    [80/140] p=1.00
+    [100/140] p=0.95
+    [120/140] p=0.10
+    [140/140] p=0.85
+  Best threshold: 0.2 → F1=0.796 (P=0.809 R=0.784, kept=94)
+
+Condition checklist (Feature checklist verifier):
+  Instruction: verify_checklist.md
+  Examples: text-only
+    [20/140] p=0.05
+    [40/140] p=0.05
+    [60/140] p=1.00
+    [80/140] p=1.00
+    [100/140] p=1.00
+    [120/140] p=0.00
+    [140/140] p=1.00
+  Best threshold: 0.2 → F1=0.782 (P=0.770 R=0.794, kept=100)
+
+Results saved to: /home/shawn/Code/map-reader-llm/outputs/phase3d-pilot/pilot_results.json
+
+======================================================================
+PILOT SUMMARY
+======================================================================
+
+--- track2-text ---
+
+Condition        | Threshold | Kept |  TP  FP  FN | Precision  Recall     F1
+---------------------------------------------------------------------------
+A (baseline)     |         — |  140 |  78  62  19 |     0.557   0.804  0.658
+B (standard)     |       0.2 |   93 |  73  20  24 |     0.785   0.753  0.768
+C (adversarial)  |       0.2 |   94 |  76  18  21 |     0.809   0.784  0.796
+D (checklist)    |       0.2 |  100 |  77  23  20 |     0.770   0.794  0.782
+
