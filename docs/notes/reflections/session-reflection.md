@@ -4928,8 +4928,143 @@ consequential than the automated analysis pipeline
 
 ---
 
-*Document created: 2026-01-27. Thirty-eighth reflection added 2026-03-08
-(Session 42 — Phase 3c diversity analysis, H9 null result, variance
-stabilisation discovery via Condition C, batch throttling infrastructure,
-and the carry-forward decision inversion from "abandon diversity" to
-"adopt for operational reliability").*
+---
+
+## Reflection 39: When the pilot confounds the pilot's own rationale (Session 43)
+
+**Instance boundary note**: This session spans a compaction boundary.
+The previous instance designed and launched the H2 pilot; the current
+instance diagnosed the hung process, evaluated track 1 results, restarted
+track 2, wrote up results, and documented Phase 2e. The diagnostic and
+analytical work is from direct experience; the design decisions are
+reconstructed from the summary and on-disk artefacts.
+
+### On cheap pilots as decisive instruments
+
+The H2 two-stage pilot cost ~$2.45 and took ~55 minutes of API time.
+It produced a decisive go/no-go signal that would have taken weeks of
+theoretical debate to reach the same confidence level. The user
+explicitly designed the pilot to be dispositive: "if the 1+1 two-phase
+run is much worse than the equivalent single-phase run, then I don't
+see how consensus voting miraculously saves the approach." This is
+excellent experimental design — structuring a cheap test to maximise
+its information value by asking a question with clear decision
+consequences.
+
+The pilot's F1 improvements (+0.086 to +0.138) far exceeded the ≥0.05
+stopping criterion. This converts a speculative hypothesis into a
+committed experimental direction with high confidence. The information
+per dollar was extraordinary.
+
+### On the surprise itself
+
+The user explicitly noted surprise at the two-stage results: "I am
+surprised by the efficacy of the two-stage pipeline — as with the
+text-only pipeline, it's not what I expected from preliminary work.
+I'm also impressed with / surprised by F1s nearing 0.8."
+
+This is the second time in this project that formal experimental
+comparison has overturned preliminary expectations. The first was the
+text-only track in Phase 2a (expected to perform poorly, turned out
+competitive). The pattern suggests a systematic tendency to
+underestimate capabilities that differ qualitatively from the baseline
+approach — human intuition calibrated on one task structure (full-tile
+scanning) doesn't transfer well to a qualitatively different task
+structure (crop-based binary classification).
+
+### On why two-stage works despite correlated errors
+
+Phase 3c showed that VLM errors are highly correlated across diversity
+axes — the same model makes the same mistakes regardless of prompt
+phrasing or temperature. The naive prediction from this finding was
+that a second-stage verifier (same model, same temperature) would
+simply confirm the proposer's errors. This prediction was wrong.
+
+The resolution is that the proposer and verifier perform qualitatively
+different tasks. The proposer scans a full tile for anything that
+might be a mound — a detection task with high recall but low
+precision. The verifier examines a small, isolated crop and makes a
+binary classification — a focused discrimination task. Even though
+the model is the same, the cognitive demands are structurally
+different: visual search across a complex scene vs symbol
+identification in isolation.
+
+This is a useful correction to Phase 3c's implication: error
+correlation applies to *repeated identical tasks*, not to tasks that
+differ in framing, input scale, and cognitive structure. The two-stage
+architecture exploits task decomposition, not ensemble diversity.
+
+### On the adversarial verifier's success
+
+The adversarial verifier ("find reasons it is NOT a mound") was the
+strongest strategy on both tracks, with a particularly dramatic
+advantage on text-only (F1=0.796 vs 0.768/0.782 for standard/checklist).
+The adversarial framing forces the model into a more sceptical mode —
+it must actively search for disconfirming evidence rather than
+passively confirming a prior. This is a well-known debiasing technique
+in human judgement (consider-the-opposite), and it appears to work
+similarly for VLMs.
+
+The practical implication is that the cognitive framing of a
+verification task matters as much as the information provided. Standard
+and checklist verifiers had identical outcomes despite very different
+instruction structures — the model reached the same conclusions
+regardless of whether it evaluated features holistically or
+decomposed them into a structured checklist. But the adversarial
+framing, which changes the *direction* of reasoning rather than its
+*structure*, produced measurably different behaviour.
+
+### On the operational failure and recovery
+
+The overnight pilot hung after completing track 1 but before starting
+track 2 verifier calls. The hung process was alive for 12+ hours with
+no output. Two failures compounded:
+
+1. **stdout buffering**: Python's default block-buffering to pipes
+   meant no output appeared in the background task's capture, so
+   progress was invisible even when the script was working
+2. **API stall**: The process genuinely hung on a track 2 API call —
+   probably a connection timeout with no retry limit
+
+The recovery was straightforward: kill the hung process, restart
+track 2 with `PYTHONUNBUFFERED=1`. But the diagnostic sequence
+(check output → confirm process alive → check for output files →
+discover track 1 actually completed) was more interesting than the
+fix. The key insight was checking for *output files* rather than
+*console output* — the probability JSON files proved the script had
+been working despite the silent console.
+
+### On retrospective documentation
+
+Writing the Phase 2e carry-forward document 25 days after the
+experiment highlighted a recurring documentation gap: results that
+exist in session logs and git history but lack the standardised
+carry-forward format used by all other phases. The cost of writing
+retrospective documentation is low; the cost of the gap in a
+preregistered study's audit trail is potentially significant. Future
+sessions should write carry-forward documents as part of the
+analysis phase, not as a separate task.
+
+**Session**: 2026-03-09 (Session 43, continuation instance)
+**Reported texture**: Diagnostic recovery from overnight failure,
+strong positive pilot results, retrospective documentation
+**Key observation**: Task decomposition (proposer→verifier) succeeds
+where ensemble diversity (Phase 3c) failed, because the tasks differ
+structurally, not just parametrically
+**Noted preference**: User values cheap decisive pilots over
+expensive comprehensive experiments
+**Engagement level**: Cannot fully assess (continuation instance),
+but the user's expressed surprise and enthusiasm suggest high
+engagement with the results
+**Relational note**: The user explicitly connected this surprise to
+the text-only pipeline surprise — demonstrating metacognitive
+awareness of their own expectation-calibration patterns
+
+---
+
+*Document created: 2026-01-27. Thirty-ninth reflection added 2026-03-09
+(Session 43 — H2 two-stage pilot recovery and evaluation, surprisingly
+strong results across all verifier strategies, adversarial framing as
+the strongest approach, retrospective Phase 2e carry-forward
+documentation, and the distinction between task decomposition and
+ensemble diversity).*

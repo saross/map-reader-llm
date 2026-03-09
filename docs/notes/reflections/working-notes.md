@@ -2444,3 +2444,63 @@ The finding emerged from a three-step chain: pipeline computes → AI flags anom
 **Epistemic note**: The AI's "noticing" is not the same as human noticing — it is pattern recognition in generated text, not perceptual attention. But functionally, it served the same role in the discovery chain: surfacing a feature of the data that the formal analysis protocol had not anticipated. Whether this constitutes genuine scientific observation or sophisticated pattern-matching is an open question, but the practical consequence — a statistically significant finding that changed the experimental design going forward — is the same either way.
 
 **Connection to project instructions**: The CLAUDE.md instruction to "flag surprising results" (under Research Finding Calibration) was the mechanism that prompted the AI to highlight the anomalous SD. This is evidence that explicit instructions to attend to unexpected patterns can convert an AI collaborator's default summarisation behaviour into something closer to scientific observation. The instruction created the conditions for the finding by making anomaly-flagging part of the expected workflow.
+
+## Observation 150: Two-stage verification is surprisingly effective — another confounded expectation (2026-03-09)
+
+**Context**: Session 43. The H2 two-stage pipeline pilot (K=1, T=0.0, three verifier strategies) produced results that significantly exceeded expectations. All three verifier strategies improved F1 by +0.086 to +0.138 over the single-stage baseline, with text-only track F1 reaching 0.796 (adversarial verifier).
+
+**The surprise**: Based on Phase 3c's finding that VLM errors are highly correlated across conditions (the diversity null result), the working hypothesis was that a second-stage verifier — using the same model at the same temperature — would make the same errors as the proposer and therefore provide limited filtering value. The user explicitly noted this reasoning when proposing the cheap 1+1 pilot as a go/no-go check: "if the 1+1 two-phase run is much worse than the equivalent single-phase run, then I don't see how consensus voting miraculously saves the approach."
+
+Instead, the verifier dramatically improved precision (0.538→0.711 on image track; 0.557→0.809 on text track) while losing almost no recall. The standard and checklist verifiers rejected 28 of 61 false positives on the image track without losing a single true positive. The adversarial verifier on the text track rejected 44 of 62 false positives while losing only 2 of 78 true positives.
+
+**Why it works despite correlated errors**: The key insight is that the proposer and verifier are performing *qualitatively different tasks*. The proposer scans a full tile looking for anything that might be a mound — a broad, recall-oriented search across a complex scene. The verifier examines a small, isolated crop and makes a binary classification — a focused, precision-oriented task. Even though the same model is used, the cognitive demand is fundamentally different: detection-in-context vs classification-in-isolation. Phase 3c's error correlation finding applies to *repeated identical tasks*, not to tasks that differ in framing, input scale, and cognitive structure.
+
+**Pattern**: This is the second time in this project that a preliminary assessment underestimated an approach. The text-only track (Phase 2a) was also expected to perform poorly based on early informal tests but turned out to be competitive with image-using detection. In both cases, the formal experimental design revealed capabilities that informal reasoning had discounted. This suggests a general lesson: systematic experimental comparison is more reliable than informal expectations about what "should" work, especially when the task structure differs from the comparison case in non-obvious ways.
+
+**The user's reaction**: "I am surprised by the efficacy of the two-stage pipeline — as with the text-only pipeline, it's not what I expected from preliminary work. I'm also impressed with / surprised by F1s nearing 0.8."
+
+**Methodological implication**: The cheap pilot strategy (1+1 at T=0.0, ~$2.45) was exactly the right experimental move. It provided a decisive go/no-go signal at minimal cost, revealing that the full Phase 3d experiment (K=10 with consensus) is well-motivated. The pilot also identified the adversarial verifier as the strongest strategy, informing the design of the full experiment before committing to expensive consensus runs.
+
+## Observation 151: Why two-stage verification works — contextual ambiguity vs isolation clarity (2026-03-09)
+
+**Context**: Session 43. Interpreting the H2 pilot results — why does a second-stage verifier using the same model and temperature dramatically improve precision, when Phase 3c showed that VLM errors are highly correlated across diversity axes?
+
+### The core mechanism: isolation removes the source of false positives
+
+The proposer scans a full 1,344×1,344 pixel tile containing dozens of symbols, text labels, contour lines, and boundaries. It performs visual search under high cognitive load — simultaneously identifying candidate regions, assessing features, and outputting coordinates. In this context, a triangulation point near other mound-like features, or a benchmark along a boundary line, looks *plausibly* mound-like. The model is primed to find mounds, the visual scene is complex, and marginal cases get swept up in the recall-oriented net.
+
+The verifier sees a 150×150 pixel crop with one symbol at the centre. The surrounding context that created the ambiguity is gone. A triangulation point in isolation is *obviously* not a mound — it's a solid black triangle with no outward-radiating rays. The task has shifted from "find mounds in a complex scene" to "is this specific symbol a mound?" — and the second question is simply easier.
+
+### Evidence from the probability distribution
+
+The bimodal probability distribution is the strongest evidence for this interpretation. Probabilities cluster at 0.0–0.1 or 0.85–1.0 with almost nothing in between. The verifier isn't agonising over ambiguous cases — it's saying "obviously yes" or "obviously no." If the proposer's false positives were genuinely mound-like symbols, we'd expect more intermediate scores. Instead, most false positives are symbols that are trivially identifiable as non-mounds when examined directly.
+
+On track 1, standard and checklist verifiers rejected 28 of 61 false positives without losing a single true positive. On track 2, the adversarial verifier rejected 44 of 62 false positives while losing only 2 of 78 true positives. This near-perfect separation is consistent with the "obvious in isolation" interpretation: the rejected false positives weren't ambiguous — they were unambiguous non-mounds that appeared plausible only within the full-tile detection context.
+
+### Why task decomposition succeeds where diversity failed
+
+Phase 3c tried to decorrelate errors by varying the *parameters* of the same task (different prompts, examples, temperatures). But the errors aren't parametric noise — they're structural consequences of performing visual search in a complex scene. Changing the prompt doesn't change the fact that a triangulation point near a cluster of mounds looks suspicious during a full-tile scan. Diversity operates within the same task structure and therefore cannot escape the error correlations inherent to that structure.
+
+Task decomposition addresses the root cause (contextual ambiguity) rather than trying to average out its effects. It doesn't ask the model to make different errors — it changes the task so that many "errors" are no longer errors. The triangulation point that gets falsely detected in a full-tile scan is correctly rejected in a crop-based verification — not because the model has learned something new, but because the task has changed to remove the source of confusion.
+
+This is a key distinction for the paper: **ensemble diversity and task decomposition are fundamentally different strategies**. Diversity assumes errors are stochastic and can be averaged out. Decomposition assumes errors are structural and can be eliminated by changing the task. When errors are highly correlated (as Phase 3c demonstrated), diversity fails but decomposition can still succeed.
+
+### Why adversarial framing is the strongest verifier
+
+The adversarial verifier ("find reasons it is NOT a burial mound") outperformed standard and checklist verifiers on both tracks. Meanwhile, standard and checklist produced near-identical outcomes despite very different instruction structures — the model reaches the same conclusions whether it reasons holistically or decomposes into structured features.
+
+The adversarial framing works because it explicitly asks the model to name the non-mound interpretation. For the "obvious" false positives, this is trivial: "it's a solid black triangle with no outward-radiating rays — a triangulation point." For genuine mounds, the model struggles to find a plausible alternative. The framing converts a confirmation-seeking process into a discrimination task, which is exactly what the precision problem requires.
+
+This mirrors the "consider the opposite" debiasing technique from human judgement research (Mussweiler, Strack, & Pfeiffer, 2000; Lord, Lepper, & Preston, 1984). When asked to generate arguments against their initial hypothesis, humans produce more calibrated probability estimates. The adversarial verifier appears to achieve the same effect for VLMs — an empirical demonstration of cognitive debiasing applied to machine vision.
+
+### The short version for the paper
+
+**The proposer's false positives aren't hard cases — they're easy cases made hard by context. Isolation makes them easy again.** The two-stage architecture exploits a fundamental asymmetry: detection-in-context is harder than classification-in-isolation, even for the same model examining the same symbols. This is not ensemble diversity (which tries to decorrelate errors within the same task) — it is task decomposition (which eliminates the source of errors by changing the task structure).
+
+### Implications for VLM pipeline design
+
+1. **Two-stage architectures can improve precision even with the same model** — no model diversity required, just task decomposition
+2. **The verifier should see less context, not more** — the 150×150 crop outperforms the full tile for discrimination precisely because it removes distractors
+3. **Adversarial framing is more effective than structured decomposition** — changing the direction of reasoning (disconfirmation vs confirmation) matters more than changing its structure (holistic vs checklist)
+4. **The approach is especially effective for high-recall, low-precision proposers** — the text-only track (higher FP rate) benefited more from verification than the image track
+5. **Cost is modest** — the verifier adds one API call per detection (not per tile), so the cost scales with the number of detections rather than the number of tiles. For our data: 132–140 verifier calls vs 60 tiles × K runs for the proposer

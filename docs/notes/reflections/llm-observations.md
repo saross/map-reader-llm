@@ -3867,7 +3867,96 @@ VLM pipelines may benefit from diversity mechanisms (for variance
 reduction), while text-only pipelines should prefer identical passes
 (for consistency preservation).
 
-*Document represents observations as of 2026-03-08. Session 42 added
-observations on VLM error correlation defeating diversity-based consensus
-improvement, variance stabilisation as a separate mechanism from accuracy
-improvement, and asymmetric diversity effects across modalities.*
+### 188. Task decomposition succeeds where ensemble diversity fails (Session 43)
+
+**Instance boundary note**: Continuation instance; analysis and evaluation
+from direct experience, pilot design reconstructed from summary.
+
+Phase 3c showed that VLM errors are highly correlated across diversity
+axes — rephrasing prompts, rotating examples, or varying temperature
+doesn't change which symbols the model misclassifies. The naive prediction
+was that a second-stage verifier using the same model would confirm the
+proposer's errors. Instead, the two-stage pilot improved F1 by +0.086 to
++0.138.
+
+The resolution: the proposer and verifier perform structurally different
+tasks. The proposer performs visual search across a full tile (~1,344×1,344
+pixels) — a broad, recall-oriented scan. The verifier performs binary
+classification on a small, isolated crop (~150×150 pixels) — a focused,
+precision-oriented discrimination. Even with the same model and
+temperature, the cognitive demand is fundamentally different.
+
+This distinction has theoretical implications for VLM ensemble design.
+Phase 3c's error correlation finding applies to *repeated identical tasks*
+(same model, same task type, varied parameters). Two-stage architectures
+circumvent this limitation by decomposing the problem into complementary
+subtasks. The errors that are systematic within one task structure
+(full-tile detection) may not be systematic within another (crop-based
+classification), because the input scale, visual context, and cognitive
+framing all differ.
+
+**Quantitative evidence**: On track 1, standard and checklist verifiers
+rejected 28 of 61 false positives (46%) without losing a single true
+positive. This near-perfect FP separation suggests these false positives
+are "obvious" non-mounds when examined in isolation — symbols that look
+plausibly mound-like in the context of a full tile scan but are clearly
+identifiable as something else (triangulation points, spot heights,
+boundary marks) when presented as a focused classification task.
+
+### 189. Adversarial framing as a debiasing mechanism for VLMs (Session 43)
+
+The adversarial verifier ("find reasons it is NOT a burial mound")
+outperformed standard and checklist verifiers on both tracks, with a
+particularly strong advantage on text-only (F1=0.796 vs 0.768/0.782).
+Meanwhile, standard and checklist verifiers produced near-identical
+outcomes despite very different instruction structures.
+
+This dissociation is informative. The standard verifier says "evaluate
+this symbol." The checklist decomposes the evaluation into five structured
+features. Both reach the same conclusions — the model's assessment is
+robust to whether it reasons holistically or by decomposition. But the
+adversarial framing changes the *direction* of reasoning: instead of
+"is this a mound?" (confirmation-seeking), it asks "what is this if it's
+NOT a mound?" (disconfirmation-seeking).
+
+This mirrors the "consider the opposite" debiasing technique from human
+judgement research. When humans are asked to generate arguments against
+their initial hypothesis, they produce more calibrated probability
+estimates. The adversarial verifier appears to do the same for VLMs —
+forcing the model to consider alternative interpretations before
+committing to a classification. The text-only track benefits more,
+possibly because text-only proposers generate more marginal/ambiguous
+false positives that the adversarial framing is better equipped to
+question.
+
+### 190. Text-only verification shows larger improvement than image verification (Session 43)
+
+All three verifier strategies produced larger F1 improvements on the
+text-only track (ΔF1 = +0.110 to +0.138) than on the image track
+(ΔF1 = +0.086 to +0.091). This is surprising because the text-only
+verifier receives no visual reference examples — only text labels
+describing what each example category looks like, alongside the
+candidate crop.
+
+Two possible explanations:
+
+1. **The text-only proposer generates more "obvious" false positives.**
+   Without visual examples, the proposer casts a wider net (140 detections
+   vs 132 for image track), and the additional detections include more
+   clear non-mounds that are trivially rejected by any verifier.
+
+2. **The text-only verifier benefits from reduced anchoring.** The
+   image-track verifier sees reference example images that may create
+   visual anchoring effects — the model may be more reluctant to reject
+   a candidate that visually resembles a positive reference example,
+   even if it lacks diagnostic features. The text-only verifier, freed
+   from visual anchoring, may make more independent assessments.
+
+The practical implication is that two-stage architectures may be
+especially valuable for modalities with higher false-positive rates,
+where the precision problem is most acute.
+
+*Document represents observations as of 2026-03-09. Session 43 added
+observations on task decomposition succeeding where ensemble diversity
+fails, adversarial framing as a VLM debiasing mechanism, and the
+surprising effectiveness of text-only verification.*

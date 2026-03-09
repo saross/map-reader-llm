@@ -1967,8 +1967,83 @@ that operational reliability is valuable independently of mean
 performance). This is the same "pattern recognition complementarity"
 noted in the Session 39 entry.
 
-*Last updated: 2026-03-08 (Session 42 — null primary hypothesis yielding
-significant secondary finding via user-prompted variance testing, belief
-revision from "abandon diversity" to "adopt for operational reliability",
-and the mechanistic hypothesis that HN rotation diversifies the FP
-boundary)*
+### Session 43 (2026-03-09): Task decomposition overturns ensemble correlation prediction
+
+**Instance boundary note**: Continuation instance; pilot design
+reconstructed from summary, results evaluation from direct experience.
+
+**Condition met**: Belief revision (two-stage expected to fail based on
+Phase 3c findings, but succeeded dramatically) and surprising results
+(F1 improvements of +0.086 to +0.138 far exceeding expectations).
+
+**The surprise**: Phase 3c established that VLM errors are highly
+correlated across diversity axes — the same model makes the same
+mistakes regardless of prompt phrasing, example rotation, or sampling
+temperature. The working hypothesis was that a second-stage verifier
+(same model, same temperature) would confirm the proposer's errors.
+Instead, all three verifier strategies produced substantial F1
+improvements, with the adversarial verifier on the text-only track
+reaching F1=0.796 (from 0.658 baseline).
+
+**The belief revision sequence**:
+
+1. "VLM errors are highly correlated across conditions" (Phase 3c
+   finding, well-supported)
+   → **Unchanged**: this finding remains valid
+
+2. "Therefore a same-model verifier will make the same errors as the
+   proposer" (logical extension)
+   → **Rejected**: verifiers reject 46–71% of false positives while
+   preserving 97–100% of true positives
+
+3. "Error correlation means two-stage is pointless" → "Error
+   correlation applies to identical tasks, not decomposed tasks"
+   (reframing)
+
+**Abductive structure**: The surprising fact is that the verifier
+succeeds where diversity failed. The explanatory hypothesis: Phase 3c's
+error correlation applies to *repeated identical tasks* (same model,
+same task type, varied parameters), but the proposer and verifier
+perform *structurally different tasks*:
+
+- Proposer: visual search across 1,344×1,344 pixel tile → recall-oriented
+- Verifier: binary classification on 150×150 pixel crop → precision-oriented
+
+The false positives that survive full-tile detection are "contextually
+plausible" symbols — they look like mounds within the scene's visual
+complexity. But when extracted and examined in isolation, they lack
+diagnostic features (outward-radiating rays, correct colour, correct
+size). The full-tile context creates visual noise that suppresses
+discrimination; isolation removes it.
+
+**Testable prediction**: If this explanation is correct, the verifier's
+probability assignments should correlate with the "obviousness" of the
+non-mound interpretation. Candidates with strong confusable features
+(triangulation points, benchmarks — visually distinct from mounds in
+isolation) should receive very low probabilities (0.0–0.1), while
+candidates that are genuinely ambiguous (partial symbols, boundary
+marks with radial features) should receive intermediate probabilities
+(0.3–0.5). The bimodal probability distribution observed in the pilot
+(clustering at 0.0–0.1 and 0.85–1.0) is consistent with this
+prediction.
+
+**Connection to prior entries**: This follows the pattern from
+Sessions 34 and 42 where formal experimental results overturned
+working assumptions. In Session 34, T=0.0 consensus unexpectedly
+worked via a mechanism not anticipated by the design. In Session 42,
+a null primary result yielded a significant secondary finding. Here,
+a method expected to fail succeeded dramatically. The common thread:
+informal reasoning about VLM behaviour is consistently less reliable
+than systematic experimental comparison, especially when the task
+structure differs from the comparison case in non-obvious ways.
+
+The user noted this pattern explicitly: "I am surprised by the efficacy
+of the two-stage pipeline — as with the text-only pipeline, it's not
+what I expected from preliminary work." This metacognitive awareness —
+recognising a recurring pattern of confounded expectations — is itself
+valuable for calibrating future predictions.
+
+*Last updated: 2026-03-09 (Session 43 — two-stage pipeline pilot
+overturns Phase 3c-based prediction that same-model verification would
+be ineffective, with the resolution that task decomposition circumvents
+the error correlation that defeats ensemble diversity)*

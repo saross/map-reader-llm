@@ -2418,6 +2418,83 @@ H9 not supported on either track. All 9 pairwise comparisons non-significant.
 - [ ] Paired permutation tests from Session 40 (carried forward)
 - [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
 
+## Session 43 — 2026-03-09 (H2 two-stage pilot recovery and evaluation, Phase 2e documentation)
+
+**Focus**: Recovering overnight pilot that hung, evaluating two-stage
+pipeline results, writing up Phase 2e carry-forward and pilot results
+**Duration**: ~2 hours (continuation from Session 42)
+**Instance**: Continuation instance (context compaction mid-session)
+
+**Instance boundary note**: Pilot was designed and launched by the
+previous instance. This instance diagnosed the hung process, recovered
+track 1 results, restarted track 2, evaluated all results, and wrote
+both the Phase 2e carry-forward and Phase 3d pilot results reports.
+
+### Accomplishments
+
+1. **Diagnosed and recovered hung pilot**: Process alive 12+ hours after
+   launch due to stdout buffering + API stall. Discovered track 1 had
+   completed successfully (3 verifier probability files saved). Killed
+   process, restarted track 2 with `PYTHONUNBUFFERED=1`
+2. **Evaluated track 1 results**: All three verifier strategies beat
+   baseline by +0.086 to +0.091 F1. Standard and checklist identical at
+   optimal threshold (F1=0.706); adversarial slightly better (F1=0.711)
+3. **Completed track 2**: 420 API calls completed in ~28 minutes. Even
+   larger improvements (+0.110 to +0.138 F1). Adversarial best (F1=0.796)
+4. **Wrote Phase 3d pilot results report**:
+   `results/phase3d-pilot-results.md` — full write-up with threshold
+   sensitivity, cross-track comparison, strategy analysis, go/no-go
+5. **Wrote Phase 2e carry-forward document** (retrospective):
+   `results/phase2e-carry-forward-parameters.md` — fills documentation
+   gap from Session 33 (25 days overdue)
+6. **Added Observation 150**: User's surprise at two-stage efficacy,
+   pattern of confounded expectations across the project
+7. **Completed reflections**: All five reflection documents updated
+
+### Key Results
+
+**H2 Two-Stage Pilot — Track 1 (Image)**:
+
+| Condition | F1 | ΔF1 | Precision | Recall |
+|---|---|---|---|---|
+| A (baseline) | 0.620 | — | 0.538 | 0.732 |
+| B (standard) | 0.706 | +0.086 | 0.683 | 0.732 |
+| C (adversarial) | 0.711 | +0.091 | 0.711 | 0.711 |
+| D (checklist) | 0.706 | +0.086 | 0.683 | 0.732 |
+
+**H2 Two-Stage Pilot — Track 2 (Text-only)**:
+
+| Condition | F1 | ΔF1 | Precision | Recall |
+|---|---|---|---|---|
+| A (baseline) | 0.658 | — | 0.557 | 0.804 |
+| B (standard) | 0.768 | +0.110 | 0.785 | 0.753 |
+| C (adversarial) | 0.796 | +0.138 | 0.809 | 0.784 |
+| D (checklist) | 0.782 | +0.124 | 0.770 | 0.794 |
+
+**Go/no-go**: GO — all conditions exceed ≥0.05 ΔF1 stopping criterion
+by wide margin.
+
+### Commits
+
+*(No commits this session — pending user review of results)*
+
+### Issues
+
+- **Pilot hung overnight**: stdout buffering hid progress; API stall
+  on track 2 transition. Fixed with `PYTHONUNBUFFERED=1`. Track 1
+  results recovered from output files despite silent console
+- **Monitoring gap**: `/loop` cron was for Phase 3c, not the pilot.
+  No automated monitoring caught the stall
+
+### Pending Work
+
+- [ ] Commit new files (verifier instructions, pilot script, results,
+  Phase 2e carry-forward, reflections)
+- [ ] Design full Phase 3d experiment based on pilot findings
+- [ ] User has extension ideas for the two-stage experiment
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
+  (carried forward)
+
 ---
 
 *New session entries should be appended above this line.*
