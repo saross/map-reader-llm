@@ -1,0 +1,79 @@
+{
+  "version": "detect_brief-text_high-recall_nulls-minimal-t0",
+  "description": "Experiment E ablation: high-recall text proposer with null examples, minimal thinking, AND T=0.0. Isolates the recall-biased prompt + removed hard negatives as the only remaining difference from baseline.",
+  "hypothesis": "H2",
+  "model": "gemini-3-flash",
+  "instruction_file": "detect_brief-text_high-recall.md",
+  "temperature": 0.0,
+  "max_output_tokens": 8192,
+  "include_example_images": false,
+  "examples": [
+    {
+      "path": "neutral-naming/example_01.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_02.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_03.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_04.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_05.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "neutral-naming/example_06.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "neutral-naming/example_07.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "neutral-naming/example_08.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "neutral-naming/example_09.png",
+      "label": "Negative",
+      "category": "canonical_negative"
+    },
+    {
+      "path": "neutral-naming/example_10.png",
+      "label": "Negative",
+      "category": "canonical_negative"
+    },
+    {
+      "path": "neutral-naming/example_15.png",
+      "label": "Negative",
+      "category": "null"
+    },
+    {
+      "path": "neutral-naming/example_16.png",
+      "label": "Negative",
+      "category": "null"
+    },
+    {
+      "path": "neutral-naming/example_17.png",
+      "label": "Negative",
+      "category": "null"
+    }
+  ],
+  "ordering_note": "Ablation: nulls restored (13 examples), minimal thinking, T=0.0. Only remaining diff from baseline: recall-bias prompt + no hard negatives (4 HN removed).",
+  "thinking_level": "minimal"
+}
