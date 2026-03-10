@@ -1,0 +1,4316 @@
+{
+  "version": "1.0",
+  "source_geojson": "/home/shawn/Code/map-reader-llm/outputs/phase3d-union/union_detections.geojson",
+  "tiles_dir": "/home/shawn/Code/map-reader-llm/inputs/tiles",
+  "padding": 75,
+  "total_detections": 184,
+  "successful_extractions": 184,
+  "failed_extractions": 0,
+  "missing_tiles": [],
+  "candidates": [
+    {
+      "candidate_id": 0,
+      "crop_file": "crops/candidate_00000.png",
+      "source_tile": "K-35-052-4_32635_x0_y0.png",
+      "centroid_x": 398433.2819125,
+      "centroid_y": 4704224.575172001,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y0.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            398433.28191250004,
+            4704224.575172
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 1,
+      "crop_file": "crops/candidate_00001.png",
+      "source_tile": "K-35-052-4_32635_x1344_y3136.png",
+      "centroid_x": 404976.5346459999,
+      "centroid_y": 4688905.680919499,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x1344_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            404978.4585665,
+            4688905.039613
+          ],
+          [
+            404974.610726,
+            4688906.3222265
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 2,
+      "crop_file": "crops/candidate_00002.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 399239.404493,
+      "centroid_y": 4697303.5927645005,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            399237.48057250003,
+            4697299.7449239995
+          ],
+          [
+            399241.328413,
+            4697307.440605
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 3,
+      "crop_file": "crops/candidate_00003.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 398384.54259950004,
+      "centroid_y": 4697181.7444825005,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398385.825213,
+            4697183.027096
+          ],
+          [
+            398383.259986,
+            4697180.4618689995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 4,
+      "crop_file": "crops/candidate_00004.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 398453.8037285001,
+      "centroid_y": 4697232.407715499,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398452.5211145,
+            4697233.049022
+          ],
+          [
+            398455.086342,
+            4697231.7664085
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 5,
+      "crop_file": "crops/candidate_00005.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 397218.64693449996,
+      "centroid_y": 4697719.159535999,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            397218.64693449996,
+            4697719.159536
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 6,
+      "crop_file": "crops/candidate_00006.png",
+      "source_tile": "K-35-052-4_32635_x3136_y0.png",
+      "centroid_x": 414854.582462,
+      "centroid_y": 4704066.8137125,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3136_y0.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            414854.58246199996,
+            4704066.8137125
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 7,
+      "crop_file": "crops/candidate_00007.png",
+      "source_tile": "K-35-052-4_32635_x2240_y1344.png",
+      "centroid_x": 410187.1519615,
+      "centroid_y": 4699201.860734001,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x2240_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            410187.1519615,
+            4699201.860734001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 8,
+      "crop_file": "crops/candidate_00008.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398340.2924345,
+      "centroid_y": 4694218.907314001,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398339.6511275,
+            4694217.6247005
+          ],
+          [
+            398340.933741,
+            4694220.1899275
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 9,
+      "crop_file": "crops/candidate_00009.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398333.87936650007,
+      "centroid_y": 4694112.450394,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398334.5206735,
+            4694113.7330075
+          ],
+          [
+            398333.23806,
+            4694111.1677805
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 10,
+      "crop_file": "crops/candidate_00010.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398256.922557,
+      "centroid_y": 4693765.503443999,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398257.563864,
+            4693766.144750999
+          ],
+          [
+            398256.2812505,
+            4693764.8621375
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 11,
+      "crop_file": "crops/candidate_00011.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398436.4884465,
+      "centroid_y": 4693867.471217,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398435.8471395,
+            4693871.3190575
+          ],
+          [
+            398437.129753,
+            4693863.6233765
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 12,
+      "crop_file": "crops/candidate_00012.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398519.8583235001,
+      "centroid_y": 4693882.862579,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398520.49963,
+            4693884.1451925
+          ],
+          [
+            398519.21701649996,
+            4693881.5799655
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 13,
+      "crop_file": "crops/candidate_00013.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398695.576372,
+      "centroid_y": 4693233.2188445,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398693.6524515,
+            4693237.7079920005
+          ],
+          [
+            398697.500292,
+            4693228.729697499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 14,
+      "crop_file": "crops/candidate_00014.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398683.39154349995,
+      "centroid_y": 4693117.1423235005,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            398683.3915435,
+            4693117.1423235
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 15,
+      "crop_file": "crops/candidate_00015.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398924.52288000006,
+      "centroid_y": 4693558.361365001,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            398924.52288,
+            4693558.361365
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 16,
+      "crop_file": "crops/candidate_00016.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 399206.05654200003,
+      "centroid_y": 4693484.6110895,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            399206.6978485,
+            4693481.4045555
+          ],
+          [
+            399205.415235,
+            4693487.817623001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 17,
+      "crop_file": "crops/candidate_00017.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 399077.795193,
+      "centroid_y": 4694166.320160501,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            399078.43649949995,
+            4694168.885387501
+          ],
+          [
+            399077.153886,
+            4694163.754933501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 18,
+      "crop_file": "crops/candidate_00018.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 399266.339376,
+      "centroid_y": 4694118.2221545,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            399270.8285235,
+            4694117.580847999
+          ],
+          [
+            399261.850229,
+            4694118.8634615
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 19,
+      "crop_file": "crops/candidate_00019.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398675.695862,
+      "centroid_y": 4693351.860592499,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            398673.1306355,
+            4693358.27366
+          ],
+          [
+            398678.2610895,
+            4693345.447525
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 20,
+      "crop_file": "crops/candidate_00020.png",
+      "source_tile": "K-35-052-4_32635_x2688_y0.png",
+      "centroid_x": 411616.6246989999,
+      "centroid_y": 4704139.922681,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x2688_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            411615.98339249997,
+            4704141.205295
+          ],
+          [
+            411617.266006,
+            4704138.640068
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 21,
+      "crop_file": "crops/candidate_00021.png",
+      "source_tile": "K-35-052-4_32635_x3136_y3584.png",
+      "centroid_x": 414258.80849450006,
+      "centroid_y": 4687363.3381945,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3136_y3584.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            414265.8628685,
+            4687362.055581
+          ],
+          [
+            414251.7541205,
+            4687364.620808
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 22,
+      "crop_file": "crops/candidate_00022.png",
+      "source_tile": "K-35-052-4_32635_x3136_y2240.png",
+      "centroid_x": 413482.18602449994,
+      "centroid_y": 4694113.733007499,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3136_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            413484.7512515,
+            4694113.7330075
+          ],
+          [
+            413479.6207975,
+            4694113.7330075
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 23,
+      "crop_file": "crops/candidate_00023.png",
+      "source_tile": "K-35-052-4_32635_x3136_y2240.png",
+      "centroid_x": 412732.4984384999,
+      "centroid_y": 4692732.999582499,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3136_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            412731.857131,
+            4692734.9235025
+          ],
+          [
+            412733.139745,
+            4692731.075662
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 24,
+      "crop_file": "crops/candidate_00024.png",
+      "source_tile": "K-35-052-4_32635_x3136_y2240.png",
+      "centroid_x": 415018.7569895001,
+      "centroid_y": 4694660.767662001,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3136_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            415014.9091485,
+            4694661.408969
+          ],
+          [
+            415022.60482949996,
+            4694660.1263555
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 25,
+      "crop_file": "crops/candidate_00025.png",
+      "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+      "centroid_x": 416633.56737649994,
+      "centroid_y": 4688758.8216745,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            416633.5673765,
+            4688758.8216745
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 26,
+      "crop_file": "crops/candidate_00026.png",
+      "source_tile": "K-35-052-4_32635_x448_y3136.png",
+      "centroid_x": 400259.08222,
+      "centroid_y": 4688379.168081,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            400259.7235265,
+            4688380.4506945
+          ],
+          [
+            400258.440913,
+            4688377.8854674995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 27,
+      "crop_file": "crops/candidate_00027.png",
+      "source_tile": "K-35-052-4_32635_x448_y1344.png",
+      "centroid_x": 400177.63626299996,
+      "centroid_y": 4699051.7949545,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            400171.2231955,
+            4699046.664501
+          ],
+          [
+            400184.0493305,
+            4699056.925409
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 28,
+      "crop_file": "crops/candidate_00028.png",
+      "source_tile": "K-35-052-4_32635_x448_y1344.png",
+      "centroid_x": 401248.61852950003,
+      "centroid_y": 4698556.706146999,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            401248.6185295,
+            4698556.706147
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 29,
+      "crop_file": "crops/candidate_00029.png",
+      "source_tile": "K-35-052-4_32635_x448_y1344.png",
+      "centroid_x": 400892.693285,
+      "centroid_y": 4697427.364966,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            400889.4867515,
+            4697426.7236595005
+          ],
+          [
+            400895.89981900004,
+            4697428.006273
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 30,
+      "crop_file": "crops/candidate_00030.png",
+      "source_tile": "K-35-052-4_32635_x448_y1344.png",
+      "centroid_x": 399231.0675050001,
+      "centroid_y": 4697303.592764501,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            399231.06750500004,
+            4697303.5927645005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 31,
+      "crop_file": "crops/candidate_00031.png",
+      "source_tile": "K-35-052-4_32635_x3584_y3584.png",
+      "centroid_x": 415385.58444799995,
+      "centroid_y": 4687571.12158,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3584_y3584.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            415385.584448,
+            4687571.12158
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 32,
+      "crop_file": "crops/candidate_00032.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y1344.png",
+      "centroid_x": 418939.45228200004,
+      "centroid_y": 4697870.228947,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            418941.37612200005,
+            4697870.228947
+          ],
+          [
+            418937.52844200004,
+            4697870.228947
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 33,
+      "crop_file": "crops/candidate_00033.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y1344.png",
+      "centroid_x": 418584.82445449993,
+      "centroid_y": 4696628.7109135,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            418582.2593355,
+            4696628.7109135
+          ],
+          [
+            418587.3895745,
+            4696628.7109135
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 34,
+      "crop_file": "crops/candidate_00034.png",
+      "source_tile": "K-35-052-4_32635_x448_y896.png",
+      "centroid_x": 399256.078468,
+      "centroid_y": 4700099.690179,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            399251.589321,
+            4700098.407565501
+          ],
+          [
+            399260.5676155,
+            4700100.972792501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 35,
+      "crop_file": "crops/candidate_00035.png",
+      "source_tile": "K-35-052-4_32635_x448_y896.png",
+      "centroid_x": 401621.21774899994,
+      "centroid_y": 4700319.6583925,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            401619.293829,
+            4700329.277993999
+          ],
+          [
+            401623.14166950004,
+            4700310.0387915
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 36,
+      "crop_file": "crops/candidate_00036.png",
+      "source_tile": "K-35-052-4_32635_x448_y896.png",
+      "centroid_x": 401339.6840875,
+      "centroid_y": 4699383.9918495,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            401337.1188605,
+            4699392.970144
+          ],
+          [
+            401342.2493145,
+            4699375.0135555
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 37,
+      "crop_file": "crops/candidate_00037.png",
+      "source_tile": "K-35-052-4_32635_x448_y896.png",
+      "centroid_x": 400157.11444699997,
+      "centroid_y": 4699064.6210900005,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y896.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            400157.11444699997,
+            4699064.6210900005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 38,
+      "crop_file": "crops/candidate_00038.png",
+      "source_tile": "K-35-052-4_32635_x896_y3136.png",
+      "centroid_x": 403157.7887135,
+      "centroid_y": 4688014.905849,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x896_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            403154.58218,
+            4688012.340622
+          ],
+          [
+            403160.9952475,
+            4688017.4710760005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 39,
+      "crop_file": "crops/candidate_00039.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y2688.png",
+      "centroid_x": 418176.97039000003,
+      "centroid_y": 4690540.3988185,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y2688.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            418176.97039000003,
+            4690540.3988185
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 40,
+      "crop_file": "crops/candidate_00040.png",
+      "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+      "centroid_x": 428457.970969,
+      "centroid_y": 4703359.585543999,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            428457.970969,
+            4703359.585543999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 41,
+      "crop_file": "crops/candidate_00041.png",
+      "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+      "centroid_x": 426636.7358365,
+      "centroid_y": 4701806.4054415,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            426636.7358365,
+            4701806.4054415
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 42,
+      "crop_file": "crops/candidate_00042.png",
+      "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+      "centroid_x": 428731.15623900003,
+      "centroid_y": 4702858.1046025,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            428731.15623900003,
+            4702858.1046025
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 43,
+      "crop_file": "crops/candidate_00043.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y0.png",
+      "centroid_x": 419878.2861669999,
+      "centroid_y": 4703542.350337001,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            419873.79720749997,
+            4703534.013697499
+          ],
+          [
+            419882.7751265,
+            4703550.686977
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 44,
+      "crop_file": "crops/candidate_00044.png",
+      "source_tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+      "centroid_x": 431988.2172385,
+      "centroid_y": 4696538.931716,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            431986.2933985,
+            4696541.4968365
+          ],
+          [
+            431990.14107799996,
+            4696536.366596499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 45,
+      "crop_file": "crops/candidate_00045.png",
+      "source_tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+      "centroid_x": 433027.73208,
+      "centroid_y": 4696676.1656315,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            433027.73208,
+            4696676.1656315
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 46,
+      "crop_file": "crops/candidate_00046.png",
+      "source_tile": "K-35-053-3_Elenovo_x3136_y1344.png",
+      "centroid_x": 434537.9464244999,
+      "centroid_y": 4697065.4225775,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3136_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            434536.0225845,
+            4697063.4987375
+          ],
+          [
+            434539.870264,
+            4697067.3464170005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 47,
+      "crop_file": "crops/candidate_00047.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y3136.png",
+      "centroid_x": 420833.15205150004,
+      "centroid_y": 4689868.3374035,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            420834.4346115,
+            4689868.3374035
+          ],
+          [
+            420831.86949149997,
+            4689868.3374035
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 48,
+      "crop_file": "crops/candidate_00048.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+      "centroid_x": 420079.64807949995,
+      "centroid_y": 4702912.6134,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            420075.15911949996,
+            4702913.254680499
+          ],
+          [
+            420084.1370395,
+            4702911.972120499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 49,
+      "crop_file": "crops/candidate_00049.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+      "centroid_x": 420601.6499805,
+      "centroid_y": 4702565.0396529995,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            420606.13894,
+            4702566.963493001
+          ],
+          [
+            420597.1610205,
+            4702563.115813
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 50,
+      "crop_file": "crops/candidate_00050.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+      "centroid_x": 421763.64929750003,
+      "centroid_y": 4702792.0527645,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            421763.00801700004,
+            4702790.128924999
+          ],
+          [
+            421764.2905775,
+            4702793.9766045
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 51,
+      "crop_file": "crops/candidate_00051.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+      "centroid_x": 422132.3852835,
+      "centroid_y": 4703251.850508001,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            422132.38528349996,
+            4703251.850508001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 52,
+      "crop_file": "crops/candidate_00052.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+      "centroid_x": 421005.0150854999,
+      "centroid_y": 4691980.7136455,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            421005.01508549997,
+            4691980.7136455
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 53,
+      "crop_file": "crops/candidate_00053.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+      "centroid_x": 420627.9424595001,
+      "centroid_y": 4690828.974808,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            420627.94245950005,
+            4690828.974808
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 54,
+      "crop_file": "crops/candidate_00054.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+      "centroid_x": 421112.7501215,
+      "centroid_y": 4690006.212598501,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            421110.18500149995,
+            4690008.1364385
+          ],
+          [
+            421115.31524100003,
+            4690004.2887585
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 55,
+      "crop_file": "crops/candidate_00055.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+      "centroid_x": 420828.02181149996,
+      "centroid_y": 4689868.3374034995,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            420826.739252,
+            4689869.619963501
+          ],
+          [
+            420829.30437150004,
+            4689867.0548435
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 56,
+      "crop_file": "crops/candidate_00056.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 421253.1904365,
+      "centroid_y": 4705314.848191501,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            421246.1363565,
+            4705316.7720315
+          ],
+          [
+            421260.24451600004,
+            4705312.9243515
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 57,
+      "crop_file": "crops/candidate_00057.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 420842.7712515,
+      "centroid_y": 4704080.384237,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            420840.8474115,
+            4704082.949357
+          ],
+          [
+            420844.695091,
+            4704077.819117
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 58,
+      "crop_file": "crops/candidate_00058.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 421889.3401725,
+      "centroid_y": 4704201.5861525,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            421892.5465725,
+            4704202.227432501
+          ],
+          [
+            421886.1337725,
+            4704200.9448725
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 59,
+      "crop_file": "crops/candidate_00059.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 419850.7111285,
+      "centroid_y": 4703534.0136975,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            419850.7111285,
+            4703534.013697499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 60,
+      "crop_file": "crops/candidate_00060.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 422138.7980835,
+      "centroid_y": 4703322.391305501,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            422138.7980835,
+            4703322.391305501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 61,
+      "crop_file": "crops/candidate_00061.png",
+      "source_tile": "K-35-053-3_Elenovo_x896_y2240.png",
+      "centroid_x": 423854.8633,
+      "centroid_y": 4694325.233238501,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x896_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            423853.58074,
+            4694322.6681185
+          ],
+          [
+            423856.14586000005,
+            4694327.7983585
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 62,
+      "crop_file": "crops/candidate_00062.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 436405.994995,
+      "centroid_y": 4693654.454383,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            436408.560115,
+            4693655.736943
+          ],
+          [
+            436403.42987500003,
+            4693653.171823001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 63,
+      "crop_file": "crops/candidate_00063.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 436725.35242350004,
+      "centroid_y": 4693385.116792999,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            436733.047783,
+            4693386.399352999
+          ],
+          [
+            436717.6570635,
+            4693383.8342335
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 64,
+      "crop_file": "crops/candidate_00064.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 437591.080391,
+      "centroid_y": 4693573.6531065,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            437592.362951,
+            4693573.653106499
+          ],
+          [
+            437589.797831,
+            4693573.653106499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 65,
+      "crop_file": "crops/candidate_00065.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 437868.7546205,
+      "centroid_y": 4693412.0505525,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            437871.9610205,
+            4693406.9203125
+          ],
+          [
+            437865.5482205,
+            4693417.180792499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 66,
+      "crop_file": "crops/candidate_00066.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 435586.43918499997,
+      "centroid_y": 4692723.315858001,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            435591.569425,
+            4692722.033298001
+          ],
+          [
+            435581.3089455,
+            4692724.598418
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 67,
+      "crop_file": "crops/candidate_00067.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 436775.37226100004,
+      "centroid_y": 4692759.2275365,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            436776.654821,
+            4692760.5100965
+          ],
+          [
+            436774.089701,
+            4692757.9449765
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 68,
+      "crop_file": "crops/candidate_00068.png",
+      "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+      "centroid_x": 437133.8477679999,
+      "centroid_y": 4692452.695707999,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x3584_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            437143.4669675,
+            4692452.695708
+          ],
+          [
+            437124.2285685,
+            4692452.695708
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 69,
+      "crop_file": "crops/candidate_00069.png",
+      "source_tile": "K-35-053-3_Elenovo_x896_y448.png",
+      "centroid_x": 422145.21088300005,
+      "centroid_y": 4703221.710349,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x896_y448.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            422146.493443,
+            4703227.4818685
+          ],
+          [
+            422143.9283235,
+            4703215.938829
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 70,
+      "crop_file": "crops/candidate_00070.png",
+      "source_tile": "K-35-053-3_Elenovo_x896_y448.png",
+      "centroid_x": 422572.94462749996,
+      "centroid_y": 4701410.094416,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x896_y448.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            422569.7382275,
+            4701411.376976
+          ],
+          [
+            422576.1510275,
+            4701408.811856
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 71,
+      "crop_file": "crops/candidate_00071.png",
+      "source_tile": "K-35-062-2_Rakovski_x1792_y3584.png",
+      "centroid_x": 323457.9297825,
+      "centroid_y": 4670719.431821501,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x1792_y3584.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            323453.43290200003,
+            4670714.9349415
+          ],
+          [
+            323462.4266625,
+            4670723.9287014995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 72,
+      "crop_file": "crops/candidate_00072.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "centroid_x": 326868.4921310001,
+      "centroid_y": 4677620.857949001,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            326864.637662,
+            4677619.573125999
+          ],
+          [
+            326872.34659950004,
+            4677622.142772
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 73,
+      "crop_file": "crops/candidate_00073.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "centroid_x": 326081.5381135,
+      "centroid_y": 4677193.6543395,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            326080.895702,
+            4677190.4422825
+          ],
+          [
+            326082.180525,
+            4677196.866397
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 74,
+      "crop_file": "crops/candidate_00074.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "centroid_x": 325967.831288,
+      "centroid_y": 4677178.878876501,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            325965.2616425,
+            4677180.1636995
+          ],
+          [
+            325970.40093400003,
+            4677177.594054
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 75,
+      "crop_file": "crops/candidate_00075.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "centroid_x": 325291.3720390001,
+      "centroid_y": 4677119.1346125,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            325292.0144505,
+            4677118.492201
+          ],
+          [
+            325290.7296275,
+            4677119.777024
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 76,
+      "crop_file": "crops/candidate_00076.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "centroid_x": 326059.6961245,
+      "centroid_y": 4676464.5173525,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            326062.9081815,
+            4676463.2325295005
+          ],
+          [
+            326056.484067,
+            4676465.802175
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 77,
+      "crop_file": "crops/candidate_00077.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+      "centroid_x": 327595.70188350003,
+      "centroid_y": 4676134.317870999,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y2240.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            327595.7018835,
+            4676134.317871
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 78,
+      "crop_file": "crops/candidate_00078.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y448.png",
+      "centroid_x": 325590.09336,
+      "centroid_y": 4684854.4107925,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            325590.09336,
+            4684854.4107925
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 79,
+      "crop_file": "crops/candidate_00079.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y2240.png",
+      "centroid_x": 327590.5625925,
+      "centroid_y": 4676144.5964545,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y2240.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            327587.99294649996,
+            4676144.5964545
+          ],
+          [
+            327593.132238,
+            4676144.596454
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 80,
+      "crop_file": "crops/candidate_00080.png",
+      "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+      "centroid_x": 324412.5531855,
+      "centroid_y": 4688133.278795,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            324414.48042000004,
+            4688129.4243265
+          ],
+          [
+            324410.625951,
+            4688137.133264
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 81,
+      "crop_file": "crops/candidate_00081.png",
+      "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+      "centroid_x": 323046.78645849996,
+      "centroid_y": 4688225.7860425,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            323055.13780749997,
+            4688224.50122
+          ],
+          [
+            323038.43510999996,
+            4688227.070865501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 82,
+      "crop_file": "crops/candidate_00082.png",
+      "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+      "centroid_x": 324747.891959,
+      "centroid_y": 4687865.393224,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            324747.2495475,
+            4687864.750812501
+          ],
+          [
+            324748.5343705,
+            4687866.035635
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 83,
+      "crop_file": "crops/candidate_00083.png",
+      "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+      "centroid_x": 324697.14145450003,
+      "centroid_y": 4687661.106385,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            324697.14145450003,
+            4687661.7487965
+          ],
+          [
+            324697.14145450003,
+            4687660.4639735
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 84,
+      "crop_file": "crops/candidate_00084.png",
+      "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+      "centroid_x": 325381.30964100006,
+      "centroid_y": 4687368.8091784995,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x1792_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            325381.9520525,
+            4687367.524356
+          ],
+          [
+            325380.6672295,
+            4687370.0940015
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 85,
+      "crop_file": "crops/candidate_00085.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "centroid_x": 328822.707739,
+      "centroid_y": 4674582.8942370005,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            328818.8532705,
+            4674582.2518255
+          ],
+          [
+            328826.5622075,
+            4674583.536648501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 86,
+      "crop_file": "crops/candidate_00086.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "centroid_x": 329185.67020349996,
+      "centroid_y": 4674149.2665135,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            329183.7429695,
+            4674150.5513365
+          ],
+          [
+            329187.59743850003,
+            4674147.9816905
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 87,
+      "crop_file": "crops/candidate_00087.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "centroid_x": 328866.391717,
+      "centroid_y": 4673759.9651795,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            328866.39171700005,
+            4673759.9651795
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 88,
+      "crop_file": "crops/candidate_00088.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "centroid_x": 328488.65378899995,
+      "centroid_y": 4681676.401385499,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            328487.36896600004,
+            4681679.613443
+          ],
+          [
+            328489.9386115,
+            4681673.189328499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 89,
+      "crop_file": "crops/candidate_00089.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "centroid_x": 328017.1237905,
+      "centroid_y": 4681639.1415225,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            328024.8327275,
+            4681638.4991105
+          ],
+          [
+            328009.4148525,
+            4681639.783934
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 90,
+      "crop_file": "crops/candidate_00090.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "centroid_x": 328277.9428355,
+      "centroid_y": 4681178.532518001,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            328277.9428355,
+            4681178.532517999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 91,
+      "crop_file": "crops/candidate_00091.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "centroid_x": 329158.04651200003,
+      "centroid_y": 4680906.1500665,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            329155.476866,
+            4680904.8652435
+          ],
+          [
+            329160.6161575,
+            4680907.434889
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 92,
+      "crop_file": "crops/candidate_00092.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y1344.png",
+      "centroid_x": 332165.1744745,
+      "centroid_y": 4680802.0794125,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            332165.816886,
+            4680803.3642355
+          ],
+          [
+            332164.5320635,
+            4680800.79459
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 93,
+      "crop_file": "crops/candidate_00093.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+      "centroid_x": 330340.72597749997,
+      "centroid_y": 4679548.734688,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            330337.5139205,
+            4679546.807453999
+          ],
+          [
+            330343.938035,
+            4679550.6619225
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 94,
+      "crop_file": "crops/candidate_00094.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+      "centroid_x": 331371.79634349997,
+      "centroid_y": 4679510.832413,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            331371.796343,
+            4679512.117236
+          ],
+          [
+            331371.796343,
+            4679509.5475905
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 95,
+      "crop_file": "crops/candidate_00095.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+      "centroid_x": 330931.10209349997,
+      "centroid_y": 4678952.57687,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y1792.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            330931.10209349997,
+            4678951.9344585
+          ],
+          [
+            330931.10209349997,
+            4678953.219281
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 96,
+      "crop_file": "crops/candidate_00096.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y2240.png",
+      "centroid_x": 332230.0580305,
+      "centroid_y": 4675619.103894001,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y2240.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            332230.0580305,
+            4675619.103894001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 97,
+      "crop_file": "crops/candidate_00097.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y896.png",
+      "centroid_x": 330171.7717679999,
+      "centroid_y": 4683625.4777025,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            330170.4869455,
+            4683624.835291
+          ],
+          [
+            330173.056591,
+            4683626.1201140005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 98,
+      "crop_file": "crops/candidate_00098.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y3136.png",
+      "centroid_x": 460211.25198,
+      "centroid_y": 4633561.712485,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            460207.387809,
+            4633563.6445705
+          ],
+          [
+            460215.11615,
+            4633559.7804000005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 99,
+      "crop_file": "crops/candidate_00099.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y3136.png",
+      "centroid_x": 459039.1202225,
+      "centroid_y": 4632378.6322449995,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            459032.67993800004,
+            4632377.344188
+          ],
+          [
+            459045.560507,
+            4632379.920302
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 100,
+      "crop_file": "crops/candidate_00100.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y3136.png",
+      "centroid_x": 459292.86742749996,
+      "centroid_y": 4631925.2362245,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y3136.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            459301.883825,
+            4631926.5242815
+          ],
+          [
+            459283.851029,
+            4631923.948168
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 101,
+      "crop_file": "crops/candidate_00101.png",
+      "source_tile": "K-35-062-2_Rakovski_x3584_y448.png",
+      "centroid_x": 333529.0139675,
+      "centroid_y": 4685487.8284745,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3584_y448.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            333526.4443215,
+            4685487.828475
+          ],
+          [
+            333531.583613,
+            4685487.828474499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 102,
+      "crop_file": "crops/candidate_00102.png",
+      "source_tile": "K-35-062-2_Rakovski_x3584_y448.png",
+      "centroid_x": 333842.51075099997,
+      "centroid_y": 4686907.557763,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3584_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            333842.510751,
+            4686907.557763
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 103,
+      "crop_file": "crops/candidate_00103.png",
+      "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+      "centroid_x": 332778.03499049996,
+      "centroid_y": 4681793.320269001,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            332779.962225,
+            4681793.9626805
+          ],
+          [
+            332776.1077565,
+            4681792.677857
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 104,
+      "crop_file": "crops/candidate_00104.png",
+      "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+      "centroid_x": 333674.84136449994,
+      "centroid_y": 4682277.0560845,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            333674.1989535,
+            4682280.9105535
+          ],
+          [
+            333675.483776,
+            4682273.201616
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 105,
+      "crop_file": "crops/candidate_00105.png",
+      "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+      "centroid_x": 332165.1744745,
+      "centroid_y": 4680802.721824501,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            332165.816886,
+            4680803.364236
+          ],
+          [
+            332164.532063,
+            4680802.0794130005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 106,
+      "crop_file": "crops/candidate_00106.png",
+      "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+      "centroid_x": 332594.3053185,
+      "centroid_y": 4679918.763679001,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3584_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            332588.52361549996,
+            4679919.4060905
+          ],
+          [
+            332600.087021,
+            4679918.1212675
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 107,
+      "crop_file": "crops/candidate_00107.png",
+      "source_tile": "K-35-078-1_Lesovo_x2688_y896.png",
+      "centroid_x": 472590.7666125,
+      "centroid_y": 4644729.8096265,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2688_y896.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            472590.7666125,
+            4644729.8096265
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 108,
+      "crop_file": "crops/candidate_00108.png",
+      "source_tile": "K-35-078-1_Lesovo_x1344_y2240.png",
+      "centroid_x": 467651.068494,
+      "centroid_y": 4638025.473587999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            467651.068494,
+            4638025.473588
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 109,
+      "crop_file": "crops/candidate_00109.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+      "centroid_x": 330677.9919855,
+      "centroid_y": 4672676.8594875,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            330677.9919855,
+            4672676.8594875
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 110,
+      "crop_file": "crops/candidate_00110.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+      "centroid_x": 330656.14999649994,
+      "centroid_y": 4673022.476843,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            330656.1499965,
+            4673022.476842999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 111,
+      "crop_file": "crops/candidate_00111.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+      "centroid_x": 459358.55832799996,
+      "centroid_y": 4634766.689693,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            459358.558328,
+            4634766.689693
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 112,
+      "crop_file": "crops/candidate_00112.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+      "centroid_x": 459234.904868,
+      "centroid_y": 4633924.300496,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            459234.904868,
+            4633924.300496
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 113,
+      "crop_file": "crops/candidate_00113.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "centroid_x": 471293.693338,
+      "centroid_y": 4632194.440111499,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            471293.693338,
+            4632194.440111499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 114,
+      "crop_file": "crops/candidate_00114.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y1344.png",
+      "centroid_x": 471823.084714,
+      "centroid_y": 4642589.0590985,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            471820.5086005,
+            4642590.347156
+          ],
+          [
+            471825.660828,
+            4642587.7710420005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 115,
+      "crop_file": "crops/candidate_00115.png",
+      "source_tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+      "centroid_x": 473323.6709745,
+      "centroid_y": 4640542.3367235,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            473323.6709745,
+            4640542.3367235
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 116,
+      "crop_file": "crops/candidate_00116.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 317876.6591695,
+      "centroid_y": 4684488.236269999,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            317885.010518,
+            4684488.23627
+          ],
+          [
+            317868.3078205,
+            4684488.23627
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 117,
+      "crop_file": "crops/candidate_00117.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 317670.445096,
+      "centroid_y": 4683866.381994,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            317670.445096,
+            4683866.381994
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 118,
+      "crop_file": "crops/candidate_00118.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 318509.43444,
+      "centroid_y": 4683692.930904,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            318509.43444,
+            4683692.930904
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 119,
+      "crop_file": "crops/candidate_00119.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 316789.6990085,
+      "centroid_y": 4683230.394666,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            316787.771774,
+            4683234.2491345
+          ],
+          [
+            316791.62624250003,
+            4683226.540197
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 120,
+      "crop_file": "crops/candidate_00120.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 318199.149713,
+      "centroid_y": 4682396.544613,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            318197.222479,
+            4682395.25979
+          ],
+          [
+            318201.0769475,
+            4682397.829436
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 121,
+      "crop_file": "crops/candidate_00121.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y1792.png",
+      "centroid_x": 474186.669081,
+      "centroid_y": 4639189.877004,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y1792.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            474186.66908100003,
+            4639189.877003999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 122,
+      "crop_file": "crops/candidate_00122.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y448.png",
+      "centroid_x": 475209.3862410001,
+      "centroid_y": 4647165.525179001,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            475209.38624100003,
+            4647165.525179001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 123,
+      "crop_file": "crops/candidate_00123.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+      "centroid_x": 475029.70230649994,
+      "centroid_y": 4642962.5955925,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            475022.617994,
+            4642960.019479
+          ],
+          [
+            475036.786619,
+            4642965.1717064995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 124,
+      "crop_file": "crops/candidate_00124.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+      "centroid_x": 474656.80984099995,
+      "centroid_y": 4640899.128478,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            474656.809841,
+            4640899.128478
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 125,
+      "crop_file": "crops/candidate_00125.png",
+      "source_tile": "K-35-078-1_Lesovo_x448_y1792.png",
+      "centroid_x": 461764.0045430001,
+      "centroid_y": 4638915.520888999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x448_y1792.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            461762.072458,
+            4638916.808946
+          ],
+          [
+            461765.9366285,
+            4638914.232832
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 126,
+      "crop_file": "crops/candidate_00126.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y1344.png",
+      "centroid_x": 477364.30539399997,
+      "centroid_y": 4640908.144876,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y1344.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            477364.305394,
+            4640908.144876
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 127,
+      "crop_file": "crops/candidate_00127.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y448.png",
+      "centroid_x": 478794.048526,
+      "centroid_y": 4647327.820344999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y448.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            478794.048526,
+            4647327.820344999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 128,
+      "crop_file": "crops/candidate_00128.png",
+      "source_tile": "K-35-078-1_Lesovo_x896_y1792.png",
+      "centroid_x": 462997.31900200003,
+      "centroid_y": 4640726.528856999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x896_y1792.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            462997.31900200003,
+            4640726.528857
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 129,
+      "crop_file": "crops/candidate_00129.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+      "centroid_x": 477475.078285,
+      "centroid_y": 4649351.357697001,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            477476.36634199996,
+            4649351.357697001
+          ],
+          [
+            477473.790228,
+            4649351.357697001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 130,
+      "crop_file": "crops/candidate_00130.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+      "centroid_x": 477949.08321550005,
+      "centroid_y": 4648248.7810115,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+        "source_tracks": [
+          "track1-image",
+          "track2-text"
+        ],
+        "proposer_votes": 2,
+        "cluster_size": 2,
+        "member_centroids": [
+          [
+            477945.21904500003,
+            4648243.6287835
+          ],
+          [
+            477952.94738599996,
+            4648253.9332385
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 131,
+      "crop_file": "crops/candidate_00131.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+      "centroid_x": 478872.61999549996,
+      "centroid_y": 4647329.108402001,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+        "source_tracks": [
+          "track1-image"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            478872.61999549996,
+            4647329.108402001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 132,
+      "crop_file": "crops/candidate_00132.png",
+      "source_tile": "K-35-052-4_32635_x0_y0.png",
+      "centroid_x": 398628.2391635,
+      "centroid_y": 4704824.8382865,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            398628.2391635,
+            4704824.8382865
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 133,
+      "crop_file": "crops/candidate_00133.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 397239.1687505,
+      "centroid_y": 4697710.1812415,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            397239.16875049996,
+            4697710.181241499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 134,
+      "crop_file": "crops/candidate_00134.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398963.001285,
+      "centroid_y": 4693546.8178435,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            398963.001285,
+            4693546.8178435005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 135,
+      "crop_file": "crops/candidate_00135.png",
+      "source_tile": "K-35-052-4_32635_x0_y2240.png",
+      "centroid_x": 398730.848243,
+      "centroid_y": 4693113.2944829995,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2240.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            398730.848243,
+            4693113.294483
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 136,
+      "crop_file": "crops/candidate_00136.png",
+      "source_tile": "K-35-052-4_32635_x2240_y1344.png",
+      "centroid_x": 410250.0000225,
+      "centroid_y": 4697362.5929849995,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x2240_y1344.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            410250.0000225,
+            4697362.592985
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 137,
+      "crop_file": "crops/candidate_00137.png",
+      "source_tile": "K-35-052-4_32635_x2688_y0.png",
+      "centroid_x": 410993.91584850004,
+      "centroid_y": 4705050.5782615,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x2688_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            410993.9158485,
+            4705050.5782615
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 138,
+      "crop_file": "crops/candidate_00138.png",
+      "source_tile": "K-35-052-4_32635_x3136_y0.png",
+      "centroid_x": 414832.7780325,
+      "centroid_y": 4705321.209708501,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3136_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            414832.7780325,
+            4705321.209708501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 139,
+      "crop_file": "crops/candidate_00139.png",
+      "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+      "centroid_x": 415665.19418949995,
+      "centroid_y": 4689042.2792565,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            415665.1941895,
+            4689042.2792565
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 140,
+      "crop_file": "crops/candidate_00140.png",
+      "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+      "centroid_x": 417176.11288400006,
+      "centroid_y": 4689366.780470501,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            417176.112884,
+            4689366.7804705
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 141,
+      "crop_file": "crops/candidate_00141.png",
+      "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+      "centroid_x": 416914.4597315001,
+      "centroid_y": 4688002.079714001,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3584_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            416914.4597315,
+            4688002.079714
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 142,
+      "crop_file": "crops/candidate_00142.png",
+      "source_tile": "K-35-052-4_32635_x3584_y3584.png",
+      "centroid_x": 416681.0240759999,
+      "centroid_y": 4687431.3167095,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x3584_y3584.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            416681.024076,
+            4687431.3167095
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 143,
+      "crop_file": "crops/candidate_00143.png",
+      "source_tile": "K-35-052-4_32635_x448_y896.png",
+      "centroid_x": 400186.61455699994,
+      "centroid_y": 4699058.2080225,
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x448_y896.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            400186.614557,
+            4699058.208022499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 144,
+      "crop_file": "crops/candidate_00144.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y2688.png",
+      "centroid_x": 419798.12617,
+      "centroid_y": 4690536.551139001,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            419798.12617,
+            4690536.551139001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 145,
+      "crop_file": "crops/candidate_00145.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y2688.png",
+      "centroid_x": 418238.533268,
+      "centroid_y": 4690262.083309,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            418238.533268,
+            4690262.083309
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 146,
+      "crop_file": "crops/candidate_00146.png",
+      "source_tile": "K-35-053-3_Elenovo_x0_y3136.png",
+      "centroid_x": 418425.78702099994,
+      "centroid_y": 4688274.1153825,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x0_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            418425.787021,
+            4688274.1153825
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 147,
+      "crop_file": "crops/candidate_00147.png",
+      "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+      "centroid_x": 428418.211611,
+      "centroid_y": 4703360.868104001,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            428418.211611,
+            4703360.868104
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 148,
+      "crop_file": "crops/candidate_00148.png",
+      "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+      "centroid_x": 426635.45327650005,
+      "centroid_y": 4701765.3635225,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x1792_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            426635.4532765,
+            4701765.3635225
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 149,
+      "crop_file": "crops/candidate_00149.png",
+      "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+      "centroid_x": 430098.3651485,
+      "centroid_y": 4703412.170501499,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            430098.3651485,
+            4703412.1705015
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 150,
+      "crop_file": "crops/candidate_00150.png",
+      "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+      "centroid_x": 430858.9232004999,
+      "centroid_y": 4702109.0895905,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            430858.92320049996,
+            4702109.0895905
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 151,
+      "crop_file": "crops/candidate_00151.png",
+      "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+      "centroid_x": 430333.07361950004,
+      "centroid_y": 4701013.783390501,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2240_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            430333.07361950004,
+            4701013.7833905
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 152,
+      "crop_file": "crops/candidate_00152.png",
+      "source_tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+      "centroid_x": 433057.2309585,
+      "centroid_y": 4696656.927232,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x2688_y1344.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            433057.2309585,
+            4696656.927232
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 153,
+      "crop_file": "crops/candidate_00153.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 419882.77512650006,
+      "centroid_y": 4703518.622978,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            419882.7751265,
+            4703518.622978
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 154,
+      "crop_file": "crops/candidate_00154.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+      "centroid_x": 422146.4934435,
+      "centroid_y": 4703212.091149501,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            422146.4934435,
+            4703212.0911495
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 155,
+      "crop_file": "crops/candidate_00155.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+      "centroid_x": 421002.4499655,
+      "centroid_y": 4691468.9722245,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            421002.4499655,
+            4691468.9722245
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 156,
+      "crop_file": "crops/candidate_00156.png",
+      "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+      "centroid_x": 420668.9843775,
+      "centroid_y": 4690831.539928,
+      "properties": {
+        "source_tile": "K-35-053-3_Elenovo_x448_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            420668.9843775,
+            4690831.539928
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 157,
+      "crop_file": "crops/candidate_00157.png",
+      "source_tile": "K-35-062-2_Rakovski_x2240_y448.png",
+      "centroid_x": 325601.65676600003,
+      "centroid_y": 4684885.246542,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2240_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            325601.656766,
+            4684885.246542
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 158,
+      "crop_file": "crops/candidate_00158.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+      "centroid_x": 328293.36071050004,
+      "centroid_y": 4681156.690529,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y1344.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            328293.36071050004,
+            4681156.690529
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 159,
+      "crop_file": "crops/candidate_00159.png",
+      "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "centroid_x": 328889.518529,
+      "centroid_y": 4673754.8258875,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x2688_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            328889.518529,
+            4673754.825887499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 160,
+      "crop_file": "crops/candidate_00160.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y2240.png",
+      "centroid_x": 329918.66166,
+      "centroid_y": 4676274.363565502,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y2240.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            329918.66166,
+            4676274.363565501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 161,
+      "crop_file": "crops/candidate_00161.png",
+      "source_tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+      "centroid_x": 329795.318663,
+      "centroid_y": 4671222.4399810005,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x3136_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            329795.318663,
+            4671222.4399810005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 162,
+      "crop_file": "crops/candidate_00162.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 317670.44509600004,
+      "centroid_y": 4683830.406953,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            317670.445096,
+            4683830.4069529995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 163,
+      "crop_file": "crops/candidate_00163.png",
+      "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+      "centroid_x": 318503.01032550004,
+      "centroid_y": 4683946.041012501,
+      "properties": {
+        "source_tile": "K-35-062-2_Rakovski_x448_y896.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            318503.01032550004,
+            4683946.0410125
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 164,
+      "crop_file": "crops/candidate_00164.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+      "centroid_x": 459569.7996555,
+      "centroid_y": 4634722.8957585,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            459569.7996555,
+            4634722.8957585
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 165,
+      "crop_file": "crops/candidate_00165.png",
+      "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+      "centroid_x": 460589.940701,
+      "centroid_y": 4634339.0548094995,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x0_y2688.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            460589.940701,
+            4634339.0548094995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 166,
+      "crop_file": "crops/candidate_00166.png",
+      "source_tile": "K-35-078-1_Lesovo_x1344_y2240.png",
+      "centroid_x": 466454.4636560001,
+      "centroid_y": 4636779.9225894995,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x1344_y2240.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            466454.463656,
+            4636779.9225894995
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 167,
+      "crop_file": "crops/candidate_00167.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "centroid_x": 470509.2667010001,
+      "centroid_y": 4633971.9586005,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            470509.26670100004,
+            4633971.9586005
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 168,
+      "crop_file": "crops/candidate_00168.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "centroid_x": 470077.767648,
+      "centroid_y": 4633911.419927,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            470077.76764800004,
+            4633911.419927
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 169,
+      "crop_file": "crops/candidate_00169.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "centroid_x": 469642.4044235,
+      "centroid_y": 4633365.2838115,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            469642.4044235,
+            4633365.2838115
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 170,
+      "crop_file": "crops/candidate_00170.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "centroid_x": 470994.8641435,
+      "centroid_y": 4632960.8339525,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            470994.8641435,
+            4632960.8339525
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 171,
+      "crop_file": "crops/candidate_00171.png",
+      "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+      "centroid_x": 470808.09589600004,
+      "centroid_y": 4631956.149589499,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2240_y3136.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            470808.09589600004,
+            4631956.149589499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 172,
+      "crop_file": "crops/candidate_00172.png",
+      "source_tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+      "centroid_x": 473323.6709745,
+      "centroid_y": 4639424.303354999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            473323.6709745,
+            4639424.303355
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 173,
+      "crop_file": "crops/candidate_00173.png",
+      "source_tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+      "centroid_x": 473599.31514600007,
+      "centroid_y": 4640583.554543501,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2688_y1792.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            473599.315146,
+            4640583.554543501
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 174,
+      "crop_file": "crops/candidate_00174.png",
+      "source_tile": "K-35-078-1_Lesovo_x2688_y896.png",
+      "centroid_x": 473590.29874800006,
+      "centroid_y": 4645223.1354094995,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2688_y896.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            473590.298748,
+            4645223.1354095
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 175,
+      "crop_file": "crops/candidate_00175.png",
+      "source_tile": "K-35-078-1_Lesovo_x2688_y896.png",
+      "centroid_x": 472165.70784299995,
+      "centroid_y": 4642822.1973935,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x2688_y896.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            472165.707843,
+            4642822.197393499
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 176,
+      "crop_file": "crops/candidate_00176.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+      "centroid_x": 474683.859035,
+      "centroid_y": 4640899.128478,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y1344.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            474683.859035,
+            4640899.128478
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 177,
+      "crop_file": "crops/candidate_00177.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y1792.png",
+      "centroid_x": 475531.4004595,
+      "centroid_y": 4640276.997006999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y1792.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            475531.40045950003,
+            4640276.997006999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 178,
+      "crop_file": "crops/candidate_00178.png",
+      "source_tile": "K-35-078-1_Lesovo_x3136_y448.png",
+      "centroid_x": 475213.2504115,
+      "centroid_y": 4647139.764041,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3136_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            475213.2504115,
+            4647139.764041
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 179,
+      "crop_file": "crops/candidate_00179.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+      "centroid_x": 477800.956675,
+      "centroid_y": 4649325.596558999,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            477800.956675,
+            4649325.596558999
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 180,
+      "crop_file": "crops/candidate_00180.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+      "centroid_x": 478800.48881,
+      "centroid_y": 4647329.108402001,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y0.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            478800.48881,
+            4647329.108402001
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 181,
+      "crop_file": "crops/candidate_00181.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y1344.png",
+      "centroid_x": 477048.7314595001,
+      "centroid_y": 4641782.735495,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y1344.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            477048.73145950004,
+            4641782.735495
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 182,
+      "crop_file": "crops/candidate_00182.png",
+      "source_tile": "K-35-078-1_Lesovo_x3584_y448.png",
+      "centroid_x": 478620.1608479999,
+      "centroid_y": 4645606.976359,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x3584_y448.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            478620.16084799997,
+            4645606.976359
+          ]
+        ]
+      }
+    },
+    {
+      "candidate_id": 183,
+      "crop_file": "crops/candidate_00183.png",
+      "source_tile": "K-35-078-1_Lesovo_x896_y1792.png",
+      "centroid_x": 463305.1645949999,
+      "centroid_y": 4638487.886006501,
+      "properties": {
+        "source_tile": "K-35-078-1_Lesovo_x896_y1792.png",
+        "source_tracks": [
+          "track2-text"
+        ],
+        "proposer_votes": 1,
+        "cluster_size": 1,
+        "member_centroids": [
+          [
+            463305.164595,
+            4638487.886006501
+          ]
+        ]
+      }
+    }
+  ]
+}
