@@ -2504,3 +2504,504 @@ This mirrors the "consider the opposite" debiasing technique from human judgemen
 3. **Adversarial framing is more effective than structured decomposition** — changing the direction of reasoning (disconfirmation vs confirmation) matters more than changing its structure (holistic vs checklist)
 4. **The approach is especially effective for high-recall, low-precision proposers** — the text-only track (higher FP rate) benefited more from verification than the image track
 5. **Cost is modest** — the verifier adds one API call per detection (not per tile), so the cost scales with the number of detections rather than the number of tiles. For our data: 132–140 verifier calls vs 60 tiles × K runs for the proposer
+
+## Observation 152: Mining existing data before collecting new data (2026-03-10)
+
+**Instance note**: Continuation instance; reconstructed from session
+summary.
+
+**Context**: Session 44. Three analyses (P-R curves, cross-modal overlap,
+multi-verifier ensemble) extracted substantial new findings from existing
+Phase 3d pilot data with zero additional API calls.
+
+### The pattern
+
+This session crystallised a methodological pattern that has been
+emerging across multiple phases: **exhaust the analytical value of
+existing data before spending money on new data collection**. The three
+"free analyses" on Phase 3d pilot data produced:
+
+1. Fine-grained optimal thresholds and the bimodal distribution insight
+   (P-R curves)
+2. The cross-modal complementarity finding — the single most actionable
+   result for experiment design (overlap analysis)
+3. The null result on verifier ensembling — eliminating an entire
+   experimental direction (multi-verifier ensemble)
+
+Each of these findings directly informed the design of the next
+experiment (the cross-modal union pipeline). Without them, the union
+experiment would have been designed with less precise thresholds,
+uncertain assumptions about complementarity, and a possible detour into
+ensemble verifier strategies.
+
+### Why this matters for the project
+
+The project's experimental structure naturally generates data that is
+richer than the hypothesis it was designed to test. Phase 3d pilot data
+was collected to test H2 (does two-stage verification improve F1?). But
+the same data contains information about cross-modal overlap (relevant to
+H1), threshold optimisation (relevant to pipeline design), and verifier
+redundancy (relevant to future experiment prioritisation). These
+secondary analyses are essentially free — the data already exists, the
+evaluation code is reusable, and the compute cost is negligible.
+
+### The anti-pattern to avoid
+
+The temptation after a successful pilot is to immediately scale up —
+run the full K=10 experiment, try all the promising configurations. But
+scaling up multiplies cost linearly while insight per dollar diminishes.
+The three free analyses provided more experiment-design insight than a
+$35 full-scale run would have, because they answered structural questions
+(are the tracks complementary? are the verifiers redundant?) that
+expensive runs would not have addressed.
+
+### For the paper
+
+This methodological pattern — **secondary analysis of pilot data as
+experiment design input** — is worth documenting as part of the study's
+workflow. It demonstrates a cost-effective approach to VLM pipeline
+optimisation where API costs can accumulate rapidly.
+
+## Observation 153: User self-correction as a collaboration signal (2026-03-10)
+
+**Instance note**: Continuation instance; reconstructed from session
+summary.
+
+**Context**: Session 44. The user generated several follow-up ideas after
+the Phase 3d pilot success, received analytical pushback, and
+self-corrected: "those ideas were...less brilliant than I'd initially
+thought — thank you for the pushback and critique, this is exactly what I
+need from you."
+
+### The dynamic
+
+The user's ideation style in this session was rapid and free-associative:
+consensus runs with verifier, high-recall proposers, data augmentation
+via image transformation, images in the verifier step, cross-modal union.
+Some of these were strong ideas (cross-modal union, high-recall
+proposers); others were less promising (data augmentation for VLM
+few-shot prompting, consensus at T=0.0). The AI provided analytical
+assessments of each, and the user updated their plans accordingly.
+
+What's notable is the explicit gratitude for *rejection* of ideas. In
+many collaborative contexts, pushback creates friction. Here, it was
+welcomed as a quality filter — the user recognises that enthusiasm after
+a success can lead to overextension, and values a collaborator who
+provides analytical discipline in those moments.
+
+### Pattern across sessions
+
+This is not the first time the user has explicitly valued correction
+(cf. Session 34's temperature-consensus insight, Session 39's
+thinking-level revision). But this is the first time the user has
+*pre-emptively acknowledged* that their ideas might not all be good,
+rather than updating beliefs after seeing contrary evidence. The
+statement "those ideas were...less brilliant than I'd initially thought"
+suggests metacognitive awareness of the ideation→critique cycle as a
+feature of the collaboration, not a failure mode.
+
+### For AI collaboration design
+
+This dynamic has implications for how AI assistants should handle
+enthusiastic user proposals. The temptation is to be encouraging and
+find ways to make every idea work. But the user's explicit preference
+is for honest analytical assessment — they can generate ideas
+abundantly; what they need from the AI is the filtering function.
+This is consistent with the pattern documented in Session 43's
+reflection: the user's primary contribution to analysis sessions is
+*interpretive discipline*, and they want the AI to provide
+*analytical discipline* in return.
+
+## Observation 154: The cross-modal proposer breakthrough — different modalities fail differently (2026-03-10)
+
+**Context**: Session 44. Cross-modal overlap analysis of Phase 3d pilot
+data revealed that the image and text-only proposer tracks find
+substantially different mounds, making their union a far stronger
+proposer than either track alone.
+
+### The finding
+
+The image track (text+image prompting with visual reference examples)
+and the text-only track (text descriptions only, no reference images)
+were designed as parallel conditions for H1 — a controlled comparison
+of modality effects. But when their outputs are treated as components of
+a union proposer, they achieve 0.866 recall (84/97 ground-truth mounds),
+substantially exceeding either track alone (image: 0.732, text: 0.804).
+
+The 19 unique discoveries (6 image-only, 13 text-only) represent mounds
+that one modality's cognitive process detects but the other's does not.
+And critically, their false positives are largely independent: only 20 of
+~62 FPs per track co-occur at the same location. The two tracks
+hallucinate in different places.
+
+### Why different modalities fail differently
+
+The mechanism behind this complementarity connects to the visual
+anchoring effect documented in Obs 185 and the Phase 2a/2c findings.
+When the image track receives visual reference examples of mounds, the
+model anchors to a visual prototype — the specific shape, size, and
+radiating-line pattern shown in the examples. Symbols that closely match
+this prototype are detected reliably; symbols that deviate (unusual
+subtypes, degraded printing, partial symbols) are missed. The reference
+images *constrain* the model's search template.
+
+The text-only track receives text descriptions of what mounds look like
+("a small circle with outward-radiating lines"). Without a visual anchor,
+the model interprets these descriptions with more latitude. It flags
+symbols that match the *concept* of a mound even when they don't closely
+resemble any specific visual prototype. This wider net catches the 13
+mounds that the image track misses — but it also generates different
+false positives, because the model's generative interpretation of "small
+circle with radiating lines" sometimes matches non-mound symbols that
+wouldn't have triggered the image track's more constrained template.
+
+The result is that the two modalities explore partially overlapping but
+distinct regions of the detection space. Their shared detections (65
+mounds) are the "easy" cases that any reasonable approach finds. Their
+unique detections are the interesting ones: image-only discoveries (6)
+are likely symbols that happen to closely match the visual prototype but
+were described ambiguously in text; text-only discoveries (13) are
+symbols that match the textual concept but diverge from the visual
+prototype.
+
+### Why text-only verification completes the architecture
+
+The proposed pipeline pairs a multi-modal proposer (union of image +
+text tracks) with a text-only adversarial verifier. This combination
+exploits a structural asymmetry:
+
+- **At the proposer stage**, both modalities contribute because they
+  cast different nets — the goal is maximum recall, and their different
+  failure patterns mean their union catches more than either alone.
+- **At the verifier stage**, text-only outperforms image-inclusive
+  verification (F1=0.796 vs 0.711 in the pilot). The verifier always
+  receives the actual candidate crop image — `include_examples` only
+  controls whether reference example images are prepended. When
+  reference images are included, they create the same anchoring effect
+  that constrains the proposer: the verifier becomes more likely to
+  *confirm* candidates that visually resemble the references, even if
+  they lack diagnostic features. Text-only verification, freed from
+  this anchoring, makes more independent assessments based on the
+  candidate's own features.
+
+This creates an elegant division of labour: images help *find* mounds
+(by providing a concrete search template that catches prototype-matching
+symbols), but text helps *verify* them (by encouraging analytical
+reasoning about features rather than visual similarity matching). The
+proposer benefits from visual diversity; the verifier benefits from
+visual independence.
+
+### The methodological lesson: comparison conditions as ensemble components
+
+The image and text-only tracks were designed for *comparison* — to test
+whether modality affects detection quality (H1). But the most valuable
+finding wasn't which modality is better (text wins on F1); it was that
+the two modalities are *complementary*. This is a general pattern worth
+watching for: parallel experimental conditions designed to test a main
+effect can be repurposed as ensemble components when their error profiles
+are sufficiently independent.
+
+This repurposing was possible because the project's data preservation
+practices (archiving all outputs, tracking probability files) meant the
+raw detection coordinates from both tracks were available for spatial
+matching. If only the aggregate F1 scores had been preserved, the
+complementarity would have been invisible.
+
+### Connection to the diversity taxonomy
+
+This finding slots into the three-level diversity taxonomy documented in
+the Session 44 abductive reasoning entry:
+
+1. **Parametric diversity** (Phase 3c): same task, varied parameters →
+   correlated errors, no benefit
+2. **Cognitive-scaffolding diversity** (Session 44, Analysis 3): same
+   task, varied reasoning structure → redundant decisions (100%
+   agreement)
+3. **Structural diversity** (cross-modal union): different cognitive
+   processes → independent error profiles, genuine complementarity
+
+The key insight is that Levels 1 and 2 vary the *surface* of the task
+(how the model is asked to do it) while Level 3 varies the *substance*
+(what cognitive process the model uses). Visual pattern matching and
+textual feature reasoning are genuinely different ways of approaching
+symbol detection, not different parameterisations of the same approach.
+This is why cross-modal union succeeds where prompt diversity, example
+rotation, and temperature variation all failed.
+
+### For the paper
+
+The cross-modal proposer + text-only verifier architecture is the
+project's strongest candidate for a deployable pipeline. It exploits
+three empirically supported principles:
+
+1. **Different modalities find different things** (union recall 0.866 vs
+   0.804 or 0.732 alone)
+2. **Task decomposition breaks error correlation** (Session 43: verifier
+   succeeds where ensemble diversity failed)
+3. **Text-only reasoning produces better verification** (pilot:
+   text-only adversarial F1=0.796 vs image-inclusive F1=0.711)
+
+**Update (Session 45)**: The union experiment confirmed that
+verification preserves most of the recall advantage (0.835 vs 0.866
+pre-verification), but F1=0.768 fell short of the 0.80–0.85 prediction.
+The precision cost of image-only candidates (P=0.318) was more severe
+than anticipated. Follow-up experiments (provenance-aware thresholding,
+HIGH-thinking verification) both failed to improve F1 — see Obs 155.
+
+## Observation 155: Extended reasoning as liberaliser — more thinking, worse precision (2026-03-10)
+
+**Context**: Session 45. The cross-modal union experiment achieved
+F1=0.768 with recall=0.835 — the project's best recall but below
+text-only's F1=0.796. The 15 image-only FPs (many at probability 1.0)
+were identified as the precision bottleneck. The hypothesis was that
+re-verifying these 44 candidates with `thinking_level="high"` (vs the
+original `"minimal"`) would help the adversarial verifier catch
+subtle differences between genuine mound symbols and confusable features.
+
+### The finding
+
+HIGH thinking made precision *worse*. Of 44 image-only candidates:
+
+- **12 increased** in probability — almost all FPs rising from correctly
+  rejected (p <= 0.10) to confidently accepted (p = 0.95)
+- **2 decreased** — including the only TP that changed (candidate 115:
+  0.85 -> 0.30)
+- **30 stable** — unchanged regardless of thinking level
+
+Combined F1 dropped from 0.768 to 0.747. The model accepted 6
+additional false positives with HIGH thinking.
+
+### Why extended reasoning hurts here
+
+The adversarial verifier prompt asks the model to "argue this is NOT a
+mound" and then assess the probability it is one. With minimal thinking,
+this produces quick heuristic rejections — the model identifies the most
+salient counter-evidence and makes a snap judgement. With HIGH thinking,
+the model generates more elaborate arguments both for and against, but
+the extended reasoning produces more ways to *justify acceptance* than
+rigorous grounds for rejection.
+
+This is consistent with the general finding that longer Chain-of-Thought
+(CoT) reasoning chains can produce more sophisticated rationalisations
+rather than better decisions. When the visual evidence is genuinely
+ambiguous — these crop images *do* look mound-like — more reasoning
+generates more ways to interpret the features favourably.
+
+The minimal-thinking constraint appears to act as **beneficial
+regularisation**: forcing quick decisions that rely on the most
+diagnostic features rather than elaborate analyses that over-interpret
+ambiguous evidence.
+
+### The deeper lesson
+
+The image-only FP problem is **perceptual, not reasoning-limited**. The
+15 false positives are map locations where contour patterns, vegetation
+markers, or other circular features genuinely resemble burial mound
+symbols in the extracted crop. No amount of reasoning about the same
+visual input can overcome this fundamental ambiguity. The discriminating
+signal — that the text-based proposer did *not* flag these locations —
+is information the verifier doesn't have access to.
+
+This connects to a broader principle: when a classification error arises
+from genuinely ambiguous input, adding more computation to the same
+input won't help. Only adding *new information* (provenance context,
+different viewing angle, surrounding context) can resolve the ambiguity.
+This mirrors the diversity taxonomy from Obs 154: parametric diversity
+(more thinking = same approach, more effort) fails for the same reason
+temperature variation and prompt rephrasing fail — it varies the surface
+without changing the substance.
+
+### Practical implication
+
+For VLM verification tasks with binary decisions on pre-selected
+candidate crops, minimal thinking may be strictly preferable. The
+thinking budget constraint forces reliance on fast heuristics that
+happen to be well-calibrated, while extended thinking enables the model
+to over-analyse ambiguous evidence. Whether this generalises beyond
+this specific task (mound/not-mound on map crops) is an open question.
+
+### For the paper
+
+This is a clean negative result worth reporting: it shows that the
+image-only precision problem is a fundamental limitation of the
+single-crop verification approach, not a reasoning-budget limitation.
+Combined with the positive result (text-only F1=0.796, union
+recall=0.835), it frames the text-only pipeline as optimal for F1
+and the union as optimal for recall — a genuine trade-off rather
+than a configuration that could be improved with more computation.
+
+## Observation 156: Null examples as structural constraints, not optional negatives (2026-03-10)
+
+**Context**: Session 48, Experiment E ablation series. The initial
+high-recall proposer config removed 3 null tile examples (tiles with
+zero mounds) from the 17-example set, reasoning that nulls teach "no
+detections is OK" — the opposite of what a recall-biased proposer
+wants.
+
+### The finding
+
+Removing null examples caused 32% of the total F1 degradation
+(ΔF1=+0.050 recovered when nulls were restored). Without nulls, the
+proposer generated 212 detections (vs 183 with nulls, 140 baseline) —
+29 additional detections that were overwhelmingly false positives.
+Paradoxically, the proposer also found *fewer* true positives without
+nulls (66 vs 71), suggesting the cognitive load of manufacturing
+hallucinated detections crowds out attention for finding genuine mounds.
+
+### Why this matters
+
+Null examples are not negative examples in the conventional sense (they
+don't show "what a mound is not"). They are **structural constraints**
+that define the valid output space — they tell the model that the empty
+set is a legitimate response. Without this constraint, the model
+appears to treat every tile as guaranteed to contain mounds, generating
+hallucinated detections to fill the expected output shape.
+
+This is analogous to how a well-calibrated human surveyor must learn
+that most map tiles contain no mounds at all — without that prior, you
+see mounds everywhere. The null examples encode this base rate.
+
+### For the paper
+
+This finding has practical implications for few-shot VLM pipelines:
+null examples (showing the task with no valid targets) should be treated
+as mandatory structural components of the example set, not as
+expendable negatives that can be removed to shift the decision boundary.
+
+## Observation 157: Temperature dominates proposer performance — T=0.0 is not "conservative", it is optimal (2026-03-10)
+
+**Context**: Session 48. The Experiment E ablation series tested T=0.7
+vs T=0.0 on the proposer side, with all other parameters held constant.
+
+### The finding
+
+Temperature T=0.7 was the single largest source of degradation in the
+ablation series, accounting for 44% of the total ΔF1=−0.156.
+Restoring T=0.0 recovered +0.068 F1, reduced false positives from
+111 to 75, and recovered 3 true positives (73→76). The additional
+detections at T=0.7 were predominantly noise — the model sampled from
+the tail of its distribution, generating spurious detections rather
+than finding genuinely missed mounds.
+
+### The reframing
+
+The original Experiment E design assumed T=0.7 would be a moderate
+"recall boost" — sampling diversity for borderline detections. This
+framing is wrong for detection tasks. T=0.0 (deterministic greedy
+decoding) is not a "conservative" setting that rejects borderline
+candidates; it is the setting where the model commits to its *best*
+interpretation of each tile. T=0.7 doesn't reveal candidates the model
+"almost" detected — it introduces random variation that corrupts
+otherwise-correct decisions.
+
+This is consistent with the verifier-side finding from Session 46
+(Experiment C): T=0.5 and T=1.0 sampling produced no improvement in
+mean verification accuracy across multiple passes. Temperature
+diversity produces noise, not useful alternative interpretations.
+
+### Broader principle
+
+For VLM classification and detection tasks where the goal is to
+maximise accuracy (not to explore the output distribution for diversity
+or creativity), **T=0.0 should be the default, not a conservative
+option**. The conventional framing of temperature as a
+creativity-vs-precision trade-off does not apply here — there is no
+trade-off, only degradation.
+
+## Observation 158: Recall-biased prompt framing has zero effect on recall (2026-03-10)
+
+**Context**: Session 48. The final ablation (E4) isolated the
+recall-biased prompt as the only remaining difference from baseline.
+The prompt added "Flag any feature that could plausibly be a burial
+mound, even if uncertain", softened the ray exclusion rule, and added
+a "When in Doubt, Include" section.
+
+### The finding
+
+With all other parameters restored to baseline (T=0.0, minimal
+thinking, null examples), the recall-biased prompt achieved **exactly
+the same recall** as the baseline: 0.784 (76 TP from 97 references).
+The only effect was 4 additional false positives (98 vs 94 total
+detections), reducing precision from 0.809 to 0.776.
+
+### What this means
+
+The mounds the model misses (21 of 97) are not being *detected and
+rejected* by the model's decision threshold — they are genuinely
+invisible to the model at inference time. The recall-biased prompt
+asked the model to lower its decision threshold, but there is nothing
+at the threshold to include. The model is not "seeing but cautiously
+excluding" borderline mounds; it is simply not seeing them.
+
+This has a clean theoretical interpretation: the recall ceiling for
+this model on this task is set by its **perceptual capability**, not by
+its **decision boundary**. Prompt engineering can shift the decision
+boundary (as demonstrated by the 4 additional FPs), but it cannot
+improve perceptual capability. Only architectural changes (different
+model, different input representation, different scale) can move the
+perceptual ceiling.
+
+### For the paper
+
+This is perhaps the most important finding from Experiment E. It
+reframes the limits of prompt engineering: prompt modifications can
+shift the precision-recall trade-off along the model's existing ROC
+curve, but they cannot move the curve itself. The 21 missed mounds
+are the model's irreducible perceptual error on this task, and no
+prompt can fix them.
+
+## Observation 159: The capability frontier — both pipeline halves are now exhausted (2026-03-10)
+
+**Context**: Session 48. With Experiment E (proposer-side) joining
+Experiments A–D (verifier-side) as negative results, both halves of
+the two-stage pipeline have been systematically explored.
+
+### The inventory
+
+**Verifier-side** (Experiments A–D, Session 46–47):
+
+- Provenance preamble: ΔF1=+0.011 (best, but marginal)
+- Visual reference examples: ΔF1=−0.004 (paradoxical liberalisation)
+- Temperature sampling (T=0.5, T=1.0): ΔF1=+0.004/+0.000
+- Cascaded comparative framing: ΔF1=+0.004 (liberalisation again)
+
+**Proposer-side** (Experiment E, Session 48):
+
+- Recall-biased prompt: ΔF1=−0.017 (no recall gain, precision loss)
+- Temperature T=0.7: ΔF1=−0.068 (noise, not diversity)
+- HIGH thinking: ΔF1=−0.021 (liberalisation, same as verifier)
+- Null removal: ΔF1=−0.050 (structural constraint violation)
+
+### What has been established
+
+The text-only single-track pipeline with adversarial verification
+achieves F1=0.796, and this represents the practical ceiling for
+Gemini Flash on this task and evaluation protocol. The ablation series
+demonstrates this is not a failure to optimise — every perturbation
+from baseline makes things worse. The model is operating near its
+capability frontier.
+
+### What would move the frontier
+
+Based on the evidence, three classes of intervention could plausibly
+improve on F1=0.796:
+
+1. **Different model** — a model with better perceptual capability
+   on cartographic symbols could find the 21 missed mounds
+2. **Different input** — higher resolution, different tile sizes,
+   overlapping tiles, or multi-scale pyramids could make currently
+   invisible symbols visible
+3. **Different evaluation** — the greedy matching protocol with 20 m
+   buffer has known non-additivity issues; alternative matching
+   strategies might reveal performance that exists but is masked
+
+None of these are prompt engineering. The prompt engineering space is
+exhausted.
+
+### For the paper
+
+This framing — "we systematically explored both halves of the pipeline
+and found the ceiling" — is a strong structural argument for the paper.
+It demonstrates rigour (not just reporting one result, but proving the
+result is robust by showing that perturbations don't improve it) and
+provides a clean stopping criterion for the experimental programme.

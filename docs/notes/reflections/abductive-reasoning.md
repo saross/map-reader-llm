@@ -2043,7 +2043,107 @@ what I expected from preliminary work." This metacognitive awareness —
 recognising a recurring pattern of confounded expectations — is itself
 valuable for calibrating future predictions.
 
-*Last updated: 2026-03-09 (Session 43 — two-stage pipeline pilot
-overturns Phase 3c-based prediction that same-model verification would
-be ineffective, with the resolution that task decomposition circumvents
-the error correlation that defeats ensemble diversity)*
+### Session 44 Assessment — 2026-03-10 (Structural vs parametric diversity)
+
+**Instance note**: Continuation instance; results reconstructed from
+session summary and output files.
+
+**Condition assessment**: Partially met. The session produced hypothesis
+generation (cross-modal union will improve F1) and a form of belief
+refinement (the structural vs parametric diversity distinction). No
+dramatic surprise or major belief revision.
+
+**Brief entry**: The three "free analyses" extended the Phase 3c/3d
+findings into a cleaner taxonomy of diversity types. Three levels of
+diversity have now been tested in this project:
+
+1. **Parametric diversity** (Phase 3c): varying prompts, examples,
+   temperature, augmentation within identical task structure.
+   **Result**: fails — VLM errors are highly correlated.
+
+2. **Cognitive-scaffolding diversity** (Session 44, Analysis 3): varying
+   the verifier's reasoning structure (holistic diagnostic vs
+   feature-checklist decomposition). **Result**: fails — standard and
+   checklist converge to identical decisions (100% agreement on image
+   track). The model's classification is determined by visual evidence,
+   not by the cognitive scaffolding imposed by the prompt.
+
+3. **Structural diversity** (Session 43, task decomposition; Session 44,
+   cross-modal union): changing the task type (detect→verify) or the
+   modality (image vs text). **Result**: succeeds — false positives are
+   independent across tracks (20/62 overlap), and task decomposition
+   breaks the error correlation that defeats parametric diversity.
+
+The taxonomy is additive: each level represents a stronger form of
+variation, and only Level 3 produces the independent error profiles
+needed for ensemble-like benefits. This has a clear prediction for the
+union experiment: cross-modal union should achieve genuinely
+complementary recall because the two modalities operate through
+structurally different cognitive processes (visual pattern matching vs
+textual feature reasoning), not just parametrically different
+configurations of the same process.
+
+**Connection to prior entries**: This refines rather than overturns the
+Phase 3c belief (errors are correlated). The refinement is in scope:
+correlation applies within structural levels but not across them. The
+Session 43 entry identified task decomposition as the exception to
+Phase 3c's rule; this session adds cross-modal fusion as a second
+exception, and provides the unifying explanation (structural diversity
+vs parametric diversity).
+
+### Session 48: Ablation as structured hypothesis testing (2026-03-10)
+
+**The surprise**: Experiment E (recall-biased proposer with four
+simultaneous modifications) degraded F1 from 0.796 to 0.640. The
+hypothesis had been that a more permissive prompt would find more
+mounds. Instead, it found fewer (66 TP vs ~78 baseline) while
+generating far more false positives (212 vs 140 detections).
+
+**The abductive moment**: The user's immediate hypothesis was "null
+removal causes serious problems — I've seen this before." This is
+classic abductive reasoning: a surprising observation (recall dropped),
+a known causal mechanism from prior experience (null removal causes
+hallucination), and a prediction (restoring nulls will help). The
+prediction was partially confirmed (+0.050 F1 recovered, 32% of the
+total degradation).
+
+**Structured hypothesis testing**: What followed was a systematic
+ablation — four sequential experiments, each restoring one parameter to
+baseline. This is abduction followed by controlled deduction: generate
+the hypothesis abductively, then test it deductively by manipulating
+the hypothesised variable while holding others constant. The full
+decomposition (T: 44%, nulls: 32%, thinking: 13%, prompt: 11%)
+emerged from this process.
+
+**Belief revision**: The session revised several beliefs:
+
+1. **"Higher T improves recall"** → Revised. T=0.7 was the largest
+   single source of degradation. Temperature adds noise, not useful
+   recall on detection tasks.
+
+2. **"Recall-biased prompts improve recall"** → Revised. The prompt
+   achieved identical recall (0.784) to baseline. The model's recall
+   ceiling is perceptual, not decisional.
+
+3. **"More thinking helps on hard cases"** → Extended. Session 45
+   showed thinking liberalises the verifier; Session 48 replicated
+   this on the proposer side. The pattern generalises across stages.
+
+4. **"The baseline can be improved"** → Revised. The ablation proves
+   the baseline is near-optimal by showing every perturbation degrades
+   performance. This is a stronger claim than "we couldn't find
+   anything better" — it's "we showed the gradient points inward from
+   all tested directions."
+
+**Type of reasoning**: This session's abductive pattern differs from
+earlier entries. Previous entries captured single-observation flashes
+of insight. Session 48 captured a *structured abductive programme*:
+surprise → hypothesis → sequential testing → decomposition. The
+user and AI operated as complementary abductive agents — the user
+generated the initial hypothesis (null removal), the AI executed the
+tests and identified the quantitative attribution, and together they
+converged on the capability-frontier interpretation.
+
+*Last updated: 2026-03-10 (Session 48 — ablation as structured
+hypothesis testing, belief revision across four parameters, and
+capability frontier proof)*

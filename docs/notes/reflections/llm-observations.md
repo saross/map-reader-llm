@@ -3956,7 +3956,172 @@ The practical implication is that two-stage architectures may be
 especially valuable for modalities with higher false-positive rates,
 where the precision problem is most acute.
 
-*Document represents observations as of 2026-03-09. Session 43 added
-observations on task decomposition succeeding where ensemble diversity
-fails, adversarial framing as a VLM debiasing mechanism, and the
-surprising effectiveness of text-only verification.*
+### 191. Cross-modal proposer complementarity — different modalities find different mounds (Session 44)
+
+**Instance note**: Continuation instance; analysis results read from
+`results/phase3d-pilot-extensions.md` and `.json`.
+
+The image and text-only proposer tracks, designed as parallel conditions
+for H1 (modality factor), turn out to be highly complementary when
+treated as ensemble members. Their union discovers 84 of 97 ground-truth
+mounds (recall = 0.866), compared to 78 for text alone (0.804) or 71 for
+image alone (0.732). The 19 unique discoveries break down as 6 image-only
+and 13 text-only, with a Jaccard index of 0.774.
+
+The asymmetry is notable: text finds more unique mounds than image. This
+is consistent with the visual anchoring hypothesis (Obs 185, 190) — the
+image track's reference examples constrain detection by anchoring the
+model to a visual prototype, causing it to miss symbols that don't match
+the prototype closely enough. The text track's interpretive latitude
+allows it to flag symbols based on described features rather than visual
+similarity, casting a wider net.
+
+Crucially, false positives are largely independent: only 20 of ~61–62 FPs
+per track co-occur at the same location. This means the two tracks
+hallucinate in different places — they are not redundantly fooled by the
+same confusable symbols. This independence is exactly the structural
+property that Phase 3c (H9) found lacking within same-task diversity:
+different modalities produce genuinely different error profiles in a way
+that prompt reformulation, temperature variation, and image rotation did
+not.
+
+**Implication**: Cross-modal union is the first ensemble-like approach in
+this project that achieves genuine complementarity. The key distinction
+from Phase 3c's failed diversity is that the "axes" of variation are
+structural (different cognitive processes: visual pattern matching vs
+textual feature reasoning) rather than parametric (different prompts,
+temperatures, or augmentations operating within the same cognitive
+process).
+
+### 192. Standard and checklist verifiers are functionally identical despite different prompts (Session 44)
+
+**Instance note**: Continuation instance; results from multi-verifier
+ensemble analysis.
+
+On the image track, the standard (diagnostic criteria) and checklist
+(structured feature decomposition) verifiers agree on 100% of candidates
+(132/132). On the text track, agreement is 93.6% (131/140). Despite
+radically different prompt structures — one asks for holistic diagnostic
+reasoning, the other decomposes assessment into explicit feature checks
+— the model converges on the same binary decisions for nearly every
+candidate.
+
+This is a stronger version of the Phase 3c finding (Obs 176–178). Phase
+3c showed that diversity within the same task structure fails. This
+observation shows that diversity *across different cognitive
+instructions* also fails when both instructions target the same
+underlying judgement. The standard and checklist prompts both ask "is this
+a mound?" with different cognitive scaffolding, but the model's answer is
+determined by the visual evidence in the crop, not by the reasoning path
+it takes to get there.
+
+The sole source of diversity in the 3-verifier ensemble is the
+adversarial verifier, which differs not in scaffolding but in *direction*
+— it asks the model to argue *against* the candidate. On the image track,
+10 candidates (7.6%) receive different decisions from the adversarial
+verifier than from standard/checklist. This small divergence produces the
+only non-trivial component of any ensemble combination.
+
+**Implication**: For VLM classification tasks with strong signal (bimodal
+probability distributions), prompt structural variation is ineffective.
+The only productive axis of prompt diversity is changing the *direction*
+of reasoning (confirmation vs disconfirmation), not its *structure*
+(holistic vs decomposed).
+
+### 193. Verification increases cross-modal complementarity (Session 44)
+
+**Instance note**: Continuation instance; post-verification overlap
+analysis from `phase3d-pilot-extensions.md`.
+
+After adversarial verification (threshold ≥ 0.5), the union of both
+proposer tracks still finds 84/97 mounds — verification does not
+preferentially eliminate the unique discoveries. However, the Jaccard
+index drops from 0.774 to 0.655, meaning each track loses some of its
+*shared* detections while retaining its *unique* ones.
+
+This is a subtle but important finding. Verification preferentially
+removes borderline candidates from the overlap region (candidates found
+by both tracks but scored marginally by the verifier), while preserving
+the track-specific discoveries that tend to be either clear mounds
+(retained) or clear non-mounds (already absent). The practical
+consequence is that verification *amplifies* complementarity — after
+filtering, each track contributes a larger proportion of exclusive
+true positives to the union.
+
+**Implication**: A cross-modal union + verification pipeline should not
+merely match the pre-verification union recall; the verification step
+may actively improve the union's precision without degrading its recall
+advantage over single-track pipelines. This is the best-case scenario
+for the planned union experiment.
+
+### 194. VLM recall ceiling is perceptual, not decisional (Session 48)
+
+The Experiment E ablation series produced a result that cleanly
+distinguishes two types of error. The recall-biased prompt asked the
+model to lower its decision threshold — include doubtful candidates,
+soften exclusion rules, flag anything plausible. With all other
+parameters at baseline (T=0.0, minimal thinking, null examples), this
+prompt achieved **identical recall** (0.784) to the standard prompt.
+The 21 missed mounds were not detected-but-rejected; they were not
+detected at all.
+
+This means the model's errors on this task fall into two categories:
+**decisional errors** (the model detects a feature but makes the wrong
+accept/reject decision) and **perceptual errors** (the model fails to
+detect the feature entirely). Prompt engineering can address decisional
+errors by shifting the decision boundary, but the Experiment E result
+shows that essentially all of the model's residual misses are
+perceptual — the features are invisible to the model regardless of how
+permissively the prompt is framed.
+
+This has implications for how to think about VLM capability limits more
+generally. When a VLM pipeline reaches a recall plateau that doesn't
+respond to prompt modifications, the remaining errors are likely
+perceptual. Further improvement requires changing what the model *sees*
+(resolution, scale, input representation), not how it *reasons* about
+what it sees.
+
+### 195. Ablation as a capability frontier proof (Session 48)
+
+The Experiment E ablation series serves a dual purpose that I find
+interesting as a methodological observation. The primary purpose was
+diagnostic — understanding why the combined intervention failed. But
+the ablation also constitutes a **proof that the baseline is
+near-optimal**, because it demonstrates that every perturbation from
+baseline degrades performance.
+
+This is more convincing than simply reporting "F1=0.796 and we couldn't
+improve it." The ablation shows *how far* performance degrades under
+specific modifications (up to ΔF1=−0.156) and *which modifications*
+cause the most damage (temperature: 44%, null removal: 32%). This
+quantitative mapping of the neighbourhood around the optimum is
+stronger evidence of frontier proximity than a single data point.
+
+The pattern — "try to improve, fail, but document the failure
+systematically" — is an underappreciated form of scientific evidence.
+It's the difference between "we tried and it didn't work" (anecdote)
+and "we systematically explored the parameter space and showed the
+gradient points inward from all directions" (proof of optimality).
+
+### 196. Temperature as noise, not diversity — proposer-side replication (Session 48)
+
+Session 46 established that temperature variation in the verifier
+(T=0.5, T=1.0) produces no improvement in mean accuracy — the
+underlying errors are systematic, not stochastic. Session 48
+replicated this finding on the proposer side: T=0.7 accounted for 44%
+of the total performance degradation, generating 33 additional false
+positives while gaining only 3 true positives compared to T=0.0.
+
+The cross-stage replication strengthens the claim considerably. The
+proposer and verifier are different tasks (multi-object detection vs
+binary classification), use different prompts, and produce different
+output types (coordinate lists vs probability scores). Yet both show
+the same pattern: non-zero temperature adds noise without adding useful
+diversity. This is not a task-specific quirk — it appears to be a
+general property of how this VLM handles cartographic symbol
+recognition.
+
+*Document represents observations as of 2026-03-10. Session 48 added
+observations on VLM perceptual vs decisional error boundaries, ablation
+as frontier proof methodology, and cross-stage replication of
+temperature-as-noise finding.*

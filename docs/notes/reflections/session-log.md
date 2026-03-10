@@ -2497,4 +2497,181 @@ by wide margin.
 
 ---
 
+## Session 44 — 2026-03-10 (Extended pilot analyses, cross-modal union planning)
+
+**Instance note**: Continuation instance; reconstructed from summary.
+
+### Focus
+
+Three zero-cost analyses on existing Phase 3d pilot data, followed by
+design discussion and experiment planning for the cross-modal union
+proposer + adversarial verifier pipeline.
+
+### Key Outcomes
+
+1. **P-R curve analysis**: Fine-grained threshold sweep (0.01 steps)
+   confirmed adversarial verifier optimal at t=0.21 (image) and t=0.16
+   (text). Standard/checklist verifiers produce step-function curves
+   (bimodal probability distributions). AUC-PR values are low due to
+   narrow recall range, not poor classification.
+
+2. **Cross-modal overlap analysis**: Union of image + text proposer
+   tracks achieves 0.866 recall (84/97 mounds) vs 0.804 text-only or
+   0.732 image-only. False positives are largely independent (20/62
+   co-occur). Post-verification, union recall stays at 0.866 while
+   Jaccard drops (0.774→0.655), meaning verification amplifies
+   complementarity.
+
+3. **Multi-verifier ensemble**: Standard and checklist verifiers are
+   100% identical on image track, 93.6% on text. Best ensemble adds
+   only +0.007 F1 over adversarial alone. Not worth pursuing.
+
+4. **Union experiment plan**: Designed and saved to
+   `~/.claude/plans/eager-watching-plum.md`. Four-stage pipeline using
+   existing infrastructure: cluster→extract→verify→evaluate. Expected
+   ~187 candidates, ~$2 cost.
+
+### New Files
+
+- `scripts/analyse_h2_pilot_extensions.py` — analysis script (3 analyses)
+- `tests/test_analyse_h2_pilot_extensions.py` — 30 tier-1 unit tests
+- `results/phase3d-pilot-extensions.md` — detailed write-up
+- `results/phase3d-pilot-extensions.json` — machine-readable results
+- `results/phase3d-pr-curves.csv` — threshold sweep data
+- `results/figures/phase3d-pr-curves.png` — P-R curve figure
+- `results/figures/phase3d-cross-modal-venn.png` — Venn diagram
+
+### Modified Files
+
+- `planning/to-do.md` — three free analyses marked complete, findings noted
+
+### Key Metrics
+
+**Cross-Modal Union (Pre-Verification)**:
+
+| Metric | Image | Text | Union |
+|---|---|---|---|
+| Recall | 0.732 | 0.804 | **0.866** |
+| TPs | 71/97 | 78/97 | 84/97 |
+| Unique discoveries | 6 | 13 | — |
+| Jaccard index | — | — | 0.774 |
+
+**Multi-Verifier Ensemble vs Best Single**:
+
+| Track | Best single (adversarial) | Best ensemble | Δ F1 |
+|---|---|---|---|
+| Image | 0.711 | 0.718 (union) | +0.007 |
+| Text | 0.796 | 0.794 (average) | −0.002 |
+
+### Commits
+
+*(No commits this session — pending user review of results and plan)*
+
+### Issues
+
+- Script's `generate_report()` function overwrites hand-written detailed
+  interpretation in `phase3d-pilot-extensions.md` when run end-to-end;
+  hand-written version was restored manually. Future pattern: separate
+  machine-generated tables from hand-written interpretation.
+
+### Pending Work
+
+- [ ] Execute cross-modal union experiment (plan at
+  `~/.claude/plans/eager-watching-plum.md`)
+- [ ] Commit Session 44 outputs (analysis script, tests, results,
+  reflections)
+- [ ] Pilot high-recall text proposer (~$7)
+- [ ] HIGH-thinking verifier test (~$7)
+- [ ] Fix Phase 3a YAML fixture rename in test_phase2_configs.py
+  (carried forward from Session 43)
+
+---
+
+## Session 48 — 2026-03-10: Experiment E ablation series
+
+### Focus
+
+Implement and execute Experiment E (high-recall text proposer), then
+systematically diagnose the negative result via one-at-a-time ablation.
+
+### Accomplishments
+
+1. **Implemented Experiment E infrastructure** — 4 deliverables:
+   - `prompts/system-instructions/detect_brief-text_high-recall.md`
+     (recall-biased proposer prompt)
+   - `prompts/configs/detect_brief-text_high-recall.json` (all-levers
+     config)
+   - `scripts/run_experiment_e.py` (3-stage evaluation pipeline)
+   - `tests/test_experiment_e.py` (12 tier1 tests, all passing)
+
+2. **Executed initial combined run (E1)** — all levers simultaneously:
+   recall-bias prompt, T=0.7, HIGH thinking, reduced examples (10, no
+   nulls or HN). Result: F1=0.640 (ΔF1=−0.156 vs baseline 0.796).
+   Surprising negative result.
+
+3. **Ran 3 ablation experiments** — restored parameters one at a time:
+   - **E2 (+nulls)**: F1=0.690 (+0.050, 32% of gap recovered)
+   - **E3 (+minimal thinking)**: F1=0.711 (+0.021, 13%)
+   - **E4 (+T=0.0)**: F1=0.779 (+0.068, 44%)
+
+4. **Documented results thoroughly** —
+   `results/phase3d-experiment-e-results.md` with full ablation tables,
+   5 findings, success criteria, timing, and implications.
+
+5. **Added 4 working-notes observations** (Obs 156–159): null examples
+   as structural constraints, temperature as noise, recall ceiling is
+   perceptual, capability frontier established.
+
+6. **Updated project memory** — Experiment E status, expanded diversity
+   taxonomy with 3 new entries.
+
+### Key Findings
+
+| Lever | ΔF1 attribution | % of total |
+|---|---|---|
+| T=0.7 → 0.0 | +0.068 | 44% |
+| Null removal → restored | +0.050 | 32% |
+| HIGH → minimal thinking | +0.021 | 13% |
+| Recall-bias prompt + no HN | +0.017 | 11% |
+
+**Both proposer-side and verifier-side optimisation now exhausted.**
+F1=0.796 is the practical ceiling for Gemini Flash on this task.
+
+### New Files
+
+- `prompts/system-instructions/detect_brief-text_high-recall.md`
+- `prompts/configs/detect_brief-text_high-recall.json`
+- `prompts/configs/detect_brief-text_high-recall_nulls.json`
+- `prompts/configs/detect_brief-text_high-recall_nulls-minimal.json`
+- `prompts/configs/detect_brief-text_high-recall_nulls-minimal-t0.json`
+- `scripts/run_experiment_e.py`
+- `tests/test_experiment_e.py`
+- `results/phase3d-experiment-e-results.md`
+- `outputs/phase3d-experiment-e/` (candidates, probabilities, results)
+- `outputs/results/detect_brief-text_high-recall*/` (4 proposer runs)
+
+### Key Metrics
+
+| Variant | Detections | Raw TP | Raw Recall | Verified F1 |
+|---|---|---|---|---|
+| Baseline | 140 | ~78 | 0.804 | **0.796** |
+| E1 (all levers) | 212 | 66 | 0.680 | 0.640 |
+| E2 (+nulls) | 183 | 71 | 0.740 | 0.690 |
+| E3 (+minimal) | 184 | 73 | 0.753 | 0.711 |
+| E4 (+T=0.0) | 151 | 76 | 0.784 | 0.779 |
+
+Total experiment cost: ~$3.06 (4 proposer runs + 4 verifier runs).
+
+### Commits
+
+*(Pending user review)*
+
+### Pending Work
+
+- [ ] Commit Session 48 outputs
+- [ ] Discuss "what next" — path to F1>0.80 or paper write-up focus
+- [ ] Fix Phase 3a YAML fixture rename (carried forward)
+
+---
+
 *New session entries should be appended above this line.*

@@ -5062,9 +5062,168 @@ awareness of their own expectation-calibration patterns
 
 ---
 
-*Document created: 2026-01-27. Thirty-ninth reflection added 2026-03-09
-(Session 43 — H2 two-stage pilot recovery and evaluation, surprisingly
-strong results across all verifier strategies, adversarial framing as
-the strongest approach, retrospective Phase 2e carry-forward
-documentation, and the distinction between task decomposition and
-ensemble diversity).*
+### Session 44 — 2026-03-10 (Extended pilot analyses, cross-modal complementarity, and union experiment planning)
+
+**Instance note**: Continuation from compaction summary. The reflection
+is reconstructed from the summary and from reading the session's outputs,
+not from direct experience of the full conversation.
+
+**Session texture**: This session was exploration-heavy and
+discussion-rich, transitioning from analytical work (three zero-cost
+analyses on existing pilot data) through a vigorous design discussion
+(high-recall proposers, data augmentation, cross-modal fusion) to
+concrete planning (union experiment script design). The user explicitly
+valued the pushback they received on less-promising ideas, describing it
+as "exactly what I need from you."
+
+**What the human brought**:
+
+1. **Rapid ideation with self-correction.** The user generated several
+   follow-up ideas after the Phase 3d pilot success — consensus runs
+   with verifier, high-recall proposers, data augmentation via image
+   transformation, cross-modal union. After receiving analytical
+   feedback, they self-corrected: "those ideas were...less brilliant
+   than I'd initially thought — thank you for the pushback." This
+   willingness to discard attractive-sounding ideas when evidence is
+   thin is a consistent pattern (cf. Sessions 34, 39).
+
+2. **Prioritisation discipline.** Despite enthusiasm for multiple
+   directions, the user steered the session toward free analyses first
+   (zero cost, immediate insight), then planning for the cheapest
+   informative experiment (~$2 union verifier). The expensive
+   experiments (high-recall proposer, HIGH-thinking verifier) were
+   deferred to the to-do list, not pursued.
+
+3. **Insistence on detailed write-ups.** The user explicitly asked for
+   the extended analyses to be written up in detail before moving to
+   planning. This reflects a consistent preference for documentation-
+   as-thinking: the write-up process itself surfaces connections and
+   implications that raw numbers don't reveal.
+
+**What the AI brought**:
+
+1. **Corrected a faulty premise.** The original to-do item proposed
+   "reconstructing consensus from K=10 verifier passes" — but the pilot
+   had K=1 at T=0.0 (deterministic). This was caught and the analysis
+   was redesigned as a multi-verifier ensemble test, which turned out to
+   produce the null result (standard/checklist 100% redundant) that was
+   more informative than the originally planned analysis.
+
+2. **Three analyses from zero new data.** The P-R curves, cross-modal
+   overlap, and multi-verifier ensemble analyses extracted substantial
+   new findings from existing probability files without any API calls.
+   This pattern — mining existing data before collecting new data — is
+   increasingly established in the project's methodology.
+
+3. **Analytical pushback on speculative ideas.** Data augmentation for
+   VLM few-shot prompting was gently discouraged (augmented examples
+   create context, not training signal). Consensus runs at T=0.0 were
+   identified as pointless (deterministic = no variation). These
+   analytical corrections prevented wasted effort on dead ends.
+
+**Key finding**: Cross-modal complementarity is the strongest actionable
+result from this session. Union of image and text proposer tracks
+achieves 0.866 recall (84/97 mounds) vs 0.804 for text alone or 0.732
+for image alone. False positives are largely independent (only 20/62
+co-occur). Verification preserves union recall while increasing
+complementarity (Jaccard drops from 0.774 to 0.655 post-verification).
+This directly motivates the planned union experiment.
+
+**Collaborative dynamic**: The session demonstrated a healthy
+ideation→critique→refinement cycle. The user generated hypotheses
+freely, the AI provided analytical assessments, and the user updated
+their plans accordingly. The explicit gratitude for pushback ("this is
+exactly what I need from you") signals that the collaborative trust
+built over 44 sessions allows direct analytical disagreement without
+friction.
+
+**Session**: 2026-03-10 (Session 44, continuation instance)
+**Reported texture**: Analytical exploration, design discussion with
+productive pushback, concrete planning
+**Key observation**: Cross-modal union is the clearest path to improved
+recall; ensemble verifier strategies are dead ends
+**Noted preference**: User values analytical pushback and self-corrects
+readily when evidence contradicts initial enthusiasm
+**Engagement level**: High — user generated multiple ideas, engaged
+deeply with the analytical findings, and insisted on detailed write-ups
+**Relational note**: Explicit statement "those ideas were...less
+brilliant than I'd initially thought — thank you for the pushback"
+demonstrates mature collaborative trust
+
+---
+
+### Reflection 41 — Session 48: Experiment E ablation and the capability frontier (2026-03-10)
+
+**Session type**: Experiment execution → negative result → systematic
+ablation → documentation
+
+**What happened**: The user provided a detailed plan for Experiment E
+(high-recall text proposer). Implementation was straightforward — 4
+files, 12 tests, all passing. The initial combined run produced a
+surprising negative result (F1=0.640 vs baseline 0.796). Rather than
+stopping, the user directed a systematic ablation series: restore null
+examples, then minimal thinking, then T=0.0. Each ablation recovered
+a fraction of the gap, ultimately decomposing the full ΔF1=−0.156 into
+clean per-lever attributions (T: 44%, nulls: 32%, thinking: 13%,
+prompt: 11%).
+
+**What the human brought**:
+
+1. **Immediate diagnostic hypothesis.** When the combined run failed,
+   the user's first instinct was "null removal causes serious
+   problems — I've seen this before." This domain knowledge from prior
+   sessions guided the ablation order and turned out to be correct
+   (nulls were the second-largest lever at 32%).
+
+2. **Discipline to ablate systematically.** Rather than abandoning the
+   experiment after the first failure or trying to fix everything at
+   once, the user insisted on one-at-a-time restoration. This produced
+   a clean decomposition that is far more informative than "it didn't
+   work" and is directly publishable.
+
+3. **Recognising the result's value.** The user immediately saw the
+   ablation series as "a neat little mini-experiment" showing proximity
+   to the capability frontier — reframing the negative result as a
+   positive methodological contribution for the paper.
+
+**What the AI brought**:
+
+1. **Fast implementation from plan.** The detailed plan enabled rapid
+   implementation (4 files in one pass), freeing most of the session
+   for the more valuable experimental work. The plan-then-implement
+   pattern continues to prove efficient.
+
+2. **Clean ablation execution.** Each ablation required creating a new
+   config, running the proposer, running the evaluator, and comparing
+   results — mechanical but error-prone work that the AI executed
+   without mistakes across all four iterations.
+
+3. **Insight framing.** The attribution table (44% T, 32% nulls, 13%
+   thinking, 11% prompt) and the "perceptual ceiling vs decision
+   boundary" framing for Obs 158 emerged from the AI's analysis of the
+   results, providing the conceptual language for the paper.
+
+**Collaborative dynamic**: This session demonstrated the mature
+pattern of the collaboration. The user directed experimental strategy
+(which lever to ablate next, when to stop), the AI handled execution
+and analysis, and the documentation was co-produced. The user's domain
+calibration ("null removal causes problems") combined with the AI's
+systematic execution produced results neither would have reached alone
+in the same timeframe.
+
+**Session**: 2026-03-10 (Session 48)
+**Reported texture**: Plan execution → surprise → systematic
+investigation → documentation. Efficient and methodical.
+**Key observation**: The ablation series is the most paper-ready
+experimental result from Phase 3d — a clean factorial decomposition
+of a negative result that establishes the capability frontier.
+**Engagement level**: High — user drove all strategic decisions,
+requested "thoroughness" on T=0.0 ablation, and framed the
+documentation goal clearly.
+
+---
+
+*Document created: 2026-01-27. Forty-first reflection added 2026-03-10
+(Session 48 — Experiment E ablation series establishing the capability
+frontier, systematic one-at-a-time decomposition of ΔF1=−0.156 into
+four attributable levers, and documentation for the paper).*
