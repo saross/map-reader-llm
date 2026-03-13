@@ -276,6 +276,7 @@ def process_single_tile(
     max_retries,
     config_version,
     governor=None,
+    tile_size=TILE_SIZE,
 ):
     """
     Worker function to process a single tile with comprehensive metadata capture.
@@ -295,6 +296,8 @@ def process_single_tile(
         max_retries: Maximum retry attempts
         config_version: Version string from config
         governor: Optional TPMGovernor for adaptive concurrency control
+        tile_size: Tile dimension in pixels for normalised→pixel coordinate
+            conversion (default: TILE_SIZE from config).
 
     Returns:
         List of GeoJSON features for detected mounds, or None if all
@@ -564,10 +567,10 @@ def process_single_tile(
                 )
                 continue
             ymin_n, xmin_n, ymax_n, xmax_n = box_coords
-            px_min_x = (xmin_n / 1000.0) * TILE_SIZE
-            px_max_x = (xmax_n / 1000.0) * TILE_SIZE
-            px_min_y = (ymin_n / 1000.0) * TILE_SIZE
-            px_max_y = (ymax_n / 1000.0) * TILE_SIZE
+            px_min_x = (xmin_n / 1000.0) * tile_size
+            px_max_x = (xmax_n / 1000.0) * tile_size
+            px_min_y = (ymin_n / 1000.0) * tile_size
+            px_max_y = (ymax_n / 1000.0) * tile_size
 
             geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
             geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
@@ -615,6 +618,8 @@ def detect_mounds_versioned(
     limit=None,
     max_retries=15,
     base_wait=30,
+    tile_size=None,
+    tiles_dir_override=None,
 ):
     """
     Executes the detection pipeline using a specific versioned configuration.
@@ -640,6 +645,10 @@ def detect_mounds_versioned(
         max_retries (int, optional): Maximum retry attempts per tile. Defaults to 15.
         base_wait (int, optional): Base wait time in seconds for exponential backoff.
             Defaults to 30.
+        tile_size (int, optional): Override tile dimension in pixels for normalised→pixel
+            coordinate conversion. Defaults to TILE_SIZE from config.
+        tiles_dir_override (str, optional): Override tiles directory path. Defaults to
+            TILES_DIR from config.
 
     Returns:
         Dict with items_processed and items_failed counts, or None if
@@ -673,9 +682,17 @@ def detect_mounds_versioned(
         )
         config["temperature"] = temperature_override
 
+    # Resolve effective tile size — CLI override > default from config import
+    effective_tile_size = tile_size if tile_size is not None else TILE_SIZE
+
+    # Resolve effective tiles directory — CLI override > default from config import
+    effective_tiles_dir = Path(tiles_dir_override) if tiles_dir_override else TILES_DIR
+
     print(f"Loaded Version: {config.get('version', 'unknown')}")
     print(f"Model: {config.get('model', 'unknown')}")
     print(f"Workers: {workers}")
+    if effective_tile_size != TILE_SIZE:
+        print(f"Tile size: {effective_tile_size} (overriding config default {TILE_SIZE})")
     if dry_run:
         print("Mode: DRY RUN (no API calls)")
     if limit:
@@ -868,7 +885,7 @@ def detect_mounds_versioned(
             with open(manifest_path, 'r') as f:
                 target_filenames = json.load(f)
                 all_tiles_map = {}
-                for map_dir in TILES_DIR.iterdir():
+                for map_dir in effective_tiles_dir.iterdir():
                     if map_dir.is_dir():
                         for t in map_dir.glob("*.png"):
                             all_tiles_map[t.name] = t
@@ -898,7 +915,7 @@ def detect_mounds_versioned(
     # Priority 3: Scan All (Default)
     else:
         all_tiles = []
-        for map_dir in TILES_DIR.iterdir():
+        for map_dir in effective_tiles_dir.iterdir():
             if map_dir.is_dir():
                 all_tiles.extend(list(map_dir.glob("*.png")))
         all_tiles = sorted(all_tiles)
@@ -981,6 +998,7 @@ def detect_mounds_versioned(
                 max_retries,
                 config_version,
                 governor,
+                effective_tile_size,
             ): tile.name for tile in tiles_to_process
         }
 
@@ -1149,6 +1167,16 @@ Examples:
         help="Validate config without making API calls",
     )
     parser.add_argument("--limit", type=int, help="Process only first N tiles")
+    parser.add_argument(
+        "--tile-size", type=int, default=None,
+        help=f"Override tile size for coordinate conversion (default: {TILE_SIZE} from config). "
+        "Must match the actual tile dimensions being processed.",
+    )
+    parser.add_argument(
+        "--tiles-dir", type=str, default=None,
+        help="Override tiles directory (default: from config.py). "
+        "Use when processing tiles at a non-standard size (e.g., inputs/tiles_384).",
+    )
     args = parser.parse_args()
 
     result = detect_mounds_versioned(
@@ -1165,6 +1193,8 @@ Examples:
         limit=args.limit,
         max_retries=args.max_retries,
         base_wait=args.base_wait,
+        tile_size=args.tile_size,
+        tiles_dir_override=args.tiles_dir,
     )
 
     # Exit code: 0 = success, 1 = setup error, 2 = partial failure

@@ -1,0 +1,111 @@
+# H11: Tile Size Experiment — Single-Pass at 384×384
+# ===================================================
+# Tests whether smaller tiles (384×384, 12.5% overlap, stride=336) improve
+# detection by increasing the mound-to-tile area ratio from 3.9–9.8% (at 512)
+# to 5.2–13% (at 384), more squarely within the literature's 4–10% sweet spot.
+#
+# This study runs the best single-pass configuration on the 384 tile grid.
+# The 512 baseline already exists from Phase 2 (brief-text, T=0.0, plus-hp,
+# minimal-neg, K=10).
+#
+# Usage:
+#   python scripts/4_detect_mounds_batch.py \
+#       --config prompts/configs/detect_brief-text.json \
+#       --manifest inputs/tiles_384/validation_manifest.json \
+#       --output-dir outputs/h11/single-pass-384 \
+#       --tile-size 384 \
+#       --tiles-dir inputs/tiles_384 \
+#       --temperature 0.0 \
+#       --workers 12
+#
+# Prerequisites:
+#   - 384×384 tiles generated (scripts/preprocess_tiling.py --tile-size 384)
+#   - 384 validation manifest created (scripts/select_tiles_by_area.py)
+#   - 384 bounds GeoJSON generated (scripts/generate_tile_bounds.py --tile-size 384)
+
+study:
+  name: "H11: Tile Size — Single-Pass at 384×384"
+  version: "1.0"
+  description: |
+    Tests whether 384×384 tiles improve single-pass detection performance
+    compared to the 512×512 baseline. Smaller tiles increase the mound-to-tile
+    area ratio, potentially making mounds easier to detect.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-12"
+
+# Carried forward from Phase 2
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  optimal_temperature: 0.0
+  source: "Phase 2 — best single-pass (F1=0.660 at T=0.0)"
+
+# Factor under test
+factors:
+  tile_size:
+    description: "Tile dimensions in pixels (square tiles)"
+    levels:
+      - name: "384"
+        value: 384
+        overlap: 48
+        stride: 336
+        description: "Smaller tiles — higher mound-to-tile ratio (5.2–13%)"
+    baseline:
+      name: "512"
+      value: 512
+      overlap: 64
+      stride: 448
+      description: "Standard tiles — mound-to-tile ratio 3.9–9.8%"
+      source: "Phase 2 existing results"
+
+# Fixed parameters
+fixed:
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.0
+  ordering: "config-default"
+
+inputs:
+  manifest_384: "inputs/tiles_384/validation_manifest.json"
+  manifest_512: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds_384: "outputs/results/validation_bounds_384.geojson"
+  bounds_512: "outputs/results/validation_bounds.geojson"
+
+execution:
+  runs: 10
+  workers: 1         # Safe default; pass --workers N at CLI for parallelism
+  output_dir: "outputs/h11/single-pass-384"
+
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest_384} \
+    --output-dir {execution.output_dir}/run_{run} \
+    --tile-size 384 \
+    --tiles-dir inputs/tiles_384 \
+    --temperature {carried_forward.optimal_temperature}
+
+analysis:
+  method: "paired_comparison"
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  comparison: "384 vs 512 at 20m tolerance"
+  output:
+    report: "results/h11/single-pass-comparison.json"
+    summary: "results/h11/single-pass-comparison.md"
+
+estimates:
+  tiles_384: "TBD"     # Depends on select_tiles_by_area.py output
+  runs: 10
+  api_calls_per_run: "TBD"
+  cost_usd: "TBD"
+
+outcome:
+  determines: "tile_size_effect_single_pass"
+  decision_rule: |
+    Compare F1 at 20m tolerance between 384 and 512 single-pass results.
+    If 384 F1 > 512 F1 with non-overlapping 95% CIs, smaller tiles are
+    preferred for single-pass detection.

@@ -12,17 +12,20 @@ files (.aux.xml).
 Usage::
 
     python scripts/preprocess_tiling.py
+    python scripts/preprocess_tiling.py --tile-size 384 --overlap 48 --output-dir inputs/tiles_384
 
 Inputs:
     - Raster scans from ``inputs/rasters/*.tif``
 
 Outputs:
-    - Tiles in ``inputs/tiles/<map_name>/*.{png,pgw,png.aux.xml}``
+    - Tiles in ``<output_dir>/<map_name>/*.{png,pgw,png.aux.xml}``
+    - Default output: ``inputs/tiles/<map_name>/``
 
 Author: Shawn Ross, Adela Sobotkova
 Licence: Apache 2.0
 """
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -35,16 +38,21 @@ from tqdm import tqdm
 
 # Add parent directory to path so config module can be imported
 sys.path.append(str(Path(__file__).parent.parent))
-from config import RASTERS_DIR, STRIDE, TILE_SIZE, TILES_DIR  # noqa: E402
+from config import RASTERS_DIR, TILE_SIZE, TILES_DIR, OVERLAP  # noqa: E402
 
 
-def tile_raster(input_path: Path) -> None:
+def tile_raster(
+    input_path: Path,
+    output_dir: Path,
+    tile_size: int,
+    stride: int,
+) -> None:
     """
     Split a single GeoTIFF into tiles with geospatial sidecar files.
 
     Process:
         1. Reads the source GeoTIFF.
-        2. Iterates through the raster using STRIDE spacing (TILE_SIZE - OVERLAP).
+        2. Iterates through the raster using stride spacing.
         3. Extracts the Red/Green/Blue (RGB) pixel data (converting single-band
            to RGB if necessary).
         4. Saves the tile as a Portable Network Graphics (PNG) file.
@@ -54,11 +62,14 @@ def tile_raster(input_path: Path) -> None:
 
     Args:
         input_path: Path to the source .tif file.
+        output_dir: Base output directory for tiles.
+        tile_size: Tile dimensions in pixels (square tiles).
+        stride: Distance between tile origins in pixels (tile_size - overlap).
     """
     map_name = input_path.stem
 
     # Create output directory for this map
-    map_output_dir = TILES_DIR / map_name
+    map_output_dir = output_dir / map_name
     map_output_dir.mkdir(parents=True, exist_ok=True)
 
     metadata: dict[str, list] = {}
@@ -67,16 +78,17 @@ def tile_raster(input_path: Path) -> None:
         height = src.height
         width = src.width
 
-        # Generate tile windows using STRIDE (distance between tile origins).
+        # Generate tile windows using stride (distance between tile origins).
         # Tiles at edges may extend beyond the raster boundary; rasterio's
         # boundless read handles this by padding with fill_value.
         windows = [
-            (x, y, Window(x, y, TILE_SIZE, TILE_SIZE))
-            for y in range(0, height, STRIDE)
-            for x in range(0, width, STRIDE)
+            (x, y, Window(x, y, tile_size, tile_size))
+            for y in range(0, height, stride)
+            for x in range(0, width, stride)
         ]
 
-        print(f"Processing {len(windows)} tiles for {map_name}...")
+        print(f"Processing {len(windows)} tiles for {map_name} "
+              f"(tile_size={tile_size}, stride={stride})...")
 
         for x, y, window in tqdm(windows):
             # Read pixel data; boundless=True pads with 0 (black) beyond edges
@@ -138,7 +150,55 @@ def tile_raster(input_path: Path) -> None:
 
 
 def main() -> None:
-    """Process all GeoTIFF files in the rasters input directory."""
+    """Parse CLI arguments and tile all GeoTIFFs in the rasters directory."""
+    parser = argparse.ArgumentParser(
+        description="Split GeoTIFF maps into tiles for VLM processing",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Default 512×512 tiles with 64px overlap
+  python scripts/preprocess_tiling.py
+
+  # 384×384 tiles with 48px overlap to a custom directory
+  python scripts/preprocess_tiling.py --tile-size 384 --overlap 48 --output-dir inputs/tiles_384
+        """,
+    )
+
+    parser.add_argument(
+        "--tile-size",
+        type=int,
+        default=TILE_SIZE,
+        help=f"Tile dimensions in pixels (default: {TILE_SIZE})",
+    )
+    parser.add_argument(
+        "--overlap",
+        type=int,
+        default=OVERLAP,
+        help=f"Overlap in pixels between adjacent tiles (default: {OVERLAP})",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=TILES_DIR,
+        help=f"Output directory for tiles (default: {TILES_DIR})",
+    )
+
+    args = parser.parse_args()
+
+    # Calculate stride from tile size and overlap
+    tile_size = args.tile_size
+    overlap = args.overlap
+    stride = tile_size - overlap
+
+    if stride <= 0:
+        print(f"Error: overlap ({overlap}) must be less than tile-size ({tile_size})")
+        sys.exit(1)
+
+    output_dir = args.output_dir
+
+    print(f"Tile size: {tile_size}×{tile_size}, overlap: {overlap}, stride: {stride}")
+    print(f"Output directory: {output_dir}")
+
     tif_files = list(RASTERS_DIR.glob("*.tif"))
 
     if not tif_files:
@@ -146,9 +206,9 @@ def main() -> None:
         return
 
     for tif_path in tif_files:
-        print(f"Starting {tif_path.name}...")
+        print(f"\nStarting {tif_path.name}...")
         try:
-            tile_raster(tif_path)
+            tile_raster(tif_path, output_dir, tile_size, stride)
         except Exception as exc:
             print(f"Error processing {tif_path.name}: {exc}")
 

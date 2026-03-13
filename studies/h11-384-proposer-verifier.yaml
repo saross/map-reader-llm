@@ -1,0 +1,153 @@
+# H11: Tile Size Experiment — Proposer-Verifier at 384×384
+# =========================================================
+# Tests whether smaller tiles (384×384) improve proposer-verifier pipeline
+# performance. The proposer runs single-pass detection on 384 tiles, then
+# the verifier evaluates 150×150 crops from source rasters (crop size is
+# tile-size-independent after the E33 fix).
+#
+# The 512 baseline must be re-run after the E33 crop fix (original Phase 3d
+# results used tile-based crops).
+#
+# Usage:
+#   # Step 1: Run proposer on 384 tiles
+#   python scripts/4_detect_mounds_batch.py \
+#       --config prompts/configs/detect_brief-text.json \
+#       --manifest inputs/tiles_384/validation_manifest.json \
+#       --output-dir outputs/h11/proposer-verifier-384/proposer \
+#       --tile-size 384 \
+#       --tiles-dir inputs/tiles_384 \
+#       --temperature 0.0 \
+#       --workers 12
+#
+#   # Step 2: Extract candidate crops (from source rasters, E33 fix)
+#   python scripts/extract_candidates.py \
+#       --proposer outputs/h11/proposer-verifier-384/proposer/detections.geojson \
+#       --rasters-dir inputs/rasters \
+#       --output-dir outputs/h11/proposer-verifier-384/candidates \
+#       --padding 75
+#
+#   # Step 3: Run verifier on crops
+#   python scripts/5_verify_crops.py \
+#       --candidates outputs/h11/proposer-verifier-384/candidates/candidate_manifest.json \
+#       --output outputs/h11/proposer-verifier-384/verified.geojson \
+#       --config prompts/configs/verify_adversarial.json \
+#       --workers 10
+#
+# Prerequisites:
+#   - 384×384 tiles generated
+#   - 384 validation manifest created
+#   - E33 crop fix applied (extract_candidates.py reads from source rasters)
+#   - Source rasters available in inputs/rasters/
+
+study:
+  name: "H11: Tile Size — Proposer-Verifier at 384×384"
+  version: "1.0"
+  description: |
+    Tests whether 384×384 tiles improve the proposer-verifier pipeline.
+    The proposer stage uses smaller tiles, potentially yielding higher
+    recall due to the increased mound-to-tile ratio. The verifier stage
+    uses 150×150 crops from source rasters (tile-size-independent after E33).
+
+    The 512 baseline is re-run after the E33 crop extraction fix to ensure
+    a fair comparison (original Phase 3d results used tile-based crops).
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-12"
+  erratum: "E33"
+
+# Carried forward from Phase 3d
+carried_forward:
+  proposer_config: "prompts/configs/detect_brief-text.json"
+  proposer_temperature: 0.0
+  verifier_config: "prompts/configs/verify_adversarial.json"
+  crop_padding: 75
+  source: "Phase 3d — best proposer-verifier (Track 2, adversarial verifier)"
+
+# Factor under test
+factors:
+  tile_size:
+    description: "Tile dimensions for the proposer stage"
+    levels:
+      - name: "384"
+        value: 384
+        overlap: 48
+        stride: 336
+    baseline:
+      name: "512"
+      value: 512
+      source: "Phase 3d re-run after E33 fix"
+
+# Fixed parameters
+fixed:
+  proposer_config: "prompts/configs/detect_brief-text.json"
+  proposer_temperature: 0.0
+  verifier_config: "prompts/configs/verify_adversarial.json"
+  crop_padding: 75
+  crop_source: "source_raster"  # E33 fix — always crop from GeoTIFF
+
+inputs:
+  manifest_384: "inputs/tiles_384/validation_manifest.json"
+  manifest_512: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds_384: "outputs/results/validation_bounds_384.geojson"
+  bounds_512: "outputs/results/validation_bounds.geojson"
+  rasters_dir: "inputs/rasters"
+
+execution:
+  workers: 1           # Safe default; pass --workers N at CLI for parallelism
+  output_dir_384: "outputs/h11/proposer-verifier-384"
+  output_dir_512: "outputs/h11/proposer-verifier-512"
+
+# Three-stage pipeline commands
+pipeline:
+  proposer:
+    command_template: |
+      python scripts/4_detect_mounds_batch.py \
+        --config {carried_forward.proposer_config} \
+        --manifest {inputs.manifest} \
+        --output-dir {output_dir}/proposer \
+        --tile-size {tile_size} \
+        --tiles-dir {tiles_dir} \
+        --temperature {carried_forward.proposer_temperature}
+  candidate_extraction:
+    command_template: |
+      python scripts/extract_candidates.py \
+        --proposer {output_dir}/proposer/detections.geojson \
+        --rasters-dir {inputs.rasters_dir} \
+        --output-dir {output_dir}/candidates \
+        --padding {carried_forward.crop_padding}
+  verifier:
+    command_template: |
+      python scripts/5_verify_crops.py \
+        --candidates {output_dir}/candidates/candidate_manifest.json \
+        --output {output_dir}/verified.geojson \
+        --config {carried_forward.verifier_config}
+
+analysis:
+  method: "paired_comparison"
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  comparison: "384 vs 512 proposer-verifier at 20m tolerance"
+  output:
+    report: "results/h11/proposer-verifier-comparison.json"
+    summary: "results/h11/proposer-verifier-comparison.md"
+
+estimates:
+  tiles_384: "TBD"
+  proposer_calls_384: "TBD"
+  verifier_calls_384: "TBD"
+  total_calls_384: "TBD"
+  cost_usd_384: "TBD"
+  # 512 re-run (E33 fix)
+  proposer_calls_512: 60
+  verifier_calls_512: "TBD"  # Depends on proposer output
+
+outcome:
+  determines: "tile_size_effect_proposer_verifier"
+  decision_rule: |
+    Compare F1 at 20m tolerance between 384 and 512 proposer-verifier results.
+    Both use corrected crop extraction (E33). If 384 F1 > 512 F1, smaller
+    tiles improve proposer recall sufficiently to offset any additional
+    false positives passed to the verifier.

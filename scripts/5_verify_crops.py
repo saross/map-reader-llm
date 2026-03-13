@@ -52,7 +52,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 try:
-    from config import GOOGLE_API_KEY, TILES_DIR, CONTEXT_SIZE, EXAMPLES_DIR, BASE_DIR
+    from config import (
+        GOOGLE_API_KEY, TILES_DIR, RASTERS_DIR, CONTEXT_SIZE, EXAMPLES_DIR,
+        BASE_DIR,
+    )
 except ImportError:
     print("Error: config.py not found.")
     sys.exit(1)
@@ -67,7 +70,7 @@ from scripts.lib_llm_metadata import (
 )
 
 # Script Version
-__version__ = "5.2.0"  # Migrated to google-genai SDK with ThinkingConfig support
+__version__ = "5.3.0"  # E33: crop from source raster instead of tile
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -124,8 +127,51 @@ def load_candidates(candidates_path: Path) -> list[Feature]:
     return fc.get("features", [])
 
 
+def _tile_id_to_map_name(tile_id: str) -> str:
+    """Extract the parent map name from a tile filename.
+
+    Tile filenames follow ``{map_name}_x{origin_x}_y{origin_y}.png``.
+
+    Args:
+        tile_id: Tile filename (e.g., "K-35-052-4_32635_x1344_y1344.png").
+
+    Returns:
+        Map name (e.g., "K-35-052-4_32635").
+    """
+    parts = tile_id.rsplit("_x", 1)
+    return parts[0]
+
+
+# Cache resolved raster paths to avoid repeated filesystem lookups
+_raster_cache: dict[str, Path | None] = {}
+
+
+def resolve_raster_for_tile(tile_id: str) -> Path | None:
+    """Resolve a tile ID to its parent source GeoTIFF raster.
+
+    Caches lookups so repeated calls for tiles from the same map sheet
+    only hit the filesystem once.
+
+    Args:
+        tile_id: Tile filename (e.g., "K-35-052-4_32635_x1344_y1344.png").
+
+    Returns:
+        Path to the source .tif file, or None if not found.
+    """
+    map_name = _tile_id_to_map_name(tile_id)
+    if map_name not in _raster_cache:
+        raster_path = RASTERS_DIR / f"{map_name}.tif"
+        if raster_path.exists():
+            _raster_cache[map_name] = raster_path
+        else:
+            # Try case-insensitive glob as fallback
+            found = list(RASTERS_DIR.glob(f"{map_name}.*tif*"))
+            _raster_cache[map_name] = found[0] if found else None
+    return _raster_cache[map_name]
+
+
 def get_tile_path(tile_id: str) -> Path | None:
-    """Resolve tile ID to absolute path."""
+    """Resolve tile ID to absolute tile path (fallback for when rasters unavailable)."""
     found = list(TILES_DIR.glob(f"**/{tile_id}"))
     if not found:
         found = list(TILES_DIR.glob(f"**/{tile_id}.png"))
@@ -140,24 +186,56 @@ def crop_candidate(
     geom: dict[str, Any],
     context_px: int = CONTEXT_SIZE,
 ) -> Image.Image | None:
-    """Crop the raster around the candidate geometry."""
-    with rasterio.open(raster_path) as src:
-        bounds = shape(geom).bounds
-        cx = (bounds[0] + bounds[2]) / 2
-        cy = (bounds[1] + bounds[3]) / 2
+    """Crop the source raster around the candidate geometry centroid.
 
-        row, col = src.index(cx, cy)
-        half_size = context_px // 2
-        window = Window(col - half_size, row - half_size, context_px, context_px)
+    Uses ``boundless=True`` so crops are always exactly
+    ``context_px × context_px`` pixels, even when the centroid is near
+    the raster edge. Rasterio pads beyond-edge pixels with fill_value=0.
 
-        try:
-            arr = src.read(window=window)
+    This was fixed in E33 — the original implementation could produce
+    truncated crops when reading from tile PNGs near tile boundaries.
+
+    Args:
+        raster_path: Path to a georeferenced raster (source GeoTIFF or tile PNG).
+        geom: GeoJSON geometry dict for the detection.
+        context_px: Size of the square crop in pixels (default: CONTEXT_SIZE).
+
+    Returns:
+        PIL Image of the crop, or None on failure.
+    """
+    try:
+        with rasterio.open(raster_path) as src:
+            bounds = shape(geom).bounds
+            cx = (bounds[0] + bounds[2]) / 2
+            cy = (bounds[1] + bounds[3]) / 2
+
+            row, col = src.index(cx, cy)
+            half_size = context_px // 2
+            window = Window(
+                col - half_size, row - half_size, context_px, context_px,
+            )
+
+            # boundless=True pads beyond raster edges with fill_value=0,
+            # guaranteeing exact crop dimensions (E33 fix)
+            arr = src.read(window=window, boundless=True, fill_value=0)
             if arr.shape[0] == 0:
                 return None
-            img_data = arr.transpose(1, 2, 0)
+
+            # Handle RGB, RGBA, and single-band rasters
+            if arr.shape[0] >= 3:
+                img_data = arr[:3].transpose(1, 2, 0)
+            elif arr.shape[0] == 1:
+                # Single-band: replicate to 3-band RGB
+                import numpy as np
+                grey = arr[0]
+                img_data = np.stack([grey, grey, grey], axis=-1)
+            else:
+                img_data = arr.transpose(1, 2, 0)
+
             return Image.fromarray(img_data)
-        except Exception:
-            return None
+    except Exception as e:
+        logging.error("Error cropping from %s: %s", raster_path, e)
+        return None
 
 
 def construct_verifier_prompt(
@@ -265,11 +343,16 @@ def process_single_candidate(
     if not tile_id:
         return None, metadata_list
 
-    tile_path = get_tile_path(tile_id)
-    if not tile_path:
-        return None, metadata_list
+    # Resolve to source raster (E33 fix) — fall back to tile PNG if unavailable
+    raster_path = resolve_raster_for_tile(tile_id)
+    if raster_path:
+        crop_source = raster_path
+    else:
+        crop_source = get_tile_path(tile_id)
+        if not crop_source:
+            return None, metadata_list
 
-    crop_img = crop_candidate(tile_path, feat["geometry"])
+    crop_img = crop_candidate(crop_source, feat["geometry"])
     if not crop_img:
         return None, metadata_list
 

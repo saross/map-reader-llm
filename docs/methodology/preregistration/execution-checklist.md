@@ -4,7 +4,7 @@
 
 **Associated preregistration**: `preregistration.md` v4.7
 
-**Last updated**: 2026-02-11
+**Last updated**: 2026-03-12
 
 ---
 
@@ -97,14 +97,14 @@
 |-------|------------|----------|-------|
 | Phase 1: Library + Text | 2026-02-01 | 2026-02-03 | Detection passes complete (F1=0.489 baseline); hard examples selected (4 HP + 4 HN); two-stage prompts reviewed and updated |
 | Phase 2a: H1 M/E Level | 2026-02-05 | 2026-02-06 | Infrastructure built; sanity checks passed (3 runs, F1 0.36–0.44); analysis script fixed (E21–E22); metadata capture enhanced (E23); dry-run bug fixed (E24); K=10 runs complete; surprising result — text-only brief-text (F1=0.5425) outperformed all image-using conditions; dual-track carry-forward established (Decision 16) |
-| Phase 2b: H7 Temperature | 2026-02-07 | | Dual-track: Track 1 (brief-text-image), Track 2 (brief-text); 5 temperatures × K=10 per track |
-| Phase 2c: H8 Library Composition | | | |
-| Phase 2d: H5 Negative Text | | | Dual-track OFAT (Decision 17, E28): Track 1 brief-text-image + plus-hp, Track 2 brief-text text-only; 4 new cells (2 per track), ~2,400 API calls |
-| Phase 2e: H4 Ordering | | | |
-| Phase 3a: H3 N=30 Extension | | | |
-| Phase 3b: H9 Diversity | | | |
-| Phase 3c: H2 Two-Stage | | | |
-| Phase 3d: Triggered Exploratory (H4b, M/E-sensitivity, HN-only) | | | |
+| Phase 2b: H7 Temperature | 2026-02-07 | 2026-02-08 | Dual-track: Track 1 (brief-text-image), Track 2 (brief-text); 5 temperatures × K=10 per track; T=0.0 optimal both tracks |
+| Phase 2c: H8 Library Composition | 2026-02-08 | 2026-02-09 | Track 1 only (library composition is visual; text-only conditions collapse to identical prompts); plus-hp library optimal (F1=0.609) |
+| Phase 2d: H5 Negative Text | 2026-02-09 | 2026-02-12 | Dual-track OFAT (Decision 17, E28): Track 1 brief-text-image + plus-hp, Track 2 brief-text text-only; H5=minimal optimal both tracks |
+| Phase 2e: H4 Ordering | 2026-02-12 | 2026-02-12 | Single-track (image-using only; text-only has nothing to reorder); 4 conditions × K=10; no significant effect after FDR correction; retrospective carry-forward 2026-03-09 |
+| Phase 3a: H3 N=30 Extension | 2026-02-12 | 2026-03-07 | 2×2×4 full analysis (dual-track, two thinking levels, four spatial tolerances); consensus voting improves F1 across all conditions |
+| Phase 3b: H9 Diversity | 2026-03-07 | 2026-03-08 | Implicit testing via Phase 3a parameter variation; confirmed null result — prompt/parameter diversity does not improve consensus |
+| Phase 3c: H2 Two-Stage | 2026-03-08 | 2026-03-09 | Pilot: adversarial verifier improves F1 by +0.086 to +0.138 vs single-stage baseline; GO for full experiment |
+| Phase 3d: Triggered Exploratory | 2026-03-09 | 2026-03-11 | Pilot extensions (cross-modal union recall=0.835); verifier experiments A–D (max ΔF1=+0.011, perceptual limit); HIGH-thinking verifier (negative); Experiment E text proposer ablation (negative — baseline at capability frontier) |
 | Phase 4: H6 Pro Transfer | | | |
 | Phase 5: Exploratory (H10-H15) | | | |
 

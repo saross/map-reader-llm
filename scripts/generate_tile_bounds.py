@@ -86,7 +86,11 @@ def load_metadata(tiles_dir: Path) -> dict[str, list[float]]:
     return all_metadata
 
 
-def tile_to_polygon(filename: str, metadata: dict[str, list[float]]) -> dict | None:
+def tile_to_polygon(
+    filename: str,
+    metadata: dict[str, list[float]],
+    tile_size: int = TILE_SIZE,
+) -> dict | None:
     """Convert tile metadata to a GeoJSON polygon feature.
 
     Constructs a rectangular polygon whose corners are derived from the tile's
@@ -95,6 +99,7 @@ def tile_to_polygon(filename: str, metadata: dict[str, list[float]]) -> dict | N
     Args:
         filename: Tile filename.
         metadata: All tile georeferencing metadata.
+        tile_size: Tile dimension in pixels (default: TILE_SIZE from config).
 
     Returns:
         GeoJSON Feature dict, or ``None`` if tile not found in metadata.
@@ -110,8 +115,8 @@ def tile_to_polygon(filename: str, metadata: dict[str, list[float]]) -> dict | N
     min_y = meta[1]
     pixel_size = meta[2]
 
-    # Calculate tile extent (each tile is TILE_SIZE pixels square)
-    extent = TILE_SIZE * pixel_size
+    # Calculate tile extent (each tile is tile_size pixels square)
+    extent = tile_size * pixel_size
     max_x = min_x + extent
     max_y = min_y + extent
 
@@ -141,6 +146,7 @@ def create_bounds_geojson(
     metadata: dict[str, list[float]],
     selection_metadata: dict,
     set_type: str,
+    tile_size: int = TILE_SIZE,
 ) -> dict:
     """Create a GeoJSON FeatureCollection for a set of tiles.
 
@@ -153,6 +159,7 @@ def create_bounds_geojson(
         metadata: Tile georeferencing metadata.
         selection_metadata: Tile selection metadata with mound counts.
         set_type: ``"calibration"`` or ``"validation"``.
+        tile_size: Tile dimension in pixels (default: TILE_SIZE from config).
 
     Returns:
         GeoJSON FeatureCollection dict.
@@ -168,7 +175,7 @@ def create_bounds_geojson(
 
     features: list[dict] = []
     for filename in tile_filenames:
-        feature = tile_to_polygon(filename, metadata)
+        feature = tile_to_polygon(filename, metadata, tile_size=tile_size)
         if feature:
             # Add selection metadata to properties
             if filename in tile_info:
@@ -191,6 +198,7 @@ def validate_bounds(
     geojson_data: dict,
     metadata: dict[str, list[float]],
     n_samples: int = 3,
+    tile_size: int = TILE_SIZE,
 ) -> bool:
     """Validate generated bounds against tile metadata.
 
@@ -202,12 +210,13 @@ def validate_bounds(
 
     - Polygon minX == metadata[0] (origin X)
     - Polygon minY == metadata[1] (origin Y, the BOTTOM edge)
-    - Polygon width and height == TILE_SIZE * pixel_size
+    - Polygon width and height == tile_size * pixel_size
 
     Args:
         geojson_data: Generated GeoJSON FeatureCollection.
         metadata: Tile georeferencing metadata dict.
         n_samples: Number of tiles to spot-check.
+        tile_size: Tile dimension in pixels (default: TILE_SIZE from config).
 
     Returns:
         True if all checks pass, False if any fail.
@@ -231,7 +240,7 @@ def validate_bounds(
         expected_min_x = meta[0]
         expected_min_y = meta[1]  # This is minY (bottom edge), NOT maxY
         pixel_size = meta[2]
-        expected_extent = TILE_SIZE * pixel_size
+        expected_extent = tile_size * pixel_size
 
         # Extract polygon bounds from generated feature
         coords = feature["geometry"]["coordinates"][0]  # Outer ring
@@ -283,6 +292,7 @@ def _generate_and_save_bounds(
     metadata: dict[str, list[float]],
     selection_metadata: dict,
     outputs_dir: Path,
+    tile_size: int = TILE_SIZE,
 ) -> None:
     """Generate, save, and validate a GeoJSON bounds file for one tile set.
 
@@ -292,13 +302,15 @@ def _generate_and_save_bounds(
         metadata: Tile georeferencing metadata.
         selection_metadata: Tile selection metadata with mound counts.
         outputs_dir: Directory to write the GeoJSON output file.
+        tile_size: Tile dimension in pixels (default: TILE_SIZE from config).
 
     Raises:
         SystemExit: If bounds validation fails.
     """
     print(f"\nGenerating {set_type} bounds GeoJSON...")
     geojson_data = create_bounds_geojson(
-        tile_filenames, metadata, selection_metadata, set_type
+        tile_filenames, metadata, selection_metadata, set_type,
+        tile_size=tile_size,
     )
 
     output_path = outputs_dir / f"{set_type}_bounds.geojson"
@@ -307,7 +319,7 @@ def _generate_and_save_bounds(
     print(f"  Saved: {output_path}")
     print(f"  Features: {len(geojson_data['features'])}")
 
-    if not validate_bounds(geojson_data, metadata):
+    if not validate_bounds(geojson_data, metadata, tile_size=tile_size):
         print(f"ERROR: {set_type.capitalize()} bounds validation failed. "
               f"Check metadata interpretation.")
         sys.exit(1)
@@ -327,6 +339,12 @@ Examples:
     python scripts/generate_tile_bounds.py \\
         --tiles-dir /path/to/tiles \\
         --output-dir /path/to/output
+
+    # Generate bounds for 384×384 tiles
+    python scripts/generate_tile_bounds.py \\
+        --tiles-dir inputs/tiles_384 \\
+        --tile-size 384 \\
+        --output-dir outputs/results
 
 Output Files:
     calibration_bounds.geojson  - Polygon bounds for calibration tiles
@@ -348,11 +366,20 @@ Output Files:
         default=base_dir / "outputs" / "results",
         help="Path to output directory for GeoJSON files (default: outputs/results)",
     )
+    parser.add_argument(
+        "--tile-size",
+        type=int,
+        default=None,
+        help=f"Override tile size for extent calculation (default: {TILE_SIZE} from config)",
+    )
 
     args = parser.parse_args()
 
     tiles_dir = args.tiles_dir
     outputs_dir = args.output_dir
+    effective_tile_size = args.tile_size if args.tile_size is not None else TILE_SIZE
+
+    print(f"Tile size for extent calculation: {effective_tile_size}")
 
     # Ensure output directory exists
     outputs_dir.mkdir(parents=True, exist_ok=True)
@@ -392,7 +419,8 @@ Output Files:
         ("validation", validation_tiles),
     ]:
         _generate_and_save_bounds(
-            set_type, tile_filenames, metadata, selection_metadata, outputs_dir
+            set_type, tile_filenames, metadata, selection_metadata, outputs_dir,
+            tile_size=effective_tile_size,
         )
 
     print("\nDone!")

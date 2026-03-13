@@ -1,0 +1,112 @@
+# H11: Tile Size Experiment — Consensus Voting at 384×384
+# =======================================================
+# Tests whether smaller tiles (384×384) improve consensus voting performance.
+# Uses the best n-of-5 consensus configuration from Phase 3a.
+#
+# The 512 baseline already exists from Phase 3a (Track 2 text-only optimal).
+#
+# Usage:
+#   # Run K passes at the consensus temperature
+#   for run in $(seq 1 5); do
+#     python scripts/4_detect_mounds_batch.py \
+#         --config prompts/configs/detect_brief-text.json \
+#         --manifest inputs/tiles_384/validation_manifest.json \
+#         --output-dir outputs/h11/consensus-384/run_${run} \
+#         --tile-size 384 \
+#         --tiles-dir inputs/tiles_384 \
+#         --temperature 0.7 \
+#         --workers 12
+#   done
+#
+# Prerequisites:
+#   - 384×384 tiles generated
+#   - 384 validation manifest created
+#   - Phase 3a complete (optimal consensus config determined)
+
+study:
+  name: "H11: Tile Size — Consensus Voting at 384×384"
+  version: "1.0"
+  description: |
+    Tests whether 384×384 tiles improve consensus voting performance
+    compared to the 512×512 baseline. Uses the same consensus configuration
+    (temperature, pool size, vote threshold) as the Phase 3a optimal.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-12"
+
+# Carried forward from Phase 3a
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  optimal_temperature: 0.7
+  optimal_pool_size: 5
+  optimal_vote_threshold: 3
+  source: "Phase 3a Track 2 — best consensus config"
+
+# Factor under test
+factors:
+  tile_size:
+    description: "Tile dimensions in pixels"
+    levels:
+      - name: "384"
+        value: 384
+        overlap: 48
+        stride: 336
+    baseline:
+      name: "512"
+      value: 512
+      source: "Phase 3a Track 2 existing results"
+
+# Fixed parameters
+fixed:
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.7
+  pool_size: 5
+  vote_threshold: 3
+  ordering: "config-default"
+
+inputs:
+  manifest_384: "inputs/tiles_384/validation_manifest.json"
+  manifest_512: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds_384: "outputs/results/validation_bounds_384.geojson"
+  bounds_512: "outputs/results/validation_bounds.geojson"
+
+execution:
+  runs: 5              # N=5 consensus pool
+  workers: 1           # Safe default; pass --workers N at CLI for parallelism
+  output_dir: "outputs/h11/consensus-384"
+
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest_384} \
+    --output-dir {execution.output_dir}/run_{run} \
+    --tile-size 384 \
+    --tiles-dir inputs/tiles_384 \
+    --temperature {carried_forward.optimal_temperature}
+
+analysis:
+  method: "consensus_then_compare"
+  script: "scripts/analyse_consensus_sweep.py"
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+  comparison: "384 vs 512 consensus at 20m tolerance"
+  output:
+    report: "results/h11/consensus-comparison.json"
+    summary: "results/h11/consensus-comparison.md"
+
+estimates:
+  tiles_384: "TBD"
+  runs: 5
+  api_calls_per_run: "TBD"
+  cost_usd: "TBD"
+
+outcome:
+  determines: "tile_size_effect_consensus"
+  decision_rule: |
+    Apply the same consensus parameters (N=5, T=0.7, x=3) to both 384
+    and 512 results. Compare F1 at 20m tolerance. If 384 consensus F1
+    exceeds 512 consensus F1, smaller tiles are preferred for consensus.

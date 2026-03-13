@@ -11,7 +11,7 @@ Description:
 Usage:
     python scripts/extract_candidates.py \\
         --proposer outputs/phase2/proposer_detections.geojson \\
-        --tiles-dir inputs/tiles \\
+        --rasters-dir inputs/rasters \\
         --output-dir outputs/phase3d/candidates \\
         --padding 75
 
@@ -23,12 +23,17 @@ Usage:
 Inputs:
     - Proposer GeoJSON (Geographic JavaScript Object Notation) with detection
       geometries and "source_tile" property
-    - Tiles directory containing georeferenced Portable Network Graphics (PNG)
-      tiles
+    - Source GeoTIFF rasters in rasters directory (preferred)
+    - Tiles directory containing georeferenced PNG tiles (fallback)
 
 Outputs:
-    - Cropped candidate images in output directory
+    - Cropped candidate images in output directory (always padding*2 × padding*2)
     - candidate_manifest.json mapping crop files to detection metadata
+
+Note:
+    E33 fix: Crops are now extracted from source GeoTIFF rasters instead of
+    tile PNGs. This prevents edge-truncated crops when detections fall near
+    tile boundaries. Falls back to tile PNGs if a raster is not found.
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -40,13 +45,14 @@ import sys
 from pathlib import Path
 
 import geojson
+import numpy as np
 import rasterio
 from PIL import Image
 from rasterio.windows import Window
 from shapely.geometry import shape
 
 # Script version
-__version__ = "1.0.0"
+__version__ = "2.0.0"  # E33: crop from source raster instead of tile
 
 # Project root
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -54,6 +60,49 @@ PROJECT_ROOT = Path(__file__).parent.parent
 # Default configuration
 DEFAULT_PADDING = 75  # pixels of context around centroid
 DEFAULT_TILES_DIR = PROJECT_ROOT / "inputs" / "tiles"
+DEFAULT_RASTERS_DIR = PROJECT_ROOT / "inputs" / "rasters"
+
+
+def tile_id_to_map_name(tile_id: str) -> str:
+    """
+    Extract the parent map name from a tile filename.
+
+    Tile filenames follow the pattern ``{map_name}_x{origin_x}_y{origin_y}.png``.
+    The map name corresponds to the source GeoTIFF filename (without extension).
+
+    Args:
+        tile_id: Tile filename (e.g., "K-35-052-4_32635_x1344_y1344.png").
+
+    Returns:
+        Map name (e.g., "K-35-052-4_32635").
+    """
+    # Split on the first "_x" followed by digits to separate map name from coords
+    parts = tile_id.rsplit("_x", 1)
+    return parts[0]
+
+
+def resolve_raster_path(tile_id: str, rasters_dir: Path) -> Path | None:
+    """
+    Resolve a tile ID to its parent source GeoTIFF raster.
+
+    Args:
+        tile_id: Tile filename (e.g., "K-35-052-4_32635_x1344_y1344.png").
+        rasters_dir: Directory containing source GeoTIFF rasters.
+
+    Returns:
+        Path to the source .tif file, or None if not found.
+    """
+    map_name = tile_id_to_map_name(tile_id)
+    raster_path = rasters_dir / f"{map_name}.tif"
+    if raster_path.exists():
+        return raster_path
+
+    # Try case-insensitive glob as fallback
+    found = list(rasters_dir.glob(f"{map_name}.*tif*"))
+    if found:
+        return found[0]
+
+    return None
 
 
 def get_tile_path(tile_id: str, tiles_dir: Path) -> Path | None:
@@ -61,7 +110,8 @@ def get_tile_path(tile_id: str, tiles_dir: Path) -> Path | None:
     Resolve tile ID to absolute path.
 
     Searches for the tile in the tiles directory, handling both direct
-    matches and subdirectory structures.
+    matches and subdirectory structures. Used as fallback when source
+    rasters are unavailable.
 
     Args:
         tile_id: Tile filename (e.g., "K-35-052-4_32635_x1344_y1344.png").
@@ -90,57 +140,61 @@ def get_tile_path(tile_id: str, tiles_dir: Path) -> Path | None:
 
 
 def crop_region(
-    tile_path: Path,
+    raster_path: Path,
     centroid: tuple[float, float],
     padding: int,
     output_path: Path,
 ) -> bool:
     """
-    Crop region around centroid from a georeferenced tile.
+    Crop region around centroid from a georeferenced source raster.
 
-    Uses rasterio to handle coordinate transformation from projected
-    coordinates (in the GeoJSON) to pixel coordinates in the tile.
+    Reads from the full-resolution source GeoTIFF with ``boundless=True``,
+    so crops are always exactly ``padding*2 × padding*2`` pixels regardless
+    of where the detection falls. Rasterio pads beyond raster edges with
+    fill_value=0 (black), avoiding any truncation.
+
+    This was fixed in E33 — the original implementation read from tile PNGs,
+    which caused edge-truncated crops for mounds near tile boundaries.
 
     Args:
-        tile_path: Path to georeferenced PNG tile.
+        raster_path: Path to source GeoTIFF raster (NOT a tile PNG).
         centroid: Detection centroid in projected coordinates (x, y).
         padding: Number of pixels of context around centroid.
+            Crop dimensions will be ``padding*2 × padding*2``.
         output_path: Path to save cropped image.
 
     Returns:
         True if crop was successful, False otherwise.
     """
     try:
-        with rasterio.open(tile_path) as src:
+        with rasterio.open(raster_path) as src:
             # Convert projected coordinates to pixel coordinates
             cx, cy = centroid
             row, col = src.index(cx, cy)
 
-            # Calculate window bounds
-            half_size = padding
-            col_start = max(0, col - half_size)
-            row_start = max(0, row - half_size)
+            # Build a window centred on the detection — no clamping needed
+            # because boundless=True pads beyond raster edges with fill_value
+            crop_size = padding * 2
+            window = Window(
+                col - padding,
+                row - padding,
+                crop_size,
+                crop_size,
+            )
 
-            # Ensure window doesn't exceed tile bounds
-            col_end = min(src.width, col + half_size)
-            row_end = min(src.height, row + half_size)
-
-            window_width = col_end - col_start
-            window_height = row_end - row_start
-
-            if window_width <= 0 or window_height <= 0:
-                return False
-
-            window = Window(col_start, row_start, window_width, window_height)
-
-            # Read and transpose to Red Green Blue (RGB)
-            arr = src.read(window=window)
+            # Read with boundless=True — rasterio fills beyond-edge pixels
+            # with 0 (black), guaranteeing exact crop dimensions
+            arr = src.read(window=window, boundless=True, fill_value=0)
             if arr.shape[0] == 0:
                 return False
 
-            # Handle both RGB and RGBA (RGB with Alpha channel)
+            # Handle RGB, RGBA, and single-band rasters
             if arr.shape[0] >= 3:
                 img_data = arr[:3].transpose(1, 2, 0)
+            elif arr.shape[0] == 1:
+                # Single-band: replicate to 3-band RGB
+                grey = arr[0]
+                img_data = np.stack([grey, grey, grey], axis=-1)
             else:
                 img_data = arr.transpose(1, 2, 0)
 
@@ -150,7 +204,7 @@ def crop_region(
             return True
 
     except Exception as e:
-        print(f"Error cropping from {tile_path}: {e}")
+        print(f"Error cropping from {raster_path}: {e}")
         return False
 
 
@@ -158,6 +212,7 @@ def extract_candidates(
     proposer_geojson: Path,
     tiles_dir: Path,
     output_dir: Path,
+    rasters_dir: Path = DEFAULT_RASTERS_DIR,
     padding: int = DEFAULT_PADDING,
     dry_run: bool = False,
 ) -> Path | None:
@@ -165,14 +220,20 @@ def extract_candidates(
     Extract candidate regions from proposer detections.
 
     Reads a GeoJSON file containing proposer detections, crops image regions
-    around each detection centroid, and generates a manifest for verifier
-    input.
+    around each detection centroid from the source GeoTIFF rasters, and
+    generates a manifest for verifier input.
+
+    Crops are extracted from source rasters (not tile PNGs) to avoid
+    edge-truncation when detections fall near tile boundaries (see E33).
+    Falls back to tile PNGs if a source raster is not found.
 
     Args:
         proposer_geojson: Path to proposer output GeoJSON.
-        tiles_dir: Directory containing source tiles.
+        tiles_dir: Directory containing source tiles (fallback for cropping).
         output_dir: Directory for cropped candidate images.
+        rasters_dir: Directory containing source GeoTIFF rasters.
         padding: Pixels of context around detection centroid.
+            Crop dimensions will be ``padding*2 × padding*2``.
         dry_run: If True, only validate inputs without extracting.
 
     Returns:
@@ -181,6 +242,7 @@ def extract_candidates(
     proposer_geojson = Path(proposer_geojson)
     tiles_dir = Path(tiles_dir)
     output_dir = Path(output_dir)
+    rasters_dir = Path(rasters_dir)
 
     # Load proposer detections
     print(f"Loading proposer detections: {proposer_geojson}")
@@ -198,7 +260,12 @@ def extract_candidates(
 
     print(f"Found {len(features)} detections")
 
-    # Validate tiles directory
+    # Validate rasters directory — warn but don't fail (tiles fallback exists)
+    if not rasters_dir.exists():
+        print(f"Warning: Rasters directory not found: {rasters_dir}")
+        print("  Will attempt fallback to tile PNGs (may produce truncated crops)")
+
+    # Validate tiles directory (fallback source)
     if not tiles_dir.exists():
         print(f"Error: Tiles directory not found: {tiles_dir}")
         return None
@@ -209,11 +276,16 @@ def extract_candidates(
         crops_dir = output_dir / "crops"
         crops_dir.mkdir(exist_ok=True)
 
+    # Cache resolved raster paths to avoid repeated filesystem lookups
+    raster_cache: dict[str, Path | None] = {}
+
     # Process each detection
     manifest_entries = []
     successful = 0
     failed = 0
-    missing_tiles = set()
+    missing_sources = set()
+    raster_crops = 0
+    tile_fallback_crops = 0
 
     for idx, feature in enumerate(features):
         props = feature.get("properties", {})
@@ -226,14 +298,24 @@ def extract_candidates(
             failed += 1
             continue
 
-        # Find tile path
-        tile_path = get_tile_path(source_tile, tiles_dir)
-        if not tile_path:
-            if source_tile not in missing_tiles:
-                missing_tiles.add(source_tile)
-                print(f"Warning: Tile not found: {source_tile}")
-            failed += 1
-            continue
+        # Resolve source raster (preferred) or fall back to tile PNG
+        map_name = tile_id_to_map_name(source_tile)
+        if map_name not in raster_cache:
+            raster_cache[map_name] = resolve_raster_path(source_tile, rasters_dir)
+
+        raster_path = raster_cache[map_name]
+        crop_source = raster_path  # Will be the raster or tile path
+        used_raster = raster_path is not None
+
+        if not raster_path:
+            # Fall back to tile PNG (pre-E33 behaviour, may truncate)
+            crop_source = get_tile_path(source_tile, tiles_dir)
+            if not crop_source:
+                if source_tile not in missing_sources:
+                    missing_sources.add(source_tile)
+                    print(f"Warning: No raster or tile found for: {source_tile}")
+                failed += 1
+                continue
 
         # Calculate centroid
         try:
@@ -255,35 +337,45 @@ def extract_candidates(
                 "source_tile": source_tile,
                 "centroid_x": centroid[0],
                 "centroid_y": centroid[1],
+                "cropped_from": "raster" if used_raster else "tile",
                 "properties": props,
             })
             successful += 1
         else:
-            # Extract crop
+            # Extract crop from source raster (or tile fallback)
             crop_path = crops_dir / crop_filename
-            if crop_region(tile_path, centroid, padding, crop_path):
+            if crop_region(crop_source, centroid, padding, crop_path):
                 manifest_entries.append({
                     "candidate_id": idx,
                     "crop_file": f"crops/{crop_filename}",
                     "source_tile": source_tile,
                     "centroid_x": centroid[0],
                     "centroid_y": centroid[1],
+                    "cropped_from": "raster" if used_raster else "tile",
                     "properties": props,
                 })
                 successful += 1
+                if used_raster:
+                    raster_crops += 1
+                else:
+                    tile_fallback_crops += 1
             else:
                 failed += 1
 
     # Generate manifest
     manifest = {
-        "version": "1.0",
+        "version": "2.0",
         "source_geojson": str(proposer_geojson),
+        "rasters_dir": str(rasters_dir),
         "tiles_dir": str(tiles_dir),
         "padding": padding,
+        "crop_dimensions": f"{padding * 2}x{padding * 2}",
         "total_detections": len(features),
         "successful_extractions": successful,
         "failed_extractions": failed,
-        "missing_tiles": list(missing_tiles),
+        "raster_crops": raster_crops,
+        "tile_fallback_crops": tile_fallback_crops,
+        "missing_sources": list(missing_sources),
         "candidates": manifest_entries,
     }
 
@@ -300,8 +392,16 @@ def extract_candidates(
     print(f"  Total detections: {len(features)}")
     print(f"  Successful:       {successful}")
     print(f"  Failed:           {failed}")
-    if missing_tiles:
-        print(f"  Missing tiles:    {len(missing_tiles)}")
+    if not dry_run:
+        print(f"  From rasters:     {raster_crops}")
+        print(f"  From tiles (fallback): {tile_fallback_crops}")
+    if missing_sources:
+        print(f"  Missing sources:  {len(missing_sources)}")
+    if tile_fallback_crops > 0:
+        print(
+            "  WARNING: Some crops used tile fallback — these may be "
+            "truncated near tile edges (see E33)"
+        )
 
     return manifest_path if not dry_run else None
 
@@ -314,13 +414,13 @@ def _write_empty_manifest(
     """Write an empty manifest when the proposer input contains no features."""
     output_dir.mkdir(parents=True, exist_ok=True)
     manifest = {
-        "version": "1.0",
+        "version": "2.0",
         "source_geojson": str(source_geojson),
         "padding": padding,
         "total_detections": 0,
         "successful_extractions": 0,
         "failed_extractions": 0,
-        "missing_tiles": [],
+        "missing_sources": [],
         "candidates": [],
     }
     manifest_path = output_dir / "candidate_manifest.json"
@@ -341,10 +441,10 @@ Examples:
       --proposer outputs/proposer_detections.geojson \\
       --output-dir outputs/candidates
 
-  # Custom padding and tiles directory
+  # Custom padding and rasters directory
   python scripts/extract_candidates.py \\
       --proposer outputs/merged.geojson \\
-      --tiles-dir inputs/tiles \\
+      --rasters-dir inputs/rasters \\
       --output-dir outputs/candidates \\
       --padding 100
 
@@ -362,10 +462,16 @@ Examples:
         help="Path to proposer output GeoJSON",
     )
     parser.add_argument(
+        "--rasters-dir",
+        type=Path,
+        default=DEFAULT_RASTERS_DIR,
+        help=f"Directory containing source GeoTIFF rasters (default: {DEFAULT_RASTERS_DIR})",
+    )
+    parser.add_argument(
         "--tiles-dir",
         type=Path,
         default=DEFAULT_TILES_DIR,
-        help=f"Directory containing source tiles (default: {DEFAULT_TILES_DIR})",
+        help=f"Directory containing source tiles — fallback if raster not found (default: {DEFAULT_TILES_DIR})",
     )
     parser.add_argument(
         "--output-dir",
@@ -396,6 +502,7 @@ Examples:
         proposer_geojson=args.proposer,
         tiles_dir=args.tiles_dir,
         output_dir=args.output_dir,
+        rasters_dir=args.rasters_dir,
         padding=args.padding,
         dry_run=args.dry_run,
     )

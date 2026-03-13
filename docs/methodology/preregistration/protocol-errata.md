@@ -765,4 +765,31 @@ The 4 conditions are:
 
 ---
 
+### E33: Verifier crop extraction reads from tiles instead of source rasters
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-12 |
+| Type | Correction |
+| Files | `scripts/extract_candidates.py`, `scripts/5_verify_crops.py` |
+| Impact | Mounds near tile edges receive asymmetrically truncated crops, potentially biasing verifier decisions |
+
+**Description**: Both `extract_candidates.py` and `5_verify_crops.py` extracted crops from tile PNG images rather than the underlying GeoTIFF source rasters. When a detection centroid fell within `padding` pixels of a tile edge, the crop was clamped to tile boundaries (via `max(0, ...)` / `min(src.width, ...)` guards), producing a smaller-than-requested, asymmetric image. The intended behaviour was to crop from the full-resolution source raster, which has no edge constraints at detection locations.
+
+**Fix**: Modified both scripts to resolve each detection's `source_tile` to its parent GeoTIFF raster (in `inputs/rasters/`), then extract the crop with `boundless=True`. Rasterio pads beyond-raster-edge pixels with fill_value=0 (black), guaranteeing crops are always exactly `padding*2 × padding*2` pixels regardless of detection position. Falls back to tile PNGs if source rasters are not available, with a warning.
+
+**Affected results**: All Phase 3d proposer-verifier results that used `extract_candidates.py`:
+
+- Phase 3d pilot (Session 43): Track 1 and Track 2, verifiers B/C/D
+- Phase 3d pilot extensions (Session 44): P-R curves, cross-modal overlap
+- Phase 3d verifier experiments A–D (Sessions 46–47)
+- Phase 3d HIGH-thinking verifier test (Session 45)
+- Cross-modal union experiment (Session 45)
+
+**Not affected**: Single-pass detection (conditions a, b) — these don't use crop extraction.
+
+**Remediation**: All affected verifier experiments to be re-run with corrected crop extraction. Original results archived to `archive/phase3d-pre-e33/` for comparison.
+
+---
+
 *End of errata. New entries should be appended above this line.*
