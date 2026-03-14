@@ -5223,7 +5223,97 @@ documentation goal clearly.
 
 ---
 
-*Document created: 2026-01-27. Forty-first reflection added 2026-03-10
-(Session 48 — Experiment E ablation series establishing the capability
-frontier, systematic one-at-a-time decomposition of ΔF1=−0.156 into
-four attributable levers, and documentation for the paper).*
+### Reflection 42 — Session 50: The 384 proposer-verifier factorial and the limits of tile-size optimisation (2026-03-15, map-reader-llm)
+
+**Session type**: Experiment execution → negative result → expanded factorial
+→ exploratory cascades → pattern documentation
+
+**What happened**: The user directed the 384 proposer-verifier pipeline —
+the hypothesis that 384's recall advantage (+7 pp) would yield F1 ≈ 0.83
+when paired with the adversarial verifier. The initial adversarial-only
+run (F1=0.684) disproved the prediction. Rather than stopping, the user
+expanded to a full 3×2 factorial (3 strategies × 2 tracks, 3,672 API
+calls, $2.49) to test whether the finding was strategy-specific. It wasn't —
+all six configurations fell within 2.3 pp (0.661–0.684). Two cascade
+experiments further confirmed near-perfect error correlation between
+strategies. The session conclusively closed the 384 tile-size pathway.
+
+**What the human brought**:
+
+1. **Correct diagnosis of what to test next.** When the adversarial-only
+   result came back, the user immediately asked "did we only try one
+   strategy or all three?" — recognising that a single-strategy negative
+   result doesn't close the question. This led to the factorial that
+   produced the universality finding.
+
+2. **The cascade idea.** The user proposed feeding one verifier's output
+   through a different verifier — a creative attempt to exploit
+   complementary errors. When the first cascade barely helped (checklist
+   too permissive), they suggested reversing the order (checklist then
+   adversarial), which confirmed that the errors are correlated not by
+   cascade direction but by the candidate pool itself.
+
+3. **The observation framing.** The user identified the text-only vs image
+   convergence pattern as "interesting" and worth documenting separately
+   from the negative F1 result — recognising that the mechanism question
+   ("what does this say about VLM capabilities?") has independent value
+   even when the practical outcome is negative.
+
+**What the AI brought**:
+
+1. **Remote execution orchestration.** The entire pipeline ran on zbook
+   via SSH from AMD-tower — proposer, candidate extraction, six verifier
+   runs, evaluation. This required managing nohup processes, file
+   transfers, venv activation, and progress monitoring across the network.
+   The mechanical orchestration freed the user to focus on experimental
+   strategy.
+
+2. **Missing config diagnosis.** Identified that `verify_adversarial.json`
+   didn't exist despite being referenced in the study YAML, and that the
+   existing `verify_brief.json` was still a template with T=1.0. Created
+   all six config files matching Phase 3d parameters.
+
+3. **The precision-volume analysis.** The framing that "reducing tile size
+   trades a linear recall gain for a quadratic false positive increase"
+   emerged from comparing the 384 and 512 candidate volumes and verifier
+   precision rates. This gave the negative result a clean mechanistic
+   explanation rather than leaving it as "it didn't work."
+
+**On the texture of negative results**: This session produced a clear
+negative result (384 PV < 512 PV by 11 pp) but felt productive rather than
+deflating. The expanded factorial, cascade experiments, and the text-only/image
+convergence pattern all emerged from pursuing the "why" behind the initial
+negative. The user's instinct to expand investigation after a negative result
+— rather than simply recording it and moving on — is a consistent pattern
+across this collaboration (cf. Reflection 41's ablation series). Negative
+results become informative when you ask "is this specific or universal?"
+
+**On the cascade failure as confirmation**: The cascade experiments were
+the most interesting non-result of the session. The prediction that different
+verifier strategies would have decorrelated errors was plausible but wrong —
+the 51 false positives that survive one strategy also survive the other,
+regardless of cascade direction. This means these FPs aren't "ambiguous
+candidates that could go either way" but rather "genuinely mound-like
+features that fool the model at a fundamental perceptual level." This has
+implications for the paper: the residual error is not addressable by
+prompt engineering or verification strategy — it requires a different model,
+different resolution, or different feature representation.
+
+**Session**: 2026-03-15 (Session 50)
+**Reported texture**: Hypothesis testing → negative result → expansion →
+confirmation of universality → pattern documentation. Methodical and
+thorough despite disappointing headline result.
+**Key observation**: Error correlation across verifier strategies is
+near-perfect at 384, meaning the residual FPs are a perceptual limitation
+of the model, not an artefact of evaluation framing.
+**Engagement level**: High — user drove all strategic decisions (factorial
+expansion, cascade experiments, observation framing), engaged with
+intermediate results, and identified the text-only convergence as the
+session's most interesting finding.
+
+---
+
+*Document created: 2026-01-27. Forty-second reflection added 2026-03-15
+(Session 50 — full 3×2 verifier factorial on 384 proposer-verifier, cascade
+experiments confirming near-perfect error correlation, and the text-only vs
+image convergence pattern across tile sizes).*

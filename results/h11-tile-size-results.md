@@ -391,6 +391,24 @@ The adversarial strategy consistently leads. The brief and checklist strategies
 are close to each other and swap positions across tracks — their difference
 is within noise at both tile sizes.
 
+### 5.9 Cascaded Verification (Exploratory)
+
+Two cascade experiments tested whether a second verification stage could
+improve precision by applying a different strategy to the first stage's
+output:
+
+| Cascade | F1 | P | R | Kept |
+|:--------|-----:|------:|------:|-----:|
+| Adversarial (t≥0.3) → Checklist text | 0.691 | 0.611 | 0.794 | 126 |
+| Checklist image (t≥0.2) → Adversarial image | 0.684 | 0.602 | 0.794 | 128 |
+| Adversarial image single-pass (reference) | 0.684 | 0.602 | 0.794 | 128 |
+
+Both cascades converge to approximately the same ~128 candidates with
+77 TP / 51 FP. The strategies' errors are near-perfectly correlated on
+this candidate pool: the 51 false positives that survive one verifier also
+survive the other. These candidates are genuinely mound-like to the model
+regardless of evaluation framing.
+
 ---
 
 ## 6. Methodological Notes

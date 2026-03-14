@@ -2672,6 +2672,75 @@ Total experiment cost: ~$3.06 (4 proposer runs + 4 verifier runs).
 - [ ] Discuss "what next" — path to F1>0.80 or paper write-up focus
 - [ ] Fix Phase 3a YAML fixture rename (carried forward)
 
+## Session 50 — 2026-03-15: H11 384 proposer-verifier factorial and cascade experiments
+
+**Focus**: Run the 384 proposer-verifier pipeline, expand to full 3×2
+factorial, and test cascaded verification
+
+**Duration**: ~2 hours
+**Instance**: Direct experience (no compaction boundary)
+
+### What Was Done
+
+1. **Ran 384 proposer-verifier pipeline on zbook** (remote via SSH) —
+   proposer reused prior 238/240 tiles, retried 2 remaining (1 succeeded,
+   1 persistent parse failure). 572 detections from 239 tiles.
+
+2. **Updated N=30 consensus findings** in results doc — N=30 at 384 does
+   not improve over N=5 (F1=0.643 vs 0.664). Recall saturation (Obs 160).
+
+3. **Created verifier configs** — `verify_adversarial.json`,
+   `verify_adversarial-text.json`, `verify_brief-text.json`,
+   `verify_checklist.json`, `verify_checklist-text.json`. Updated
+   `verify_brief.json` from template (T=1.0) to Phase 3d params (T=0.0).
+
+4. **Ran full 3×2 verifier factorial** — 3 strategies × 2 tracks on 572
+   candidates. 3,672 API calls, $2.49 total, ~20 min sequential on zbook.
+
+5. **Ran cascade experiments** — adversarial → checklist (removed 2 FPs)
+   and checklist → adversarial (identical to single-pass). Confirmed
+   near-perfect error correlation between strategies.
+
+6. **Wrote up all results** — Section 5 of `results/h11-tile-size-results.md`
+   expanded to cover full factorial (5.4), text-only gap collapse (5.7),
+   strategy ranking (5.8), cascades (5.9).
+
+7. **Added Obs 161** (384 PV factorial, text-only gap collapse) and
+   **Obs 162** (text-only vs image as VLM capability insight).
+
+### Key Findings
+
+| Strategy | Image F1 | Text F1 | 512 text (ref) |
+|:---------|:--------:|:-------:|:--------------:|
+| Adversarial | **0.684** | 0.679 | 0.796 |
+| Checklist | 0.672 | 0.661 | 0.782 |
+| Brief | 0.661 | 0.675 | 0.768 |
+
+- All 6 configs within 2.3 pp — candidate pool quality is the binding
+  constraint, not verifier strategy
+- Text-only vs image gap collapsed from +6–9 pp at 512 to ±1.5 pp at 384
+- Cascade experiments show near-perfect error correlation between strategies
+- 512 PV text-only (F1=0.796) remains project best
+
+### New Files
+
+- `prompts/configs/verify_adversarial.json`
+- `prompts/configs/verify_adversarial-text.json`
+- `prompts/configs/verify_brief-text.json`
+- `prompts/configs/verify_checklist.json`
+- `prompts/configs/verify_checklist-text.json`
+- Outputs on zbook: `outputs/h11/proposer-verifier-384/verified-{strategy}-{track}.geojson`
+
+### Commits
+
+- `021ac42` — 384 PV results and N=30 consensus findings (adversarial only)
+- `e9923cd` — Full 3×2 verifier factorial
+
+### Pending Work
+
+- [ ] Commit reflection entries and Obs 162
+- [ ] 384 tile-size pathway is closed; focus shifts to paper write-up
+
 ---
 
 *New session entries should be appended above this line.*

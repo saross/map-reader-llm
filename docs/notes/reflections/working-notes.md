@@ -3118,3 +3118,62 @@ does not translate into improved F1 through any available post-processing
 strategy — neither consensus voting (Obs 160) nor proposer-verifier
 verification across any of three strategies can overcome the precision
 penalty from denser tiling.
+
+## Observation 162: Text-only verification outperforms image at 512 but converges at 384 — a pattern that says something about VLM capabilities (2026-03-15)
+
+**Context**: Session 50. The full 3×2 verifier factorial (3 strategies × 2
+tracks) at both 384 and 512 tile sizes reveals a consistent and puzzling
+pattern in the text-only vs image track comparison.
+
+**The pattern**: At 512, the text-only verifier (no example images)
+outperforms the image variant (with 9 reference examples) across all three
+strategies, by a large and consistent margin:
+
+| Strategy | 512 gap (text − image) | 384 gap (text − image) |
+|:---------|:----------------------:|:----------------------:|
+| Adversarial | +8.5 pp | −0.5 pp |
+| Brief | +6.2 pp | +1.4 pp |
+| Checklist | +7.6 pp | −1.1 pp |
+
+At 384, the gap collapses to noise (±1.5 pp) across all strategies.
+
+**What this might say about VLM capabilities**: This is a genuinely
+interesting pattern whose mechanism is not fully understood. Some observations:
+
+1. **Example images can hurt**: At 512, sending visual examples consistently
+   degrades performance by 6–9 pp. This is counterintuitive — one would
+   expect visual examples to help a *vision* language model. Instead, the
+   model performs better with only text descriptions and the candidate crop.
+   This suggests the model may be pattern-matching against the examples in
+   ways that introduce systematic biases (e.g., priming towards acceptance
+   of anything visually similar to the positive examples).
+
+2. **The penalty is context-dependent**: The same example images that hurt at
+   512 become neutral at 384. The candidates themselves are different (smaller
+   crops, different false positive composition), but the examples are
+   identical. This means the example images are not universally harmful — they
+   interact with the difficulty distribution of the candidate pool.
+
+3. **Possible mechanism — ambiguity threshold**: At 512, the false positives
+   may be more visually ambiguous (larger crops capture more context that can
+   be misinterpreted). Example images may resolve this ambiguity in the wrong
+   direction — the model sees superficial similarity between ambiguous
+   candidates and positive examples, biasing towards acceptance. At 384, the
+   false positives may be more visually distinctive (smaller crops make
+   infrastructure symbols etc. proportionally larger), so the model rejects
+   them regardless of priming from examples.
+
+4. **The broader implication**: For VLM verification tasks, the "obvious"
+   choice of providing visual examples may be counterproductive. The model's
+   text understanding of diagnostic criteria (what rays look like, what
+   benchmarks look like) may be more reliable than its visual pattern matching
+   against examples — at least for tasks where the false positives share
+   superficial visual similarity with the targets. This parallels findings
+   in human psychology where verbal criteria outperform "I know it when I
+   see it" approaches for ambiguous classification tasks.
+
+**Open question**: Would this pattern hold at other tile sizes (256, 448,
+1024)? If the gap scales with candidate ambiguity, we'd expect it to be
+largest at tile sizes that maximise the proportion of ambiguous false
+positives in the candidate pool. Testing this would require running the
+2-track comparison across the full tile size range.

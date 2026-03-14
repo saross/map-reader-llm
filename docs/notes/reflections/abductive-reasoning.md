@@ -2144,6 +2144,62 @@ generated the initial hypothesis (null removal), the AI executed the
 tests and identified the quantitative attribution, and together they
 converged on the capability-frontier interpretation.
 
-*Last updated: 2026-03-10 (Session 48 — ablation as structured
-hypothesis testing, belief revision across four parameters, and
-capability frontier proof)*
+### Session 50: Prediction failure and the context-dependence of VLM example effects (2026-03-15)
+
+**The surprise**: The 384 proposer-verifier was predicted to achieve
+F1 ≈ 0.83 based on two assumptions: (a) 384 proposer recall (0.877)
+would feed ~7 more true mounds to the verifier, and (b) verifier
+precision would hold at ~0.81 from Phase 3d. The actual result was
+F1 = 0.684 — a 14.6 pp shortfall from prediction. The full 3×2
+factorial (3 strategies × 2 tracks) confirmed the finding is universal:
+all configurations fell within 0.661–0.684.
+
+**The abductive moment**: When the initial adversarial-only result came
+back at 0.684, the question was "is this specific to the adversarial
+strategy, or structural?" The user's request to run all three strategies
+was an abductive probe — if multiple independent verification approaches
+fail by the same margin, the failure must be in the shared element (the
+candidate pool), not the varying element (the verification strategy). The
+factorial confirmed this: the 2.3 pp spread across six configurations is
+noise, not signal.
+
+**Belief revision**:
+
+1. **"384 recall advantage translates through the verifier"** → Revised.
+   The verifier's own false negative rate erodes the recall advantage.
+   After verification, 384 recall (0.763–0.794) is only marginally above
+   512 (0.784). The linear recall gain from smaller tiles is consumed by
+   the quadratic false positive increase — more tiles produce more
+   candidates, and each candidate has an independent chance of fooling
+   the verifier.
+
+2. **"Text-only verification is universally better"** → Revised. This was
+   the sharpest belief revision. Session 43 established text-only as
+   dramatically superior (+8.5 pp with adversarial). Session 50 showed
+   this advantage is context-dependent: it holds at 512 (6–9 pp across
+   all strategies) but vanishes at 384 (±1.5 pp). The same example images
+   that hurt at 512 become neutral at 384. The mechanism appears to
+   involve candidate ambiguity: example images prime false acceptance when
+   candidates are ambiguous (512), but have no effect when candidates are
+   visually distinctive (384).
+
+3. **"Different verifier strategies have decorrelated errors"** → Revised.
+   Cascade experiments showed near-perfect error correlation: the 51 FPs
+   surviving the adversarial verifier also survive the checklist, and
+   vice versa. These are not "borderline calls that different evaluators
+   judge differently" but "features that are genuinely mound-like to this
+   model." This strengthens the perceptual ceiling finding from Session 48
+   — the error is in perception, not evaluation.
+
+**Type of reasoning**: This session's pattern is prediction → falsification →
+expansion → universality confirmation. The critical step was expanding
+from adversarial-only to the full factorial, which transformed a
+single-strategy negative result into a structural finding. The cascade
+experiments were a further abductive probe: if different strategies have
+decorrelated errors, cascading should help; since it didn't, the errors
+must be correlated. Both the factorial and the cascade followed
+the structure of deductive testing of abductively generated hypotheses.
+
+*Last updated: 2026-03-15 (Session 50 — prediction failure at 384 PV,
+belief revision on text-only advantage context-dependence, and
+error correlation confirmation via cascade experiments)*

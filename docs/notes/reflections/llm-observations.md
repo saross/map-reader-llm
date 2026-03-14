@@ -4121,7 +4121,58 @@ diversity. This is not a task-specific quirk — it appears to be a
 general property of how this VLM handles cartographic symbol
 recognition.
 
-*Document represents observations as of 2026-03-10. Session 48 added
-observations on VLM perceptual vs decisional error boundaries, ablation
-as frontier proof methodology, and cross-stage replication of
-temperature-as-noise finding.*
+### 197. Verifier precision scales inversely with candidate volume (Session 50)
+
+The 384 proposer generates ~4× the candidates (572 vs ~140 at 512). All
+three verifier strategies achieve 0.53–0.61 precision at 384 vs 0.77–0.81
+at 512. This is not a strategy-specific failure — it's a structural
+property of the pipeline. Each candidate has an independent probability of
+fooling the verifier, so more candidates = more false positives at a
+constant per-candidate error rate. The practical implication is that
+proposer recall improvements are only valuable if paired with proportional
+improvements in verifier selectivity. At 384, the verifier would need to
+achieve ~0.85 precision to match the 512 PV result — a 40% improvement
+over current capability on a harder candidate pool.
+
+### 198. Text-only vs image example gap is context-dependent, not absolute (Session 50)
+
+At 512, text-only verification outperforms image verification by 6–9 pp
+F1 across all three strategies. At 384, the gap collapses to ±1.5 pp.
+The same example images, evaluated by the same model with the same
+instructions, go from harmful to neutral depending on the candidate pool.
+
+This finding challenges the straightforward interpretation from Session 43
+that "text-only is better." The more accurate statement is: text-only is
+better *when the candidate pool contains ambiguous false positives that
+share superficial visual similarity with the positive examples.* At 384,
+the false positives appear to be more visually distinctive (smaller crops
+make non-mound symbols proportionally larger), reducing the model's
+susceptibility to example-primed false acceptance.
+
+This has implications for VLM deployment: the decision to include or
+exclude visual examples should be calibrated to the expected ambiguity of
+the inputs, not treated as a universal best practice. The Phase 3d finding
+that text-only is better was correct for that context but does not
+generalise to denser candidate pools.
+
+### 199. Error correlation across verifier strategies is near-perfect at 384 (Session 50)
+
+Cascade experiments (adversarial → checklist and checklist → adversarial)
+converge to the same ~128 candidates with 77 TP / 51 FP regardless of
+order. The checklist removed only 2 FPs from the adversarial output
+(4% rejection), and the adversarial produced identical results on the
+checklist-filtered pool.
+
+This means the residual false positives are not "candidates that one
+strategy happens to misjudge" but "features that are genuinely mound-like
+to this model at a perceptual level." No prompt engineering or verification
+framing can resolve these errors — they require a different model,
+different resolution, or different feature representation. This is
+consistent with the perceptual ceiling identified in Obs 194 (Session 48)
+and strengthens the case that the current approach has reached its
+practical limit for this task.
+
+*Document represents observations as of 2026-03-15. Session 50 added
+observations on verifier precision scaling with candidate volume,
+context-dependence of text-only vs image advantage, and near-perfect
+error correlation across verification strategies.*
