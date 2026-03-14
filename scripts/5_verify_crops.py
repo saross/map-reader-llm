@@ -254,7 +254,19 @@ def construct_verifier_prompt(
     """
     reference_parts: list[types.Part] = []
 
-    # 1. Image Library (Federated) — build Part objects for the new SDK
+    # 1a. Text-only example labels (no images) — matches Phase 3d Track 2
+    # When present, sends a single text Part with example labels listed.
+    # This is mutually exclusive with image examples below.
+    text_only_labels = prompt_config.get("text_only_labels", [])
+    if text_only_labels:
+        label_lines = "\n".join(f"- {lbl}" for lbl in text_only_labels)
+        reference_parts.append(
+            types.Part.from_text(
+                text=f"Reference examples (text descriptions only):\n{label_lines}"
+            )
+        )
+
+    # 1b. Image Library (Federated) — build Part objects for the new SDK
     for ex in prompt_config.get("examples", []):
         img_path = refs_dir / ex["path"]
         if img_path.exists():
@@ -372,11 +384,16 @@ def process_single_candidate(
         crop_img.save(crop_buffer, format="PNG")
         crop_bytes = crop_buffer.getvalue()
 
-        target_label = (
-            "**Target Candidate (with 100m Grid):**"
-            if prompt_config.get("grid_overlay")
-            else "**Target Candidate:**"
-        )
+        # Crop introduction text — configurable to match different prompt styles.
+        # Default matches legacy 5_verify_crops.py; Phase 3d pilot used
+        # "Now classify the candidate symbol at the centre of this crop:"
+        if prompt_config.get("grid_overlay"):
+            target_label = "**Target Candidate (with 100m Grid):**"
+        else:
+            target_label = prompt_config.get(
+                "crop_label",
+                "**Target Candidate:**",
+            )
 
         # Build content parts using types.Part objects
         content_parts = list(reference_parts)  # Copy to avoid mutating shared list

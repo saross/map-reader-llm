@@ -11,8 +11,17 @@
         "source": "Phase 3d Track 2 (Session 43). Text-only adversarial verifier achieved F1=0.796 at T=0.0, threshold 0.2.",
         "temperature": "0.0 based on Phase 3d: T=0.5 and T=1.0 did not improve over T=0.0 baseline.",
         "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
-        "track": "Track 2 — text-only. No example images sent; model sees only the candidate crop and the adversarial system instruction.",
+        "track": "Track 2 — text-only. Text example labels sent (no images), matching Phase 3d run_h2_pilot.py build_verifier_request(include_examples=False).",
         "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
     },
-    "examples": []
+    "examples": [],
+    "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+    ],
+    "crop_label": "Now classify the candidate symbol at the centre of this crop:"
 }
