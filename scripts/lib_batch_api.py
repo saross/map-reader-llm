@@ -101,6 +101,7 @@ class BatchUnitContext:
     system_instruction: str     # System instruction text
     config_version: str         # Config version string (for GeoJSON properties)
     line_count: int             # Lines written to JSONL
+    tile_size: int = 512        # Tile dimension for normalised→pixel conversion
 
 
 def _get_state_name(state: Any) -> str:
@@ -802,13 +803,14 @@ def parse_detections_to_geojson(
     tile_paths_by_name: dict[str, Path],
     config_version: str,
     model_name: str,
+    tile_size: int = TILE_SIZE,
 ) -> tuple[list[dict], int, int]:
     """
     Convert batch responses to GeoJSON features.
 
     Reuses the same coordinate transformation logic as
     ``process_single_tile()`` — normalised [0, 1000] coordinates
-    mapped to pixel space via TILE_SIZE, then georeferenced via
+    mapped to pixel space via ``tile_size``, then georeferenced via
     the tile's rasterio transform.
 
     Args:
@@ -816,6 +818,8 @@ def parse_detections_to_geojson(
         tile_paths_by_name: Dict of tile_filename → Path for rasterio.
         config_version: Version string from config (for feature properties).
         model_name: Model name string (for feature properties).
+        tile_size: Tile dimension in pixels for coordinate conversion.
+            Defaults to TILE_SIZE (512) for backward compatibility.
 
     Returns:
         Tuple of:
@@ -861,10 +865,10 @@ def parse_detections_to_geojson(
                 continue
 
             ymin_n, xmin_n, ymax_n, xmax_n = box_coords
-            px_min_x = (xmin_n / 1000.0) * TILE_SIZE
-            px_max_x = (xmax_n / 1000.0) * TILE_SIZE
-            px_min_y = (ymin_n / 1000.0) * TILE_SIZE
-            px_max_y = (ymax_n / 1000.0) * TILE_SIZE
+            px_min_x = (xmin_n / 1000.0) * tile_size
+            px_max_x = (xmax_n / 1000.0) * tile_size
+            px_min_y = (ymin_n / 1000.0) * tile_size
+            px_max_y = (ymax_n / 1000.0) * tile_size
 
             geo_x1, geo_y1 = transform * (px_min_x, px_min_y)
             geo_x2, geo_y2 = transform * (px_max_x, px_max_y)
@@ -1041,12 +1045,17 @@ def write_batch_outputs(
 # ─────────────────────────────────────────────────────────────────────
 
 
-def _resolve_tile_paths(manifest_path: Path) -> list[Path]:
+def _resolve_tile_paths(
+    manifest_path: Path,
+    tiles_dir: Path | None = None,
+) -> list[Path]:
     """
     Resolve tile paths from a manifest file.
 
     Args:
         manifest_path: Path to JSON manifest listing tile filenames.
+        tiles_dir: Directory containing tile subdirectories. Defaults to
+            ``TILES_DIR`` from config when not specified.
 
     Returns:
         List of Path objects for each tile found on disc.
@@ -1055,8 +1064,9 @@ def _resolve_tile_paths(manifest_path: Path) -> list[Path]:
         target_filenames = json.load(f)
 
     # Build lookup of all available tiles
+    effective_dir = tiles_dir if tiles_dir is not None else TILES_DIR
     all_tiles: dict[str, Path] = {}
-    for map_dir in TILES_DIR.iterdir():
+    for map_dir in effective_dir.iterdir():
         if map_dir.is_dir():
             for t in map_dir.glob("*.png"):
                 all_tiles[t.name] = t
@@ -1080,6 +1090,8 @@ def prepare_batch_unit(
     examples: list[dict],
     config_version: str,
     limit: int | None = None,
+    tile_size: int | None = None,
+    tiles_dir: Path | None = None,
 ) -> BatchUnitContext | None:
     """
     Prepare one execution unit for batch submission (Phase 1).
@@ -1097,6 +1109,10 @@ def prepare_batch_unit(
         examples: List of example dicts from prompt config.
         config_version: Version string from prompt config.
         limit: Optional tile limit for testing.
+        tile_size: Tile dimension in pixels for coordinate conversion.
+            Defaults to TILE_SIZE (512) when not specified.
+        tiles_dir: Directory containing tile subdirectories. Defaults to
+            TILES_DIR from config when not specified.
 
     Returns:
         A ``BatchUnitContext`` carrying all state needed for submission
@@ -1110,8 +1126,8 @@ def prepare_batch_unit(
     output_name = f"detections_{unit['condition_name']}_run{unit['run']:02d}"
     output_file = run_dir / f"{output_name}.geojson"
 
-    # Resolve tiles
-    tile_paths = _resolve_tile_paths(manifest_path)
+    # Resolve tiles (use overridden tiles_dir if provided)
+    tile_paths = _resolve_tile_paths(manifest_path, tiles_dir=tiles_dir)
     if limit and limit > 0:
         tile_paths = tile_paths[:limit]
 
@@ -1145,6 +1161,9 @@ def prepare_batch_unit(
 
     key = f"{unit['condition_name']}/run_{unit['run']}"
 
+    # Use provided tile_size or fall back to config default
+    effective_tile_size = tile_size if tile_size is not None else TILE_SIZE
+
     return BatchUnitContext(
         unit_key=key,
         unit=unit,
@@ -1157,6 +1176,7 @@ def prepare_batch_unit(
         system_instruction=system_instruction,
         config_version=config_version,
         line_count=line_count,
+        tile_size=effective_tile_size,
     )
 
 
@@ -1252,13 +1272,15 @@ def complete_batch_unit(
     # Build tile path lookup for georeferencing
     tile_paths_by_name = {t.name: t for t in ctx.tile_paths}
 
-    # Parse detections to GeoJSON
+    # Parse detections to GeoJSON (use tile_size from context for
+    # correct normalised→pixel coordinate conversion)
     features, total_detections, parse_failures = (
         parse_detections_to_geojson(
             matched_results=matched,
             tile_paths_by_name=tile_paths_by_name,
             config_version=ctx.config_version,
             model_name=ctx.model_name,
+            tile_size=ctx.tile_size,
         )
     )
 

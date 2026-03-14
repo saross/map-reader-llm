@@ -86,14 +86,17 @@ fixed:
   crop_source: "source_raster"  # E33 fix — always crop from GeoTIFF
 
 inputs:
+  manifest: "inputs/tiles_384/validation_manifest.json"   # canonical field for run_phase2.py
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
   manifest_384: "inputs/tiles_384/validation_manifest.json"
   manifest_512: "inputs/tiles/validation_manifest.json"
   ground_truth: "inputs/vectors/references/mounds-reference.geojson"
-  bounds_384: "outputs/results/validation_bounds_384.geojson"
-  bounds_512: "outputs/results/validation_bounds.geojson"
+  bounds_512: "inputs/vectors/bounds/validation_bounds.geojson"
+  bounds_384: "inputs/vectors/bounds/384/validation_bounds.geojson"
   rasters_dir: "inputs/rasters"
   # Evaluation uses 512 bounds for BOTH tile sizes — see h11-384-single-pass.yaml
-  evaluation_bounds: "outputs/results/validation_bounds.geojson"
+  evaluation_bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
   workers: 1           # Safe default; pass --workers N at CLI for parallelism

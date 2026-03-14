@@ -599,6 +599,14 @@ def run_execution_unit(
     if unit.get("ordering_seed") is not None:
         cmd.extend(["--ordering-seed", str(unit["ordering_seed"])])
 
+    # Add tile size override if specified in study config
+    if inputs.get("tile_size") is not None:
+        cmd.extend(["--tile-size", str(inputs["tile_size"])])
+
+    # Add tiles directory override if specified in study config
+    if inputs.get("tiles_dir") is not None:
+        cmd.extend(["--tiles-dir", str(PROJECT_ROOT / inputs["tiles_dir"])])
+
     # Add tile limit for sanity checks
     if limit and limit > 0:
         cmd.extend(["--limit", str(limit)])
@@ -1288,8 +1296,22 @@ def _execute_units_batch(
     # ── Phase 1: Prepare all units (sequential, fast) ───────────
     contexts: dict = {}  # unit_key → BatchUnitContext
 
+    # Extract optional tile parameters from study config — these are
+    # study-level (not condition-level), so read once before the loop.
+    # When absent, lib_batch_api defaults to TILE_SIZE=512 / TILES_DIR.
+    inputs = config.get("inputs", {})
+    study_tile_size = inputs.get("tile_size")       # None → use default 512
+    tiles_dir_str = inputs.get("tiles_dir")         # None → use default TILES_DIR
+    study_tiles_dir = (
+        Path(PROJECT_ROOT / tiles_dir_str) if tiles_dir_str else None
+    )
+
     if verbose:
         print(f"Phase 1: Preparing {len(units)} execution units...")
+        if study_tile_size is not None:
+            print(f"  Tile size override: {study_tile_size}")
+        if study_tiles_dir is not None:
+            print(f"  Tiles directory override: {study_tiles_dir}")
         print()
 
     for i, unit in enumerate(units, 1):
@@ -1366,6 +1388,8 @@ def _execute_units_batch(
             examples=examples,
             config_version=config_version,
             limit=limit,
+            tile_size=study_tile_size,
+            tiles_dir=study_tiles_dir,
         )
 
         if ctx is None:

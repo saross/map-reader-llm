@@ -14,7 +14,10 @@ import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import numpy as np
 import pytest
+import rasterio
+from rasterio.transform import from_origin
 
 # Add project root to path for imports
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -26,10 +29,12 @@ from scripts.lib_batch_api import (
     BatchUnitContext,
     _get_state_name,
     _parse_detections_from_response,
+    _resolve_tile_paths,
     audit_file_storage,
     build_jsonl_file,
     cleanup_batch_files,
     complete_batch_unit,
+    parse_detections_to_geojson,
     poll_all_batch_jobs,
     prepare_batch_unit,
     run_batch_unit,
@@ -2239,3 +2244,546 @@ class TestRunBatchUnitWrapper:
                 poll_args[0][1] == "batches/resume_test"
                 or poll_args[1].get("job_name") == "batches/resume_test"
             )
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Helpers: GeoTIFF creation for georeferencing tests
+# ═════════════════════════════════════════════════════════════════════
+
+
+def _make_geotiff(
+    path: Path,
+    tile_size: int = 512,
+    origin_x: float = 500000.0,
+    origin_y: float = 4700000.0,
+    pixel_size: float = 0.5,
+) -> Path:
+    """
+    Create a minimal single-band GeoTIFF with a known affine transform.
+
+    The transform places the tile at (origin_x, origin_y) in UTM zone 35N
+    with the given pixel size. This enables deterministic coordinate
+    assertions in georeferencing tests.
+
+    Args:
+        path: Output file path.
+        tile_size: Tile dimension in pixels (width and height).
+        origin_x: Easting of the top-left corner (metres).
+        origin_y: Northing of the top-left corner (metres).
+        pixel_size: Ground distance per pixel (metres).
+
+    Returns:
+        The path to the created GeoTIFF.
+    """
+    transform = from_origin(origin_x, origin_y, pixel_size, pixel_size)
+    data = np.zeros((1, tile_size, tile_size), dtype=np.uint8)
+
+    with rasterio.open(
+        path,
+        "w",
+        driver="GTiff",
+        height=tile_size,
+        width=tile_size,
+        count=1,
+        dtype="uint8",
+        crs="EPSG:32635",
+        transform=transform,
+    ) as dst:
+        dst.write(data)
+
+    return path
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: parse_detections_to_geojson()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestParseDetectionsToGeojson:
+    """Tests for parse_detections_to_geojson() — coordinate conversion
+    from normalised [0, 1000] space to geographic coordinates via
+    rasterio transforms."""
+
+    def test_basic_georeferencing_512(self) -> None:
+        """A detection at known normalised coords should produce the
+        correct geographic coordinates for a 512-pixel tile."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile_size = 512
+            origin_x = 500000.0
+            origin_y = 4700000.0
+            pixel_size = 0.5
+
+            tile_path = _make_geotiff(
+                tmp / "tile_001.png", tile_size=tile_size,
+                origin_x=origin_x, origin_y=origin_y,
+                pixel_size=pixel_size,
+            )
+
+            # Detection at normalised [0, 0, 1000, 1000] = full tile
+            matched = {
+                "tile_001.png": _make_batch_response(
+                    "tile_001.png",
+                    detections=[{
+                        "label": "mound",
+                        "subtype": "burial_mound",
+                        "box_2d": [0, 0, 1000, 1000],
+                    }],
+                ),
+            }
+
+            features, total, failures = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile_001.png": tile_path},
+                config_version="test_v1",
+                model_name="gemini-test",
+                tile_size=tile_size,
+            )
+
+            assert len(features) == 1
+            assert total == 1
+            assert failures == 0
+
+            # Full tile should span origin to origin + tile_size * pixel_size
+            bbox = features[0]["geometry"]["coordinates"][0]
+            xs = [c[0] for c in bbox]
+            ys = [c[1] for c in bbox]
+            expected_width = tile_size * pixel_size  # 256.0m
+            assert min(xs) == pytest.approx(origin_x, abs=0.01)
+            assert max(xs) == pytest.approx(origin_x + expected_width, abs=0.01)
+            # Y axis is inverted (north-up raster: origin_y is top)
+            assert min(ys) == pytest.approx(
+                origin_y - expected_width, abs=0.01,
+            )
+            assert max(ys) == pytest.approx(origin_y, abs=0.01)
+
+    def test_tile_size_384_produces_different_coordinates(self) -> None:
+        """The same normalised coords should map to a smaller geographic
+        extent when tile_size=384 (with same pixel size)."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            pixel_size = 0.5
+            origin_x = 500000.0
+            origin_y = 4700000.0
+
+            # Create two tiles with different sizes but same origin/pixel_size
+            tile_512 = _make_geotiff(
+                tmp / "tile_512.png", tile_size=512,
+                origin_x=origin_x, origin_y=origin_y,
+                pixel_size=pixel_size,
+            )
+            tile_384 = _make_geotiff(
+                tmp / "tile_384.png", tile_size=384,
+                origin_x=origin_x, origin_y=origin_y,
+                pixel_size=pixel_size,
+            )
+
+            detection = [{
+                "label": "mound",
+                "subtype": "burial_mound",
+                "box_2d": [500, 500, 600, 600],  # centre-ish detection
+            }]
+
+            # Parse with tile_size=512
+            features_512, _, _ = parse_detections_to_geojson(
+                matched_results={
+                    "tile_512.png": _make_batch_response(
+                        "tile_512.png", detections=detection,
+                    ),
+                },
+                tile_paths_by_name={"tile_512.png": tile_512},
+                config_version="test",
+                model_name="test",
+                tile_size=512,
+            )
+
+            # Parse with tile_size=384
+            features_384, _, _ = parse_detections_to_geojson(
+                matched_results={
+                    "tile_384.png": _make_batch_response(
+                        "tile_384.png", detections=detection,
+                    ),
+                },
+                tile_paths_by_name={"tile_384.png": tile_384},
+                config_version="test",
+                model_name="test",
+                tile_size=384,
+            )
+
+            # Both should produce one feature
+            assert len(features_512) == 1
+            assert len(features_384) == 1
+
+            # The 384 feature should have a smaller geographic extent
+            # (384/512 = 0.75× the pixel coordinates, same pixel_size)
+            bbox_512 = features_512[0]["geometry"]["coordinates"][0]
+            bbox_384 = features_384[0]["geometry"]["coordinates"][0]
+
+            xs_512 = [c[0] for c in bbox_512]
+            xs_384 = [c[0] for c in bbox_384]
+
+            width_512 = max(xs_512) - min(xs_512)
+            width_384 = max(xs_384) - min(xs_384)
+
+            assert width_384 == pytest.approx(width_512 * 384 / 512, abs=0.01)
+
+    def test_wrong_tile_size_gives_wrong_coordinates(self) -> None:
+        """Using tile_size=512 on a 384-pixel tile should produce
+        coordinates that overshoot the tile's actual extent — verifying
+        that tile_size matters."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            pixel_size = 0.5
+
+            # Create a 384-pixel tile
+            tile_path = _make_geotiff(
+                tmp / "tile.png", tile_size=384, pixel_size=pixel_size,
+            )
+            tile_extent = 384 * pixel_size  # 192.0m
+
+            # Parse with WRONG tile_size=512
+            features, _, _ = parse_detections_to_geojson(
+                matched_results={
+                    "tile.png": _make_batch_response(
+                        "tile.png",
+                        detections=[{
+                            "label": "mound",
+                            "box_2d": [0, 0, 1000, 1000],
+                        }],
+                    ),
+                },
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="test",
+                model_name="test",
+                tile_size=512,  # WRONG — should be 384
+            )
+
+            bbox = features[0]["geometry"]["coordinates"][0]
+            xs = [c[0] for c in bbox]
+            geo_width = max(xs) - min(xs)
+
+            # With wrong tile_size, computed extent overshoots
+            assert geo_width == pytest.approx(512 * pixel_size, abs=0.01)
+            assert geo_width > tile_extent  # proves mismatch
+
+    def test_multiple_detections_per_tile(self) -> None:
+        """Multiple detections in one tile should produce multiple features."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile_path = _make_geotiff(tmp / "tile.png")
+
+            matched = {
+                "tile.png": _make_batch_response(
+                    "tile.png",
+                    detections=[
+                        {"label": "mound", "box_2d": [100, 100, 200, 200]},
+                        {"label": "mound", "box_2d": [300, 300, 400, 400]},
+                        {"label": "mound", "box_2d": [600, 600, 700, 700]},
+                    ],
+                ),
+            }
+
+            features, total, failures = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="test",
+                model_name="test",
+            )
+
+            assert len(features) == 3
+            assert total == 3
+            assert failures == 0
+
+    def test_missing_tile_path_counts_as_failure(self) -> None:
+        """Tile present in results but missing from tile_paths_by_name
+        should increment parse_failures."""
+        matched = {
+            "missing_tile.png": _make_batch_response(
+                "missing_tile.png",
+                detections=[{"label": "mound", "box_2d": [0, 0, 100, 100]}],
+            ),
+        }
+
+        features, total, failures = parse_detections_to_geojson(
+            matched_results=matched,
+            tile_paths_by_name={},  # tile not found
+            config_version="test",
+            model_name="test",
+        )
+
+        assert len(features) == 0
+        assert failures == 1
+
+    def test_malformed_box_2d_skipped(self) -> None:
+        """Detections with invalid box_2d should be silently skipped."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile_path = _make_geotiff(tmp / "tile.png")
+
+            matched = {
+                "tile.png": _make_batch_response(
+                    "tile.png",
+                    detections=[
+                        {"label": "mound", "box_2d": [100, 200]},  # too short
+                        {"label": "mound", "box_2d": "not_a_list"},  # wrong type
+                        {"label": "mound"},  # no box_2d at all
+                        {"label": "mound", "box_2d": [0, 0, 100, 100]},  # valid
+                    ],
+                ),
+            }
+
+            features, total, failures = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="test",
+                model_name="test",
+            )
+
+            # Only the one valid detection should produce a feature
+            assert len(features) == 1
+            assert total == 4  # all 4 were counted as detections
+            assert failures == 0  # tile itself didn't fail
+
+    def test_feature_properties_populated(self) -> None:
+        """GeoJSON features should carry source_tile, label, method, model."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile_path = _make_geotiff(tmp / "tile.png")
+
+            matched = {
+                "tile.png": _make_batch_response(
+                    "tile.png",
+                    detections=[{
+                        "label": "mound",
+                        "subtype": "burial_mound",
+                        "box_2d": [100, 200, 300, 400],
+                    }],
+                ),
+            }
+
+            features, _, _ = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="detect_brief-text",
+                model_name="gemini-3-flash",
+            )
+
+            props = features[0]["properties"]
+            assert props["source_tile"] == "tile.png"
+            assert props["label"] == "mound"
+            assert props["subtype"] == "burial_mound"
+            assert props["method"] == "detect_brief-text"
+            assert props["model"] == "gemini-3-flash"
+
+    def test_empty_detections_returns_no_features(self) -> None:
+        """A tile with zero detections should produce no features."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tile_path = _make_geotiff(tmp / "tile.png")
+
+            matched = {
+                "tile.png": _make_batch_response(
+                    "tile.png", detections=[],
+                ),
+            }
+
+            features, total, failures = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="test",
+                model_name="test",
+            )
+
+            assert len(features) == 0
+            assert total == 0
+            assert failures == 0
+
+    def test_default_tile_size_is_512(self) -> None:
+        """When tile_size is not specified, should default to 512 (TILE_SIZE)."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            pixel_size = 0.5
+            tile_path = _make_geotiff(
+                tmp / "tile.png", tile_size=512, pixel_size=pixel_size,
+            )
+
+            # Detection at [0, 0, 1000, 1000] without explicit tile_size
+            matched = {
+                "tile.png": _make_batch_response(
+                    "tile.png",
+                    detections=[{
+                        "label": "mound",
+                        "box_2d": [0, 0, 1000, 1000],
+                    }],
+                ),
+            }
+
+            features_default, _, _ = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="test",
+                model_name="test",
+                # tile_size not specified — should use default
+            )
+
+            features_explicit, _, _ = parse_detections_to_geojson(
+                matched_results=matched,
+                tile_paths_by_name={"tile.png": tile_path},
+                config_version="test",
+                model_name="test",
+                tile_size=512,
+            )
+
+            # Both should produce identical coordinates
+            bbox_default = features_default[0]["geometry"]["coordinates"][0]
+            bbox_explicit = features_explicit[0]["geometry"]["coordinates"][0]
+            assert bbox_default == bbox_explicit
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: _resolve_tile_paths()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestResolveTilePaths:
+    """Tests for _resolve_tile_paths() — manifest-driven tile discovery."""
+
+    def _setup_tiles_dir(
+        self, tmpdir: Path, map_name: str, tile_names: list[str],
+    ) -> Path:
+        """Create a tiles directory with map subdirectories and tile files.
+
+        Args:
+            tmpdir: Temporary directory root.
+            map_name: Name of the map subdirectory.
+            tile_names: List of tile filenames to create.
+
+        Returns:
+            Path to the tiles directory.
+        """
+        tiles_dir = tmpdir / "tiles"
+        map_dir = tiles_dir / map_name
+        map_dir.mkdir(parents=True)
+        for name in tile_names:
+            (map_dir / name).write_bytes(b"fake-png")
+        return tiles_dir
+
+    def test_resolves_tiles_from_manifest(self) -> None:
+        """Should return paths for all tiles listed in the manifest."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tiles_dir = self._setup_tiles_dir(
+                tmp, "map_A", ["tile_001.png", "tile_002.png", "tile_003.png"],
+            )
+
+            manifest = tmp / "manifest.json"
+            manifest.write_text(
+                json.dumps(["tile_001.png", "tile_002.png"]),
+            )
+
+            paths = _resolve_tile_paths(manifest, tiles_dir=tiles_dir)
+
+            assert len(paths) == 2
+            assert all(p.exists() for p in paths)
+            names = {p.name for p in paths}
+            assert names == {"tile_001.png", "tile_002.png"}
+
+    def test_tiles_dir_override(self) -> None:
+        """When tiles_dir is specified, should search that directory
+        instead of the default TILES_DIR."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+
+            # Create tiles in a non-default directory
+            custom_dir = self._setup_tiles_dir(
+                tmp, "map_A", ["tile_384_001.png"],
+            )
+
+            manifest = tmp / "manifest.json"
+            manifest.write_text(json.dumps(["tile_384_001.png"]))
+
+            paths = _resolve_tile_paths(manifest, tiles_dir=custom_dir)
+
+            assert len(paths) == 1
+            assert paths[0].name == "tile_384_001.png"
+            assert str(custom_dir) in str(paths[0])
+
+    def test_missing_tile_logged_and_skipped(self) -> None:
+        """Tiles in manifest but not on disc should be skipped with a
+        warning (not raise an error)."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tiles_dir = self._setup_tiles_dir(
+                tmp, "map_A", ["tile_001.png"],
+            )
+
+            manifest = tmp / "manifest.json"
+            manifest.write_text(
+                json.dumps(["tile_001.png", "tile_missing.png"]),
+            )
+
+            paths = _resolve_tile_paths(manifest, tiles_dir=tiles_dir)
+
+            # Only the existing tile should be returned
+            assert len(paths) == 1
+            assert paths[0].name == "tile_001.png"
+
+    def test_multiple_map_directories(self) -> None:
+        """Should discover tiles across multiple map subdirectories."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tiles_dir = tmp / "tiles"
+
+            # Create two map directories with different tiles
+            (tiles_dir / "map_A").mkdir(parents=True)
+            (tiles_dir / "map_A" / "tileA.png").write_bytes(b"png")
+            (tiles_dir / "map_B").mkdir(parents=True)
+            (tiles_dir / "map_B" / "tileB.png").write_bytes(b"png")
+
+            manifest = tmp / "manifest.json"
+            manifest.write_text(json.dumps(["tileA.png", "tileB.png"]))
+
+            paths = _resolve_tile_paths(manifest, tiles_dir=tiles_dir)
+
+            assert len(paths) == 2
+            names = {p.name for p in paths}
+            assert names == {"tileA.png", "tileB.png"}
+
+    def test_empty_manifest_returns_empty(self) -> None:
+        """An empty manifest should return an empty list."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            tiles_dir = self._setup_tiles_dir(
+                tmp, "map_A", ["tile_001.png"],
+            )
+
+            manifest = tmp / "manifest.json"
+            manifest.write_text(json.dumps([]))
+
+            paths = _resolve_tile_paths(manifest, tiles_dir=tiles_dir)
+
+            assert paths == []
+
+    def test_default_tiles_dir_used_when_none(self) -> None:
+        """When tiles_dir is None, should fall back to TILES_DIR from
+        config (tested via mock to avoid filesystem dependency)."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+
+            manifest = tmp / "manifest.json"
+            manifest.write_text(json.dumps(["tile_001.png"]))
+
+            # Mock TILES_DIR to point to our temp directory
+            mock_tiles_dir = self._setup_tiles_dir(
+                tmp, "map_A", ["tile_001.png"],
+            )
+
+            with patch(
+                "scripts.lib_batch_api.TILES_DIR", mock_tiles_dir,
+            ):
+                paths = _resolve_tile_paths(manifest)  # no tiles_dir arg
+
+            assert len(paths) == 1
+            assert paths[0].name == "tile_001.png"

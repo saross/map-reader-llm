@@ -66,17 +66,20 @@ fixed:
   ordering: "config-default"
 
 inputs:
+  manifest: "inputs/tiles_384/validation_manifest.json"   # canonical field for run_phase2.py
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
   manifest_384: "inputs/tiles_384/validation_manifest.json"
   manifest_512: "inputs/tiles/validation_manifest.json"
   ground_truth: "inputs/vectors/references/mounds-reference.geojson"
-  bounds_384: "outputs/results/validation_bounds_384.geojson"
-  bounds_512: "outputs/results/validation_bounds.geojson"
+  bounds_512: "inputs/vectors/bounds/validation_bounds.geojson"
+  bounds_384: "inputs/vectors/bounds/384/validation_bounds.geojson"
   # Evaluation uses 512 bounds for BOTH tile sizes to ensure the same
   # ground truth references are in scope. The 384 tiles cover a larger
   # geographic area (10% min-overlap threshold trims peripheral tiles,
   # but edge tiles still extend beyond the 512 footprint). Using a
   # common evaluation footprint guarantees a fair comparison.
-  evaluation_bounds: "outputs/results/validation_bounds.geojson"
+  evaluation_bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
   runs: 10
