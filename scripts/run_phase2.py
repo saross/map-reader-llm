@@ -859,8 +859,12 @@ def run_phase2(
         print(f"Manifest: {manifest_path}")
         print()
 
-    # Cost monitoring
-    estimated_cost = config.get("estimates", {}).get("cost_usd", 0)
+    # Cost monitoring — handle non-numeric values like "TBD"
+    raw_cost = config.get("estimates", {}).get("cost_usd", 0)
+    try:
+        estimated_cost = float(raw_cost)
+    except (TypeError, ValueError):
+        estimated_cost = 0
     cost_warn_threshold = (
         estimated_cost * 1.2 if estimated_cost else float("inf")
     )
