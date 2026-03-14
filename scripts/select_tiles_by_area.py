@@ -37,6 +37,8 @@ Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import sys
