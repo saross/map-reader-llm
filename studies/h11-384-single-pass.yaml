@@ -71,6 +71,12 @@ inputs:
   ground_truth: "inputs/vectors/references/mounds-reference.geojson"
   bounds_384: "outputs/results/validation_bounds_384.geojson"
   bounds_512: "outputs/results/validation_bounds.geojson"
+  # Evaluation uses 512 bounds for BOTH tile sizes to ensure the same
+  # ground truth references are in scope. The 384 tiles cover a larger
+  # geographic area (10% min-overlap threshold trims peripheral tiles,
+  # but edge tiles still extend beyond the 512 footprint). Using a
+  # common evaluation footprint guarantees a fair comparison.
+  evaluation_bounds: "outputs/results/validation_bounds.geojson"
 
 execution:
   runs: 10
@@ -97,10 +103,17 @@ analysis:
     report: "results/h11/single-pass-comparison.json"
     summary: "results/h11/single-pass-comparison.md"
 
+tile_selection:
+  method: "geographic_overlap"
+  min_overlap: 0.10
+  reference_area_km2: 369.6
+  selected_tiles: 240
+  coverage_of_512_area: 0.997
+
 estimates:
-  tiles_384: "TBD"     # Depends on select_tiles_by_area.py output
+  tiles_384: 240
   runs: 10
-  api_calls_per_run: "TBD"
+  api_calls_per_run: 240
   cost_usd: "TBD"
 
 outcome:

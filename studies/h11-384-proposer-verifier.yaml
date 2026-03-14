@@ -92,6 +92,8 @@ inputs:
   bounds_384: "outputs/results/validation_bounds_384.geojson"
   bounds_512: "outputs/results/validation_bounds.geojson"
   rasters_dir: "inputs/rasters"
+  # Evaluation uses 512 bounds for BOTH tile sizes — see h11-384-single-pass.yaml
+  evaluation_bounds: "outputs/results/validation_bounds.geojson"
 
 execution:
   workers: 1           # Safe default; pass --workers N at CLI for parallelism
@@ -134,10 +136,15 @@ analysis:
     report: "results/h11/proposer-verifier-comparison.json"
     summary: "results/h11/proposer-verifier-comparison.md"
 
+tile_selection:
+  method: "geographic_overlap"
+  min_overlap: 0.10
+  selected_tiles: 240
+
 estimates:
-  tiles_384: "TBD"
-  proposer_calls_384: "TBD"
-  verifier_calls_384: "TBD"
+  tiles_384: 240
+  proposer_calls_384: 240
+  verifier_calls_384: "TBD"  # Depends on proposer output
   total_calls_384: "TBD"
   cost_usd_384: "TBD"
   # 512 re-run (E33 fix)

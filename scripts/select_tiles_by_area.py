@@ -136,16 +136,23 @@ def select_overlapping_tiles(
     reference_geometries: list,
     new_metadata: dict[str, list[float]],
     tile_size: int,
+    min_overlap: float = 0.0,
 ) -> list[str]:
     """Select tiles from the new grid that overlap the reference area.
 
     Computes the union of all reference tile extents, then checks each
-    tile in the new grid for intersection with that union.
+    tile in the new grid for intersection with that union. Tiles whose
+    overlap fraction is below ``min_overlap`` are discarded — this trims
+    peripheral tiles that barely touch the reference area, reducing the
+    excess geographic footprint.
 
     Args:
         reference_geometries: List of Shapely geometries from the reference set.
         new_metadata: Metadata for all tiles in the new grid.
         tile_size: Tile dimension in pixels for the new grid.
+        min_overlap: Minimum fraction of tile area that must overlap
+            the reference area (0.0–1.0). Tiles below this threshold
+            are excluded. Default 0.0 (any overlap).
 
     Returns:
         Sorted list of tile filenames that overlap the reference area.
@@ -155,12 +162,22 @@ def select_overlapping_tiles(
     print(f"  Reference area bounds: {reference_union.bounds}")
     print(f"  Reference area: {reference_union.area:.1f} sq metres")
 
-    # Check each new tile for overlap
+    # Check each new tile for overlap, applying minimum overlap threshold
     selected = []
+    skipped_below_threshold = 0
     for filename in sorted(new_metadata.keys()):
         extent = tile_extent(filename, new_metadata, tile_size)
         if extent is not None and extent.intersects(reference_union):
+            if min_overlap > 0:
+                overlap_frac = extent.intersection(reference_union).area / extent.area
+                if overlap_frac < min_overlap:
+                    skipped_below_threshold += 1
+                    continue
             selected.append(filename)
+
+    if skipped_below_threshold > 0:
+        print(f"  Skipped {skipped_below_threshold} tiles below "
+              f"{min_overlap:.0%} overlap threshold")
 
     return selected
 
@@ -214,6 +231,14 @@ Examples:
         help="Directory to write validation_manifest.json and selection metadata",
     )
     parser.add_argument(
+        "--min-overlap",
+        type=float,
+        default=0.0,
+        help="Minimum fraction of tile area overlapping the reference area "
+        "(0.0–1.0). Tiles below this threshold are excluded. Default: 0.0 "
+        "(any overlap). Use 0.10 to trim peripheral tiles.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Preview selection without writing output files",
@@ -253,6 +278,7 @@ Examples:
           f"that overlap the reference area...")
     selected_tiles = select_overlapping_tiles(
         reference_geometries, new_metadata, args.tile_size,
+        min_overlap=args.min_overlap,
     )
 
     # Count tiles per map
@@ -289,6 +315,7 @@ Examples:
             "new_tiles_dir": str(args.new_tiles_dir),
             "tile_size": args.tile_size,
             "selection_method": "geographic_overlap",
+            "min_overlap": args.min_overlap,
         },
         "reference_tiles": len(reference_geometries),
         "total_new_tiles": len(new_metadata),
