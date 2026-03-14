@@ -3057,59 +3057,64 @@ This mirrors the classical precision/recall tradeoff: high-recall detectors
 benefit more from precision-focused post-processing (verification) than
 from recall-focused ensembling (consensus).
 
-## Observation 161: 384 proposer-verifier does not improve F1, and the text-only gap narrows (2026-03-15)
+## Observation 161: 384 proposer-verifier does not improve F1, and the text-only gap collapses across all strategies (2026-03-15)
 
-**Context**: Session 50. H11 proposer-verifier pipeline with 384-tile proposer
-and adversarial verifier (Phase 3d configuration). Tested both image and
-text-only verifier tracks.
+**Context**: Session 50. Full 3×2 factorial: three verifier strategies
+(adversarial, brief, checklist) × two tracks (image, text-only) on the
+384-tile proposer output (572 candidates). 3,672 API calls, $2.49 total.
 
 **The prediction**: Back-of-envelope estimated F1 ≈ 0.83 for the 384 PV
 pipeline, based on: (a) 384 proposer recall of 0.877 feeding ~7 more true
 mounds than the 512 proposer (0.804), and (b) the verifier maintaining ~0.81
 precision as at 512. Both assumptions were partially wrong.
 
-**The result**: Best F1 = 0.684 (image track, threshold 0.3) and 0.679
-(text-only, threshold 0.2). Both fall well short of the 512 PV best (0.796).
+**The result**: All six configurations fall within a narrow 2.3 pp range
+(0.661–0.684), well short of the 512 PV best (0.796).
 
-| Config | F1 | P | R |
-|:-------|-----:|-----:|-----:|
-| 384 PV image (t=0.3) | 0.684 | 0.602 | 0.794 |
-| 384 PV text-only (t=0.2) | 0.679 | 0.612 | 0.763 |
-| 384 consensus N=5 T>=5 | 0.664 | 0.560 | 0.814 |
-| 512 PV text-only (Phase 3d) | 0.796 | 0.809 | 0.784 |
+| Strategy | Image F1 | Text F1 | Gap | Phase 3d 512 text |
+|:---------|:--------:|:-------:|:---:|:-----------------:|
+| Adversarial | **0.684** | 0.679 | −0.5 pp | 0.796 |
+| Brief | 0.661 | 0.675 | +1.4 pp | 0.768 |
+| Checklist | 0.672 | 0.661 | −1.1 pp | 0.782 |
 
 **Why the prediction failed**: The 384 proposer generates ~4× the candidates
-(572 vs ~140 at 512). Each candidate has an independent probability of fooling
-the verifier, so more candidates means more false positives even at a constant
-per-candidate error rate. The verifier achieved only ~0.60 precision on 384
-candidates vs 0.81 at 512. Reducing tile size trades a linear recall gain for
-a quadratic false positive increase (2× tiles × constant FP rate per tile), and
-the verifier cannot compensate.
+(572 vs ~140 at 512). All verifier strategies achieve 0.53–0.61 precision,
+substantially below the 0.81 seen at 512. No verifier strategy is selective
+enough to compensate for the denser false positive pool. Reducing tile size
+trades a linear recall gain for a quadratic false positive increase.
 
-**The interesting finding — text-only gap narrows**: At 512, the text-only
-adversarial verifier dramatically outperformed the image variant (+8.5 pp F1:
-0.796 vs 0.711). At 384, this gap disappears (−0.5 pp: 0.679 vs 0.684). Two
-candidate explanations:
+**The interesting finding — text-only gap collapses universally**: At 512,
+the text-only verifier outperformed the image variant by +6–9 pp F1 across
+all three strategies. At 384, this gap collapses to ±1.5 pp — and this holds
+across all strategies, not just the adversarial:
 
-1. **False positive composition**: 384 tiles produce a different distribution
-   of false positives (more obvious infrastructure, text, boundaries in smaller
-   crops) that are easier to reject regardless of whether example images are
-   present. The example images hurt more at 512 where false positives are more
-   ambiguous and the images may prime false acceptance.
-2. **Candidate volume**: With 4× the candidates, both tracks are making more
-   decisions. The text-only advantage may be specific to lower-volume candidate
-   pools where individual marginal decisions matter more — at higher volumes,
-   the signal-to-noise ratio dominates over the track distinction.
+| Strategy | 512 gap (text − image) | 384 gap (text − image) |
+|:---------|:----------------------:|:----------------------:|
+| Adversarial | +8.5 pp | −0.5 pp |
+| Brief | +6.2 pp | +1.4 pp |
+| Checklist | +7.6 pp | −1.1 pp |
 
-**Implication**: The track distinction (text-only vs image examples) is not a
-universal property of the verifier — it interacts with the proposer's candidate
-volume and false positive distribution. Running both tracks across the full
-tile size range (256, 448, 512, 1024) would determine whether the convergence
-at 384 is a general pattern of denser candidate pools or a tile-size-specific
-effect.
+The universality rules out strategy-specific explanations. The two most
+plausible mechanisms:
+
+1. **False positive composition shifts with tile density**: At 384, the
+   denser tiling produces false positives that are more visually distinctive
+   (infrastructure, text, boundaries in smaller crops), making them easy to
+   reject regardless of example images. At 512, false positives are more
+   ambiguous, and example images may prime false acceptance.
+2. **Volume dilution**: With 4× the candidates, the marginal impact of
+   example images on each decision is smaller relative to the noise floor.
+   The text-only advantage may require a lower-volume, more ambiguous
+   candidate pool to manifest.
+
+**Strategy ranking preserved**: Adversarial > Checklist ≈ Brief at both
+tile sizes and both tracks. The narrow spread (2.3 pp) at 384 suggests
+the candidate pool quality — not the verifier strategy — is the binding
+constraint.
 
 **For the project**: The 512 PV text-only result (F1=0.796) remains the best
 configuration. H11 confirms that 384 tiles improve recall but this advantage
 does not translate into improved F1 through any available post-processing
 strategy — neither consensus voting (Obs 160) nor proposer-verifier
-verification can overcome the precision penalty from denser tiling.
+verification across any of three strategies can overcome the precision
+penalty from denser tiling.

@@ -1,14 +1,14 @@
 {
-    "version": "verify_brief",
-    "description": "Two-Stage Verifier (Stage 2). Standard diagnostic verification using brief text.",
+    "version": "verify_checklist",
+    "description": "Two-Stage Verifier (Stage 2). Structured feature checklist verification with example images.",
     "hypothesis": "H2",
     "model": "gemini-3-flash",
-    "instruction_file": "verify_brief.md",
+    "instruction_file": "verify_checklist.md",
     "temperature": 0.0,
     "max_output_tokens": 8192,
     "thinking_level": "minimal",
     "_config_notes": {
-        "source": "Phase 3d pilot (Session 43). Standard verifier achieved F1=0.706 (Track 1) / 0.768 (Track 2) at T=0.0.",
+        "source": "Phase 3d pilot (Session 43). Checklist verifier achieved F1=0.706 (Track 1) / 0.782 (Track 2) at T=0.0.",
         "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
         "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
         "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
@@ -23,6 +23,5 @@
         {"path": "neutral-naming/example_15.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
         {"path": "neutral-naming/example_16.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
         {"path": "neutral-naming/example_17.png", "label": "Negative: Empty tile (no mounds)", "category": "null"}
-    ],
-    "_library_note": "Canonical 9-example library. Image track sends these as visual references; text-only track omits them."
+    ]
 }

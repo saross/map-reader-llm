@@ -1,0 +1,17 @@
+{
+    "version": "verify_brief-text",
+    "description": "Two-Stage Verifier (Stage 2). Standard diagnostic, text-only (no example images). Matches Phase 3d Track 2.",
+    "hypothesis": "H2",
+    "model": "gemini-3-flash",
+    "instruction_file": "verify_brief.md",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "_config_notes": {
+        "source": "Phase 3d Track 2 (Session 43). Standard text-only verifier achieved F1=0.768 at T=0.0, threshold 0.2.",
+        "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "track": "Track 2 — text-only. No example images sent; model sees only the candidate crop and the system instruction."
+    },
+    "examples": []
+}
