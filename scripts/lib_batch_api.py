@@ -76,7 +76,7 @@ _TERMINAL_STATES = frozenset({
 })
 
 # Script metadata for metadata tracker
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 
 @dataclasses.dataclass
@@ -102,6 +102,9 @@ class BatchUnitContext:
     config_version: str         # Config version string (for GeoJSON properties)
     line_count: int             # Lines written to JSONL
     tile_size: int = 512        # Tile dimension for normalised→pixel conversion
+    examples: list[dict] = dataclasses.field(
+        default_factory=list,
+    )                           # Prompt examples (for parse-failure retry)
 
 
 def _get_state_name(state: Any) -> str:
@@ -804,7 +807,7 @@ def parse_detections_to_geojson(
     config_version: str,
     model_name: str,
     tile_size: int = TILE_SIZE,
-) -> tuple[list[dict], int, int]:
+) -> tuple[list[dict], int, list[str]]:
     """
     Convert batch responses to GeoJSON features.
 
@@ -825,11 +828,11 @@ def parse_detections_to_geojson(
         Tuple of:
         - features: List of GeoJSON Feature dicts
         - total_detections: Count of detections extracted
-        - parse_failures: Count of tiles that failed JSON parsing
+        - parse_failed_keys: List of tile keys that failed JSON parsing
     """
     features: list[dict] = []
     total_detections = 0
-    parse_failures = 0
+    parse_failed_keys: list[str] = []
 
     for tile_key, result in matched_results.items():
         try:
@@ -838,16 +841,20 @@ def parse_detections_to_geojson(
             logger.warning(
                 "Failed to parse detections for %s: %s", tile_key, e,
             )
-            parse_failures += 1
+            parse_failed_keys.append(tile_key)
             continue
 
         total_detections += len(detections)
+
+        # Skip georeferencing if no detections to process
+        if not detections:
+            continue
 
         # Get tile transform for georeferencing
         tile_path = tile_paths_by_name.get(tile_key)
         if tile_path is None or not tile_path.exists():
             logger.warning("Tile path not found for %s", tile_key)
-            parse_failures += 1
+            parse_failed_keys.append(tile_key)
             continue
 
         with rasterio.open(tile_path) as src:
@@ -892,7 +899,140 @@ def parse_detections_to_geojson(
             )
             features.append(feature)
 
-    return features, total_detections, parse_failures
+    return features, total_detections, parse_failed_keys
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Parse-Failure Retry
+# ─────────────────────────────────────────────────────────────────────
+
+
+def _retry_tile_sync(
+    client: Any,
+    tile_path: Path,
+    model_name: str,
+    system_instruction: str,
+    prompt_config: dict,
+    examples: list[dict],
+) -> dict | None:
+    """
+    Retry a single parse-failed tile via synchronous API call.
+
+    Reconstructs the same prompt used in the batch request and makes
+    one synchronous ``generate_content()`` call. Returns the response
+    in the same dict format as batch response lines so it can be fed
+    back through ``_parse_detections_from_response()``.
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        tile_path: Path to the tile image file.
+        model_name: Model name string (e.g. ``"gemini-3-flash"``).
+        system_instruction: System instruction text.
+        prompt_config: Prompt config dict (temperature, etc.).
+        examples: List of example dicts from prompt config.
+
+    Returns:
+        A result dict matching the batch response format, or ``None``
+        if the retry itself fails.
+    """
+    try:
+        from google.genai import types  # Lazy import — only on retry path
+    except ImportError:
+        logger.error("google.genai SDK not available for sync retry")
+        return None
+
+    try:
+        include_images = prompt_config.get("include_example_images", True)
+
+        # Build content parts mirroring 4_detect_mounds_batch.py's
+        # process_single_tile() prompt assembly
+        content_parts: list[types.Part] = []
+
+        # Reference examples preamble
+        content_parts.append(types.Part.from_text(
+            text="Here are the Reference Symbols you must find:",
+        ))
+
+        # Reference example images/labels (if image-inclusive)
+        if include_images:
+            for ex in examples:
+                label = ex.get("label", "Example")
+                path_str = ex.get("path", "")
+                img_path = EXAMPLES_DIR / path_str
+                if img_path.exists():
+                    content_parts.append(
+                        types.Part.from_text(text=label),
+                    )
+                    with open(img_path, "rb") as f:
+                        image_bytes = f.read()
+                    suffix = img_path.suffix.lower()
+                    mime = (
+                        "image/png" if suffix == ".png" else "image/jpeg"
+                    )
+                    content_parts.append(
+                        types.Part.from_bytes(
+                            data=image_bytes, mime_type=mime,
+                        ),
+                    )
+
+        # Transition text
+        content_parts.append(types.Part.from_text(
+            text="Now, find detection instances that visually match "
+            "ANY of the above Reference Examples in the Target "
+            "Map Tile below:",
+        ))
+
+        # Tile image
+        with open(tile_path, "rb") as f:
+            tile_bytes = f.read()
+        content_parts.append(
+            types.Part.from_bytes(data=tile_bytes, mime_type="image/png"),
+        )
+
+        # Generation config — mirror batch JSONL settings including
+        # thinking_config when present (Finding 1 from debug audit)
+        gen_config_kwargs: dict[str, Any] = {
+            "temperature": prompt_config.get("temperature", 0.1),
+            "max_output_tokens": prompt_config.get(
+                "max_output_tokens", 8192,
+            ),
+            "response_mime_type": "application/json",
+            "system_instruction": system_instruction,
+        }
+        thinking_level = prompt_config.get("thinking_level")
+        if thinking_level:
+            gen_config_kwargs["thinking_config"] = types.ThinkingConfig(
+                thinking_level=thinking_level.upper(),
+            )
+        gen_config = types.GenerateContentConfig(**gen_config_kwargs)
+
+        response = client.models.generate_content(
+            model=model_name,
+            contents=content_parts,
+            config=gen_config,
+        )
+
+        # Convert SDK response to batch-format dict for reuse by
+        # _parse_detections_from_response()
+        return {
+            "key": tile_path.name,
+            "response": {
+                "candidates": [
+                    {
+                        "content": {
+                            "parts": [{"text": response.text}],
+                            "role": "model",
+                        },
+                        "finish_reason": "STOP",
+                    }
+                ],
+            },
+        }
+    except Exception as e:
+        logger.warning(
+            "Sync retry failed for %s: %s", tile_path.name, e,
+        )
+        return None
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -1177,6 +1317,7 @@ def prepare_batch_unit(
         config_version=config_version,
         line_count=line_count,
         tile_size=effective_tile_size,
+        examples=examples,
     )
 
 
@@ -1274,7 +1415,7 @@ def complete_batch_unit(
 
     # Parse detections to GeoJSON (use tile_size from context for
     # correct normalised→pixel coordinate conversion)
-    features, total_detections, parse_failures = (
+    features, total_detections, parse_failed_keys = (
         parse_detections_to_geojson(
             matched_results=matched,
             tile_paths_by_name=tile_paths_by_name,
@@ -1284,9 +1425,71 @@ def complete_batch_unit(
         )
     )
 
+    # Retry parse failures via synchronous API (one attempt per tile).
+    # Note: retry calls use the synchronous API (no 50% batch discount)
+    # and their token usage is not reflected in the batch cost estimate.
+    # At ~0.17% failure rate this is negligible (~$0.01 per 2400 tiles).
+    retried_keys: list[str] = []
+    if parse_failed_keys:
+        logger.info(
+            "Retrying %d parse-failed tile(s) synchronously: %s",
+            len(parse_failed_keys), parse_failed_keys,
+        )
+        for tile_key in parse_failed_keys:
+            tile_path = tile_paths_by_name.get(tile_key)
+            if tile_path is None:
+                continue
+
+            retry_result = _retry_tile_sync(
+                client=client,
+                tile_path=tile_path,
+                model_name=ctx.model_name,
+                system_instruction=ctx.system_instruction,
+                prompt_config=ctx.prompt_config,
+                examples=ctx.examples,
+            )
+
+            if retry_result is not None:
+                # Feed through the same parse pipeline
+                retry_matched = {tile_key: retry_result}
+                retry_features, retry_dets, retry_failures = (
+                    parse_detections_to_geojson(
+                        matched_results=retry_matched,
+                        tile_paths_by_name=tile_paths_by_name,
+                        config_version=ctx.config_version,
+                        model_name=ctx.model_name,
+                        tile_size=ctx.tile_size,
+                    )
+                )
+                if not retry_failures:
+                    features.extend(retry_features)
+                    total_detections += retry_dets
+                    retried_keys.append(tile_key)
+                    logger.info("Retry succeeded for %s", tile_key)
+                else:
+                    logger.warning(
+                        "Retry also failed to parse for %s", tile_key,
+                    )
+
+    if retried_keys:
+        print(
+            f"  Retried {len(retried_keys)}/{len(parse_failed_keys)} "
+            f"parse-failed tile(s) successfully"
+        )
+
+    # Tiles that failed parse even after retry are true failures
+    still_failed = [
+        k for k in parse_failed_keys if k not in retried_keys
+    ]
+    if still_failed:
+        print(
+            f"  WARNING: {len(still_failed)} tile(s) failed parse "
+            f"even after retry: {still_failed}"
+        )
+
     # Build processed/failed tile sets
-    processed_tiles = set(matched.keys())
-    failed_tiles = missing_tiles + errored
+    processed_tiles = set(matched.keys()) - set(still_failed)
+    failed_tiles = missing_tiles + errored + still_failed
 
     # Extract usage stats from batch job metadata if available
     usage_stats = None

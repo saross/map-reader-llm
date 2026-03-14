@@ -30,6 +30,7 @@ from scripts.lib_batch_api import (
     _get_state_name,
     _parse_detections_from_response,
     _resolve_tile_paths,
+    _retry_tile_sync,
     audit_file_storage,
     build_jsonl_file,
     cleanup_batch_files,
@@ -1748,6 +1749,230 @@ class TestCompleteBatchUnit:
         assert "retrieve_error" in message
         assert cost == 0.0
 
+    @patch("scripts.lib_batch_api._retry_tile_sync")
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_parse_failure_retried_successfully(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+        mock_retry: MagicMock,
+    ) -> None:
+        """Parse-failed tiles should be retried via sync API, and
+        successful retries should be merged into the output."""
+        # Tile 1 returns valid response, tile 2 returns unparseable JSON
+        good_response = _make_batch_response(
+            "tile_001.png", detections=[],
+        )
+        bad_response = {
+            "key": "tile_002.png",
+            "response": {
+                "candidates": [
+                    {
+                        "content": {
+                            "parts": [{"text": "NOT VALID JSON {{{"}],
+                            "role": "model",
+                        },
+                        "finish_reason": "STOP",
+                    }
+                ],
+            },
+        }
+        mock_retrieve.return_value = [good_response, bad_response]
+        mock_write.return_value = {"total_cost_usd": 0.005}
+
+        # Retry returns valid response
+        mock_retry.return_value = _make_batch_response(
+            "tile_002.png",
+            detections=[{
+                "label": "mound", "subtype": "burial_mound",
+                "box_2d": [400, 400, 600, 600],
+            }],
+        )
+
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_SUCCEEDED
+        completed_job.usage_metadata = None
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_001 = _make_geotiff(Path(tmpdir) / "tile_001.png")
+            tile_002 = _make_geotiff(Path(tmpdir) / "tile_002.png")
+
+            ctx = BatchUnitContext(
+                unit_key="cond_a/run_1",
+                unit=_make_unit(),
+                output_file=Path(tmpdir) / "out.geojson",
+                jsonl_path=Path(tmpdir) / "batch.jsonl",
+                submitted_keys=["tile_001.png", "tile_002.png"],
+                tile_paths=[tile_001, tile_002],
+                prompt_config=_make_prompt_config(),
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                config_version="test_v1",
+                line_count=2,
+                examples=[],
+            )
+
+            success, message, cost = complete_batch_unit(
+                ctx, MagicMock(), completed_job,
+            )
+
+        assert success is True
+        assert message == "success"
+        # Verify retry was called for the bad tile
+        mock_retry.assert_called_once()
+        retry_call_args = mock_retry.call_args
+        assert retry_call_args.kwargs["tile_path"].name == "tile_002.png"
+
+    @patch("scripts.lib_batch_api._retry_tile_sync")
+    @patch("scripts.lib_batch_api.retrieve_batch_results")
+    @patch("scripts.lib_batch_api.write_batch_outputs")
+    def test_parse_failure_retry_also_fails(
+        self,
+        mock_write: MagicMock,
+        mock_retrieve: MagicMock,
+        mock_retry: MagicMock,
+    ) -> None:
+        """When retry also fails, tile should end up in failed_tiles."""
+        bad_response = {
+            "key": "tile_001.png",
+            "response": {
+                "candidates": [
+                    {
+                        "content": {
+                            "parts": [{"text": "GARBAGE"}],
+                            "role": "model",
+                        },
+                        "finish_reason": "STOP",
+                    }
+                ],
+            },
+        }
+        mock_retrieve.return_value = [bad_response]
+        mock_write.return_value = {"total_cost_usd": 0.0}
+        # Retry also fails
+        mock_retry.return_value = None
+
+        completed_job = MagicMock()
+        completed_job.state = JobState.JOB_STATE_SUCCEEDED
+        completed_job.usage_metadata = None
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_001 = _make_geotiff(Path(tmpdir) / "tile_001.png")
+
+            ctx = BatchUnitContext(
+                unit_key="cond_a/run_1",
+                unit=_make_unit(),
+                output_file=Path(tmpdir) / "out.geojson",
+                jsonl_path=Path(tmpdir) / "batch.jsonl",
+                submitted_keys=["tile_001.png"],
+                tile_paths=[tile_001],
+                prompt_config=_make_prompt_config(),
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                config_version="test_v1",
+                line_count=1,
+                examples=[],
+            )
+
+            success, message, cost = complete_batch_unit(
+                ctx, MagicMock(), completed_job,
+            )
+
+        # 1 failed tile ≤ 2 threshold → still accepted
+        assert success is True
+        # Verify write_batch_outputs was called with the tile in failed_tiles
+        write_call = mock_write.call_args
+        assert "tile_001.png" in write_call.kwargs.get(
+            "failed_tiles", write_call[1].get("failed_tiles", [])
+        )
+
+
+# ═════════════════════════════════════════════════════════════════════
+# Tests: _retry_tile_sync()
+# ═════════════════════════════════════════════════════════════════════
+
+
+@pytest.mark.tier1
+class TestRetryTileSync:
+    """Direct tests for _retry_tile_sync() — synchronous parse-failure
+    retry with a mocked genai client."""
+
+    def test_successful_retry_returns_batch_format_dict(self) -> None:
+        """Successful sync retry should return a dict matching the
+        batch response format for reuse by _parse_detections_from_response."""
+        mock_client = MagicMock()
+        mock_response = MagicMock()
+        mock_response.text = json.dumps({
+            "detections": [
+                {"label": "mound", "subtype": "burial_mound",
+                 "box_2d": [400, 400, 600, 600]},
+            ]
+        })
+        mock_client.models.generate_content.return_value = mock_response
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_path = _make_geotiff(Path(tmpdir) / "tile.png")
+
+            result = _retry_tile_sync(
+                client=mock_client,
+                tile_path=tile_path,
+                model_name="gemini-3-flash",
+                system_instruction="Test system instruction",
+                prompt_config=_make_prompt_config(),
+                examples=[],
+            )
+
+        assert result is not None
+        assert result["key"] == "tile.png"
+        # Verify the result can be parsed by the existing parser
+        detections = _parse_detections_from_response(result)
+        assert len(detections) == 1
+        assert detections[0]["label"] == "mound"
+
+    def test_api_error_returns_none(self) -> None:
+        """API exception during retry should return None, not raise."""
+        mock_client = MagicMock()
+        mock_client.models.generate_content.side_effect = RuntimeError(
+            "API quota exceeded"
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_path = _make_geotiff(Path(tmpdir) / "tile.png")
+
+            result = _retry_tile_sync(
+                client=mock_client,
+                tile_path=tile_path,
+                model_name="gemini-3-flash",
+                system_instruction="Test",
+                prompt_config=_make_prompt_config(),
+                examples=[],
+            )
+
+        assert result is None
+
+    def test_generate_content_called_with_correct_model(self) -> None:
+        """The sync retry should pass through the model name correctly."""
+        mock_client = MagicMock()
+        mock_response = MagicMock()
+        mock_response.text = '{"detections": []}'
+        mock_client.models.generate_content.return_value = mock_response
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_path = _make_geotiff(Path(tmpdir) / "tile.png")
+
+            _retry_tile_sync(
+                client=mock_client,
+                tile_path=tile_path,
+                model_name="gemini-3-flash-preview",
+                system_instruction="Test",
+                prompt_config=_make_prompt_config(),
+                examples=[],
+            )
+
+        call_kwargs = mock_client.models.generate_content.call_args
+        assert call_kwargs.kwargs["model"] == "gemini-3-flash-preview"
+
 
 # ═════════════════════════════════════════════════════════════════════
 # Tests: poll_all_batch_jobs()
@@ -2343,7 +2568,7 @@ class TestParseDetectionsToGeojson:
 
             assert len(features) == 1
             assert total == 1
-            assert failures == 0
+            assert failures == []
 
             # Full tile should span origin to origin + tile_size * pixel_size
             bbox = features[0]["geometry"]["coordinates"][0]
@@ -2493,7 +2718,7 @@ class TestParseDetectionsToGeojson:
 
             assert len(features) == 3
             assert total == 3
-            assert failures == 0
+            assert failures == []
 
     def test_missing_tile_path_counts_as_failure(self) -> None:
         """Tile present in results but missing from tile_paths_by_name
@@ -2513,7 +2738,8 @@ class TestParseDetectionsToGeojson:
         )
 
         assert len(features) == 0
-        assert failures == 1
+        assert len(failures) == 1
+        assert "missing_tile.png" in failures
 
     def test_malformed_box_2d_skipped(self) -> None:
         """Detections with invalid box_2d should be silently skipped."""
@@ -2543,7 +2769,7 @@ class TestParseDetectionsToGeojson:
             # Only the one valid detection should produce a feature
             assert len(features) == 1
             assert total == 4  # all 4 were counted as detections
-            assert failures == 0  # tile itself didn't fail
+            assert failures == []  # tile itself didn't fail
 
     def test_feature_properties_populated(self) -> None:
         """GeoJSON features should carry source_tile, label, method, model."""
@@ -2597,7 +2823,7 @@ class TestParseDetectionsToGeojson:
 
             assert len(features) == 0
             assert total == 0
-            assert failures == 0
+            assert failures == []
 
     def test_default_tile_size_is_512(self) -> None:
         """When tile_size is not specified, should default to 512 (TILE_SIZE)."""
