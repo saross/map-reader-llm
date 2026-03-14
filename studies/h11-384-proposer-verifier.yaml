@@ -59,9 +59,9 @@ study:
 carried_forward:
   proposer_config: "prompts/configs/detect_brief-text.json"
   proposer_temperature: 0.0
-  verifier_config: "prompts/configs/verify_adversarial.json"
+  verifier_config: "prompts/configs/verify_adversarial-text.json"
   crop_padding: 75
-  source: "Phase 3d — best proposer-verifier (Track 2, adversarial verifier)"
+  source: "Phase 3d — best proposer-verifier (Track 2, adversarial verifier, text-only)"
 
 # Factor under test
 factors:
@@ -81,7 +81,7 @@ factors:
 fixed:
   proposer_config: "prompts/configs/detect_brief-text.json"
   proposer_temperature: 0.0
-  verifier_config: "prompts/configs/verify_adversarial.json"
+  verifier_config: "prompts/configs/verify_adversarial-text.json"
   crop_padding: 75
   crop_source: "source_raster"  # E33 fix — always crop from GeoTIFF
 

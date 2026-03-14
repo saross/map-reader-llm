@@ -11,7 +11,16 @@
         "source": "Phase 3d Track 2 (Session 43). Standard text-only verifier achieved F1=0.768 at T=0.0, threshold 0.2.",
         "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
         "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
-        "track": "Track 2 — text-only. No example images sent; model sees only the candidate crop and the system instruction."
+        "track": "Track 2 — text-only. Text example labels sent (no images), matching Phase 3d run_h2_pilot.py build_verifier_request(include_examples=False)."
     },
-    "examples": []
+    "examples": [],
+    "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+    ],
+    "crop_label": "Now classify the candidate symbol at the centre of this crop:"
 }
