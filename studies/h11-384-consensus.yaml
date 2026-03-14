@@ -78,7 +78,7 @@ inputs:
   evaluation_bounds: "inputs/vectors/bounds/validation_bounds.geojson"
 
 execution:
-  runs: 5              # N=5 consensus pool
+  runs: 30             # Extended from N=5 to N=30 for comparison with Phase 3a
   workers: 1           # Safe default; pass --workers N at CLI for parallelism
   output_dir: "outputs/h11/consensus-384"
 
