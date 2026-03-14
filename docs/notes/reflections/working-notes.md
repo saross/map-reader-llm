@@ -3005,3 +3005,54 @@ and found the ceiling" — is a strong structural argument for the paper.
 It demonstrates rigour (not just reporting one result, but proving the
 result is robust by showing that perturbations don't improve it) and
 provides a clean stopping criterion for the experimental programme.
+
+## Observation 160: Recall saturation inverts the value of consensus voting (2026-03-14)
+
+**Context**: Session 49. H11 N=30 consensus results at 384×384 tiles compared to
+N=5 and N=10. Expectation was that N=30 would improve over N=5 as it did at
+512 (0.751 vs 0.657 with HIGH thinking). Instead, the best N=30 configuration
+(x=28, F1=0.643) is slightly *below* the N=5 unanimous result (F1=0.664).
+
+**The pattern**: At 512, individual runs have moderate recall (~0.73), meaning
+different runs miss different mounds. Pooling 30 runs discovers mounds that any
+single run missed — the variance across runs is *informative signal* that
+consensus voting exploits. This is the diversity dividend from Observation 139:
+lower per-run reliability produces better ensemble performance because the
+disagreements carry information.
+
+At 384, individual runs achieve near-saturated recall (~0.92 at T=0.7). Nearly
+every run finds nearly every mound. The variance across runs is therefore mostly
+*noise* (false positive locations vary, but true positives are consistent).
+Additional runs beyond N=5 contribute almost no new true positives while
+inflating the false positive pool that must be filtered. Stricter thresholds
+can filter the noise, but at the cost of discarding the few remaining marginal
+true positives — producing diminishing returns.
+
+**The key numbers**:
+
+| Config | Best x | F1 | P | R |
+|:-------|-------:|-----:|-----:|-----:|
+| 384 N=5 | x=5 | **0.664** | 0.560 | 0.814 |
+| 384 N=10 | x=10 | 0.648 | 0.595 | 0.711 |
+| 384 N=30 | x=28 | 0.643 | 0.567 | 0.742 |
+| 512 N=5 (HIGH) | x=3 | 0.657 | 0.644 | 0.670 |
+| 512 N=30 (HIGH) | x=22 | 0.751 | 0.772 | 0.732 |
+
+At 512, going from N=5 to N=30 adds +9.4 pp F1. At 384, it adds −2.1 pp.
+
+**Implication for pipeline design**: This is strong evidence that the 384
+single-pass recall (~0.877 at T=0.0) already captures nearly all detectable
+mounds, and the right precision intervention is the adversarial verifier — not
+more consensus runs. The proposer-verifier pipeline with 384-tile proposer
+should outperform any consensus configuration because:
+
+1. One 384 pass (240 API calls) captures ~85 of 97 reference mounds
+2. The adversarial verifier independently filters each candidate
+3. No need for 30× the API calls when recall is already saturated
+
+**Generalisation**: When per-unit detection reliability is high, consensus
+voting adds cost without adding signal. The optimal strategy shifts from
+"vote across many noisy detectors" to "detect once, verify individually."
+This mirrors the classical precision/recall tradeoff: high-recall detectors
+benefit more from precision-focused post-processing (verification) than
+from recall-focused ensembling (consensus).
