@@ -5313,6 +5313,7 @@ session's most interesting finding.
 
 ---
 
+<<<<<<< HEAD
 ### Session 51 Reflection — 2026-03-15 (map-reader-llm)
 
 This session was unusual in that its primary productive output was
@@ -5387,3 +5388,16 @@ pathway), and drove the documentation rationalisation initiative.
 (Session 51 — config audit, model drift investigation, Flash-Lite
 failure, Phase 3a replication, pipeline improvements, documentation
 rationalisation, and comprehensive configuration audit).*
+
+---
+
+### Protocol revision note (2026-03-15)
+
+After 43 reflections, mid-course review identified template drift: the
+"What X brought" structure had calcified into enumerated praise lists
+rather than genuine reflection. The protocol was revised to use rotating
+prompts from a pool, avoid fixed structural templates, and make footer
+fields conditional. Entries 44+ follow the revised protocol. See the
+`/reflect` skill definition for details.
+
+---

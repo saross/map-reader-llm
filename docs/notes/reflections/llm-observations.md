@@ -3,6 +3,9 @@ priority: 2
 scope: always
 title: "LLM Observations"
 audience: "researchers and future instances"
+scope_note: "Observations about collaboration patterns and AI-as-tool
+  behaviour. Research findings about VLM capabilities belong in
+  working-notes.md or abductive-reasoning.md, not here."
 ---
 
 # LLM Observations
