@@ -7,7 +7,7 @@ if absolute F1 is lower.
 
 **Model**: `gemini-3.1-flash-lite-preview`
 **Tile size**: 512×512 (60 validation tiles)
-**Execution**: Batch API (`--mode batch`)
+**Execution**: Real-time API (synchronous, costs trivial)
 **Base config**: `detect_brief-text.json` with model override
 
 ---
@@ -157,8 +157,30 @@ Document which gate failed and why. Possible outcomes:
 
 ## Status
 
-- [ ] Stage 1: Basic capability (pending)
-- [ ] Stage 2: Single-pass contrasts (pending)
-- [ ] Stage 3: Consensus voting (pending)
-- [ ] Stage 4: Proposer-verifier (pending)
-- [ ] Decision: proceed to full-scale / abandon / modify
+- [x] Stage 1: Basic capability — **FAILED** (2026-03-15)
+- [ ] ~~Stage 2: Single-pass contrasts~~ (not reached)
+- [ ] ~~Stage 3: Consensus voting~~ (not reached)
+- [ ] ~~Stage 4: Proposer-verifier~~ (not reached)
+- [x] Decision: **ABANDON** Flash-Lite pathway
+
+## Results (2026-03-15)
+
+Stage 1 gate (F1 > 0.2) failed across all three variants tested:
+
+| Variant | Dets | TP | FP | FN | P | R | F1 |
+|:--------|-----:|---:|---:|---:|-----:|-----:|-----:|
+| Minimal T=0.0 | 282 | 21 | 261 | 76 | 0.074 | 0.216 | 0.111 |
+| Minimal T=0.3 | 267 | 23 | 244 | 74 | 0.086 | 0.237 | 0.126 |
+| HIGH T=0.0 | 89 | 9 | 80 | 88 | 0.101 | 0.093 | 0.097 |
+| **Flash baseline** | **~162** | **~42** | **~120** | **~55** | **0.434** | **0.725** | **0.542** |
+
+Flash-Lite detects map features but cannot discriminate mound symbols
+from other cartographic elements. The 4.4 pp MMMU Pro gap (76.8% vs
+81.2%) translates to a catastrophic ~43 pp F1 collapse on this task.
+HIGH thinking worsened performance by suppressing output without
+improving discrimination.
+
+Total pilot cost: ~$0.05 (3 runs × 60 tiles). The staged gate design
+prevented wasted budget on Stages 2–4.
+
+See Observation 164 in working notes.

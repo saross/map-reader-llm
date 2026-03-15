@@ -3219,3 +3219,44 @@ with corrected configs (v2). The single-pass detection configs
 `4_detect_mounds_batch.py` without intermediate extraction. The drift
 appears confined to the verifier pipeline, where configs were created
 specifically for the H11 experiments.
+
+## Observation 164: Flash-Lite failure suggests we are operating near the frontier of multimodal capabilities (2026-03-15)
+
+**Context**: Session 51. A transfer pilot tested whether Gemini 3.1
+Flash-Lite (`gemini-3.1-flash-lite-preview`) could perform our mound
+detection task. Flash-Lite scores 76.8% on MMMU Pro vs Flash's 81.2% — a
+4.4 pp gap that initially seemed modest.
+
+**Finding**: Flash-Lite catastrophically fails the task. Three variants
+were tested:
+
+| Variant | Dets | TP | FP | F1 |
+|:--------|-----:|---:|---:|-----:|
+| Flash-Lite minimal T=0.0 | 282 | 21 | 261 | 0.111 |
+| Flash-Lite minimal T=0.3 | 267 | 23 | 244 | 0.126 |
+| Flash-Lite HIGH T=0.0 | 89 | 9 | 80 | 0.097 |
+| Flash (baseline) T=0.0 | ~162 | ~42 | ~120 | 0.542 |
+
+The model can detect *some* map features (282 detections) but cannot
+discriminate mound symbols from other Soviet cartographic elements
+(7.4% precision). HIGH thinking made things worse — it suppressed
+detections without improving discrimination (F1 dropped to 0.097).
+
+**Interpretation**: The 4.4 pp MMMU Pro gap between Flash and Flash-Lite
+translates to a ~43 pp F1 collapse on our task. This is evidence that we
+are operating near the frontier of multimodal visual capabilities — the
+task requires a level of fine-grained cartographic symbol discrimination
+that sits just above Flash-Lite's capability threshold but within Flash's.
+
+**Caveat**: This is one data point. To strengthen the claim that our task
+requires near-frontier capabilities, we would need to test additional
+models at various capability levels (Claude Haiku, GPT-4o-mini, older
+Gemini versions) and show that the performance cliff correlates with
+model capability rather than being specific to the Flash/Flash-Lite
+architecture. Cross-provider testing (H14) would directly address this.
+
+**Implication for the project**: Flash-Lite cannot serve as a cheaper
+proxy for Flash. The full-scale statistical replication will need to use
+Flash (or a similarly capable model), which constrains the budget for
+comprehensive reruns. The ~4× cost advantage of Flash-Lite Batch pricing
+is unavailable.
