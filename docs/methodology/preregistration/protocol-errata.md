@@ -823,6 +823,56 @@ separate issue — the metadata captured the config file's default value rather
 than the actual API parameter. That bug existed in the metadata *writer*, not
 in the parameter *propagation* fixed here.
 
+### E35: Bootstrap per-tile matching caused recall bias from reference double-counting
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-15 |
+| Type | Correction |
+| Files | `scripts/lib_advanced_metrics.py` |
+| Impact | Bootstrap CIs for all prior phases had a small recall bias (bootstrap mean ~7 pp below point estimate at 340 tiles) |
+
+**Description**: The `compute_per_tile_tp_fp_fn()` function performed
+Hungarian-algorithm matching **per tile**, while `calculate_f1_internal()`
+matched **per map**. With 64-pixel tile overlap, references near tile
+borders intersected multiple tile geometries, causing two biases:
+
+1. **Reference double-counting**: A reference in the overlap zone was
+   independently matched (or not) in each overlapping tile, inflating
+   both TP and FN counts.
+2. **Border-detection misses**: A detection in tile A near the border
+   could not match a reference in tile B's overlap zone, inflating FP.
+
+At 60 tiles the effect was small (few tile boundaries). At 340 tiles
+(production run), the divergence between point estimate and bootstrap
+mean became visible: recall point estimate 0.802 vs bootstrap mean
+0.731 (divergence 0.071).
+
+**Fix**: Rewrote `compute_per_tile_tp_fp_fn()` to match **per map**
+(identical to `calculate_f1_internal`), then distribute TP/FP/FN to
+tiles: TPs and FPs assigned to the detection's `source_tile`,
+unmatched FNs assigned to the reference's primary tile (nearest
+centroid via `_assign_refs_to_primary_tiles()`).
+
+After fix, divergence between point estimate and bootstrap mean
+collapsed to <0.002 across all metrics (F1: 0.6050 vs 0.6034,
+recall: 0.8015 vs 0.8005).
+
+**Affected results**: All bootstrap CIs computed in Phases 2–3 on the
+60-tile validation set have a small recall bias. The effect was modest
+at 60 tiles (fewer overlap boundaries) but systematically present.
+Pairwise effect size CIs were less affected because the bias applies
+equally to both conditions, partially cancelling in the difference.
+Production-run results use the corrected implementation.
+
+**Context**: This correction is outside the formally preregistered
+analysis protocol. The preregistration specifies bootstrap resampling
+at the tile level (Section 3.5) but does not specify the spatial
+matching granularity (per-tile vs per-map) within each bootstrap
+iteration. The correction aligns the bootstrap matching with the
+point-estimate matching method, which is the methodologically
+consistent choice.
+
 ---
 
 *End of errata. New entries should be appended above this line.*

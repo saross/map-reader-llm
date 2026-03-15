@@ -249,6 +249,64 @@ def scope_references_to_tiles(
     return gdf_ref.loc[gdf_ref.index.isin(in_scope.index)].copy()
 
 
+def _assign_refs_to_primary_tiles(
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> dict[str, set]:
+    """
+    Assign each reference to exactly one primary tile.
+
+    When tiles overlap (e.g., 64-pixel stride overlap), a reference
+    near a tile border may intersect multiple tile geometries. To
+    prevent double-counting in per-tile TP/FP/FN computation, each
+    reference is assigned to the tile whose centroid is nearest to
+    the reference point.
+
+    Args:
+        gdf_ref: GeoDataFrame of ground truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name').
+
+    Returns:
+        Dict mapping tile_name → set of reference indices assigned
+        to that tile.
+    """
+    from collections import defaultdict
+
+    # Spatial join: find all (ref, tile) intersections
+    joined = gpd.sjoin(
+        gdf_ref, gdf_bounds, how="inner", predicate="intersects",
+    )
+
+    if joined.empty:
+        return {}
+
+    # Pre-compute tile centroids
+    centroid_map: dict[str, object] = {}
+    for _, row in gdf_bounds.iterrows():
+        centroid_map[row["tile_name"]] = row.geometry.centroid
+
+    # For each reference, assign to nearest-centroid tile
+    tile_assignments: dict[str, set] = defaultdict(set)
+
+    for ref_idx in joined.index.unique():
+        matches = joined.loc[[ref_idx]] if joined.index.duplicated().any() \
+            else joined.loc[joined.index == ref_idx]
+        tile_names = matches["tile_name"].tolist()
+
+        if len(tile_names) == 1:
+            tile_assignments[tile_names[0]].add(ref_idx)
+        else:
+            # Multiple tiles — assign to tile with nearest centroid
+            ref_geom = gdf_ref.loc[ref_idx].geometry
+            best_tile = min(
+                tile_names,
+                key=lambda t: ref_geom.distance(centroid_map[t]),
+            )
+            tile_assignments[best_tile].add(ref_idx)
+
+    return dict(tile_assignments)
+
+
 def compute_per_tile_tp_fp_fn(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
@@ -256,17 +314,23 @@ def compute_per_tile_tp_fp_fn(
     buffer_metres: int = 20,
 ) -> pd.DataFrame:
     """
-    Pre-compute TP, FP, FN counts per tile via spatial matching.
+    Pre-compute TP, FP, FN counts per tile via per-map Hungarian matching.
 
-    Performs Hungarian-algorithm matching once per tile, returning a
-    DataFrame of per-tile counts. This avoids repeating expensive spatial
-    operations inside bootstrap loops.
+    Performs Hungarian-algorithm matching **per map** (identical to
+    ``calculate_f1_internal``), then distributes the TP/FP/FN results
+    to individual tiles for bootstrap resampling. This avoids two
+    biases that arise from naive per-tile matching:
 
-    The matching is per-tile rather than per-map (the approach used by
-    calculate_f1_internal). Cross-tile matches within the buffer zone
-    are negligible given tile sizes (hundreds of metres) relative to
-    the buffer (20 m), so the approximation is safe for bootstrap
-    resampling purposes.
+    1. **Reference double-counting** — with overlapping tiles, a reference
+       near a tile border intersects multiple tile geometries. Per-tile
+       matching counts it in each tile, inflating both TP and FN.
+    2. **Border-detection misses** — a detection in tile A near the border
+       may be closest to a reference in tile B's overlap zone. Per-tile
+       matching can't make this cross-tile assignment.
+
+    The approach: match globally per map, then assign each outcome to a
+    tile — TPs and FPs to the detection's ``source_tile``, unmatched FNs
+    to the reference's primary tile (nearest centroid).
 
     Args:
         gdf_det: GeoDataFrame of detections (must have 'source_tile').
@@ -277,51 +341,97 @@ def compute_per_tile_tp_fp_fn(
     Returns:
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
     """
-    rows: list[dict] = []
+    tile_counts: dict[str, dict[str, int]] = {
+        row["tile_name"]: {"tp": 0, "fp": 0, "fn": 0}
+        for _, row in gdf_bounds.iterrows()
+    }
 
-    for _, tile_row in gdf_bounds.iterrows():
-        tile_name = tile_row['tile_name']
-        tile_geom = tile_row.geometry
-        map_name = get_map_name(tile_name)
+    # Pre-compute primary tile for each reference (for FN assignment)
+    ref_primary = _assign_refs_to_primary_tiles(gdf_ref, gdf_bounds)
+    # Invert: ref_index → tile_name
+    ref_to_tile: dict[int, str] = {}
+    for tile_name, ref_indices in ref_primary.items():
+        for ref_idx in ref_indices:
+            ref_to_tile[ref_idx] = tile_name
 
+    # Scope by processed maps (same logic as calculate_f1_internal)
+    processed_maps = {
+        get_map_name(n) for n in gdf_bounds["tile_name"].unique()
+    }
+
+    for map_name in processed_maps:
         if map_name == "Unknown":
-            rows.append({"tile_name": tile_name, "tp": 0, "fp": 0, "fn": 0})
             continue
 
-        # Detections for this tile
-        det_scope = gdf_det[gdf_det['source_tile'] == tile_name]
+        map_bounds = gdf_bounds[
+            gdf_bounds["tile_name"].str.startswith(map_name)
+        ]
 
-        # References: filter by map name, then intersect with tile geometry
-        ref_for_map = gdf_ref[gdf_ref['Map'] == map_name]
+        # Scope references to this map's tile bounds
+        ref_for_map = gdf_ref[gdf_ref["Map"] == map_name]
         if not ref_for_map.empty:
-            ref_scope = ref_for_map[ref_for_map.intersects(tile_geom)]
+            ref_scope = scope_references_to_tiles(ref_for_map, map_bounds)
         else:
             ref_scope = ref_for_map.iloc[0:0]
 
-        if det_scope.empty and ref_scope.empty:
-            rows.append({"tile_name": tile_name, "tp": 0, "fp": 0, "fn": 0})
-        elif det_scope.empty:
-            rows.append({
-                "tile_name": tile_name,
-                "tp": 0, "fp": 0, "fn": len(ref_scope),
-            })
-        elif ref_scope.empty:
-            rows.append({
-                "tile_name": tile_name,
-                "tp": 0, "fp": len(det_scope), "fn": 0,
-            })
-        else:
-            det_geoms = list(det_scope.geometry)
-            ref_geoms = list(ref_scope.geometry)
-            matched_det, _matched_ref, unmatched_det, unmatched_ref = \
-                match_detections_to_references(det_geoms, ref_geoms, buffer_metres)
-            rows.append({
-                "tile_name": tile_name,
-                "tp": len(matched_det),
-                "fp": len(unmatched_det),
-                "fn": len(unmatched_ref),
-            })
+        # All detections on this map
+        det_scope = gdf_det[
+            gdf_det["source_tile"].str.startswith(map_name)
+        ]
 
+        if det_scope.empty and ref_scope.empty:
+            continue
+
+        if det_scope.empty:
+            # All in-scope references are FNs — assign to primary tiles
+            for ref_idx in ref_scope.index:
+                tile = ref_to_tile.get(ref_idx)
+                if tile and tile in tile_counts:
+                    tile_counts[tile]["fn"] += 1
+            continue
+
+        if ref_scope.empty:
+            # All detections are FPs — assign to source tiles
+            for _, det_row in det_scope.iterrows():
+                tile = det_row["source_tile"]
+                if tile in tile_counts:
+                    tile_counts[tile]["fp"] += 1
+            continue
+
+        # Per-map Hungarian matching (same as calculate_f1_internal)
+        det_geoms = list(det_scope.geometry)
+        ref_geoms = list(ref_scope.geometry)
+        matched_det, matched_ref, unmatched_det, unmatched_ref = \
+            match_detections_to_references(
+                det_geoms, ref_geoms, buffer_metres,
+            )
+
+        # Assign TPs to the detection's source tile
+        for d_idx in matched_det:
+            det_row = det_scope.iloc[d_idx]
+            tile = det_row["source_tile"]
+            if tile in tile_counts:
+                tile_counts[tile]["tp"] += 1
+
+        # Assign FPs to the detection's source tile
+        for d_idx in unmatched_det:
+            det_row = det_scope.iloc[d_idx]
+            tile = det_row["source_tile"]
+            if tile in tile_counts:
+                tile_counts[tile]["fp"] += 1
+
+        # Assign FNs to the reference's primary tile
+        ref_index_list = list(ref_scope.index)
+        for r_idx in unmatched_ref:
+            ref_original_idx = ref_index_list[r_idx]
+            tile = ref_to_tile.get(ref_original_idx)
+            if tile and tile in tile_counts:
+                tile_counts[tile]["fn"] += 1
+
+    rows = [
+        {"tile_name": tile, **counts}
+        for tile, counts in tile_counts.items()
+    ]
     return pd.DataFrame(rows)
 
 
