@@ -2,36 +2,36 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-02-11
+**Last updated**: 2026-03-15
 
 ---
 
 ## Confirmatory Hypotheses (H1-H8)
 
-| ID | Hypothesis | Factor | # Conditions | Config Pattern | Phase | Status |
-|----|------------|--------|--------------|----------------|-------|--------|
-| H1 | Modality/Elaboration Level | M/E | 5 | `detect_{modality}.json` | 2a | Complete |
-| H2 | Two-Stage Pipelines | Architecture | 3 | `propose_*.json`, `verify_*.json` | 3d | Pending (Exploratory) |
-| H3 | Consensus Voting | N, threshold | Multiple | N/A (runtime) | 3a | Pending |
-| H4 | Example Ordering | Ordering | 3 | `detect_*_canonical-last.json`, `detect_*_random-order.json` | 2e | Pending |
-| H5 | Negative Text Treatment | Text level | 3 levels × 2 tracks (OFAT) | `library_plus-hp_*.json`, `detect_brief-text_*.json` | 2d | Pending |
-| H6 | Flash→Pro Transfer | Model | OFAT | Same configs, different model | 4 | Pending |
-| H7 | Temperature | T | 5 | N/A (runtime parameter) | 2b | Complete |
-| H8 | Library Composition/Scaling | Library size | 5 (of 7) | `library_*.json` | 2c | Complete |
+| ID | Hypothesis | Factor | Phase | Status | Date |
+|----|------------|--------|-------|--------|------|
+| H1 | Modality/Elaboration Level | M/E | 2a | Complete | 2026-02-06 |
+| H2 | Two-Stage Pipelines | Architecture | 3c/3d | **Complete** | 2026-03-11 |
+| H3 | Consensus Voting | N, threshold | 3a | Complete | 2026-03-07 |
+| H4 | Example Ordering | Ordering | 2e | Complete | 2026-02-12 |
+| H5 | Negative Text Treatment | Text level | 2d | Complete | 2026-02-12 |
+| H6 | Flash→Pro Transfer | Model | 4 | Not started | — |
+| H7 | Temperature | T | 2b | Complete | 2026-02-08 |
+| H8 | Library Composition/Scaling | Library size | 2c | Complete | 2026-02-09 |
 
 ---
 
 ## Exploratory Hypotheses (H9-H15)
 
-| ID | Hypothesis | Factor | Tier | Trigger | Status |
-|----|------------|--------|------|---------|--------|
-| H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | After Phase 2 | Pending (HN-diversity only; HP frozen) |
-| H10 | Training Pool Size | Pool size | B | Budget permits | Pending |
-| H11 | Tile Size Effects | Tile dimensions | B | F1 < 0.85 or speed concerns | Pending |
-| H12 | HP:HN Ratio | Hard example ratio | B | H8 shows library matters | Deferred (post-H10; HP pool exhausted) |
-| H13 | Overlap/Stride Effects | Tile overlap | B | Edge errors observed | Pending |
-| H14 | Cross-Model Consistency | Provider | C | Deferred to future work | Deferred |
-| H15 | Cross-Model Voting | Multi-provider voting | C | Deferred to future work | Deferred |
+| ID | Hypothesis | Factor | Tier | Status | Date |
+|----|------------|--------|------|--------|------|
+| H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | Complete (implicit) | 2026-03-07 |
+| H10 | Training Pool Size | Pool size | B | Not started (HP pool exhausted) | — |
+| H11 | Tile Size Effects | Tile dimensions | B | Complete (384 pathway closed) | 2026-03-15 |
+| H12 | HP:HN Ratio | Hard example ratio | B | Deferred (post-H10; HP pool exhausted) | — |
+| H13 | Overlap/Stride Effects | Tile overlap | B | Not started (low priority) | — |
+| H14 | Cross-Model Consistency | Provider | C | Deferred to future work | — |
+| H15 | Cross-Model Voting | Multi-provider voting | C | Deferred to future work | — |
 
 ---
 
@@ -54,23 +54,53 @@ identified and carried forward into subsequent phases.
 
 ---
 
-### H2: Two-Stage Pipelines (Phase 3d — Exploratory)
+### H2: Two-Stage Pipelines (Phase 3c/3d) — COMPLETE
 
 Tests whether two-stage architectures improve over single-stage detection.
 
-| Condition | Architecture | Stage 1 | Stage 2 | Configs |
-|-----------|--------------|---------|---------|---------|
-| H2-A | Single-stage (baseline) | N/A | N/A | Optimal single-stage config |
-| H2-B | Coarse-to-fine | `propose_brief.json` | `verify_brief.json` | Both configs |
-| H2-C | Fine-to-coarse | Standard detection | Context-expanded re-query | TBD |
+**Status (2026-03-11)**: Complete. The preregistered null prediction (two-stage
+will not improve) was **contradicted** with large effect size. Phase 3c pilot
+exceeded the GO criterion (ΔF1 ≥ 0.05) by a 2× margin, achieving +0.09 to
++0.14 F1 improvement with proposer-verifier architecture.
 
-**Note**: H2 is now confirmatory but treated as exploratory in execution due to preliminary evidence suggesting no benefit.
+Phase 3d triggered exploratory extensions were comprehensive:
+
+- Phase 3c pilot (Session 43): 3 verifier strategies × 2 tracks
+- Phase 3d Experiments A–D (Sessions 44–48): provenance preamble, visual
+  examples, temperature sweeps, cascaded verification
+- Phase 3d Experiment E (Session 48): text proposer ablation — negative result
+  confirming baseline is near capability frontier
+- H11 factorial (Session 50): 3 strategies × 2 tracks at 384 tiles
+
+**Best result**: F1=0.796 (adversarial verifier, text-only, 512 tiles) — but
+see Observation 163 regarding model drift and the corrected v2 result
+(F1=0.732) obtained after config audit.
+
+| Condition | Architecture | Verifier Strategy | Best F1 |
+|-----------|--------------|-------------------|---------|
+| Single-stage baseline | N/A | N/A | 0.660 |
+| Proposer-verifier | Coarse-to-fine | Adversarial (text-only) | 0.732 (v2 corrected) |
+| Proposer-verifier | Coarse-to-fine | Standard (text-only) | 0.768 (pre-correction) |
+| Proposer-verifier | Coarse-to-fine | Checklist (text-only) | 0.782 (pre-correction) |
+
+**Note**: Fine-to-coarse (H2-C) was not tested — the coarse-to-fine results
+were strong enough that context expansion was deprioritised.
 
 ---
 
-### H3: Consensus Voting (Phase 3a)
+### H3: Consensus Voting (Phase 3a) — COMPLETE
 
-Tests voting pool sizes and thresholds. No separate configs — voting is post-hoc analysis.
+Tests voting pool sizes and thresholds. No separate configs — voting is
+post-hoc analysis.
+
+**Status (2026-03-07)**: Complete. Consensus voting confirmed to improve over
+single-run baseline for both tracks. N=30 at T=0.7 optimal. Detailed results
+in `results/phase3a-consensus/`.
+
+**Note (2026-03-15)**: The Phase 3a results labelled as "HIGH thinking" were
+found to have used `thinking_level: minimal` in their metadata — the "HIGH"
+label was a directory naming artefact. A clean replication with properly
+controlled thinking levels is underway. See Observation 163.
 
 | Pool Size | Source | Thresholds Tested |
 |-----------|--------|-------------------|
@@ -80,9 +110,12 @@ Tests voting pool sizes and thresholds. No separate configs — voting is post-h
 
 ---
 
-### H4: Example Ordering (Phase 2e)
+### H4: Example Ordering (Phase 2e) — COMPLETE
 
 Tests positioning of canonical vs hard examples.
+
+**Status (2026-02-12)**: Complete. No significant ordering effect after FDR
+correction. Config-default (canonical-first) ordering carried forward.
 
 | Condition | ID | Canonical Position | Config Pattern |
 |-----------|----|--------------------|----------------|
@@ -90,15 +123,20 @@ Tests positioning of canonical vs hard examples.
 | Canonical-last | H4-B | Last (final positions) | `detect_*_canonical-last.json` |
 | Random | H4-C | Shuffled | `detect_*_random-order.json` |
 
-**Triggered exploratory (H4b)**: If H4 significant, test HP-first vs HN-first ordering within hard block.
+**Triggered exploratory (H4b)**: If H4 significant, test HP-first vs HN-first
+ordering within hard block. **Not triggered** — H4 showed no significant
+effect (2026-02-12).
 
 ---
 
-### H5: Negative Text Treatment (Phase 2d)
+### H5: Negative Text Treatment (Phase 2d) — COMPLETE
 
 Tests whether exclusion guidance text in the system instruction reduces false
 positives. Three levels tested at the carried-forward optimal M/E per track
 (OFAT, not full factorial). See Decision 17 and Erratum E28.
+
+**Status (2026-02-12)**: Complete. H5=minimal optimal for both tracks. Carried
+forward to subsequent phases.
 
 **Instruction text adaptation**: Terse and verbose instruction files were
 modified to remove references to non-existent HN reference images (HN
@@ -222,23 +260,25 @@ Phase 0: Preparation
     ↓
 Phase 1: Library + Text Construction
     ↓
-Phase 2a: H1 (M/E) → optimal M/E ✓ COMPLETE
+Phase 2a: H1 (M/E) → optimal M/E                    ✓ COMPLETE
     ↓
-Phase 2b: H7 (Temperature) → optimal T ✓ COMPLETE (T=0.0)
+Phase 2b: H7 (Temperature) → optimal T               ✓ COMPLETE (T=0.0)
     ↓
-Phase 2c: H8 (Library) → optimal library ✓ COMPLETE (plus-hp)
+Phase 2c: H8 (Library) → optimal library              ✓ COMPLETE (plus-hp)
     ↓
-Phase 2d: H5 (Negative Text) → optimal text treatment
+Phase 2d: H5 (Negative Text) → optimal text           ✓ COMPLETE (minimal)
     ↓
-Phase 2e: H4 (Ordering) → optimal ordering
+Phase 2e: H4 (Ordering) → optimal ordering             ✓ COMPLETE (no effect)
     ↓
-    ├── Phase 3a: H3 (Voting N=30)
-    ├── Phase 3c: H9 (Diversity)
-    └── Phase 3d: H2 (Two-Stage)
-        ↓
-Phase 4: H6 (Flash→Pro Transfer)
+    ├── Phase 3a: H3 (Voting N=30)                     ✓ COMPLETE
+    ├── Phase 3c: H9 (Diversity — implicit)            ✓ COMPLETE
+    └── Phase 3c/3d: H2 (Two-Stage)                    ✓ COMPLETE
     ↓
-Phase 5: Exploratory (H10-H15 as triggered)
+    └── H11 (Tile Size — exploratory)                  ✓ COMPLETE (384 closed)
+    ↓
+Phase 4: H6 (Flash→Pro Transfer)                       ○ NOT STARTED
+    ↓
+Phase 5: Exploratory (H10-H15 as triggered)            ○ H10-H13 not started
 ```
 
 ---
