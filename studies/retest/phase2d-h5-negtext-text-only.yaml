@@ -1,0 +1,120 @@
+study:
+  name: 'Retest: Phase 2d: H5 Negative Text Treatment — Track 2 (brief-text)'
+  version: 2.0-retest
+  description: 'Tests 3 exclusion guidance levels (Minimal, Terse, Verbose) at the
+
+    carried-forward brief-text (text-only) M/E with T=0.0.
+
+
+    This is a text-only analogue of the preregistered H5 test. Since no
+
+    example images are sent, the exclusion guidance is purely instructional
+
+    — it tells the model what NOT to detect based on visual descriptions,
+
+    without reference image anchoring.
+
+
+    Minimal is the Phase 2b Track 2 T=0.0 baseline. Terse adds a brief
+
+    "do not mark" list. Verbose adds detailed per-type exclusion criteria.
+
+
+    See Decision 16 (dual-track), Decision 17 (Phase 2d design).
+
+    '
+  phase: 2d
+  hypothesis: H5
+  created: '2026-02-11'
+  retest_notes: H5 negative text Track 2 (text-only). All at T=0.0.
+carried_forward:
+  optimal_temperature: 0.0
+  optimal_me_config: prompts/configs/detect_brief-text.json
+  optimal_me_name: brief-text
+  source: Phase 2a (M/E), Phase 2b Track 2 (T=0.0)
+factors:
+  negative_text_treatment:
+    description: Exclusion guidance level in system instruction
+    levels:
+    - name: minimal
+      description: No exclusion text — baseline from Phase 2b Track 2 T=0.0
+      config: prompts/configs/detect_brief-text.json
+      run_in_phase2d: false
+    - name: terse
+      description: Brief exclusion guidance (do-not-mark list)
+      config: prompts/configs/detect_brief-text_terse.json
+      run_in_phase2d: true
+    - name: verbose
+      description: Detailed per-type exclusion criteria
+      config: prompts/configs/detect_brief-text_verbose.json
+      run_in_phase2d: true
+fixed:
+  ordering: canonical-first
+  temperature: 0.0
+  me_level: brief-text
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 1
+  output_dir: outputs/retest/phase2d/track2-text
+  checkpoint_dir: outputs/phase2d/track2-text/checkpoints
+  cells_to_run: 2
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {condition_config} \\\n  --manifest\
+  \ {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/run_{run} \\\n  --temperature {carried_forward.optimal_temperature}\n"
+analysis:
+  method: bootstrap_ci
+  n_iterations: 1000
+  fdr_q: 0.05
+  design: one_way
+  planned_contrasts:
+  - - minimal
+    - terse
+  - - terse
+    - verbose
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: outputs/phase2d/track2-text/analysis_report.json
+    summary: outputs/phase2d/track2-text/analysis_summary.md
+  notes: 'Phase 2b Track 2 data for brief-text at T=0.0 is available in
+
+    outputs/phase2b/track2-text/T0.0/run_* (K=10 runs). This serves
+
+    as the minimal baseline.
+
+
+    Cross-track comparison: after both tracks complete, compare whether
+
+    exclusion guidance has differential impact on text-only vs image-using
+
+    conditions.
+
+    '
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - '{output_dir}/results_summary.csv'
+  - '{output_dir}/analysis_report.json'
+estimates:
+  cells: 2
+  api_calls_per_cell: 340
+  total_api_calls: 680
+  cost_usd: 2.5
+  time_hours: 0.5
+  original_runs: 2
+  retest_runs: 1
+  retest_tiles: 340
+outcome:
+  determines: optimal_h5_treatment_text_track
+  carries_forward_to: deferred phases (2e section ordering)
+  decision_rule: "Compare F1 across 3 H5 levels (minimal, terse, verbose).\nIf terse or verbose significantly\
+    \ improves F1 over minimal:\n  Select level with highest mean F1.\nIf no significant differences:\n\
+    \  Use Minimal (simplest) as default — Occam's razor.\nOptimal H5 level carried forward independently\
+    \ for text-only track.\n\nNote: subsequent phases for the text-only track are deferred pending\nPhase\
+    \ 2d results. See Decision 16 for the text-only phase plan.\n"

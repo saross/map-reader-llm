@@ -1,0 +1,79 @@
+study:
+  name: 'Retest: Phase 2a: H1 Modality/Elaboration'
+  version: 2.0-retest
+  description: 'Tests 5 modality/elaboration (M/E) levels to determine optimal configuration.
+
+    Results inform the M/E level used in subsequent phases (2b-2e).
+
+    '
+  phase: 2a
+  hypothesis: H1
+  created: '2026-01-21'
+  retest_notes: H1 modality/elaboration. All conditions at T=1.0.
+factors:
+  modality_elaboration:
+    description: Text modality and elaboration level
+    levels:
+    - name: image-only
+      config: prompts/configs/detect_image-only.json
+      description: No text guidance, images only
+    - name: brief-text
+      config: prompts/configs/detect_brief-text.json
+      description: Concise text, no images
+    - name: brief-text-image
+      config: prompts/configs/detect_brief-text-image.json
+      description: Concise text with images
+    - name: verbose-text
+      config: prompts/configs/detect_verbose-text.json
+      description: Detailed text, no images
+    - name: verbose-text-image
+      config: prompts/configs/detect_verbose-text-image.json
+      description: Detailed text with images
+fixed:
+  temperature: 1.0
+  ordering: canonical-first
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 3
+  output_dir: outputs/retest/phase2a
+  checkpoint_dir: outputs/phase2a/checkpoints
+analysis:
+  method: bootstrap_ci
+  n_iterations: 1000
+  fdr_q: 0.05
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: outputs/phase2a/analysis_report.json
+    summary: outputs/phase2a/analysis_summary.md
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - '{output_dir}/results_summary.csv'
+  - '{output_dir}/analysis_report.json'
+estimates:
+  cells: 5
+  api_calls_per_cell: 1020
+  total_api_calls: 5100
+  cost_usd: 11
+  time_hours: 1
+  original_runs: 5
+  retest_runs: 3
+  retest_tiles: 340
+outcome:
+  determines: optimal_me
+  carries_forward_to: phase2b
+  decision_rule: 'Select M/E level with highest mean F1.
+
+    If multiple levels have overlapping 95% CIs with the best,
+
+    prefer the simpler option (image-only > brief > verbose).
+
+    '

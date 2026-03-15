@@ -1,0 +1,119 @@
+study:
+  name: 'Retest: Phase 2c Exploratory: Pure-Positive HP Scaling'
+  version: 2.0-retest
+  description: "Exploratory follow-up to Phase 2c (H8). Tests whether adding hard\npositives to a pure-positive\
+    \ library (no Canon-) yields further\nimprovement over plus-hp (F1=0.609, the Phase 2c winner).\n\n\
+    Three conditions test HP scaling in a negative-free context:\n  - pure-positive-canon: 4 Canon+ only\
+    \ (baseline, reused from Phase 2c)\n  - pure-positive-2hp: 4 Canon+ + 2 HP (one Rakovski, one Elenovo)\n\
+    \  - pure-positive-4hp: 4 Canon+ + 4 HP (all available hard positives)\n\nThe pure-positive-canon\
+    \ condition (10 runs) can be copied from the\nmain Phase 2c output directory to avoid redundant API\
+    \ calls.\n"
+  phase: 2c-exploratory
+  hypothesis: H8-exploratory (related to H12)
+  created: '2026-02-09'
+  retest_notes: H8/H12 pure-positive HP scaling (exploratory). All at T=0.0.
+carried_forward:
+  optimal_me_config: prompts/configs/detect_brief-text-image.json
+  optimal_me_name: brief-text-image
+  optimal_temperature: 0.0
+  source_2a: Phase 2a — best image-using M/E (F1=0.4617)
+  source_2b: Phase 2b Track 1 — optimal temperature (T=0.0, F1=0.5574)
+  source_2c: Phase 2c — plus-hp best overall (F1=0.609), negatives hurt
+factors:
+  library_composition:
+    description: HP scaling in pure-positive (negative-free) context
+    levels:
+    - name: pure-positive-canon
+      config: prompts/configs/library_pure-positive-canon.json
+      description: Canon+ (4), null (3) = 7 examples. Reused from Phase 2c.
+      composition:
+        canonical_positive: 4
+        canonical_negative: 0
+        hard_positive: 0
+        hard_negative: 0
+        null_examples: 3
+        total: 7
+    - name: pure-positive-2hp
+      config: prompts/configs/library_pure-positive-2hp.json
+      description: Canon+ (4), HP (2), null (3) = 9 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 0
+        hard_positive: 2
+        hard_negative: 0
+        null_examples: 3
+        total: 9
+    - name: pure-positive-4hp
+      config: prompts/configs/library_pure-positive-4hp.json
+      description: Canon+ (4), HP (4), null (3) = 11 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 0
+        hard_positive: 4
+        hard_negative: 0
+        null_examples: 3
+        total: 11
+fixed:
+  ordering: canonical-first
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 1
+  output_dir: outputs/retest/phase2c/track1-image-exploratory
+  checkpoint_dir: outputs/phase2c/track1-image-exploratory/checkpoints
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {factor_config} \\\n  --manifest\
+  \ {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \\\n  --temperature\
+  \ {carried_forward.optimal_temperature}\n"
+analysis:
+  method: bootstrap_ci
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+  - - pure-positive-canon
+    - pure-positive-2hp
+  - - pure-positive-2hp
+    - pure-positive-4hp
+  - - pure-positive-canon
+    - pure-positive-4hp
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: results/phase2c-exploratory-pure-positive-hp.json
+    summary: results/phase2c-exploratory-pure-positive-hp.md
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - results/phase2c-exploratory-pure-positive-hp.json
+  - results/phase2c-exploratory-pure-positive-hp.md
+estimates:
+  cells: 3
+  new_cells: 2
+  api_calls_per_cell: 340
+  total_new_api_calls: 1200
+  cost_usd: 2
+  time_minutes: 20
+  total_api_calls: 1020
+  original_runs: 0
+  retest_runs: 1
+  retest_tiles: 340
+outcome:
+  determines: optimal_pure_positive_library
+  comparison_baseline: plus-hp (F1=0.609 from Phase 2c)
+  carries_forward_to: phase2d (if better than plus-hp)
+  decision_rule: 'Compare best pure-positive condition against plus-hp (F1=0.609).
+
+    If a pure-positive variant has higher mean F1 and non-overlapping
+
+    95% CIs, update carry-forward library for Phase 2d.
+
+    If CIs overlap, prefer plus-hp as the preregistered winner unless
+
+    the pure-positive variant is substantially simpler (fewer examples).
+
+    '

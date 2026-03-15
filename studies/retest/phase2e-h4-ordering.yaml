@@ -1,0 +1,126 @@
+study:
+  name: 'Retest: Phase 2e: H4 Example Ordering'
+  version: 2.0-retest
+  description: 'Tests 4 example ordering strategies to determine if position of canonical
+
+    vs hard examples affects detection performance. Includes the config-default
+
+    baseline (reused from Phase 2c) plus 3 reordering variants.
+
+    Uses all optimal parameters from Phases 2a-2d.
+
+    Final phase before Phase 3 validation.
+
+    '
+  phase: 2e
+  hypothesis: H4
+  created: '2026-01-21'
+  updated: '2026-02-12'
+  retest_notes: H4 example ordering (image-using). All at T=0.0.
+carried_forward:
+  optimal_me_config: prompts/configs/library_plus-hp.json
+  optimal_me_name: brief-text-image
+  optimal_temperature: 0.0
+  optimal_library: plus-hp
+  optimal_h5_treatment: minimal
+factors:
+  ordering:
+    description: Position of canonical vs hard examples in the prompt
+    levels:
+    - name: config-default
+      value: config-default
+      description: JSON config file order [C+, HP, C−, null] — baseline used in all prior phases
+    - name: canonical-first
+      value: canonical-first
+      description: All canonical examples grouped first [C+, C−, HP, null]
+    - name: canonical-last
+      value: canonical-last
+      description: All canonical examples grouped last [HP, null, C+, C−]
+    - name: random
+      value: random
+      description: Examples in shuffled order (seeded for reproducibility)
+fixed: null
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 1
+  output_dir: outputs/retest/phase2e
+  checkpoint_dir: outputs/phase2e/checkpoints
+  random_seed_base: 42
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {carried_forward.optimal_me_config}\
+  \ \\\n  --manifest {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/run_{run} \\\n\
+  \  --ordering {factor_value} \\\n  --ordering-seed {random_seed}\n"
+analysis:
+  method: bootstrap_ci
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+  - - config-default
+    - canonical-first
+  - - canonical-first
+    - canonical-last
+  - - config-default
+    - random
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: outputs/phase2e/analysis_report.json
+    summary: outputs/phase2e/analysis_summary.md
+triggered_exploratory:
+  condition: H4 significant at p < 0.05
+  description: 'If ordering effect is significant, test HP-first vs HN-first
+
+    ordering within the hard example block.
+
+    '
+  additional_cells: 2
+  levels:
+  - name: hp-first
+    description: Hard positives before hard negatives
+  - name: hn-first
+    description: Hard negatives before hard positives
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - '{output_dir}/results_summary.csv'
+  - '{output_dir}/analysis_report.json'
+estimates:
+  cells: 4
+  api_calls_per_cell: 340
+  total_api_calls: 1360
+  cost_usd: 9
+  time_hours: 1
+  original_runs: 4
+  retest_runs: 1
+  retest_tiles: 340
+outcome:
+  determines: optimal_ordering
+  carries_forward_to: phase3
+  decision_rule: 'Select ordering with highest mean F1.
+
+    If config-default (prior phases'' ordering) is within 0.02 F1 of best,
+
+    prefer config-default for consistency with prior work.
+
+    If H4 significant, document effect size for reporting.
+
+    '
+  final_configuration: 'After Phase 2e, the optimal configuration is:
+
+    - M/E: {optimal_me_name}
+
+    - Temperature: {optimal_temperature}
+
+    - Library: {optimal_library}
+
+    - H5 Treatment: {optimal_h5_treatment}
+
+    - Ordering: {optimal_ordering}
+
+    '

@@ -1,0 +1,133 @@
+study:
+  name: 'Retest: Phase 2b: H7 Temperature — Track 2 (brief-text)'
+  version: 2.0-retest
+  description: 'Tests 5 temperature levels at the best text-only M/E from Phase 2a
+
+    (brief-text, F1=0.5425). This track explores whether text-only
+
+    performance varies with temperature — particularly whether lower
+
+    temperatures improve precision (brief-text had P=0.43, R=0.72 at T=1.0).
+
+
+    Dual-track context: brief-text unexpectedly outperformed all image-using
+
+    conditions in Phase 2a, but no pairwise differences survived FDR correction.
+
+    This track runs in parallel with the image-using track (brief-text-image)
+
+    and maintains independent optimal parameters. See Decision 16.
+
+
+    Text-only prompts have a substantially smaller context window (no base64
+
+    images), which may cause different temperature sensitivity compared to the
+
+    image-using track.
+
+    '
+  phase: 2b
+  hypothesis: H7
+  created: '2026-02-06'
+  retest_notes: H7 temperature Track 2 (text-only). T=0.0 runs redundant but cheap.
+carried_forward:
+  optimal_me_config: prompts/configs/detect_brief-text.json
+  optimal_me_name: brief-text
+  source: Phase 2a — best overall M/E (F1=0.5425) and best text-only
+factors:
+  temperature:
+    description: Model temperature (controls output randomness)
+    levels:
+    - name: T0.0
+      value: 0.0
+      description: Minimum (deterministic)
+    - name: T0.3
+      value: 0.3
+      description: Low variance
+    - name: T0.7
+      value: 0.7
+      description: Moderate variance
+    - name: T1.0
+      value: 1.0
+      description: Vendor default (also tested in Phase 2a)
+    - name: T1.3
+      value: 1.3
+      description: Above default
+fixed:
+  ordering: canonical-first
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 3
+  output_dir: outputs/retest/phase2b/track2-text
+  checkpoint_dir: outputs/phase2b/track2-text/checkpoints
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {carried_forward.optimal_me_config}\
+  \ \\\n  --manifest {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass}\
+  \ \\\n  --temperature {factor_value}\n"
+analysis:
+  method: bootstrap_ci
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+  - - T1.0
+    - T0.0
+  - - T1.0
+    - T0.3
+  - - T1.0
+    - T0.7
+  - - T1.0
+    - T1.3
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: outputs/phase2b/track2-text/analysis_report.json
+    summary: outputs/phase2b/track2-text/analysis_summary.md
+  notes: 'Phase 2a data for brief-text at T=1.0 is available in
+
+    outputs/phase2a/brief-text/run_* (K=10 runs). This can supplement
+
+    the T=1.0 condition here or serve as a replication check.
+
+
+    Cross-track comparison: after both tracks complete, compare optimal
+
+    temperatures. If they differ, this informs the interaction between
+
+    context window size (text-only vs image-using) and temperature.
+
+    '
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - '{output_dir}/results_summary.csv'
+  - '{output_dir}/analysis_report.json'
+estimates:
+  cells: 5
+  api_calls_per_cell: 1020
+  total_api_calls: 5100
+  cost_usd: 11
+  time_hours: 1
+  original_runs: 5
+  retest_runs: 3
+  retest_tiles: 340
+outcome:
+  determines: optimal_temperature_text_track
+  carries_forward_to: deferred phases (2d negative guidance, 2e section ordering)
+  decision_rule: 'Select temperature with highest mean F1.
+
+    If T=1.0 (default) is within 0.02 F1 of best, prefer T=1.0 for simplicity.
+
+    Optimal temperature is carried forward independently for the text-only track.
+
+
+    Note: subsequent phases for the text-only track are deferred pending
+
+    Phase 2b results. See Decision 16 for the text-only phase plan.
+
+    '

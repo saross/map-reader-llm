@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate GeoJSON bounds files for calibration and validation tile sets.
+Generate GeoJSON bounds files for tile sets.
 
 Creates Geographic JavaScript Object Notation (GeoJSON) polygon features for
 each tile showing its geographic extent, useful for visualisation and spatial
@@ -8,18 +8,27 @@ analysis of tile coverage.
 
 Usage::
 
+    # Generate default calibration + validation bounds
     python scripts/generate_tile_bounds.py
+
+    # Generate bounds for a custom manifest
+    python scripts/generate_tile_bounds.py \\
+        --manifest inputs/tiles/full_evaluation_manifest.json \\
+        --name full_evaluation
+
     python scripts/generate_tile_bounds.py --tiles-dir inputs/tiles --output-dir outputs/results
 
 Inputs:
     - Tile manifests: inputs/tiles/calibration_manifest.json,
-      inputs/tiles/validation_manifest.json
+      inputs/tiles/validation_manifest.json (default mode)
+    - OR: custom manifest via --manifest (custom mode)
     - Selection metadata: inputs/tiles/tile_selection_metadata.json
     - Per-map metadata: inputs/tiles/{map_name}/metadata.json
 
 Outputs:
-    - calibration_bounds.geojson  - Polygon bounds for calibration tiles
-    - validation_bounds.geojson   - Polygon bounds for validation tiles
+    - calibration_bounds.geojson  - Polygon bounds for calibration tiles (default)
+    - validation_bounds.geojson   - Polygon bounds for validation tiles (default)
+    - {name}_bounds.geojson       - Polygon bounds for custom manifest (--manifest)
 
 Created: 2025-12-23
 Author: Shawn Ross, Claude Code
@@ -328,12 +337,17 @@ def _generate_and_save_bounds(
 def main() -> None:
     """Generate bounds GeoJSON files for calibration and validation tile sets."""
     parser = argparse.ArgumentParser(
-        description="Generate GeoJSON bounds files for calibration and validation tile sets",
+        description="Generate GeoJSON bounds files for tile sets",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
     # Use default paths (inputs/tiles and outputs/results)
     python scripts/generate_tile_bounds.py
+
+    # Generate bounds for a custom manifest
+    python scripts/generate_tile_bounds.py \\
+        --manifest inputs/tiles/full_evaluation_manifest.json \\
+        --name full_evaluation
 
     # Specify custom paths
     python scripts/generate_tile_bounds.py \\
@@ -347,8 +361,9 @@ Examples:
         --output-dir outputs/results
 
 Output Files:
-    calibration_bounds.geojson  - Polygon bounds for calibration tiles
-    validation_bounds.geojson   - Polygon bounds for validation tiles
+    calibration_bounds.geojson  - Polygon bounds for calibration tiles (default)
+    validation_bounds.geojson   - Polygon bounds for validation tiles (default)
+    {name}_bounds.geojson       - Polygon bounds for custom manifest (--manifest)
         """,
     )
 
@@ -372,8 +387,27 @@ Output Files:
         default=None,
         help=f"Override tile size for extent calculation (default: {TILE_SIZE} from config)",
     )
+    parser.add_argument(
+        "--manifest",
+        type=Path,
+        default=None,
+        help="Path to a custom manifest JSON file (overrides default calibration/validation)",
+    )
+    parser.add_argument(
+        "--name",
+        type=str,
+        default=None,
+        help="Name prefix for output bounds file (required with --manifest, "
+             "e.g., 'full_evaluation' → 'full_evaluation_bounds.geojson')",
+    )
 
     args = parser.parse_args()
+
+    # Validate --manifest and --name are used together
+    if args.manifest and not args.name:
+        parser.error("--name is required when using --manifest")
+    if args.name and not args.manifest:
+        parser.error("--manifest is required when using --name")
 
     tiles_dir = args.tiles_dir
     outputs_dir = args.output_dir
@@ -384,44 +418,75 @@ Output Files:
     # Ensure output directory exists
     outputs_dir.mkdir(parents=True, exist_ok=True)
 
-    # Validate required input files exist before loading
-    print("Loading manifests...")
-    manifest_paths = {
-        "calibration": (tiles_dir / "calibration_manifest.json", "calibration manifest"),
-        "validation": (tiles_dir / "validation_manifest.json", "validation manifest"),
-        "selection": (tiles_dir / "tile_selection_metadata.json", "tile selection metadata"),
-    }
-    for path, description in manifest_paths.values():
-        if not path.exists():
-            print(f"ERROR: Required file not found: {path}")
-            print(f"  Missing: {description}")
-            sys.exit(1)
-
-    with open(manifest_paths["calibration"][0]) as f:
-        calibration_tiles = json.load(f)
-    print(f"  Calibration tiles: {len(calibration_tiles)}")
-
-    with open(manifest_paths["validation"][0]) as f:
-        validation_tiles = json.load(f)
-    print(f"  Validation tiles: {len(validation_tiles)}")
-
-    with open(manifest_paths["selection"][0]) as f:
-        selection_metadata = json.load(f)
-
-    # Load tile georeferencing metadata
-    print("\nLoading tile metadata...")
+    # Load tile georeferencing metadata (needed for all modes)
+    print("Loading tile metadata...")
     metadata = load_metadata(tiles_dir)
     print(f"  Total tiles with metadata: {len(metadata)}")
 
-    # Generate, save, and validate bounds for each tile set
-    for set_type, tile_filenames in [
-        ("calibration", calibration_tiles),
-        ("validation", validation_tiles),
-    ]:
+    if args.manifest:
+        # Custom manifest mode — generate bounds for a single manifest file
+        if not args.manifest.exists():
+            print(f"ERROR: Manifest not found: {args.manifest}")
+            sys.exit(1)
+
+        print(f"\nLoading custom manifest: {args.manifest}")
+        with open(args.manifest) as f:
+            custom_tiles = json.load(f)
+        print(f"  Tiles in manifest: {len(custom_tiles)}")
+
+        # Load selection metadata if available (for mound count enrichment)
+        selection_metadata_path = tiles_dir / "tile_selection_metadata.json"
+        if selection_metadata_path.exists():
+            with open(selection_metadata_path) as f:
+                selection_metadata = json.load(f)
+        else:
+            selection_metadata = {}
+
         _generate_and_save_bounds(
-            set_type, tile_filenames, metadata, selection_metadata, outputs_dir,
+            args.name, custom_tiles, metadata, selection_metadata, outputs_dir,
             tile_size=effective_tile_size,
         )
+    else:
+        # Default mode — generate calibration and validation bounds
+        print("Loading manifests...")
+        manifest_paths = {
+            "calibration": (
+                tiles_dir / "calibration_manifest.json", "calibration manifest",
+            ),
+            "validation": (
+                tiles_dir / "validation_manifest.json", "validation manifest",
+            ),
+            "selection": (
+                tiles_dir / "tile_selection_metadata.json",
+                "tile selection metadata",
+            ),
+        }
+        for path, description in manifest_paths.values():
+            if not path.exists():
+                print(f"ERROR: Required file not found: {path}")
+                print(f"  Missing: {description}")
+                sys.exit(1)
+
+        with open(manifest_paths["calibration"][0]) as f:
+            calibration_tiles = json.load(f)
+        print(f"  Calibration tiles: {len(calibration_tiles)}")
+
+        with open(manifest_paths["validation"][0]) as f:
+            validation_tiles = json.load(f)
+        print(f"  Validation tiles: {len(validation_tiles)}")
+
+        with open(manifest_paths["selection"][0]) as f:
+            selection_metadata = json.load(f)
+
+        # Generate, save, and validate bounds for each tile set
+        for set_type, tile_filenames in [
+            ("calibration", calibration_tiles),
+            ("validation", validation_tiles),
+        ]:
+            _generate_and_save_bounds(
+                set_type, tile_filenames, metadata, selection_metadata,
+                outputs_dir, tile_size=effective_tile_size,
+            )
 
     print("\nDone!")
 

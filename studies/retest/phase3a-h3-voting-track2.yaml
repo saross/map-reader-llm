@@ -1,0 +1,129 @@
+study:
+  name: 'Retest: Phase 3a: H3 Consensus Voting — Track 2 (Text-Only)'
+  version: 2.0-retest
+  description: 'Tests consensus voting at elevated temperatures (T=0.3, T=0.7, T=1.0) using
+
+    the carry-forward text-only configuration (F1=0.660 at T=0.0).
+
+    T=0.0 is excluded because the model produces near-deterministic output
+
+    at zero temperature, making consensus voting meaningless (Erratum E32).
+
+
+    This is the first consensus voting analysis for the text-only track.
+
+    Phase 2b retroactive consensus analysis was only performed on the image
+
+    track (canonical library), so no prior text-only consensus baseline exists.
+
+
+    Text-only prompts have a substantially smaller context window (no base64
+
+    images), which may produce different temperature sensitivity and
+
+    consensus behaviour compared to the image-using track.
+
+    '
+  phase: 3a
+  hypothesis: H3
+  created: '2026-02-12'
+  retest_notes: H3 consensus voting Track 2 (text-only). K=30 for full threshold sweep.
+carried_forward:
+  optimal_me_config: prompts/configs/detect_brief-text.json
+  optimal_me_name: brief-text
+  source: Phase 2a — best overall M/E (F1=0.660 at T=0.0)
+factors:
+  temperature:
+    description: Model temperature (controls output randomness for consensus voting diversity)
+    levels:
+    - name: T0.3
+      value: 0.3
+      description: Low variance — tests whether modest stochasticity enables FP filtering
+    - name: T0.7
+      value: 0.7
+      description: Moderate variance — tests diversity vs noise trade-off
+    - name: T1.0
+      value: 1.0
+      description: Vendor default — tests whether high diversity improves consensus
+fixed:
+  ordering: config-default
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 30
+  workers: 1
+  output_dir: outputs/retest/phase3a/track2-text
+  checkpoint_dir: outputs/phase3a/track2-text/checkpoints
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {carried_forward.optimal_me_config}\
+  \ \\\n  --manifest {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/run_{run} \\\n\
+  \  --temperature {factor_value}\n"
+analysis:
+  method: consensus_sweep
+  script: scripts/analyse_consensus_sweep.py
+  args:
+  - --study-dir
+  - outputs/phase3a/track2-text
+  - --output-dir
+  - results/phase3a-consensus/track2-text
+  - --temperatures
+  - T0.3
+  - T0.7
+  - T1.0
+  - --pool-sizes
+  - '5'
+  - '10'
+  - '30'
+  - --baseline-f1
+  - '0.660'
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: results/phase3a-consensus/track2-text/consensus-analysis-report.json
+    summary: results/phase3a-consensus/track2-text/consensus-analysis-summary.md
+  notes: 'Stage 1 (K=10): Use --pool-sizes 5 10 only.
+
+    Stage 2 (K=30): Use --pool-sizes 5 10 30.
+
+    Baseline F1=0.660 is the T=0.0 single-run mean from Phase 2b.
+
+    No prior consensus baseline exists for the text-only track.
+
+    '
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - results/phase3a-consensus/track2-text/consensus-sweep-results.csv
+  - results/phase3a-consensus/track2-text/consensus-analysis-report.json
+estimates:
+  cells: 3
+  api_calls_per_cell: 10200
+  total_api_calls: 30600
+  stage1_completed: 1200
+  stage2_remaining: 4200
+  cost_usd_total: 1.17
+  cost_usd_stage2_remaining: 0.91
+  time_hours: 0.5
+  original_runs: 3
+  retest_runs: 30
+  retest_tiles: 340
+outcome:
+  determines: consensus_voting_value_text_track
+  carries_forward_to: phase3b (if consensus improves over baseline)
+  decision_rule: 'If the best (T, N, x) consensus configuration exceeds the T=0.0
+
+    single-run baseline (F1=0.660), consensus voting is validated for the
+
+    text-only track. The optimal configuration is carried forward.
+
+
+    Success threshold: any consensus F1 > 0.660 (the T=0.0 ceiling).
+
+    Cost-efficiency: report F1 per additional API dollar for each (T, N, x).
+
+    '

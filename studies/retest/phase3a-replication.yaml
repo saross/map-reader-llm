@@ -1,0 +1,80 @@
+study:
+  name: 'Retest: Phase 3a Replication: Thinking Level at T=0.7 N=30'
+  version: 2.0-retest
+  description: 'Replication of the Phase 3a consensus voting experiment with properly
+
+    controlled thinking levels. The original Phase 3a runs labelled as
+
+    "HIGH" and "minimal" both used thinking_level=minimal in their configs.
+
+    This replication creates a clean comparison.
+
+
+    Also tests for model drift: if the minimal replication departs from
+
+    the historical F1 range [0.683, 0.751], the gemini-3-flash-preview
+
+    model has changed since February 2026.
+
+    '
+  phase: 3a-replication
+  hypothesis: H3, H5
+  created: '2026-03-15'
+  retest_notes: Thinking level replication (minimal vs HIGH). K=30 at T=0.7.
+factors:
+  thinking_level:
+    description: Model thinking level (minimal vs high extended thinking)
+    levels:
+    - name: minimal
+      value: minimal
+      config: prompts/configs/detect_brief-text.json
+      description: Minimal thinking — matches all prior Phase 3a runs
+    - name: high
+      value: high
+      config: prompts/configs/detect_brief-text-high.json
+      description: HIGH thinking — tests whether extended reasoning improves consensus
+fixed:
+  temperature: 0.7
+  ordering: config-default
+  model: gemini-3-flash
+  include_example_images: false
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 30
+  workers: 1
+  output_dir: outputs/retest/phase3a-replication
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {level.config} \\\n  --manifest\
+  \ {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/T0.7/run_{run} \\\n  --temperature\
+  \ 0.7\n"
+analysis:
+  method: consensus_sweep
+  script: scripts/analyse_consensus_sweep.py
+  parameters:
+    temperatures:
+    - T0.7
+    pool_sizes:
+    - 5
+    - 10
+    - 30
+    baseline_f1: 0.66
+    bootstrap_iterations: 1000
+    bootstrap_seed: 42
+    match_tolerance_m: 20
+estimates:
+  conditions: 2
+  runs_per_condition: 30
+  tiles_per_run: 60
+  api_calls_per_condition: 1800
+  total_api_calls: 3600
+  cost_usd_minimal: 0.2
+  cost_usd_high: 0.5
+  cost_usd_total: 0.7
+outcome:
+  determines: thinking_level_effect_and_model_drift
+  decision_rule: "1. Model drift: If minimal replication F1 falls outside [0.60, 0.80]\n   (the historical\
+    \ 95% CI), model drift is confirmed.\n2. Thinking level: If HIGH F1 exceeds minimal F1 by more than\
+    \ 3 pp\n   (outside the stochastic noise band observed in Phase 3a), thinking\n   level has a genuine\
+    \ effect under consensus voting conditions.\n"

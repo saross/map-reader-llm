@@ -235,7 +235,7 @@ def extract_conditions(config: dict) -> list[dict]:
             # Determine overrides based on which factor is under test.
             # Factor-level values take precedence; fixed-section values
             # provide defaults for non-target parameters.
-            fixed = config.get("fixed", {})
+            fixed = config.get("fixed") or {}
 
             temperature = (
                 level.get("value") if factor_name == "temperature"

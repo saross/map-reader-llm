@@ -1,0 +1,162 @@
+study:
+  name: 'Retest: Phase 2c: H8 Library Composition — Track 2 (brief-text)'
+  version: 2.0-retest
+  description: 'Tests 5 library compositions at the best text-only M/E from Phase 2a
+
+    (brief-text, F1=0.5425) and optimal temperature from Phase 2b (T=0.0,
+
+    F1=0.6602). This track explores whether library composition effects
+
+    differ between text-only and image-using modalities.
+
+
+    Dual-track context: brief-text unexpectedly outperformed all image-using
+
+    conditions in Phase 2a, but no pairwise differences survived FDR correction.
+
+    Both M/E levels are carried forward independently. See Decision 16.
+
+
+    Text-only prompts have a substantially smaller context window (no base64
+
+    images), which may cause different sensitivity to library composition
+
+    compared to the image-using track.
+
+    '
+  phase: 2c
+  hypothesis: H8
+  created: '2026-02-08'
+  retest_notes: H8 library composition Track 2 (text-only). All at T=0.0.
+carried_forward:
+  optimal_me_config: prompts/configs/detect_brief-text.json
+  optimal_me_name: brief-text
+  optimal_temperature: 0.0
+  source_2a: Phase 2a — best overall M/E (F1=0.5425) and best text-only
+  source_2b: Phase 2b Track 2 — optimal temperature (T=0.0, F1=0.6602)
+factors:
+  library_composition:
+    description: Example library composition and scaling
+    levels:
+    - name: pure-positive-canon
+      config: prompts/configs/library_pure-positive-canon-text.json
+      description: Canon+ (4), null (3) = 7 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 0
+        hard_positive: 0
+        hard_negative: 0
+        null_examples: 3
+        total: 7
+    - name: canonical
+      config: prompts/configs/library_canonical-text.json
+      description: Canon+ (4), Canon- (2), null (3) = 9 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 2
+        hard_positive: 0
+        hard_negative: 0
+        null_examples: 3
+        total: 9
+    - name: plus-hp
+      config: prompts/configs/library_plus-hp-text.json
+      description: Canon+ (4), HP (4), Canon- (2), null (3) = 13 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 2
+        hard_positive: 4
+        hard_negative: 0
+        null_examples: 3
+        total: 13
+    - name: scale-4
+      config: prompts/configs/library_scale-4-text.json
+      description: Canon+ (4), HP (2), Canon- (2), HN (2), null (3) = 13 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 2
+        hard_positive: 2
+        hard_negative: 2
+        null_examples: 3
+        total: 13
+    - name: scale-8
+      config: prompts/configs/library_scale-8-text.json
+      description: Canon+ (4), HP (4), Canon- (2), HN (4), null (3) = 17 examples
+      composition:
+        canonical_positive: 4
+        canonical_negative: 2
+        hard_positive: 4
+        hard_negative: 4
+        null_examples: 3
+        total: 17
+fixed:
+  ordering: canonical-first
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 1
+  output_dir: outputs/retest/phase2c/track2-text
+  checkpoint_dir: outputs/phase2c/track2-text/checkpoints
+command_template: "python scripts/4_detect_mounds_batch.py \\\n  --config {factor_config} \\\n  --manifest\
+  \ {inputs.manifest} \\\n  --output-dir {output_dir}/{condition_name}/run_{run}/pass_{pass} \\\n  --temperature\
+  \ {carried_forward.optimal_temperature}\n"
+analysis:
+  method: bootstrap_ci
+  n_iterations: 1000
+  fdr_q: 0.05
+  planned_contrasts:
+  - - pure-positive-canon
+    - canonical
+  - - canonical
+    - plus-hp
+  - - plus-hp
+    - scale-4
+  - - scale-4
+    - scale-8
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: outputs/phase2c/track2-text/analysis_report.json
+    summary: outputs/phase2c/track2-text/analysis_summary.md
+  notes: 'Cross-track comparison: after both tracks complete, compare library
+
+    composition effects. If optimal library differs between tracks, this
+
+    informs whether text-only and image-using modalities have different
+
+    sensitivity to example library composition.
+
+    '
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - '{output_dir}/results_summary.csv'
+  - '{output_dir}/analysis_report.json'
+estimates:
+  cells: 5
+  api_calls_per_cell: 340
+  total_api_calls: 1700
+  cost_usd: 7
+  time_hours: 1
+  original_runs: 5
+  retest_runs: 1
+  retest_tiles: 340
+outcome:
+  determines: optimal_library_text_track
+  carries_forward_to: deferred text-only phases
+  decision_rule: 'Select library with highest mean F1.
+
+    If multiple libraries have overlapping 95% CIs with the best,
+
+    prefer smaller library (fewer examples) for parsimony.
+
+    Note: Scale-16/32 deferred per E11 (HP pool exhausted at 4).
+
+    Optimal library is carried forward independently for the text-only track.
+
+    '
