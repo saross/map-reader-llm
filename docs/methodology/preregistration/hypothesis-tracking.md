@@ -162,9 +162,10 @@ Simplified to single-factor OFAT at carried-forward M/E per Decision 17.
 
 ---
 
-### H6: Flash→Pro Transfer (Phase 4)
+### H6: Flash→Pro Transfer (Phase 4) — NOT STARTED
 
 Tests whether Flash-optimal config transfers to Pro. OFAT sensitivity testing.
+This is the only untested confirmatory hypothesis.
 
 | Factor | Tests | Decision Rule |
 |--------|-------|---------------|
@@ -233,9 +234,15 @@ in decisions-log.md.
 
 ---
 
-### H9: Diversity Mechanisms (Phase 3c — Exploratory)
+### H9: Diversity Mechanisms (Phase 3c — Exploratory) — COMPLETE (implicit)
 
 Tests whether diversity in prompts, images, or temperature improves voting.
+
+**Status (2026-03-07)**: Implicitly tested via Phase 3a parameter variation.
+Prompt/parameter diversity does not improve consensus — confirmed null result.
+The formal H9-A through H9-E conditions were not run as separate experiments;
+the finding emerged from Phase 3a's multi-temperature, multi-run design which
+inherently tested temperature diversity (H9-D).
 
 | Condition | Text | Images | Temperature | Description |
 |-----------|------|--------|-------------|-------------|
