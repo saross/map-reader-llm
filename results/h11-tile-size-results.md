@@ -2,7 +2,7 @@
 
 **Author**: Shawn Ross
 **Date**: 2026-03-15
-**Status**: Complete (N=30 consensus results added; proposer-verifier pending)
+**Status**: Complete (corrected PV factorial v2 — config audit applied)
 **Phase**: H11 (Tile Size)
 **Model**: Gemini 3 Flash (`gemini-3-flash-preview`)
 
@@ -164,18 +164,29 @@ returns rather than the diversity dividend seen at 512.
 | 512 single-pass (Phase 2a) | 1 | 20 m | 0.542 | 0.434 | 0.725 |
 | 512 consensus best at N=5 (Phase 2b) | 5 | 20 m | 0.657 | 0.644 | 0.670 |
 | 384 consensus T>=5 | 5 | 20 m | 0.664 | 0.560 | 0.814 |
-| 384 PV best (adversarial image, t=0.3) | 1+v | 20 m | 0.684 | 0.602 | 0.794 |
+| 384 PV best (adversarial text, t=0.2, v2) | 1+v | 20 m | 0.682 | 0.624 | 0.753 |
 | 384 consensus best at N=30 | 30 | 20 m | 0.643 | 0.567 | 0.742 |
+| **512 PV text-only (E33 corrected, v2)** | **1+v** | **20 m** | **0.732** | **0.779** | **0.691** |
 | 512 consensus best at N=30 (Phase 3a, HIGH) | 30 | 20 m | 0.751 | 0.772 | 0.732 |
-| **512 PV text-only (Phase 3d)** | **1+v** | **20 m** | **0.796** | **0.809** | **0.784** |
 
-The 384 proposer-verifier best (adversarial image, F1=0.684) beats the 384
-consensus (0.664) by +2 pp, confirming that verification is the right
-precision intervention when recall is saturated. All six 384 PV
-configurations (3 strategies × 2 tracks) fall within a narrow 0.661–0.684
-range, 11 pp short of the 512 PV (0.796). The denser candidate pool
-degrades verifier precision across all strategies (0.53–0.61 vs 0.81). The
-512 proposer-verifier remains the project's best configuration.
+**Note on PV results revision (v2):** A config audit revealed that the
+verifier configs used for the original 384 PV runs and the 512 re-run
+contained non-target parameter changes relative to Phase 3d (missing text
+example labels, modified image example sets, different crop introduction
+text). All PV results in this section are from the corrected v2 runs using
+configs aligned to Phase 3d. The pre-correction 512 PV result (F1=0.796)
+is also confounded with a possible `gemini-3-flash-preview` model update
+between March 8 and March 15; identical crops produced different scores
+at the same rate as modified crops, confirming model drift as a factor.
+
+The 384 proposer-verifier best (adversarial text, F1=0.682) beats the 384
+consensus (0.664) by +1.8 pp, confirming that verification is the right
+precision intervention when recall is saturated. All 384 PV configurations
+fall within a narrow 0.640–0.682 range, 5.0 pp short of the corrected 512
+PV (0.732). The denser candidate pool degrades verifier precision across
+all strategies (0.53–0.62 vs 0.78). The 512 proposer-verifier remains the
+project's best pipeline configuration, though N=30 consensus (0.751) now
+leads overall.
 
 ---
 
@@ -261,9 +272,9 @@ each candidate.
 | C (adversarial) | `verify_adversarial.md` | Argue for strongest non-mound interpretation |
 | D (checklist) | `verify_checklist.md` | Structured evaluation of 5 diagnostic features |
 
-Each strategy was run on two tracks: **image** (9 canonical reference images
-sent alongside the candidate crop) and **text-only** (no example images; model
-sees only the candidate crop and the system instruction).
+Each strategy was run on two tracks: **image** (6 canonical reference images
+sent alongside the candidate crop, matching Phase 3d) and **text-only**
+(6 text-only example labels, no images, matching Phase 3d Track 2).
 
 ### 5.2 Execution
 
@@ -282,33 +293,40 @@ The proposer produced 572 detections across 239/240 tiles. One tile
 (`K-35-062-2_Rakovski_x2352_y1344.png`) consistently returned malformed
 JSON across three retry attempts.
 
-### 5.3 Verification Rates by Strategy
+### 5.3 Verification Rates by Strategy (v2 corrected configs)
 
 | Strategy | Image verified | Image rejected | Text verified | Text rejected |
 |:---------|---------------:|---------------:|--------------:|--------------:|
-| Adversarial (C) | 261 (46%) | 311 (54%) | 215 (38%) | 357 (62%) |
-| Brief (B) | 326 (57%) | 246 (43%) | 269 (47%) | 303 (53%) |
-| Checklist (D) | 326 (57%) | 246 (43%) | 336 (59%) | 236 (41%) |
+| Adversarial (C) | 246 (43%) | 326 (57%) | 225 (39%) | 347 (61%) |
+| Brief (B) | 318 (56%) | 254 (44%) | 259 (45%) | 313 (55%) |
+| Checklist (D) | *pending* | *pending* | 311 (54%) | 151 (26%) |
 
 The adversarial strategy is consistently the strictest verifier. The checklist
 is the most permissive — its structured feature decomposition appears to give
 candidates more opportunities to accumulate evidence for mound classification.
 
-### 5.4 Full Factorial Results (Best F1 at 20 m)
+### 5.4 Full Factorial Results (Best F1 at 20 m, v2 corrected configs)
 
-| Strategy | Track | Threshold | Kept | TP | FP | FN | P | R | F1 |
-|:---------|:------|----------:|-----:|---:|---:|---:|------:|------:|------:|
-| **Adversarial** | **image** | **0.3** | **128** | **77** | **51** | **20** | **0.602** | **0.794** | **0.684** |
-| Adversarial | text | 0.2 | 121 | 74 | 47 | 23 | 0.612 | 0.763 | 0.679 |
-| Brief | text | 0.2 | 131 | 77 | 54 | 20 | 0.588 | 0.794 | 0.675 |
-| Checklist | image | 0.2 | 150 | 83 | 67 | 14 | 0.553 | 0.856 | 0.672 |
-| Brief | image | 0.2 | 151 | 82 | 69 | 15 | 0.543 | 0.845 | 0.661 |
-| Checklist | text | 0.2 | 157 | 84 | 73 | 13 | 0.535 | 0.866 | 0.661 |
+| Strategy | Track | Threshold | TP | FP | FN | P | R | F1 |
+|:---------|:------|----------:|---:|---:|---:|------:|------:|------:|
+| **Adversarial** | **text** | **0.2** | **73** | **44** | **24** | **0.624** | **0.753** | **0.682** |
+| Adversarial | image | 0.3 | 73 | 45 | 24 | 0.619 | 0.753 | 0.679 |
+| Checklist | text | 0.2 | 80 | 69 | 17 | 0.537 | 0.825 | 0.650 |
+| Brief | image | 0.2 | 80 | 71 | 17 | 0.530 | 0.825 | 0.645 |
+| Brief | text | 0.2 | 71 | 54 | 26 | 0.568 | 0.732 | 0.640 |
+| Checklist | image | — | — | — | — | — | — | *pending* |
 
 The adversarial strategy (C) retains its Phase 3d advantage at 384, leading
-the factorial with F1=0.684. All six configurations fall within a 2.3 pp
-range (0.661–0.684), suggesting that the dominant constraint is the candidate
-pool quality, not the verifier strategy.
+the factorial with F1=0.682. Five of six configurations fall within a 4.2 pp
+range (0.640–0.682), suggesting that the dominant constraint is the candidate
+pool quality, not the verifier strategy. The checklist-image config is pending
+due to API rate limiting and will be added when available.
+
+**512 PV comparison (E33-corrected, adversarial text-only, t=0.2):**
+F1=0.732, P=0.779, R=0.691 — the 512 pipeline leads by 5.0 pp, driven
+entirely by its precision advantage (+15.5 pp) over the 384 best. The 384
+pipeline has higher recall (+6.2 pp) but cannot overcome the false positive
+volume from the denser candidate pool (572 vs 140 candidates).
 
 ### 5.5 Multi-Tolerance Comparison
 
@@ -350,19 +368,21 @@ denser tiling propagates through the verification stage.
 
 ### 5.7 The Collapse of the Text-Only vs Image Gap
 
-At 512, the text-only verifier dramatically outperformed the image variant
-across all three strategies. At 384, this gap collapses:
+At 384, the text-only vs image gap is negligible across all strategies:
 
-| Strategy | 512 image | 512 text | 512 gap | 384 image | 384 text | 384 gap |
-|:---------|----------:|---------:|--------:|----------:|---------:|--------:|
-| Adversarial | 0.711 | 0.796 | +8.5 pp | 0.684 | 0.679 | −0.5 pp |
-| Brief | 0.706 | 0.768 | +6.2 pp | 0.661 | 0.675 | +1.4 pp |
-| Checklist | 0.706 | 0.782 | +7.6 pp | 0.672 | 0.661 | −1.1 pp |
+| Strategy | 384 image | 384 text | 384 gap |
+|:---------|----------:|---------:|--------:|
+| Adversarial | 0.679 | 0.682 | +0.3 pp |
+| Brief | 0.645 | 0.640 | −0.5 pp |
+| Checklist | *pending* | 0.650 | — |
 
-The text-only advantage that was consistent and large at 512 (+6–9 pp)
-disappears entirely at 384 (−1 to +1.4 pp, all within noise). This is not
-strategy-specific — it holds across all three verifiers, ruling out
-explanations specific to the adversarial framing.
+All gaps are within ±1 pp, consistent with noise. This contrasts with the
+Phase 3d 512 results where text-only consistently outperformed image by
++6–9 pp. However, the Phase 3d 512 numbers are pre-correction and may
+reflect a different model version, so direct comparison is tentative.
+
+The corrected 512 run (adversarial text-only, F1=0.732) does not have an
+image-track counterpart to test this gap at 512 with the current model.
 
 Two factors likely explain this convergence:
 
@@ -377,19 +397,19 @@ Two factors likely explain this convergence:
    to the noise floor of the candidate pool. The text-only advantage may
    require a lower-volume, more ambiguous candidate pool to manifest.
 
-### 5.8 Strategy Ranking Comparison (384 vs 512)
+### 5.8 Strategy Ranking Comparison (384, v2 corrected)
 
-The strategy ranking is preserved at 384 for both tracks:
+The strategy ranking at 384:
 
-| Rank | 512 text-only | 512 image | 384 text-only | 384 image |
-|:-----|:--------------|:----------|:--------------|:----------|
-| 1st | Adversarial (0.796) | Adversarial (0.711) | Adversarial (0.679) | Adversarial (0.684) |
-| 2nd | Checklist (0.782) | Brief/Checklist (0.706) | Brief (0.675) | Checklist (0.672) |
-| 3rd | Brief (0.768) | Brief/Checklist (0.706) | Checklist (0.661) | Brief (0.661) |
+| Rank | 384 text-only | 384 image |
+|:-----|:--------------|:----------|
+| 1st | Adversarial (0.682) | Adversarial (0.679) |
+| 2nd | Checklist (0.650) | Brief (0.645) |
+| 3rd | Brief (0.640) | Checklist (*pending*) |
 
 The adversarial strategy consistently leads. The brief and checklist strategies
 are close to each other and swap positions across tracks — their difference
-is within noise at both tile sizes.
+is within noise.
 
 ### 5.9 Cascaded Verification (Exploratory)
 
