@@ -1,0 +1,104 @@
+# Phase 3a Replication: Thinking Level × Model Drift Test
+# ======================================================
+# Clean replication of N=30 consensus at T=0.7, testing both minimal
+# and HIGH thinking levels. Serves two purposes:
+#
+# 1. Model drift test: compare minimal replication to historical range
+#    [0.683, 0.751] to detect gemini-3-flash-preview changes
+# 2. Thinking level test: properly controlled comparison between minimal
+#    and HIGH thinking (the Phase 3a "HIGH" result was mislabelled —
+#    both original directories used minimal thinking)
+#
+# Usage:
+#   python scripts/run_phase2.py studies/phase3a-replication.yaml --dry-run
+#   python scripts/run_phase2.py studies/phase3a-replication.yaml --condition minimal --workers 10
+#   python scripts/run_phase2.py studies/phase3a-replication.yaml --condition high --workers 10
+#   python scripts/run_phase2.py studies/phase3a-replication.yaml --resume --workers 10
+#
+# Prerequisites:
+#   - detect_brief-text.json (minimal thinking config)
+#   - detect_brief-text-high.json (HIGH thinking config — identical except thinking_level)
+
+study:
+  name: "Phase 3a Replication: Thinking Level at T=0.7 N=30"
+  version: "1.0"
+  description: |
+    Replication of the Phase 3a consensus voting experiment with properly
+    controlled thinking levels. The original Phase 3a runs labelled as
+    "HIGH" and "minimal" both used thinking_level=minimal in their configs.
+    This replication creates a clean comparison.
+
+    Also tests for model drift: if the minimal replication departs from
+    the historical F1 range [0.683, 0.751], the gemini-3-flash-preview
+    model has changed since February 2026.
+  phase: "3a-replication"
+  hypothesis: "H3, H5"
+  created: "2026-03-15"
+
+# Factor under test
+factors:
+  thinking_level:
+    description: "Model thinking level (minimal vs high extended thinking)"
+    levels:
+      - name: "minimal"
+        value: "minimal"
+        config: "prompts/configs/detect_brief-text.json"
+        description: "Minimal thinking — matches all prior Phase 3a runs"
+      - name: "high"
+        value: "high"
+        config: "prompts/configs/detect_brief-text-high.json"
+        description: "HIGH thinking — tests whether extended reasoning improves consensus"
+
+# Fixed parameters
+fixed:
+  temperature: 0.7
+  ordering: "config-default"
+  model: "gemini-3-flash"
+  include_example_images: false
+
+inputs:
+  manifest: "inputs/tiles/validation_manifest.json"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/validation_bounds.geojson"
+
+execution:
+  runs: 30
+  workers: 1           # Safe default; pass --workers N at CLI
+  output_dir: "outputs/phase3a-replication"
+
+command_template: |
+  python scripts/4_detect_mounds_batch.py \
+    --config {level.config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/T0.7/run_{run} \
+    --temperature 0.7
+
+analysis:
+  method: "consensus_sweep"
+  script: "scripts/analyse_consensus_sweep.py"
+  parameters:
+    temperatures: ["T0.7"]
+    pool_sizes: [5, 10, 30]
+    baseline_f1: 0.660
+    bootstrap_iterations: 1000
+    bootstrap_seed: 42
+    match_tolerance_m: 20
+
+estimates:
+  conditions: 2
+  runs_per_condition: 30
+  tiles_per_run: 60
+  api_calls_per_condition: 1800
+  total_api_calls: 3600
+  cost_usd_minimal: 0.20
+  cost_usd_high: 0.50
+  cost_usd_total: 0.70
+
+outcome:
+  determines: "thinking_level_effect_and_model_drift"
+  decision_rule: |
+    1. Model drift: If minimal replication F1 falls outside [0.60, 0.80]
+       (the historical 95% CI), model drift is confirmed.
+    2. Thinking level: If HIGH F1 exceeds minimal F1 by more than 3 pp
+       (outside the stochastic noise band observed in Phase 3a), thinking
+       level has a genuine effect under consensus voting conditions.
