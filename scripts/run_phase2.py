@@ -309,6 +309,7 @@ def generate_execution_units(
                 "run": run,
                 "config": condition["config"],
                 "temperature": condition.get("temperature"),
+                "thinking_level": condition.get("thinking_level"),
                 "ordering": condition.get("ordering"),
                 "ordering_seed": ordering_seed,
             })
