@@ -64,7 +64,10 @@ override or symlinks to Phase 2b results.
 **Impact**: Zero — the temperature is always overridden at runtime.
 The file value is never used in its raw form for any post-Phase-2a
 experiment.
-**Status**: Legacy inconsistency. No action needed.
+**Status**: Not an error. The config's temperature (1.0) is correct
+for its original purpose (Phase 2a H1 baseline). Subsequent phases
+correctly override via `--temperature 0.0`. Changing the file would
+make it inconsistent with Phase 2a's historical use.
 
 ### L2: Phase 2e config-default metadata lacks ordering_override field
 
@@ -75,20 +78,21 @@ does not include an `ordering_override` field in metadata, since no
 override was applied.
 **Impact**: Zero — this is correct behaviour. Config-default used the
 JSON file's original order without override.
-**Status**: Working as designed.
+**Status**: Working as designed. Not an error.
 
 ### L3: Phase 3a metadata thinking_level null vs "minimal"
 
-**Phase**: Multiple
+**Phase**: Multiple (early runs before thinking_level was in configs)
 **Category**: Metadata recording inconsistency
 **Description**: Some metadata files record `thinking_level: null` at
 the top level but correctly record `"minimal"` in the
-`full_config_snapshot` section. The top-level field was not consistently
-extracted.
+`full_config_snapshot` section. The top-level field was not populated
+when the config didn't include `thinking_level` as a key.
 **Impact**: Zero for results. Minor inconvenience for automated
 metadata queries that don't check `full_config_snapshot`.
-**Status**: Known. Future runs capture thinking_level correctly via
-the CLI flag.
+**Status**: Already fixed. The `--thinking-level` CLI flag (commit
+`ead94aa`) mutates `config["thinking_level"]` before the metadata
+tracker reads it, so future runs will always populate this field.
 
 ---
 
