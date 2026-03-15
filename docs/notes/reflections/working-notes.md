@@ -3177,3 +3177,45 @@ interesting pattern whose mechanism is not fully understood. Some observations:
 largest at tile sizes that maximise the proportion of ambiguous false
 positives in the candidate pool. Testing this would require running the
 2-track comparison across the full tile size range.
+
+## Observation 163: Configuration drift as a systematic risk in LLM experiment pipelines (2026-03-15)
+
+**Context**: Session 51. Audit of the 512 PV re-run revealed that
+verifier config files created for the H11 experiments had silently
+deviated from the Phase 3d baseline they claimed to replicate. Three
+categories of drift were found:
+
+1. **Missing prompt elements**: Text-only configs dropped the 6 text
+   example labels that Phase 3d sent. The verifier received zero
+   reference information instead of category labels.
+2. **Expanded example sets**: Image configs had 9 examples instead of
+   Phase 3d's 6, with modified labels (added "(no mound)" suffixes)
+   and 3 new null examples.
+3. **Mislabelled parameters**: The Phase 3a `track2-text-high` directory
+   was labelled as "HIGH thinking" but metadata from every run shows
+   `thinking_level: minimal`. The F1 difference attributed to thinking
+   level (0.751 vs 0.683) may be stochastic variation between two sets
+   of T=0.7 runs, not a parameter effect. A clean replication with
+   properly controlled thinking levels is underway.
+
+**Pattern**: These drifts share a common mechanism — configs were created
+by extracting parameters from one script (`run_h2_pilot.py`) into
+standalone JSON files for use with a different script
+(`5_verify_crops.py`), without verifying that the two scripts assembled
+identical API payloads. Each script had its own prompt construction logic,
+and the JSON configs captured the *data* (examples, instruction file) but
+not the *assembly* (text-only label formatting, crop introduction text).
+
+**Lesson**: For preregistered experiments, config files are necessary but
+not sufficient. The actual API payload must be audited — either by logging
+the full request on a test run and diffing it against the baseline, or by
+having a single prompt-assembly function shared across all scripts. The
+project now has a pending full audit of all experiments (Task #1) to check
+for other instances of this pattern.
+
+**Scope of impact**: The H11 proposer-verifier factorial has been re-run
+with corrected configs (v2). The single-pass detection configs
+(`detect_brief-text.json`) were not affected — they are used directly by
+`4_detect_mounds_batch.py` without intermediate extraction. The drift
+appears confined to the verifier pipeline, where configs were created
+specifically for the H11 experiments.
