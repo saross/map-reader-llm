@@ -3308,3 +3308,66 @@ PV figures. Note the model drift caveat and the inability to attribute
 the decline to any single factor. The Phase 3d F1=0.796 should be
 cited as a historical result obtained under different conditions, not
 as the current pipeline performance.
+
+---
+
+## Transition to Production Runs (Session 52)
+
+**Date**: 2026-03-15
+
+The project is transitioning from exploratory/calibration work on the
+60-tile validation holdout to **production runs on the full 340-tile
+corpus** (all tiles minus 20 calibration). This is the definitive
+data collection for the publication.
+
+**Why**: The 60-tile holdout produced wide confidence intervals
+(F1 CI width ~0.22) that left most pairwise comparisons statistically
+non-significant after FDR correction. Only 1 of 10 Phase 2a comparisons
+survived. The original plan was to run only the top configurations on
+the full corpus, but insufficient statistical power means we need to
+retest *all* conditions to produce publishable results.
+
+**Design summary**:
+
+- **Corpus**: 340 tiles (539 mound symbols, 204 populated / 136 empty
+  tiles) — 6.8× more mounds than the 60-tile set
+- **Expected power**: MDE drops from ΔF1 ≈ 0.08 to ΔF1 ≈ 0.03;
+  CI width narrows ~2.4×
+- **Statistical method**: Paired bootstrap effect size CIs with
+  Benjamini-Hochberg FDR correction (q=0.05)
+- **Execution**: All via Gemini Flash Batch API (50% cost discount)
+- **Budget**: $100
+
+**Staged execution**:
+
+1. **Stage 1** — Single-pass phases (H1, H4, H5, H7, H8): ~66 batch
+   units, ~22k calls. K=1 at T=0.0, K=3 at T>0.
+2. **Stage 2** — Consensus voting (H3) + thinking replication: ~240
+   batch units, ~82k calls. K=30 for full threshold sweep.
+3. **Stage 3** — Proposer-verifier pipeline (H2) + experiments A–D:
+   ~16k calls. Sequential (proposer → verifier).
+4. **Stage 4** — Diversity (H9): ~76k calls. Deferred pending review
+   of Stages 1–3 results.
+
+**Key decisions**:
+
+- Run all 340 tiles fresh (no reuse of old 60-tile data) for a clean,
+  uniform dataset
+- K reduced from original K=10 to K=1–3 for single-pass conditions
+  (340 tiles provide sufficient power; net improvement ~3× over
+  original despite lower K)
+- Scale-16/32 library conditions excluded (blocked on calibration
+  tile expansion)
+- All PV experiments A–D retested (cost is trivial, comprehensive
+  negatives are publishable)
+
+**Infrastructure created**:
+
+- `inputs/tiles/full_evaluation_manifest.json` — 340-tile manifest
+- `inputs/vectors/bounds/full_evaluation_bounds.geojson` — spatial bounds
+- `studies/retest/*.yaml` — 14 retest study definitions
+- `scripts/create_retest_studies.py` — generation script with overlap
+  analysis
+
+**Next steps**: Config audit (verify every config against original
+specifications before committing budget), then begin Stage 1 execution.
