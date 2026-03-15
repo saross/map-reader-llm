@@ -792,4 +792,37 @@ The 4 conditions are:
 
 ---
 
+### E34: Thinking-level not propagated through batch/subprocess execution units
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-15 |
+| Type | Correction |
+| Files | `scripts/run_phase2.py` |
+| Impact | `--thinking-level` CLI override silently dropped when running via `run_phase2.py` |
+
+**Description**: The `generate_execution_units()` function in `run_phase2.py`
+copied `temperature`, `ordering`, and `ordering_seed` from condition dicts to
+execution unit dicts, but not `thinking_level`. This meant that when a study
+YAML defined `thinking_level` as a factor (or set it in the `fixed` section),
+the value was parsed correctly at the condition level but never reached the
+subprocess command (real-time mode) or the batch unit dict (batch mode).
+
+**Fix**: Added `"thinking_level": condition.get("thinking_level")` to the unit
+dict in `generate_execution_units()`. Also added `--thinking-level` CLI flag to
+`4_detect_mounds_batch.py` and thinking_level override support in
+`lib_batch_api.py`'s `prepare_batch_unit()`.
+
+**Affected results**: The `phase3a-replication.yaml` study was the first to use
+`thinking_level` as a factor. The initial dry run (before the fix) showed
+`--thinking-level` was absent from the subprocess commands. The fix was applied
+before any replication data was collected, so no results are affected.
+
+**Related**: The historical Phase 3a metadata-recording bug (Obs 141) is a
+separate issue — the metadata captured the config file's default value rather
+than the actual API parameter. That bug existed in the metadata *writer*, not
+in the parameter *propagation* fixed here.
+
+---
+
 *End of errata. New entries should be appended above this line.*

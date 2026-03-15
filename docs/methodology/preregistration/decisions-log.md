@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-02-11
+**Last updated**: 2026-03-15
 
 ---
 
@@ -926,6 +926,132 @@ Phase 2c plus-hp outputs via symlinks and are pre-checkpointed.
 **Cross-references**: E29 (canonical-first bug), E30 (4th condition deviation).
 
 **Evidence**: Session 32 Phase 2e setup analysis, `studies/phase2e-h4-ordering.yaml`.
+
+---
+
+## Decision 19: Re-run H11 PV Factorial with Corrected Configs
+
+**Date**: 2026-03-15
+
+**Decision**: Re-run all H11 proposer-verifier experiments (512 and 384)
+with verifier configs corrected to match the Phase 3d baseline prompt
+assembly. Supersede all prior PV results with "v2" corrected results.
+
+### Rationale
+
+A config audit (Observation 163) revealed that verifier configs created for
+the H11 experiments had silently diverged from the Phase 3d baseline in
+three ways:
+
+1. **Text-only configs** (`verify_*-text.json`): missing the 6 text-only
+   example labels that Phase 3d's `run_h2_pilot.py` sent
+2. **Image configs** (`verify_*.json`): 9 examples instead of Phase 3d's 6,
+   with modified labels and 3 extra null examples
+3. **Crop introduction text**: "**Target Candidate:**" instead of Phase 3d's
+   "Now classify the candidate symbol at the centre of this crop:"
+
+These are non-target parameter changes that violate experimental control.
+The original results cannot be attributed solely to the tile-size factor.
+
+### Alternatives considered
+
+1. **Accept results with caveat**: Document the config drift as a known
+   limitation. Rejected — the drift affects multiple prompt elements
+   simultaneously, making the results difficult to interpret.
+2. **Re-run with corrected configs**: Ensures only the target parameter
+   (tile size) differs between 384 and 512. Selected.
+
+### Result
+
+v2 corrected results: 512 PV F1=0.732 (was 0.796 pre-correction), 384 PV
+best F1=0.682. Gap narrowed from 11.2 pp to 5.0 pp, though model drift
+between March 8 and March 15 is a confound (Observation 165).
+
+**Evidence**: Commits `cad5d33`, `9b023ae`, `6159416`. See Observation 163.
+
+---
+
+## Decision 20: Replicate Phase 3a Consensus with Controlled Thinking Levels
+
+**Date**: 2026-03-15
+
+**Decision**: Run a clean N=30 consensus replication at T=0.7 with both
+minimal and HIGH thinking levels, using separate config files
+(`detect_brief-text.json` and `detect_brief-text-high.json`) that differ
+only in the `thinking_level` field.
+
+### Rationale
+
+Investigation of the Phase 3a metadata revealed that both `track2-text`
+and `track2-text-high` directories recorded `thinking_level: minimal` in
+their metadata files. Per Observation 141, the metadata captured the
+config file's default value rather than the actual API parameter — the
+HIGH directory did use HIGH thinking at the API level, but the metadata
+is unreliable. This metadata bug means:
+
+1. The Phase 3a thinking-level comparison (F1=0.751 vs 0.683) is valid
+   but the metadata cannot verify it
+2. A clean replication with properly controlled and metadata-verifiable
+   configs eliminates this ambiguity
+3. The replication also serves as a model drift test — if minimal
+   replication departs from the historical range [0.683, 0.751], the
+   model has changed
+
+### Result
+
+Replication confirms the direction: HIGH F1=0.735 vs minimal F1=0.699
+(+3.6 pp). Model drift is modest — minimal replication (0.699) falls
+within historical CI.
+
+**Evidence**: Study YAML `phase3a-replication.yaml`, Observations 140-141.
+
+---
+
+## Decision 21: Abandon Flash-Lite Transfer Pathway
+
+**Date**: 2026-03-15
+
+**Decision**: Abandon Gemini 3.1 Flash-Lite (`gemini-3.1-flash-lite-preview`)
+as a cheaper proxy for Flash. The model cannot perform the mound detection
+task at a useful level.
+
+### Rationale
+
+The Flash-Lite transfer pilot (`planning/flash-lite-transfer-pilot.md`)
+tested whether Flash-Lite preserves Flash's performance shape, which would
+enable comprehensive statistical reruns at 4× lower cost (Batch API pricing).
+
+Stage 1 (basic capability gate, F1 > 0.2) failed across all three variants:
+
+| Variant | Detections | TP | FP | F1 |
+|---------|----------:|----|----|----|
+| Minimal T=0.0 | 282 | 21 | 261 | 0.111 |
+| Minimal T=0.3 | 267 | 23 | 244 | 0.126 |
+| HIGH T=0.0 | 89 | 9 | 80 | 0.097 |
+
+Flash-Lite can detect map features but cannot discriminate mound symbols
+from other cartographic elements. The 4.4 pp MMMU Pro gap (76.8% vs 81.2%)
+translates to a ~43 pp F1 collapse on this task.
+
+### Alternatives considered
+
+1. **Flash-Lite with additional prompt engineering**: Rejected — the failure
+   is at the visual discrimination level, not the prompt level. HIGH thinking
+   made performance worse, not better.
+2. **Try other cheaper models (Claude Haiku, GPT-4o-mini)**: Deferred to
+   H14 cross-model testing. Models with MMMU Pro < 77% are likely to fail
+   similarly.
+3. **Proceed with Flash at standard pricing**: Accepted as the only viable
+   option for now.
+
+### Implications
+
+Full-scale statistical reruns must use Flash pricing ($0.50/M input,
+$3.00/M output standard; $0.25/$1.50 Batch API). This constrains the
+budget for comprehensive reruns. The staged pilot design limited wasted
+budget to ~$0.05.
+
+**Evidence**: Observation 164, `planning/flash-lite-transfer-pilot.md`.
 
 ---
 

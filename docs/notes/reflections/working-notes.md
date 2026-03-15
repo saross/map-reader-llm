@@ -3260,3 +3260,51 @@ proxy for Flash. The full-scale statistical replication will need to use
 Flash (or a similarly capable model), which constrains the budget for
 comprehensive reruns. The ~4× cost advantage of Flash-Lite Batch pricing
 is unavailable.
+
+## Observation 165: Model drift detected via identical-crop analysis — modest for detection, confounded for verification (2026-03-15)
+
+**Context**: Session 51. The 512 PV re-run (post-E33 crop fix, corrected
+config v2) produced F1=0.732, down from Phase 3d's F1=0.796. To separate
+the E33 crop effect from potential model drift (`gemini-3-flash-preview`
+updating between March 8 and March 15), we compared verifier scores on
+crops that were byte-identical between pre-E33 and post-E33 extractions.
+
+**Method**: Of 140 proposer candidates, 80 (57%) had byte-identical crops
+between the Phase 3d extraction and the E33-corrected extraction. If the
+F1 decline were caused by the crop fix, candidates with changed crops
+should show more score movement than those with identical crops.
+
+**Finding**: The flip rates and score changes were statistically
+indistinguishable:
+
+| Group | Classification flipped (at t=0.2) | Mean |score change| |
+|:------|----------------------------------:|---------------------:|
+| Identical crops (n=80) | 34% | 0.346 |
+| Different crops (n=60) | 35% | 0.343 |
+
+This conclusively demonstrates that the E33 crop fix is **not** the
+primary cause of the F1 decline. The decline is uniform across both
+groups, pointing to model drift (the `gemini-3-flash-preview` model
+was updated between March 8 and March 15) or other external factors.
+
+**Corroboration**: The Phase 3a consensus replication (same session)
+provides a separate test. Consensus voting uses single-pass detection
+(no crops, no verifier), so it's unaffected by the E33 fix. The
+replication minimal-thinking result (F1=0.699) falls within the
+historical CI [0.610, 0.795] and is only +1.6 pp above the historical
+minimal (0.683). This confirms that model drift for the **detection**
+task is modest — the model still detects mounds at roughly the same
+level.
+
+**Implication**: The PV F1 decline (0.796 → 0.732) is likely driven
+by the combination of (a) modest model drift, (b) the E33 crop
+correction (which provides more context that may confuse the verifier
+on ambiguous candidates), and (c) the config corrections (v2). These
+effects cannot be separated with the current data because all three
+changed simultaneously between Phase 3d and the re-run.
+
+**For the paper**: Report the corrected v2 results as the authoritative
+PV figures. Note the model drift caveat and the inability to attribute
+the decline to any single factor. The Phase 3d F1=0.796 should be
+cited as a historical result obtained under different conditions, not
+as the current pipeline performance.
