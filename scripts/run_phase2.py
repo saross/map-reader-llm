@@ -60,7 +60,70 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.5.0"
+__version__ = "1.6.0"
+
+
+# ── Token Ledger for Batch API queue management ──────────────
+# The Gemini Batch API enforces an "enqueued tokens per model"
+# quota (e.g. 3M tokens at Tier 1). This ledger tracks estimated
+# enqueued tokens across active batch jobs so we can gate
+# submissions and avoid 429 RESOURCE_EXHAUSTED errors.
+
+# Default quota for Gemini 3 Flash Preview (Tier 1)
+DEFAULT_BATCH_TOKEN_QUOTA = 3_000_000
+
+
+class BatchTokenLedger:
+    """Track estimated enqueued tokens across active batch jobs.
+
+    The Gemini Batch API limits the total input tokens that can be
+    enqueued across all active (PENDING + RUNNING) batch jobs for a
+    given model. This ledger maintains a self-tracked estimate so
+    that ``_execute_units_batch()`` can gate submissions without
+    exceeding the quota.
+
+    Token estimates are obtained via the free ``countTokens`` API
+    during Phase 1 (preparation), then recorded/released as jobs
+    are submitted/completed.
+
+    Attributes:
+        quota: Maximum enqueued tokens allowed.
+        jobs: Dict mapping job_name → estimated_tokens.
+    """
+
+    def __init__(self, quota: int = DEFAULT_BATCH_TOKEN_QUOTA) -> None:
+        self.quota = quota
+        self.jobs: dict[str, int] = {}
+
+    def can_submit(self, estimated_tokens: int) -> bool:
+        """Check whether a new job would fit within the token quota."""
+        return (self.current_enqueued + estimated_tokens) <= self.quota
+
+    def record(self, job_name: str, estimated_tokens: int) -> None:
+        """Record a newly submitted job's estimated token usage."""
+        self.jobs[job_name] = estimated_tokens
+
+    def release(self, job_name: str) -> None:
+        """Release tokens when a job reaches a terminal state."""
+        self.jobs.pop(job_name, None)
+
+    @property
+    def current_enqueued(self) -> int:
+        """Total estimated tokens currently enqueued."""
+        return sum(self.jobs.values())
+
+    @property
+    def headroom(self) -> int:
+        """Remaining token capacity before hitting quota."""
+        return max(0, self.quota - self.current_enqueued)
+
+    def __repr__(self) -> str:
+        return (
+            f"BatchTokenLedger("
+            f"enqueued={self.current_enqueued:,}/"
+            f"{self.quota:,}, "
+            f"jobs={len(self.jobs)})"
+        )
 
 # Resolve project root as parent of the scripts/ directory
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -768,6 +831,7 @@ def run_phase2(
     max_batch_jobs: int = 50,
     poll_interval: int = 30,
     max_poll_hours: float = 25.0,
+    token_quota: int = DEFAULT_BATCH_TOKEN_QUOTA,
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -972,6 +1036,7 @@ def run_phase2(
             max_batch_jobs=max_batch_jobs,
             poll_interval=poll_interval,
             max_poll_hours=max_poll_hours,
+            token_quota=token_quota,
         )
     elif use_parallel:
         results, running_cost = _execute_units_parallel(
@@ -1230,22 +1295,24 @@ def _execute_units_batch(
     max_batch_jobs: int = 50,
     poll_interval: int = 30,
     max_poll_hours: float = 25.0,
+    token_quota: int = DEFAULT_BATCH_TOKEN_QUOTA,
 ) -> tuple[dict, float]:
     """
     Execute units via the Gemini Batch API — throttled submission.
 
-    Submits units in waves up to ``max_batch_jobs`` concurrent jobs,
-    then polls until slots free up before submitting more. This
-    prevents RESOURCE_EXHAUSTED errors from exceeding the Batch API's
-    100-concurrent-job limit while still parallelising wall-clock time
-    from worst-case N×24h (serial) to ~1×24h.
+    Submits units in waves, gated by **two** constraints:
+
+    1. **Concurrent jobs** — capped at ``max_batch_jobs`` (API limit: 100).
+    2. **Enqueued tokens** — capped at ``token_quota`` (Tier 1: 3M).
+       Token estimates are obtained via the free ``countTokens`` API
+       during Phase 1, cached per config, and tracked by a
+       :class:`BatchTokenLedger`.
 
     Three-phase approach:
-        1. **Prepare** — Build JSONL files for all units (sequential)
-        2. **Submit + Poll** — Interleaved loop: submit up to
-           ``max_batch_jobs``, poll until slots free, submit more.
-           Completions are processed incrementally via callback.
-        3. **Summary** — Report totals
+        1. **Prepare** — Build JSONL files and estimate tokens per unit.
+        2. **Submit + Poll** — Interleaved loop: submit if both job
+           count and token budget allow; poll and release on completion.
+        3. **Summary** — Report totals.
 
     Batch-pending jobs are recorded in the checkpoint immediately after
     submission (write-ahead pattern). On crash and resume, pending entries
@@ -1267,6 +1334,8 @@ def _execute_units_batch(
             Batch API's hard 100-job limit.
         poll_interval: Seconds between batch API poll cycles.
         max_poll_hours: Maximum hours to poll before timing out.
+        token_quota: Maximum enqueued tokens across all active batch
+            jobs (default: 3,000,000 for Tier 1).
 
     Returns:
         Tuple of (results dict, updated running_cost).
@@ -1359,6 +1428,17 @@ def _execute_units_batch(
                 key, job_name, uploaded_file_name,
             )
         return _on_submit
+
+    # ── Initialise token ledger ─────────────────────────────────
+    token_ledger = BatchTokenLedger(quota=token_quota)
+    # Per-unit token estimates (unit_key → estimated_tokens)
+    unit_token_estimates: dict[str, int] = {}
+    # Cache: config_path → tokens_per_tile (avoid redundant countTokens)
+    _token_cache: dict[str, int] = {}
+
+    if verbose:
+        print(f"Token quota: {token_quota:,} enqueued tokens")
+        print()
 
     # ── Phase 1: Prepare all units (sequential, fast) ───────────
     contexts: dict = {}  # unit_key → BatchUnitContext
@@ -1488,6 +1568,69 @@ def _execute_units_batch(
                 f"({ctx.jsonl_path})"
             )
 
+        # Estimate tokens for this unit via countTokens (cached per config).
+        # countTokens only counts TEXT tokens — image tokens use a fixed
+        # rate of 258 tokens per image (for images ≤ 768×768 pixels).
+        # We add image token overhead separately.
+        #
+        # Per-tile composition:
+        #   text_tokens (from countTokens) + tile_image (258) +
+        #   example_images (n × 258 if include_example_images=True)
+        config_path = unit["config"]
+        if config_path not in _token_cache:
+            has_images = prompt_config.get(
+                "include_example_images", True,
+            )
+            n_examples = len(examples)
+            # Fixed image token overhead (258 tokens per image ≤ 768×768)
+            image_tokens = (
+                258  # tile image (always present)
+                + (258 * n_examples if has_images else 0)
+            )
+
+            try:
+                # Count TEXT tokens via the free countTokens API
+                sample_parts = [system_instruction]
+                for ex in examples:
+                    sample_parts.append(f"Example: {ex.get('label', '')}")
+                sample_parts.append("Analyse this map tile.")
+
+                count_result = client.models.count_tokens(
+                    model=model_name,
+                    contents=sample_parts,
+                )
+                text_tokens = count_result.total_tokens
+                tokens_per_tile = text_tokens + image_tokens
+                _token_cache[config_path] = tokens_per_tile
+                if verbose:
+                    print(
+                        f"  Token estimate: {tokens_per_tile:,}/tile "
+                        f"(text={text_tokens:,} + "
+                        f"images={image_tokens:,})"
+                    )
+            except Exception as e:
+                # Fallback: estimate text at ~50 tokens per label + 200
+                text_tokens = 50 * n_examples + 200
+                tokens_per_tile = text_tokens + image_tokens
+                _token_cache[config_path] = tokens_per_tile
+                if verbose:
+                    print(
+                        f"  Token estimate: {tokens_per_tile:,}/tile "
+                        f"(fallback; countTokens failed: {e})"
+                    )
+        else:
+            tokens_per_tile = _token_cache[config_path]
+
+        estimated_tokens = tokens_per_tile * ctx.line_count
+        unit_token_estimates[key] = estimated_tokens
+
+        if verbose:
+            print(
+                f"  Unit total: {estimated_tokens:,} tokens "
+                f"({ctx.line_count} tiles × "
+                f"{tokens_per_tile:,}/tile)"
+            )
+
         if dry_run:
             if verbose:
                 print(
@@ -1506,6 +1649,15 @@ def _execute_units_batch(
 
     # If dry_run or nothing to submit, return early
     if dry_run or not contexts:
+        if dry_run and verbose and unit_token_estimates:
+            total_est = sum(unit_token_estimates.values())
+            print(
+                f"\n  Total estimated tokens: {total_est:,} "
+                f"(quota: {token_quota:,}, "
+                f"max concurrent: "
+                f"{token_quota // max(unit_token_estimates.values()):,} "
+                f"jobs)"
+            )
         return results, running_cost
 
     # ── Phase 2: Throttled submit + poll loop ─────────────────
@@ -1555,12 +1707,14 @@ def _execute_units_batch(
     def _submit_one(key: str) -> bool:
         """Submit a single unit. Returns True on success."""
         ctx = contexts[key]
+        est_tokens = unit_token_estimates.get(key, 0)
         for attempt in range(max_submit_retries):
             try:
                 job_name, _uploaded = submit_batch_unit(
                     ctx, client, _make_on_submit(key),
                 )
                 in_flight[key] = job_name
+                token_ledger.record(job_name, est_tokens)
                 return True
             except Exception as e:
                 if (
@@ -1668,7 +1822,10 @@ def _execute_units_batch(
                 {"unit": key, "error": message}
             )
 
-        # Remove from pending/in-flight and persist checkpoint
+        # Remove from pending/in-flight, release tokens, persist checkpoint
+        job_name_for_release = in_flight.get(key)
+        if job_name_for_release:
+            token_ledger.release(job_name_for_release)
         batch_pending.pop(key, None)
         in_flight.pop(key, None)
         n_completed += 1
@@ -1693,23 +1850,27 @@ def _execute_units_batch(
             )
 
     # ── Initial submission wave ───────────────────────────────
-    # Fill up to effective_cap, accounting for already-pending
-    slots_available = max(
-        0, effective_cap - len(in_flight),
-    )
-    initial_batch = submission_queue[:slots_available]
-    submission_queue = submission_queue[slots_available:]
-
-    for key in initial_batch:
-        if _submit_one(key):
+    # Fill up to effective_cap, gated by both job count and token budget
+    initial_submitted = 0
+    while submission_queue:
+        if len(in_flight) >= effective_cap:
+            break  # Job count limit
+        next_key = submission_queue[0]
+        est = unit_token_estimates.get(next_key, 0)
+        if not token_ledger.can_submit(est) and len(in_flight) > 0:
+            break  # Token budget full (but always allow at least 1 job)
+        submission_queue.pop(0)
+        if _submit_one(next_key):
             n_submitted += 1
+            initial_submitted += 1
 
-    if verbose and initial_batch:
+    if verbose and initial_submitted:
         print(
-            f"  Submitted initial wave: {len(initial_batch)} "
+            f"  Submitted initial wave: {initial_submitted} "
             f"job(s), {len(in_flight)} in flight, "
             f"{len(submission_queue)} queued"
         )
+        print(f"  {token_ledger}")
         print()
 
     # ── Interleaved poll + submit loop ────────────────────────
@@ -1752,25 +1913,27 @@ def _execute_units_batch(
                     )
                     _handle_completion(key, job_name, job)
 
-            # Submit more if slots are available
-            slots_available = max(
-                0, effective_cap - len(in_flight),
-            )
+            # Submit more if both job count and token budget allow
             newly_submitted = 0
-            while submission_queue and slots_available > 0:
-                next_key = submission_queue.pop(0)
+            while submission_queue and len(in_flight) < effective_cap:
+                next_key = submission_queue[0]
+                est = unit_token_estimates.get(next_key, 0)
+                if (
+                    not token_ledger.can_submit(est)
+                    and len(in_flight) > 0
+                ):
+                    break  # Token budget full
+                submission_queue.pop(0)
                 if _submit_one(next_key):
                     n_submitted += 1
                     newly_submitted += 1
-                slots_available = max(
-                    0, effective_cap - len(in_flight),
-                )
 
             if verbose and newly_submitted > 0:
                 print(
                     f"  Submitted {newly_submitted} more "
                     f"job(s), {len(in_flight)} in flight, "
-                    f"{len(submission_queue)} queued"
+                    f"{len(submission_queue)} queued "
+                    f"({token_ledger})"
                 )
 
             # Exit if nothing left to process
@@ -1783,8 +1946,11 @@ def _execute_units_batch(
                 hours = elapsed / 3600
                 print(
                     f"  ... {n_completed}/{total_units} "
-                    f"complete, {len(in_flight)} in flight "
-                    f"({hours:.1f}h elapsed)",
+                    f"complete, {len(in_flight)} in flight, "
+                    f"{len(submission_queue)} queued "
+                    f"({hours:.1f}h elapsed) "
+                    f"[tokens: {token_ledger.current_enqueued:,}"
+                    f"/{token_ledger.quota:,}]",
                     flush=True,
                 )
 
@@ -1950,6 +2116,19 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--token-quota",
+        type=int,
+        default=DEFAULT_BATCH_TOKEN_QUOTA,
+        help=(
+            "Maximum enqueued tokens across all active batch "
+            f"jobs (default: {DEFAULT_BATCH_TOKEN_QUOTA:,}). "
+            "Tier 1 = 3M, Tier 2 = 400M. The ledger gates "
+            "submissions to stay within this limit, avoiding "
+            "429 RESOURCE_EXHAUSTED errors from the enqueued "
+            "tokens quota."
+        ),
+    )
+    parser.add_argument(
         "--poll-interval",
         type=int,
         default=30,
@@ -2015,6 +2194,7 @@ Examples:
         max_batch_jobs=args.max_batch_jobs,
         poll_interval=args.poll_interval,
         max_poll_hours=args.max_poll_hours,
+        token_quota=args.token_quota,
     )
 
     # Exit code based on results
