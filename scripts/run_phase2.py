@@ -71,6 +71,51 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 
+def _reorder_examples_for_batch(
+    examples: list, ordering: str, seed: int | None = None,
+) -> list:
+    """Reorder examples for batch mode — mirrors reorder_examples() in
+    4_detect_mounds_batch.py. Extracted here because the detection script
+    cannot be imported as a Python module (numeric filename prefix).
+
+    Args:
+        examples: List of example dicts with 'category' field.
+        ordering: One of 'config-default', 'canonical-first',
+            'canonical-last', 'random'.
+        seed: Random seed for 'random' ordering.
+
+    Returns:
+        Reordered list of examples.
+    """
+    import random as rand_module
+
+    if ordering == "config-default":
+        return examples
+
+    if ordering == "canonical-first":
+        canonical = [e for e in examples
+                     if e.get("category", "").startswith("canonical")]
+        hard = [e for e in examples
+                if e.get("category", "").startswith("hard")]
+        null = [e for e in examples if e.get("category") == "null"]
+        return canonical + hard + null
+
+    if ordering == "canonical-last":
+        canonical = [e for e in examples
+                     if e.get("category", "").startswith("canonical")]
+        hard = [e for e in examples
+                if e.get("category", "").startswith("hard")]
+        null = [e for e in examples if e.get("category") == "null"]
+        return null + hard + canonical
+
+    if ordering == "random":
+        shuffled = list(examples)
+        rand_module.Random(seed).shuffle(shuffled)
+        return shuffled
+
+    return examples
+
+
 def load_study_config(yaml_path: Path) -> dict:
     """
     Load and validate Phase 2 OFAT study configuration from YAML.
@@ -187,11 +232,23 @@ def extract_conditions(config: dict) -> list[dict]:
                 # For temperature/ordering factors, use carried-forward config
                 config_path = carried.get("optimal_me_config", "")
 
-            # Determine temperature override
-            temperature = level.get("value") if factor_name == "temperature" else None
+            # Determine overrides based on which factor is under test.
+            # Factor-level values take precedence; fixed-section values
+            # provide defaults for non-target parameters.
+            fixed = config.get("fixed", {})
 
-            # Determine ordering override
-            ordering = level.get("value") if factor_name == "ordering" else None
+            temperature = (
+                level.get("value") if factor_name == "temperature"
+                else fixed.get("temperature")
+            )
+            ordering = (
+                level.get("value") if factor_name == "ordering"
+                else fixed.get("ordering")
+            )
+            thinking_level = (
+                level.get("value") if factor_name == "thinking_level"
+                else fixed.get("thinking_level")
+            )
 
             conditions.append({
                 "name": level["name"],
@@ -199,6 +256,7 @@ def extract_conditions(config: dict) -> list[dict]:
                 "description": level.get("description", ""),
                 "temperature": temperature,
                 "ordering": ordering,
+                "thinking_level": thinking_level,
             })
 
     return conditions
@@ -590,6 +648,10 @@ def run_execution_unit(
     # Add temperature override if specified
     if unit.get("temperature") is not None:
         cmd.extend(["--temperature", str(unit["temperature"])])
+
+    # Add thinking level override if specified
+    if unit.get("thinking_level") is not None:
+        cmd.extend(["--thinking-level", str(unit["thinking_level"])])
 
     # Add ordering override if specified
     if unit.get("ordering") is not None:
@@ -1325,6 +1387,8 @@ def _execute_units_batch(
             extras = []
             if unit.get("temperature") is not None:
                 extras.append(f"T={unit['temperature']}")
+            if unit.get("thinking_level") is not None:
+                extras.append(f"thinking={unit['thinking_level']}")
             if unit.get("ordering") is not None:
                 extras.append(f"ordering={unit['ordering']}")
             extra_str = f" ({', '.join(extras)})" if extras else ""
@@ -1382,6 +1446,18 @@ def _execute_units_batch(
 
         config_version = prompt_config.get("version", "vX")
         examples = prompt_config.get("examples", [])
+
+        # Apply example reordering if specified (matches real-time
+        # pathway's reorder_examples() call in 4_detect_mounds_batch.py)
+        ordering = unit.get("ordering")
+        if ordering and ordering != "config-default" and examples:
+            examples = _reorder_examples_for_batch(
+                examples, ordering, unit.get("ordering_seed"),
+            )
+            if verbose:
+                seed = unit.get("ordering_seed")
+                print(f"  Reordered examples: {ordering}"
+                      f"{f' (seed={seed})' if seed else ''}")
 
         ctx = prepare_batch_unit(
             unit=unit,

@@ -611,6 +611,7 @@ def detect_mounds_versioned(
     export_bounds=False,
     model_override=None,
     temperature_override=None,
+    thinking_level_override=None,
     ordering_override=None,
     ordering_seed=None,
     workers=1,
@@ -681,6 +682,15 @@ def detect_mounds_versioned(
             f"with CLI Argument: {temperature_override}"
         )
         config["temperature"] = temperature_override
+
+    # Apply Thinking Level Override
+    if thinking_level_override is not None:
+        print(
+            f"Overriding Config Thinking Level "
+            f"({config.get('thinking_level', 'not set')}) "
+            f"with CLI Argument: {thinking_level_override}"
+        )
+        config["thinking_level"] = thinking_level_override
 
     # Resolve effective tile size — CLI override > default from config import
     effective_tile_size = tile_size if tile_size is not None else TILE_SIZE
@@ -1139,6 +1149,11 @@ Examples:
         help="Override temperature from config (0.0-2.0)",
     )
     parser.add_argument(
+        "--thinking-level", required=False,
+        choices=["minimal", "low", "medium", "high"],
+        help="Override thinking level from config",
+    )
+    parser.add_argument(
         "--ordering", required=False,
         choices=["config-default", "canonical-first", "canonical-last", "random"],
         help="Override example ordering (config-default, canonical-first, canonical-last, random)",
@@ -1186,6 +1201,7 @@ Examples:
         output_dir=getattr(args, 'output_dir', None),
         model_override=args.model,
         temperature_override=args.temperature,
+        thinking_level_override=getattr(args, 'thinking_level', None),
         ordering_override=args.ordering,
         ordering_seed=getattr(args, 'ordering_seed', None),
         workers=args.workers,

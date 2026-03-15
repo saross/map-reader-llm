@@ -1284,6 +1284,8 @@ def prepare_batch_unit(
     # Apply overrides from the execution unit
     if unit.get("temperature") is not None:
         prompt_config["temperature"] = unit["temperature"]
+    if unit.get("thinking_level") is not None:
+        prompt_config["thinking_level"] = unit["thinking_level"]
 
     # Build JSONL
     jsonl_dir = run_dir / "batch_working"
