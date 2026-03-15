@@ -97,10 +97,13 @@ post-hoc analysis.
 single-run baseline for both tracks. N=30 at T=0.7 optimal. Detailed results
 in `results/phase3a-consensus/`.
 
-**Note (2026-03-15)**: The Phase 3a results labelled as "HIGH thinking" were
-found to have used `thinking_level: minimal` in their metadata — the "HIGH"
-label was a directory naming artefact. A clean replication with properly
-controlled thinking levels is underway. See Observation 163.
+**Note (2026-03-15)**: The Phase 3a metadata files in `track2-text-high/`
+incorrectly record `thinking_level: minimal` due to a metadata-recording bug
+(the script captured the config file default rather than the actual API
+parameter). The directory label "HIGH" is correct — the runs did use HIGH
+thinking at the API level (see Observation 141). A clean replication
+(2026-03-15) with properly controlled configs confirmed the direction:
+HIGH F1=0.735 vs minimal F1=0.699 (+3.6 pp).
 
 | Pool Size | Source | Thresholds Tested |
 |-----------|--------|-------------------|
