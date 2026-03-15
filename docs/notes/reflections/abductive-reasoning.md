@@ -2200,6 +2200,64 @@ decorrelated errors, cascading should help; since it didn't, the errors
 must be correlated. Both the factorial and the cascade followed
 the structure of deductive testing of abductively generated hypotheses.
 
-*Last updated: 2026-03-15 (Session 50 — prediction failure at 384 PV,
-belief revision on text-only advantage context-dependence, and
-error correlation confirmation via cascade experiments)*
+---
+
+## Session 51 — 2026-03-15 (map-reader-llm): Diagnostic reasoning under multiple confounds
+
+**Surprising fact**: The 512 PV re-run produced F1=0.729, down from
+0.796. Three possible explanations: (1) the E33 crop fix changed crop
+content, (2) the verifier config drifted from Phase 3d, (3) the model
+itself changed between March 8 and March 15.
+
+**Abductive probe 1 — identical-crop analysis**: If the crop fix caused
+the decline, candidates with changed crops should show more score
+movement than those with identical crops. Result: 34% vs 35% flip rate
+— indistinguishable. This eliminates the crop fix as the primary cause.
+
+**Abductive probe 2 — config audit**: The verifier configs were found
+to differ from Phase 3d in three non-target parameters. Correcting
+these produced F1=0.732 (marginal improvement over 0.729). This shows
+the config drift had minimal impact (~0.3 pp) — not the main cause
+either.
+
+**Abductive probe 3 — consensus replication**: If the model drifted,
+single-pass detection (no crops, no verifier) should also show a
+decline. Result: F1=0.699 vs historical 0.683 (within CI, +1.6 pp).
+Detection-level drift is modest. This localises the decline to the
+verification stage specifically, not the model globally.
+
+**Belief revision**: The decline cannot be attributed to any single
+cause. It's the combined effect of modest model drift + crop correction +
+config corrections, and these effects cannot be separated because all
+three changed simultaneously. This is an honest "we don't know" result
+— uncomfortable but more rigorous than attributing the decline to any
+one factor.
+
+**Second abductive thread — Flash-Lite failure**: The surprising fact
+was that 4.4 pp on MMMU Pro translated to 43 pp on F1. The abductive
+hypothesis: we are operating near a capability cliff where small
+benchmark differences produce large task-performance differences. This
+is testable by running models at different MMMU Pro levels — Claude
+Opus 4.6 at 77.3% would be the most informative test case (just above
+Flash-Lite's 76.8%).
+
+**Third abductive thread — my own error**: I concluded the Phase 3a
+"HIGH" label was a misnomer based on metadata showing "minimal." The
+user pointed me to Observation 141, which explained the metadata
+recording bug. My inference was logically sound (metadata says X,
+therefore X was sent) but factually wrong (metadata had a known bug).
+The lesson: abductive reasoning from data requires checking whether the
+data source itself is reliable. Prior documentation (Obs 141) was the
+authoritative source; I should have consulted it before drawing
+conclusions.
+
+**Type of reasoning**: Multiple parallel abductive probes to
+triangulate causation under confounded conditions. The identical-crop
+analysis was the cleanest — it created a natural experiment within the
+existing data. The consensus replication was a designed experiment
+targeting a specific confound. Together they narrow the explanation
+space without fully resolving it.
+
+*Last updated: 2026-03-15 (Session 51 — diagnostic reasoning under
+confounded PV decline, Flash-Lite capability cliff, and self-correction
+on metadata reliability)*

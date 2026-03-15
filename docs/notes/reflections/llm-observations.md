@@ -4172,7 +4172,52 @@ consistent with the perceptual ceiling identified in Obs 194 (Session 48)
 and strengthens the case that the current approach has reached its
 practical limit for this task.
 
-*Document represents observations as of 2026-03-15. Session 50 added
-observations on verifier precision scaling with candidate volume,
-context-dependence of text-only vs image advantage, and near-perfect
-error correlation across verification strategies.*
+---
+
+## Session 51 Observations (2026-03-15, map-reader-llm)
+
+**Observation 22: Configuration drift as a failure mode specific to
+LLM experiment pipelines.** Traditional software testing catches
+functional bugs (wrong output for a given input). LLM experiment
+pipelines have a distinct failure mode: *correct execution with wrong
+parameters*. The verifier configs produced valid JSON output, passed
+all tests, and appeared to work — but sent a different prompt than
+intended. This went undetected because there was no mechanism to
+validate the actual API payload against the intended baseline. The fix
+is not more testing but more auditing: diff the wire-level payload, not
+just the config file.
+
+**Observation 23: Model drift is detectable but not preventable with
+preview models.** The identical-crop analysis (57% byte-identical crops,
+same flip rate for identical and different crops) provides a clean
+method for detecting model drift. But `gemini-3-flash-preview` is a
+preview model — Google can update it silently. The practical implication
+for reproducibility is stark: any result obtained with a preview model
+is temporally bounded. The Phase 3a consensus replication showed modest
+drift for detection (F1 0.699 vs historical 0.683), but the PV pipeline
+showed larger effects. Preview model instability may be task-dependent
+— simple detection is robust, but fine-grained verification is sensitive
+to model changes.
+
+**Observation 24: The MMMU Pro gap as a capability cliff.** Flash-Lite's
+4.4 pp MMMU Pro gap from Flash (76.8% vs 81.2%) translated to a 43 pp
+F1 collapse on our task. This is not a linear relationship — it's a
+cliff. The task appears to require a specific level of fine-grained
+visual discrimination that sits in a narrow capability band. This has
+implications for model selection: you cannot interpolate from benchmark
+scores to task performance. A quick pilot (~$0.05) is worth more than
+any amount of benchmark comparison.
+
+**Observation 25: The value of the user's domain calibration.** Twice
+in this session, the user corrected my analysis: (1) the Phase 3a
+thinking-level mislabelling (I said the label was wrong; the metadata
+was wrong), and (2) the Batch API execution mode (I used the wrong
+pathway). In both cases, the user's memory of prior decisions and
+established terminology was more reliable than my inference from
+current data. This reinforces Observation 18 from Session 5 (the
+asymmetry of scrutiny): the human collaborator serves as an integrity
+check that the AI cannot replicate from first principles.
+
+*Document represents observations as of 2026-03-15. Session 51 added
+observations on configuration drift, model drift detection, MMMU Pro
+capability cliffs, and the value of human domain calibration.*

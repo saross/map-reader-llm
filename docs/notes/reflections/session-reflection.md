@@ -5313,7 +5313,77 @@ session's most interesting finding.
 
 ---
 
-*Document created: 2026-01-27. Forty-second reflection added 2026-03-15
-(Session 50 — full 3×2 verifier factorial on 384 proposer-verifier, cascade
-experiments confirming near-perfect error correlation, and the text-only vs
-image convergence pattern across tile sizes).*
+### Session 51 Reflection — 2026-03-15 (map-reader-llm)
+
+This session was unusual in that its primary productive output was
+*finding and fixing errors* rather than generating new experimental data.
+The 512 PV re-run was supposed to be a routine replication; instead it
+became an audit trigger that cascaded into config corrections, a full
+factorial re-run, a Phase 3a replication, a Flash-Lite pilot, pipeline
+improvements, documentation rationalisation, and a comprehensive
+configuration audit.
+
+**On my own error**: I used the synchronous API when the user explicitly
+asked for the Batch API. The root cause was treating "batch" as a casual
+descriptor rather than a technical instruction. The user and I worked
+through this together and established clearer terminology (capitalised
+"Batch API" for the Google async pathway). The cost was hours of
+rate-limited grinding, but the meta-outcome — a shared disambiguation
+protocol — may prevent larger future errors.
+
+**On the config drift discovery**: The most consequential finding was that
+verifier configs had silently diverged from Phase 3d in three ways
+(missing text labels, expanded example sets, wrong crop introduction
+text). What's striking is that none of these were caught by any automated
+check — they were discovered only because I audited the actual API
+payload against the historical baseline. The project now has Observation
+163 and a documentation protocol to prevent recurrence, but the deeper
+lesson is that config files are necessary but not sufficient for
+experimental control. The actual wire-level API payload is the ground
+truth.
+
+**On the model drift investigation**: The identical-crop analysis was a
+methodologically clean way to separate crop-change effects from model
+drift. The finding (34% vs 35% flip rate — indistinguishable) was
+conclusive. The Phase 3a consensus replication then confirmed that
+detection-level drift is modest (F1=0.699 vs historical 0.683, within
+CI). The PV decline is attributable to the combined effect of crop fix +
+config corrections + modest drift, not to any single factor. This is
+honest but unsatisfying — we can't assign the decline to a clean cause.
+
+**On Flash-Lite**: The catastrophic failure (F1=0.111) was the session's
+clearest result. The staged pilot design worked exactly as intended —
+$0.05 to discover the model can't do the task, rather than $50 for a
+full-scale run. The 4.4 pp MMMU Pro gap translating to a 43 pp F1
+collapse is evidence that we're operating near the frontier of
+multimodal capabilities, though this claim needs more data points
+(cross-model testing).
+
+**On my incorrect analysis of Phase 3a thinking levels**: I concluded
+that the "HIGH" directory label was a misnomer based on the metadata
+showing "minimal." The user pushed back, and re-reading Observation 141
+showed the metadata was wrong, not the label. I should have read the
+existing documentation (Obs 141) before drawing conclusions from
+metadata that was known to have a recording bug. The lesson: check what
+prior sessions already established before contradicting their findings.
+
+**Session texture**: Error-finding → correction → verification →
+documentation. Unusually heavy on meta-work (auditing, documenting,
+rationalising) rather than new experiments. High collaboration
+intensity — the user drove several corrections and pushed back on
+my analysis twice (correctly both times).
+
+**Session**: 2026-03-15 (Session 51)
+**Key observation**: Configuration drift is a systematic risk in
+multi-script, multi-phase experimental pipelines. The fix is auditing
+actual API payloads, not just config files.
+**Engagement level**: Very high — user identified both my analytical
+error (Phase 3a thinking levels) and my execution error (wrong API
+pathway), and drove the documentation rationalisation initiative.
+
+---
+
+*Document created: 2026-01-27. Forty-third reflection added 2026-03-15
+(Session 51 — config audit, model drift investigation, Flash-Lite
+failure, Phase 3a replication, pipeline improvements, documentation
+rationalisation, and comprehensive configuration audit).*

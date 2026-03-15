@@ -2743,4 +2743,71 @@ factorial, and test cascaded verification
 
 ---
 
+## Session 51 — 2026-03-15: Config audit, model drift, Flash-Lite pilot, documentation rationalisation
+
+**Focus**: 512 PV re-run after E33 crop fix; config audit and correction;
+Phase 3a replication; Flash-Lite transfer pilot; documentation
+**Duration**: ~4 hours
+**Instance**: Direct experience (no compaction boundary)
+
+### What Was Done
+
+1. Planned and executed 512 PV re-run on zbook (E33-corrected crops)
+2. Discovered F1 decline (0.796 → 0.729); ran identical-crop analysis
+   (34% vs 35% flip rate → model drift, not crop fix)
+3. Found verifier config mismatch vs Phase 3d baseline — 3 categories
+   of non-target drift. Added `text_only_labels` and `crop_label`
+   support to `5_verify_crops.py`
+4. Audited all 384 configs; fixed 5 configs + study YAML reference
+5. Re-ran corrected 512 PV (F1=0.732) and 384 factorial (5/6 complete,
+   checklist-image rate-limited)
+6. Investigated Phase 3a thinking-level metadata bug — corrected my
+   initial analysis after user pointed to Obs 141
+7. Added `--thinking-level` CLI override, fixed batch mode ordering
+   gap, added `fixed` parameter support in study YAMLs
+8. Ran Phase 3a replication via Batch API (30 minimal + 30 HIGH).
+   Result: HIGH F1=0.735 vs minimal F1=0.699 (+3.6 pp)
+9. Ran Flash-Lite pilot — catastrophic failure (F1=0.111 best). Three
+   variants tested, all failed gate. Pathway abandoned (Decision 21)
+10. Looked up MMMU Pro scores; saved leaderboard for cross-model planning
+11. Updated hypothesis tracking (H2-H5, H9, H11 marked complete)
+12. Created documentation index and maintenance protocol
+13. Extracted 5 items from commits to formal docs (E34, D19-D21, Obs 165)
+14. Completed full configuration audit (12 phases, ~350 checks). One
+    critical finding (already resolved), no new issues
+
+### Key Findings
+
+| Result | Value |
+|:-------|:------|
+| 512 PV (corrected v2) | F1=0.732 (was 0.796 pre-correction) |
+| 384 PV best (corrected v2) | F1=0.682 adversarial text |
+| 512-384 gap | 5.0 pp (was 11.2 pp) |
+| Phase 3a HIGH replication | F1=0.735 (+3.6 pp over minimal) |
+| Flash-Lite best | F1=0.111 (gate failed) |
+| Config audit | 1 critical (resolved), 0 new |
+
+### Commits
+
+`cad5d33`, `9b023ae`, `6159416`, `3419ce2`, `b9dbe80`, `7fb1d0b`,
+`60cdffb`, `ead94aa`, `5d72603`, `eb423ef`, `0f67eba`, `9940972`,
+`743cb5b`, `1ea2e43`, `59e7495`, `c0a6c8d`, `49e93c5`
+
+### New Documents
+
+- `docs/methodology/documentation-index.md`
+- `docs/methodology/documentation-protocol.md`
+- `docs/methodology/configuration-audit.md`
+- `planning/mmmu-pro-leaderboard.md`
+- `prompts/configs/detect_brief-text-high.json`
+- `studies/phase3a-replication.yaml`
+
+### Pending
+
+- [ ] Checklist-image 384 verifier (rate-limited; retry when quota recovers)
+- [ ] Cross-model comparison design (H14, using MMMU Pro leaderboard)
+- [ ] Paper write-up integration of corrected results
+
+---
+
 *New session entries should be appended above this line.*
