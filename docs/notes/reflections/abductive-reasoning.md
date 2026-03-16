@@ -2258,6 +2258,55 @@ existing data. The consensus replication was a designed experiment
 targeting a specific confound. Together they narrow the explanation
 space without fully resolving it.
 
-*Last updated: 2026-03-15 (Session 51 — diagnostic reasoning under
-confounded PV decline, Flash-Lite capability cliff, and self-correction
-on metadata reliability)*
+## Session 52 — 2026-03-15/16 (map-reader-llm): Scale-dependent bias and quota diagnosis by elimination
+
+**Surprising fact 1**: The bootstrap recall mean (0.731) diverged from
+the point estimate (0.802) by 7 pp on the 340-tile pilot — a
+discrepancy that had been invisible at 60 tiles.
+
+**Default explanation**: Bootstrap CIs naturally differ from point
+estimates due to resampling. A 7 pp gap might just be sampling noise.
+
+**Belief revision trigger**: The user flagged the divergence as
+suspicious. Comparing per-tile vs per-map matching revealed that
+reference mounds in tile overlap zones were being counted in multiple
+tiles, inflating both TP and FN in the per-tile bootstrap. This was
+a systematic bias, not sampling noise.
+
+**Abductive probe**: If the bias is from tile-overlap double-counting,
+then matching per-map (like the point estimate) and distributing
+results to tiles should eliminate the divergence. Result: divergence
+collapsed to <0.002 across all metrics. Hypothesis confirmed.
+
+**Why it was invisible at 60 tiles**: Fewer tile boundaries → fewer
+overlap zones → less reference duplication. The bias was always present
+but its magnitude scaled with tile count. This is an instance of a
+general pattern: scale-dependent bugs that are negligible at
+development scale and significant at production scale.
+
+**Surprising fact 2**: The Batch API continued to return 429 errors
+even after implementing a token ledger that correctly tracked enqueued
+tokens within the 3M quota.
+
+**Hypothesis elimination sequence**:
+1. Concurrent job limit (100)? No — we were submitting far fewer.
+2. File storage (20 GB)? No — storage was empty on check.
+3. Enqueued token quota (3M)? Partially — the token ledger correctly
+   gated to ~2.85M, but the API still rejected.
+4. Server-side propagation delay? Partially — adding safety margin
+   and submission spacing reduced but didn't eliminate failures.
+5. Undocumented daily submission quota? Most likely — after
+   exhausting all documented quotas, failures persisted until
+   sufficient time elapsed. Google's public documentation doesn't
+   list a daily batch submission limit.
+
+**Type of reasoning**: Progressive elimination of hypotheses through
+empirical testing. Each failed explanation narrowed the possibility
+space. The final hypothesis (undocumented daily quota) is a residual
+— it explains the observations but can't be directly confirmed from
+available documentation. This is a common endpoint in API debugging:
+you reach a point where the system's behaviour is consistent with a
+constraint that isn't publicly documented.
+
+*Last updated: 2026-03-16 (Session 52 — scale-dependent bootstrap bias
+and Batch API quota diagnosis by elimination)*

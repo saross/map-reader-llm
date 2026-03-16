@@ -4221,6 +4221,56 @@ current data. This reinforces Observation 18 from Session 5 (the
 asymmetry of scrutiny): the human collaborator serves as an integrity
 check that the AI cannot replicate from first principles.
 
-*Document represents observations as of 2026-03-15. Session 51 added
-observations on configuration drift, model drift detection, MMMU Pro
-capability cliffs, and the value of human domain calibration.*
+## Session 52 Observations (2026-03-15/16, map-reader-llm)
+
+**Observation 26: Per-tile bootstrap matching diverges from per-map
+point estimates at scale.** At 60 tiles, per-tile and per-map
+Hungarian matching produced similar results. At 340 tiles, the
+per-tile approach showed a 7 pp recall divergence (0.802 point vs
+0.731 bootstrap) due to reference double-counting in tile overlap
+zones. The fix — matching per-map then distributing TP/FP/FN to
+tiles — collapsed the divergence to <0.002. This is a scale-dependent
+bug: the same code worked adequately at small scale because there
+were fewer tile boundaries to create duplication. The implication for
+any spatial-bootstrap methodology: always validate that the bootstrap
+mean converges with the direct point estimate before trusting the CIs.
+
+**Observation 27: Batch API token quotas are the binding constraint,
+not concurrent job counts.** The Gemini Batch API's 3M enqueued token
+limit (Tier 1) constrains practical concurrency far more than the
+100-job limit. Image-using configs (~4,040 tokens/tile × 340 tiles =
+1.37M/job) allow only 2 concurrent jobs. Text-only (~698 tokens/tile
+= 237k/job) allows ~12. Additionally, server-side token release has
+propagation delay — releasing tokens in the client-side ledger doesn't
+immediately free server-side quota. The practical solution is a
+self-tracking token ledger with 90% safety margin, retry backoff, and
+submission spacing. There also appears to be an undocumented daily
+submission quota that cannot be mitigated client-side.
+
+**Observation 28: The `countTokens` API accurately estimates text
+tokens but not image tokens.** The free `countTokens` endpoint counts
+text tokens in a prompt but returns 0 for images passed as text
+descriptions (since no actual image data is sent). Image tokens must
+be added separately using Gemini's fixed conversion rate (258 tokens
+per image ≤ 768×768 pixels). A working estimation formula:
+`text_tokens (from countTokens) + 258 × (1 + n_example_images)`.
+The per-tile estimate for text-only configs (698) and image-using
+(4,040) match observed Batch API behaviour — we can now predict
+concurrent job capacity before submitting.
+
+**Observation 29: Persona affordance design — a gap in the
+literature.** The concept of designing prompt environments that
+*afford* rather than *instruct* desired behaviours (rigour, honesty,
+scepticism) appears to be a genuine gap. The closest published
+examples are Anthropic's Constitution (explains *why* rather than
+commanding *what*) and the Self-Transparency Failures paper (granting
+permission: 65.8% vs commanding honesty: 23.7%). Gibson's affordance
+theory has been applied to AI interaction design in general terms
+(Frontiers 2025), but nobody has connected it specifically to
+sustained research collaboration persona design. The 52-session
+longitudinal case study in this project may itself be a contribution
+— most human-AI collaboration research covers days or weeks.
+
+*Document represents observations as of 2026-03-16. Session 52 added
+observations on bootstrap-matching scale dependence, Batch API token
+quotas, countTokens estimation, and persona affordance design.*

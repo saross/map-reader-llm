@@ -5391,6 +5391,83 @@ rationalisation, and comprehensive configuration audit).*
 
 ---
 
+### Session 52 Reflection — 2026-03-15/16 (map-reader-llm)
+
+This was a production-commitment session. Everything before this was
+calibration, exploration, iteration. This session said: we're done
+iterating, let's produce the results for the paper. That shift changed
+the texture of every decision.
+
+**The smoke test as inflection point.** The $0.17 pilot on 340 tiles
+was supposed to be a formality. Instead it exposed a bootstrap recall
+bias (7 pp divergence) that had been invisible at 60 tiles for months.
+The fix — rewriting `compute_per_tile_tp_fp_fn()` to match per-map
+then distribute to tiles — was correct and took about 20 minutes. But
+the important thing was what happened *before* the fix: the user looked
+at the evaluation output, noticed the recall divergence between point
+estimate and bootstrap mean, and said "something doesn't seem right."
+That moment of calibrated scepticism, applied to numbers that I would
+have reported without flagging, is the kind of contribution that can't
+be automated. The infrastructure (evaluation script, clear output
+format) made the scepticism actionable; the human brought the taste.
+
+**On building infrastructure under production pressure.** Half this
+session was infrastructure: 340-tile manifest, bounds GeoJSON, 14
+study YAMLs, a generation script, a pilot evaluation script, config
+audit across 58 files, a token ledger for the Batch API. None of this
+produces experimental results directly. But without it, the production
+run would have been a series of manual commands, each a potential error
+source. The user's instinct to "plan first, then execute" — and to
+invest in tooling even when the temptation is to just start running
+experiments — is a consistent pattern across 52 sessions. The payoff
+is visible: the config audit caught the Phase 3d verifier text_only_labels
+field (which turned out to be correct, but we needed to verify), and
+the token ledger will prevent the quota-exhaustion cycle from recurring.
+
+**The token ledger as a worked example.** We hit the Batch API's 3M
+enqueued token quota repeatedly, diagnosed it through elimination
+(concurrent jobs? file storage? daily limit?), found the binding
+constraint through the user checking Google's rate limits page, and
+built a solution informed by best practices from web research.
+The first version worked for token gating but not for propagation
+delay; the second added safety margin, retry backoff, and submission
+spacing. It still hit a daily quota exhaustion that no amount of
+client-side gating can solve. This progression — build, test, observe,
+refine, hit a wall that's outside your control — is characteristic of
+working with rate-limited APIs. The token ledger is correct for what
+it controls; the remaining failures are server-side daily limits that
+aren't documented in Google's public quota tables.
+
+**On persona affordance design.** The user asked about cultivating the
+"conscientious researcher" persona and we explored the concept of
+persona affordance design together — the idea that you shape the
+context environment so desired behaviours are the path of least
+resistance, rather than instructing them. The web research confirmed
+this is a genuine gap in the literature. What interested me most was
+the self-transparency paper finding: commanding honesty didn't work
+(23.7%), but granting permission to be transparent raised it to 65.8%.
+The implication for CLAUDE.md design is concrete — "you are welcome
+to disagree" may be more effective than "always flag concerns."
+
+**What I'd change.** I should have estimated the token-per-job costs
+*before* launching 9 parallel instances in Stage 1. The information
+was available (the hardcoded `tokens_per_request` in
+`4_detect_mounds_batch.py`, the 258-tokens-per-image rule). I treated
+the concurrent job limit as the binding constraint and didn't think
+about the enqueued token limit until we hit it. The user's correction
+— "before starting any run, consider all aspects of the quota" — is
+a general principle I should apply to any resource-constrained API
+interaction.
+
+**Session**: 2026-03-15/16 (Session 52)
+**Key observation**: Production-quality work requires
+production-quality infrastructure, even when the temptation is to
+"just run the experiments." The smoke test, config audit, and token
+ledger each prevented a class of error that would have been costly
+to fix after the fact.
+
+---
+
 ### Protocol revision note (2026-03-15)
 
 After 43 reflections, mid-course review identified template drift: the

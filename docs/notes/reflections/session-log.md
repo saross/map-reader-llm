@@ -2808,6 +2808,62 @@ Phase 3a replication; Flash-Lite transfer pilot; documentation
 - [ ] Cross-model comparison design (H14, using MMMU Pro leaderboard)
 - [ ] Paper write-up integration of corrected results
 
+## Session 52 — 2026-03-15/16
+
+**Focus**: Production retest infrastructure and execution (340-tile
+full corpus).
+
+### Accomplished
+
+1. Created 340-tile manifest and bounds GeoJSON (539 mounds in scope)
+2. Config audit: 58 detection configs verified, PV text_only_labels
+   confirmed correct
+3. Generated 14 retest study YAMLs via `create_retest_studies.py`
+4. Fixed `run_phase2.py` empty `fixed:` handling (NoneType bug)
+5. Ran $0.17 smoke test — caught bootstrap recall bias (E35, 7 pp
+   divergence from tile-overlap reference double-counting)
+6. Rewrote `compute_per_tile_tp_fp_fn()` to match per-map then
+   distribute to tiles — divergence collapsed to <0.002
+7. **Stage 1 complete**: 66/66 units across 9 studies (Phases 2a–2e)
+8. **Stage 2 partially complete**: 162/240 units (Track 1: 81/90,
+   Track 2: 81/90, Replication: 18/60)
+9. Built `BatchTokenLedger` for Batch API enqueued token management
+   (3M Tier 1 quota)
+10. Added `countTokens`-based estimation, safety margin, retry backoff,
+    and submission spacing
+11. Documented persona affordance design concept — craft entry, paper
+    seed, memory, actionable plan
+12. Web research on persona cultivation, context engineering, affordance
+    theory applied to AI
+
+### Key Finding
+
+Per-tile bootstrap matching produces biased recall estimates at scale
+due to reference double-counting in tile overlap zones. Fixed by
+switching to per-map matching with tile-level distribution (E35).
+
+### Infrastructure Created
+
+- `inputs/tiles/full_evaluation_manifest.json` (340 tiles)
+- `inputs/vectors/bounds/full_evaluation_bounds.geojson`
+- `studies/retest/*.yaml` (14 files)
+- `scripts/create_retest_studies.py`
+- `scripts/evaluate_pilot.py`
+- `BatchTokenLedger` class in `run_phase2.py`
+
+### Commits
+
+`f06afb7`, `3ad487f`, `5a57f58`, `aa099ad`, `195fa64`
+
+### Pending
+
+- [ ] Stage 2 remaining: Track 2 (9 units), Replication (42 units),
+      Track 1 (9 units) — blocked on daily quota reset
+- [ ] Stage 3: PV pipeline (proposer + verifier on 340 tiles)
+- [ ] Stage 4: Diversity (deferred, decision after Stages 1–3)
+- [ ] Persona affordance design: review proposed CLAUDE.md additions
+- [ ] Push commits to origin
+
 ---
 
 *New session entries should be appended above this line.*
