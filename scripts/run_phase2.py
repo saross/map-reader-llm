@@ -95,9 +95,18 @@ class BatchTokenLedger:
         self.quota = quota
         self.jobs: dict[str, int] = {}
 
+    # Reserve 10% headroom to account for server-side propagation delay
+    # when releasing tokens from completed jobs
+    SAFETY_MARGIN = 0.90
+
     def can_submit(self, estimated_tokens: int) -> bool:
-        """Check whether a new job would fit within the token quota."""
-        return (self.current_enqueued + estimated_tokens) <= self.quota
+        """Check whether a new job would fit within the token quota.
+
+        Uses a 90% safety margin to account for server-side propagation
+        delay when releasing tokens from completed jobs.
+        """
+        effective_quota = int(self.quota * self.SAFETY_MARGIN)
+        return (self.current_enqueued + estimated_tokens) <= effective_quota
 
     def record(self, job_name: str, estimated_tokens: int) -> None:
         """Record a newly submitted job's estimated token usage."""
@@ -1701,11 +1710,14 @@ def _execute_units_batch(
         )
         print()
 
-    # Maximum retries for file_storage_bytes quota errors
-    max_submit_retries = 3
+    # Retry settings for transient submission failures
+    max_submit_retries = 4
+    # Delay between consecutive submissions to avoid burst-submitting
+    # faster than the server releases quota (seconds)
+    submit_spacing_seconds = 3
 
     def _submit_one(key: str) -> bool:
-        """Submit a single unit. Returns True on success."""
+        """Submit a single unit with retry/backoff. Returns True on success."""
         ctx = contexts[key]
         est_tokens = unit_token_estimates.get(key, 0)
         for attempt in range(max_submit_retries):
@@ -1717,34 +1729,50 @@ def _execute_units_batch(
                 token_ledger.record(job_name, est_tokens)
                 return True
             except Exception as e:
-                if (
-                    "file_storage_bytes" in str(e)
-                    and attempt < max_submit_retries - 1
-                ):
-                    # Storage quota hit — sweep orphaned files
-                    if verbose:
-                        print(
-                            f"  {key}: storage quota hit "
-                            f"(attempt {attempt + 1}/"
-                            f"{max_submit_retries}), "
-                            f"sweeping stale files..."
+                err_str = str(e)
+                is_retryable = (
+                    "RESOURCE_EXHAUSTED" in err_str
+                    or "429" in err_str
+                    or "file_storage_bytes" in err_str
+                )
+                if is_retryable and attempt < max_submit_retries - 1:
+                    # Backoff: 10s, 30s, 60s
+                    backoff = [10, 30, 60][
+                        min(attempt, 2)
+                    ]
+                    if "file_storage_bytes" in err_str:
+                        # Storage quota — sweep orphaned files
+                        if verbose:
+                            print(
+                                f"  {key}: storage quota hit "
+                                f"(attempt {attempt + 1}/"
+                                f"{max_submit_retries}), "
+                                f"sweeping stale files..."
+                            )
+                        active = {
+                            v["uploaded_file_name"]
+                            for v in batch_pending.values()
+                            if "uploaded_file_name" in v
+                        }
+                        swept, freed = sweep_stale_files(
+                            client, active,
                         )
-                    active = {
-                        v["uploaded_file_name"]
-                        for v in batch_pending.values()
-                        if "uploaded_file_name" in v
-                    }
-                    swept, freed = sweep_stale_files(
-                        client, active,
-                    )
-                    if verbose:
-                        print(
-                            f"  Swept {swept} stale files "
-                            f"({freed:.2f} GB freed)"
-                        )
-                    time.sleep(5)
+                        if verbose:
+                            print(
+                                f"  Swept {swept} stale files "
+                                f"({freed:.2f} GB freed)"
+                            )
+                    else:
+                        if verbose:
+                            print(
+                                f"  {key}: quota exceeded "
+                                f"(attempt {attempt + 1}/"
+                                f"{max_submit_retries}), "
+                                f"backing off {backoff}s..."
+                            )
+                    time.sleep(backoff)
                     continue
-                # Non-storage error or retries exhausted
+                # Non-retryable error or retries exhausted
                 results["failed"].append(
                     {"unit": key, "error": f"submit: {e}"}
                 )
@@ -1850,7 +1878,9 @@ def _execute_units_batch(
             )
 
     # ── Initial submission wave ───────────────────────────────
-    # Fill up to effective_cap, gated by both job count and token budget
+    # Fill up to effective_cap, gated by both job count and token budget.
+    # Space submissions to avoid burst-submitting faster than the
+    # server can process quota changes.
     initial_submitted = 0
     while submission_queue:
         if len(in_flight) >= effective_cap:
@@ -1863,6 +1893,9 @@ def _execute_units_batch(
         if _submit_one(next_key):
             n_submitted += 1
             initial_submitted += 1
+            # Brief pause between submissions
+            if submission_queue:
+                time.sleep(submit_spacing_seconds)
 
     if verbose and initial_submitted:
         print(
@@ -1927,6 +1960,9 @@ def _execute_units_batch(
                 if _submit_one(next_key):
                     n_submitted += 1
                     newly_submitted += 1
+                    # Brief pause between submissions
+                    if submission_queue:
+                        time.sleep(submit_spacing_seconds)
 
             if verbose and newly_submitted > 0:
                 print(
