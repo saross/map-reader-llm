@@ -1,0 +1,57 @@
+{
+  "analysis_timestamp": "2026-03-14T11:13:07.960481+00:00",
+  "study_dir": "outputs/h11/single-pass-384",
+  "n_conditions": 1,
+  "n_bootstrap": 1000,
+  "fdr_q": 0.05,
+  "per_condition_metrics": {
+    "384-clipped-to-512": {
+      "n_runs": 10,
+      "n_detections_total": 3134,
+      "per_run_f1": [
+        0.3933,
+        0.4257,
+        0.4318,
+        0.4079,
+        0.4098,
+        0.4332,
+        0.4094,
+        0.4135,
+        0.4067,
+        0.4177
+      ],
+      "point_estimate": {
+        "f1": 0.4149,
+        "precision": 0.2717,
+        "recall": 0.8773
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.11902668720301329,
+          "ci_lower": 0.00828884605330963,
+          "ci_upper": 0.27284240628370754
+        },
+        "precision": {
+          "mean": 0.40662433738414316,
+          "ci_lower": 0.03837047327672327,
+          "ci_upper": 0.7265183688860161
+        },
+        "recall": {
+          "mean": 0.07128985556245307,
+          "ci_lower": 0.004585089676832796,
+          "ci_upper": 0.17859374999999997
+        },
+        "n_iterations": 1000,
+        "n_runs": 10,
+        "n_tiles": 60
+      }
+    }
+  },
+  "pairwise_comparisons": [],
+  "n_comparisons": 0,
+  "n_initially_significant": 0,
+  "n_fdr_significant": 0,
+  "optimal_condition": "384-clipped-to-512",
+  "optimal_f1": 0.11902668720301329,
+  "recommendation": "Optimal condition: 384-clipped-to-512 (mean F1 = 0.1190)\nNo pairwise differences significant after FDR correction (q=0.05)."
+}

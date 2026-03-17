@@ -1,0 +1,28 @@
+{
+  "study": {
+    "name": "H11: Tile Size \u2014 Single-Pass at 384\u00d7384",
+    "version": "1.0",
+    "description": "Tests whether 384\u00d7384 tiles improve single-pass detection performance\ncompared to the 512\u00d7512 baseline. Smaller tiles increase the mound-to-tile\narea ratio, potentially making mounds easier to detect.\n",
+    "phase": "h11",
+    "hypothesis": "H11",
+    "created": "2026-03-12"
+  },
+  "generated": "2026-03-14T06:04:16.607206+00:00",
+  "conditions": [
+    "384"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 9,
+  "tile_limit": null,
+  "execution_order": [
+    "384/run_10",
+    "384/run_7",
+    "384/run_5",
+    "384/run_3",
+    "384/run_4",
+    "384/run_8",
+    "384/run_2",
+    "384/run_9",
+    "384/run_6"
+  ]
+}

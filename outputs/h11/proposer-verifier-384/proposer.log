@@ -1,0 +1,28 @@
+Overriding Config Temperature (1.0) with CLI Argument: 0.0
+Loaded Version: detect_brief-text
+Model: gemini-3-flash
+Workers: 12
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: minimal
+Output: outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.geojson
+Metadata: outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json
+Using Manifest: inputs/tiles_384/validation_manifest.json
+Manifest loaded. Found 240 of 240 tiles (2 remaining to process).
+  Resuming: 238 tiles already processed.
+Processing 2 new tiles...
+Token Bucket: target_rpm=1440, target_tpm=720,000, tokens_per_request=1500
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [00:01<00:01,  1.99s/it]100%|██████████| 2/2 [00:02<00:00,  1.17s/it]100%|██████████| 2/2 [00:02<00:00,  1.29s/it]
+Failed to parse response for K-35-053-3_Elenovo_x2352_y336.png: Expecting value: line 9 column 7 (char 102)
+Failed to parse response for K-35-062-2_Rakovski_x2352_y1344.png: Expecting value: line 9 column 7 (char 102)
+
+Finished. Saved to outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.geojson
+Tile manifest: outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.tiles.json
+Metadata saved to outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json
+Tiles processed: 2
+Tiles failed: 2
+Total detections: 0
+Tokens used: 3,218
+Estimated cost: $0.0004
