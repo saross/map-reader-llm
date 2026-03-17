@@ -76,7 +76,27 @@ _TERMINAL_STATES = frozenset({
 })
 
 # Script metadata for metadata tracker
-__version__ = "1.4.0"
+__version__ = "1.5.0"
+
+# Maximum tile-level failures before a batch unit is rejected.
+# At 340 tiles, 10 failures = ~3% — acceptable for consensus voting
+# studies (K=30 runs, each tile gets many chances). Individual failed
+# tiles can be patched later via --patch-tiles mode.
+MAX_ACCEPTABLE_TILE_FAILURES = 10
+
+# Maximum synchronous retry attempts for tiles that fail JSON parsing
+# after a batch job completes. Empirically, ~74% resolve on attempt 1,
+# ~98% by attempt 3. At 10 attempts, even 60% per-attempt failure
+# rates resolve with P(all fail) = 0.6%. No observed tile exceeds
+# 60% failure rate.
+MAX_SYNC_RETRIES = 10
+
+# Reduced max_output_tokens for safe-mode retries via --patch-tiles.
+# Failures are caused by output truncation: the model's thinking
+# tokens consume most of the 8192 budget, leaving ~188 tokens for
+# visible JSON. Reducing to 2048 constrains thinking, preventing
+# truncation. Only used as a last resort to preserve detection quality.
+SAFE_MODE_MAX_OUTPUT_TOKENS = 2048
 
 
 @dataclasses.dataclass
@@ -914,6 +934,7 @@ def _retry_tile_sync(
     system_instruction: str,
     prompt_config: dict,
     examples: list[dict],
+    max_output_tokens_override: int | None = None,
 ) -> dict | None:
     """
     Retry a single parse-failed tile via synchronous API call.
@@ -930,6 +951,10 @@ def _retry_tile_sync(
         system_instruction: System instruction text.
         prompt_config: Prompt config dict (temperature, etc.).
         examples: List of example dicts from prompt config.
+        max_output_tokens_override: If provided, overrides the
+            ``max_output_tokens`` from prompt_config. Used by
+            safe-mode retries to constrain thinking budget and
+            prevent output truncation.
 
     Returns:
         A result dict matching the batch response format, or ``None``
@@ -993,8 +1018,8 @@ def _retry_tile_sync(
         # thinking_config when present (Finding 1 from debug audit)
         gen_config_kwargs: dict[str, Any] = {
             "temperature": prompt_config.get("temperature", 0.1),
-            "max_output_tokens": prompt_config.get(
-                "max_output_tokens", 8192,
+            "max_output_tokens": max_output_tokens_override or (
+                prompt_config.get("max_output_tokens", 8192)
             ),
             "response_mime_type": "application/json",
             "system_instruction": system_instruction,
@@ -1427,66 +1452,131 @@ def complete_batch_unit(
         )
     )
 
-    # Retry parse failures via synchronous API (one attempt per tile).
-    # Note: retry calls use the synchronous API (no 50% batch discount)
-    # and their token usage is not reflected in the batch cost estimate.
-    # At ~0.17% failure rate this is negligible (~$0.01 per 2400 tiles).
+    # Retry parse failures via synchronous API (up to MAX_SYNC_RETRIES
+    # attempts per tile). Failures are typically stochastic JSON parse
+    # errors — the model produces valid detections wrapped in malformed
+    # JSON. Empirically, ~74% resolve on the first retry, ~98% by
+    # attempt 3, and ~99.9% by attempt 5. Deterministic failures (tiles
+    # where the model consistently exceeds output token limits) will not
+    # resolve and are recorded for later diagnosis.
+    #
+    # Cost is negligible: ~$0.0003 per text retry, ~$0.0005 per image
+    # retry. Even 5 retries × 30 tiles ≈ $0.05.
     retried_keys: list[str] = []
     if parse_failed_keys:
+        pending_retries = list(parse_failed_keys)
         logger.info(
-            "Retrying %d parse-failed tile(s) synchronously: %s",
-            len(parse_failed_keys), parse_failed_keys,
+            "Retrying %d parse-failed tile(s) synchronously "
+            "(up to %d attempts each): %s",
+            len(pending_retries), MAX_SYNC_RETRIES, pending_retries,
         )
-        for tile_key in parse_failed_keys:
-            tile_path = tile_paths_by_name.get(tile_key)
-            if tile_path is None:
-                continue
 
-            retry_result = _retry_tile_sync(
-                client=client,
-                tile_path=tile_path,
-                model_name=ctx.model_name,
-                system_instruction=ctx.system_instruction,
-                prompt_config=ctx.prompt_config,
-                examples=ctx.examples,
+        # Remove tiles with unresolvable paths before retrying —
+        # these will never succeed and should not be retried.
+        unresolvable = [
+            k for k in pending_retries
+            if tile_paths_by_name.get(k) is None
+        ]
+        if unresolvable:
+            logger.warning(
+                "Skipping %d tile(s) with no local path: %s",
+                len(unresolvable), unresolvable,
             )
+            pending_retries = [
+                k for k in pending_retries if k not in unresolvable
+            ]
 
-            if retry_result is not None:
-                # Feed through the same parse pipeline
-                retry_matched = {tile_key: retry_result}
-                retry_features, retry_dets, retry_failures = (
-                    parse_detections_to_geojson(
-                        matched_results=retry_matched,
-                        tile_paths_by_name=tile_paths_by_name,
-                        config_version=ctx.config_version,
+        for attempt in range(1, MAX_SYNC_RETRIES + 1):
+            if not pending_retries:
+                break
+
+            attempt_successes: list[str] = []
+            for tile_key in pending_retries:
+                tile_path = tile_paths_by_name[tile_key]
+
+                try:
+                    retry_result = _retry_tile_sync(
+                        client=client,
+                        tile_path=tile_path,
                         model_name=ctx.model_name,
-                        tile_size=ctx.tile_size,
+                        system_instruction=ctx.system_instruction,
+                        prompt_config=ctx.prompt_config,
+                        examples=ctx.examples,
                     )
-                )
-                if not retry_failures:
-                    features.extend(retry_features)
-                    total_detections += retry_dets
-                    retried_keys.append(tile_key)
-                    logger.info("Retry succeeded for %s", tile_key)
-                else:
+
+                    if retry_result is not None:
+                        # Feed through the same parse pipeline
+                        retry_matched = {tile_key: retry_result}
+                        retry_features, retry_dets, retry_failures = (
+                            parse_detections_to_geojson(
+                                matched_results=retry_matched,
+                                tile_paths_by_name=tile_paths_by_name,
+                                config_version=ctx.config_version,
+                                model_name=ctx.model_name,
+                                tile_size=ctx.tile_size,
+                            )
+                        )
+                        if not retry_failures:
+                            features.extend(retry_features)
+                            total_detections += retry_dets
+                            retried_keys.append(tile_key)
+                            attempt_successes.append(tile_key)
+                            logger.info(
+                                "Retry attempt %d succeeded for %s",
+                                attempt, tile_key,
+                            )
+                except Exception as e:
                     logger.warning(
-                        "Retry also failed to parse for %s", tile_key,
+                        "Retry attempt %d error for %s: %s",
+                        attempt, tile_key, e,
                     )
+
+            # Remove successes from pending list for next attempt
+            pending_retries = [
+                k for k in pending_retries
+                if k not in attempt_successes
+            ]
+
+            if attempt_successes:
+                logger.info(
+                    "Retry attempt %d: %d/%d resolved, %d remaining",
+                    attempt, len(attempt_successes),
+                    len(attempt_successes) + len(pending_retries),
+                    len(pending_retries),
+                )
 
     if retried_keys:
         print(
             f"  Retried {len(retried_keys)}/{len(parse_failed_keys)} "
             f"parse-failed tile(s) successfully"
+            + (
+                f" ({MAX_SYNC_RETRIES} attempts max)"
+                if len(retried_keys) < len(parse_failed_keys)
+                else ""
+            )
         )
 
-    # Tiles that failed parse even after retry are true failures
+    # Tiles that failed parse even after all retry attempts are
+    # recorded as true failures — likely deterministic (e.g., model
+    # output exceeds token limit for this tile/config combination).
     still_failed = [
         k for k in parse_failed_keys if k not in retried_keys
     ]
     if still_failed:
         print(
-            f"  WARNING: {len(still_failed)} tile(s) failed parse "
-            f"even after retry: {still_failed}"
+            f"\n  {'─' * 56}\n"
+            f"  Tile Failure Report: {len(still_failed)} tile(s) "
+            f"failed all {MAX_SYNC_RETRIES} retry attempts"
+        )
+        for tile_name in sorted(still_failed):
+            print(f"    {tile_name}")
+        print(
+            f"\n  These tiles likely hit output truncation "
+            f"(thinking tokens exhaust max_output_tokens)."
+            f"\n  To patch later with reduced output budget:"
+            f"\n    python scripts/run_phase2.py <study.yaml> "
+            f"--patch-tiles"
+            f"\n  {'─' * 56}"
         )
 
     # Build processed/failed tile sets
@@ -1527,15 +1617,14 @@ def complete_batch_unit(
         f"${cost:.4f}"
     )
 
-    # Accept with small failure count (matching concurrent pipeline
-    # tolerance)
-    max_acceptable_failures = 2
-    if len(failed_tiles) <= max_acceptable_failures:
+    # Accept with small failure count — partial results are preserved
+    # on disk and missing tiles can be patched later via --patch-tiles.
+    if len(failed_tiles) <= MAX_ACCEPTABLE_TILE_FAILURES:
         if failed_tiles:
             print(
                 f"  Accepting partial result: "
                 f"{len(failed_tiles)} tile(s) "
-                f"failed (≤ {max_acceptable_failures} threshold)"
+                f"failed (≤ {MAX_ACCEPTABLE_TILE_FAILURES} threshold)"
             )
         return True, "success", cost
 
@@ -1647,3 +1736,299 @@ def run_batch_unit(
 
     # Phase 3: Complete
     return complete_batch_unit(ctx, client, completed_job)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Post-Hoc Tile Patching
+# ─────────────────────────────────────────────────────────────────────
+
+
+def patch_failed_tiles(
+    unit_dir: Path,
+    client: Any,
+    max_output_tokens: int = SAFE_MODE_MAX_OUTPUT_TOKENS,
+    max_attempts: int = MAX_SYNC_RETRIES,
+    dry_run: bool = False,
+) -> dict:
+    """
+    Patch failed tiles in a completed execution unit.
+
+    Reads ``.tiles.json`` to identify failed tiles, reconstructs the
+    prompt configuration from ``.meta.json``, and retries each tile
+    via the synchronous API. Uses a two-tier approach:
+
+    1. **Tier 1**: Retry with original parameters (preserves experimental
+       conditions). Most failures are stochastic and resolve here.
+    2. **Tier 2**: Retry with reduced ``max_output_tokens`` (constrains
+       thinking budget to prevent output truncation). Only used when
+       tier 1 exhausts all attempts.
+
+    On success, the existing GeoJSON is updated with new detections and
+    the ``.tiles.json`` / ``.meta.json`` are amended to reflect recovery.
+
+    Args:
+        unit_dir: Path to the unit directory (contains ``.geojson``,
+            ``.tiles.json``, and ``.meta.json``).
+        client: Initialised ``google.genai.Client``.
+        max_output_tokens: Reduced output token limit for tier 2
+            safe-mode retries. Defaults to ``SAFE_MODE_MAX_OUTPUT_TOKENS``.
+        max_attempts: Maximum retry attempts per tier.
+        dry_run: If ``True``, report what would be patched without
+            making API calls.
+
+    Returns:
+        Dictionary with ``recovered``, ``recovered_safe_mode``,
+        ``still_failed``, and ``total_patched`` keys.
+    """
+    # ── Locate output files ───────────────────────────────────
+    geojson_files = list(unit_dir.glob("*.geojson"))
+    tiles_files = list(unit_dir.glob("*.tiles.json"))
+    meta_files = list(unit_dir.glob("*.meta.json"))
+
+    if not geojson_files or not tiles_files or not meta_files:
+        logger.warning("Incomplete unit at %s — skipping", unit_dir)
+        return {
+            "recovered": [], "recovered_safe_mode": [],
+            "still_failed": [], "total_patched": 0,
+        }
+
+    geojson_path = geojson_files[0]
+    tiles_path = tiles_files[0]
+    meta_path = meta_files[0]
+
+    # ── Read failed tiles ─────────────────────────────────────
+    with open(tiles_path) as f:
+        tiles_data = json.load(f)
+
+    failed_tiles = tiles_data.get("failed", [])
+    if not failed_tiles:
+        return {
+            "recovered": [], "recovered_safe_mode": [],
+            "still_failed": [], "total_patched": 0,
+        }
+
+    # ── Extract config from .meta.json ────────────────────────
+    with open(meta_path) as f:
+        meta_data = json.load(f)
+
+    config_section = meta_data.get("configuration", {})
+    snapshot = config_section.get("full_config_snapshot", {})
+    system_instruction = config_section.get("system_instruction_text", "")
+    model_name = config_section.get("model", "gemini-3-flash")
+    examples = snapshot.get("examples", [])
+    include_images = config_section.get("include_example_images", False)
+
+    # Resolve model name — configs use marketing names (e.g.
+    # 'gemini-3-flash') but the sync API may require '-preview'.
+    try:
+        available_models = {
+            m.name.removeprefix("models/")
+            for m in client.models.list()
+        }
+        if model_name not in available_models:
+            preview_name = f"{model_name}-preview"
+            if preview_name in available_models:
+                logger.info(
+                    "Model '%s' not found; resolved to '%s'",
+                    model_name, preview_name,
+                )
+                model_name = preview_name
+    except Exception as e:
+        logger.warning("Could not resolve model name: %s", e)
+
+    # Reconstruct prompt_config from snapshot
+    prompt_config = {
+        "temperature": config_section.get("temperature", 0.0),
+        "max_output_tokens": config_section.get(
+            "max_output_tokens", 8192,
+        ),
+        "thinking_level": config_section.get("thinking_level"),
+        "include_example_images": include_images,
+        "examples": examples,
+    }
+
+    # Resolve tile size from meta (default 512)
+    tile_size = config_section.get("tile_size", TILE_SIZE)
+
+    print(f"  {len(failed_tiles)} failed tile(s) to patch")
+    if dry_run:
+        for t in sorted(failed_tiles):
+            print(f"    [DRY RUN] Would retry: {t}")
+        return {
+            "recovered": [], "recovered_safe_mode": [],
+            "still_failed": failed_tiles, "total_patched": 0,
+        }
+
+    # ── Resolve tile paths ────────────────────────────────────
+    tile_paths_by_name: dict[str, Path] = {}
+    for tile_name in failed_tiles:
+        # Search in subdirectories of TILES_DIR
+        matches = list(TILES_DIR.rglob(tile_name))
+        if matches:
+            tile_paths_by_name[tile_name] = matches[0]
+        else:
+            logger.warning(
+                "Tile file not found: %s", tile_name,
+            )
+
+    # ── Tier 1: Retry with original parameters ────────────────
+    recovered: list[str] = []
+    all_new_features: list[dict] = []
+    config_version = snapshot.get("version", "patched")
+    pending = [
+        t for t in failed_tiles if t in tile_paths_by_name
+    ]
+
+    if pending:
+        print(f"  Tier 1: retrying {len(pending)} tile(s) "
+              f"with original parameters...")
+        for attempt in range(1, max_attempts + 1):
+            if not pending:
+                break
+            successes: list[str] = []
+            for tile_name in pending:
+                try:
+                    result = _retry_tile_sync(
+                        client=client,
+                        tile_path=tile_paths_by_name[tile_name],
+                        model_name=model_name,
+                        system_instruction=system_instruction,
+                        prompt_config=prompt_config,
+                        examples=examples,
+                    )
+                    if result is not None:
+                        retry_matched = {tile_name: result}
+                        new_features, dets, failures = (
+                            parse_detections_to_geojson(
+                                matched_results=retry_matched,
+                                tile_paths_by_name=tile_paths_by_name,
+                                config_version=config_version,
+                                model_name=model_name,
+                                tile_size=tile_size,
+                            )
+                        )
+                        if not failures:
+                            all_new_features.extend(new_features)
+                            recovered.append(tile_name)
+                            successes.append(tile_name)
+                except Exception as e:
+                    logger.warning(
+                        "Tier 1 attempt %d error for %s: %s",
+                        attempt, tile_name, e,
+                    )
+            pending = [t for t in pending if t not in successes]
+
+        if recovered:
+            print(f"  Tier 1 recovered: {len(recovered)} tile(s)")
+
+    # ── Tier 2: Safe-mode retry (reduced max_output_tokens) ───
+    recovered_safe: list[str] = []
+    if pending:
+        print(
+            f"  Tier 2: retrying {len(pending)} tile(s) "
+            f"with max_output_tokens={max_output_tokens}..."
+        )
+        for attempt in range(1, max_attempts + 1):
+            if not pending:
+                break
+            successes = []
+            for tile_name in pending:
+                try:
+                    result = _retry_tile_sync(
+                        client=client,
+                        tile_path=tile_paths_by_name[tile_name],
+                        model_name=model_name,
+                        system_instruction=system_instruction,
+                        prompt_config=prompt_config,
+                        examples=examples,
+                        max_output_tokens_override=max_output_tokens,
+                    )
+                    if result is not None:
+                        retry_matched = {tile_name: result}
+                        new_features, dets, failures = (
+                            parse_detections_to_geojson(
+                                matched_results=retry_matched,
+                                tile_paths_by_name=tile_paths_by_name,
+                                config_version=config_version,
+                                model_name=model_name,
+                                tile_size=tile_size,
+                            )
+                        )
+                        if not failures:
+                            all_new_features.extend(new_features)
+                            recovered_safe.append(tile_name)
+                            successes.append(tile_name)
+                except Exception as e:
+                    logger.warning(
+                        "Tier 2 attempt %d error for %s: %s",
+                        attempt, tile_name, e,
+                    )
+            pending = [t for t in pending if t not in successes]
+
+        if recovered_safe:
+            print(
+                f"  Tier 2 recovered: {len(recovered_safe)} tile(s) "
+                f"(safe mode)"
+            )
+
+    # ── Merge recovered features into existing GeoJSON ────────
+    all_recovered = recovered + recovered_safe
+    if all_recovered and all_new_features:
+        with open(geojson_path) as f:
+            existing = json.load(f)
+        existing_features = existing.get("features", [])
+        existing_features.extend(all_new_features)
+
+        # Update processed_tiles property
+        processed = set(
+            existing.get("properties", {}).get("processed_tiles", [])
+        )
+        processed.update(all_recovered)
+        existing.setdefault("properties", {})["processed_tiles"] = (
+            sorted(processed)
+        )
+        existing["features"] = existing_features
+
+        with open(geojson_path, "w") as f:
+            json.dump(existing, f)
+
+    # ── Update .tiles.json ────────────────────────────────────
+    if all_recovered:
+        completed_set = set(tiles_data.get("completed", []))
+        completed_set.update(all_recovered)
+        tiles_data["completed"] = sorted(completed_set)
+        tiles_data["failed"] = sorted(pending)
+        tiles_data["patched"] = sorted(all_recovered)
+        tiles_data["patch_timestamp"] = (
+            datetime.now(timezone.utc).isoformat()
+        )
+        with open(tiles_path, "w") as f:
+            json.dump(tiles_data, f, indent=2)
+
+    # ── Update .meta.json failure count ───────────────────────
+    if all_recovered:
+        exec_stats = meta_data.get("execution_stats", {})
+        items_failed = exec_stats.get("items_failed", 0)
+        items_processed = exec_stats.get("items_processed", 0)
+        exec_stats["items_failed"] = max(
+            0, items_failed - len(all_recovered),
+        )
+        exec_stats["items_processed"] = (
+            items_processed + len(all_recovered)
+        )
+        meta_data["execution_stats"] = exec_stats
+        with open(meta_path, "w") as f:
+            json.dump(meta_data, f, indent=2)
+
+    # ── Report ────────────────────────────────────────────────
+    if pending:
+        print(f"  Still failed: {len(pending)} tile(s)")
+        for t in sorted(pending):
+            print(f"    {t}")
+
+    return {
+        "recovered": recovered,
+        "recovered_safe_mode": recovered_safe,
+        "still_failed": pending,
+        "total_patched": len(all_recovered),
+    }

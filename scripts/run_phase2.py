@@ -72,6 +72,13 @@ __version__ = "1.6.0"
 # Default quota for Gemini 3 Flash Preview (Tier 1)
 DEFAULT_BATCH_TOKEN_QUOTA = 3_000_000
 
+# Maximum tile-level failures before a unit is rejected.
+# MUST match lib_batch_api.MAX_ACCEPTABLE_TILE_FAILURES — enforced
+# by a runtime assertion in _execute_units_batch() where both modules
+# are loaded. Cannot import at module level because lib_batch_api
+# has heavy dependencies (rasterio, config) not available at parse time.
+MAX_ACCEPTABLE_TILE_FAILURES = 10
+
 
 class BatchTokenLedger:
     """Track estimated enqueued tokens across active batch jobs.
@@ -493,9 +500,8 @@ def reconcile_checkpoint(
 
     Scans {output_dir}/{condition}/run_{N}/ for completed runs.
     A run is considered complete if it has a ``.meta.json`` file
-    with ``items_failed <= 2``, matching the acceptance threshold
-    used by the concurrent execution path (see
-    ``run_execution_unit()``, line ~626).
+    with ``items_failed <= MAX_ACCEPTABLE_TILE_FAILURES``, matching
+    the acceptance threshold used by the execution paths.
 
     Runs without a ``.meta.json`` are treated as incomplete
     (e.g. the worker was killed mid-execution before writing
@@ -516,8 +522,7 @@ def reconcile_checkpoint(
     Returns:
         Updated checkpoint dictionary.
     """
-    # Match the acceptance threshold from run_execution_unit()
-    max_acceptable_failures = 2
+    max_acceptable_failures = MAX_ACCEPTABLE_TILE_FAILURES
 
     checkpoint = load_checkpoint(checkpoint_path)
     tracked = set(checkpoint.get("completed", []))
@@ -802,14 +807,13 @@ def run_execution_unit(
             return True, "success", cost
 
         # Exit code 2 = partial failure (some tiles failed).
-        # Accept runs where only a small number of tiles failed
-        # (e.g. 1 tile with a known JSON parse issue out of 60).
-        max_acceptable_failures = 2
-        if proc.returncode in (0, 2) and items_failed <= max_acceptable_failures:
+        # Accept runs where tile failures are within threshold —
+        # missing tiles can be patched later via --patch-tiles.
+        if proc.returncode in (0, 2) and items_failed <= MAX_ACCEPTABLE_TILE_FAILURES:
             if items_failed > 0:
                 print(
                     f"  Accepting partial result: {items_failed} tile(s) "
-                    f"failed (≤ {max_acceptable_failures} threshold)"
+                    f"failed (≤ {MAX_ACCEPTABLE_TILE_FAILURES} threshold)"
                 )
             return True, "success", cost
 
@@ -1355,11 +1359,19 @@ def _execute_units_batch(
 
     from config import BASE_DIR, GOOGLE_API_KEY
     from scripts.lib_batch_api import (
+        MAX_ACCEPTABLE_TILE_FAILURES as _BATCH_THRESHOLD,
         cleanup_batch_files,
         complete_batch_unit,
         prepare_batch_unit,
         submit_batch_unit,
         sweep_stale_files,
+    )
+
+    # Verify the two modules agree on the acceptance threshold
+    assert MAX_ACCEPTABLE_TILE_FAILURES == _BATCH_THRESHOLD, (
+        f"MAX_ACCEPTABLE_TILE_FAILURES mismatch: "
+        f"run_phase2={MAX_ACCEPTABLE_TILE_FAILURES}, "
+        f"lib_batch_api={_BATCH_THRESHOLD}"
     )
 
     results: dict = {"completed": [], "failed": []}
@@ -2026,6 +2038,107 @@ def _execute_units_batch(
     return results, running_cost
 
 
+def _patch_tiles_mode(
+    output_dir: Path,
+    dry_run: bool = False,
+    condition_filter: str | None = None,
+    verbose: bool = True,
+) -> None:
+    """
+    Scan completed units for failed tiles and patch via sync API.
+
+    Walks the output directory tree for ``.tiles.json`` files listing
+    failed tiles, then calls ``patch_failed_tiles()`` from
+    ``lib_batch_api`` to retry them with a two-tier approach (original
+    params first, then reduced ``max_output_tokens``).
+
+    Args:
+        output_dir: Root output directory for the study.
+        dry_run: Preview without making API calls.
+        condition_filter: Only patch units matching this condition name.
+        verbose: Print progress information.
+    """
+    from google import genai
+
+    from config import GOOGLE_API_KEY
+    from scripts.lib_batch_api import patch_failed_tiles
+
+    # ── Discover units with failures ──────────────────────────
+    units_to_patch: list[tuple[Path, int]] = []
+    for tiles_json in sorted(output_dir.rglob("*.tiles.json")):
+        unit_dir = tiles_json.parent
+
+        # Apply condition filter
+        if condition_filter:
+            # Unit path is .../condition_name/run_N/
+            condition_name = unit_dir.parent.name
+            if condition_name != condition_filter:
+                continue
+
+        with open(tiles_json) as f:
+            tiles_data = json.load(f)
+        n_failed = len(tiles_data.get("failed", []))
+        if n_failed > 0:
+            units_to_patch.append((unit_dir, n_failed))
+
+    if not units_to_patch:
+        print("No failed tiles found — nothing to patch.")
+        return
+
+    total_failed = sum(n for _, n in units_to_patch)
+    print(
+        f"Found {total_failed} failed tile(s) across "
+        f"{len(units_to_patch)} unit(s)"
+    )
+
+    if dry_run:
+        for unit_dir, n in units_to_patch:
+            rel = unit_dir.relative_to(output_dir)
+            print(f"  [DRY RUN] {rel}: {n} failed tile(s)")
+        return
+
+    # ── Initialise API client ─────────────────────────────────
+    if not GOOGLE_API_KEY:
+        print("ERROR: GOOGLE_API_KEY not set")
+        sys.exit(1)
+    client = genai.Client(api_key=GOOGLE_API_KEY)
+
+    # ── Patch each unit ───────────────────────────────────────
+    total_recovered = 0
+    total_safe_mode = 0
+    total_still_failed = 0
+
+    for unit_dir, n_failed in units_to_patch:
+        rel = unit_dir.relative_to(output_dir)
+        print(f"\n{'─' * 60}")
+        print(f"  Patching {rel} ({n_failed} failed tile(s))")
+
+        result = patch_failed_tiles(
+            unit_dir=unit_dir,
+            client=client,
+            dry_run=False,
+        )
+
+        total_recovered += len(result["recovered"])
+        total_safe_mode += len(result["recovered_safe_mode"])
+        total_still_failed += len(result["still_failed"])
+
+    # ── Summary ───────────────────────────────────────────────
+    print(f"\n{'=' * 60}")
+    print("  Patch Summary")
+    print(f"{'=' * 60}")
+    print(f"  Units processed:    {len(units_to_patch)}")
+    print(f"  Tiles recovered:    {total_recovered} (original params)")
+    print(f"  Tiles recovered:    {total_safe_mode} (safe mode)")
+    print(f"  Tiles still failed: {total_still_failed}")
+    if total_still_failed > 0:
+        print(
+            "\n  Remaining failures are likely deterministic — "
+            "consider accepting the gaps."
+        )
+    print(f"{'=' * 60}")
+
+
 def main() -> None:
     """Main entry point for Phase 2 OFAT runner."""
     parser = argparse.ArgumentParser(
@@ -2193,6 +2306,17 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--patch-tiles",
+        action="store_true",
+        help=(
+            "Scan completed units for tiles that failed JSON parsing "
+            "and retry them via real-time API. Uses two tiers: first "
+            "retries with original parameters, then falls back to "
+            "reduced max_output_tokens (2048) to prevent truncation. "
+            "Respects --dry-run and --condition filters."
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -2211,6 +2335,21 @@ Examples:
         reconcile_checkpoint(
             output_dir=output_dir,
             checkpoint_path=checkpoint_path,
+            verbose=not args.quiet,
+        )
+        sys.exit(0)
+
+    # --patch-tiles: scan for failed tiles and retry via sync API
+    if args.patch_tiles:
+        config = load_study_config(args.study_file)
+        output_dir = PROJECT_ROOT / config["execution"]["output_dir"]
+        if not output_dir.exists():
+            print(f"ERROR: Output directory does not exist: {output_dir}")
+            sys.exit(1)
+        _patch_tiles_mode(
+            output_dir=output_dir,
+            dry_run=args.dry_run,
+            condition_filter=args.condition,
             verbose=not args.quiet,
         )
         sys.exit(0)
