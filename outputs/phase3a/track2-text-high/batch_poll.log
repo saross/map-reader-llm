@@ -1,0 +1,391 @@
+======================================================================
+Study: Phase 3a: H3 Consensus Voting — Track 2 (Text-Only)
+Phase: 3a
+Hypothesis: H3
+Version: 1.0
+Description: Tests consensus voting at elevated temperatures (T=0.3, T=0.7, T=1.0) using
+the carry-forward text-only configuration (F1=0.660 at T=0.0).
+T=0.0 is excluded because the model produces near-deterministic output
+at zero temperature, making consensus voting meaningless (Erratum E32).
+
+This is the first consensus voting analysis for the text-only track.
+Phase 2b retroactive consensus analysis was only performed on the image
+track (canonical library), so no prior text-only consensus baseline exists.
+
+Text-only prompts have a substantially smaller context window (no base64
+images), which may produce different temperature sensitivity and
+consensus behaviour compared to the image-using track.
+======================================================================
+
+Conditions: 3
+  - T0.3: prompts/configs/detect_brief-text.json
+    Overrides: T=0.3
+  - T0.7: prompts/configs/detect_brief-text.json
+    Overrides: T=0.7
+  - T1.0: prompts/configs/detect_brief-text.json
+    Overrides: T=1.0
+Runs per condition: 30
+Tiles per run: ALL
+Total execution units: 90
+
+Resuming: 21 units already completed, 69 remaining
+
+Manifest: /home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/study_manifest.json
+
+Execution mode: BATCH (Gemini Batch API — parallel submission)
+
+Found 69 pending batch job(s) from previous run
+Phase 1: Preparing 69 execution units...
+
+[1/69] T1.0/run_10 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_10/batch_working/detections_T1.0_run10.jsonl)
+
+[2/69] T0.7/run_13 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_13/batch_working/detections_T0.7_run13.jsonl)
+
+[3/69] T0.7/run_29 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_29/batch_working/detections_T0.7_run29.jsonl)
+
+[4/69] T0.7/run_23 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_23/batch_working/detections_T0.7_run23.jsonl)
+
+[5/69] T0.7/run_24 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_24/batch_working/detections_T0.7_run24.jsonl)
+
+[6/69] T0.7/run_11 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_11/batch_working/detections_T0.7_run11.jsonl)
+
+[7/69] T0.3/run_25 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_25/batch_working/detections_T0.3_run25.jsonl)
+
+[8/69] T0.3/run_11 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_11/batch_working/detections_T0.3_run11.jsonl)
+
+[9/69] T0.3/run_19 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_19/batch_working/detections_T0.3_run19.jsonl)
+
+[10/69] T0.3/run_18 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_18/batch_working/detections_T0.3_run18.jsonl)
+
+[11/69] T1.0/run_14 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_14/batch_working/detections_T1.0_run14.jsonl)
+
+[12/69] T0.3/run_23 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_23/batch_working/detections_T0.3_run23.jsonl)
+
+[13/69] T0.3/run_29 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_29/batch_working/detections_T0.3_run29.jsonl)
+
+[14/69] T0.7/run_25 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_25/batch_working/detections_T0.7_run25.jsonl)
+
+[15/69] T0.3/run_16 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_16/batch_working/detections_T0.3_run16.jsonl)
+
+[16/69] T0.3/run_27 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_27/batch_working/detections_T0.3_run27.jsonl)
+
+[17/69] T1.0/run_27 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_27/batch_working/detections_T1.0_run27.jsonl)
+
+[18/69] T1.0/run_18 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_18/batch_working/detections_T1.0_run18.jsonl)
+
+[19/69] T1.0/run_3 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_3/batch_working/detections_T1.0_run03.jsonl)
+
+[20/69] T0.7/run_26 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_26/batch_working/detections_T0.7_run26.jsonl)
+
+[21/69] T0.7/run_16 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_16/batch_working/detections_T0.7_run16.jsonl)
+
+[22/69] T1.0/run_23 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_23/batch_working/detections_T1.0_run23.jsonl)
+
+[23/69] T1.0/run_6 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_6/batch_working/detections_T1.0_run06.jsonl)
+
+[24/69] T1.0/run_7 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_7/batch_working/detections_T1.0_run07.jsonl)
+
+[25/69] T0.7/run_27 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_27/batch_working/detections_T0.7_run27.jsonl)
+
+[26/69] T1.0/run_22 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_22/batch_working/detections_T1.0_run22.jsonl)
+
+[27/69] T1.0/run_13 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_13/batch_working/detections_T1.0_run13.jsonl)
+
+[28/69] T0.3/run_12 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_12/batch_working/detections_T0.3_run12.jsonl)
+
+[29/69] T0.7/run_18 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_18/batch_working/detections_T0.7_run18.jsonl)
+
+[30/69] T1.0/run_20 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_20/batch_working/detections_T1.0_run20.jsonl)
+
+[31/69] T0.7/run_30 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_30/batch_working/detections_T0.7_run30.jsonl)
+
+[32/69] T1.0/run_1 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_1/batch_working/detections_T1.0_run01.jsonl)
+
+[33/69] T0.3/run_30 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_30/batch_working/detections_T0.3_run30.jsonl)
+
+[34/69] T0.7/run_19 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_19/batch_working/detections_T0.7_run19.jsonl)
+
+[35/69] T0.7/run_12 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_12/batch_working/detections_T0.7_run12.jsonl)
+
+[36/69] T1.0/run_29 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_29/batch_working/detections_T1.0_run29.jsonl)
+
+[37/69] T1.0/run_15 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_15/batch_working/detections_T1.0_run15.jsonl)
+
+[38/69] T0.7/run_20 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_20/batch_working/detections_T0.7_run20.jsonl)
+
+[39/69] T1.0/run_17 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_17/batch_working/detections_T1.0_run17.jsonl)
+
+[40/69] T0.7/run_17 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_17/batch_working/detections_T0.7_run17.jsonl)
+
+[41/69] T1.0/run_11 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_11/batch_working/detections_T1.0_run11.jsonl)
+
+[42/69] T0.7/run_22 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_22/batch_working/detections_T0.7_run22.jsonl)
+
+[43/69] T1.0/run_4 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_4/batch_working/detections_T1.0_run04.jsonl)
+
+[44/69] T1.0/run_16 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_16/batch_working/detections_T1.0_run16.jsonl)
+
+[45/69] T1.0/run_9 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_9/batch_working/detections_T1.0_run09.jsonl)
+
+[46/69] T0.7/run_28 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_28/batch_working/detections_T0.7_run28.jsonl)
+
+[47/69] T0.3/run_14 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_14/batch_working/detections_T0.3_run14.jsonl)
+
+[48/69] T0.3/run_22 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_22/batch_working/detections_T0.3_run22.jsonl)
+
+[49/69] T0.3/run_24 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_24/batch_working/detections_T0.3_run24.jsonl)
+
+[50/69] T0.3/run_28 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_28/batch_working/detections_T0.3_run28.jsonl)
+
+[51/69] T1.0/run_26 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_26/batch_working/detections_T1.0_run26.jsonl)
+
+[52/69] T0.3/run_17 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_17/batch_working/detections_T0.3_run17.jsonl)
+
+[53/69] T0.3/run_15 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_15/batch_working/detections_T0.3_run15.jsonl)
+
+[54/69] T0.3/run_20 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_20/batch_working/detections_T0.3_run20.jsonl)
+
+[55/69] T1.0/run_25 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_25/batch_working/detections_T1.0_run25.jsonl)
+
+[56/69] T0.3/run_26 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_26/batch_working/detections_T0.3_run26.jsonl)
+
+[57/69] T0.7/run_14 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_14/batch_working/detections_T0.7_run14.jsonl)
+
+[58/69] T1.0/run_12 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_12/batch_working/detections_T1.0_run12.jsonl)
+
+[59/69] T1.0/run_28 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_28/batch_working/detections_T1.0_run28.jsonl)
+
+[60/69] T1.0/run_19 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_19/batch_working/detections_T1.0_run19.jsonl)
+
+[61/69] T1.0/run_2 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_2/batch_working/detections_T1.0_run02.jsonl)
+
+[62/69] T1.0/run_5 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_5/batch_working/detections_T1.0_run05.jsonl)
+
+[63/69] T1.0/run_30 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_30/batch_working/detections_T1.0_run30.jsonl)
+
+[64/69] T1.0/run_24 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_24/batch_working/detections_T1.0_run24.jsonl)
+
+[65/69] T0.7/run_21 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_21/batch_working/detections_T0.7_run21.jsonl)
+
+[66/69] T0.3/run_13 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_13/batch_working/detections_T0.3_run13.jsonl)
+
+[67/69] T0.3/run_21 (T=0.3)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.3/run_21/batch_working/detections_T0.3_run21.jsonl)
+
+[68/69] T1.0/run_8 (T=1.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T1.0/run_8/batch_working/detections_T1.0_run08.jsonl)
+
+[69/69] T0.7/run_15 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 60 lines (/home/shawn/Code/map-reader-llm/outputs/phase3a/track2-text/T0.7/run_15/batch_working/detections_T0.7_run15.jsonl)
+
+Phase 2: Submitting 0 new job(s) (69 already pending)...
+
+  T1.0/run_10: resuming pending job batches/pdabwyjmyagkuvoc78jcyxkygn4jl8txxuxh
+  T0.7/run_13: resuming pending job batches/idsumdovddxv67oyql9kcn55al0rfb2zxsbj
+  T0.7/run_29: resuming pending job batches/s65fjvm1hzxzcly0ajt8rfoypfhbzkv68z3x
+  T0.7/run_23: resuming pending job batches/ckncsjxlrl5163j14qvaiqpdvfeykt5h9lhz
+  T0.7/run_24: resuming pending job batches/me5uykk3hd62jndlzua8iljqczs3olj05r8x
+  T0.7/run_11: resuming pending job batches/4wobwrjkbptpde3wvsek8jl13syr8a0uh8gu
+  T0.3/run_25: resuming pending job batches/07vx0vvvv18x2psumw76riath8a0tqwdmow3
+  T0.3/run_11: resuming pending job batches/8gconhps9bpontr7bnl45prz3aay2aqcqumt
+  T0.3/run_19: resuming pending job batches/vwtu9wjwb3j9p339hnoycf528eymt0u9ew0y
+  T0.3/run_18: resuming pending job batches/hknptp0nl49snfnzazecb4r1oergb2l3id41
+  T1.0/run_14: resuming pending job batches/i521hl5q65o6n85ti8vjm6j6ho58vu6hzwa8
+  T0.3/run_23: resuming pending job batches/n7mmc7gi574fej6mny2egr1pjq3va21rfaer
+  T0.3/run_29: resuming pending job batches/noeh0zvgm2c6onp5gimstbrd87wggohubgaz
+  T0.7/run_25: resuming pending job batches/6487bzmef2u7eevwfz3beh9gkvw1kssmhez5
+  T0.3/run_16: resuming pending job batches/mk55mw5sfkz21w6vfrudzt2gw5178sfhjw80
+  T0.3/run_27: resuming pending job batches/1c8btoxfw23003hvvaqunodsmj21kmdx5bkq
+  T1.0/run_27: resuming pending job batches/ry6nvncshmvvbtlorayzdrnvs0evpid9nd9k
+  T1.0/run_18: resuming pending job batches/hsddqq4lygfa0xdzcpeqjt93rgc2qmhtpgop
+  T1.0/run_3: resuming pending job batches/yow7jkfavwjch0kwj78tu7jtadr53ugzyslz
+  T0.7/run_26: resuming pending job batches/0ergwx9glyrzttidvqu0s85p6idsy0kkjz8z
+  T0.7/run_16: resuming pending job batches/uw5tjo5sxwdx9nw89yb6po2oa59kr6nyrvhw
+  T1.0/run_23: resuming pending job batches/3ld4nv7u428d277hz0044f8vn6oazx8ofh9t
+  T1.0/run_6: resuming pending job batches/y4jqih8xkyf2vyaur59636ntfabfiuofmkag
+  T1.0/run_7: resuming pending job batches/8c24bnx1fulan078dy9tf9ix2upmuh1m872w
+  T0.7/run_27: resuming pending job batches/hzt9a8ob5oum74p1ibtnehxkwjshn1ttqcf3
+  T1.0/run_22: resuming pending job batches/tt3r5ipj0y6hysrl25fmsmcabkx9qtwr614b
+  T1.0/run_13: resuming pending job batches/yh8fmp58igm8ymqjpmzvcxeno1mdtcae5om8
+  T0.3/run_12: resuming pending job batches/s0y7g0sqbrpx0tf3kzaiye1ubapljaksbzv6
+  T0.7/run_18: resuming pending job batches/qhkkb7dd45rvthws04qqco7aqphyvul0k7mm
+  T1.0/run_20: resuming pending job batches/vvfrhlcjrp8dmx0qc571ohmr38xrhalkoqdm
+  T0.7/run_30: resuming pending job batches/1j8s9fb2oq3fe1zk87afbfxju8k5z787rb0e
+  T1.0/run_1: resuming pending job batches/bu1ho70dzuffh43n1mq9duwvwcw32ebug88u
+  T0.3/run_30: resuming pending job batches/m2zwtabn5rkrbtay5zgk89lsm2h9tsjdrdsv
+  T0.7/run_19: resuming pending job batches/y9oxu187qjv35cr6bck62zp6tmzgy9suvzer
+  T0.7/run_12: resuming pending job batches/uyi1t1ewd8fkbwr7i96gh8l3m9sbndb8p9me
+  T1.0/run_29: resuming pending job batches/vll984d0l1o63vqojjm9096picqs6xhv3hyy
+  T1.0/run_15: resuming pending job batches/5k9v2hbymxm0xrjjegrocg5xslhp7xqhr6bo
+  T0.7/run_20: resuming pending job batches/wby88x7lb6ra4ceaq5da3z4ekyaj9yqh0hi5
+  T1.0/run_17: resuming pending job batches/i3gend1c1j1skmnog4c65k2hnridwv9rl4ao
+  T0.7/run_17: resuming pending job batches/i0gsg626m3r5s278kovzkfcy9z2ab9k9wp07
+  T1.0/run_11: resuming pending job batches/ud9uji0r1l1pd8v89j3ivrmcwuwvda3u02u0
+  T0.7/run_22: resuming pending job batches/k6mjuz036t6n1pxqz4t68uy1grpro80hjdrs
+  T1.0/run_4: resuming pending job batches/glikz2xhov2m2nsow060pe81tq2t24kutmta
+  T1.0/run_16: resuming pending job batches/ccye6hhfcp0af6gw7qxpy6roaj3527yvhlnr
+  T1.0/run_9: resuming pending job batches/98azxx6pq7e5xw1hmf55ycdggfqrk9i90b0q
+  T0.7/run_28: resuming pending job batches/vfarvxfoifrtsl1pna22bs06krtm3f84i2ic
+  T0.3/run_14: resuming pending job batches/32irh2x8rbmmuml1jji3vkxv6566yebxc9fg
+  T0.3/run_22: resuming pending job batches/l8mkjj2jofpo9vdksi55yxpkfpwmkb56urgt
+  T0.3/run_24: resuming pending job batches/fv418f6vxdkbn3mondrhhkoc5ug8uo1dp7hf
+  T0.3/run_28: resuming pending job batches/t8l7ihmizssdszjdzvbg4yqehmqvvdli5ngz
+  T1.0/run_26: resuming pending job batches/ckh9l0sa8xa5627w3qnwlbfh5gxem9d8rent
+  T0.3/run_17: resuming pending job batches/4zopkp247p53ghx7btu7su7jfyyky46qew6v
+  T0.3/run_15: resuming pending job batches/5dfk8cr4d04jc1zuvgn5q4o1z77wqns923tl
+  T0.3/run_20: resuming pending job batches/akqaw4yjb2c5bfwj2v69zcuv2gdky5svu5u6
+  T1.0/run_25: resuming pending job batches/p8uh868av1zydrr4oree58tj89lp6r7fe6xx
+  T0.3/run_26: resuming pending job batches/jp6y6zn0122q9ls1gbpve9akcs5xgvasi9wd
+  T0.7/run_14: resuming pending job batches/o91tr423h52npgrb1e8bi51jcb8d6vftkt5g
+  T1.0/run_12: resuming pending job batches/4qu29hb3gwq83fn54mvr5u6rpr5j2mpeyz18
+  T1.0/run_28: resuming pending job batches/yxirb2495zj4lpmbmns6dwud6p4la34bfx4q
+  T1.0/run_19: resuming pending job batches/378sas8o3c5fyqk8mc0t7wmmiy7qz8xh7u7g
+  T1.0/run_2: resuming pending job batches/0g36mw7tkgkt3btfewwfo9cp2prwsq9hpbx2
+  T1.0/run_5: resuming pending job batches/lfj63i07h7pr4ishjasyqss8sy8j3201xgdi
+  T1.0/run_30: resuming pending job batches/exh0zps0c3pbvfl48g8wxtuv3qe8osuq59ij
+  T1.0/run_24: resuming pending job batches/bbitqylnyw2lvrux52b9jg00n31u9zia2zbm
+  T0.7/run_21: resuming pending job batches/mf36thc3ce04r7y6dgbpxtb239a5m41c69ls
+  T0.3/run_13: resuming pending job batches/stwe8zzoeqvahesqniuoqeuu9669louyzzvw
+  T0.3/run_21: resuming pending job batches/edttdb8eei03z2yqij3jrhex1kc7rnda32cc
+  T1.0/run_8: resuming pending job batches/fscs916t9lmr3p4fpkyjg9jdc03tt5dytz86
+  T0.7/run_15: resuming pending job batches/ahhbyv6b5ffcrvc0kafwqb7wj6nyiz5yw1ij
+
+Phase 3: Polling 69 batch job(s)...
+
+  ... 0/69 complete (0.0h elapsed)
+  ... 0/69 complete (0.0h elapsed)

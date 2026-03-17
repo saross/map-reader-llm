@@ -1,0 +1,239 @@
+{
+  "run_id": "ae762711-a9c9-4b76-9df9-889b76aa7abc",
+  "timestamp": {
+    "start": "2026-03-08T04:36:52.452469+00:00",
+    "end": "2026-03-08T04:36:52.452548+00:00",
+    "duration_seconds": 7.9e-05
+  },
+  "environment": {
+    "git_commit": "ec00c2ae031865f14bbc0014a4f8c37680057e2a",
+    "script": "lib_batch_api.py",
+    "script_version": "1.3.0"
+  },
+  "configuration": {
+    "version": "phase3c-t1-h9E-p1",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image_v1.md",
+    "system_instruction_hash": "7c409b049d80e0824738a1c47e6ab815d850091afce6ace1adedc8bf72dfb168",
+    "system_instruction_text": "# Burial Mound Identification\n\nIdentify all burial mound symbols in this map section.\n\n## Target Symbols\n\nThe key diagnostic feature shared by every mound symbol is short **radiating lines (hachures) pointing OUTWARD** from a central form, creating a \"starburst\" or \"cogwheel\" appearance. This convention denotes raised ground.\n\n**Subtypes to identify:**\n\n- **Kurgan (burial mound)**: Orange-brown hollow circle with radiating lines. Approximately 10\u201320 pixels across. May appear near elevation figures or the Cyrillic label \"\u043a\u0443\u0440\u0433.\"\n- **Settlement mound**: Orange-brown, typically larger and oval or irregular in outline. Bears more radiating lines (8\u201315).\n- **Triangulation point on mound**: Black triangle containing a central dot, encircled by black radiating lines.\n- **Benchmark on mound**: Black square containing a central dot, encircled by black radiating lines.\n\n**Radiating lines pointing outward** are the essential identifier. Symbols lacking visible radiating lines are not mounds.\n\n## Guidelines\n\n1. Report a separate bounding box for every individual symbol, including those appearing in clusters.\n2. Partially obscured symbols (overlapped by lines, shapes, or text) should be included provided the starburst pattern is still recognisable.\n3. When reference examples accompany the prompt, use them to resolve uncertain cases. Each reference image is centred on the feature being labelled \u2014 the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
+    "library_hash": "d36619076c5024ffebf3406477f1248b780834e114fa0e79ae25fefc013444b6",
+    "temperature": 0.4,
+    "max_output_tokens": 8192,
+    "thinking_level": "high",
+    "include_example_images": true,
+    "example_count": 17,
+    "full_config_snapshot": {
+      "version": "phase3c-t1-h9E-p1",
+      "description": "Phase 3c H9-E \u2014 Track 1 (Image). Full diversity: pass 1 (V1 + HN 11, 18, 22, 26 + T=0.4).",
+      "hypothesis": "H9-E",
+      "model": "gemini-3-flash",
+      "instruction_file": "detect_brief-text-image_v1.md",
+      "temperature": 0.4,
+      "max_output_tokens": 8192,
+      "thinking_level": "high",
+      "composition": {
+        "canonical_positive": 4,
+        "hard_positive": 4,
+        "canonical_negative": 2,
+        "hard_negative": 4,
+        "null": 3
+      },
+      "total_examples": 17,
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_05.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_06.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_07.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_08.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_11.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_18.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_22.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_26.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_15.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_16.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_17.png",
+          "label": "Negative",
+          "category": "null"
+        }
+      ],
+      "note": "Full diversity pass 1: instruction V1, HN rotation [11, 18, 22, 26]. Temperature set via YAML override."
+    }
+  },
+  "execution_stats": {
+    "items_processed": 60,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {},
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [
+      "K-35-052-4_32635_x0_y0.png",
+      "K-35-053-3_Elenovo_x0_y0.png",
+      "K-35-078-1_Lesovo_x448_y1792.png",
+      "K-35-078-1_Lesovo_x896_y1792.png",
+      "K-35-053-3_Elenovo_x448_y3136.png",
+      "K-35-052-4_32635_x3136_y2240.png",
+      "K-35-052-4_32635_x1344_y3136.png",
+      "K-35-078-1_Lesovo_x2688_y896.png",
+      "K-35-078-1_Lesovo_x2240_y3136.png",
+      "K-35-062-2_Rakovski_x2688_y2240.png",
+      "K-35-053-3_Elenovo_x2240_y448.png",
+      "K-35-062-2_Rakovski_x2688_y1344.png",
+      "K-35-062-2_Rakovski_x3136_y1792.png",
+      "K-35-052-4_32635_x448_y1344.png",
+      "K-35-062-2_Rakovski_x3136_y896.png",
+      "K-35-062-2_Rakovski_x448_y896.png",
+      "K-35-062-2_Rakovski_x3136_y2240.png",
+      "K-35-052-4_32635_x3584_y3136.png",
+      "K-35-078-1_Lesovo_x2240_y1344.png",
+      "K-35-078-1_Lesovo_x3584_y1344.png",
+      "K-35-052-4_32635_x3136_y0.png",
+      "K-35-052-4_32635_x2688_y0.png",
+      "K-35-062-2_Rakovski_x3584_y448.png",
+      "K-35-053-3_Elenovo_x0_y1344.png",
+      "K-35-053-3_Elenovo_x0_y3136.png",
+      "K-35-062-2_Rakovski_x1792_y0.png",
+      "K-35-062-2_Rakovski_x3584_y1344.png",
+      "K-35-078-1_Lesovo_x0_y3136.png",
+      "K-35-052-4_32635_x0_y2240.png",
+      "K-35-078-1_Lesovo_x3584_y0.png",
+      "K-35-053-3_Elenovo_x0_y2688.png",
+      "K-35-052-4_32635_x896_y3136.png",
+      "K-35-053-3_Elenovo_x3584_y2240.png",
+      "K-35-053-3_Elenovo_x1792_y448.png",
+      "K-35-053-3_Elenovo_x448_y0.png",
+      "K-35-053-3_Elenovo_x3136_y1344.png",
+      "K-35-053-3_Elenovo_x448_y2688.png",
+      "K-35-062-2_Rakovski_x3136_y3136.png",
+      "K-35-053-3_Elenovo_x2688_y1344.png",
+      "K-35-062-2_Rakovski_x2240_y2240.png",
+      "K-35-078-1_Lesovo_x2688_y1792.png",
+      "K-35-078-1_Lesovo_x3136_y1344.png",
+      "K-35-078-1_Lesovo_x3584_y448.png",
+      "K-35-052-4_32635_x3584_y3584.png",
+      "K-35-062-2_Rakovski_x3136_y1344.png",
+      "K-35-052-4_32635_x3136_y3584.png",
+      "K-35-078-1_Lesovo_x0_y2688.png",
+      "K-35-078-1_Lesovo_x3136_y1792.png",
+      "K-35-053-3_Elenovo_x896_y2240.png",
+      "K-35-062-2_Rakovski_x2240_y448.png",
+      "K-35-078-1_Lesovo_x3136_y448.png",
+      "K-35-053-3_Elenovo_x448_y448.png",
+      "K-35-062-2_Rakovski_x1792_y3584.png",
+      "K-35-053-3_Elenovo_x896_y448.png",
+      "K-35-052-4_32635_x2240_y1344.png",
+      "K-35-052-4_32635_x448_y896.png",
+      "K-35-052-4_32635_x0_y1344.png",
+      "K-35-062-2_Rakovski_x2688_y2688.png",
+      "K-35-078-1_Lesovo_x1344_y2240.png",
+      "K-35-052-4_32635_x448_y3136.png"
+    ],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 0,
+    "by_provider": {}
+  },
+  "results_summary": {
+    "total_detections": 139,
+    "execution_mode": "batch"
+  },
+  "cost_estimate": {
+    "input_cost_usd": 0.0,
+    "output_cost_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.1,
+      "output_per_1m": 0.4,
+      "batch_discount": 0.5
+    }
+  },
+  "batch_api": {
+    "execution_mode": "batch",
+    "batch_discount_applied": true
+  }
+}

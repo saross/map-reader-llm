@@ -1,0 +1,28 @@
+{
+  "study": {
+    "name": "Phase 3a: H3 Consensus Voting \u2014 Track 1 (Image)",
+    "version": "1.0",
+    "description": "Tests consensus voting at elevated temperatures (T=0.3, T=0.7, T=1.0) using\nthe carry-forward plus-hp library configuration (F1=0.609 at T=0.0).\nT=0.0 is excluded because the plus-hp library produces near-deterministic\noutput at zero temperature, making consensus voting meaningless (Erratum E32).\n\nConsensus voting is evaluated post-hoc by pooling K independent single-pass\nruns (per preregistration Section 3.8) at pool sizes N=5, N=10, and N=30,\nsweeping vote threshold x=1..N for each. The key question: does any\n(T, N, x) configuration beat the T=0.0 single-run baseline (F1=0.609)?\n",
+    "phase": "3a",
+    "hypothesis": "H3",
+    "created": "2026-02-12"
+  },
+  "generated": "2026-02-14T11:48:54.146454+00:00",
+  "conditions": [
+    "T0.3",
+    "T0.7",
+    "T1.0"
+  ],
+  "runs_per_condition": 30,
+  "total_units": 7,
+  "tile_limit": null,
+  "execution_order": [
+    "T1.0/run_30",
+    "T1.0/run_24",
+    "T0.7/run_21",
+    "T0.3/run_13",
+    "T0.3/run_21",
+    "T1.0/run_8",
+    "T0.7/run_15"
+  ]
+}
