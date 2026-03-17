@@ -1,0 +1,87 @@
+{
+    "version": "library_plus-hp-high",
+    "description": "H8 Condition 3: +HP library with HIGH thinking. Identical to library_plus-hp.json except thinking_level=high. Created for Phase 3a HIGH thinking experiment.",
+    "hypothesis": "H8-3",
+    "model": "gemini-3-flash",
+    "instruction_file": "detect_brief-text-image.md",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "high",
+    "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 4,
+        "hard_negative": 0,
+        "null": 3
+    },
+    "total_examples": 13,
+    "hard_examples": 4,
+    "examples": [
+        {
+            "path": "neutral-naming/example_01.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_02.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_03.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_04.png",
+            "label": "Positive",
+            "category": "canonical_positive"
+        },
+        {
+            "path": "neutral-naming/example_05.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_06.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_07.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_08.png",
+            "label": "Positive",
+            "category": "hard_positive"
+        },
+        {
+            "path": "neutral-naming/example_09.png",
+            "label": "Negative",
+            "category": "canonical_negative"
+        },
+        {
+            "path": "neutral-naming/example_10.png",
+            "label": "Negative",
+            "category": "canonical_negative"
+        },
+        {
+            "path": "neutral-naming/example_15.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral-naming/example_16.png",
+            "label": "Negative",
+            "category": "null"
+        },
+        {
+            "path": "neutral-naming/example_17.png",
+            "label": "Negative",
+            "category": "null"
+        }
+    ],
+    "note": "Tests +HP effect (contrast C2). Hard positives improve recall for degraded/occluded mounds."
+}

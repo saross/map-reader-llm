@@ -1,0 +1,102 @@
+study:
+  name: 'Retest: Phase 3a: H3 Consensus Voting — Track 1 (Image, HIGH Thinking)'
+  version: 2.0-retest
+  description: >
+    Tests consensus voting with HIGH thinking level at elevated temperatures
+    (T=0.3, T=0.7, T=1.0) using the carry-forward plus-hp library
+    configuration with HIGH thinking enabled.
+
+    Motivated by the Phase 3a replication finding that HIGH thinking +
+    consensus voting at T=0.7 achieves F1=0.771 on the text track — the
+    best result in the study. This experiment tests whether the same
+    effect holds on the image track and at other temperatures.
+
+    HIGH thinking produces more false positives per run (lower single-pass
+    precision) but the false positives are stochastic while true positives
+    are consistent, enabling consensus voting to filter effectively.
+  phase: 3a
+  hypothesis: H3
+  created: '2026-03-17'
+  retest_notes: >
+    H3 consensus voting Track 1 (image-using) with HIGH thinking.
+    K=30 for full threshold sweep. New experiment — the pilot's
+    'track1-image-high' was mislabelled (actually used minimal thinking).
+carried_forward:
+  optimal_me_config: prompts/configs/library_plus-hp-high.json
+  optimal_me_name: plus-hp-high (brief-text-image, HIGH thinking)
+  source: Phase 3a replication — HIGH thinking + consensus voting
+factors:
+  temperature:
+    description: Model temperature (controls output randomness for consensus voting diversity)
+    levels:
+    - name: T0.3
+      value: 0.3
+      description: Low variance — tests whether modest stochasticity enables FP filtering
+    - name: T0.7
+      value: 0.7
+      description: Moderate variance — optimal for text-track HIGH consensus
+    - name: T1.0
+      value: 1.0
+      description: Vendor default — tests whether high diversity improves consensus
+fixed:
+  ordering: config-default
+inputs:
+  manifest: inputs/tiles/full_evaluation_manifest.json
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+execution:
+  runs: 30
+  workers: 1
+  output_dir: outputs/retest/phase3a-high/track1-image
+  checkpoint_dir: outputs/retest/phase3a-high/track1-image/checkpoints
+command_template: >
+  python scripts/4_detect_mounds_batch.py \
+    --config {carried_forward.optimal_me_config} \
+    --manifest {inputs.manifest} \
+    --output-dir {output_dir}/{condition_name}/run_{run} \
+    --temperature {factor_value}
+analysis:
+  method: consensus_sweep
+  script: scripts/analyse_consensus_sweep.py
+  args:
+  - --study-dir
+  - outputs/retest/phase3a-high/track1-image
+  - --output-dir
+  - results/retest/phase3a-consensus/track1-image-high
+  - --temperatures
+  - T0.3
+  - T0.7
+  - T1.0
+  - --pool-sizes
+  - '5'
+  - '10'
+  - '30'
+  metrics:
+  - f1
+  - precision
+  - recall
+  output:
+    report: results/retest/phase3a-consensus/track1-image-high/consensus-analysis-report.json
+    summary: results/retest/phase3a-consensus/track1-image-high/consensus-analysis-summary.md
+outputs:
+  per_condition:
+  - '{output_dir}/{condition_name}/run_{run}/*.geojson'
+  - '{output_dir}/{condition_name}/run_{run}/*.meta.json'
+  aggregated:
+  - results/retest/phase3a-consensus/track1-image-high/consensus-sweep-results.csv
+  - results/retest/phase3a-consensus/track1-image-high/consensus-analysis-report.json
+estimates:
+  cells: 3
+  api_calls_per_cell: 10200
+  total_api_calls: 30600
+  cost_usd_total: 9
+  time_hours: 4
+  retest_runs: 30
+  retest_tiles: 340
+outcome:
+  determines: consensus_voting_value_image_track_high_thinking
+  decision_rule: >
+    Compare HIGH thinking consensus optima against minimal thinking
+    consensus optima (from phase3a-h3-voting-track1.yaml). If HIGH
+    thinking consensus outperforms minimal thinking consensus, HIGH
+    thinking is the preferred approach for the image track.

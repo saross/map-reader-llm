@@ -463,6 +463,8 @@ def main() -> None:
          "Phase 3a Track 1: H3 Consensus Voting (Image, K=30)"),
         ("phase3a/track2-text",
          "Phase 3a Track 2: H3 Consensus Voting (Text, K=30)"),
+        ("phase3a-replication",
+         "Phase 3a Replication: Thinking Level (minimal vs HIGH, K=30)"),
     ]
 
     for subdir, name in phase3a_tracks:

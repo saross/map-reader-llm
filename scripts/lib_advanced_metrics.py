@@ -640,6 +640,7 @@ def bootstrap_effect_size_ci(
     gdf_ref: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    return_p_values: bool = False,
 ) -> dict:
     """
     Bootstrap confidence intervals for effect size (difference) between two conditions.
@@ -663,9 +664,15 @@ def bootstrap_effect_size_ci(
         gdf_ref: GeoDataFrame of ground truth references (shared).
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        return_p_values: If True, compute and include two-sided bootstrap
+            p-values for each metric. The p-value is the proportion of
+            bootstrap samples where the effect size crosses zero,
+            doubled for a two-sided test. Required for False Discovery
+            Rate (FDR) correction across multiple comparisons.
 
     Returns:
         Effect size estimates with 95% CIs for F1, precision, recall differences.
+        When ``return_p_values=True``, each metric dict also includes ``p_value``.
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -705,22 +712,40 @@ def bootstrap_effect_size_ci(
         precision_diffs.append(p_a - p_b)
         recall_diffs.append(r_a - r_b)
 
+    def _build_metric_dict(
+        diffs: list[float],
+        compute_p: bool,
+    ) -> dict:
+        """Build a metric difference dict with optional p-value."""
+        result = {
+            "mean": float(np.mean(diffs)),
+            "ci_lower": float(np.percentile(diffs, 2.5)),
+            "ci_upper": float(np.percentile(diffs, 97.5)),
+        }
+        if compute_p:
+            # Two-sided bootstrap p-value: proportion of samples on
+            # the minority side of zero, doubled. Clamped to [1/N, 1]
+            # to avoid exact-zero p-values from finite samples.
+            diffs_arr = np.array(diffs)
+            prop_le_zero = np.mean(diffs_arr <= 0)
+            prop_gt_zero = np.mean(diffs_arr > 0)
+            p_value = 2.0 * min(prop_le_zero, prop_gt_zero)
+            # Floor at 1/n_iterations (cannot claim p=0 from
+            # finite bootstrap)
+            p_value = max(p_value, 1.0 / n_iterations)
+            result["p_value"] = float(p_value)
+        return result
+
     return {
-        "f1_difference": {
-            "mean": float(np.mean(f1_diffs)),
-            "ci_lower": float(np.percentile(f1_diffs, 2.5)),
-            "ci_upper": float(np.percentile(f1_diffs, 97.5)),
-        },
-        "precision_difference": {
-            "mean": float(np.mean(precision_diffs)),
-            "ci_lower": float(np.percentile(precision_diffs, 2.5)),
-            "ci_upper": float(np.percentile(precision_diffs, 97.5)),
-        },
-        "recall_difference": {
-            "mean": float(np.mean(recall_diffs)),
-            "ci_lower": float(np.percentile(recall_diffs, 2.5)),
-            "ci_upper": float(np.percentile(recall_diffs, 97.5)),
-        },
+        "f1_difference": _build_metric_dict(
+            f1_diffs, return_p_values,
+        ),
+        "precision_difference": _build_metric_dict(
+            precision_diffs, return_p_values,
+        ),
+        "recall_difference": _build_metric_dict(
+            recall_diffs, return_p_values,
+        ),
         "n_tiles": n_tiles,
         "n_iterations": n_iterations,
     }
