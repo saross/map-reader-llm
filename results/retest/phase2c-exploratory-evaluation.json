@@ -1,0 +1,134 @@
+{
+  "phase2c-track1-image-exploratory": {
+    "conditions": {
+      "pure-positive-2hp": {
+        "f1": 0.5720588235294118,
+        "precision": 0.47381242387332523,
+        "recall": 0.7217068645640075,
+        "n_runs": 1,
+        "n_detections": 821,
+        "f1_ci": {
+          "mean": 0.5701068153852678,
+          "ci_lower": 0.5205264999886823,
+          "ci_upper": 0.6175495508870907
+        },
+        "precision_ci": {
+          "mean": 0.47191595229463484,
+          "ci_lower": 0.4177646962399418,
+          "ci_upper": 0.5248859152513295
+        },
+        "recall_ci": {
+          "mean": 0.7210921107536195,
+          "ci_lower": 0.6672707558859975,
+          "ci_upper": 0.7751407062013433
+        }
+      },
+      "pure-positive-4hp": {
+        "f1": 0.5984732824427481,
+        "precision": 0.5084306095979247,
+        "recall": 0.7272727272727273,
+        "n_runs": 1,
+        "n_detections": 771,
+        "f1_ci": {
+          "mean": 0.5968721193269609,
+          "ci_lower": 0.5495908380885588,
+          "ci_upper": 0.6459440763106551
+        },
+        "precision_ci": {
+          "mean": 0.5064901665926809,
+          "ci_lower": 0.4600239478680673,
+          "ci_upper": 0.5566407451883583
+        },
+        "recall_ci": {
+          "mean": 0.7271048659093451,
+          "ci_lower": 0.6698837067119217,
+          "ci_upper": 0.7820530726256983
+        }
+      },
+      "pure-positive-canon": {
+        "f1": 0.5675889328063242,
+        "precision": 0.49449035812672176,
+        "recall": 0.6660482374768089,
+        "n_runs": 1,
+        "n_detections": 726,
+        "f1_ci": {
+          "mean": 0.5661573171117964,
+          "ci_lower": 0.52108335337502,
+          "ci_upper": 0.6086972389717549
+        },
+        "precision_ci": {
+          "mean": 0.49290293733582247,
+          "ci_lower": 0.44443638122883405,
+          "ci_upper": 0.5349621074605191
+        },
+        "recall_ci": {
+          "mean": 0.6656827263381346,
+          "ci_lower": 0.6139122889748185,
+          "ci_upper": 0.7191654103090639
+        }
+      }
+    },
+    "pairwise": [
+      {
+        "condition_a": "pure-positive-2hp",
+        "condition_b": "pure-positive-4hp",
+        "f1_difference": {
+          "mean": -0.026388690314799446,
+          "ci_lower": -0.0636860647619996,
+          "ci_upper": 0.012642500850656938
+        },
+        "precision_difference": {
+          "mean": -0.034415888383742994,
+          "ci_lower": -0.0751614547313186,
+          "ci_upper": 0.004693666580204805
+        },
+        "recall_difference": {
+          "mean": -0.0052890000734808745,
+          "ci_lower": -0.03887531988559392,
+          "ci_upper": 0.0316107588663413
+        },
+        "significant": false
+      },
+      {
+        "condition_a": "pure-positive-2hp",
+        "condition_b": "pure-positive-canon",
+        "f1_difference": {
+          "mean": 0.005463477219935646,
+          "ci_lower": -0.035059212827150125,
+          "ci_upper": 0.04410331689079088
+        },
+        "precision_difference": {
+          "mean": -0.019695812840318155,
+          "ci_lower": -0.06700139815537973,
+          "ci_upper": 0.023145515049042727
+        },
+        "recall_difference": {
+          "mean": 0.05707287604691434,
+          "ci_lower": 0.021858327335985257,
+          "ci_upper": 0.09453045549856473
+        },
+        "significant": false
+      },
+      {
+        "condition_a": "pure-positive-4hp",
+        "condition_b": "pure-positive-canon",
+        "f1_difference": {
+          "mean": 0.0318521675347351,
+          "ci_lower": -0.007778253781545846,
+          "ci_upper": 0.06721901938897451
+        },
+        "precision_difference": {
+          "mean": 0.014720075543424844,
+          "ci_lower": -0.025892122823644746,
+          "ci_upper": 0.051825447644922064
+        },
+        "recall_difference": {
+          "mean": 0.062361876120395225,
+          "ci_lower": 0.021387506871555724,
+          "ci_upper": 0.10117456585278245
+        },
+        "significant": false
+      }
+    ]
+  }
+}

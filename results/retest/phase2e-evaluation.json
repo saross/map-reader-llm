@@ -1,0 +1,216 @@
+{
+  "phase2e": {
+    "conditions": {
+      "canonical-first": {
+        "f1": 0.5983167559296098,
+        "precision": 0.5091145833333334,
+        "recall": 0.725417439703154,
+        "n_runs": 1,
+        "n_detections": 768,
+        "f1_ci": {
+          "mean": 0.5967731367772222,
+          "ci_lower": 0.5459769953677398,
+          "ci_upper": 0.6456978705796225
+        },
+        "precision_ci": {
+          "mean": 0.5072683073836023,
+          "ci_lower": 0.45775660080433644,
+          "ci_upper": 0.5573974513998698
+        },
+        "recall_ci": {
+          "mean": 0.7254051960852872,
+          "ci_lower": 0.6647828529555446,
+          "ci_upper": 0.7822575493612078
+        }
+      },
+      "canonical-last": {
+        "f1": 0.6314199395770392,
+        "precision": 0.532484076433121,
+        "recall": 0.7755102040816326,
+        "n_runs": 1,
+        "n_detections": 785,
+        "f1_ci": {
+          "mean": 0.6292608369470211,
+          "ci_lower": 0.5866632566069906,
+          "ci_upper": 0.6717378559320415
+        },
+        "precision_ci": {
+          "mean": 0.5304227556551071,
+          "ci_lower": 0.48552204910812596,
+          "ci_upper": 0.5757615421227987
+        },
+        "recall_ci": {
+          "mean": 0.7740878879640071,
+          "ci_lower": 0.7211895313804257,
+          "ci_upper": 0.8245033830264422
+        }
+      },
+      "config-default": {
+        "f1": 0.6046511627906976,
+        "precision": 0.5193075898801598,
+        "recall": 0.7235621521335807,
+        "n_runs": 1,
+        "n_detections": 751,
+        "f1_ci": {
+          "mean": 0.6032956848037685,
+          "ci_lower": 0.5589921313403649,
+          "ci_upper": 0.653001754524659
+        },
+        "precision_ci": {
+          "mean": 0.5178682584779408,
+          "ci_lower": 0.4750554552973908,
+          "ci_upper": 0.5672324868728635
+        },
+        "recall_ci": {
+          "mean": 0.7230611833952181,
+          "ci_lower": 0.6666666666666666,
+          "ci_upper": 0.7775861566939124
+        }
+      },
+      "random": {
+        "f1": 0.571008094186902,
+        "precision": 0.47317073170731705,
+        "recall": 0.7198515769944341,
+        "n_runs": 1,
+        "n_detections": 820,
+        "f1_ci": {
+          "mean": 0.5691178283740527,
+          "ci_lower": 0.5194030533277051,
+          "ci_upper": 0.6182378079436903
+        },
+        "precision_ci": {
+          "mean": 0.47135480930826396,
+          "ci_lower": 0.41863065017523643,
+          "ci_upper": 0.5218030508460169
+        },
+        "recall_ci": {
+          "mean": 0.7191486539568092,
+          "ci_lower": 0.6678429007120229,
+          "ci_upper": 0.766611263012986
+        }
+      }
+    },
+    "pairwise": [
+      {
+        "condition_a": "canonical-first",
+        "condition_b": "canonical-last",
+        "f1_difference": {
+          "mean": -0.03161434880882529,
+          "ci_lower": -0.07488855127953274,
+          "ci_upper": 0.011683812254883942
+        },
+        "precision_difference": {
+          "mean": -0.021964728140383614,
+          "ci_lower": -0.0645027871332995,
+          "ci_upper": 0.020466956020111327
+        },
+        "recall_difference": {
+          "mean": -0.04850248625781938,
+          "ci_lower": -0.09410045655110921,
+          "ci_upper": -0.0039987687356907884
+        },
+        "significant": false
+      },
+      {
+        "condition_a": "canonical-first",
+        "condition_b": "config-default",
+        "f1_difference": {
+          "mean": -0.005109940395559699,
+          "ci_lower": -0.03715819965135705,
+          "ci_upper": 0.02555621745655681
+        },
+        "precision_difference": {
+          "mean": -0.009008662249467319,
+          "ci_lower": -0.04212121913328816,
+          "ci_upper": 0.02347549927278105
+        },
+        "recall_difference": {
+          "mean": 0.0032196780814804688,
+          "ci_lower": -0.02993671481534703,
+          "ci_upper": 0.03610279489439046
+        },
+        "significant": false
+      },
+      {
+        "condition_a": "canonical-first",
+        "condition_b": "random",
+        "f1_difference": {
+          "mean": 0.028563020360203764,
+          "ci_lower": -0.00819890857807959,
+          "ci_upper": 0.06554730263558338
+        },
+        "precision_difference": {
+          "mean": 0.03676626647857469,
+          "ci_lower": -0.001624125303416264,
+          "ci_upper": 0.07359091468858256
+        },
+        "recall_difference": {
+          "mean": 0.007265248131144068,
+          "ci_lower": -0.03164707732313287,
+          "ci_upper": 0.04380454071564301
+        },
+        "significant": false
+      },
+      {
+        "condition_a": "canonical-last",
+        "condition_b": "config-default",
+        "f1_difference": {
+          "mean": 0.026504408413265595,
+          "ci_lower": -0.008853265392035788,
+          "ci_upper": 0.06543645557198065
+        },
+        "precision_difference": {
+          "mean": 0.012956065890916293,
+          "ci_lower": -0.022319411490549713,
+          "ci_upper": 0.051737650921041926
+        },
+        "recall_difference": {
+          "mean": 0.05172216433929986,
+          "ci_lower": 0.014650604565173662,
+          "ci_upper": 0.09353412806002975
+        },
+        "significant": false
+      },
+      {
+        "condition_a": "canonical-last",
+        "condition_b": "random",
+        "f1_difference": {
+          "mean": 0.06017736916902906,
+          "ci_lower": 0.02331383754213006,
+          "ci_upper": 0.09551838356896886
+        },
+        "precision_difference": {
+          "mean": 0.058730994618958296,
+          "ci_lower": 0.018848852876759588,
+          "ci_upper": 0.09762510243925486
+        },
+        "recall_difference": {
+          "mean": 0.05576773438896346,
+          "ci_lower": 0.021920985698824866,
+          "ci_upper": 0.08882265611130837
+        },
+        "significant": true
+      },
+      {
+        "condition_a": "config-default",
+        "condition_b": "random",
+        "f1_difference": {
+          "mean": 0.03367296075576346,
+          "ci_lower": -0.0020569392656992445,
+          "ci_upper": 0.07181109381347014
+        },
+        "precision_difference": {
+          "mean": 0.04577492872804201,
+          "ci_lower": 0.007583909071888517,
+          "ci_upper": 0.08322890930477317
+        },
+        "recall_difference": {
+          "mean": 0.004045570049663598,
+          "ci_lower": -0.02783240559018434,
+          "ci_upper": 0.038286196308187415
+        },
+        "significant": false
+      }
+    ]
+  }
+}
