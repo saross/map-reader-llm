@@ -4271,6 +4271,38 @@ sustained research collaboration persona design. The 52-session
 longitudinal case study in this project may itself be a contribution
 — most human-AI collaboration research covers days or weeks.
 
-*Document represents observations as of 2026-03-16. Session 52 added
-observations on bootstrap-matching scale dependence, Batch API token
-quotas, countTokens estimation, and persona affordance design.*
+**Observation 30: The thinking-level consensus inversion.** HIGH
+thinking at N=1 is the worst configuration (F1=0.431, precision 0.300)
+but at N=30 consensus is the best (F1=0.771, precision 0.785). The
+mechanism: HIGH thinking generates *diverse* false positives
+(stochastic reasoning chains produce different errors per run) and
+*consistent* true positives (genuine mound evidence survives even
+elaborate counterarguments). Consensus voting exploits this
+asymmetry — high vote thresholds filter stochastic FPs while
+retaining consistent TPs. Minimal thinking produces fewer but more
+*systematic* FPs that recur across runs and resist consensus
+filtering. This is structurally a bias-variance trade-off: HIGH
+increases variance (bad for single estimates, good for averaging).
+
+**Observation 31: Image examples don't justify their cost.** Across
+every configuration tested (N=1 through N=30, minimal and HIGH
+thinking), text-only prompts match or exceed image+text prompts in
+F1 while costing ~10× less (input token reduction from ~20K to ~1.5K
+per tile). The Pareto frontier contains only text-only configs.
+This contradicts the intuition that showing visual examples of burial
+mound symbols would help the model identify them — the model's
+text-based archaeological knowledge appears sufficient, and the
+image token overhead may crowd out useful context.
+
+**Observation 32: Consensus diminishing returns depend on thinking
+level.** For minimal thinking, N=5→N=30 improves F1 by only 0.006
+(0.686→0.692). For HIGH thinking, the same increase yields 0.058
+(0.713→0.771). HIGH thinking benefits more from larger pools because
+it generates more diverse FPs — a larger pool provides more
+independent samples for the vote threshold to work with. This
+suggests that the optimal N depends on the FP diversity of the
+underlying detector, not just the number of reference mounds.
+
+*Document represents observations as of 2026-03-19. Session 53 added
+observations on the HIGH thinking consensus inversion, image example
+cost-effectiveness, and thinking-level-dependent diminishing returns.*

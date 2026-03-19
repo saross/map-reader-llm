@@ -3371,3 +3371,37 @@ retest *all* conditions to produce publishable results.
 
 **Next steps**: Config audit (verify every config against original
 specifications before committing budget), then begin Stage 1 execution.
+
+## Session 53 — 2026-03-17/19: Production results and cost analysis
+
+### Best results to date
+
+| Configuration | F1 | Precision | Recall | Cost |
+|---|---|---|---|---|
+| HIGH text N=30 21-of-30 (T=0.7) | **0.771** | 0.785 | 0.757 | $8.93 |
+| HIGH text N=5 4-of-5 (T=0.7) | **0.713** | 0.701 | 0.725 | $1.49 |
+| Minimal image N=30 18-of-30 (T=0.7) | **0.691** | 0.694 | 0.688 | $10.55 |
+| Best single-pass (canon-last, T=0.0) | 0.631 | 0.533 | 0.776 | $0.35 |
+
+### Cost-efficiency sweet spot
+
+Text-only N=5 consensus at $0.18 per evaluation achieves F1=0.686 —
+the lowest $/ΔF1 ($2.28 per unit improvement). Image examples add
+~10× cost without improving F1 at any configuration.
+
+### Tile failure characterisation
+
+Output truncation is the sole failure mode. The model's thinking
+tokens consume most of the 8192 `max_output_tokens` budget, leaving
+insufficient room for detection JSON. Errors consistently appear at
+~line 52, char ~750. The 10-retry loop resolves 99%+ of failures;
+`--patch-tiles` handles the remainder via reduced `max_output_tokens`.
+
+### PV pipeline design
+
+Verifier library (`lib_batch_verifier.py`) complete. Orchestrator
+and evaluator pending. Phase 1 tests 6 verifier variants (75px crop,
+N=5 consensus at 3 temperatures, standard+adversarial ensemble,
+multi-scale) on 4 proposer configs. Phase 2 applies optimal verifier
+to all 21 proposer configs. All proposer data reused — zero new
+proposer API calls.

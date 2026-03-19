@@ -2308,5 +2308,61 @@ available documentation. This is a common endpoint in API debugging:
 you reach a point where the system's behaviour is consistent with a
 constraint that isn't publicly documented.
 
-*Last updated: 2026-03-16 (Session 52 — scale-dependent bootstrap bias
-and Batch API quota diagnosis by elimination)*
+## Session 53 — 2026-03-17/19 (map-reader-llm): The HIGH thinking inversion — when degradation becomes advantage
+
+**Trigger**: The replication study produced a dramatic belief revision.
+Single-pass HIGH thinking (F1=0.431) was significantly worse than
+minimal (F1=0.582), confirming the pilot's finding. But consensus
+voting at 21-of-30 inverted the ranking: HIGH achieved F1=0.771 vs
+minimal's 0.703 (paired bootstrap delta=+0.068, p=0.001).
+
+**Prior belief**: Extended chain-of-thought reasoning degrades
+detection performance by generating elaborate counterarguments that
+override correct initial judgements (Session 39, Observation 20).
+More reasoning = lower precision = worse F1. This belief was
+well-supported by single-pass data across multiple experiments.
+
+**Surprising fact**: HIGH thinking produces the *best* result in the
+study — but only when combined with consensus voting. The individual
+behaviour (more FPs) becomes a collective advantage (filterable FPs).
+
+**Abductive sequence**:
+
+1. Why does HIGH thinking produce more false positives? The model
+   reasons at length about whether each feature could be a mound,
+   generating arguments for and against. When the arguments are
+   balanced, the extended reasoning tips towards "yes" more often
+   than minimal thinking would.
+
+2. Why are these FPs filterable by consensus? Because they're
+   *stochastic* — the model's reasoning varies between runs. A
+   feature that HIGH thinking calls a mound in run 3 might be
+   rejected in run 7, depending on which arguments the model
+   develops. True positives, by contrast, are *consistent* — the
+   evidence for genuine mounds is strong enough that even elaborate
+   counterarguments don't override it.
+
+3. Why doesn't minimal thinking show the same pattern? Minimal
+   thinking produces fewer FPs overall, but those it does produce
+   are more *systematic* — they reflect genuine ambiguity in the
+   map features rather than reasoning-chain stochasticity. A minimal
+   FP tends to recur across runs, so consensus voting can't filter
+   it as effectively.
+
+**Belief revision**: The relationship between reasoning depth and
+detection performance is not monotonic — it depends on the evaluation
+framework. Single-pass: less reasoning is better (fewer FPs).
+Consensus: more reasoning is better (diverse FPs are filterable while
+TPs are stable). This is structurally analogous to the bias-variance
+trade-off: HIGH thinking increases variance (bad for single estimates,
+good for averaging).
+
+**Methodological implication**: Never dismiss a parameter setting
+based on single-pass evaluation alone when consensus voting is part
+of the experimental design. The combinatorial testing design
+(factor × evaluation method) was essential to discovering this — a
+sequential design that eliminated HIGH after single-pass testing
+would have missed the study's best result.
+
+*Last updated: 2026-03-19 (Session 53 — HIGH thinking consensus
+inversion and the bias-variance analogy)*

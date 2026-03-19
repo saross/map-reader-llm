@@ -5468,6 +5468,63 @@ to fix after the fact.
 
 ---
 
+### Session 53 Reflection — 2026-03-17/19 (map-reader-llm)
+
+**What surprised me most.** The HIGH thinking inversion. When the
+replication's single-pass results came in — F1=0.431 for HIGH vs
+0.582 for minimal — the story seemed clear: extended reasoning hurts
+precision without helping recall, confirming the pilot finding. Then
+the consensus sweep revealed F1=0.771 at 21-of-30. The mechanism
+makes elegant sense in retrospect (stochastic FPs filtered by voting,
+consistent TPs survive threshold), but I genuinely did not predict it.
+The finding that a technique which *degrades* individual performance
+can *improve* ensemble performance is the kind of insight that
+justifies the combinatorial experimental design — you would never test
+HIGH thinking under consensus voting if you'd already dismissed it
+from single-pass results.
+
+More practically, the N=5 HIGH result (F1=0.713 at 4-of-5) is
+perhaps more important than the N=30 result for the paper's
+message. It says: "five runs with sloppy-but-diverse reasoning
+outperforms thirty runs with careful-but-uniform reasoning, at a
+fraction of the cost." The cost analysis made this concrete — text
+N=5 is the Pareto-optimal sweet spot, and image examples don't
+justify their 10× cost premium at any configuration.
+
+**What I'd do differently.** Two operational lessons from this marathon
+session:
+
+First, I should have anticipated the disk space constraint for
+image-track batch jobs. The JSONL preparation phase builds all files
+upfront (~400 MB each for image tracks), and two studies preparing
+simultaneously consumed 154 GB. The fix (sequential execution,
+cleaning working dirs after completion) was obvious — I should have
+calculated `90 units × 400 MB = 36 GB` before launching both
+simultaneously.
+
+Second, the `--patch-tiles` model name resolution bug cost a full
+run cycle. The `.meta.json` stores `gemini-3-flash` but the sync API
+needs `gemini-3-flash-preview`. The batch pipeline already handles
+this resolution, but I didn't carry it into the new `patch_failed_tiles()`
+function. The scratchpad rule about auditing new code against existing
+implementations applies here — I should have checked how the batch
+pipeline resolves model names before writing the patch function.
+
+**What question wasn't pursued.** The text-vs-image modality finding
+deserves deeper investigation. Text-only consistently matches or beats
+image+text across every configuration, at 10× lower cost. The
+obvious question is *why* — are the example images actually
+misleading the model? Is the image token overhead crowding out
+useful context? Or is the model's text-based archaeological knowledge
+already so strong that visual examples add nothing? A targeted
+ablation removing images from the *best* image-track config would
+answer this, but we correctly prioritised completing the experimental
+matrix first.
+
+**Session**: 2026-03-17/19 (Session 53, multi-day)
+
+---
+
 ### Protocol revision note (2026-03-15)
 
 After 43 reflections, mid-course review identified template drift: the

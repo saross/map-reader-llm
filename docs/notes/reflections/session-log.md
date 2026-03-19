@@ -2866,4 +2866,80 @@ switching to per-map matching with tile-level distribution (E35).
 
 ---
 
+## Session 53 — 2026-03-17/19 (map-reader-llm)
+
+### Production Runs Completed
+
+- Phase 3a Track 2 (text, minimal): 8 remaining units → 90/90 complete
+- Phase 3a Track 1 (image, minimal): 9 remaining units → 90/90 complete
+  (reconciled T1.0/run_26 under new threshold)
+- Phase 3a Replication (minimal + HIGH, T=0.7): 42 units → 60/60 complete
+  (reconciled 26 units, patched 203 tiles via `--patch-tiles`)
+- Phase 3a HIGH text track (T=0.3/0.7/1.0): 76/90 complete (in progress)
+- Phase 3c Diversity text track: 41/100 complete (in progress)
+- Phase 3a HIGH image track: queued (pending text completion)
+- Phase 3c Diversity image track: queued (pending text completion)
+
+### Evaluation Results
+
+All OFAT phases (2a–2e) and Phase 3a evaluated with F1/P/R + bootstrap
+95% CIs. Key results:
+
+- Best single-pass: F1=0.631 (image, canonical-last, T=0.0)
+- Best consensus (minimal): F1=0.691 (image T0.7 18-of-30)
+- Best consensus (HIGH): F1=0.771 (text T0.7 21-of-30) — **best overall**
+- HIGH thinking significantly worse single-pass (−0.139) but
+  significantly better under consensus (+0.068)
+
+Consensus sweep completed for both tracks + replication (N=5/10/30).
+
+### Statistical Analysis
+
+70 pairwise bootstrap comparisons with two-sided p-values completed.
+24 significant at raw p < 0.05. FDR correction deferred until full
+comparison family is available. `bootstrap_effect_size_ci()` extended
+with `return_p_values` parameter for FDR support.
+
+### Infrastructure Built
+
+- `scripts/evaluate_retest_all.py` — comprehensive evaluation script
+- `scripts/lib_batch_verifier.py` — batch verifier library for PV pipeline
+- `MAX_SYNC_RETRIES` raised to 10; `MAX_ACCEPTABLE_TILE_FAILURES` to 10
+- `--patch-tiles` mode for post-hoc tile recovery (two-tier: original
+  params then safe-mode with reduced `max_output_tokens`)
+- Failed tile report in `complete_batch_unit()` with `--patch-tiles` hint
+- `max_output_tokens_override` parameter on `_retry_tile_sync()`
+- Model name resolution in `patch_failed_tiles()`
+
+### Documentation
+
+- `docs/batch-api-throughput-and-errors.md` — processing times and error
+  characterisation
+- `docs/cost-effectiveness-analysis.md` — cost model with Pareto frontier
+- `planning/pv-batch-pipeline.md` — approved PV implementation plan
+
+### Study YAMLs Created
+
+- `studies/retest/phase3a-h3-voting-track1-high.yaml`
+- `studies/retest/phase3a-h3-voting-track2-high.yaml`
+- `prompts/configs/library_plus-hp-high.json`
+
+### Commits
+
+`2176d46`, `d9361ea`, `3caae99`, `9d3fcbb`, `fc832df`, `3054136`,
+`85edc74`, `f9d40e0`, `01a6a76`
+
+### Pending
+
+- [ ] HIGH text track: 14 remaining units (in progress)
+- [ ] Diversity text track: 59 remaining units (in progress)
+- [ ] HIGH image track: 90 units (queued)
+- [ ] Diversity image track: 125 units (queued)
+- [ ] PV pipeline: `run_pv_batch.py` orchestrator (step 2–6 of plan)
+- [ ] PV pipeline: `evaluate_pv_results.py` threshold sweep (step 7)
+- [ ] Phase 1 verifier optimisation (6 variants × 4 proposers)
+- [ ] FDR-corrected analysis (after all production data available)
+
+---
+
 *New session entries should be appended above this line.*
