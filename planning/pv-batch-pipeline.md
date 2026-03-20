@@ -1,4 +1,4 @@
-# Plan: Proposer-Verifier Batch Pipeline
+# Plan: Proposer-Verifier Pipeline (Dual-Mode)
 
 ## Context
 
@@ -8,45 +8,74 @@ need to replicate on 340 tiles and optimise the verifier before scaling to all
 21 proposer configurations. All proposer data exists — zero new proposer API
 calls needed. Verifier cost is negligible (~$0.0001 per candidate).
 
+**Dual-mode requirement (added 2026-03-20):** The pipeline must support both
+Batch API and real-time API execution. Prompt construction is factored into a
+shared intermediate representation (IR) with mode-specific serialisers, so the
+same prompts are used regardless of execution mode. Published software must
+offer both modes to end users.
+
 ## Architecture: 3 New Files
 
-### `scripts/lib_batch_verifier.py` — Core library (~200 lines)
+### `scripts/lib_verifier.py` — Core library (~450 lines)
 
-Verifier-specific batch functions. Reuses `lib_batch_api.py` for upload/submit/
-poll/retrieve lifecycle; implements verifier JSONL building and response parsing.
+Verifier library with shared prompt construction via an intermediate
+representation (IR). Supports both Batch API and real-time API modes.
 
-**Key functions:**
+**IR types:** `TextItem` and `ImageItem` frozen dataclasses represent
+mode-agnostic content. Two serialisers convert the IR:
 
-- `build_verifier_jsonl()` — One JSONL line per candidate: reference examples
-  (text labels or images from config), crop image (base64), system instruction,
-  generation config. Supports configurable temperature for consensus.
-- `build_verifier_jsonl_consensus()` — Emits N copies per candidate with unique
-  keys (`candidate_00042_iter3`) for consensus voting.
-- `build_verifier_jsonl_multiscale()` — Two crops (75+150px) per JSONL line.
-- `parse_verifier_results()` — Extracts `mound_probability` and `reasoning` from
-  batch response lines (different schema from proposer's `box_2d` detections).
-- `aggregate_consensus_votes()` — Groups by candidate ID, computes vote count
-  and mean probability.
+- `content_items_to_batch_parts()` → JSONL-compatible dicts (base64 images)
+- `content_items_to_sdk_parts()` → google-genai `types.Part` objects (binary)
 
-### `scripts/run_pv_batch.py` — Orchestrator (~300 lines)
+**Shared prompt construction:**
 
-Two subcommands:
+- `build_reference_items()` — Reference examples as IR (text-only or image)
+- `build_candidate_content()` — Full candidate prompt as IR
+- `load_system_instruction()` — System instruction text from file
+- `build_generation_config()` — Mode-agnostic config dict
+- `gen_config_to_sdk()` — Converts config dict to SDK `GenerateContentConfig`
 
-**`extract`** — Crop extraction wrapper:
-```
-python scripts/run_pv_batch.py extract \
+**Batch JSONL builders (use IR internally):**
+
+- `build_verifier_jsonl()` — One JSONL line per candidate
+- `build_verifier_jsonl_consensus()` — N copies per candidate for consensus
+- `build_verifier_jsonl_multiscale()` — Two crops (75+150px) per JSONL line
+
+**Real-time verification:**
+
+- `verify_candidate_realtime()` — Verify one candidate via SDK (called per
+  thread). Builds IR, serialises to SDK parts, calls API, parses response.
+  Supports N iterations for consensus.
+
+**Response parsing (unchanged):**
+
+- `parse_verifier_results()` — Extracts `mound_probability` and `reasoning`
+- `aggregate_consensus_votes()` — Groups by candidate ID, computes votes
+
+### `scripts/run_pv.py` — Dual-mode orchestrator (~350 lines)
+
+Two subcommands with `--mode batch|realtime` for the verify path:
+
+**`extract`** — Crop extraction (direct call to `extract_candidates()`):
+
+```text
+python scripts/run_pv.py extract \
     --proposer outputs/retest/.../detections.geojson \
-    --output-dir outputs/pv-batch/crops-150/config-name \
+    --output-dir outputs/pv/crops-150/config-name \
     --padding 75
 ```
 
-**`verify`** — Full verifier batch lifecycle:
-```
-python scripts/run_pv_batch.py verify \
-    --crops-dir outputs/pv-batch/crops-150/config-name \
+**`verify`** — Verification with mode selection:
+
+```text
+python scripts/run_pv.py verify \
+    --crops-dir outputs/pv/crops-150/config-name \
     --verifier-config prompts/configs/verify_adversarial.json \
-    --output-dir outputs/pv-batch/results/adversarial-150/config-name \
-    [--iterations 5] [--temperature 0.3] [--multi-scale] [--dry-run]
+    --output-dir outputs/pv/results/adversarial-150/config-name \
+    --mode batch|realtime \
+    [--iterations 5] [--temperature 0.7] \
+    [--workers 10] [--model gemini-3-flash] \
+    [--multi-scale] [--dry-run]
 ```
 
 For consensus: `--iterations 5 --temperature 0.7`
@@ -55,7 +84,8 @@ For multi-scale: `--multi-scale --crops-dir-75 ... --crops-dir-150 ...`
 ### `scripts/evaluate_pv_results.py` — Evaluation (~250 lines)
 
 Threshold sweep and comparison:
-```
+
+```text
 python scripts/evaluate_pv_results.py \
     --probabilities outputs/pv-batch/results/.../probabilities.json \
     --manifest outputs/pv-batch/crops-150/.../candidate_manifest.json \
@@ -114,9 +144,10 @@ Total Phase 2 cost: ~$3-5 (21 configs × optimal verifier only).
 
 | Function | Source |
 |---|---|
-| `extract_candidates.py` | Crop extraction at any `--padding` |
+| `extract_candidates()` | `extract_candidates.py` (direct function call) |
 | `upload_jsonl()`, `submit_batch_job()`, `poll_batch_job()`, etc. | `lib_batch_api.py` |
-| `_encode_image_base64()` | `lib_batch_api.py` |
+| `_encode_image_base64()`, `_mime_type_for()` | `lib_batch_api.py` |
+| `LLMMetadataTracker`, `extract_gemini_metadata()`, `estimate_cost()` | `lib_llm_metadata.py` |
 | `calculate_f1_internal()`, `bootstrap_ci()`, `bootstrap_effect_size_ci()` | `lib_advanced_metrics.py` |
 | `apply_threshold()`, `cluster_across_passes()` | `merge_passes.py` |
 | `consensus_to_gdf()` | `analyse_consensus_sweep.py` |
@@ -129,16 +160,20 @@ Total Phase 2 cost: ~$3-5 (21 configs × optimal verifier only).
 
 ## Implementation sequence
 
-1. `lib_batch_verifier.py` — JSONL builder + response parser (core)
-2. `run_pv_batch.py extract` subcommand (wraps extract_candidates.py)
-3. `run_pv_batch.py verify` subcommand — single variant, single iteration
-4. Test on proposer #1 with adversarial-150 baseline → verify matches pilot
-5. Add `--iterations` and `--temperature` for consensus
-6. Add `--multi-scale` for dual-crop variant
-7. `evaluate_pv_results.py` — threshold sweep + comparison
-8. Run Phase 1 verifier optimisation matrix
-9. Analyse results, select optimal verifier
-10. Run Phase 2 full evaluation
+1. ~~`lib_batch_verifier.py` — JSONL builder + response parser (core)~~ [done 2026-03-19]
+2. Refactor `lib_batch_verifier.py` → `lib_verifier.py` with shared IR layer
+   and dual-mode serialisers (batch dicts + SDK `types.Part` objects)
+3. Add `verify_candidate_realtime()` to `lib_verifier.py`
+4. `run_pv.py extract` subcommand (calls `extract_candidates()` directly)
+5. `run_pv.py verify --mode batch` — single variant, single iteration
+6. `run_pv.py verify --mode realtime` — ThreadPoolExecutor path
+7. Test on proposer #1 with adversarial-150 baseline → verify matches pilot
+8. Add `--iterations` and `--temperature` for consensus (both modes)
+9. Add `--multi-scale` for dual-crop variant
+10. `evaluate_pv_results.py` — threshold sweep + comparison
+11. Run Phase 1 verifier optimisation matrix
+12. Analyse results, select optimal verifier
+13. Run Phase 2 full evaluation
 
 ## Verification
 
