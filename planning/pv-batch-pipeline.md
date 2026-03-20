@@ -161,14 +161,18 @@ Total Phase 2 cost: ~$3-5 (21 configs × optimal verifier only).
 ## Implementation sequence
 
 1. ~~`lib_batch_verifier.py` — JSONL builder + response parser (core)~~ [done 2026-03-19]
-2. Refactor `lib_batch_verifier.py` → `lib_verifier.py` with shared IR layer
-   and dual-mode serialisers (batch dicts + SDK `types.Part` objects)
-3. Add `verify_candidate_realtime()` to `lib_verifier.py`
-4. `run_pv.py extract` subcommand (calls `extract_candidates()` directly)
-5. `run_pv.py verify --mode batch` — single variant, single iteration
-6. `run_pv.py verify --mode realtime` — ThreadPoolExecutor path
-7. Test on proposer #1 with adversarial-150 baseline → verify matches pilot
-8. Add `--iterations` and `--temperature` for consensus (both modes)
+2. ~~Refactor → `lib_verifier.py` with shared IR layer and dual-mode
+   serialisers (batch dicts + SDK `types.Part` objects)~~ [done 2026-03-20]
+3. ~~Add `verify_candidate_realtime()` to `lib_verifier.py`~~ [done 2026-03-20]
+4. ~~`run_pv.py extract` subcommand (calls `extract_candidates()` directly)~~ [done 2026-03-20]
+5. ~~`run_pv.py verify --mode batch` — single variant, single iteration~~ [done 2026-03-20]
+6. ~~`run_pv.py verify --mode realtime` — ThreadPoolExecutor path~~ [done 2026-03-20]
+7. ~~Test on proposer #1 with adversarial-150 baseline → verify matches pilot~~ [done 2026-03-20]
+   882 candidates, 340 tiles, F1=0.767 at threshold 0.2 (pilot: F1=0.796
+   on 60 tiles — within CI). Full threshold sweep from 0.1–0.9 confirms
+   expected precision/recall trade-off curve.
+8. ~~Add `--iterations` and `--temperature` for consensus (both modes)~~ [done 2026-03-20]
+   Built into both batch and realtime paths from the start.
 9. Add `--multi-scale` for dual-crop variant
 10. `evaluate_pv_results.py` — threshold sweep + comparison
 11. Run Phase 1 verifier optimisation matrix
