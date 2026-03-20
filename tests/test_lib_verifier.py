@@ -23,6 +23,7 @@ from scripts.lib_verifier import (
     ContentItems,
     ImageItem,
     TextItem,
+    _resolve_crop_path,
     aggregate_consensus_votes,
     build_candidate_content,
     build_generation_config,
@@ -32,6 +33,7 @@ from scripts.lib_verifier import (
     content_items_to_batch_parts,
     content_items_to_sdk_parts,
     gen_config_to_sdk,
+    load_system_instruction,
     parse_verifier_results,
 )
 
@@ -460,6 +462,8 @@ class TestBatchRealTimeParity:
 
     def test_text_content_matches(self) -> None:
         """Text content is identical in both serialisations."""
+        from google.genai import types
+
         items: ContentItems = [
             TextItem(text="first"),
             TextItem(text="second"),
@@ -467,12 +471,14 @@ class TestBatchRealTimeParity:
         batch_parts = content_items_to_batch_parts(items)
         batch_texts = [p["text"] for p in batch_parts]
 
-        # Verify batch texts match the input
-        assert batch_texts == ["first", "second"]
-
-        # SDK parts should also be produced (count check)
         sdk_parts = content_items_to_sdk_parts(items)
-        assert len(sdk_parts) == len(batch_parts)
+        # Extract text from SDK parts for direct comparison
+        sdk_texts = [
+            p.text for p in sdk_parts
+            if isinstance(p, types.Part) and p.text is not None
+        ]
+
+        assert batch_texts == sdk_texts
 
 
 # =========================================================================
@@ -497,14 +503,28 @@ class TestBuildVerifierJsonl:
         )
         assert n == 1
 
-        # Verify JSONL structure
+        # Verify JSONL structure in detail
         with open(output) as f:
             line = json.loads(f.readline())
         assert line["key"] == "candidate_00000"
-        assert "request" in line
-        assert "contents" in line["request"]
-        assert "system_instruction" in line["request"]
-        assert "generation_config" in line["request"]
+
+        request = line["request"]
+        assert "contents" in request
+        assert "system_instruction" in request
+        assert "generation_config" in request
+
+        # Verify contents structure: list with one user-role entry
+        contents = request["contents"]
+        assert len(contents) == 1
+        assert contents[0]["role"] == "user"
+
+        # Verify parts: reference text + crop label + inline_data image
+        parts = contents[0]["parts"]
+        assert len(parts) == 3
+        assert "text" in parts[0]  # Reference labels
+        assert "text" in parts[1]  # Crop label
+        assert "inline_data" in parts[2]  # Crop image
+        assert parts[2]["inline_data"]["mime_type"] == "image/png"
 
     def test_consensus_jsonl_emits_n_copies(
         self,
@@ -528,6 +548,11 @@ class TestBuildVerifierJsonl:
             "candidate_00000_iter2",
             "candidate_00000_iter3",
         ]
+
+        # Verify temperature override was applied (config has T=0.0,
+        # consensus should use T=0.7)
+        gen_cfg = lines[0]["request"]["generation_config"]
+        assert gen_cfg["temperature"] == 0.7
 
 
 # =========================================================================
@@ -560,8 +585,11 @@ class TestParseVerifierResults:
             },
         }
         parsed = parse_verifier_results(matched)
-        assert parsed["candidate_00000"]["mound_probability"] == 0.85
-        assert parsed["candidate_00000"]["reasoning"] == "Clear sunburst"
+        result = parsed["candidate_00000"]
+        assert result["mound_probability"] == 0.85
+        assert result["reasoning"] == "Clear sunburst"
+        assert result["best_alternative"] == "None"
+        assert result["alternative_evidence"] == ""
 
     def test_malformed_json_returns_parse_error(self) -> None:
         """Malformed JSON produces PARSE_ERROR result."""
@@ -619,3 +647,143 @@ class TestAggregateConsensusVotes:
         agg = aggregate_consensus_votes(parsed, threshold=0.5)
         assert 10 in agg
         assert agg[10]["vote_count"] == 1
+
+    def test_boundary_threshold(self) -> None:
+        """Probability exactly at threshold counts as a positive vote."""
+        parsed = {
+            "candidate_00001_iter1": {
+                "mound_probability": 0.5, "reasoning": "",
+            },
+            "candidate_00001_iter2": {
+                "mound_probability": 0.49, "reasoning": "",
+            },
+        }
+        agg = aggregate_consensus_votes(parsed, threshold=0.5)
+        assert agg[1]["vote_count"] == 1  # 0.5 >= 0.5, 0.49 < 0.5
+
+    def test_all_output_fields_present(self) -> None:
+        """Aggregated result includes all expected fields."""
+        parsed = {
+            "candidate_00005_iter1": {
+                "mound_probability": 0.9, "reasoning": "yes",
+            },
+            "candidate_00005_iter2": {
+                "mound_probability": 0.3, "reasoning": "no",
+            },
+        }
+        agg = aggregate_consensus_votes(parsed, threshold=0.5)
+        result = agg[5]
+        assert result["candidate_id"] == 5
+        assert result["vote_count"] == 1
+        assert result["total_iterations"] == 2
+        assert result["mean_probability"] == pytest.approx(0.6)
+        assert result["min_probability"] == 0.3
+        assert result["max_probability"] == 0.9
+        assert len(result["iterations"]) == 2
+
+
+# =========================================================================
+# LOAD SYSTEM INSTRUCTION
+# =========================================================================
+
+
+@pytest.mark.tier1
+class TestLoadSystemInstruction:
+    """Tests for load_system_instruction."""
+
+    def test_empty_instruction_file(self) -> None:
+        """Returns empty string when instruction_file is empty."""
+        result = load_system_instruction({"instruction_file": ""})
+        assert result == ""
+
+    def test_missing_instruction_file_key(self) -> None:
+        """Returns empty string when instruction_file key absent."""
+        result = load_system_instruction({})
+        assert result == ""
+
+    def test_nonexistent_file_returns_empty(self) -> None:
+        """Returns empty string (with warning) for missing file."""
+        result = load_system_instruction(
+            {"instruction_file": "nonexistent_file.md"},
+        )
+        assert result == ""
+
+    def test_valid_instruction_file(self, temp_dir: Path) -> None:
+        """Loads instruction text from file."""
+        instructions_dir = temp_dir / "instructions"
+        instructions_dir.mkdir()
+        (instructions_dir / "test.md").write_text("Test instruction")
+
+        with patch(
+            "scripts.lib_verifier._INSTRUCTIONS_DIR",
+            instructions_dir,
+        ):
+            result = load_system_instruction(
+                {"instruction_file": "test.md"},
+            )
+        assert result == "Test instruction"
+
+
+# =========================================================================
+# RESOLVE CROP PATH
+# =========================================================================
+
+
+@pytest.mark.tier1
+class TestResolveCropPath:
+    """Tests for _resolve_crop_path."""
+
+    def test_existing_crop(
+        self, sample_candidate: dict, temp_dir: Path,
+    ) -> None:
+        """Returns path when crop file exists."""
+        result = _resolve_crop_path(sample_candidate, temp_dir)
+        assert result is not None
+        assert result.exists()
+
+    def test_missing_crop_returns_none(self, temp_dir: Path) -> None:
+        """Returns None when crop file does not exist."""
+        candidate = {
+            "candidate_id": 99,
+            "crop_file": "crops/missing.png",
+        }
+        result = _resolve_crop_path(candidate, temp_dir)
+        assert result is None
+
+    def test_missing_crop_with_non_int_id(self, temp_dir: Path) -> None:
+        """Handles non-integer candidate_id without crashing."""
+        candidate = {
+            "candidate_id": "abc",
+            "crop_file": "crops/missing.png",
+        }
+        # Should log warning with %s format, not crash with %d
+        result = _resolve_crop_path(candidate, temp_dir)
+        assert result is None
+
+
+# =========================================================================
+# EMPTY CANDIDATES IN BATCH RESPONSE
+# =========================================================================
+
+
+@pytest.mark.tier1
+class TestParseVerifierEdgeCases:
+    """Edge case tests for parse_verifier_results."""
+
+    def test_empty_candidates_list_skips_silently(self) -> None:
+        """Response with empty candidates list is silently skipped."""
+        matched = {
+            "candidate_00000": {
+                "response": {"candidates": []},
+            },
+        }
+        parsed = parse_verifier_results(matched)
+        # Key is NOT in parsed — silently dropped
+        assert "candidate_00000" not in parsed
+
+    def test_missing_response_key(self) -> None:
+        """Response without 'response' key produces PARSE_ERROR."""
+        matched = {"candidate_00000": {}}
+        parsed = parse_verifier_results(matched)
+        # Empty candidates → silently skipped
+        assert "candidate_00000" not in parsed

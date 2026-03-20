@@ -164,6 +164,14 @@ def cmd_verify(args: argparse.Namespace) -> int:
     if args.temperature is not None:
         logger.info("Temperature override: %.2f", args.temperature)
 
+    # Warn if --dry-run used with real-time mode (not supported)
+    if args.dry_run and args.mode == "realtime":
+        logger.warning(
+            "--dry-run is only supported in batch mode. "
+            "No API calls will be made — exiting.",
+        )
+        return 0
+
     # Dispatch to mode-specific path
     if args.mode == "batch":
         return _verify_batch(
@@ -174,6 +182,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
             iterations=args.iterations,
             temperature=args.temperature,
             dry_run=args.dry_run,
+            model_override=args.model,
         )
     else:
         return _verify_realtime(
@@ -201,6 +210,7 @@ def _verify_batch(
     iterations: int,
     temperature: float | None,
     dry_run: bool,
+    model_override: str | None = None,
 ) -> int:
     """Batch API verification path.
 
@@ -216,6 +226,7 @@ def _verify_batch(
         iterations: Number of verifier passes (1=single, >1=consensus).
         temperature: Temperature override for consensus.
         dry_run: If True, build JSONL without submitting.
+        model_override: Optional model name override from CLI.
 
     Returns:
         Exit code (0=success, 1=error).
@@ -275,8 +286,12 @@ def _verify_batch(
         uploaded_file = upload_jsonl(client, jsonl_path, display_name)
         logger.info("Uploaded: %s", uploaded_file)
 
-        # Submit
-        model_name = config.get("model", "gemini-3-flash")
+        # Resolve model name (handles -preview suffix fallback)
+        model_name = model_override or config.get("model", "gemini-3-flash")
+        model_name = _resolve_model_name(client, model_name)
+        if model_name is None:
+            return 1
+
         batch_job = submit_batch_job(
             client, model_name, uploaded_file, display_name,
         )
@@ -284,20 +299,25 @@ def _verify_batch(
 
         # Poll
         completed_job = poll_batch_job(client, batch_job.name)
-        logger.info("Batch job complete: %s", completed_job.state.name)
+        # Use getattr for safe access — state may be enum or string
+        state_str = getattr(
+            completed_job.state, "name", str(completed_job.state),
+        )
+        logger.info("Batch job complete: %s", state_str)
 
         # Retrieve and parse
         raw_results = retrieve_batch_results(client, completed_job)
 
-        # Build expected keys for validation
-        expected_keys = set()
+        # Build expected keys for validation (sorted list to match
+        # validate_batch_results' list[str] type contract)
+        expected_keys: list[str] = []
         for candidate in manifest.get("candidates", []):
             cid = candidate["candidate_id"]
             if iterations > 1:
                 for i in range(1, iterations + 1):
-                    expected_keys.add(f"candidate_{cid:05d}_iter{i}")
+                    expected_keys.append(f"candidate_{cid:05d}_iter{i}")
             else:
-                expected_keys.add(f"candidate_{cid:05d}")
+                expected_keys.append(f"candidate_{cid:05d}")
 
         matched, missing, errored = validate_batch_results(
             expected_keys, raw_results,
@@ -314,6 +334,16 @@ def _verify_batch(
         logger.error("Batch verification failed: %s", e)
         return 1
 
+    # Create a minimal metadata tracker for batch runs — no per-response
+    # data (the Batch API doesn't return it), but captures run config.
+    from scripts.lib_llm_metadata import LLMMetadataTracker
+    batch_metadata = LLMMetadataTracker(
+        config=config,
+        system_instruction=load_system_instruction(config),
+        script_name="run_pv.py",
+        script_version=__version__,
+    )
+
     # Write outputs
     _write_verification_outputs(
         parsed_results=parsed,
@@ -322,6 +352,7 @@ def _verify_batch(
         output_dir=output_dir,
         iterations=iterations,
         mode="batch",
+        metadata_tracker=batch_metadata,
     )
 
     return 0
@@ -420,18 +451,13 @@ def _verify_realtime(
                 config=config,
                 crops_base_dir=crops_base_dir,
                 iterations=iterations,
-                candidate_id_str=f"cand_{i:04d}",
+                candidate_id_str=f"cand_{cand['candidate_id']:04d}",
             ): cand
-            for i, cand in enumerate(candidates)
+            for cand in candidates
         }
 
         for future in concurrent.futures.as_completed(future_to_cand):
             completed += 1
-            if completed % 10 == 0 or completed == total:
-                logger.info(
-                    "Progress: %d/%d (verified: %d, failed: %d)",
-                    completed, total, verified_count, failed_count,
-                )
 
             try:
                 cand_results, metadata_list = future.result()
@@ -451,8 +477,15 @@ def _verify_realtime(
                 failed_count += 1
                 cand = future_to_cand[future]
                 logger.error(
-                    "Candidate %d failed: %s",
+                    "Candidate %s failed: %s",
                     cand["candidate_id"], e,
+                )
+
+            # Log progress after counters are updated
+            if completed % 10 == 0 or completed == total:
+                logger.info(
+                    "Progress: %d/%d (verified: %d, failed: %d)",
+                    completed, total, verified_count, failed_count,
                 )
 
     logger.info(
@@ -539,16 +572,18 @@ def _write_verification_outputs(
             }, f, indent=2)
         logger.info("Consensus written: %s", consensus_path)
 
-        # Summary stats
+        # Summary stats — minimum votes to accept is majority
+        import math
+        min_votes = math.ceil(iterations / 2)
         n_accepted = sum(
             1 for v in consensus.values()
-            if v["vote_count"] >= (iterations * 0.5)
+            if v["vote_count"] >= min_votes
         )
         logger.info(
             "Consensus summary: %d/%d candidates accepted "
             "(≥%d/%d votes)",
             n_accepted, len(consensus),
-            int(iterations * 0.5) + 1, iterations,
+            min_votes, iterations,
         )
 
     # Metadata
@@ -595,14 +630,15 @@ def _get_api_key() -> str:
         API key string.
 
     Raises:
-        SystemExit: If config module or key not found.
+        RuntimeError: If config module or API key not found.
     """
     try:
         from config import GOOGLE_API_KEY
         return GOOGLE_API_KEY
     except ImportError:
-        logger.error("config.py not found — cannot load API key")
-        sys.exit(1)
+        raise RuntimeError(
+            "config.py not found — cannot load API key"
+        )
 
 
 def _resolve_model_name(client: Any, model_name: str) -> str | None:

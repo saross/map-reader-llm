@@ -410,7 +410,7 @@ def _resolve_crop_path(
         return crop_path
 
     logger.warning(
-        "Crop file not found: %s (candidate %d)",
+        "Crop file not found: %s (candidate %s)",
         candidate["crop_file"],
         candidate["candidate_id"],
     )
@@ -459,14 +459,15 @@ def build_verifier_jsonl(
 
     with open(output_path, "w") as f:
         for candidate in manifest.get("candidates", []):
-            crop_path = _resolve_crop_path(candidate, crops_base_dir)
-            if crop_path is None:
+            # Build IR and serialise to batch parts — skip candidates
+            # with missing crop files rather than crashing mid-write
+            try:
+                items = build_candidate_content(
+                    candidate, config, crops_base_dir, reference_items,
+                )
+            except FileNotFoundError as e:
+                logger.warning("%s", e)
                 continue
-
-            # Build IR and serialise to batch parts
-            items = build_candidate_content(
-                candidate, config, crops_base_dir, reference_items,
-            )
             parts = content_items_to_batch_parts(items)
 
             candidate_id = candidate["candidate_id"]
@@ -535,14 +536,15 @@ def build_verifier_jsonl_consensus(
 
     with open(output_path, "w") as f:
         for candidate in manifest.get("candidates", []):
-            crop_path = _resolve_crop_path(candidate, crops_base_dir)
-            if crop_path is None:
+            # Build IR and serialise once per candidate — skip
+            # candidates with missing crop files
+            try:
+                items = build_candidate_content(
+                    candidate, config, crops_base_dir, reference_items,
+                )
+            except FileNotFoundError as e:
+                logger.warning("%s", e)
                 continue
-
-            # Build IR and serialise once per candidate
-            items = build_candidate_content(
-                candidate, config, crops_base_dir, reference_items,
-            )
             parts = content_items_to_batch_parts(items)
             candidate_id = candidate["candidate_id"]
 
@@ -621,7 +623,7 @@ def build_verifier_jsonl_multiscale(
             large_candidate = large_by_id.get(cid)
             if large_candidate is None:
                 logger.warning(
-                    "No matching large crop for candidate %d", cid,
+                    "No matching large crop for candidate %s", cid,
                 )
                 continue
 
@@ -730,7 +732,7 @@ def verify_candidate_realtime(
             candidate, config, crops_base_dir, reference_items,
         )
     except FileNotFoundError as e:
-        logger.warning("Skipping candidate %d: %s", cid, e)
+        logger.warning("Skipping candidate %s: %s", cid, e)
         return {}, []
 
     sdk_parts = content_items_to_sdk_parts(items)
@@ -800,7 +802,9 @@ def _call_verifier_api(
                 config=gen_config,
             )
 
-            # Track metadata
+            # Track metadata before attempting to parse text —
+            # response.text can raise ValueError on safety-blocked or
+            # empty responses, so we capture metadata first.
             response_metadata = extract_gemini_metadata(
                 response=response,
                 request_start=request_start,
@@ -810,10 +814,34 @@ def _call_verifier_api(
             )
             metadata_list.append(response_metadata)
 
+            # Access response text — raises ValueError if safety-blocked
+            # or no candidates returned. Handle this distinctly from
+            # transient API errors: safety blocks are deterministic and
+            # should not be retried.
+            try:
+                txt = response.text
+            except ValueError as e:
+                response_metadata.parse_success = False
+                response_metadata.parse_error = f"BLOCKED: {e}"
+                logger.warning(
+                    "%s attempt %d: response blocked or empty (%s) — "
+                    "not retrying (deterministic)",
+                    iteration_id, attempt, e,
+                )
+                return None
+
+            if txt is None:
+                response_metadata.parse_success = False
+                response_metadata.parse_error = "EMPTY_RESPONSE"
+                logger.warning(
+                    "%s attempt %d: response.text is None — "
+                    "not retrying",
+                    iteration_id, attempt,
+                )
+                return None
+
             # Parse JSON response
-            txt = response.text.replace(
-                "```json", "",
-            ).replace("```", "").strip()
+            txt = txt.replace("```json", "").replace("```", "").strip()
             data = json.loads(txt)
 
             return {
@@ -828,18 +856,9 @@ def _call_verifier_api(
             }
 
         except json.JSONDecodeError as e:
-            # Track metadata for the response that failed to parse
-            if "response" in locals():
-                response_metadata = extract_gemini_metadata(
-                    response=response,
-                    request_start=request_start,
-                    model_requested=model_name,
-                    item_id=iteration_id,
-                    attempt=attempt,
-                )
-                response_metadata.parse_success = False
-                response_metadata.parse_error = str(e)
-                metadata_list.append(response_metadata)
+            # Metadata already tracked above; mark parse failure
+            response_metadata.parse_success = False
+            response_metadata.parse_error = str(e)
 
             if attempt < _MAX_RETRIES:
                 backoff = _RETRY_BACKOFF_SECONDS[attempt - 1]
