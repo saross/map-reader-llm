@@ -3348,6 +3348,38 @@ it is worth noting for full transparency.
 
 ---
 
+## Observation 167: Consensus voting does not improve the PV verifier (2026-03-20)
+
+Compared single-pass (N=1, T=0.0) against consensus voting (N=5, T=0.7)
+for the adversarial-text verifier on proposer #1 (882 candidates, 340
+tiles, 150px raster-sourced crops):
+
+| Config | Optimal threshold | F1 | 95% CI | P | R |
+|---|---|---|---|---|---|
+| N=1, T=0.0 | 0.15 | 0.770 | [0.726–0.811] | 0.776 | 0.764 |
+| N=5, T=0.7 | 0.20 | 0.774 | [0.727–0.816] | 0.774 | 0.774 |
+
+The difference (+0.004 F1) is not statistically significant — the CIs
+overlap almost completely. Consensus produces slightly more balanced
+precision/recall but at 5× the API cost ($1.09 vs $0.22).
+
+**Why consensus doesn't help here**: In the proposer stage, consensus
+voting filters noise by requiring agreement across diverse passes — the
+"diversity dividend" (Obs 141). The verifier stage operates differently:
+it receives a single crop image and makes a binary judgement. At T=0.0,
+the verifier is already near-deterministic. At T=0.7, the five passes
+produce variation, but the adversarial framing is strong enough that
+individual passes are already well-calibrated. Averaging five calibrated
+judgements doesn't materially improve on one.
+
+**Practical implication**: The published PV pipeline should default to
+N=1 single-pass verification. This is faster, cheaper, and produces
+equivalent results. Consensus voting remains valuable for the proposer
+stage (where it demonstrably improves recall) but adds no value at the
+verification stage.
+
+---
+
 ## Transition to Production Runs (Session 52)
 
 **Date**: 2026-03-15
@@ -3442,3 +3474,48 @@ N=5 consensus at 3 temperatures, standard+adversarial ensemble,
 multi-scale) on 4 proposer configs. Phase 2 applies optimal verifier
 to all 21 proposer configs. All proposer data reused — zero new
 proposer API calls.
+
+---
+
+## Observation 168: Phase boundary gap — validate assumptions before scaling (2026-03-21)
+
+During PV pipeline Phase 2, we committed ~$5 of API calls and 20
+experiments using the adversarial-text verifier — selected as "best"
+from the 60-tile H11 pilot (F1=0.796). We ran all Phase 1 optimisation
+(crop size, consensus) and began Phase 2 production runs before
+validating the verifier strategy choice at full power (340 tiles).
+
+A $0.44, 10-minute validation run (brief-text + checklist-text on
+proposer #1) confirmed the choice was correct:
+
+| Strategy | F1 | 95% CI |
+|---|---|---|
+| Adversarial | 0.770 | [0.726–0.811] |
+| Checklist | 0.769 | [0.724–0.809] |
+| Brief | 0.752 | [0.711–0.795] |
+
+All three overlap — the strategy choice is not statistically
+significant at 340 tiles, which means it was *certainly* not
+significant at 60 tiles. We got the right answer by luck, not by
+statistical power.
+
+**The gap**: An under-powered assumption (strategy selection on 60
+tiles with wide CIs) was carried forward as settled fact across a
+phase boundary (pilot → production) without explicit validation. The
+decision *felt* data-driven because it came from an experiment — but
+the experiment lacked the power to distinguish alternatives.
+
+**Process improvement**: Created `/phase-gate` skill — a structured
+checkpoint for experimental phase boundaries that enumerates
+assumptions, checks statistical power, estimates validation cost, and
+assesses consequences of being wrong. Added to CLAUDE.md as a
+proactive trigger at phase boundaries.
+
+**Key insight**: The cost asymmetry is stark. Validation cost ($0.44)
+was 0.09× the phase cost ($5+). A 10-minute check could have saved
+hours of uncertainty. The `/phase-gate` protocol's "consequence check"
+(Step 4) would have flagged this: if adversarial were wrong, all 20
+Phase 2 experiments would need re-running — making validation
+mandatory regardless of cost.
+
+---

@@ -40,6 +40,12 @@ This project uses structured CC session archiving for research transparency:
 - **Gap analysis**: Before implementing new workflow phases, run a "dry-run simulation"—mentally execute each step checking whether required inputs, scripts, and configs exist; document missing pieces before writing code
 - **Linting**: Run `ruff check` on modified Python files and `npx markdownlint-cli2` on modified Markdown files before committing. Config in `pyproject.toml` and `.markdownlint.json`. Pre-existing violations in untouched files are legacy debt — fix them when touching those files, not in bulk
 
+## Experimental Phase Boundaries
+
+Before committing API spend or compute to a new experimental phase, run the `/phase-gate` check. This surfaces under-powered assumptions from prior phases that should be validated before scaling. Trigger proactively when recognising a phase boundary — do not wait for the user to invoke it.
+
+Phase boundaries include: moving from pilot to full-corpus evaluation, switching from parameter optimisation to production runs, and applying a configuration selected on a subset to a larger dataset.
+
 ## Research Finding Calibration
 
 **Flag surprising results.** When analysis produces results that contradict expectations, hypotheses, or prior experience, proactively raise this with the user rather than accepting the output at face value. Surprising research findings are as important to flag as implementation bugs — both require human judgement to interpret.
