@@ -174,7 +174,9 @@ Total Phase 2 cost: ~$3-5 (21 configs × optimal verifier only).
 8. ~~Add `--iterations` and `--temperature` for consensus (both modes)~~ [done 2026-03-20]
    Built into both batch and realtime paths from the start.
 9. Add `--multi-scale` for dual-crop variant
-10. `evaluate_pv_results.py` — threshold sweep + comparison
+10. ~~`evaluate_pv_results.py` — threshold sweep + comparison~~ [done 2026-03-20]
+    Sweep + compare subcommands with bootstrap CIs. Verified on proposer #1:
+    optimal T=0.15, F1=0.770 [0.726–0.811].
 11. Run Phase 1 verifier optimisation matrix
 12. Analyse results, select optimal verifier
 13. Run Phase 2 full evaluation
