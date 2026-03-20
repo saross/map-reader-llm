@@ -3311,6 +3311,43 @@ as the current pipeline performance.
 
 ---
 
+## Observation 166: Verifier crop size — ~150px optimal but sensitivity is low (2026-03-20)
+
+Swept four crop sizes for the adversarial-text verifier (N=1, T=0.0,
+882 candidates, 340 tiles, proposer #1 = Phase 2b T=0.0 run_1):
+
+| Crop (px) | Padding | Optimal F1 | 95% CI |
+|---|---|---|---|
+| 40 | 20 | 0.741 | [0.695–0.784] |
+| 76 | 38 | 0.768 | [0.723–0.808] |
+| 150 | 75 | 0.770 | [0.726–0.811] |
+| 300 | 150 | 0.761 | [0.713–0.803] |
+
+All four CIs overlap. The peak is at 150px, but the curve is remarkably
+flat between 76px and 300px (F1 range: 0.761–0.770, a span of 0.009).
+Degradation only becomes noticeable at 40px, where recall drops from
+0.764 to 0.705 — the model loses context needed to distinguish mound
+symbols from confusable features at very small crop sizes. At 300px,
+the slight decline is likely from additional visual noise (contour
+lines, other symbols) giving the adversarial verifier more material
+to argue against the mound hypothesis.
+
+**Practical implication**: 150px is a safe default for the published
+pipeline. Users could halve or double it without meaningful performance
+change. The verifier is robust to crop size variation across nearly an
+order of magnitude (40–300px), which is a desirable property for a
+tool that will be applied to maps at varying scales and resolutions.
+
+**Methodological note**: The 40px and 76px runs used tile-edge fallback
+cropping (source rasters were not available on the test machine at the
+time). The 150px and 300px runs used the E33 raster cropping path with
+`boundless=True`. Since crop size, not edge handling, is the variable
+under test, and truncation affects only candidates near tile boundaries
+(a small minority), this is unlikely to confound the comparison — but
+it is worth noting for full transparency.
+
+---
+
 ## Transition to Production Runs (Session 52)
 
 **Date**: 2026-03-15

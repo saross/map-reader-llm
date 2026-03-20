@@ -73,6 +73,72 @@ logger = logging.getLogger(__name__)
 
 
 # =========================================================================
+# Helper: Load Probabilities (single-pass or consensus)
+# =========================================================================
+
+
+def load_probabilities(
+    probabilities_path: Path,
+    consensus_path: Path | None = None,
+) -> dict[str, dict]:
+    """Load per-candidate probabilities from single-pass or consensus output.
+
+    For single-pass results (``probabilities.json``), returns the
+    ``results`` dict directly — keys are ``"candidate_NNNNN"``.
+
+    For consensus results (``consensus.json``), converts the aggregated
+    ``mean_probability`` into the same format so downstream code
+    (``build_candidate_gdf``) works unchanged.
+
+    Args:
+        probabilities_path: Path to ``probabilities.json``.
+        consensus_path: Optional path to ``consensus.json``. If provided
+            and the file exists, consensus mean probabilities are used
+            instead of raw iteration-level results.
+
+    Returns:
+        Dict mapping ``"candidate_NNNNN"`` to result dicts containing
+        ``mound_probability``.
+    """
+    # Prefer consensus if available
+    if consensus_path and consensus_path.exists():
+        with open(consensus_path) as f:
+            consensus_data = json.load(f)
+        consensus = consensus_data.get("consensus", {})
+        probabilities: dict[str, dict] = {}
+        for _str_id, entry in consensus.items():
+            cid = entry["candidate_id"]
+            key = f"candidate_{cid:05d}"
+            probabilities[key] = {
+                "mound_probability": entry["mean_probability"],
+                "vote_count": entry.get("vote_count", 0),
+                "total_iterations": entry.get("total_iterations", 0),
+            }
+        logger.info(
+            "Loaded consensus probabilities: %d candidates "
+            "(mean of %d iterations)",
+            len(probabilities),
+            consensus_data.get("iterations", 0),
+        )
+        return probabilities
+
+    # Single-pass: unwrap from probabilities.json
+    with open(probabilities_path) as f:
+        prob_data = json.load(f)
+    probabilities = prob_data.get("results", {})
+
+    # Check if these are iteration-level keys (consensus without consensus.json)
+    if probabilities and any("_iter" in k for k in list(probabilities)[:5]):
+        logger.warning(
+            "Probabilities appear to be iteration-level (consensus) "
+            "but no consensus.json found. Use run_pv.py verify to "
+            "generate consensus.json, or pass --consensus.",
+        )
+
+    return probabilities
+
+
+# =========================================================================
 # Helper: Build Candidate GeoDataFrame
 # =========================================================================
 
@@ -160,14 +226,20 @@ def cmd_sweep(args: argparse.Namespace) -> int:
     Returns:
         Exit code (0=success, 1=error).
     """
-    # Load probabilities
+    # Load probabilities (single-pass or consensus)
+    consensus_path = getattr(args, "consensus", None)
+    if consensus_path is None:
+        # Auto-detect: look for consensus.json next to probabilities.json
+        auto_consensus = args.probabilities.parent / "consensus.json"
+        if auto_consensus.exists():
+            consensus_path = auto_consensus
+            logger.info("Auto-detected consensus.json: %s", consensus_path)
+
     try:
-        with open(args.probabilities) as f:
-            prob_data = json.load(f)
+        probabilities = load_probabilities(args.probabilities, consensus_path)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         logger.error("Cannot load probabilities: %s", e)
         return 1
-    probabilities = prob_data.get("results", {})
 
     # Load manifest
     try:
@@ -510,14 +582,20 @@ def _load_variant_gdf(
         Filtered GeoDataFrame, or None if files cannot be loaded.
     """
     try:
-        with open(variant["probabilities_file"]) as f:
-            prob_data = json.load(f)
+        # Check for consensus.json alongside probabilities
+        prob_path = Path(variant["probabilities_file"])
+        consensus_path = prob_path.parent / "consensus.json"
+        probabilities = load_probabilities(
+            prob_path,
+            consensus_path if consensus_path.exists() else None,
+        )
+
         with open(variant["manifest_file"]) as f:
             manifest = json.load(f)
 
         return build_candidate_gdf(
             manifest,
-            prob_data.get("results", {}),
+            probabilities,
             variant["optimal_threshold"],
         )
     except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
@@ -561,6 +639,13 @@ def _build_parser() -> argparse.ArgumentParser:
     sweep_parser.add_argument(
         "--output-dir", type=Path, required=True,
         help="Directory for sweep outputs (JSON + CSV)",
+    )
+    sweep_parser.add_argument(
+        "--consensus", type=Path, default=None,
+        help=(
+            "Path to consensus.json (for multi-iteration results). "
+            "Auto-detected if next to probabilities.json."
+        ),
     )
     sweep_parser.add_argument(
         "--step", type=float, default=0.05,
