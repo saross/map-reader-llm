@@ -3519,3 +3519,156 @@ Phase 2 experiments would need re-running — making validation
 mandatory regardless of cost.
 
 ---
+
+## Observation 169: Verifier strategy choice is not significant at scale (2026-03-21)
+
+Three verifier strategies (adversarial, checklist, brief) tested on
+proposer #1 (882 candidates, 340 tiles) produced statistically
+indistinguishable F1:
+
+| Strategy | F1 | 95% CI | P | R |
+|---|---|---|---|---|
+| Adversarial | 0.770 | [0.726–0.811] | 0.776 | 0.764 |
+| Checklist | 0.769 | [0.724–0.809] | 0.748 | 0.792 |
+| Brief | 0.752 | [0.711–0.795] | 0.761 | 0.744 |
+
+All CIs overlap. The pilot's selection of adversarial (F1=0.796 on
+60 tiles) was correct but not statistically justified — the 60-tile
+holdout lacked the power to distinguish strategies. At 340 tiles,
+the strategies converge.
+
+**Notable difference in profile**: Checklist retains the most recall
+(0.792, nearly matching the unfiltered proposer's 0.798) while
+adversarial has the highest precision (0.776). For applications where
+recall matters most, checklist may be preferable despite identical F1.
+
+**Implication for the paper**: The verifier *architecture* (proposer +
+verifier pipeline) drives the improvement, not the specific prompt
+strategy. This is a robustness finding — the PV approach works
+regardless of which verifier framing is used.
+
+---
+
+## Observation 170: PV universally improves F1 — the headline result (2026-03-21)
+
+Across 25 proposer configurations spanning both tracks, all
+temperatures, N=1 through N=30, and both thinking levels, the PV
+verifier improved F1 in **every case**. Mean improvement: +0.173 F1.
+
+The improvement is largest for high-recall, low-precision proposers
+(consensus unions) and smallest for already-precise proposers (strict
+consensus thresholds). The verifier cannot improve recall — it can
+only accept or reject candidates — so the proposer's recall sets the
+ceiling.
+
+**Top results** (all using adversarial-text verifier, 150px crops, N=1):
+
+| Proposer | Proposer F1 | + PV F1 | ΔF1 |
+|---|---|---|---|
+| Text 5-of-10 | 0.667 | **0.831** | +0.164 |
+| Text 3-of-10 | 0.614 | **0.823** | +0.209 |
+| HIGH 20-of-30 | 0.762 | **0.819** | +0.057 |
+| Text 2-of-10 | 0.561 | **0.807** | +0.246 |
+
+**New project best: F1=0.831** (text 5-of-10 + PV), up from the
+previous best of 0.763 (HIGH 25-of-30 consensus without PV).
+
+---
+
+## Observation 171: Moderate consensus + PV is the optimal architecture (2026-03-21)
+
+The best PV results come from **moderate consensus unions** (2-of-10
+through 5-of-10) as proposers, not from single runs or strict
+consensus. This creates a "Goldilocks zone":
+
+- **Too few passes (N=1)**: Recall is capped at ~0.80. PV improves
+  precision but can't recover missed detections. Best PV F1 ≈ 0.77.
+- **Too many passes, loose threshold (1-of-30)**: Extreme recall
+  (~0.89) but so many FPs that even the verifier can't filter them
+  all. PV F1 ≈ 0.74.
+- **Moderate consensus (3-of-10)**: Recall is boosted (~0.85) by the
+  union, but most single-run FPs are already filtered out by requiring
+  agreement from 3+ runs. The verifier then filters the remaining
+  consensus FPs. PV F1 ≈ 0.82.
+
+**The practical implication**: The published pipeline should recommend
+~10 proposer passes with a 3-of-10 or 5-of-10 vote threshold,
+followed by a single verifier pass. This is 11 total API calls per
+tile — compared to 30 for the previous best consensus approach —
+and achieves higher F1 (0.831 vs 0.763).
+
+---
+
+## Observation 172: PV improvement tracks proposer recall, not proposer F1 (2026-03-21)
+
+Plotting PV F1 against proposer recall (not proposer F1) reveals a
+clearer relationship: proposers with higher recall produce better PV
+results, regardless of their starting precision.
+
+This makes mechanistic sense. The verifier can only improve precision
+(by rejecting FPs). It cannot improve recall (it never adds
+detections). So the proposer's job is to maximise recall, and the
+verifier's job is to clean up the resulting FPs. A proposer with
+R=0.85 and P=0.48 (F1=0.61) is a better PV input than one with
+R=0.72 and P=0.53 (F1=0.61) — same F1, but more recall to work with.
+
+**Implication for proposer optimisation**: When designing proposers
+for a PV pipeline, optimise for recall, not F1. This inverts the
+usual single-stage optimisation target and suggests that
+configurations previously dismissed as "too noisy" (HIGH thinking,
+high temperature, loose consensus) may be the best PV inputs.
+
+---
+
+## Observation 173: Text track dominates image track under PV (2026-03-21)
+
+The text-only track consistently outperforms the text+image track
+when PV filtering is applied:
+
+| Consensus level | Text + PV | Image + PV | Gap |
+|---|---|---|---|
+| 5-of-10 | **0.831** | 0.712 | 0.119 |
+| 3-of-10 | **0.823** | 0.668 | 0.155 |
+| 2-of-10 | **0.807** | 0.635 | 0.172 |
+| 1-of-10 | **0.737** | 0.552 | 0.185 |
+
+The gap *widens* at lower consensus thresholds (more FPs to filter).
+This suggests image examples introduce false positives that are harder
+for the verifier to reject — possibly because the verifier (which
+uses text-only reference labels) is less effective at distinguishing
+image-track FPs that visually resemble mound symbols.
+
+**For the paper**: This reinforces the earlier finding (Obs 162) that
+text-only examples outperform image examples for this detection task.
+The PV pipeline amplifies this advantage.
+
+---
+
+## Observation 174: The "11 passes beats 30 passes" cost-efficiency finding (2026-03-21)
+
+The most cost-relevant comparison:
+
+| Configuration | Passes | F1 | Cost per tile |
+|---|---|---|---|
+| PV: text 3-of-10 + verifier | **11** | **0.823** | ~$0.004 |
+| Consensus: HIGH 25-of-30 | 30 | 0.763 | ~$0.026 |
+
+The PV approach uses 63% fewer passes, requires no HIGH thinking
+(cheaper per call), and achieves +0.060 higher F1. The cost
+advantage is ~6.5× per tile.
+
+This is the headline finding for practical deployment: the PV
+pipeline is both cheaper and more accurate than the best
+consensus-only approach. The savings come from two sources: (1)
+fewer proposer passes (10 vs 30), and (2) minimal thinking instead
+of HIGH (the verifier doesn't need HIGH thinking to be effective).
+
+**Caveat**: The comparison is between minimal-thinking text-only
+proposer (10 passes) + minimal-thinking text-only verifier (1 pass)
+vs HIGH-thinking text-only proposer (30 passes). These use different
+thinking levels, so the cost difference includes both the pass count
+reduction and the thinking level reduction. A fairer comparison
+(same thinking level) would show a smaller but still substantial
+cost advantage.
+
+---
