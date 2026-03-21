@@ -2366,3 +2366,54 @@ would have missed the study's best result.
 
 *Last updated: 2026-03-19 (Session 53 — HIGH thinking consensus
 inversion and the bias-variance analogy)*
+
+---
+
+### Session 54 (2026-03-21): PV pipeline inverts the thinking-level recommendation — a second-order belief revision
+
+**The surprise**: After establishing that HIGH thinking helps
+consensus voting (Session 53 finding, confirmed at scale this
+session with p=0.002), the PV pipeline produces the opposite
+result. Pairwise comparisons show HIGH thinking is significantly
+*worse* than minimal under PV at the single-pass level (dF1=−0.083,
+p=0.001). The PV pipeline's best result (F1=0.831) uses minimal
+thinking throughout.
+
+**Abductive sequence**:
+
+1. Session 53 established: HIGH thinking = variance amplifier,
+   beneficial under consensus (Obs 141, confirmed as Obs 176)
+2. Expectation entering PV work: HIGH thinking should also benefit
+   PV, since PV (like consensus) filters noise
+3. Surprise: HIGH thinking hurts PV at single-pass level
+4. Hypothesis: the verifier and consensus are *different kinds* of
+   noise filter. Consensus requires agreement across multiple runs
+   (votes) — it tolerates high-variance input because diverse runs
+   contribute different TPs. The verifier makes a binary judgement
+   on a single candidate — it works better with a cleaner signal
+   because each FP must be independently rejected
+
+**Belief revision**: The relationship between reasoning depth and
+optimal strategy now has *three* levels:
+
+- Single-pass: minimal better (fewer FPs, F1 0.596 vs 0.452)
+- Consensus: HIGH better (diverse TPs survive voting, F1 0.779 vs 0.690)
+- PV single-pass: minimal better (cleaner input for verifier, F1 0.831 via moderate consensus + verifier)
+
+This is a second-order inversion: the Session 53 finding inverted
+the N=1 finding, and now the PV finding inverts *that*. The
+underlying mechanism (variance amplification) is consistent — what
+changes is whether the downstream noise-reduction technique benefits
+from high variance (consensus does) or low variance (PV verifier
+does).
+
+**Connection to previous entries**: This extends the bias-variance
+analogy from Session 53. Consensus voting is like bagging (benefits
+from high-variance base learners). PV verification is like boosting
+(benefits from low-bias base learners). The optimal "ensemble
+strategy" depends on which aggregation method is used — a point
+the machine learning literature makes extensively but that was not
+obvious when applied to VLM detection pipelines.
+
+*Last updated: 2026-03-21 (Session 54 — PV inverts the thinking-
+level recommendation, second-order belief revision)*

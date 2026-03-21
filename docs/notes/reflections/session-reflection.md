@@ -5535,3 +5535,58 @@ fields conditional. Entries 44+ follow the revised protocol. See the
 `/reflect` skill definition for details.
 
 ---
+
+## Reflection 40: The session where everything worked — and what that revealed (Session 54)
+
+**What surprised me about this session?**
+
+The PV pipeline went from "library exists, nothing else built" to "new
+project best F1=0.831, 25/25 experiments improved, full documentation
+suite, 54 pairwise comparisons" in a single two-day session. The
+technical execution was fast — the dual-mode refactor, orchestrator,
+evaluator, audits, and production runs all flowed without major
+blockers. What surprised me was that the *process gaps* were more
+consequential than the *technical gaps*.
+
+We built and validated the entire pipeline, ran 25 experiments, and got
+halfway through Phase 2 before realising we'd never validated the
+verifier strategy choice at production scale. A $0.44, 10-minute check
+that should have been done before any Phase 2 experiments. The
+technical work was correct; the experimental discipline wasn't. This
+led to the `/phase-gate` skill — the session's most durable
+contribution, even though it came from a mistake rather than a plan.
+
+**What would I do differently if I replayed this session?**
+
+Three things. First, I would have validated the verifier strategy
+before Phase 2 — the `/phase-gate` check we created would have caught
+this. Second, I would have run compute-intensive analysis (bootstrap
+sweeps) on sapphire from the start rather than being reminded twice.
+Third, I would have followed the preregistered consensus pool
+conventions (N=5/10/30) from the beginning instead of picking ad hoc
+thresholds. All three are "follow the established protocol" failures,
+not "figure out something new" failures — the protocols existed, I
+just didn't apply them consistently. That's a different class of error
+from the pilot era, where the protocols were being invented.
+
+**What question emerged that wasn't pursued?**
+
+The verifier strategy equivalence is striking. Adversarial, checklist,
+and brief framings all produce the same F1 — despite having very
+different prompt structures and reasoning chains. Does this mean the
+model's visual classification is invariant to prompt framing once you
+give it a crop image and ask "is this a mound?" Or does each strategy
+produce the same F1 through *different* TP/FP trade-offs that happen
+to balance out? A per-candidate agreement analysis between strategies
+would answer this: if the same candidates are accepted/rejected by all
+three, the model's judgement is robust; if different candidates are
+filtered but the net F1 is the same, the strategies have complementary
+error profiles that could be exploited via ensembling.
+
+**Session**: 2026-03-20/21 (Session 54, two-day)
+**Texture**: Production execution with periodic course corrections from
+the human collaborator. Three corrections on operational practice
+(run on sapphire, flag large runs, follow preregistered conventions)
+that were all "apply existing rules" rather than "create new rules."
+
+---

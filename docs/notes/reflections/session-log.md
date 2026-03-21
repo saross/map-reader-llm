@@ -2942,4 +2942,51 @@ with `return_p_values` parameter for FDR support.
 
 ---
 
+## Session 54 — 2026-03-20/21 (map-reader-llm): PV pipeline build, production experiments, documentation
+
+### Overview
+
+Built the complete dual-mode Proposer-Verifier pipeline from library through orchestrator, evaluator, and production experiments. Achieved new project best F1=0.831. Completed Phase 3a-HIGH text (90/90). Created `/phase-gate` skill. Full documentation suite.
+
+### Accomplishments
+
+1. **Refactored lib_verifier.py** — shared IR (TextItem/ImageItem), batch + real-time serialisers, verify_candidate_realtime() with retry
+2. **Built run_pv.py** — dual-mode orchestrator with extract/verify subcommands, `--mode batch|realtime`
+3. **Built evaluate_pv_results.py** — threshold sweep with bootstrap CIs, multi-variant comparison
+4. **Audited all new code** — 18 issues found and fixed across 3 files (critical: dry-run guard, model resolution, safety-block handling; tests: 36 → 47 → 57)
+5. **PV Phase 1 optimisation** — crop size (40–300px), consensus (N=1 vs N=5), verifier strategy (3 types). All parameters insensitive. Obs 166–169.
+6. **PV Phase 2 production** — 25 experiments across N=1 runs, consensus unions, HIGH configs. PV improved F1 in 25/25. New best: F1=0.831 (text 5-of-10 + PV)
+7. **54 pairwise bootstrap comparisons** — computed on sapphire. PV significantly beats all non-PV approaches.
+8. **Phase 3a-HIGH text complete** (90/90) — consensus sweep (135 configs), 8 pairwise comparisons. Best: T=0.3 23-of-30 F1=0.779
+9. **Created `/phase-gate` skill** — experimental phase boundary checkpoint (Obs 168)
+10. **Full documentation** — retest summary, PV Phase 1 + 2 analyses, protocol errata E36–39, decisions D22–25, Obs 166–177
+11. **Copied rasters** to amd-tower, fixed consensus GeoJSON CRS (EPSG:4326 → 32635)
+
+### Key Results
+
+| Configuration | F1 | 95% CI |
+|---|---|---|
+| PV: text 5-of-10 + verifier | **0.831** | [0.789, 0.870] |
+| PV: text 3-of-10 + verifier | 0.823 | [0.784, 0.860] |
+| PV: HIGH 20-of-30 + verifier | 0.819 | [0.776, 0.856] |
+| Consensus: HIGH 23-of-30 (no PV) | 0.779 | [0.735, 0.822] |
+| Previous best: HIGH 25-of-30 | 0.763 | [0.709, 0.802] |
+
+### Issues
+
+- Batch API jobs stuck in PENDING for 24+ hours (cancelled, resubmitted)
+- Consensus GeoJSONs missing CRS declaration (fixed)
+- Verifier strategy not validated at scale before Phase 2 (caught retroactively, led to /phase-gate skill)
+- Ad hoc consensus thresholds used instead of preregistered N=5/10/30 convention (corrected)
+
+### Pending
+
+- [ ] Phase 3c diversity text: 60/100 complete (batch polling running)
+- [ ] Phase 3a-HIGH image track: 90 units, not started (Task #1 prerequisite)
+- [ ] Phase 3c diversity image track: 100 units, not started (Task #1)
+- [ ] FDR correction across all pairwise comparisons (after all data)
+- [ ] Update analysis summaries when pairwise/FDR results available
+
+---
+
 *New session entries should be appended above this line.*
