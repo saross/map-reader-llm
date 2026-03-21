@@ -173,13 +173,20 @@ Total Phase 2 cost: ~$3-5 (21 configs × optimal verifier only).
    expected precision/recall trade-off curve.
 8. ~~Add `--iterations` and `--temperature` for consensus (both modes)~~ [done 2026-03-20]
    Built into both batch and realtime paths from the start.
-9. Add `--multi-scale` for dual-crop variant
+9. ~~Add `--multi-scale` for dual-crop variant~~ [skipped — crop size insensitive,
+   Obs 166. No benefit from multi-scale given 75–300px equivalence.]
 10. ~~`evaluate_pv_results.py` — threshold sweep + comparison~~ [done 2026-03-20]
     Sweep + compare subcommands with bootstrap CIs. Verified on proposer #1:
     optimal T=0.15, F1=0.770 [0.726–0.811].
-11. Run Phase 1 verifier optimisation matrix
-12. Analyse results, select optimal verifier
-13. Run Phase 2 full evaluation
+11. ~~Run Phase 1 verifier optimisation matrix~~ [done 2026-03-20]
+    Crop size (4 sizes), consensus (N=1 vs N=5), verifier strategy (3 types).
+    All parameters insensitive. See `results/pv/phase1/pv-phase1-analysis.md`.
+12. ~~Analyse results, select optimal verifier~~ [done 2026-03-21]
+    Optimal: adversarial-text, 150px, N=1, T=0.0. Decision 23–24.
+13. ~~Run Phase 2 full evaluation~~ [done 2026-03-21]
+    25 experiments + 6 top-performer additions. PV improves F1 in 25/25.
+    New project best: F1=0.831 (text 5-of-10 + PV).
+    See `results/pv/phase2/pv-phase2-analysis.md`.
 
 ## Verification
 

@@ -875,4 +875,70 @@ consistent choice.
 
 ---
 
+### E36: 340-tile production retest replaces 60-tile holdout evaluation
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-17 |
+| Type | Deviation |
+| Commit | `f06afb7` |
+| Files | `studies/retest/*.yaml`, `inputs/vectors/bounds/full_evaluation_bounds.geojson` |
+| Impact | All Phase 2–3 results re-evaluated on larger corpus; statistical power substantially increased |
+
+**Description**: The preregistered Phase 3 evaluation used a 60-tile holdout set. Bootstrap CIs on this set were wide (~0.20) and only 1 of 10 Phase 2a pairwise comparisons survived FDR correction (Obs 155). The evaluation corpus was expanded to 340 tiles (569 ground truth mounds across 4 map sheets) to achieve adequate statistical power. All Phase 2a–3a conditions were re-run from scratch on the full corpus. K was reduced from 10 to 1–3 for single-pass conditions (340 tiles provide sufficient power) and retained at K=30 for consensus voting.
+
+**Protocol impact**: Results from the 340-tile corpus supersede the 60-tile holdout results for all conditions. The 60-tile results remain documented in `results/phase3d-*.md` as historical reference. Hypothesis tests now have adequate power to detect the observed effect sizes.
+
+---
+
+### E37: Proposer-Verifier (PV) pipeline introduced as post-hoc extension
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-15 |
+| Type | Deviation |
+| Commit | `f9d40e0` (library), `5d72593` (orchestrator) |
+| Files | `scripts/lib_verifier.py`, `scripts/run_pv.py`, `scripts/evaluate_pv_results.py` |
+| Impact | New two-stage detection architecture; achieves F1=0.831, surpassing all preregistered approaches |
+
+**Description**: The preregistration did not include a two-stage Proposer-Verifier pipeline. The PV approach was developed after observing that single-stage detection produced many false positives that a second-stage verifier could filter. The verifier receives candidate crop images and classifies them as mound/not-mound using an adversarial prompt framing. The PV pipeline was first piloted on the 60-tile holdout (F1=0.796, Obs 150) and then validated and optimised on the 340-tile corpus.
+
+The PV pipeline supports both Batch API and real-time API execution modes. The published software offers both modes to end users. Verifier optimisation (Phase 1) tested crop size (40–300px), consensus (N=1 vs N=5), and verifier strategy (adversarial, checklist, brief) — all parameters were found to be insensitive (Obs 166, 167, 169).
+
+**Protocol impact**: The PV pipeline is an extension beyond the preregistered design, not a replacement. All preregistered analyses (H1–H9) are evaluated independently of PV. The PV results are reported as an additional finding demonstrating that two-stage architectures can substantially improve VLM detection accuracy.
+
+---
+
+### E38: Dual-mode API architecture (batch and real-time)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-20 |
+| Type | Clarification |
+| Commit | `5d72593` |
+| Files | `scripts/run_pv.py`, `scripts/lib_verifier.py` |
+| Impact | Technical implementation choice; no effect on results |
+
+**Description**: The PV pipeline was implemented with shared prompt construction via an intermediate representation (IR) that supports both Gemini Batch API and real-time API execution. Both modes produce identical prompts and results — the mode affects only execution speed, cost (Batch API is 50% cheaper), and quota management. The published software defaults to real-time mode but allows `--mode batch` for large-scale runs.
+
+**Protocol impact**: None — this is a technical implementation decision that does not affect the experimental design or results.
+
+---
+
+### E39: Verifier strategy equivalence confirmed at production scale
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-21 |
+| Type | Clarification |
+| Commit | `9a1b9e1` |
+| Files | `results/pv/phase1/*/threshold_sweep.json` |
+| Impact | Adversarial verifier selected as default; all three strategies produce equivalent F1 |
+
+**Description**: The 60-tile pilot selected the adversarial verifier strategy based on F1=0.796 (vs checklist 0.782, brief 0.768). At 340-tile scale, all three strategies produce statistically indistinguishable F1 (adversarial 0.770, checklist 0.769, brief 0.752 — all CIs overlap, Obs 169). The adversarial strategy was retained as the default for consistency with the pilot and because its adversarial framing provides the most interpretable rejection reasoning.
+
+**Protocol impact**: The choice of verifier strategy is not load-bearing for the PV results. Any of the three strategies would produce equivalent F1. This is documented as a robustness finding.
+
+---
+
 *End of errata. New entries should be appended above this line.*

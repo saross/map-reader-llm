@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-03-15
+**Last updated**: 2026-03-21
 
 ---
 
@@ -1052,6 +1052,107 @@ budget for comprehensive reruns. The staged pilot design limited wasted
 budget to ~$0.05.
 
 **Evidence**: Observation 164, `planning/flash-lite-transfer-pilot.md`.
+
+---
+
+## Decision 22: Adopt Proposer-Verifier Pipeline for Production Evaluation
+
+**Date**: 2026-03-19
+
+**Decision**: Introduce a two-stage Proposer-Verifier (PV) pipeline as a post-hoc extension to the preregistered single-stage detection approach. The PV pipeline reuses existing proposer detections and adds a verifier stage that classifies candidate crops as mound/not-mound.
+
+**Alternatives considered**:
+
+- Continue with single-stage detection only (preregistered approach)
+- Implement cascade verification (multiple verifier stages in sequence)
+- Use model ensembling (multiple models instead of multiple stages)
+
+**Rationale**:
+
+1. The 60-tile pilot demonstrated +0.14 F1 improvement (0.605 → 0.796) from adding a verifier stage (Obs 150)
+2. The PV approach reuses all existing proposer data — zero additional proposer API calls needed
+3. Verifier cost is negligible (~$0.0002 per candidate) compared to proposer cost
+4. The architecture is transparent: the verifier's reasoning (best alternative hypothesis, evidence, probability) is fully auditable per candidate
+5. Cascade verification was tested in the pilot (Obs 161) but did not improve over single-stage verification
+
+**Implementation**: `scripts/run_pv.py` with dual-mode execution (batch + real-time API). See E37 in protocol errata.
+
+**Evidence**: Obs 150, 170; `results/phase3d-verifier-experiments-abc.md`; `results/pv/phase1/pv-phase1-analysis.md`
+
+---
+
+## Decision 23: 150px Crop Size as Verifier Default
+
+**Date**: 2026-03-20
+
+**Decision**: Use 150×150 pixel crops (padding=75) as the default crop size for the PV verifier. Users may adjust without meaningful performance change.
+
+**Alternatives considered**:
+
+- 75×75 px (tighter, better signal-to-noise ratio for small symbols)
+- 300×300 px (more context for disambiguation)
+- 40×40 px (minimal context, smallest possible crop)
+
+**Rationale**:
+
+1. Empirical sweep across 4 crop sizes (40, 76, 150, 300 px) showed F1 is insensitive between 75–300px (Obs 166)
+2. 150px is the sweet spot: mound symbols are ~10–20px, so 150px provides 7–15× context
+3. 40px showed the only noticeable degradation (F1 0.741 vs 0.770), confirming a lower bound
+4. 300px was marginally worse than 150px, suggesting additional context adds noise
+
+**Implementation**: `DEFAULT_PADDING = 75` in `extract_candidates.py` (crop size = padding × 2)
+
+**Evidence**: Obs 166; `results/pv/phase1/pv-phase1-analysis.md`
+
+---
+
+## Decision 24: Single-Pass Verifier (No Consensus) as Default
+
+**Date**: 2026-03-20
+
+**Decision**: Use N=1 single-pass verification rather than N=5 consensus voting for the verifier stage. Consensus voting adds no significant value at the verification stage.
+
+**Alternatives considered**:
+
+- N=5 consensus at T=0.7 (matching proposer consensus approach)
+- N=3 consensus as a lighter alternative
+
+**Rationale**:
+
+1. N=5 T=0.7 consensus produced F1=0.774 vs N=1 T=0.0 at F1=0.770 — a +0.004 difference well within CI overlap (Obs 167)
+2. The adversarial verifier is already well-calibrated at T=0.0; adding stochastic variation via temperature doesn't improve judgements
+3. N=1 is 5× cheaper in API calls and 5× faster in wall-clock time
+4. Unlike the proposer stage (where consensus filters FPs via agreement), the verifier makes a binary judgement on a single crop — there is no "diversity dividend" to exploit
+
+**Implementation**: `--iterations 1` default in `run_pv.py verify`
+
+**Evidence**: Obs 167; `results/pv/phase1/pv-phase1-analysis.md`
+
+---
+
+## Decision 25: Moderate Consensus (3–5 of 10) as Recommended Proposer Strategy for PV
+
+**Date**: 2026-03-21
+
+**Decision**: Recommend 10 proposer passes with a 3-of-10 or 5-of-10 vote threshold, followed by a single verifier pass, as the optimal PV pipeline configuration. This achieves F1=0.823–0.831.
+
+**Alternatives considered**:
+
+- N=1 single pass + verifier (simpler, cheaper, F1 ≈ 0.77)
+- N=30 strict consensus + verifier (expensive, HIGH thinking needed, F1 ≈ 0.79)
+- N=30 loose union (1-of-30) + verifier (extreme recall but verifier can't filter enough FPs)
+
+**Rationale**:
+
+1. Moderate consensus (3-of-10) creates a "Goldilocks zone": enough agreement to filter single-run FPs, enough diversity to boost recall above N=1 (Obs 171)
+2. Text 5-of-10 + PV achieves F1=0.831 — new project best, surpassing HIGH 25-of-30 consensus (F1=0.763) by +0.068
+3. The approach uses 11 total API calls per tile (10 proposer + 1 verifier) vs 30 for the previous best — 63% fewer passes at 6.5× lower cost per tile (Obs 174)
+4. No HIGH thinking required — minimal thinking throughout — further reducing per-call cost
+5. Works with text-only examples (no image examples needed), the cheapest modality
+
+**Implementation**: Documented in `results/pv/phase2/pv-phase2-analysis.md`
+
+**Evidence**: Obs 170, 171, 174; `results/pv/phase2/pv-phase2-analysis.md`
 
 ---
 
