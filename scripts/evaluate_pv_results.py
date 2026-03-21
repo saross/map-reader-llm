@@ -102,15 +102,17 @@ def load_probabilities(
     """
     # Prefer consensus if available
     if consensus_path and consensus_path.exists():
-        with open(consensus_path) as f:
+        with open(consensus_path, encoding="utf-8") as f:
             consensus_data = json.load(f)
         consensus = consensus_data.get("consensus", {})
         probabilities: dict[str, dict] = {}
         for _str_id, entry in consensus.items():
-            cid = entry["candidate_id"]
-            key = f"candidate_{cid:05d}"
+            cid = entry.get("candidate_id")
+            if cid is None:
+                continue
+            key = f"candidate_{int(cid):05d}"
             probabilities[key] = {
-                "mound_probability": entry["mean_probability"],
+                "mound_probability": entry.get("mean_probability", 0.0),
                 "vote_count": entry.get("vote_count", 0),
                 "total_iterations": entry.get("total_iterations", 0),
             }
@@ -123,7 +125,7 @@ def load_probabilities(
         return probabilities
 
     # Single-pass: unwrap from probabilities.json
-    with open(probabilities_path) as f:
+    with open(probabilities_path, encoding="utf-8") as f:
         prob_data = json.load(f)
     probabilities = prob_data.get("results", {})
 
@@ -132,8 +134,10 @@ def load_probabilities(
         logger.warning(
             "Probabilities appear to be iteration-level (consensus) "
             "but no consensus.json found. Use run_pv.py verify to "
-            "generate consensus.json, or pass --consensus.",
+            "generate consensus.json, or pass --consensus. "
+            "Returning empty dict to avoid silent all-zero results.",
         )
+        return {}
 
     return probabilities
 
@@ -243,7 +247,7 @@ def cmd_sweep(args: argparse.Namespace) -> int:
 
     # Load manifest
     try:
-        with open(args.manifest) as f:
+        with open(args.manifest, encoding="utf-8") as f:
             manifest = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         logger.error("Cannot load manifest: %s", e)
@@ -271,8 +275,8 @@ def cmd_sweep(args: argparse.Namespace) -> int:
         logger.error("--step must be in (0.0, 1.0], got %.4f", step)
         return 1
     thresholds = list(np.arange(0.0, 1.0 + step / 2, step))
-    # Ensure 1.0 is included and round to avoid float artefacts
-    thresholds = sorted(set(round(t, 4) for t in thresholds))
+    # Ensure 1.0 is included, clamp values >1.0, and round to avoid float artefacts
+    thresholds = sorted(set(round(t, 4) for t in thresholds if t <= 1.0) | {1.0})
 
     logger.info(
         "Sweeping %d thresholds (step=%.2f, bootstrap=%d)",
@@ -370,13 +374,13 @@ def cmd_sweep(args: argparse.Namespace) -> int:
         "optimal": best_entry,
     }
     json_path = args.output_dir / "threshold_sweep.json"
-    with open(json_path, "w") as f:
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(sweep_data, f, indent=2)
     logger.info("Sweep JSON written: %s", json_path)
 
     # CSV
     csv_path = args.output_dir / "threshold_sweep.csv"
-    with open(csv_path, "w", newline="") as f:
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([
             "threshold", "n_accepted",
@@ -443,7 +447,7 @@ def cmd_compare(args: argparse.Namespace) -> int:
             logger.warning("Sweep file not found: %s — skipping", sweep_path)
             continue
 
-        with open(sweep_path) as f:
+        with open(sweep_path, encoding="utf-8") as f:
             sweep_data = json.load(f)
 
         # Derive variant name from directory path — use parent/dir
@@ -533,13 +537,13 @@ def cmd_compare(args: argparse.Namespace) -> int:
         "pairwise": pairwise,
     }
     json_path = args.output_dir / "comparison.json"
-    with open(json_path, "w") as f:
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(comparison_data, f, indent=2)
     logger.info("Comparison JSON written: %s", json_path)
 
     # CSV — variant summary
     csv_path = args.output_dir / "comparison.csv"
-    with open(csv_path, "w", newline="") as f:
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([
             "variant", "optimal_threshold", "n_accepted",
@@ -590,7 +594,7 @@ def _load_variant_gdf(
             consensus_path if consensus_path.exists() else None,
         )
 
-        with open(variant["manifest_file"]) as f:
+        with open(variant["manifest_file"], encoding="utf-8") as f:
             manifest = json.load(f)
 
         return build_candidate_gdf(

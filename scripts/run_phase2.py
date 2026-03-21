@@ -1360,6 +1360,7 @@ def _execute_units_batch(
     from config import BASE_DIR, GOOGLE_API_KEY
     from scripts.lib_batch_api import (
         MAX_ACCEPTABLE_TILE_FAILURES as _BATCH_THRESHOLD,
+        audit_file_storage,
         cleanup_batch_files,
         complete_batch_unit,
         prepare_batch_unit,
@@ -1889,6 +1890,36 @@ def _execute_units_batch(
                 f"${cost_warn_threshold:.2f}.\n"
             )
 
+    def _proactive_sweep() -> None:
+        """Sweep orphaned files from Google File Storage.
+
+        Builds the 'active' set from batch_pending (files still needed
+        for in-flight jobs) and deletes everything else. Safe to call
+        at any point — will never touch files referenced by pending jobs.
+        """
+        active = {
+            v["uploaded_file_name"]
+            for v in batch_pending.values()
+            if "uploaded_file_name" in v
+        }
+        swept, freed = sweep_stale_files(client, active)
+        if verbose and swept:
+            try:
+                remaining_count, remaining_gb = audit_file_storage(
+                    client,
+                )
+                print(
+                    f"  Proactive sweep: {swept} orphaned file(s) "
+                    f"removed ({freed:.2f} GB freed); "
+                    f"{remaining_count} files remain "
+                    f"({remaining_gb:.2f} GB)"
+                )
+            except Exception:
+                print(
+                    f"  Proactive sweep: {swept} orphaned file(s) "
+                    f"removed ({freed:.2f} GB freed)"
+                )
+
     # ── Initial submission wave ───────────────────────────────
     # Fill up to effective_cap, gated by both job count and token budget.
     # Space submissions to avoid burst-submitting faster than the
@@ -1924,6 +1955,7 @@ def _execute_units_batch(
 
     max_seconds = max_poll_hours * 3600
     loop_start = time.monotonic()
+    sweep_cycle_counter = 0
 
     try:
         while in_flight or submission_queue:
@@ -2011,6 +2043,14 @@ def _execute_units_batch(
                     f"{pending_keys[:5]}"
                 )
 
+            # Periodic orphan cleanup — sweep every 10 poll cycles
+            # to prevent storage accumulation from failed
+            # per-completion deletions or concurrent processes
+            # sharing the same quota.
+            sweep_cycle_counter += 1
+            if sweep_cycle_counter % 10 == 0:
+                _proactive_sweep()
+
             # Sleep before next poll cycle
             remaining = max_seconds - elapsed
             sleep_time = min(poll_interval, remaining)
@@ -2034,6 +2074,15 @@ def _execute_units_batch(
         )
         checkpoint["batch_pending"] = batch_pending
         save_checkpoint(checkpoint_path, checkpoint)
+
+    # Final sweep — best-effort cleanup of any orphaned files.
+    # This catches files from: (a) failed per-completion deletions,
+    # (b) interrupted submissions, (c) concurrent process leftovers.
+    # Safe because batch_pending only contains jobs still in flight.
+    try:
+        _proactive_sweep()
+    except (KeyboardInterrupt, Exception):
+        pass  # Best-effort; checkpoint already saved
 
     return results, running_cost
 

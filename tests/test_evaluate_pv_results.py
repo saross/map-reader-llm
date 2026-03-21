@@ -202,6 +202,8 @@ class TestBuildCandidateGdf:
             sample_manifest, partial_probs, threshold=0.0,
         )
         assert len(gdf) == 1
+        # Verify the surviving candidate is specifically candidate_00000
+        assert gdf["mound_probability"].iloc[0] == pytest.approx(0.9)
 
     def test_coordinates_match_manifest(
         self,
@@ -259,6 +261,9 @@ class TestBuildCandidateGdf:
         gdf = build_candidate_gdf(manifest, probs, threshold=0.0)
         # Only candidate_00001 survives (candidate_00000 missing coords)
         assert len(gdf) == 1
+        # Verify the correct candidate survived
+        assert gdf["source_tile"].iloc[0] == "tile.png"
+        assert gdf["mound_probability"].iloc[0] == pytest.approx(0.8)
 
     def test_missing_mound_probability_defaults_to_zero(self) -> None:
         """Result entry without mound_probability defaults to 0.0."""
@@ -297,9 +302,9 @@ class TestBuildCandidateGdf:
 
 @pytest.mark.tier1
 class TestCmdSweepIntegration:
-    """Lightweight integration tests for cmd_sweep data flow.
+    """Lightweight tests for cmd_sweep data flow.
 
-    These test the results-key unwrapping and threshold generation
+    Test the results-key unwrapping and threshold generation
     without running the full bootstrap (which needs spatial data).
     """
 
@@ -308,10 +313,12 @@ class TestCmdSweepIntegration:
         sample_manifest: dict,
         sample_probabilities: dict,
     ) -> None:
-        """Probabilities are correctly unwrapped from the 'results' key.
+        """build_candidate_gdf works with data unwrapped from 'results' key.
 
-        Verifies the data path from the real probabilities.json structure
-        (with a wrapping ``results`` key) through to build_candidate_gdf.
+        Tests that probabilities extracted via ``.get("results", {})`` —
+        the same unwrapping that ``load_probabilities`` performs — produce
+        valid GeoDataFrame output. This is a unit test of the data format
+        contract, not an integration test of ``load_probabilities`` itself.
         """
         # Simulate the real probabilities.json structure
         prob_data = {
@@ -322,7 +329,6 @@ class TestCmdSweepIntegration:
             "total_results": 4,
             "results": sample_probabilities,
         }
-        # This is the unwrapping that cmd_sweep does
         unwrapped = prob_data.get("results", {})
         gdf = build_candidate_gdf(
             sample_manifest, unwrapped, threshold=0.5,
