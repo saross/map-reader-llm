@@ -3672,3 +3672,47 @@ reduction and the thinking level reduction. A fairer comparison
 cost advantage.
 
 ---
+
+## Observation 175: PV inverts the thinking-level recommendation (2026-03-21)
+
+Pairwise bootstrap comparisons (Group F, 54 tests on sapphire) reveal
+that HIGH thinking is significantly **worse** than minimal thinking
+when combined with a PV verifier at the single-pass level:
+
+| Comparison | ΔF1 | p |
+|---|---|---|
+| PV: HIGH T=0.3 N=1 vs PV: text T=0.0 N=1 | −0.042 | 0.001 |
+| PV: HIGH T=0.7 N=1 vs PV: text T=0.7 N=1 | −0.083 | 0.001 |
+| PV: HIGH 20-of-30 vs PV: text 5-of-10 | −0.012 | 0.312 (n.s.) |
+
+At the single-pass level, HIGH thinking hurts. At the consensus level,
+the difference vanishes.
+
+**Mechanism**: HIGH thinking generates more elaborate arguments for
+mound presence, producing additional false positives that would be
+filtered by consensus voting (where most single-run FPs don't survive
+agreement checks). But when a single HIGH-thinking pass feeds directly
+into the verifier, those FPs reach the verifier — and the adversarial
+verifier rejects many of them, but not all. The net effect is worse
+than starting with a cleaner minimal-thinking proposer.
+
+At the consensus level (HIGH 20-of-30 vs text 5-of-10), the consensus
+stage has already filtered the HIGH-thinking FPs before the verifier
+sees them, so the thinking-level difference disappears.
+
+**This inverts the established recommendation.** Without PV, HIGH
+thinking is the best single configuration for consensus voting (Obs
+141: HIGH thinking produces diverse FPs that consensus filters
+effectively, yielding the project's previous best F1=0.763). With PV,
+minimal thinking is preferred because the verifier substitutes for
+consensus as the FP filter — and it works better with a cleaner input
+signal.
+
+**Practical implication**: The recommended PV pipeline (Decision 25)
+already uses minimal thinking throughout. This finding confirms that
+choice is optimal, not just cheaper — it is genuinely more accurate
+when combined with a verifier. Users should not use HIGH thinking in
+a PV pipeline unless they are also using multi-run consensus as an
+intermediate stage.
+
+---
