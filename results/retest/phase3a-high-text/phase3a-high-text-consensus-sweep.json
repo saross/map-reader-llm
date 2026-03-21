@@ -1,0 +1,4127 @@
+{
+  "analysis": "Phase 3a-HIGH text track consensus sweep",
+  "total_configurations": 135,
+  "temperatures": [
+    "T0.3",
+    "T0.7",
+    "T1.0"
+  ],
+  "pool_sizes": [
+    5,
+    10,
+    30
+  ],
+  "bootstrap_iterations": 1000,
+  "bootstrap_seed": 42,
+  "best_per_temperature": {
+    "T0.3": {
+      "config_key": "T0.3_N30_T23",
+      "pool_size": 30,
+      "vote_threshold": 23,
+      "f1": 0.778641,
+      "precision": 0.816701,
+      "recall": 0.74397,
+      "n_detections": 491,
+      "f1_ci": {
+        "mean": 0.7777051569793885,
+        "ci_lower": 0.7348746919153714,
+        "ci_upper": 0.8220984828401884
+      }
+    },
+    "T0.7": {
+      "config_key": "T0.7_N30_T21",
+      "pool_size": 30,
+      "vote_threshold": 21,
+      "f1": 0.774688,
+      "precision": 0.801587,
+      "recall": 0.749536,
+      "n_detections": 504,
+      "f1_ci": {
+        "mean": 0.7735058619384185,
+        "ci_lower": 0.7324488304093568,
+        "ci_upper": 0.813121392288155
+      }
+    },
+    "T1.0": {
+      "config_key": "T1.0_N30_T23",
+      "pool_size": 30,
+      "vote_threshold": 23,
+      "f1": 0.77472,
+      "precision": 0.859729,
+      "recall": 0.705009,
+      "n_detections": 442,
+      "f1_ci": {
+        "mean": 0.7735292209638684,
+        "ci_lower": 0.7248355695869506,
+        "ci_upper": 0.8183620905200683
+      }
+    }
+  },
+  "overall_best": {
+    "config_key": "T0.3_N30_T23",
+    "temperature": "T0.3",
+    "pool_size": 30,
+    "vote_threshold": 23,
+    "f1": 0.778641,
+    "precision": 0.816701,
+    "recall": 0.74397,
+    "n_detections": 491,
+    "f1_ci": {
+      "mean": 0.7777051569793885,
+      "ci_lower": 0.7348746919153714,
+      "ci_upper": 0.8220984828401884
+    }
+  },
+  "results": [
+    {
+      "config_key": "T0.3_N5_T1",
+      "temperature": "T0.3",
+      "pool_size": 5,
+      "vote_threshold": 1,
+      "n_detections": 2637,
+      "point_estimates": {
+        "f1": 0.303526,
+        "precision": 0.182783,
+        "recall": 0.894249
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.30314718511142824,
+          "ci_lower": 0.25692089063699675,
+          "ci_upper": 0.35027461770988455
+        },
+        "precision": {
+          "mean": 0.1827632710677278,
+          "ci_lower": 0.1500881555153707,
+          "ci_upper": 0.21733044220503578
+        },
+        "recall": {
+          "mean": 0.8939377790949823,
+          "ci_lower": 0.8568805399155912,
+          "ci_upper": 0.9240407693846256
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N5_T2",
+      "temperature": "T0.3",
+      "pool_size": 5,
+      "vote_threshold": 2,
+      "n_detections": 1080,
+      "point_estimates": {
+        "f1": 0.569487,
+        "precision": 0.426852,
+        "recall": 0.855288
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5677044385064266,
+          "ci_lower": 0.5167441395511571,
+          "ci_upper": 0.6193904341868138
+        },
+        "precision": {
+          "mean": 0.4254739053536122,
+          "ci_lower": 0.372712866961081,
+          "ci_upper": 0.4772208701112467
+        },
+        "recall": {
+          "mean": 0.8548262135769107,
+          "ci_lower": 0.8096064226402305,
+          "ci_upper": 0.8968110217818079
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N5_T3",
+      "temperature": "T0.3",
+      "pool_size": 5,
+      "vote_threshold": 3,
+      "n_detections": 760,
+      "point_estimates": {
+        "f1": 0.677444,
+        "precision": 0.578947,
+        "recall": 0.816327
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6757795566065463,
+          "ci_lower": 0.6271965676567657,
+          "ci_upper": 0.7239531852595782
+        },
+        "precision": {
+          "mean": 0.5773357240829634,
+          "ci_lower": 0.5204663444325098,
+          "ci_upper": 0.6343706961004211
+        },
+        "recall": {
+          "mean": 0.8157521783904701,
+          "ci_lower": 0.7644518230932279,
+          "ci_upper": 0.8650271994880097
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N5_T4",
+      "temperature": "T0.3",
+      "pool_size": 5,
+      "vote_threshold": 4,
+      "n_detections": 562,
+      "point_estimates": {
+        "f1": 0.733878,
+        "precision": 0.718861,
+        "recall": 0.749536
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7326529621406096,
+          "ci_lower": 0.6873175694962386,
+          "ci_upper": 0.7811440034699632
+        },
+        "precision": {
+          "mean": 0.7171834391387067,
+          "ci_lower": 0.6604876110786795,
+          "ci_upper": 0.772733181030408
+        },
+        "recall": {
+          "mean": 0.7495615274586732,
+          "ci_lower": 0.6908277614041262,
+          "ci_upper": 0.8092577256558471
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N5_T5",
+      "temperature": "T0.3",
+      "pool_size": 5,
+      "vote_threshold": 5,
+      "n_detections": 415,
+      "point_estimates": {
+        "f1": 0.725367,
+        "precision": 0.833735,
+        "recall": 0.641929
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7252657234073663,
+          "ci_lower": 0.6714235383156596,
+          "ci_upper": 0.7774506449464058
+        },
+        "precision": {
+          "mean": 0.8324201524272835,
+          "ci_lower": 0.7831742575174906,
+          "ci_upper": 0.8767458712504212
+        },
+        "recall": {
+          "mean": 0.6433329873503376,
+          "ci_lower": 0.5770932697403286,
+          "ci_upper": 0.7094736289057516
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T1",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 1,
+      "n_detections": 4033,
+      "point_estimates": {
+        "f1": 0.212161,
+        "precision": 0.120258,
+        "recall": 0.899814
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.21196454185815866,
+          "ci_lower": 0.1755836969685485,
+          "ci_upper": 0.24995355736563243
+        },
+        "precision": {
+          "mean": 0.12027295681849175,
+          "ci_lower": 0.09737746358595627,
+          "ci_upper": 0.1451256308975203
+        },
+        "recall": {
+          "mean": 0.899153987347614,
+          "ci_lower": 0.8690237313976997,
+          "ci_upper": 0.9237605967420213
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T2",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 2,
+      "n_detections": 1643,
+      "point_estimates": {
+        "f1": 0.43538,
+        "precision": 0.289105,
+        "recall": 0.881262
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.4341904736003074,
+          "ci_lower": 0.38011565775336587,
+          "ci_upper": 0.48599200459936087
+        },
+        "precision": {
+          "mean": 0.28852537672133133,
+          "ci_lower": 0.24386210992806373,
+          "ci_upper": 0.33437021174546766
+        },
+        "recall": {
+          "mean": 0.8805121580945622,
+          "ci_lower": 0.8428003702757916,
+          "ci_upper": 0.9119345628159521
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T3",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 3,
+      "n_detections": 1181,
+      "point_estimates": {
+        "f1": 0.537209,
+        "precision": 0.391194,
+        "recall": 0.857143
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5355516759565115,
+          "ci_lower": 0.4788120356258334,
+          "ci_upper": 0.5879349044475668
+        },
+        "precision": {
+          "mean": 0.3900977828787079,
+          "ci_lower": 0.33568337939202525,
+          "ci_upper": 0.44259753705318217
+        },
+        "recall": {
+          "mean": 0.8563566819315265,
+          "ci_lower": 0.80835949567154,
+          "ci_upper": 0.8986093573692978
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T4",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 4,
+      "n_detections": 936,
+      "point_estimates": {
+        "f1": 0.615593,
+        "precision": 0.485043,
+        "recall": 0.842301
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6137458977442336,
+          "ci_lower": 0.5579598954407194,
+          "ci_upper": 0.6701069737056997
+        },
+        "precision": {
+          "mean": 0.4836288226859769,
+          "ci_lower": 0.42258395247903485,
+          "ci_upper": 0.5435074515061717
+        },
+        "recall": {
+          "mean": 0.8413626682187985,
+          "ci_lower": 0.7905503797422954,
+          "ci_upper": 0.8904382470119522
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T5",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 5,
+      "n_detections": 769,
+      "point_estimates": {
+        "f1": 0.67737,
+        "precision": 0.576073,
+        "recall": 0.821892
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6751907452854536,
+          "ci_lower": 0.623865885545957,
+          "ci_upper": 0.7236653785392411
+        },
+        "precision": {
+          "mean": 0.5739165623044128,
+          "ci_lower": 0.5122650214513854,
+          "ci_upper": 0.6321747945543409
+        },
+        "recall": {
+          "mean": 0.8210293478668614,
+          "ci_lower": 0.7709062342463451,
+          "ci_upper": 0.8707270123152889
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T6",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 6,
+      "n_detections": 660,
+      "point_estimates": {
+        "f1": 0.722269,
+        "precision": 0.656061,
+        "recall": 0.80334
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.720433699559768,
+          "ci_lower": 0.6709309159065846,
+          "ci_upper": 0.7671021149194494
+        },
+        "precision": {
+          "mean": 0.6540707364913376,
+          "ci_lower": 0.5945121951219512,
+          "ci_upper": 0.710988937436088
+        },
+        "recall": {
+          "mean": 0.802651126377219,
+          "ci_lower": 0.7509948979591837,
+          "ci_upper": 0.8533202816010125
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T7",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 7,
+      "n_detections": 578,
+      "point_estimates": {
+        "f1": 0.750224,
+        "precision": 0.724913,
+        "recall": 0.777365
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7489224111132704,
+          "ci_lower": 0.7054529884890712,
+          "ci_upper": 0.796212031441324
+        },
+        "precision": {
+          "mean": 0.7235497472933871,
+          "ci_lower": 0.6666526845637584,
+          "ci_upper": 0.7772301535293017
+        },
+        "recall": {
+          "mean": 0.7769430015237733,
+          "ci_lower": 0.7186070370605234,
+          "ci_upper": 0.8322628581949211
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T8",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 8,
+      "n_detections": 517,
+      "point_estimates": {
+        "f1": 0.75947,
+        "precision": 0.775629,
+        "recall": 0.74397
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.758117278685621,
+          "ci_lower": 0.7150713238894969,
+          "ci_upper": 0.8031971722131296
+        },
+        "precision": {
+          "mean": 0.7737571651844064,
+          "ci_lower": 0.7225491793149161,
+          "ci_upper": 0.8200480442697604
+        },
+        "recall": {
+          "mean": 0.7437909816350934,
+          "ci_lower": 0.6831282901299937,
+          "ci_upper": 0.8042733902815096
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T9",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 9,
+      "n_detections": 440,
+      "point_estimates": {
+        "f1": 0.749745,
+        "precision": 0.834091,
+        "recall": 0.680891
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7489262703715736,
+          "ci_lower": 0.7060204226259502,
+          "ci_upper": 0.7942030484240816
+        },
+        "precision": {
+          "mean": 0.8326589394014173,
+          "ci_lower": 0.7880411864850707,
+          "ci_upper": 0.8730013794567062
+        },
+        "recall": {
+          "mean": 0.6811677558583233,
+          "ci_lower": 0.6202670815442152,
+          "ci_upper": 0.7448895510899103
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N10_T10",
+      "temperature": "T0.3",
+      "pool_size": 10,
+      "vote_threshold": 10,
+      "n_detections": 346,
+      "point_estimates": {
+        "f1": 0.696045,
+        "precision": 0.890173,
+        "recall": 0.571429
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6961564876653665,
+          "ci_lower": 0.639469590153507,
+          "ci_upper": 0.7479356512151681
+        },
+        "precision": {
+          "mean": 0.8896491522550991,
+          "ci_lower": 0.8461477987421384,
+          "ci_upper": 0.9283837170081795
+        },
+        "recall": {
+          "mean": 0.5726114350743655,
+          "ci_lower": 0.5032858531943065,
+          "ci_upper": 0.6418510420745769
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T1",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 1,
+      "n_detections": 7932,
+      "point_estimates": {
+        "f1": 0.116633,
+        "precision": 0.062279,
+        "recall": 0.916512
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.11670313545951547,
+          "ci_lower": 0.0948953870085888,
+          "ci_upper": 0.14000413214041593
+        },
+        "precision": {
+          "mean": 0.06236269941597544,
+          "ci_lower": 0.05001725256576619,
+          "ci_upper": 0.07573346761639553
+        },
+        "recall": {
+          "mean": 0.9160703701224727,
+          "ci_lower": 0.887286901995913,
+          "ci_upper": 0.9424902414533751
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T2",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 2,
+      "n_detections": 3331,
+      "point_estimates": {
+        "f1": 0.25168,
+        "precision": 0.146202,
+        "recall": 0.903525
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.25168384710345015,
+          "ci_lower": 0.21148587042092779,
+          "ci_upper": 0.293185683397319
+        },
+        "precision": {
+          "mean": 0.14638540364724167,
+          "ci_lower": 0.11985227297949452,
+          "ci_upper": 0.17415950025335045
+        },
+        "recall": {
+          "mean": 0.9030206163360203,
+          "ci_lower": 0.8677252524851683,
+          "ci_upper": 0.9338553511389823
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T3",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 3,
+      "n_detections": 2337,
+      "point_estimates": {
+        "f1": 0.335188,
+        "precision": 0.206247,
+        "recall": 0.894249
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.3348875726768781,
+          "ci_lower": 0.2870694305238055,
+          "ci_upper": 0.38247884268543386
+        },
+        "precision": {
+          "mean": 0.20631157014202306,
+          "ci_lower": 0.17145048669070373,
+          "ci_upper": 0.2429675330841515
+        },
+        "recall": {
+          "mean": 0.8938212169479474,
+          "ci_lower": 0.8539267133928249,
+          "ci_upper": 0.9271418252622322
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T4",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 4,
+      "n_detections": 1862,
+      "point_estimates": {
+        "f1": 0.397334,
+        "precision": 0.256176,
+        "recall": 0.884972
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.3967501377026555,
+          "ci_lower": 0.3464919842250276,
+          "ci_upper": 0.4472461324955514
+        },
+        "precision": {
+          "mean": 0.2560771803611269,
+          "ci_lower": 0.21635662465253344,
+          "ci_upper": 0.2972121557582702
+        },
+        "recall": {
+          "mean": 0.8844763301191604,
+          "ci_lower": 0.845201475949142,
+          "ci_upper": 0.9180343481654957
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T5",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 5,
+      "n_detections": 1573,
+      "point_estimates": {
+        "f1": 0.451705,
+        "precision": 0.303242,
+        "recall": 0.884972
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.4508962794841382,
+          "ci_lower": 0.3980046496132244,
+          "ci_upper": 0.5009812201027579
+        },
+        "precision": {
+          "mean": 0.30297105728139273,
+          "ci_lower": 0.25815674084489293,
+          "ci_upper": 0.34834676176365303
+        },
+        "recall": {
+          "mean": 0.8844763301191604,
+          "ci_lower": 0.845201475949142,
+          "ci_upper": 0.9180343481654957
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T6",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 6,
+      "n_detections": 1375,
+      "point_estimates": {
+        "f1": 0.490073,
+        "precision": 0.341091,
+        "recall": 0.87013
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.48892661022687683,
+          "ci_lower": 0.4351589260788707,
+          "ci_upper": 0.5404628250480978
+        },
+        "precision": {
+          "mean": 0.340524985364779,
+          "ci_lower": 0.292644086671446,
+          "ci_upper": 0.3883404784061019
+        },
+        "recall": {
+          "mean": 0.8694895358413739,
+          "ci_lower": 0.826368682442302,
+          "ci_upper": 0.9082079705391222
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T7",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 7,
+      "n_detections": 1211,
+      "point_estimates": {
+        "f1": 0.530286,
+        "precision": 0.383154,
+        "recall": 0.860853
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5288142597609956,
+          "ci_lower": 0.4742412767795877,
+          "ci_upper": 0.5818019778430003
+        },
+        "precision": {
+          "mean": 0.3822541236421614,
+          "ci_lower": 0.32898652079738283,
+          "ci_upper": 0.43500796006929016
+        },
+        "recall": {
+          "mean": 0.860163825962783,
+          "ci_lower": 0.8125857110406985,
+          "ci_upper": 0.9034111326302035
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T8",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 8,
+      "n_detections": 1105,
+      "point_estimates": {
+        "f1": 0.559611,
+        "precision": 0.41629,
+        "recall": 0.853432
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5578212491402663,
+          "ci_lower": 0.5035174266638943,
+          "ci_upper": 0.6117004493838074
+        },
+        "precision": {
+          "mean": 0.41503271321568364,
+          "ci_lower": 0.3603324640078027,
+          "ci_upper": 0.4711449767120297
+        },
+        "recall": {
+          "mean": 0.8526564385940725,
+          "ci_lower": 0.8003604436229206,
+          "ci_upper": 0.8980887681159421
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T9",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 9,
+      "n_detections": 1021,
+      "point_estimates": {
+        "f1": 0.588462,
+        "precision": 0.449559,
+        "recall": 0.851577
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.586584012575371,
+          "ci_lower": 0.5327802212448355,
+          "ci_upper": 0.6422715476188148
+        },
+        "precision": {
+          "mean": 0.4481537201195388,
+          "ci_lower": 0.3926710470089737,
+          "ci_upper": 0.5064722672667704
+        },
+        "recall": {
+          "mean": 0.8508012599858575,
+          "ci_lower": 0.8003411386036156,
+          "ci_upper": 0.8970470347590882
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T10",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 10,
+      "n_detections": 952,
+      "point_estimates": {
+        "f1": 0.61167,
+        "precision": 0.478992,
+        "recall": 0.846011
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6097992638233579,
+          "ci_lower": 0.5565945826819748,
+          "ci_upper": 0.6627349173203905
+        },
+        "precision": {
+          "mean": 0.4775174380960325,
+          "ci_lower": 0.4205844270287019,
+          "ci_upper": 0.5356041227463229
+        },
+        "recall": {
+          "mean": 0.8452524476151394,
+          "ci_lower": 0.7955369212571815,
+          "ci_upper": 0.8910894599112184
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T11",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 11,
+      "n_detections": 886,
+      "point_estimates": {
+        "f1": 0.638596,
+        "precision": 0.513544,
+        "recall": 0.844156
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.636774003070299,
+          "ci_lower": 0.5842865219357757,
+          "ci_upper": 0.6896214708430957
+        },
+        "precision": {
+          "mean": 0.5120223553457314,
+          "ci_lower": 0.45383045521131554,
+          "ci_upper": 0.5719132356150433
+        },
+        "recall": {
+          "mean": 0.8435050104476927,
+          "ci_lower": 0.7925908618899273,
+          "ci_upper": 0.8908498601576404
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T12",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 12,
+      "n_detections": 839,
+      "point_estimates": {
+        "f1": 0.658926,
+        "precision": 0.54112,
+        "recall": 0.842301
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6570835542404854,
+          "ci_lower": 0.6066242330724861,
+          "ci_upper": 0.707428772070626
+        },
+        "precision": {
+          "mean": 0.5394542689504349,
+          "ci_lower": 0.48133710486651665,
+          "ci_upper": 0.5982042648709316
+        },
+        "recall": {
+          "mean": 0.8417260071265993,
+          "ci_lower": 0.7923318420723314,
+          "ci_upper": 0.8895221725507414
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T13",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 13,
+      "n_detections": 797,
+      "point_estimates": {
+        "f1": 0.676647,
+        "precision": 0.567127,
+        "recall": 0.83859
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6746467569250143,
+          "ci_lower": 0.6263902435896431,
+          "ci_upper": 0.7233870678230276
+        },
+        "precision": {
+          "mean": 0.5651993205816042,
+          "ci_lower": 0.5076750700280112,
+          "ci_upper": 0.6234751476863734
+        },
+        "recall": {
+          "mean": 0.8379433231574243,
+          "ci_lower": 0.7858237588278697,
+          "ci_upper": 0.8879687733746958
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T14",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 14,
+      "n_detections": 741,
+      "point_estimates": {
+        "f1": 0.696875,
+        "precision": 0.601889,
+        "recall": 0.827458
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6947570858632387,
+          "ci_lower": 0.6469592252835091,
+          "ci_upper": 0.7429499418283552
+        },
+        "precision": {
+          "mean": 0.5995578414229256,
+          "ci_lower": 0.5399129024636468,
+          "ci_upper": 0.6547511603400983
+        },
+        "recall": {
+          "mean": 0.8269653202799538,
+          "ci_lower": 0.7759039592522579,
+          "ci_upper": 0.8787939882697947
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T15",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 15,
+      "n_detections": 710,
+      "point_estimates": {
+        "f1": 0.707766,
+        "precision": 0.622535,
+        "recall": 0.820037
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7057049922290084,
+          "ci_lower": 0.6589470839277258,
+          "ci_upper": 0.753761275484209
+        },
+        "precision": {
+          "mean": 0.6201988782467568,
+          "ci_lower": 0.5626648747385868,
+          "ci_upper": 0.6752361673414305
+        },
+        "recall": {
+          "mean": 0.8195438044884672,
+          "ci_lower": 0.7644803293054147,
+          "ci_upper": 0.8721585662398423
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T16",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 16,
+      "n_detections": 680,
+      "point_estimates": {
+        "f1": 0.720263,
+        "precision": 0.645588,
+        "recall": 0.814471
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.718325456925293,
+          "ci_lower": 0.6729385275516633,
+          "ci_upper": 0.7640531319656098
+        },
+        "precision": {
+          "mean": 0.6433377807571108,
+          "ci_lower": 0.5853226008650049,
+          "ci_upper": 0.7001395700641723
+        },
+        "recall": {
+          "mean": 0.8140389863504431,
+          "ci_lower": 0.7584370971269395,
+          "ci_upper": 0.8659865835339631
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T17",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 17,
+      "n_detections": 656,
+      "point_estimates": {
+        "f1": 0.728033,
+        "precision": 0.66311,
+        "recall": 0.80705
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7262032650518706,
+          "ci_lower": 0.6797865570975653,
+          "ci_upper": 0.770927676001536
+        },
+        "precision": {
+          "mean": 0.6609632681603789,
+          "ci_lower": 0.6038342270556273,
+          "ci_upper": 0.7156141602795029
+        },
+        "recall": {
+          "mean": 0.8066452320398138,
+          "ci_lower": 0.7499889770723104,
+          "ci_upper": 0.8596936534311198
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T18",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 18,
+      "n_detections": 623,
+      "point_estimates": {
+        "f1": 0.73494,
+        "precision": 0.685393,
+        "recall": 0.792208
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7332300137836992,
+          "ci_lower": 0.6865671641791045,
+          "ci_upper": 0.7788165985775886
+        },
+        "precision": {
+          "mean": 0.683421634887309,
+          "ci_lower": 0.6248145240912454,
+          "ci_upper": 0.7377586360829421
+        },
+        "recall": {
+          "mean": 0.7917281981621946,
+          "ci_lower": 0.7329927401067954,
+          "ci_upper": 0.8457034040178572
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T19",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 19,
+      "n_detections": 585,
+      "point_estimates": {
+        "f1": 0.74911,
+        "precision": 0.719658,
+        "recall": 0.781076
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7474666486901265,
+          "ci_lower": 0.7021260905039853,
+          "ci_upper": 0.7918287660862984
+        },
+        "precision": {
+          "mean": 0.7177502616722601,
+          "ci_lower": 0.6629006302156609,
+          "ci_upper": 0.7674834562299111
+        },
+        "recall": {
+          "mean": 0.7805155439018274,
+          "ci_lower": 0.7210417242084345,
+          "ci_upper": 0.8387240783410138
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T20",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 20,
+      "n_detections": 566,
+      "point_estimates": {
+        "f1": 0.760181,
+        "precision": 0.742049,
+        "recall": 0.779221
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7585811768215941,
+          "ci_lower": 0.7151221959972011,
+          "ci_upper": 0.8023561845554467
+        },
+        "precision": {
+          "mean": 0.7401158352163565,
+          "ci_lower": 0.6866488374847037,
+          "ci_upper": 0.7896716938140143
+        },
+        "recall": {
+          "mean": 0.7787138367403181,
+          "ci_lower": 0.7191467091075118,
+          "ci_upper": 0.8377585377585377
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T21",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 21,
+      "n_detections": 548,
+      "point_estimates": {
+        "f1": 0.767249,
+        "precision": 0.760949,
+        "recall": 0.773655
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7657713352318003,
+          "ci_lower": 0.7227521452785398,
+          "ci_upper": 0.808315737649673
+        },
+        "precision": {
+          "mean": 0.7592081620720801,
+          "ci_lower": 0.7067170458209154,
+          "ci_upper": 0.8062841051544871
+        },
+        "recall": {
+          "mean": 0.7731670638982852,
+          "ci_lower": 0.7142857142857143,
+          "ci_upper": 0.8310220784164446
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T22",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 22,
+      "n_detections": 522,
+      "point_estimates": {
+        "f1": 0.772856,
+        "precision": 0.785441,
+        "recall": 0.760668
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7715897399336193,
+          "ci_lower": 0.7269081014316527,
+          "ci_upper": 0.8148747302524769
+        },
+        "precision": {
+          "mean": 0.7839259617908945,
+          "ci_lower": 0.7350567609081745,
+          "ci_upper": 0.8291911770078993
+        },
+        "recall": {
+          "mean": 0.760355649105942,
+          "ci_lower": 0.6994776365222656,
+          "ci_upper": 0.8195092224682199
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T23",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 23,
+      "n_detections": 491,
+      "point_estimates": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7777051569793885,
+          "ci_lower": 0.7348746919153714,
+          "ci_upper": 0.8220984828401884
+        },
+        "precision": {
+          "mean": 0.8155839027116187,
+          "ci_lower": 0.7716106708559951,
+          "ci_upper": 0.8580836439240118
+        },
+        "recall": {
+          "mean": 0.743849746817471,
+          "ci_lower": 0.6826131665087432,
+          "ci_upper": 0.805466696669667
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T24",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 24,
+      "n_detections": 469,
+      "point_estimates": {
+        "f1": 0.775794,
+        "precision": 0.833689,
+        "recall": 0.725417
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7749385298041549,
+          "ci_lower": 0.7320048831353797,
+          "ci_upper": 0.8180066635601119
+        },
+        "precision": {
+          "mean": 0.8328239554357051,
+          "ci_lower": 0.787988221709007,
+          "ci_upper": 0.8738542258666884
+        },
+        "recall": {
+          "mean": 0.725266818491682,
+          "ci_lower": 0.6626600076103502,
+          "ci_upper": 0.7872739356757761
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T25",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 25,
+      "n_detections": 450,
+      "point_estimates": {
+        "f1": 0.766431,
+        "precision": 0.842222,
+        "recall": 0.703154
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7655793621230672,
+          "ci_lower": 0.7195570924982992,
+          "ci_upper": 0.8106323375792119
+        },
+        "precision": {
+          "mean": 0.8411854337400944,
+          "ci_lower": 0.7981640608175044,
+          "ci_upper": 0.8816120507399577
+        },
+        "recall": {
+          "mean": 0.7031506021931393,
+          "ci_lower": 0.6391224689041322,
+          "ci_upper": 0.7679760307164691
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T26",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 26,
+      "n_detections": 426,
+      "point_estimates": {
+        "f1": 0.760622,
+        "precision": 0.861502,
+        "recall": 0.680891
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7598467107240162,
+          "ci_lower": 0.7127072694829687,
+          "ci_upper": 0.8078553921568628
+        },
+        "precision": {
+          "mean": 0.8603839753456964,
+          "ci_lower": 0.8203700389360878,
+          "ci_upper": 0.8983422393525847
+        },
+        "recall": {
+          "mean": 0.6810339703346951,
+          "ci_lower": 0.6165124349334875,
+          "ci_upper": 0.7488064150943397
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T27",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 27,
+      "n_detections": 403,
+      "point_estimates": {
+        "f1": 0.749469,
+        "precision": 0.875931,
+        "recall": 0.654917
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7490554386336276,
+          "ci_lower": 0.6984754699131365,
+          "ci_upper": 0.7982764189060039
+        },
+        "precision": {
+          "mean": 0.8750172950827321,
+          "ci_lower": 0.8354393149664929,
+          "ci_upper": 0.9097749205487947
+        },
+        "recall": {
+          "mean": 0.6555156065236875,
+          "ci_lower": 0.5913453067128361,
+          "ci_upper": 0.7239272714941334
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T28",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 28,
+      "n_detections": 364,
+      "point_estimates": {
+        "f1": 0.737542,
+        "precision": 0.914835,
+        "recall": 0.617811
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7373768003451217,
+          "ci_lower": 0.6876243396790591,
+          "ci_upper": 0.7869180673357632
+        },
+        "precision": {
+          "mean": 0.9142423142781997,
+          "ci_lower": 0.8821575744782394,
+          "ci_upper": 0.9434458354124163
+        },
+        "recall": {
+          "mean": 0.6185813320555799,
+          "ci_lower": 0.5530169378813957,
+          "ci_upper": 0.6875093190854871
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T29",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 29,
+      "n_detections": 318,
+      "point_estimates": {
+        "f1": 0.690782,
+        "precision": 0.930818,
+        "recall": 0.549165
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6908896021629055,
+          "ci_lower": 0.6348731155399487,
+          "ci_upper": 0.7410502470506815
+        },
+        "precision": {
+          "mean": 0.9303155972838815,
+          "ci_lower": 0.8989890191109704,
+          "ci_upper": 0.9570597554084598
+        },
+        "recall": {
+          "mean": 0.5502209877038158,
+          "ci_lower": 0.4844185929723014,
+          "ci_upper": 0.6163968153079316
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.3_N30_T30",
+      "temperature": "T0.3",
+      "pool_size": 30,
+      "vote_threshold": 30,
+      "n_detections": 250,
+      "point_estimates": {
+        "f1": 0.60076,
+        "precision": 0.948,
+        "recall": 0.439703
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6012202489252482,
+          "ci_lower": 0.5330899975544143,
+          "ci_upper": 0.6641448082980341
+        },
+        "precision": {
+          "mean": 0.9473609031142974,
+          "ci_lower": 0.917871259175607,
+          "ci_upper": 0.9728862451108213
+        },
+        "recall": {
+          "mean": 0.44118184169691227,
+          "ci_lower": 0.37219838308457714,
+          "ci_upper": 0.5077908006706526
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N5_T1",
+      "temperature": "T0.7",
+      "pool_size": 5,
+      "vote_threshold": 1,
+      "n_detections": 3493,
+      "point_estimates": {
+        "f1": 0.231151,
+        "precision": 0.13341,
+        "recall": 0.864564
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.2312680670212402,
+          "ci_lower": 0.19021265542769172,
+          "ci_upper": 0.27537306986333115
+        },
+        "precision": {
+          "mean": 0.13368420380797336,
+          "ci_lower": 0.10693689433501927,
+          "ci_upper": 0.16304176686598576
+        },
+        "recall": {
+          "mean": 0.8641223979451713,
+          "ci_lower": 0.8214085522101217,
+          "ci_upper": 0.9019404252041804
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N5_T2",
+      "temperature": "T0.7",
+      "pool_size": 5,
+      "vote_threshold": 2,
+      "n_detections": 1214,
+      "point_estimates": {
+        "f1": 0.507701,
+        "precision": 0.366557,
+        "recall": 0.825603
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5066892726687349,
+          "ci_lower": 0.4461316637275499,
+          "ci_upper": 0.5611804815322403
+        },
+        "precision": {
+          "mean": 0.36614857191307004,
+          "ci_lower": 0.3087691932570341,
+          "ci_upper": 0.4207512283199361
+        },
+        "recall": {
+          "mean": 0.8253831270554358,
+          "ci_lower": 0.7722510595946943,
+          "ci_upper": 0.8729564761350891
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N5_T3",
+      "temperature": "T0.7",
+      "pool_size": 5,
+      "vote_threshold": 3,
+      "n_detections": 763,
+      "point_estimates": {
+        "f1": 0.662058,
+        "precision": 0.564875,
+        "recall": 0.799629
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6608895310753098,
+          "ci_lower": 0.6055887921705335,
+          "ci_upper": 0.7127822564865183
+        },
+        "precision": {
+          "mean": 0.5640389275465371,
+          "ci_lower": 0.49782495430396834,
+          "ci_upper": 0.6250380170316301
+        },
+        "recall": {
+          "mean": 0.7992802929100851,
+          "ci_lower": 0.7456649474440165,
+          "ci_upper": 0.850896776205512
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N5_T4",
+      "temperature": "T0.7",
+      "pool_size": 5,
+      "vote_threshold": 4,
+      "n_detections": 535,
+      "point_estimates": {
+        "f1": 0.729981,
+        "precision": 0.73271,
+        "recall": 0.727273
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7288153730480992,
+          "ci_lower": 0.6842555265333836,
+          "ci_upper": 0.7712498838397918
+        },
+        "precision": {
+          "mean": 0.7314957551696759,
+          "ci_lower": 0.6756161312958054,
+          "ci_upper": 0.7827040519315048
+        },
+        "recall": {
+          "mean": 0.7268687634840083,
+          "ci_lower": 0.6695204688015847,
+          "ci_upper": 0.7816880743525481
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N5_T5",
+      "temperature": "T0.7",
+      "pool_size": 5,
+      "vote_threshold": 5,
+      "n_detections": 386,
+      "point_estimates": {
+        "f1": 0.700541,
+        "precision": 0.839378,
+        "recall": 0.601113
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6995874335408507,
+          "ci_lower": 0.6511451191065243,
+          "ci_upper": 0.7481941389268252
+        },
+        "precision": {
+          "mean": 0.8380957871057226,
+          "ci_lower": 0.7883566760037348,
+          "ci_upper": 0.8807621699045775
+        },
+        "recall": {
+          "mean": 0.6010283195489051,
+          "ci_lower": 0.5403623949579832,
+          "ci_upper": 0.6642764285829815
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T1",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 1,
+      "n_detections": 5589,
+      "point_estimates": {
+        "f1": 0.157637,
+        "precision": 0.08642,
+        "recall": 0.896104
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.15770247269168244,
+          "ci_lower": 0.12841273667955144,
+          "ci_upper": 0.19097578394291323
+        },
+        "precision": {
+          "mean": 0.08654816673433861,
+          "ci_lower": 0.06920499075698922,
+          "ci_upper": 0.10648298475773009
+        },
+        "recall": {
+          "mean": 0.8955006849100848,
+          "ci_lower": 0.8592962467119839,
+          "ci_upper": 0.9280831253776644
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T2",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 2,
+      "n_detections": 1957,
+      "point_estimates": {
+        "f1": 0.370994,
+        "precision": 0.236587,
+        "recall": 0.858998
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.3705103102913364,
+          "ci_lower": 0.3175902866661686,
+          "ci_upper": 0.42296804756610434
+        },
+        "precision": {
+          "mean": 0.2366354053279264,
+          "ci_lower": 0.19536424563137847,
+          "ci_upper": 0.27943253493406867
+        },
+        "recall": {
+          "mean": 0.8581889929243817,
+          "ci_lower": 0.8127325144360543,
+          "ci_upper": 0.897547714490846
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T3",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 3,
+      "n_detections": 1256,
+      "point_estimates": {
+        "f1": 0.504735,
+        "precision": 0.360669,
+        "recall": 0.840445
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5041778113882146,
+          "ci_lower": 0.4474119855169959,
+          "ci_upper": 0.5569487661784377
+        },
+        "precision": {
+          "mean": 0.36078295306294716,
+          "ci_lower": 0.3067691290290977,
+          "ci_upper": 0.413888257231217
+        },
+        "recall": {
+          "mean": 0.8399017903916763,
+          "ci_lower": 0.7954854404141122,
+          "ci_upper": 0.8834056347804139
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T4",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 4,
+      "n_detections": 942,
+      "point_estimates": {
+        "f1": 0.600945,
+        "precision": 0.472399,
+        "recall": 0.825603
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6002597116767306,
+          "ci_lower": 0.5435300547670399,
+          "ci_upper": 0.6527509301279693
+        },
+        "precision": {
+          "mean": 0.4722742168652578,
+          "ci_lower": 0.4098073089183549,
+          "ci_upper": 0.5324024775919033
+        },
+        "recall": {
+          "mean": 0.8255087168511789,
+          "ci_lower": 0.7745460081663621,
+          "ci_upper": 0.8732658615860264
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T5",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 5,
+      "n_detections": 762,
+      "point_estimates": {
+        "f1": 0.667179,
+        "precision": 0.569554,
+        "recall": 0.805195
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6665224013939635,
+          "ci_lower": 0.616799862415644,
+          "ci_upper": 0.718027898516735
+        },
+        "precision": {
+          "mean": 0.5693010497018932,
+          "ci_lower": 0.5096240696116744,
+          "ci_upper": 0.6304989451662758
+        },
+        "recall": {
+          "mean": 0.805175283511605,
+          "ci_lower": 0.7525146265402712,
+          "ci_upper": 0.8557721663226694
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T6",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 6,
+      "n_detections": 659,
+      "point_estimates": {
+        "f1": 0.711185,
+        "precision": 0.646434,
+        "recall": 0.790353
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7104599217230241,
+          "ci_lower": 0.6640182825110085,
+          "ci_upper": 0.7575994793751442
+        },
+        "precision": {
+          "mean": 0.6459950675197578,
+          "ci_lower": 0.5845239127260782,
+          "ci_upper": 0.7042274899760645
+        },
+        "recall": {
+          "mean": 0.7902417326253779,
+          "ci_lower": 0.7392778361344539,
+          "ci_upper": 0.8397721549895463
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T7",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 7,
+      "n_detections": 558,
+      "point_estimates": {
+        "f1": 0.740201,
+        "precision": 0.727599,
+        "recall": 0.753247
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.739262040457458,
+          "ci_lower": 0.6967823772272924,
+          "ci_upper": 0.7801154092086982
+        },
+        "precision": {
+          "mean": 0.726827162104142,
+          "ci_lower": 0.6736778050603182,
+          "ci_upper": 0.7769481399579127
+        },
+        "recall": {
+          "mean": 0.7528225229711732,
+          "ci_lower": 0.6973297217533682,
+          "ci_upper": 0.8058755760368663
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T8",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 8,
+      "n_detections": 478,
+      "point_estimates": {
+        "f1": 0.737463,
+        "precision": 0.784519,
+        "recall": 0.695733
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7363924486864138,
+          "ci_lower": 0.6913181707169659,
+          "ci_upper": 0.7800005313496281
+        },
+        "precision": {
+          "mean": 0.7834887790353257,
+          "ci_lower": 0.7344021335218519,
+          "ci_upper": 0.8294107425570529
+        },
+        "recall": {
+          "mean": 0.695366445106746,
+          "ci_lower": 0.6326040940490526,
+          "ci_upper": 0.7562190912409971
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T9",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 9,
+      "n_detections": 401,
+      "point_estimates": {
+        "f1": 0.725532,
+        "precision": 0.850374,
+        "recall": 0.632653
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7240554853614664,
+          "ci_lower": 0.675583069392456,
+          "ci_upper": 0.7705419270153162
+        },
+        "precision": {
+          "mean": 0.8485270858275339,
+          "ci_lower": 0.8040514328619697,
+          "ci_upper": 0.8871794871794871
+        },
+        "recall": {
+          "mean": 0.6321014651672804,
+          "ci_lower": 0.5682862275833306,
+          "ci_upper": 0.6967075253774075
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N10_T10",
+      "temperature": "T0.7",
+      "pool_size": 10,
+      "vote_threshold": 10,
+      "n_detections": 279,
+      "point_estimates": {
+        "f1": 0.608802,
+        "precision": 0.892473,
+        "recall": 0.461967
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6081652403089349,
+          "ci_lower": 0.5491521969511698,
+          "ci_upper": 0.6666666666666666
+        },
+        "precision": {
+          "mean": 0.8913265598612183,
+          "ci_lower": 0.8419027029826015,
+          "ci_upper": 0.9342632903428751
+        },
+        "recall": {
+          "mean": 0.4623438370601668,
+          "ci_lower": 0.3989724269103087,
+          "ci_upper": 0.5277791106845809
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T1",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 1,
+      "n_detections": 11795,
+      "point_estimates": {
+        "f1": 0.08205,
+        "precision": 0.0429,
+        "recall": 0.938776
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.08209942674797284,
+          "ci_lower": 0.06545801059889098,
+          "ci_upper": 0.10109514318720415
+        },
+        "precision": {
+          "mean": 0.042952362275193494,
+          "ci_lower": 0.03392464886701975,
+          "ci_upper": 0.05338477684617439
+        },
+        "recall": {
+          "mean": 0.9378903925394817,
+          "ci_lower": 0.9154128108733371,
+          "ci_upper": 0.9577516286015912
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T2",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 2,
+      "n_detections": 4272,
+      "point_estimates": {
+        "f1": 0.202868,
+        "precision": 0.114232,
+        "recall": 0.90538
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.2027626160727619,
+          "ci_lower": 0.1674543691523149,
+          "ci_upper": 0.24087412365430877
+        },
+        "precision": {
+          "mean": 0.11431009839341634,
+          "ci_lower": 0.09229145384958137,
+          "ci_upper": 0.1386130810746883
+        },
+        "recall": {
+          "mean": 0.90438315257284,
+          "ci_lower": 0.8704417293233083,
+          "ci_upper": 0.9339251464693186
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T3",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 3,
+      "n_detections": 2746,
+      "point_estimates": {
+        "f1": 0.293455,
+        "precision": 0.175528,
+        "recall": 0.894249
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.29321561571011784,
+          "ci_lower": 0.24691554094500404,
+          "ci_upper": 0.3398099114406969
+        },
+        "precision": {
+          "mean": 0.1756372582523368,
+          "ci_lower": 0.14356184350308027,
+          "ci_upper": 0.20958769432753774
+        },
+        "recall": {
+          "mean": 0.8933670078108678,
+          "ci_lower": 0.8546394086408612,
+          "ci_upper": 0.9285748692540601
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T4",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 4,
+      "n_detections": 2119,
+      "point_estimates": {
+        "f1": 0.357412,
+        "precision": 0.224162,
+        "recall": 0.881262
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.35710486429552085,
+          "ci_lower": 0.3062050442403789,
+          "ci_upper": 0.4071360544490243
+        },
+        "precision": {
+          "mean": 0.2243091870373088,
+          "ci_lower": 0.18614367714197066,
+          "ci_upper": 0.26448845194681503
+        },
+        "recall": {
+          "mean": 0.8805687281036899,
+          "ci_lower": 0.8399775967413442,
+          "ci_upper": 0.9182520480316609
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T5",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 5,
+      "n_detections": 1751,
+      "point_estimates": {
+        "f1": 0.412227,
+        "precision": 0.26956,
+        "recall": 0.875696
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.41178372156107057,
+          "ci_lower": 0.35910872482919204,
+          "ci_upper": 0.46272623562877796
+        },
+        "precision": {
+          "mean": 0.26966743603144194,
+          "ci_lower": 0.22649488879208757,
+          "ci_upper": 0.3131191027669334
+        },
+        "recall": {
+          "mean": 0.8750409535120403,
+          "ci_lower": 0.8333269525267994,
+          "ci_upper": 0.9126299815482247
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T6",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 6,
+      "n_detections": 1504,
+      "point_estimates": {
+        "f1": 0.461087,
+        "precision": 0.313165,
+        "recall": 0.87384
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.46042269710117295,
+          "ci_lower": 0.4043200877931756,
+          "ci_upper": 0.5132758950879834
+        },
+        "precision": {
+          "mean": 0.313150721817677,
+          "ci_lower": 0.2648231232098053,
+          "ci_upper": 0.362558474887654
+        },
+        "recall": {
+          "mean": 0.8730751425250054,
+          "ci_lower": 0.8308421261566087,
+          "ci_upper": 0.9112639337687203
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T7",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 7,
+      "n_detections": 1320,
+      "point_estimates": {
+        "f1": 0.499193,
+        "precision": 0.351515,
+        "recall": 0.860853
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.49833569946208645,
+          "ci_lower": 0.4411315543319038,
+          "ci_upper": 0.5510816054412384
+        },
+        "precision": {
+          "mean": 0.35136860717223717,
+          "ci_lower": 0.29893480460802235,
+          "ci_upper": 0.40430328506108265
+        },
+        "recall": {
+          "mean": 0.8599440916770636,
+          "ci_lower": 0.8134591425068227,
+          "ci_upper": 0.9021356665807746
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T8",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 8,
+      "n_detections": 1184,
+      "point_estimates": {
+        "f1": 0.532792,
+        "precision": 0.387669,
+        "recall": 0.851577
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5320446683246046,
+          "ci_lower": 0.47484072419599915,
+          "ci_upper": 0.5846338648870721
+        },
+        "precision": {
+          "mean": 0.3876410381165224,
+          "ci_lower": 0.3315282473857453,
+          "ci_upper": 0.4410286320899631
+        },
+        "recall": {
+          "mean": 0.8507615242911518,
+          "ci_lower": 0.8047730710249354,
+          "ci_upper": 0.8943726336513707
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T9",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 9,
+      "n_detections": 1074,
+      "point_estimates": {
+        "f1": 0.569126,
+        "precision": 0.427374,
+        "recall": 0.851577
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5681604416798391,
+          "ci_lower": 0.5124780243978416,
+          "ci_upper": 0.6206116405267686
+        },
+        "precision": {
+          "mean": 0.4271032589942282,
+          "ci_lower": 0.36862693225438325,
+          "ci_upper": 0.4829184330645897
+        },
+        "recall": {
+          "mean": 0.8507615242911518,
+          "ci_lower": 0.8047730710249354,
+          "ci_upper": 0.8943726336513707
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T10",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 10,
+      "n_detections": 980,
+      "point_estimates": {
+        "f1": 0.599078,
+        "precision": 0.464286,
+        "recall": 0.844156
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5978342656629977,
+          "ci_lower": 0.542958714781134,
+          "ci_upper": 0.6478792352271245
+        },
+        "precision": {
+          "mean": 0.46367200247714335,
+          "ci_lower": 0.4028018208222143,
+          "ci_upper": 0.5210044125398886
+        },
+        "recall": {
+          "mean": 0.8433915589436493,
+          "ci_lower": 0.7952812938299081,
+          "ci_upper": 0.8882893785919952
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T11",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 11,
+      "n_detections": 900,
+      "point_estimates": {
+        "f1": 0.622655,
+        "precision": 0.497778,
+        "recall": 0.831169
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.621400218823502,
+          "ci_lower": 0.566792777275068,
+          "ci_upper": 0.6737199105388741
+        },
+        "precision": {
+          "mean": 0.4970577108583978,
+          "ci_lower": 0.43768748075528674,
+          "ci_upper": 0.5538003975167826
+        },
+        "recall": {
+          "mean": 0.8305592847581488,
+          "ci_lower": 0.7804339254427012,
+          "ci_upper": 0.8792817143826817
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T12",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 12,
+      "n_detections": 843,
+      "point_estimates": {
+        "f1": 0.643994,
+        "precision": 0.527877,
+        "recall": 0.825603
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6428018997621326,
+          "ci_lower": 0.5899322138546927,
+          "ci_upper": 0.6942590120160214
+        },
+        "precision": {
+          "mean": 0.5271724936602095,
+          "ci_lower": 0.4657315944632673,
+          "ci_upper": 0.5863130231259324
+        },
+        "recall": {
+          "mean": 0.8250104207312757,
+          "ci_lower": 0.7752903609653592,
+          "ci_upper": 0.8726673835701795
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T13",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 13,
+      "n_detections": 786,
+      "point_estimates": {
+        "f1": 0.670189,
+        "precision": 0.564885,
+        "recall": 0.823748
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6688535655311411,
+          "ci_lower": 0.6193635851515215,
+          "ci_upper": 0.718441502362718
+        },
+        "precision": {
+          "mean": 0.5638935457080652,
+          "ci_lower": 0.5048406066676205,
+          "ci_upper": 0.6204312925170068
+        },
+        "recall": {
+          "mean": 0.823170269851581,
+          "ci_lower": 0.7726166605119568,
+          "ci_upper": 0.871894095703118
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T14",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 14,
+      "n_detections": 735,
+      "point_estimates": {
+        "f1": 0.682889,
+        "precision": 0.591837,
+        "recall": 0.80705
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6815618873877367,
+          "ci_lower": 0.6303545756544482,
+          "ci_upper": 0.731674589694971
+        },
+        "precision": {
+          "mean": 0.59073624277681,
+          "ci_lower": 0.5285039782825375,
+          "ci_upper": 0.6490325896452087
+        },
+        "recall": {
+          "mean": 0.8066200899155317,
+          "ci_lower": 0.7512126865671642,
+          "ci_upper": 0.8599692989936892
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T15",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 15,
+      "n_detections": 693,
+      "point_estimates": {
+        "f1": 0.701299,
+        "precision": 0.623377,
+        "recall": 0.801484
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7000949246646287,
+          "ci_lower": 0.6528958104847553,
+          "ci_upper": 0.7471255156771643
+        },
+        "precision": {
+          "mean": 0.6223024741726302,
+          "ci_lower": 0.56298299045956,
+          "ci_upper": 0.6792885879451382
+        },
+        "recall": {
+          "mean": 0.801179329164584,
+          "ci_lower": 0.7470365267060828,
+          "ci_upper": 0.8541676401869158
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T16",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 16,
+      "n_detections": 656,
+      "point_estimates": {
+        "f1": 0.714644,
+        "precision": 0.650915,
+        "recall": 0.792208
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7132467645966185,
+          "ci_lower": 0.6666666666666667,
+          "ci_upper": 0.7589792663476874
+        },
+        "precision": {
+          "mean": 0.6494846148551793,
+          "ci_lower": 0.5905394676905056,
+          "ci_upper": 0.7055092617164694
+        },
+        "recall": {
+          "mean": 0.7918174607808736,
+          "ci_lower": 0.7372494553376907,
+          "ci_upper": 0.8457507384501777
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T17",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 17,
+      "n_detections": 630,
+      "point_estimates": {
+        "f1": 0.723695,
+        "precision": 0.671429,
+        "recall": 0.784787
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7223567612023878,
+          "ci_lower": 0.6769960633758583,
+          "ci_upper": 0.7662612694654403
+        },
+        "precision": {
+          "mean": 0.6700363761369919,
+          "ci_lower": 0.6110969387755103,
+          "ci_upper": 0.7268173424099152
+        },
+        "recall": {
+          "mean": 0.7844108904650775,
+          "ci_lower": 0.7307656826568265,
+          "ci_upper": 0.8387223276407337
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T18",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 18,
+      "n_detections": 599,
+      "point_estimates": {
+        "f1": 0.739895,
+        "precision": 0.702838,
+        "recall": 0.781076
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7385082416633815,
+          "ci_lower": 0.694278042508131,
+          "ci_upper": 0.7820109946714549
+        },
+        "precision": {
+          "mean": 0.7012499182421771,
+          "ci_lower": 0.6478551912568307,
+          "ci_upper": 0.7516476325055598
+        },
+        "recall": {
+          "mean": 0.7807048131570736,
+          "ci_lower": 0.7263837123663712,
+          "ci_upper": 0.8359270837023131
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T19",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 19,
+      "n_detections": 566,
+      "point_estimates": {
+        "f1": 0.756561,
+        "precision": 0.738516,
+        "recall": 0.77551
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7552598766169892,
+          "ci_lower": 0.7125431099115309,
+          "ci_upper": 0.7961938013802714
+        },
+        "precision": {
+          "mean": 0.7369964137089395,
+          "ci_lower": 0.6854546173308033,
+          "ci_upper": 0.7867772493372837
+        },
+        "recall": {
+          "mean": 0.7751277187377152,
+          "ci_lower": 0.7209908167864602,
+          "ci_upper": 0.8291295339978358
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T20",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 20,
+      "n_detections": 534,
+      "point_estimates": {
+        "f1": 0.766076,
+        "precision": 0.769663,
+        "recall": 0.762523
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7647470925936068,
+          "ci_lower": 0.7221570438525596,
+          "ci_upper": 0.8046610852304357
+        },
+        "precision": {
+          "mean": 0.7680041070875834,
+          "ci_lower": 0.7195085799672226,
+          "ci_upper": 0.8132083825265644
+        },
+        "recall": {
+          "mean": 0.7621311909841181,
+          "ci_lower": 0.707688679245283,
+          "ci_upper": 0.8170964393107727
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T21",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 21,
+      "n_detections": 504,
+      "point_estimates": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7735058619384185,
+          "ci_lower": 0.7324488304093568,
+          "ci_upper": 0.813121392288155
+        },
+        "precision": {
+          "mean": 0.8001018605675553,
+          "ci_lower": 0.7546765515515516,
+          "ci_upper": 0.8423478567042668
+        },
+        "recall": {
+          "mean": 0.7491775738417138,
+          "ci_lower": 0.6933253676470589,
+          "ci_upper": 0.8057706310679612
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T22",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 22,
+      "n_detections": 482,
+      "point_estimates": {
+        "f1": 0.773751,
+        "precision": 0.819502,
+        "recall": 0.732839
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.772853007674549,
+          "ci_lower": 0.7312927210333957,
+          "ci_upper": 0.8129070546568392
+        },
+        "precision": {
+          "mean": 0.8182605630780516,
+          "ci_lower": 0.7749360344084444,
+          "ci_upper": 0.8602654029151308
+        },
+        "recall": {
+          "mean": 0.7327642409588658,
+          "ci_lower": 0.6779609071210188,
+          "ci_upper": 0.7878802617615847
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T23",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 23,
+      "n_detections": 458,
+      "point_estimates": {
+        "f1": 0.764293,
+        "precision": 0.831878,
+        "recall": 0.706865
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7633923214073435,
+          "ci_lower": 0.7199070850739341,
+          "ci_upper": 0.8064549316341431
+        },
+        "precision": {
+          "mean": 0.830612289645025,
+          "ci_lower": 0.7871396895787139,
+          "ci_upper": 0.8709784707817753
+        },
+        "recall": {
+          "mean": 0.7068142672654951,
+          "ci_lower": 0.6462640516124065,
+          "ci_upper": 0.7682984053572289
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T24",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 24,
+      "n_detections": 432,
+      "point_estimates": {
+        "f1": 0.764161,
+        "precision": 0.858796,
+        "recall": 0.688312
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7633547539130884,
+          "ci_lower": 0.7201206098466373,
+          "ci_upper": 0.8068522636599699
+        },
+        "precision": {
+          "mean": 0.8579231684564275,
+          "ci_lower": 0.8174859972677596,
+          "ci_upper": 0.897218037780323
+        },
+        "recall": {
+          "mean": 0.688185206608957,
+          "ci_lower": 0.6261563092979128,
+          "ci_upper": 0.7509807827513475
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T25",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 25,
+      "n_detections": 401,
+      "point_estimates": {
+        "f1": 0.742553,
+        "precision": 0.870324,
+        "recall": 0.647495
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7412850814518779,
+          "ci_lower": 0.6947729824203303,
+          "ci_upper": 0.7892293730868861
+        },
+        "precision": {
+          "mean": 0.8691865609395124,
+          "ci_lower": 0.8278551208382626,
+          "ci_upper": 0.9073316212213277
+        },
+        "recall": {
+          "mean": 0.6468673019575968,
+          "ci_lower": 0.5815146839268808,
+          "ci_upper": 0.7125075692041523
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T26",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 26,
+      "n_detections": 377,
+      "point_estimates": {
+        "f1": 0.729258,
+        "precision": 0.885942,
+        "recall": 0.619666
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7281890841615527,
+          "ci_lower": 0.6792274434906711,
+          "ci_upper": 0.7767234939952994
+        },
+        "precision": {
+          "mean": 0.8847316801653904,
+          "ci_lower": 0.8441815686968839,
+          "ci_upper": 0.9197867268691353
+        },
+        "recall": {
+          "mean": 0.6194009223497631,
+          "ci_lower": 0.5538139973408333,
+          "ci_upper": 0.6854395653864992
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T27",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 27,
+      "n_detections": 347,
+      "point_estimates": {
+        "f1": 0.711061,
+        "precision": 0.907781,
+        "recall": 0.584416
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7101305521127699,
+          "ci_lower": 0.6603984174552736,
+          "ci_upper": 0.7636962624578725
+        },
+        "precision": {
+          "mean": 0.9066935646535315,
+          "ci_lower": 0.8703687902919984,
+          "ci_upper": 0.9378466380287572
+        },
+        "recall": {
+          "mean": 0.5843323958732485,
+          "ci_lower": 0.5212280837908978,
+          "ci_upper": 0.6525953080867002
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T28",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 28,
+      "n_detections": 308,
+      "point_estimates": {
+        "f1": 0.680047,
+        "precision": 0.935065,
+        "recall": 0.534323
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6785438328304833,
+          "ci_lower": 0.6222705533602767,
+          "ci_upper": 0.7347403892345665
+        },
+        "precision": {
+          "mean": 0.9337922165209086,
+          "ci_lower": 0.8982209805335256,
+          "ci_upper": 0.9622120407819347
+        },
+        "recall": {
+          "mean": 0.5336464873215564,
+          "ci_lower": 0.46862505141916905,
+          "ci_upper": 0.6039149803684688
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T29",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 29,
+      "n_detections": 261,
+      "point_estimates": {
+        "f1": 0.61,
+        "precision": 0.934866,
+        "recall": 0.45269
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6091703890690967,
+          "ci_lower": 0.5483015939673904,
+          "ci_upper": 0.6695862807732024
+        },
+        "precision": {
+          "mean": 0.9338697793832753,
+          "ci_lower": 0.8947320574162679,
+          "ci_upper": 0.9653879310344827
+        },
+        "recall": {
+          "mean": 0.45280439078768836,
+          "ci_lower": 0.3891022025488166,
+          "ci_upper": 0.5200800174407338
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T0.7_N30_T30",
+      "temperature": "T0.7",
+      "pool_size": 30,
+      "vote_threshold": 30,
+      "n_detections": 178,
+      "point_estimates": {
+        "f1": 0.468619,
+        "precision": 0.94382,
+        "recall": 0.311688
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.46823074567491574,
+          "ci_lower": 0.4035795017167434,
+          "ci_upper": 0.5300632257620232
+        },
+        "precision": {
+          "mean": 0.9432681715624094,
+          "ci_lower": 0.9012345679012346,
+          "ci_upper": 0.9761939983093829
+        },
+        "recall": {
+          "mean": 0.31205436862050956,
+          "ci_lower": 0.25640138408304497,
+          "ci_upper": 0.36977507942697513
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N5_T1",
+      "temperature": "T1.0",
+      "pool_size": 5,
+      "vote_threshold": 1,
+      "n_detections": 3911,
+      "point_estimates": {
+        "f1": 0.214382,
+        "precision": 0.121964,
+        "recall": 0.884972
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.21471890422577056,
+          "ci_lower": 0.17565187286333606,
+          "ci_upper": 0.25622722593926917
+        },
+        "precision": {
+          "mean": 0.1223475946694192,
+          "ci_lower": 0.09770123564937237,
+          "ci_upper": 0.14907913273850135
+        },
+        "recall": {
+          "mean": 0.8848076334617668,
+          "ci_lower": 0.8461303462321792,
+          "ci_upper": 0.9206440957886044
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N5_T2",
+      "temperature": "T1.0",
+      "pool_size": 5,
+      "vote_threshold": 2,
+      "n_detections": 1273,
+      "point_estimates": {
+        "f1": 0.5,
+        "precision": 0.355852,
+        "recall": 0.840445
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.4997365228238667,
+          "ci_lower": 0.4405926775557573,
+          "ci_upper": 0.5539960478197411
+        },
+        "precision": {
+          "mean": 0.3562491703275701,
+          "ci_lower": 0.3006398910737629,
+          "ci_upper": 0.41225339602925803
+        },
+        "recall": {
+          "mean": 0.8400566742987118,
+          "ci_lower": 0.7950236404685557,
+          "ci_upper": 0.882032898794564
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N5_T3",
+      "temperature": "T1.0",
+      "pool_size": 5,
+      "vote_threshold": 3,
+      "n_detections": 786,
+      "point_estimates": {
+        "f1": 0.641509,
+        "precision": 0.540712,
+        "recall": 0.788497
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.640445974875393,
+          "ci_lower": 0.5848575177202835,
+          "ci_upper": 0.6947564079506279
+        },
+        "precision": {
+          "mean": 0.5401726407179996,
+          "ci_lower": 0.47611926435073376,
+          "ci_upper": 0.6062277390797104
+        },
+        "recall": {
+          "mean": 0.7880423467497941,
+          "ci_lower": 0.7330670752438823,
+          "ci_upper": 0.84375
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N5_T4",
+      "temperature": "T1.0",
+      "pool_size": 5,
+      "vote_threshold": 4,
+      "n_detections": 527,
+      "point_estimates": {
+        "f1": 0.726079,
+        "precision": 0.734345,
+        "recall": 0.717996
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7249313849509347,
+          "ci_lower": 0.6766526616764786,
+          "ci_upper": 0.7731168161434978
+        },
+        "precision": {
+          "mean": 0.7333549530272854,
+          "ci_lower": 0.675779834692029,
+          "ci_upper": 0.7874768738140417
+        },
+        "recall": {
+          "mean": 0.7175082711533012,
+          "ci_lower": 0.6591855172413793,
+          "ci_upper": 0.7797510822510821
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N5_T5",
+      "temperature": "T1.0",
+      "pool_size": 5,
+      "vote_threshold": 5,
+      "n_detections": 357,
+      "point_estimates": {
+        "f1": 0.6875,
+        "precision": 0.862745,
+        "recall": 0.571429
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6869139922813381,
+          "ci_lower": 0.6345379274947324,
+          "ci_upper": 0.7367261373773417
+        },
+        "precision": {
+          "mean": 0.8620051149090944,
+          "ci_lower": 0.8167870213963965,
+          "ci_upper": 0.9042843525897786
+        },
+        "recall": {
+          "mean": 0.5716251738283599,
+          "ci_lower": 0.5099082251542881,
+          "ci_upper": 0.6336066774616392
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T1",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 1,
+      "n_detections": 6239,
+      "point_estimates": {
+        "f1": 0.145766,
+        "precision": 0.079179,
+        "recall": 0.916512
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.1459666993207869,
+          "ci_lower": 0.11757246165272021,
+          "ci_upper": 0.17617939735911775
+        },
+        "precision": {
+          "mean": 0.07937858842782654,
+          "ci_lower": 0.0628798502816132,
+          "ci_upper": 0.09743322068776608
+        },
+        "recall": {
+          "mean": 0.9159660726855997,
+          "ci_lower": 0.8863159652976726,
+          "ci_upper": 0.9441555074506645
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T2",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 2,
+      "n_detections": 2023,
+      "point_estimates": {
+        "f1": 0.371585,
+        "precision": 0.235294,
+        "recall": 0.883117
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.37125757774692675,
+          "ci_lower": 0.317730031406502,
+          "ci_upper": 0.42557737770503723
+        },
+        "precision": {
+          "mean": 0.23549303582771422,
+          "ci_lower": 0.1943879367599321,
+          "ci_upper": 0.27917768348313937
+        },
+        "recall": {
+          "mean": 0.882080391702553,
+          "ci_lower": 0.8402083326895683,
+          "ci_upper": 0.9198625552992779
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T3",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 3,
+      "n_detections": 1260,
+      "point_estimates": {
+        "f1": 0.515842,
+        "precision": 0.368254,
+        "recall": 0.860853
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5151022168871108,
+          "ci_lower": 0.45771065048870907,
+          "ci_upper": 0.5707259256129613
+        },
+        "precision": {
+          "mean": 0.36826138620083965,
+          "ci_lower": 0.3140909512945671,
+          "ci_upper": 0.42338507846320345
+        },
+        "recall": {
+          "mean": 0.8600803408120931,
+          "ci_lower": 0.8164940218511647,
+          "ci_upper": 0.9017394353314225
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T4",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 4,
+      "n_detections": 971,
+      "point_estimates": {
+        "f1": 0.597351,
+        "precision": 0.46447,
+        "recall": 0.836735
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5965042391631217,
+          "ci_lower": 0.5402386442990077,
+          "ci_upper": 0.65040279657414
+        },
+        "precision": {
+          "mean": 0.46426417664265,
+          "ci_lower": 0.40305969387755103,
+          "ci_upper": 0.5287303191489362
+        },
+        "recall": {
+          "mean": 0.8363260192824649,
+          "ci_lower": 0.78825623657061,
+          "ci_upper": 0.881040436291156
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T5",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 5,
+      "n_detections": 775,
+      "point_estimates": {
+        "f1": 0.663623,
+        "precision": 0.562581,
+        "recall": 0.808905
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6627236026955675,
+          "ci_lower": 0.6076163204230076,
+          "ci_upper": 0.71593739821462
+        },
+        "precision": {
+          "mean": 0.5621525936307596,
+          "ci_lower": 0.4980359340388875,
+          "ci_upper": 0.6263149223114526
+        },
+        "recall": {
+          "mean": 0.8086742396264048,
+          "ci_lower": 0.7544771645873141,
+          "ci_upper": 0.8616652696821028
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T6",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 6,
+      "n_detections": 635,
+      "point_estimates": {
+        "f1": 0.717206,
+        "precision": 0.662992,
+        "recall": 0.781076
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.715758756439452,
+          "ci_lower": 0.6621638846791623,
+          "ci_upper": 0.767463131026659
+        },
+        "precision": {
+          "mean": 0.661685487207202,
+          "ci_lower": 0.6031973195876288,
+          "ci_upper": 0.7211827223088924
+        },
+        "recall": {
+          "mean": 0.7804716495075347,
+          "ci_lower": 0.7152123263583612,
+          "ci_upper": 0.8444075702778234
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T7",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 7,
+      "n_detections": 537,
+      "point_estimates": {
+        "f1": 0.756506,
+        "precision": 0.757914,
+        "recall": 0.755102
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7550965018471475,
+          "ci_lower": 0.7059848604321086,
+          "ci_upper": 0.8050562361080936
+        },
+        "precision": {
+          "mean": 0.7563773193684303,
+          "ci_lower": 0.7036164314516129,
+          "ci_upper": 0.8069272053083528
+        },
+        "recall": {
+          "mean": 0.7545355008482595,
+          "ci_lower": 0.6884324994365563,
+          "ci_upper": 0.8233137992038921
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T8",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 8,
+      "n_detections": 456,
+      "point_estimates": {
+        "f1": 0.769849,
+        "precision": 0.839912,
+        "recall": 0.710575
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.768381933886516,
+          "ci_lower": 0.7170421356506744,
+          "ci_upper": 0.8162687674464532
+        },
+        "precision": {
+          "mean": 0.8384775841369476,
+          "ci_lower": 0.7875456984298151,
+          "ci_upper": 0.8832268225459612
+        },
+        "recall": {
+          "mean": 0.7097923517402676,
+          "ci_lower": 0.6428244108233926,
+          "ci_upper": 0.7779899587107373
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T9",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 9,
+      "n_detections": 379,
+      "point_estimates": {
+        "f1": 0.738562,
+        "precision": 0.894459,
+        "recall": 0.628942
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.737100029813025,
+          "ci_lower": 0.684476904946802,
+          "ci_upper": 0.7887058525429456
+        },
+        "precision": {
+          "mean": 0.8931900425721229,
+          "ci_lower": 0.8511721571023833,
+          "ci_upper": 0.93182781201849
+        },
+        "recall": {
+          "mean": 0.6281404864445418,
+          "ci_lower": 0.5615370377987086,
+          "ci_upper": 0.6966736394900426
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N10_T10",
+      "temperature": "T1.0",
+      "pool_size": 10,
+      "vote_threshold": 10,
+      "n_detections": 268,
+      "point_estimates": {
+        "f1": 0.619579,
+        "precision": 0.932836,
+        "recall": 0.463822
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.618839044557239,
+          "ci_lower": 0.5620504635719098,
+          "ci_upper": 0.6747086957183983
+        },
+        "precision": {
+          "mean": 0.9328596002102604,
+          "ci_lower": 0.8947368421052632,
+          "ci_upper": 0.9656601759606676
+        },
+        "recall": {
+          "mean": 0.4636449393284822,
+          "ci_lower": 0.4030314702706637,
+          "ci_upper": 0.5252366779776686
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T1",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 1,
+      "n_detections": 13445,
+      "point_estimates": {
+        "f1": 0.072368,
+        "precision": 0.037635,
+        "recall": 0.938776
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.07249990188435401,
+          "ci_lower": 0.05701586233593239,
+          "ci_upper": 0.08953950380901428
+        },
+        "precision": {
+          "mean": 0.03772611810567072,
+          "ci_lower": 0.029418020134199564,
+          "ci_upper": 0.047029564076459834
+        },
+        "recall": {
+          "mean": 0.9384485644337376,
+          "ci_lower": 0.9147698283858998,
+          "ci_upper": 0.9600051903114186
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T2",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 2,
+      "n_detections": 4482,
+      "point_estimates": {
+        "f1": 0.19757,
+        "precision": 0.110665,
+        "recall": 0.920223
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.19765010423878163,
+          "ci_lower": 0.162262626704594,
+          "ci_upper": 0.2333407477292844
+        },
+        "precision": {
+          "mean": 0.11084462178596868,
+          "ci_lower": 0.08907867602267847,
+          "ci_upper": 0.13326954999535393
+        },
+        "recall": {
+          "mean": 0.9197474586684804,
+          "ci_lower": 0.8866783499745025,
+          "ci_upper": 0.9462447672986949
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T3",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 3,
+      "n_detections": 2811,
+      "point_estimates": {
+        "f1": 0.290149,
+        "precision": 0.172892,
+        "recall": 0.90167
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.29000058350226415,
+          "ci_lower": 0.2436313308435359,
+          "ci_upper": 0.3348981894308005
+        },
+        "precision": {
+          "mean": 0.17305402065849762,
+          "ci_lower": 0.1409264093753816,
+          "ci_upper": 0.20477121551182215
+        },
+        "recall": {
+          "mean": 0.9007086497694292,
+          "ci_lower": 0.8640159348498694,
+          "ci_upper": 0.9324458969839404
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T4",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 4,
+      "n_detections": 2097,
+      "point_estimates": {
+        "f1": 0.363429,
+        "precision": 0.228422,
+        "recall": 0.888683
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.36304593991751855,
+          "ci_lower": 0.3110901726507141,
+          "ci_upper": 0.41314199630774334
+        },
+        "precision": {
+          "mean": 0.2285110584489927,
+          "ci_lower": 0.18905501349025444,
+          "ci_upper": 0.26840677703868343
+        },
+        "recall": {
+          "mean": 0.8878425472109881,
+          "ci_lower": 0.8502601701155643,
+          "ci_upper": 0.9221810507211506
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T5",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 5,
+      "n_detections": 1719,
+      "point_estimates": {
+        "f1": 0.418955,
+        "precision": 0.27516,
+        "recall": 0.877551
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.4183982705366478,
+          "ci_lower": 0.36396193032761875,
+          "ci_upper": 0.47039551013154907
+        },
+        "precision": {
+          "mean": 0.275177317135207,
+          "ci_lower": 0.230722545207137,
+          "ci_upper": 0.3185907365936076
+        },
+        "recall": {
+          "mean": 0.8768252033891484,
+          "ci_lower": 0.8342806065495861,
+          "ci_upper": 0.9133337125015689
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T6",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 6,
+      "n_detections": 1465,
+      "point_estimates": {
+        "f1": 0.467066,
+        "precision": 0.319454,
+        "recall": 0.868275
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.46643633933430934,
+          "ci_lower": 0.41060615707390424,
+          "ci_upper": 0.5201745162074787
+        },
+        "precision": {
+          "mean": 0.3194674649764627,
+          "ci_lower": 0.26949409174092714,
+          "ci_upper": 0.3693719334110628
+        },
+        "recall": {
+          "mean": 0.8675305817196529,
+          "ci_lower": 0.8250783676312657,
+          "ci_upper": 0.905519966783813
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T7",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 7,
+      "n_detections": 1293,
+      "point_estimates": {
+        "f1": 0.50655,
+        "precision": 0.358855,
+        "recall": 0.860853
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5057697610812965,
+          "ci_lower": 0.447848984634754,
+          "ci_upper": 0.5609639734843082
+        },
+        "precision": {
+          "mean": 0.3587879426785542,
+          "ci_lower": 0.3045778283421413,
+          "ci_upper": 0.4117826125884143
+        },
+        "recall": {
+          "mean": 0.8600654206327886,
+          "ci_lower": 0.8142784007801073,
+          "ci_upper": 0.9009810936370631
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T8",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 8,
+      "n_detections": 1151,
+      "point_estimates": {
+        "f1": 0.542012,
+        "precision": 0.397915,
+        "recall": 0.849722
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5411436843222727,
+          "ci_lower": 0.4826127324477338,
+          "ci_upper": 0.5988029263723407
+        },
+        "precision": {
+          "mean": 0.39776176399146257,
+          "ci_lower": 0.34122986261312505,
+          "ci_upper": 0.45823918996744356
+        },
+        "recall": {
+          "mean": 0.8490722588657933,
+          "ci_lower": 0.7977863499873376,
+          "ci_upper": 0.8962810899342812
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T9",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 9,
+      "n_detections": 1046,
+      "point_estimates": {
+        "f1": 0.571609,
+        "precision": 0.433078,
+        "recall": 0.840445
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5705508332222823,
+          "ci_lower": 0.5111398824069024,
+          "ci_upper": 0.6281781563416489
+        },
+        "precision": {
+          "mean": 0.432701333767435,
+          "ci_lower": 0.3721476162762791,
+          "ci_upper": 0.49219071118695235
+        },
+        "recall": {
+          "mean": 0.8397795888887046,
+          "ci_lower": 0.78838565763384,
+          "ci_upper": 0.8866061345670467
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T10",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 10,
+      "n_detections": 960,
+      "point_estimates": {
+        "f1": 0.6004,
+        "precision": 0.46875,
+        "recall": 0.834879
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5991241909439425,
+          "ci_lower": 0.5405777166437414,
+          "ci_upper": 0.6551746470030093
+        },
+        "precision": {
+          "mean": 0.46810201107848776,
+          "ci_lower": 0.4056596395616503,
+          "ci_upper": 0.5296045070938256
+        },
+        "recall": {
+          "mean": 0.8341296344339669,
+          "ci_lower": 0.7825015031189719,
+          "ci_upper": 0.8834797257532957
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T11",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 11,
+      "n_detections": 893,
+      "point_estimates": {
+        "f1": 0.621508,
+        "precision": 0.49832,
+        "recall": 0.825603
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6202717754522596,
+          "ci_lower": 0.564497858175766,
+          "ci_upper": 0.6748474655984009
+        },
+        "precision": {
+          "mean": 0.4976242898627352,
+          "ci_lower": 0.43420431976166834,
+          "ci_upper": 0.5586898163006642
+        },
+        "recall": {
+          "mean": 0.8249892054062369,
+          "ci_lower": 0.769746233148295,
+          "ci_upper": 0.8770150798041264
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T12",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 12,
+      "n_detections": 830,
+      "point_estimates": {
+        "f1": 0.642805,
+        "precision": 0.53012,
+        "recall": 0.816327
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6415499620089343,
+          "ci_lower": 0.585089113014645,
+          "ci_upper": 0.6945377508803109
+        },
+        "precision": {
+          "mean": 0.5293374286863336,
+          "ci_lower": 0.46375846697157413,
+          "ci_upper": 0.590982280781463
+        },
+        "recall": {
+          "mean": 0.8157887302887441,
+          "ci_lower": 0.756012719467999,
+          "ci_upper": 0.8698295003965107
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T13",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 13,
+      "n_detections": 780,
+      "point_estimates": {
+        "f1": 0.664139,
+        "precision": 0.561538,
+        "recall": 0.812616
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6627983937568629,
+          "ci_lower": 0.6082463859468694,
+          "ci_upper": 0.7166204032636306
+        },
+        "precision": {
+          "mean": 0.5606666156254553,
+          "ci_lower": 0.4962529286706005,
+          "ci_upper": 0.6229060741744484
+        },
+        "recall": {
+          "mean": 0.8119454808070994,
+          "ci_lower": 0.7537956481707452,
+          "ci_upper": 0.86532449921873
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T14",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 14,
+      "n_detections": 725,
+      "point_estimates": {
+        "f1": 0.686709,
+        "precision": 0.598621,
+        "recall": 0.805195
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6851437735151273,
+          "ci_lower": 0.632347453906936,
+          "ci_upper": 0.7380624902929815
+        },
+        "precision": {
+          "mean": 0.5972964966749591,
+          "ci_lower": 0.5343097725665533,
+          "ci_upper": 0.6565979685590255
+        },
+        "recall": {
+          "mean": 0.8045674257253803,
+          "ci_lower": 0.7481571572985268,
+          "ci_upper": 0.8586982802119251
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T15",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 15,
+      "n_detections": 672,
+      "point_estimates": {
+        "f1": 0.706854,
+        "precision": 0.636905,
+        "recall": 0.794063
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7052320536918942,
+          "ci_lower": 0.657489536780269,
+          "ci_upper": 0.7542996383019227
+        },
+        "precision": {
+          "mean": 0.635247318042119,
+          "ci_lower": 0.5749960191082802,
+          "ci_upper": 0.6940431212140136
+        },
+        "recall": {
+          "mean": 0.7936421346202078,
+          "ci_lower": 0.7341399373166178,
+          "ci_upper": 0.848377021198235
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T16",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 16,
+      "n_detections": 632,
+      "point_estimates": {
+        "f1": 0.722459,
+        "precision": 0.669304,
+        "recall": 0.784787
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7207198125599714,
+          "ci_lower": 0.6709150470797863,
+          "ci_upper": 0.7688630307243447
+        },
+        "precision": {
+          "mean": 0.667558863959167,
+          "ci_lower": 0.6072953891205083,
+          "ci_upper": 0.7245263242763847
+        },
+        "recall": {
+          "mean": 0.7840515176823694,
+          "ci_lower": 0.7248762235994526,
+          "ci_upper": 0.8420230863251604
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T17",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 17,
+      "n_detections": 595,
+      "point_estimates": {
+        "f1": 0.738977,
+        "precision": 0.704202,
+        "recall": 0.777365
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.737293220818138,
+          "ci_lower": 0.6916467969568333,
+          "ci_upper": 0.7837480698111018
+        },
+        "precision": {
+          "mean": 0.7024493850706816,
+          "ci_lower": 0.6449244740011052,
+          "ci_upper": 0.7560694149284897
+        },
+        "recall": {
+          "mean": 0.7766340710364793,
+          "ci_lower": 0.7167550418351517,
+          "ci_upper": 0.836002394106814
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T18",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 18,
+      "n_detections": 565,
+      "point_estimates": {
+        "f1": 0.753623,
+        "precision": 0.736283,
+        "recall": 0.7718
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7520696970071874,
+          "ci_lower": 0.7063884844378452,
+          "ci_upper": 0.7970901963375998
+        },
+        "precision": {
+          "mean": 0.7346082852856423,
+          "ci_lower": 0.6792318315517613,
+          "ci_upper": 0.7866208158929678
+        },
+        "recall": {
+          "mean": 0.7711351077676193,
+          "ci_lower": 0.7097269401620068,
+          "ci_upper": 0.8323324592074592
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T19",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 19,
+      "n_detections": 538,
+      "point_estimates": {
+        "f1": 0.759517,
+        "precision": 0.760223,
+        "recall": 0.758813
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7579372573699509,
+          "ci_lower": 0.7122982464158936,
+          "ci_upper": 0.8038304677114988
+        },
+        "precision": {
+          "mean": 0.7585396007957387,
+          "ci_lower": 0.7054684788895316,
+          "ci_upper": 0.8077
+        },
+        "recall": {
+          "mean": 0.7580426410042478,
+          "ci_lower": 0.6944206621004566,
+          "ci_upper": 0.8209943589777683
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T20",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 20,
+      "n_detections": 517,
+      "point_estimates": {
+        "f1": 0.768939,
+        "precision": 0.7853,
+        "recall": 0.753247
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7676208870706839,
+          "ci_lower": 0.7228133777844791,
+          "ci_upper": 0.8123844962975398
+        },
+        "precision": {
+          "mean": 0.783778686810565,
+          "ci_lower": 0.7337585374164778,
+          "ci_upper": 0.8298327641623142
+        },
+        "recall": {
+          "mean": 0.7527893074356586,
+          "ci_lower": 0.6888666666666666,
+          "ci_upper": 0.8155344194947243
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T21",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 21,
+      "n_detections": 494,
+      "point_estimates": {
+        "f1": 0.770571,
+        "precision": 0.805668,
+        "recall": 0.738404
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7692699668392099,
+          "ci_lower": 0.7247055503832469,
+          "ci_upper": 0.8139044738610794
+        },
+        "precision": {
+          "mean": 0.8041346709777002,
+          "ci_lower": 0.7565754807099716,
+          "ci_upper": 0.8487241932548716
+        },
+        "recall": {
+          "mean": 0.737970200536951,
+          "ci_lower": 0.6738676342376532,
+          "ci_upper": 0.8009783144153205
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T22",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 22,
+      "n_detections": 468,
+      "point_estimates": {
+        "f1": 0.76862,
+        "precision": 0.826923,
+        "recall": 0.717996
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7673561292942654,
+          "ci_lower": 0.719905512476296,
+          "ci_upper": 0.8116785608088017
+        },
+        "precision": {
+          "mean": 0.8255097117119264,
+          "ci_lower": 0.7840815116817025,
+          "ci_upper": 0.867530657748049
+        },
+        "recall": {
+          "mean": 0.7174750431366397,
+          "ci_lower": 0.6539162514977612,
+          "ci_upper": 0.7770890231092437
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T23",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 23,
+      "n_detections": 442,
+      "point_estimates": {
+        "f1": 0.77472,
+        "precision": 0.859729,
+        "recall": 0.705009
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7735292209638684,
+          "ci_lower": 0.7248355695869506,
+          "ci_upper": 0.8183620905200683
+        },
+        "precision": {
+          "mean": 0.8584393433552098,
+          "ci_lower": 0.8196473608358854,
+          "ci_upper": 0.8945147679324894
+        },
+        "recall": {
+          "mean": 0.7045258087412769,
+          "ci_lower": 0.6392464139749032,
+          "ci_upper": 0.766828473813768
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T24",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 24,
+      "n_detections": 421,
+      "point_estimates": {
+        "f1": 0.760417,
+        "precision": 0.866983,
+        "recall": 0.67718
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.759505364938564,
+          "ci_lower": 0.7085654761904762,
+          "ci_upper": 0.8079611103283078
+        },
+        "precision": {
+          "mean": 0.8658233770391507,
+          "ci_lower": 0.8254862097682849,
+          "ci_upper": 0.900904420045045
+        },
+        "recall": {
+          "mean": 0.6770626603684672,
+          "ci_lower": 0.6111863859467838,
+          "ci_upper": 0.7404493077236999
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T25",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 25,
+      "n_detections": 394,
+      "point_estimates": {
+        "f1": 0.748124,
+        "precision": 0.885787,
+        "recall": 0.647495
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.747296905337268,
+          "ci_lower": 0.6982796763225719,
+          "ci_upper": 0.7979304941235941
+        },
+        "precision": {
+          "mean": 0.8846578406297784,
+          "ci_lower": 0.845952581369248,
+          "ci_upper": 0.9181613343497934
+        },
+        "recall": {
+          "mean": 0.6475290909721907,
+          "ci_lower": 0.5810902519713587,
+          "ci_upper": 0.7157763743863329
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T26",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 26,
+      "n_detections": 367,
+      "point_estimates": {
+        "f1": 0.728477,
+        "precision": 0.899183,
+        "recall": 0.612245
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.7274694239538162,
+          "ci_lower": 0.6738168335187245,
+          "ci_upper": 0.7791373781730297
+        },
+        "precision": {
+          "mean": 0.8980388355068785,
+          "ci_lower": 0.857996288589664,
+          "ci_upper": 0.9333372921615202
+        },
+        "recall": {
+          "mean": 0.6120408815999847,
+          "ci_lower": 0.5430645095270257,
+          "ci_upper": 0.6782481828288733
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T27",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 27,
+      "n_detections": 326,
+      "point_estimates": {
+        "f1": 0.689017,
+        "precision": 0.91411,
+        "recall": 0.552876
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6881774622586347,
+          "ci_lower": 0.6343089056286865,
+          "ci_upper": 0.7405980820584395
+        },
+        "precision": {
+          "mean": 0.9132491957908687,
+          "ci_lower": 0.8770750680041716,
+          "ci_upper": 0.9442898714189037
+        },
+        "recall": {
+          "mean": 0.5528059349056946,
+          "ci_lower": 0.48849151917404127,
+          "ci_upper": 0.619360609926493
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T28",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 28,
+      "n_detections": 282,
+      "point_estimates": {
+        "f1": 0.645554,
+        "precision": 0.939716,
+        "recall": 0.491651
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.6445879485556039,
+          "ci_lower": 0.583421499554158,
+          "ci_upper": 0.699875478927203
+        },
+        "precision": {
+          "mean": 0.939149321583875,
+          "ci_lower": 0.9028567758038468,
+          "ci_upper": 0.9674976299232957
+        },
+        "recall": {
+          "mean": 0.49138340079717774,
+          "ci_lower": 0.42550337311883757,
+          "ci_upper": 0.5555722891566265
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T29",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 29,
+      "n_detections": 233,
+      "point_estimates": {
+        "f1": 0.57513,
+        "precision": 0.95279,
+        "recall": 0.411874
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.5741258820293225,
+          "ci_lower": 0.512446137273007,
+          "ci_upper": 0.6346912812151377
+        },
+        "precision": {
+          "mean": 0.9526868125101225,
+          "ci_lower": 0.9230769230769231,
+          "ci_upper": 0.9780701754385965
+        },
+        "recall": {
+          "mean": 0.4115136550219562,
+          "ci_lower": 0.35052046263345193,
+          "ci_upper": 0.4731032845081779
+        },
+        "n_iterations": 1000
+      }
+    },
+    {
+      "config_key": "T1.0_N30_T30",
+      "temperature": "T1.0",
+      "pool_size": 30,
+      "vote_threshold": 30,
+      "n_detections": 145,
+      "point_estimates": {
+        "f1": 0.412281,
+        "precision": 0.972414,
+        "recall": 0.261596
+      },
+      "bootstrap_ci": {
+        "f1": {
+          "mean": 0.411720454053067,
+          "ci_lower": 0.3451772756769512,
+          "ci_upper": 0.47596272051140204
+        },
+        "precision": {
+          "mean": 0.9722596050504241,
+          "ci_lower": 0.9411655773420479,
+          "ci_upper": 0.9941234629444998
+        },
+        "recall": {
+          "mean": 0.26174076020148446,
+          "ci_lower": 0.21032496914849855,
+          "ci_upper": 0.31449117315903896
+        },
+        "n_iterations": 1000
+      }
+    }
+  ]
+}

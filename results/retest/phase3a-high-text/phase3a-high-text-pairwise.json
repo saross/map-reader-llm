@@ -1,0 +1,333 @@
+{
+  "analysis": "Phase 3a-HIGH text track pairwise comparisons",
+  "bootstrap_iterations": 1000,
+  "bootstrap_seed": 42,
+  "minimal_best_thresholds": {
+    "5": {
+      "threshold": 4,
+      "f1": 0.662829
+    },
+    "10": {
+      "threshold": 7,
+      "f1": 0.675851
+    },
+    "30": {
+      "threshold": 24,
+      "f1": 0.690373
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "HIGH_T0.7_N5_best vs Minimal_T0.7_N5_best",
+      "condition_a": "HIGH T=0.7 N=5 thresh=4",
+      "condition_b": "Minimal T=0.7 N=5 thresh=4",
+      "point_estimates_a": {
+        "f1": 0.729981,
+        "precision": 0.73271,
+        "recall": 0.727273,
+        "n_detections": 535
+      },
+      "point_estimates_b": {
+        "f1": 0.662829,
+        "precision": 0.595273,
+        "recall": 0.747681,
+        "n_detections": 677
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.06717397650810722,
+          "ci_lower": 0.0205675813538689,
+          "ci_upper": 0.11224553061830596,
+          "p_value": 0.002
+        },
+        "precision_difference": {
+          "mean": 0.1370039441496148,
+          "ci_lower": 0.07755497541703657,
+          "ci_upper": 0.19796314024594097,
+          "p_value": 0.001
+        },
+        "recall_difference": {
+          "mean": -0.020349751088507197,
+          "ci_lower": -0.061011894235100554,
+          "ci_upper": 0.020797875332746768,
+          "p_value": 0.346
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_best vs PV_text_5of10",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "PV text 5-of-10 (F1=0.831)",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.831373,
+        "precision": 0.881497,
+        "recall": 0.786642,
+        "n_detections": 481
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.053908323621430713,
+          "ci_lower": -0.087694790544844,
+          "ci_upper": -0.019498019162089496,
+          "p_value": 0.001
+        },
+        "precision_difference": {
+          "mean": -0.06635440967652033,
+          "ci_lower": -0.10779325363002897,
+          "ci_upper": -0.02654350990643327,
+          "p_value": 0.001
+        },
+        "recall_difference": {
+          "mean": -0.04327367707949983,
+          "ci_lower": -0.08929532264945365,
+          "ci_upper": 0.002600804995300312,
+          "p_value": 0.06
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_best vs PV_text_3of10",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "PV text 3-of-10 (F1=0.823)",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.822749,
+        "precision": 0.841085,
+        "recall": 0.805195,
+        "n_detections": 516
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.04518053140353371,
+          "ci_lower": -0.07961131649863297,
+          "ci_upper": -0.010454256423323333,
+          "p_value": 0.008
+        },
+        "precision_difference": {
+          "mean": -0.02560781488703006,
+          "ci_lower": -0.06911701725519984,
+          "ci_upper": 0.017729398738122345,
+          "p_value": 0.224
+        },
+        "recall_difference": {
+          "mean": -0.06192093552127245,
+          "ci_lower": -0.11198206968424544,
+          "ci_upper": -0.012910863626124827,
+          "p_value": 0.01
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_T0.7_run1 vs Minimal_T0.7_run1",
+      "condition_a": "HIGH T=0.7 run_1",
+      "condition_b": "Minimal T=0.7 run_1",
+      "point_estimates_a": {
+        "f1": 0.451971,
+        "precision": 0.322504,
+        "recall": 0.755102,
+        "n_detections": 1262
+      },
+      "point_estimates_b": {
+        "f1": 0.596416,
+        "precision": 0.485981,
+        "recall": 0.7718,
+        "n_detections": 856
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.14383448193704249,
+          "ci_lower": -0.19216996985888757,
+          "ci_upper": -0.09264553429013452,
+          "p_value": 0.001
+        },
+        "precision_difference": {
+          "mean": -0.16283713734793065,
+          "ci_lower": -0.21655218646998975,
+          "ci_upper": -0.10780112207495947,
+          "p_value": 0.001
+        },
+        "recall_difference": {
+          "mean": -0.016516256164925067,
+          "ci_lower": -0.06299129191676336,
+          "ci_upper": 0.030993807890584903,
+          "p_value": 0.45
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_T0.7_N30_best vs Minimal_T0.7_N30_best",
+      "condition_a": "HIGH T=0.7 N=30 thresh=21",
+      "condition_b": "Minimal T=0.7 N=30 thresh=24",
+      "point_estimates_a": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536,
+        "n_detections": 504
+      },
+      "point_estimates_b": {
+        "f1": 0.690373,
+        "precision": 0.648208,
+        "recall": 0.738404,
+        "n_detections": 614
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.08455915705900352,
+          "ci_lower": 0.04480578619226211,
+          "ci_upper": 0.12868239117077535,
+          "p_value": 0.002
+        },
+        "precision_difference": {
+          "mean": 0.1531666339010958,
+          "ci_lower": 0.09978857724663091,
+          "ci_upper": 0.20843043755482143,
+          "p_value": 0.001
+        },
+        "recall_difference": {
+          "mean": 0.011339068858994484,
+          "ci_lower": -0.03292061912235688,
+          "ci_upper": 0.06051904606210048,
+          "p_value": 0.65
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_T0.3_best vs HIGH_T0.7_best",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "HIGH T0.7 N=30 thresh=21",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536,
+        "n_detections": 504
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.0037783159050149757,
+          "ci_lower": -0.01821401872936653,
+          "ci_upper": 0.025706468406619706,
+          "p_value": 0.742
+        },
+        "precision_difference": {
+          "mean": 0.014634194636991414,
+          "ci_lower": -0.012601303195124829,
+          "ci_upper": 0.04206853599944774,
+          "p_value": 0.298
+        },
+        "recall_difference": {
+          "mean": -0.005430934061307608,
+          "ci_lower": -0.03214122275955926,
+          "ci_upper": 0.02143924601655052,
+          "p_value": 0.696
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_T0.3_best vs HIGH_T1.0_best",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "HIGH T1.0 N=30 thresh=23",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.77472,
+        "precision": 0.859729,
+        "recall": 0.705009,
+        "n_detections": 442
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.0038949829061078766,
+          "ci_lower": -0.019657800179476954,
+          "ci_upper": 0.026219116094084036,
+          "p_value": 0.732
+        },
+        "precision_difference": {
+          "mean": -0.043191544252948286,
+          "ci_lower": -0.07970898729329061,
+          "ci_upper": -0.012198254554878602,
+          "p_value": 0.004
+        },
+        "recall_difference": {
+          "mean": 0.039075750022044706,
+          "ci_lower": 0.013185460887382641,
+          "ci_upper": 0.0674574979724423,
+          "p_value": 0.004
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    },
+    {
+      "comparison": "HIGH_T0.7_best vs HIGH_T1.0_best",
+      "condition_a": "HIGH T0.7 N=30 thresh=21",
+      "condition_b": "HIGH T1.0 N=30 thresh=23",
+      "point_estimates_a": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536,
+        "n_detections": 504
+      },
+      "point_estimates_b": {
+        "f1": 0.77472,
+        "precision": 0.859729,
+        "recall": 0.705009,
+        "n_detections": 442
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.0001166670010929013,
+          "ci_lower": -0.02229882998535977,
+          "ci_upper": 0.02344595062076587,
+          "p_value": 0.986
+        },
+        "precision_difference": {
+          "mean": -0.05782573888993969,
+          "ci_lower": -0.088322745226303,
+          "ci_upper": -0.02592143823671356,
+          "p_value": 0.001
+        },
+        "recall_difference": {
+          "mean": 0.04450668408335231,
+          "ci_lower": 0.016448518824301223,
+          "ci_upper": 0.07262788767957153,
+          "p_value": 0.002
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000
+      }
+    }
+  ]
+}
