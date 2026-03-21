@@ -3716,3 +3716,66 @@ a PV pipeline unless they are also using multi-run consensus as an
 intermediate stage.
 
 ---
+
+## Observation 176: HIGH thinking paradox confirmed at 340-tile scale (2026-03-21)
+
+Pairwise bootstrap comparisons on the full Phase 3a-HIGH text track
+(90 runs, 135 consensus configurations) confirm the HIGH thinking
+paradox with statistical significance:
+
+| Level | N=1 F1 | N=30 best F1 | Direction |
+|---|---|---|---|
+| HIGH | 0.452 | **0.779** | +0.327 |
+| Minimal | 0.596 | 0.690 | +0.094 |
+| Difference | −0.144 (p=0.001) | +0.085 (p=0.002) | **Inverts** |
+
+HIGH thinking is a **variance amplifier**: it produces more detections
+(1,262 vs 856 per run) including both additional true positives and
+many additional false positives. At the single-run level, the FPs
+dominate and F1 drops. At the consensus level (N=30), the FPs are
+filtered by vote agreement while the diverse TPs survive — yielding
+the best non-PV result in the project.
+
+The PV pipeline achieves the best *overall* result (F1=0.831) without
+HIGH thinking. This means there are now two effective strategies for
+handling the variance amplification: consensus voting (N=30, expensive)
+or PV filtering (N=10 + verifier, cheaper and better).
+
+**Connection to Obs 141** (diversity dividend): This confirms the
+mechanism proposed in the pilot. HIGH thinking is beneficial *because*
+of its noise, not despite it — but only when paired with an effective
+noise-reduction strategy (consensus or PV).
+
+---
+
+## Observation 177: N=30 consensus erases temperature sensitivity (2026-03-21)
+
+At the Phase 3a-HIGH text track, N=30 consensus produces nearly
+identical F1 across all three temperatures:
+
+| Temperature | Best threshold | F1 | 95% CI |
+|---|---|---|---|
+| T=0.3 | 23-of-30 | 0.779 | [0.735, 0.822] |
+| T=0.7 | 21-of-30 | 0.775 | [0.732, 0.813] |
+| T=1.0 | 23-of-30 | 0.775 | [0.725, 0.818] |
+
+Pairwise comparisons: T=0.3 vs T=0.7 p=0.742, T=0.3 vs T=1.0
+p=0.732, T=0.7 vs T=1.0 p=0.986. No significant differences.
+
+The optimal vote thresholds also converge (~21–23 of 30), suggesting
+that N=30 consensus is a sufficiently powerful noise-reduction
+mechanism that the input diversity level (controlled by temperature)
+no longer matters — the consensus process extracts the same signal
+regardless of how much stochastic variation is in the individual runs.
+
+**Practical implication**: For HIGH-thinking N=30 consensus, any
+temperature in the 0.3–1.0 range produces equivalent results. This
+simplifies the pipeline — temperature is not a parameter that needs
+tuning when N=30 consensus is used.
+
+**Contrast with N=1**: At the single-run level, temperature matters
+significantly (Phase 2b results show T=0.0 optimal for minimal
+thinking). The temperature insensitivity is an emergent property of
+large-N consensus, not an inherent property of the model.
+
+---
