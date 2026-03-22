@@ -1365,7 +1365,11 @@ def _execute_units_batch(
         complete_batch_unit,
         prepare_batch_unit,
         submit_batch_unit,
-        sweep_stale_files,
+        sweep_stale_files_safe,
+    )
+    from scripts.lib_file_registry import (
+        deregister_file,
+        register_file,
     )
 
     # Verify the two modules agree on the acceptance threshold
@@ -1376,6 +1380,14 @@ def _execute_units_batch(
     )
 
     results: dict = {"completed": [], "failed": []}
+
+    # Shared file registry for concurrency-safe storage management.
+    # All processes writing to the same Google Files API account share
+    # this registry so sweeps don't delete each other's uploads.
+    # Use PROJECT_ROOT/outputs/ as the canonical location regardless
+    # of output_dir nesting depth (e.g., outputs/retest/phase3c/...).
+    registry_path = BASE_DIR / "outputs" / ".active_files.json"
+    study_name = config.get("study", {}).get("name", "unknown")
 
     if verbose:
         print(
@@ -1444,6 +1456,14 @@ def _execute_units_batch(
             }
             checkpoint["batch_pending"] = batch_pending
             save_checkpoint(checkpoint_path, checkpoint)
+
+            # Register in shared file registry so concurrent
+            # processes' sweeps know this file is in use.
+            register_file(
+                registry_path, uploaded_file_name,
+                unit_key=key, study_name=study_name,
+            )
+
             logger.info(
                 "Write-ahead checkpoint: persisted %s → %s "
                 "(input file: %s)",
@@ -1754,7 +1774,7 @@ def _execute_units_batch(
                         min(attempt, 2)
                     ]
                     if "file_storage_bytes" in err_str:
-                        # Storage quota — sweep orphaned files
+                        # Storage quota — sweep via registry
                         if verbose:
                             print(
                                 f"  {key}: storage quota hit "
@@ -1762,13 +1782,8 @@ def _execute_units_batch(
                                 f"{max_submit_retries}), "
                                 f"sweeping stale files..."
                             )
-                        active = {
-                            v["uploaded_file_name"]
-                            for v in batch_pending.values()
-                            if "uploaded_file_name" in v
-                        }
-                        swept, freed = sweep_stale_files(
-                            client, active,
+                        swept, freed = sweep_stale_files_safe(
+                            client, registry_path,
                         )
                         if verbose:
                             print(
@@ -1840,6 +1855,14 @@ def _execute_units_batch(
         except (AttributeError, TypeError):
             pass  # No output file (job failed before producing)
         if files_to_delete:
+            # Deregister BEFORE deletion — safe because the file is
+            # about to be deleted. If deletion fails, the file will
+            # auto-expire after 48h. Deregistering first prevents
+            # the race where deletion succeeds but deregistration
+            # crashes, leaving a stale registry entry that blocks
+            # future sweeps from cleaning the (now-deleted) file.
+            for fname in files_to_delete:
+                deregister_file(registry_path, fname)
             deleted, errors = cleanup_batch_files(
                 client, files_to_delete, label=key,
             )
@@ -1891,18 +1914,15 @@ def _execute_units_batch(
             )
 
     def _proactive_sweep() -> None:
-        """Sweep orphaned files from Google File Storage.
+        """Concurrency-safe sweep of orphaned files.
 
-        Builds the 'active' set from batch_pending (files still needed
-        for in-flight jobs) and deletes everything else. Safe to call
-        at any point — will never touch files referenced by pending jobs.
+        Uses the shared file registry at ``registry_path`` to determine
+        which files are in use across all concurrent processes. Files
+        not in the registry and older than 5 minutes are deleted.
         """
-        active = {
-            v["uploaded_file_name"]
-            for v in batch_pending.values()
-            if "uploaded_file_name" in v
-        }
-        swept, freed = sweep_stale_files(client, active)
+        swept, freed = sweep_stale_files_safe(
+            client, registry_path,
+        )
         if verbose and swept:
             try:
                 remaining_count, remaining_gb = audit_file_storage(
@@ -2054,10 +2074,10 @@ def _execute_units_batch(
                     f"{pending_keys[:5]}"
                 )
 
-            # Periodic orphan cleanup — sweep every 10 poll cycles
-            # to prevent storage accumulation from failed
-            # per-completion deletions or concurrent processes
-            # sharing the same quota.
+            # Periodic orphan cleanup — now concurrency-safe via shared
+            # file registry. Sweeps every 10 poll cycles to prevent
+            # storage accumulation from failed per-completion deletions
+            # or crashed processes.
             sweep_cycle_counter += 1
             if sweep_cycle_counter % 10 == 0:
                 _proactive_sweep()

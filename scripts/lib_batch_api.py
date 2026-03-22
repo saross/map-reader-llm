@@ -244,6 +244,13 @@ def sweep_stale_files(
     """
     Delete files not in the active set — orphan cleanup.
 
+    .. deprecated::
+        Use :func:`sweep_stale_files_safe` instead. This function builds
+        the active set from a single process's ``batch_pending`` dict,
+        which causes 404 errors when multiple processes share the same
+        Google Files API account (each process sees other processes'
+        files as orphans).
+
     Lists all files via the Files API and deletes any whose name is
     not in ``active_file_names``. This cleans up files from previous
     runs, failed submissions, or downloaded-but-not-deleted outputs.
@@ -281,6 +288,100 @@ def sweep_stale_files(
 
     deleted, _errors = cleanup_batch_files(
         client, stale_names, label="sweep",
+    )
+    return deleted, freed_gb
+
+
+def sweep_stale_files_safe(
+    client: Any,
+    registry_path: Path,
+    grace_minutes: float = 5.0,
+) -> tuple[int, float]:
+    """
+    Concurrency-safe orphan cleanup using a shared file registry.
+
+    Safe to call from any process — uses the shared registry at
+    ``registry_path`` to determine which files are actively in use
+    across all concurrent processes. Files not in the registry and
+    older than ``grace_minutes`` are deleted.
+
+    The grace period covers the window between a file being uploaded
+    and being registered (typically < 1 second, but 5 minutes
+    provides a generous safety margin).
+
+    Args:
+        client: Initialised ``google.genai.Client``.
+        registry_path: Path to the shared ``.active_files.json``.
+        grace_minutes: Files younger than this are always preserved,
+            regardless of registry state. Default 5 minutes.
+
+    Returns:
+        Tuple of ``(deleted_count, freed_gb)``.
+    """
+    from datetime import datetime, timezone
+
+    from scripts.lib_file_registry import get_registered_files
+
+    # Get the set of files registered by all processes
+    try:
+        registered = get_registered_files(
+            registry_path, prune_stale=True,
+        )
+    except Exception as e:
+        logger.warning(
+            "Could not read file registry for sweep: %s", e,
+        )
+        return 0, 0.0
+
+    now = datetime.now(timezone.utc)
+    grace_seconds = grace_minutes * 60
+    stale_names: list[str] = []
+    stale_bytes = 0
+
+    try:
+        for f in client.files.list():
+            name = getattr(f, "name", "")
+            if not name:
+                continue
+
+            # Registered files are always preserved
+            if name in registered:
+                continue
+
+            # Recent files are preserved (grace period).
+            # Ensure timezone-aware comparison — API may return
+            # naive or aware datetimes depending on SDK version.
+            create_time = getattr(f, "create_time", None)
+            if create_time:
+                if create_time.tzinfo is None:
+                    create_time = create_time.replace(
+                        tzinfo=timezone.utc,
+                    )
+                age_seconds = (now - create_time).total_seconds()
+                if age_seconds < grace_seconds:
+                    continue
+
+            stale_names.append(name)
+            stale_bytes += getattr(f, "size_bytes", 0) or 0
+    except Exception as e:
+        logger.warning(
+            "Could not list files for safe sweep: %s", e,
+        )
+        return 0, 0.0
+
+    if not stale_names:
+        logger.info("Safe sweep: no stale files found")
+        return 0, 0.0
+
+    freed_gb = stale_bytes / (1024 ** 3)
+    logger.info(
+        "Safe sweep: found %d stale files (%.2f GB), "
+        "%d registered (protected), deleting...",
+        len(stale_names), freed_gb, len(registered),
+    )
+
+    deleted, _errors = cleanup_batch_files(
+        client, stale_names, label="safe-sweep",
     )
     return deleted, freed_gb
 
@@ -891,7 +992,19 @@ def parse_detections_to_geojson(
                 )
                 continue
 
-            ymin_n, xmin_n, ymax_n, xmax_n = box_coords
+            # Cast to float — Gemini occasionally returns string
+            # coordinates (e.g., "123" instead of 123) which would
+            # cause TypeError on the division below.
+            try:
+                ymin_n, xmin_n, ymax_n, xmax_n = [
+                    float(v) for v in box_coords
+                ]
+            except (ValueError, TypeError) as e:
+                logger.warning(
+                    "Non-numeric box_2d in %s: %s (%s)",
+                    tile_key, box_coords, e,
+                )
+                continue
             px_min_x = (xmin_n / 1000.0) * tile_size
             px_max_x = (xmax_n / 1000.0) * tile_size
             px_min_y = (ymin_n / 1000.0) * tile_size
