@@ -3826,3 +3826,100 @@ monitoring obligation that is not well-documented.
    partial-failure handling in the pipeline.
 
 ---
+
+## Observation 179: 384px tiles achieve new project-best F1 — the pilot was underpowered (2026-03-22)
+
+**Context**: Session 55. Full production 384px PV diagnostic experiment
+on 487 clean tiles (calibration areas excluded), with fair paired
+comparison against 512px results on the same geographic footprint.
+
+**Background**: The original H11 study (Observations 160–162, Session
+49–50) evaluated 384px tiles on the 60-tile validation set and
+concluded that "384 proposer-verifier does not improve F1" (Obs 161).
+The best 384px PV result was F1=0.682, well short of the 512px best
+(F1=0.732 corrected, F1=0.796 pre-correction). The 384px pathway was
+conditionally closed: "The recall advantage of smaller tiles is
+overwhelmed by the precision penalty of a denser false positive pool."
+
+**The production result contradicts the pilot conclusion.** On the
+full evaluation area (487 tiles, 435 reference mounds), 384px tiles
+with moderate consensus + PV achieve:
+
+| Configuration | F1 | P | R | Threshold |
+|:---|---:|---:|---:|---:|
+| 384px text 6-of-10 + PV | **0.883** | — | — | 0.20 |
+| 384px text 5-of-10 + PV | 0.881 | — | — | 0.15 |
+| 384px text 4-of-10 + PV | 0.867 | — | — | 0.20 |
+| 512px text 5-of-10 + PV | 0.831 | — | — | 0.15 |
+
+The **new project best is F1=0.883** (384px text 6-of-10 + PV),
+surpassing the previous best of F1=0.831 (512px text 5-of-10 + PV).
+
+**Fair paired comparison** (both evaluated on the 384px tile footprint,
+512px detections spatial-joined to 384px tile polygons for paired
+bootstrap):
+
+| Comparison | dF1 | 95% CI | p |
+|:---|---:|:---|---:|
+| Loose consensus (1-of-10) | +0.070 | [+0.018, +0.120] | 0.004 |
+| Goldilocks (5-of-10 vs 5-of-10) | +0.061 | [+0.021, +0.104] | 0.002 |
+| Best vs best (6-of-10 vs 5-of-10) | +0.063 | [+0.023, +0.106] | 0.002 |
+| Deterministic baseline (N=1 T=0.0) | +0.067 | [+0.020, +0.112] | 0.006 |
+| Image moderate consensus | +0.127 | [+0.077, +0.178] | 0.001 |
+| Image baseline (N=1 T=0.0) | +0.072 | [+0.018, +0.127] | 0.008 |
+
+384px significantly outperforms 512px in all six comparisons (p ≤ 0.008).
+Text track gains ~0.06–0.07 F1; image track gains ~0.07–0.13 F1.
+
+**Why the pilot missed this:**
+
+1. **Underpowered evaluation**: The 60-tile validation set contained
+   only 97 reference mounds. With a paired minimum detectable effect
+   (MDE) of ~0.09 F1, the pilot could not detect the +0.06 effect
+   that the production run reveals. The production set (487 tiles,
+   435 mounds) has an MDE of ~0.05, sufficient to detect this effect
+   with p=0.002.
+
+2. **Missing the consensus + PV combination**: The H11 pilot tested
+   384px with single-pass PV (572 candidates from one proposer run)
+   and 384px with consensus voting (N=5 and N=30, no PV). It never
+   tested **consensus + PV at 384px** — the combination that was
+   transformative at 512px (Obs 171). The pilot's conclusion that
+   "the denser candidate pool degrades verifier precision" was correct
+   for single-pass candidates, but consensus pre-filtering reduces the
+   candidate count to ~400 (from ~1,900 at 1-of-10), bringing it
+   within the verifier's effective operating range.
+
+3. **Evaluation scope artefact**: The pilot clipped 384px results to
+   the 512px geographic footprint (97 mounds in scope). The production
+   run evaluates on the full 384px footprint (435 mounds). This is
+   not the primary cause of the discrepancy — the fair paired
+   comparison above uses the same footprint for both — but it means
+   the pilot's precision estimates were distorted by edge effects from
+   the clipping.
+
+**The Goldilocks zone shifts at 384px**: At 512px, the optimal
+consensus for PV input is 3–5 of 10 (Obs 171). At 384px, the zone
+shifts slightly higher: 4–7 of 10 all achieve F1 > 0.86, with the
+peak at 6-of-10 (F1=0.883). This makes sense: 384px produces more
+candidates per consensus threshold, so a slightly stricter filter is
+needed to reach the verifier's precision sweet spot.
+
+**Practical implication**: The 384px PV pipeline uses 10 proposer
+passes × 487 tiles + 1 verifier pass × ~400 candidates = ~5,270
+API calls per evaluation run, compared to 10 × 340 + ~480 = ~3,880
+for the 512px equivalent. The 36% cost increase buys a +0.063 F1
+improvement (p=0.002). Whether this trade-off is worthwhile depends
+on the application's sensitivity to detection accuracy vs cost.
+
+**Methodological lesson**: The H11 experience illustrates the danger
+of closing a research pathway based on underpowered pilot data. The
+60-tile validation set was designed for rapid iteration during Phase 2
+parameter optimisation, where effects of 0.05–0.10 F1 are typical and
+detectable. For cross-tile-size comparisons — where the effect size is
+smaller and the evaluation footprint differs — the validation set lacks
+the statistical power to draw reliable conclusions. The production
+evaluation (487 tiles, 435 mounds) provides the power needed to detect
+a genuine +0.06 effect that the pilot could not see.
+
+---

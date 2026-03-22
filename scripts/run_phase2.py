@@ -2236,6 +2236,54 @@ def _patch_tiles_mode(
         )
     print(f"{'=' * 60}")
 
+    # ── Reconcile checkpoint with patched tiles ──────────────
+    # Units that were recorded as "failed" in the checkpoint may
+    # now be fully recovered. Move them to "completed" if their
+    # tiles.json shows 0 remaining failures.
+    checkpoint_path = output_dir / "checkpoint.json"
+    if checkpoint_path.exists():
+        checkpoint = json.load(open(checkpoint_path, encoding="utf-8"))
+        failed_entries = checkpoint.get("failed", [])
+        reconciled = 0
+
+        for entry in list(failed_entries):
+            unit_key = (
+                entry["unit"] if isinstance(entry, dict) else entry
+            )
+            # Find the tiles.json for this unit
+            unit_dir = output_dir / unit_key
+            tiles_files = list(unit_dir.glob("*.tiles.json"))
+            if not tiles_files:
+                continue
+
+            tiles_data = json.load(
+                open(tiles_files[0], encoding="utf-8"),
+            )
+            remaining_failures = len(
+                tiles_data.get("failed", []),
+            )
+
+            if remaining_failures == 0:
+                failed_entries.remove(entry)
+                if unit_key not in checkpoint.get("completed", []):
+                    checkpoint.setdefault("completed", []).append(
+                        unit_key,
+                    )
+                reconciled += 1
+
+        if reconciled > 0:
+            checkpoint["failed"] = failed_entries
+            save_checkpoint(checkpoint_path, checkpoint)
+            print(
+                f"\n  Checkpoint reconciled: {reconciled} unit(s) "
+                f"moved from failed → completed"
+            )
+            print(
+                f"  Now: {len(checkpoint.get('completed', []))} "
+                f"completed, "
+                f"{len(checkpoint.get('failed', []))} failed"
+            )
+
 
 def main() -> None:
     """Main entry point for Phase 2 OFAT runner."""

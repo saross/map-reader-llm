@@ -288,14 +288,17 @@ def generate_consensus_gdf(
     """
     total_passes = len(run_dirs)
 
-    # Load and deduplicate each run
+    # Load and deduplicate each run.
+    # Use parent/name as key to handle the case where multiple
+    # sub-conditions share the same run_N directory name
+    # (e.g., Phase 3c diversity: h9-A-p1/run_1, h9-A-p2/run_1).
     pass_detections: dict[str, list[dict]] = {}
     for run_dir in run_dirs:
-        run_name = run_dir.name
+        run_key = f"{run_dir.parent.name}/{run_dir.name}"
         features = load_run_detections(run_dir)
         if features:
             deduped = deduplicate_within_pass(features)
-            pass_detections[run_name] = deduped
+            pass_detections[run_key] = deduped
 
     if not pass_detections:
         return gpd.GeoDataFrame(
