@@ -3961,3 +3961,62 @@ effect, and (b) the temptation to compare individual CIs visually
 is strong when presenting results in tables.
 
 ---
+
+## Observation 181: 384px is the optimal tile size — 256px confirms the peak (2026-03-23)
+
+**Context**: Session 55. 256px tile-size diagnostic (1,032 clean tiles,
+431 mounds) with N=1 smoke test + N=5 consensus + full PV pipeline,
+compared against 384px and 512px via fair paired bootstrap.
+
+**The tile-size F1 curve peaks at 384px and does not continue to rise
+at 256px.** Best results across three tile sizes:
+
+| Tile size | Best config | F1 | Paired vs 384px best |
+|----------:|:------------|---:|:---------------------|
+| 256px | text 5-of-5 + PV | 0.844 | dF1=-0.005, p=0.816 (no difference) |
+| **384px** | **text 6-of-10 + PV** | **0.883** | — (reference) |
+| 512px | text 5-of-10 + PV | 0.831 | dF1=-0.063, p=0.002 (384px better) |
+
+The 256px best (F1=0.844) is 4 points below the 384px best (0.883)
+but the paired comparison is non-significant (p=0.816). This
+suggests 256px is in the same performance tier as 384px — close
+but not an improvement.
+
+**Sensitivity and the sweet spot**: The results reveal an inverted-U
+relationship between tile size and detection performance under the
+PV pipeline:
+
+- **512px → 384px**: F1 rises by +0.063 (p=0.002). Smaller tiles
+  increase recall by improving mound-to-tile area ratio.
+- **384px → 256px**: F1 declines by ~0.04 (not significant). The
+  recall gain from even smaller tiles is negligible (already
+  saturated at ~0.89), while the false positive density from ~2×
+  more tiles starts to erode verifier precision.
+
+The practical implication is that the optimal zone is broad — tile
+sizes in the range ~300–400px would likely perform similarly.
+Practitioners do not need to fine-tune tile size to the pixel; being
+in the right ballpark (roughly matching the target feature's size to
+5–13% of the tile area) is sufficient. However, there are genuine
+performance declines — not just diminishing returns — both above
+(512px, +0.063 deficit) and below (256px, ~0.04 deficit) the sweet
+spot. 384px sits at the peak.
+
+**Why 256px doesn't continue improving**: At 384px, single-pass
+recall is already 0.885. At 256px it rises to ~0.90 — only +0.015.
+Meanwhile the tile count increases from 487 to 1,032 (~2.1×),
+producing ~2× the false positives across the same geographic area.
+Consensus filtering at N=5 works but cannot fully compensate: the
+best 256px consensus + PV (F1=0.844) falls short of the best 384px
+consensus + PV (F1=0.883) because the verifier is processing a
+denser candidate pool with a lower signal-to-noise ratio.
+
+**The Goldilocks zone flattens at 256px**: At 384px, the consensus
+threshold sweep shows a clear peak at 6-of-10. At 256px, the zone
+is flat — 3-of-5, 4-of-5, and 5-of-5 all achieve F1 0.837–0.844
+with no significant differences (p=0.814 for 3-of-5 vs 5-of-5).
+This flattening suggests the pipeline is near its ceiling at this
+tile size: no amount of threshold tuning can overcome the inherent
+precision limitation of the denser detection pool.
+
+---

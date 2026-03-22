@@ -1,0 +1,54 @@
+# H11: 256px PV Diagnostic — Text Track N=5
+# ============================================
+# Runs 5 text-only proposer passes at T=0.7 on the full 256px evaluation area.
+# Post-hoc consensus at 1-of-5 through 5-of-5, each fed through PV verifier.
+#
+# Only launched if the N=1 smoke test passes the gate (F1 >= 0.75).
+#
+# Part of the 256px PV diagnostic experiment set.
+# See planning/h11-256-pv-diagnostic.md for full design.
+
+study:
+  name: "H11: 256px PV Diagnostic — Text N=5"
+  version: "1.0"
+  description: |
+    5 text-only proposer passes at T=0.7 on the full 256px evaluation area
+    (1032 tiles). Post-hoc consensus sweep at all thresholds (1-of-5 through
+    5-of-5), each fed through the PV pipeline.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-23"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 3a — text-only optimal; T=0.7 for consensus diversity"
+
+inputs:
+  manifest: "inputs/tiles_256/full_evaluation_manifest.json"
+  tile_size: 256
+  tiles_dir: "inputs/tiles_256"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/256/full_evaluation_bounds.geojson"
+  evaluation_bounds: "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 5
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-256/text-n5"
+
+conditions:
+- name: text-t0.7
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.7
+  description: "Text-only proposer, T=0.7, minimal thinking"
+
+estimates:
+  tiles: 1032
+  runs: 5
+  total_execution_units: 5
+  tiles_per_unit: 1032
+  total_api_calls: 5160
+  cost_per_call_usd: 0.001
+  cost_batch_discount: 0.5
+  cost_usd_total: 2.58

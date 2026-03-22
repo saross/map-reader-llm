@@ -1,0 +1,53 @@
+# H11: 256px PV Diagnostic — Text Baseline (N=1, T=0.0)
+# ======================================================
+# Single deterministic text-only proposer pass on the full 256px evaluation area.
+# Smoke test — run first to validate pipeline and gate the N=5 run.
+#
+# Part of the 256px PV diagnostic experiment set.
+# See planning/h11-256-pv-diagnostic.md for full design.
+
+study:
+  name: "H11: 256px PV Diagnostic — Text Baseline"
+  version: "1.0"
+  description: |
+    Single deterministic text-only proposer pass (T=0.0) on the full 256px
+    evaluation area (1032 tiles, calibration areas excluded). Fed through
+    PV verifier. Smoke test — if N=1 + PV F1 < 0.75, the 256px pathway
+    is unlikely to beat 384px best (F1=0.883) and we stop.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-23"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2 — best single-pass (T=0.0 deterministic)"
+
+inputs:
+  manifest: "inputs/tiles_256/full_evaluation_manifest.json"
+  tile_size: 256
+  tiles_dir: "inputs/tiles_256"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/256/full_evaluation_bounds.geojson"
+  evaluation_bounds: "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 1
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-256/text-baseline"
+
+conditions:
+- name: text-t0.0
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.0
+  description: "Text-only proposer, T=0.0, deterministic single-pass baseline"
+
+estimates:
+  tiles: 1032
+  runs: 1
+  total_execution_units: 1
+  tiles_per_unit: 1032
+  total_api_calls: 1032
+  cost_per_call_usd: 0.001
+  cost_batch_discount: 0.5
+  cost_usd_total: 0.52
