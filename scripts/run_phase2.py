@@ -843,7 +843,7 @@ def run_phase2(
     mode: str = "concurrent",
     max_batch_jobs: int = 50,
     poll_interval: int = 30,
-    max_poll_hours: float = 25.0,
+    max_poll_hours: float = 72.0,
     token_quota: int = DEFAULT_BATCH_TOKEN_QUOTA,
 ) -> dict:
     """
@@ -1307,7 +1307,7 @@ def _execute_units_batch(
     verbose: bool,
     max_batch_jobs: int = 50,
     poll_interval: int = 30,
-    max_poll_hours: float = 25.0,
+    max_poll_hours: float = 72.0,
     token_quota: int = DEFAULT_BATCH_TOKEN_QUOTA,
 ) -> tuple[dict, float]:
     """
@@ -2435,9 +2435,9 @@ Examples:
     parser.add_argument(
         "--max-poll-hours",
         type=float,
-        default=25.0,
+        default=72.0,
         help=(
-            "Maximum hours to poll before timing out (default: 25). "
+            "Maximum hours to poll before timing out (default: 72). "
             "Pending jobs remain in checkpoint for future --resume."
         ),
     )
