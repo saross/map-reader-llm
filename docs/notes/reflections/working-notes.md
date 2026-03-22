@@ -3923,3 +3923,41 @@ evaluation (487 tiles, 435 mounds) provides the power needed to detect
 a genuine +0.06 effect that the pilot could not see.
 
 ---
+
+## Observation 180: Paired tests are necessary for cross-tile-size comparisons — unpaired CIs mislead (2026-03-22)
+
+**Context**: Session 55. Comparing 384px and 512px PV results using
+both unpaired bootstrap CIs and paired bootstrap effect sizes.
+
+**The unpaired view**: Every 384px configuration's individual 95% CI
+overlaps with the 512px best CI (F1=0.831 [0.789, 0.870]). Even the
+384px project-best (F1=0.883 [0.857, 0.908]) overlaps. An unpaired
+analysis would conclude "no significant difference" between tile sizes.
+
+**The paired view**: Using the same 487-tile footprint for both
+conditions, with 512px detections spatial-joined to 384px tile
+polygons for paired bootstrap resampling, all six comparisons are
+significant (p ≤ 0.008) with consistent +0.06–0.13 F1 effects.
+
+The discrepancy arises because individual CIs are wide (~±0.025)
+due to tile-level variance — some tiles are easy (many mounds, few
+confusables), others are hard. This variance inflates both CIs
+equally, making them overlap. The paired test subtracts it out: for
+each bootstrap sample, the same tiles are drawn for both conditions,
+so the tile difficulty cancels and only the tile-size effect remains.
+
+**Methodological implication for the paper**: Cross-condition
+comparisons in this project should always use paired bootstrap on
+shared spatial units. Reporting overlapping individual CIs as evidence
+of "no difference" would be a Type II error. This is especially
+important for tile-size comparisons where the effect (+0.06 F1) is
+real but smaller than the per-tile variance (~0.15 F1 SD across
+tiles).
+
+This is a standard statistical point (paired t-tests are more
+powerful than unpaired), but it has specific bite here because:
+(a) the tile-level variance is large relative to the treatment
+effect, and (b) the temptation to compare individual CIs visually
+is strong when presenting results in tables.
+
+---
