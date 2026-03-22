@@ -204,7 +204,7 @@ class TestLoadStudyConfig:
         path = _write_yaml(config)
 
         try:
-            with pytest.raises(ValueError, match="Missing required section"):
+            with pytest.raises(ValueError, match="factors.*conditions"):
                 load_study_config(path)
         finally:
             path.unlink()

@@ -3778,4 +3778,51 @@ significantly (Phase 2b results show T=0.0 optimal for minimal
 thinking). The temperature insensitivity is an emergent property of
 large-N consensus, not an inherent property of the model.
 
+## Observation 178: Gemini Batch API is not "set and forget" (2026-03-22)
+
+Operational experience across ~1,650 execution units reveals a ~9.4%
+unit failure rate and consistent need for manual intervention:
+
+**Failure breakdown**:
+
+- 76 units (4.6%): partial failure from truncated JSON — the model's
+  output was cut off mid-response, producing unparseable JSON. This
+  occurs at ~5% of tiles within affected units, independent of
+  temperature or thinking level. It appears to be a server-side
+  output truncation issue, not a prompt or parameter problem.
+- 45 units (2.7%): exit code 2 — script-level errors, mostly from
+  early development iterations.
+- 18 units (1.1%): timeout — batch jobs did not complete within the
+  polling window. Google's documentation suggests 24-hour resolution
+  but this is aspirational; some jobs take longer.
+- 16 units (1.0%): exit code 1 — miscellaneous script errors.
+
+**Process death**: The Phase 3c Track 2 orchestration process died at
+84/100 units due to an unhandled exception in the polling loop. The
+outer exception handler only caught `TimeoutError` and
+`KeyboardInterrupt`, allowing other exceptions to crash without saving
+the checkpoint. Track 1 (image) ran continuously through the same
+period, confirming this was a process-level failure. Recovery required
+manual `--resume`, which retrieved 5 completed jobs that had been
+sitting in Google's queue for ~18 hours.
+
+**48-hour retention window**: Batch API results (output files) are
+stored in the Google Files API with a 48-hour auto-expiry. If the
+orchestration process dies and is not restarted within this window,
+completed results are lost and must be re-run. This creates a
+monitoring obligation that is not well-documented.
+
+**Practical guidance for future users**:
+
+1. The Batch API requires active monitoring — check running processes
+   at least daily, especially for multi-day runs.
+2. Build resilient polling loops with catch-all exception handlers
+   that save checkpoints before crashing.
+3. Use `--resume` promptly after process death — results expire.
+4. Budget for ~10% unit failure rate requiring `--resume` or
+   `--patch` reruns.
+5. The per-tile JSON truncation rate (~5%) is a background failure
+   mode that cannot be eliminated by parameter tuning — plan for
+   partial-failure handling in the pipeline.
+
 ---

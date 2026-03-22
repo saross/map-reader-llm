@@ -1963,32 +1963,36 @@ def _execute_units_batch(
             for key, job_name in list(in_flight.items()):
                 try:
                     job = client.batches.get(name=job_name)
+
+                    state_name = getattr(
+                        job.state, "name",
+                        str(job.state),
+                    ).upper()
+
+                    terminal_states = {
+                        "JOB_STATE_SUCCEEDED",
+                        "JOB_STATE_FAILED",
+                        "JOB_STATE_CANCELLED",
+                        "SUCCEEDED", "FAILED", "CANCELLED",
+                    }
+
+                    if state_name in terminal_states:
+                        logger.info(
+                            "Batch job %s (%s) reached: %s",
+                            job_name, key, state_name,
+                        )
+                        _handle_completion(key, job_name, job)
                 except Exception as e:
+                    # Catch transient API errors, malformed job
+                    # responses, and unexpected state values.
+                    # Log and continue polling — the job will be
+                    # re-queried on the next cycle.
                     logger.warning(
-                        "Transient error polling %s (%s), "
-                        "will retry: %s",
+                        "Error polling/processing %s (%s), "
+                        "will retry next cycle: %s",
                         job_name, key, e,
                     )
                     continue
-
-                state_name = getattr(
-                    job.state, "name",
-                    str(job.state),
-                ).upper()
-
-                terminal_states = {
-                    "JOB_STATE_SUCCEEDED",
-                    "JOB_STATE_FAILED",
-                    "JOB_STATE_CANCELLED",
-                    "SUCCEEDED", "FAILED", "CANCELLED",
-                }
-
-                if state_name in terminal_states:
-                    logger.info(
-                        "Batch job %s (%s) reached: %s",
-                        job_name, key, state_name,
-                    )
-                    _handle_completion(key, job_name, job)
 
             # Submit more if both job count and token budget allow
             newly_submitted = 0
@@ -2020,18 +2024,25 @@ def _execute_units_batch(
             if not in_flight and not submission_queue:
                 break
 
-            # Progress report
+            # Progress report — wrapped to prevent non-fatal
+            # formatting errors from crashing the polling loop.
             elapsed = time.monotonic() - loop_start
-            if verbose:
-                hours = elapsed / 3600
-                print(
-                    f"  ... {n_completed}/{total_units} "
-                    f"complete, {len(in_flight)} in flight, "
-                    f"{len(submission_queue)} queued "
-                    f"({hours:.1f}h elapsed) "
-                    f"[tokens: {token_ledger.current_enqueued:,}"
-                    f"/{token_ledger.quota:,}]",
-                    flush=True,
+            try:
+                if verbose:
+                    hours = elapsed / 3600
+                    print(
+                        f"  ... {n_completed}/{total_units} "
+                        f"complete, {len(in_flight)} in flight, "
+                        f"{len(submission_queue)} queued "
+                        f"({hours:.1f}h elapsed) "
+                        f"[tokens: "
+                        f"{token_ledger.current_enqueued:,}"
+                        f"/{token_ledger.quota:,}]",
+                        flush=True,
+                    )
+            except Exception as e:
+                logger.debug(
+                    "Progress reporting error (non-fatal): %s", e,
                 )
 
             # Timeout check
@@ -2074,6 +2085,24 @@ def _execute_units_batch(
         )
         checkpoint["batch_pending"] = batch_pending
         save_checkpoint(checkpoint_path, checkpoint)
+    except Exception as e:
+        # Catch-all for unexpected errors (RuntimeError,
+        # ValueError, AttributeError, etc.) that would otherwise
+        # crash without saving the checkpoint. Saves state so
+        # --resume can recover, then re-raises for visibility.
+        logger.error(
+            "Unexpected error in batch loop: %s", e,
+            exc_info=True,
+        )
+        if verbose:
+            print(f"\n  UNEXPECTED ERROR: {e}")
+            print(
+                "  Checkpoint saved. Re-run with --resume "
+                "to continue."
+            )
+        checkpoint["batch_pending"] = batch_pending
+        save_checkpoint(checkpoint_path, checkpoint)
+        raise
 
     # Final sweep — best-effort cleanup of any orphaned files.
     # This catches files from: (a) failed per-completion deletions,

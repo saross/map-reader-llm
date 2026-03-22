@@ -1,0 +1,64 @@
+# H11: 384px PV Diagnostic — Text Baseline (N=1, T=0.0)
+# ======================================================
+# Single deterministic text-only proposer pass on the full 384px evaluation area.
+# Serves as the smoke test (run first) and comparison anchor for all other configs.
+#
+# Part of the 384px PV diagnostic experiment set (4 configs total).
+# See planning/h11-384-pv-diagnostic.md for full design.
+
+study:
+  name: "H11: 384px PV Diagnostic — Text Baseline"
+  version: "1.0"
+  description: |
+    Single deterministic text-only proposer pass (T=0.0) on the full 384px
+    evaluation area (611 tiles). Fed directly through PV verifier (no consensus).
+    Smoke test config — run first to validate the full pipeline before
+    committing to the more expensive multi-run configs.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-21"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2 — best single-pass (T=0.0 deterministic)"
+
+inputs:
+  manifest: "inputs/tiles_384/full_evaluation_manifest.json"
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+  evaluation_bounds: "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 1
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-384/text-baseline"
+
+conditions:
+- name: text-t0.0
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.0
+  description: "Text-only proposer, T=0.0, deterministic single-pass baseline"
+
+estimates:
+  tiles: 611
+  runs: 1
+  total_execution_units: 1
+  tiles_per_unit: 611
+  total_api_calls: 611
+  cost_per_call_usd: 0.001
+  cost_batch_discount: 0.5
+  cost_usd_total: 0.31
+
+analysis:
+  method: "pv_evaluation"
+  description: |
+    Single-pass proposer output fed directly through crop extraction + PV
+    verifier. Bootstrap CI evaluation against ground truth. Comparison
+    anchor for all other configs.
+  metrics:
+  - "f1"
+  - "precision"
+  - "recall"
