@@ -4020,3 +4020,29 @@ tile size: no amount of threshold tuning can overcome the inherent
 precision limitation of the denser detection pool.
 
 ---
+
+## Observation 182: Audit bug fixes had negligible impact on pairwise results (2026-03-23)
+
+**Context**: Session 55. The code audit (commit `db7745f`) fixed two
+bugs that could have affected pairwise comparisons: (1) consensus.json
+key mismatch (scripts read `"results"` but producer writes `"consensus"`,
+making consensus override dead code), and (2) deduplication algorithm
+divergence (O(N²) greedy vs cKDTree). All 52 pairwise comparisons were
+re-run with corrected code (v2) and compared to the original results (v1).
+
+**Result**: No comparison changed by more than 0.0018 F1. Mean absolute
+change was 0.0008. Zero significance conclusions flipped. Two duplicate
+Group H comparisons were removed (audit finding #7), reducing the total
+from 54 to 52.
+
+**Interpretation**: The bugs were real but did not affect the specific
+data paths exercised by these comparisons. The consensus.json key
+mismatch only matters when both `consensus.json` and `probabilities.json`
+exist for the same config — likely not the case for the Phase 2 PV
+results that dominate Groups A–G. The deduplication divergence produced
+near-identical clusters at the 20m threshold used throughout.
+
+**Conclusion**: All previously reported pairwise results remain valid.
+No retractions or corrections needed.
+
+---
