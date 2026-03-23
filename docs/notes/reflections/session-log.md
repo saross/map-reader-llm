@@ -2990,3 +2990,46 @@ Built the complete dual-mode Proposer-Verifier pipeline from library through orc
 ---
 
 *New session entries should be appended above this line.*
+
+## Session 55 — 2026-03-21/23 (map-reader-llm): 384px tile-size breakthrough, 256px diagnostic, infrastructure hardening
+
+### Overview
+
+Extended session spanning three days. Managed in-flight batch runs (Phase 3c Tracks 1+2), discovered 384px tiles produce a new project-best F1=0.883 (+0.063 over 512px, p=0.002), confirmed with 256px diagnostic that 384px is optimal (inverted-U curve). Significant infrastructure work: code audit integration, file storage concurrency fix, polling resilience, and 306 accumulated failed tiles recovered.
+
+### Accomplishments
+
+1. **Batch API management** — swept 116 orphaned files (15.3 GB), resumed crashed processes, patched 306 failed tiles across all runs, increased max_poll_hours from 25 → 72
+2. **Code audit integration** — reviewed 22-finding audit from parallel session, built on fixes (proactive sweep, polling resilience, catch-all exception handler)
+3. **Concurrency-safe file registry** — `lib_file_registry.py` with `fcntl.flock` locking, atomic writes, 48h stale entry pruning. Replaced per-process sweep that caused 404 race conditions
+4. **384px diagnostic** — 4 proposer configs (487 clean tiles), 17 PV verification runs, full threshold sweeps. New project best: text 6-of-10 + PV F1=0.883
+5. **Fair paired comparison methodology** — spatial-join 512px detections to 384px tile polygons for truly paired bootstrap. All 6 comparisons significant (p ≤ 0.008)
+6. **256px diagnostic** — 1,032 clean tiles, N=1 smoke test + N=5 consensus + PV. Best F1=0.844. Confirms inverted-U peaking at 384px
+7. **Phase 3c Track 2 complete** (100/100) — diversity adds nothing (all p > 0.44), 9 pairwise comparisons
+8. **Pairwise re-run** — 52 comparisons with corrected code (v2). Max change 0.0018 F1; no conclusions affected
+9. **Phase 3c diversity pairwise** — 9 new comparisons confirming null result for H9
+10. **Observations 178–182** — Batch API operations, 384px superiority, paired test methodology, 256px peak confirmation, audit impact assessment
+
+### Key Results
+
+| Configuration | F1 | Context |
+|---|---|---|
+| **384px text 6-of-10 + PV** | **0.883** | New project best |
+| 384px text 5-of-10 + PV | 0.881 | |
+| 256px text 5-of-5 + PV | 0.844 | Below 384px (p=0.816) |
+| 512px text 5-of-10 + PV | 0.831 | Below 384px (p=0.002) |
+
+### Issues Found
+
+- Proactive sweep race condition (files deleted by concurrent processes) → fixed with shared registry
+- 25-hour poll timeout misidentified as process crash → increased to 72h
+- `box_2d` string coordinates from Gemini API → float cast added
+- `generate_consensus_gdf` key collision with shared run names → parent/name key
+- `calculate_f1_internal` return order (P, R, F1) misread as (F1, P, R) → caught by user
+
+### Pending
+
+- Phase 3c Track 1 image: 74/125 (will need 1 more --resume after 25h timeout)
+- Phase 3c Track 1 analysis + pairwise comparisons
+- FDR correction (blocked on Track 1)
+- Phase 4 (H6 Flash→Pro transfer): not started

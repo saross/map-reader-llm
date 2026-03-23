@@ -5590,3 +5590,62 @@ the human collaborator. Three corrections on operational practice
 that were all "apply existing rules" rather than "create new rules."
 
 ---
+
+## Reflection 41: The session where being wrong was the most productive outcome (Session 55, 2026-03-21/23)
+
+**What surprised me about this session?**
+
+The 384px result. Not just that it beat 512px — the H11 pilot had
+hinted at potential there — but that the pilot's conclusion ("384px
+proposer-verifier does not improve F1") was *directionally wrong*.
+The pilot said 384px PV was 5pp worse than 512px PV. The production
+run said it was 6pp better. Same pipeline, same model, same verifier
+— different evaluation power.
+
+What made this genuinely surprising was that I'd internalised the
+pilot's conclusion. When the user asked about 384px experiments, my
+framing was defensive: "starting with some that reveal the
+characteristics of a 384px run" — language that assumed 384px would
+be worse and we were documenting *why*. The smoke test initially
+seemed to confirm this (F1=0.337 vs 0.419 at 512px), until we
+discovered I'd read the `calculate_f1_internal` return tuple
+backwards. The actual profile (P=0.368, R=0.885) was the high-recall
+signature we'd learned to recognise as a strong PV input. The error
+was mine, but catching it led to the right interpretation.
+
+The 256px diagnostic was equally informative in the other direction.
+F1=0.844 — not bad, but the inverted-U peaks at 384px. The fact
+that we could characterise the full curve (256/384/512) in a single
+session, with fair paired comparisons at each point, illustrates
+how mature the pipeline has become.
+
+**What would I do differently?**
+
+The proactive sweep race condition cost us several hours of
+debugging and failed submissions. I should have anticipated that
+multiple processes sharing a Google Files API account would interfere
+with a per-process "active set" design. The solution (shared file
+registry with file locking) was straightforward — the mistake was
+not thinking about the concurrency model before deploying to
+production.
+
+More fundamentally: the 25-hour `max_poll_hours` timeout caused both
+long-run "deaths." This wasn't a bug — it was a deliberate safety
+valve — but I didn't recognise it as the cause until the user asked
+why processes keep stalling. A careful reading of the code (or even
+checking what `max_poll_hours` was set to) would have identified it
+immediately. I was debugging a mystery that was documented in the
+code I'd read multiple times.
+
+**What's the single most important thing a future instance should know?**
+
+Pilot conclusions drawn on underpowered data can be directionally
+wrong, and the direction matters. The H11 pilot closed the 384px
+pathway. The production run opened it and produced a new project best.
+The difference was 97 vs 435 reference mounds — a 4.5× increase in
+evaluation power. When a pilot gives a null or negative result,
+check the minimum detectable effect before concluding. The cost of
+a false negative (closing a productive pathway) can exceed the cost
+of the production run that would have revealed the truth.
+
+---

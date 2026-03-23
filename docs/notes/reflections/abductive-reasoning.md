@@ -2417,3 +2417,55 @@ obvious when applied to VLM detection pipelines.
 
 *Last updated: 2026-03-21 (Session 54 — PV inverts the thinking-
 level recommendation, second-order belief revision)*
+
+## Session 55 — 2026-03-21/23 (map-reader-llm): When the pilot's conclusion was directionally wrong
+
+**Trigger**: The production 384px PV experiment contradicted the H11
+pilot's conclusion. The pilot (60 tiles, 97 mounds) found 384px PV
+F1=0.682, well below 512px PV F1=0.732, leading to "384 pathway
+conditionally closed." The production run (487 tiles, 435 mounds)
+found 384px PV F1=0.883, significantly *above* 512px PV F1=0.831
+(p=0.002).
+
+**Prior belief**: Smaller tiles increase recall but the quadratic
+false positive increase overwhelms the verifier, producing a net
+F1 decline. Based on: H11 pilot data (Sessions 49–50), Observations
+160–162, multiple verifier strategies all falling 5pp short.
+
+**Surprising fact**: 384px text 6-of-10 + PV achieves F1=0.883 —
+a new project best, beating the 512px configuration by +0.063. The
+effect is consistent across all six paired comparisons (p ≤ 0.008).
+
+**Abductive sequence**:
+
+1. The pilot tested single-pass PV (one proposer run → verifier) and
+   consensus without PV (N=5/30 voting → no verifier). It never
+   tested **consensus + PV** — the combination that was transformative
+   at 512px (Obs 171). The single-pass PV result was genuinely poor
+   (F1=0.682) because 572 unfiltered candidates overwhelmed the
+   verifier. Consensus pre-filtering reduces the candidate count to
+   ~400, bringing it within the verifier's effective operating range.
+
+2. The pilot's evaluation used 97 reference mounds (MDE ~0.09).
+   The actual effect (+0.063) was below the MDE — literally
+   undetectable. The pilot's null result was a power failure, not
+   a genuine null.
+
+3. The evaluation scope (clipping 384px detections to 512px bounds)
+   introduced edge effects that distorted precision estimates. The
+   production evaluation on the full 384px footprint eliminated this
+   artefact.
+
+**Belief revision**: Tile size interacts with the PV pipeline in
+ways that single-stage evaluation cannot predict. The pilot's
+conclusion was based on valid data from an incomplete experimental
+design and an underpowered evaluation. The general lesson: closing
+a research pathway based on pilot data requires confirming that the
+pilot tested the relevant combinations and had sufficient power.
+
+**Confidence calibration**: The prior was held with moderate
+confidence (multiple data points, consistent across strategies).
+The revision is held with high confidence (435 mounds, 6 paired
+comparisons, p ≤ 0.008 for all). The 256px diagnostic further
+strengthens the revision by confirming the inverted-U — 384px is
+not just better than 512px, it's the peak.
