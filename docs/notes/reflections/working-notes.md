@@ -4046,3 +4046,114 @@ near-identical clusters at the 20m threshold used throughout.
 No retractions or corrections needed.
 
 ---
+
+## Observation 183: Gemini 3.1 Pro MEDIUM single-pass underperforms Flash MINIMAL (2026-03-24)
+
+**Context**: Session 56. Ran the first Gemini 3.1 Pro experiments on this
+project — single-pass baseline comparisons at 384px with and without the
+PV verifier. The preregistration (§8.2) specifies `thinking_level=minimal`
+for Pro, but 3.1 Pro does not support MINIMAL (see Obs 185). MEDIUM is
+its lowest available thinking level.
+
+**Result**: Full Flash × Pro comparison matrix (single-run, T=0.0, 384px):
+
+| Proposer | Verifier | Text F1 | Image F1 |
+|----------|----------|---------|----------|
+| Flash (MINIMAL) | Flash | **0.813** | **0.716** |
+| 3.1 Pro (MEDIUM) | Flash | 0.774 | 0.620 |
+| Flash (MINIMAL) | 3.1 Pro | **0.825** | **0.730** |
+| 3.1 Pro (MEDIUM) | 3.1 Pro | 0.784 | 0.628 |
+
+**Key findings**:
+
+- **Pro proposer consistently degrades F1**: text -0.039 to -0.041,
+  image -0.096 to -0.102. The effect is larger for image track.
+- **Pro verifier marginally helps**: +0.010 to +0.014 for text,
+  +0.008 to +0.014 for image. Proposer effect dominates.
+- Pro generates **fewer raw detections** (430 text, 519 image) than
+  Flash (1,047 text, 746 image), suggesting higher proposer precision
+  but much lower recall.
+
+**Interpretation**: The MEDIUM thinking requirement is the most likely
+explanation. Our prior work (§8.9, Obs 168) established that extended
+reasoning degrades visual pattern matching — the model either recognises
+the mound symbol or it doesn't. MEDIUM thinking introduces a reasoning
+overhead that the single-pass detection task does not benefit from. This
+is consistent with findings from other groups working on handwriting
+recognition with similar models. The higher-capability model may also be
+more conservative in its detections, trading recall for precision in a
+way that hurts F1. N=5 consensus runs with HIGH thinking (now in
+progress) will test whether the consistency benefit of extended reasoning
+compensates for the per-pass recall loss at strict consensus thresholds.
+
+---
+
+## Observation 184: N=5 vs N=10 pool size — dramatic impact on PV pipeline (2026-03-24)
+
+**Context**: Session 56. Derived N=5 text consensus from existing N=10
+proposer data at 384px and ran the full PV pipeline. Also completed the
+image N=10 PV pipeline (proposer runs 6–10 completed, verifier run on
+1-of-10 union, threshold results derived).
+
+**Result**:
+
+| Track | N=5 best + PV | N=10 best + PV | Delta |
+|-------|--------------|----------------|-------|
+| Text | 0.600 (2-of-5) | 0.883 (6-of-10) | **+0.283** |
+| Image | 0.771 (3-of-5) | 0.789 (6-of-10) | +0.018 |
+
+**Key findings**:
+
+- Pool size matters **dramatically** for text: the N=10 union discovers
+  far more true positives across 10 runs than N=5 does across 5 (recall
+  ceiling ~0.89 vs ~0.48 at the union level).
+- Image shows a much smaller N=5→N=10 gain (+0.018), suggesting the
+  image proposer's per-run recall is already near its ceiling — additional
+  runs contribute diminishing returns.
+- The cost-saving "union verifier" approach worked correctly: running
+  the verifier once on the 1-of-10 union and deriving all 10 threshold
+  conditions from the single run (via `derive_vote_threshold_results.py`)
+  saved ~80% of verifier API calls.
+
+**Interpretation**: For the text track, N=10 is not optional — N=5 is
+far below the performance frontier. For image, N=5 is a viable budget
+option with only a 0.018 F1 cost. This asymmetry likely reflects the
+text modality's higher variance in what each run detects — individual
+text-only runs miss different mounds, so more runs are needed to build
+a comprehensive union. Image runs, with their richer visual context,
+converge faster.
+
+---
+
+## Observation 185: Gemini 3.1 Pro silent batch failure on MINIMAL thinking (2026-03-24)
+
+**Context**: Session 56. First attempt to run Gemini 3.1 Pro proposer
+via the Batch API failed silently — all 487 tiles returned empty
+detections with no error messages in the batch results.
+
+**Failure mode**: The Batch API accepted the JSONL, processed it, and
+returned results — but every response was empty. The only signal was
+`partial_failure_487_tiles` in the checkpoint status. A diagnostic
+real-time API call revealed the actual error: `"Thinking level MINIMAL
+is not supported for this model. Please retry with other thinking
+level."` This error was suppressed in the Batch API response format.
+
+**Root cause**: The prompt configs (`detect_brief-text.json`,
+`library_plus-hp.json`) and the verifier config
+(`verify_adversarial-text.json`) all specify `thinking_level: minimal`,
+which Gemini 3 Flash supports but Gemini 3.1 Pro does not. The lowest
+supported level for 3.1 Pro is MEDIUM.
+
+**Fix**: Added `--thinking-level` CLI override to both `run_phase2.py`
+(via `thinking_level:` in study YAML conditions) and `run_pv.py verify`
+(via `--thinking-level` flag). Also fixed a bug in `extract_conditions()`
+where the pre-enumerated conditions code path (the `conditions:` YAML
+structure used by H11 studies) did not propagate `thinking_level` to the
+execution unit dict — only the OFAT factors path did.
+
+**Lesson**: When switching models, verify which thinking levels the
+target model supports **before committing API spend**. Batch API errors
+can be silent — test with a single real-time call first. This has been
+recorded in the project's protocol errata (E40) and memory system.
+
+---
