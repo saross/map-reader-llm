@@ -2991,6 +2991,39 @@ Built the complete dual-mode Proposer-Verifier pipeline from library through orc
 
 *New session entries should be appended above this line.*
 
+## Session 56 — 2026-03-23/24 (map-reader-llm): Gemini 3.1 Pro pilot, HIGH thinking consensus, temperature bug discovery
+
+### Overview
+
+First Gemini 3.1 Pro experiments on this project. Ran a full Flash × Pro comparison matrix (single-pass + PV, 8 conditions) and N=5 consensus comparisons with HIGH thinking. Key finding: HIGH thinking is the dominant factor for consensus performance (p<0.0001), not the model — Pro adds nothing beyond Flash HIGH (p=0.874). Discovered a temperature propagation bug affecting 30 runs of historical data and a silent batch failure mode in Gemini 3.1 Pro. Significant infrastructure work: `--model`, `--thinking-level`, and `--bounds` CLI overrides for cross-model experiments.
+
+### Key results
+
+- Pro MEDIUM single-pass underperforms Flash MINIMAL: text -0.039, image -0.096
+- Pro HIGH text N=5 simple consensus F1=0.849 (approaching Flash N=10+PV champion 0.883)
+- Flash HIGH text N=5 simple consensus F1=0.776 (+0.132 over MINIMAL)
+- Pairwise: Flash HIGH vs MINIMAL text p<0.0001; Pro HIGH vs Flash HIGH p=0.874 (ns)
+- Image N=10+PV: best 6-of-10 F1=0.789; text N=5+PV: best 2-of-5 F1=0.600
+
+### Issues found
+
+- Gemini 3.1 Pro rejects MINIMAL thinking silently in batch mode (E40)
+- `extract_conditions()` dropped `thinking_level` for pre-enumerated conditions
+- consensus-384 text runs used T=1.0 not T=0.7 (10-day-old bug in temperature propagation)
+- `evaluate_pv_results.py` and `paired_permutation_consensus.py` hardcoded 512px bounds
+- Bootstrap evaluations run on local machine during live presentation (sapphire policy)
+
+### Pending (next session)
+
+- Analyse completed batch runs (consensus sweeps, PV pipeline, pairwise comparisons)
+- Flash HIGH text N=30 and Flash MINIMAL text N=30 T=0.7 (in flight)
+- Phase 3c H9 diversity Track 1 completion + analysis
+- T=0.7 vs T=1.0 comparison (unexpected data from temperature bug)
+- Comprehensive run audit against preregistration
+- 512px PV pipeline (low priority)
+
+---
+
 ## Session 55 — 2026-03-21/23 (map-reader-llm): 384px tile-size breakthrough, 256px diagnostic, infrastructure hardening
 
 ### Overview

@@ -2469,3 +2469,52 @@ The revision is held with high confidence (435 mounds, 6 paired
 comparisons, p ≤ 0.008 for all). The 256px diagnostic further
 strengthens the revision by confirming the inverted-U — 384px is
 not just better than 512px, it's the peak.
+
+---
+
+## Session 56 — 2026-03-24 (map-reader-llm): The model matters less than the thinking budget
+
+**Surprising fact**: Gemini 3.1 Pro — a model with "2.5× stronger
+abstract reasoning" than its predecessor — performed *worse* than
+Gemini 3 Flash on single-pass mound detection (text F1 0.774 vs
+0.813), yet achieved F1=0.849 on N=5 consensus, nearly matching
+Flash's best N=10 + PV result (0.883). The pairwise test between
+Pro HIGH and Flash HIGH consensus was non-significant (p=0.874).
+
+**Prior belief**: A more capable model should detect mound symbols
+at least as well as a less capable one, given identical prompts and
+evaluation. The preregistration (§8.9) tested thinking levels and
+concluded MINIMAL was optimal, but this was only for single-pass
+detection. The implicit assumption was that model capability and
+thinking budget were independent axes.
+
+**Probe**: The comparison matrix isolated the variables:
+- Pro MEDIUM single-pass vs Flash MINIMAL single-pass (model + thinking)
+- Flash HIGH consensus vs Flash MINIMAL consensus (thinking only)
+- Pro HIGH consensus vs Flash HIGH consensus (model only, at matched thinking)
+
+**Belief revision**: For visual symbol detection, thinking budget
+and model capability are *not* independent. They interact through
+the detection task's fundamental constraint: the model either
+recognises the sunburst mound pattern or it doesn't. Additional
+reasoning (MEDIUM or HIGH) introduces deliberation that can
+*suppress* initial pattern recognition for single-pass detection
+(Obs 183, §8.9). But for consensus voting, that same deliberation
+produces more *consistent* detections across runs — the model
+commits to the same locations each time. Consistency, not capability,
+is what consensus voting rewards.
+
+The practical implication: Flash with HIGH thinking at N=30 (cost:
+~$3.10) is likely a better investment than Pro at N=5 (cost: ~$10),
+because Flash N=30 provides the statistical depth that consensus
+needs, while Pro's per-run advantage is invisible in the pairwise
+test. The 512px data confirms this: Flash HIGH N=5→N=30 gained
++0.079 F1, far exceeding any model-switching effect.
+
+**Confidence**: The Pro vs Flash HIGH comparison is well-powered
+(487 tiles, 44:38 win ratio, p=0.874) — the null result is
+credible, not underpowered. The HIGH thinking consensus benefit is
+highly significant (p<0.0001, 103:23 win ratio). The belief revision
+is held with moderate-to-high confidence, pending the Flash HIGH
+N=10/N=30 results at 384px which will test whether the 512px
+scaling pattern transfers.

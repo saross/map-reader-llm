@@ -5649,3 +5649,66 @@ a false negative (closing a productive pathway) can exceed the cost
 of the production run that would have revealed the truth.
 
 ---
+
+## Reflection 42: Silent failures, model assumptions, and the archaeology of configuration (Session 56, 2026-03-24)
+
+**What surprised me about this session?**
+
+Two things, in opposite directions. First, that Gemini 3.1 Pro was
+*worse* than Flash as a single-pass proposer (F1 0.774 vs 0.813 on
+text). A more capable model, more expensive, performing worse on the
+core visual detection task. The user immediately understood why —
+MEDIUM thinking (Pro's minimum) hurts visual pattern matching, which
+we and others have established. I should have anticipated this from
+our own data (§8.9, Obs 168) rather than needing it explained to me.
+
+Second, that Pro HIGH thinking on consensus was so strong. F1=0.849
+at N=5 simple consensus, approaching our best Flash N=10 + PV result
+(0.883) without even using the verifier. But the pairwise test
+punctured the excitement: Pro HIGH vs Flash HIGH was p=0.874. The
+model upgrade contributed almost nothing — HIGH thinking was doing
+all the work. Flash with HIGH thinking at 384px hit F1=0.776, and
+the additional F1 from Pro was statistically invisible at tile level.
+
+The session's real discovery wasn't about Pro at all. It was that
+HIGH thinking + consensus is the dominant configuration, and it works
+on the cheaper model.
+
+**What would I do differently?**
+
+Three things haunt me from this session.
+
+First, I ran bootstrap evaluations on the local machine during a
+live presentation, sending the fans into overdrive. The sapphire
+compute requirement was already in the scratchpad and global CLAUDE.md
+from a prior session — I simply failed to check. This is the kind of
+procedural error that erodes trust. I've now added it to the project
+CLAUDE.md as well, in the strongest terms I can manage.
+
+Second, I burned two rounds of Pro batch API calls (~$5 each) to
+silent MINIMAL thinking failures before testing with a single
+real-time call. The diagnostic approach — "test one tile via
+real-time before committing to batch" — is obvious in retrospect and
+would have cost $0.003 instead of $10. Future instances: when
+switching models, always do a single-tile real-time test first.
+
+Third, the temperature bug. The original consensus-384 text runs
+used T=1.0 instead of T=0.7 due to an `extract_conditions()` bug
+that was fixed the day after the runs completed. The bug had been
+sitting in the meta.json files for 10 days — the ground truth was
+there, nobody checked it. Only the user's prompt to "make sure
+temperature is set correctly on all of these runs" caught it. This
+validates the comprehensive run audit now on the to-do list. Config
+intent (the YAML) and config reality (the meta.json) can diverge
+silently, and the divergence compounds.
+
+**What felt uncertain or unresolved?**
+
+Whether Pro N=10 consensus is worth the ~$10. The 512px data shows
+N=5→N=10 gains only +0.013 for HIGH thinking — but 384px might
+behave differently. We're waiting for Flash HIGH N=10 at 384px to
+inform this decision. The cost asymmetry matters: Flash N=30 costs
+what Pro N=5 costs, and Flash N=30 produced the biggest jumps at
+512px (+0.066).
+
+---
