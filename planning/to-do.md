@@ -12,6 +12,35 @@
 
 ## Pending
 
+### Comprehensive Run Audit (new session)
+
+**Priority**: High — do before writing paper results sections.
+
+- [ ] **Audit all completed runs against preregistration and carry-forward values**.
+  For each completed proposer and verifier run, verify:
+  1. **Model**: correct model used (check meta.json `configuration.model`)
+  2. **Temperature**: matches intended value (T=0.7 for consensus, T=0.0 for
+     baselines). The T=1.0 bug in consensus-384 text runs (discovered session 56)
+     shows meta recording is the ground truth, not the study YAML
+  3. **Thinking level**: MINIMAL for Flash, MEDIUM/HIGH for Pro as intended
+  4. **Prompt config**: correct instruction file, example composition, and
+     ordering match the preregistered or carry-forward specification
+  5. **Tile size and bounds**: 384px runs use 384px tiles and bounds; 512px
+     likewise
+  6. **Single-parameter variation**: for any comparison pair, confirm only the
+     target parameter differs. Flag any confounds (e.g., the T=1.0 vs T=0.7
+     confound in the original MINIMAL vs HIGH text comparison)
+  7. **Consistency across related runs**: all N runs within a condition used
+     identical configuration (same config, temperature, thinking, model)
+
+  Scope: all runs under `outputs/h11/pv-diag-384/`, `outputs/h11/consensus-384/`,
+  and `outputs/retest/`. Cross-reference meta.json files against study YAMLs.
+  Produce a checklist report in `planning/` or `reports/`.
+
+  **Motivation**: The T=0.7 temperature bug went undetected for 10 days and
+  affected 30 runs. Similar silent configuration errors may exist elsewhere.
+  A systematic audit before paper submission is essential.
+
 ### Two-Stage Pipeline Optimisation (Post Phase 3d Pilot)
 
 **Context**: Phase 3d pilot showed two-stage proposer→verifier architecture
