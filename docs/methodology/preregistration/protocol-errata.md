@@ -941,4 +941,36 @@ The PV pipeline supports both Batch API and real-time API execution modes. The p
 
 ---
 
+### E40: Gemini 3.1 Pro requires MEDIUM thinking — deviation from §8.2/§8.9
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-24 |
+| Type | Deviation |
+| Commit | pending |
+| Files | `studies/h11-384-pro-pilot-*.yaml`, `scripts/run_phase2.py`, `scripts/run_pv.py` |
+| Impact | Pro results use MEDIUM or HIGH thinking instead of preregistered MINIMAL |
+
+**Description**: The preregistration (§8.2) specifies `thinking_level=minimal` for both Gemini 3 Flash and Gemini 3 Pro. Gemini 3.1 Pro (the current Pro model, API name `gemini-3.1-pro-preview`) does not support MINIMAL thinking — the lowest available level is MEDIUM. Attempts to use MINIMAL result in silent batch failures where all tiles return empty detections with no error message (only a `partial_failure_N_tiles` checkpoint status reveals the problem). Single-pass Pro experiments use MEDIUM thinking; consensus Pro experiments use HIGH thinking (motivated by the post-registration finding that HIGH thinking benefits consensus voting at strict thresholds, Obs 183).
+
+**Protocol impact**: Pro results are not directly comparable to Flash at a matched thinking level. The comparison confounds model capability with thinking budget. This is an inherent constraint of the model (not a design choice) and is documented as such. The `--thinking-level` CLI override was added to both `run_phase2.py` and `run_pv.py verify` to support explicit thinking level specification for cross-model experiments.
+
+---
+
+### E41: 384px tile size and full evaluation set used for Pro comparison
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-24 |
+| Type | Deviation |
+| Commit | pending |
+| Files | `studies/h11-384-pro-*.yaml` |
+| Impact | More statistical power but different evaluation scope than preregistered H6 |
+
+**Description**: The preregistered H6 (Flash→Pro transfer, §3.6) specifies a 20-tile stratified holdout subset at 512px tile size. Our Pro comparison uses 487 tiles at 384px — the optimal tile size identified by the H11 diagnostic (Obs 181). This provides substantially more statistical power (487 vs 20 tiles) and evaluates at the pipeline's optimal operating point, but departs from the preregistered H6 scope and tile size.
+
+**Protocol impact**: The Pro comparison is best characterised as an exploratory extension rather than a strict implementation of H6. The larger evaluation set and optimal tile size strengthen the comparison's statistical validity but make it a different experiment than preregistered. H6 Phase 1 (20-tile holdout at 512px) remains available for future execution if a strict preregistration-compliant comparison is needed.
+
+---
+
 *End of errata. New entries should be appended above this line.*
