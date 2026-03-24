@@ -1,0 +1,56 @@
+# H11: 384px Gemini 3.1 Pro HIGH Thinking — Image N=5
+# ======================================================
+# 5 image-track proposer passes with HIGH thinking at T=0.7 using
+# Gemini 3.1 Pro on the full 384px evaluation area. Exploratory
+# analysis motivated by the finding that HIGH thinking benefits
+# consensus voting at strict thresholds.
+#
+# Run with: --model gemini-3.1-pro
+
+study:
+  name: "H11: 384px Pro HIGH — Image N=5"
+  version: "1.0"
+  description: |
+    Gemini 3.1 Pro, 5 image-track proposer passes with HIGH thinking at
+    T=0.7 on the full 384px evaluation area (611 tiles). Exploratory
+    analysis: the preregistration (§8.9) fixed thinking at MINIMAL, but
+    post-registration experiments found HIGH thinking improves consensus
+    voting at strict thresholds. Tests whether Pro with HIGH thinking
+    can outperform Flash consensus.
+  phase: "h11"
+  hypothesis: "H6-exploratory"
+  created: "2026-03-24"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/library_plus-hp.json"
+  optimal_me_name: "plus-hp (brief-text-image)"
+  source: "Phase 3a — image-track optimal config"
+
+inputs:
+  manifest: "inputs/tiles_384/full_evaluation_manifest.json"
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 5
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-384/pro-high-image-n5"
+
+conditions:
+- name: image-t0.7
+  config: "prompts/configs/library_plus-hp.json"
+  temperature: 0.7
+  thinking_level: high
+  description: "Image-track proposer, T=0.7, HIGH thinking, Gemini 3.1 Pro (via --model)"
+
+estimates:
+  tiles: 611
+  runs: 5
+  total_execution_units: 5
+  tiles_per_unit: 611
+  total_api_calls: 3055
+  cost_per_call_usd: 0.009
+  cost_batch_discount: 0.5
+  cost_usd_total: 14.00

@@ -1,0 +1,65 @@
+# H11: 384px Gemini 3.1 Pro Pilot — Text Baseline (N=1, T=0.0)
+# ===============================================================
+# Single deterministic text-only proposer pass using Gemini 3.1 Pro on
+# the full 384px evaluation area. Paired with the Flash baseline
+# (h11-384-pv-diag-text-baseline.yaml) to isolate the model upgrade effect.
+#
+# The --model gemini-3.1-pro CLI flag overrides the config model.
+
+study:
+  name: "H11: 384px Pro Pilot — Text Baseline"
+  version: "1.0"
+  description: |
+    Gemini 3.1 Pro single-pass text-only proposer (T=0.0) on the full 384px
+    evaluation area (611 tiles). Direct comparison with Flash text baseline
+    (F1=0.813 with PV). Tests whether a stronger proposer model improves
+    detection quality in the PV pipeline.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-23"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2 — best single-pass (T=0.0 deterministic)"
+
+inputs:
+  manifest: "inputs/tiles_384/full_evaluation_manifest.json"
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+  evaluation_bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 1
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-384/pro-pilot-text"
+
+conditions:
+- name: text-t0.0
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.0
+  thinking_level: medium
+  description: "Text-only proposer, T=0.0, Gemini 3.1 Pro (via --model override, MEDIUM thinking — MINIMAL not supported by 3.1 Pro)"
+
+estimates:
+  tiles: 611
+  runs: 1
+  total_execution_units: 1
+  tiles_per_unit: 611
+  total_api_calls: 611
+  cost_per_call_usd: 0.003
+  cost_batch_discount: 0.5
+  cost_usd_total: 1.81
+
+analysis:
+  method: "pv_evaluation"
+  description: |
+    Single-pass proposer output fed through crop extraction + PV verifier.
+    Bootstrap CI evaluation against ground truth. Comparison with Flash
+    baseline to quantify model upgrade effect.
+  metrics:
+  - "f1"
+  - "precision"
+  - "recall"

@@ -1,0 +1,51 @@
+# H11: 384px Flash HIGH Thinking — Image N=5
+# ==============================================
+# 5 image-track proposer passes with HIGH thinking at T=0.7 on the full
+# 384px evaluation area. Comparison with MINIMAL thinking (existing) to
+# quantify the consensus benefit of extended reasoning.
+
+study:
+  name: "H11: 384px Flash HIGH — Image N=5"
+  version: "1.0"
+  description: |
+    5 image-track proposer passes with HIGH thinking at T=0.7 on the full
+    384px evaluation area (611 tiles). Post-hoc consensus sweep at all
+    thresholds (1-of-5 through 5-of-5), each fed through PV pipeline.
+    Comparison with Flash MINIMAL (existing) and Pro HIGH (new).
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-24"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/library_plus-hp.json"
+  optimal_me_name: "plus-hp (brief-text-image)"
+  source: "Phase 3a — image-track optimal config"
+
+inputs:
+  manifest: "inputs/tiles_384/full_evaluation_manifest.json"
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 5
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-384/flash-high-image-n5"
+
+conditions:
+- name: image-t0.7
+  config: "prompts/configs/library_plus-hp.json"
+  temperature: 0.7
+  thinking_level: high
+  description: "Image-track proposer, T=0.7, HIGH thinking, Flash"
+
+estimates:
+  tiles: 611
+  runs: 5
+  total_execution_units: 5
+  tiles_per_unit: 611
+  total_api_calls: 3055
+  cost_per_call_usd: 0.002
+  cost_batch_discount: 0.5
+  cost_usd_total: 1.10
