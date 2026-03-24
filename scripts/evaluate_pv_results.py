@@ -258,16 +258,17 @@ def cmd_sweep(args: argparse.Namespace) -> int:
                 n_candidates, len(probabilities))
 
     # Load reference data and verify CRS consistency
+    bounds_path = args.bounds if args.bounds else _BOUNDS_PATH
     gdf_ref = gpd.read_file(_REFERENCE_PATH)
-    gdf_bounds = gpd.read_file(_BOUNDS_PATH)
+    gdf_bounds = gpd.read_file(bounds_path)
     for name, gdf in [("reference", gdf_ref), ("bounds", gdf_bounds)]:
         if gdf.crs is None or gdf.crs.to_epsg() != 32635:
             logger.error(
                 "%s data has CRS %s, expected EPSG:32635", name, gdf.crs,
             )
             return 1
-    logger.info("Ground truth: %d mounds, %d evaluation tiles",
-                len(gdf_ref), len(gdf_bounds))
+    logger.info("Ground truth: %d mounds, %d evaluation tiles (bounds: %s)",
+                len(gdf_ref), len(gdf_bounds), bounds_path.name)
 
     # Generate threshold steps
     step = args.step
@@ -487,8 +488,9 @@ def cmd_compare(args: argparse.Namespace) -> int:
     # Pairwise bootstrap effect size tests
     pairwise: list[dict] = []
     if args.pairwise:
+        bounds_path = args.bounds if args.bounds else _BOUNDS_PATH
         gdf_ref = gpd.read_file(_REFERENCE_PATH)
-        gdf_bounds = gpd.read_file(_BOUNDS_PATH)
+        gdf_bounds = gpd.read_file(bounds_path)
 
         for i, va in enumerate(variants):
             for vb in variants[i + 1:]:
@@ -623,6 +625,15 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--version", action="version", version=f"%(prog)s {__version__}",
+    )
+    parser.add_argument(
+        "--bounds", type=Path, default=None,
+        help=(
+            "Override evaluation bounds GeoJSON. Defaults to "
+            f"{_BOUNDS_PATH.relative_to(BASE_DIR)}. Use "
+            "inputs/vectors/bounds/384/full_evaluation_bounds.geojson "
+            "for 384px tile evaluations."
+        ),
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True)
