@@ -22,46 +22,66 @@ complete by next session. All local analysis MUST run on sapphire.
 #### Check completion and patch failures
 
 - [ ] **Verify all proposer runs completed** — check checkpoints for:
-  - `flash-high-text-n5` (target: 30 runs)
-  - `flash-high-image-n5` (target: 10 runs)
-  - `pro-high-image-n5` (target: 5 runs)
-  - `flash-minimal-text-n30-t07` (target: 30 runs, corrected T=0.7)
-  - Phase 3c H9 diversity Track 1 (target: 80/80)
+  - `flash-high-text-n5` (target: 30 runs) — was 12/30 at session end
+  - `flash-high-image-n5` (target: 10 runs) — **DONE** at session end
+  - `pro-high-image-n5` (target: 5 runs) — **DONE** at session end
+  - `flash-minimal-text-n30-t07` (target: 30 runs) — **DONE** at session end
+  - Phase 3c H9 diversity Track 1 (target: 80/80) — was 64/80 at session end
 - [ ] **Patch any tile failures** via `--patch-tiles` for each condition
 
 #### Simple consensus sweeps (sapphire, no API)
 
-- [ ] **Flash HIGH text N=10 and N=30 sweeps** — run `analyse_consensus_sweep.py`
-  with `--pool-sizes 5 10 30` on the completed 30-run data
-- [ ] **Flash HIGH image N=10 sweep** — `--pool-sizes 5 10`
-- [ ] **Pro HIGH image N=5 sweep** — `--pool-sizes 5`
-- [ ] **Flash MINIMAL text N=5/10/30 sweeps at T=0.7** — the corrected re-run;
-  replaces the T=1.0 results from consensus-384
+- [ ] **Flash HIGH text N=5/10/30 sweeps** — run `analyse_consensus_sweep.py`
+  with `--pool-sizes 5 10 30` on the completed 30-run data. N=5 sweep exists
+  (F1=0.776 at 5-of-5); N=10 and N=30 are new
+- [ ] **Flash HIGH image N=5/10 sweep** — `--pool-sizes 5 10`. N=5 exists
+  (F1=0.730 at 3-of-5); N=10 is new
+- [ ] **Pro HIGH image N=5 sweep** — `--pool-sizes 5`. Proposer data complete
+- [ ] **Flash MINIMAL text N=5/10/30 sweeps at T=0.7** — the corrected re-run
+  (30 runs complete). Replaces the T=1.0 results from consensus-384
 
 #### PV pipeline (Batch API verifier + sapphire evaluation)
 
 For each condition, the pipeline is: generate 1-of-N union → extract crops →
 run verifier (Batch API) → derive x-of-N results → threshold sweep (sapphire).
 
-- [ ] **Flash HIGH text N=5 + Flash PV** — verifier job submitted session 56,
-  check if complete; derive thresholds and evaluate
-- [ ] **Pro HIGH text N=5 + Pro PV** — verifier job submitted session 56,
-  check if complete; derive thresholds and evaluate
-- [ ] **Flash HIGH image N=5 + Flash PV** — needs full pipeline
-- [ ] **Flash HIGH image N=10 + Flash PV** — needs full pipeline (union approach)
-- [ ] **Flash HIGH text N=10 + Flash PV** — needs full pipeline (union approach)
-- [ ] **Flash HIGH text N=30 + Flash PV** — needs full pipeline (union approach)
-- [ ] **Pro HIGH image N=5 + Pro PV** — needs full pipeline
-- [ ] **Flash MINIMAL text N=5/10/30 + Flash PV at T=0.7** — needs full pipeline
+Use the `derive_vote_threshold_results.py` script to derive x-of-N results
+from a single 1-of-N union verifier run (saves ~80% of verifier API calls).
+
+**Verifier jobs already complete** (derive thresholds + evaluate on sapphire):
+- [ ] **Flash HIGH text N=5 + Flash PV** — verifier done (3,736 results).
+  Derive 1-of-5 through 5-of-5, run threshold sweeps
+- [ ] **Pro HIGH text N=5 + Pro PV** — verifier done (504 results, mean
+  prob 0.819). Derive 1-of-5 through 5-of-5, run threshold sweeps
+
+**Need full PV pipeline** (consensus union → crops → verifier → derive → eval):
+- [ ] **Flash HIGH image N=5 + Flash PV**
+- [ ] **Flash HIGH image N=10 + Flash PV** (union approach)
+- [ ] **Flash HIGH text N=10 + Flash PV** (union approach)
+- [ ] **Flash HIGH text N=30 + Flash PV** (union approach)
+- [ ] **Pro HIGH image N=5 + Pro PV** (`--model gemini-3.1-pro --thinking-level medium`)
+- [ ] **Flash MINIMAL text T=0.7 N=5/10/30 + Flash PV** (union approach for each)
 
 #### Pairwise comparisons (sapphire, no API)
 
 Run on sapphire with `--bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
+Use `paired_permutation_consensus.py` with `--bounds` flag.
 
-- [ ] **Flash HIGH image vs Pro HIGH image** (when Pro image done)
-- [ ] **Flash MINIMAL T=0.7 vs Flash HIGH** at N=5, N=10, N=30 (clean comparison)
+**Already done** (session 56, 487 tiles):
+- Flash HIGH vs Flash MINIMAL text: dF1=+0.149, p<0.0001 ***
+- Pro HIGH vs Flash MINIMAL text: dF1=+0.150, p<0.0001 ***
+- Pro HIGH vs Flash HIGH text: dF1=+0.002, p=0.874 ns
+- Flash HIGH vs Flash MINIMAL image: dF1=+0.009, p=0.324 ns
+
+**Still needed**:
+- [ ] **Flash HIGH image vs Pro HIGH image** (N=5, matched T=0.7)
+- [ ] **Flash MINIMAL T=0.7 vs Flash HIGH** at N=5, N=10, N=30 — clean
+  temperature-matched comparison using the corrected MINIMAL re-run
 - [ ] **Flash MINIMAL T=0.7 vs Pro HIGH** at N=5
-- [ ] **Flash HIGH N=5 vs N=10 vs N=30** — does more runs help with HIGH thinking?
+- [ ] **Flash HIGH N=5 vs N=10 vs N=30** — quantify pool size benefit with
+  HIGH thinking. Important for deciding whether Pro N=10 is worth the cost
+- [ ] **PV pairwise comparisons** — repeat key comparisons using PV-filtered
+  results (after PV pipeline is done)
 
 #### T=0.7 vs T=1.0 comparison (unexpected data from bug)
 
@@ -88,10 +108,25 @@ Proposer data exists from Phase 3a. Needs verifier batch jobs + sapphire eval.
 - [ ] **512px Flash HIGH text N=5 + Flash PV**
 - [ ] **512px Flash HIGH image N=5 + Flash PV**
 
-#### Consolidation
+#### Phase 3c H9 Diversity analysis
+
+- [ ] **Verify Phase 3c H9 Track 1 complete** (80/80) and patch failures
+- [ ] **Run diversity analysis** per the existing Phase 3c analysis scripts
+- [ ] **Compare with Phase 3c Track 2** (text, already complete from prior session)
+
+#### Consolidation and review
 
 - [ ] **Update bootstrap-cis-384px.json** with all new PV results
-- [ ] **Review**: do we have all comparisons needed for the paper?
+- [ ] **Write session 56 key findings summary** for working notes:
+  - HIGH thinking is the key differentiator for consensus, not the model
+    (Pro HIGH vs Flash HIGH: p=0.874 ns)
+  - Pro HIGH text N=5 simple consensus F1=0.849 — approaches Flash N=10 + PV
+    champion (0.883) without verifier
+  - Pro single-pass MEDIUM underperforms Flash MINIMAL (proposer degradation)
+  - N=5 vs N=10 pool size dramatic for text (+0.28), minimal for image (+0.02)
+  - Temperature bug in consensus-384 text runs (T=1.0 not T=0.7) — corrected
+- [ ] **Review**: do we have all comparisons needed for the paper? Produce a
+  complete matrix of what exists and what gaps remain
 
 ### Comprehensive Run Audit (new session)
 
