@@ -1,0 +1,53 @@
+# H11: 384px Flash MINIMAL Thinking — Text N=30 (T=0.7, corrected)
+# ==================================================================
+# Re-run of the consensus-384 text runs with correct T=0.7.
+# The original runs (consensus-384) used T=1.0 due to a bug in
+# extract_conditions() that failed to propagate the fixed.temperature
+# override for non-temperature factors (fixed in commit 5d72603).
+
+study:
+  name: "H11: 384px Flash MINIMAL — Text N=30 (T=0.7 corrected)"
+  version: "1.1"
+  description: |
+    30 text-track proposer passes with MINIMAL thinking at T=0.7 on the
+    full 384px evaluation area (611 tiles). Corrected re-run — the original
+    consensus-384 text runs executed at T=1.0 (the config default) due to
+    a temperature propagation bug. This re-run enables clean comparison
+    with Flash HIGH (T=0.7) and Pro HIGH (T=0.7) at matched temperature.
+  phase: "h11"
+  hypothesis: "H11"
+  created: "2026-03-24"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2 — best single-pass text config"
+
+inputs:
+  manifest: "inputs/tiles_384/full_evaluation_manifest.json"
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 30
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07"
+
+conditions:
+- name: text-t0.7
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.7
+  thinking_level: minimal
+  description: "Text-only proposer, T=0.7, MINIMAL thinking, Flash (corrected re-run)"
+
+estimates:
+  tiles: 611
+  runs: 30
+  total_execution_units: 30
+  tiles_per_unit: 611
+  total_api_calls: 18330
+  cost_per_call_usd: 0.001
+  cost_batch_discount: 0.5
+  cost_usd_total: 3.10
