@@ -985,6 +985,7 @@ PRICING = {
         "gemini-2.0-flash": {"input": 0.10, "output": 0.40},
         "gemini-3-flash": {"input": 0.10, "output": 0.40},
         "gemini-3-pro": {"input": 2.50, "output": 10.00},
+        "gemini-3.1-pro": {"input": 2.00, "output": 12.00},
         "default": {"input": 0.10, "output": 0.40},
     },
     "anthropic_claude": {
