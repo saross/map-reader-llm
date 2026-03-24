@@ -12,6 +12,71 @@
 
 ## Pending
 
+### Session 56 Follow-Up: Analyse Completed Batch Runs
+
+**Priority**: High — do at start of next session.
+
+**Context**: Session 56 submitted multiple batch API runs that should be
+complete by next session. All local analysis MUST run on sapphire.
+
+#### Check completion and patch failures
+
+- [ ] **Verify all proposer runs completed** — check checkpoints for:
+  - `flash-high-text-n5` (target: 30 runs)
+  - `flash-high-image-n5` (target: 10 runs)
+  - `pro-high-image-n5` (target: 5 runs)
+  - `flash-minimal-text-n30-t07` (target: 30 runs, corrected T=0.7)
+  - Phase 3c H9 diversity Track 1 (target: 80/80)
+- [ ] **Patch any tile failures** via `--patch-tiles` for each condition
+
+#### Simple consensus sweeps (sapphire, no API)
+
+- [ ] **Flash HIGH text N=10 and N=30 sweeps** — run `analyse_consensus_sweep.py`
+  with `--pool-sizes 5 10 30` on the completed 30-run data
+- [ ] **Flash HIGH image N=10 sweep** — `--pool-sizes 5 10`
+- [ ] **Pro HIGH image N=5 sweep** — `--pool-sizes 5`
+- [ ] **Flash MINIMAL text N=5/10/30 sweeps at T=0.7** — the corrected re-run;
+  replaces the T=1.0 results from consensus-384
+
+#### PV pipeline (Batch API verifier + sapphire evaluation)
+
+For each condition, the pipeline is: generate 1-of-N union → extract crops →
+run verifier (Batch API) → derive x-of-N results → threshold sweep (sapphire).
+
+- [ ] **Flash HIGH text N=5 + Flash PV** — verifier job submitted session 56,
+  check if complete; derive thresholds and evaluate
+- [ ] **Pro HIGH text N=5 + Pro PV** — verifier job submitted session 56,
+  check if complete; derive thresholds and evaluate
+- [ ] **Flash HIGH image N=5 + Flash PV** — needs full pipeline
+- [ ] **Flash HIGH image N=10 + Flash PV** — needs full pipeline (union approach)
+- [ ] **Flash HIGH text N=10 + Flash PV** — needs full pipeline (union approach)
+- [ ] **Flash HIGH text N=30 + Flash PV** — needs full pipeline (union approach)
+- [ ] **Pro HIGH image N=5 + Pro PV** — needs full pipeline
+- [ ] **Flash MINIMAL text N=5/10/30 + Flash PV at T=0.7** — needs full pipeline
+
+#### Pairwise comparisons (sapphire, no API)
+
+Run on sapphire with `--bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
+
+- [ ] **Flash HIGH image vs Pro HIGH image** (when Pro image done)
+- [ ] **Flash MINIMAL T=0.7 vs Flash HIGH** at N=5, N=10, N=30 (clean comparison)
+- [ ] **Flash MINIMAL T=0.7 vs Pro HIGH** at N=5
+- [ ] **Flash HIGH N=5 vs N=10 vs N=30** — does more runs help with HIGH thinking?
+
+#### 512px PV pipeline (low priority)
+
+Proposer data exists from Phase 3a. Needs verifier batch jobs + sapphire eval.
+
+- [ ] **512px Flash MINIMAL text N=5 + Flash PV**
+- [ ] **512px Flash MINIMAL image N=5 + Flash PV**
+- [ ] **512px Flash HIGH text N=5 + Flash PV**
+- [ ] **512px Flash HIGH image N=5 + Flash PV**
+
+#### Consolidation
+
+- [ ] **Update bootstrap-cis-384px.json** with all new PV results
+- [ ] **Review**: do we have all comparisons needed for the paper?
+
 ### Comprehensive Run Audit (new session)
 
 **Priority**: High — do before writing paper results sections.
