@@ -63,6 +63,22 @@ Run on sapphire with `--bounds inputs/vectors/bounds/384/full_evaluation_bounds.
 - [ ] **Flash MINIMAL T=0.7 vs Pro HIGH** at N=5
 - [ ] **Flash HIGH N=5 vs N=10 vs N=30** — does more runs help with HIGH thinking?
 
+#### T=0.7 vs T=1.0 comparison (unexpected data from bug)
+
+Per the "unexpected data as discovery opportunities" policy: the original
+consensus-384 text runs executed at T=1.0 (bug), and the corrected re-run
+provides T=0.7. Both are N=30, MINIMAL thinking, 384px — identical except
+temperature. This is an unplanned but free comparison of consensus
+temperature at the optimal tile size.
+
+- [ ] **Compare Flash MINIMAL text N=30 at T=0.7 vs T=1.0** — full
+  consensus sweeps at N=5, N=10, N=30 for both temperatures. Pairwise
+  permutation tests at matched pool sizes and optimal thresholds. The
+  512px data showed T=0.7 slightly ahead of T=1.0 for MINIMAL; this
+  tests whether the same holds at 384px.
+- [ ] **If interesting, add to paper** as a sensitivity analysis for
+  consensus temperature at the optimal tile size.
+
 #### 512px PV pipeline (low priority)
 
 Proposer data exists from Phase 3a. Needs verifier batch jobs + sapphire eval.
