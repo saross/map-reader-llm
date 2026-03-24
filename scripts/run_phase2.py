@@ -291,6 +291,7 @@ def extract_conditions(config: dict) -> list[dict]:
                 "config": cond["config"],
                 "description": cond.get("description", ""),
                 "temperature": cond.get("temperature"),
+                "thinking_level": cond.get("thinking_level"),
                 "ordering": cond.get("ordering"),
             })
         return conditions
@@ -677,6 +678,7 @@ def run_execution_unit(
     limit: int | None = None,
     timeout: int = 3600,
     workers_override: int | None = None,
+    model_override: str | None = None,
     log_file: Path | None = None,
 ) -> tuple[bool, str, float]:
     """
@@ -693,6 +695,9 @@ def run_execution_unit(
         limit: Process only first N tiles (for sanity checks)
         timeout: Maximum seconds to wait for completion
         workers_override: If set, override YAML workers count for parallelism
+        model_override: If set, override the model name from the prompt
+            config (e.g., ``"gemini-3.1-pro"``). Passed as ``--model``
+            to ``4_detect_mounds_batch.py``.
         log_file: If set, redirect subprocess output to this file
             instead of inheriting the terminal. Used in parallel mode
             to prevent interleaved output from concurrent units.
@@ -722,6 +727,10 @@ def run_execution_unit(
         "--output", output_name,
         "--workers", str(workers),
     ]
+
+    # Add model override if specified via CLI
+    if model_override is not None:
+        cmd.extend(["--model", str(model_override)])
 
     # Add temperature override if specified
     if unit.get("temperature") is not None:
@@ -839,6 +848,7 @@ def run_phase2(
     verbose: bool = True,
     timeout: int = 3600,
     workers_override: int | None = None,
+    model_override: str | None = None,
     parallel_units: int = 1,
     mode: str = "concurrent",
     max_batch_jobs: int = 50,
@@ -946,6 +956,8 @@ def run_phase2(
         print(f"Tiles per run: {tiles_str}")
         total_units = len(conditions) * num_runs
         print(f"Total execution units: {total_units}")
+        if model_override:
+            print(f"\n  ** Model override: {model_override} **")
         print()
 
     # Generate execution units
@@ -1043,6 +1055,7 @@ def run_phase2(
             checkpoint_path=checkpoint_path,
             dry_run=dry_run,
             limit=limit,
+            model_override=model_override,
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
@@ -1061,6 +1074,7 @@ def run_phase2(
             limit=limit,
             timeout=timeout,
             workers_override=workers_override,
+            model_override=model_override,
             parallel_units=parallel_units,
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
@@ -1077,6 +1091,7 @@ def run_phase2(
             limit=limit,
             timeout=timeout,
             workers_override=workers_override,
+            model_override=model_override,
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
@@ -1111,6 +1126,7 @@ def _execute_units_sequential(
     limit: int | None,
     timeout: int,
     workers_override: int | None,
+    model_override: str | None,
     running_cost: float,
     cost_warn_threshold: float,
     verbose: bool,
@@ -1144,6 +1160,7 @@ def _execute_units_sequential(
             limit=limit,
             timeout=timeout,
             workers_override=workers_override,
+            model_override=model_override,
         )
 
         running_cost += cost
@@ -1195,6 +1212,7 @@ def _execute_units_parallel(
     limit: int | None,
     timeout: int,
     workers_override: int | None,
+    model_override: str | None,
     parallel_units: int,
     running_cost: float,
     cost_warn_threshold: float,
@@ -1233,6 +1251,7 @@ def _execute_units_parallel(
             limit=limit,
             timeout=timeout,
             workers_override=workers_override,
+            model_override=model_override,
             log_file=unit_log,
         )
         return key, success, message, cost
@@ -1302,6 +1321,7 @@ def _execute_units_batch(
     checkpoint_path: Path,
     dry_run: bool,
     limit: int | None,
+    model_override: str | None,
     running_cost: float,
     cost_warn_threshold: float,
     verbose: bool,
@@ -1554,7 +1574,11 @@ def _execute_units_batch(
                 print()
             continue
 
-        model_name = prompt_config.get("model", "gemini-3-flash")
+        # Apply model override if provided via --model CLI flag
+        if model_override:
+            model_name = model_override
+        else:
+            model_name = prompt_config.get("model", "gemini-3-flash")
 
         # Resolve model name via cached available models list
         if available_models and model_name not in available_models:
@@ -2352,6 +2376,17 @@ Examples:
         help="Override number of runs per condition (default: from YAML)",
     )
     parser.add_argument(
+        "--model",
+        type=str,
+        help=(
+            "Override the model name from the prompt config "
+            "(e.g., 'gemini-3.1-pro'). Applies to all execution "
+            "units. In batch mode, overrides the model used for "
+            "JSONL construction and submission. In concurrent mode, "
+            "passed as --model to 4_detect_mounds_batch.py."
+        ),
+    )
+    parser.add_argument(
         "--limit",
         type=int,
         help="Process only first N tiles per run (for sanity checks)",
@@ -2510,6 +2545,7 @@ Examples:
         verbose=not args.quiet,
         timeout=args.timeout,
         workers_override=args.workers,
+        model_override=args.model,
         parallel_units=args.parallel_units,
         mode=args.mode,
         max_batch_jobs=args.max_batch_jobs,
