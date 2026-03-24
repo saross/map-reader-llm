@@ -105,6 +105,22 @@ The file `docs/notes/reflections/working-notes.md` captures observations about r
 - The user is in Sydney, Australia — plan experiment runs around the local evening reset window
 - Free-tier and pay-as-you-go rate limits (Tokens Per Minute (TPM), Requests Per Minute (RPM)) are rolling and do not have a fixed reset time, but daily quotas do
 
+## Compute Location — CRITICAL
+
+**All computationally intensive analysis MUST run on sapphire** (`ssh sapphire`, 192.168.1.150), not on the local workstation (amd-tower). This is a hard requirement — the local machine is old, has no GPU, and sends fans into overdrive during CPU-intensive work. This has caused disruptions during live presentations.
+
+The bar for "computationally intensive" is **low**:
+
+- Bootstrap confidence interval sweeps (even 1,000 iterations on a few conditions)
+- Threshold sweep evaluations across multiple conditions
+- Pairwise permutation tests
+- Any batch processing of analysis results
+- Any task that would take more than ~30 seconds of CPU time
+
+**Workflow**: SSH into sapphire, `cd` to the repo (synced via git), activate the venv, and run the analysis there. Sapphire has a better CPU, GPU, and more memory — analyses complete faster there as well.
+
+**Only fall back to local** if sapphire is confirmed unavailable (e.g., network down, machine offline). Do not assume it is unavailable — check first.
+
 ## End-of-Session Reflection
 
 Invoke the `/reflect` skill to run the end-of-session reflection protocol. The user will prompt with "let's reflect", `/reflect`, or similar. Reflections are most valuable when written by the instance that did the work — trigger before compacting rather than after.
