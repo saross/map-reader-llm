@@ -157,6 +157,12 @@ def cmd_verify(args: argparse.Namespace) -> int:
     with open(args.verifier_config) as f:
         config = json.load(f)
 
+    # Apply thinking level override before any JSONL construction
+    thinking_override = getattr(args, "thinking_level", None)
+    if thinking_override is not None:
+        config["thinking_level"] = thinking_override
+        logger.info("Thinking level override: %s", thinking_override)
+
     logger.info("Verifier config: %s", args.verifier_config.name)
     logger.info("Candidates: %d", n_candidates)
     logger.info("Mode: %s", args.mode)
@@ -772,6 +778,16 @@ def _build_parser() -> argparse.ArgumentParser:
     verify_parser.add_argument(
         "--model", type=str, default=None,
         help="Override model name from config",
+    )
+    verify_parser.add_argument(
+        "--thinking-level", type=str, default=None,
+        help=(
+            "Override thinking level from config "
+            "(e.g., 'medium'). Required when --model targets a "
+            "model that does not support the config's default "
+            "thinking level (e.g., Gemini 3.1 Pro requires "
+            "MEDIUM, not MINIMAL)."
+        ),
     )
     verify_parser.add_argument(
         "--dry-run", action="store_true",
