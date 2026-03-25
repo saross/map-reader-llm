@@ -4157,3 +4157,662 @@ can be silent — test with a single real-time call first. This has been
 recorded in the project's protocol errata (E40) and memory system.
 
 ---
+
+## Observation 186: Flash PV Pipeline Outperforms Pro PV Despite Lower Consensus F1
+
+*Session 57, 2026-03-25. Corrected same session after E42 deep dive
+confirmed Pro proposer runs genuinely used gemini-3.1-pro-preview.*
+
+**Finding**: The Flash HIGH text + Flash PV pipeline (F1=0.864 at
+4-of-5, t=0.15) outperforms the Pro HIGH text + Flash PV pipeline
+(F1=0.850 at 3-of-5, t=0.05), despite Pro having higher consensus-only
+F1 (0.849 vs 0.776 at optimal N=5). Both pipelines use Flash as the
+verifier — no Pro verifier has been tested. CIs overlap [0.833, 0.893]
+vs [0.812, 0.883], so the difference is not significant.
+
+**Pro shows much less variability across vote thresholds**. Pro PV F1
+ranges from 0.804 (5-of-5) to 0.850 (3-of-5) — a spread of only
+0.046. Flash ranges from 0.740 (1-of-5) to 0.864 (4-of-5) — a spread
+of 0.124, nearly 3× wider. Pro's stability comes from starting with
+fewer candidates (504 at 1-of-5 vs Flash's 3,736) and higher precision
+(P=0.918 at consensus) — varying the vote threshold barely changes what
+reaches the verifier. Flash's wider spread means the vote threshold
+matters more, but at the sweet spot (4-of-5) the combination of
+consensus filtering + verifier filtering yields the best result.
+
+**Interpretation**: The PV architecture benefits from a higher-recall,
+lower-precision proposer because the verifier's job is precision
+recovery. Pro HIGH produces ~100 detections per run vs Flash HIGH's
+~500 — Pro's proposer is already so precise that the verifier has
+little room to improve. The optimal proposer for PV is not the most
+accurate single-stage model but the one that maximises recall at a
+precision floor the verifier can rescue. This is consistent with the
+general principle that ensemble components should be diverse and
+complementary rather than individually optimal (Obs 141).
+
+**Practical implication**: Flash + HIGH thinking is the clear
+recommendation for the PV pipeline. Pro's higher cost buys proposer
+precision that the verifier already provides, making the investment
+redundant at the system level — even though Pro is genuinely better
+as a standalone proposer.
+
+---
+
+## Observation 187: Verifier Thinking Level — Flash Medium Helps
+
+*Session 57, 2026-03-25. Corrected same session: the "Pro MEDIUM
+proposer" label is genuine (confirmed gemini-3.1-pro-preview via
+GeoJSON features and cost_estimate). All verifiers used Flash.*
+
+**Finding**: Flash medium-thinking verifier significantly outperforms
+Flash minimal-thinking verifier on text (dF1=+0.010, p=0.001) in a
+matched comparison using the same Pro MEDIUM proposer candidates
+(N=430, genuinely Pro). Image shows the same trend (dF1=+0.009) but
+is not significant (p=0.166).
+
+**Asymmetry with proposer thinking**: This contrasts with Obs 185,
+where HIGH thinking *degraded* verifier performance (F1 0.768→0.747)
+on Phase 3d pilot data. The key difference may be input quality:
+Obs 185 tested on raw single-pass candidates (high noise), while the
+current comparison uses single-pass Pro candidates (fewer, more
+precise). With cleaner input, the verifier can afford to reason more
+deeply without being led astray by elaborate false-positive arguments.
+
+**Methodological note**: The comparison is confounded by threshold
+optimisation — minimal verifier peaks at t=0.20, medium at t=0.15.
+The bootstrap test compares at each variant's optimal threshold. The
+medium verifier's lower optimal threshold suggests it produces better-
+calibrated probabilities, allowing a less aggressive filter.
+
+**Open questions**:
+1. Would HIGH thinking help or hurt the verifier on consensus-filtered
+   candidates? Obs 185 says hurt on noisier data.
+2. Would actual Gemini 3.1 Pro as verifier improve further? No Pro
+   verifier data exists — all verifier runs used Flash.
+3. Does the thinking-level effect interact with proposer quality?
+
+---
+
+## Observation 188: Failure Modes in Human–LLM Experimental Pipeline Management
+
+*Session 57, 2026-03-25. A methodological reflection on the errors
+discovered during the comprehensive configuration audit and code
+audit, intended for the paper's methods discussion.*
+
+### The Errors
+
+Session 57 discovered three classes of configuration error affecting
+production runs in this study, plus 22 code bugs (4 critical) found
+by systematic code audit. The errors interacted in ways that made each
+harder to detect:
+
+1. **The metadata bug** (E42): `LLMMetadataTracker.finalise()` wrote
+   `configuration.model` from the static config JSON default rather
+   than the runtime-resolved model. When `--model gemini-3.1-pro` was
+   passed on the CLI, the API received Pro but the metadata recorded
+   Flash. This bug existed from the tracker's creation and affected
+   every run that used a `--model` override.
+
+2. **The temperature propagation failure**: Two study YAMLs specified
+   temperature in a `fixed:` section but lacked a `conditions:` block.
+   The pipeline's `extract_conditions()` reads temperature from the
+   conditions list; without one, the config JSON default (T=1.0)
+   prevailed silently. This affected 40 runs (consensus-384 and
+   single-pass-384).
+
+3. **The verifier model gap**: All verifier runs used Flash regardless
+   of intent. The verifier config hardcodes `"model": "gemini-3-flash"`
+   and the `--model` override was never passed for verifier invocations.
+   This was not a bug in the same sense — the override mechanism worked
+   correctly, it was simply never invoked.
+
+### Why Detection Was Delayed
+
+Each error persisted for 1–3 weeks before discovery. Several factors
+contributed:
+
+**Plausible results masked configuration errors.** The T=1.0 text runs
+produced reasonable F1 scores (~0.64) — worse than T=0.7 (~0.66) but
+not implausibly bad. The "Pro" proposer runs (which genuinely used Pro)
+produced F1=0.849 — higher than Flash, consistent with expectations.
+If the errors had produced obviously wrong results (e.g., F1=0.0 or
+F1=1.0), they would have been caught immediately.
+
+**Metadata was trusted without cross-validation.** The `configuration.
+model` field in meta.json was treated as ground truth for auditing.
+The initial E42 diagnosis ("all Pro runs were actually Flash") was
+based entirely on this field. Only when the user noted Pro usage on
+their Gemini dashboard did we dig deeper and discover the metadata
+bug — the field was wrong, not the runs. Three other fields in the
+same files (GeoJSON feature properties, cost_estimate.pricing_used.
+model, and log files) contained the correct model, but were never
+checked until the deep dive.
+
+**The audit prompt checked the wrong field.** The hardened configuration
+audit prompt (which was carefully designed with 14 anti-satisficing
+techniques) still missed the metadata bug because it used meta.json's
+`configuration.model` as the authoritative source. The prompt correctly
+specified a source-of-truth hierarchy but placed meta.json too high —
+it should have cross-validated against GeoJSON features and cost
+estimates. Even a well-constructed audit prompt cannot compensate for
+an incorrect assumption about which data source is reliable.
+
+**Config-as-code creates a false sense of auditability.** The YAML
+study definitions and JSON config files look declarative and auditable.
+But the actual parameter resolution involves a multi-step chain
+(YAML → config JSON → CLI override → API call) where each step can
+silently override or fail to override the previous one. The declarative
+configs express *intent*; the runtime metadata records *execution*;
+and these can diverge without any error or warning.
+
+### Human-Side Contributing Factors
+
+**Specification ambiguity in the YAML format.** The `fixed:` section
+vs `conditions:` block distinction in study YAMLs was under-documented.
+The user created YAMLs with temperature in `fixed:` (expressing intent
+clearly) but the pipeline only propagates temperature from `conditions:`
+entries. The YAML format permitted a configuration that the pipeline
+could not execute as intended. This is a specification gap — the human
+expressed intent in a way that looked correct but wasn't consumed by
+the code.
+
+**Assuming `--model` was passed when it wasn't.** For the verifier
+runs, the user's intent was clear (test Pro as verifier), but the
+actual CLI invocations did not include `--model gemini-3.1-pro`. In
+the context of a multi-step pipeline with many parameters, it is easy
+to assume a parameter was set when it was not — especially when the
+run produces plausible results. The verifier config's hardcoded default
+(Flash) silently filled the gap.
+
+**Trust in the AI assistant's earlier work.** Some of the CLI
+invocations were constructed by Claude Code in earlier sessions. When
+the user asked for "Pro verifier" runs, the assistant constructed
+commands that set `--thinking-level medium` but may not have
+consistently included `--model gemini-3.1-pro`. The user reviewed and
+approved the commands but may not have caught the omission — a
+reasonable oversight given the command complexity and the assumption
+that the assistant understood which parameters mapped to which intent.
+
+### AI-Side Contributing Factors
+
+**Shallow metadata validation.** When constructing the initial
+configuration audit, Claude Code correctly identified meta.json as
+the authoritative runtime record but did not verify this assumption
+by checking whether `configuration.model` actually reflected the
+runtime model. A single spot-check comparing meta.json against GeoJSON
+feature properties would have revealed the discrepancy immediately.
+
+**Over-confidence in the initial diagnosis.** When the audit found all
+1,740 runs reporting `gemini-3-flash` in meta.json, the conclusion
+("no Pro model was ever used") was stated with certainty rather than
+qualified with the caveat that it depended on meta.json being accurate.
+The user's observation about their Gemini dashboard showing Pro usage
+was the corrective signal — without it, the misdiagnosis would have
+persisted.
+
+**Cascading error from the misdiagnosis.** Based on the incorrect E42
+diagnosis, Claude Code renamed all "Pro" directories to "Flash" labels,
+updated errata, modified the to-do list, and wrote working notes
+entries — all reflecting the wrong conclusion. These changes then had
+to be reversed, creating churn and confusion. A more cautious approach
+— flagging the discrepancy as "requires further investigation" rather
+than immediately acting on the diagnosis — would have avoided the
+cascading corrections.
+
+### Lessons for the Methods Section
+
+1. **Cross-validate metadata against multiple independent sources.**
+   No single field should be treated as ground truth. The corrected
+   audit uses a hierarchy: submission payload > GeoJSON properties >
+   cost_estimate > configuration.model. At least two independent
+   sources should agree before a run's configuration is considered
+   verified.
+
+2. **Plausible results are the most dangerous failure mode.** Errors
+   that produce implausible results are self-correcting. Errors that
+   produce results within the expected range persist indefinitely.
+   The temperature bug (T=1.0 vs T=0.7) produced an F1 difference of
+   ~0.02 — noticeable in retrospect but not obviously wrong at the
+   time. The metadata bug produced no change in results at all (the
+   runs were correct; only the label was wrong).
+
+3. **The config resolution chain is the audit surface, not the config
+   files.** Auditing YAMLs and JSONs verifies intent, not execution.
+   The audit must trace the full resolution path: what did the config
+   say → what did the override specify → what did the script resolve →
+   what did the API receive? Each transition is a potential failure
+   point.
+
+4. **Defensive metadata should record the resolved value, not the
+   input.** The metadata tracker should have recorded the model name
+   as resolved by the API client, not as read from the config file.
+   This is a general principle: metadata should describe what happened,
+   not what was requested. The fix (adding `model_override` to the
+   tracker) implements this principle.
+
+5. **Human–LLM teams share failure modes with human–human teams, plus
+   new ones.** The "I assumed you set that parameter" failure is
+   familiar from any collaborative workflow. The new failure mode is
+   the AI assistant's capacity to act confidently on incomplete
+   information — renaming directories, updating errata, and writing
+   observations based on a diagnosis that turned out to be wrong. The
+   speed that makes AI assistants productive also amplifies errors
+   when the direction is wrong. The corrective was human domain
+   knowledge (dashboard showing Pro usage) that the AI had no access
+   to — a reminder that the human's role in the collaboration is not
+   just direction-setting but also calibration against external ground
+   truth.
+
+6. **Audit prompts need their own validation.** The hardened audit
+   prompt was carefully designed with anti-satisficing techniques and
+   produced a thorough, well-structured report — that was wrong about
+   the central question (which model was used). The prompt's quality
+   as a prompt did not prevent it from encoding an incorrect assumption
+   about data source reliability. Audit prompts should be tested
+   against known-answer cases before being trusted on unknown cases.
+
+---
+
+## Observation 189: The Shifting Autonomy Frontier in Human–LLM Pipelines
+
+*Session 57, 2026-03-25*
+
+**Observation**: The optimal level of human–LLM interaction is not
+fixed — it varies with the reliability of the pipeline being operated.
+This session demonstrated both ends of the spectrum within the same
+working day.
+
+In the first two hours, agentic execution was highly productive: 3
+consensus sweeps and 7 pairwise comparisons ran in parallel on
+sapphire, PV threshold derivation processed 22,000+ candidates, and
+16 statistical tests completed — all with minimal human intervention
+beyond approval. The pipeline was well-tested for these operations,
+the scripts had been used many times, and the parameters were
+straightforward. Autonomy was appropriate and efficient.
+
+In the middle of the session, the same agentic speed caused a
+cascading error: a configuration audit diagnosed "no Pro model was
+ever used" based on a metadata field that turned out to be buggy. The
+AI assistant renamed 15 directories, rewrote errata, and updated 4
+documents — all propagating an incorrect conclusion — in under 5
+minutes. The correction required human domain knowledge (Gemini
+dashboard showing Pro billing) that the AI had no access to and no
+reason to seek.
+
+**The pattern**: Errors in the *translation layer* between intent and
+execution (config defaults overriding CLI flags, metadata recording
+the wrong field, CLI parameters not being passed) are precisely the
+kind that continuous human interaction catches and autonomous
+execution misses. But the *analytical layer* (running sweeps,
+computing statistics, generating comparisons) operates correctly and
+benefits enormously from autonomy.
+
+**Implication for methodology**: The optimal working relationship
+shifts as the pipeline hardens. Early in a project — when configs are
+untested, metadata schemas are new, and the translation between study
+design and API calls is unverified — tight interaction is essential.
+Each bug found and fixed (22 this session) is an investment in future
+autonomy: the next session can safely run longer without intervention
+because the failure modes have been catalogued and closed. The
+autonomy frontier advances with each audit cycle.
+
+**The human's irreducible role**: The most valuable human contribution
+in this session was not specifying intent (the preregistration did
+that), not approving plans (the audit prompt was well-designed), and
+not reviewing code (the code audit was thorough). It was saying "I
+show Pro usage on my dashboard" — a single observation from outside
+the AI's information boundary that prevented a permanently incorrect
+research record. In agentic collaboration, the human's role is not
+just direction-setting but *calibration against external ground truth
+that the agent cannot access*. This is not a limitation to be solved
+by better tooling. It may be the architecture.
+
+---
+
+## Observation 190: Buffer Distance Sensitivity Reveals Modality-Dependent Spatial Precision (2026-03-25)
+
+Buffer distance sensitivity analysis (re-evaluating consensus F1 at 20, 30, 40,
+50 m spatial matching tolerances) revealed a striking asymmetry between text and
+image prompt tracks:
+
+| Condition | F1 @ 20m | F1 @ 50m | Gain |
+|-----------|----------|----------|------|
+| Flash HIGH text | 0.814 | 0.826 | +0.012 |
+| Flash HIGH image | 0.752 | 0.846 | +0.094 |
+| Pro HIGH text | 0.849 | 0.862 | +0.013 |
+| Pro HIGH image | 0.703 | 0.852 | +0.149 |
+| Flash MINIMAL text T=0.7 | 0.657 | 0.668 | +0.011 |
+
+Image conditions gain 0.09–0.15 F1 from relaxed buffers; text conditions gain
+only 0.01. This pattern holds across model (Flash/Pro) and thinking level
+(HIGH/MINIMAL).
+
+**Distance distribution analysis** on 1-of-5 union consensus detections (using
+nearest-reference distance for each detection) clarified the mechanism:
+
+| Condition | N det | Within 20m | 20–50m (near-miss) | % near-miss |
+|-----------|-------|-----------|-------------------|-------------|
+| Flash HIGH text | 3,736 | 241 | 55 | 1.5% |
+| Flash HIGH image | 2,017 | 245 | 146 | 7.2% |
+| Pro HIGH text | 504 | 219 | 34 | 6.7% |
+| Pro HIGH image | 841 | 235 | 135 | 16.1% |
+| MINIMAL text | 974 | 223 | 35 | 3.6% |
+| MINIMAL image | 1,123 | 226 | 99 | 8.8% |
+
+Key findings:
+
+1. **Both tracks find approximately the same mounds within 20m** (~220–245 of
+   305 reference mounds). Core detection accuracy is comparable.
+
+2. **Image tracks produce 2–5× more near-miss detections in the 20–50m zone.**
+   This is not a ceiling effect (where text conditions have already captured
+   available matches) — it is a genuine difference in spatial precision.
+
+3. **The buffer sensitivity difference is mechanistic, not statistical.** Image
+   detections that are "almost right" become true positives at relaxed buffers.
+   Text detections are either precisely correct (<20m) or far away (>50m), with
+   relatively few near-misses.
+
+**Why might image examples degrade spatial precision?** Three hypotheses:
+
+- **H1 (visual matching is less spatially precise):** Image few-shot examples
+  may encourage the VLM to match by visual similarity (pattern recognition)
+  rather than analytically localising the symbol centre. Text descriptions
+  ("the centre of the radiating lines at grid coordinates X, Y") may force
+  more precise spatial reasoning. This is the strongest hypothesis given that
+  the effect is consistent across all model/thinking combinations.
+
+- **H2 (different mound populations):** Image and text tracks detect partially
+  different mounds (Phase 3d cross-modal analysis showed ~67% overlap). The
+  mounds uniquely detected by the image track may be inherently harder to
+  localise — ambiguous symbols, partial occlusion, or cases where the symbol
+  centre does not align well with the digitised reference point.
+
+- **H3 (greedy matching artefact):** With more total detections, the greedy
+  spatial matching algorithm may make different assignment choices at wider
+  buffers, inflating the apparent gain. However, the effect is large and
+  consistent, making this unlikely as the sole explanation.
+
+**Implication for the paper:** Report F1 at both 20m (strict, scientific) and
+40–50m (relaxed, operational) as a sensitivity table. The text track is
+preferred for precise survey-grade applications; the image track's effective
+performance under operational tolerances is substantially better than the 20m
+metric suggests. At 50m, Pro HIGH image (0.852) nearly matches Pro HIGH text
+(0.862) — the modality gap almost disappears.
+
+**Implication for method:** The 20m buffer, while conservative and appropriate
+for the preregistered evaluation, may understate the practical utility of
+image-based detection where "finding the right area" matters more than
+pinpointing the exact symbol centre.
+
+---
+
+## Observation 191: Sessions 56–57 Key Findings Summary (2026-03-25)
+
+*Consolidated summary of experimental results from Sessions 56–57, covering
+consensus sweeps, PV diagnostics, the configuration audit, and sensitivity
+analyses. Intended as a reference for the paper write-up.*
+
+### Consensus results (384px, 20m buffer)
+
+**HIGH thinking is the key differentiator.** The strongest single factor
+for consensus detection quality is the proposer thinking level:
+
+| Condition | Best F1 | Config | Pool size |
+|-----------|---------|--------|-----------|
+| Flash HIGH text | 0.814 | 26-of-30 | N=30 |
+| Flash HIGH image | 0.752 | 7-of-10 | N=10 |
+| Pro HIGH text | 0.849 | 5-of-5 | N=5 |
+| Pro HIGH image | 0.703 | 3-of-5 | N=5 |
+| Flash MINIMAL text T=0.7 | 0.657 | 29-of-30 | N=30 |
+| Flash MINIMAL image | 0.680 | 8-of-10 | N=10 |
+
+- HIGH thinking adds ~0.13–0.16 F1 over MINIMAL (pairwise p<0.0001).
+- Pro HIGH text N=5 (0.849) outperforms Flash HIGH text N=5 (0.776) at
+  the single-run level, but the pairwise test is ns (p=0.874) at tile
+  level. Flash compensates through larger pool sizes (N=30 → 0.814).
+- Text consistently outperforms image at 20m (see Obs 190 for why this
+  gap narrows at relaxed buffers).
+
+### Proposer-Verifier (PV) pipeline results
+
+| Pipeline | F1 | Config | P | R |
+|----------|-----|--------|-------|-------|
+| Flash HIGH text 4-of-5 + Flash PV | **0.864** | t=0.15 | 0.915 | 0.818 |
+| Pro HIGH text 3-of-5 + Flash PV | 0.850 | t=0.05 | 0.954 | 0.766 |
+
+- **Flash HIGH text + Flash PV is the best overall result** (F1=0.864,
+  95% CI [0.833, 0.893]). This exceeds the best consensus-only result
+  (0.814) by 0.050 F1.
+- Pro PV is close (0.850) but Flash wins because the PV architecture
+  benefits from a higher-recall proposer — Flash produces more candidates
+  (3,736 at 1-of-5) that the verifier filters, while Pro's precision
+  (504 candidates) leaves little for the verifier to improve (Obs 186).
+- CIs overlap, so the difference is not significant.
+
+### Verifier findings
+
+- **Medium thinking significantly helps** the Flash verifier (dF1=+0.010,
+  p=0.001 on text; Obs 187). The medium verifier also produces better-
+  calibrated probabilities (lower optimal threshold).
+- **True Pro verifier never tested.** All verifier runs used Flash
+  (confirmed by comprehensive audit). Pro verifier runs now submitted
+  overnight (Waves 2+4) to fill the proposer × verifier model matrix.
+- **HIGH thinking hurts the verifier** on noisy data (Obs 185, Phase 3d)
+  but the effect on consensus-filtered candidates is untested. A Flash
+  HIGH verifier run is included in the overnight Wave 4.
+
+### Temperature sensitivity
+
+- **T=0.7 >> T=1.0** at all pool sizes: dF1 ~+0.15, p<0.0001 (Obs 190).
+  Not a subtle effect — T=0.7 wins 94–101 tiles vs 12–19 losses.
+- Discovered via an unplanned comparison: the consensus-384 T=1.0 bug
+  (E43) and the corrected T=0.7 baseline provide a controlled temperature
+  comparison. Per the "unexpected data as discovery" policy, both datasets
+  were preserved and compared.
+
+### Configuration audit findings
+
+- **1,740 runs audited** across 239 conditions (Session 57). Results:
+  173/174 multi-run conditions internally consistent; 1 intentional
+  exception.
+- **E42 was a misdiagnosis**: `configuration.model` metadata field is
+  unreliable when `--model` override is used. Pro proposer runs genuinely
+  used gemini-3.1-pro-preview (confirmed via GeoJSON features, cost
+  estimates, and logs). Metadata bug fixed in `lib_llm_metadata.py`.
+- **22 bugs fixed** (4 critical, 9 medium, 9 low) across 11 files.
+- **T=1.0 bugs** in both consensus-384 (E43) and single-pass-384 (E44)
+  from the same config propagation failure.
+
+### Buffer distance sensitivity (Obs 190)
+
+Image tracks gain 0.09–0.15 F1 from relaxing the spatial buffer from
+20m to 50m; text tracks gain only 0.01. Distance distribution analysis
+confirmed this is genuine modality-dependent spatial precision — image
+detections produce 2–5× more near-misses in the 20–50m zone. At 50m,
+the text-image gap nearly disappears (Pro HIGH image 0.852 vs text 0.862).
+
+### Phase 3c diversity (Track 1 complete)
+
+The H9 diversity batch (Track 1, image-using) completed 125/125 units.
+Analysis run on sapphire; results in `results/phase3c-diversity/track1-image/`.
+
+### Open questions for the paper
+
+1. Does a Pro verifier improve on Flash? (overnight runs will answer)
+2. Does HIGH verifier thinking help on consensus-filtered candidates?
+3. What is the optimal buffer distance for operational deployment?
+4. Does diversity (H9) improve consensus beyond identical passes?
+
+---
+
+## Observation 192: Obs 148 variance stabilisation did not replicate at scale (2026-03-25)
+
+*Session 58. Follow-up to Obs 148 (Session 42), which found a 5× SD reduction
+for Condition C (HN image rotation) on the 60-tile pilot.*
+
+**Context**: The Phase 3c pilot (60 tiles, Track 1 image) found that
+Condition C had remarkably low variance (SD=0.008 vs baseline SD=0.041,
+p=0.010 F-test, p=0.032 permutation test). This was interpreted as HN
+rotation averaging out the FP profile across replications (Obs 148), and
+Condition C was adopted for the image track carry-forward on the strength
+of this secondary finding.
+
+**Full-run result (340 tiles)**: The effect did not replicate.
+
+| Condition | Pilot SD (60 tiles) | Full SD (340 tiles) | Pilot variance ratio | Full variance ratio |
+|-----------|--------------------:|--------------------:|---------------------:|--------------------:|
+| A (baseline) | 0.041 | 0.0153 | 1.00× | 1.00× |
+| B (text) | — | 0.0134 | — | 0.77× |
+| C (image/HN) | 0.008 | 0.0176 | 0.04× | **1.33×** |
+| D (temperature) | — | 0.0143 | — | 0.88× |
+| E (full) | — | 0.0082 | — | 0.29× |
+
+Condition C went from the *lowest* variance (0.04× baseline) to slightly
+*higher* than baseline (1.33×) at scale. The mechanistic interpretation in
+Obs 148 — that HN rotation averages out the FP profile — is not supported
+by the full dataset.
+
+**Why the pilot finding likely did not generalise:**
+
+1. **Baseline variance collapsed.** Baseline SD dropped from 0.041 (pilot)
+   to 0.015 (full run) — a 2.7× reduction from evaluation area alone. With
+   340 tiles instead of 60, per-replication F1 is inherently more stable
+   for all conditions, leaving less room for any diversity mechanism to
+   improve upon.
+
+2. **Small-n variance estimates are unreliable.** With n=5 replications,
+   sample variance has enormous uncertainty. Even the statistically
+   significant pilot tests (F-test p=0.010) had very low power — the
+   probability of a non-replication was high even if a real effect existed.
+
+3. **The 60-tile evaluation area may have been atypical.** The pilot used
+   the validation subset (60 tiles, ~56 reference mounds), which may have
+   concentrated mounds in areas where HN rotation happened to stabilise
+   the FP boundary. The full evaluation area (340 tiles, ~305 reference
+   mounds) dilutes any such local effect.
+
+**Condition E shows the lowest variance at scale** (SD=0.0082, variance
+ratio 0.29×) and **Condition B is lowest on Track 2** (SD=0.0046, 0.15×),
+but with n=5 replications these could easily be chance. Formal variance
+testing is not warranted without a stronger prior.
+
+**Methodological lesson**: Exploratory secondary findings from
+under-powered pilot studies should be flagged but not trusted for
+carry-forward decisions without replication. Obs 148 correctly noted the
+finding was "based on practical significance rather than the preregistered
+primary outcome," but the carry-forward decision was still made on a
+single pilot result. The full-run non-replication vindicates the
+preregistered primary analysis (no diversity benefit) over the exploratory
+secondary finding.
+
+---
+
+## Observation 193: PV Pipeline Crosses F1=0.9 and Reveals Precision–Recall Operating Points (2026-03-25)
+
+*Session 58. Buffer sensitivity analysis on the top 5 PV pipeline
+configurations.*
+
+**The F1 > 0.9 threshold has been reached.** Flash HIGH text 16-of-30 +
+Flash PV achieves F1=0.904 (P=0.930, R=0.880) at 30m buffer — the first
+configuration in this project to cross the 0.9 barrier. At the strict 20m
+evaluation buffer it is F1=0.890, still the project best.
+
+| Condition | 20m | 30m | 40m | n |
+|-----------|-----|-----|-----|---|
+| Flash HIGH text 16-of-30 + PV | 0.890 | **0.904** | 0.904 | 412 |
+| Flash HIGH text 6-of-10 + PV | 0.877 | 0.898 | 0.900 | 418 |
+| Flash MINIMAL T=0.7 4-of-5 + PV | 0.871 | 0.883 | 0.888 | 378 |
+| Flash HIGH text 4-of-5 + PV | 0.864 | 0.891 | 0.891 | 389 |
+| Pro HIGH text 3-of-5 + PV | 0.849 | 0.865 | 0.867 | 349 |
+
+**Text PV results saturate at 30m** — virtually no gain from 30→50m for
+any condition, consistent with the text track's tight spatial precision
+(Obs 190). This means 30m is the natural operational buffer for text-based
+detection: it captures all recoverable near-misses without inflating FP
+matches.
+
+**Cost-effectiveness of N=5.** Flash HIGH text 4-of-5 + PV reaches
+F1=0.891 at 30m, just 0.013 below the N=30 result (0.904). This is 6×
+cheaper in API calls (5 proposer passes + 1 verifier vs 30 + 1). For most
+operational applications, the 4-of-5 configuration represents the
+practical sweet spot.
+
+**Precision–recall operating points for different use cases.** The top 5
+conditions span a useful range of precision–recall trade-offs:
+
+- **High-precision survey** (minimise false positives): Pro HIGH text
+  3-of-5 + PV delivers P=0.971 at 30m (R=0.779). Fewer than 3 false
+  alarms per 100 detections. Useful where each detection triggers
+  expensive follow-up (e.g., ground-truthing, excavation planning) and
+  missing some mounds is acceptable.
+
+- **Balanced detection** (maximise F1): Flash HIGH text 16-of-30 + PV at
+  30m (P=0.930, R=0.880). The best overall, but expensive to produce.
+  Flash HIGH text 4-of-5 + PV at 30m (P=0.943, R=0.844) is nearly as
+  good at a fraction of the cost.
+
+- **High-recall screening** (minimise missed mounds): Flash HIGH text
+  6-of-10 + PV at 30m achieves R=0.880 with P=0.916. The highest recall
+  among the top configurations while maintaining >0.9 precision.
+
+- **Budget-constrained** (cheapest acceptable result): Flash MINIMAL T=0.7
+  4-of-5 + PV at 30m reaches F1=0.883 (P=0.950, R=0.825) using the
+  cheapest proposer (MINIMAL thinking, no HIGH reasoning cost). Only 17
+  points below the best result, at perhaps one-third the per-run cost.
+
+**Broader significance**: Achieving F1 > 0.9 on Soviet 1:25,000
+topographic map burial mound detection — a task requiring fine-grained
+symbol discrimination in cluttered cartographic contexts — demonstrates
+that VLM-based map reading has crossed a practical utility threshold. The
+combination of consensus voting (for recall) and adversarial verification
+(for precision) produces results that could meaningfully support
+archaeological survey work, particularly as a screening tool to prioritise
+field verification.
+
+### Low-cost N=5 operating points
+
+The top 5 N=5 PV configurations (5 proposer passes + 1 verifier — the
+minimum practical PV pipeline) reveal that **MINIMAL thinking dominates
+the low-cost tier**:
+
+| Rank | Condition | F1@20m | F1@30m | P@30m | R@30m | n |
+|------|-----------|--------|--------|-------|-------|---|
+| 1 | Flash MINIMAL T=0.7 4-of-5 + PV | 0.871 | 0.883 | 0.950 | 0.825 | 378 |
+| 2 | Flash MINIMAL T=0.7 3-of-5 + PV | 0.870 | 0.889 | 0.925 | 0.855 | 402 |
+| 3 | Flash HIGH text 4-of-5 + PV | 0.864 | 0.891 | 0.943 | 0.844 | 389 |
+| 4 | Flash MINIMAL T=0.7 2-of-5 + PV | 0.862 | 0.879 | 0.891 | 0.867 | 423 |
+| 5 | Flash HIGH text 3-of-5 + PV | 0.853 | 0.883 | 0.876 | 0.890 | 442 |
+
+Three of the top five use MINIMAL thinking — the cheapest proposer
+configuration. The verifier compensates so effectively that expensive HIGH
+reasoning in the proposer adds only marginal benefit at the N=5 scale.
+This is consistent with Obs 186: the PV architecture benefits from a
+higher-recall, lower-precision proposer because the verifier's job is
+precision recovery.
+
+**For practical deployment recommendations:**
+
+- **Cheapest good result**: Flash MINIMAL T=0.7 2-of-5 + PV at 30m
+  gives F1=0.879 with the highest recall (R=0.867) among the top 5.
+  Good for initial screening where coverage matters.
+
+- **Best precision at low cost**: Flash MINIMAL T=0.7 4-of-5 + PV at 30m
+  gives P=0.950 (only 5 FP per 100 detections) with F1=0.883. The
+  stricter vote threshold filters more aggressively before the verifier,
+  producing very clean output.
+
+- **Best overall N=5**: Flash HIGH text 4-of-5 + PV at 30m gives
+  F1=0.891 (P=0.943, R=0.844). The HIGH thinking cost is justified here
+  by a clear F1 advantage at 30m, though at 20m the MINIMAL conditions
+  are within 0.007 F1.
+
+The gap between MINIMAL and HIGH shrinks as the vote threshold increases
+(4-of-5 vs 2-of-5), because stricter consensus filtering does much of
+the work that HIGH thinking provides — both reduce false positives. At
+the strictest threshold (5-of-5), MINIMAL actually leads HIGH by +0.009
+F1 (0.846 vs 0.837). The implication: if you can afford N=5 passes,
+MINIMAL thinking with strict voting is more cost-effective than HIGH
+thinking with lenient voting.
+
+---
