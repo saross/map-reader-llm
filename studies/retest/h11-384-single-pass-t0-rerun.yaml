@@ -1,0 +1,57 @@
+study:
+  name: 'Retest: H11 Single-Pass 384px T=0.0 (corrected)'
+  version: 1.0-retest
+  description: >
+    Corrected rerun of single-pass-384 at T=0.0. Original runs executed
+    at T=1.0 due to the same config propagation bug as consensus-384
+    (temperature from JSON config overrode the YAML-specified T=0.0).
+
+    Uses full_evaluation_manifest (487 tiles) to match all consensus and
+    PV analyses. The 240-tile validation subset can be derived post-hoc
+    by clipping to validation_bounds.geojson.
+  phase: h11
+  hypothesis: H11
+  created: '2026-03-25'
+  retest_notes: >
+    T=1.0 bug correction. Original single-pass-384 used detect_brief-text.json
+    which has temperature: 1.0 hardcoded. The YAML specified T=0.0 in fixed
+    and carried_forward sections, but the config file default was applied
+    instead. This rerun uses explicit temperature: 0.0 in conditions to
+    ensure the CLI --temperature flag is passed.
+
+carried_forward:
+  optimal_me_config: prompts/configs/detect_brief-text.json
+  optimal_me_name: brief-text
+  optimal_temperature: 0.0
+  source: 'Phase 2 — best single-pass text config (F1=0.660 at T=0.0)'
+
+inputs:
+  manifest: inputs/tiles_384/full_evaluation_manifest.json
+  tile_size: 384
+  tiles_dir: inputs/tiles_384
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+
+execution:
+  runs: 10
+  workers: 1
+  output_dir: outputs/retest/h11-single-pass-384-t0
+
+conditions:
+- name: brief-text-t0
+  config: prompts/configs/detect_brief-text.json
+  temperature: 0.0
+  thinking_level: minimal
+  description: >
+    Single-pass brief-text, T=0.0, MINIMAL thinking, Flash.
+    Corrected rerun of the original single-pass-384 study.
+
+estimates:
+  tiles: 487
+  runs: 10
+  total_execution_units: 10
+  tiles_per_unit: 487
+  total_api_calls: 4870
+  cost_per_call_usd: 0.001
+  cost_batch_discount: 0.5
+  cost_usd_total: 1.00
