@@ -12,33 +12,83 @@
 
 ## Pending
 
+### Next Session: Systematic Review and Remaining Work
+
+**Priority**: Start of next session — before launching new runs.
+
+The project is in the final experimentation stages before write-up.
+Next session should begin with a systematic review of what's done and
+what remains, covering both API runs and local analyses.
+
+#### Immediate priorities (in order)
+
+1. **Commit all Session 57 changes** — bug fixes (22), errata updates,
+   renamed directories, new analysis results, audit reports
+2. **Audit correctives** — rename T=1.0 directories, re-run single-pass
+   at T=0.0, regenerate stale pairwise JSONs, update Obs 186–187
+3. **Complete PV baseline** — run Flash minimal verifier on the 5
+   conditions with crops ready (22,088 candidates, ~$1.23 Batch API)
+4. **Buffer distance sensitivity** — re-evaluate top conditions at
+   30, 40, 50 m (sapphire, no API)
+5. **Review gap matrix** — what comparisons are needed for the paper?
+
+#### Remaining API work
+
+- PV baseline verifier runs (5 conditions, Flash minimal) — crops ready
+- Proposer × Verifier model matrix: 10 new verifier runs needed (4
+  Pro verifier on baselines, 4 on HIGH consensus, 2 thinking experiments)
+- Re-run single-pass-384 at T=0.0 (10 runs, ~$0.50)
+- Phase 3c H9 diversity Track 1 completion (nohup'd, check status)
+
+#### Remaining local analysis (sapphire, no API)
+
+- PV threshold derivation + sweep for each new verifier run
+- PV pairwise comparisons (after PV pipeline done)
+- Buffer distance sensitivity (30, 40, 50 m)
+- Phase 3c H9 diversity analysis
+- Update bootstrap-cis-384px.json
+- Write findings summary for working notes
+- Produce complete gap matrix for paper
+
+---
+
 ### Session 56 Follow-Up: Analyse Completed Batch Runs
 
-**Priority**: High — do at start of next session.
+**Priority**: High — ~~do at start of next session~~ mostly complete.
 
 **Context**: Session 56 submitted multiple batch API runs that should be
 complete by next session. All local analysis MUST run on sapphire.
 
 #### Check completion and patch failures
 
-- [ ] **Verify all proposer runs completed** — check checkpoints for:
-  - `flash-high-text-n5` (target: 30 runs) — was 12/30 at session end
-  - `flash-high-image-n5` (target: 10 runs) — **DONE** at session end
-  - `pro-high-image-n5` (target: 5 runs) — **DONE** at session end
-  - `flash-minimal-text-n30-t07` (target: 30 runs) — **DONE** at session end
-  - Phase 3c H9 diversity Track 1 (target: 80/80) — was 64/80 at session end
-- [ ] **Patch any tile failures** via `--patch-tiles` for each condition
+- [x] **Verify all proposer runs completed** — *(Completed 2026-03-25, Session 57)*
+  - `flash-high-text-n5`: 30/30 complete (batch resumed overnight, all 487 tiles OK)
+  - `flash-high-image-n5`: 10/10 complete
+  - `pro-high-image-n5`: 5/5 complete
+  - `flash-minimal-text-n30-t07`: 30/30 complete
+  - Phase 3c H9 diversity Track 1: 117/125 complete, batch resumed with nohup
+- [x] **Patch any tile failures** — no tile failures found in any condition
+  (all runs: 487/487 tiles succeeded) *(Verified 2026-03-25, Session 57)*
 
 #### Simple consensus sweeps (sapphire, no API)
 
-- [ ] **Flash HIGH text N=5/10/30 sweeps** — run `analyse_consensus_sweep.py`
-  with `--pool-sizes 5 10 30` on the completed 30-run data. N=5 sweep exists
-  (F1=0.776 at 5-of-5); N=10 and N=30 are new
-- [ ] **Flash HIGH image N=5/10 sweep** — `--pool-sizes 5 10`. N=5 exists
-  (F1=0.730 at 3-of-5); N=10 is new
-- [ ] **Pro HIGH image N=5 sweep** — `--pool-sizes 5`. Proposer data complete
-- [ ] **Flash MINIMAL text N=5/10/30 sweeps at T=0.7** — the corrected re-run
-  (30 runs complete). Replaces the T=1.0 results from consensus-384
+- [x] **Flash HIGH text N=5/10/30 sweeps** — *(Completed 2026-03-25, Session 57)*
+  N=5: F1=0.776 (5-of-5, replicates). N=10: F1=0.805 (9-of-10). N=30: F1=0.814
+  (26-of-30, best consensus result). See `results/h11-384-consensus-flash-high-text-n30/`
+- [x] **Flash HIGH image N=5/10 sweep** — *(Completed 2026-03-24, Session 57)*
+  N=5: F1=0.730 (3-of-5). N=10: F1=0.752 (7-of-10).
+  See `results/h11-384-consensus-flash-high-image-n10/`
+- [x] **Pro HIGH image N=5 sweep** — *(Completed 2026-03-24, Session 57)*
+  F1=0.703 (3-of-5). See `results/h11-384-consensus-pro-high-image-n5/`
+- [x] **Flash MINIMAL text N=5/10/30 sweeps at T=0.7** — *(Completed 2026-03-24, Session 57)*
+  N=5: F1=0.637 (5-of-5). N=10: F1=0.633 (10-of-10). N=30: F1=0.657 (29-of-30).
+  See `results/h11-384-consensus-flash-minimal-text-t07/`
+- [x] **Flash MINIMAL text N=5/10/30 sweeps at T=1.0** — *(Completed 2026-03-25, Session 57)*
+  N=5: F1=0.644 (5-of-5, replicates). N=10: F1=0.624 (9-of-10). N=30: F1=0.637 (28-of-30).
+  See `results/h11-384-consensus-flash-minimal-text-t10/`
+- [x] **Flash MINIMAL image N=5/10 sweep** — *(Completed 2026-03-25, Session 57)*
+  N=5: F1=0.658 (4-of-5). N=10: F1=0.680 (8-of-10, replicates).
+  See `results/h11-384-consensus-flash-minimal-image/`
 
 #### PV pipeline (Batch API verifier + sapphire evaluation)
 
@@ -49,10 +99,80 @@ Use the `derive_vote_threshold_results.py` script to derive x-of-N results
 from a single 1-of-N union verifier run (saves ~80% of verifier API calls).
 
 **Verifier jobs already complete** (derive thresholds + evaluate on sapphire):
-- [ ] **Flash HIGH text N=5 + Flash PV** — verifier done (3,736 results).
-  Derive 1-of-5 through 5-of-5, run threshold sweeps
-- [ ] **Pro HIGH text N=5 + Pro PV** — verifier done (504 results, mean
-  prob 0.819). Derive 1-of-5 through 5-of-5, run threshold sweeps
+- [x] **Flash HIGH text N=5 + Flash PV** — *(Completed 2026-03-25, Session 57)*
+  Best: 4-of-5 at t=0.15, F1=0.864 [0.833, 0.893], P=0.915, R=0.818.
+  Full sweep at all 5 vote thresholds. See `results/h11-384-pv-diagnostic/flash-high-text-*of5/`
+- [x] **Pro HIGH text N=5 + Flash PV** — *(Completed 2026-03-25, Session 57)*
+  **NOTE**: Verifier used Flash (gemini-3-flash, thinking=medium), NOT Pro.
+  Config hardcodes Flash; `--model` override was not passed. See errata below.
+  Best: 3-of-5 at t=0.05, F1=0.850 [0.812, 0.883], P=0.954, R=0.766.
+  See `results/h11-384-pv-diagnostic/pro-high-text-*of5/`
+
+#### Verifier model error (discovered Session 57)
+
+**All verifier runs used gemini-3-flash** — confirmed via `cost_estimate.
+pricing_used.model` in every run.meta.json (31 verified directories).
+The "medium-verifier" runs (formerly labelled "pro-verifier") used Flash
+with `thinking=medium`, not Pro. The verifier config hardcodes Flash and
+`--model gemini-3.1-pro` was never passed for any verifier invocation.
+
+These runs are still valuable as a **verifier thinking-level comparison**
+(Flash minimal vs Flash medium, p=0.001 on text), but the intended
+proposer × verifier model matrix is incomplete.
+
+#### Proposer × Verifier model matrix (Batch API)
+
+**Intended 2×2 matrix** across Flash and Pro for both proposer and
+verifier stages, on single-pass baseline data (text + image tracks):
+
+**Text track (single-pass proposer baseline):**
+
+|  | Flash verifier (minimal) | Flash verifier (medium) | Pro verifier (medium) |
+|--|--------------------------|------------------------|-----------------------|
+| **Flash proposer** | ✓ `text-baseline` | ✓ `flash-minimal-text-medium-verifier` | ✗ MISSING |
+| **Pro proposer** | ✓ `pro-text-minimal-verifier` | ✓ `pro-text-medium-verifier` | ✗ MISSING |
+
+**Image track (single-pass proposer baseline):**
+
+|  | Flash verifier (minimal) | Flash verifier (medium) | Pro verifier (medium) |
+|--|--------------------------|------------------------|-----------------------|
+| **Flash proposer** | ✓ `image-baseline` | ✓ `flash-minimal-image-medium-verifier` | ✗ MISSING |
+| **Pro proposer** | ✓ `pro-image-minimal-verifier` | ✓ `pro-image-medium-verifier` | ✗ MISSING |
+
+**HIGH consensus (text, N=5 1-of-5 union):**
+
+|  | Flash verifier (minimal) | Flash verifier (medium) | Pro verifier (medium) |
+|--|--------------------------|------------------------|-----------------------|
+| **Flash HIGH** | ✓ `flash-high-text-1of5` | ✗ MISSING | ✗ MISSING |
+| **Pro HIGH** | ✗ MISSING | ✓ `pro-high-text-1of5` | ✗ MISSING |
+
+**New verifier runs needed** (all use `--model gemini-3.1-pro
+--thinking-level medium` for Pro verifier; Batch API):
+
+Single-pass baseline matrix (4 runs):
+- [ ] **Flash text baseline + Pro verifier** — reuse existing crops
+  from `crops/text-baseline/`
+- [ ] **Flash image baseline + Pro verifier** — reuse existing crops
+  from `crops/image-baseline/`
+- [ ] **Pro text baseline + Pro verifier** — reuse existing crops
+  from `crops/pro-medium-text-baseline/`
+- [ ] **Pro image baseline + Pro verifier** — reuse existing crops
+  from `crops/pro-medium-image-baseline/`
+
+HIGH consensus matrix (4 runs):
+- [ ] **Flash HIGH text N=5 + Pro verifier** — reuse crops from
+  `crops/flash-high-text-1of5/`
+- [ ] **Flash HIGH text N=5 + Flash medium verifier** — reuse crops,
+  `--thinking-level medium`
+- [ ] **Pro HIGH text N=5 + Pro verifier** — reuse crops from
+  `crops/pro-high-text-1of5/`
+- [ ] **Pro HIGH text N=5 + Flash minimal verifier** — reuse crops,
+  fills the gap in the HIGH consensus matrix
+
+Verifier thinking experiments (2 runs):
+- [ ] **Flash HIGH text N=5 + Flash HIGH verifier** — `--thinking-level
+  high`, test whether HIGH thinking helps the verifier on consensus-
+  filtered candidates (prior Obs 185 suggests it may hurt on noisier data)
 
 **Need full PV pipeline** (consensus union → crops → verifier → derive → eval):
 - [ ] **Flash HIGH image N=5 + Flash PV**
@@ -73,13 +193,23 @@ Use `paired_permutation_consensus.py` with `--bounds` flag.
 - Pro HIGH vs Flash HIGH text: dF1=+0.002, p=0.874 ns
 - Flash HIGH vs Flash MINIMAL image: dF1=+0.009, p=0.324 ns
 
+**Completed Session 57** (2026-03-25, 16 new comparisons, 20 total):
+- [x] Flash HIGH image vs Pro HIGH image N=5: dF1=-0.028, p=0.018 * (Flash better)
+- [x] Flash HIGH vs MINIMAL T=0.7 text N=5: dF1=-0.016, p=0.131 ns
+- [x] Flash HIGH vs MINIMAL T=0.7 text N=10: dF1=+0.018, p=0.059 ns (trend)
+- [x] Flash HIGH vs MINIMAL T=0.7 text N=30: dF1=+0.016, p=0.094 ns (trend)
+- [x] Pro HIGH vs MINIMAL T=0.7 text N=5: dF1=-0.014, p=0.165 ns
+- [x] Flash HIGH text vs image N=5: dF1=-0.009, p=0.432 ns
+- [x] Flash HIGH text vs image N=10: dF1=+0.019, p=0.083 ns (trend)
+- [x] Pro HIGH text vs image N=5: dF1=+0.021, p=0.111 ns
+- [x] Flash HIGH text N=10 vs N=5: dF1=+0.016, p=0.025 *
+- [x] Flash HIGH text N=30 vs N=10: dF1=-0.001, p=0.852 ns
+- [x] Flash HIGH vs MINIMAL image N=10: dF1=+0.002, p=0.867 ns
+- [x] MINIMAL T=0.7 vs T=1.0 text N=5: dF1=+0.164, p<0.0001 ***
+- [x] MINIMAL T=0.7 vs T=1.0 text N=10: dF1=+0.143, p<0.0001 ***
+- [x] MINIMAL T=0.7 vs T=1.0 text N=30: dF1=+0.151, p<0.0001 ***
+
 **Still needed**:
-- [ ] **Flash HIGH image vs Pro HIGH image** (N=5, matched T=0.7)
-- [ ] **Flash MINIMAL T=0.7 vs Flash HIGH** at N=5, N=10, N=30 — clean
-  temperature-matched comparison using the corrected MINIMAL re-run
-- [ ] **Flash MINIMAL T=0.7 vs Pro HIGH** at N=5
-- [ ] **Flash HIGH N=5 vs N=10 vs N=30** — quantify pool size benefit with
-  HIGH thinking. Important for deciding whether Pro N=10 is worth the cost
 - [ ] **PV pairwise comparisons** — repeat key comparisons using PV-filtered
   results (after PV pipeline is done)
 
@@ -91,13 +221,16 @@ provides T=0.7. Both are N=30, MINIMAL thinking, 384px — identical except
 temperature. This is an unplanned but free comparison of consensus
 temperature at the optimal tile size.
 
-- [ ] **Compare Flash MINIMAL text N=30 at T=0.7 vs T=1.0** — full
-  consensus sweeps at N=5, N=10, N=30 for both temperatures. Pairwise
-  permutation tests at matched pool sizes and optimal thresholds. The
-  512px data showed T=0.7 slightly ahead of T=1.0 for MINIMAL; this
-  tests whether the same holds at 384px.
-- [ ] **If interesting, add to paper** as a sensitivity analysis for
-  consensus temperature at the optimal tile size.
+- [x] **Compare Flash MINIMAL text N=30 at T=0.7 vs T=1.0** —
+  *(Completed 2026-03-25, Session 57)*. T=0.7 dramatically better than
+  T=1.0 at all pool sizes: N=5 dF1=+0.164 (p<0.0001), N=10 dF1=+0.143
+  (p<0.0001), N=30 dF1=+0.151 (p<0.0001). Not a subtle effect — T=0.7
+  wins 94-101 tiles vs 12-19 losses. The temperature bug hid ~15 F1
+  points of performance. **Add to paper as sensitivity analysis.**
+- [x] **If interesting, add to paper** — YES, highly significant.
+  Consensus sweeps for both temperatures at N=5/10/30 complete.
+  See `results/h11-384-consensus-flash-minimal-text-t07/` and
+  `results/h11-384-consensus-flash-minimal-text-t10/`.
 
 #### 512px PV pipeline (low priority)
 
@@ -110,52 +243,133 @@ Proposer data exists from Phase 3a. Needs verifier batch jobs + sapphire eval.
 
 #### Phase 3c H9 Diversity analysis
 
-- [ ] **Verify Phase 3c H9 Track 1 complete** (80/80) and patch failures
-- [ ] **Run diversity analysis** per the existing Phase 3c analysis scripts
+- [x] **Verify Phase 3c H9 Track 1 complete** — 125/125 units, 0 failures.
+  *(Completed 2026-03-25, Session 58)*
+- [x] **Run diversity analysis** — both Track 1 (image) and Track 2 (text)
+  re-analysed on sapphire. Results in `results/phase3c-diversity/`.
+  *(Completed 2026-03-25, Session 58)*
 - [ ] **Compare with Phase 3c Track 2** (text, already complete from prior session)
+
+#### Buffer distance sensitivity analysis (sapphire, no API)
+
+All experiments to date used a strict 20 m spatial matching buffer. For
+the paper and for practical deployment, we should also report metrics at
+relaxed thresholds. At 384px tile size with ~15 px symbols, 40–50 m
+corresponds to ~10–12 px — a reasonable "hit" radius for production use.
+
+- [x] **Re-evaluate high-performing conditions at 30, 40, and 50 m buffers** —
+  *(Completed 2026-03-25, Session 58)*. 15 runs on sapphire (5 conditions
+  × 3 buffers). Results in `results/h11-384-buffer-sensitivity/`. Key finding:
+  image tracks gain 0.09–0.15 F1 from 20→50m; text tracks gain only 0.01.
+  See Obs 190 for distance distribution analysis. PV buffer sensitivity
+  deferred — `evaluate_pv_results.py` lacks `--buffer-metres` support.
+- [ ] **Report as sensitivity table in paper** — one table showing F1/P/R
+  at 20, 30, 40, 50 m for the top conditions.
+- [ ] **Create standalone PV buffer sensitivity script** —
+  `scripts/analyse_pv_buffer_sensitivity.py` that takes a verified PV
+  output dir (probabilities.json + candidate_manifest.json), a threshold,
+  and evaluates at multiple buffer distances (default 20, 30, 40, 50 m).
+  Keep `evaluate_pv_results.py` focused on threshold sweeps; buffer
+  sensitivity is a separate analytical concern. Should support batch mode
+  (multiple conditions in one invocation) for the paper sensitivity table.
 
 #### Consolidation and review
 
 - [ ] **Update bootstrap-cis-384px.json** with all new PV results
-- [ ] **Write session 56 key findings summary** for working notes:
-  - HIGH thinking is the key differentiator for consensus, not the model
-    (Pro HIGH vs Flash HIGH: p=0.874 ns)
-  - Pro HIGH text N=5 simple consensus F1=0.849 — approaches Flash N=10 + PV
-    champion (0.883) without verifier
-  - Pro single-pass MEDIUM underperforms Flash MINIMAL (proposer degradation)
-  - N=5 vs N=10 pool size dramatic for text (+0.28), minimal for image (+0.02)
-  - Temperature bug in consensus-384 text runs (T=1.0 not T=0.7) — corrected
+- [x] **Write session 56–57 key findings summary** — Obs 191 added to
+  working notes. *(Completed 2026-03-25, Session 58)* Content:
+  - HIGH thinking is the key differentiator for consensus
+  - Pro HIGH text N=5 F1=0.849 (genuine Pro, confirmed via deep dive);
+    Flash HIGH text N=5 F1=0.776 — Pro outperforms at N=5 but pairwise
+    test ns (p=0.874) at tile level
+  - Flash HIGH text N=30 consensus F1=0.814 is best consensus-only result
+  - Flash HIGH text 4-of-5 + Flash PV F1=0.864 is best overall result
+  - Pro HIGH text 3-of-5 + Flash PV F1=0.850 — Pro close but Flash wins
+  - Medium thinking significantly helps Flash verifier (p=0.001)
+  - True Pro verifier never tested (all verifiers used Flash)
+  - T=0.7 >> T=1.0 at all pool sizes (dF1 ~+0.15, p<0.0001)
+  - single-pass-384 also has T=1.0 bug (newly discovered in audit)
+  - Metadata bug in `lib_llm_metadata.py` — `configuration.model` field
+    was unreliable when `--model` override used (fixed Session 57)
 - [ ] **Review**: do we have all comparisons needed for the paper? Produce a
   complete matrix of what exists and what gaps remain
 
-### Comprehensive Run Audit (new session)
+### Comprehensive Run Audit
 
-**Priority**: High — do before writing paper results sections.
+- [x] **Audit all completed runs against preregistration and carry-forward
+  values** — *(Completed 2026-03-25, Session 57)*. Audited 1,740 runs
+  across 239 conditions. See `reports/configuration-audit-2026-03-25-v2.md`.
+  Key findings:
+  - E42 was a misdiagnosis: `configuration.model` metadata field is
+    unreliable due to bug in `lib_llm_metadata.py`. Pro proposer runs
+    genuinely used gemini-3.1-pro-preview (confirmed via GeoJSON features,
+    cost_estimate, and logs). All verifier runs used Flash (confirmed).
+  - consensus-384 T=1.0 bug: confirmed, corrected replacement verified
+  - **single-pass-384 T=1.0 bug (NEW)**: 10 runs at T=1.0 not T=0.0
+  - Phase 3a "-high" mislabelling: 180 runs, known and documented
+  - 12 runs used Pro (proposers only); 1,728 used Flash
+  - 173/174 multi-run conditions internally consistent
+  - 3 pairwise comparisons confounded by T=1.0 bug
 
-- [ ] **Audit all completed runs against preregistration and carry-forward values**.
-  For each completed proposer and verifier run, verify:
-  1. **Model**: correct model used (check meta.json `configuration.model`)
-  2. **Temperature**: matches intended value (T=0.7 for consensus, T=0.0 for
-     baselines). The T=1.0 bug in consensus-384 text runs (discovered session 56)
-     shows meta recording is the ground truth, not the study YAML
-  3. **Thinking level**: MINIMAL for Flash, MEDIUM/HIGH for Pro as intended
-  4. **Prompt config**: correct instruction file, example composition, and
-     ordering match the preregistered or carry-forward specification
-  5. **Tile size and bounds**: 384px runs use 384px tiles and bounds; 512px
-     likewise
-  6. **Single-parameter variation**: for any comparison pair, confirm only the
-     target parameter differs. Flag any confounds (e.g., the T=1.0 vs T=0.7
-     confound in the original MINIMAL vs HIGH text comparison)
-  7. **Consistency across related runs**: all N runs within a condition used
-     identical configuration (same config, temperature, thinking, model)
+### Audit Correctives (from Session 57 audit)
 
-  Scope: all runs under `outputs/h11/pv-diag-384/`, `outputs/h11/consensus-384/`,
-  and `outputs/retest/`. Cross-reference meta.json files against study YAMLs.
-  Produce a checklist report in `planning/` or `reports/`.
+**Priority**: High — complete before writing paper results sections.
 
-  **Motivation**: The T=0.7 temperature bug went undetected for 10 days and
-  affected 30 runs. Similar silent configuration errors may exist elsewhere.
-  A systematic audit before paper submission is essential.
+#### Temperature bug correctives
+
+- [x] **Rename consensus-384 to clearly indicate T=1.0 error** — renamed
+  to `outputs/h11/consensus-384-UNINTENDED-T1.0/` with README.md. Pairwise
+  JSON paths updated (3 files). Protocol errata E43 added.
+  *(Completed 2026-03-25, Session 58)*
+- [x] **Rename single-pass-384 to clearly indicate T=1.0 error** — renamed
+  to `outputs/h11/single-pass-384-UNINTENDED-T1.0/` with README.md.
+  Protocol errata E44 added. Corrected T=0.0 rerun in progress at
+  `outputs/retest/h11-single-pass-384-t0/`.
+  *(Completed 2026-03-25, Session 58)*
+- [ ] **Re-run single-pass-384 at T=0.0** — 10 runs, Flash MINIMAL,
+  T=0.0, 384px. This is the deterministic single-pass baseline needed
+  for the tile-size comparison. Estimated cost: ~$0.50 via Batch API.
+  Use explicit `--temperature 0.0` on CLI to avoid config default.
+
+#### Pairwise comparison fixes
+
+- [x] **Regenerate 3 confounded pairwise comparisons** — audit found both
+  confounded comparisons already superseded by corrected `*-t0.7-*`
+  versions (Session 57). Superseded files archived to
+  `archive/superseded-pairwise/`. 3 intentional T=0.7 vs T=1.0
+  comparisons confirmed correct (they use consensus-384 AS T=1.0 data).
+  *(Verified and archived 2026-03-25, Session 58)*
+- [x] **Regenerate stale pairwise JSON files** — comprehensive audit of
+  all 19 pairwise JSONs found no stale `study_dir` paths. All paths
+  resolve to existing directories. E42 rename cycle did not leave stale
+  references. *(Verified 2026-03-25, Session 58)*
+
+#### Documentation updates
+
+- [x] **Update working notes Obs 186–187** — verified already correct.
+  Both observations were corrected in-session after E42 deep dive
+  confirmed Pro genuine. Content accurately describes Flash vs Pro
+  findings. *(Verified 2026-03-25, Session 58)*
+
+#### Minor cleanup
+- [x] **Complete 6 incomplete retest Phase 3c runs** — all picked up by
+  nohup'd diversity resumption. Final batch completed 125/125 units,
+  0 failures. *(Completed 2026-03-25, Session 58)*
+- [ ] **Add defensive model check to run_phase2.py and run_pv.py** — when
+  a study YAML or directory name implies a specific model (e.g., "pro"),
+  verify the resolved model name matches before proceeding. Prevents
+  recurrence of E42.
+
+### Code Audit Bug Fixes (Session 57)
+
+- [x] **All 22 bugs fixed** *(Completed 2026-03-25, Session 57)*:
+  4 critical (C1–C4), 9 medium (M1–M9), 9 low (L1–L9). Linting clean,
+  tier1 tests pass (13 pre-existing failures unrelated to changes).
+  Files modified: `lib_llm_metadata.py`, `lib_batch_api.py`, `run_pv.py`,
+  `run_phase2.py`, `4_detect_mounds_batch.py`, `5_verify_crops.py`,
+  `derive_vote_threshold_results.py`, `extract_candidates.py`,
+  `merge_passes.py`, `paired_permutation_consensus.py`,
+  `evaluate_pv_results.py`.
 
 ### Two-Stage Pipeline Optimisation (Post Phase 3d Pilot)
 
