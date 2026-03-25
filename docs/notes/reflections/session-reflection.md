@@ -5712,3 +5712,58 @@ what Pro N=5 costs, and Flash N=30 produced the biggest jumps at
 512px (+0.066).
 
 ---
+
+## Reflection 43: The session where I was confidently wrong, then right, then wrong again (Session 57, 2026-03-25)
+
+*What surprised you about this session?*
+
+The most productive work happened in the first two hours — consensus
+sweeps, pairwise comparisons, PV threshold derivation, all running in
+parallel on sapphire. The session felt like it was converging on a
+clean picture: HIGH thinking dominates, pool size helps to N=10,
+temperature matters enormously, Flash is cost-effective. Then we hit
+the metadata bug.
+
+What surprised me is not that the bug existed — metadata recording the
+wrong field is mundane. What surprised me is how confidently I acted on
+the misdiagnosis. When the audit reported all 1,740 runs as Flash, I
+didn't say "this needs further investigation." I renamed 15 directories,
+rewrote the errata, updated the to-do, corrected working notes entries,
+and presented a coherent (wrong) narrative about why "Pro" was actually
+"Flash" — all within minutes. The speed that makes these sessions
+productive also meant the error propagated instantly across multiple
+documents before the user's external evidence (their Gemini dashboard)
+could correct it.
+
+*What would you do differently if you replayed this session?*
+
+Two things. First, I should have cross-validated the audit's model
+finding against at least one other source before acting. The GeoJSON
+feature properties, cost_estimate fields, and log files were all
+available and all contained the correct model name. Checking any one
+of them would have caught the metadata bug immediately. The audit
+prompt specified a source-of-truth hierarchy but I placed meta.json's
+`configuration.model` at the top without verifying it was reliable.
+
+Second, when the initial audit produced the "no Pro runs exist"
+conclusion, I should have flagged it as a finding that *contradicts
+the user's operational knowledge* (they submitted Pro jobs, they saw
+Pro billing) rather than treating it as a discovery that overrides
+that knowledge. The user's experience was a valid data source that I
+discounted in favour of what I could read from files.
+
+*What's the single most important thing a future instance should know?*
+
+In this project, `configuration.model` in meta.json is unreliable when
+a `--model` CLI override was used. Always cross-check against
+`cost_estimate.pricing_used.model` or GeoJSON detection feature
+properties for the actual model. The bug is now fixed (Session 57,
+`model_override` parameter added to `LLMMetadataTracker`) but all
+existing meta.json files from runs with `--model` overrides still
+contain the wrong value.
+
+More broadly: when an automated audit contradicts the human's domain
+knowledge, the audit might be wrong. Check the audit's assumptions
+before overriding what the human knows from other sources.
+
+---

@@ -2518,3 +2518,76 @@ highly significant (p<0.0001, 103:23 win ratio). The belief revision
 is held with moderate-to-high confidence, pending the Flash HIGH
 N=10/N=30 results at 384px which will test whether the 512px
 scaling pattern transfers.
+
+## Session 57 — 2026-03-25 (map-reader-llm): When the audit tool lies — a double belief revision about model identity
+
+**Surprising fact**: A comprehensive configuration audit of 1,740
+runs concluded that no run in the entire project had ever used
+Gemini 3.1 Pro — every `configuration.model` field said
+`gemini-3-flash`. Directories were renamed, errata written, and
+working notes updated accordingly. Then the user said: "I show Pro
+usage on my Gemini dashboard." A deep dive using three independent
+sources (GeoJSON feature properties, cost_estimate.pricing_used.model,
+and log files) confirmed that 12 runs genuinely used Pro. The audit's
+central conclusion was wrong because its "ground truth" field was
+wrong.
+
+**Prior belief (start of session)**: The "Pro" runs used Pro. This was
+the operating assumption based on the study design and the CLI commands
+used to submit them.
+
+**First revision (after audit)**: The "Pro" runs actually used Flash.
+The `configuration.model` field in all meta.json files reported
+`gemini-3-flash`. This was accepted as definitive because meta.json
+is the runtime snapshot — the most authoritative source for what
+actually happened. All Pro labels were removed and directories renamed.
+
+**Second revision (after deep dive)**: The first revision was wrong.
+`configuration.model` in meta.json had a bug — it read from the static
+config JSON rather than the runtime-resolved model. Three other
+metadata sources in the *same files* contained the correct value:
+- GeoJSON detection features: `"model": "gemini-3.1-pro-preview"`
+- `cost_estimate.pricing_used.model`: `"gemini-3.1-pro-preview"`
+- Log files: `"Model override: gemini-3.1-pro"`
+
+The metadata bug had existed since the tracker was written. It only
+became visible when someone checked a field other than the broken one.
+
+**Abductive structure**: This is a rare case of a double revision —
+the correction was itself incorrect and required correction. The
+sequence was:
+
+1. Belief: Pro was used (based on operational knowledge)
+2. Evidence: meta.json says Flash (1,740/1,740 runs)
+3. Revised belief: Pro was never used
+4. Contradicting evidence: Gemini dashboard shows Pro billing
+5. Deep investigation: three independent sources confirm Pro
+6. Final belief: Pro was used; meta.json field is buggy
+
+The critical moment was step 4 — human domain knowledge from outside
+the codebase that the AI assistant had no access to. Without it, the
+incorrect step 3 belief would have persisted permanently, with
+cascading effects on all subsequent analysis and paper writing.
+
+**Epistemological lesson**: When an automated audit contradicts human
+operational knowledge, the audit's assumptions should be tested before
+the human's knowledge is overridden. The audit was well-constructed
+(14 anti-satisficing techniques, exhaustive coverage, structured
+output) but encoded an incorrect assumption about which metadata field
+was reliable. Prompt quality does not compensate for wrong premises.
+
+**Methodological lesson for the paper**: This episode demonstrates a
+failure mode specific to human–LLM collaboration: the AI's capacity
+to act quickly and confidently on a diagnosis amplifies both correct
+and incorrect conclusions equally. The same speed that completed 16
+pairwise comparisons in 3 minutes also renamed 15 directories and
+rewrote 4 documents based on a wrong diagnosis in under 5 minutes.
+The corrective required the human's external ground truth — a source
+the AI could not access or anticipate.
+
+**Confidence in final belief**: High. Three independent sources agree
+on the Pro model identity. The metadata bug's root cause is identified
+and fixed. The only remaining uncertainty is whether the verifier
+runs (all Flash) were intentionally Flash or suffered from the same
+`--model` omission — the user confirmed they intended Pro verifier
+but the override was never passed.

@@ -2991,6 +2991,62 @@ Built the complete dual-mode Proposer-Verifier pipeline from library through orc
 
 *New session entries should be appended above this line.*
 
+## Session 57 — 2026-03-25 (map-reader-llm): Comprehensive analysis, configuration audit, E42 saga, 22 bug fixes
+
+### Overview
+
+Marathon session covering four major workstreams: (1) completed all
+pending consensus sweeps and 16 pairwise comparisons, (2) ran PV
+pipeline on two conditions, (3) discovered and investigated a metadata
+bug (E42) that led to a misdiagnosis (Pro runs reported as Flash),
+then corrected after deep dive confirmed Pro was genuine, (4) ran
+comprehensive code audit finding 22 bugs (4 critical) and fixed all.
+
+### Key results
+
+- Flash HIGH text N=30 consensus F1=0.814 [0.763, 0.860] — best consensus-only
+- Flash HIGH text 4-of-5 + Flash PV F1=0.864 [0.833, 0.893] — best overall
+- Pro HIGH text 3-of-5 + Flash PV F1=0.850 [0.812, 0.883]
+- T=0.7 >> T=1.0 at all pool sizes (dF1 ~+0.15, p<0.0001)
+- Pool scaling: N=5→N=10 significant (p=0.025), N=10→N=30 ns (p=0.852)
+- Flash medium verifier > minimal verifier on text (p=0.001)
+- Pro vs Flash model: ns at tile level (p=0.874 text, p=0.018 image Flash better)
+
+### Bugs found and fixed (22 total)
+
+- **E42 metadata bug**: `configuration.model` reported config default, not
+  resolved model. Fixed with `model_override` parameter in `LLMMetadataTracker`.
+  Initially misdiagnosed as "Pro never used" (all meta.json said Flash); deep
+  dive via GeoJSON features/cost_estimate/logs confirmed Pro was genuine.
+- **E42 in 3 more callers**: `5_verify_crops.py`, `4_detect_mounds_batch.py`,
+  `run_pv.py` estimate_cost — all fixed
+- **source_tiles/source_tile mismatch**: merge_passes.py outputs list,
+  extract_candidates.py expects string — added normalisation
+- **Temperature propagation**: single-pass-384 T=1.0 bug newly discovered
+- **15 additional medium/low bugs**: patch metadata, dropped tiles logging,
+  bounds tracking, thinking_level display, stale path fallbacks, etc.
+
+### Issues found
+
+- E42 misdiagnosis: renamed Pro dirs to Flash, then had to rename back.
+  Root cause was trusting `configuration.model` without cross-validation.
+- All verifier runs used Flash — no Pro verifier data exists despite intent.
+  Proposer × verifier model matrix is incomplete (4 of 6 cells filled).
+- single-pass-384 ran at T=1.0 not T=0.0 (same root cause as consensus-384).
+- Long-running diversity batch killed when CC session closed (not nohup'd).
+  Restarted with nohup, 123/125 complete at session end.
+
+### Pending (next session)
+
+- Commit all Session 57 changes (massive)
+- Audit correctives: rename T=1.0 dirs, re-run single-pass at T=0.0
+- Complete PV baseline: 5 conditions with crops ready (~$1.23 Batch API)
+- Buffer sensitivity analysis at 30, 40, 50 m
+- Pro verifier matrix: 10 new verifier runs needed
+- Systematic gap matrix for paper write-up
+
+---
+
 ## Session 56 — 2026-03-23/24 (map-reader-llm): Gemini 3.1 Pro pilot, HIGH thinking consensus, temperature bug discovery
 
 ### Overview
