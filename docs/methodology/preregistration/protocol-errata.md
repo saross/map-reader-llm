@@ -973,4 +973,122 @@ The PV pipeline supports both Batch API and real-time API execution modes. The p
 
 ---
 
+### E42: Metadata bug — `configuration.model` in meta.json reports config default, not resolved model
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-25 (initial); 2026-03-25 (corrected) |
+| Type | Correction |
+| Commit | pending |
+| Files | `scripts/lib_llm_metadata.py`, `scripts/lib_batch_api.py`, `scripts/run_pv.py` |
+| Impact | meta.json `configuration.model` field was unreliable when `--model` CLI override was used; led to incorrect E42 initial diagnosis |
+
+**Description**: `LLMMetadataTracker.finalise()` wrote
+`configuration.model` from `self.config.get("model")`, which reads the
+static prompt config JSON. When the `--model` CLI override was used
+(e.g., `--model gemini-3.1-pro`), the override was applied to the API
+call but NOT reflected in the metadata. The `cost_estimate.pricing_used.model`
+field and GeoJSON detection properties did record the correct model.
+
+**Initial incorrect diagnosis**: Based on meta.json alone, all "Pro"
+runs appeared to use `gemini-3-flash`. Directories were renamed from
+`pro-*` to `flash-*-b` and `flash-medium-*`. This was WRONG.
+
+**Corrected diagnosis**: Three independent sources confirm Pro was
+actually used for the "Pro" proposer runs:
+
+1. GeoJSON detection feature properties: `"model": "gemini-3.1-pro-preview"`
+2. Log files: `"Model override: gemini-3.1-pro"` → `"resolved to 'gemini-3.1-pro-preview'"`
+3. `cost_estimate.pricing_used.model`: `"gemini-3.1-pro-preview"`
+
+**Pro proposer runs confirmed** (gemini-3.1-pro-preview):
+
+- `pro-high-text-n5` (5 runs) — Pro HIGH text
+- `pro-high-image-n5` (5 runs) — Pro HIGH image
+- `pro-medium-text-baseline` (1 run) — Pro MEDIUM text
+- `pro-medium-image-baseline` (1 run) — Pro MEDIUM image
+
+**Verifier runs**: All verifier runs used `gemini-3-flash` (confirmed).
+The "pro-verifier" label indicated Flash with medium thinking, not Pro
+model. These have been renamed to `*-medium-verifier` (verifier side)
+and `pro-*-minimal-verifier` / `pro-*-medium-verifier` (proposer side)
+to reflect: Pro proposer + Flash verifier at minimal or medium thinking.
+
+**Fix applied** (Session 57): Added `model_override` parameter to
+`LLMMetadataTracker.__init__()`. Callers (`lib_batch_api.py`,
+`run_pv.py`) now pass the resolved model name. Future meta.json files
+will correctly reflect the actual model used.
+
+**Directories renamed back** to original Pro labels (Session 57):
+
+| Incorrect rename | Restored name | Actual model |
+|-----------------|---------------|--------------|
+| `flash-high-text-n5-b` | `pro-high-text-n5` | gemini-3.1-pro-preview |
+| `flash-high-image-n5-b` | `pro-high-image-n5` | gemini-3.1-pro-preview |
+| `flash-medium-text-baseline` | `pro-medium-text-baseline` | gemini-3.1-pro-preview |
+| `flash-medium-image-baseline` | `pro-medium-image-baseline` | gemini-3.1-pro-preview |
+
+**Lesson**: Never trust a single metadata field for audit purposes.
+Cross-reference multiple independent sources (meta.json, GeoJSON
+properties, log files, cost estimates) before concluding a run used the
+wrong model. The audit prompt has been updated to check
+`cost_estimate.pricing_used.model` as a secondary verification source.
+
+---
+
+### E43: consensus-384 executed at T=1.0 instead of T=0.7
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-25 (discovered during configuration audit) |
+| Type | Deviation |
+| Files | `outputs/h11/consensus-384-UNINTENDED-T1.0/` (renamed from `consensus-384/`) |
+| Impact | 30 runs × 487 tiles executed at wrong temperature; corrected baseline produced separately |
+
+**Description**: The H11 consensus-384 study was intended as a Flash MINIMAL
+T=0.7 consensus baseline (30 runs, 384px). The study YAML specified
+`fixed.temperature: 0.7` and `carried_forward.optimal_temperature: 0.7`,
+but the prompt config `detect_brief-text.json` has `"temperature": 1.0`
+hardcoded. The `run_phase2.py` orchestrator used the config's embedded
+temperature rather than the YAML-specified value, resulting in all 30 runs
+executing at T=1.0.
+
+**Root cause**: Same config propagation failure as E44. The `temperature`
+field in the prompt config JSON was treated as the default when the
+`--temperature` CLI flag was not explicitly passed by `run_phase2.py`.
+
+**Data disposition**: The T=1.0 data is preserved and used in the T=0.7 vs
+T=1.0 temperature sensitivity analysis (Obs 190: dF1 ~+0.15, p<0.0001 at
+all pool sizes — T=0.7 dramatically outperforms T=1.0). Directory renamed
+to `consensus-384-UNINTENDED-T1.0` with explanatory README.
+
+**Corrected baseline**: `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`
+(30 runs, 487 tiles, T=0.7, Flash MINIMAL, produced Session 56).
+
+---
+
+### E44: single-pass-384 executed at T=1.0 instead of T=0.0
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-25 (discovered during configuration audit) |
+| Type | Deviation |
+| Files | `outputs/h11/single-pass-384-UNINTENDED-T1.0/` (renamed from `single-pass-384/`) |
+| Impact | 10 runs × 240 tiles executed at wrong temperature; corrected rerun in progress |
+
+**Description**: The H11 single-pass-384 study was intended as a deterministic
+T=0.0 single-pass baseline (10 runs, 240 tiles, Flash MINIMAL). Same config
+propagation failure as E43: the YAML specified `fixed.temperature: 0.0` and
+`carried_forward.optimal_temperature: 0.0`, but `detect_brief-text.json` has
+`"temperature": 1.0` hardcoded and the CLI override was not applied.
+
+**Data disposition**: Directory renamed to `single-pass-384-UNINTENDED-T1.0`
+with explanatory README. Not used in any published analysis.
+
+**Corrected rerun**: `outputs/retest/h11-single-pass-384-t0/` (10 runs,
+487 tiles — expanded to full evaluation area for consistency with consensus
+analyses, T=0.0, Flash MINIMAL, Batch API). Submitted 2026-03-25.
+
+---
+
 *End of errata. New entries should be appended above this line.*
