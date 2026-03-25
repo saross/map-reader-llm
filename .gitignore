@@ -24,5 +24,8 @@ archive/cc-sessions/*.jsonl
 # Batch API working directories (large JSONL request payloads with base64 images)
 **/batch_working/
 
+# Large verifier request payloads (contain base64-encoded images, >100 MB)
+**/verifier_requests.jsonl
+
 # Ephemeral lock files
 .claude/*.lock
