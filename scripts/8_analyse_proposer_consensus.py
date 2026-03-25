@@ -33,6 +33,7 @@ def analyse_proposer(
     union_path: Path | str,
     bounds_path: Path | str,
     template_path: Path | str,
+    buffer_metres: float = 20,
 ) -> None:
     """Analyse proposer vote thresholds for Stage 1 of the pipeline.
 
@@ -45,6 +46,7 @@ def analyse_proposer(
             (must contain a ``proposer_votes`` column).
         bounds_path: Path to the tile bounds GeoJSON file.
         template_path: Path to the ground truth reference GeoJSON file.
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
     """
     print(f"Analysing Proposer Consensus: {union_path}")
 
@@ -107,6 +109,7 @@ def analyse_proposer(
 
         precision, recall, f1 = calculate_f1_internal(
             subset, gdf_ref, gdf_bounds,
+            buffer_metres=buffer_metres,
         )
 
         if f1 > best["f1"]:
@@ -139,6 +142,19 @@ if __name__ == "__main__":
     parser.add_argument("--union", required=True, help="Path to union GeoJSON")
     parser.add_argument("--bounds", required=True, help="Path to bounds GeoJSON")
     parser.add_argument("--template", required=True, help="Path to ground truth GeoJSON")
+    parser.add_argument(
+        "--buffer-metres",
+        type=float,
+        default=20,
+        help=(
+            "Spatial matching tolerance in metres for F1 evaluation"
+            " \u2014 how close a detection must be to ground truth to"
+            " count as a true positive (default: 20)."
+        ),
+    )
     args = parser.parse_args()
 
-    analyse_proposer(args.union, args.bounds, args.template)
+    analyse_proposer(
+        args.union, args.bounds, args.template,
+        buffer_metres=args.buffer_metres,
+    )
