@@ -53,6 +53,7 @@ def validate_file(
     bounds_path: Path | str,
     template_det_path: Path | str,
     target_crs: str = DEFAULT_CRS,
+    buffer_metres: float = 20,
 ) -> None:
     """
     Validate detection predictions against ground truth and print an accuracy report.
@@ -68,6 +69,7 @@ def validate_file(
         template_det_path: Path to the ground truth reference GeoJSON.
         target_crs: Coordinate Reference System (CRS) for all datasets
             (default: EPSG:32635).
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
     """
     print(f"Validating: {pred_path}")
 
@@ -149,7 +151,9 @@ def validate_file(
     if gdf_verified.crs != gdf_ref.crs:
         gdf_verified = gdf_verified.to_crs(gdf_ref.crs)
 
-    p, r, f1 = calculate_f1_internal(gdf_verified, gdf_ref, gdf_bounds)
+    p, r, f1 = calculate_f1_internal(
+        gdf_verified, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+    )
 
     print("\n=== Validation Results (Symbol-Level) ===")
     print(f"Precision: {p:.4f}")
@@ -199,9 +203,9 @@ def validate_file(
     # 6. Save FP / FN GeoJSON files for error mining
     print("\nGenerating FP/FN files...")
 
-    # Buffer references by 20 m for spatial matching
+    # Buffer references for spatial matching (FP/FN identification)
     gdf_ref_buf = gdf_ref.copy()
-    gdf_ref_buf["geometry"] = gdf_ref_buf.geometry.buffer(20)
+    gdf_ref_buf["geometry"] = gdf_ref_buf.geometry.buffer(buffer_metres)
 
     # Identify FPs: verified candidates that do not intersect any reference
     join_fp = gpd.sjoin(
@@ -266,7 +270,7 @@ def validate_file(
     if gdf_all.crs != gdf_ref.crs:
         gdf_all = gdf_all.to_crs(gdf_ref.crs)
     p_base, r_base, f1_base = calculate_f1_internal(
-        gdf_all, gdf_ref, gdf_bounds,
+        gdf_all, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
     )
     print(f"Base Precision: {p_base:.4f}")
     print(f"Base Recall:    {r_base:.4f}")
@@ -300,8 +304,19 @@ if __name__ == "__main__":
         default=DEFAULT_CRS,
         help=f"Target CRS for all datasets (default: {DEFAULT_CRS})",
     )
+    parser.add_argument(
+        "--buffer-metres",
+        type=float,
+        default=20,
+        help=(
+            "Spatial matching tolerance in metres for F1 evaluation"
+            " \u2014 how close a detection must be to ground truth to"
+            " count as a true positive (default: 20)."
+        ),
+    )
     args = parser.parse_args()
 
     validate_file(
         args.pred, args.bounds, args.template, target_crs=args.crs,
+        buffer_metres=args.buffer_metres,
     )

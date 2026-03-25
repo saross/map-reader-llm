@@ -73,6 +73,9 @@ def derive_thresholds(
         sys.exit(1)
 
     vote_counts = gdf["vote_count"].tolist()
+    if not vote_counts:
+        logger.error("Consensus GeoJSON has no features")
+        sys.exit(1)
     logger.info(
         "Loaded consensus: %d features, vote_count range %d–%d",
         len(gdf), min(vote_counts), max(vote_counts),
@@ -96,6 +99,20 @@ def derive_thresholds(
             "Mismatch: %d candidates vs %d consensus features. "
             "These must be from the same extraction.",
             len(candidates), len(vote_counts),
+        )
+        sys.exit(1)
+
+    # Validate candidate IDs are sequential 0..N-1 (as assigned by
+    # extract_candidates.py). Non-sequential IDs would cause the
+    # vote_count mapping to silently assign wrong counts.
+    actual_ids = {c["candidate_id"] for c in candidates}
+    expected_ids = set(range(len(candidates)))
+    if actual_ids != expected_ids:
+        logger.error(
+            "Candidate IDs are not sequential 0..%d: "
+            "unexpected IDs %s",
+            len(candidates) - 1,
+            sorted(actual_ids - expected_ids)[:5],
         )
         sys.exit(1)
 

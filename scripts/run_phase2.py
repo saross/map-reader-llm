@@ -171,21 +171,26 @@ def _reorder_examples_for_batch(
     if ordering == "config-default":
         return examples
 
-    if ordering == "canonical-first":
+    if ordering in ("canonical-first", "canonical-last"):
         canonical = [e for e in examples
                      if e.get("category", "").startswith("canonical")]
         hard = [e for e in examples
                 if e.get("category", "").startswith("hard")]
         null = [e for e in examples if e.get("category") == "null"]
-        return canonical + hard + null
-
-    if ordering == "canonical-last":
-        canonical = [e for e in examples
-                     if e.get("category", "").startswith("canonical")]
-        hard = [e for e in examples
-                if e.get("category", "").startswith("hard")]
-        null = [e for e in examples if e.get("category") == "null"]
-        return null + hard + canonical
+        recognised = canonical + hard + null
+        if len(recognised) < len(examples):
+            dropped = [
+                e.get("category", "<none>") for e in examples
+                if e not in recognised
+            ]
+            logger.warning(
+                "Ordering '%s' dropped %d example(s) with unrecognised "
+                "categories: %s",
+                ordering, len(dropped), dropped,
+            )
+        if ordering == "canonical-first":
+            return recognised  # canonical + hard + null
+        return null + hard + canonical  # canonical-last
 
     if ordering == "random":
         shuffled = list(examples)
@@ -947,6 +952,8 @@ def run_phase2(
             extras = []
             if c.get("temperature") is not None:
                 extras.append(f"T={c['temperature']}")
+            if c.get("thinking_level") is not None:
+                extras.append(f"thinking={c['thinking_level']}")
             if c.get("ordering") is not None:
                 extras.append(f"ordering={c['ordering']}")
             if extras:
@@ -1146,6 +1153,8 @@ def _execute_units_sequential(
             extras = []
             if unit.get("temperature") is not None:
                 extras.append(f"T={unit['temperature']}")
+            if unit.get("thinking_level") is not None:
+                extras.append(f"thinking={unit['thinking_level']}")
             if unit.get("ordering") is not None:
                 ordering_str = f"ordering={unit['ordering']}"
                 if unit.get("ordering_seed") is not None:

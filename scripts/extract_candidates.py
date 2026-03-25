@@ -258,6 +258,20 @@ def extract_candidates(
         print("Warning: No features in proposer GeoJSON")
         return _write_empty_manifest(output_dir, proposer_geojson, padding)
 
+    # Normalise source_tiles (list) → source_tile (string).
+    # merge_passes.py outputs "source_tiles" (plural, list) but
+    # downstream code expects "source_tile" (singular, string).
+    # Same pattern as 6_accuracy_report.py:_normalise_source_tile().
+    for feat in features:
+        props = feat.get("properties", {})
+        if "source_tile" not in props and "source_tiles" in props:
+            tiles_list = props["source_tiles"]
+            props["source_tile"] = (
+                tiles_list[0]
+                if isinstance(tiles_list, list) and len(tiles_list) > 0
+                else str(tiles_list)
+            )
+
     print(f"Found {len(features)} detections")
 
     # Validate rasters directory — warn but don't fail (tiles fallback exists)

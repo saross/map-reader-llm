@@ -60,6 +60,10 @@ __version__ = "1.0.0"
 # Default paths for reference data
 _VECTORS_DIR = BASE_DIR / "inputs" / "vectors"
 _REFERENCE_PATH = _VECTORS_DIR / "references" / "mounds-reference.geojson"
+# NOTE: This default differs from analyse_consensus_sweep.py and
+# paired_permutation_consensus.py which default to validation_bounds.
+# For 384px evaluations, always pass --bounds explicitly to ensure
+# consistency across scripts.
 _BOUNDS_PATH = _VECTORS_DIR / "bounds" / "full_evaluation_bounds.geojson"
 
 # Coordinate Reference System (CRS) for all spatial data
@@ -309,8 +313,10 @@ def cmd_sweep(args: argparse.Namespace) -> int:
             continue
 
         # Point estimate
+        buffer_metres = getattr(args, "buffer_metres", 20)
         precision, recall, f1 = calculate_f1_internal(
             gdf_det, gdf_ref, gdf_bounds,
+            buffer_metres=buffer_metres,
         )
 
         # Bootstrap CIs
@@ -318,6 +324,7 @@ def cmd_sweep(args: argparse.Namespace) -> int:
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=args.bootstrap,
             random_seed=args.seed,
+            buffer_metres=buffer_metres,
         )
 
         entry = {
@@ -369,6 +376,7 @@ def cmd_sweep(args: argparse.Namespace) -> int:
         "ground_truth_mounds": len(gdf_ref),
         "evaluation_tiles": len(gdf_bounds),
         "step": step,
+        "buffer_metres": buffer_metres,
         "bootstrap_iterations": args.bootstrap,
         "seed": args.seed,
         "thresholds": results,
@@ -587,16 +595,34 @@ def _load_variant_gdf(
     Returns:
         Filtered GeoDataFrame, or None if files cannot be loaded.
     """
+    def _resolve_path(stored: str) -> Path:
+        """Resolve a stored absolute path, falling back to relative."""
+        p = Path(stored)
+        if p.exists():
+            return p
+        # Try relative to project root (handles cross-machine paths)
+        rel = Path(*p.parts[-len(Path(stored).relative_to("/").parts):])
+        candidate = BASE_DIR / rel
+        if candidate.exists():
+            logger.info(
+                "Resolved stale path via fallback: %s -> %s",
+                stored, candidate,
+            )
+            return candidate
+        raise FileNotFoundError(f"Cannot resolve: {stored}")
+
     try:
+        prob_path = _resolve_path(variant["probabilities_file"])
+        manifest_path = _resolve_path(variant["manifest_file"])
+
         # Check for consensus.json alongside probabilities
-        prob_path = Path(variant["probabilities_file"])
         consensus_path = prob_path.parent / "consensus.json"
         probabilities = load_probabilities(
             prob_path,
             consensus_path if consensus_path.exists() else None,
         )
 
-        with open(variant["manifest_file"], encoding="utf-8") as f:
+        with open(manifest_path, encoding="utf-8") as f:
             manifest = json.load(f)
 
         return build_candidate_gdf(
@@ -633,6 +659,14 @@ def _build_parser() -> argparse.ArgumentParser:
             f"{_BOUNDS_PATH.relative_to(BASE_DIR)}. Use "
             "inputs/vectors/bounds/384/full_evaluation_bounds.geojson "
             "for 384px tile evaluations."
+        ),
+    )
+    parser.add_argument(
+        "--buffer-metres", type=int, default=20,
+        help=(
+            "Spatial matching tolerance in metres for F1 evaluation — "
+            "how close a detection must be to ground truth to count as "
+            "a true positive (default: 20)."
         ),
     )
 

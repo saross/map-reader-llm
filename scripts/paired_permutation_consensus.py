@@ -239,6 +239,7 @@ def run_comparison(
     buffer_metres: int = 20,
     n_permutations: int = 10_000,
     seed: int = 42,
+    bounds_override: Path | None = None,
 ) -> dict:
     """
     Run paired permutation test comparing two consensus conditions.
@@ -258,8 +259,10 @@ def run_comparison(
         Dict with full comparison results.
     """
     # Load shared evaluation data
+    bounds_path = bounds_override if bounds_override else BOUNDS_PATH
     gdf_ref = gpd.read_file(GROUND_TRUTH_PATH).to_crs(TARGET_CRS)
-    gdf_bounds = gpd.read_file(BOUNDS_PATH).to_crs(TARGET_CRS)
+    gdf_bounds = gpd.read_file(bounds_path).to_crs(TARGET_CRS)
+    logger.info("Bounds: %s (%d tiles)", bounds_path.name, len(gdf_bounds))
 
     temp_a, pool_a, thresh_a = config_a
     temp_b, pool_b, thresh_b = config_b
@@ -310,6 +313,13 @@ def run_comparison(
         on="tile_name",
         suffixes=("_a", "_b"),
     )
+    n_a, n_b, n_merged = len(tile_f1s_a), len(tile_f1s_b), len(merged)
+    if n_merged < n_a or n_merged < n_b:
+        logger.warning(
+            "Inner join dropped tiles: A=%d, B=%d, merged=%d "
+            "(dropped %d tiles from paired test)",
+            n_a, n_b, n_merged, max(n_a, n_b) - n_merged,
+        )
 
     # Global F1 (micro-averaged from TP/FP/FN totals)
     tp_a, fp_a, fn_a = (
@@ -364,6 +374,7 @@ def run_comparison(
         "metadata": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "script": "paired_permutation_consensus.py",
+            "bounds": str(bounds_path),
             "buffer_metres": buffer_metres,
             "n_permutations": n_permutations,
             "seed": seed,
@@ -471,6 +482,15 @@ Examples:
         default=Path("results/phase3a-consensus/permutation-tests"),
         help="Output directory for results JSON",
     )
+    parser.add_argument(
+        "--bounds", type=Path, default=None,
+        help=(
+            "Override evaluation bounds GeoJSON. Defaults to "
+            f"{BOUNDS_PATH.relative_to(BASE_DIR)}. Use "
+            "inputs/vectors/bounds/384/full_evaluation_bounds.geojson "
+            "for 384px tile evaluations."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -487,6 +507,7 @@ Examples:
         buffer_metres=args.buffer_metres,
         n_permutations=args.n_permutations,
         seed=args.seed,
+        bounds_override=args.bounds,
     )
 
     # Save results

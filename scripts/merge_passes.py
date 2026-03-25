@@ -40,6 +40,7 @@ Licence: Apache 2.0
 
 import argparse
 import json
+import logging
 import math
 import sys
 from collections import Counter
@@ -48,6 +49,8 @@ from pathlib import Path
 import geojson
 from geojson import Feature, FeatureCollection, Point
 from shapely.geometry import shape
+
+logger = logging.getLogger(__name__)
 
 # Script version
 __version__ = "1.0.0"
@@ -182,8 +185,14 @@ def cluster_across_passes(
     Implements preregistration Section 8.5 Steps 2-5:
 
     - Pool deduplicated detections from all passes
-    - Cluster using distance threshold
+    - Cluster using distance threshold (greedy star clustering)
     - Count votes (distinct passes per cluster)
+
+    Note: Uses greedy star clustering (seed-based), not agglomerative.
+    Cluster composition is order-dependent: different input orderings can
+    produce different clusters for detections near the threshold boundary.
+    This is a deliberate design choice for performance; the effect is
+    minimal at the 20 m tolerance used in this project.
 
     Args:
         pass_detections: Dict mapping pass_id to list of deduplicated
@@ -336,7 +345,7 @@ def load_pass_detections(
         pass_dirs = sorted(input_dir.glob("run_*"))
 
     if not pass_dirs:
-        print(f"Warning: No pass_* or run_* directories found in {input_dir}")
+        logger.warning("No pass_* or run_* directories found in %s", input_dir)
         return {}
 
     result: dict[str, list[dict]] = {}
@@ -371,11 +380,11 @@ def load_pass_detections(
                     feats = data.get("features", [])
                     features.extend(feats)
             except (json.JSONDecodeError, OSError) as e:
-                print(f"Warning: Could not load {geojson_file}: {e}")
+                logger.warning("Could not load %s: %s", geojson_file, e)
 
         if features:
             result[pass_name] = features
-            print(f"  Loaded {len(features)} detections from {pass_name}")
+            logger.info("  Loaded %d detections from %s", len(features), pass_name)
 
     return result
 
@@ -401,37 +410,37 @@ def merge_passes(
     Returns:
         Summary statistics dictionary with counts at each pipeline stage.
     """
-    print(f"Loading passes from {input_dir}...")
+    logger.info("Loading passes from %s...", input_dir)
     raw_passes = load_pass_detections(input_dir, pass_filter)
 
     if not raw_passes:
-        print("Error: No passes loaded.")
+        logger.error("No passes loaded.")
         return {"error": "No passes loaded"}
 
     total_passes = len(raw_passes)
     total_raw_detections = sum(len(feats) for feats in raw_passes.values())
 
-    print("\nStep 1: Within-pass deduplication (20 m tolerance)...")
+    logger.info("Step 1: Within-pass deduplication (20 m tolerance)...")
     deduped_passes: dict[str, list[dict]] = {}
     total_deduped = 0
     for pass_id, features in raw_passes.items():
         deduped = deduplicate_within_pass(features)
         deduped_passes[pass_id] = deduped
         total_deduped += len(deduped)
-        print(f"  {pass_id}: {len(features)} -> {len(deduped)} detections")
+        logger.info("  %s: %d -> %d detections", pass_id, len(features), len(deduped))
 
-    print("\nStep 2-5: Cross-pass clustering and vote counting...")
+    logger.info("Step 2-5: Cross-pass clustering and vote counting...")
     clusters = cluster_across_passes(deduped_passes)
-    print(f"  Generated {len(clusters)} unique clusters")
+    logger.info("  Generated %d unique clusters", len(clusters))
 
     # Vote distribution
     vote_counts = Counter(c["vote_count"] for c in clusters)
-    print(f"  Vote distribution: {dict(sorted(vote_counts.items()))}")
+    logger.info("  Vote distribution: %s", dict(sorted(vote_counts.items())))
 
-    print(f"\nStep 6: Applying threshold T>={threshold}...")
+    logger.info("Step 6: Applying threshold T>=%d...", threshold)
     consensus = apply_threshold(clusters, threshold, total_passes)
     retained = len(consensus["features"])
-    print(f"  Retained {retained}/{len(clusters)} clusters")
+    logger.info("  Retained %d/%d clusters", retained, len(clusters))
 
     # Ensure output directory exists
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -439,7 +448,7 @@ def merge_passes(
     # Write output
     with open(output_path, "w") as f:
         geojson.dump(consensus, f, indent=2)
-    print(f"\nSaved consensus detections to {output_path}")
+    logger.info("Saved consensus detections to %s", output_path)
 
     # Summary statistics
     stats = {
@@ -467,27 +476,27 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
         input_dir: Directory containing pass subdirectories.
         output_dir: Directory for output files.
     """
-    print(f"Loading passes from {input_dir}...")
+    logger.info("Loading passes from %s...", input_dir)
     raw_passes = load_pass_detections(input_dir)
 
     if not raw_passes:
-        print("Error: No passes loaded.")
+        logger.error("No passes loaded.")
         return
 
     total_passes = len(raw_passes)
 
-    print("\nStep 1: Within-pass deduplication...")
+    logger.info("Step 1: Within-pass deduplication...")
     deduped_passes: dict[str, list[dict]] = {}
     for pass_id, features in raw_passes.items():
         deduped_passes[pass_id] = deduplicate_within_pass(features)
 
-    print("\nStep 2-5: Cross-pass clustering...")
+    logger.info("Step 2-5: Cross-pass clustering...")
     clusters = cluster_across_passes(deduped_passes)
 
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"\nGenerating outputs for thresholds 1 to {total_passes}...")
+    logger.info("Generating outputs for thresholds 1 to %d...", total_passes)
     summary: dict = {"total_passes": total_passes, "thresholds": {}}
 
     for t in range(1, total_passes + 1):
@@ -499,13 +508,13 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
             geojson.dump(consensus, f, indent=2)
 
         summary["thresholds"][t] = retained
-        print(f"  T>={t}: {retained} detections -> {output_path.name}")
+        logger.info("  T>=%d: %d detections -> %s", t, retained, output_path.name)
 
     # Write summary
     summary_path = output_dir / "voting_summary.json"
     with open(summary_path, "w") as f:
         json.dump(summary, f, indent=2)
-    print(f"\nSummary saved to {summary_path}")
+    logger.info("Summary saved to %s", summary_path)
 
 
 def main() -> None:
@@ -595,18 +604,18 @@ Notes:
         try:
             pass_filter = [int(p.strip()) for p in args.passes.split(",")]
         except ValueError:
-            print("Error: --passes must be comma-separated integers")
+            logger.error("--passes must be comma-separated integers")
             sys.exit(1)
 
     # Validate arguments and dispatch
     if args.sweep:
         if not args.output_dir:
-            print("Error: --sweep requires --output-dir")
+            logger.error("--sweep requires --output-dir")
             sys.exit(1)
         threshold_sweep(args.input_dir, args.output_dir)
     else:
         if not args.output:
-            print("Error: --output required (unless using --sweep)")
+            logger.error("--output required (unless using --sweep)")
             sys.exit(1)
         merge_passes(args.input_dir, args.output, args.threshold, pass_filter)
 

@@ -641,6 +641,7 @@ def bootstrap_effect_size_ci(
     n_iterations: int = 1000,
     random_seed: int | None = None,
     return_p_values: bool = False,
+    buffer_metres: int = 20,
 ) -> dict:
     """
     Bootstrap confidence intervals for effect size (difference) between two conditions.
@@ -690,10 +691,10 @@ def bootstrap_effect_size_ci(
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
     tile_metrics_a = compute_per_tile_tp_fp_fn(
-        gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=20,
+        gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=buffer_metres,
     )
     tile_metrics_b = compute_per_tile_tp_fp_fn(
-        gdf_det_b, gdf_ref, common_bounds_b, buffer_metres=20,
+        gdf_det_b, gdf_ref, common_bounds_b, buffer_metres=buffer_metres,
     )
 
     f1_diffs = []
@@ -757,6 +758,7 @@ def bootstrap_multi_run_ci(
     gdf_bounds: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    buffer_metres: int = 20,
 ) -> dict:
     """
     Bootstrap 95% CIs for a condition with K independent runs.
@@ -797,7 +799,7 @@ def bootstrap_multi_run_ci(
     run_tile_metrics: list[pd.DataFrame] = []
     for _run_num, gdf_det in run_gdfs:
         tm = compute_per_tile_tp_fp_fn(
-            gdf_det, gdf_ref, gdf_bounds, buffer_metres=20,
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
         )
         run_tile_metrics.append(tm)
 
@@ -854,6 +856,7 @@ def bootstrap_multi_run_effect_size_ci(
     gdf_bounds: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    buffer_metres: int = 20,
 ) -> dict:
     """
     Bootstrap 95% CIs for effect size between two multi-run conditions.
@@ -890,12 +893,16 @@ def bootstrap_multi_run_effect_size_ci(
     run_metrics_a: list[pd.DataFrame] = []
     for _rn, gdf_det in run_gdfs_a:
         run_metrics_a.append(
-            compute_per_tile_tp_fp_fn(gdf_det, gdf_ref, gdf_bounds, buffer_metres=20)
+            compute_per_tile_tp_fp_fn(
+                gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            )
         )
     run_metrics_b: list[pd.DataFrame] = []
     for _rn, gdf_det in run_gdfs_b:
         run_metrics_b.append(
-            compute_per_tile_tp_fp_fn(gdf_det, gdf_ref, gdf_bounds, buffer_metres=20)
+            compute_per_tile_tp_fp_fn(
+                gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            )
         )
 
     def _mean_metrics(
@@ -957,6 +964,7 @@ def bootstrap_interaction_ci(
     metric: str = "f1",
     n_iterations: int = 1000,
     random_seed: int | None = None,
+    buffer_metres: int = 20,
 ) -> dict:
     """
     Bootstrap confidence intervals for a two-way interaction effect.
@@ -1037,7 +1045,7 @@ def bootstrap_interaction_ci(
     for (a_level, b_level), (gdf_det, gdf_bounds) in conditions.items():
         common_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(common_tiles)]
         cell_tile_metrics[(a_level, b_level)] = compute_per_tile_tp_fp_fn(
-            gdf_det, gdf_ref, common_bounds, buffer_metres=20,
+            gdf_det, gdf_ref, common_bounds, buffer_metres=buffer_metres,
         )
 
     # Storage for simple effect distributions per factor_a level

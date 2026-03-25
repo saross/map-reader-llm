@@ -72,6 +72,7 @@ def evaluate_condition(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     n_runs: int = 1,
+    buffer_metres: float = 20,
 ) -> dict:
     """Evaluate a single condition (possibly averaged across runs).
 
@@ -84,16 +85,20 @@ def evaluate_condition(
         gdf_ref: Ground truth GeoDataFrame.
         gdf_bounds: Bounds GeoDataFrame.
         n_runs: Number of runs (for informational reporting).
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
 
     Returns:
         Dictionary with F1, precision, recall, and bootstrap CIs.
     """
-    p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds)
+    p, r, f1 = calculate_f1_internal(
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+    )
 
     ci = bootstrap_ci(
         gdf_det, gdf_ref, gdf_bounds,
         n_iterations=BOOTSTRAP_ITERATIONS,
         random_seed=RANDOM_SEED,
+        buffer_metres=buffer_metres,
     )
 
     return {
@@ -112,6 +117,7 @@ def evaluate_multi_run_condition(
     run_gdfs: list[gpd.GeoDataFrame],
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: float = 20,
 ) -> dict:
     """Evaluate a condition with multiple independent runs.
 
@@ -122,13 +128,16 @@ def evaluate_multi_run_condition(
         run_gdfs: List of GeoDataFrames, one per run.
         gdf_ref: Ground truth GeoDataFrame.
         gdf_bounds: Bounds GeoDataFrame.
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
 
     Returns:
         Dictionary with per-run metrics, mean/std, and bootstrap CIs.
     """
     run_metrics = []
     for gdf in run_gdfs:
-        p, r, f1 = calculate_f1_internal(gdf, gdf_ref, gdf_bounds)
+        p, r, f1 = calculate_f1_internal(
+            gdf, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+        )
         run_metrics.append({"f1": f1, "precision": p, "recall": r})
 
     f1s = [m["f1"] for m in run_metrics]
@@ -140,6 +149,7 @@ def evaluate_multi_run_condition(
         run_gdfs[0], gdf_ref, gdf_bounds,
         n_iterations=BOOTSTRAP_ITERATIONS,
         random_seed=RANDOM_SEED,
+        buffer_metres=buffer_metres,
     )
 
     return {
@@ -185,6 +195,7 @@ def pairwise_effect_sizes(
     condition_gdfs: dict[str, gpd.GeoDataFrame],
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: float = 20,
 ) -> list[dict]:
     """Compute pairwise bootstrap effect size CIs between conditions.
 
@@ -193,6 +204,7 @@ def pairwise_effect_sizes(
             representative GeoDataFrame (single run).
         gdf_ref: Ground truth GeoDataFrame.
         gdf_bounds: Bounds GeoDataFrame.
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
 
     Returns:
         List of dictionaries with pairwise comparison results.
@@ -209,6 +221,7 @@ def pairwise_effect_sizes(
             gdf_ref,
             n_iterations=BOOTSTRAP_ITERATIONS,
             random_seed=RANDOM_SEED,
+            buffer_metres=buffer_metres,
         )
 
         f1_diff = effect.get("f1_difference", {})
@@ -284,6 +297,7 @@ def evaluate_ofat_phase(
     phase_name: str,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: float = 20,
 ) -> dict:
     """Evaluate a single One-Factor-At-a-Time (OFAT) retest phase.
 
@@ -296,6 +310,7 @@ def evaluate_ofat_phase(
         phase_name: Display name for printing.
         gdf_ref: Ground truth GeoDataFrame.
         gdf_bounds: Bounds GeoDataFrame.
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
 
     Returns:
         Dictionary with condition results and pairwise comparisons.
@@ -319,17 +334,22 @@ def evaluate_ofat_phase(
         if len(run_gdfs) == 1:
             result = evaluate_condition(
                 run_gdfs[0], gdf_ref, gdf_bounds, n_runs=1,
+                buffer_metres=buffer_metres,
             )
         else:
             result = evaluate_multi_run_condition(
                 run_gdfs, gdf_ref, gdf_bounds,
+                buffer_metres=buffer_metres,
             )
 
         representative_gdfs[name] = run_gdfs[0]
         condition_results[name] = result
 
     # Pairwise comparisons
-    pw = pairwise_effect_sizes(representative_gdfs, gdf_ref, gdf_bounds)
+    pw = pairwise_effect_sizes(
+        representative_gdfs, gdf_ref, gdf_bounds,
+        buffer_metres=buffer_metres,
+    )
 
     print_phase_results(phase_name, condition_results, pw)
 
@@ -344,6 +364,7 @@ def evaluate_phase3a(
     track_name: str,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: float = 20,
 ) -> dict:
     """Evaluate Phase 3a consensus voting track (K=30 runs per temperature).
 
@@ -355,6 +376,7 @@ def evaluate_phase3a(
         track_name: Display name for printing.
         gdf_ref: Ground truth GeoDataFrame.
         gdf_bounds: Bounds GeoDataFrame.
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
 
     Returns:
         Dictionary with per-condition run distributions and pairwise
@@ -375,12 +397,18 @@ def evaluate_phase3a(
         if not run_gdfs:
             continue
 
-        result = evaluate_multi_run_condition(run_gdfs, gdf_ref, gdf_bounds)
+        result = evaluate_multi_run_condition(
+            run_gdfs, gdf_ref, gdf_bounds,
+            buffer_metres=buffer_metres,
+        )
         condition_results[name] = result
         representative_gdfs[name] = run_gdfs[0]
 
     # Pairwise comparisons between temperature levels
-    pw = pairwise_effect_sizes(representative_gdfs, gdf_ref, gdf_bounds)
+    pw = pairwise_effect_sizes(
+        representative_gdfs, gdf_ref, gdf_bounds,
+        buffer_metres=buffer_metres,
+    )
 
     print_phase_results(track_name, condition_results, pw)
 
@@ -404,6 +432,16 @@ def main() -> None:
         "--phase",
         type=str,
         help="Evaluate only this phase (e.g., 'phase2a', 'phase3a-track2')",
+    )
+    parser.add_argument(
+        "--buffer-metres",
+        type=float,
+        default=20,
+        help=(
+            "Spatial matching tolerance in metres for F1 evaluation"
+            " \u2014 how close a detection must be to ground truth to"
+            " count as a true positive (default: 20)."
+        ),
     )
     args = parser.parse_args()
 
@@ -453,6 +491,7 @@ def main() -> None:
             t0 = time.time()
             all_results[phase_key] = evaluate_ofat_phase(
                 d, name, gdf_ref, gdf_bounds,
+                buffer_metres=args.buffer_metres,
             )
             elapsed = time.time() - t0
             print(f"  [{elapsed:.1f}s]")
@@ -477,6 +516,7 @@ def main() -> None:
             t0 = time.time()
             all_results[phase_key] = evaluate_phase3a(
                 d, name, gdf_ref, gdf_bounds,
+                buffer_metres=args.buffer_metres,
             )
             elapsed = time.time() - t0
             print(f"  [{elapsed:.1f}s]")

@@ -18,7 +18,9 @@ Supported Providers:
 Usage:
     from lib_llm_metadata import LLMMetadataTracker, extract_gemini_metadata
 
-    tracker = LLMMetadataTracker(config, system_instruction)
+    tracker = LLMMetadataTracker(
+        config, system_instruction, model_override=resolved_model_name,
+    )
 
     # After each API call:
     metadata = extract_gemini_metadata(response, request_start_time)
@@ -240,7 +242,9 @@ class LLMMetadataTracker:
     and provides comprehensive audit trails.
 
     Usage:
-        tracker = LLMMetadataTracker(config, system_instruction)
+        tracker = LLMMetadataTracker(
+            config, system_instruction, model_override=resolved_model,
+        )
 
         # For each API call:
         metadata = extract_gemini_metadata(response, start_time)
@@ -256,6 +260,7 @@ class LLMMetadataTracker:
         system_instruction: str,
         script_name: str = "unknown",
         script_version: str = "unknown",
+        model_override: str | None = None,
     ) -> None:
         """
         Initialise the metadata tracker.
@@ -266,13 +271,21 @@ class LLMMetadataTracker:
                 persisting in output metadata).
             script_name: Name of the calling script.
             script_version: Version of the calling script.
+            model_override: If the model was overridden via CLI (e.g.,
+                ``--model gemini-3.1-pro``), pass the resolved model name
+                here. This ensures ``configuration.model`` in the output
+                metadata reflects the actual model used, not the static
+                default in the config JSON. Fixes E42 metadata bug where
+                ``config.get("model")`` returned the config default even
+                when a CLI override was active.
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
         self.config = config
-        self.system_instruction_text = system_instruction
+        self.model_override = model_override
+        self.system_instruction_text = system_instruction or ""
         self.system_instruction_hash = hashlib.sha256(
-            system_instruction.encode('utf-8')
+            (system_instruction or "").encode('utf-8')
         ).hexdigest()
         self.library_hash = self._compute_library_hash(config)
         self.script_name = script_name
@@ -495,7 +508,11 @@ class LLMMetadataTracker:
                 },
                 "configuration": {
                     "version": self.config.get("version"),
-                    "model": self.config.get("model"),
+                    "model": (
+                        self.model_override
+                        if self.model_override is not None
+                        else self.config.get("model")
+                    ),
                     "instruction_file": self.config.get(
                         "instruction_file", "unknown"
                     ),
@@ -507,6 +524,7 @@ class LLMMetadataTracker:
                         "max_output_tokens"
                     ),
                     "thinking_level": self.config.get("thinking_level"),
+                    "tile_size": self.config.get("tile_size"),
                     "include_example_images": self.config.get(
                         "include_example_images", True
                     ),
@@ -1022,13 +1040,16 @@ def estimate_cost(
     """
     pricing_table = PRICING.get(provider, PRICING.get("google_gemini"))
 
-    # Find model pricing (fuzzy match on model name)
+    # Find model pricing (fuzzy match on model name, longest match wins
+    # to avoid e.g. "gpt-4o" matching before "gpt-4o-mini")
     model_lower = model.lower()
     rates = pricing_table.get("default")
+    best_match_len = 0
     for model_key, model_rates in pricing_table.items():
         if model_key != "default" and model_key in model_lower:
-            rates = model_rates
-            break
+            if len(model_key) > best_match_len:
+                rates = model_rates
+                best_match_len = len(model_key)
 
     input_cost = (usage.total_input_tokens / 1_000_000) * rates["input"]
     output_cost = (usage.total_output_tokens / 1_000_000) * rates["output"]

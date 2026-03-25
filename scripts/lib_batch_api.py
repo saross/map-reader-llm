@@ -1259,6 +1259,7 @@ def write_batch_outputs(
         system_instruction=system_instruction,
         script_name="lib_batch_api.py",
         script_version=__version__,
+        model_override=model_name,
     )
 
     # Record processed/failed counts
@@ -1929,7 +1930,7 @@ def patch_failed_tiles(
     system_instruction = config_section.get("system_instruction_text", "")
     model_name = config_section.get("model", "gemini-3-flash")
     examples = snapshot.get("examples", [])
-    include_images = config_section.get("include_example_images", False)
+    include_images = config_section.get("include_example_images", True)
 
     # Resolve model name — configs use marketing names (e.g.
     # 'gemini-3-flash') but the sync API may require '-preview'.
@@ -2086,20 +2087,18 @@ def patch_failed_tiles(
 
     # ── Merge recovered features into existing GeoJSON ────────
     all_recovered = recovered + recovered_safe
+    total_new_detections = len(all_new_features)
     if all_recovered and all_new_features:
         with open(geojson_path) as f:
             existing = json.load(f)
         existing_features = existing.get("features", [])
         existing_features.extend(all_new_features)
 
-        # Update processed_tiles property
-        processed = set(
-            existing.get("properties", {}).get("processed_tiles", [])
-        )
+        # Update processed_tiles (top-level property, matching
+        # _save_geojson which writes collection["processed_tiles"])
+        processed = set(existing.get("processed_tiles", []))
         processed.update(all_recovered)
-        existing.setdefault("properties", {})["processed_tiles"] = (
-            sorted(processed)
-        )
+        existing["processed_tiles"] = sorted(processed)
         existing["features"] = existing_features
 
         with open(geojson_path, "w") as f:
@@ -2130,6 +2129,16 @@ def patch_failed_tiles(
             items_processed + len(all_recovered)
         )
         meta_data["execution_stats"] = exec_stats
+
+        # Update total_detections to include recovered tiles'
+        # detections (the GeoJSON features have already been extended)
+        summary = meta_data.get("results_summary", {})
+        if "total_detections" in summary:
+            summary["total_detections"] = (
+                summary["total_detections"] + total_new_detections
+            )
+            meta_data["results_summary"] = summary
+
         with open(meta_path, "w") as f:
             json.dump(meta_data, f, indent=2)
 

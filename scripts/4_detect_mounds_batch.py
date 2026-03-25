@@ -746,7 +746,8 @@ def detect_mounds_versioned(
         config=config,
         system_instruction=system_instruction_text,
         script_name="4_detect_mounds_batch.py",
-        script_version=__version__
+        script_version=__version__,
+        model_override=model_name_cfg,
     )
 
     # Initialise results tracker for detection counts

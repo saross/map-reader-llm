@@ -86,6 +86,7 @@ def analyse_consensus(
     bounds_path: Path | str,
     template_path: Path | str,
     iterations: int = 5,
+    buffer_metres: float = 20,
 ) -> None:
     """Analyse consensus voting thresholds for the two-stage pipeline.
 
@@ -100,6 +101,7 @@ def analyse_consensus(
         template_path: Path to the ground truth reference GeoJSON.
         iterations: Maximum number of verifier iterations to simulate
             (default: 5).
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
     """
     print(f"Analysing Consensus: {pred_path}")
 
@@ -167,6 +169,7 @@ def analyse_consensus(
         if count > 0:
             p, r, f1 = calculate_f1_internal(
                 subset_verified, gdf_ref, gdf_bounds,
+                buffer_metres=buffer_metres,
             )
 
         label = "1-Pass Verifier"
@@ -212,6 +215,7 @@ def analyse_consensus(
             if count > 0:
                 p, r, f1 = calculate_f1_internal(
                     subset_pv, gdf_ref, gdf_bounds,
+                    buffer_metres=buffer_metres,
                 )
 
             if f1 > best_overall["f1"]:
@@ -252,6 +256,7 @@ def analyse_threshold_sweep(
     cost_per_call: float = 0.003,
     n_tiles: int = 60,
     output_path: Path | str | None = None,
+    buffer_metres: float = 20,
 ) -> dict:
     """Perform threshold sweep analysis across voting pool sizes.
 
@@ -274,6 +279,7 @@ def analyse_threshold_sweep(
         n_tiles: Number of tiles per pass (default: 60 for the
             validation set).
         output_path: Optional path to write JSON results.
+        buffer_metres: Spatial matching tolerance in metres (default: 20).
 
     Returns:
         Dictionary with keys:
@@ -372,6 +378,7 @@ def analyse_threshold_sweep(
             if count > 0:
                 precision, recall, f1 = calculate_f1_internal(
                     subset, gdf_ref, gdf_bounds,
+                    buffer_metres=buffer_metres,
                 )
 
             # Calculate cost
@@ -593,6 +600,16 @@ Examples:
         default=60,
         help="Number of tiles per pass (default: 60)",
     )
+    parser.add_argument(
+        "--buffer-metres",
+        type=float,
+        default=20,
+        help=(
+            "Spatial matching tolerance in metres for F1 evaluation"
+            " \u2014 how close a detection must be to ground truth to"
+            " count as a true positive (default: 20)."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -605,6 +622,10 @@ Examples:
             cost_per_call=args.cost_per_call,
             n_tiles=args.n_tiles,
             output_path=args.output,
+            buffer_metres=args.buffer_metres,
         )
     else:
-        analyse_consensus(args.pred, args.bounds, args.template, args.iterations)
+        analyse_consensus(
+            args.pred, args.bounds, args.template, args.iterations,
+            buffer_metres=args.buffer_metres,
+        )

@@ -593,6 +593,7 @@ def run_verification(
         system_instruction=system_instruction,
         script_name="5_verify_crops.py",
         script_version=__version__,
+        model_override=model_name,
     )
 
     verified_features = []

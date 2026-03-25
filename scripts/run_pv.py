@@ -348,6 +348,7 @@ def _verify_batch(
         system_instruction=load_system_instruction(config),
         script_name="run_pv.py",
         script_version=__version__,
+        model_override=model_name,
     )
 
     # Write outputs
@@ -359,6 +360,7 @@ def _verify_batch(
         iterations=iterations,
         mode="batch",
         metadata_tracker=batch_metadata,
+        model_name=model_name,
     )
 
     return 0
@@ -427,6 +429,7 @@ def _verify_realtime(
         system_instruction=system_instruction,
         script_name="run_pv.py",
         script_version=__version__,
+        model_override=model_name,
     )
 
     candidates = manifest.get("candidates", [])
@@ -508,6 +511,7 @@ def _verify_realtime(
         iterations=iterations,
         mode="realtime",
         metadata_tracker=metadata_tracker,
+        model_name=model_name,
     )
 
     return 0
@@ -527,6 +531,7 @@ def _write_verification_outputs(
     mode: str,
     metadata_tracker: Any = None,
     threshold: float = 0.5,
+    model_name: str | None = None,
 ) -> None:
     """Write verification outputs shared by both modes.
 
@@ -600,7 +605,7 @@ def _write_verification_outputs(
         meta["cost_estimate"] = estimate_cost(
             usage=metadata_tracker.usage,
             provider=LLMProvider.GEMINI.value,
-            model=config.get("model", "gemini-3-flash"),
+            model=model_name or config.get("model", "gemini-3-flash"),
         )
         meta_path = output_dir / "run.meta.json"
         with open(meta_path, "w") as f:
