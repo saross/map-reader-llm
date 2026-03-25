@@ -1,0 +1,86 @@
+{
+  "version": "1.0",
+  "n_variants": 2,
+  "variants": [
+    {
+      "name": "h11-384-pv-diagnostic/pro-text-flash-verifier",
+      "dir": "results/h11-384-pv-diagnostic/pro-text-flash-verifier",
+      "optimal_threshold": 0.2,
+      "f1": 0.774,
+      "precision": 0.8111,
+      "recall": 0.7402,
+      "n_accepted": 397,
+      "ci": {
+        "f1": {
+          "mean": 0.7729,
+          "lower": 0.7256,
+          "upper": 0.8161
+        },
+        "precision": {
+          "mean": 0.8102,
+          "lower": 0.762,
+          "upper": 0.8571
+        },
+        "recall": {
+          "mean": 0.7395,
+          "lower": 0.6769,
+          "upper": 0.8028
+        }
+      },
+      "probabilities_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-flash-verifier/probabilities.json",
+      "manifest_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-text-baseline/candidate_manifest.json"
+    },
+    {
+      "name": "h11-384-pv-diagnostic/pro-text-pro-verifier",
+      "dir": "results/h11-384-pv-diagnostic/pro-text-pro-verifier",
+      "optimal_threshold": 0.15,
+      "f1": 0.7842,
+      "precision": 0.8195,
+      "recall": 0.7517,
+      "n_accepted": 399,
+      "ci": {
+        "f1": {
+          "mean": 0.7825,
+          "lower": 0.7366,
+          "upper": 0.8255
+        },
+        "precision": {
+          "mean": 0.8183,
+          "lower": 0.7721,
+          "upper": 0.8637
+        },
+        "recall": {
+          "mean": 0.7503,
+          "lower": 0.6869,
+          "upper": 0.813
+        }
+      },
+      "probabilities_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-pro-verifier/probabilities.json",
+      "manifest_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-text-baseline/candidate_manifest.json"
+    }
+  ],
+  "pairwise": [
+    {
+      "variant_a": "h11-384-pv-diagnostic/pro-text-flash-verifier",
+      "variant_b": "h11-384-pv-diagnostic/pro-text-pro-verifier",
+      "f1_difference": {
+        "mean": -0.017468946875414403,
+        "ci_lower": -0.028803679241618564,
+        "ci_upper": -0.007006179929676318,
+        "p_value": 0.001
+      },
+      "precision_difference": {
+        "mean": -0.010850004965166204,
+        "ci_lower": -0.025034128672818654,
+        "ci_upper": 0.0015112259352531544,
+        "p_value": 0.1
+      },
+      "recall_difference": {
+        "mean": -0.02283363450131266,
+        "ci_lower": -0.04067704794551437,
+        "ci_upper": -0.006299329253622999,
+        "p_value": 0.002
+      }
+    }
+  ]
+}

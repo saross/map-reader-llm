@@ -1,7 +1,7 @@
 # Phase 3c Diversity Analysis
 
-**Generated**: 2026-03-08T05:51:18.273803+00:00  
-**Track**: Phase 3c: H9 Diversity — Track 1 (Image)  
+**Generated**: 2026-03-25T07:28:36.787798+00:00  
+**Track**: Retest: Phase 3c: H9 Diversity — Track 1 (Image)  
 **Bootstrap iterations**: 1000  
 **Buffer (spatial tolerance)**: 20 m  
 **Permutation test iterations**: 10000
@@ -22,11 +22,11 @@ Best threshold (maximising mean F1 across replications):
 
 | Condition | x* | F1 | ±SD | P | R | n_det |
 |-----------|---:|----:|----:|---:|---:|------:|
-| A | 3 | 0.6437 | 0.0406 | 0.6618 | 0.6268 | 92 |
-| B | 3 | 0.6344 | 0.0700 | 0.6523 | 0.6186 | 92 |
-| C | 3 | 0.6472 | 0.0084 | 0.6816 | 0.6165 | 88 |
-| D | 3 | 0.6575 | 0.0178 | 0.6773 | 0.6392 | 92 |
-| E | 3 | 0.6434 | 0.0140 | 0.6637 | 0.6248 | 91 |
+| A | 3 | 0.6640 | 0.0153 | 0.6765 | 0.6519 | 519 |
+| B | 3 | 0.6682 | 0.0134 | 0.6828 | 0.6542 | 516 |
+| C | 3 | 0.6713 | 0.0176 | 0.6910 | 0.6527 | 509 |
+| D | 3 | 0.6691 | 0.0143 | 0.6800 | 0.6586 | 522 |
+| E | 3 | 0.6709 | 0.0082 | 0.6909 | 0.6519 | 509 |
 
 ## Comparisons vs Baseline (A)
 
@@ -34,24 +34,24 @@ Paired permutation test on per-replication F1 scores (at each condition's optima
 
 | Comparison | ΔF1 | p-value | Significant? |
 |------------|----:|--------:|:------------:|
-| B vs A | -0.0093 | 0.8155 | No |
-| C vs A | +0.0035 | 0.9419 | No |
-| D vs A | +0.0138 | 0.6263 | No |
-| E vs A | -0.0003 | 1.0000 | No |
+| B vs A | +0.0042 | 0.6893 | No |
+| C vs A | +0.0073 | 0.6213 | No |
+| D vs A | +0.0052 | 0.3750 | No |
+| E vs A | +0.0069 | 0.3754 | No |
 
 ## Per-Replication F1 (at optimal threshold)
 
 | Rep | A (x=3) | B (x=3) | C (x=3) | D (x=3) | E (x=3) |
 |----:|-----:|-----:|-----:|-----:|-----:|
-| 1 | 0.6596 | 0.6186 | 0.6486 | 0.6277 | 0.6378 |
-| 2 | 0.6989 | 0.6630 | 0.6593 | 0.6562 | 0.6630 |
-| 3 | 0.6064 | 0.6806 | 0.6374 | 0.6667 | 0.6250 |
-| 4 | 0.6010 | 0.6907 | 0.6413 | 0.6737 | 0.6492 |
-| 5 | 0.6526 | 0.5193 | 0.6492 | 0.6632 | 0.6421 |
+| 1 | 0.6559 | 0.6641 | 0.6802 | 0.6685 | 0.6698 |
+| 2 | 0.6554 | 0.6880 | 0.6628 | 0.6705 | 0.6781 |
+| 3 | 0.6528 | 0.6534 | 0.6978 | 0.6528 | 0.6571 |
+| 4 | 0.6898 | 0.6743 | 0.6610 | 0.6916 | 0.6750 |
+| 5 | 0.6660 | 0.6610 | 0.6546 | 0.6623 | 0.6743 |
 
 ## Key Finding
 
-No diversity condition significantly outperforms the identical-pass baseline (A, F1=0.6437). Diversity does not improve consensus voting for this track.
+No diversity condition significantly outperforms the identical-pass baseline (A, F1=0.6640). Diversity does not improve consensus voting for this track.
 
 ## Methodology
 

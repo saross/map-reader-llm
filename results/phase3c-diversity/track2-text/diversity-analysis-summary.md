@@ -1,7 +1,7 @@
 # Phase 3c Diversity Analysis
 
-**Generated**: 2026-03-08T05:24:47.305466+00:00  
-**Track**: Phase 3c: H9 Diversity — Track 2 (Text-Only)  
+**Generated**: 2026-03-25T07:29:29.265580+00:00  
+**Track**: Retest: Phase 3c: H9 Diversity — Track 2 (Text-Only)  
 **Bootstrap iterations**: 1000  
 **Buffer (spatial tolerance)**: 20 m  
 **Permutation test iterations**: 10000
@@ -21,10 +21,10 @@ Best threshold (maximising mean F1 across replications):
 
 | Condition | x* | F1 | ±SD | P | R | n_det |
 |-----------|---:|----:|----:|---:|---:|------:|
-| A | 4 | 0.7026 | 0.0376 | 0.7204 | 0.6866 | 92 |
-| B | 4 | 0.6681 | 0.0631 | 0.7214 | 0.6227 | 84 |
-| D | 4 | 0.6690 | 0.0611 | 0.6752 | 0.6639 | 95 |
-| E | 4 | 0.6649 | 0.0414 | 0.7218 | 0.6165 | 83 |
+| A | 4 | 0.7163 | 0.0119 | 0.7050 | 0.7280 | 557 |
+| B | 4 | 0.6862 | 0.0046 | 0.6974 | 0.6753 | 522 |
+| D | 4 | 0.7301 | 0.0081 | 0.7227 | 0.7380 | 551 |
+| E | 4 | 0.6943 | 0.0111 | 0.6985 | 0.6902 | 533 |
 
 ## Comparisons vs Baseline (A)
 
@@ -32,23 +32,23 @@ Paired permutation test on per-replication F1 scores (at each condition's optima
 
 | Comparison | ΔF1 | p-value | Significant? |
 |------------|----:|--------:|:------------:|
-| B vs A | -0.0345 | 0.1208 | No |
-| D vs A | -0.0336 | 0.4957 | No |
-| E vs A | -0.0377 | 0.2450 | No |
+| B vs A | -0.0301 | 0.0610 | No |
+| D vs A | +0.0138 | 0.1812 | No |
+| E vs A | -0.0221 | 0.0610 | No |
 
 ## Per-Replication F1 (at optimal threshold)
 
 | Rep | A (x=4) | B (x=4) | D (x=4) | E (x=4) |
 |----:|-----:|-----:|-----:|-----:|
-| 1 | 0.7435 | 0.7487 | 0.6667 | 0.6556 |
-| 2 | 0.6559 | 0.6369 | 0.6559 | 0.6145 |
-| 3 | 0.7179 | 0.6780 | 0.5789 | 0.6813 |
-| 4 | 0.6703 | 0.5810 | 0.6984 | 0.7253 |
-| 5 | 0.7254 | 0.6961 | 0.7449 | 0.6477 |
+| 1 | 0.7269 | 0.6873 | 0.7395 | 0.7049 |
+| 2 | 0.7177 | 0.6876 | 0.7238 | 0.7006 |
+| 3 | 0.7030 | 0.6785 | 0.7334 | 0.6966 |
+| 4 | 0.7288 | 0.6868 | 0.7198 | 0.6761 |
+| 5 | 0.7052 | 0.6907 | 0.7340 | 0.6931 |
 
 ## Key Finding
 
-No diversity condition significantly outperforms the identical-pass baseline (A, F1=0.7026). Diversity does not improve consensus voting for this track.
+No diversity condition significantly outperforms the identical-pass baseline (A, F1=0.7163). Diversity does not improve consensus voting for this track.
 
 ## Methodology
 
