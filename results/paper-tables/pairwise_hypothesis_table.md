@@ -1,0 +1,83 @@
+# Pairwise Hypothesis Test Results (30m buffer, FDR-corrected)
+
+## Group 1
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| PV on single-pass text | Text base + PV | Single-pass 5/5 | 0.832 | 0.554 | 0.278 | <0.0001 | *** | *** agree |
+| PV on single-pass image | Image base + PV | Single-pass 5/5 | 0.782 | 0.554 | 0.228 | <0.0001 | *** | *** agree |
+| PV vs consensus | FH text 4/5 + PV | FH text 5/5 | 0.891 | 0.788 | 0.102 | <0.0001 | *** | *** agree |
+| PV verifier thinking | FH text 4/5 + med vf | FH text 5/5 | 0.885 | 0.788 | 0.097 | <0.0001 | *** | *** agree |
+| PV vs consensus | FH text 16/30 + PV | FH text 26/30 | 0.904 | 0.826 | 0.079 | <0.0001 | *** | *** agree |
+| PV vs consensus | FH text 9/10 + PV | FH text 9/10 | 0.869 | 0.811 | 0.059 | <0.0001 | *** | *** agree |
+| PV vs consensus (image) | FH image 3/5 + PV | FH image 3/5 | 0.851 | 0.799 | 0.052 | 0.0004 | *** | *** agree |
+| PV vs consensus (Pro) | Pro text 3/5 + PV | Pro text 3/5 | 0.865 | 0.855 | 0.009 | 0.2569 | ns | ns agree |
+
+**Summary:** 7 significant / 8 total comparisons
+
+## Group 2
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| Text vs image (MINIMAL) | FM text 5/5 | FM image 4/5 | 0.647 | 0.724 | -0.077 | 0.0020 | ** | ns agree |
+| Text vs image (PV) | FH text 4/5 + PV | FH image 3/5 + PV | 0.891 | 0.851 | 0.040 | 0.0173 | * | *** agree |
+| Text vs image | FH text 5/5 | FH image 3/5 | 0.788 | 0.799 | -0.011 | 0.6055 | ns | * disagree |
+| Text vs image (N=10) | FH text 9/10 | FH image 6/10 | 0.811 | 0.812 | -0.001 | 0.9561 | ns | ** disagree |
+
+**Summary:** 2 significant / 4 total comparisons
+
+## Group 3
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| HIGH vs MINIMAL (text N=10) | FH text 9/10 | FM text 10/10 | 0.811 | 0.641 | 0.169 | <0.0001 | *** | *** agree |
+| HIGH vs MINIMAL (text N=30) | FH text 26/30 | FM text 29/30 | 0.826 | 0.669 | 0.157 | <0.0001 | *** | *** agree |
+| HIGH vs MINIMAL (text N=5) | FH text 5/5 | FM text 5/5 | 0.788 | 0.647 | 0.141 | <0.0001 | *** | *** agree |
+| HIGH vs MINIMAL (image N=5) | FH image 3/5 | FM image 4/5 | 0.799 | 0.724 | 0.075 | <0.0001 | *** | *** agree |
+
+**Summary:** 4 significant / 4 total comparisons
+
+## Group 4
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| T=0.7 vs T=1.0 (N=30) | FM text T=0.7 29/30 | FM text T=1.0 22/30 | 0.669 | 0.477 | 0.193 | <0.0001 | *** | *** agree |
+| T=0.7 vs T=1.0 (N=10) | FM text T=0.7 10/10 | FM text T=1.0 9/10 | 0.641 | 0.469 | 0.172 | <0.0001 | *** | *** agree |
+| T=0.7 vs T=1.0 (N=5) | FM text T=0.7 5/5 | FM text T=1.0 5/5 | 0.647 | 0.479 | 0.168 | 0.0002 | *** | *** agree |
+
+**Summary:** 3 significant / 3 total comparisons
+
+## Group 5
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| Pro vs Flash (text consensus) | Pro text 3/5 | FH text 5/5 | 0.855 | 0.788 | 0.067 | 0.0016 | ** | ** agree |
+| Pro vs Flash (PV text) | Pro text 3/5 + PV | FH text 4/5 + PV | 0.865 | 0.891 | -0.026 | 0.1400 | ns | ns agree |
+| Pro vs Flash (image consensus) | Pro image 3/5 | FH image 3/5 | 0.821 | 0.799 | 0.022 | 0.2834 | ns | ns disagree |
+
+**Summary:** 1 significant / 3 total comparisons
+
+## Group 6
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| Best vs runner-up 4 | FH text 16/30 + PV | Pro text 3/5 + PV | 0.904 | 0.865 | 0.040 | 0.0212 | * | * agree |
+| Best vs runner-up 3 | FH text 16/30 + PV | FH text 9/10 + PV | 0.904 | 0.869 | 0.035 | 0.0054 | ** | * agree |
+| Runner-up 1 vs 3 | FH text 4/5 + PV | FH text 9/10 + PV | 0.891 | 0.869 | 0.022 | 0.0212 | * | ns agree |
+| Best vs runner-up 2 | FH text 16/30 + PV | FH text 4/5 + med vf | 0.904 | 0.885 | 0.019 | 0.1743 | ns | * agree |
+| Best vs runner-up 1 | FH text 16/30 + PV | FH text 4/5 + PV | 0.904 | 0.891 | 0.014 | 0.2518 | ns | ns agree |
+| Runner-up 1 vs 2 | FH text 4/5 + PV | FH text 4/5 + med vf | 0.891 | 0.885 | 0.006 | 0.4334 | ns | ns agree |
+
+**Summary:** 3 significant / 6 total comparisons
+
+## Group 7
+
+| Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |
+|----------|-------------|-------------|------|------|-----|-------|-----|-----|
+| N=30 vs N=10 (MIN text) | FM text 29/30 | FM text 10/10 | 0.669 | 0.641 | 0.028 | 0.0009 | *** | *** agree |
+| N=10 vs N=5 (HIGH text) | FH text 9/10 | FH text 5/5 | 0.811 | 0.788 | 0.022 | 0.0831 | ns | ns agree |
+| N=30 vs N=10 (HIGH text) | FH text 26/30 | FH text 9/10 | 0.826 | 0.811 | 0.015 | 0.0872 | ns | * agree |
+| N=10 vs N=5 (MIN text) | FM text 10/10 | FM text 5/5 | 0.641 | 0.647 | -0.006 | 0.6972 | ns | ns agree |
+
+**Summary:** 1 significant / 4 total comparisons
+

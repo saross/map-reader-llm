@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "description": "API cost retrospective for paper",
+  "project_period": "2026-02-01 to 2026-03-27",
+  "project_days": 55,
+  "total_estimated_cost_usd": {
+    "lower": 194,
+    "upper": 203,
+    "tracked_realtime": 87.07,
+    "estimated_batch": {
+      "lower": 107,
+      "upper": 116,
+      "note": "Estimated from per-tile rates × batch tile counts × 50% discount"
+    }
+  },
+  "total_tile_inferences": 353863,
+  "average_cost_per_tile_usd": 0.00057,
+  "execution_modes": {
+    "realtime_runs": 484,
+    "batch_api_runs": 1360,
+    "batch_discount_rate": 0.50
+  },
+  "cost_by_model": {
+    "gemini-3-flash": {"tracked_cost": 38.50, "total_calls_approx": 340534},
+    "gemini-3-flash-preview": {"tracked_cost": 45.81, "total_calls_approx": 18019},
+    "gemini-3.1-pro-preview": {"tracked_cost": 2.71, "note": "Token-heavy, few tiles"},
+    "gemini-3.1-flash-lite-preview": {"tracked_cost": 0.04, "total_calls": 180}
+  },
+  "token_usage_tracked_only": {
+    "input_tokens": 452913934,
+    "output_tokens": 9637532,
+    "thinking_tokens": 19899889,
+    "cached_tokens": 150612750,
+    "total_approx": 482000000,
+    "cache_hit_rate_pct": 33
+  },
+  "cost_by_phase_tracked": {
+    "h11_consensus_pv": {"cost": 52.88, "tracked_calls": 16026, "batch_tiles_approx": 66993},
+    "phase3a_temperature": {"cost": 8.62, "tracked_calls": 6339},
+    "phase2c_prompt_detail": {"cost": 6.61, "tracked_calls": 4794},
+    "phase2b_modality": {"cost": 5.53, "tracked_calls": 4410},
+    "pv_sweeps": {"cost": 4.09},
+    "phase2a_baseline": {"cost": 4.07, "tracked_calls": 3000},
+    "retest_replication": {"batch_tiles_approx": 216001, "note": "All batch pricing"}
+  },
+  "key_findings": {
+    "per_mound_cost": "~$0.34 per true mound detected (569 reference mounds, ~$195 total)",
+    "batch_savings": "~50% discount on 77% of tile inferences",
+    "flash_dominance": "99%+ of spend on Flash-family models; Pro used sparingly ($2.71)",
+    "caching_benefit": "33% of input tokens served from cache"
+  }
+}
