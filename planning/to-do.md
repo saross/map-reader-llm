@@ -98,10 +98,10 @@
   All pushed. [2026-03-28]
 - [x] **Update to-do.md** — in progress, marking items throughout
   session. [2026-03-28]
-- [ ] **Copy plans to planning/** — session-60 plan should be in
-  git-tracked `planning/` directory.
-- [ ] **Clean up batch_working directories on sapphire** — may have
-  accumulated from the outstanding runs.
+- [x] **Copy plans to planning/** — saved as
+  `planning/session-60-pairwise-plan.md`. [2026-03-28]
+- [x] **Clean up batch_working directories on sapphire** — removed
+  319 dirs, freed 171.7 GB. [2026-03-28]
 
 ## 8. Outstanding Items from Master To-Do
 
@@ -109,12 +109,18 @@
   Written up in `results/phase3c-diversity/cross-track-comparison.md`.
   H9 null on both tracks; parametric vs structural diversity
   distinction is a key contribution. [2026-03-28]
-- [ ] **Add defensive model check to run_phase2.py and run_pv.py** —
-  verify model name matches study dir/YAML before proceeding.
-- [ ] **Buffer sensitivity table in paper** — Obs 190 findings, now
-  superseded by the comprehensive multi-buffer evaluation.
-- [ ] **Update bootstrap-cis-384px.json** — the old consolidated CI
-  file. May be superseded by the new paper-eval results.
+- [x] **Add defensive model check to run_phase2.py and run_pv.py** —
+  validate_model_consistency() checks CLI vs YAML vs output dir.
+  Aborts on CLI/YAML conflict, warns on dir name mismatch.
+  Per-condition model field now propagated through execution chain.
+  [2026-03-28]
+- [x] **Buffer sensitivity table in paper** — Superseded by
+  `spatial_tolerance_curve.csv` (15 conditions × 4 buffers) and the
+  20m headline / 30m discussion decision. [2026-03-28]
+- [x] **Update bootstrap-cis-384px.json** — Not needed. The old file
+  (81 PV threshold sweep conditions at 30m) is self-consistent with
+  its source data. Paper tables now use the comprehensive multi-buffer
+  evaluations in results/paper-eval/ instead. [2026-03-28]
 
 ---
 
