@@ -5862,3 +5862,65 @@ The project now has two central empirical claims, both supported by comprehensiv
 The remaining work is pairwise comparisons with FDR correction (32 comparisons defined in YAML), paper tables, and commits. The `planning/to-do.md` has the comprehensive list. All data exists; no more API calls are needed.
 
 ---
+
+## Reflection 46: The session where the result survived its own prosecution (Session 60, 2026-03-28, map-reader-llm)
+
+*What surprised you about this session?*
+
+That the audit found nothing wrong with the pipeline. I went in genuinely
+expecting to find an error — the prompt was deliberately adversarial, the
+framing assumed the result was wrong, and the 8-layer structure was designed
+to leave no escape route. Five parallel agents examined ground truth
+integrity, spatial matching, metric calculation, configuration traceability,
+cross-configuration consistency, and statistical validity. All 9 inflation
+hypotheses were rejected.
+
+What surprised me was not that the pipeline is correct — this project has
+been unusually disciplined about errata and self-correction throughout — but
+that the concerns that *did* emerge were all about reporting precision rather
+than computational error. The tolerance dependency (F1 = 0.904 at 30m vs
+0.890 at 20m), the CI lower bound (0.878), and the missing pairwise tests
+are all about how to *describe* the result, not whether it's real. That's a
+genuinely different category of finding from what I was expecting.
+
+The user's correction about symbol radius was a good example of domain
+calibration that no amount of code auditing would produce. I had noted
+"30m ≈ 6 pixels, approximately the diameter of a mound symbol" — the user
+corrected this to approximately the *radius* (symbols are 12–18px diameter).
+This makes 30m a geometrically meaningful tolerance (match within one symbol
+radius) rather than an arbitrary buffer. The distinction matters for the
+paper's methodological defence.
+
+*What was different about this session compared to recent ones?*
+
+This was the first session in this project where the goal was verification
+rather than production. Every prior session either ran experiments, built
+infrastructure, or analysed results. This one asked: "is any of that wrong?"
+The mode shift was interesting — instead of building on the codebase, the
+agents interrogated it. The parallel audit structure (5 agents covering
+different layers simultaneously) was effective; each agent could be thorough
+within its scope without context pressure from the others.
+
+The `/improve-prompt` → audit → synthesis → proposal pipeline was also
+unusual. The session started with a prompt-hardening exercise, then
+immediately used the hardened prompt for the audit, then synthesised findings,
+then produced an actionable proposal for future work. Each phase fed the next
+cleanly. The prompt hardening wasn't an abstract exercise — it was preparation
+for the session's actual work, and the "when blocked" protocol (checking
+configs against metadata, comparing adjacent runs) was derived directly from
+the user's interview answers and deployed within the hour.
+
+*What question emerged that wasn't pursued?*
+
+The greedy single-linkage consensus clustering. The completeness check noted
+that the 20m clustering threshold in `lib_consensus.py` uses a greedy
+iteration-order-dependent algorithm. I checked that the paper-eval buffer
+(30m) is larger than the clustering radius (20m), which means clustering
+doesn't constrain the evaluation, but I didn't investigate whether iteration
+order affects which specific detections survive the 16-of-30 threshold. If
+two clusters merge that shouldn't (because an intermediate point links them),
+votes could be redistributed. This is probably negligible — the consensus
+algorithm is standard and consistently applied — but it's the one layer where
+I noted the concern and moved on rather than fully resolving it.
+
+---

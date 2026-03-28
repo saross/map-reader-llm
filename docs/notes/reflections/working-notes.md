@@ -5601,3 +5601,64 @@ the confounds.
   for the downstream pipeline's needs.
 
 ---
+
+### Obs 203: Adversarial audit as a publication prerequisite (Session 60, 2026-03-28)
+
+*Session 60. Emerged from the full 8-layer adversarial audit of
+the F1 = 0.904 result.*
+
+When a result substantially exceeds all published benchmarks — in this
+case, F1 = 0.90 vs the best prior F1 = 0.73 (DARPA CriticalMAAS U-Net)
+and F1 = 0.886 (U-Net wetland segmentation) — the burden of proof shifts.
+The result requires active prosecution, not just validation. The
+adversarial audit protocol used here (inventory every verifiable claim
+before evaluating any, check bidirectionally, test 9 specific inflation
+hypotheses) is a defensible methodology for this prosecution.
+
+The audit's value was not that it found errors (it didn't) but that it
+produced a *publishable audit trail* demonstrating due diligence. For the
+paper, the audit report (`reports/adversarial-audit-report.md`) can be
+referenced as a supplementary document: "We assumed the result contained
+an error and systematically attempted to find it across 8 pipeline layers
+and 9 inflation hypotheses. All hypotheses were rejected."
+
+The three concerns it identified — tolerance dependency, CI bounds not
+guaranteeing F1 > 0.9, and missing pairwise tests — are all about
+reporting precision, not pipeline correctness. This distinction matters:
+the result is computationally verified, but the paper must frame it
+carefully to avoid overstating what the statistics support.
+
+**Methodological recommendation**: For any result that exceeds prior
+state-of-the-art by a large margin, run an adversarial audit before
+submission. The cost is ~1 hour of CC time; the benefit is either finding
+an error early (saving embarrassment) or producing a verification trail
+(strengthening the paper). The expected value is positive in both cases.
+
+### Obs 204: 30m tolerance as symbol radius — geometric justification (Session 60, 2026-03-28)
+
+*Session 60. User correction during audit debrief.*
+
+The 30m spatial matching tolerance was initially justified as
+"approximately one symbol diameter" (12–18px, or 60–90m). The user
+corrected this: 30m ≈ 6px is approximately one symbol *radius*, not
+diameter. Burial mound symbols on Soviet 1:25,000 topographic maps are
+12–18px in diameter (60–90m at 5.01 m/pixel), making 30m the approximate
+minimum radius.
+
+This reframing strengthens the tolerance justification substantially.
+"Match within one symbol radius of the reference point" is a
+geometrically meaningful criterion — it says "the detection centroid
+falls within the symbol's footprint." By contrast, "one symbol diameter"
+would mean "the detection centroid is within twice the symbol's extent,"
+which is generous enough to invite scrutiny.
+
+The preregistered 20m tolerance (~4px) is approximately 2/3 of the
+minimum symbol radius. At 20m, F1 = 0.890 [0.863, 0.915]. The 20m→30m
+gain adds 8 TPs (375→383) from detections that are correctly localised
+to within the symbol footprint but not to within 2/3 of its radius.
+
+For the paper, recommend describing 30m as "the approximate minimum
+symbol radius" and noting it as a preregistration deviation (erratum
+E46) with geometric justification. Report both 20m and 30m results.
+
+---

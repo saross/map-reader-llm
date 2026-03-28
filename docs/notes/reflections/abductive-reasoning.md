@@ -2708,6 +2708,18 @@ but seeing it manifest so starkly (MCC=0.02 vs F1=0.51) was genuinely
 surprising. The preregistration's inclusion of MCC as a secondary
 outcome was prescient.
 
+### Conditional assessment: Session 60, 2026-03-28
+
+**Not updated.** The adversarial audit session tested the hypothesis
+"F1 > 0.9 contains an error" and found no error — the result survived
+prosecution. This is a confirmation (hypothesis disconfirmed), not a
+surprising finding or belief revision. The concerns identified (tolerance
+dependency, CI bounds, missing pairwise tests) were about reporting
+precision, which does not meet the abductive trigger of a surprising
+fact requiring explanation. The user's symbol radius correction (30m ≈
+radius, not diameter) refines the tolerance justification but doesn't
+revise a prior belief about the pipeline's correctness.
+
 ### Entry 14: The temperature × thinking interaction — when two safe defaults combine into a terrible configuration (Session 59, 2026-03-27)
 
 **Surprising fact**: Pro MEDIUM T=0.7 achieves F1=0.428 (text) — worse

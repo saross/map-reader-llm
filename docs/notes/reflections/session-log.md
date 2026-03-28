@@ -3320,3 +3320,68 @@ defined 32 pairwise comparisons for the next session.
 - Spatial tolerance curve for plotting
 
 See `planning/session-59-analysis-plan.md` for detailed carry-forward.
+
+---
+
+## Session 60 — 2026-03-28 (map-reader-llm)
+
+**Focus**: Adversarial audit of F1 > 0.9 result; pairwise comparison
+strategy.
+
+### Accomplishments
+
+1. **Prompt hardening** — applied `/improve-prompt` to the adversarial
+   audit seed prompt (`planning/adversarial-audit-prompt-seed.md`).
+   Produced hardened version at `planning/adversarial-audit-prompt.md`
+   with 15 anti-satisficing techniques applied. Captured to grimoire.
+
+2. **Full adversarial audit** — ran the hardened prompt across 8 pipeline
+   layers and 9 inflation hypotheses using 5 parallel subagents. All 9
+   hypotheses rejected. No pipeline errors, data leakage, or
+   methodological flaws found. F1 = 0.9044 verified from raw counts
+   (TP=383, FP=29, FN=52, scoped GT=435). Report at
+   `reports/adversarial-audit-report.md`.
+
+3. **Identified reporting concerns** — three issues flagged, all about
+   reporting precision rather than pipeline correctness:
+   - Tolerance dependency: F1 = 0.904 at 30m, 0.890 at 20m
+   - CI lower bound = 0.878 (does not guarantee F1 > 0.9)
+   - No pairwise test between top-2 PV conditions
+
+4. **Documented pseudo-p-value FDR flaw** — detailed explanation of why
+   the ad hoc formula in `analyse_phase2_results.py:199-210` is
+   methodologically unsound, with recommendation to replace with real
+   permutation test p-values from `pairwise_permutation_test.py`.
+
+5. **Pairwise comparison proposal** — designed 32 structured comparisons
+   across 7 hypothesis-driven groups (26 confirmatory + 6 exploratory)
+   with BH FDR correction. Written to
+   `planning/pairwise-comparison-proposal.md`.
+
+6. **Symbol radius correction** — incorporated user's domain correction
+   that 30m ≈ 1 symbol radius (not diameter), strengthening the
+   tolerance justification (Obs 204).
+
+### Key findings
+
+- **Obs 203**: Adversarial audit as publication prerequisite — the audit
+  trail is itself a publishable supplementary document
+- **Obs 204**: 30m tolerance = approximate minimum symbol radius,
+  providing geometric justification for the preregistration deviation
+
+### Files created
+
+- `planning/adversarial-audit-prompt.md` — hardened audit prompt
+- `reports/adversarial-audit-report.md` — full audit report
+- `planning/pairwise-comparison-proposal.md` — 32-comparison strategy
+- `personal-assistant/notes/grimoire/adversarial-results-audit.md` —
+  grimoire entry
+
+### Pending (Session 61)
+
+- Execute the 32 pairwise permutation tests (on sapphire)
+- Apply FDR correction (26 confirmatory + 6 exploratory families)
+- Replace pseudo-p-value FDR in `analyse_phase2_results.py`
+- Paper tables (leaderboard with tiers, pipeline progression)
+- API cost retrospective
+- Commits (substantial accumulated changes from sessions 59–60)
