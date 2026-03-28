@@ -1,0 +1,45 @@
+{
+  "description": "Tile size comparison: 512px vs 384px at N=1 level",
+  "buffer_metres": 30,
+  "method": "Evaluate 512px detections on 384px tile grid (487 tiles) for same-area comparison",
+  "conditions": [
+    {
+      "label": "Image T=0.0",
+      "f1_512_native": 0.654,
+      "f1_512_on_384": 0.571,
+      "f1_384_native": 0.655,
+      "winner_same_grid": "384px",
+      "delta": 0.084
+    },
+    {
+      "label": "Image T=0.7",
+      "f1_512_native": 0.634,
+      "f1_512_on_384": 0.57,
+      "f1_384_native": 0.63,
+      "winner_same_grid": "384px",
+      "delta": 0.06
+    },
+    {
+      "label": "Text T=0.0",
+      "f1_512_native": 0.643,
+      "f1_512_on_384": 0.567,
+      "f1_384_native": 0.515,
+      "winner_same_grid": "512px",
+      "delta": -0.052
+    },
+    {
+      "label": "Text T=0.7",
+      "f1_512_native": 0.612,
+      "f1_512_on_384": 0.542,
+      "f1_384_native": 0.506,
+      "winner_same_grid": "512px",
+      "delta": -0.036
+    }
+  ],
+  "interpretation": {
+    "image_track": "384px preferred \u2014 smaller tiles give clearer view of symbols (+0.06 to +0.08)",
+    "text_track": "512px marginally better at N=1 \u2014 larger context helps text descriptions",
+    "pipeline_argument": "The text-track N=1 deficit is overcome by consensus+PV (F1=0.904 at 384px). 384px was the correct production choice because: (1) image detection is better, (2) more tiles per sheet gives finer spatial resolution, (3) the full pipeline compensates for the text N=1 deficit."
+  },
+  "caveat": "Cross-grid evaluation has methodological limitations: bootstrap CIs are unreliable due to sparse tile coverage. Point estimates are directionally clear but formal significance not established."
+}
