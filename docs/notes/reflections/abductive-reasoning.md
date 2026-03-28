@@ -2761,3 +2761,58 @@ optimised jointly, never independently. A benchmark that sweeps
 temperature at a fixed thinking level (or vice versa) will miss the
 interaction and may report misleadingly poor results for capable
 models tested at mismatched configurations.
+
+### Entry 15: When two valid metrics give opposite answers — tile size as pipeline optimisation (Session 60 cont., 2026-03-28)
+
+**Surprising fact**: McNemar tests show 384px detects significantly
+more unique mounds than 512px (p≤0.017, all 4 matched conditions).
+Yet F1 comparisons on the same data show 512px achieves higher F1 in
+3 of 4 conditions, sometimes substantially (+0.118 for Text T=0.0).
+Both results are correct. They measure different things.
+
+**Prior belief**: Smaller tiles (384px) should produce better
+detection quality overall because target symbols occupy a larger
+proportion of each tile. The move from 512px to 384px was justified
+as improving detection resolution.
+
+**Probe sequence**:
+
+1. Initial cross-grid evaluation produced F1=0.251 for 384px on the
+   512px grid — clearly wrong. Geographic coverage mismatch diagnosed
+   (384px covers less area than 512px).
+
+2. Reversed the reference grid (evaluate both on 384px bounds). Point
+   estimates: image conditions roughly equivalent, text conditions
+   substantially worse at 384px.
+
+3. `/review-implementation` revealed the tile-swap permutation test is
+   methodologically invalid for cross-grid comparison. Recommended
+   McNemar (per-mound) + per-map descriptive.
+
+4. McNemar results: 384px detects 37–64 more unique mounds per
+   condition (significantly more discordant pairs in its favour). But
+   384px also generates ~2× more false positives.
+
+**Revised belief**: 384px isn't "better" or "worse" than 512px. It
+shifts the precision–recall operating point towards high recall / low
+precision. This is *exactly* what the consensus+PV pipeline needs:
+the downstream stages are precision-recovery mechanisms that cannot
+resurrect false negatives. Tile-size selection is a pipeline
+optimisation choice, not an absolute quality decision.
+
+**Abductive structure**: The best explanation for the McNemar/F1
+divergence is that 384px tiles provide less context per tile, causing
+the model to adopt a more liberal detection strategy ("when in doubt,
+flag it"). This inflates both true positive count (more mounds found)
+and false positive count (more spurious detections). F1 penalises the
+false positives; McNemar only sees the mounds. The pipeline exploits
+the high recall while filtering the low precision.
+
+**Generalised principle**: For multi-stage detection pipelines,
+optimise the first stage for recall, not F1. The downstream stages
+can reject false positives but cannot recover false negatives. A
+noisy, high-recall input is strictly better raw material than a
+cleaner, lower-recall input — provided the pipeline has effective
+filtering stages. This connects to Obs 141 (diversity dividend) and
+Obs 202 (pipeline > prompt engineering): the common thread is that
+ensemble methods benefit from noisy, diverse inputs.

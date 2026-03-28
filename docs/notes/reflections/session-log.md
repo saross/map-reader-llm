@@ -3377,11 +3377,54 @@ strategy.
 - `personal-assistant/notes/grimoire/adversarial-results-audit.md` —
   grimoire entry
 
-### Pending (Session 61)
+### Session 60 continuation — Analysis phase (different CC instance)
 
-- Execute the 32 pairwise permutation tests (on sapphire)
-- Apply FDR correction (26 confirmatory + 6 exploratory families)
-- Replace pseudo-p-value FDR in `analyse_phase2_results.py`
-- Paper tables (leaderboard with tiers, pipeline progression)
-- API cost retrospective
-- Commits (substantial accumulated changes from sessions 59–60)
+7. **N=1 tolerance sweep** — evaluated all 51 N=1 conditions (18 at
+   384px + 33 at 512px) at 20/30/40/50m buffers on sapphire.
+
+8. **Pairwise permutation tests** — wrote `run_pairwise_tests.py`
+   orchestrator and `apply_fdr_correction.py`. Ran 335 comparisons:
+   - 32 hypothesis-driven (7 groups): 18/26 confirmatory significant,
+     3/6 exploratory significant after BH FDR at 30m
+   - 300 leaderboard round-robin (top-25): 243/300 significant,
+     9 performance tiers identified
+   - 20m sensitivity: directionally consistent (20/26 confirmatory)
+
+9. **Paper tables** — produced 7 tables:
+   - N=1 leaderboard (51 conditions × 4 buffers)
+   - Pipeline progression (F1: 0.406 → 0.904)
+   - Pairwise hypothesis table with 20m cross-check
+   - Leaderboard tier clustering (top 3 indistinguishable)
+   - Spatial tolerance curve (15 conditions × 4 buffers)
+   - Pro 2×2 temperature × thinking matrix
+   - Cost retrospective (~$195–203 total, $0.34/mound)
+
+10. **MCC completeness** — 16 additional conditions (5 PV + 11
+    consensus). Image baseline + PV achieved MCC=0.877 (highest).
+
+11. **H9 diversity cross-track comparison** — null result on both
+    tracks. Parametric diversity fails where structural diversity
+    (PV pipeline) succeeds.
+
+12. **Tile-size comparison** — `/review-implementation` identified
+    McNemar + per-map F1 as the correct approach (tile-swap permutation
+    invalid for cross-grid). Finding: 384px has higher recall (McNemar
+    p≤0.017), 512px has higher F1 (better precision). Divergence
+    explains why 384px suits the consensus+PV pipeline (Obs 203).
+
+13. **Defensive model check** — `validate_model_consistency()` in
+    run_phase2.py and run_pv.py. Checks CLI vs YAML vs output dir.
+
+14. **Commits and cleanup** — 22 commits pushed, 171.7 GB freed on
+    sapphire (319 batch_working dirs), all to-do items complete.
+
+### Key findings
+
+- **Obs 203**: Tile size as pipeline optimisation — 384px provides
+  better raw material (high recall) for consensus+PV
+- Headline buffer: 20m per preregistration, tolerance curve prominent,
+  30m argued as empirically grounded
+
+### Status
+
+All analysis for the paper is complete. Next phase: paper writing.

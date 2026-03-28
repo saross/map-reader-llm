@@ -5924,3 +5924,71 @@ algorithm is standard and consistently applied — but it's the one layer where
 I noted the concern and moved on rather than fully resolving it.
 
 ---
+
+## Reflection 47: The session where the analysis wrote itself (Session 60 cont., 2026-03-28, map-reader-llm)
+
+*Note: This reflection is from a different CC instance than Reflection 46.
+Reflection 46 covered the audit phase of Session 60; this covers the
+analysis phase (pairwise tests, paper tables, tile-size comparison) by
+the instance that executed the work.*
+
+*What surprised you about this session?*
+
+The throughput. 335 pairwise permutation tests, 7 paper tables, a complete
+MCC sweep, a McNemar tile-size comparison, a cost retrospective, an H9
+diversity write-up, a defensive model check implementation, and 22 commits
+— all in one session. The analysis phase of a paper usually feels like a
+slog, but this one accelerated because every piece of infrastructure was
+already in place. The evaluation scripts, the YAML configs, the detection
+data — all built over 59 prior sessions — turned the final analysis into
+assembly rather than invention.
+
+What surprised me specifically was the tile-size comparison. I initially
+attempted a naive cross-grid evaluation that produced nonsensical results
+(F1=0.251 for a condition that should have been ~0.65). The user caught
+that the geographic coverage was wrong and suggested reversing the grid
+direction. Even after fixing that, the `/review-implementation` protocol
+revealed that the tile-swap permutation test was fundamentally invalid for
+cross-grid comparison — the exchangeability assumption is violated when
+the two conditions saw different input images. The eventual approach
+(per-mound McNemar + per-map F1) produced a finding I didn't expect: that
+384px and 512px each win on different metrics, and the *divergence* between
+McNemar (recall) and F1 (overall) is itself the key insight. It reframes
+tile-size selection as a pipeline optimisation problem rather than an
+absolute quality comparison.
+
+*What would you do differently if you replayed this session?*
+
+I would have run the tile-size methodology review *before* attempting the
+cross-grid evaluation. The naive approach wasted time and produced an
+incorrect result file that needed replacing. The `/review-implementation`
+skill exists precisely for these moments — when you're about to commit to
+an analytical approach in a domain where the first working solution may
+not be the right one. I should have recognised the cross-grid comparison
+as a non-trivial methodological choice rather than a routine evaluation.
+
+I would also have parallelised more aggressively at the start. The N=1
+evaluation jobs on sapphire, the pairwise tests, and the paper table
+generation were all independent — I could have launched them simultaneously
+rather than sequentially. The sapphire jobs ran in the background while I
+worked locally, which was good, but I waited for several intermediate
+checks that didn't change my next action.
+
+*What's the single most important thing a future instance should know?*
+
+The analysis for this paper is complete. All evaluation data exists at all
+buffer distances, all pairwise tests are run and FDR-corrected, all paper
+tables are generated, and everything is committed and pushed. The next
+phase is writing the paper itself. The key narrative threads are:
+
+1. Pipeline architecture > prompt engineering (Obs 202, Groups 1 vs 3-4)
+2. F1/MCC divergence reveals Flash's fundamental limitation (Obs 201)
+3. Tile size is a pipeline optimisation, not an absolute quality choice (Obs 203)
+4. Top 3 PV conditions are statistically indistinguishable (leaderboard tiers)
+5. H9 diversity is null — parametric vs structural diversity distinction
+6. Temperature × thinking interaction means parameters must be jointly optimised (Obs 200)
+
+The data supports all six threads. The paper needs to weave them into a
+coherent argument about multi-stage VLM pipelines for detection tasks.
+
+---
