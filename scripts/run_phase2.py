@@ -298,6 +298,7 @@ def extract_conditions(config: dict) -> list[dict]:
                 "temperature": cond.get("temperature"),
                 "thinking_level": cond.get("thinking_level"),
                 "ordering": cond.get("ordering"),
+                "model": cond.get("model"),
             })
         return conditions
 
@@ -397,6 +398,7 @@ def generate_execution_units(
                 "thinking_level": condition.get("thinking_level"),
                 "ordering": condition.get("ordering"),
                 "ordering_seed": ordering_seed,
+                "model": condition.get("model"),
             })
 
     # Randomise unit order with fixed seed
@@ -427,6 +429,85 @@ def validate_configs(conditions: list[dict]) -> tuple[list[dict], list[dict]]:
             missing.append(condition)
 
     return valid, missing
+
+
+def validate_model_consistency(
+    conditions: list[dict],
+    model_override: str | None,
+    output_dir: str,
+) -> list[str]:
+    """Validate model consistency across YAML, CLI, and output directory.
+
+    Checks for three types of mismatch that have caused silent errors
+    in past experiments (see scratchpad 2026-03-15):
+
+    1. Per-condition model vs CLI --model override (conflict)
+    2. Per-condition models differ from each other (mixed study)
+    3. Output directory name suggests a different model than configured
+
+    Args:
+        conditions: List of condition dicts (may have 'model' key).
+        model_override: CLI --model value, or None.
+        output_dir: Output directory path string.
+
+    Returns:
+        List of warning/error messages (empty if all consistent).
+    """
+    messages: list[str] = []
+
+    # Collect per-condition models (ignoring None = default Flash)
+    condition_models = {}
+    for cond in conditions:
+        if cond.get("model"):
+            condition_models[cond["name"]] = cond["model"]
+
+    # Check 1: CLI override conflicts with per-condition model
+    if model_override and condition_models:
+        for cname, cmodel in condition_models.items():
+            # Normalise for comparison (strip -preview suffix)
+            cli_base = model_override.removesuffix("-preview")
+            cond_base = cmodel.removesuffix("-preview")
+            if cli_base != cond_base:
+                messages.append(
+                    f"ERROR: Condition '{cname}' specifies model "
+                    f"'{cmodel}' but CLI --model is "
+                    f"'{model_override}'. These must match or the "
+                    f"experiment is invalid."
+                )
+
+    # Check 2: Mixed models within a single study
+    unique_models = set(condition_models.values())
+    if len(unique_models) > 1:
+        messages.append(
+            f"WARNING: Study contains mixed models: "
+            f"{', '.join(sorted(unique_models))}. Verify this is "
+            f"intentional."
+        )
+
+    # Check 3: Output directory name vs model
+    # Detect common model indicators in directory names
+    out_lower = output_dir.lower()
+    effective_model = model_override or (
+        next(iter(unique_models)) if len(unique_models) == 1 else None
+    )
+
+    if effective_model:
+        model_lower = effective_model.lower()
+        # Flag if directory says "pro" but model is "flash" or vice versa
+        if "pro" in out_lower and "flash" in model_lower:
+            messages.append(
+                f"WARNING: Output directory contains 'pro' but "
+                f"model is '{effective_model}'. Check for "
+                f"model/directory mismatch."
+            )
+        if "flash" in out_lower and "pro" in model_lower:
+            messages.append(
+                f"WARNING: Output directory contains 'flash' but "
+                f"model is '{effective_model}'. Check for "
+                f"model/directory mismatch."
+            )
+
+    return messages
 
 
 def load_checkpoint(checkpoint_path: Path) -> dict:
@@ -938,6 +1019,27 @@ def run_phase2(
             return {"error": "no_valid_conditions"}
 
         conditions = valid_conditions
+
+    # Validate model consistency before any execution
+    model_warnings = validate_model_consistency(
+        conditions, model_override, execution["output_dir"],
+    )
+    if model_warnings:
+        print("=" * 70)
+        print("MODEL CONSISTENCY CHECK")
+        print("=" * 70)
+        has_errors = False
+        for msg in model_warnings:
+            print(f"  {msg}")
+            if msg.startswith("ERROR"):
+                has_errors = True
+        print()
+        if has_errors:
+            print(
+                "Aborting — fix model configuration before running. "
+                "See scratchpad 2026-03-15 for context."
+            )
+            return {"error": "model_mismatch"}
 
     # Apply condition filter
     if condition_filter:
@@ -1595,9 +1697,12 @@ def _execute_units_batch(
                 print()
             continue
 
-        # Apply model override if provided via --model CLI flag
+        # Resolve model name — priority: CLI --model > YAML per-condition
+        # model > prompt config model > default
         if model_override:
             model_name = model_override
+        elif unit.get("model"):
+            model_name = unit["model"]
         else:
             model_name = prompt_config.get("model", "gemini-3-flash")
 

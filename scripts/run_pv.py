@@ -170,6 +170,22 @@ def cmd_verify(args: argparse.Namespace) -> int:
     if args.temperature is not None:
         logger.info("Temperature override: %.2f", args.temperature)
 
+    # Defensive model check: verify model is consistent with output dir
+    effective_model = args.model or config.get("model", "gemini-3-flash")
+    out_lower = str(args.output_dir).lower()
+    if "pro" in out_lower and "flash" in effective_model.lower():
+        logger.warning(
+            "Output directory contains 'pro' but model is '%s'. "
+            "Check for model/directory mismatch.",
+            effective_model,
+        )
+    if "flash" in out_lower and "pro" in effective_model.lower():
+        logger.warning(
+            "Output directory contains 'flash' but model is '%s'. "
+            "Check for model/directory mismatch.",
+            effective_model,
+        )
+
     # Warn if --dry-run used with real-time mode (not supported)
     if args.dry_run and args.mode == "realtime":
         logger.warning(
