@@ -105,9 +105,10 @@
 
 ## 8. Outstanding Items from Master To-Do
 
-- [ ] **Phase 3c H9 diversity Track 1 vs Track 2 comparison** — data
-  exists in `results/phase3c-diversity/`, just needs the comparison
-  written up.
+- [x] **Phase 3c H9 diversity Track 1 vs Track 2 comparison** —
+  Written up in `results/phase3c-diversity/cross-track-comparison.md`.
+  H9 null on both tracks; parametric vs structural diversity
+  distinction is a key contribution. [2026-03-28]
 - [ ] **Add defensive model check to run_phase2.py and run_pv.py** —
   verify model name matches study dir/YAML before proceeding.
 - [ ] **Buffer sensitivity table in paper** — Obs 190 findings, now
