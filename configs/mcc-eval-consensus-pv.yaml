@@ -1,0 +1,98 @@
+# Tile-Level MCC — Consensus and PV Conditions
+# ================================================
+# Batch spec for evaluate_tile_mcc.py --batch.
+# Evaluates tile-level discrimination for consensus-voted and
+# proposer-verifier pipeline conditions, plus representative N=1
+# baselines for same-table comparison.
+#
+# Created: 2026-03-28
+
+metadata:
+  description: >
+    Tile-level MCC for consensus and PV conditions at 384px.
+    Completes the MCC table from Obs 202.
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bootstrap: 1000
+  seed: 42
+
+conditions:
+  # ── Consensus conditions ────────────────────────────────────
+  - label: "Flash HIGH text 5-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-text-n5
+    temperature: text-t0.7
+    pool_size: 5
+    vote_threshold: 5
+
+  - label: "Flash HIGH text 9-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-text-n5
+    temperature: text-t0.7
+    pool_size: 10
+    vote_threshold: 9
+
+  - label: "Flash HIGH text 26-of-30"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-text-n5
+    temperature: text-t0.7
+    pool_size: 30
+    vote_threshold: 26
+
+  - label: "Flash HIGH image 3-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-image-n5
+    temperature: image-t0.7
+    pool_size: 5
+    vote_threshold: 3
+
+  - label: "Flash HIGH image 6-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-image-n5
+    temperature: image-t0.7
+    pool_size: 10
+    vote_threshold: 6
+
+  - label: "Pro HIGH text 3-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/pro-high-text-n5
+    temperature: text-t0.7
+    pool_size: 5
+    vote_threshold: 3
+
+  # ── PV conditions ───────────────────────────────────────────
+  - label: "Flash HIGH text 16-of-30 + PV"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json
+    pv_threshold: 0.20
+
+  - label: "Flash HIGH text 4-of-5 + PV"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-4of5/candidate_manifest.json
+    pv_threshold: 0.15
+
+  - label: "Pro HIGH text 3-of-5 + PV"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/candidate_manifest.json
+    pv_threshold: 0.15
+
+  # ── N=1 baselines (for same-table comparison) ──────────────
+  - label: "Flash Text MINIMAL T=0.0 (N=1)"
+    type: n1
+    detections_dir: outputs/retest/h11-single-pass-384-t0/brief-text-t0
+    glob: "*/detections_*.geojson"
+
+  - label: "Pro Text HIGH T=0.7 (N=1)"
+    type: n1
+    detections_dir: outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7
+    glob: "*/detections_*.geojson"
+
+  - label: "Pro Image HIGH T=0.7 (N=1)"
+    type: n1
+    detections_dir: outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7
+    glob: "*/detections_*.geojson"

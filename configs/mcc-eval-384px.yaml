@@ -1,0 +1,87 @@
+# Tile-Level MCC Evaluation — 384px N=1 Conditions
+# ==================================================
+# Batch spec for evaluate_detections.py --batch --mcc.
+# Computes tile-level MCC, sensitivity, and specificity with bootstrap
+# CIs for all 384px N=1 single-pass conditions.
+#
+# 487 tiles: 229 populated (47%), 258 empty (53%).
+#
+# Created: 2026-03-27
+
+metadata:
+  description: "Tile-level MCC evaluation for 384px N=1 conditions"
+  tile_size: 384
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  buffers: [30]
+  bootstrap: 1000
+  seed: 42
+  glob: "*/detections_*.geojson"
+
+conditions:
+  # ── Flash Text ──────────────────────────────────────────────
+  - label: "Flash Text MINIMAL T=0.0"
+    detections_dir: outputs/retest/h11-single-pass-384-t0/brief-text-t0
+
+  - label: "Flash Text MINIMAL T=0.3"
+    detections_dir: outputs/h11/n1-outstanding-384/brief-text-t03
+    glob: "run_*/detections_*_run??"
+
+  - label: "Flash Text MINIMAL T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7
+
+  - label: "Flash Text HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7
+
+  - label: "Flash Text MINIMAL T=0.0 (PV baseline)"
+    detections_dir: outputs/h11/pv-diag-384/text-baseline/text-t0.0
+
+  # ── Flash Image ─────────────────────────────────────────────
+  - label: "Flash Image MINIMAL T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/image-baseline/image-t0.0
+
+  - label: "Flash Image MINIMAL T=0.0 (487 tiles)"
+    detections_dir: outputs/h11/n1-outstanding-384/image-t0
+    glob: "run_*/detections_*_run??"
+
+  - label: "Flash Image MINIMAL T=0.3"
+    detections_dir: outputs/h11/n1-outstanding-384/image-t03
+    glob: "run_*/detections_*_run??"
+
+  - label: "Flash Image MINIMAL T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/image-n5/image-t0.7
+
+  - label: "Flash Image HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7
+
+  # ── Pro Text ────────────────────────────────────────────────
+  - label: "Pro Text MEDIUM T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0
+
+  - label: "Pro Text MEDIUM T=0.7"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-text-medium-t07
+    glob: "run_*/detections_*_run??"
+
+  - label: "Pro Text HIGH T=0.0"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-text-high-t0
+    glob: "run_*/detections_*_run??"
+
+  - label: "Pro Text HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7
+
+  # ── Pro Image ───────────────────────────────────────────────
+  - label: "Pro Image MEDIUM T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0
+
+  - label: "Pro Image MEDIUM T=0.7"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-image-medium-t07
+    glob: "run_*/detections_*_run??"
+
+  - label: "Pro Image HIGH T=0.0"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-image-high-t0
+    glob: "run_*/detections_*_run??"
+
+  - label: "Pro Image HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7

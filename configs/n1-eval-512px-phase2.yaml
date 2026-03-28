@@ -1,0 +1,134 @@
+# N=1 Single-Pass Evaluation — 512px Phase 2 Conditions
+# =======================================================
+# Batch spec for evaluate_detections.py --batch.
+# Evaluates all Phase 2a-2e detection data on the 512px full
+# evaluation set (340 tiles) at 30m spatial buffer.
+#
+# Phase 2 tested prompt configuration, temperature, example
+# structure, instruction verbosity, and example ordering to select
+# optimal carry-forward parameters for production experiments.
+#
+# Created: 2026-03-27
+
+metadata:
+  description: "Phase 2a-2e config exploration at 512px, 30m buffer, 340 tiles"
+  tile_size: 512
+  purpose: >
+    Systematic configuration exploration across modality, temperature,
+    example structure, verbosity, and ordering. Results justify the
+    carry-forward configuration choices for 384px production runs.
+
+defaults:
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  buffers: [20, 30, 40, 50]
+  bootstrap: 1000
+  seed: 42
+  glob: "*/detections_*.geojson"
+
+conditions:
+  # ── Phase 2a: Modality and Elaboration (H1) ────────────────
+  - label: "P2a Image only"
+    detections_dir: outputs/retest/phase2a/image-only
+
+  - label: "P2a Brief text"
+    detections_dir: outputs/retest/phase2a/brief-text
+
+  - label: "P2a Brief text+image"
+    detections_dir: outputs/retest/phase2a/brief-text-image
+
+  - label: "P2a Verbose text"
+    detections_dir: outputs/retest/phase2a/verbose-text
+
+  - label: "P2a Verbose text+image"
+    detections_dir: outputs/retest/phase2a/verbose-text-image
+
+  # ── Phase 2b: Temperature — Text Track (H7) ────────────────
+  - label: "P2b Text T=0.0"
+    detections_dir: outputs/retest/phase2b/track2-text/T0.0
+
+  - label: "P2b Text T=0.3"
+    detections_dir: outputs/retest/phase2b/track2-text/T0.3
+
+  - label: "P2b Text T=0.7"
+    detections_dir: outputs/retest/phase2b/track2-text/T0.7
+
+  - label: "P2b Text T=1.0"
+    detections_dir: outputs/retest/phase2b/track2-text/T1.0
+
+  - label: "P2b Text T=1.3"
+    detections_dir: outputs/retest/phase2b/track2-text/T1.3
+
+  # ── Phase 2b: Temperature — Image Track (H7) ───────────────
+  - label: "P2b Image T=0.0"
+    detections_dir: outputs/retest/phase2b/track1-image/T0.0
+
+  - label: "P2b Image T=0.3"
+    detections_dir: outputs/retest/phase2b/track1-image/T0.3
+
+  - label: "P2b Image T=0.7"
+    detections_dir: outputs/retest/phase2b/track1-image/T0.7
+
+  - label: "P2b Image T=1.0"
+    detections_dir: outputs/retest/phase2b/track1-image/T1.0
+
+  - label: "P2b Image T=1.3"
+    detections_dir: outputs/retest/phase2b/track1-image/T1.3
+
+  # ── Phase 2c: Example Structure — Text Track (H8) ──────────
+  - label: "P2c Text canonical"
+    detections_dir: outputs/retest/phase2c/track2-text/canonical
+
+  - label: "P2c Text plus-hp"
+    detections_dir: outputs/retest/phase2c/track2-text/plus-hp
+
+  - label: "P2c Text pure-positive-canon"
+    detections_dir: outputs/retest/phase2c/track2-text/pure-positive-canon
+
+  - label: "P2c Text scale-4"
+    detections_dir: outputs/retest/phase2c/track2-text/scale-4
+
+  - label: "P2c Text scale-8"
+    detections_dir: outputs/retest/phase2c/track2-text/scale-8
+
+  # ── Phase 2c: Example Structure — Image Track (H8) ─────────
+  - label: "P2c Image canonical"
+    detections_dir: outputs/retest/phase2c/track1-image/canonical
+
+  - label: "P2c Image plus-hp"
+    detections_dir: outputs/retest/phase2c/track1-image/plus-hp
+
+  - label: "P2c Image pure-positive-canon"
+    detections_dir: outputs/retest/phase2c/track1-image/pure-positive-canon
+
+  - label: "P2c Image scale-4"
+    detections_dir: outputs/retest/phase2c/track1-image/scale-4
+
+  - label: "P2c Image scale-8"
+    detections_dir: outputs/retest/phase2c/track1-image/scale-8
+
+  # ── Phase 2d: Instruction Verbosity (H5) ───────────────────
+  - label: "P2d Text terse"
+    detections_dir: outputs/retest/phase2d/track2-text/terse
+
+  - label: "P2d Text verbose"
+    detections_dir: outputs/retest/phase2d/track2-text/verbose
+
+  - label: "P2d Image terse"
+    detections_dir: outputs/retest/phase2d/track1-image/terse
+
+  - label: "P2d Image verbose"
+    detections_dir: outputs/retest/phase2d/track1-image/verbose
+
+  # ── Phase 2e: Example Ordering (H4) ────────────────────────
+  - label: "P2e Config default"
+    detections_dir: outputs/retest/phase2e/config-default
+
+  - label: "P2e Canonical first"
+    detections_dir: outputs/retest/phase2e/canonical-first
+
+  - label: "P2e Canonical last"
+    detections_dir: outputs/retest/phase2e/canonical-last
+
+  - label: "P2e Random"
+    detections_dir: outputs/retest/phase2e/random

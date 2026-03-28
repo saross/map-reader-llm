@@ -1,0 +1,149 @@
+# Condition Registry — Maps leaderboard conditions to detection sources
+# =====================================================================
+# Used by run_pairwise_tests.py --leaderboard mode to look up detection
+# source parameters for each condition in metrics_master.csv.
+#
+# Labels must match the output of _build_leaderboard_label() exactly:
+#   PV:        "{condition_label} ({config_details})"
+#   Consensus: "{condition_label} N={pool_size} {config_details}"
+#
+# Created: 2026-03-28
+
+conditions:
+  # ── PV conditions ──────────────────────────────────────────────
+  - label: "flash-high-text-16-of-30--flash-min-vf (t=0.2)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json
+    threshold: 0.20
+
+  - label: "flash-high-text-4-of-5--flash-min-vf (t=0.15)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-4of5/candidate_manifest.json
+    threshold: 0.15
+
+  - label: "flash-high-text-4-of-5--flash-medium-vf (t=0.95)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-4of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-4of5/candidate_manifest.json
+    threshold: 0.95
+
+  - label: "flash-high-text-9-of-10--flash-min-vf (t=0.2)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-9of10/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-9of10/candidate_manifest.json
+    threshold: 0.20
+
+  - label: "pro-high-text-3-of-5--flash-min-vf (t=0.15)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/candidate_manifest.json
+    threshold: 0.15
+
+  - label: "flash-high-image-3-of-5--flash-min-vf (t=0.15)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-image-3of5/candidate_manifest.json
+    threshold: 0.15
+
+  - label: "text-baseline--flash-min-vf (t=0.15)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/text-baseline/probabilities.json
+    manifest: outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json
+    threshold: 0.15
+
+  - label: "image-baseline--flash-min-vf (t=0.2)"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/image-baseline/probabilities.json
+    manifest: outputs/h11/pv-diag-384/crops/image-baseline/candidate_manifest.json
+    threshold: 0.20
+
+  # ── Consensus conditions — HIGH thinking ───────────────────────
+  - label: "pro-high-text N=5 N=5, 3-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/pro-high-text-n5
+    config: "text-t0.7,5,3"
+
+  - label: "flash-high-text N=30 N=30, 26-of-30"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-text-n5
+    config: "text-t0.7,30,26"
+
+  - label: "pro-high-image N=5 N=5, 3-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/pro-high-image-n5
+    config: "image-t0.7,5,3"
+
+  - label: "flash-high-image N=10 N=10, 6-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-image-n5
+    config: "image-t0.7,10,6"
+
+  - label: "flash-high-text N=10 N=10, 9-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-text-n5
+    config: "text-t0.7,10,9"
+
+  - label: "flash-high-image N=5 N=5, 3-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-image-n5
+    config: "image-t0.7,5,3"
+
+  - label: "flash-high-text N=5 N=5, 5-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-high-text-n5
+    config: "text-t0.7,5,5"
+
+  # ── Consensus conditions — MINIMAL thinking ────────────────────
+  - label: "flash-min-image N=10 N=10, 6-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/image-n5
+    config: "image-t0.7,10,6"
+
+  - label: "flash-min-image N=5 N=5, 4-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/image-n5
+    config: "image-t0.7,5,4"
+
+  - label: "flash-min-text-t07 N=30 N=30, 29-of-30"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    config: "text-t0.7,30,29"
+
+  - label: "flash-min-text-t07 N=5 N=5, 5-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    config: "text-t0.7,5,5"
+
+  - label: "flash-min-text-t07 N=10 N=10, 10-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    config: "text-t0.7,10,10"
+
+  # ── Consensus conditions — single-pass T=0.0 ──────────────────
+  - label: "single-pass-t0 N=10 N=10, 10-of-10"
+    type: consensus
+    study_dir: outputs/retest/h11-single-pass-384-t0
+    config: "brief-text-t0,10,10"
+
+  - label: "single-pass-t0 N=5 N=5, 5-of-5"
+    type: consensus
+    study_dir: outputs/retest/h11-single-pass-384-t0
+    config: "brief-text-t0,5,5"
+
+  # ── Consensus conditions — MINIMAL T=1.0 (unintended) ─────────
+  - label: "flash-min-text-t10 N=5 N=5, 5-of-5"
+    type: consensus
+    study_dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+    config: "384,5,5"
+
+  - label: "flash-min-text-t10 N=30 N=30, 22-of-30"
+    type: consensus
+    study_dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+    config: "384,30,22"
+
+  - label: "flash-min-text-t10 N=10 N=10, 9-of-10"
+    type: consensus
+    study_dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+    config: "384,10,9"

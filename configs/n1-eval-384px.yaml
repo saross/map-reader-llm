@@ -1,0 +1,57 @@
+# N=1 Single-Pass Evaluation — 384px Conditions
+# ================================================
+# Batch spec for evaluate_detections.py --batch.
+# Evaluates all 384px single-pass N=1 detection data on the full
+# 487-tile evaluation set at 30m spatial buffer.
+#
+# Each condition represents individual detection runs evaluated
+# independently, with mean metrics reported for multi-run conditions.
+#
+# Created: 2026-03-27
+
+metadata:
+  description: "N=1 single-pass evaluation at 384px, 30m buffer, 487 tiles"
+  tile_size: 384
+  purpose: >
+    Establish single-pass baseline performance across thinking level,
+    temperature, modality, and model axes. These baselines quantify
+    the improvement achieved by consensus voting and the proposer-
+    verifier pipeline.
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  buffers: [20, 30, 40, 50]
+  bootstrap: 1000
+  seed: 42
+  glob: "*/detections_*.geojson"
+
+conditions:
+  # ── Text modality ───────────────────────────────────────────
+  - label: "Flash Text MINIMAL T=0.0"
+    detections_dir: outputs/retest/h11-single-pass-384-t0/brief-text-t0
+
+  - label: "Flash Text MINIMAL T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7
+
+  - label: "Flash Text HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7
+
+  - label: "Flash Text MINIMAL T=0.0 (PV baseline)"
+    detections_dir: outputs/h11/pv-diag-384/text-baseline/text-t0.0
+
+  - label: "Pro Text HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7
+
+  # ── Image modality ─────────────────────────────────────────
+  - label: "Flash Image MINIMAL T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/image-baseline/image-t0.0
+
+  - label: "Flash Image MINIMAL T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/image-n5/image-t0.7
+
+  - label: "Flash Image HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7
+
+  - label: "Pro Image HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7

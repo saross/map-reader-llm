@@ -1,0 +1,50 @@
+# PV Paper Conditions — Buffer Sensitivity Batch Spec
+# ====================================================
+# Used by analyse_pv_buffer_sensitivity.py --batch to evaluate paper-critical
+# PV conditions at multiple spatial buffer distances (20, 30, 40, 50 m).
+#
+# Thresholds are optimal values from existing threshold_sweep.json results.
+# All evaluated on full_evaluation_bounds.geojson (487 tiles, 435 mounds).
+#
+# Generated: 2026-03-26
+
+conditions:
+  - label: "Flash HIGH text 4-of-5 + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/candidate_manifest.json"
+    threshold: 0.15
+
+  - label: "Flash HIGH text 16-of-30 + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json"
+    threshold: 0.20
+
+  - label: "Flash HIGH text 9-of-10 + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/flash-high-text-9of10/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/verified/flash-high-text-9of10/candidate_manifest.json"
+    threshold: 0.20
+
+  - label: "Pro HIGH text 3-of-5 + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/candidate_manifest.json"
+    threshold: 0.15
+
+  - label: "Text baseline + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/text-baseline/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json"
+    threshold: 0.15
+
+  - label: "Image baseline + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/image-baseline/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/crops/image-baseline/candidate_manifest.json"
+    threshold: 0.20
+
+  - label: "Flash HIGH text 4-of-5 + Flash medium vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-4of5/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-4of5/candidate_manifest.json"
+    threshold: 0.95
+
+  - label: "Flash HIGH image 3-of-5 + Flash min vf"
+    probabilities: "outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json"
+    manifest: "outputs/h11/pv-diag-384/verified/flash-high-image-3of5/candidate_manifest.json"
+    threshold: 0.15

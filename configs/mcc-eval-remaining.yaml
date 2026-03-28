@@ -1,0 +1,138 @@
+# Tile-Level MCC — Remaining Consensus and PV Conditions
+# ======================================================
+# Batch spec for evaluate_tile_mcc.py --batch.
+# Fills in all missing MCC evaluations not covered by
+# mcc-eval-consensus-pv.yaml.
+#
+# Created: 2026-03-28
+
+metadata:
+  description: >
+    Tile-level MCC for remaining consensus and PV conditions at 384px.
+    Covers flash-min-text-t07/t10, flash-min-image, pro-high-image,
+    single-pass-t0 consensus conditions, and five additional PV
+    conditions with various verifier configurations.
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bootstrap: 1000
+  seed: 42
+
+conditions:
+  # ── Consensus: flash-min-text-t07 ──────────────────────────────
+  - label: "Flash MIN text T=0.7 5-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    temperature: text-t0.7
+    pool_size: 5
+    vote_threshold: 5
+
+  - label: "Flash MIN text T=0.7 10-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    temperature: text-t0.7
+    pool_size: 10
+    vote_threshold: 10
+
+  - label: "Flash MIN text T=0.7 29-of-30"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    temperature: text-t0.7
+    pool_size: 30
+    vote_threshold: 29
+
+  # ── Consensus: flash-min-text-t10 (UNINTENDED T=1.0) ──────────
+  - label: "Flash MIN text T=1.0 5-of-5"
+    type: consensus
+    study_dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+    temperature: "384"
+    pool_size: 5
+    vote_threshold: 5
+
+  - label: "Flash MIN text T=1.0 9-of-10"
+    type: consensus
+    study_dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+    temperature: "384"
+    pool_size: 10
+    vote_threshold: 9
+
+  - label: "Flash MIN text T=1.0 22-of-30"
+    type: consensus
+    study_dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+    temperature: "384"
+    pool_size: 30
+    vote_threshold: 22
+
+  # ── Consensus: flash-min-image ─────────────────────────────────
+  - label: "Flash MIN image 4-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/image-n5
+    temperature: image-t0.7
+    pool_size: 5
+    vote_threshold: 4
+
+  - label: "Flash MIN image 6-of-10"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/image-n5
+    temperature: image-t0.7
+    pool_size: 10
+    vote_threshold: 6
+
+  # ── Consensus: pro-high-image ──────────────────────────────────
+  - label: "Pro HIGH image 3-of-5"
+    type: consensus
+    study_dir: outputs/h11/pv-diag-384/pro-high-image-n5
+    temperature: image-t0.7
+    pool_size: 5
+    vote_threshold: 3
+
+  # ── Consensus: single-pass-t0 ─────────────────────────────────
+  - label: "Single-pass T=0.0 5-of-5"
+    type: consensus
+    study_dir: outputs/retest/h11-single-pass-384-t0
+    temperature: brief-text-t0
+    pool_size: 5
+    vote_threshold: 5
+
+  - label: "Single-pass T=0.0 10-of-10"
+    type: consensus
+    study_dir: outputs/retest/h11-single-pass-384-t0
+    temperature: brief-text-t0
+    pool_size: 10
+    vote_threshold: 10
+
+  # ── PV: flash-high-text 4-of-5 + flash-medium verifier ────────
+  - label: "Flash HIGH text 4-of-5 + flash-medium-vf"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-4of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-4of5/candidate_manifest.json
+    pv_threshold: 0.95
+
+  # ── PV: flash-high-text 9-of-10 + flash-min verifier ──────────
+  - label: "Flash HIGH text 9-of-10 + flash-min-vf"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-text-9of10/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-text-9of10/candidate_manifest.json
+    pv_threshold: 0.20
+
+  # ── PV: flash-high-image 3-of-5 + flash-min verifier ──────────
+  - label: "Flash HIGH image 3-of-5 + flash-min-vf"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json
+    manifest: outputs/h11/pv-diag-384/verified/flash-high-image-3of5/candidate_manifest.json
+    pv_threshold: 0.15
+
+  # ── PV: text-baseline + flash-min verifier ─────────────────────
+  - label: "Text baseline + flash-min-vf"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/text-baseline/probabilities.json
+    manifest: outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json
+    pv_threshold: 0.15
+
+  # ── PV: image-baseline + flash-min verifier ────────────────────
+  - label: "Image baseline + flash-min-vf"
+    type: pv
+    probabilities: outputs/h11/pv-diag-384/verified/image-baseline/probabilities.json
+    manifest: outputs/h11/pv-diag-384/crops/image-baseline/candidate_manifest.json
+    pv_threshold: 0.20
