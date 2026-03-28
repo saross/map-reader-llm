@@ -1,0 +1,72 @@
+study:
+  name: 'H11 N=1 Baselines 384px'
+  version: 1.0
+  description: >
+    Single-pass N=1 baselines at 384px to confirm Phase 2 temperature
+    findings transfer to production tile size. T=0.3 was the Phase 2
+    optimum; T=0.0 image fills a gap in the modality comparison matrix.
+
+    All conditions use Flash MINIMAL thinking on the full 487-tile
+    evaluation set.
+  phase: h11
+  hypothesis: H1, H7
+  created: '2026-03-27'
+
+carried_forward:
+  optimal_text_config: prompts/configs/detect_brief-text.json
+  optimal_image_config: prompts/configs/library_plus-hp.json
+  source: 'Phase 2 carry-forward — brief-text and library_plus-hp'
+
+inputs:
+  manifest: inputs/tiles_384/full_evaluation_manifest.json
+  tile_size: 384
+  tiles_dir: inputs/tiles_384
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+
+execution:
+  runs: 3
+  workers: 1
+  output_dir: outputs/h11/n1-baselines-384
+
+conditions:
+- name: brief-text-t03
+  config: prompts/configs/detect_brief-text.json
+  temperature: 0.3
+  thinking_level: minimal
+  runs: 3
+  description: >
+    Text track, T=0.3, MINIMAL thinking, Flash. Phase 2b optimal
+    temperature for text. Three runs for run-to-run variation at
+    this stochastic temperature.
+
+- name: image-t03
+  config: prompts/configs/library_plus-hp.json
+  temperature: 0.3
+  thinking_level: minimal
+  runs: 3
+  description: >
+    Image track, T=0.3, MINIMAL thinking, Flash. Phase 2b optimal
+    temperature for image. Three runs for run-to-run variation.
+
+- name: image-t0
+  config: prompts/configs/library_plus-hp.json
+  temperature: 0.0
+  thinking_level: minimal
+  runs: 1
+  description: >
+    Image track, T=0.0 deterministic, MINIMAL thinking, Flash.
+    Fills gap in the modality comparison matrix — text T=0.0 exists
+    (single-pass-384-t0) but image T=0.0 only has a single run on
+    483 tiles from the PV baseline.
+
+estimates:
+  tiles: 487
+  total_execution_units: 7
+  tiles_per_unit: 487
+  total_api_calls: 3409
+  # Gemini 3 Flash Preview pricing (verified 2026-03-27):
+  #   Standard: $0.50 input / $3.00 output per 1M tokens
+  #   Batch: $0.05 input / output discount N/A (assumed no discount)
+  cost_usd_batch: 6.80
+  cost_usd_realtime: 12.82

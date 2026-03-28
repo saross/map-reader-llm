@@ -1,0 +1,36 @@
+study:
+  name: 'H11 Pro MEDIUM T=0.7 384px'
+  version: 1.0
+  description: >
+    Pro MEDIUM thinking at T=0.7 for text and image tracks.
+    Completes the Pro 2x2 thinking x temperature matrix.
+  phase: h11
+  hypothesis: H1
+  created: '2026-03-27'
+
+inputs:
+  manifest: inputs/tiles_384/full_evaluation_manifest.json
+  tile_size: 384
+  tiles_dir: inputs/tiles_384
+
+execution:
+  runs: 1
+  workers: 1
+  output_dir: outputs/h11/n1-outstanding-384
+
+conditions:
+- name: pro-text-medium-t07
+  config: prompts/configs/detect_brief-text.json
+  model: gemini-3.1-pro
+  temperature: 0.7
+  thinking_level: medium
+  description: >
+    Text track, T=0.7, MEDIUM thinking, Pro. Completes Pro matrix.
+
+- name: pro-image-medium-t07
+  config: prompts/configs/library_plus-hp.json
+  model: gemini-3.1-pro
+  temperature: 0.7
+  thinking_level: medium
+  description: >
+    Image track, T=0.7, MEDIUM thinking, Pro. Completes Pro matrix.

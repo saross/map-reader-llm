@@ -1,0 +1,85 @@
+study:
+  name: 'H11 N=1 Outstanding Runs 384px'
+  version: 1.0
+  description: >
+    Outstanding N=1 runs to complete the parameter matrix at 384px:
+    T=0.3 text/image (Phase 2 best temperature), proper image T=0.0
+    baseline on full 487-tile set, and Pro HIGH T=0.0 text/image to
+    complete the Pro 2x2 thinking x temperature matrix.
+  phase: h11
+  hypothesis: H1, H7
+  created: '2026-03-27'
+
+carried_forward:
+  optimal_text_config: prompts/configs/detect_brief-text.json
+  optimal_image_config: prompts/configs/library_plus-hp.json
+  source: 'Phase 2 carry-forward configs'
+
+inputs:
+  manifest: inputs/tiles_384/full_evaluation_manifest.json
+  tile_size: 384
+  tiles_dir: inputs/tiles_384
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+
+execution:
+  runs: 3
+  workers: 1
+  output_dir: outputs/h11/n1-outstanding-384
+
+conditions:
+- name: brief-text-t03
+  config: prompts/configs/detect_brief-text.json
+  temperature: 0.3
+  thinking_level: minimal
+  runs: 3
+  description: >
+    Text track, T=0.3, MINIMAL thinking, Flash. Phase 2b optimal
+    temperature for text. Three runs for run-to-run variation.
+
+- name: image-t03
+  config: prompts/configs/library_plus-hp.json
+  temperature: 0.3
+  thinking_level: minimal
+  runs: 3
+  description: >
+    Image track, T=0.3, MINIMAL thinking, Flash. Phase 2b optimal
+    temperature for image. Three runs for run-to-run variation.
+
+- name: image-t0
+  config: prompts/configs/library_plus-hp.json
+  temperature: 0.0
+  thinking_level: minimal
+  runs: 1
+  description: >
+    Image track, T=0.0 deterministic, MINIMAL thinking, Flash.
+    Fills gap in modality comparison matrix (487-tile version).
+
+- name: pro-text-high-t0
+  config: prompts/configs/detect_brief-text.json
+  model: gemini-3.1-pro
+  temperature: 0.0
+  thinking_level: high
+  runs: 1
+  description: >
+    Text track, T=0.0, HIGH thinking, Pro. Completes Pro 2x2
+    thinking x temperature matrix.
+
+- name: pro-image-high-t0
+  config: prompts/configs/library_plus-hp.json
+  model: gemini-3.1-pro
+  temperature: 0.0
+  thinking_level: high
+  runs: 1
+  description: >
+    Image track, T=0.0, HIGH thinking, Pro. Completes Pro 2x2
+    thinking x temperature matrix.
+
+estimates:
+  tiles: 487
+  total_execution_units: 9
+  tiles_per_unit: 487
+  total_api_calls: 4383
+  # With context caching (~50-90% input discount):
+  cost_usd_cached: 7.89
+  cost_usd_realtime: 12.82
