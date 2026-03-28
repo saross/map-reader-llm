@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:48:31.663981+00:00",
+  "summary": {
+    "label": "P2c Image scale-4",
+    "n_detections": 811,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.637,
+        "f1_ci_lower": 0.5853,
+        "f1_ci_upper": 0.6828,
+        "precision": 0.5302,
+        "p_ci_lower": 0.4668,
+        "p_ci_upper": 0.5868,
+        "recall": 0.7978,
+        "r_ci_lower": 0.7521,
+        "r_ci_upper": 0.8439
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 204,
+        "tn": 4,
+        "fp": 132,
+        "fn": 0
+      },
+      "mcc": {
+        "mean": 0.1331,
+        "ci_lower": 0.0665,
+        "ci_upper": 0.1912
+      },
+      "sensitivity": {
+        "mean": 1.0,
+        "ci_lower": 1.0,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.03,
+        "ci_lower": 0.0069,
+        "ci_upper": 0.0602
+      }
+    }
+  }
+}

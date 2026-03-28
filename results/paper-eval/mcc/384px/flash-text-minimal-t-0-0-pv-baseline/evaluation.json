@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:33:07.954817+00:00",
+  "summary": {
+    "label": "Flash Text MINIMAL T=0.0 (PV baseline)",
+    "n_detections": 1047,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.5304,
+        "f1_ci_lower": 0.4713,
+        "f1_ci_upper": 0.587,
+        "precision": 0.3754,
+        "p_ci_lower": 0.3191,
+        "p_ci_upper": 0.4345,
+        "recall": 0.9034,
+        "r_ci_lower": 0.8716,
+        "r_ci_upper": 0.9325
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 228,
+        "tn": 1,
+        "fp": 257,
+        "fn": 1
+      },
+      "mcc": {
+        "mean": -0.0011,
+        "ci_lower": -0.0747,
+        "ci_upper": 0.0742
+      },
+      "sensitivity": {
+        "mean": 0.9959,
+        "ci_lower": 0.9864,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.004,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0122
+      }
+    }
+  }
+}

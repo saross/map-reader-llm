@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T05:08:02.615983+00:00",
+  "summary": {
+    "label": "P2b Text T=1.0",
+    "n_runs": 3,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.5775,
+        "f1_ci_lower": 0.5089,
+        "f1_ci_upper": 0.6407,
+        "precision": 0.4489,
+        "p_ci_lower": 0.377,
+        "p_ci_upper": 0.5216,
+        "recall": 0.8102,
+        "r_ci_lower": 0.7588,
+        "r_ci_upper": 0.8553
+      }
+    ]
+  },
+  "per_run": [
+    {
+      "label": "detections_T1.0_run01",
+      "n_detections": 1029,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5574,
+          "f1_ci_lower": 0.4749,
+          "f1_ci_upper": 0.6354,
+          "precision": 0.4247,
+          "p_ci_lower": 0.3395,
+          "p_ci_upper": 0.5134,
+          "recall": 0.8108,
+          "r_ci_lower": 0.7566,
+          "r_ci_upper": 0.858
+        }
+      ]
+    },
+    {
+      "label": "detections_T1.0_run02",
+      "n_detections": 965,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5838,
+          "f1_ci_lower": 0.5162,
+          "f1_ci_upper": 0.6415,
+          "precision": 0.4549,
+          "p_ci_lower": 0.3855,
+          "p_ci_upper": 0.5225,
+          "recall": 0.8145,
+          "r_ci_lower": 0.761,
+          "r_ci_upper": 0.8584
+        }
+      ]
+    },
+    {
+      "label": "detections_T1.0_run03",
+      "n_detections": 929,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5913,
+          "f1_ci_lower": 0.5355,
+          "f1_ci_upper": 0.6452,
+          "precision": 0.4672,
+          "p_ci_lower": 0.4059,
+          "p_ci_upper": 0.5288,
+          "recall": 0.8052,
+          "r_ci_lower": 0.7588,
+          "r_ci_upper": 0.8494
+        }
+      ]
+    }
+  ]
+}

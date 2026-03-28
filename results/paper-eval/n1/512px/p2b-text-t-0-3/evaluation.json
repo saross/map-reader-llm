@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T05:07:38.061421+00:00",
+  "summary": {
+    "label": "P2b Text T=0.3",
+    "n_runs": 3,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6348,
+        "f1_ci_lower": 0.5798,
+        "f1_ci_upper": 0.6829,
+        "precision": 0.5138,
+        "p_ci_lower": 0.4509,
+        "p_ci_upper": 0.5705,
+        "recall": 0.8306,
+        "r_ci_lower": 0.7873,
+        "r_ci_upper": 0.8728
+      }
+    ]
+  },
+  "per_run": [
+    {
+      "label": "detections_T0.3_run01",
+      "n_detections": 864,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6358,
+          "f1_ci_lower": 0.5813,
+          "f1_ci_upper": 0.6818,
+          "precision": 0.5162,
+          "p_ci_lower": 0.4517,
+          "p_ci_upper": 0.5703,
+          "recall": 0.8275,
+          "r_ci_lower": 0.782,
+          "r_ci_upper": 0.8694
+        }
+      ]
+    },
+    {
+      "label": "detections_T0.3_run02",
+      "n_detections": 873,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6388,
+          "f1_ci_lower": 0.5825,
+          "f1_ci_upper": 0.6866,
+          "precision": 0.5166,
+          "p_ci_lower": 0.4549,
+          "p_ci_upper": 0.5733,
+          "recall": 0.8367,
+          "r_ci_lower": 0.7938,
+          "r_ci_upper": 0.8775
+        }
+      ]
+    },
+    {
+      "label": "detections_T0.3_run03",
+      "n_detections": 877,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6299,
+          "f1_ci_lower": 0.5755,
+          "f1_ci_upper": 0.6802,
+          "precision": 0.5086,
+          "p_ci_lower": 0.446,
+          "p_ci_upper": 0.5678,
+          "recall": 0.8275,
+          "r_ci_lower": 0.786,
+          "r_ci_upper": 0.8715
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T10:28:56.839324+00:00",
+  "summary": {
+    "label": "Pro Text HIGH T=0.0",
+    "n_runs": 3,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.5148,
+        "f1_ci_lower": 0.456,
+        "f1_ci_upper": 0.5656,
+        "precision": 0.3672,
+        "p_ci_lower": 0.3122,
+        "p_ci_upper": 0.4184,
+        "recall": 0.8606,
+        "r_ci_lower": 0.8098,
+        "r_ci_upper": 0.9121
+      }
+    ]
+  },
+  "per_run": [
+    {
+      "label": "detections_pro-text-high-t0_run01",
+      "n_detections": 1026,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5202,
+          "f1_ci_lower": 0.4627,
+          "f1_ci_upper": 0.5697,
+          "precision": 0.3704,
+          "p_ci_lower": 0.3171,
+          "p_ci_upper": 0.4223,
+          "recall": 0.8736,
+          "r_ci_lower": 0.8245,
+          "r_ci_upper": 0.9207
+        }
+      ]
+    },
+    {
+      "label": "detections_pro-text-high-t0_run02",
+      "n_detections": 1028,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5099,
+          "f1_ci_lower": 0.4509,
+          "f1_ci_upper": 0.561,
+          "precision": 0.3628,
+          "p_ci_lower": 0.3067,
+          "p_ci_upper": 0.4127,
+          "recall": 0.8575,
+          "r_ci_lower": 0.8067,
+          "r_ci_upper": 0.9098
+        }
+      ]
+    },
+    {
+      "label": "detections_pro-text-high-t0_run03",
+      "n_detections": 1004,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5142,
+          "f1_ci_lower": 0.4543,
+          "f1_ci_upper": 0.5662,
+          "precision": 0.3685,
+          "p_ci_lower": 0.3129,
+          "p_ci_upper": 0.4202,
+          "recall": 0.8506,
+          "r_ci_lower": 0.7981,
+          "r_ci_upper": 0.9058
+        }
+      ]
+    }
+  ]
+}

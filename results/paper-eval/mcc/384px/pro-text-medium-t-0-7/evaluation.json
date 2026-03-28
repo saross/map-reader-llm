@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:35:56.818981+00:00",
+  "summary": {
+    "label": "Pro Text MEDIUM T=0.7",
+    "n_detections": 1445,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.4277,
+        "f1_ci_lower": 0.3696,
+        "f1_ci_upper": 0.4802,
+        "precision": 0.2782,
+        "p_ci_lower": 0.2305,
+        "p_ci_upper": 0.3235,
+        "recall": 0.9241,
+        "r_ci_lower": 0.8975,
+        "r_ci_upper": 0.9493
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 225,
+        "tn": 58,
+        "fp": 200,
+        "fn": 4
+      },
+      "mcc": {
+        "mean": 0.3095,
+        "ci_lower": 0.2467,
+        "ci_upper": 0.3678
+      },
+      "sensitivity": {
+        "mean": 0.9825,
+        "ci_lower": 0.9628,
+        "ci_upper": 0.9961
+      },
+      "specificity": {
+        "mean": 0.2243,
+        "ci_lower": 0.1732,
+        "ci_upper": 0.2788
+      }
+    }
+  }
+}

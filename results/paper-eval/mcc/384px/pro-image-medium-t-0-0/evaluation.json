@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:36:47.714586+00:00",
+  "summary": {
+    "label": "Pro Image MEDIUM T=0.0",
+    "n_detections": 519,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.7338,
+        "f1_ci_lower": 0.6923,
+        "f1_ci_upper": 0.7724,
+        "precision": 0.6744,
+        "p_ci_lower": 0.6284,
+        "p_ci_upper": 0.7183,
+        "recall": 0.8046,
+        "r_ci_lower": 0.747,
+        "r_ci_upper": 0.8591
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 202,
+        "tn": 220,
+        "fp": 38,
+        "fn": 27
+      },
+      "mcc": {
+        "mean": 0.7335,
+        "ci_lower": 0.6753,
+        "ci_upper": 0.7947
+      },
+      "sensitivity": {
+        "mean": 0.8822,
+        "ci_lower": 0.838,
+        "ci_upper": 0.9204
+      },
+      "specificity": {
+        "mean": 0.8526,
+        "ci_lower": 0.8101,
+        "ci_upper": 0.8954
+      }
+    }
+  }
+}

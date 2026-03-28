@@ -1,0 +1,1918 @@
+=============================================
+Sapphire Paper Evaluation
+Started: Thu Mar 26 12:36:12 PM UTC 2026
+Bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson (487 tiles, 435 mounds)
+Bootstrap: 1000 iterations, seed=42
+=============================================
+
+=== Section A: Consensus Sweeps ===
+
+[1/32] flash-high-text @ 20m
+  Study dir: outputs/h11/pv-diag-384/flash-high-text-n5
+  Started: Thu Mar 26 12:36:12 PM UTC 2026
+2026-03-26 12:36:13,058 - INFO - Loading ground truth and bounds...
+2026-03-26 12:36:13,087 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:36:13,087 - INFO - Precomputing clusters...
+2026-03-26 12:36:13,087 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:36:13,104 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1459 features)
+2026-03-26 12:36:13,122 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1563 features)
+2026-03-26 12:36:13,141 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1548 features)
+2026-03-26 12:36:13,161 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1667 features)
+2026-03-26 12:36:13,180 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1505 features)
+2026-03-26 12:36:13,197 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1457 features)
+2026-03-26 12:36:13,216 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1561 features)
+2026-03-26 12:36:13,234 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1537 features)
+2026-03-26 12:36:13,252 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1465 features)
+2026-03-26 12:36:13,270 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1491 features)
+2026-03-26 12:36:13,288 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1456 features)
+2026-03-26 12:36:13,306 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1559 features)
+2026-03-26 12:36:13,324 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1536 features)
+2026-03-26 12:36:13,342 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1519 features)
+2026-03-26 12:36:13,361 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1598 features)
+2026-03-26 12:36:13,380 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1603 features)
+2026-03-26 12:36:13,397 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1437 features)
+2026-03-26 12:36:13,413 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1535 features)
+2026-03-26 12:36:13,427 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1513 features)
+2026-03-26 12:36:13,442 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1483 features)
+2026-03-26 12:36:13,458 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1507 features)
+2026-03-26 12:36:13,471 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1505 features)
+2026-03-26 12:36:13,485 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1476 features)
+2026-03-26 12:36:13,499 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1596 features)
+2026-03-26 12:36:13,513 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1442 features)
+2026-03-26 12:36:13,526 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1465 features)
+2026-03-26 12:36:13,540 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1548 features)
+2026-03-26 12:36:13,556 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1578 features)
+2026-03-26 12:36:13,569 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1438 features)
+2026-03-26 12:36:13,584 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1562 features)
+2026-03-26 12:36:13,584 - INFO - Condition 'text-t0.7': loaded 30 runs with 45609 total features
+2026-03-26 12:36:16,784 - INFO -   text-t0.7 N=5: 5 runs -> 3736 clusters
+2026-03-26 12:36:25,133 - INFO -   text-t0.7 N=10: 10 runs -> 5866 clusters
+2026-03-26 12:37:04,223 - INFO -   text-t0.7 N=30: 30 runs -> 11771 clusters
+2026-03-26 12:37:04,233 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:37:10,914 - INFO -   text-t0.7 N=10 x=5: F1=0.5951 (879 det)
+2026-03-26 12:37:10,932 - INFO -   text-t0.7 N=5 x=2: F1=0.4362 (1376 det)
+2026-03-26 12:37:11,006 - INFO -   text-t0.7 N=10 x=4: F1=0.5133 (1104 det)
+2026-03-26 12:37:13,443 - INFO -   text-t0.7 N=10 x=3: F1=0.4180 (1493 det)
+2026-03-26 12:37:13,889 - INFO -   text-t0.7 N=30 x=4: F1=0.2938 (2363 det)
+2026-03-26 12:37:14,365 - INFO -   text-t0.7 N=5 x=5: F1=0.7788 (415 det)
+2026-03-26 12:37:14,515 - INFO -   text-t0.7 N=10 x=9: F1=0.7968 (431 det)
+2026-03-26 12:37:14,536 - INFO -   text-t0.7 N=5 x=4: F1=0.7203 (584 det)
+2026-03-26 12:37:14,671 - INFO -   text-t0.7 N=10 x=10: F1=0.7821 (345 det)
+2026-03-26 12:37:14,799 - INFO -   text-t0.7 N=10 x=6: F1=0.6661 (727 det)
+2026-03-26 12:37:14,916 - INFO -   text-t0.7 N=10 x=8: F1=0.7674 (511 det)
+2026-03-26 12:37:15,193 - INFO -   text-t0.7 N=10 x=7: F1=0.7259 (590 det)
+2026-03-26 12:37:15,392 - INFO -   text-t0.7 N=5 x=3: F1=0.6000 (855 det)
+2026-03-26 12:37:16,977 - INFO -   text-t0.7 N=10 x=2: F1=0.3087 (2215 det)
+2026-03-26 12:37:17,581 - INFO -   text-t0.7 N=30 x=5: F1=0.3380 (1991 det)
+2026-03-26 12:37:18,117 - INFO -   text-t0.7 N=30 x=6: F1=0.3799 (1713 det)
+2026-03-26 12:37:18,313 - INFO -   text-t0.7 N=30 x=3: F1=0.2350 (3072 det)
+2026-03-26 12:37:19,746 - INFO -   text-t0.7 N=30 x=7: F1=0.4110 (1536 det)
+2026-03-26 12:37:20,289 - INFO -   text-t0.7 N=5 x=1: F1=0.1961 (3736 det)
+2026-03-26 12:37:20,432 - INFO -   text-t0.7 N=30 x=8: F1=0.4446 (1387 det)
+2026-03-26 12:37:21,167 - INFO -   text-t0.7 N=30 x=9: F1=0.4748 (1271 det)
+2026-03-26 12:37:21,392 - INFO -   text-t0.7 N=30 x=2: F1=0.1663 (4543 det)
+2026-03-26 12:37:21,418 - INFO -   text-t0.7 N=30 x=16: F1=0.6753 (729 det)
+2026-03-26 12:37:21,780 - INFO -   text-t0.7 N=30 x=13: F1=0.5931 (907 det)
+2026-03-26 12:37:22,026 - INFO -   text-t0.7 N=10 x=1: F1=0.1311 (5866 det)
+2026-03-26 12:37:23,425 - INFO -   text-t0.7 N=30 x=12: F1=0.5660 (975 det)
+2026-03-26 12:37:24,018 - INFO -   text-t0.7 N=30 x=15: F1=0.6471 (789 det)
+2026-03-26 12:37:24,978 - INFO -   text-t0.7 N=30 x=10: F1=0.5050 (1161 det)
+2026-03-26 12:37:25,425 - INFO -   text-t0.7 N=30 x=11: F1=0.5355 (1070 det)
+2026-03-26 12:37:25,857 - INFO -   text-t0.7 N=30 x=14: F1=0.6179 (850 det)
+2026-03-26 12:37:26,272 - INFO -   text-t0.7 N=30 x=17: F1=0.7001 (682 det)
+2026-03-26 12:37:26,351 - INFO -   text-t0.7 N=30 x=18: F1=0.7127 (637 det)
+2026-03-26 12:37:26,379 - INFO -   text-t0.7 N=30 x=22: F1=0.7746 (510 det)
+2026-03-26 12:37:26,459 - INFO -   text-t0.7 N=30 x=23: F1=0.7797 (491 det)
+2026-03-26 12:37:26,535 - INFO -   text-t0.7 N=30 x=19: F1=0.7274 (607 det)
+2026-03-26 12:37:26,854 - INFO -   text-t0.7 N=30 x=21: F1=0.7580 (536 det)
+2026-03-26 12:37:27,334 - INFO -   text-t0.7 N=30 x=27: F1=0.8048 (390 det)
+2026-03-26 12:37:27,339 - INFO -   text-t0.7 N=30 x=20: F1=0.7416 (571 det)
+2026-03-26 12:37:27,648 - INFO -   text-t0.7 N=30 x=1: F1=0.0685 (11771 det)
+2026-03-26 12:37:27,762 - INFO -   text-t0.7 N=30 x=26: F1=0.8141 (415 det)
+2026-03-26 12:37:27,891 - INFO -   text-t0.7 N=30 x=24: F1=0.7876 (469 det)
+2026-03-26 12:37:28,446 - INFO -   text-t0.7 N=30 x=29: F1=0.7874 (327 det)
+2026-03-26 12:37:28,512 - INFO -   text-t0.7 N=30 x=30: F1=0.6946 (256 det)
+2026-03-26 12:37:28,620 - INFO -   text-t0.7 N=30 x=25: F1=0.8014 (441 det)
+2026-03-26 12:37:28,820 - INFO -   text-t0.7 N=30 x=28: F1=0.8015 (361 det)
+2026-03-26 12:37:28,840 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:37:28,843 - INFO - Saved CSV: results/paper-eval/flash-high-text-20m/consensus-sweep-results.csv
+2026-03-26 12:37:28,844 - INFO - Saved JSON: results/paper-eval/flash-high-text-20m/consensus-analysis-report.json
+2026-03-26 12:37:28,846 - INFO - Saved Markdown: results/paper-eval/flash-high-text-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:37:28 PM UTC 2026
+
+[2/32] flash-high-text @ 30m
+  Study dir: outputs/h11/pv-diag-384/flash-high-text-n5
+  Started: Thu Mar 26 12:37:28 PM UTC 2026
+2026-03-26 12:37:29,242 - INFO - Loading ground truth and bounds...
+2026-03-26 12:37:29,265 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:37:29,266 - INFO - Precomputing clusters...
+2026-03-26 12:37:29,266 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:37:29,279 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1459 features)
+2026-03-26 12:37:29,294 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1563 features)
+2026-03-26 12:37:29,308 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1548 features)
+2026-03-26 12:37:29,323 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1667 features)
+2026-03-26 12:37:29,337 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1505 features)
+2026-03-26 12:37:29,350 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1457 features)
+2026-03-26 12:37:29,364 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1561 features)
+2026-03-26 12:37:29,378 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1537 features)
+2026-03-26 12:37:29,392 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1465 features)
+2026-03-26 12:37:29,405 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1491 features)
+2026-03-26 12:37:29,419 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1456 features)
+2026-03-26 12:37:29,433 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1559 features)
+2026-03-26 12:37:29,447 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1536 features)
+2026-03-26 12:37:29,461 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1519 features)
+2026-03-26 12:37:29,476 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1598 features)
+2026-03-26 12:37:29,490 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1603 features)
+2026-03-26 12:37:29,504 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1437 features)
+2026-03-26 12:37:29,518 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1535 features)
+2026-03-26 12:37:29,531 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1513 features)
+2026-03-26 12:37:29,545 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1483 features)
+2026-03-26 12:37:29,559 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1507 features)
+2026-03-26 12:37:29,573 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1505 features)
+2026-03-26 12:37:29,587 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1476 features)
+2026-03-26 12:37:29,602 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1596 features)
+2026-03-26 12:37:29,615 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1442 features)
+2026-03-26 12:37:29,628 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1465 features)
+2026-03-26 12:37:29,642 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1548 features)
+2026-03-26 12:37:29,657 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1578 features)
+2026-03-26 12:37:29,670 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1438 features)
+2026-03-26 12:37:29,684 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1562 features)
+2026-03-26 12:37:29,684 - INFO - Condition 'text-t0.7': loaded 30 runs with 45609 total features
+2026-03-26 12:37:32,880 - INFO -   text-t0.7 N=5: 5 runs -> 3736 clusters
+2026-03-26 12:37:41,246 - INFO -   text-t0.7 N=10: 10 runs -> 5866 clusters
+2026-03-26 12:38:20,411 - INFO -   text-t0.7 N=30: 30 runs -> 11771 clusters
+2026-03-26 12:38:20,422 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:38:26,608 - INFO -   text-t0.7 N=5 x=4: F1=0.7419 (584 det)
+2026-03-26 12:38:26,745 - INFO -   text-t0.7 N=5 x=5: F1=0.7882 (415 det)
+2026-03-26 12:38:26,811 - INFO -   text-t0.7 N=10 x=9: F1=0.8106 (431 det)
+2026-03-26 12:38:26,990 - INFO -   text-t0.7 N=10 x=4: F1=0.5302 (1104 det)
+2026-03-26 12:38:30,523 - INFO -   text-t0.7 N=10 x=10: F1=0.7872 (345 det)
+2026-03-26 12:38:30,982 - INFO -   text-t0.7 N=10 x=5: F1=0.6164 (879 det)
+2026-03-26 12:38:31,312 - INFO -   text-t0.7 N=5 x=3: F1=0.6202 (855 det)
+2026-03-26 12:38:31,432 - INFO -   text-t0.7 N=10 x=8: F1=0.7844 (511 det)
+2026-03-26 12:38:31,570 - INFO -   text-t0.7 N=10 x=7: F1=0.7415 (590 det)
+2026-03-26 12:38:31,804 - INFO -   text-t0.7 N=10 x=6: F1=0.6850 (727 det)
+2026-03-26 12:38:31,937 - INFO -   text-t0.7 N=5 x=2: F1=0.4528 (1376 det)
+2026-03-26 12:38:32,134 - INFO -   text-t0.7 N=10 x=3: F1=0.4326 (1493 det)
+2026-03-26 12:38:33,198 - INFO -   text-t0.7 N=30 x=4: F1=0.3009 (2363 det)
+2026-03-26 12:38:33,508 - INFO -   text-t0.7 N=10 x=2: F1=0.3177 (2215 det)
+2026-03-26 12:38:33,508 - INFO -   text-t0.7 N=30 x=6: F1=0.3911 (1713 det)
+2026-03-26 12:38:33,970 - INFO -   text-t0.7 N=30 x=5: F1=0.3471 (1991 det)
+2026-03-26 12:38:34,023 - INFO -   text-t0.7 N=30 x=7: F1=0.4242 (1536 det)
+2026-03-26 12:38:35,548 - INFO -   text-t0.7 N=5 x=1: F1=0.2019 (3736 det)
+2026-03-26 12:38:35,610 - INFO -   text-t0.7 N=30 x=3: F1=0.2401 (3072 det)
+2026-03-26 12:38:35,771 - INFO -   text-t0.7 N=30 x=8: F1=0.4588 (1387 det)
+2026-03-26 12:38:35,879 - INFO -   text-t0.7 N=30 x=9: F1=0.4900 (1271 det)
+2026-03-26 12:38:38,030 - INFO -   text-t0.7 N=30 x=2: F1=0.1695 (4543 det)
+2026-03-26 12:38:38,911 - INFO -   text-t0.7 N=30 x=11: F1=0.5528 (1070 det)
+2026-03-26 12:38:39,377 - INFO -   text-t0.7 N=30 x=10: F1=0.5213 (1161 det)
+2026-03-26 12:38:39,580 - INFO -   text-t0.7 N=30 x=19: F1=0.7428 (607 det)
+2026-03-26 12:38:39,654 - INFO -   text-t0.7 N=30 x=18: F1=0.7276 (637 det)
+2026-03-26 12:38:40,228 - INFO -   text-t0.7 N=10 x=1: F1=0.1339 (5866 det)
+2026-03-26 12:38:40,269 - INFO -   text-t0.7 N=30 x=13: F1=0.6095 (907 det)
+2026-03-26 12:38:41,541 - INFO -   text-t0.7 N=30 x=14: F1=0.6350 (850 det)
+2026-03-26 12:38:41,827 - INFO -   text-t0.7 N=30 x=22: F1=0.7915 (510 det)
+2026-03-26 12:38:41,880 - INFO -   text-t0.7 N=30 x=12: F1=0.5816 (975 det)
+2026-03-26 12:38:42,586 - INFO -   text-t0.7 N=30 x=16: F1=0.6907 (729 det)
+2026-03-26 12:38:42,662 - INFO -   text-t0.7 N=30 x=17: F1=0.7162 (682 det)
+2026-03-26 12:38:43,022 - INFO -   text-t0.7 N=30 x=15: F1=0.6634 (789 det)
+2026-03-26 12:38:43,172 - INFO -   text-t0.7 N=30 x=20: F1=0.7575 (571 det)
+2026-03-26 12:38:43,593 - INFO -   text-t0.7 N=30 x=21: F1=0.7745 (536 det)
+2026-03-26 12:38:43,635 - INFO -   text-t0.7 N=30 x=25: F1=0.8151 (441 det)
+2026-03-26 12:38:43,751 - INFO -   text-t0.7 N=30 x=24: F1=0.8031 (469 det)
+2026-03-26 12:38:44,026 - INFO -   text-t0.7 N=30 x=26: F1=0.8259 (415 det)
+2026-03-26 12:38:44,147 - INFO -   text-t0.7 N=30 x=23: F1=0.7948 (491 det)
+2026-03-26 12:38:44,768 - INFO -   text-t0.7 N=30 x=28: F1=0.8141 (361 det)
+2026-03-26 12:38:45,148 - INFO -   text-t0.7 N=30 x=29: F1=0.7979 (327 det)
+2026-03-26 12:38:45,303 - INFO -   text-t0.7 N=30 x=30: F1=0.7004 (256 det)
+2026-03-26 12:38:45,550 - INFO -   text-t0.7 N=30 x=1: F1=0.0696 (11771 det)
+2026-03-26 12:38:45,574 - INFO -   text-t0.7 N=30 x=27: F1=0.8170 (390 det)
+2026-03-26 12:38:45,596 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:38:45,599 - INFO - Saved CSV: results/paper-eval/flash-high-text-30m/consensus-sweep-results.csv
+2026-03-26 12:38:45,600 - INFO - Saved JSON: results/paper-eval/flash-high-text-30m/consensus-analysis-report.json
+2026-03-26 12:38:45,601 - INFO - Saved Markdown: results/paper-eval/flash-high-text-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:38:45 PM UTC 2026
+
+[3/32] flash-high-text @ 40m
+  Study dir: outputs/h11/pv-diag-384/flash-high-text-n5
+  Started: Thu Mar 26 12:38:45 PM UTC 2026
+2026-03-26 12:38:45,998 - INFO - Loading ground truth and bounds...
+2026-03-26 12:38:46,021 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:38:46,021 - INFO - Precomputing clusters...
+2026-03-26 12:38:46,021 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:38:46,035 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1459 features)
+2026-03-26 12:38:46,050 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1563 features)
+2026-03-26 12:38:46,064 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1548 features)
+2026-03-26 12:38:46,079 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1667 features)
+2026-03-26 12:38:46,093 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1505 features)
+2026-03-26 12:38:46,106 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1457 features)
+2026-03-26 12:38:46,121 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1561 features)
+2026-03-26 12:38:46,135 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1537 features)
+2026-03-26 12:38:46,148 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1465 features)
+2026-03-26 12:38:46,162 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1491 features)
+2026-03-26 12:38:46,175 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1456 features)
+2026-03-26 12:38:46,190 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1559 features)
+2026-03-26 12:38:46,204 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1536 features)
+2026-03-26 12:38:46,218 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1519 features)
+2026-03-26 12:38:46,233 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1598 features)
+2026-03-26 12:38:46,248 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1603 features)
+2026-03-26 12:38:46,261 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1437 features)
+2026-03-26 12:38:46,275 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1535 features)
+2026-03-26 12:38:46,289 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1513 features)
+2026-03-26 12:38:46,303 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1483 features)
+2026-03-26 12:38:46,317 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1507 features)
+2026-03-26 12:38:46,331 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1505 features)
+2026-03-26 12:38:46,345 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1476 features)
+2026-03-26 12:38:46,360 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1596 features)
+2026-03-26 12:38:46,373 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1442 features)
+2026-03-26 12:38:46,387 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1465 features)
+2026-03-26 12:38:46,401 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1548 features)
+2026-03-26 12:38:46,416 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1578 features)
+2026-03-26 12:38:46,429 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1438 features)
+2026-03-26 12:38:46,443 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1562 features)
+2026-03-26 12:38:46,443 - INFO - Condition 'text-t0.7': loaded 30 runs with 45609 total features
+2026-03-26 12:38:49,686 - INFO -   text-t0.7 N=5: 5 runs -> 3736 clusters
+2026-03-26 12:38:58,129 - INFO -   text-t0.7 N=10: 10 runs -> 5866 clusters
+2026-03-26 12:39:37,491 - INFO -   text-t0.7 N=30: 30 runs -> 11771 clusters
+2026-03-26 12:39:37,501 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:39:43,696 - INFO -   text-t0.7 N=5 x=4: F1=0.7419 (584 det)
+2026-03-26 12:39:44,302 - INFO -   text-t0.7 N=10 x=6: F1=0.6867 (727 det)
+2026-03-26 12:39:45,637 - INFO -   text-t0.7 N=30 x=5: F1=0.3479 (1991 det)
+2026-03-26 12:39:47,547 - INFO -   text-t0.7 N=30 x=2: F1=0.1699 (4543 det)
+2026-03-26 12:39:47,923 - INFO -   text-t0.7 N=5 x=5: F1=0.7882 (415 det)
+2026-03-26 12:39:48,329 - INFO -   text-t0.7 N=5 x=2: F1=0.4561 (1376 det)
+2026-03-26 12:39:48,497 - INFO -   text-t0.7 N=10 x=10: F1=0.7872 (345 det)
+2026-03-26 12:39:48,544 - INFO -   text-t0.7 N=5 x=3: F1=0.6233 (855 det)
+2026-03-26 12:39:48,654 - INFO -   text-t0.7 N=10 x=9: F1=0.8106 (431 det)
+2026-03-26 12:39:48,698 - INFO -   text-t0.7 N=10 x=8: F1=0.7844 (511 det)
+2026-03-26 12:39:49,028 - INFO -   text-t0.7 N=10 x=5: F1=0.6180 (879 det)
+2026-03-26 12:39:49,081 - INFO -   text-t0.7 N=10 x=7: F1=0.7415 (590 det)
+2026-03-26 12:39:49,554 - INFO -   text-t0.7 N=10 x=3: F1=0.4367 (1493 det)
+2026-03-26 12:39:49,844 - INFO -   text-t0.7 N=30 x=4: F1=0.3016 (2363 det)
+2026-03-26 12:39:50,122 - INFO -   text-t0.7 N=10 x=2: F1=0.3200 (2215 det)
+2026-03-26 12:39:50,161 - INFO -   text-t0.7 N=10 x=4: F1=0.5328 (1104 det)
+2026-03-26 12:39:52,399 - INFO -   text-t0.7 N=30 x=8: F1=0.4599 (1387 det)
+2026-03-26 12:39:52,833 - INFO -   text-t0.7 N=30 x=6: F1=0.3920 (1713 det)
+2026-03-26 12:39:52,857 - INFO -   text-t0.7 N=30 x=3: F1=0.2407 (3072 det)
+2026-03-26 12:39:52,888 - INFO -   text-t0.7 N=5 x=1: F1=0.2033 (3736 det)
+2026-03-26 12:39:53,851 - INFO -   text-t0.7 N=30 x=7: F1=0.4252 (1536 det)
+2026-03-26 12:39:56,021 - INFO -   text-t0.7 N=30 x=19: F1=0.7428 (607 det)
+2026-03-26 12:39:56,079 - INFO -   text-t0.7 N=30 x=16: F1=0.6907 (729 det)
+2026-03-26 12:39:56,211 - INFO -   text-t0.7 N=10 x=1: F1=0.1349 (5866 det)
+2026-03-26 12:39:56,678 - INFO -   text-t0.7 N=30 x=15: F1=0.6650 (789 det)
+2026-03-26 12:39:57,680 - INFO -   text-t0.7 N=30 x=14: F1=0.6366 (850 det)
+2026-03-26 12:39:58,246 - INFO -   text-t0.7 N=30 x=11: F1=0.5542 (1070 det)
+2026-03-26 12:39:58,509 - INFO -   text-t0.7 N=30 x=22: F1=0.7915 (510 det)
+2026-03-26 12:39:58,611 - INFO -   text-t0.7 N=30 x=9: F1=0.4912 (1271 det)
+2026-03-26 12:39:59,201 - INFO -   text-t0.7 N=30 x=13: F1=0.6110 (907 det)
+2026-03-26 12:39:59,518 - INFO -   text-t0.7 N=30 x=10: F1=0.5226 (1161 det)
+2026-03-26 12:39:59,707 - INFO -   text-t0.7 N=30 x=18: F1=0.7276 (637 det)
+2026-03-26 12:39:59,729 - INFO -   text-t0.7 N=30 x=12: F1=0.5830 (975 det)
+2026-03-26 12:39:59,848 - INFO -   text-t0.7 N=30 x=17: F1=0.7162 (682 det)
+2026-03-26 12:40:00,141 - INFO -   text-t0.7 N=30 x=20: F1=0.7575 (571 det)
+2026-03-26 12:40:00,831 - INFO -   text-t0.7 N=30 x=21: F1=0.7745 (536 det)
+2026-03-26 12:40:01,508 - INFO -   text-t0.7 N=30 x=25: F1=0.8151 (441 det)
+2026-03-26 12:40:01,586 - INFO -   text-t0.7 N=30 x=23: F1=0.7948 (491 det)
+2026-03-26 12:40:01,607 - INFO -   text-t0.7 N=30 x=24: F1=0.8031 (469 det)
+2026-03-26 12:40:01,876 - INFO -   text-t0.7 N=30 x=28: F1=0.8141 (361 det)
+2026-03-26 12:40:01,933 - INFO -   text-t0.7 N=30 x=26: F1=0.8259 (415 det)
+2026-03-26 12:40:02,582 - INFO -   text-t0.7 N=30 x=27: F1=0.8170 (390 det)
+2026-03-26 12:40:02,730 - INFO -   text-t0.7 N=30 x=29: F1=0.7979 (327 det)
+2026-03-26 12:40:02,973 - INFO -   text-t0.7 N=30 x=30: F1=0.7004 (256 det)
+2026-03-26 12:40:03,242 - INFO -   text-t0.7 N=30 x=1: F1=0.0698 (11771 det)
+2026-03-26 12:40:03,263 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:40:03,266 - INFO - Saved CSV: results/paper-eval/flash-high-text-40m/consensus-sweep-results.csv
+2026-03-26 12:40:03,267 - INFO - Saved JSON: results/paper-eval/flash-high-text-40m/consensus-analysis-report.json
+2026-03-26 12:40:03,268 - INFO - Saved Markdown: results/paper-eval/flash-high-text-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:40:03 PM UTC 2026
+
+[4/32] flash-high-text @ 50m
+  Study dir: outputs/h11/pv-diag-384/flash-high-text-n5
+  Started: Thu Mar 26 12:40:03 PM UTC 2026
+2026-03-26 12:40:03,663 - INFO - Loading ground truth and bounds...
+2026-03-26 12:40:03,686 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:40:03,686 - INFO - Precomputing clusters...
+2026-03-26 12:40:03,686 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:40:03,700 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1459 features)
+2026-03-26 12:40:03,714 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1563 features)
+2026-03-26 12:40:03,729 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1548 features)
+2026-03-26 12:40:03,744 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1667 features)
+2026-03-26 12:40:03,758 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1505 features)
+2026-03-26 12:40:03,771 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1457 features)
+2026-03-26 12:40:03,785 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1561 features)
+2026-03-26 12:40:03,799 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1537 features)
+2026-03-26 12:40:03,813 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1465 features)
+2026-03-26 12:40:03,826 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1491 features)
+2026-03-26 12:40:03,840 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1456 features)
+2026-03-26 12:40:03,854 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1559 features)
+2026-03-26 12:40:03,868 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1536 features)
+2026-03-26 12:40:03,882 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1519 features)
+2026-03-26 12:40:03,897 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1598 features)
+2026-03-26 12:40:03,912 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1603 features)
+2026-03-26 12:40:03,925 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1437 features)
+2026-03-26 12:40:03,939 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1535 features)
+2026-03-26 12:40:03,953 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1513 features)
+2026-03-26 12:40:03,966 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1483 features)
+2026-03-26 12:40:03,980 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1507 features)
+2026-03-26 12:40:03,995 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1505 features)
+2026-03-26 12:40:04,008 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1476 features)
+2026-03-26 12:40:04,023 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1596 features)
+2026-03-26 12:40:04,036 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1442 features)
+2026-03-26 12:40:04,050 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1465 features)
+2026-03-26 12:40:04,064 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1548 features)
+2026-03-26 12:40:04,078 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1578 features)
+2026-03-26 12:40:04,092 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1438 features)
+2026-03-26 12:40:04,106 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1562 features)
+2026-03-26 12:40:04,106 - INFO - Condition 'text-t0.7': loaded 30 runs with 45609 total features
+2026-03-26 12:40:07,290 - INFO -   text-t0.7 N=5: 5 runs -> 3736 clusters
+2026-03-26 12:40:15,631 - INFO -   text-t0.7 N=10: 10 runs -> 5866 clusters
+2026-03-26 12:40:54,607 - INFO -   text-t0.7 N=30: 30 runs -> 11771 clusters
+2026-03-26 12:40:54,617 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:41:01,460 - INFO -   text-t0.7 N=10 x=7: F1=0.7415 (590 det)
+2026-03-26 12:41:02,285 - INFO -   text-t0.7 N=10 x=2: F1=0.3200 (2215 det)
+2026-03-26 12:41:03,469 - INFO -   text-t0.7 N=5 x=1: F1=0.2038 (3736 det)
+2026-03-26 12:41:03,550 - INFO -   text-t0.7 N=30 x=3: F1=0.2418 (3072 det)
+2026-03-26 12:41:04,919 - INFO -   text-t0.7 N=10 x=9: F1=0.8106 (431 det)
+2026-03-26 12:41:05,038 - INFO -   text-t0.7 N=5 x=5: F1=0.7882 (415 det)
+2026-03-26 12:41:05,215 - INFO -   text-t0.7 N=5 x=2: F1=0.4572 (1376 det)
+2026-03-26 12:41:05,655 - INFO -   text-t0.7 N=5 x=4: F1=0.7419 (584 det)
+2026-03-26 12:41:05,764 - INFO -   text-t0.7 N=10 x=10: F1=0.7872 (345 det)
+2026-03-26 12:41:05,867 - INFO -   text-t0.7 N=5 x=3: F1=0.6248 (855 det)
+2026-03-26 12:41:06,347 - INFO -   text-t0.7 N=10 x=8: F1=0.7844 (511 det)
+2026-03-26 12:41:06,369 - INFO -   text-t0.7 N=10 x=4: F1=0.5328 (1104 det)
+2026-03-26 12:41:06,431 - INFO -   text-t0.7 N=10 x=6: F1=0.6867 (727 det)
+2026-03-26 12:41:06,598 - INFO -   text-t0.7 N=10 x=5: F1=0.6180 (879 det)
+2026-03-26 12:41:07,498 - INFO -   text-t0.7 N=30 x=5: F1=0.3495 (1991 det)
+2026-03-26 12:41:07,870 - INFO -   text-t0.7 N=10 x=3: F1=0.4378 (1493 det)
+2026-03-26 12:41:08,338 - INFO -   text-t0.7 N=30 x=4: F1=0.3031 (2363 det)
+2026-03-26 12:41:09,544 - INFO -   text-t0.7 N=30 x=6: F1=0.3939 (1713 det)
+2026-03-26 12:41:11,743 - INFO -   text-t0.7 N=30 x=12: F1=0.5830 (975 det)
+2026-03-26 12:41:12,462 - INFO -   text-t0.7 N=30 x=7: F1=0.4272 (1536 det)
+2026-03-26 12:41:12,655 - INFO -   text-t0.7 N=30 x=2: F1=0.1703 (4543 det)
+2026-03-26 12:41:13,184 - INFO -   text-t0.7 N=30 x=16: F1=0.6907 (729 det)
+2026-03-26 12:41:13,476 - INFO -   text-t0.7 N=30 x=9: F1=0.4912 (1271 det)
+2026-03-26 12:41:13,662 - INFO -   text-t0.7 N=10 x=1: F1=0.1349 (5866 det)
+2026-03-26 12:41:14,532 - INFO -   text-t0.7 N=30 x=8: F1=0.4621 (1387 det)
+2026-03-26 12:41:15,157 - INFO -   text-t0.7 N=30 x=10: F1=0.5226 (1161 det)
+2026-03-26 12:41:15,547 - INFO -   text-t0.7 N=30 x=20: F1=0.7575 (571 det)
+2026-03-26 12:41:15,871 - INFO -   text-t0.7 N=30 x=17: F1=0.7162 (682 det)
+2026-03-26 12:41:15,924 - INFO -   text-t0.7 N=30 x=15: F1=0.6650 (789 det)
+2026-03-26 12:41:16,707 - INFO -   text-t0.7 N=30 x=11: F1=0.5542 (1070 det)
+2026-03-26 12:41:16,917 - INFO -   text-t0.7 N=30 x=13: F1=0.6110 (907 det)
+2026-03-26 12:41:17,205 - INFO -   text-t0.7 N=30 x=19: F1=0.7428 (607 det)
+2026-03-26 12:41:17,373 - INFO -   text-t0.7 N=30 x=23: F1=0.7948 (491 det)
+2026-03-26 12:41:17,393 - INFO -   text-t0.7 N=30 x=14: F1=0.6366 (850 det)
+2026-03-26 12:41:17,536 - INFO -   text-t0.7 N=30 x=21: F1=0.7745 (536 det)
+2026-03-26 12:41:17,580 - INFO -   text-t0.7 N=30 x=18: F1=0.7276 (637 det)
+2026-03-26 12:41:18,352 - INFO -   text-t0.7 N=30 x=22: F1=0.7915 (510 det)
+2026-03-26 12:41:19,253 - INFO -   text-t0.7 N=30 x=24: F1=0.8031 (469 det)
+2026-03-26 12:41:19,338 - INFO -   text-t0.7 N=30 x=27: F1=0.8170 (390 det)
+2026-03-26 12:41:19,390 - INFO -   text-t0.7 N=30 x=1: F1=0.0700 (11771 det)
+2026-03-26 12:41:20,009 - INFO -   text-t0.7 N=30 x=30: F1=0.7004 (256 det)
+2026-03-26 12:41:20,040 - INFO -   text-t0.7 N=30 x=25: F1=0.8151 (441 det)
+2026-03-26 12:41:20,140 - INFO -   text-t0.7 N=30 x=28: F1=0.8141 (361 det)
+2026-03-26 12:41:20,470 - INFO -   text-t0.7 N=30 x=26: F1=0.8259 (415 det)
+2026-03-26 12:41:20,702 - INFO -   text-t0.7 N=30 x=29: F1=0.7979 (327 det)
+2026-03-26 12:41:20,725 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:41:20,728 - INFO - Saved CSV: results/paper-eval/flash-high-text-50m/consensus-sweep-results.csv
+2026-03-26 12:41:20,729 - INFO - Saved JSON: results/paper-eval/flash-high-text-50m/consensus-analysis-report.json
+2026-03-26 12:41:20,731 - INFO - Saved Markdown: results/paper-eval/flash-high-text-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:41:20 PM UTC 2026
+
+[5/32] flash-high-image @ 20m
+  Study dir: outputs/h11/pv-diag-384/flash-high-image-n5
+  Started: Thu Mar 26 12:41:20 PM UTC 2026
+2026-03-26 12:41:21,125 - INFO - Loading ground truth and bounds...
+2026-03-26 12:41:21,149 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:41:21,149 - INFO - Precomputing clusters...
+2026-03-26 12:41:21,149 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:41:21,178 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (831 features)
+2026-03-26 12:41:21,186 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (868 features)
+2026-03-26 12:41:21,195 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (904 features)
+2026-03-26 12:41:21,204 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (858 features)
+2026-03-26 12:41:21,212 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (843 features)
+2026-03-26 12:41:21,221 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (822 features)
+2026-03-26 12:41:21,229 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (852 features)
+2026-03-26 12:41:21,237 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (845 features)
+2026-03-26 12:41:21,246 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (836 features)
+2026-03-26 12:41:21,254 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (894 features)
+2026-03-26 12:41:21,254 - INFO - Condition 'image-t0.7': loaded 10 runs with 8553 total features
+2026-03-26 12:41:22,352 - INFO -   image-t0.7 N=5: 5 runs -> 2017 clusters
+2026-03-26 12:41:25,146 - INFO -   image-t0.7 N=10: 10 runs -> 3211 clusters
+2026-03-26 12:41:25,148 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:41:30,708 - INFO -   image-t0.7 N=5 x=5: F1=0.6583 (282 det)
+2026-03-26 12:41:30,960 - INFO -   image-t0.7 N=10 x=7: F1=0.7500 (405 det)
+2026-03-26 12:41:30,990 - INFO -   image-t0.7 N=5 x=4: F1=0.7193 (388 det)
+2026-03-26 12:41:31,098 - INFO -   image-t0.7 N=10 x=9: F1=0.6788 (281 det)
+2026-03-26 12:41:31,441 - INFO -   image-t0.7 N=10 x=5: F1=0.7212 (519 det)
+2026-03-26 12:41:31,572 - INFO -   image-t0.7 N=10 x=4: F1=0.6801 (609 det)
+2026-03-26 12:41:31,698 - INFO -   image-t0.7 N=10 x=3: F1=0.6217 (752 det)
+2026-03-26 12:41:32,194 - INFO -   image-t0.7 N=10 x=2: F1=0.4874 (1112 det)
+2026-03-26 12:41:32,732 - INFO -   image-t0.7 N=5 x=1: F1=0.3116 (2017 det)
+2026-03-26 12:41:33,062 - INFO -   image-t0.7 N=10 x=8: F1=0.7291 (344 det)
+2026-03-26 12:41:33,126 - INFO -   image-t0.7 N=10 x=10: F1=0.5741 (206 det)
+2026-03-26 12:41:33,295 - INFO -   image-t0.7 N=5 x=3: F1=0.7269 (506 det)
+2026-03-26 12:41:33,362 - INFO -   image-t0.7 N=10 x=6: F1=0.7402 (462 det)
+2026-03-26 12:41:33,575 - INFO -   image-t0.7 N=5 x=2: F1=0.6173 (741 det)
+2026-03-26 12:41:35,939 - INFO -   image-t0.7 N=10 x=1: F1=0.2128 (3211 det)
+2026-03-26 12:41:35,953 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:41:35,956 - INFO - Saved CSV: results/paper-eval/flash-high-image-20m/consensus-sweep-results.csv
+2026-03-26 12:41:35,956 - INFO - Saved JSON: results/paper-eval/flash-high-image-20m/consensus-analysis-report.json
+2026-03-26 12:41:35,957 - INFO - Saved Markdown: results/paper-eval/flash-high-image-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:41:36 PM UTC 2026
+
+[6/32] flash-high-image @ 30m
+  Study dir: outputs/h11/pv-diag-384/flash-high-image-n5
+  Started: Thu Mar 26 12:41:36 PM UTC 2026
+2026-03-26 12:41:36,369 - INFO - Loading ground truth and bounds...
+2026-03-26 12:41:36,393 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:41:36,393 - INFO - Precomputing clusters...
+2026-03-26 12:41:36,393 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:41:36,401 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (831 features)
+2026-03-26 12:41:36,410 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (868 features)
+2026-03-26 12:41:36,418 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (904 features)
+2026-03-26 12:41:36,427 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (858 features)
+2026-03-26 12:41:36,435 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (843 features)
+2026-03-26 12:41:36,443 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (822 features)
+2026-03-26 12:41:36,452 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (852 features)
+2026-03-26 12:41:36,460 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (845 features)
+2026-03-26 12:41:36,468 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (836 features)
+2026-03-26 12:41:36,477 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (894 features)
+2026-03-26 12:41:36,477 - INFO - Condition 'image-t0.7': loaded 10 runs with 8553 total features
+2026-03-26 12:41:37,545 - INFO -   image-t0.7 N=5: 5 runs -> 2017 clusters
+2026-03-26 12:41:40,277 - INFO -   image-t0.7 N=10: 10 runs -> 3211 clusters
+2026-03-26 12:41:40,278 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:41:46,124 - INFO -   image-t0.7 N=10 x=8: F1=0.7779 (344 det)
+2026-03-26 12:41:46,236 - INFO -   image-t0.7 N=10 x=10: F1=0.6022 (206 det)
+2026-03-26 12:41:46,269 - INFO -   image-t0.7 N=5 x=5: F1=0.6946 (282 det)
+2026-03-26 12:41:46,290 - INFO -   image-t0.7 N=10 x=9: F1=0.7179 (281 det)
+2026-03-26 12:41:46,347 - INFO -   image-t0.7 N=10 x=5: F1=0.7925 (519 det)
+2026-03-26 12:41:46,474 - INFO -   image-t0.7 N=10 x=7: F1=0.8095 (405 det)
+2026-03-26 12:41:46,566 - INFO -   image-t0.7 N=10 x=3: F1=0.6790 (752 det)
+2026-03-26 12:41:46,721 - INFO -   image-t0.7 N=10 x=4: F1=0.7510 (609 det)
+2026-03-26 12:41:47,892 - INFO -   image-t0.7 N=5 x=1: F1=0.3344 (2017 det)
+2026-03-26 12:41:48,469 - INFO -   image-t0.7 N=5 x=4: F1=0.7776 (388 det)
+2026-03-26 12:41:48,567 - INFO -   image-t0.7 N=5 x=3: F1=0.7991 (506 det)
+2026-03-26 12:41:48,687 - INFO -   image-t0.7 N=10 x=6: F1=0.8116 (462 det)
+2026-03-26 12:41:48,904 - INFO -   image-t0.7 N=5 x=2: F1=0.6820 (741 det)
+2026-03-26 12:41:49,229 - INFO -   image-t0.7 N=10 x=2: F1=0.5262 (1112 det)
+2026-03-26 12:41:51,185 - INFO -   image-t0.7 N=10 x=1: F1=0.2282 (3211 det)
+2026-03-26 12:41:51,198 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:41:51,201 - INFO - Saved CSV: results/paper-eval/flash-high-image-30m/consensus-sweep-results.csv
+2026-03-26 12:41:51,201 - INFO - Saved JSON: results/paper-eval/flash-high-image-30m/consensus-analysis-report.json
+2026-03-26 12:41:51,203 - INFO - Saved Markdown: results/paper-eval/flash-high-image-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:41:51 PM UTC 2026
+
+[7/32] flash-high-image @ 40m
+  Study dir: outputs/h11/pv-diag-384/flash-high-image-n5
+  Started: Thu Mar 26 12:41:51 PM UTC 2026
+2026-03-26 12:41:51,593 - INFO - Loading ground truth and bounds...
+2026-03-26 12:41:51,616 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:41:51,616 - INFO - Precomputing clusters...
+2026-03-26 12:41:51,616 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:41:51,625 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (831 features)
+2026-03-26 12:41:51,633 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (868 features)
+2026-03-26 12:41:51,642 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (904 features)
+2026-03-26 12:41:51,650 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (858 features)
+2026-03-26 12:41:51,658 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (843 features)
+2026-03-26 12:41:51,666 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (822 features)
+2026-03-26 12:41:51,675 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (852 features)
+2026-03-26 12:41:51,683 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (845 features)
+2026-03-26 12:41:51,691 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (836 features)
+2026-03-26 12:41:51,700 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (894 features)
+2026-03-26 12:41:51,700 - INFO - Condition 'image-t0.7': loaded 10 runs with 8553 total features
+2026-03-26 12:41:52,771 - INFO -   image-t0.7 N=5: 5 runs -> 2017 clusters
+2026-03-26 12:41:55,513 - INFO -   image-t0.7 N=10: 10 runs -> 3211 clusters
+2026-03-26 12:41:55,514 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:01,069 - INFO -   image-t0.7 N=5 x=5: F1=0.7085 (282 det)
+2026-03-26 12:42:01,208 - INFO -   image-t0.7 N=5 x=4: F1=0.7922 (388 det)
+2026-03-26 12:42:01,338 - INFO -   image-t0.7 N=10 x=10: F1=0.6053 (206 det)
+2026-03-26 12:42:01,408 - INFO -   image-t0.7 N=10 x=6: F1=0.8294 (462 det)
+2026-03-26 12:42:01,517 - INFO -   image-t0.7 N=10 x=8: F1=0.7882 (344 det)
+2026-03-26 12:42:01,748 - INFO -   image-t0.7 N=10 x=3: F1=0.6976 (752 det)
+2026-03-26 12:42:01,890 - INFO -   image-t0.7 N=10 x=4: F1=0.7701 (609 det)
+2026-03-26 12:42:02,456 - INFO -   image-t0.7 N=10 x=2: F1=0.5365 (1112 det)
+2026-03-26 12:42:03,303 - INFO -   image-t0.7 N=5 x=1: F1=0.3401 (2017 det)
+2026-03-26 12:42:03,455 - INFO -   image-t0.7 N=10 x=7: F1=0.8238 (405 det)
+2026-03-26 12:42:03,455 - INFO -   image-t0.7 N=10 x=9: F1=0.7235 (281 det)
+2026-03-26 12:42:03,634 - INFO -   image-t0.7 N=10 x=5: F1=0.8134 (519 det)
+2026-03-26 12:42:03,656 - INFO -   image-t0.7 N=5 x=3: F1=0.8183 (506 det)
+2026-03-26 12:42:03,835 - INFO -   image-t0.7 N=5 x=2: F1=0.6956 (741 det)
+2026-03-26 12:42:06,207 - INFO -   image-t0.7 N=10 x=1: F1=0.2320 (3211 det)
+2026-03-26 12:42:06,220 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:06,230 - INFO - Saved CSV: results/paper-eval/flash-high-image-40m/consensus-sweep-results.csv
+2026-03-26 12:42:06,230 - INFO - Saved JSON: results/paper-eval/flash-high-image-40m/consensus-analysis-report.json
+2026-03-26 12:42:06,232 - INFO - Saved Markdown: results/paper-eval/flash-high-image-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:06 PM UTC 2026
+
+[8/32] flash-high-image @ 50m
+  Study dir: outputs/h11/pv-diag-384/flash-high-image-n5
+  Started: Thu Mar 26 12:42:06 PM UTC 2026
+2026-03-26 12:42:06,622 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:06,646 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:06,646 - INFO - Precomputing clusters...
+2026-03-26 12:42:06,646 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:42:06,654 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (831 features)
+2026-03-26 12:42:06,663 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (868 features)
+2026-03-26 12:42:06,672 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (904 features)
+2026-03-26 12:42:06,680 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (858 features)
+2026-03-26 12:42:06,688 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (843 features)
+2026-03-26 12:42:06,696 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (822 features)
+2026-03-26 12:42:06,704 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (852 features)
+2026-03-26 12:42:06,713 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (845 features)
+2026-03-26 12:42:06,721 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (836 features)
+2026-03-26 12:42:06,729 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (894 features)
+2026-03-26 12:42:06,729 - INFO - Condition 'image-t0.7': loaded 10 runs with 8553 total features
+2026-03-26 12:42:07,822 - INFO -   image-t0.7 N=5: 5 runs -> 2017 clusters
+2026-03-26 12:42:10,596 - INFO -   image-t0.7 N=10: 10 runs -> 3211 clusters
+2026-03-26 12:42:10,597 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:16,228 - INFO -   image-t0.7 N=5 x=5: F1=0.7113 (282 det)
+2026-03-26 12:42:16,502 - INFO -   image-t0.7 N=10 x=6: F1=0.8339 (462 det)
+2026-03-26 12:42:16,542 - INFO -   image-t0.7 N=5 x=3: F1=0.8268 (506 det)
+2026-03-26 12:42:16,688 - INFO -   image-t0.7 N=10 x=8: F1=0.7882 (344 det)
+2026-03-26 12:42:17,148 - INFO -   image-t0.7 N=10 x=4: F1=0.7778 (609 det)
+2026-03-26 12:42:17,200 - INFO -   image-t0.7 N=10 x=3: F1=0.6992 (752 det)
+2026-03-26 12:42:17,322 - INFO -   image-t0.7 N=10 x=2: F1=0.5404 (1112 det)
+2026-03-26 12:42:18,201 - INFO -   image-t0.7 N=5 x=1: F1=0.3442 (2017 det)
+2026-03-26 12:42:18,468 - INFO -   image-t0.7 N=5 x=4: F1=0.7922 (388 det)
+2026-03-26 12:42:18,662 - INFO -   image-t0.7 N=10 x=7: F1=0.8238 (405 det)
+2026-03-26 12:42:18,686 - INFO -   image-t0.7 N=10 x=9: F1=0.7235 (281 det)
+2026-03-26 12:42:18,705 - INFO -   image-t0.7 N=10 x=10: F1=0.6053 (206 det)
+2026-03-26 12:42:18,948 - INFO -   image-t0.7 N=10 x=5: F1=0.8218 (519 det)
+2026-03-26 12:42:19,264 - INFO -   image-t0.7 N=5 x=2: F1=0.7024 (741 det)
+2026-03-26 12:42:19,683 - INFO -   image-t0.7 N=10 x=1: F1=0.2348 (3211 det)
+2026-03-26 12:42:19,695 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:19,698 - INFO - Saved CSV: results/paper-eval/flash-high-image-50m/consensus-sweep-results.csv
+2026-03-26 12:42:19,698 - INFO - Saved JSON: results/paper-eval/flash-high-image-50m/consensus-analysis-report.json
+2026-03-26 12:42:19,699 - INFO - Saved Markdown: results/paper-eval/flash-high-image-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:19 PM UTC 2026
+
+[9/32] pro-high-text @ 20m
+  Study dir: outputs/h11/pv-diag-384/pro-high-text-n5
+  Started: Thu Mar 26 12:42:19 PM UTC 2026
+2026-03-26 12:42:20,088 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:20,112 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:20,112 - INFO - Precomputing clusters...
+2026-03-26 12:42:20,112 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:42:20,138 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (440 features)
+2026-03-26 12:42:20,143 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (442 features)
+2026-03-26 12:42:20,148 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (429 features)
+2026-03-26 12:42:20,153 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (430 features)
+2026-03-26 12:42:20,158 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (439 features)
+2026-03-26 12:42:20,158 - INFO - Condition 'text-t0.7': loaded 5 runs with 2180 total features
+2026-03-26 12:42:20,402 - INFO -   text-t0.7 N=5: 5 runs -> 504 clusters
+2026-03-26 12:42:20,403 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:25,294 - INFO -   text-t0.7 N=5 x=5: F1=0.8016 (306 det)
+2026-03-26 12:42:25,297 - INFO -   text-t0.7 N=5 x=4: F1=0.8264 (337 det)
+2026-03-26 12:42:25,330 - INFO -   text-t0.7 N=5 x=2: F1=0.8223 (409 det)
+2026-03-26 12:42:25,341 - INFO -   text-t0.7 N=5 x=3: F1=0.8404 (367 det)
+2026-03-26 12:42:25,517 - INFO -   text-t0.7 N=5 x=1: F1=0.7689 (504 det)
+2026-03-26 12:42:25,528 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:25,534 - INFO - Saved CSV: results/paper-eval/pro-high-text-20m/consensus-sweep-results.csv
+2026-03-26 12:42:25,534 - INFO - Saved JSON: results/paper-eval/pro-high-text-20m/consensus-analysis-report.json
+2026-03-26 12:42:25,535 - INFO - Saved Markdown: results/paper-eval/pro-high-text-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:25 PM UTC 2026
+
+[10/32] pro-high-text @ 30m
+  Study dir: outputs/h11/pv-diag-384/pro-high-text-n5
+  Started: Thu Mar 26 12:42:25 PM UTC 2026
+2026-03-26 12:42:25,927 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:25,950 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:25,950 - INFO - Precomputing clusters...
+2026-03-26 12:42:25,950 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:42:25,955 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (440 features)
+2026-03-26 12:42:25,960 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (442 features)
+2026-03-26 12:42:25,965 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (429 features)
+2026-03-26 12:42:25,969 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (430 features)
+2026-03-26 12:42:25,974 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (439 features)
+2026-03-26 12:42:25,974 - INFO - Condition 'text-t0.7': loaded 5 runs with 2180 total features
+2026-03-26 12:42:26,221 - INFO -   text-t0.7 N=5: 5 runs -> 504 clusters
+2026-03-26 12:42:26,222 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:31,139 - INFO -   text-t0.7 N=5 x=5: F1=0.8097 (306 det)
+2026-03-26 12:42:31,146 - INFO -   text-t0.7 N=5 x=4: F1=0.8368 (337 det)
+2026-03-26 12:42:31,177 - INFO -   text-t0.7 N=5 x=3: F1=0.8554 (367 det)
+2026-03-26 12:42:31,225 - INFO -   text-t0.7 N=5 x=2: F1=0.8412 (409 det)
+2026-03-26 12:42:31,296 - INFO -   text-t0.7 N=5 x=1: F1=0.7859 (504 det)
+2026-03-26 12:42:31,305 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:31,308 - INFO - Saved CSV: results/paper-eval/pro-high-text-30m/consensus-sweep-results.csv
+2026-03-26 12:42:31,309 - INFO - Saved JSON: results/paper-eval/pro-high-text-30m/consensus-analysis-report.json
+2026-03-26 12:42:31,310 - INFO - Saved Markdown: results/paper-eval/pro-high-text-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:31 PM UTC 2026
+
+[11/32] pro-high-text @ 40m
+  Study dir: outputs/h11/pv-diag-384/pro-high-text-n5
+  Started: Thu Mar 26 12:42:31 PM UTC 2026
+2026-03-26 12:42:31,705 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:31,729 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:31,729 - INFO - Precomputing clusters...
+2026-03-26 12:42:31,729 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:42:31,734 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (440 features)
+2026-03-26 12:42:31,739 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (442 features)
+2026-03-26 12:42:31,744 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (429 features)
+2026-03-26 12:42:31,748 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (430 features)
+2026-03-26 12:42:31,753 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (439 features)
+2026-03-26 12:42:31,753 - INFO - Condition 'text-t0.7': loaded 5 runs with 2180 total features
+2026-03-26 12:42:31,999 - INFO -   text-t0.7 N=5: 5 runs -> 504 clusters
+2026-03-26 12:42:32,000 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:36,885 - INFO -   text-t0.7 N=5 x=5: F1=0.8124 (306 det)
+2026-03-26 12:42:36,921 - INFO -   text-t0.7 N=5 x=4: F1=0.8394 (337 det)
+2026-03-26 12:42:36,956 - INFO -   text-t0.7 N=5 x=3: F1=0.8579 (367 det)
+2026-03-26 12:42:36,984 - INFO -   text-t0.7 N=5 x=2: F1=0.8483 (409 det)
+2026-03-26 12:42:37,032 - INFO -   text-t0.7 N=5 x=1: F1=0.7923 (504 det)
+2026-03-26 12:42:37,041 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:37,044 - INFO - Saved CSV: results/paper-eval/pro-high-text-40m/consensus-sweep-results.csv
+2026-03-26 12:42:37,044 - INFO - Saved JSON: results/paper-eval/pro-high-text-40m/consensus-analysis-report.json
+2026-03-26 12:42:37,045 - INFO - Saved Markdown: results/paper-eval/pro-high-text-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:37 PM UTC 2026
+
+[12/32] pro-high-text @ 50m
+  Study dir: outputs/h11/pv-diag-384/pro-high-text-n5
+  Started: Thu Mar 26 12:42:37 PM UTC 2026
+2026-03-26 12:42:37,434 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:37,458 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:37,458 - INFO - Precomputing clusters...
+2026-03-26 12:42:37,458 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:42:37,463 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (440 features)
+2026-03-26 12:42:37,468 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (442 features)
+2026-03-26 12:42:37,473 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (429 features)
+2026-03-26 12:42:37,478 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (430 features)
+2026-03-26 12:42:37,484 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (439 features)
+2026-03-26 12:42:37,484 - INFO - Condition 'text-t0.7': loaded 5 runs with 2180 total features
+2026-03-26 12:42:37,737 - INFO -   text-t0.7 N=5: 5 runs -> 504 clusters
+2026-03-26 12:42:37,737 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:42,625 - INFO -   text-t0.7 N=5 x=5: F1=0.8124 (306 det)
+2026-03-26 12:42:42,626 - INFO -   text-t0.7 N=5 x=4: F1=0.8394 (337 det)
+2026-03-26 12:42:42,670 - INFO -   text-t0.7 N=5 x=3: F1=0.8579 (367 det)
+2026-03-26 12:42:42,760 - INFO -   text-t0.7 N=5 x=2: F1=0.8483 (409 det)
+2026-03-26 12:42:42,828 - INFO -   text-t0.7 N=5 x=1: F1=0.7923 (504 det)
+2026-03-26 12:42:42,838 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:42,841 - INFO - Saved CSV: results/paper-eval/pro-high-text-50m/consensus-sweep-results.csv
+2026-03-26 12:42:42,841 - INFO - Saved JSON: results/paper-eval/pro-high-text-50m/consensus-analysis-report.json
+2026-03-26 12:42:42,842 - INFO - Saved Markdown: results/paper-eval/pro-high-text-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:42 PM UTC 2026
+
+[13/32] pro-high-image @ 20m
+  Study dir: outputs/h11/pv-diag-384/pro-high-image-n5
+  Started: Thu Mar 26 12:42:42 PM UTC 2026
+2026-03-26 12:42:43,230 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:43,254 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:43,254 - INFO - Precomputing clusters...
+2026-03-26 12:42:43,254 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:42:43,260 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (569 features)
+2026-03-26 12:42:43,266 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (575 features)
+2026-03-26 12:42:43,272 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (573 features)
+2026-03-26 12:42:43,277 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (565 features)
+2026-03-26 12:42:43,283 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (570 features)
+2026-03-26 12:42:43,283 - INFO - Condition 'image-t0.7': loaded 5 runs with 2852 total features
+2026-03-26 12:42:43,718 - INFO -   image-t0.7 N=5: 5 runs -> 841 clusters
+2026-03-26 12:42:43,719 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:48,559 - INFO -   image-t0.7 N=5 x=5: F1=0.6448 (297 det)
+2026-03-26 12:42:48,695 - INFO -   image-t0.7 N=5 x=4: F1=0.6925 (391 det)
+2026-03-26 12:42:48,765 - INFO -   image-t0.7 N=5 x=3: F1=0.6998 (471 det)
+2026-03-26 12:42:48,880 - INFO -   image-t0.7 N=5 x=2: F1=0.6621 (583 det)
+2026-03-26 12:42:49,194 - INFO -   image-t0.7 N=5 x=1: F1=0.5611 (841 det)
+2026-03-26 12:42:49,204 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:49,207 - INFO - Saved CSV: results/paper-eval/pro-high-image-20m/consensus-sweep-results.csv
+2026-03-26 12:42:49,207 - INFO - Saved JSON: results/paper-eval/pro-high-image-20m/consensus-analysis-report.json
+2026-03-26 12:42:49,208 - INFO - Saved Markdown: results/paper-eval/pro-high-image-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:49 PM UTC 2026
+
+[14/32] pro-high-image @ 30m
+  Study dir: outputs/h11/pv-diag-384/pro-high-image-n5
+  Started: Thu Mar 26 12:42:49 PM UTC 2026
+2026-03-26 12:42:49,602 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:49,625 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:49,626 - INFO - Precomputing clusters...
+2026-03-26 12:42:49,626 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:42:49,632 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (569 features)
+2026-03-26 12:42:49,638 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (575 features)
+2026-03-26 12:42:49,643 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (573 features)
+2026-03-26 12:42:49,649 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (565 features)
+2026-03-26 12:42:49,655 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (570 features)
+2026-03-26 12:42:49,655 - INFO - Condition 'image-t0.7': loaded 5 runs with 2852 total features
+2026-03-26 12:42:50,083 - INFO -   image-t0.7 N=5: 5 runs -> 841 clusters
+2026-03-26 12:42:50,084 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:42:54,913 - INFO -   image-t0.7 N=5 x=5: F1=0.7049 (297 det)
+2026-03-26 12:42:55,056 - INFO -   image-t0.7 N=5 x=4: F1=0.7918 (391 det)
+2026-03-26 12:42:55,153 - INFO -   image-t0.7 N=5 x=3: F1=0.8212 (471 det)
+2026-03-26 12:42:55,220 - INFO -   image-t0.7 N=5 x=2: F1=0.7701 (583 det)
+2026-03-26 12:42:55,550 - INFO -   image-t0.7 N=5 x=1: F1=0.6332 (841 det)
+2026-03-26 12:42:55,560 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:42:55,563 - INFO - Saved CSV: results/paper-eval/pro-high-image-30m/consensus-sweep-results.csv
+2026-03-26 12:42:55,563 - INFO - Saved JSON: results/paper-eval/pro-high-image-30m/consensus-analysis-report.json
+2026-03-26 12:42:55,564 - INFO - Saved Markdown: results/paper-eval/pro-high-image-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:42:55 PM UTC 2026
+
+[15/32] pro-high-image @ 40m
+  Study dir: outputs/h11/pv-diag-384/pro-high-image-n5
+  Started: Thu Mar 26 12:42:55 PM UTC 2026
+2026-03-26 12:42:55,949 - INFO - Loading ground truth and bounds...
+2026-03-26 12:42:55,972 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:42:55,972 - INFO - Precomputing clusters...
+2026-03-26 12:42:55,972 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:42:55,978 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (569 features)
+2026-03-26 12:42:55,984 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (575 features)
+2026-03-26 12:42:55,990 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (573 features)
+2026-03-26 12:42:55,996 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (565 features)
+2026-03-26 12:42:56,002 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (570 features)
+2026-03-26 12:42:56,002 - INFO - Condition 'image-t0.7': loaded 5 runs with 2852 total features
+2026-03-26 12:42:56,429 - INFO -   image-t0.7 N=5: 5 runs -> 841 clusters
+2026-03-26 12:42:56,430 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:43:01,259 - INFO -   image-t0.7 N=5 x=5: F1=0.7240 (297 det)
+2026-03-26 12:43:01,346 - INFO -   image-t0.7 N=5 x=4: F1=0.8208 (391 det)
+2026-03-26 12:43:01,457 - INFO -   image-t0.7 N=5 x=3: F1=0.8521 (471 det)
+2026-03-26 12:43:01,606 - INFO -   image-t0.7 N=5 x=2: F1=0.7976 (583 det)
+2026-03-26 12:43:01,892 - INFO -   image-t0.7 N=5 x=1: F1=0.6489 (841 det)
+2026-03-26 12:43:01,901 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:43:01,903 - INFO - Saved CSV: results/paper-eval/pro-high-image-40m/consensus-sweep-results.csv
+2026-03-26 12:43:01,904 - INFO - Saved JSON: results/paper-eval/pro-high-image-40m/consensus-analysis-report.json
+2026-03-26 12:43:01,905 - INFO - Saved Markdown: results/paper-eval/pro-high-image-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:43:01 PM UTC 2026
+
+[16/32] pro-high-image @ 50m
+  Study dir: outputs/h11/pv-diag-384/pro-high-image-n5
+  Started: Thu Mar 26 12:43:01 PM UTC 2026
+2026-03-26 12:43:02,290 - INFO - Loading ground truth and bounds...
+2026-03-26 12:43:02,314 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:43:02,314 - INFO - Precomputing clusters...
+2026-03-26 12:43:02,314 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:43:02,320 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (569 features)
+2026-03-26 12:43:02,326 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (575 features)
+2026-03-26 12:43:02,332 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (573 features)
+2026-03-26 12:43:02,338 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (565 features)
+2026-03-26 12:43:02,344 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (570 features)
+2026-03-26 12:43:02,344 - INFO - Condition 'image-t0.7': loaded 5 runs with 2852 total features
+2026-03-26 12:43:02,770 - INFO -   image-t0.7 N=5: 5 runs -> 841 clusters
+2026-03-26 12:43:02,770 - INFO - Evaluating 5 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:43:07,753 - INFO -   image-t0.7 N=5 x=5: F1=0.7322 (297 det)
+2026-03-26 12:43:07,844 - INFO -   image-t0.7 N=5 x=4: F1=0.8305 (391 det)
+2026-03-26 12:43:07,951 - INFO -   image-t0.7 N=5 x=3: F1=0.8653 (471 det)
+2026-03-26 12:43:08,085 - INFO -   image-t0.7 N=5 x=2: F1=0.8094 (583 det)
+2026-03-26 12:43:08,361 - INFO -   image-t0.7 N=5 x=1: F1=0.6520 (841 det)
+2026-03-26 12:43:08,371 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:43:08,375 - INFO - Saved CSV: results/paper-eval/pro-high-image-50m/consensus-sweep-results.csv
+2026-03-26 12:43:08,375 - INFO - Saved JSON: results/paper-eval/pro-high-image-50m/consensus-analysis-report.json
+2026-03-26 12:43:08,376 - INFO - Saved Markdown: results/paper-eval/pro-high-image-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:43:08 PM UTC 2026
+
+[17/32] flash-min-text-t07 @ 20m
+  Study dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+  Started: Thu Mar 26 12:43:08 PM UTC 2026
+2026-03-26 12:43:08,765 - INFO - Loading ground truth and bounds...
+2026-03-26 12:43:08,789 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:43:08,789 - INFO - Precomputing clusters...
+2026-03-26 12:43:08,789 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:43:08,803 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1090 features)
+2026-03-26 12:43:08,814 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1131 features)
+2026-03-26 12:43:08,825 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1096 features)
+2026-03-26 12:43:08,836 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1079 features)
+2026-03-26 12:43:08,847 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1124 features)
+2026-03-26 12:43:08,857 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1099 features)
+2026-03-26 12:43:08,868 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1097 features)
+2026-03-26 12:43:08,879 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1096 features)
+2026-03-26 12:43:08,889 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1087 features)
+2026-03-26 12:43:08,900 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1112 features)
+2026-03-26 12:43:08,911 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1140 features)
+2026-03-26 12:43:08,921 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1118 features)
+2026-03-26 12:43:08,932 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1084 features)
+2026-03-26 12:43:08,943 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1118 features)
+2026-03-26 12:43:08,953 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1098 features)
+2026-03-26 12:43:08,964 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1091 features)
+2026-03-26 12:43:08,975 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1153 features)
+2026-03-26 12:43:08,986 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1119 features)
+2026-03-26 12:43:08,997 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1132 features)
+2026-03-26 12:43:09,008 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1099 features)
+2026-03-26 12:43:09,018 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1070 features)
+2026-03-26 12:43:09,029 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1067 features)
+2026-03-26 12:43:09,039 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1085 features)
+2026-03-26 12:43:09,050 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1139 features)
+2026-03-26 12:43:09,061 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1089 features)
+2026-03-26 12:43:09,071 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1108 features)
+2026-03-26 12:43:09,082 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1121 features)
+2026-03-26 12:43:09,092 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1067 features)
+2026-03-26 12:43:09,103 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1127 features)
+2026-03-26 12:43:09,114 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1073 features)
+2026-03-26 12:43:09,114 - INFO - Condition 'text-t0.7': loaded 30 runs with 33109 total features
+2026-03-26 12:43:10,473 - INFO -   text-t0.7 N=5: 5 runs -> 1593 clusters
+2026-03-26 12:43:13,350 - INFO -   text-t0.7 N=10: 10 runs -> 1953 clusters
+2026-03-26 12:43:23,140 - INFO -   text-t0.7 N=30: 30 runs -> 2790 clusters
+2026-03-26 12:43:23,149 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:43:29,434 - INFO -   text-t0.7 N=5 x=3: F1=0.5545 (950 det)
+2026-03-26 12:43:29,561 - INFO -   text-t0.7 N=10 x=3: F1=0.4975 (1157 det)
+2026-03-26 12:43:29,572 - INFO -   text-t0.7 N=10 x=9: F1=0.6304 (685 det)
+2026-03-26 12:43:29,748 - INFO -   text-t0.7 N=10 x=8: F1=0.6099 (762 det)
+2026-03-26 12:43:33,478 - INFO -   text-t0.7 N=5 x=5: F1=0.6397 (653 det)
+2026-03-26 12:43:33,736 - INFO -   text-t0.7 N=10 x=5: F1=0.5475 (975 det)
+2026-03-26 12:43:33,753 - INFO -   text-t0.7 N=10 x=7: F1=0.5923 (838 det)
+2026-03-26 12:43:33,784 - INFO -   text-t0.7 N=5 x=4: F1=0.6023 (807 det)
+2026-03-26 12:43:33,840 - INFO -   text-t0.7 N=10 x=6: F1=0.5689 (908 det)
+2026-03-26 12:43:34,121 - INFO -   text-t0.7 N=10 x=4: F1=0.5293 (1050 det)
+2026-03-26 12:43:34,128 - INFO -   text-t0.7 N=10 x=10: F1=0.6332 (560 det)
+2026-03-26 12:43:34,567 - INFO -   text-t0.7 N=5 x=1: F1=0.3935 (1593 det)
+2026-03-26 12:43:34,707 - INFO -   text-t0.7 N=30 x=3: F1=0.3958 (1586 det)
+2026-03-26 12:43:34,807 - INFO -   text-t0.7 N=5 x=2: F1=0.5068 (1104 det)
+2026-03-26 12:43:35,036 - INFO -   text-t0.7 N=30 x=5: F1=0.4537 (1324 det)
+2026-03-26 12:43:35,243 - INFO -   text-t0.7 N=10 x=2: F1=0.4511 (1334 det)
+2026-03-26 12:43:35,418 - INFO -   text-t0.7 N=30 x=4: F1=0.4322 (1416 det)
+2026-03-26 12:43:35,952 - INFO -   text-t0.7 N=30 x=2: F1=0.3475 (1890 det)
+2026-03-26 12:43:35,952 - INFO -   text-t0.7 N=10 x=1: F1=0.3358 (1953 det)
+2026-03-26 12:43:36,311 - INFO -   text-t0.7 N=30 x=8: F1=0.5013 (1149 det)
+2026-03-26 12:43:37,023 - INFO -   text-t0.7 N=30 x=7: F1=0.4856 (1200 det)
+2026-03-26 12:43:37,314 - INFO -   text-t0.7 N=30 x=1: F1=0.2518 (2790 det)
+2026-03-26 12:43:37,698 - INFO -   text-t0.7 N=30 x=6: F1=0.4695 (1256 det)
+2026-03-26 12:43:37,818 - INFO -   text-t0.7 N=30 x=9: F1=0.5143 (1101 det)
+2026-03-26 12:43:39,994 - INFO -   text-t0.7 N=30 x=11: F1=0.5386 (1028 det)
+2026-03-26 12:43:40,840 - INFO -   text-t0.7 N=30 x=18: F1=0.5797 (876 det)
+2026-03-26 12:43:41,535 - INFO -   text-t0.7 N=30 x=20: F1=0.5946 (833 det)
+2026-03-26 12:43:42,674 - INFO -   text-t0.7 N=30 x=25: F1=0.6297 (702 det)
+2026-03-26 12:43:42,987 - INFO -   text-t0.7 N=30 x=14: F1=0.5530 (961 det)
+2026-03-26 12:43:43,834 - INFO -   text-t0.7 N=30 x=10: F1=0.5284 (1060 det)
+2026-03-26 12:43:44,349 - INFO -   text-t0.7 N=30 x=17: F1=0.5744 (902 det)
+2026-03-26 12:43:44,487 - INFO -   text-t0.7 N=30 x=13: F1=0.5471 (987 det)
+2026-03-26 12:43:44,491 - INFO -   text-t0.7 N=30 x=12: F1=0.5429 (1009 det)
+2026-03-26 12:43:44,621 - INFO -   text-t0.7 N=30 x=15: F1=0.5610 (941 det)
+2026-03-26 12:43:44,686 - INFO -   text-t0.7 N=30 x=24: F1=0.6232 (730 det)
+2026-03-26 12:43:44,726 - INFO -   text-t0.7 N=30 x=23: F1=0.6178 (753 det)
+2026-03-26 12:43:45,034 - INFO -   text-t0.7 N=30 x=16: F1=0.5695 (917 det)
+2026-03-26 12:43:45,218 - INFO -   text-t0.7 N=30 x=19: F1=0.5845 (855 det)
+2026-03-26 12:43:45,247 - INFO -   text-t0.7 N=30 x=28: F1=0.6499 (596 det)
+2026-03-26 12:43:45,317 - INFO -   text-t0.7 N=30 x=21: F1=0.6058 (803 det)
+2026-03-26 12:43:45,415 - INFO -   text-t0.7 N=30 x=26: F1=0.6355 (676 det)
+2026-03-26 12:43:45,444 - INFO -   text-t0.7 N=30 x=22: F1=0.6102 (781 det)
+2026-03-26 12:43:45,599 - INFO -   text-t0.7 N=30 x=30: F1=0.6584 (455 det)
+2026-03-26 12:43:45,609 - INFO -   text-t0.7 N=30 x=29: F1=0.6611 (530 det)
+2026-03-26 12:43:46,056 - INFO -   text-t0.7 N=30 x=27: F1=0.6449 (638 det)
+2026-03-26 12:43:46,074 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:43:46,077 - INFO - Saved CSV: results/paper-eval/flash-min-text-t07-20m/consensus-sweep-results.csv
+2026-03-26 12:43:46,077 - INFO - Saved JSON: results/paper-eval/flash-min-text-t07-20m/consensus-analysis-report.json
+2026-03-26 12:43:46,079 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t07-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:43:46 PM UTC 2026
+
+[18/32] flash-min-text-t07 @ 30m
+  Study dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+  Started: Thu Mar 26 12:43:46 PM UTC 2026
+2026-03-26 12:43:46,470 - INFO - Loading ground truth and bounds...
+2026-03-26 12:43:46,494 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:43:46,494 - INFO - Precomputing clusters...
+2026-03-26 12:43:46,494 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:43:46,505 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1090 features)
+2026-03-26 12:43:46,515 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1131 features)
+2026-03-26 12:43:46,526 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1096 features)
+2026-03-26 12:43:46,536 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1079 features)
+2026-03-26 12:43:46,547 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1124 features)
+2026-03-26 12:43:46,557 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1099 features)
+2026-03-26 12:43:46,568 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1097 features)
+2026-03-26 12:43:46,578 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1096 features)
+2026-03-26 12:43:46,589 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1087 features)
+2026-03-26 12:43:46,599 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1112 features)
+2026-03-26 12:43:46,610 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1140 features)
+2026-03-26 12:43:46,621 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1118 features)
+2026-03-26 12:43:46,631 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1084 features)
+2026-03-26 12:43:46,641 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1118 features)
+2026-03-26 12:43:46,652 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1098 features)
+2026-03-26 12:43:46,662 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1091 features)
+2026-03-26 12:43:46,673 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1153 features)
+2026-03-26 12:43:46,684 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1119 features)
+2026-03-26 12:43:46,694 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1132 features)
+2026-03-26 12:43:46,705 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1099 features)
+2026-03-26 12:43:46,716 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1070 features)
+2026-03-26 12:43:46,726 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1067 features)
+2026-03-26 12:43:46,736 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1085 features)
+2026-03-26 12:43:46,747 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1139 features)
+2026-03-26 12:43:46,757 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1089 features)
+2026-03-26 12:43:46,768 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1108 features)
+2026-03-26 12:43:46,779 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1121 features)
+2026-03-26 12:43:46,789 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1067 features)
+2026-03-26 12:43:46,800 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1127 features)
+2026-03-26 12:43:46,810 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1073 features)
+2026-03-26 12:43:46,810 - INFO - Condition 'text-t0.7': loaded 30 runs with 33109 total features
+2026-03-26 12:43:48,213 - INFO -   text-t0.7 N=5: 5 runs -> 1593 clusters
+2026-03-26 12:43:51,158 - INFO -   text-t0.7 N=10: 10 runs -> 1953 clusters
+2026-03-26 12:44:01,223 - INFO -   text-t0.7 N=30: 30 runs -> 2790 clusters
+2026-03-26 12:44:01,232 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:44:07,736 - INFO -   text-t0.7 N=10 x=10: F1=0.6412 (560 det)
+2026-03-26 12:44:07,999 - INFO -   text-t0.7 N=10 x=2: F1=0.4556 (1334 det)
+2026-03-26 12:44:08,399 - INFO -   text-t0.7 N=30 x=5: F1=0.4582 (1324 det)
+2026-03-26 12:44:08,425 - INFO -   text-t0.7 N=10 x=1: F1=0.3400 (1953 det)
+2026-03-26 12:44:11,917 - INFO -   text-t0.7 N=5 x=5: F1=0.6471 (653 det)
+2026-03-26 12:44:12,179 - INFO -   text-t0.7 N=10 x=7: F1=0.6002 (838 det)
+2026-03-26 12:44:12,195 - INFO -   text-t0.7 N=5 x=4: F1=0.6103 (807 det)
+2026-03-26 12:44:12,252 - INFO -   text-t0.7 N=10 x=6: F1=0.5778 (908 det)
+2026-03-26 12:44:12,416 - INFO -   text-t0.7 N=10 x=5: F1=0.5589 (975 det)
+2026-03-26 12:44:12,553 - INFO -   text-t0.7 N=10 x=4: F1=0.5360 (1050 det)
+2026-03-26 12:44:12,574 - INFO -   text-t0.7 N=10 x=3: F1=0.5038 (1157 det)
+2026-03-26 12:44:12,646 - INFO -   text-t0.7 N=10 x=9: F1=0.6393 (685 det)
+2026-03-26 12:44:12,871 - INFO -   text-t0.7 N=10 x=8: F1=0.6199 (762 det)
+2026-03-26 12:44:13,068 - INFO -   text-t0.7 N=5 x=1: F1=0.4004 (1593 det)
+2026-03-26 12:44:13,082 - INFO -   text-t0.7 N=5 x=3: F1=0.5675 (950 det)
+2026-03-26 12:44:13,313 - INFO -   text-t0.7 N=5 x=2: F1=0.5172 (1104 det)
+2026-03-26 12:44:13,432 - INFO -   text-t0.7 N=30 x=4: F1=0.4365 (1416 det)
+2026-03-26 12:44:14,112 - INFO -   text-t0.7 N=30 x=3: F1=0.3998 (1586 det)
+2026-03-26 12:44:14,524 - INFO -   text-t0.7 N=30 x=2: F1=0.3510 (1890 det)
+2026-03-26 12:44:14,812 - INFO -   text-t0.7 N=30 x=6: F1=0.4755 (1256 det)
+2026-03-26 12:44:14,909 - INFO -   text-t0.7 N=30 x=9: F1=0.5208 (1101 det)
+2026-03-26 12:44:15,708 - INFO -   text-t0.7 N=30 x=7: F1=0.4917 (1200 det)
+2026-03-26 12:44:15,831 - INFO -   text-t0.7 N=30 x=1: F1=0.2549 (2790 det)
+2026-03-26 12:44:17,233 - INFO -   text-t0.7 N=30 x=8: F1=0.5076 (1149 det)
+2026-03-26 12:44:19,163 - INFO -   text-t0.7 N=30 x=16: F1=0.5784 (917 det)
+2026-03-26 12:44:20,090 - INFO -   text-t0.7 N=30 x=22: F1=0.6168 (781 det)
+2026-03-26 12:44:21,041 - INFO -   text-t0.7 N=30 x=26: F1=0.6445 (676 det)
+2026-03-26 12:44:21,829 - INFO -   text-t0.7 N=30 x=18: F1=0.5889 (876 det)
+2026-03-26 12:44:22,553 - INFO -   text-t0.7 N=30 x=17: F1=0.5834 (902 det)
+2026-03-26 12:44:22,746 - INFO -   text-t0.7 N=30 x=20: F1=0.6041 (833 det)
+2026-03-26 12:44:22,759 - INFO -   text-t0.7 N=30 x=19: F1=0.5938 (855 det)
+2026-03-26 12:44:22,965 - INFO -   text-t0.7 N=30 x=25: F1=0.6385 (702 det)
+2026-03-26 12:44:23,070 - INFO -   text-t0.7 N=30 x=10: F1=0.5351 (1060 det)
+2026-03-26 12:44:23,124 - INFO -   text-t0.7 N=30 x=12: F1=0.5512 (1009 det)
+2026-03-26 12:44:23,203 - INFO -   text-t0.7 N=30 x=15: F1=0.5712 (941 det)
+2026-03-26 12:44:23,208 - INFO -   text-t0.7 N=30 x=14: F1=0.5630 (961 det)
+2026-03-26 12:44:23,220 - INFO -   text-t0.7 N=30 x=11: F1=0.5468 (1028 det)
+2026-03-26 12:44:23,226 - INFO -   text-t0.7 N=30 x=13: F1=0.5556 (987 det)
+2026-03-26 12:44:23,853 - INFO -   text-t0.7 N=30 x=21: F1=0.6139 (803 det)
+2026-03-26 12:44:23,976 - INFO -   text-t0.7 N=30 x=27: F1=0.6542 (638 det)
+2026-03-26 12:44:24,176 - INFO -   text-t0.7 N=30 x=23: F1=0.6263 (753 det)
+2026-03-26 12:44:24,290 - INFO -   text-t0.7 N=30 x=24: F1=0.6318 (730 det)
+2026-03-26 12:44:24,760 - INFO -   text-t0.7 N=30 x=28: F1=0.6596 (596 det)
+2026-03-26 12:44:24,807 - INFO -   text-t0.7 N=30 x=30: F1=0.6652 (455 det)
+2026-03-26 12:44:25,120 - INFO -   text-t0.7 N=30 x=29: F1=0.6694 (530 det)
+2026-03-26 12:44:25,136 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:44:25,139 - INFO - Saved CSV: results/paper-eval/flash-min-text-t07-30m/consensus-sweep-results.csv
+2026-03-26 12:44:25,140 - INFO - Saved JSON: results/paper-eval/flash-min-text-t07-30m/consensus-analysis-report.json
+2026-03-26 12:44:25,141 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t07-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:44:25 PM UTC 2026
+
+[19/32] flash-min-text-t07 @ 40m
+  Study dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+  Started: Thu Mar 26 12:44:25 PM UTC 2026
+2026-03-26 12:44:25,535 - INFO - Loading ground truth and bounds...
+2026-03-26 12:44:25,559 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:44:25,559 - INFO - Precomputing clusters...
+2026-03-26 12:44:25,559 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:44:25,569 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1090 features)
+2026-03-26 12:44:25,580 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1131 features)
+2026-03-26 12:44:25,590 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1096 features)
+2026-03-26 12:44:25,600 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1079 features)
+2026-03-26 12:44:25,611 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1124 features)
+2026-03-26 12:44:25,621 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1099 features)
+2026-03-26 12:44:25,632 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1097 features)
+2026-03-26 12:44:25,642 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1096 features)
+2026-03-26 12:44:25,652 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1087 features)
+2026-03-26 12:44:25,662 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1112 features)
+2026-03-26 12:44:25,673 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1140 features)
+2026-03-26 12:44:25,683 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1118 features)
+2026-03-26 12:44:25,694 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1084 features)
+2026-03-26 12:44:25,704 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1118 features)
+2026-03-26 12:44:25,714 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1098 features)
+2026-03-26 12:44:25,725 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1091 features)
+2026-03-26 12:44:25,735 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1153 features)
+2026-03-26 12:44:25,746 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1119 features)
+2026-03-26 12:44:25,756 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1132 features)
+2026-03-26 12:44:25,767 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1099 features)
+2026-03-26 12:44:25,777 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1070 features)
+2026-03-26 12:44:25,787 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1067 features)
+2026-03-26 12:44:25,798 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1085 features)
+2026-03-26 12:44:25,808 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1139 features)
+2026-03-26 12:44:25,819 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1089 features)
+2026-03-26 12:44:25,829 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1108 features)
+2026-03-26 12:44:25,839 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1121 features)
+2026-03-26 12:44:25,849 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1067 features)
+2026-03-26 12:44:25,860 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1127 features)
+2026-03-26 12:44:25,870 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1073 features)
+2026-03-26 12:44:25,870 - INFO - Condition 'text-t0.7': loaded 30 runs with 33109 total features
+2026-03-26 12:44:27,236 - INFO -   text-t0.7 N=5: 5 runs -> 1593 clusters
+2026-03-26 12:44:30,136 - INFO -   text-t0.7 N=10: 10 runs -> 1953 clusters
+2026-03-26 12:44:39,859 - INFO -   text-t0.7 N=30: 30 runs -> 2790 clusters
+2026-03-26 12:44:39,868 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:44:46,293 - INFO -   text-t0.7 N=10 x=6: F1=0.5793 (908 det)
+2026-03-26 12:44:46,651 - INFO -   text-t0.7 N=5 x=3: F1=0.5704 (950 det)
+2026-03-26 12:44:47,034 - INFO -   text-t0.7 N=10 x=1: F1=0.3417 (1953 det)
+2026-03-26 12:44:47,104 - INFO -   text-t0.7 N=30 x=5: F1=0.4616 (1324 det)
+2026-03-26 12:44:50,255 - INFO -   text-t0.7 N=5 x=5: F1=0.6471 (653 det)
+2026-03-26 12:44:50,433 - INFO -   text-t0.7 N=10 x=9: F1=0.6393 (685 det)
+2026-03-26 12:44:50,561 - INFO -   text-t0.7 N=5 x=4: F1=0.6135 (807 det)
+2026-03-26 12:44:50,622 - INFO -   text-t0.7 N=10 x=8: F1=0.6199 (762 det)
+2026-03-26 12:44:50,830 - INFO -   text-t0.7 N=10 x=7: F1=0.6002 (838 det)
+2026-03-26 12:44:51,048 - INFO -   text-t0.7 N=10 x=10: F1=0.6412 (560 det)
+2026-03-26 12:44:51,080 - INFO -   text-t0.7 N=5 x=2: F1=0.5185 (1104 det)
+2026-03-26 12:44:51,267 - INFO -   text-t0.7 N=10 x=2: F1=0.4579 (1334 det)
+2026-03-26 12:44:51,669 - INFO -   text-t0.7 N=10 x=5: F1=0.5617 (975 det)
+2026-03-26 12:44:51,763 - INFO -   text-t0.7 N=10 x=4: F1=0.5387 (1050 det)
+2026-03-26 12:44:51,789 - INFO -   text-t0.7 N=5 x=1: F1=0.4004 (1593 det)
+2026-03-26 12:44:51,883 - INFO -   text-t0.7 N=10 x=3: F1=0.5063 (1157 det)
+2026-03-26 12:44:52,265 - INFO -   text-t0.7 N=30 x=3: F1=0.4038 (1586 det)
+2026-03-26 12:44:52,403 - INFO -   text-t0.7 N=30 x=4: F1=0.4398 (1416 det)
+2026-03-26 12:44:52,494 - INFO -   text-t0.7 N=30 x=2: F1=0.3535 (1890 det)
+2026-03-26 12:44:52,878 - INFO -   text-t0.7 N=30 x=6: F1=0.4790 (1256 det)
+2026-03-26 12:44:54,365 - INFO -   text-t0.7 N=30 x=1: F1=0.2567 (2790 det)
+2026-03-26 12:44:54,978 - INFO -   text-t0.7 N=30 x=7: F1=0.4954 (1200 det)
+2026-03-26 12:44:55,617 - INFO -   text-t0.7 N=30 x=9: F1=0.5247 (1101 det)
+2026-03-26 12:44:56,009 - INFO -   text-t0.7 N=30 x=8: F1=0.5114 (1149 det)
+2026-03-26 12:44:58,778 - INFO -   text-t0.7 N=30 x=17: F1=0.5864 (902 det)
+2026-03-26 12:44:59,080 - INFO -   text-t0.7 N=30 x=25: F1=0.6385 (702 det)
+2026-03-26 12:44:59,094 - INFO -   text-t0.7 N=30 x=24: F1=0.6335 (730 det)
+2026-03-26 12:44:59,137 - INFO -   text-t0.7 N=30 x=10: F1=0.5378 (1060 det)
+2026-03-26 12:44:59,578 - INFO -   text-t0.7 N=30 x=18: F1=0.5904 (876 det)
+2026-03-26 12:45:00,697 - INFO -   text-t0.7 N=30 x=14: F1=0.5659 (961 det)
+2026-03-26 12:45:00,743 - INFO -   text-t0.7 N=30 x=12: F1=0.5540 (1009 det)
+2026-03-26 12:45:00,884 - INFO -   text-t0.7 N=30 x=11: F1=0.5496 (1028 det)
+2026-03-26 12:45:01,109 - INFO -   text-t0.7 N=30 x=22: F1=0.6184 (781 det)
+2026-03-26 12:45:01,245 - INFO -   text-t0.7 N=30 x=13: F1=0.5584 (987 det)
+2026-03-26 12:45:01,412 - INFO -   text-t0.7 N=30 x=16: F1=0.5814 (917 det)
+2026-03-26 12:45:01,591 - INFO -   text-t0.7 N=30 x=21: F1=0.6155 (803 det)
+2026-03-26 12:45:01,842 - INFO -   text-t0.7 N=30 x=20: F1=0.6057 (833 det)
+2026-03-26 12:45:01,909 - INFO -   text-t0.7 N=30 x=15: F1=0.5741 (941 det)
+2026-03-26 12:45:01,936 - INFO -   text-t0.7 N=30 x=19: F1=0.5953 (855 det)
+2026-03-26 12:45:02,359 - INFO -   text-t0.7 N=30 x=23: F1=0.6279 (753 det)
+2026-03-26 12:45:02,923 - INFO -   text-t0.7 N=30 x=27: F1=0.6542 (638 det)
+2026-03-26 12:45:03,047 - INFO -   text-t0.7 N=30 x=29: F1=0.6694 (530 det)
+2026-03-26 12:45:03,265 - INFO -   text-t0.7 N=30 x=28: F1=0.6596 (596 det)
+2026-03-26 12:45:03,283 - INFO -   text-t0.7 N=30 x=26: F1=0.6445 (676 det)
+2026-03-26 12:45:04,281 - INFO -   text-t0.7 N=30 x=30: F1=0.6652 (455 det)
+2026-03-26 12:45:04,297 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:45:04,300 - INFO - Saved CSV: results/paper-eval/flash-min-text-t07-40m/consensus-sweep-results.csv
+2026-03-26 12:45:04,301 - INFO - Saved JSON: results/paper-eval/flash-min-text-t07-40m/consensus-analysis-report.json
+2026-03-26 12:45:04,302 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t07-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:45:04 PM UTC 2026
+
+[20/32] flash-min-text-t07 @ 50m
+  Study dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+  Started: Thu Mar 26 12:45:04 PM UTC 2026
+2026-03-26 12:45:04,707 - INFO - Loading ground truth and bounds...
+2026-03-26 12:45:04,730 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:45:04,730 - INFO - Precomputing clusters...
+2026-03-26 12:45:04,730 - INFO - Loading runs for text-t0.7...
+2026-03-26 12:45:04,741 - INFO - Loaded run 1: detections_text-t0.7_run01.geojson (1090 features)
+2026-03-26 12:45:04,752 - INFO - Loaded run 10: detections_text-t0.7_run10.geojson (1131 features)
+2026-03-26 12:45:04,762 - INFO - Loaded run 11: detections_text-t0.7_run11.geojson (1096 features)
+2026-03-26 12:45:04,773 - INFO - Loaded run 12: detections_text-t0.7_run12.geojson (1079 features)
+2026-03-26 12:45:04,783 - INFO - Loaded run 13: detections_text-t0.7_run13.geojson (1124 features)
+2026-03-26 12:45:04,794 - INFO - Loaded run 14: detections_text-t0.7_run14.geojson (1099 features)
+2026-03-26 12:45:04,804 - INFO - Loaded run 15: detections_text-t0.7_run15.geojson (1097 features)
+2026-03-26 12:45:04,815 - INFO - Loaded run 16: detections_text-t0.7_run16.geojson (1096 features)
+2026-03-26 12:45:04,825 - INFO - Loaded run 17: detections_text-t0.7_run17.geojson (1087 features)
+2026-03-26 12:45:04,835 - INFO - Loaded run 18: detections_text-t0.7_run18.geojson (1112 features)
+2026-03-26 12:45:04,846 - INFO - Loaded run 19: detections_text-t0.7_run19.geojson (1140 features)
+2026-03-26 12:45:04,857 - INFO - Loaded run 2: detections_text-t0.7_run02.geojson (1118 features)
+2026-03-26 12:45:04,867 - INFO - Loaded run 20: detections_text-t0.7_run20.geojson (1084 features)
+2026-03-26 12:45:04,878 - INFO - Loaded run 21: detections_text-t0.7_run21.geojson (1118 features)
+2026-03-26 12:45:04,888 - INFO - Loaded run 22: detections_text-t0.7_run22.geojson (1098 features)
+2026-03-26 12:45:04,899 - INFO - Loaded run 23: detections_text-t0.7_run23.geojson (1091 features)
+2026-03-26 12:45:04,910 - INFO - Loaded run 24: detections_text-t0.7_run24.geojson (1153 features)
+2026-03-26 12:45:04,920 - INFO - Loaded run 25: detections_text-t0.7_run25.geojson (1119 features)
+2026-03-26 12:45:04,931 - INFO - Loaded run 26: detections_text-t0.7_run26.geojson (1132 features)
+2026-03-26 12:45:04,941 - INFO - Loaded run 27: detections_text-t0.7_run27.geojson (1099 features)
+2026-03-26 12:45:04,952 - INFO - Loaded run 28: detections_text-t0.7_run28.geojson (1070 features)
+2026-03-26 12:45:04,962 - INFO - Loaded run 29: detections_text-t0.7_run29.geojson (1067 features)
+2026-03-26 12:45:04,973 - INFO - Loaded run 3: detections_text-t0.7_run03.geojson (1085 features)
+2026-03-26 12:45:04,984 - INFO - Loaded run 30: detections_text-t0.7_run30.geojson (1139 features)
+2026-03-26 12:45:04,994 - INFO - Loaded run 4: detections_text-t0.7_run04.geojson (1089 features)
+2026-03-26 12:45:05,004 - INFO - Loaded run 5: detections_text-t0.7_run05.geojson (1108 features)
+2026-03-26 12:45:05,015 - INFO - Loaded run 6: detections_text-t0.7_run06.geojson (1121 features)
+2026-03-26 12:45:05,025 - INFO - Loaded run 7: detections_text-t0.7_run07.geojson (1067 features)
+2026-03-26 12:45:05,036 - INFO - Loaded run 8: detections_text-t0.7_run08.geojson (1127 features)
+2026-03-26 12:45:05,046 - INFO - Loaded run 9: detections_text-t0.7_run09.geojson (1073 features)
+2026-03-26 12:45:05,046 - INFO - Condition 'text-t0.7': loaded 30 runs with 33109 total features
+2026-03-26 12:45:06,415 - INFO -   text-t0.7 N=5: 5 runs -> 1593 clusters
+2026-03-26 12:45:09,312 - INFO -   text-t0.7 N=10: 10 runs -> 1953 clusters
+2026-03-26 12:45:19,067 - INFO -   text-t0.7 N=30: 30 runs -> 2790 clusters
+2026-03-26 12:45:19,075 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:45:25,246 - INFO -   text-t0.7 N=5 x=5: F1=0.6471 (653 det)
+2026-03-26 12:45:26,339 - INFO -   text-t0.7 N=10 x=1: F1=0.3434 (1953 det)
+2026-03-26 12:45:26,385 - INFO -   text-t0.7 N=30 x=3: F1=0.4038 (1586 det)
+2026-03-26 12:45:26,676 - INFO -   text-t0.7 N=30 x=2: F1=0.3535 (1890 det)
+2026-03-26 12:45:29,670 - INFO -   text-t0.7 N=10 x=9: F1=0.6393 (685 det)
+2026-03-26 12:45:29,785 - INFO -   text-t0.7 N=10 x=8: F1=0.6199 (762 det)
+2026-03-26 12:45:29,905 - INFO -   text-t0.7 N=10 x=7: F1=0.6002 (838 det)
+2026-03-26 12:45:29,977 - INFO -   text-t0.7 N=5 x=2: F1=0.5224 (1104 det)
+2026-03-26 12:45:30,169 - INFO -   text-t0.7 N=10 x=10: F1=0.6412 (560 det)
+2026-03-26 12:45:30,179 - INFO -   text-t0.7 N=10 x=4: F1=0.5401 (1050 det)
+2026-03-26 12:45:30,400 - INFO -   text-t0.7 N=10 x=3: F1=0.5075 (1157 det)
+2026-03-26 12:45:30,464 - INFO -   text-t0.7 N=5 x=4: F1=0.6135 (807 det)
+2026-03-26 12:45:30,581 - INFO -   text-t0.7 N=10 x=5: F1=0.5631 (975 det)
+2026-03-26 12:45:30,593 - INFO -   text-t0.7 N=10 x=2: F1=0.4590 (1334 det)
+2026-03-26 12:45:30,637 - INFO -   text-t0.7 N=10 x=6: F1=0.5793 (908 det)
+2026-03-26 12:45:30,724 - INFO -   text-t0.7 N=5 x=3: F1=0.5733 (950 det)
+2026-03-26 12:45:31,165 - INFO -   text-t0.7 N=30 x=5: F1=0.4616 (1324 det)
+2026-03-26 12:45:31,493 - INFO -   text-t0.7 N=5 x=1: F1=0.4034 (1593 det)
+2026-03-26 12:45:31,510 - INFO -   text-t0.7 N=30 x=4: F1=0.4398 (1416 det)
+2026-03-26 12:45:31,804 - INFO -   text-t0.7 N=30 x=6: F1=0.4790 (1256 det)
+2026-03-26 12:45:32,641 - INFO -   text-t0.7 N=30 x=1: F1=0.2567 (2790 det)
+2026-03-26 12:45:33,452 - INFO -   text-t0.7 N=30 x=9: F1=0.5247 (1101 det)
+2026-03-26 12:45:35,237 - INFO -   text-t0.7 N=30 x=7: F1=0.4954 (1200 det)
+2026-03-26 12:45:35,340 - INFO -   text-t0.7 N=30 x=8: F1=0.5114 (1149 det)
+2026-03-26 12:45:36,681 - INFO -   text-t0.7 N=30 x=12: F1=0.5540 (1009 det)
+2026-03-26 12:45:37,342 - INFO -   text-t0.7 N=30 x=18: F1=0.5904 (876 det)
+2026-03-26 12:45:37,917 - INFO -   text-t0.7 N=30 x=25: F1=0.6385 (702 det)
+2026-03-26 12:45:39,609 - INFO -   text-t0.7 N=30 x=10: F1=0.5378 (1060 det)
+2026-03-26 12:45:39,866 - INFO -   text-t0.7 N=30 x=27: F1=0.6542 (638 det)
+2026-03-26 12:45:40,120 - INFO -   text-t0.7 N=30 x=17: F1=0.5864 (902 det)
+2026-03-26 12:45:40,489 - INFO -   text-t0.7 N=30 x=11: F1=0.5496 (1028 det)
+2026-03-26 12:45:40,607 - INFO -   text-t0.7 N=30 x=16: F1=0.5814 (917 det)
+2026-03-26 12:45:40,748 - INFO -   text-t0.7 N=30 x=13: F1=0.5584 (987 det)
+2026-03-26 12:45:40,851 - INFO -   text-t0.7 N=30 x=15: F1=0.5741 (941 det)
+2026-03-26 12:45:40,979 - INFO -   text-t0.7 N=30 x=19: F1=0.5953 (855 det)
+2026-03-26 12:45:41,045 - INFO -   text-t0.7 N=30 x=14: F1=0.5659 (961 det)
+2026-03-26 12:45:41,225 - INFO -   text-t0.7 N=30 x=21: F1=0.6155 (803 det)
+2026-03-26 12:45:41,379 - INFO -   text-t0.7 N=30 x=23: F1=0.6279 (753 det)
+2026-03-26 12:45:41,399 - INFO -   text-t0.7 N=30 x=20: F1=0.6057 (833 det)
+2026-03-26 12:45:41,476 - INFO -   text-t0.7 N=30 x=24: F1=0.6335 (730 det)
+2026-03-26 12:45:41,538 - INFO -   text-t0.7 N=30 x=22: F1=0.6184 (781 det)
+2026-03-26 12:45:41,659 - INFO -   text-t0.7 N=30 x=26: F1=0.6445 (676 det)
+2026-03-26 12:45:42,171 - INFO -   text-t0.7 N=30 x=29: F1=0.6694 (530 det)
+2026-03-26 12:45:42,232 - INFO -   text-t0.7 N=30 x=28: F1=0.6596 (596 det)
+2026-03-26 12:45:42,351 - INFO -   text-t0.7 N=30 x=30: F1=0.6652 (455 det)
+2026-03-26 12:45:42,367 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:45:42,370 - INFO - Saved CSV: results/paper-eval/flash-min-text-t07-50m/consensus-sweep-results.csv
+2026-03-26 12:45:42,371 - INFO - Saved JSON: results/paper-eval/flash-min-text-t07-50m/consensus-analysis-report.json
+2026-03-26 12:45:42,372 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t07-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:45:42 PM UTC 2026
+
+[21/32] flash-min-text-t10 @ 20m
+  Study dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+  Started: Thu Mar 26 12:45:42 PM UTC 2026
+2026-03-26 12:45:42,770 - INFO - Loading ground truth and bounds...
+2026-03-26 12:45:42,793 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:45:42,793 - INFO - Precomputing clusters...
+2026-03-26 12:45:42,793 - INFO - Loading runs for 384...
+2026-03-26 12:45:42,799 - INFO - Loaded run 1: detections_384_run01.geojson (570 features)
+2026-03-26 12:45:42,805 - INFO - Loaded run 10: detections_384_run10.geojson (589 features)
+2026-03-26 12:45:42,811 - INFO - Loaded run 11: detections_384_run11.geojson (583 features)
+2026-03-26 12:45:42,817 - INFO - Loaded run 12: detections_384_run12.geojson (577 features)
+2026-03-26 12:45:42,823 - INFO - Loaded run 13: detections_384_run13.geojson (597 features)
+2026-03-26 12:45:42,830 - INFO - Loaded run 14: detections_384_run14.geojson (623 features)
+2026-03-26 12:45:42,836 - INFO - Loaded run 15: detections_384_run15.geojson (607 features)
+2026-03-26 12:45:42,842 - INFO - Loaded run 16: detections_384_run16.geojson (631 features)
+2026-03-26 12:45:42,848 - INFO - Loaded run 17: detections_384_run17.geojson (583 features)
+2026-03-26 12:45:42,854 - INFO - Loaded run 18: detections_384_run18.geojson (624 features)
+2026-03-26 12:45:42,860 - INFO - Loaded run 19: detections_384_run19.geojson (580 features)
+2026-03-26 12:45:42,866 - INFO - Loaded run 2: detections_384_run02.geojson (593 features)
+2026-03-26 12:45:42,872 - INFO - Loaded run 20: detections_384_run20.geojson (544 features)
+2026-03-26 12:45:42,878 - INFO - Loaded run 21: detections_384_run21.geojson (605 features)
+2026-03-26 12:45:42,884 - INFO - Loaded run 22: detections_384_run22.geojson (609 features)
+2026-03-26 12:45:42,890 - INFO - Loaded run 23: detections_384_run23.geojson (593 features)
+2026-03-26 12:45:42,896 - INFO - Loaded run 24: detections_384_run24.geojson (608 features)
+2026-03-26 12:45:42,902 - INFO - Loaded run 25: detections_384_run25.geojson (575 features)
+2026-03-26 12:45:42,908 - INFO - Loaded run 26: detections_384_run26.geojson (605 features)
+2026-03-26 12:45:42,914 - INFO - Loaded run 27: detections_384_run27.geojson (598 features)
+2026-03-26 12:45:42,920 - INFO - Loaded run 28: detections_384_run28.geojson (586 features)
+2026-03-26 12:45:42,926 - INFO - Loaded run 29: detections_384_run29.geojson (580 features)
+2026-03-26 12:45:42,932 - INFO - Loaded run 3: detections_384_run03.geojson (579 features)
+2026-03-26 12:45:42,937 - INFO - Loaded run 30: detections_384_run30.geojson (564 features)
+2026-03-26 12:45:42,944 - INFO - Loaded run 4: detections_384_run04.geojson (604 features)
+2026-03-26 12:45:42,950 - INFO - Loaded run 5: detections_384_run05.geojson (583 features)
+2026-03-26 12:45:42,956 - INFO - Loaded run 6: detections_384_run06.geojson (588 features)
+2026-03-26 12:45:42,962 - INFO - Loaded run 7: detections_384_run07.geojson (582 features)
+2026-03-26 12:45:42,968 - INFO - Loaded run 8: detections_384_run08.geojson (609 features)
+2026-03-26 12:45:42,974 - INFO - Loaded run 9: detections_384_run09.geojson (585 features)
+2026-03-26 12:45:42,974 - INFO - Condition '384': loaded 30 runs with 17754 total features
+2026-03-26 12:45:43,442 - INFO -   384 N=5: 5 runs -> 974 clusters
+2026-03-26 12:45:44,464 - INFO -   384 N=10: 10 runs -> 1246 clusters
+2026-03-26 12:45:47,944 - INFO -   384 N=30: 30 runs -> 1862 clusters
+2026-03-26 12:45:47,948 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:45:53,879 - INFO -   384 N=5 x=2: F1=0.3977 (616 det)
+2026-03-26 12:45:54,825 - INFO -   384 N=30 x=2: F1=0.2665 (1186 det)
+2026-03-26 12:45:55,089 - INFO -   384 N=10 x=3: F1=0.3915 (643 det)
+2026-03-26 12:45:55,850 - INFO -   384 N=10 x=6: F1=0.4449 (464 det)
+2026-03-26 12:45:55,973 - INFO -   384 N=5 x=3: F1=0.4331 (484 det)
+2026-03-26 12:45:56,424 - INFO -   384 N=30 x=1: F1=0.1898 (1862 det)
+2026-03-26 12:45:57,203 - INFO -   384 N=30 x=5: F1=0.3568 (770 det)
+2026-03-26 12:45:57,818 - INFO -   384 N=5 x=5: F1=0.4712 (295 det)
+2026-03-26 12:45:57,930 - INFO -   384 N=5 x=4: F1=0.4554 (395 det)
+2026-03-26 12:45:57,981 - INFO -   384 N=10 x=7: F1=0.4535 (425 det)
+2026-03-26 12:45:58,119 - INFO -   384 N=10 x=5: F1=0.4333 (502 det)
+2026-03-26 12:45:58,136 - INFO -   384 N=10 x=8: F1=0.4570 (379 det)
+2026-03-26 12:45:58,175 - INFO -   384 N=10 x=4: F1=0.4218 (556 det)
+2026-03-26 12:45:58,354 - INFO -   384 N=10 x=10: F1=0.4388 (235 det)
+2026-03-26 12:45:58,497 - INFO -   384 N=10 x=9: F1=0.4615 (319 det)
+2026-03-26 12:45:58,756 - INFO -   384 N=10 x=1: F1=0.2558 (1246 det)
+2026-03-26 12:45:59,110 - INFO -   384 N=10 x=2: F1=0.3511 (784 det)
+2026-03-26 12:45:59,237 - INFO -   384 N=30 x=4: F1=0.3420 (828 det)
+2026-03-26 12:45:59,262 - INFO -   384 N=5 x=1: F1=0.3038 (974 det)
+2026-03-26 12:45:59,300 - INFO -   384 N=30 x=3: F1=0.3112 (953 det)
+2026-03-26 12:45:59,916 - INFO -   384 N=30 x=6: F1=0.3735 (711 det)
+2026-03-26 12:46:02,655 - INFO -   384 N=30 x=11: F1=0.4245 (559 det)
+2026-03-26 12:46:04,100 - INFO -   384 N=30 x=15: F1=0.4495 (486 det)
+2026-03-26 12:46:04,366 - INFO -   384 N=30 x=10: F1=0.4195 (571 det)
+2026-03-26 12:46:05,361 - INFO -   384 N=30 x=24: F1=0.4635 (346 det)
+2026-03-26 12:46:05,565 - INFO -   384 N=30 x=7: F1=0.3872 (660 det)
+2026-03-26 12:46:05,602 - INFO -   384 N=30 x=26: F1=0.4654 (317 det)
+2026-03-26 12:46:05,952 - INFO -   384 N=30 x=8: F1=0.3974 (627 det)
+2026-03-26 12:46:05,958 - INFO -   384 N=30 x=12: F1=0.4337 (538 det)
+2026-03-26 12:46:06,118 - INFO -   384 N=30 x=9: F1=0.4097 (595 det)
+2026-03-26 12:46:07,108 - INFO -   384 N=30 x=14: F1=0.4497 (499 det)
+2026-03-26 12:46:07,203 - INFO -   384 N=30 x=18: F1=0.4477 (463 det)
+2026-03-26 12:46:07,268 - INFO -   384 N=30 x=17: F1=0.4498 (472 det)
+2026-03-26 12:46:07,347 - INFO -   384 N=30 x=21: F1=0.4658 (398 det)
+2026-03-26 12:46:07,648 - INFO -   384 N=30 x=13: F1=0.4410 (522 det)
+2026-03-26 12:46:07,706 - INFO -   384 N=30 x=16: F1=0.4496 (477 det)
+2026-03-26 12:46:08,008 - INFO -   384 N=30 x=23: F1=0.4627 (369 det)
+2026-03-26 12:46:08,040 - INFO -   384 N=30 x=19: F1=0.4531 (439 det)
+2026-03-26 12:46:08,070 - INFO -   384 N=30 x=25: F1=0.4632 (325 det)
+2026-03-26 12:46:08,084 - INFO -   384 N=30 x=20: F1=0.4653 (416 det)
+2026-03-26 12:46:08,382 - INFO -   384 N=30 x=22: F1=0.4670 (383 det)
+2026-03-26 12:46:08,439 - INFO -   384 N=30 x=27: F1=0.4575 (295 det)
+2026-03-26 12:46:09,402 - INFO -   384 N=30 x=28: F1=0.4587 (267 det)
+2026-03-26 12:46:10,224 - INFO -   384 N=30 x=29: F1=0.4389 (244 det)
+2026-03-26 12:46:10,847 - INFO -   384 N=30 x=30: F1=0.4122 (186 det)
+2026-03-26 12:46:10,861 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:46:10,864 - INFO - Saved CSV: results/paper-eval/flash-min-text-t10-20m/consensus-sweep-results.csv
+2026-03-26 12:46:10,865 - INFO - Saved JSON: results/paper-eval/flash-min-text-t10-20m/consensus-analysis-report.json
+2026-03-26 12:46:10,867 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t10-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:46:10 PM UTC 2026
+
+[22/32] flash-min-text-t10 @ 30m
+  Study dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+  Started: Thu Mar 26 12:46:10 PM UTC 2026
+2026-03-26 12:46:11,261 - INFO - Loading ground truth and bounds...
+2026-03-26 12:46:11,285 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:46:11,285 - INFO - Precomputing clusters...
+2026-03-26 12:46:11,285 - INFO - Loading runs for 384...
+2026-03-26 12:46:11,291 - INFO - Loaded run 1: detections_384_run01.geojson (570 features)
+2026-03-26 12:46:11,297 - INFO - Loaded run 10: detections_384_run10.geojson (589 features)
+2026-03-26 12:46:11,303 - INFO - Loaded run 11: detections_384_run11.geojson (583 features)
+2026-03-26 12:46:11,309 - INFO - Loaded run 12: detections_384_run12.geojson (577 features)
+2026-03-26 12:46:11,315 - INFO - Loaded run 13: detections_384_run13.geojson (597 features)
+2026-03-26 12:46:11,321 - INFO - Loaded run 14: detections_384_run14.geojson (623 features)
+2026-03-26 12:46:11,328 - INFO - Loaded run 15: detections_384_run15.geojson (607 features)
+2026-03-26 12:46:11,334 - INFO - Loaded run 16: detections_384_run16.geojson (631 features)
+2026-03-26 12:46:11,340 - INFO - Loaded run 17: detections_384_run17.geojson (583 features)
+2026-03-26 12:46:11,346 - INFO - Loaded run 18: detections_384_run18.geojson (624 features)
+2026-03-26 12:46:11,352 - INFO - Loaded run 19: detections_384_run19.geojson (580 features)
+2026-03-26 12:46:11,358 - INFO - Loaded run 2: detections_384_run02.geojson (593 features)
+2026-03-26 12:46:11,364 - INFO - Loaded run 20: detections_384_run20.geojson (544 features)
+2026-03-26 12:46:11,370 - INFO - Loaded run 21: detections_384_run21.geojson (605 features)
+2026-03-26 12:46:11,376 - INFO - Loaded run 22: detections_384_run22.geojson (609 features)
+2026-03-26 12:46:11,382 - INFO - Loaded run 23: detections_384_run23.geojson (593 features)
+2026-03-26 12:46:11,388 - INFO - Loaded run 24: detections_384_run24.geojson (608 features)
+2026-03-26 12:46:11,394 - INFO - Loaded run 25: detections_384_run25.geojson (575 features)
+2026-03-26 12:46:11,400 - INFO - Loaded run 26: detections_384_run26.geojson (605 features)
+2026-03-26 12:46:11,406 - INFO - Loaded run 27: detections_384_run27.geojson (598 features)
+2026-03-26 12:46:11,412 - INFO - Loaded run 28: detections_384_run28.geojson (586 features)
+2026-03-26 12:46:11,418 - INFO - Loaded run 29: detections_384_run29.geojson (580 features)
+2026-03-26 12:46:11,424 - INFO - Loaded run 3: detections_384_run03.geojson (579 features)
+2026-03-26 12:46:11,429 - INFO - Loaded run 30: detections_384_run30.geojson (564 features)
+2026-03-26 12:46:11,436 - INFO - Loaded run 4: detections_384_run04.geojson (604 features)
+2026-03-26 12:46:11,442 - INFO - Loaded run 5: detections_384_run05.geojson (583 features)
+2026-03-26 12:46:11,448 - INFO - Loaded run 6: detections_384_run06.geojson (588 features)
+2026-03-26 12:46:11,454 - INFO - Loaded run 7: detections_384_run07.geojson (582 features)
+2026-03-26 12:46:11,460 - INFO - Loaded run 8: detections_384_run08.geojson (609 features)
+2026-03-26 12:46:11,466 - INFO - Loaded run 9: detections_384_run09.geojson (585 features)
+2026-03-26 12:46:11,466 - INFO - Condition '384': loaded 30 runs with 17754 total features
+2026-03-26 12:46:11,934 - INFO -   384 N=5: 5 runs -> 974 clusters
+2026-03-26 12:46:12,958 - INFO -   384 N=10: 10 runs -> 1246 clusters
+2026-03-26 12:46:16,464 - INFO -   384 N=30: 30 runs -> 1862 clusters
+2026-03-26 12:46:16,468 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:46:22,217 - INFO -   384 N=5 x=5: F1=0.4795 (295 det)
+2026-03-26 12:46:22,315 - INFO -   384 N=5 x=3: F1=0.4483 (484 det)
+2026-03-26 12:46:22,531 - INFO -   384 N=10 x=10: F1=0.4478 (235 det)
+2026-03-26 12:46:23,069 - INFO -   384 N=30 x=3: F1=0.3170 (953 det)
+2026-03-26 12:46:26,443 - INFO -   384 N=5 x=4: F1=0.4675 (395 det)
+2026-03-26 12:46:26,584 - INFO -   384 N=10 x=6: F1=0.4561 (464 det)
+2026-03-26 12:46:26,589 - INFO -   384 N=10 x=5: F1=0.4440 (502 det)
+2026-03-26 12:46:26,695 - INFO -   384 N=10 x=4: F1=0.4319 (556 det)
+2026-03-26 12:46:26,710 - INFO -   384 N=5 x=2: F1=0.4091 (616 det)
+2026-03-26 12:46:26,945 - INFO -   384 N=10 x=2: F1=0.3577 (784 det)
+2026-03-26 12:46:27,007 - INFO -   384 N=10 x=9: F1=0.4695 (319 det)
+2026-03-26 12:46:27,112 - INFO -   384 N=10 x=7: F1=0.4628 (425 det)
+2026-03-26 12:46:27,149 - INFO -   384 N=10 x=8: F1=0.4668 (379 det)
+2026-03-26 12:46:27,179 - INFO -   384 N=5 x=1: F1=0.3109 (974 det)
+2026-03-26 12:46:27,489 - INFO -   384 N=10 x=3: F1=0.4007 (643 det)
+2026-03-26 12:46:27,575 - INFO -   384 N=10 x=1: F1=0.2617 (1246 det)
+2026-03-26 12:46:27,695 - INFO -   384 N=30 x=5: F1=0.3651 (770 det)
+2026-03-26 12:46:27,705 - INFO -   384 N=30 x=4: F1=0.3484 (828 det)
+2026-03-26 12:46:28,237 - INFO -   384 N=30 x=2: F1=0.2714 (1186 det)
+2026-03-26 12:46:28,248 - INFO -   384 N=30 x=6: F1=0.3822 (711 det)
+2026-03-26 12:46:28,270 - INFO -   384 N=30 x=7: F1=0.3963 (660 det)
+2026-03-26 12:46:29,086 - INFO -   384 N=30 x=1: F1=0.1933 (1862 det)
+2026-03-26 12:46:29,393 - INFO -   384 N=30 x=9: F1=0.4194 (595 det)
+2026-03-26 12:46:29,731 - INFO -   384 N=30 x=8: F1=0.4068 (627 det)
+2026-03-26 12:46:33,527 - INFO -   384 N=30 x=16: F1=0.4583 (477 det)
+2026-03-26 12:46:33,910 - INFO -   384 N=30 x=25: F1=0.4737 (325 det)
+2026-03-26 12:46:33,931 - INFO -   384 N=30 x=26: F1=0.4761 (317 det)
+2026-03-26 12:46:35,523 - INFO -   384 N=30 x=12: F1=0.4440 (538 det)
+2026-03-26 12:46:35,553 - INFO -   384 N=30 x=14: F1=0.4582 (499 det)
+2026-03-26 12:46:36,038 - INFO -   384 N=30 x=17: F1=0.4587 (472 det)
+2026-03-26 12:46:36,055 - INFO -   384 N=30 x=28: F1=0.4672 (267 det)
+2026-03-26 12:46:36,138 - INFO -   384 N=30 x=10: F1=0.4294 (571 det)
+2026-03-26 12:46:36,241 - INFO -   384 N=30 x=13: F1=0.4514 (522 det)
+2026-03-26 12:46:36,379 - INFO -   384 N=30 x=23: F1=0.4726 (369 det)
+2026-03-26 12:46:36,449 - INFO -   384 N=30 x=11: F1=0.4346 (559 det)
+2026-03-26 12:46:36,456 - INFO -   384 N=30 x=22: F1=0.4768 (383 det)
+2026-03-26 12:46:36,637 - INFO -   384 N=30 x=15: F1=0.4582 (486 det)
+2026-03-26 12:46:36,721 - INFO -   384 N=30 x=19: F1=0.4622 (439 det)
+2026-03-26 12:46:36,832 - INFO -   384 N=30 x=21: F1=0.4754 (398 det)
+2026-03-26 12:46:37,010 - INFO -   384 N=30 x=18: F1=0.4566 (463 det)
+2026-03-26 12:46:37,075 - INFO -   384 N=30 x=20: F1=0.4747 (416 det)
+2026-03-26 12:46:37,254 - INFO -   384 N=30 x=29: F1=0.4477 (244 det)
+2026-03-26 12:46:37,395 - INFO -   384 N=30 x=24: F1=0.4738 (346 det)
+2026-03-26 12:46:37,682 - INFO -   384 N=30 x=27: F1=0.4658 (295 det)
+2026-03-26 12:46:39,204 - INFO -   384 N=30 x=30: F1=0.4187 (186 det)
+2026-03-26 12:46:39,220 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:46:39,223 - INFO - Saved CSV: results/paper-eval/flash-min-text-t10-30m/consensus-sweep-results.csv
+2026-03-26 12:46:39,224 - INFO - Saved JSON: results/paper-eval/flash-min-text-t10-30m/consensus-analysis-report.json
+2026-03-26 12:46:39,226 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t10-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:46:39 PM UTC 2026
+
+[23/32] flash-min-text-t10 @ 40m
+  Study dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+  Started: Thu Mar 26 12:46:39 PM UTC 2026
+2026-03-26 12:46:39,619 - INFO - Loading ground truth and bounds...
+2026-03-26 12:46:39,643 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:46:39,643 - INFO - Precomputing clusters...
+2026-03-26 12:46:39,643 - INFO - Loading runs for 384...
+2026-03-26 12:46:39,649 - INFO - Loaded run 1: detections_384_run01.geojson (570 features)
+2026-03-26 12:46:39,655 - INFO - Loaded run 10: detections_384_run10.geojson (589 features)
+2026-03-26 12:46:39,661 - INFO - Loaded run 11: detections_384_run11.geojson (583 features)
+2026-03-26 12:46:39,667 - INFO - Loaded run 12: detections_384_run12.geojson (577 features)
+2026-03-26 12:46:39,673 - INFO - Loaded run 13: detections_384_run13.geojson (597 features)
+2026-03-26 12:46:39,679 - INFO - Loaded run 14: detections_384_run14.geojson (623 features)
+2026-03-26 12:46:39,685 - INFO - Loaded run 15: detections_384_run15.geojson (607 features)
+2026-03-26 12:46:39,692 - INFO - Loaded run 16: detections_384_run16.geojson (631 features)
+2026-03-26 12:46:39,698 - INFO - Loaded run 17: detections_384_run17.geojson (583 features)
+2026-03-26 12:46:39,704 - INFO - Loaded run 18: detections_384_run18.geojson (624 features)
+2026-03-26 12:46:39,710 - INFO - Loaded run 19: detections_384_run19.geojson (580 features)
+2026-03-26 12:46:39,716 - INFO - Loaded run 2: detections_384_run02.geojson (593 features)
+2026-03-26 12:46:39,722 - INFO - Loaded run 20: detections_384_run20.geojson (544 features)
+2026-03-26 12:46:39,728 - INFO - Loaded run 21: detections_384_run21.geojson (605 features)
+2026-03-26 12:46:39,734 - INFO - Loaded run 22: detections_384_run22.geojson (609 features)
+2026-03-26 12:46:39,740 - INFO - Loaded run 23: detections_384_run23.geojson (593 features)
+2026-03-26 12:46:39,746 - INFO - Loaded run 24: detections_384_run24.geojson (608 features)
+2026-03-26 12:46:39,752 - INFO - Loaded run 25: detections_384_run25.geojson (575 features)
+2026-03-26 12:46:39,758 - INFO - Loaded run 26: detections_384_run26.geojson (605 features)
+2026-03-26 12:46:39,764 - INFO - Loaded run 27: detections_384_run27.geojson (598 features)
+2026-03-26 12:46:39,770 - INFO - Loaded run 28: detections_384_run28.geojson (586 features)
+2026-03-26 12:46:39,776 - INFO - Loaded run 29: detections_384_run29.geojson (580 features)
+2026-03-26 12:46:39,782 - INFO - Loaded run 3: detections_384_run03.geojson (579 features)
+2026-03-26 12:46:39,788 - INFO - Loaded run 30: detections_384_run30.geojson (564 features)
+2026-03-26 12:46:39,794 - INFO - Loaded run 4: detections_384_run04.geojson (604 features)
+2026-03-26 12:46:39,800 - INFO - Loaded run 5: detections_384_run05.geojson (583 features)
+2026-03-26 12:46:39,806 - INFO - Loaded run 6: detections_384_run06.geojson (588 features)
+2026-03-26 12:46:39,812 - INFO - Loaded run 7: detections_384_run07.geojson (582 features)
+2026-03-26 12:46:39,818 - INFO - Loaded run 8: detections_384_run08.geojson (609 features)
+2026-03-26 12:46:39,824 - INFO - Loaded run 9: detections_384_run09.geojson (585 features)
+2026-03-26 12:46:39,824 - INFO - Condition '384': loaded 30 runs with 17754 total features
+2026-03-26 12:46:40,297 - INFO -   384 N=5: 5 runs -> 974 clusters
+2026-03-26 12:46:41,316 - INFO -   384 N=10: 10 runs -> 1246 clusters
+2026-03-26 12:46:44,789 - INFO -   384 N=30: 30 runs -> 1862 clusters
+2026-03-26 12:46:44,792 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:46:50,578 - INFO -   384 N=5 x=4: F1=0.4723 (395 det)
+2026-03-26 12:46:50,698 - INFO -   384 N=5 x=2: F1=0.4129 (616 det)
+2026-03-26 12:46:50,903 - INFO -   384 N=10 x=7: F1=0.4674 (425 det)
+2026-03-26 12:46:50,980 - INFO -   384 N=10 x=4: F1=0.4359 (556 det)
+2026-03-26 12:46:54,413 - INFO -   384 N=5 x=5: F1=0.4822 (295 det)
+2026-03-26 12:46:54,645 - INFO -   384 N=5 x=3: F1=0.4527 (484 det)
+2026-03-26 12:46:54,675 - INFO -   384 N=10 x=6: F1=0.4605 (464 det)
+2026-03-26 12:46:54,710 - INFO -   384 N=10 x=5: F1=0.4482 (502 det)
+2026-03-26 12:46:54,880 - INFO -   384 N=10 x=3: F1=0.4045 (643 det)
+2026-03-26 12:46:54,941 - INFO -   384 N=10 x=10: F1=0.4537 (235 det)
+2026-03-26 12:46:55,029 - INFO -   384 N=10 x=2: F1=0.3610 (784 det)
+2026-03-26 12:46:55,082 - INFO -   384 N=10 x=9: F1=0.4748 (319 det)
+2026-03-26 12:46:55,177 - INFO -   384 N=10 x=8: F1=0.4693 (379 det)
+2026-03-26 12:46:55,279 - INFO -   384 N=5 x=1: F1=0.3123 (974 det)
+2026-03-26 12:46:55,655 - INFO -   384 N=10 x=1: F1=0.2653 (1246 det)
+2026-03-26 12:46:55,744 - INFO -   384 N=30 x=5: F1=0.3685 (770 det)
+2026-03-26 12:46:55,835 - INFO -   384 N=30 x=4: F1=0.3515 (828 det)
+2026-03-26 12:46:55,907 - INFO -   384 N=30 x=3: F1=0.3199 (953 det)
+2026-03-26 12:46:56,277 - INFO -   384 N=30 x=2: F1=0.2739 (1186 det)
+2026-03-26 12:46:56,533 - INFO -   384 N=30 x=6: F1=0.3857 (711 det)
+2026-03-26 12:46:56,570 - INFO -   384 N=30 x=7: F1=0.4000 (660 det)
+2026-03-26 12:46:57,110 - INFO -   384 N=30 x=8: F1=0.4105 (627 det)
+2026-03-26 12:46:57,155 - INFO -   384 N=30 x=1: F1=0.1942 (1862 det)
+2026-03-26 12:46:58,183 - INFO -   384 N=30 x=9: F1=0.4233 (595 det)
+2026-03-26 12:47:01,414 - INFO -   384 N=30 x=15: F1=0.4625 (486 det)
+2026-03-26 12:47:02,145 - INFO -   384 N=30 x=26: F1=0.4814 (317 det)
+2026-03-26 12:47:02,179 - INFO -   384 N=30 x=25: F1=0.4789 (325 det)
+2026-03-26 12:47:02,977 - INFO -   384 N=30 x=27: F1=0.4685 (295 det)
+2026-03-26 12:47:03,412 - INFO -   384 N=30 x=10: F1=0.4314 (571 det)
+2026-03-26 12:47:03,539 - INFO -   384 N=30 x=13: F1=0.4535 (522 det)
+2026-03-26 12:47:04,287 - INFO -   384 N=30 x=16: F1=0.4605 (477 det)
+2026-03-26 12:47:04,440 - INFO -   384 N=30 x=21: F1=0.4778 (398 det)
+2026-03-26 12:47:04,440 - INFO -   384 N=30 x=11: F1=0.4366 (559 det)
+2026-03-26 12:47:04,446 - INFO -   384 N=30 x=17: F1=0.4609 (472 det)
+2026-03-26 12:47:04,527 - INFO -   384 N=30 x=14: F1=0.4604 (499 det)
+2026-03-26 12:47:04,533 - INFO -   384 N=30 x=20: F1=0.4771 (416 det)
+2026-03-26 12:47:04,542 - INFO -   384 N=30 x=12: F1=0.4460 (538 det)
+2026-03-26 12:47:04,647 - INFO -   384 N=30 x=18: F1=0.4588 (463 det)
+2026-03-26 12:47:04,745 - INFO -   384 N=30 x=23: F1=0.4776 (369 det)
+2026-03-26 12:47:04,751 - INFO -   384 N=30 x=19: F1=0.4645 (439 det)
+2026-03-26 12:47:05,076 - INFO -   384 N=30 x=24: F1=0.4789 (346 det)
+2026-03-26 12:47:05,260 - INFO -   384 N=30 x=22: F1=0.4792 (383 det)
+2026-03-26 12:47:05,309 - INFO -   384 N=30 x=29: F1=0.4507 (244 det)
+2026-03-26 12:47:05,726 - INFO -   384 N=30 x=28: F1=0.4701 (267 det)
+2026-03-26 12:47:06,588 - INFO -   384 N=30 x=30: F1=0.4219 (186 det)
+2026-03-26 12:47:06,604 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:47:06,612 - INFO - Saved CSV: results/paper-eval/flash-min-text-t10-40m/consensus-sweep-results.csv
+2026-03-26 12:47:06,612 - INFO - Saved JSON: results/paper-eval/flash-min-text-t10-40m/consensus-analysis-report.json
+2026-03-26 12:47:06,614 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t10-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:47:06 PM UTC 2026
+
+[24/32] flash-min-text-t10 @ 50m
+  Study dir: outputs/h11/consensus-384-UNINTENDED-T1.0
+  Started: Thu Mar 26 12:47:06 PM UTC 2026
+2026-03-26 12:47:07,005 - INFO - Loading ground truth and bounds...
+2026-03-26 12:47:07,029 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:47:07,029 - INFO - Precomputing clusters...
+2026-03-26 12:47:07,029 - INFO - Loading runs for 384...
+2026-03-26 12:47:07,035 - INFO - Loaded run 1: detections_384_run01.geojson (570 features)
+2026-03-26 12:47:07,041 - INFO - Loaded run 10: detections_384_run10.geojson (589 features)
+2026-03-26 12:47:07,047 - INFO - Loaded run 11: detections_384_run11.geojson (583 features)
+2026-03-26 12:47:07,053 - INFO - Loaded run 12: detections_384_run12.geojson (577 features)
+2026-03-26 12:47:07,059 - INFO - Loaded run 13: detections_384_run13.geojson (597 features)
+2026-03-26 12:47:07,065 - INFO - Loaded run 14: detections_384_run14.geojson (623 features)
+2026-03-26 12:47:07,071 - INFO - Loaded run 15: detections_384_run15.geojson (607 features)
+2026-03-26 12:47:07,078 - INFO - Loaded run 16: detections_384_run16.geojson (631 features)
+2026-03-26 12:47:07,084 - INFO - Loaded run 17: detections_384_run17.geojson (583 features)
+2026-03-26 12:47:07,090 - INFO - Loaded run 18: detections_384_run18.geojson (624 features)
+2026-03-26 12:47:07,096 - INFO - Loaded run 19: detections_384_run19.geojson (580 features)
+2026-03-26 12:47:07,102 - INFO - Loaded run 2: detections_384_run02.geojson (593 features)
+2026-03-26 12:47:07,108 - INFO - Loaded run 20: detections_384_run20.geojson (544 features)
+2026-03-26 12:47:07,114 - INFO - Loaded run 21: detections_384_run21.geojson (605 features)
+2026-03-26 12:47:07,120 - INFO - Loaded run 22: detections_384_run22.geojson (609 features)
+2026-03-26 12:47:07,126 - INFO - Loaded run 23: detections_384_run23.geojson (593 features)
+2026-03-26 12:47:07,132 - INFO - Loaded run 24: detections_384_run24.geojson (608 features)
+2026-03-26 12:47:07,138 - INFO - Loaded run 25: detections_384_run25.geojson (575 features)
+2026-03-26 12:47:07,144 - INFO - Loaded run 26: detections_384_run26.geojson (605 features)
+2026-03-26 12:47:07,150 - INFO - Loaded run 27: detections_384_run27.geojson (598 features)
+2026-03-26 12:47:07,156 - INFO - Loaded run 28: detections_384_run28.geojson (586 features)
+2026-03-26 12:47:07,162 - INFO - Loaded run 29: detections_384_run29.geojson (580 features)
+2026-03-26 12:47:07,168 - INFO - Loaded run 3: detections_384_run03.geojson (579 features)
+2026-03-26 12:47:07,174 - INFO - Loaded run 30: detections_384_run30.geojson (564 features)
+2026-03-26 12:47:07,181 - INFO - Loaded run 4: detections_384_run04.geojson (604 features)
+2026-03-26 12:47:07,187 - INFO - Loaded run 5: detections_384_run05.geojson (583 features)
+2026-03-26 12:47:07,193 - INFO - Loaded run 6: detections_384_run06.geojson (588 features)
+2026-03-26 12:47:07,199 - INFO - Loaded run 7: detections_384_run07.geojson (582 features)
+2026-03-26 12:47:07,205 - INFO - Loaded run 8: detections_384_run08.geojson (609 features)
+2026-03-26 12:47:07,211 - INFO - Loaded run 9: detections_384_run09.geojson (585 features)
+2026-03-26 12:47:07,211 - INFO - Condition '384': loaded 30 runs with 17754 total features
+2026-03-26 12:47:07,700 - INFO -   384 N=5: 5 runs -> 974 clusters
+2026-03-26 12:47:08,770 - INFO -   384 N=10: 10 runs -> 1246 clusters
+2026-03-26 12:47:12,378 - INFO -   384 N=30: 30 runs -> 1862 clusters
+2026-03-26 12:47:12,382 - INFO - Evaluating 45 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:47:18,487 - INFO -   384 N=10 x=10: F1=0.4567 (235 det)
+2026-03-26 12:47:18,558 - INFO -   384 N=10 x=2: F1=0.3626 (784 det)
+2026-03-26 12:47:18,781 - INFO -   384 N=10 x=1: F1=0.2665 (1246 det)
+2026-03-26 12:47:19,604 - INFO -   384 N=30 x=1: F1=0.1959 (1862 det)
+2026-03-26 12:47:22,263 - INFO -   384 N=5 x=5: F1=0.4849 (295 det)
+2026-03-26 12:47:22,352 - INFO -   384 N=5 x=4: F1=0.4747 (395 det)
+2026-03-26 12:47:22,450 - INFO -   384 N=10 x=7: F1=0.4698 (425 det)
+2026-03-26 12:47:22,505 - INFO -   384 N=10 x=6: F1=0.4627 (464 det)
+2026-03-26 12:47:22,505 - INFO -   384 N=10 x=5: F1=0.4504 (502 det)
+2026-03-26 12:47:22,644 - INFO -   384 N=10 x=4: F1=0.4379 (556 det)
+2026-03-26 12:47:22,673 - INFO -   384 N=5 x=2: F1=0.4148 (616 det)
+2026-03-26 12:47:22,746 - INFO -   384 N=10 x=3: F1=0.4063 (643 det)
+2026-03-26 12:47:22,938 - INFO -   384 N=10 x=9: F1=0.4775 (319 det)
+2026-03-26 12:47:23,065 - INFO -   384 N=10 x=8: F1=0.4717 (379 det)
+2026-03-26 12:47:23,111 - INFO -   384 N=5 x=3: F1=0.4548 (484 det)
+2026-03-26 12:47:23,545 - INFO -   384 N=30 x=4: F1=0.3547 (828 det)
+2026-03-26 12:47:23,556 - INFO -   384 N=30 x=5: F1=0.3718 (770 det)
+2026-03-26 12:47:23,764 - INFO -   384 N=5 x=1: F1=0.3137 (974 det)
+2026-03-26 12:47:23,839 - INFO -   384 N=30 x=3: F1=0.3228 (953 det)
+2026-03-26 12:47:24,146 - INFO -   384 N=30 x=2: F1=0.2764 (1186 det)
+2026-03-26 12:47:24,513 - INFO -   384 N=30 x=7: F1=0.4018 (660 det)
+2026-03-26 12:47:24,688 - INFO -   384 N=30 x=8: F1=0.4124 (627 det)
+2026-03-26 12:47:24,851 - INFO -   384 N=30 x=6: F1=0.3892 (711 det)
+2026-03-26 12:47:25,899 - INFO -   384 N=30 x=9: F1=0.4252 (595 det)
+2026-03-26 12:47:29,928 - INFO -   384 N=30 x=23: F1=0.4801 (369 det)
+2026-03-26 12:47:30,235 - INFO -   384 N=30 x=26: F1=0.4840 (317 det)
+2026-03-26 12:47:30,833 - INFO -   384 N=30 x=28: F1=0.4729 (267 det)
+2026-03-26 12:47:31,844 - INFO -   384 N=30 x=29: F1=0.4536 (244 det)
+2026-03-26 12:47:31,989 - INFO -   384 N=30 x=17: F1=0.4631 (472 det)
+2026-03-26 12:47:32,249 - INFO -   384 N=30 x=10: F1=0.4334 (571 det)
+2026-03-26 12:47:32,390 - INFO -   384 N=30 x=15: F1=0.4647 (486 det)
+2026-03-26 12:47:32,402 - INFO -   384 N=30 x=16: F1=0.4627 (477 det)
+2026-03-26 12:47:32,430 - INFO -   384 N=30 x=14: F1=0.4625 (499 det)
+2026-03-26 12:47:32,459 - INFO -   384 N=30 x=11: F1=0.4386 (559 det)
+2026-03-26 12:47:32,462 - INFO -   384 N=30 x=20: F1=0.4794 (416 det)
+2026-03-26 12:47:32,481 - INFO -   384 N=30 x=12: F1=0.4481 (538 det)
+2026-03-26 12:47:32,500 - INFO -   384 N=30 x=13: F1=0.4556 (522 det)
+2026-03-26 12:47:32,669 - INFO -   384 N=30 x=21: F1=0.4802 (398 det)
+2026-03-26 12:47:32,789 - INFO -   384 N=30 x=22: F1=0.4817 (383 det)
+2026-03-26 12:47:32,882 - INFO -   384 N=30 x=19: F1=0.4668 (439 det)
+2026-03-26 12:47:32,955 - INFO -   384 N=30 x=27: F1=0.4712 (295 det)
+2026-03-26 12:47:33,009 - INFO -   384 N=30 x=18: F1=0.4610 (463 det)
+2026-03-26 12:47:33,320 - INFO -   384 N=30 x=24: F1=0.4814 (346 det)
+2026-03-26 12:47:33,369 - INFO -   384 N=30 x=25: F1=0.4816 (325 det)
+2026-03-26 12:47:34,951 - INFO -   384 N=30 x=30: F1=0.4251 (186 det)
+2026-03-26 12:47:34,968 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:47:34,971 - INFO - Saved CSV: results/paper-eval/flash-min-text-t10-50m/consensus-sweep-results.csv
+2026-03-26 12:47:34,971 - INFO - Saved JSON: results/paper-eval/flash-min-text-t10-50m/consensus-analysis-report.json
+2026-03-26 12:47:34,973 - INFO - Saved Markdown: results/paper-eval/flash-min-text-t10-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:47:35 PM UTC 2026
+
+[25/32] flash-min-image @ 20m
+  Study dir: outputs/h11/pv-diag-384/image-n5
+  Started: Thu Mar 26 12:47:35 PM UTC 2026
+2026-03-26 12:47:35,368 - INFO - Loading ground truth and bounds...
+2026-03-26 12:47:35,391 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:47:35,391 - INFO - Precomputing clusters...
+2026-03-26 12:47:35,391 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:47:35,402 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (758 features)
+2026-03-26 12:47:35,410 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (769 features)
+2026-03-26 12:47:35,418 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (770 features)
+2026-03-26 12:47:35,426 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (750 features)
+2026-03-26 12:47:35,433 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (755 features)
+2026-03-26 12:47:35,441 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (753 features)
+2026-03-26 12:47:35,449 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (761 features)
+2026-03-26 12:47:35,456 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (752 features)
+2026-03-26 12:47:35,464 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (761 features)
+2026-03-26 12:47:35,472 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (754 features)
+2026-03-26 12:47:35,472 - INFO - Condition 'image-t0.7': loaded 10 runs with 7583 total features
+2026-03-26 12:47:36,159 - INFO -   image-t0.7 N=5: 5 runs -> 1123 clusters
+2026-03-26 12:47:37,670 - INFO -   image-t0.7 N=10: 10 runs -> 1450 clusters
+2026-03-26 12:47:37,672 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:47:43,466 - INFO -   image-t0.7 N=5 x=5: F1=0.6566 (427 det)
+2026-03-26 12:47:43,709 - INFO -   image-t0.7 N=10 x=6: F1=0.6759 (577 det)
+2026-03-26 12:47:43,725 - INFO -   image-t0.7 N=10 x=10: F1=0.6307 (361 det)
+2026-03-26 12:47:43,849 - INFO -   image-t0.7 N=10 x=9: F1=0.6697 (443 det)
+2026-03-26 12:47:43,892 - INFO -   image-t0.7 N=10 x=4: F1=0.6360 (697 det)
+2026-03-26 12:47:43,961 - INFO -   image-t0.7 N=10 x=8: F1=0.6803 (494 det)
+2026-03-26 12:47:43,998 - INFO -   image-t0.7 N=5 x=4: F1=0.6639 (523 det)
+2026-03-26 12:47:44,323 - INFO -   image-t0.7 N=10 x=3: F1=0.6040 (777 det)
+2026-03-26 12:47:44,798 - INFO -   image-t0.7 N=10 x=1: F1=0.4053 (1450 det)
+2026-03-26 12:47:45,878 - INFO -   image-t0.7 N=5 x=3: F1=0.6445 (617 det)
+2026-03-26 12:47:46,013 - INFO -   image-t0.7 N=10 x=5: F1=0.6604 (625 det)
+2026-03-26 12:47:46,094 - INFO -   image-t0.7 N=10 x=7: F1=0.6784 (535 det)
+2026-03-26 12:47:46,305 - INFO -   image-t0.7 N=5 x=2: F1=0.5870 (754 det)
+2026-03-26 12:47:46,308 - INFO -   image-t0.7 N=10 x=2: F1=0.5407 (952 det)
+2026-03-26 12:47:46,549 - INFO -   image-t0.7 N=5 x=1: F1=0.4801 (1123 det)
+2026-03-26 12:47:46,561 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:47:46,564 - INFO - Saved CSV: results/paper-eval/flash-min-image-20m/consensus-sweep-results.csv
+2026-03-26 12:47:46,565 - INFO - Saved JSON: results/paper-eval/flash-min-image-20m/consensus-analysis-report.json
+2026-03-26 12:47:46,566 - INFO - Saved Markdown: results/paper-eval/flash-min-image-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:47:46 PM UTC 2026
+
+[26/32] flash-min-image @ 30m
+  Study dir: outputs/h11/pv-diag-384/image-n5
+  Started: Thu Mar 26 12:47:46 PM UTC 2026
+2026-03-26 12:47:46,952 - INFO - Loading ground truth and bounds...
+2026-03-26 12:47:46,975 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:47:46,975 - INFO - Precomputing clusters...
+2026-03-26 12:47:46,975 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:47:46,983 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (758 features)
+2026-03-26 12:47:46,991 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (769 features)
+2026-03-26 12:47:46,998 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (770 features)
+2026-03-26 12:47:47,006 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (750 features)
+2026-03-26 12:47:47,013 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (755 features)
+2026-03-26 12:47:47,021 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (753 features)
+2026-03-26 12:47:47,028 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (761 features)
+2026-03-26 12:47:47,036 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (752 features)
+2026-03-26 12:47:47,043 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (761 features)
+2026-03-26 12:47:47,051 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (754 features)
+2026-03-26 12:47:47,051 - INFO - Condition 'image-t0.7': loaded 10 runs with 7583 total features
+2026-03-26 12:47:47,738 - INFO -   image-t0.7 N=5: 5 runs -> 1123 clusters
+2026-03-26 12:47:49,244 - INFO -   image-t0.7 N=10: 10 runs -> 1450 clusters
+2026-03-26 12:47:49,246 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:47:55,096 - INFO -   image-t0.7 N=5 x=5: F1=0.7030 (427 det)
+2026-03-26 12:47:55,357 - INFO -   image-t0.7 N=5 x=3: F1=0.7053 (617 det)
+2026-03-26 12:47:55,595 - INFO -   image-t0.7 N=10 x=8: F1=0.7277 (494 det)
+2026-03-26 12:47:55,599 - INFO -   image-t0.7 N=10 x=9: F1=0.7175 (443 det)
+2026-03-26 12:47:55,631 - INFO -   image-t0.7 N=10 x=7: F1=0.7278 (535 det)
+2026-03-26 12:47:55,678 - INFO -   image-t0.7 N=10 x=6: F1=0.7332 (577 det)
+2026-03-26 12:47:55,760 - INFO -   image-t0.7 N=10 x=5: F1=0.7170 (625 det)
+2026-03-26 12:47:55,963 - INFO -   image-t0.7 N=5 x=1: F1=0.5173 (1123 det)
+2026-03-26 12:47:56,306 - INFO -   image-t0.7 N=10 x=1: F1=0.4308 (1450 det)
+2026-03-26 12:47:57,532 - INFO -   image-t0.7 N=5 x=4: F1=0.7244 (523 det)
+2026-03-26 12:47:57,539 - INFO -   image-t0.7 N=10 x=10: F1=0.6734 (361 det)
+2026-03-26 12:47:57,755 - INFO -   image-t0.7 N=10 x=4: F1=0.6890 (697 det)
+2026-03-26 12:47:57,892 - INFO -   image-t0.7 N=5 x=2: F1=0.6426 (754 det)
+2026-03-26 12:47:57,945 - INFO -   image-t0.7 N=10 x=3: F1=0.6535 (777 det)
+2026-03-26 12:47:58,089 - INFO -   image-t0.7 N=10 x=2: F1=0.5811 (952 det)
+2026-03-26 12:47:58,100 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:47:58,103 - INFO - Saved CSV: results/paper-eval/flash-min-image-30m/consensus-sweep-results.csv
+2026-03-26 12:47:58,104 - INFO - Saved JSON: results/paper-eval/flash-min-image-30m/consensus-analysis-report.json
+2026-03-26 12:47:58,105 - INFO - Saved Markdown: results/paper-eval/flash-min-image-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:47:58 PM UTC 2026
+
+[27/32] flash-min-image @ 40m
+  Study dir: outputs/h11/pv-diag-384/image-n5
+  Started: Thu Mar 26 12:47:58 PM UTC 2026
+2026-03-26 12:47:58,493 - INFO - Loading ground truth and bounds...
+2026-03-26 12:47:58,517 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:47:58,517 - INFO - Precomputing clusters...
+2026-03-26 12:47:58,517 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:47:58,525 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (758 features)
+2026-03-26 12:47:58,533 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (769 features)
+2026-03-26 12:47:58,540 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (770 features)
+2026-03-26 12:47:58,548 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (750 features)
+2026-03-26 12:47:58,555 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (755 features)
+2026-03-26 12:47:58,563 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (753 features)
+2026-03-26 12:47:58,570 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (761 features)
+2026-03-26 12:47:58,578 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (752 features)
+2026-03-26 12:47:58,586 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (761 features)
+2026-03-26 12:47:58,593 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (754 features)
+2026-03-26 12:47:58,593 - INFO - Condition 'image-t0.7': loaded 10 runs with 7583 total features
+2026-03-26 12:47:59,275 - INFO -   image-t0.7 N=5: 5 runs -> 1123 clusters
+2026-03-26 12:48:00,780 - INFO -   image-t0.7 N=10: 10 runs -> 1450 clusters
+2026-03-26 12:48:00,781 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:48:06,689 - INFO -   image-t0.7 N=5 x=5: F1=0.7169 (427 det)
+2026-03-26 12:48:06,862 - INFO -   image-t0.7 N=10 x=6: F1=0.7510 (577 det)
+2026-03-26 12:48:07,121 - INFO -   image-t0.7 N=10 x=8: F1=0.7449 (494 det)
+2026-03-26 12:48:07,186 - INFO -   image-t0.7 N=10 x=9: F1=0.7267 (443 det)
+2026-03-26 12:48:07,195 - INFO -   image-t0.7 N=10 x=7: F1=0.7443 (535 det)
+2026-03-26 12:48:07,301 - INFO -   image-t0.7 N=10 x=5: F1=0.7358 (625 det)
+2026-03-26 12:48:07,351 - INFO -   image-t0.7 N=10 x=2: F1=0.5883 (952 det)
+2026-03-26 12:48:07,829 - INFO -   image-t0.7 N=10 x=1: F1=0.4350 (1450 det)
+2026-03-26 12:48:07,860 - INFO -   image-t0.7 N=5 x=1: F1=0.5263 (1123 det)
+2026-03-26 12:48:09,052 - INFO -   image-t0.7 N=10 x=10: F1=0.6834 (361 det)
+2026-03-26 12:48:09,066 - INFO -   image-t0.7 N=5 x=3: F1=0.7281 (617 det)
+2026-03-26 12:48:09,114 - INFO -   image-t0.7 N=5 x=4: F1=0.7432 (523 det)
+2026-03-26 12:48:09,238 - INFO -   image-t0.7 N=10 x=4: F1=0.7085 (697 det)
+2026-03-26 12:48:09,264 - INFO -   image-t0.7 N=10 x=3: F1=0.6700 (777 det)
+2026-03-26 12:48:09,423 - INFO -   image-t0.7 N=5 x=2: F1=0.6627 (754 det)
+2026-03-26 12:48:09,434 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:48:09,437 - INFO - Saved CSV: results/paper-eval/flash-min-image-40m/consensus-sweep-results.csv
+2026-03-26 12:48:09,438 - INFO - Saved JSON: results/paper-eval/flash-min-image-40m/consensus-analysis-report.json
+2026-03-26 12:48:09,439 - INFO - Saved Markdown: results/paper-eval/flash-min-image-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:48:09 PM UTC 2026
+
+[28/32] flash-min-image @ 50m
+  Study dir: outputs/h11/pv-diag-384/image-n5
+  Started: Thu Mar 26 12:48:09 PM UTC 2026
+2026-03-26 12:48:09,827 - INFO - Loading ground truth and bounds...
+2026-03-26 12:48:09,851 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:48:09,851 - INFO - Precomputing clusters...
+2026-03-26 12:48:09,851 - INFO - Loading runs for image-t0.7...
+2026-03-26 12:48:09,859 - INFO - Loaded run 1: detections_image-t0.7_run01.geojson (758 features)
+2026-03-26 12:48:09,866 - INFO - Loaded run 10: detections_image-t0.7_run10.geojson (769 features)
+2026-03-26 12:48:09,874 - INFO - Loaded run 2: detections_image-t0.7_run02.geojson (770 features)
+2026-03-26 12:48:09,881 - INFO - Loaded run 3: detections_image-t0.7_run03.geojson (750 features)
+2026-03-26 12:48:09,889 - INFO - Loaded run 4: detections_image-t0.7_run04.geojson (755 features)
+2026-03-26 12:48:09,896 - INFO - Loaded run 5: detections_image-t0.7_run05.geojson (753 features)
+2026-03-26 12:48:09,904 - INFO - Loaded run 6: detections_image-t0.7_run06.geojson (761 features)
+2026-03-26 12:48:09,911 - INFO - Loaded run 7: detections_image-t0.7_run07.geojson (752 features)
+2026-03-26 12:48:09,918 - INFO - Loaded run 8: detections_image-t0.7_run08.geojson (761 features)
+2026-03-26 12:48:09,926 - INFO - Loaded run 9: detections_image-t0.7_run09.geojson (754 features)
+2026-03-26 12:48:09,926 - INFO - Condition 'image-t0.7': loaded 10 runs with 7583 total features
+2026-03-26 12:48:10,612 - INFO -   image-t0.7 N=5: 5 runs -> 1123 clusters
+2026-03-26 12:48:12,115 - INFO -   image-t0.7 N=10: 10 runs -> 1450 clusters
+2026-03-26 12:48:12,116 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:48:17,836 - INFO -   image-t0.7 N=5 x=5: F1=0.7169 (427 det)
+2026-03-26 12:48:18,083 - INFO -   image-t0.7 N=10 x=6: F1=0.7530 (577 det)
+2026-03-26 12:48:18,093 - INFO -   image-t0.7 N=10 x=5: F1=0.7396 (625 det)
+2026-03-26 12:48:18,116 - INFO -   image-t0.7 N=10 x=10: F1=0.6834 (361 det)
+2026-03-26 12:48:18,227 - INFO -   image-t0.7 N=10 x=9: F1=0.7289 (443 det)
+2026-03-26 12:48:18,342 - INFO -   image-t0.7 N=10 x=7: F1=0.7464 (535 det)
+2026-03-26 12:48:18,353 - INFO -   image-t0.7 N=10 x=8: F1=0.7470 (494 det)
+2026-03-26 12:48:18,992 - INFO -   image-t0.7 N=5 x=1: F1=0.5289 (1123 det)
+2026-03-26 12:48:19,118 - INFO -   image-t0.7 N=10 x=1: F1=0.4393 (1450 det)
+2026-03-26 12:48:20,260 - INFO -   image-t0.7 N=5 x=4: F1=0.7495 (523 det)
+2026-03-26 12:48:20,334 - INFO -   image-t0.7 N=5 x=3: F1=0.7376 (617 det)
+2026-03-26 12:48:20,508 - INFO -   image-t0.7 N=10 x=3: F1=0.6716 (777 det)
+2026-03-26 12:48:20,521 - INFO -   image-t0.7 N=5 x=2: F1=0.6695 (754 det)
+2026-03-26 12:48:20,555 - INFO -   image-t0.7 N=10 x=4: F1=0.7102 (697 det)
+2026-03-26 12:48:20,626 - INFO -   image-t0.7 N=10 x=2: F1=0.5912 (952 det)
+2026-03-26 12:48:20,640 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:48:20,642 - INFO - Saved CSV: results/paper-eval/flash-min-image-50m/consensus-sweep-results.csv
+2026-03-26 12:48:20,643 - INFO - Saved JSON: results/paper-eval/flash-min-image-50m/consensus-analysis-report.json
+2026-03-26 12:48:20,644 - INFO - Saved Markdown: results/paper-eval/flash-min-image-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:48:20 PM UTC 2026
+
+[29/32] single-pass-t0 @ 20m
+  Study dir: outputs/retest/h11-single-pass-384-t0
+  Started: Thu Mar 26 12:48:20 PM UTC 2026
+2026-03-26 12:48:21,033 - INFO - Loading ground truth and bounds...
+2026-03-26 12:48:21,057 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:48:21,057 - INFO - Precomputing clusters...
+2026-03-26 12:48:21,057 - INFO - Loading runs for brief-text-t0...
+2026-03-26 12:48:21,071 - INFO - Loaded run 1: detections_brief-text-t0_run01.geojson (1084 features)
+2026-03-26 12:48:21,081 - INFO - Loaded run 10: detections_brief-text-t0_run10.geojson (1090 features)
+2026-03-26 12:48:21,092 - INFO - Loaded run 2: detections_brief-text-t0_run02.geojson (1107 features)
+2026-03-26 12:48:21,103 - INFO - Loaded run 3: detections_brief-text-t0_run03.geojson (1104 features)
+2026-03-26 12:48:21,114 - INFO - Loaded run 4: detections_brief-text-t0_run04.geojson (1089 features)
+2026-03-26 12:48:21,125 - INFO - Loaded run 5: detections_brief-text-t0_run05.geojson (1085 features)
+2026-03-26 12:48:21,135 - INFO - Loaded run 6: detections_brief-text-t0_run06.geojson (1095 features)
+2026-03-26 12:48:21,146 - INFO - Loaded run 7: detections_brief-text-t0_run07.geojson (1089 features)
+2026-03-26 12:48:21,157 - INFO - Loaded run 8: detections_brief-text-t0_run08.geojson (1079 features)
+2026-03-26 12:48:21,168 - INFO - Loaded run 9: detections_brief-text-t0_run09.geojson (1080 features)
+2026-03-26 12:48:21,168 - INFO - Condition 'brief-text-t0': loaded 10 runs with 10902 total features
+2026-03-26 12:48:22,356 - INFO -   brief-text-t0 N=5: 5 runs -> 1103 clusters
+2026-03-26 12:48:24,767 - INFO -   brief-text-t0 N=10: 10 runs -> 1158 clusters
+2026-03-26 12:48:24,768 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:48:31,095 - INFO -   brief-text-t0 N=5 x=2: F1=0.5290 (1032 det)
+2026-03-26 12:48:31,107 - INFO -   brief-text-t0 N=5 x=4: F1=0.5342 (999 det)
+2026-03-26 12:48:31,132 - INFO -   brief-text-t0 N=10 x=8: F1=0.5342 (999 det)
+2026-03-26 12:48:31,182 - INFO -   brief-text-t0 N=10 x=3: F1=0.5287 (1029 det)
+2026-03-26 12:48:31,184 - INFO -   brief-text-t0 N=10 x=6: F1=0.5322 (1008 det)
+2026-03-26 12:48:31,497 - INFO -   brief-text-t0 N=10 x=4: F1=0.5304 (1013 det)
+2026-03-26 12:48:31,501 - INFO -   brief-text-t0 N=10 x=7: F1=0.5330 (1006 det)
+2026-03-26 12:48:31,574 - INFO -   brief-text-t0 N=5 x=3: F1=0.5330 (1006 det)
+2026-03-26 12:48:31,579 - INFO -   brief-text-t0 N=5 x=1: F1=0.5111 (1103 det)
+2026-03-26 12:48:33,390 - INFO -   brief-text-t0 N=10 x=10: F1=0.5521 (898 det)
+2026-03-26 12:48:33,541 - INFO -   brief-text-t0 N=10 x=5: F1=0.5322 (1008 det)
+2026-03-26 12:48:33,626 - INFO -   brief-text-t0 N=5 x=5: F1=0.5440 (951 det)
+2026-03-26 12:48:33,684 - INFO -   brief-text-t0 N=10 x=9: F1=0.5416 (972 det)
+2026-03-26 12:48:33,700 - INFO -   brief-text-t0 N=10 x=2: F1=0.5187 (1061 det)
+2026-03-26 12:48:33,746 - INFO -   brief-text-t0 N=10 x=1: F1=0.4934 (1158 det)
+2026-03-26 12:48:33,760 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:48:33,763 - INFO - Saved CSV: results/paper-eval/single-pass-t0-20m/consensus-sweep-results.csv
+2026-03-26 12:48:33,763 - INFO - Saved JSON: results/paper-eval/single-pass-t0-20m/consensus-analysis-report.json
+2026-03-26 12:48:33,764 - INFO - Saved Markdown: results/paper-eval/single-pass-t0-20m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:48:33 PM UTC 2026
+
+[30/32] single-pass-t0 @ 30m
+  Study dir: outputs/retest/h11-single-pass-384-t0
+  Started: Thu Mar 26 12:48:33 PM UTC 2026
+2026-03-26 12:48:34,152 - INFO - Loading ground truth and bounds...
+2026-03-26 12:48:34,176 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:48:34,176 - INFO - Precomputing clusters...
+2026-03-26 12:48:34,176 - INFO - Loading runs for brief-text-t0...
+2026-03-26 12:48:34,186 - INFO - Loaded run 1: detections_brief-text-t0_run01.geojson (1084 features)
+2026-03-26 12:48:34,197 - INFO - Loaded run 10: detections_brief-text-t0_run10.geojson (1090 features)
+2026-03-26 12:48:34,207 - INFO - Loaded run 2: detections_brief-text-t0_run02.geojson (1107 features)
+2026-03-26 12:48:34,218 - INFO - Loaded run 3: detections_brief-text-t0_run03.geojson (1104 features)
+2026-03-26 12:48:34,228 - INFO - Loaded run 4: detections_brief-text-t0_run04.geojson (1089 features)
+2026-03-26 12:48:34,238 - INFO - Loaded run 5: detections_brief-text-t0_run05.geojson (1085 features)
+2026-03-26 12:48:34,248 - INFO - Loaded run 6: detections_brief-text-t0_run06.geojson (1095 features)
+2026-03-26 12:48:34,259 - INFO - Loaded run 7: detections_brief-text-t0_run07.geojson (1089 features)
+2026-03-26 12:48:34,269 - INFO - Loaded run 8: detections_brief-text-t0_run08.geojson (1079 features)
+2026-03-26 12:48:34,279 - INFO - Loaded run 9: detections_brief-text-t0_run09.geojson (1080 features)
+2026-03-26 12:48:34,279 - INFO - Condition 'brief-text-t0': loaded 10 runs with 10902 total features
+2026-03-26 12:48:35,494 - INFO -   brief-text-t0 N=5: 5 runs -> 1103 clusters
+2026-03-26 12:48:37,942 - INFO -   brief-text-t0 N=10: 10 runs -> 1158 clusters
+2026-03-26 12:48:37,944 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:48:44,205 - INFO -   brief-text-t0 N=5 x=4: F1=0.5439 (999 det)
+2026-03-26 12:48:44,282 - INFO -   brief-text-t0 N=10 x=7: F1=0.5441 (1006 det)
+2026-03-26 12:48:44,350 - INFO -   brief-text-t0 N=10 x=2: F1=0.5294 (1061 det)
+2026-03-26 12:48:44,373 - INFO -   brief-text-t0 N=10 x=1: F1=0.5035 (1158 det)
+2026-03-26 12:48:44,475 - INFO -   brief-text-t0 N=10 x=10: F1=0.5626 (898 det)
+2026-03-26 12:48:44,594 - INFO -   brief-text-t0 N=10 x=4: F1=0.5414 (1013 det)
+2026-03-26 12:48:44,621 - INFO -   brief-text-t0 N=10 x=8: F1=0.5453 (999 det)
+2026-03-26 12:48:44,645 - INFO -   brief-text-t0 N=10 x=9: F1=0.5529 (972 det)
+2026-03-26 12:48:44,655 - INFO -   brief-text-t0 N=5 x=1: F1=0.5202 (1103 det)
+2026-03-26 12:48:46,540 - INFO -   brief-text-t0 N=5 x=5: F1=0.5541 (951 det)
+2026-03-26 12:48:46,558 - INFO -   brief-text-t0 N=5 x=2: F1=0.5385 (1032 det)
+2026-03-26 12:48:46,585 - INFO -   brief-text-t0 N=10 x=3: F1=0.5396 (1029 det)
+2026-03-26 12:48:46,622 - INFO -   brief-text-t0 N=10 x=5: F1=0.5433 (1008 det)
+2026-03-26 12:48:46,713 - INFO -   brief-text-t0 N=10 x=6: F1=0.5433 (1008 det)
+2026-03-26 12:48:46,716 - INFO -   brief-text-t0 N=5 x=3: F1=0.5427 (1006 det)
+2026-03-26 12:48:46,731 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:48:46,733 - INFO - Saved CSV: results/paper-eval/single-pass-t0-30m/consensus-sweep-results.csv
+2026-03-26 12:48:46,734 - INFO - Saved JSON: results/paper-eval/single-pass-t0-30m/consensus-analysis-report.json
+2026-03-26 12:48:46,735 - INFO - Saved Markdown: results/paper-eval/single-pass-t0-30m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:48:46 PM UTC 2026
+
+[31/32] single-pass-t0 @ 40m
+  Study dir: outputs/retest/h11-single-pass-384-t0
+  Started: Thu Mar 26 12:48:46 PM UTC 2026
+2026-03-26 12:48:47,123 - INFO - Loading ground truth and bounds...
+2026-03-26 12:48:47,146 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:48:47,146 - INFO - Precomputing clusters...
+2026-03-26 12:48:47,146 - INFO - Loading runs for brief-text-t0...
+2026-03-26 12:48:47,157 - INFO - Loaded run 1: detections_brief-text-t0_run01.geojson (1084 features)
+2026-03-26 12:48:47,167 - INFO - Loaded run 10: detections_brief-text-t0_run10.geojson (1090 features)
+2026-03-26 12:48:47,178 - INFO - Loaded run 2: detections_brief-text-t0_run02.geojson (1107 features)
+2026-03-26 12:48:47,188 - INFO - Loaded run 3: detections_brief-text-t0_run03.geojson (1104 features)
+2026-03-26 12:48:47,199 - INFO - Loaded run 4: detections_brief-text-t0_run04.geojson (1089 features)
+2026-03-26 12:48:47,209 - INFO - Loaded run 5: detections_brief-text-t0_run05.geojson (1085 features)
+2026-03-26 12:48:47,219 - INFO - Loaded run 6: detections_brief-text-t0_run06.geojson (1095 features)
+2026-03-26 12:48:47,230 - INFO - Loaded run 7: detections_brief-text-t0_run07.geojson (1089 features)
+2026-03-26 12:48:47,240 - INFO - Loaded run 8: detections_brief-text-t0_run08.geojson (1079 features)
+2026-03-26 12:48:47,250 - INFO - Loaded run 9: detections_brief-text-t0_run09.geojson (1080 features)
+2026-03-26 12:48:47,250 - INFO - Condition 'brief-text-t0': loaded 10 runs with 10902 total features
+2026-03-26 12:48:48,446 - INFO -   brief-text-t0 N=5: 5 runs -> 1103 clusters
+2026-03-26 12:48:50,869 - INFO -   brief-text-t0 N=10: 10 runs -> 1158 clusters
+2026-03-26 12:48:50,871 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:48:57,148 - INFO -   brief-text-t0 N=10 x=5: F1=0.5489 (1008 det)
+2026-03-26 12:48:57,219 - INFO -   brief-text-t0 N=10 x=9: F1=0.5586 (972 det)
+2026-03-26 12:48:57,272 - INFO -   brief-text-t0 N=5 x=1: F1=0.5267 (1103 det)
+2026-03-26 12:48:57,290 - INFO -   brief-text-t0 N=10 x=3: F1=0.5451 (1029 det)
+2026-03-26 12:48:57,419 - INFO -   brief-text-t0 N=10 x=10: F1=0.5671 (898 det)
+2026-03-26 12:48:57,438 - INFO -   brief-text-t0 N=5 x=5: F1=0.5584 (951 det)
+2026-03-26 12:48:57,518 - INFO -   brief-text-t0 N=10 x=6: F1=0.5489 (1008 det)
+2026-03-26 12:48:57,527 - INFO -   brief-text-t0 N=10 x=8: F1=0.5509 (999 det)
+2026-03-26 12:48:57,614 - INFO -   brief-text-t0 N=10 x=4: F1=0.5470 (1013 det)
+2026-03-26 12:48:59,492 - INFO -   brief-text-t0 N=5 x=3: F1=0.5482 (1006 det)
+2026-03-26 12:48:59,508 - INFO -   brief-text-t0 N=5 x=2: F1=0.5453 (1032 det)
+2026-03-26 12:48:59,565 - INFO -   brief-text-t0 N=10 x=2: F1=0.5361 (1061 det)
+2026-03-26 12:48:59,599 - INFO -   brief-text-t0 N=10 x=1: F1=0.5097 (1158 det)
+2026-03-26 12:48:59,616 - INFO -   brief-text-t0 N=5 x=4: F1=0.5495 (999 det)
+2026-03-26 12:48:59,686 - INFO -   brief-text-t0 N=10 x=7: F1=0.5496 (1006 det)
+2026-03-26 12:48:59,699 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:48:59,702 - INFO - Saved CSV: results/paper-eval/single-pass-t0-40m/consensus-sweep-results.csv
+2026-03-26 12:48:59,702 - INFO - Saved JSON: results/paper-eval/single-pass-t0-40m/consensus-analysis-report.json
+2026-03-26 12:48:59,703 - INFO - Saved Markdown: results/paper-eval/single-pass-t0-40m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:48:59 PM UTC 2026
+
+[32/32] single-pass-t0 @ 50m
+  Study dir: outputs/retest/h11-single-pass-384-t0
+  Started: Thu Mar 26 12:48:59 PM UTC 2026
+2026-03-26 12:49:00,093 - INFO - Loading ground truth and bounds...
+2026-03-26 12:49:00,117 - INFO - Loaded 569 reference features, 487 tiles
+2026-03-26 12:49:00,117 - INFO - Precomputing clusters...
+2026-03-26 12:49:00,117 - INFO - Loading runs for brief-text-t0...
+2026-03-26 12:49:00,127 - INFO - Loaded run 1: detections_brief-text-t0_run01.geojson (1084 features)
+2026-03-26 12:49:00,137 - INFO - Loaded run 10: detections_brief-text-t0_run10.geojson (1090 features)
+2026-03-26 12:49:00,148 - INFO - Loaded run 2: detections_brief-text-t0_run02.geojson (1107 features)
+2026-03-26 12:49:00,158 - INFO - Loaded run 3: detections_brief-text-t0_run03.geojson (1104 features)
+2026-03-26 12:49:00,169 - INFO - Loaded run 4: detections_brief-text-t0_run04.geojson (1089 features)
+2026-03-26 12:49:00,179 - INFO - Loaded run 5: detections_brief-text-t0_run05.geojson (1085 features)
+2026-03-26 12:49:00,189 - INFO - Loaded run 6: detections_brief-text-t0_run06.geojson (1095 features)
+2026-03-26 12:49:00,199 - INFO - Loaded run 7: detections_brief-text-t0_run07.geojson (1089 features)
+2026-03-26 12:49:00,210 - INFO - Loaded run 8: detections_brief-text-t0_run08.geojson (1079 features)
+2026-03-26 12:49:00,220 - INFO - Loaded run 9: detections_brief-text-t0_run09.geojson (1080 features)
+2026-03-26 12:49:00,220 - INFO - Condition 'brief-text-t0': loaded 10 runs with 10902 total features
+2026-03-26 12:49:01,411 - INFO -   brief-text-t0 N=5: 5 runs -> 1103 clusters
+2026-03-26 12:49:03,822 - INFO -   brief-text-t0 N=10: 10 runs -> 1158 clusters
+2026-03-26 12:49:03,824 - INFO - Evaluating 15 (T, N, x) configurations with 1000 bootstrap iterations each...
+2026-03-26 12:49:10,010 - INFO -   brief-text-t0 N=5 x=5: F1=0.5584 (951 det)
+2026-03-26 12:49:10,072 - INFO -   brief-text-t0 N=5 x=4: F1=0.5495 (999 det)
+2026-03-26 12:49:10,118 - INFO -   brief-text-t0 N=10 x=6: F1=0.5489 (1008 det)
+2026-03-26 12:49:10,274 - INFO -   brief-text-t0 N=10 x=1: F1=0.5097 (1158 det)
+2026-03-26 12:49:10,404 - INFO -   brief-text-t0 N=10 x=4: F1=0.5470 (1013 det)
+2026-03-26 12:49:10,410 - INFO -   brief-text-t0 N=10 x=10: F1=0.5671 (898 det)
+2026-03-26 12:49:10,434 - INFO -   brief-text-t0 N=10 x=8: F1=0.5509 (999 det)
+2026-03-26 12:49:10,461 - INFO -   brief-text-t0 N=5 x=3: F1=0.5482 (1006 det)
+2026-03-26 12:49:10,474 - INFO -   brief-text-t0 N=10 x=9: F1=0.5586 (972 det)
+2026-03-26 12:49:12,343 - INFO -   brief-text-t0 N=5 x=2: F1=0.5453 (1032 det)
+2026-03-26 12:49:12,398 - INFO -   brief-text-t0 N=10 x=7: F1=0.5496 (1006 det)
+2026-03-26 12:49:12,413 - INFO -   brief-text-t0 N=10 x=2: F1=0.5361 (1061 det)
+2026-03-26 12:49:12,495 - INFO -   brief-text-t0 N=5 x=1: F1=0.5267 (1103 det)
+2026-03-26 12:49:12,545 - INFO -   brief-text-t0 N=10 x=3: F1=0.5451 (1029 det)
+2026-03-26 12:49:12,546 - INFO -   brief-text-t0 N=10 x=5: F1=0.5489 (1008 det)
+2026-03-26 12:49:12,559 - WARNING - Baseline CSV not found, using known value: 0.5574
+2026-03-26 12:49:12,562 - INFO - Saved CSV: results/paper-eval/single-pass-t0-50m/consensus-sweep-results.csv
+2026-03-26 12:49:12,562 - INFO - Saved JSON: results/paper-eval/single-pass-t0-50m/consensus-analysis-report.json
+2026-03-26 12:49:12,563 - INFO - Saved Markdown: results/paper-eval/single-pass-t0-50m/consensus-analysis-summary.md
+  Completed: Thu Mar 26 12:49:12 PM UTC 2026
+
+=== Section A complete: Thu Mar 26 12:49:12 PM UTC 2026 ===
+
+=== Section B: PV Buffer Sensitivity ===
+Started: Thu Mar 26 12:49:12 PM UTC 2026
+2026-03-26 12:49:12,972 - INFO - Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson
+2026-03-26 12:49:12,991 - INFO - Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+2026-03-26 12:49:12,996 - INFO - Reference: 569 mounds, 487 evaluation tiles
+2026-03-26 12:49:12,997 - INFO - Loaded 8 conditions from configs/pv-paper-conditions.yaml
+2026-03-26 12:49:12,997 - INFO - [1/8] Flash HIGH text 4-of-5 + Flash min vf (threshold=0.15)
+2026-03-26 12:49:13,001 - INFO - Flash HIGH text 4-of-5 + Flash min vf: 389 candidates accepted at threshold 0.15
+2026-03-26 12:49:17,639 - INFO -   20m: F1=0.8641 [0.833, 0.893], P=0.9152, R=0.8184
+2026-03-26 12:49:22,332 - INFO -   30m: F1=0.8908 [0.863, 0.916], P=0.9434, R=0.8437
+2026-03-26 12:49:26,989 - INFO -   40m: F1=0.8908 [0.863, 0.916], P=0.9434, R=0.8437
+2026-03-26 12:49:31,656 - INFO -   50m: F1=0.8908 [0.863, 0.916], P=0.9434, R=0.8437
+2026-03-26 12:49:31,656 - INFO - JSON written: results/paper-eval/pv/flash-high-text-4-of-5--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:49:31,656 - INFO - CSV written: results/paper-eval/pv/flash-high-text-4-of-5--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:49:31,657 - INFO - [2/8] Flash HIGH text 16-of-30 + Flash min vf (threshold=0.20)
+2026-03-26 12:49:31,685 - INFO - Flash HIGH text 16-of-30 + Flash min vf: 412 candidates accepted at threshold 0.20
+2026-03-26 12:49:36,355 - INFO -   20m: F1=0.8902 [0.863, 0.915], P=0.9150, R=0.8667
+2026-03-26 12:49:41,057 - INFO -   30m: F1=0.9044 [0.878, 0.928], P=0.9296, R=0.8805
+2026-03-26 12:49:45,763 - INFO -   40m: F1=0.9044 [0.878, 0.928], P=0.9296, R=0.8805
+2026-03-26 12:49:50,476 - INFO -   50m: F1=0.9044 [0.878, 0.928], P=0.9296, R=0.8805
+2026-03-26 12:49:50,476 - INFO - JSON written: results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:49:50,477 - INFO - CSV written: results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:49:50,477 - INFO - [3/8] Flash HIGH text 9-of-10 + Flash min vf (threshold=0.20)
+2026-03-26 12:49:50,502 - INFO - Flash HIGH text 9-of-10 + Flash min vf: 352 candidates accepted at threshold 0.20
+2026-03-26 12:49:55,160 - INFO -   20m: F1=0.8564 [0.825, 0.885], P=0.9574, R=0.7747
+2026-03-26 12:49:59,797 - INFO -   30m: F1=0.8691 [0.837, 0.897], P=0.9716, R=0.7862
+2026-03-26 12:50:04,424 - INFO -   40m: F1=0.8691 [0.837, 0.897], P=0.9716, R=0.7862
+2026-03-26 12:50:09,064 - INFO -   50m: F1=0.8691 [0.837, 0.897], P=0.9716, R=0.7862
+2026-03-26 12:50:09,065 - INFO - JSON written: results/paper-eval/pv/flash-high-text-9-of-10--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:50:09,065 - INFO - CSV written: results/paper-eval/pv/flash-high-text-9-of-10--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:50:09,065 - INFO - [4/8] Pro HIGH text 3-of-5 + Flash min vf (threshold=0.15)
+2026-03-26 12:50:09,068 - INFO - Pro HIGH text 3-of-5 + Flash min vf: 347 candidates accepted at threshold 0.15
+2026-03-26 12:50:13,701 - INFO -   20m: F1=0.8491 [0.812, 0.883], P=0.9568, R=0.7632
+2026-03-26 12:50:18,289 - INFO -   30m: F1=0.8645 [0.828, 0.896], P=0.9741, R=0.7770
+2026-03-26 12:50:22,890 - INFO -   40m: F1=0.8670 [0.832, 0.898], P=0.9769, R=0.7793
+2026-03-26 12:50:27,533 - INFO -   50m: F1=0.8670 [0.832, 0.898], P=0.9769, R=0.7793
+2026-03-26 12:50:27,533 - INFO - JSON written: results/paper-eval/pv/pro-high-text-3-of-5--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:50:27,533 - INFO - CSV written: results/paper-eval/pv/pro-high-text-3-of-5--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:50:27,533 - INFO - [5/8] Text baseline + Flash min vf (threshold=0.15)
+2026-03-26 12:50:27,561 - INFO - Text baseline + Flash min vf: 464 candidates accepted at threshold 0.15
+2026-03-26 12:50:32,325 - INFO -   20m: F1=0.8142 [0.780, 0.844], P=0.7888, R=0.8414
+2026-03-26 12:50:37,091 - INFO -   30m: F1=0.8320 [0.800, 0.857], P=0.8060, R=0.8598
+2026-03-26 12:50:41,894 - INFO -   40m: F1=0.8387 [0.807, 0.865], P=0.8125, R=0.8667
+2026-03-26 12:50:46,645 - INFO -   50m: F1=0.8387 [0.807, 0.865], P=0.8125, R=0.8667
+2026-03-26 12:50:46,646 - INFO - JSON written: results/paper-eval/pv/text-baseline--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:50:46,646 - INFO - CSV written: results/paper-eval/pv/text-baseline--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:50:46,646 - INFO - [6/8] Image baseline + Flash min vf (threshold=0.20)
+2026-03-26 12:50:46,673 - INFO - Image baseline + Flash min vf: 511 candidates accepted at threshold 0.20
+2026-03-26 12:50:51,470 - INFO -   20m: F1=0.7167 [0.673, 0.754], P=0.6634, R=0.7793
+2026-03-26 12:50:56,314 - INFO -   30m: F1=0.7822 [0.744, 0.813], P=0.7241, R=0.8506
+2026-03-26 12:51:01,134 - INFO -   40m: F1=0.7992 [0.764, 0.829], P=0.7397, R=0.8690
+2026-03-26 12:51:05,952 - INFO -   50m: F1=0.8076 [0.775, 0.836], P=0.7476, R=0.8782
+2026-03-26 12:51:05,952 - INFO - JSON written: results/paper-eval/pv/image-baseline--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:51:05,952 - INFO - CSV written: results/paper-eval/pv/image-baseline--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:51:05,952 - INFO - [7/8] Flash HIGH text 4-of-5 + Flash medium vf (threshold=0.95)
+2026-03-26 12:51:05,956 - INFO - Flash HIGH text 4-of-5 + Flash medium vf: 417 candidates accepted at threshold 0.95
+2026-03-26 12:51:10,647 - INFO -   20m: F1=0.8592 [0.827, 0.887], P=0.8777, R=0.8414
+2026-03-26 12:51:15,353 - INFO -   30m: F1=0.8850 [0.855, 0.911], P=0.9041, R=0.8667
+2026-03-26 12:51:20,065 - INFO -   40m: F1=0.8850 [0.855, 0.911], P=0.9041, R=0.8667
+2026-03-26 12:51:24,760 - INFO -   50m: F1=0.8850 [0.855, 0.911], P=0.9041, R=0.8667
+2026-03-26 12:51:24,781 - INFO - JSON written: results/paper-eval/pv/flash-high-text-4-of-5--flash-medium-vf/buffer_sensitivity.json
+2026-03-26 12:51:24,781 - INFO - CSV written: results/paper-eval/pv/flash-high-text-4-of-5--flash-medium-vf/buffer_sensitivity.csv
+2026-03-26 12:51:24,781 - INFO - [8/8] Flash HIGH image 3-of-5 + Flash min vf (threshold=0.15)
+2026-03-26 12:51:24,790 - INFO - Flash HIGH image 3-of-5 + Flash min vf: 411 candidates accepted at threshold 0.15
+2026-03-26 12:51:29,462 - INFO -   20m: F1=0.7778 [0.735, 0.816], P=0.8005, R=0.7563
+2026-03-26 12:51:34,162 - INFO -   30m: F1=0.8511 [0.815, 0.882], P=0.8759, R=0.8276
+2026-03-26 12:51:38,873 - INFO -   40m: F1=0.8723 [0.840, 0.900], P=0.8978, R=0.8483
+2026-03-26 12:51:43,565 - INFO -   50m: F1=0.8771 [0.847, 0.904], P=0.9027, R=0.8529
+2026-03-26 12:51:43,566 - INFO - JSON written: results/paper-eval/pv/flash-high-image-3-of-5--flash-min-vf/buffer_sensitivity.json
+2026-03-26 12:51:43,566 - INFO - CSV written: results/paper-eval/pv/flash-high-image-3-of-5--flash-min-vf/buffer_sensitivity.csv
+2026-03-26 12:51:43,566 - INFO - Summary CSV written: results/paper-eval/pv/buffer_sensitivity_summary.csv
+2026-03-26 12:51:43,566 - INFO - Summary Markdown written: results/paper-eval/pv/buffer_sensitivity_summary.md
+2026-03-26 12:51:43,566 - INFO - Done: 8 conditions evaluated
+=== Section B complete: Thu Mar 26 12:51:43 PM UTC 2026 ===
+
+=============================================
+All evaluations complete: Thu Mar 26 12:51:43 PM UTC 2026
+Results in: results/paper-eval
+=============================================

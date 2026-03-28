@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:33:13.711125+00:00",
+  "summary": {
+    "label": "Flash Image MINIMAL T=0.0",
+    "n_detections": 746,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6554,
+        "f1_ci_lower": 0.6116,
+        "f1_ci_upper": 0.6892,
+        "precision": 0.5188,
+        "p_ci_lower": 0.4685,
+        "p_ci_upper": 0.5583,
+        "recall": 0.8897,
+        "r_ci_lower": 0.8567,
+        "r_ci_upper": 0.9199
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 228,
+        "tn": 51,
+        "fp": 207,
+        "fn": 1
+      },
+      "mcc": {
+        "mean": 0.3113,
+        "ci_lower": 0.2586,
+        "ci_upper": 0.3628
+      },
+      "sensitivity": {
+        "mean": 0.9955,
+        "ci_lower": 0.9855,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.1974,
+        "ci_lower": 0.1494,
+        "ci_upper": 0.249
+      }
+    }
+  }
+}

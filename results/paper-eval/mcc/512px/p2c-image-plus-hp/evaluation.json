@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:48:22.637935+00:00",
+  "summary": {
+    "label": "P2c Image plus-hp",
+    "n_detections": 771,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6641,
+        "f1_ci_lower": 0.6174,
+        "f1_ci_upper": 0.706,
+        "precision": 0.5642,
+        "p_ci_lower": 0.515,
+        "p_ci_upper": 0.609,
+        "recall": 0.8071,
+        "r_ci_lower": 0.7554,
+        "r_ci_upper": 0.8574
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 204,
+        "tn": 2,
+        "fp": 134,
+        "fn": 0
+      },
+      "mcc": {
+        "mean": 0.0983,
+        "ci_lower": 0.0626,
+        "ci_upper": 0.1534
+      },
+      "sensitivity": {
+        "mean": 1.0,
+        "ci_lower": 1.0,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.015,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0376
+      }
+    }
+  }
+}

@@ -1,0 +1,506 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-28T07:14:50.659843+00:00",
+  "n_conditions": 16,
+  "metadata": {
+    "description": "Tile-level MCC for remaining consensus and PV conditions at 384px. Covers flash-min-text-t07/t10, flash-min-image, pro-high-image, single-pass-t0 consensus conditions, and five additional PV conditions with various verifier configurations.\n"
+  },
+  "results": [
+    {
+      "label": "Image baseline + flash-min-vf",
+      "n_detections": 511,
+      "confusion": {
+        "tp": 216,
+        "tn": 241,
+        "fp": 17,
+        "fn": 13
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.8766,
+        "mean": 0.8765,
+        "ci_lower": 0.8327,
+        "ci_upper": 0.9188
+      },
+      "sensitivity": {
+        "point": 0.9432,
+        "mean": 0.9424,
+        "ci_lower": 0.9102,
+        "ci_upper": 0.9701
+      },
+      "specificity": {
+        "point": 0.9341,
+        "mean": 0.9347,
+        "ci_lower": 0.9022,
+        "ci_upper": 0.9653
+      }
+    },
+    {
+      "label": "Text baseline + flash-min-vf",
+      "n_detections": 464,
+      "confusion": {
+        "tp": 199,
+        "tn": 247,
+        "fp": 11,
+        "fn": 30
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.8328,
+        "mean": 0.8324,
+        "ci_lower": 0.7831,
+        "ci_upper": 0.8769
+      },
+      "sensitivity": {
+        "point": 0.869,
+        "mean": 0.8685,
+        "ci_lower": 0.8266,
+        "ci_upper": 0.9064
+      },
+      "specificity": {
+        "point": 0.9574,
+        "mean": 0.9574,
+        "ci_lower": 0.9294,
+        "ci_upper": 0.981
+      }
+    },
+    {
+      "label": "Flash HIGH image 3-of-5 + flash-min-vf",
+      "n_detections": 411,
+      "confusion": {
+        "tp": 194,
+        "tn": 250,
+        "fp": 8,
+        "fn": 35
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.8268,
+        "mean": 0.8266,
+        "ci_lower": 0.7767,
+        "ci_upper": 0.8734
+      },
+      "sensitivity": {
+        "point": 0.8472,
+        "mean": 0.8468,
+        "ci_lower": 0.7991,
+        "ci_upper": 0.8908
+      },
+      "specificity": {
+        "point": 0.969,
+        "mean": 0.9691,
+        "ci_lower": 0.9482,
+        "ci_upper": 0.9885
+      }
+    },
+    {
+      "label": "Pro HIGH image 3-of-5",
+      "n_detections": 471,
+      "confusion": {
+        "tp": 193,
+        "tn": 236,
+        "fp": 22,
+        "fn": 36
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7614,
+        "mean": 0.7615,
+        "ci_lower": 0.7055,
+        "ci_upper": 0.8163
+      },
+      "sensitivity": {
+        "point": 0.8428,
+        "mean": 0.8424,
+        "ci_lower": 0.7964,
+        "ci_upper": 0.8894
+      },
+      "specificity": {
+        "point": 0.9147,
+        "mean": 0.9151,
+        "ci_lower": 0.8808,
+        "ci_upper": 0.9472
+      }
+    },
+    {
+      "label": "Flash HIGH text 9-of-10 + flash-min-vf",
+      "n_detections": 352,
+      "confusion": {
+        "tp": 169,
+        "tn": 253,
+        "fp": 5,
+        "fn": 60
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7485,
+        "mean": 0.7473,
+        "ci_lower": 0.6959,
+        "ci_upper": 0.797
+      },
+      "sensitivity": {
+        "point": 0.738,
+        "mean": 0.7368,
+        "ci_lower": 0.6779,
+        "ci_upper": 0.7888
+      },
+      "specificity": {
+        "point": 0.9806,
+        "mean": 0.9805,
+        "ci_lower": 0.9614,
+        "ci_upper": 0.996
+      }
+    },
+    {
+      "label": "Flash HIGH text 4-of-5 + flash-medium-vf",
+      "n_detections": 417,
+      "confusion": {
+        "tp": 184,
+        "tn": 239,
+        "fp": 19,
+        "fn": 45
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7388,
+        "mean": 0.7376,
+        "ci_lower": 0.6792,
+        "ci_upper": 0.7933
+      },
+      "sensitivity": {
+        "point": 0.8035,
+        "mean": 0.8023,
+        "ci_lower": 0.75,
+        "ci_upper": 0.8527
+      },
+      "specificity": {
+        "point": 0.9264,
+        "mean": 0.9262,
+        "ci_lower": 0.8911,
+        "ci_upper": 0.9565
+      }
+    },
+    {
+      "label": "Flash MIN image 4-of-5",
+      "n_detections": 523,
+      "confusion": {
+        "tp": 193,
+        "tn": 137,
+        "fp": 121,
+        "fn": 36
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.3898,
+        "mean": 0.3883,
+        "ci_lower": 0.3104,
+        "ci_upper": 0.4694
+      },
+      "sensitivity": {
+        "point": 0.8428,
+        "mean": 0.8422,
+        "ci_lower": 0.7945,
+        "ci_upper": 0.8874
+      },
+      "specificity": {
+        "point": 0.531,
+        "mean": 0.5301,
+        "ci_lower": 0.4651,
+        "ci_upper": 0.5936
+      }
+    },
+    {
+      "label": "Flash MIN text T=0.7 29-of-30",
+      "n_detections": 530,
+      "confusion": {
+        "tp": 187,
+        "tn": 143,
+        "fp": 115,
+        "fn": 42
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.3814,
+        "mean": 0.3802,
+        "ci_lower": 0.3017,
+        "ci_upper": 0.4598
+      },
+      "sensitivity": {
+        "point": 0.8166,
+        "mean": 0.8159,
+        "ci_lower": 0.7644,
+        "ci_upper": 0.8638
+      },
+      "specificity": {
+        "point": 0.5543,
+        "mean": 0.5539,
+        "ci_lower": 0.4906,
+        "ci_upper": 0.6151
+      }
+    },
+    {
+      "label": "Flash MIN text T=0.7 10-of-10",
+      "n_detections": 560,
+      "confusion": {
+        "tp": 191,
+        "tn": 133,
+        "fp": 125,
+        "fn": 38
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.3655,
+        "mean": 0.3631,
+        "ci_lower": 0.2837,
+        "ci_upper": 0.4435
+      },
+      "sensitivity": {
+        "point": 0.8341,
+        "mean": 0.8331,
+        "ci_lower": 0.7845,
+        "ci_upper": 0.8819
+      },
+      "specificity": {
+        "point": 0.5155,
+        "mean": 0.5141,
+        "ci_lower": 0.4537,
+        "ci_upper": 0.5745
+      }
+    },
+    {
+      "label": "Flash MIN image 6-of-10",
+      "n_detections": 577,
+      "confusion": {
+        "tp": 197,
+        "tn": 123,
+        "fp": 135,
+        "fn": 32
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.3611,
+        "mean": 0.3594,
+        "ci_lower": 0.2827,
+        "ci_upper": 0.4325
+      },
+      "sensitivity": {
+        "point": 0.8603,
+        "mean": 0.8597,
+        "ci_lower": 0.8154,
+        "ci_upper": 0.9037
+      },
+      "specificity": {
+        "point": 0.4767,
+        "mean": 0.4757,
+        "ci_lower": 0.4098,
+        "ci_upper": 0.5396
+      }
+    },
+    {
+      "label": "Flash MIN text T=0.7 5-of-5",
+      "n_detections": 653,
+      "confusion": {
+        "tp": 197,
+        "tn": 110,
+        "fp": 148,
+        "fn": 32
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.3148,
+        "mean": 0.3131,
+        "ci_lower": 0.2303,
+        "ci_upper": 0.395
+      },
+      "sensitivity": {
+        "point": 0.8603,
+        "mean": 0.8597,
+        "ci_lower": 0.8134,
+        "ci_upper": 0.904
+      },
+      "specificity": {
+        "point": 0.4264,
+        "mean": 0.4254,
+        "ci_lower": 0.3659,
+        "ci_upper": 0.4821
+      }
+    },
+    {
+      "label": "Flash MIN text T=1.0 5-of-5",
+      "n_detections": 295,
+      "confusion": {
+        "tp": 104,
+        "tn": 203,
+        "fp": 55,
+        "fn": 125
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.2565,
+        "mean": 0.2569,
+        "ci_lower": 0.1755,
+        "ci_upper": 0.3375
+      },
+      "sensitivity": {
+        "point": 0.4541,
+        "mean": 0.4546,
+        "ci_lower": 0.3914,
+        "ci_upper": 0.5193
+      },
+      "specificity": {
+        "point": 0.7868,
+        "mean": 0.7869,
+        "ci_lower": 0.7342,
+        "ci_upper": 0.8354
+      }
+    },
+    {
+      "label": "Single-pass T=0.0 10-of-10",
+      "n_detections": 898,
+      "confusion": {
+        "tp": 209,
+        "tn": 64,
+        "fp": 194,
+        "fn": 20
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.2123,
+        "mean": 0.2132,
+        "ci_lower": 0.1255,
+        "ci_upper": 0.2927
+      },
+      "sensitivity": {
+        "point": 0.9127,
+        "mean": 0.9129,
+        "ci_lower": 0.8727,
+        "ci_upper": 0.9481
+      },
+      "specificity": {
+        "point": 0.2481,
+        "mean": 0.2487,
+        "ci_lower": 0.1956,
+        "ci_upper": 0.3044
+      }
+    },
+    {
+      "label": "Flash MIN text T=1.0 9-of-10",
+      "n_detections": 319,
+      "confusion": {
+        "tp": 107,
+        "tn": 190,
+        "fp": 68,
+        "fn": 122
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.2119,
+        "mean": 0.212,
+        "ci_lower": 0.1224,
+        "ci_upper": 0.3025
+      },
+      "sensitivity": {
+        "point": 0.4672,
+        "mean": 0.4674,
+        "ci_lower": 0.4057,
+        "ci_upper": 0.5333
+      },
+      "specificity": {
+        "point": 0.7364,
+        "mean": 0.7364,
+        "ci_lower": 0.6821,
+        "ci_upper": 0.7889
+      }
+    },
+    {
+      "label": "Flash MIN text T=1.0 22-of-30",
+      "n_detections": 383,
+      "confusion": {
+        "tp": 114,
+        "tn": 182,
+        "fp": 76,
+        "fn": 115
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.208,
+        "mean": 0.2078,
+        "ci_lower": 0.1224,
+        "ci_upper": 0.2982
+      },
+      "sensitivity": {
+        "point": 0.4978,
+        "mean": 0.498,
+        "ci_lower": 0.4338,
+        "ci_upper": 0.5665
+      },
+      "specificity": {
+        "point": 0.7054,
+        "mean": 0.7051,
+        "ci_lower": 0.648,
+        "ci_upper": 0.7571
+      }
+    },
+    {
+      "label": "Single-pass T=0.0 5-of-5",
+      "n_detections": 951,
+      "confusion": {
+        "tp": 212,
+        "tn": 51,
+        "fp": 207,
+        "fn": 17
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.1778,
+        "mean": 0.1787,
+        "ci_lower": 0.0956,
+        "ci_upper": 0.255
+      },
+      "sensitivity": {
+        "point": 0.9258,
+        "mean": 0.9258,
+        "ci_lower": 0.8909,
+        "ci_upper": 0.9567
+      },
+      "specificity": {
+        "point": 0.1977,
+        "mean": 0.1985,
+        "ci_lower": 0.1517,
+        "ci_upper": 0.2473
+      }
+    }
+  ]
+}

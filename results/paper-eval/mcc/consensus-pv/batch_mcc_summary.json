@@ -1,0 +1,382 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T21:55:45.584976+00:00",
+  "n_conditions": 12,
+  "metadata": {
+    "description": "Tile-level MCC for consensus and PV conditions at 384px. Completes the MCC table from Obs 202.\n"
+  },
+  "results": [
+    {
+      "label": "Pro Image HIGH T=0.7 (N=1)",
+      "n_detections": 569,
+      "confusion": {
+        "tp": 221,
+        "tn": 228,
+        "fp": 30,
+        "fn": 8
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.8477,
+        "mean": 0.8478,
+        "ci_lower": 0.8015,
+        "ci_upper": 0.8944
+      },
+      "sensitivity": {
+        "point": 0.9651,
+        "mean": 0.9646,
+        "ci_lower": 0.9364,
+        "ci_upper": 0.9868
+      },
+      "specificity": {
+        "point": 0.8837,
+        "mean": 0.8844,
+        "ci_lower": 0.8452,
+        "ci_upper": 0.9234
+      }
+    },
+    {
+      "label": "Flash HIGH text 16-of-30 + PV",
+      "n_detections": 412,
+      "confusion": {
+        "tp": 188,
+        "tn": 247,
+        "fp": 11,
+        "fn": 41
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7903,
+        "mean": 0.7891,
+        "ci_lower": 0.7328,
+        "ci_upper": 0.8401
+      },
+      "sensitivity": {
+        "point": 0.821,
+        "mean": 0.8199,
+        "ci_lower": 0.7668,
+        "ci_upper": 0.8672
+      },
+      "specificity": {
+        "point": 0.9574,
+        "mean": 0.9572,
+        "ci_lower": 0.9286,
+        "ci_upper": 0.9809
+      }
+    },
+    {
+      "label": "Flash HIGH text 4-of-5 + PV",
+      "n_detections": 389,
+      "confusion": {
+        "tp": 180,
+        "tn": 249,
+        "fp": 9,
+        "fn": 49
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7693,
+        "mean": 0.7681,
+        "ci_lower": 0.7162,
+        "ci_upper": 0.82
+      },
+      "sensitivity": {
+        "point": 0.786,
+        "mean": 0.7848,
+        "ci_lower": 0.7304,
+        "ci_upper": 0.8341
+      },
+      "specificity": {
+        "point": 0.9651,
+        "mean": 0.965,
+        "ci_lower": 0.9409,
+        "ci_upper": 0.9878
+      }
+    },
+    {
+      "label": "Pro Text HIGH T=0.7 (N=1)",
+      "n_detections": 440,
+      "confusion": {
+        "tp": 175,
+        "tn": 247,
+        "fp": 11,
+        "fn": 54
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7412,
+        "mean": 0.7413,
+        "ci_lower": 0.6828,
+        "ci_upper": 0.7939
+      },
+      "sensitivity": {
+        "point": 0.7642,
+        "mean": 0.7641,
+        "ci_lower": 0.7043,
+        "ci_upper": 0.8169
+      },
+      "specificity": {
+        "point": 0.9574,
+        "mean": 0.9575,
+        "ci_lower": 0.9305,
+        "ci_upper": 0.9809
+      }
+    },
+    {
+      "label": "Pro HIGH text 3-of-5",
+      "n_detections": 367,
+      "confusion": {
+        "tp": 171,
+        "tn": 249,
+        "fp": 9,
+        "fn": 58
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.736,
+        "mean": 0.736,
+        "ci_lower": 0.6817,
+        "ci_upper": 0.7883
+      },
+      "sensitivity": {
+        "point": 0.7467,
+        "mean": 0.7469,
+        "ci_lower": 0.6888,
+        "ci_upper": 0.7982
+      },
+      "specificity": {
+        "point": 0.9651,
+        "mean": 0.9649,
+        "ci_lower": 0.9395,
+        "ci_upper": 0.985
+      }
+    },
+    {
+      "label": "Pro HIGH text 3-of-5 + PV",
+      "n_detections": 347,
+      "confusion": {
+        "tp": 161,
+        "tn": 255,
+        "fp": 3,
+        "fn": 68
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.7302,
+        "mean": 0.73,
+        "ci_lower": 0.6763,
+        "ci_upper": 0.7827
+      },
+      "sensitivity": {
+        "point": 0.7031,
+        "mean": 0.7027,
+        "ci_lower": 0.6437,
+        "ci_upper": 0.7626
+      },
+      "specificity": {
+        "point": 0.9884,
+        "mean": 0.9884,
+        "ci_lower": 0.9732,
+        "ci_upper": 1.0
+      }
+    },
+    {
+      "label": "Flash HIGH image 6-of-10",
+      "n_detections": 462,
+      "confusion": {
+        "tp": 192,
+        "tn": 216,
+        "fp": 42,
+        "fn": 37
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.675,
+        "mean": 0.6731,
+        "ci_lower": 0.6037,
+        "ci_upper": 0.7364
+      },
+      "sensitivity": {
+        "point": 0.8384,
+        "mean": 0.8386,
+        "ci_lower": 0.7915,
+        "ci_upper": 0.8833
+      },
+      "specificity": {
+        "point": 0.8372,
+        "mean": 0.8353,
+        "ci_lower": 0.7869,
+        "ci_upper": 0.8808
+      }
+    },
+    {
+      "label": "Flash HIGH image 3-of-5",
+      "n_detections": 506,
+      "confusion": {
+        "tp": 196,
+        "tn": 209,
+        "fp": 49,
+        "fn": 33
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.6648,
+        "mean": 0.6636,
+        "ci_lower": 0.5979,
+        "ci_upper": 0.7244
+      },
+      "sensitivity": {
+        "point": 0.8559,
+        "mean": 0.8552,
+        "ci_lower": 0.81,
+        "ci_upper": 0.8966
+      },
+      "specificity": {
+        "point": 0.8101,
+        "mean": 0.8094,
+        "ci_lower": 0.7572,
+        "ci_upper": 0.8566
+      }
+    },
+    {
+      "label": "Flash HIGH text 9-of-10",
+      "n_detections": 431,
+      "confusion": {
+        "tp": 182,
+        "tn": 213,
+        "fp": 45,
+        "fn": 47
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.6207,
+        "mean": 0.6208,
+        "ci_lower": 0.5452,
+        "ci_upper": 0.6907
+      },
+      "sensitivity": {
+        "point": 0.7948,
+        "mean": 0.7952,
+        "ci_lower": 0.7411,
+        "ci_upper": 0.8469
+      },
+      "specificity": {
+        "point": 0.8256,
+        "mean": 0.8253,
+        "ci_lower": 0.7774,
+        "ci_upper": 0.8691
+      }
+    },
+    {
+      "label": "Flash HIGH text 26-of-30",
+      "n_detections": 415,
+      "confusion": {
+        "tp": 178,
+        "tn": 217,
+        "fp": 41,
+        "fn": 51
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.6204,
+        "mean": 0.6198,
+        "ci_lower": 0.5489,
+        "ci_upper": 0.6906
+      },
+      "sensitivity": {
+        "point": 0.7773,
+        "mean": 0.7768,
+        "ci_lower": 0.7193,
+        "ci_upper": 0.8325
+      },
+      "specificity": {
+        "point": 0.8411,
+        "mean": 0.8409,
+        "ci_lower": 0.7951,
+        "ci_upper": 0.884
+      }
+    },
+    {
+      "label": "Flash HIGH text 5-of-5",
+      "n_detections": 415,
+      "confusion": {
+        "tp": 176,
+        "tn": 214,
+        "fp": 44,
+        "fn": 53
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.5998,
+        "mean": 0.6002,
+        "ci_lower": 0.5294,
+        "ci_upper": 0.6711
+      },
+      "sensitivity": {
+        "point": 0.7686,
+        "mean": 0.7691,
+        "ci_lower": 0.7137,
+        "ci_upper": 0.8263
+      },
+      "specificity": {
+        "point": 0.8295,
+        "mean": 0.8294,
+        "ci_lower": 0.7844,
+        "ci_upper": 0.8727
+      }
+    },
+    {
+      "label": "Flash Text MINIMAL T=0.0 (N=1)",
+      "n_detections": 1084,
+      "confusion": {
+        "tp": 228,
+        "tn": 2,
+        "fp": 256,
+        "fn": 1
+      },
+      "n_tiles": 487,
+      "n_populated": 229,
+      "n_empty": 258,
+      "mcc": {
+        "point": 0.0216,
+        "mean": 0.0231,
+        "ci_lower": -0.0651,
+        "ci_upper": 0.0936
+      },
+      "sensitivity": {
+        "point": 0.9956,
+        "mean": 0.9959,
+        "ci_lower": 0.9864,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "point": 0.0078,
+        "mean": 0.0078,
+        "ci_lower": 0.0,
+        "ci_upper": 0.02
+      }
+    }
+  ]
+}

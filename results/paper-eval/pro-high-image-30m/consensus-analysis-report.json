@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-26T12:42:55.563237+00:00",
+    "script_version": "2.0.0",
+    "study_dir": "outputs/h11/pv-diag-384/pro-high-image-n5",
+    "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+    "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_bootstrap": 1000,
+    "random_seed": 42,
+    "pool_selection": "first-N (preregistration Section 3.8)",
+    "temperatures": [
+      "image-t0.7"
+    ],
+    "pool_sizes": [
+      5
+    ],
+    "n_configurations": 5,
+    "max_workers": 20,
+    "buffer_metres": 30,
+    "clustering_tolerance_metres": 20
+  },
+  "optima": {
+    "per_temperature_optima": {
+      "image-t0.7": {
+        "pool_size": 5,
+        "threshold": 3,
+        "f1": 0.8212,
+        "f1_ci": [
+          0.787,
+          0.8509
+        ],
+        "precision": 0.7898,
+        "recall": 0.8552,
+        "n_detections": 471,
+        "delta_vs_baseline": 0.2638
+      }
+    },
+    "global_optimum": {
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 3,
+      "f1": 0.8212,
+      "f1_ci": [
+        0.787,
+        0.8509
+      ],
+      "delta_vs_baseline": 0.2638
+    },
+    "baseline_f1": 0.5574,
+    "beats_baseline": true
+  },
+  "results": [
+    {
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 1,
+      "f1": 0.6332,
+      "precision": 0.4804,
+      "recall": 0.9287,
+      "f1_ci_lo": 0.5991,
+      "f1_ci_hi": 0.6684,
+      "p_ci_lo": 0.4425,
+      "p_ci_hi": 0.5186,
+      "r_ci_lo": 0.9045,
+      "r_ci_hi": 0.9508,
+      "n_detections": 841
+    },
+    {
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 2,
+      "f1": 0.7701,
+      "precision": 0.6724,
+      "recall": 0.9011,
+      "f1_ci_lo": 0.7385,
+      "f1_ci_hi": 0.8024,
+      "p_ci_lo": 0.6294,
+      "p_ci_hi": 0.7138,
+      "r_ci_lo": 0.8702,
+      "r_ci_hi": 0.9296,
+      "n_detections": 583
+    },
+    {
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 3,
+      "f1": 0.8212,
+      "precision": 0.7898,
+      "recall": 0.8552,
+      "f1_ci_lo": 0.787,
+      "f1_ci_hi": 0.8509,
+      "p_ci_lo": 0.7489,
+      "p_ci_hi": 0.8288,
+      "r_ci_lo": 0.8153,
+      "r_ci_hi": 0.8898,
+      "n_detections": 471
+    },
+    {
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 4,
+      "f1": 0.7918,
+      "precision": 0.8363,
+      "recall": 0.7517,
+      "f1_ci_lo": 0.7497,
+      "f1_ci_hi": 0.827,
+      "p_ci_lo": 0.7946,
+      "p_ci_hi": 0.8734,
+      "r_ci_lo": 0.6986,
+      "r_ci_hi": 0.8014,
+      "n_detections": 391
+    },
+    {
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 5,
+      "f1": 0.7049,
+      "precision": 0.8687,
+      "recall": 0.5931,
+      "f1_ci_lo": 0.66,
+      "f1_ci_hi": 0.7478,
+      "p_ci_lo": 0.828,
+      "p_ci_hi": 0.9061,
+      "r_ci_lo": 0.5398,
+      "r_ci_hi": 0.6484,
+      "n_detections": 297
+    }
+  ]
+}

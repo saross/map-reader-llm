@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T05:08:39.034507+00:00",
+  "summary": {
+    "label": "P2b Image T=0.3",
+    "n_runs": 3,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6512,
+        "f1_ci_lower": 0.6082,
+        "f1_ci_upper": 0.6908,
+        "precision": 0.5529,
+        "p_ci_lower": 0.5028,
+        "p_ci_upper": 0.5986,
+        "recall": 0.7922,
+        "r_ci_lower": 0.7445,
+        "r_ci_upper": 0.8373
+      }
+    ]
+  },
+  "per_run": [
+    {
+      "label": "detections_T0.3_run01",
+      "n_detections": 774,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6535,
+          "f1_ci_lower": 0.6135,
+          "f1_ci_upper": 0.6892,
+          "precision": 0.5543,
+          "p_ci_lower": 0.5018,
+          "p_ci_upper": 0.598,
+          "recall": 0.7959,
+          "r_ci_lower": 0.7538,
+          "r_ci_upper": 0.8359
+        }
+      ]
+    },
+    {
+      "label": "detections_T0.3_run02",
+      "n_detections": 778,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.653,
+          "f1_ci_lower": 0.6079,
+          "f1_ci_upper": 0.6934,
+          "precision": 0.5527,
+          "p_ci_lower": 0.5021,
+          "p_ci_upper": 0.6003,
+          "recall": 0.7978,
+          "r_ci_lower": 0.7477,
+          "r_ci_upper": 0.8462
+        }
+      ]
+    },
+    {
+      "label": "detections_T0.3_run03",
+      "n_detections": 765,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6472,
+          "f1_ci_lower": 0.6031,
+          "f1_ci_upper": 0.6899,
+          "precision": 0.5516,
+          "p_ci_lower": 0.5046,
+          "p_ci_upper": 0.5974,
+          "recall": 0.7829,
+          "r_ci_lower": 0.7319,
+          "r_ci_upper": 0.8297
+        }
+      ]
+    }
+  ]
+}

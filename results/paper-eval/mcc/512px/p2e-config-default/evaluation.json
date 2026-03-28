@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:48:59.005047+00:00",
+  "summary": {
+    "label": "P2e Config default",
+    "n_detections": 752,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6708,
+        "f1_ci_lower": 0.6296,
+        "f1_ci_upper": 0.7092,
+        "precision": 0.5758,
+        "p_ci_lower": 0.529,
+        "p_ci_upper": 0.6193,
+        "recall": 0.8033,
+        "r_ci_lower": 0.7559,
+        "r_ci_upper": 0.848
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 204,
+        "tn": 10,
+        "fp": 126,
+        "fn": 0
+      },
+      "mcc": {
+        "mean": 0.2143,
+        "ci_lower": 0.1468,
+        "ci_upper": 0.2742
+      },
+      "sensitivity": {
+        "mean": 1.0,
+        "ci_lower": 1.0,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.0757,
+        "ci_lower": 0.0359,
+        "ci_upper": 0.1189
+      }
+    }
+  }
+}

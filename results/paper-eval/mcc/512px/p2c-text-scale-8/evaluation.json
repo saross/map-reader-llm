@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:48:13.597992+00:00",
+  "summary": {
+    "label": "P2c Text scale-8",
+    "n_detections": 881,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6451,
+        "f1_ci_lower": 0.59,
+        "f1_ci_upper": 0.6942,
+        "precision": 0.5199,
+        "p_ci_lower": 0.4554,
+        "p_ci_upper": 0.5787,
+        "recall": 0.8497,
+        "r_ci_lower": 0.8092,
+        "r_ci_upper": 0.8905
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 204,
+        "tn": 0,
+        "fp": 136,
+        "fn": 0
+      },
+      "mcc": {
+        "mean": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0
+      },
+      "sensitivity": {
+        "mean": 1.0,
+        "ci_lower": 1.0,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+INFO: Loaded 33 conditions from configs/n1-eval-512px-phase2.yaml
+INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson
+INFO: [1/33] P2a Image only (dir=/home/shawn/Code/map-reader-llm/outputs/retest/phase2a/image-only)
+INFO: Loading bounds: /home/shawn/Code/map-reader-llm/inputs/vectors/bounds/full_evaluation_bounds.geojson
+INFO: Bounds: 340 tiles
+INFO:   3 detection files
+INFO: Evaluating: detections_image-only_run01.geojson
+INFO:   30m: F1=0.560 [0.507, 0.608], P=0.454 [0.397, 0.508], R=0.729 [0.681, 0.774]
+INFO:   MCC=0.078 [-0.043, 0.164], Sens=0.995, Spec=0.022
+INFO: Evaluating: detections_image-only_run02.geojson
+INFO:   30m: F1=0.574 [0.523, 0.619], P=0.469 [0.413, 0.521], R=0.740 [0.686, 0.789]
+INFO:   MCC=0.134 [0.067, 0.196], Sens=1.000, Spec=0.029
+INFO: Evaluating: detections_image-only_run03.geojson
+INFO:   30m: F1=0.588 [0.540, 0.633], P=0.482 [0.430, 0.532], R=0.755 [0.707, 0.801]
+INFO:   MCC=0.116 [0.063, 0.177], Sens=1.000, Spec=0.022
+INFO:   Mean across 3 runs @ 30m: F1=0.574 [0.523, 0.620], P=0.468, R=0.742
+INFO:   Mean MCC across 3 runs: 0.107 [0.029, 0.179]
+INFO: JSON written: results/paper-eval/mcc/512px/p2a-image-only/evaluation.json
+INFO: CSV written: results/paper-eval/mcc/512px/p2a-image-only/evaluation.csv
+INFO: Markdown written: results/paper-eval/mcc/512px/p2a-image-only/evaluation.md
+INFO: [2/33] P2a Brief text (dir=/home/shawn/Code/map-reader-llm/outputs/retest/phase2a/brief-text)
+INFO:   3 detection files
+INFO: Evaluating: detections_brief-text_run01.geojson
+INFO:   30m: F1=0.589 [0.527, 0.644], P=0.457 [0.392, 0.523], R=0.826 [0.774, 0.872]
+INFO:   MCC=0.067 [0.060, 0.126], Sens=1.000, Spec=0.007
+INFO: Evaluating: detections_brief-text_run02.geojson
+INFO:   30m: F1=0.600 [0.539, 0.654], P=0.474 [0.409, 0.537], R=0.818 [0.772, 0.861]
+INFO:   MCC=0.067 [0.060, 0.126], Sens=1.000, Spec=0.007
+INFO: Evaluating: detections_brief-text_run03.geojson
+INFO:   30m: F1=0.599 [0.539, 0.652], P=0.474 [0.411, 0.537], R=0.814 [0.764, 0.858]
+Traceback (most recent call last):
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 941, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 725, in main
+    return _run_batch_mode(args)
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 916, in _run_batch_mode
+    summary = _evaluate_condition(
+        det_files, gdf_ref, gdf_bounds,
+    ...<5 lines>...
+        compute_mcc=args.mcc,
+    )
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 774, in _evaluate_condition
+    result = evaluate_single_run(
+        gdf_det, gdf_ref, gdf_bounds,
+    ...<4 lines>...
+        compute_mcc=compute_mcc,
+    )
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 230, in evaluate_single_run
+    "mean": round(tile_ci["mcc"]["mean"], 4),
+            ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: type NoneType doesn't define __round__ method

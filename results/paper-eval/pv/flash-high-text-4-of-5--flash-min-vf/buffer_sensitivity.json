@@ -1,0 +1,105 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-26T12:49:31.656656+00:00",
+  "label": "Flash HIGH text 4-of-5 + Flash min vf",
+  "threshold": 0.15,
+  "n_accepted": 389,
+  "ground_truth_mounds": 569,
+  "evaluation_tiles": 487,
+  "bootstrap_iterations": 1000,
+  "seed": 42,
+  "buffers": [
+    {
+      "buffer_metres": 20,
+      "precision": 0.9152,
+      "recall": 0.8184,
+      "f1": 0.8641,
+      "ci": {
+        "f1": {
+          "mean": 0.8641,
+          "lower": 0.8331,
+          "upper": 0.8935
+        },
+        "precision": {
+          "mean": 0.9154,
+          "lower": 0.8838,
+          "upper": 0.9417
+        },
+        "recall": {
+          "mean": 0.8184,
+          "lower": 0.774,
+          "upper": 0.862
+        }
+      }
+    },
+    {
+      "buffer_metres": 30,
+      "precision": 0.9434,
+      "recall": 0.8437,
+      "f1": 0.8908,
+      "ci": {
+        "f1": {
+          "mean": 0.8907,
+          "lower": 0.8629,
+          "upper": 0.9161
+        },
+        "precision": {
+          "mean": 0.9437,
+          "lower": 0.9173,
+          "upper": 0.9669
+        },
+        "recall": {
+          "mean": 0.8436,
+          "lower": 0.8019,
+          "upper": 0.8833
+        }
+      }
+    },
+    {
+      "buffer_metres": 40,
+      "precision": 0.9434,
+      "recall": 0.8437,
+      "f1": 0.8908,
+      "ci": {
+        "f1": {
+          "mean": 0.8907,
+          "lower": 0.8629,
+          "upper": 0.9161
+        },
+        "precision": {
+          "mean": 0.9437,
+          "lower": 0.9173,
+          "upper": 0.9669
+        },
+        "recall": {
+          "mean": 0.8436,
+          "lower": 0.8019,
+          "upper": 0.8833
+        }
+      }
+    },
+    {
+      "buffer_metres": 50,
+      "precision": 0.9434,
+      "recall": 0.8437,
+      "f1": 0.8908,
+      "ci": {
+        "f1": {
+          "mean": 0.8907,
+          "lower": 0.8629,
+          "upper": 0.9161
+        },
+        "precision": {
+          "mean": 0.9437,
+          "lower": 0.9173,
+          "upper": 0.9669
+        },
+        "recall": {
+          "mean": 0.8436,
+          "lower": 0.8019,
+          "upper": 0.8833
+        }
+      }
+    }
+  ]
+}

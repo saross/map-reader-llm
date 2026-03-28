@@ -1,0 +1,170 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T12:33:48.359872+00:00",
+  "summary": {
+    "label": "Flash Image MINIMAL T=0.3",
+    "n_runs": 3,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.6528,
+        "f1_ci_lower": 0.6093,
+        "f1_ci_upper": 0.6885,
+        "precision": 0.516,
+        "p_ci_lower": 0.4659,
+        "p_ci_upper": 0.558,
+        "recall": 0.8882,
+        "r_ci_lower": 0.8554,
+        "r_ci_upper": 0.9181
+      }
+    ],
+    "tile_classification": {
+      "mcc": {
+        "mean": 0.3041,
+        "ci_lower": 0.2486,
+        "ci_upper": 0.3589
+      },
+      "sensitivity": {
+        "mean": 0.9911,
+        "ci_lower": 0.9777,
+        "ci_upper": 1.0
+      },
+      "specificity": {
+        "mean": 0.2,
+        "ci_lower": 0.1507,
+        "ci_upper": 0.25
+      },
+      "confusion": {
+        "tp": 227,
+        "tn": 52,
+        "fp": 206,
+        "fn": 2
+      }
+    }
+  },
+  "per_run": [
+    {
+      "label": "detections_image-t03_run01",
+      "n_detections": 753,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6481,
+          "f1_ci_lower": 0.6041,
+          "f1_ci_upper": 0.6851,
+          "precision": 0.5113,
+          "p_ci_lower": 0.4601,
+          "p_ci_upper": 0.5544,
+          "recall": 0.8851,
+          "r_ci_lower": 0.8494,
+          "r_ci_upper": 0.9157
+        }
+      ],
+      "tile_classification": {
+        "confusion": {
+          "tp": 227,
+          "tn": 52,
+          "fp": 206,
+          "fn": 2
+        },
+        "mcc": {
+          "mean": 0.3055,
+          "ci_lower": 0.2509,
+          "ci_upper": 0.3627
+        },
+        "sensitivity": {
+          "mean": 0.9912,
+          "ci_lower": 0.9778,
+          "ci_upper": 1.0
+        },
+        "specificity": {
+          "mean": 0.2013,
+          "ci_lower": 0.1532,
+          "ci_upper": 0.2519
+        }
+      }
+    },
+    {
+      "label": "detections_image-t03_run02",
+      "n_detections": 746,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6588,
+          "f1_ci_lower": 0.6147,
+          "f1_ci_upper": 0.6953,
+          "precision": 0.5214,
+          "p_ci_lower": 0.4705,
+          "p_ci_upper": 0.5655,
+          "recall": 0.8943,
+          "r_ci_lower": 0.862,
+          "r_ci_upper": 0.9244
+        }
+      ],
+      "tile_classification": {
+        "confusion": {
+          "tp": 226,
+          "tn": 51,
+          "fp": 207,
+          "fn": 3
+        },
+        "mcc": {
+          "mean": 0.2923,
+          "ci_lower": 0.2329,
+          "ci_upper": 0.3489
+        },
+        "sensitivity": {
+          "mean": 0.9866,
+          "ci_lower": 0.9697,
+          "ci_upper": 1.0
+        },
+        "specificity": {
+          "mean": 0.1977,
+          "ci_lower": 0.1471,
+          "ci_upper": 0.2481
+        }
+      }
+    },
+    {
+      "label": "detections_image-t03_run03",
+      "n_detections": 747,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.6514,
+          "f1_ci_lower": 0.6091,
+          "f1_ci_upper": 0.6851,
+          "precision": 0.5154,
+          "p_ci_lower": 0.467,
+          "p_ci_upper": 0.5541,
+          "recall": 0.8851,
+          "r_ci_lower": 0.8549,
+          "r_ci_upper": 0.9143
+        }
+      ],
+      "tile_classification": {
+        "confusion": {
+          "tp": 228,
+          "tn": 52,
+          "fp": 206,
+          "fn": 1
+        },
+        "mcc": {
+          "mean": 0.3146,
+          "ci_lower": 0.262,
+          "ci_upper": 0.365
+        },
+        "sensitivity": {
+          "mean": 0.9955,
+          "ci_lower": 0.9855,
+          "ci_upper": 1.0
+        },
+        "specificity": {
+          "mean": 0.2011,
+          "ci_lower": 0.1519,
+          "ci_upper": 0.25
+        }
+      }
+    }
+  ]
+}

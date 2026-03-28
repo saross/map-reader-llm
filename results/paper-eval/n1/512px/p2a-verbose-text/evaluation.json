@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T05:07:01.579630+00:00",
+  "summary": {
+    "label": "P2a Verbose text",
+    "n_runs": 3,
+    "buffers": [
+      {
+        "buffer_metres": 30,
+        "f1": 0.5552,
+        "f1_ci_lower": 0.4953,
+        "f1_ci_upper": 0.6099,
+        "precision": 0.4348,
+        "p_ci_lower": 0.3727,
+        "p_ci_upper": 0.4966,
+        "recall": 0.7681,
+        "r_ci_lower": 0.7117,
+        "r_ci_upper": 0.8193
+      }
+    ]
+  },
+  "per_run": [
+    {
+      "label": "detections_verbose-text_run01",
+      "n_detections": 931,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5537,
+          "f1_ci_lower": 0.4947,
+          "f1_ci_upper": 0.6089,
+          "precision": 0.4372,
+          "p_ci_lower": 0.3754,
+          "p_ci_upper": 0.499,
+          "recall": 0.7551,
+          "r_ci_lower": 0.6954,
+          "r_ci_upper": 0.8098
+        }
+      ]
+    },
+    {
+      "label": "detections_verbose-text_run02",
+      "n_detections": 964,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.5509,
+          "f1_ci_lower": 0.4906,
+          "f1_ci_upper": 0.6043,
+          "precision": 0.4295,
+          "p_ci_lower": 0.3681,
+          "p_ci_upper": 0.4902,
+          "recall": 0.7681,
+          "r_ci_lower": 0.7135,
+          "r_ci_upper": 0.8172
+        }
+      ]
+    },
+    {
+      "label": "detections_verbose-text_run03",
+      "n_detections": 962,
+      "buffers": [
+        {
+          "buffer_metres": 30,
+          "f1": 0.561,
+          "f1_ci_lower": 0.5007,
+          "f1_ci_upper": 0.6166,
+          "precision": 0.4376,
+          "p_ci_lower": 0.3745,
+          "p_ci_upper": 0.5005,
+          "recall": 0.7811,
+          "r_ci_lower": 0.7263,
+          "r_ci_upper": 0.831
+        }
+      ]
+    }
+  ]
+}
