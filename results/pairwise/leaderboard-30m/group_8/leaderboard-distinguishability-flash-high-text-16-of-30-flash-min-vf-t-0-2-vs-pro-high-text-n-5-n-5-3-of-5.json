@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:58:14.840535+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 8,
+    "question": "Leaderboard distinguishability",
+    "family": "leaderboard",
+    "buffer_metres": 30,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "flash-high-text-16-of-30--flash-min-vf (t=0.2)",
+    "source": {
+      "mode": "pv",
+      "probabilities": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json",
+      "manifest": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json",
+      "threshold": 0.2
+    },
+    "f1": 0.904368,
+    "precision": 0.929612,
+    "recall": 0.88046,
+    "n_detections": 412,
+    "tp": 383,
+    "fp": 29,
+    "fn": 52
+  },
+  "condition_b": {
+    "label": "pro-high-text N=5 N=5, 3-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "outputs/h11/pv-diag-384/pro-high-text-n5",
+      "temperature": "text-t0.7",
+      "pool_size": 5,
+      "threshold": 3
+    },
+    "f1": 0.855362,
+    "precision": 0.934605,
+    "recall": 0.788506,
+    "n_detections": 367,
+    "tp": 343,
+    "fp": 24,
+    "fn": 92
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.049007,
+    "p_value": 0.0022,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 55,
+    "losses_a": 31,
+    "ties": 401,
+    "null_distribution": {
+      "mean": 4.9e-05,
+      "std": 0.016435,
+      "percentile_2.5": -0.031341,
+      "percentile_97.5": 0.03269
+    }
+  }
+}

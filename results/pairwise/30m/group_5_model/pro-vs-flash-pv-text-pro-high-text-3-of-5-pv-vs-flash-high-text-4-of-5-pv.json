@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:52:26.884559+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 5,
+    "question": "Pro vs Flash (PV text)",
+    "family": "confirmatory",
+    "buffer_metres": 30,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "Pro HIGH text 3-of-5 + PV",
+    "source": {
+      "mode": "pv",
+      "probabilities": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json",
+      "manifest": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/candidate_manifest.json",
+      "threshold": 0.15
+    },
+    "f1": 0.86445,
+    "precision": 0.974063,
+    "recall": 0.777011,
+    "n_detections": 347,
+    "tp": 338,
+    "fp": 9,
+    "fn": 97
+  },
+  "condition_b": {
+    "label": "Flash HIGH text 4-of-5 + PV",
+    "source": {
+      "mode": "pv",
+      "probabilities": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json",
+      "manifest": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-text-4of5/candidate_manifest.json",
+      "threshold": 0.15
+    },
+    "f1": 0.890777,
+    "precision": 0.943445,
+    "recall": 0.843678,
+    "n_detections": 389,
+    "tp": 367,
+    "fp": 22,
+    "fn": 68
+  },
+  "permutation_test": {
+    "observed_f1_diff": -0.026327,
+    "p_value": 0.1131,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 29,
+    "losses_a": 45,
+    "ties": 413,
+    "null_distribution": {
+      "mean": 6.2e-05,
+      "std": 0.016652,
+      "percentile_2.5": -0.032379,
+      "percentile_97.5": 0.032383
+    }
+  }
+}

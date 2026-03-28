@@ -1,0 +1,33 @@
+group,question,family,label_a,label_b,f1_a,f1_b,delta_f1,precision_a,precision_b,recall_a,recall_b,n_detections_a,n_detections_b,p_value_raw,p_value_adj,significant,wins_a,losses_a,ties,n_tiles
+1,PV vs consensus,confirmatory,Flash HIGH text 16-of-30 + PV,Flash HIGH text 26-of-30,0.8902,0.8141,0.0761,0.915,0.8337,0.8667,0.7954,412,415,0.0,0.0,***,52,27,408,487
+1,PV vs consensus,confirmatory,Flash HIGH text 9-of-10 + PV,Flash HIGH text 9-of-10,0.8564,0.7968,0.0597,0.9574,0.8005,0.7747,0.7931,352,431,0.0,0.0,***,25,34,428,487
+1,PV vs consensus,confirmatory,Flash HIGH text 4-of-5 + PV,Flash HIGH text 5-of-5,0.8641,0.7788,0.0853,0.9152,0.7976,0.8184,0.7609,389,415,0.0,0.0,***,45,30,412,487
+1,PV verifier thinking,confirmatory,Flash HIGH text 4-of-5 + medium vf,Flash HIGH text 5-of-5,0.8592,0.7788,0.0803,0.8777,0.7976,0.8414,0.7609,417,415,0.0,0.0,***,49,27,411,487
+1,PV vs consensus (image),confirmatory,Flash HIGH image 3-of-5 + PV,Flash HIGH image 3-of-5,0.7778,0.7269,0.0509,0.8005,0.6759,0.7563,0.7862,411,506,0.0004,0.0007,***,37,42,408,487
+1,PV vs consensus (Pro),confirmatory,Pro HIGH text 3-of-5 + PV,Pro HIGH text 3-of-5,0.8491,0.8404,0.0087,0.9568,0.9183,0.7632,0.7747,347,367,0.258,0.3049,ns,20,30,437,487
+1,PV on single-pass text,confirmatory,Text baseline + PV,Single-pass text 5-of-5,0.8142,0.544,0.2702,0.7888,0.3964,0.8414,0.8667,464,951,0.0,0.0,***,32,58,397,487
+1,PV on single-pass image,confirmatory,Image baseline + PV,Single-pass text 5-of-5,0.7167,0.544,0.1727,0.6634,0.3964,0.7793,0.8667,511,951,0.0,0.0,***,30,79,378,487
+2,Text vs image,confirmatory,Flash HIGH text 5-of-5,Flash HIGH image 3-of-5,0.7788,0.7269,0.0519,0.7976,0.6759,0.7609,0.7862,415,506,0.0143,0.0196,*,61,38,388,487
+2,Text vs image (N=10),confirmatory,Flash HIGH text 9-of-10,Flash HIGH image 6-of-10,0.7968,0.7402,0.0565,0.8005,0.7186,0.7931,0.7632,431,462,0.0054,0.0078,**,63,30,394,487
+2,Text vs image (MINIMAL),confirmatory,Flash MIN text 5-of-5,Flash MIN image 4-of-5,0.6397,0.6639,-0.0242,0.5329,0.608,0.8,0.731,653,523,0.3604,0.3904,ns,60,36,391,487
+2,Text vs image (PV),confirmatory,Flash HIGH text 4-of-5 + PV,Flash HIGH image 3-of-5 + PV,0.8641,0.7778,0.0863,0.9152,0.8005,0.8184,0.7563,389,411,0.0,0.0,***,55,25,407,487
+3,HIGH vs MINIMAL (text N=5),confirmatory,Flash HIGH text 5-of-5,Flash MIN text 5-of-5,0.7788,0.6397,0.1391,0.7976,0.5329,0.7609,0.8,415,653,0.0,0.0,***,34,44,409,487
+3,HIGH vs MINIMAL (text N=10),confirmatory,Flash HIGH text 9-of-10,Flash MIN text 10-of-10,0.7968,0.6332,0.1636,0.8005,0.5625,0.7931,0.7241,431,560,0.0,0.0,***,48,22,417,487
+3,HIGH vs MINIMAL (text N=30),confirmatory,Flash HIGH text 26-of-30,Flash MIN text 29-of-30,0.8141,0.6611,0.153,0.8337,0.6019,0.7954,0.7333,415,530,0.0,0.0,***,47,23,417,487
+3,HIGH vs MINIMAL (image N=5),confirmatory,Flash HIGH image 3-of-5,Flash MIN image 4-of-5,0.7269,0.6639,0.063,0.6759,0.608,0.7862,0.731,506,523,0.0003,0.0006,***,43,43,401,487
+4,T=0.7 vs T=1.0 (N=5),confirmatory,Flash MIN text T=0.7 5-of-5,Flash MIN text T=1.0 5-of-5,0.6397,0.4712,0.1685,0.5329,0.5831,0.8,0.3954,653,295,0.0,0.0,***,101,12,374,487
+4,T=0.7 vs T=1.0 (N=10),confirmatory,Flash MIN text T=0.7 10-of-10,Flash MIN text T=1.0 9-of-10,0.6332,0.4615,0.1716,0.5625,0.5455,0.7241,0.4,560,319,0.0,0.0,***,94,19,374,487
+4,T=0.7 vs T=1.0 (N=30),confirmatory,Flash MIN text T=0.7 29-of-30,Flash MIN text T=1.0 22-of-30,0.6611,0.467,0.1941,0.6019,0.4987,0.7333,0.4391,530,383,0.0,0.0,***,91,22,374,487
+5,Pro vs Flash (text consensus),confirmatory,Pro HIGH text 3-of-5,Flash HIGH text 5-of-5,0.8404,0.7788,0.0616,0.9183,0.7976,0.7747,0.7609,367,415,0.0042,0.0064,**,44,38,405,487
+5,Pro vs Flash (image consensus),confirmatory,Pro HIGH image 3-of-5,Flash HIGH image 3-of-5,0.6998,0.7269,-0.0271,0.673,0.6759,0.7287,0.7862,471,506,0.2939,0.3322,ns,44,66,377,487
+5,Pro vs Flash (PV text),confirmatory,Pro HIGH text 3-of-5 + PV,Flash HIGH text 4-of-5 + PV,0.8491,0.8641,-0.015,0.9568,0.9152,0.7632,0.8184,347,389,0.4002,0.4162,ns,31,46,410,487
+6,Best vs runner-up 1,exploratory,Flash HIGH text 16-of-30 + PV,Flash HIGH text 4-of-5 + PV,0.8902,0.8641,0.0261,0.915,0.9152,0.8667,0.8184,412,389,0.0398,0.0597,ns,29,11,447,487
+6,Best vs runner-up 2,exploratory,Flash HIGH text 16-of-30 + PV,Flash HIGH text 4-of-5 + medium vf,0.8902,0.8592,0.031,0.915,0.8777,0.8667,0.8414,412,417,0.0207,0.0414,*,31,16,440,487
+6,Best vs runner-up 3,exploratory,Flash HIGH text 16-of-30 + PV,Flash HIGH text 9-of-10 + PV,0.8902,0.8564,0.0338,0.915,0.9574,0.8667,0.7747,412,352,0.0017,0.0102,*,36,6,445,487
+6,Best vs runner-up 4,exploratory,Flash HIGH text 16-of-30 + PV,Pro HIGH text 3-of-5 + PV,0.8902,0.8491,0.0411,0.915,0.9568,0.8667,0.7632,412,347,0.0119,0.0357,*,51,21,415,487
+6,Runner-up 1 vs 2,exploratory,Flash HIGH text 4-of-5 + PV,Flash HIGH text 4-of-5 + medium vf,0.8641,0.8592,0.0049,0.9152,0.8777,0.8184,0.8414,389,417,0.4701,0.4701,ns,8,12,467,487
+6,Runner-up 1 vs 3,exploratory,Flash HIGH text 4-of-5 + PV,Flash HIGH text 9-of-10 + PV,0.8641,0.8564,0.0077,0.9152,0.9574,0.8184,0.7747,389,352,0.4656,0.4701,ns,20,10,457,487
+7,N=10 vs N=5 (HIGH text),confirmatory,Flash HIGH text 9-of-10,Flash HIGH text 5-of-5,0.7968,0.7788,0.0179,0.8005,0.7976,0.7931,0.7609,431,415,0.1404,0.1738,ns,21,8,458,487
+7,N=30 vs N=10 (HIGH text),confirmatory,Flash HIGH text 26-of-30,Flash HIGH text 9-of-10,0.8141,0.7968,0.0174,0.8337,0.8005,0.7954,0.7931,415,431,0.0375,0.0488,*,10,8,469,487
+7,N=10 vs N=5 (MIN text),confirmatory,Flash MIN text 10-of-10,Flash MIN text 5-of-5,0.6332,0.6397,-0.0065,0.5625,0.5329,0.7241,0.8,560,653,0.6338,0.6338,ns,0,24,463,487
+7,N=30 vs N=10 (MIN text),confirmatory,Flash MIN text 29-of-30,Flash MIN text 10-of-10,0.6611,0.6332,0.028,0.6019,0.5625,0.7333,0.7241,530,560,0.0005,0.0008,***,13,6,468,487

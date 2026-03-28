@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:52:26.071514+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 5,
+    "question": "Pro vs Flash (image consensus)",
+    "family": "confirmatory",
+    "buffer_metres": 30,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "Pro HIGH image 3-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-image-n5",
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 3
+    },
+    "f1": 0.821192,
+    "precision": 0.789809,
+    "recall": 0.855172,
+    "n_detections": 471,
+    "tp": 372,
+    "fp": 99,
+    "fn": 63
+  },
+  "condition_b": {
+    "label": "Flash HIGH image 3-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5",
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 3
+    },
+    "f1": 0.79915,
+    "precision": 0.743083,
+    "recall": 0.864368,
+    "n_detections": 506,
+    "tp": 376,
+    "fp": 130,
+    "fn": 59
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.022042,
+    "p_value": 0.2507,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 38,
+    "losses_a": 53,
+    "ties": 396,
+    "null_distribution": {
+      "mean": 0.000256,
+      "std": 0.019202,
+      "percentile_2.5": -0.037175,
+      "percentile_97.5": 0.038214
+    }
+  }
+}

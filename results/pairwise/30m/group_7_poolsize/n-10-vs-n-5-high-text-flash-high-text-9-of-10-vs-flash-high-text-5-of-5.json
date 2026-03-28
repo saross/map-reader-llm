@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:52:32.786753+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 7,
+    "question": "N=10 vs N=5 (HIGH text)",
+    "family": "confirmatory",
+    "buffer_metres": 30,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "Flash HIGH text 9-of-10",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5",
+      "temperature": "text-t0.7",
+      "pool_size": 10,
+      "threshold": 9
+    },
+    "f1": 0.810624,
+    "precision": 0.814385,
+    "recall": 0.806897,
+    "n_detections": 431,
+    "tp": 351,
+    "fp": 80,
+    "fn": 84
+  },
+  "condition_b": {
+    "label": "Flash HIGH text 5-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5",
+      "temperature": "text-t0.7",
+      "pool_size": 5,
+      "threshold": 5
+    },
+    "f1": 0.788235,
+    "precision": 0.807229,
+    "recall": 0.770115,
+    "n_detections": 415,
+    "tp": 335,
+    "fp": 80,
+    "fn": 100
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.022388,
+    "p_value": 0.0607,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 23,
+    "losses_a": 6,
+    "ties": 458,
+    "null_distribution": {
+      "mean": -9.9e-05,
+      "std": 0.012172,
+      "percentile_2.5": -0.024236,
+      "percentile_97.5": 0.023316
+    }
+  }
+}

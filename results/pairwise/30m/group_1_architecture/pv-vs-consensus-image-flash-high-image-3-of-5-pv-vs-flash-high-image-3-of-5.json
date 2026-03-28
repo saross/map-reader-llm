@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:51:45.588575+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 1,
+    "question": "PV vs consensus (image)",
+    "family": "confirmatory",
+    "buffer_metres": 30,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "Flash HIGH image 3-of-5 + PV",
+    "source": {
+      "mode": "pv",
+      "probabilities": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json",
+      "manifest": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-image-3of5/candidate_manifest.json",
+      "threshold": 0.15
+    },
+    "f1": 0.851064,
+    "precision": 0.875912,
+    "recall": 0.827586,
+    "n_detections": 411,
+    "tp": 360,
+    "fp": 51,
+    "fn": 75
+  },
+  "condition_b": {
+    "label": "Flash HIGH image 3-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5",
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 3
+    },
+    "f1": 0.79915,
+    "precision": 0.743083,
+    "recall": 0.864368,
+    "n_detections": 506,
+    "tp": 376,
+    "fp": 130,
+    "fn": 59
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.051914,
+    "p_value": 0.0002,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 37,
+    "losses_a": 40,
+    "ties": 410,
+    "null_distribution": {
+      "mean": -0.0001,
+      "std": 0.013652,
+      "percentile_2.5": -0.026473,
+      "percentile_97.5": 0.026728
+    }
+  }
+}

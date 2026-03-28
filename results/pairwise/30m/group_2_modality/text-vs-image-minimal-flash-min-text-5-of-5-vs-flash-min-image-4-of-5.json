@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:51:58.139567+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 2,
+    "question": "Text vs image (MINIMAL)",
+    "family": "confirmatory",
+    "buffer_metres": 30,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "Flash MIN text 5-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07",
+      "temperature": "text-t0.7",
+      "pool_size": 5,
+      "threshold": 5
+    },
+    "f1": 0.647059,
+    "precision": 0.539051,
+    "recall": 0.809195,
+    "n_detections": 653,
+    "tp": 352,
+    "fp": 301,
+    "fn": 83
+  },
+  "condition_b": {
+    "label": "Flash MIN image 4-of-5",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/image-n5",
+      "temperature": "image-t0.7",
+      "pool_size": 5,
+      "threshold": 4
+    },
+    "f1": 0.724426,
+    "precision": 0.66348,
+    "recall": 0.797701,
+    "n_detections": 523,
+    "tp": 347,
+    "fp": 176,
+    "fn": 88
+  },
+  "permutation_test": {
+    "observed_f1_diff": -0.077367,
+    "p_value": 0.0013,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 44,
+    "losses_a": 40,
+    "ties": 403,
+    "null_distribution": {
+      "mean": 0.000317,
+      "std": 0.02476,
+      "percentile_2.5": -0.048767,
+      "percentile_97.5": 0.048974
+    }
+  }
+}

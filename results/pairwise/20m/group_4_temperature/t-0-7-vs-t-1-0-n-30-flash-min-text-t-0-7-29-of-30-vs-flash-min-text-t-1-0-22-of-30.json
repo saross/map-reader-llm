@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T06:54:24.492834+00:00",
+    "script": "run_pairwise_tests.py",
+    "version": "1.0.0",
+    "group": 4,
+    "question": "T=0.7 vs T=1.0 (N=30)",
+    "family": "confirmatory",
+    "buffer_metres": 20,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "condition_a": {
+    "label": "Flash MIN text T=0.7 29-of-30",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07",
+      "temperature": "text-t0.7",
+      "pool_size": 30,
+      "threshold": 29
+    },
+    "f1": 0.66114,
+    "precision": 0.601887,
+    "recall": 0.733333,
+    "n_detections": 530,
+    "tp": 319,
+    "fp": 211,
+    "fn": 116
+  },
+  "condition_b": {
+    "label": "Flash MIN text T=1.0 22-of-30",
+    "source": {
+      "mode": "consensus",
+      "study_dir": "/home/shawn/Code/map-reader-llm/outputs/h11/consensus-384-UNINTENDED-T1.0",
+      "temperature": "384",
+      "pool_size": 30,
+      "threshold": 22
+    },
+    "f1": 0.466993,
+    "precision": 0.498695,
+    "recall": 0.43908,
+    "n_detections": 383,
+    "tp": 191,
+    "fp": 192,
+    "fn": 244
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.194147,
+    "p_value": 0.0,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "wins_a": 91,
+    "losses_a": 22,
+    "ties": 374,
+    "null_distribution": {
+      "mean": 0.000377,
+      "std": 0.037814,
+      "percentile_2.5": -0.073732,
+      "percentile_97.5": 0.075634
+    }
+  }
+}
