@@ -5495,3 +5495,109 @@ For the discussion (expanded):
 > from accurate detection to diverse detection followed by filtering."
 
 ---
+
+## Observation 203: Tile Size Selection as Pipeline Optimisation — 384px Provides Better Raw Material for Consensus+PV (2026-03-28)
+
+*Session 60. McNemar analysis of 512px vs 384px detection results on a
+common geographic footprint (435 reference mounds, 30m buffer). This
+observation connects the tile-size decision to the pipeline architecture
+argument in Obs 202.*
+
+### The finding
+
+McNemar tests and F1 comparisons tell **divergent but complementary
+stories** about tile size:
+
+| Metric | 512px advantage | 384px advantage |
+|--------|-----------------|-----------------|
+| **Recall (McNemar)** | — | All 4 conditions, p≤0.017 |
+| **F1 (per-map)** | 3 of 4 conditions | 1 of 4 conditions |
+| **Precision** | Consistently higher | ~50% more false positives |
+
+384px tiles detect significantly more unique mounds (higher recall) but
+generate roughly twice the false positives (lower precision), yielding
+lower overall F1 in 3 of 4 matched conditions. 512px tiles are more
+precise but miss more mounds.
+
+### Per-condition detail
+
+| Condition | 512px F1 | 384px F1 | ΔF1 | McNemar p | 384px unique detections |
+|-----------|----------|----------|-----|-----------|------------------------|
+| Image T=0.0 | 0.631 | 0.642 | −0.011 | 0.0000 | 64 vs 23 |
+| Image T=0.7 | 0.628 | 0.610 | +0.018 | 0.0172 | 59 vs 35 |
+| Text T=0.0 | 0.628 | 0.509 | +0.118 | 0.0032 | 37 vs 15 |
+| Text T=0.7 | 0.600 | 0.502 | +0.098 | 0.0052 | 43 vs 20 |
+
+The text conditions show the largest F1 gap (~+0.10 in favour of 512px)
+because 384px text generates dramatically more false positives. At 384px,
+each tile contains less surrounding context, and the model compensates by
+flagging more ambiguous features — a "when in doubt, flag it" response
+that inflates recall at the cost of precision.
+
+### Why 384px is the right choice *for this pipeline*
+
+The McNemar/F1 divergence is not a contradiction — it reveals that 384px
+tiles are optimised for a different downstream consumer than a human
+reviewer. The consensus+PV pipeline wants **raw material with high
+recall**, not a polished detection set with balanced F1.
+
+The pipeline progression at 384px demonstrates this:
+
+| Stage | F1 | Precision | Recall | What it does |
+|-------|-----|-----------|--------|-------------|
+| N=1 (384px) | 0.406 | 0.261 | 0.912 | High recall, terrible precision |
+| Consensus N=5 | 0.788 | 0.807 | 0.770 | Precision up 3×, recall drops ~15% |
+| Consensus + PV | 0.904 | 0.930 | 0.880 | Both precision and recall optimised |
+
+At the N=1 stage, 384px tiles produce recall of 0.912 — the pipeline
+starts with nearly every mound detected. The consensus stage eliminates
+most false positives (precision 0.261→0.807) while tolerating a 15%
+recall loss. The verifier polishes both metrics to F1=0.904.
+
+If 512px tiles were used instead, the pipeline would start with higher
+precision but lower recall. The recall lost at the input stage **cannot
+be recovered downstream** — consensus voting and verification can only
+filter what's already been detected. The McNemar results show that 384px
+detects 37–64 mounds that 512px misses entirely, depending on condition.
+Those are mounds that would be permanently lost in a 512px pipeline.
+
+### The general principle
+
+**For multi-stage detection pipelines, optimise the first stage for
+recall, not F1.** The downstream stages (consensus voting, verification)
+are precision-recovery mechanisms — they can reject false positives but
+cannot resurrect false negatives. A noisy, high-recall input is strictly
+better raw material than a cleaner, lower-recall input.
+
+This is why 384px outperforms 512px in the pipeline despite
+underperforming at N=1 F1: smaller tiles trigger more detections
+(including more false positives), and the pipeline filters the noise
+more effectively than 512px's inherently cleaner but sparser detections.
+
+### Methodological note
+
+The comparison is confounded with experimental phase (512px = Phase 2
+exploration, 384px = production) and prompt optimisation. The effect
+cannot be attributed solely to tile size. However, the **mechanism** —
+smaller tiles produce higher recall at lower precision, which suits a
+multi-stage filtering pipeline — is a general principle independent of
+the confounds.
+
+### Connection to prior observations
+
+- **Obs 141 (diversity dividend)**: HIGH thinking works similarly —
+  noisier individual passes produce better consensus outcomes because
+  the noise is diverse and filterable. Tile size operates on the same
+  principle: more input signal (even noisy signal) is better than less.
+- **Obs 201 (Flash tile discrimination failure)**: Flash flags 80–100%
+  of empty tiles regardless of tile size. The excess false positives at
+  384px are consistent with this limitation — more tiles means more
+  opportunities for Flash to generate false alarms. Consensus voting
+  handles this (specificity 0.20→0.84).
+- **Obs 202 (pipeline > prompt engineering)**: Tile size selection is
+  another instance of the pipeline architecture principle. Just as
+  prompt engineering can't fix Flash's self-calibration deficit, tile
+  size can't be optimised for F1 in isolation — it must be optimised
+  for the downstream pipeline's needs.
+
+---
