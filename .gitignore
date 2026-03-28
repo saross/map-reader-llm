@@ -1,6 +1,7 @@
 # Large GIS data
 inputs/gis-map-mounds/
 inputs/rasters/
+inputs/tiles_256/*/
 *.tif
 
 # Python
@@ -26,6 +27,13 @@ archive/cc-sessions/*.jsonl
 
 # Large verifier request payloads (contain base64-encoded images, >100 MB)
 **/verifier_requests.jsonl
+
+# Large raw output directories (regenerable from API; commit results/ instead)
+outputs/h11/pv-diag-256/
+outputs/h11/pv-diag-384/
+outputs/pv/
+outputs/retest/
+outputs/.active_files.*
 
 # Ephemeral lock files
 .claude/*.lock
