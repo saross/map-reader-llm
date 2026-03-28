@@ -1,0 +1,22 @@
+{
+  "study": {
+    "name": "H11 Pro MEDIUM T=0.7 384px",
+    "version": 1.0,
+    "description": "Pro MEDIUM thinking at T=0.7 for text and image tracks. Completes the Pro 2x2 thinking x temperature matrix.\n",
+    "phase": "h11",
+    "hypothesis": "H1",
+    "created": "2026-03-27"
+  },
+  "generated": "2026-03-27T10:39:21.532764+00:00",
+  "conditions": [
+    "pro-text-medium-t07",
+    "pro-image-medium-t07"
+  ],
+  "runs_per_condition": 1,
+  "total_units": 2,
+  "tile_limit": null,
+  "execution_order": [
+    "pro-text-medium-t07/run_1",
+    "pro-image-medium-t07/run_1"
+  ]
+}
