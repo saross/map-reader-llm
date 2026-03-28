@@ -1,0 +1,616 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-28T08:17:26.207323+00:00",
+    "script": "compare_tile_sizes.py",
+    "version": "1.0.0",
+    "batch_config": "/home/shawn/Code/map-reader-llm/configs/tile-size-comparison.yaml",
+    "buffer_metres": 30,
+    "seed": 42
+  },
+  "comparisons": [
+    {
+      "label": "Image T=0.0",
+      "result": {
+        "labels": {
+          "condition_512": "512px Image T=0.0",
+          "condition_384": "384px Image T=0.0"
+        },
+        "scoping": {
+          "n_ref_total": 569,
+          "n_ref_in_common_area": 435,
+          "n_det_512_total": 777,
+          "n_det_512_in_common_area": 640,
+          "n_det_384_total": 746,
+          "n_det_384_in_common_area": 746
+        },
+        "mcnemar": {
+          "concordance_table": {
+            "both_detect": 323,
+            "512_only": 23,
+            "384_only": 64,
+            "neither": 25
+          },
+          "test": {
+            "b_512_only": 23,
+            "c_384_only": 64,
+            "n_discordant": 87,
+            "p_value": 1.3e-05,
+            "significance": "***",
+            "direction": "384px detects more unique mounds",
+            "interpretation": "Of 87 discordant mounds, 23 detected only by 512px and 64 detected only by 384px. McNemar p = 0.0000 (***)."
+          }
+        },
+        "global_512": {
+          "tp": 346,
+          "fp": 316,
+          "fn": 89,
+          "precision": 0.5227,
+          "recall": 0.7954,
+          "f1": 0.6308
+        },
+        "global_384": {
+          "tp": 387,
+          "fp": 384,
+          "fn": 48,
+          "precision": 0.5019,
+          "recall": 0.8897,
+          "f1": 0.6418
+        },
+        "f1_difference": -0.011,
+        "per_map_512": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "512px Image T=0.0",
+            "n_detections": 163,
+            "n_references": 94,
+            "tp": 78,
+            "fp": 85,
+            "fn": 16,
+            "precision": 0.4785,
+            "recall": 0.8298,
+            "f1": 0.607
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "512px Image T=0.0",
+            "n_detections": 201,
+            "n_references": 162,
+            "tp": 119,
+            "fp": 82,
+            "fn": 43,
+            "precision": 0.592,
+            "recall": 0.7346,
+            "f1": 0.6556
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "512px Image T=0.0",
+            "n_detections": 208,
+            "n_references": 164,
+            "tp": 140,
+            "fp": 68,
+            "fn": 24,
+            "precision": 0.6731,
+            "recall": 0.8537,
+            "f1": 0.7527
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "512px Image T=0.0",
+            "n_detections": 90,
+            "n_references": 15,
+            "tp": 9,
+            "fp": 81,
+            "fn": 6,
+            "precision": 0.1,
+            "recall": 0.6,
+            "f1": 0.1714
+          }
+        ],
+        "per_map_384": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "384px Image T=0.0",
+            "n_detections": 189,
+            "n_references": 94,
+            "tp": 84,
+            "fp": 105,
+            "fn": 10,
+            "precision": 0.4444,
+            "recall": 0.8936,
+            "f1": 0.5936
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "384px Image T=0.0",
+            "n_detections": 234,
+            "n_references": 162,
+            "tp": 138,
+            "fp": 96,
+            "fn": 24,
+            "precision": 0.5897,
+            "recall": 0.8519,
+            "f1": 0.697
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "384px Image T=0.0",
+            "n_detections": 251,
+            "n_references": 164,
+            "tp": 151,
+            "fp": 100,
+            "fn": 13,
+            "precision": 0.6016,
+            "recall": 0.9207,
+            "f1": 0.7277
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "384px Image T=0.0",
+            "n_detections": 97,
+            "n_references": 15,
+            "tp": 14,
+            "fp": 83,
+            "fn": 1,
+            "precision": 0.1443,
+            "recall": 0.9333,
+            "f1": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "label": "Image T=0.7",
+      "result": {
+        "labels": {
+          "condition_512": "512px Image T=0.7",
+          "condition_384": "384px Image T=0.7"
+        },
+        "scoping": {
+          "n_ref_total": 569,
+          "n_ref_in_common_area": 435,
+          "n_det_512_total": 783,
+          "n_det_512_in_common_area": 645,
+          "n_det_384_total": 758,
+          "n_det_384_in_common_area": 758
+        },
+        "mcnemar": {
+          "concordance_table": {
+            "both_detect": 312,
+            "512_only": 35,
+            "384_only": 59,
+            "neither": 29
+          },
+          "test": {
+            "b_512_only": 35,
+            "c_384_only": 59,
+            "n_discordant": 94,
+            "p_value": 0.01721,
+            "significance": "*",
+            "direction": "384px detects more unique mounds",
+            "interpretation": "Of 94 discordant mounds, 35 detected only by 512px and 59 detected only by 384px. McNemar p = 0.0172 (*)."
+          }
+        },
+        "global_512": {
+          "tp": 347,
+          "fp": 324,
+          "fn": 88,
+          "precision": 0.5171,
+          "recall": 0.7977,
+          "f1": 0.6275
+        },
+        "global_384": {
+          "tp": 371,
+          "fp": 411,
+          "fn": 64,
+          "precision": 0.4744,
+          "recall": 0.8529,
+          "f1": 0.6097
+        },
+        "f1_difference": 0.0178,
+        "per_map_512": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "512px Image T=0.7",
+            "n_detections": 165,
+            "n_references": 94,
+            "tp": 79,
+            "fp": 86,
+            "fn": 15,
+            "precision": 0.4788,
+            "recall": 0.8404,
+            "f1": 0.61
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "512px Image T=0.7",
+            "n_detections": 206,
+            "n_references": 162,
+            "tp": 119,
+            "fp": 87,
+            "fn": 43,
+            "precision": 0.5777,
+            "recall": 0.7346,
+            "f1": 0.6467
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "512px Image T=0.7",
+            "n_detections": 208,
+            "n_references": 164,
+            "tp": 139,
+            "fp": 69,
+            "fn": 25,
+            "precision": 0.6683,
+            "recall": 0.8476,
+            "f1": 0.7473
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "512px Image T=0.7",
+            "n_detections": 92,
+            "n_references": 15,
+            "tp": 10,
+            "fp": 82,
+            "fn": 5,
+            "precision": 0.1087,
+            "recall": 0.6667,
+            "f1": 0.1869
+          }
+        ],
+        "per_map_384": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "384px Image T=0.7",
+            "n_detections": 192,
+            "n_references": 94,
+            "tp": 82,
+            "fp": 110,
+            "fn": 12,
+            "precision": 0.4271,
+            "recall": 0.8723,
+            "f1": 0.5734
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "384px Image T=0.7",
+            "n_detections": 229,
+            "n_references": 162,
+            "tp": 130,
+            "fp": 99,
+            "fn": 32,
+            "precision": 0.5677,
+            "recall": 0.8025,
+            "f1": 0.665
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "384px Image T=0.7",
+            "n_detections": 255,
+            "n_references": 164,
+            "tp": 144,
+            "fp": 111,
+            "fn": 20,
+            "precision": 0.5647,
+            "recall": 0.878,
+            "f1": 0.6874
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "384px Image T=0.7",
+            "n_detections": 106,
+            "n_references": 15,
+            "tp": 15,
+            "fp": 91,
+            "fn": 0,
+            "precision": 0.1415,
+            "recall": 1.0,
+            "f1": 0.2479
+          }
+        ]
+      }
+    },
+    {
+      "label": "Text T=0.0",
+      "result": {
+        "labels": {
+          "condition_512": "512px Text T=0.0",
+          "condition_384": "384px Text T=0.0"
+        },
+        "scoping": {
+          "n_ref_total": 569,
+          "n_ref_in_common_area": 435,
+          "n_det_512_total": 884,
+          "n_det_512_in_common_area": 734,
+          "n_det_384_total": 1093,
+          "n_det_384_in_common_area": 1093
+        },
+        "mcnemar": {
+          "concordance_table": {
+            "both_detect": 359,
+            "512_only": 15,
+            "384_only": 37,
+            "neither": 24
+          },
+          "test": {
+            "b_512_only": 15,
+            "c_384_only": 37,
+            "n_discordant": 52,
+            "p_value": 0.003185,
+            "significance": "**",
+            "direction": "384px detects more unique mounds",
+            "interpretation": "Of 52 discordant mounds, 15 detected only by 512px and 37 detected only by 384px. McNemar p = 0.0032 (**)."
+          }
+        },
+        "global_512": {
+          "tp": 374,
+          "fp": 383,
+          "fn": 61,
+          "precision": 0.4941,
+          "recall": 0.8598,
+          "f1": 0.6275
+        },
+        "global_384": {
+          "tp": 396,
+          "fp": 724,
+          "fn": 39,
+          "precision": 0.3536,
+          "recall": 0.9103,
+          "f1": 0.5093
+        },
+        "f1_difference": 0.1182,
+        "per_map_512": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "512px Text T=0.0",
+            "n_detections": 171,
+            "n_references": 94,
+            "tp": 81,
+            "fp": 90,
+            "fn": 13,
+            "precision": 0.4737,
+            "recall": 0.8617,
+            "f1": 0.6113
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "512px Text T=0.0",
+            "n_detections": 211,
+            "n_references": 162,
+            "tp": 144,
+            "fp": 67,
+            "fn": 18,
+            "precision": 0.6825,
+            "recall": 0.8889,
+            "f1": 0.7721
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "512px Text T=0.0",
+            "n_detections": 205,
+            "n_references": 164,
+            "tp": 142,
+            "fp": 63,
+            "fn": 22,
+            "precision": 0.6927,
+            "recall": 0.8659,
+            "f1": 0.7696
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "512px Text T=0.0",
+            "n_detections": 170,
+            "n_references": 15,
+            "tp": 7,
+            "fp": 163,
+            "fn": 8,
+            "precision": 0.0412,
+            "recall": 0.4667,
+            "f1": 0.0757
+          }
+        ],
+        "per_map_384": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "384px Text T=0.0",
+            "n_detections": 233,
+            "n_references": 94,
+            "tp": 83,
+            "fp": 150,
+            "fn": 11,
+            "precision": 0.3562,
+            "recall": 0.883,
+            "f1": 0.5076
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "384px Text T=0.0",
+            "n_detections": 272,
+            "n_references": 162,
+            "tp": 144,
+            "fp": 128,
+            "fn": 18,
+            "precision": 0.5294,
+            "recall": 0.8889,
+            "f1": 0.6636
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "384px Text T=0.0",
+            "n_detections": 265,
+            "n_references": 164,
+            "tp": 156,
+            "fp": 109,
+            "fn": 8,
+            "precision": 0.5887,
+            "recall": 0.9512,
+            "f1": 0.7273
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "384px Text T=0.0",
+            "n_detections": 350,
+            "n_references": 15,
+            "tp": 13,
+            "fp": 337,
+            "fn": 2,
+            "precision": 0.0371,
+            "recall": 0.8667,
+            "f1": 0.0712
+          }
+        ]
+      }
+    },
+    {
+      "label": "Text T=0.7",
+      "result": {
+        "labels": {
+          "condition_512": "512px Text T=0.7",
+          "condition_384": "384px Text T=0.7"
+        },
+        "scoping": {
+          "n_ref_total": 569,
+          "n_ref_in_common_area": 435,
+          "n_det_512_total": 924,
+          "n_det_512_in_common_area": 770,
+          "n_det_384_total": 1090,
+          "n_det_384_in_common_area": 1090
+        },
+        "mcnemar": {
+          "concordance_table": {
+            "both_detect": 348,
+            "512_only": 20,
+            "384_only": 43,
+            "neither": 24
+          },
+          "test": {
+            "b_512_only": 20,
+            "c_384_only": 43,
+            "n_discordant": 63,
+            "p_value": 0.005152,
+            "significance": "**",
+            "direction": "384px detects more unique mounds",
+            "interpretation": "Of 63 discordant mounds, 20 detected only by 512px and 43 detected only by 384px. McNemar p = 0.0052 (**)."
+          }
+        },
+        "global_512": {
+          "tp": 368,
+          "fp": 424,
+          "fn": 67,
+          "precision": 0.4646,
+          "recall": 0.846,
+          "f1": 0.5998
+        },
+        "global_384": {
+          "tp": 391,
+          "fp": 731,
+          "fn": 44,
+          "precision": 0.3485,
+          "recall": 0.8989,
+          "f1": 0.5022
+        },
+        "f1_difference": 0.0976,
+        "per_map_512": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "512px Text T=0.7",
+            "n_detections": 174,
+            "n_references": 94,
+            "tp": 81,
+            "fp": 93,
+            "fn": 13,
+            "precision": 0.4655,
+            "recall": 0.8617,
+            "f1": 0.6045
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "512px Text T=0.7",
+            "n_detections": 204,
+            "n_references": 162,
+            "tp": 134,
+            "fp": 70,
+            "fn": 28,
+            "precision": 0.6569,
+            "recall": 0.8272,
+            "f1": 0.7322
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "512px Text T=0.7",
+            "n_detections": 219,
+            "n_references": 164,
+            "tp": 146,
+            "fp": 73,
+            "fn": 18,
+            "precision": 0.6667,
+            "recall": 0.8902,
+            "f1": 0.7624
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "512px Text T=0.7",
+            "n_detections": 195,
+            "n_references": 15,
+            "tp": 7,
+            "fp": 188,
+            "fn": 8,
+            "precision": 0.0359,
+            "recall": 0.4667,
+            "f1": 0.0667
+          }
+        ],
+        "per_map_384": [
+          {
+            "map_name": "K-35-052-4_32635",
+            "label": "384px Text T=0.7",
+            "n_detections": 216,
+            "n_references": 94,
+            "tp": 84,
+            "fp": 132,
+            "fn": 10,
+            "precision": 0.3889,
+            "recall": 0.8936,
+            "f1": 0.5419
+          },
+          {
+            "map_name": "K-35-053-3_Elenovo",
+            "label": "384px Text T=0.7",
+            "n_detections": 256,
+            "n_references": 162,
+            "tp": 143,
+            "fp": 113,
+            "fn": 19,
+            "precision": 0.5586,
+            "recall": 0.8827,
+            "f1": 0.6842
+          },
+          {
+            "map_name": "K-35-062-2_Rakovski",
+            "label": "384px Text T=0.7",
+            "n_detections": 264,
+            "n_references": 164,
+            "tp": 152,
+            "fp": 112,
+            "fn": 12,
+            "precision": 0.5758,
+            "recall": 0.9268,
+            "f1": 0.7103
+          },
+          {
+            "map_name": "K-35-078-1_Lesovo",
+            "label": "384px Text T=0.7",
+            "n_detections": 386,
+            "n_references": 15,
+            "tp": 12,
+            "fp": 374,
+            "fn": 3,
+            "precision": 0.0311,
+            "recall": 0.8,
+            "f1": 0.0599
+          }
+        ]
+      }
+    }
+  ]
+}

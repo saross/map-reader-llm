@@ -1,0 +1,36 @@
+# Tile size comparison: 512px vs 384px matched conditions
+#
+# Compares detection performance across tile sizes using per-mound
+# McNemar test and per-map-sheet F1 breakdown. Each pair matches the
+# same prompt modality and temperature across the two tile grids.
+#
+# Usage:
+#   python scripts/compare_tile_sizes.py \
+#       --batch configs/tile-size-comparison.yaml \
+#       --output-dir results/pairwise/tile-size-mcnemar-30m
+
+metadata:
+  description: "512px vs 384px tile size comparison — matched conditions"
+  created: "2026-03-28"
+
+defaults:
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  common_bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  buffer_metres: 30
+
+comparisons:
+  - label: "Image T=0.0"
+    detections_512: outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson
+    detections_384: outputs/h11/pv-diag-384/image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson
+
+  - label: "Image T=0.7"
+    detections_512: outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson
+    detections_384: outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+
+  - label: "Text T=0.0"
+    detections_512: outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson
+    detections_384: outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.geojson
+
+  - label: "Text T=0.7"
+    detections_512: outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson
+    detections_384: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson
