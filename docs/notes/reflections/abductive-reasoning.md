@@ -2591,3 +2591,161 @@ and fixed. The only remaining uncertainty is whether the verifier
 runs (all Flash) were intentionally Flash or suffered from the same
 `--model` omission — the user confirmed they intended Pro verifier
 but the override was never passed.
+
+---
+
+### Entry 12: Three tests, three answers — when the method is the variable (Session 58, 2026-03-26)
+
+**Surprising fact**: Running the same comparison (Pro verifier vs Flash
+minimal verifier on Flash HIGH text 4-of-5 candidates) with three
+different statistical methods produced three different p-values:
+p=0.013 (bootstrap), p=0.081 (sign-flip permutation), p=0.019
+(tile-swap permutation). Same data, same question, three answers
+spanning "clearly significant" to "clearly not significant."
+
+**Probe sequence**:
+
+1. Initial test (ad-hoc bootstrap): p=0.013, ΔF1=+0.015. Reported
+   in Obs 194 as significant. No reason to question it.
+
+2. Attempted reproduction with new generalised script (implementing
+   the preregistered sign-flip method): p=0.081, ΔF1=+0.007. The
+   ΔF1 didn't even match. Something was fundamentally different.
+
+3. Investigation: The bootstrap used micro-average F1 (aggregate
+   TP/FP/FN, then compute F1). The sign-flip used macro-average
+   (per-tile F1, then average differences). These are different test
+   statistics measuring subtly different quantities. With ~347/487
+   tiles containing zero reference mounds, the macro-average is
+   heavily diluted by uninformative tiles.
+
+4. User's intervention: "which is more robust? I'd rather file an
+   erratum than use a less-preferred method." This reframed the
+   question from "which matches the preregistration?" to "which is
+   correct?"
+
+5. `/review-implementation` identified a third option: tile-swap
+   permutation with micro-average F1. This is a proper permutation
+   test (like the preregistered method) but uses the micro-average
+   (like our standard F1 reporting). Best of both.
+
+6. Final test: p=0.019, ΔF1=+0.015. The ΔF1 matches our standard
+   reporting. The p-value falls between the bootstrap and sign-flip.
+
+**Belief revision**:
+- Before: "p=0.013, clearly significant"
+- After: "p=0.019, significant but less decisively, and the previous
+  value was from the wrong test"
+
+**Abductive structure**: This is an instance where the *method of
+inquiry* was the hidden variable, not the data. The same observations
+support different conclusions depending on an analytical choice (macro
+vs micro averaging) that is rarely made explicit. The sign-flip
+permutation test "works" and is well-established, but it answers a
+subtly different question ("does the mean per-tile F1 differ?") from
+what we're actually asking ("does the overall detection quality
+differ?"). The difference only becomes visible when tiles have unequal
+information content — which, in detection tasks with sparse targets,
+they almost always do.
+
+**Methodological lesson**: Preregistration captures the intended
+analysis, not necessarily the best analysis. When the preregistered
+method turns out to use a less appropriate test statistic than
+available alternatives, the right response is an erratum with
+justification, not fidelity to a suboptimal choice. The user's
+willingness to challenge the preregistration — rather than treating
+it as sacred — was the key decision that led to the correct method.
+
+### Entry 13: Two metrics, two stories — when F1 and MCC disagree about what "good" means (Session 59, 2026-03-27/28)
+
+**Surprising fact**: Flash Text MINIMAL achieves F1=0.515 (decent
+single-pass detection) but MCC=0.022 (random tile classification).
+These are not contradictory — they measure different things — but the
+divergence is so extreme that it changes the interpretation of every
+F1 result in the project.
+
+**Probe sequence**:
+
+1. Initial expectation: MCC would track F1 roughly — conditions with
+   higher F1 would have higher MCC. This is the default assumption
+   when adding a secondary metric.
+
+2. First MCC results (N=1 Flash): MCC ranges from 0.000 to 0.078 for
+   all text conditions, 0.30-0.33 for image conditions. Sensitivity
+   is near-perfect (0.99-1.00) but specificity is near-zero (0.00-0.20).
+   Flash detects in virtually every tile.
+
+3. Pro MCC results: MCC 0.73-0.85 with specificity 0.85-0.96. Pro
+   genuinely discriminates empty from populated tiles.
+
+4. The user's question: "is this a prompting problem?" We checked 33
+   prompt configurations at 512px. No prompt variation improved Flash's
+   specificity meaningfully. This is a model capability boundary, not
+   a configuration issue.
+
+5. Pipeline MCC results: Flash consensus MCC=0.62, Flash consensus +
+   PV MCC=0.79. The pipeline recovers tile discrimination from a model
+   that has none.
+
+**Belief revision**:
+- Before: "Flash is a decent detector that the pipeline makes better"
+- After: "Flash is a high-recall proposal engine with no
+  self-calibration. The pipeline provides the calibration that Flash
+  lacks. F1 measures detection quality within populated tiles; MCC
+  reveals that Flash has no idea which tiles are populated."
+
+**Abductive structure**: The best explanation for the F1-MCC divergence
+is that F1 and MCC measure orthogonal capabilities. F1 (with its
+precision/recall components) evaluates symbol-level matching quality.
+MCC evaluates tile-level discrimination. A model can be good at one
+and terrible at the other if it achieves symbol-level precision through
+volume (detect everywhere, match by chance in populated tiles) rather
+than through discrimination (detect only where targets exist).
+
+This is a known issue in detection evaluation — precision can be
+misleadingly high when the ratio of targets to tiles is favourable —
+but seeing it manifest so starkly (MCC=0.02 vs F1=0.51) was genuinely
+surprising. The preregistration's inclusion of MCC as a secondary
+outcome was prescient.
+
+### Entry 14: The temperature × thinking interaction — when two safe defaults combine into a terrible configuration (Session 59, 2026-03-27)
+
+**Surprising fact**: Pro MEDIUM T=0.7 achieves F1=0.428 (text) — worse
+than Flash MINIMAL at any temperature. Pro MEDIUM T=0.0 achieves
+F1=0.784. Same model, same prompt, same examples. The only difference
+is temperature, and it causes a 0.356 F1 collapse.
+
+**Probe sequence**:
+
+1. Completed the Pro 2×2 matrix expecting similar performance across
+   cells (based on the small HIGH T=0.7 vs MEDIUM T=0.0 difference).
+
+2. Pro HIGH T=0.0 was also poor (F1=0.515), but this had a plausible
+   explanation (HIGH over-reasons on deterministic output). The medium
+   thinking + stochastic combination was expected to be moderate.
+
+3. Instead, MEDIUM T=0.7 was the worst of all four cells. Inspection
+   shows P=0.278 (catastrophic precision) with R=0.924 (excellent
+   recall). The model generates massive numbers of candidates but
+   can't filter them.
+
+**Belief revision**:
+- Before: "Temperature and thinking level are independent knobs that
+  each contribute monotonically to performance"
+- After: "They interact strongly and non-linearly. Two 'moderate'
+  settings (MEDIUM thinking, T=0.7) combine worse than either extreme
+  (HIGH + T=0.7 or MEDIUM + T=0.0)"
+
+**Abductive structure**: The best explanation is that stochastic
+sampling (T>0) introduces noise that requires sufficient reasoning
+depth to filter. MEDIUM thinking at T=0.7 generates diverse candidates
+(the stochastic contribution) but lacks the reasoning budget to
+evaluate them (the thinking limitation). HIGH thinking at T=0.7
+provides enough internal filtering. MEDIUM thinking at T=0.0 doesn't
+need filtering because the deterministic output is already coherent.
+
+The implication: temperature and thinking level should always be
+optimised jointly, never independently. A benchmark that sweeps
+temperature at a fixed thinking level (or vice versa) will miss the
+interaction and may report misleadingly poor results for capable
+models tested at mismatched configurations.

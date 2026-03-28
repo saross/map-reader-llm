@@ -3122,3 +3122,201 @@ Extended session spanning three days. Managed in-flight batch runs (Phase 3c Tra
 - Phase 3c Track 1 analysis + pairwise comparisons
 - FDR correction (blocked on Track 1)
 - Phase 4 (H6 Flash→Pro transfer): not started
+
+---
+
+## Session 58 — 2026-03-25/26 (map-reader-llm): Final API runs, Pro verifier matrix, F1=0.890, methodology revision
+
+### Overview
+
+Two-day session completing all planned API work, running comprehensive
+analyses, and discovering a methodological issue in the pairwise
+permutation test that led to erratum E45. The project's best result
+reached F1=0.890 (0.904 at 30m buffer). All experiments are now complete
+— remaining work is statistical analysis and paper writing.
+
+### Accomplishments
+
+1. **All API runs complete** — 4 waves launched overnight:
+   - Wave 1: Flash PV baseline (4 conditions, 21,247 candidates) via batch
+   - Wave 2+4: Pro verifier matrix (10 conditions, 15,799 candidates) —
+     batch stalled twice, switched to real-time for final 4 jobs
+   - Wave 3: Single-pass T=0.0 rerun (10 runs × 487 tiles) via batch
+   - 90 missing Pro verifier candidates recovered via real-time API
+   - 1 candidate (03486) excluded — systematic parse failure at medium thinking
+
+2. **Sapphire analyses** — all run on sapphire per project rules:
+   - Buffer distance sensitivity: 15 consensus conditions × 3 buffers
+   - Phase 3c diversity: Track 1 + Track 2 re-analysis (H9 null both tracks)
+   - PV threshold sweeps: 50 new conditions (N=5/10/30 Flash, N=5 MINIMAL)
+   - Pro verifier evaluation: 34 sweeps (4 baselines + 30 derived)
+   - Detection-to-reference distance distributions (Obs 190)
+   - Cross-modal complementarity check (+0.3% recall — not worthwhile)
+
+3. **Documentation completed**:
+   - Observations 190–195 in working notes
+   - Protocol errata E43 (consensus-384 T=1.0), E44 (single-pass T=1.0),
+     E45 (permutation test methodology)
+   - Consolidated results report (`reports/results-summary-session-58.md`)
+   - 81 per-condition PV sweep markdown summaries (new generator script)
+   - Bootstrap CIs consolidated (81 conditions)
+   - T=1.0 directories renamed with READMEs
+   - 2 superseded pairwise files archived
+
+4. **Code delivered**:
+   - `analyse_pv_buffer_sensitivity.py` — standalone FAIR4RS buffer script
+   - `pairwise_permutation_test.py` — generalised pairwise test (3 modes)
+   - `generate_pv_sweep_summaries.py` — markdown summary generator
+   - `consolidate_pv_bootstrap_cis.py` — bootstrap CI consolidation
+   - Buffer-metres consolidation: `lib_advanced_metrics.py` (4 functions
+     parameterised), `evaluate_pv_results.py` + 4 consumer scripts updated
+   - 6 batch/overnight shell scripts
+
+5. **13 commits pushed** — clearing Session 57–58 backlog. Resolved
+   GitHub 100 MB limit by gitignoring verifier_requests.jsonl files.
+
+### Key Results
+
+| Configuration | F1@20m | F1@30m | Notes |
+|---|---|---|---|
+| **Flash HIGH text 16-of-30 + Flash min vf** | **0.890** | **0.904** | New project best |
+| Flash HIGH text 4-of-5 + Pro vf | 0.879 | — | Pro verifier significant (p=0.019) |
+| Flash HIGH text 6-of-10 + Flash min vf | 0.877 | 0.898 | |
+| Flash MINIMAL T=0.7 4-of-5 + Flash min vf | 0.871 | 0.883 | Cheapest competitive config |
+| Flash HIGH text 4-of-5 + Flash min vf | 0.864 | 0.891 | Previous best |
+| Pro HIGH text 3-of-5 + Flash min vf | 0.850 | 0.865 | P=0.971 at 30m (precision leader) |
+
+### Key Findings
+
+- **F1 > 0.9 achieved** at 30m buffer (Obs 193)
+- **Pro verifier significantly outperforms Flash** (p=0.019, E45 method)
+- **Verifier thinking level**: minimal > medium > HIGH in aggregate,
+  but HIGH wins more individual tiles (Obs 194)
+- **Buffer sensitivity**: image tracks gain 0.09–0.15 F1 at 30–50m;
+  text saturates at 30m (Obs 190)
+- **Temperature**: T=0.7 >> T=1.0 by ~0.15 F1 at all pool sizes
+- **Diversity (H9)**: null on both tracks; Obs 148 variance stabilisation
+  did not replicate (Obs 192)
+- **Cross-modal union**: +0.3% recall at N=30 — not worthwhile
+- **Verifier model effect converges** with consensus quality (Obs 195)
+- **Permutation test methodology**: macro-average sign-flip replaced by
+  micro-average tile-swap (E45) for consistency with project F1 reporting
+
+### Issues Found
+
+- Batch API queue stalled repeatedly (2 Pro jobs, 1 Flash job stuck in
+  PENDING for hours with no state change). Resolved by switching to
+  real-time API.
+- 90 candidates missing from flash-high-text-1of5 Pro verifier batch
+  result — recovered via real-time API
+- 1 candidate (03486) produces unparseable JSON at Flash medium thinking
+  — excluded (3,735/3,736 coverage)
+- Ad-hoc bootstrap pairwise test used different method than preregistered
+  permutation test — caught during `/review-implementation`, corrected
+  with E45
+- Disk space critically low (638 MB) — freed 5 GB by deleting
+  regenerable verifier JSONL files
+
+### Pending
+
+- ~~FDR correction across all pairwise families~~ → Session 60
+- ~~Tile-level MCC (preregistered secondary outcome)~~ → Done Session 59
+- ~~Re-run 17 existing pairwise comparisons with E45 method~~ → Session 60
+- ~~Additional PV pairwise comparisons~~ → Session 60 (32 defined in YAML)
+- ~~Gap matrix review~~ → Done Session 59 (comprehensive coverage)
+- Commit Session 58+59 changes
+- Paper writing
+
+## Session 59 — 2026-03-27/28 (map-reader-llm): Multi-buffer evaluation, N=1 baselines, MCC, Pro 2×2 matrix
+
+### Overview
+
+Marathon two-day session completing all single-condition analyses for
+the paper. Chose 30m spatial tolerance (E46), evaluated everything at
+multiple buffers, computed tile-level MCC across 63 conditions, completed
+the Pro temperature × thinking matrix, implemented context caching, and
+defined 32 pairwise comparisons for the next session.
+
+### Accomplishments
+
+1. **Tile patching and bug fixes** — patched 13 failed tiles in
+   single-pass-384 T=0.0. Fixed 3 bugs: tiles_dir not threaded to
+   patch function, trailing comma in LLM JSON output, tile_size None
+   from meta.json.
+
+2. **Multi-buffer evaluation** — all consensus + PV conditions at
+   20/30/40/50m on full 487-tile bounds. Created `sapphire-paper-eval.sh`,
+   `consolidate_paper_metrics.py`, `configs/pv-paper-conditions.yaml`.
+   Ran on sapphire (~16 min).
+
+3. **Spatial tolerance decision** — chose 30m as primary buffer (E46).
+   Text plateaus at 30m, image at 50m. Both plateau well within symbol
+   diameter. Centroid-to-centroid matching methodology documented
+   (Obs 198).
+
+4. **N=1 single-pass evaluation** — created `evaluate_detections.py`
+   with `--batch` and `--mcc` modes. Evaluated 16 conditions at 384px
+   and 33 conditions at 512px (Phase 2), all at 30m with bootstrap CIs.
+
+5. **Pro 2×2 matrix** — completed MEDIUM/HIGH × T=0.0/T=0.7 for text
+   and image. Discovered strong temperature × thinking interaction
+   (Obs 200). Ran Pro MEDIUM T=0.7 (the final missing cell) and found
+   it dramatically underperforms (F1=0.428 text).
+
+6. **Context caching** — implemented `--use-cache` in
+   `4_detect_mounds_batch.py` and `run_phase2.py`. Works for image
+   configs (14,549 tokens cached, 90% input discount). Text configs
+   below 1,024 token minimum, fall back gracefully.
+
+7. **Pricing fix** — updated PRICING table in `lib_llm_metadata.py`
+   with verified Google pricing. Old table had Flash-Lite prices for
+   Flash model.
+
+8. **Tile-level MCC** — created `evaluate_tile_mcc.py` for consensus
+   and PV conditions. Evaluated 63 total conditions (18 N=1 at 384px,
+   33 N=1 at 512px, 12 consensus/PV). Key finding: Flash MCC ≈ 0
+   (detects everywhere), Pro MCC ≈ 0.85 (genuine discrimination),
+   pipeline MCC = 0.79 (compensates for Flash limitation).
+
+9. **Pairwise comparison spec** — 32 comparisons across 7 groups
+   defined in `configs/pairwise-comparisons.yaml`. YAML-driven for
+   reproducibility.
+
+10. **Disk cleanup** — freed 173 GB by deleting 319 completed
+    batch_working directories.
+
+11. **Documentation** — Observations 196–202 in working notes. Erratum
+    E46 (spatial tolerance). Archived 11 superseded planning files.
+    New master to-do list.
+
+### Key findings
+
+- **Obs 196**: Text-image gap is largely a localisation artefact — gap
+  narrows and inverts at wider buffers
+- **Obs 197**: Text plateaus at 30m (6 px), image at 50m (10 px)
+- **Obs 198**: Centroid-to-centroid Hungarian matching methodology
+- **Obs 199**: ~$1,000 potentially wasted by not using context caching
+- **Obs 200**: Pro temperature × thinking interaction — mismatched
+  configurations fail
+- **Obs 201**: Flash cannot discriminate empty tiles (MCC ≈ 0)
+- **Obs 202**: Pipeline compensates for fundamental model limitations
+  that prompt engineering cannot fix
+
+### Scripts created
+
+- `scripts/evaluate_detections.py` — general-purpose detection
+  evaluation with `--batch` and `--mcc` modes
+- `scripts/evaluate_tile_mcc.py` — tile-level MCC for consensus/PV
+- `scripts/consolidate_paper_metrics.py` — multi-buffer consolidation
+- `scripts/sapphire-paper-eval.sh` — multi-buffer orchestration
+
+### Pending (Session 60)
+
+- Pairwise permutation tests (32 comparisons at 20m + 30m)
+- FDR correction (26 confirmatory + 6 exploratory)
+- Paper tables (leaderboard, pipeline progression, tolerance curve)
+- API cost retrospective
+- Commits (substantial accumulated changes)
+- Spatial tolerance curve for plotting
+
+See `planning/session-59-analysis-plan.md` for detailed carry-forward.

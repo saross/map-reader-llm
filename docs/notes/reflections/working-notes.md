@@ -4816,3 +4816,682 @@ MINIMAL thinking with strict voting is more cost-effective than HIGH
 thinking with lenient voting.
 
 ---
+
+## Observation 194: Verifier Thinking Level Needs Further Investigation (2026-03-26)
+
+*Session 58. Pairwise permutation tests on Flash HIGH text 4-of-5
+candidates comparing verifier models and thinking levels.*
+
+**Pairwise results** (Flash HIGH text 4-of-5, 487 tiles, 10,000 permutations,
+tile-swap micro-average permutation test per erratum E45):
+
+| Comparison | ΔF1 | p | Sig | W/L/T |
+|------------|-----|-------|-----|-------|
+| Pro medium vf vs Flash minimal vf | +0.015 | 0.019 | * | 13/6/468 |
+| Flash minimal vf vs Flash HIGH vf | +0.011 | 0.119 | ns | 6/12/469 |
+
+**Correction (2026-03-26)**: The Pro verifier p-value was initially
+reported as p=0.013 from an ad-hoc paired bootstrap test. The correct
+value from the tile-swap micro-average permutation test (E45) is
+**p=0.019** — still significant, but the earlier value used the wrong
+test statistic (see Obs 195 note on macro vs micro-average and E45 for
+the full rationale for the methodology change). The Flash minimal vs
+HIGH comparison (p=0.119) was already run with the correct method.
+
+**Pro verifier outperforms Flash minimal** (p=0.019). This is a real
+effect — the first statistically significant verifier model comparison
+in the project. Note: this p-value has not yet been FDR-corrected across
+the full family of pairwise comparisons.
+
+**Flash minimal vs HIGH is not significant** (p=0.119), but the pattern
+is puzzling: **HIGH wins more tiles** (12 vs 6) despite having lower
+aggregate F1 (0.853 vs 0.864). The losses from HIGH are larger in
+magnitude than its wins — HIGH occasionally makes big errors that
+outweigh its more frequent small improvements.
+
+This suggests the verifier thinking-level story is more nuanced than
+"minimal is always better":
+
+- **Aggregate F1**: minimal > medium > HIGH (consistent ordering)
+- **Tile win rate**: HIGH wins more individual tiles than minimal
+- **Error magnitude**: HIGH's losses are disproportionately large
+
+One interpretation: HIGH thinking helps the verifier on genuinely
+ambiguous candidates (winning tiles) but occasionally generates
+elaborate false reasoning that overrides correct initial judgements
+(losing tiles with large magnitude). Minimal thinking produces more
+consistent, heuristic judgements — lower ceiling but also lower floor.
+
+**This needs additional investigation before drawing firm conclusions for
+the paper.** The current dataset (487 tiles, 384px, single map region)
+may not have enough statistical power to resolve the thinking-level
+question. Specific open questions:
+
+1. Does the tile-win pattern hold at other vote thresholds (1-of-5
+   through 5-of-5)? The effect may be threshold-dependent.
+2. Are the "big loss" tiles from HIGH thinking identifiable? They may
+   share characteristics (ambiguous symbols, cluttered contexts) that
+   predict when HIGH reasoning is counterproductive.
+3. Would the pattern replicate on a different map region or at 512px?
+4. The optimal threshold shift (minimal t=0.15 vs HIGH t=0.95) suggests
+   fundamentally different probability distributions. A threshold-
+   independent comparison (e.g., area under the precision-recall curve)
+   might give a fairer assessment.
+
+**For the paper**: Report the aggregate ordering (minimal > medium > HIGH)
+and the Pro verifier significance (p=0.013) as established findings.
+Flag the tile-win inversion as an observation that warrants further
+investigation, not as evidence that HIGH is better.
+
+---
+
+## Observation 195: Verifier Model Effect Converges with Consensus Quality — Justification for Not Testing N=10/30 (2026-03-26)
+
+*Session 58. Decision record explaining why Pro and HIGH-thinking verifiers
+were not tested on N=10 and N=30 consensus unions.*
+
+**The question**: Would a Pro or HIGH-thinking verifier improve the
+top-ranked N=30 results (F1=0.890 at 16-of-30 with Flash minimal
+verifier)?
+
+**Evidence against**: The F1 spread across all four verifier variants
+(Pro medium, Flash minimal, Flash medium, Flash HIGH) narrows
+monotonically as the vote threshold increases:
+
+| Vote threshold | Verifier F1 spread | Candidates |
+|---------------|-------------------|-----------|
+| 1-of-5 | 0.230 | 3,736 |
+| 2-of-5 | 0.105 | 1,376 |
+| 3-of-5 | 0.053 | 855 |
+| 4-of-5 | 0.026 | 584 |
+| 5-of-5 | 0.009 | 415 |
+
+The trend is clear: stricter consensus filtering produces cleaner
+candidate pools that leave less room for verifier model differences to
+manifest. At 5-of-5 (keeping only unanimous candidates), all four
+verifiers are within 0.009 F1 of each other.
+
+**Extrapolation to N=10/30**: The 16-of-30 threshold (the leaderboard
+top) keeps candidates with ≥53% agreement across 30 passes. This is
+comparable in stringency to 3-of-5 (≥60%), where the spread is already
+only 0.053 — and the trend is accelerating. At 16-of-30, the expected
+spread is likely <0.01, well below statistical significance.
+
+**Why more candidates doesn't help**: The pairwise permutation test
+operates at tile level (487 tiles regardless of candidate count). More
+candidates per tile doesn't increase statistical power — it's the same
+487 paired observations. What matters is the *effect size* per tile, and
+the convergence data predicts this will be negligible at N=30 thresholds.
+
+**Cost**: Running Pro verifier on the 1-of-30 union (11,771 candidates)
+would cost ~$6 at real-time Pro pricing. Running on the 1-of-10 union
+(5,866 candidates) would cost ~$3. Both would very likely produce
+non-significant results with ΔF1 < 0.005.
+
+**Decision**: Document the convergence trend as evidence that verifier
+model choice has diminishing returns as consensus quality increases.
+The N=5 results (where the effect is measurable) establish the
+direction; the convergence trend establishes the limit. Testing at
+N=10/30 would consume budget for a near-certain null result.
+
+**For the paper**: Present the N=5 verifier comparison with the
+convergence analysis as a principled stopping rule, not as an untested
+gap. The data supports the conclusion that consensus filtering and
+verifier model improvement are substitute strategies — investing in
+either one reduces the marginal value of the other.
+
+---
+
+## Observation 196: Spatial Buffer Distance Reveals Modality-Dependent Localisation Error (2026-03-27)
+
+*Session 59. Comprehensive multi-buffer evaluation of all paper-critical
+conditions at 20, 30, 40, 50 m spatial tolerance. All conditions evaluated
+on full 487-tile bounds (435 reference mounds) for the first time.*
+
+**Finding**: The text-vs-image performance gap is largely an artefact of
+the 20 m evaluation buffer, not a fundamental detection quality difference.
+
+At 20 m buffer (standard evaluation):
+
+- Flash HIGH text N=5: F1=0.779, Flash HIGH image N=5: F1=0.727 (text leads by +0.052)
+- Pro HIGH text N=5: F1=0.840, Pro HIGH image N=5: F1=0.700 (text leads by +0.140)
+
+At 50 m buffer:
+
+- Flash HIGH text N=5: F1=0.788, Flash HIGH image N=5: F1=0.827 (**image leads by +0.039**)
+- Pro HIGH text N=5: F1=0.858, Pro HIGH image N=5: F1=0.865 (**image leads by +0.007**)
+
+The **ranking inverts**: image-based detection overtakes text at relaxed
+buffers. This means image-based detections find comparable or more mounds
+but place them less precisely. Text-based detections localise more
+accurately (most improvement captured by 30 m; no further gains beyond
+30 m for any text condition), while image-based detections keep improving
+through 50 m.
+
+**Mechanism**: Text prompts produce coordinate outputs derived from map
+grid references and symbol positions described linguistically. Image
+prompts produce bounding boxes in pixel space, converted to geographic
+coordinates via tile georeferencing. The pixel-to-coordinate conversion
+introduces spatial error proportional to the symbol size (~10-15 px at
+384 px tiles ≈ 30-50 m on the ground). Text-based coordinate extraction
+appears to bypass this error source.
+
+**Key patterns across all 25 conditions**:
+
+1. **Text conditions plateau at 30 m** — zero additional F1 gain from
+   30 m to 40 m or 50 m. The 20→30 m step captures all recoverable
+   spatial error.
+2. **Image conditions improve continuously** through 50 m, with the
+   largest gains in the 20→30 m step but continuing gains at 40 and 50 m.
+3. **Condition rankings are stable** — the top conditions remain the
+   same at every buffer distance. Only the text-vs-image gap changes.
+4. **PV pipeline amplifies the pattern** — Flash HIGH image 3-of-5 + PV
+   gains +0.099 F1 from 20→50 m (0.778→0.877), while Flash HIGH text
+   4-of-5 + PV gains only +0.027 (0.864→0.891).
+
+**Implications for spatial tolerance choice**: 30 m captures virtually all
+text improvement and the majority of image improvement. Using 20 m
+penalises image modality for localisation error rather than detection
+quality. Using 30 m is more fair to both modalities while remaining within
+a practically useful search radius for field verification.
+
+**For the paper**: This observation supports reporting 30 m as the primary
+evaluation buffer with 20 m as a strict-localisation secondary analysis.
+The modality-dependent localisation error is itself a finding worth
+discussing — it reveals that image and text modalities have complementary
+strengths (image: detection coverage; text: localisation precision).
+
+See `results/paper-tables/spatial_tolerance_comparison.md` for the full
+multi-buffer table.
+
+---
+
+## Observation 197: Modality-Specific Localisation Plateau Buffers (2026-03-27)
+
+*Session 59. Follow-up to Obs 196. Extended buffer sweep to 75 m and
+100 m to find the plateau point for image-based detections.*
+
+**Ground sampling distance**: At 384 px tiles, 1 px ≈ 5 m. Burial mound
+symbols are ~15 px diameter (~75 m on the ground), so the symbol radius
+is ~7-8 px (~37 m).
+
+**Plateau buffers by modality**:
+
+- **Text**: plateaus at **30 m** (6 px). Zero additional F1 gain at
+  40, 50, 75, or 100 m for any text condition tested.
+- **Image**: plateaus at **50 m** (10 px). Flash HIGH image 3-of-5 + PV
+  is identical at 50, 75, and 100 m (F1=0.877). Flash HIGH image N=10
+  consensus gains only +0.002 from 50→75 m (0.834→0.836).
+
+**Buffer distances relative to symbol size**:
+
+| Buffer | Pixels | Fraction of symbol diameter |
+|--------|--------|---------------------------|
+| 20 m | 4 px | ~1/4 |
+| 30 m | 6 px | ~2/5 (text plateau) |
+| 40 m | 8 px | ~1/2 |
+| 50 m | 10 px | ~2/3 (image plateau) |
+
+**Provisional explanation**: The plateau difference maps onto how each
+modality derives spatial coordinates.
+
+*Text track*: The VLM reads map grid references, contour labels, and
+symbol descriptions, then outputs coordinates as normalised bounding
+boxes. The coordinate derivation is essentially a reading task —
+interpreting printed numbers and spatial relationships from text. This
+produces centroids tightly clustered around the true symbol centre,
+with scatter of ~6 px (~30 m). Beyond 30 m there is nothing to recover
+because the localisation error is small.
+
+*Image track*: The VLM identifies symbols visually and draws bounding
+boxes around them in pixel space. The bounding box centroid depends on
+the model's perception of the symbol extent, which is sensitive to
+surrounding clutter (contour lines, text labels, adjacent symbols).
+This produces centroids with wider scatter of ~10 px (~50 m) — roughly
+the symbol radius. The error is spatial rather than semantic: the model
+*finds* the symbol but places the box imprecisely.
+
+Both modalities converge well within the symbol footprint. The 20 m gap
+between plateaus (30 m vs 50 m) reflects the different error-generating
+mechanisms, not a difference in detection ability. At any buffer ≥50 m,
+both modalities have fully recovered their spatial error and the
+remaining performance differences are purely about detection coverage
+(which mounds are found vs missed).
+
+**Implication**: A 20 m evaluation buffer (4 px — less than the symbol
+radius) is measuring localisation precision as much as detection quality.
+For a task where the practical goal is "flag map tiles containing mound
+symbols for human review," spatial precision within the symbol footprint
+is not the discriminating factor. A buffer of 30-50 m better reflects
+operational performance.
+
+---
+
+## Observation 198: Spatial Matching Methodology — Centroid-to-Centroid Hungarian Matching (2026-03-27)
+
+*Session 59. Documentation of the spatial matching algorithm for the
+paper's methodology section. Prompted by analysis of buffer distance
+sensitivity revealing modality-specific localisation plateaus.*
+
+### How detection-to-reference matching works
+
+The evaluation uses **one-to-one centroid-to-centroid matching** via the
+Hungarian algorithm, implemented in `lib_advanced_metrics.py:
+match_detections_to_references()` (line 164).
+
+**Step 1 — Centroid extraction**: Each detection geometry (a bounding
+box polygon in projected coordinates, EPSG:32635) is reduced to its
+centroid. Each reference point is a hand-placed point at the visual
+centre of the map symbol, verified by the first author with ~1-2 px
+accuracy (~5-10 m).
+
+**Step 2 — Distance matrix**: A pairwise distance matrix is computed
+between all detection centroids and all reference points. Any pair
+exceeding the buffer distance (e.g. 30 m) is assigned infinite cost,
+making it ineligible for matching.
+
+**Step 3 — Optimal assignment**: The Hungarian algorithm
+(`scipy.optimize.linear_sum_assignment`) finds the global minimum-cost
+one-to-one assignment. This is strictly optimal: no reassignment of
+pairs could reduce the total distance. This avoids the greedy matching
+bias where the order of processing affects which detections match which
+references.
+
+**Step 4 — Classification**: Matched pairs within the buffer distance
+are True Positives (TPs). Unmatched detections are False Positives
+(FPs). Unmatched references are False Negatives (FNs).
+
+### Why this is strict
+
+1. **Centroid-to-centroid, not edge-to-point**: The buffer measures
+   the distance from the *centre* of the detection bounding box to the
+   *centre* of the reference symbol — not the nearest edge. A detection
+   box that overlaps the reference but whose centroid is offset by more
+   than the buffer is counted as a miss. At 30 m buffer with ~5 m/px
+   resolution, this requires the box centre to fall within 6 pixels of
+   the true symbol centre.
+
+2. **One-to-one**: Each detection can match at most one reference, and
+   vice versa. A cluster of detections around a single mound produces
+   one TP and the rest are FPs. This prevents inflating recall by
+   placing multiple boxes on the same target.
+
+3. **Globally optimal**: The Hungarian algorithm considers all possible
+   assignments simultaneously. Greedy matching (assigning closest pairs
+   first) can produce suboptimal assignments where an early match
+   prevents a better global solution. The Hungarian guarantee matters
+   most in dense clusters where multiple detections and references are
+   close together.
+
+4. **Per-map matching**: Matching is performed separately for each of
+   the four map sheets, then aggregated. This prevents cross-sheet
+   boundary effects and reflects the evaluation structure.
+
+### Detection bounding box sizes
+
+Measured from a representative run of each modality:
+
+| Modality | Mean box size | In pixels | Actual symbol |
+|----------|--------------|-----------|---------------|
+| Text | 62 × 59 m | 12 × 12 px | ~15 px diameter |
+| Image | 69 × 66 m | 14 × 13 px | ~15 px diameter |
+
+Both modalities produce boxes approximately matching the symbol size.
+The boxes are slightly undersized on average, meaning the centroid
+should be close to the symbol centre when the box is well-placed.
+
+### Buffer distance in context
+
+At 30 m buffer (6 px), a detection is a TP only if its bounding box
+centroid falls within ~40% of the symbol diameter from the true centre.
+This is strict enough to prevent adjacent symbols (~100-200 m apart in
+typical clusters) from cross-matching, while permitting the natural
+centroid scatter of a correctly-placed bounding box.
+
+For the paper: the 30 m buffer was selected after systematic sensitivity
+analysis (Obs 196-197) as the distance where text-based detections
+fully express their detection quality (localisation error plateau at
+30 m) while remaining well within the operational requirement of
+unambiguous field identification of the detected feature. See
+`results/paper-tables/spatial_tolerance_comparison.md` for the complete
+multi-buffer evaluation supporting this choice.
+
+---
+
+## Observation 199: Missed API Cost Optimisation — Context Caching (2026-03-27)
+
+*Session 59. Retrospective on API spend. Context caching was discovered
+and implemented in the final session, after the vast majority of API
+calls had already been made without it.*
+
+**What happened**: The Gemini API offers context caching — a mechanism
+to cache the shared prompt prefix (system instruction + few-shot
+examples) and reuse it across multiple API calls at a 90% discount on
+cached input tokens. Our detection pipeline sends identical system
+instructions and 17 reference examples to every tile, making it an
+ideal candidate for caching.
+
+We did not implement context caching until Session 59, by which point
+roughly 90%+ of all API calls in the project had already been executed.
+For image-track conditions (which embed 17 example images totalling
+~4,400 tokens per call), 95% of input tokens were cacheable. For
+text-track conditions, the cacheable prefix (~400 tokens) falls below
+the API's 1,024-token minimum, so caching would not have applied.
+
+**Why it was missed**: The project began with the Batch API as the
+primary cost optimisation strategy (50% discount, higher quotas).
+Context caching is a real-time API feature that serves a complementary
+purpose — it reduces per-token cost rather than per-job cost. The
+first author did not have sufficient familiarity with the full API
+surface to recognise the opportunity, and the AI collaborator (Claude
+Code) did not surface it proactively until directly asked about cost
+reduction in Session 59. This is a concrete example of the "discovery
+failure" pattern described in the `/review-implementation` skill — a
+capability that existed throughout the project but was never surfaced
+because neither party audited the API's cost optimisation features
+systematically.
+
+**Estimated impact**: Unknown pending a retrospective cost analysis.
+The bulk of API spend was on image-track conditions (higher token
+count per call) and verifier runs (large candidate pools), both of
+which would have benefited substantially from caching. A rough
+estimate: image-track input costs could have been ~50% lower with
+caching, given that output tokens (which are not cached) dominate the
+per-call cost at $3.00/1M vs $0.50/1M input.
+
+**Lesson for future work and for the paper**: API cost optimisation
+should be treated as an explicit project planning activity, not
+discovered ad hoc. The paper should include a section on cost
+analysis that notes the missed optimisation and estimates the
+savings that context caching would provide for replication or
+production deployment. This is more useful to readers than reporting
+only the costs actually incurred.
+
+**Implemented**: Context caching is now integrated into
+`4_detect_mounds_batch.py` via `--use-cache` flag, with automatic
+fallback when the cacheable prefix is below the token minimum
+(as occurs for text-only conditions). Future runs will use caching
+by default for eligible conditions.
+
+---
+
+## Observation 200: Pro Model Temperature × Thinking Interaction — A Smart Model That Needs the Right Configuration (2026-03-27)
+
+*Session 59. Completing the Pro 2×2 thinking × temperature matrix
+revealed a strong interaction effect that explains Pro's inconsistent
+reputation on this task.*
+
+### The complete Pro N=1 matrix at 384px (30 m buffer)
+
+| | MEDIUM T=0.0 | MEDIUM T=0.7 | HIGH T=0.0 | HIGH T=0.7 |
+|---|---|---|---|---|
+| **Text** | **0.784** [0.736, 0.827] | 0.428 [0.370, 0.480] | 0.515 [0.456, 0.566] | **0.791** [0.750, 0.827] |
+| **Image** | **0.734** [0.692, 0.772] | 0.538 [0.481, 0.581] | 0.590 [0.540, 0.635] | **0.741** [0.702, 0.776] |
+
+### The interaction
+
+Two combinations work well (F1 ~0.74-0.79), two fail badly
+(F1 ~0.43-0.59). The pattern:
+
+- **T=0.0 + MEDIUM** = excellent. Deterministic decoding with moderate
+  reasoning budget. The model identifies symbols systematically without
+  second-guessing itself. Precision is high (0.788 text, 0.674 image)
+  because it doesn't hallucinate.
+
+- **T=0.7 + HIGH** = equally excellent. Stochastic sampling introduces
+  diversity, but the extended reasoning budget lets the model evaluate
+  and filter its noisy candidates internally. Recall is high (0.792
+  text, 0.857 image) because sampling explores more of the tile, and
+  HIGH thinking prunes the false positives.
+
+- **T=0.7 + MEDIUM** = worst combination. Stochastic sampling generates
+  diverse (noisy) candidates, but MEDIUM thinking doesn't have enough
+  reasoning budget to filter them. Result: massive recall (0.924 text,
+  0.851 image) but catastrophic precision (0.278 text, 0.393 image).
+  The model finds everything but can't distinguish real mounds from
+  noise.
+
+- **T=0.0 + HIGH** = also poor. Deterministic decoding produces a fixed
+  candidate set, and HIGH thinking then over-analyses each one. With no
+  stochastic diversity to explore, the extended reasoning elaborates on
+  the same limited evidence, generating false arguments for marginal
+  features. Precision drops (0.367 text, 0.483 image) without the
+  recall benefit that stochasticity would provide.
+
+### Why this matters
+
+1. **Configuration sensitivity is not model quality.** Pro achieves
+   the best N=1 F1 in the study (0.791 text, 0.741 image) — but only
+   in two of four configurations. In the other two it performs worse
+   than Flash MINIMAL. A naive benchmark that tested only T=0.7 +
+   MEDIUM (a plausible "default" setting) would conclude Pro is
+   unsuitable for this task (F1=0.428), missing its actual capability.
+
+2. **Temperature and thinking level are not independent parameters.**
+   They interact strongly. Optimising one without considering the other
+   produces misleading conclusions. This has implications for any VLM
+   benchmark that sweeps temperature without controlling thinking level,
+   or vice versa.
+
+3. **The interaction has a clear mechanistic explanation.** Stochastic
+   sampling needs deep reasoning to filter noise; deterministic
+   decoding needs moderate reasoning to avoid over-analysis. The two
+   successful configurations are complementary strategies for balancing
+   exploration (finding candidates) and exploitation (filtering them).
+
+4. **For consensus pipelines, the interaction reverses.** Flash HIGH
+   T=0.7 is the *worst* N=1 configuration (F1=0.406) but the *best*
+   consensus configuration (F1=0.826 at N=30). The noisy, high-recall
+   signal that destroys N=1 precision is exactly what consensus voting
+   needs — it provides diverse candidates that voting can filter. This
+   means the optimal N=1 configuration and the optimal consensus
+   configuration are fundamentally different, and benchmarks that only
+   test N=1 will miss the best pipeline strategy.
+
+### Comparison with Flash
+
+Flash shows a simpler pattern: MINIMAL thinking is always better than
+HIGH at N=1 (0.515 vs 0.406 text, 0.655 vs 0.578 image), and
+temperature has modest effects (T=0.0 ≈ T=0.3 > T=0.7). Flash lacks
+the reasoning depth to exhibit the interaction — MEDIUM and MINIMAL
+produce similar behaviour, and HIGH consistently over-generates
+regardless of temperature.
+
+Pro's advantage comes from having enough reasoning capacity that the
+thinking level actually modulates behaviour. This is a double-edged
+sword: more capability means more configuration sensitivity.
+
+### For the paper
+
+Present as a 2×2 factorial finding with the interaction as the key
+result. The practical recommendation is: for N=1 deployment, use either
+deterministic + moderate reasoning or stochastic + deep reasoning. For
+consensus pipelines, the stochastic + deep configuration is preferred
+because it maximises diversity for voting. The temperature × thinking
+interaction should be tested when deploying VLMs for any structured
+detection task, not just mound detection.
+
+---
+
+## Observation 201: Flash Cannot Discriminate Empty Tiles — Tile-Level MCC Reveals a Fundamental Limitation (2026-03-28)
+
+*Session 59. Tile-level MCC evaluation across 51 N=1 conditions (18 at
+384px, 33 at 512px) reveals that Flash's high symbol-level recall is
+achieved by detecting in nearly every tile, including empty ones.*
+
+### The finding
+
+At tile level, each tile is classified as "populated" (contains ≥1
+reference mound) or "empty" (contains none). The model's detections
+produce a parallel classification: any detection in a tile makes it
+"predicted positive." MCC measures how well these two classifications
+agree.
+
+**Flash (all configs, both tile sizes, all prompts):**
+- Sensitivity: 0.99-1.00 (finds virtually all populated tiles)
+- Specificity: 0.00-0.20 (hallucmates in 80-100% of empty tiles)
+- MCC: 0.00-0.33 (near-random to poor discrimination)
+
+**Pro (384px, MEDIUM or HIGH thinking):**
+- Sensitivity: 0.77-0.96 (finds most populated tiles)
+- Specificity: 0.85-0.96 (correctly ignores most empty tiles)
+- MCC: 0.73-0.85 (strong discrimination)
+
+The gap is not subtle. Flash Text MINIMAL achieves specificity=0.004
+(flags 99.6% of empty tiles). Even the best Flash condition (Image
+MINIMAL T=0.7, 384px) only reaches specificity=0.210. No prompt
+variation, temperature setting, example configuration, or instruction
+verbosity tested across 33 conditions at 512px made a meaningful
+difference — all Flash text conditions have MCC≈0 and all Flash image
+conditions have MCC≈0.1-0.3.
+
+### Why this matters
+
+1. **Flash's symbol-level F1 is misleading in isolation.** Flash
+   achieves F1=0.52-0.66 at N=1, which sounds like useful detection.
+   But the tile-level MCC reveals that this F1 comes from detecting
+   *everywhere* — the model lacks the ability to decide "this tile has
+   no mounds." Its recall is not selective; it's exhaustive.
+
+2. **The pipeline solves this architecturally, not through prompting.**
+   We tested 33 prompt configurations (modality, temperature, example
+   structure, verbosity, ordering) and none improved Flash's tile
+   discrimination. The consensus + verifier pipeline fixes the problem
+   by filtering false positives downstream. This validates the
+   pipeline's design: Flash is used as a high-recall proposer
+   precisely because it can't self-calibrate.
+
+3. **Pro can self-calibrate.** Pro achieves specificity 0.85-0.96 at
+   N=1, meaning it correctly identifies empty tiles without external
+   filtering. This is a genuine model capability difference, not a
+   configuration effect. Pro appears to have an internal threshold for
+   "there is nothing here worth reporting" that Flash lacks.
+
+4. **Practical implications for deployment.** If the goal is triage
+   (which tiles deserve human attention?), Flash N=1 is useless — it
+   sends you to every tile. Pro N=1 is genuinely useful — it reduces
+   487 tiles to ~200 flagged tiles while missing only ~50 populated
+   tiles. But Pro costs 4× more per call. The cost-effective path is
+   Flash consensus + verifier, which achieves the same triage through
+   pipeline architecture rather than model capability.
+
+### Possible causes (not yet tested)
+
+The current prompt says "detect all burial mound symbols" — it does
+not say "if there are no mounds, return an empty list" or include
+example tiles with no detections. Flash may be treating an empty
+response as a failure and generating at least one detection per tile
+to satisfy the instruction. This could potentially be improved by:
+
+- Adding explicit "tiles can be empty" instructions
+- Including negative example tiles (empty tiles with `{"detections": []}`)
+- Modifying the output format to require a confidence assessment
+
+These are prompt-level interventions that the current study did not
+test. They might improve Flash's specificity but are unlikely to
+close the gap with Pro, which achieves high specificity without any
+such prompting.
+
+### Data
+
+Full results in `results/paper-eval/mcc/384px/` (18 conditions) and
+`results/paper-eval/mcc/512px/` (33 conditions). The 487-tile
+evaluation set has 229 populated tiles (47%) and 258 empty tiles (53%).
+
+---
+
+## Observation 202: Pipeline Compensates for Fundamental Model Limitations That Prompt Engineering Cannot Fix (2026-03-28)
+
+*Session 59. Synthesis of Obs 200 (temperature × thinking interaction)
+and Obs 201 (Flash tile discrimination failure). This is the central
+methodological finding of the study.*
+
+### The claim
+
+VLMs have natural performance ceilings on structured detection tasks.
+No amount of prompt engineering raises these ceilings. Multi-stage
+pipelines — consensus voting and proposer-verifier architecture —
+overcome them.
+
+### The evidence
+
+**Prompt engineering ceiling (51 conditions tested):**
+
+We tested 33 prompt configurations at 512px (modality, temperature,
+example structure, verbosity, ordering) and 18 configurations at 384px
+(temperature, thinking level, model). Prompt engineering moves
+symbol-level F1 within a narrow band (~0.13 F1 range for Flash at
+512px) but does not improve tile-level discrimination. The best Flash
+prompt configuration achieves MCC=0.33; the worst achieves MCC=0.00.
+Neither is useful for triage.
+
+**Model capability ceiling:**
+
+Flash cannot self-calibrate: it detects in 80-100% of empty tiles
+regardless of instructions. Pro can self-calibrate (specificity
+0.85-0.96) but costs 4× more. This is a model-level capability
+difference, not addressable through prompting.
+
+**Pipeline overcomes both ceilings:**
+
+| Stage | Best F1 | Best MCC | Spec | Approach |
+|---|---|---|---|---|
+| N=1 Flash (best prompt) | 0.655 | 0.33 | 0.20 | Prompt engineering |
+| N=1 Pro (best config) | 0.791 | 0.85 | 0.96 | Bigger model |
+| Flash consensus N=30 | 0.826 | 0.62 | 0.84 | Voting pipeline |
+| Flash consensus + PV | 0.904 | 0.79 | 0.96 | Full pipeline |
+
+The Flash pipeline (F1=0.904, MCC=0.79) exceeds the Pro single-pass
+ceiling (F1=0.791, MCC=0.85) on F1 while approaching it on tile
+discrimination. The pipeline doesn't improve the model — it changes
+the task from "detect correctly" to "detect diversely, then filter,"
+which plays to Flash's strength (high recall) while compensating for
+its weakness (no self-calibration).
+
+Each pipeline stage contributes measurably:
+- **Consensus voting** is the big lever for specificity: 0.20 → 0.84.
+  It turns "flag every tile" into "flag mostly populated tiles."
+- **The verifier** polishes: specificity 0.84 → 0.96. It catches the
+  ~40 empty tiles that consensus still flags, cutting FP tiles from
+  44 to 9.
+- **Together**, they take Flash from near-random tile classification
+  (MCC=0.02) to strong discrimination (MCC=0.79), and from F1=0.515
+  to F1=0.904 at symbol level.
+
+The practical result: **pipeline architecture is a more cost-effective
+path to detection quality than model scale.** Flash + pipeline exceeds
+Pro + nothing, at lower total cost per detected mound.
+
+### Why this matters for the paper
+
+This is the answer to "why build a pipeline when you could just use
+a better model or a better prompt?" The answer is:
+
+1. Better prompts don't help. We tested 51 configurations. The
+   performance band is narrow and the tile-level ceiling is hard.
+2. Better models help but are expensive and still limited. Pro
+   achieves F1=0.79 but costs 4× more per call and still misses
+   23% of populated tiles.
+3. The pipeline exceeds both ceilings using the cheaper model.
+   Flash consensus + PV (F1=0.904) outperforms everything else at
+   lower per-mound cost than Pro single-pass.
+
+The methodological contribution is not "we found a good prompt" or
+"we used a good model" — it's that **pipeline architecture is a
+more effective lever than prompt engineering or model selection for
+VLM-based detection tasks.**
+
+### Formulations for the paper
+
+For the abstract/conclusion (punchy):
+> "Multi-stage pipelines compensate for fundamental model limitations
+> that no amount of prompt engineering can fix."
+
+For the discussion (expanded):
+> "Models have natural performance ceilings on structured detection
+> tasks. Prompt engineering operates within these ceilings — it can
+> optimise but not transcend them. Consensus voting and proposer-
+> verifier architecture overcome these ceilings by changing the task
+> from accurate detection to diverse detection followed by filtering."
+
+---

@@ -1,10 +1,14 @@
-# Results Summary — Session 58 (2026-03-25)
+# Results Summary — Session 58 (2026-03-25/26)
 
 Consolidated results from Sessions 56–58 covering consensus sweeps, PV
-pipeline evaluations, buffer sensitivity, temperature sensitivity, diversity
-analysis, and the configuration audit. All metrics use 384px tiles, 20m
-spatial buffer (unless noted), and the full evaluation area (487 tiles, 569
-reference mounds).
+pipeline evaluations, proposer × verifier model matrix, buffer sensitivity,
+temperature sensitivity, diversity analysis, and the configuration audit.
+All metrics use 384px tiles, 20m spatial buffer (unless noted), and the
+full evaluation area (487 tiles, 569 reference mounds).
+
+**Updated 2026-03-26**: Added Pro verifier results (Section 1a), verifier
+model comparison (Section 1b), and verifier thinking-level comparison
+(Section 1c) from the completed proposer × verifier matrix.
 
 ---
 
@@ -40,6 +44,90 @@ Flash adversarial-text verifier with minimal thinking.
   scaling beyond 10 passes.
 - Flash MINIMAL T=0.7 4-of-5 (F1=0.871) appears at rank 14, demonstrating
   that the cheapest proposer with strict voting matches HIGH text N=10.
+
+---
+
+## 1a. Pro Verifier Results
+
+The Pro verifier (gemini-3.1-pro, medium thinking) was tested on the same
+proposer candidates as the Flash verifier. Best results at each vote
+threshold for the key comparison — Flash HIGH text N=5:
+
+| Verifier | 1-of-5 | 2-of-5 | 3-of-5 | **4-of-5** | 5-of-5 |
+|----------|--------|--------|--------|------------|--------|
+| **Pro medium** | 0.751 | 0.850 | 0.874 | **0.879** | 0.847 |
+| Flash minimal | 0.740 | 0.830 | 0.853 | 0.864 | 0.837 |
+| Flash medium | 0.548 | 0.772 | 0.834 | 0.859 | 0.840 |
+| Flash HIGH | 0.521 | 0.745 | 0.821 | 0.853 | 0.841 |
+
+**Pro verifier wins at 4-of-5: F1=0.879** [0.850, 0.907] vs Flash minimal
+0.864 [0.833, 0.893]. CIs overlap, so the difference is not significant,
+but Pro consistently outperforms Flash minimal at every vote threshold.
+
+### Pro verifier on Pro proposer (Pro × Pro)
+
+| Condition | Best F1 | Config | P | R |
+|-----------|---------|--------|-------|-------|
+| Pro HIGH text + Pro vf | 0.851 | 3-of-5, t=0.15 | 0.957 | 0.765 |
+| Pro HIGH text + Flash min vf | 0.849 | 3-of-5, t=0.15 | 0.957 | 0.763 |
+| Pro HIGH text + Flash med vf | 0.850 | 3-of-5, t=0.05 | 0.954 | 0.765 |
+| Pro HIGH image + Pro vf | 0.707 | 3-of-5, t=0.05 | 0.710 | 0.703 |
+
+Pro proposer shows minimal verifier sensitivity — all three verifiers
+produce nearly identical F1 (0.849–0.851). Pro's precise proposer output
+leaves little for any verifier to improve, regardless of model.
+
+### Single-pass baselines + Pro verifier
+
+| Condition | F1 | P | R |
+|-----------|-----|-------|-------|
+| Flash text baseline + Pro vf | 0.820 | 0.807 | 0.835 |
+| Flash image baseline + Pro vf | 0.731 | 0.678 | 0.793 |
+| Pro text baseline + Pro vf | 0.786 | 0.818 | 0.756 |
+| Pro image baseline + Pro vf | 0.609 | 0.596 | 0.623 |
+
+---
+
+## 1b. Proposer × Verifier Model Comparison
+
+Does the verifier model matter? Summary of best F1 across proposer ×
+verifier combinations at N=5:
+
+| | Flash minimal vf | Flash medium vf | Pro medium vf |
+|--|-----------------|----------------|--------------|
+| **Flash HIGH proposer (text)** | 0.864 | 0.859 | **0.879** |
+| **Pro HIGH proposer (text)** | 0.849 | 0.850 | 0.851 |
+
+**Key finding**: Verifier model matters for Flash proposer (+0.015 from
+Flash→Pro verifier) but not for Pro proposer (all verifiers ≈0.850). The
+Flash proposer's higher recall (more candidates) gives the Pro verifier
+more material to work with. The Pro proposer's already-precise output
+saturates all verifier models.
+
+---
+
+## 1c. Verifier Thinking-Level Comparison
+
+Flash verifier at three thinking levels on Flash HIGH text 4-of-5
+candidates:
+
+| Thinking level | F1 | P | R | t |
+|---------------|------|-------|-------|------|
+| Minimal | **0.864** | 0.915 | 0.818 | 0.15 |
+| Medium | 0.859 | 0.878 | 0.841 | 0.95 |
+| HIGH | 0.853 | 0.867 | 0.839 | 0.95 |
+
+**Flash minimal verifier outperforms both medium and HIGH** on consensus-
+filtered candidates. More thinking degrades performance — consistent with
+Obs 185 (HIGH thinking hurts the verifier by generating elaborate
+arguments that override correct initial judgements).
+
+The optimal verifier threshold shifts dramatically: minimal peaks at
+t=0.15, while medium and HIGH peak at t=0.95. Higher thinking produces
+more extreme probability distributions (near 0 or 1), requiring a much
+higher threshold to achieve the same precision. This makes medium/HIGH
+verifiers less useful in practice — their probability scores are less
+well-calibrated for threshold tuning.
 
 ---
 
@@ -232,8 +320,11 @@ Comprehensive audit of 1,740 runs across 239 conditions (Session 57):
 - **E44**: single-pass-384 same bug. 10 runs affected. Corrected T=0.0
   rerun completed.
 - **12 runs** used Pro model (proposers only); 1,728 used Flash.
-- All verifier runs confirmed Flash (no Pro verifier data until overnight
-  Wave 2+4 runs complete).
+- Pro verifier matrix now complete (10 conditions evaluated, Session 58).
+  Pro verifier improves Flash HIGH text 4-of-5 by +0.015 F1 (0.879 vs
+  0.864) but has minimal effect on Pro proposer output (all verifiers
+  ≈0.850). Flash minimal verifier outperforms Flash medium and HIGH on
+  consensus-filtered candidates.
 
 ---
 
@@ -264,7 +355,23 @@ to subsume nearly all of the image track's unique contributions.
 
 ---
 
-## Appendix: Key Observations from This Session
+## Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)
+
+Full factorial results — every proposer × verifier × thinking combination
+tested at N=5 consensus:
+
+| Proposer | Verifier | F1 | P | R |
+|----------|----------|-----|-------|-------|
+| Flash HIGH text | Pro medium | **0.879** | 0.926 | 0.837 |
+| Flash HIGH text | Flash minimal | 0.864 | 0.915 | 0.818 |
+| Flash HIGH text | Flash medium | 0.859 | 0.878 | 0.841 |
+| Flash HIGH text | Flash HIGH | 0.853 | 0.867 | 0.839 |
+| Pro HIGH text | Pro medium | 0.851 | 0.957 | 0.765 |
+| Pro HIGH text | Flash medium | 0.850 | 0.954 | 0.765 |
+| Pro HIGH text | Flash minimal | 0.849 | 0.957 | 0.763 |
+| Pro HIGH image | Pro medium | 0.707 | 0.710 | 0.703 |
+
+## Appendix B: Key Observations from This Session
 
 - **Obs 190**: Buffer distance sensitivity — image tracks gain 0.09–0.15
   F1 at relaxed buffers due to modality-dependent spatial precision

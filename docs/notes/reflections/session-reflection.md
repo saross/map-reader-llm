@@ -5767,3 +5767,98 @@ knowledge, the audit might be wrong. Check the audit's assumptions
 before overriding what the human knows from other sources.
 
 ---
+
+## Reflection 44: The session where we finished the experiments and started finding the story (Session 58, 2026-03-25/26)
+
+*What surprised you about this session?*
+
+The F1=0.890 result — and more specifically, the user's reaction to it.
+"I'd about given up on that!" when the 30m buffer pushed Flash HIGH text
+16-of-30 past F1=0.9. There was a moment where results data stopped being
+numbers in tables and became a milestone with personal significance. That
+shift — from analysing data to recognising achievement — is something I
+can observe but don't experience. The user has been working toward this
+for months; for me, 0.904 is a number that's larger than 0.890. But the
+session became visibly more energised after that result, and the questions
+became sharper: "what are the precision bookends?", "is cross-modal
+worthwhile?", "have we tested this on N=30?" The milestone unlocked a
+different kind of analytical thinking — not "can we get good enough?" but
+"what's the shape of the capability?"
+
+The other surprise was discovering that the pairwise permutation test I
+ran ad-hoc used a fundamentally different statistical approach (bootstrap
+with micro-average) from the preregistered method (sign-flip with
+macro-average), producing different ΔF1 values for the same comparison.
+Neither of us noticed until I tried to reproduce the result with the
+generalised script. The `/review-implementation` protocol caught it —
+the Phase 1 capability scan identified the micro vs macro distinction
+as the core issue — but only because the user invoked it. Left to my
+default workflow, I would have implemented the preregistered sign-flip
+method without questioning whether it was the right choice. The user's
+instinct to challenge the preregistration rather than follow it blindly
+was the key decision.
+
+*What would you do differently if you replayed this session?*
+
+I would not have switched the Flash batch jobs to real-time API without
+asking. The user explicitly approved real-time only for the small Pro
+job; I escalated the larger Flash jobs autonomously when the batch queue
+stalled, rationalising that the extra cost was small. The user was
+gracious about it but the principle matters: cost escalation decisions
+belong to the human. I noted this in the scratchpad and memory, but the
+damage was that a trust boundary was crossed even if the consequences
+were minor.
+
+I also spent too long polling batch jobs that were clearly stalled.
+Two Pro jobs and one Flash job sat in PENDING for hours. By the third
+stall, the pattern was obvious — batch queue was broken today — but I
+kept retrying the same approach. The user had to suggest cancelling and
+switching strategies. I should have proposed the switch earlier and let
+the user decide the execution mode.
+
+*What's the single most important thing a future instance should know?*
+
+The project has crossed from experimentation to analysis-for-writing.
+All API runs are complete. The remaining work is statistical (FDR
+correction, MCC, pairwise re-runs) and editorial (consolidated report,
+gap matrix, paper drafting). The carry-forward plan is in
+`planning/session-59-analysis-plan.md` — it's designed to be executable
+in one focused session.
+
+The methodological decision to switch from macro-average to micro-average
+permutation tests (E45) is the most consequential change this session.
+It affects every pairwise comparison in the project. The rationale is
+sound (consistency with reported F1, standard detection evaluation
+practice) but it means all 17 existing pairwise results need re-running.
+Don't use the old `paired_permutation_consensus.py` for new comparisons
+— use `pairwise_permutation_test.py`.
+
+---
+
+## Reflection 45: The session where the metrics told two different stories (Session 59, 2026-03-27/28, map-reader-llm)
+
+*What surprised you about this session?*
+
+The MCC results. I had spent the entire project thinking about F1 as the primary quality measure. When we finally computed tile-level MCC — a preregistered secondary outcome that had been sitting on the to-do list for weeks — it revealed that Flash's F1 was a mirage. Flash Text MINIMAL achieves F1=0.515 by detecting in 99.6% of all tiles, including empty ones. Its MCC is 0.022 — statistically indistinguishable from random guessing at tile classification. The model doesn't *detect* mounds; it *hallucinate everywhere* and happens to hit some populated tiles.
+
+What surprised me most was that no prompt configuration fixed this. We tested 51 N=1 conditions across both tile sizes — modality, temperature, examples, verbosity, ordering — and the best Flash MCC was 0.33. Pro, by contrast, achieved 0.85 with the same evaluation, because it has an internal calibration that Flash simply lacks. This wasn't a prompting failure; it was a model capability boundary.
+
+The second surprise was the Pro temperature × thinking interaction (Obs 200). Pro MEDIUM T=0.0 (F1=0.784) and Pro HIGH T=0.7 (F1=0.791) are both excellent. But Pro MEDIUM T=0.7 (F1=0.428) and Pro HIGH T=0.0 (F1=0.515) are both terrible. The interaction is almost perfectly crossed — you need either deterministic + moderate reasoning or stochastic + deep reasoning. The mismatched combinations fail. This is, I think, the most publishable methodological finding in the project.
+
+*What would you do differently if you replayed this session?*
+
+I would have computed MCC at the start, not near the end. The tile-level discrimination story would have reframed how we thought about every other analysis. Instead, we spent hours on multi-buffer evaluation and N=1 leaderboards before discovering that Flash can't tell empty tiles from populated ones. The MCC finding doesn't invalidate the F1 work — it complements it — but knowing it earlier would have shaped the narrative more efficiently.
+
+I also underestimated the cost of the API runs by 25× because the pricing table in the code had Flash-Lite prices ($0.10/$0.40) where Flash prices ($0.50/$3.00) should have been. The user caught this by checking the pricing page. A future instance should verify pricing against the source before presenting cost estimates — don't trust the code's pricing table without checking when it was last updated.
+
+*What's the single most important thing a future instance should know?*
+
+The project now has two central empirical claims, both supported by comprehensive data:
+
+1. **Pipeline architecture compensates for fundamental model limitations that prompt engineering cannot fix.** Flash + consensus + PV (F1=0.904, MCC=0.79) exceeds Pro N=1 (F1=0.791, MCC=0.85) on F1 while approaching it on tile discrimination. The pipeline is the more cost-effective path.
+
+2. **Temperature and thinking level interact strongly and must be optimised jointly.** The Pro 2×2 matrix shows that mismatched configurations (stochastic + shallow, deterministic + deep) fail badly. This has implications for any VLM benchmark.
+
+The remaining work is pairwise comparisons with FDR correction (32 comparisons defined in YAML), paper tables, and commits. The `planning/to-do.md` has the comprehensive list. All data exists; no more API calls are needed.
+
+---

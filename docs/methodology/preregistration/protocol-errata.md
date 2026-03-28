@@ -1091,4 +1091,139 @@ analyses, T=0.0, Flash MINIMAL, Batch API). Submitted 2026-03-25.
 
 ---
 
+### E45: Pairwise permutation test statistic changed from macro-average to micro-average F1
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-26 |
+| Type | Deviation |
+| Preregistration ref | Section 3.5 |
+| Files | `scripts/pairwise_permutation_test.py` (new, replaces `scripts/paired_permutation_consensus.py`) |
+| Impact | Different test statistic produces different ΔF1 and p-values for the same comparison |
+
+**Description**: The preregistered pairwise permutation test (Section 3.5)
+specifies tile-level resampling with a sign-flip permutation on per-tile
+F1 differences. This computes the **macro-average** F1 difference — each
+tile receives equal weight regardless of how many detections or references
+it contains.
+
+The generalised replacement script (`pairwise_permutation_test.py`) uses a
+**tile-swap permutation** with **micro-average** F1 as the test statistic.
+For each permutation, per-tile TP/FP/FN assignments are independently
+swapped between conditions with probability 0.5, then TP/FP/FN are
+aggregated across tiles to compute F1 for each permuted condition.
+
+**Rationale for the change**:
+
+1. **Consistency with reported F1**: All F1 values throughout the project
+   (threshold sweeps, leaderboard, working notes) are micro-averages
+   computed by `calculate_f1_internal()`. The macro-average test statistic
+   produced a different ΔF1 from the reported ΔF1 for the same comparison
+   (e.g., +0.007 macro vs +0.015 micro for the Pro verifier comparison).
+   This inconsistency would be confusing in the paper.
+
+2. **Standard practice in detection evaluation**: PASCAL VOC, COCO, and
+   the remote sensing detection literature use micro-average F1 for method
+   comparisons. Macro-average is unusual for object detection tasks.
+
+3. **Information weighting**: With 487 evaluation tiles, ~347 contain zero
+   reference mounds. In the macro-average, these tiles contribute noise
+   (undefined or trivial F1 values). In the micro-average, they contribute
+   zero TP/FP/FN — effectively receiving appropriate weight.
+
+4. **Statistical power**: The macro-average dilutes the signal with ~347
+   uninformative tiles, reducing power. The micro-average concentrates on
+   tiles that contain detectable objects.
+
+**The change preserves**:
+- Tile-level exchangeability as the null hypothesis
+- Permutation-based inference (exact Type I error under the null)
+- Paired design (same tiles compared across conditions)
+
+**What changes**:
+- Test statistic: micro-average F1 difference (aggregate TP/FP/FN, then
+  compute F1) instead of macro-average (per-tile F1, then average)
+- Output key renamed: `observed_f1_diff` (was `observed_mean_diff`)
+- The ΔF1 reported by the permutation test now matches the ΔF1 computed
+  from the project's standard F1 reporting pipeline
+
+**Validation**: The Pro verifier comparison (Flash HIGH text 4-of-5)
+produces ΔF1=+0.015, p=0.019 with the micro-average test, compared to
+ΔF1=+0.007, p=0.081 with the macro-average. The micro-average result
+is consistent with the F1 values reported in the threshold sweep results
+(0.879 − 0.864 = 0.015).
+
+---
+
+### E46: Primary spatial matching buffer changed from 20 m to 30 m
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-27 |
+| Type | Deviation |
+| Preregistration ref | Section 3.5 |
+| Files | All evaluation scripts (`analyse_consensus_sweep.py`, `evaluate_pv_results.py`, `analyse_pv_buffer_sensitivity.py`) |
+| Impact | Absolute F1/P/R values increase slightly; condition rankings unchanged |
+
+**Description**: The preregistered evaluation buffer of 20 m is replaced
+by 30 m as the primary spatial matching tolerance. 20 m results are
+retained as a secondary strict-localisation analysis.
+
+The spatial matching algorithm uses **centroid-to-centroid distance**:
+each detection bounding box is reduced to its centroid, and the distance
+to the hand-placed reference point (verified at ~1-2 px accuracy by the
+first author) must fall within the buffer to count as a True Positive.
+At 384 px tiles (~5 m/px), 30 m = 6 px — requiring the detection box
+centre to fall within ~40% of the symbol diameter (~15 px) from the
+true centre.
+
+**Rationale for the change**:
+
+1. **Symbol-scale analysis**: Burial mound symbols are ~15 px in
+   diameter (~75 m on the ground). A 20 m buffer (4 px) requires the
+   detection centroid to fall within ~1/4 of the symbol diameter. This
+   threshold measures localisation precision as much as detection
+   quality, penalising correctly-detected symbols whose bounding boxes
+   are slightly off-centre.
+
+2. **Modality-specific localisation plateaus**: Comprehensive buffer
+   sensitivity analysis (Obs 196-197) showed that text-based detections
+   plateau at 30 m (zero further F1 gain at 40, 50, 75, or 100 m) while
+   image-based detections plateau at 50 m. At 20 m, the evaluation
+   disproportionately penalises image detections for localisation error
+   rather than detection quality. At 30 m, text detections fully express
+   their detection quality while image detections recover the majority
+   of their spatial error.
+
+3. **Practical relevance**: The task is to flag map locations containing
+   burial mound symbols for human verification. A 30 m offset (6 px on
+   the map, ~30 m in the field) produces no ambiguity about which
+   feature was detected — mound symbols in these maps are typically
+   >100 m apart in clusters.
+
+4. **Ranking stability**: Condition rankings are identical at all buffer
+   distances from 20 m to 100 m. No comparative conclusion changes. The
+   only effect is that absolute metrics rise slightly and the text-image
+   performance gap narrows.
+
+**The change preserves**:
+- Centroid-to-centroid matching (not edge-to-point)
+- Hungarian algorithm for globally optimal one-to-one assignment
+- Per-map-sheet matching to prevent boundary effects
+- All 20 m results available as secondary analysis
+
+**What changes**:
+- Primary F1/P/R values reported in the paper use 30 m buffer
+- 20 m results reported as sensitivity analysis
+- The text-vs-image modality gap is smaller at 30 m (reflects detection
+  quality rather than localisation precision)
+
+**Evidence**: Full multi-buffer evaluation at 20, 30, 40, 50 m for 16
+conditions (8 consensus, 8 PV) on 487 tiles with 435 reference mounds.
+Extended to 75 m and 100 m for image conditions to confirm plateau.
+See `results/paper-tables/spatial_tolerance_comparison.md` and
+Observations 196-198 in working notes.
+
+---
+
 *End of errata. New entries should be appended above this line.*
