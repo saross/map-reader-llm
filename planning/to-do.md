@@ -26,14 +26,12 @@
 - [x] **N=1 MCC at 384px** — 18 conditions. Done (Session 59).
 - [x] **N=1 MCC at 512px** — 33 Phase 2 conditions. Done (Session 59).
 - [x] **Consensus + PV MCC** — 12 conditions. Done (Session 59).
-- [ ] **MCC for ALL consensus conditions at all pool sizes** — we did
-  MCC for the best threshold at each pool size for 6 consensus
-  conditions. May want MCC for additional consensus conditions
-  (e.g., flash-min-text-t07, flash-min-text-t10, flash-min-image)
-  to show how MCC varies across the full range. Quick on sapphire.
-- [ ] **MCC for remaining PV conditions** — we did 3 PV + 3 N=1
-  baselines. May want MCC for text-baseline + PV, image-baseline + PV,
-  and the medium-verifier condition for completeness.
+- [x] **MCC for ALL consensus conditions at all pool sizes** — 11
+  additional consensus conditions evaluated. MINIMAL consensus MCC
+  0.18–0.39; Pro image 0.761. [2026-03-28]
+- [x] **MCC for remaining PV conditions** — 5 additional PV conditions.
+  Image baseline + PV: MCC=0.877 (highest). Text baseline + PV: 0.833.
+  All pipeline stages now have MCC. [2026-03-28]
 
 ## 3. Pairwise Permutation Tests
 
@@ -94,14 +92,12 @@
 
 ## 7. Documentation and Housekeeping
 
-- [ ] **Commit all Session 59 changes** — substantial: bug fixes
-  (tiles_dir, trailing comma, tile_size inference, pricing), new
-  scripts (evaluate_detections.py, evaluate_tile_mcc.py,
-  consolidate_paper_metrics.py), study YAMLs, evaluation results,
-  working notes (Obs 196-202), erratum E46, context caching, configs.
-  Break into logical commits.
-- [ ] **Update to-do.md** — mark completed items, add new items from
-  this session.
+- [x] **Commit all Session 59+60 changes** — 13 logical commits:
+  gitignore, archive, bug fixes, 4 evaluation scripts, 2 orchestration
+  scripts, configs, studies, docs, planning, results (4 commits).
+  All pushed. [2026-03-28]
+- [x] **Update to-do.md** — in progress, marking items throughout
+  session. [2026-03-28]
 - [ ] **Copy plans to planning/** — session-60 plan should be in
   git-tracked `planning/` directory.
 - [ ] **Clean up batch_working directories on sapphire** — may have
