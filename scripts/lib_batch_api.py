@@ -44,6 +44,7 @@ import base64
 import dataclasses
 import json
 import logging
+import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -906,6 +907,10 @@ def _parse_detections_from_response(result: dict) -> list[dict]:
     text = parts[0].get("text", "")
     if not text:
         return []
+
+    # Strip trailing commas before closing brackets/braces —
+    # common LLM output malformation (e.g. [{...},])
+    text = re.sub(r",\s*([}\]])", r"\1", text)
 
     json_response = json.loads(text)
 
@@ -1863,6 +1868,7 @@ def patch_failed_tiles(
     max_output_tokens: int = SAFE_MODE_MAX_OUTPUT_TOKENS,
     max_attempts: int = MAX_SYNC_RETRIES,
     dry_run: bool = False,
+    tiles_dir: Path | None = None,
 ) -> dict:
     """
     Patch failed tiles in a completed execution unit.
@@ -1889,6 +1895,9 @@ def patch_failed_tiles(
         max_attempts: Maximum retry attempts per tier.
         dry_run: If ``True``, report what would be patched without
             making API calls.
+        tiles_dir: Directory containing tile subdirectories. Defaults
+            to ``TILES_DIR`` from config when not specified. Override
+            for studies using non-default tile sizes (e.g. 384px).
 
     Returns:
         Dictionary with ``recovered``, ``recovered_safe_mode``,
@@ -1961,8 +1970,10 @@ def patch_failed_tiles(
         "examples": examples,
     }
 
-    # Resolve tile size from meta (default 512)
-    tile_size = config_section.get("tile_size", TILE_SIZE)
+    # Resolve tile size from meta. Use `or` rather than dict.get()
+    # default because tile_size may be present but None (not
+    # recorded in some configs). Tile size is resolved after tile
+    # paths are discovered — see below.
 
     print(f"  {len(failed_tiles)} failed tile(s) to patch")
     if dry_run:
@@ -1974,16 +1985,31 @@ def patch_failed_tiles(
         }
 
     # ── Resolve tile paths ────────────────────────────────────
+    effective_tiles_dir = tiles_dir if tiles_dir is not None else TILES_DIR
     tile_paths_by_name: dict[str, Path] = {}
     for tile_name in failed_tiles:
-        # Search in subdirectories of TILES_DIR
-        matches = list(TILES_DIR.rglob(tile_name))
+        # Search in subdirectories of tiles_dir
+        matches = list(effective_tiles_dir.rglob(tile_name))
         if matches:
             tile_paths_by_name[tile_name] = matches[0]
         else:
             logger.warning(
                 "Tile file not found: %s", tile_name,
             )
+
+    # ── Resolve tile size ─────────────────────────────────────
+    # Use `or` rather than dict.get() default because tile_size
+    # may be present but None in meta. When missing, infer from
+    # the first resolved tile to avoid assuming 512px default for
+    # studies using different tile sizes (e.g. 384px).
+    tile_size = config_section.get("tile_size")
+    if tile_size is None and tile_paths_by_name:
+        first_tile = next(iter(tile_paths_by_name.values()))
+        with rasterio.open(first_tile) as src:
+            tile_size = src.width
+        logger.info("Inferred tile_size=%d from %s", tile_size, first_tile)
+    if tile_size is None:
+        tile_size = TILE_SIZE
 
     # ── Tier 1: Retry with original parameters ────────────────
     recovered: list[str] = []

@@ -685,6 +685,7 @@ def run_execution_unit(
     workers_override: int | None = None,
     model_override: str | None = None,
     log_file: Path | None = None,
+    use_cache: bool = False,
 ) -> tuple[bool, str, float]:
     """
     Execute a single (condition, run) unit via 4_detect_mounds_batch.py.
@@ -760,6 +761,10 @@ def run_execution_unit(
     # Add tiles directory override if specified in study config
     if inputs.get("tiles_dir") is not None:
         cmd.extend(["--tiles-dir", str(PROJECT_ROOT / inputs["tiles_dir"])])
+
+    # Add context caching flag if specified
+    if use_cache:
+        cmd.append("--use-cache")
 
     # Add tile limit for sanity checks
     if limit and limit > 0:
@@ -860,6 +865,7 @@ def run_phase2(
     poll_interval: int = 30,
     max_poll_hours: float = 72.0,
     token_quota: int = DEFAULT_BATCH_TOKEN_QUOTA,
+    use_cache: bool = False,
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -1086,6 +1092,7 @@ def run_phase2(
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
+            use_cache=use_cache,
         )
     else:
         results, running_cost = _execute_units_sequential(
@@ -1102,6 +1109,7 @@ def run_phase2(
             running_cost=running_cost,
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
+            use_cache=use_cache,
         )
 
     # Summary
@@ -1137,6 +1145,7 @@ def _execute_units_sequential(
     running_cost: float,
     cost_warn_threshold: float,
     verbose: bool,
+    use_cache: bool = False,
 ) -> tuple[dict, float]:
     """
     Execute units one at a time (original behaviour).
@@ -1170,6 +1179,7 @@ def _execute_units_sequential(
             timeout=timeout,
             workers_override=workers_override,
             model_override=model_override,
+            use_cache=use_cache,
         )
 
         running_cost += cost
@@ -1226,6 +1236,7 @@ def _execute_units_parallel(
     running_cost: float,
     cost_warn_threshold: float,
     verbose: bool,
+    use_cache: bool = False,
 ) -> tuple[dict, float]:
     """
     Execute units concurrently via ThreadPoolExecutor.
@@ -1262,6 +1273,7 @@ def _execute_units_parallel(
             workers_override=workers_override,
             model_override=model_override,
             log_file=unit_log,
+            use_cache=use_cache,
         )
         return key, success, message, cost
 
@@ -2174,6 +2186,7 @@ def _patch_tiles_mode(
     dry_run: bool = False,
     condition_filter: str | None = None,
     verbose: bool = True,
+    tiles_dir: Path | None = None,
 ) -> None:
     """
     Scan completed units for failed tiles and patch via sync API.
@@ -2188,6 +2201,9 @@ def _patch_tiles_mode(
         dry_run: Preview without making API calls.
         condition_filter: Only patch units matching this condition name.
         verbose: Print progress information.
+        tiles_dir: Directory containing tile subdirectories. Passed
+            through to ``patch_failed_tiles()`` for studies using
+            non-default tile sizes.
     """
     from google import genai
 
@@ -2248,6 +2264,7 @@ def _patch_tiles_mode(
             unit_dir=unit_dir,
             client=client,
             dry_run=False,
+            tiles_dir=tiles_dir,
         )
 
         total_recovered += len(result["recovered"])
@@ -2507,6 +2524,17 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--use-cache",
+        action="store_true",
+        help=(
+            "Enable Gemini context caching for real-time API runs. "
+            "Caches the shared prompt prefix (system instruction + "
+            "examples) to reduce input costs. Each execution unit "
+            "creates and manages its own cache. Not compatible with "
+            "batch mode."
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -2536,11 +2564,18 @@ Examples:
         if not output_dir.exists():
             print(f"ERROR: Output directory does not exist: {output_dir}")
             sys.exit(1)
+        # Resolve tiles_dir from study config (supports non-default
+        # tile sizes like 384px)
+        study_tiles_dir = config.get("inputs", {}).get("tiles_dir")
+        resolved_tiles_dir = (
+            PROJECT_ROOT / study_tiles_dir if study_tiles_dir else None
+        )
         _patch_tiles_mode(
             output_dir=output_dir,
             dry_run=args.dry_run,
             condition_filter=args.condition,
             verbose=not args.quiet,
+            tiles_dir=resolved_tiles_dir,
         )
         sys.exit(0)
 
@@ -2561,6 +2596,7 @@ Examples:
         poll_interval=args.poll_interval,
         max_poll_hours=args.max_poll_hours,
         token_quota=args.token_quota,
+        use_cache=args.use_cache,
     )
 
     # Exit code based on results

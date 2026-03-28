@@ -277,6 +277,7 @@ def process_single_tile(
     config_version,
     governor=None,
     tile_size=TILE_SIZE,
+    cache_name=None,
 ):
     """
     Worker function to process a single tile with comprehensive metadata capture.
@@ -311,22 +312,40 @@ def process_single_tile(
         with open(tile_path, "rb") as f:
             tile_bytes = f.read()
 
-        # Build content parts using types.Part objects
-        content_parts = [
-            types.Part.from_text(
-                text="Here are the Reference Symbols you must find:"
-            ),
-        ]
-        content_parts.extend(reference_parts)
-        content_parts.append(
-            types.Part.from_text(
-                text="Now, find detection instances that visually match ANY of the "
-                "above Reference Examples in the Target Map Tile below:"
+        # Build content parts using types.Part objects.
+        # When a context cache is active, the preamble and examples
+        # are already in the cache — only send the transition text
+        # and the tile image.
+        if cache_name:
+            content_parts = [
+                types.Part.from_text(
+                    text="Now, find detection instances that visually "
+                    "match ANY of the above Reference Examples in "
+                    "the Target Map Tile below:"
+                ),
+                types.Part.from_bytes(
+                    data=tile_bytes, mime_type="image/png",
+                ),
+            ]
+        else:
+            content_parts = [
+                types.Part.from_text(
+                    text="Here are the Reference Symbols you must find:"
+                ),
+            ]
+            content_parts.extend(reference_parts)
+            content_parts.append(
+                types.Part.from_text(
+                    text="Now, find detection instances that visually "
+                    "match ANY of the above Reference Examples in "
+                    "the Target Map Tile below:"
+                )
             )
-        )
-        content_parts.append(
-            types.Part.from_bytes(data=tile_bytes, mime_type="image/png")
-        )
+            content_parts.append(
+                types.Part.from_bytes(
+                    data=tile_bytes, mime_type="image/png",
+                )
+            )
 
         # Build content object
         content = types.Content(parts=content_parts)
@@ -352,10 +371,24 @@ def process_single_tile(
                 governor.acquire()
 
             try:
+                # When using context cache, pass cache_name in config
+                # and omit system_instruction (it's in the cache).
+                if cache_name:
+                    call_config = types.GenerateContentConfig(
+                        cached_content=cache_name,
+                        temperature=gen_config.temperature,
+                        max_output_tokens=gen_config.max_output_tokens,
+                        response_mime_type=gen_config.response_mime_type,
+                        thinking_config=gen_config.thinking_config,
+                        safety_settings=gen_config.safety_settings,
+                    )
+                else:
+                    call_config = gen_config
+
                 response = client.models.generate_content(
                     model=model_name_cfg,
                     contents=content,
-                    config=gen_config,
+                    config=call_config,
                 )
 
                 api_latency = time.monotonic() - api_start
@@ -621,6 +654,7 @@ def detect_mounds_versioned(
     base_wait=30,
     tile_size=None,
     tiles_dir_override=None,
+    use_cache=False,
 ):
     """
     Executes the detection pipeline using a specific versioned configuration.
@@ -831,6 +865,48 @@ def detect_mounds_versioned(
         ],
     )
 
+    # ── Context caching (opt-in) ─────────────────────────────────
+    # Cache the shared prompt prefix (system instruction + examples)
+    # so each tile only sends its unique image. Reduces input costs
+    # by ~50-90% depending on example count.
+    cache_name = None
+    if use_cache:
+        cache_parts = [
+            types.Part.from_text(
+                text="Here are the Reference Symbols you must find:"
+            ),
+        ]
+        cache_parts.extend(reference_parts)
+
+        try:
+            config_version_tag = config.get("version", "detect")
+            cached_content = client.caches.create(
+                model=model_name_cfg,
+                config=types.CreateCachedContentConfig(
+                    system_instruction=system_instruction_text,
+                    contents=[
+                        types.Content(parts=cache_parts, role="user"),
+                    ],
+                    display_name=f"detect-{config_version_tag}",
+                    ttl="3600s",
+                ),
+            )
+            cache_name = cached_content.name
+            cache_tokens = getattr(
+                cached_content, "usage_metadata", None,
+            )
+            token_count = (
+                getattr(cache_tokens, "total_token_count", 0)
+                if cache_tokens else 0
+            )
+            print(
+                f"Context cache created: {cache_name} "
+                f"({token_count} tokens, TTL=1h)"
+            )
+        except Exception as e:
+            print(f"WARNING: Cache creation failed ({e}), proceeding without cache")
+            cache_name = None
+
     # Output file setup
     if output_name:
         filename = output_name
@@ -1010,6 +1086,7 @@ def detect_mounds_versioned(
                 config_version,
                 governor,
                 effective_tile_size,
+                cache_name,
             ): tile.name for tile in tiles_to_process
         }
 
@@ -1075,6 +1152,14 @@ def detect_mounds_versioned(
 
     # Add results summary to metadata tracker
     metadata_tracker.update_results_summary(results_tracker.get_summary())
+
+    # ── Clean up context cache ─────────────────────────────────
+    if cache_name:
+        try:
+            client.caches.delete(name=cache_name)
+            print(f"Context cache deleted: {cache_name}")
+        except Exception as e:
+            print(f"Cache cleanup failed (will expire via TTL): {e}")
 
     # Estimate costs
     cost_estimate = estimate_cost(
@@ -1184,6 +1269,14 @@ Examples:
     )
     parser.add_argument("--limit", type=int, help="Process only first N tiles")
     parser.add_argument(
+        "--use-cache", action="store_true",
+        help=(
+            "Enable Gemini context caching. Caches the shared prompt "
+            "prefix (system instruction + examples) to reduce input "
+            "costs by ~50-90%%. Real-time API only."
+        ),
+    )
+    parser.add_argument(
         "--tile-size", type=int, default=None,
         help=f"Override tile size for coordinate conversion (default: {TILE_SIZE} from config). "
         "Must match the actual tile dimensions being processed.",
@@ -1212,6 +1305,7 @@ Examples:
         base_wait=args.base_wait,
         tile_size=args.tile_size,
         tiles_dir_override=args.tiles_dir,
+        use_cache=args.use_cache,
     )
 
     # Exit code: 0 = success, 1 = setup error, 2 = partial failure
