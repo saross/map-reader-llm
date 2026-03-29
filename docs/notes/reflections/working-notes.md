@@ -5692,6 +5692,105 @@ thresholds don't provide meaningfully different operating points.
 
 ---
 
+## Observation 205: Cost-Performance Pareto Frontier — The Verifier Dominates (2026-03-29)
+
+*Session 61. Cost analysis of all 26 leaderboard conditions at 20m
+tolerance, using Gemini Batch API pricing (50% discount). Identifies
+the Pareto-optimal configurations where no alternative is both cheaper
+and better.*
+
+### The Pareto frontier
+
+Only **three configurations** are Pareto-optimal across the entire
+cost-performance space:
+
+| Configuration | F1 | Cost | Marginal $/+0.001 F1 |
+|---|:---:|---:|---:|
+| Text baseline + PV (1 FM run + min vf) | 0.814 | $0.25 | — |
+| FH text 4/5 + PV (5 FH runs + min vf) | 0.864 | $2.97 | $0.054 |
+| FH text 16/30 + PV (30 FH runs + min vf) | 0.890 | $17.39 | $0.55 |
+
+Every other configuration is dominated — there exists a Pareto-optimal
+condition that is both cheaper and higher-performing.
+
+### The verifier is the defining feature
+
+All three Pareto points use the proposer-verifier (PV) pipeline. No
+consensus-only configuration appears on the frontier. The cheapest
+Pareto point ($0.25) is a single Flash MINIMAL run + verifier — it
+outperforms every consensus-only configuration, including:
+
+- FH text 26/30 consensus: $17.31 for F1=0.814 (same F1, 70× the cost)
+- FH text 5/5 consensus: $2.89 for F1=0.779 (lower F1, 12× the cost)
+- Pro H text 3/5 consensus: $54.06 for F1=0.840 (lower F1, 216× the cost)
+
+The verifier costs ~$0.08 (Flash MINIMAL on ~400 candidates) and
+consistently adds more F1 than any amount of additional proposer runs.
+It is the single most cost-effective component in the pipeline.
+
+### Pro is completely off the frontier
+
+Pro H text 3/5 + PV costs $54.14 for F1=0.849. Flash text 4/5 + PV
+costs $2.97 for F1=0.864. Pro is **18× more expensive for a worse
+result**. Pro N=10 ($108.11 for F1=0.837) is even further dominated.
+The more expensive model provides no benefit when paired with the right
+pipeline architecture.
+
+### The knee of the curve
+
+The marginal cost of F1 improvement increases ~10× at each Pareto step:
+
+| Step | ΔF1 | ΔCost | Marginal $/+0.001 F1 |
+|---|:---:|---:|---:|
+| → Text baseline + PV | +0.814 | $0.25 | $0.0003 |
+| → FH text 4/5 + PV | +0.050 | $2.72 | $0.054 |
+| → FH text 16/30 + PV | +0.026 | $14.42 | $0.55 |
+
+**FH text 4/5 + PV (~$3) is the knee.** It achieves 97% of the best
+F1 at 17% of the cost. The jump from $3 to $17 buys only +0.026 F1 —
+worth it for a publication headline but not for production deployment.
+
+### The $0.25 surprise
+
+A single Flash MINIMAL proposer pass + Flash MINIMAL verifier achieves
+Tier 3 performance (F1=0.814) for twenty-five cents. This configuration
+uses no HIGH thinking, no consensus, no Pro model — just one cheap
+proposer run filtered by one cheap verifier. It outperforms all
+MINIMAL consensus conditions (Tier 6, F1≤0.680) and all Flash HIGH
+consensus conditions without PV (Tier 4, F1≤0.797).
+
+This is the strongest evidence that **pipeline architecture matters more
+than model quality or prompt engineering.** The cheapest possible
+two-stage pipeline outperforms sophisticated single-stage approaches
+costing 10–200× more.
+
+### Practical recommendations
+
+- **Budget < $1**: Text baseline + PV (F1=0.814). One proposer run,
+  one verifier pass. Viable for rapid triage.
+- **Budget $1–5**: FH text 4/5 + PV (F1=0.864). The sweet spot.
+  Five HIGH-thinking proposer runs with consensus filtering, then
+  verifier. Best cost-adjusted performance.
+- **Budget unconstrained**: FH text 16/30 + PV (F1=0.890). Thirty
+  proposer runs with low-threshold consensus, then verifier. The
+  best absolute result but with steep marginal costs.
+- **Never**: Pro-based configurations at current pricing. Flash +
+  pipeline dominates Pro at every price point.
+
+### Connection to prior observations
+
+- **Obs 202 (pipeline > prompt engineering)**: The Pareto analysis
+  quantifies this — the verifier (an architectural addition) provides
+  more F1 per dollar than any parameter change (model, thinking level,
+  pool size). Architecture is not just qualitatively better; it is
+  orders of magnitude more cost-effective.
+- **Obs 204 (pool-size plateau)**: The plateau explains why N=10 and
+  N=30 consensus-only configurations are dominated. Additional proposer
+  runs beyond N=5 add cost without meaningful F1 gain. The verifier
+  breaks through the plateau where more runs cannot.
+
+---
+
 ### Obs 203: Adversarial audit as a publication prerequisite (Session 60, 2026-03-28)
 
 *Session 60. Emerged from the full 8-layer adversarial audit of
