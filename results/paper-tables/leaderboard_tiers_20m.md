@@ -1,13 +1,9 @@
 # Leaderboard Tier Clustering (20m buffer, FDR-corrected)
 
 Conditions within the same tier are statistically indistinguishable
-(all pairwise adjusted p-values >= 0.05). Based on 253 pairwise
-permutation tests (10,000 permutations, seed 42) among 23 of 25
+(all pairwise adjusted p-values >= 0.05). Based on 300 pairwise
+permutation tests (10,000 permutations, seed 42) among all 25
 leaderboard conditions, FDR-corrected at q=0.05.
-
-Two conditions excluded: FH image N=10 (7-of-10) and FM image N=10
-(8-of-10) — their optimal thresholds at 20m differ from the
-condition-registry built for 30m. Both have N=5 variants included.
 
 ## Tier 1 (F1: 0.890)
 
@@ -40,19 +36,21 @@ condition-registry built for 30m. Both have N=5 variants included.
 | FH text 9/10 (consensus) | 0.797 | 0.800 | 0.793 |
 | FH text 5/5 (consensus) | 0.779 | 0.798 | 0.761 |
 
-## Tier 5 (F1: 0.700–0.727)
+## Tier 5 (F1: 0.700–0.750)
 
 | Condition | F1 | P | R |
 |---|---|---|---|
+| FH image 7/10 (consensus) | 0.750 | 0.778 | 0.724 |
 | FH image 3/5 (consensus) | 0.727 | 0.676 | 0.786 |
 | Image baseline + PV | 0.717 | 0.663 | 0.779 |
 | Pro H image 3/5 (consensus) | 0.700 | 0.673 | 0.729 |
 
-## Tier 6 (F1: 0.640–0.664)
+## Tier 6 (F1: 0.640–0.680)
 
 | Condition | F1 | P | R |
 |---|---|---|---|
-| FM image 4/5 | 0.664 | 0.608 | 0.731 |
+| FM image 8/10 (consensus) | 0.680 | 0.640 | 0.726 |
+| FM image 4/5 (consensus) | 0.664 | 0.608 | 0.731 |
 | FM text T=0.7 29/30 | 0.661 | 0.602 | 0.733 |
 | FM text T=0.7 5/5 | 0.640 | 0.533 | 0.800 |
 
@@ -87,6 +85,6 @@ tighter spatial tolerance.
 
 ## Statistics
 
-- 253 pairwise comparisons (23 conditions, 2 excluded for registry mismatch)
-- 213/253 significant after FDR correction (q=0.05)
+- 300 pairwise comparisons (all 25 leaderboard conditions)
+- 248/300 significant after FDR correction (q=0.05)
 - 9 tiers identified via greedy clique-based clustering
