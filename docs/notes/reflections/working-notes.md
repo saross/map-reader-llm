@@ -5594,6 +5594,96 @@ the confounds.
   384px are consistent with this limitation — more tiles means more
   opportunities for Flash to generate false alarms. Consensus voting
   handles this (specificity 0.20→0.84).
+
+---
+
+## Observation 204: Consensus Pool-Size Plateau — N=5 Saturates for Both Flash and Pro (2026-03-29)
+
+*Session 61. Pro HIGH text expanded from N=5 to N=10 (5 additional Batch
+API runs, ~$60). Consensus clustering with full threshold sweeps at
+20/30/40/50m with bootstrap CIs. This observation generalises the Flash
+pool-size finding to a second model.*
+
+### The finding
+
+Pro N=10 consensus does **not** improve over Pro N=5. The effect is
+null — or if anything, marginally negative:
+
+| Buffer | N=5 best (3-of-5) | N=10 best (6-of-10) | ΔF1 |
+|--------|-------------------|---------------------|-----|
+| 20m | 0.843 [0.806, 0.879] | 0.837 [0.798, 0.874] | -0.007 |
+| 30m | 0.861 | 0.861 | +0.000 |
+| 40m | 0.863 | 0.866 | +0.003 |
+| 50m | 0.866 | 0.868 | +0.002 |
+
+CIs overlap almost completely. At 30m the F1 values are identical to
+three decimal places. MCC is also flat: 0.716 (N=5) vs 0.710 (N=10).
+
+This parallels the Flash result where N=5→N=10 was non-significant
+(ΔF1=+0.018, p=0.174 at 20m). The consensus mechanism saturates at
+N=5 for both models.
+
+### Why the plateau is stronger for Pro
+
+The Flash N=5→N=10 delta (+0.018) is at least in the right direction,
+even if non-significant. Pro's delta (-0.006) is effectively zero. This
+makes sense: Pro's individual runs are more consistent (higher per-run
+precision: 0.917 vs Flash's ~0.80), so additional runs contribute less
+diversity to the consensus pool. The runs agree with each other already —
+a 6th through 10th run mostly confirms what runs 1–5 already detected,
+adding neither new true positives nor useful disagreement signal.
+
+### The optimal threshold fraction is stable
+
+Both pool sizes produce the same optimal threshold fraction:
+
+- N=5: 3-of-5 = 60% agreement
+- N=10: 6-of-10 = 60% agreement
+
+The optimal operating point is a property of the task and model, not the
+pool size. This suggests the threshold can be predicted without exhaustive
+sweep: ~60% agreement is the sweet spot for Pro on this task.
+
+### The N=10 threshold curve is remarkably flat
+
+At 20m, Pro N=10 F1 ranges from 0.795 (1-of-10) to 0.837 (6-of-10) —
+a span of only 0.042 across 10 thresholds. For comparison, Pro N=5
+spans 0.806 to 0.843 (0.037 across 5 thresholds). The additional
+thresholds don't provide meaningfully different operating points.
+
+### Implications for the paper
+
+1. **Pool size is not a productive optimisation axis.** For both Flash
+   and Pro, the path from N=5 consensus to better performance goes
+   through the verifier stage, not through more proposer runs. This is
+   the architectural argument: improvement comes from adding a new
+   pipeline stage, not from scaling an existing one.
+
+2. **Pro's N=5 plateau strengthens the cost-effectiveness argument.**
+   Pro consensus at N=5 (F1=0.843, total cost: 5 × ~$12 = ~$60) is
+   statistically indistinguishable from Flash consensus at N=5 + PV
+   verifier (F1=0.864, total cost: 30 Flash runs + 1 verification ≈
+   ~$15). Flash + pipeline achieves the same result tier at ~1/4 the
+   cost.
+
+3. **The $60 spent on Pro N=10 was worth it** — not because it improved
+   performance, but because it confirms the plateau with a second model.
+   A claimed plateau that was only tested on one model would be weaker
+   evidence. Now we can state the finding generally.
+
+### Connection to prior observations
+
+- **Obs 202 (pipeline compensates for model limitations)**: The plateau
+  confirms that consensus voting is a precision-recovery mechanism with
+  diminishing returns. Once false positives have been filtered to ~0.92
+  precision (at N=5), further consensus passes cannot improve precision
+  further without sacrificing recall. The verifier operates on a
+  different axis (per-candidate evaluation vs per-cluster voting).
+- **Obs 203 (tile size as pipeline optimisation)**: Both observations
+  point to the same meta-principle: in a multi-stage pipeline, each
+  stage has a saturation point. Pool size saturates at N=5; tile-size
+  effects are absorbed by consensus; the verifier is the only stage
+  that continues to add value beyond the consensus ceiling.
 - **Obs 202 (pipeline > prompt engineering)**: Tile size selection is
   another instance of the pipeline architecture principle. Just as
   prompt engineering can't fix Flash's self-calibration deficit, tile
