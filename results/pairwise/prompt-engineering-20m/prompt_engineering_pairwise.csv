@@ -1,0 +1,59 @@
+group,label_a,label_b,f1_a,f1_b,delta_f1,p_value,n_tiles,n_permutations
+Library composition (text),P2c Text canonical,P2c Text plus-hp,0.6045,0.5969,0.0075,0.563,340,10000
+Library composition (text),P2c Text canonical,P2c Text pure-positive-canon,0.6045,0.6045,-0.0,1.0,340,10000
+Library composition (text),P2c Text canonical,P2c Text scale-4,0.6045,0.6094,-0.005,0.6216,340,10000
+Library composition (text),P2c Text canonical,P2c Text scale-8,0.6045,0.607,-0.0026,0.8057,340,10000
+Library composition (text),P2c Text plus-hp,P2c Text pure-positive-canon,0.5969,0.6045,-0.0076,0.608,340,10000
+Library composition (text),P2c Text plus-hp,P2c Text scale-4,0.5969,0.6094,-0.0125,0.0588,340,10000
+Library composition (text),P2c Text plus-hp,P2c Text scale-8,0.5969,0.607,-0.0101,0.3089,340,10000
+Library composition (text),P2c Text pure-positive-canon,P2c Text scale-4,0.6045,0.6094,-0.0049,0.2623,340,10000
+Library composition (text),P2c Text pure-positive-canon,P2c Text scale-8,0.6045,0.607,-0.0026,0.4549,340,10000
+Library composition (text),P2c Text scale-4,P2c Text scale-8,0.6094,0.607,0.0024,0.4338,340,10000
+Library composition (image),P2c Image canonical,P2c Image plus-hp,0.5814,0.5985,-0.0171,0.3691,340,10000
+Library composition (image),P2c Image canonical,P2c Image pure-positive-canon,0.5814,0.5678,0.0136,0.4001,340,10000
+Library composition (image),P2c Image canonical,P2c Image scale-4,0.5814,0.5837,-0.0023,0.9158,340,10000
+Library composition (image),P2c Image canonical,P2c Image scale-8,0.5814,0.5867,-0.0053,0.7611,340,10000
+Library composition (image),P2c Image plus-hp,P2c Image pure-positive-canon,0.5985,0.5678,0.0306,0.0907,340,10000
+Library composition (image),P2c Image plus-hp,P2c Image scale-4,0.5985,0.5837,0.0148,0.5115,340,10000
+Library composition (image),P2c Image plus-hp,P2c Image scale-8,0.5985,0.5867,0.0118,0.4983,340,10000
+Library composition (image),P2c Image pure-positive-canon,P2c Image scale-4,0.5678,0.5837,-0.0159,0.4653,340,10000
+Library composition (image),P2c Image pure-positive-canon,P2c Image scale-8,0.5678,0.5867,-0.0189,0.2757,340,10000
+Library composition (image),P2c Image scale-4,P2c Image scale-8,0.5837,0.5867,-0.003,0.888,340,10000
+Text treatment (image),P2d Image terse,P2d Image verbose,0.6052,0.6027,0.0025,0.8779,340,10000
+Text treatment (text),P2d Text terse,P2d Text verbose,0.5984,0.5834,0.015,0.4263,340,10000
+Example ordering,P2e canonical-first,P2e canonical-last,0.5985,0.6314,-0.0329,0.1366,340,10000
+Example ordering,P2e canonical-first,P2e config-default,0.5985,0.6057,-0.0073,0.6401,340,10000
+Example ordering,P2e canonical-first,P2e random,0.5985,0.5706,0.0279,0.1218,340,10000
+Example ordering,P2e canonical-last,P2e config-default,0.6314,0.6057,0.0257,0.1857,340,10000
+Example ordering,P2e canonical-last,P2e random,0.6314,0.5706,0.0608,0.0019,340,10000
+Example ordering,P2e config-default,P2e random,0.6057,0.5706,0.0351,0.0563,340,10000
+Modality/elaboration,P2a brief-text,P2a verbose-text,0.27,0.2591,0.0109,0.2487,340,10000
+Modality/elaboration,P2a brief-text,P2a brief-text-image,0.27,0.2986,-0.0286,0.0257,340,10000
+Modality/elaboration,P2a brief-text,P2a verbose-text-image,0.27,0.2939,-0.0239,0.0799,340,10000
+Modality/elaboration,P2a brief-text,P2a image-only,0.27,0.2652,0.0049,0.6842,340,10000
+Modality/elaboration,P2a verbose-text,P2a brief-text-image,0.2591,0.2986,-0.0395,0.0009,340,10000
+Modality/elaboration,P2a verbose-text,P2a verbose-text-image,0.2591,0.2939,-0.0348,0.0061,340,10000
+Modality/elaboration,P2a verbose-text,P2a image-only,0.2591,0.2652,-0.006,0.5934,340,10000
+Modality/elaboration,P2a brief-text-image,P2a verbose-text-image,0.2986,0.2939,0.0047,0.5888,340,10000
+Modality/elaboration,P2a brief-text-image,P2a image-only,0.2986,0.2652,0.0334,0.0006,340,10000
+Modality/elaboration,P2a verbose-text-image,P2a image-only,0.2939,0.2652,0.0288,0.0045,340,10000
+Temperature (text),P2b Text T0.0,P2b Text T0.3,0.2731,0.2873,-0.0142,0.0315,340,10000
+Temperature (text),P2b Text T0.0,P2b Text T0.7,0.2731,0.2813,-0.0082,0.3266,340,10000
+Temperature (text),P2b Text T0.0,P2b Text T1.0,0.2731,0.264,0.0091,0.4225,340,10000
+Temperature (text),P2b Text T0.0,P2b Text T1.3,0.2731,0.276,-0.0029,0.7896,340,10000
+Temperature (text),P2b Text T0.3,P2b Text T0.7,0.2873,0.2813,0.0061,0.4349,340,10000
+Temperature (text),P2b Text T0.3,P2b Text T1.0,0.2873,0.264,0.0233,0.0131,340,10000
+Temperature (text),P2b Text T0.3,P2b Text T1.3,0.2873,0.276,0.0113,0.2298,340,10000
+Temperature (text),P2b Text T0.7,P2b Text T1.0,0.2813,0.264,0.0173,0.0414,340,10000
+Temperature (text),P2b Text T0.7,P2b Text T1.3,0.2813,0.276,0.0053,0.5516,340,10000
+Temperature (text),P2b Text T1.0,P2b Text T1.3,0.264,0.276,-0.012,0.1874,340,10000
+Temperature (image),P2b Image T0.0,P2b Image T0.3,0.2703,0.2962,-0.0259,0.0004,340,10000
+Temperature (image),P2b Image T0.0,P2b Image T0.7,0.2703,0.2891,-0.0188,0.0173,340,10000
+Temperature (image),P2b Image T0.0,P2b Image T1.0,0.2703,0.2922,-0.0219,0.0209,340,10000
+Temperature (image),P2b Image T0.0,P2b Image T1.3,0.2703,0.2833,-0.013,0.1726,340,10000
+Temperature (image),P2b Image T0.3,P2b Image T0.7,0.2962,0.2891,0.0072,0.3734,340,10000
+Temperature (image),P2b Image T0.3,P2b Image T1.0,0.2962,0.2922,0.004,0.6536,340,10000
+Temperature (image),P2b Image T0.3,P2b Image T1.3,0.2962,0.2833,0.0129,0.1576,340,10000
+Temperature (image),P2b Image T0.7,P2b Image T1.0,0.2891,0.2922,-0.0031,0.6967,340,10000
+Temperature (image),P2b Image T0.7,P2b Image T1.3,0.2891,0.2833,0.0057,0.4988,340,10000
+Temperature (image),P2b Image T1.0,P2b Image T1.3,0.2922,0.2833,0.0088,0.3524,340,10000
