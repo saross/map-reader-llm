@@ -2,17 +2,18 @@
 
 Buffer: 20m | Permutations: 10000 | Seed: 42
 
-## Leaderboard (248/300 significant)
+## Leaderboard (265/325 significant)
 
 ### Group 8: Leaderboard distinguishability
 
 | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|
-| flash-high-text-16-of-30--flash-min-vf ( | flash-high-text-4-of-5--flash-min-vf (t= | 0.890 | 0.864 | +0.0261 | 0.0398 | 0.0481 | * |
-| flash-high-text-16-of-30--flash-min-vf ( | flash-high-text-4-of-5--flash-medium-vf  | 0.890 | 0.859 | +0.0310 | 0.0207 | 0.0259 | * |
-| flash-high-text-16-of-30--flash-min-vf ( | flash-high-text-9-of-10--flash-min-vf (t | 0.890 | 0.856 | +0.0338 | 0.0017 | 0.0023 | ** |
-| flash-high-text-16-of-30--flash-min-vf ( | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.890 | 0.849 | +0.0411 | 0.0119 | 0.0153 | * |
-| flash-high-text-16-of-30--flash-min-vf ( | pro-high-text N=5 N=5, 3-of-5 | 0.890 | 0.840 | +0.0498 | 0.0035 | 0.0047 | ** |
+| flash-high-text-16-of-30--flash-min-vf ( | flash-high-text-4-of-5--flash-min-vf (t= | 0.890 | 0.864 | +0.0261 | 0.0398 | 0.0488 | * |
+| flash-high-text-16-of-30--flash-min-vf ( | flash-high-text-4-of-5--flash-medium-vf  | 0.890 | 0.859 | +0.0310 | 0.0207 | 0.0263 | * |
+| flash-high-text-16-of-30--flash-min-vf ( | flash-high-text-9-of-10--flash-min-vf (t | 0.890 | 0.856 | +0.0338 | 0.0017 | 0.0024 | ** |
+| flash-high-text-16-of-30--flash-min-vf ( | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.890 | 0.849 | +0.0411 | 0.0119 | 0.0155 | * |
+| flash-high-text-16-of-30--flash-min-vf ( | pro-high-text N=5 N=5, 3-of-5 | 0.890 | 0.840 | +0.0498 | 0.0035 | 0.0048 | ** |
+| flash-high-text-16-of-30--flash-min-vf ( | pro-high-text N=10 N=10, 6-of-10 | 0.890 | 0.836 | +0.0543 | 0.0024 | 0.0033 | ** |
 | flash-high-text-16-of-30--flash-min-vf ( | text-baseline--flash-min-vf (t=0.15) | 0.890 | 0.814 | +0.0760 | 0.0000 | 0.0000 | *** |
 | flash-high-text-16-of-30--flash-min-vf ( | flash-high-text N=30 N=30, 26-of-30 | 0.890 | 0.814 | +0.0761 | 0.0000 | 0.0000 | *** |
 | flash-high-text-16-of-30--flash-min-vf ( | flash-high-text N=10 N=10, 9-of-10 | 0.890 | 0.797 | +0.0934 | 0.0000 | 0.0000 | *** |
@@ -32,12 +33,13 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text-16-of-30--flash-min-vf ( | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.890 | 0.471 | +0.4190 | 0.0000 | 0.0000 | *** |
 | flash-high-text-16-of-30--flash-min-vf ( | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.890 | 0.467 | +0.4232 | 0.0000 | 0.0000 | *** |
 | flash-high-text-16-of-30--flash-min-vf ( | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.890 | 0.462 | +0.4287 | 0.0000 | 0.0000 | *** |
-| flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text-4-of-5--flash-medium-vf  | 0.864 | 0.859 | +0.0049 | 0.4701 | 0.4880 | ns |
+| flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text-4-of-5--flash-medium-vf  | 0.864 | 0.859 | +0.0049 | 0.4701 | 0.4881 | ns |
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text-9-of-10--flash-min-vf (t | 0.864 | 0.856 | +0.0077 | 0.4656 | 0.4850 | ns |
-| flash-high-text-4-of-5--flash-min-vf (t= | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.864 | 0.849 | +0.0150 | 0.4002 | 0.4229 | ns |
-| flash-high-text-4-of-5--flash-min-vf (t= | pro-high-text N=5 N=5, 3-of-5 | 0.864 | 0.840 | +0.0237 | 0.2148 | 0.2343 | ns |
-| flash-high-text-4-of-5--flash-min-vf (t= | text-baseline--flash-min-vf (t=0.15) | 0.864 | 0.814 | +0.0498 | 0.0075 | 0.0098 | ** |
-| flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text N=30 N=30, 26-of-30 | 0.864 | 0.814 | +0.0500 | 0.0001 | 0.0001 | *** |
+| flash-high-text-4-of-5--flash-min-vf (t= | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.864 | 0.849 | +0.0150 | 0.4002 | 0.4224 | ns |
+| flash-high-text-4-of-5--flash-min-vf (t= | pro-high-text N=5 N=5, 3-of-5 | 0.864 | 0.840 | +0.0237 | 0.2148 | 0.2366 | ns |
+| flash-high-text-4-of-5--flash-min-vf (t= | pro-high-text N=10 N=10, 6-of-10 | 0.864 | 0.836 | +0.0282 | 0.1320 | 0.1511 | ns |
+| flash-high-text-4-of-5--flash-min-vf (t= | text-baseline--flash-min-vf (t=0.15) | 0.864 | 0.814 | +0.0498 | 0.0075 | 0.0099 | ** |
+| flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text N=30 N=30, 26-of-30 | 0.864 | 0.814 | +0.0500 | 0.0001 | 0.0002 | *** |
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text N=10 N=10, 9-of-10 | 0.864 | 0.797 | +0.0673 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-high-text N=5 N=5, 5-of-5 | 0.864 | 0.779 | +0.0853 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-high-image-3-of-5--flash-min-vf (t | 0.864 | 0.778 | +0.0863 | 0.0000 | 0.0000 | *** |
@@ -55,11 +57,12 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.864 | 0.471 | +0.3928 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.864 | 0.467 | +0.3971 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-min-vf (t= | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.864 | 0.462 | +0.4025 | 0.0000 | 0.0000 | *** |
-| flash-high-text-4-of-5--flash-medium-vf  | flash-high-text-9-of-10--flash-min-vf (t | 0.859 | 0.856 | +0.0027 | 0.8415 | 0.8500 | ns |
-| flash-high-text-4-of-5--flash-medium-vf  | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.859 | 0.849 | +0.0100 | 0.5913 | 0.6096 | ns |
-| flash-high-text-4-of-5--flash-medium-vf  | pro-high-text N=5 N=5, 3-of-5 | 0.859 | 0.840 | +0.0188 | 0.3345 | 0.3584 | ns |
-| flash-high-text-4-of-5--flash-medium-vf  | text-baseline--flash-min-vf (t=0.15) | 0.859 | 0.814 | +0.0449 | 0.0161 | 0.0204 | * |
-| flash-high-text-4-of-5--flash-medium-vf  | flash-high-text N=30 N=30, 26-of-30 | 0.859 | 0.814 | +0.0450 | 0.0007 | 0.0010 | *** |
+| flash-high-text-4-of-5--flash-medium-vf  | flash-high-text-9-of-10--flash-min-vf (t | 0.859 | 0.856 | +0.0027 | 0.8415 | 0.8493 | ns |
+| flash-high-text-4-of-5--flash-medium-vf  | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.859 | 0.849 | +0.0100 | 0.5913 | 0.6081 | ns |
+| flash-high-text-4-of-5--flash-medium-vf  | pro-high-text N=5 N=5, 3-of-5 | 0.859 | 0.840 | +0.0188 | 0.3345 | 0.3576 | ns |
+| flash-high-text-4-of-5--flash-medium-vf  | pro-high-text N=10 N=10, 6-of-10 | 0.859 | 0.836 | +0.0233 | 0.2335 | 0.2555 | ns |
+| flash-high-text-4-of-5--flash-medium-vf  | text-baseline--flash-min-vf (t=0.15) | 0.859 | 0.814 | +0.0449 | 0.0161 | 0.0207 | * |
+| flash-high-text-4-of-5--flash-medium-vf  | flash-high-text N=30 N=30, 26-of-30 | 0.859 | 0.814 | +0.0450 | 0.0007 | 0.0010 | ** |
 | flash-high-text-4-of-5--flash-medium-vf  | flash-high-text N=10 N=10, 9-of-10 | 0.859 | 0.797 | +0.0624 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-medium-vf  | flash-high-text N=5 N=5, 5-of-5 | 0.859 | 0.779 | +0.0803 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-medium-vf  | flash-high-image-3-of-5--flash-min-vf (t | 0.859 | 0.778 | +0.0814 | 0.0000 | 0.0000 | *** |
@@ -77,13 +80,14 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text-4-of-5--flash-medium-vf  | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.859 | 0.471 | +0.3879 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-medium-vf  | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.859 | 0.467 | +0.3922 | 0.0000 | 0.0000 | *** |
 | flash-high-text-4-of-5--flash-medium-vf  | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.859 | 0.462 | +0.3976 | 0.0000 | 0.0000 | *** |
-| flash-high-text-9-of-10--flash-min-vf (t | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.856 | 0.849 | +0.0073 | 0.6720 | 0.6857 | ns |
-| flash-high-text-9-of-10--flash-min-vf (t | pro-high-text N=5 N=5, 3-of-5 | 0.856 | 0.840 | +0.0160 | 0.4003 | 0.4229 | ns |
-| flash-high-text-9-of-10--flash-min-vf (t | text-baseline--flash-min-vf (t=0.15) | 0.856 | 0.814 | +0.0422 | 0.0204 | 0.0256 | * |
+| flash-high-text-9-of-10--flash-min-vf (t | pro-high-text-3-of-5--flash-min-vf (t=0. | 0.856 | 0.849 | +0.0073 | 0.6720 | 0.6846 | ns |
+| flash-high-text-9-of-10--flash-min-vf (t | pro-high-text N=5 N=5, 3-of-5 | 0.856 | 0.840 | +0.0160 | 0.4003 | 0.4224 | ns |
+| flash-high-text-9-of-10--flash-min-vf (t | pro-high-text N=10 N=10, 6-of-10 | 0.856 | 0.836 | +0.0206 | 0.2831 | 0.3047 | ns |
+| flash-high-text-9-of-10--flash-min-vf (t | text-baseline--flash-min-vf (t=0.15) | 0.856 | 0.814 | +0.0422 | 0.0204 | 0.0260 | * |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-high-text N=30 N=30, 26-of-30 | 0.856 | 0.814 | +0.0423 | 0.0004 | 0.0006 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-high-text N=10 N=10, 9-of-10 | 0.856 | 0.797 | +0.0597 | 0.0000 | 0.0000 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-high-text N=5 N=5, 5-of-5 | 0.856 | 0.779 | +0.0776 | 0.0000 | 0.0000 | *** |
-| flash-high-text-9-of-10--flash-min-vf (t | flash-high-image-3-of-5--flash-min-vf (t | 0.856 | 0.778 | +0.0786 | 0.0001 | 0.0001 | *** |
+| flash-high-text-9-of-10--flash-min-vf (t | flash-high-image-3-of-5--flash-min-vf (t | 0.856 | 0.778 | +0.0786 | 0.0001 | 0.0002 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-high-image N=10 N=10, 7-of-10 | 0.856 | 0.750 | +0.1064 | 0.0000 | 0.0000 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-high-image N=5 N=5, 3-of-5 | 0.856 | 0.727 | +0.1295 | 0.0000 | 0.0000 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | image-baseline--flash-min-vf (t=0.2) | 0.856 | 0.717 | +0.1397 | 0.0000 | 0.0000 | *** |
@@ -98,13 +102,14 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text-9-of-10--flash-min-vf (t | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.856 | 0.471 | +0.3852 | 0.0000 | 0.0000 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.856 | 0.467 | +0.3894 | 0.0000 | 0.0000 | *** |
 | flash-high-text-9-of-10--flash-min-vf (t | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.856 | 0.462 | +0.3949 | 0.0000 | 0.0000 | *** |
-| pro-high-text-3-of-5--flash-min-vf (t=0. | pro-high-text N=5 N=5, 3-of-5 | 0.849 | 0.840 | +0.0087 | 0.2580 | 0.2794 | ns |
-| pro-high-text-3-of-5--flash-min-vf (t=0. | text-baseline--flash-min-vf (t=0.15) | 0.849 | 0.814 | +0.0349 | 0.0739 | 0.0859 | ns |
-| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-text N=30 N=30, 26-of-30 | 0.849 | 0.814 | +0.0350 | 0.0626 | 0.0736 | ns |
-| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-text N=10 N=10, 9-of-10 | 0.849 | 0.797 | +0.0523 | 0.0074 | 0.0097 | ** |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | pro-high-text N=5 N=5, 3-of-5 | 0.849 | 0.840 | +0.0087 | 0.2580 | 0.2814 | ns |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | pro-high-text N=10 N=10, 6-of-10 | 0.849 | 0.836 | +0.0132 | 0.1654 | 0.1860 | ns |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | text-baseline--flash-min-vf (t=0.15) | 0.849 | 0.814 | +0.0349 | 0.0739 | 0.0870 | ns |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-text N=30 N=30, 26-of-30 | 0.849 | 0.814 | +0.0350 | 0.0626 | 0.0745 | ns |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-text N=10 N=10, 9-of-10 | 0.849 | 0.797 | +0.0523 | 0.0074 | 0.0099 | ** |
 | pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-text N=5 N=5, 5-of-5 | 0.849 | 0.779 | +0.0703 | 0.0015 | 0.0021 | ** |
-| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-image-3-of-5--flash-min-vf (t | 0.849 | 0.778 | +0.0713 | 0.0051 | 0.0068 | ** |
-| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-image N=10 N=10, 7-of-10 | 0.849 | 0.750 | +0.0991 | 0.0001 | 0.0001 | *** |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-image-3-of-5--flash-min-vf (t | 0.849 | 0.778 | +0.0713 | 0.0051 | 0.0069 | ** |
+| pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-image N=10 N=10, 7-of-10 | 0.849 | 0.750 | +0.0991 | 0.0001 | 0.0002 | *** |
 | pro-high-text-3-of-5--flash-min-vf (t=0. | flash-high-image N=5 N=5, 3-of-5 | 0.849 | 0.727 | +0.1222 | 0.0000 | 0.0000 | *** |
 | pro-high-text-3-of-5--flash-min-vf (t=0. | image-baseline--flash-min-vf (t=0.2) | 0.849 | 0.717 | +0.1324 | 0.0000 | 0.0000 | *** |
 | pro-high-text-3-of-5--flash-min-vf (t=0. | pro-high-image N=5 N=5, 3-of-5 | 0.849 | 0.700 | +0.1493 | 0.0000 | 0.0000 | *** |
@@ -118,11 +123,12 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | pro-high-text-3-of-5--flash-min-vf (t=0. | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.849 | 0.471 | +0.3779 | 0.0000 | 0.0000 | *** |
 | pro-high-text-3-of-5--flash-min-vf (t=0. | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.849 | 0.467 | +0.3821 | 0.0000 | 0.0000 | *** |
 | pro-high-text-3-of-5--flash-min-vf (t=0. | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.849 | 0.462 | +0.3876 | 0.0000 | 0.0000 | *** |
-| pro-high-text N=5 N=5, 3-of-5 | text-baseline--flash-min-vf (t=0.15) | 0.840 | 0.814 | +0.0262 | 0.1878 | 0.2071 | ns |
-| pro-high-text N=5 N=5, 3-of-5 | flash-high-text N=30 N=30, 26-of-30 | 0.840 | 0.814 | +0.0263 | 0.1653 | 0.1843 | ns |
-| pro-high-text N=5 N=5, 3-of-5 | flash-high-text N=10 N=10, 9-of-10 | 0.840 | 0.797 | +0.0436 | 0.0238 | 0.0294 | * |
-| pro-high-text N=5 N=5, 3-of-5 | flash-high-text N=5 N=5, 5-of-5 | 0.840 | 0.779 | +0.0616 | 0.0042 | 0.0056 | ** |
-| pro-high-text N=5 N=5, 3-of-5 | flash-high-image-3-of-5--flash-min-vf (t | 0.840 | 0.778 | +0.0626 | 0.0196 | 0.0247 | * |
+| pro-high-text N=5 N=5, 3-of-5 | pro-high-text N=10 N=10, 6-of-10 | 0.840 | 0.836 | +0.0045 | 0.5330 | 0.5499 | ns |
+| pro-high-text N=5 N=5, 3-of-5 | text-baseline--flash-min-vf (t=0.15) | 0.840 | 0.814 | +0.0262 | 0.1878 | 0.2090 | ns |
+| pro-high-text N=5 N=5, 3-of-5 | flash-high-text N=30 N=30, 26-of-30 | 0.840 | 0.814 | +0.0263 | 0.1653 | 0.1860 | ns |
+| pro-high-text N=5 N=5, 3-of-5 | flash-high-text N=10 N=10, 9-of-10 | 0.840 | 0.797 | +0.0436 | 0.0238 | 0.0299 | * |
+| pro-high-text N=5 N=5, 3-of-5 | flash-high-text N=5 N=5, 5-of-5 | 0.840 | 0.779 | +0.0616 | 0.0042 | 0.0057 | ** |
+| pro-high-text N=5 N=5, 3-of-5 | flash-high-image-3-of-5--flash-min-vf (t | 0.840 | 0.778 | +0.0626 | 0.0196 | 0.0251 | * |
 | pro-high-text N=5 N=5, 3-of-5 | flash-high-image N=10 N=10, 7-of-10 | 0.840 | 0.750 | +0.0904 | 0.0004 | 0.0006 | *** |
 | pro-high-text N=5 N=5, 3-of-5 | flash-high-image N=5 N=5, 3-of-5 | 0.840 | 0.727 | +0.1135 | 0.0000 | 0.0000 | *** |
 | pro-high-text N=5 N=5, 3-of-5 | image-baseline--flash-min-vf (t=0.2) | 0.840 | 0.717 | +0.1237 | 0.0000 | 0.0000 | *** |
@@ -137,11 +143,30 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | pro-high-text N=5 N=5, 3-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.840 | 0.471 | +0.3692 | 0.0000 | 0.0000 | *** |
 | pro-high-text N=5 N=5, 3-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.840 | 0.467 | +0.3734 | 0.0000 | 0.0000 | *** |
 | pro-high-text N=5 N=5, 3-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.840 | 0.462 | +0.3789 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | text-baseline--flash-min-vf (t=0.15) | 0.836 | 0.814 | +0.0216 | 0.2825 | 0.3047 | ns |
+| pro-high-text N=10 N=10, 6-of-10 | flash-high-text N=30 N=30, 26-of-30 | 0.836 | 0.814 | +0.0217 | 0.2609 | 0.2836 | ns |
+| pro-high-text N=10 N=10, 6-of-10 | flash-high-text N=10 N=10, 9-of-10 | 0.836 | 0.797 | +0.0391 | 0.0483 | 0.0584 | ns |
+| pro-high-text N=10 N=10, 6-of-10 | flash-high-text N=5 N=5, 5-of-5 | 0.836 | 0.779 | +0.0570 | 0.0075 | 0.0099 | ** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-high-image-3-of-5--flash-min-vf (t | 0.836 | 0.778 | +0.0581 | 0.0270 | 0.0336 | * |
+| pro-high-text N=10 N=10, 6-of-10 | flash-high-image N=10 N=10, 7-of-10 | 0.836 | 0.750 | +0.0859 | 0.0007 | 0.0010 | ** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-high-image N=5 N=5, 3-of-5 | 0.836 | 0.727 | +0.1090 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | image-baseline--flash-min-vf (t=0.2) | 0.836 | 0.717 | +0.1192 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | pro-high-image N=5 N=5, 3-of-5 | 0.836 | 0.700 | +0.1361 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-image N=10 N=10, 8-of-10 | 0.836 | 0.680 | +0.1556 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-image N=5 N=5, 4-of-5 | 0.836 | 0.664 | +0.1720 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.836 | 0.661 | +0.1747 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.836 | 0.640 | +0.1962 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.836 | 0.633 | +0.2027 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | single-pass-t0 N=10 N=10, 10-of-10 | 0.836 | 0.552 | +0.2837 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | single-pass-t0 N=5 N=5, 5-of-5 | 0.836 | 0.544 | +0.2918 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.836 | 0.471 | +0.3646 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.836 | 0.467 | +0.3689 | 0.0000 | 0.0000 | *** |
+| pro-high-text N=10 N=10, 6-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.836 | 0.462 | +0.3743 | 0.0000 | 0.0000 | *** |
 | text-baseline--flash-min-vf (t=0.15) | flash-high-text N=30 N=30, 26-of-30 | 0.814 | 0.814 | +0.0001 | 0.9930 | 0.9930 | ns |
-| text-baseline--flash-min-vf (t=0.15) | flash-high-text N=10 N=10, 9-of-10 | 0.814 | 0.797 | +0.0175 | 0.3862 | 0.4109 | ns |
-| text-baseline--flash-min-vf (t=0.15) | flash-high-text N=5 N=5, 5-of-5 | 0.814 | 0.779 | +0.0354 | 0.0953 | 0.1095 | ns |
-| text-baseline--flash-min-vf (t=0.15) | flash-high-image-3-of-5--flash-min-vf (t | 0.814 | 0.778 | +0.0365 | 0.1365 | 0.1539 | ns |
-| text-baseline--flash-min-vf (t=0.15) | flash-high-image N=10 N=10, 7-of-10 | 0.814 | 0.750 | +0.0642 | 0.0105 | 0.0136 | * |
+| text-baseline--flash-min-vf (t=0.15) | flash-high-text N=10 N=10, 9-of-10 | 0.814 | 0.797 | +0.0175 | 0.3862 | 0.4102 | ns |
+| text-baseline--flash-min-vf (t=0.15) | flash-high-text N=5 N=5, 5-of-5 | 0.814 | 0.779 | +0.0354 | 0.0953 | 0.1110 | ns |
+| text-baseline--flash-min-vf (t=0.15) | flash-high-image-3-of-5--flash-min-vf (t | 0.814 | 0.778 | +0.0365 | 0.1365 | 0.1557 | ns |
+| text-baseline--flash-min-vf (t=0.15) | flash-high-image N=10 N=10, 7-of-10 | 0.814 | 0.750 | +0.0642 | 0.0105 | 0.0138 | * |
 | text-baseline--flash-min-vf (t=0.15) | flash-high-image N=5 N=5, 3-of-5 | 0.814 | 0.727 | +0.0874 | 0.0000 | 0.0000 | *** |
 | text-baseline--flash-min-vf (t=0.15) | image-baseline--flash-min-vf (t=0.2) | 0.814 | 0.717 | +0.0975 | 0.0000 | 0.0000 | *** |
 | text-baseline--flash-min-vf (t=0.15) | pro-high-image N=5 N=5, 3-of-5 | 0.814 | 0.700 | +0.1145 | 0.0000 | 0.0000 | *** |
@@ -155,10 +180,10 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | text-baseline--flash-min-vf (t=0.15) | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.814 | 0.471 | +0.3430 | 0.0000 | 0.0000 | *** |
 | text-baseline--flash-min-vf (t=0.15) | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.814 | 0.467 | +0.3472 | 0.0000 | 0.0000 | *** |
 | text-baseline--flash-min-vf (t=0.15) | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.814 | 0.462 | +0.3527 | 0.0000 | 0.0000 | *** |
-| flash-high-text N=30 N=30, 26-of-30 | flash-high-text N=10 N=10, 9-of-10 | 0.814 | 0.797 | +0.0174 | 0.0375 | 0.0457 | * |
-| flash-high-text N=30 N=30, 26-of-30 | flash-high-text N=5 N=5, 5-of-5 | 0.814 | 0.779 | +0.0353 | 0.0035 | 0.0047 | ** |
-| flash-high-text N=30 N=30, 26-of-30 | flash-high-image-3-of-5--flash-min-vf (t | 0.814 | 0.778 | +0.0363 | 0.0983 | 0.1126 | ns |
-| flash-high-text N=30 N=30, 26-of-30 | flash-high-image N=10 N=10, 7-of-10 | 0.814 | 0.750 | +0.0641 | 0.0017 | 0.0023 | ** |
+| flash-high-text N=30 N=30, 26-of-30 | flash-high-text N=10 N=10, 9-of-10 | 0.814 | 0.797 | +0.0174 | 0.0375 | 0.0463 | * |
+| flash-high-text N=30 N=30, 26-of-30 | flash-high-text N=5 N=5, 5-of-5 | 0.814 | 0.779 | +0.0353 | 0.0035 | 0.0048 | ** |
+| flash-high-text N=30 N=30, 26-of-30 | flash-high-image-3-of-5--flash-min-vf (t | 0.814 | 0.778 | +0.0363 | 0.0983 | 0.1141 | ns |
+| flash-high-text N=30 N=30, 26-of-30 | flash-high-image N=10 N=10, 7-of-10 | 0.814 | 0.750 | +0.0641 | 0.0017 | 0.0024 | ** |
 | flash-high-text N=30 N=30, 26-of-30 | flash-high-image N=5 N=5, 3-of-5 | 0.814 | 0.727 | +0.0872 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=30 N=30, 26-of-30 | image-baseline--flash-min-vf (t=0.2) | 0.814 | 0.717 | +0.0974 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=30 N=30, 26-of-30 | pro-high-image N=5 N=5, 3-of-5 | 0.814 | 0.700 | +0.1143 | 0.0000 | 0.0000 | *** |
@@ -172,12 +197,12 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text N=30 N=30, 26-of-30 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.814 | 0.471 | +0.3429 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=30 N=30, 26-of-30 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.814 | 0.467 | +0.3471 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=30 N=30, 26-of-30 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.814 | 0.462 | +0.3526 | 0.0000 | 0.0000 | *** |
-| flash-high-text N=10 N=10, 9-of-10 | flash-high-text N=5 N=5, 5-of-5 | 0.797 | 0.779 | +0.0179 | 0.1404 | 0.1578 | ns |
-| flash-high-text N=10 N=10, 9-of-10 | flash-high-image-3-of-5--flash-min-vf (t | 0.797 | 0.778 | +0.0190 | 0.4029 | 0.4241 | ns |
-| flash-high-text N=10 N=10, 9-of-10 | flash-high-image N=10 N=10, 7-of-10 | 0.797 | 0.750 | +0.0468 | 0.0233 | 0.0290 | * |
+| flash-high-text N=10 N=10, 9-of-10 | flash-high-text N=5 N=5, 5-of-5 | 0.797 | 0.779 | +0.0179 | 0.1404 | 0.1595 | ns |
+| flash-high-text N=10 N=10, 9-of-10 | flash-high-image-3-of-5--flash-min-vf (t | 0.797 | 0.778 | +0.0190 | 0.4029 | 0.4238 | ns |
+| flash-high-text N=10 N=10, 9-of-10 | flash-high-image N=10 N=10, 7-of-10 | 0.797 | 0.750 | +0.0468 | 0.0233 | 0.0295 | * |
 | flash-high-text N=10 N=10, 9-of-10 | flash-high-image N=5 N=5, 3-of-5 | 0.797 | 0.727 | +0.0699 | 0.0008 | 0.0011 | ** |
 | flash-high-text N=10 N=10, 9-of-10 | image-baseline--flash-min-vf (t=0.2) | 0.797 | 0.717 | +0.0801 | 0.0004 | 0.0006 | *** |
-| flash-high-text N=10 N=10, 9-of-10 | pro-high-image N=5 N=5, 3-of-5 | 0.797 | 0.700 | +0.0970 | 0.0003 | 0.0004 | *** |
+| flash-high-text N=10 N=10, 9-of-10 | pro-high-image N=5 N=5, 3-of-5 | 0.797 | 0.700 | +0.0970 | 0.0003 | 0.0005 | *** |
 | flash-high-text N=10 N=10, 9-of-10 | flash-min-image N=10 N=10, 8-of-10 | 0.797 | 0.680 | +0.1165 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=10 N=10, 9-of-10 | flash-min-image N=5 N=5, 4-of-5 | 0.797 | 0.664 | +0.1329 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=10 N=10, 9-of-10 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.797 | 0.661 | +0.1356 | 0.0000 | 0.0000 | *** |
@@ -188,11 +213,11 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text N=10 N=10, 9-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.797 | 0.471 | +0.3255 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=10 N=10, 9-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.797 | 0.467 | +0.3298 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=10 N=10, 9-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.797 | 0.462 | +0.3352 | 0.0000 | 0.0000 | *** |
-| flash-high-text N=5 N=5, 5-of-5 | flash-high-image-3-of-5--flash-min-vf (t | 0.779 | 0.778 | +0.0010 | 0.9664 | 0.9696 | ns |
-| flash-high-text N=5 N=5, 5-of-5 | flash-high-image N=10 N=10, 7-of-10 | 0.779 | 0.750 | +0.0288 | 0.1993 | 0.2182 | ns |
-| flash-high-text N=5 N=5, 5-of-5 | flash-high-image N=5 N=5, 3-of-5 | 0.779 | 0.727 | +0.0519 | 0.0143 | 0.0182 | * |
-| flash-high-text N=5 N=5, 5-of-5 | image-baseline--flash-min-vf (t=0.2) | 0.779 | 0.717 | +0.0621 | 0.0104 | 0.0135 | * |
-| flash-high-text N=5 N=5, 5-of-5 | pro-high-image N=5 N=5, 3-of-5 | 0.779 | 0.700 | +0.0790 | 0.0036 | 0.0048 | ** |
+| flash-high-text N=5 N=5, 5-of-5 | flash-high-image-3-of-5--flash-min-vf (t | 0.779 | 0.778 | +0.0010 | 0.9664 | 0.9694 | ns |
+| flash-high-text N=5 N=5, 5-of-5 | flash-high-image N=10 N=10, 7-of-10 | 0.779 | 0.750 | +0.0288 | 0.1993 | 0.2203 | ns |
+| flash-high-text N=5 N=5, 5-of-5 | flash-high-image N=5 N=5, 3-of-5 | 0.779 | 0.727 | +0.0519 | 0.0143 | 0.0184 | * |
+| flash-high-text N=5 N=5, 5-of-5 | image-baseline--flash-min-vf (t=0.2) | 0.779 | 0.717 | +0.0621 | 0.0104 | 0.0137 | * |
+| flash-high-text N=5 N=5, 5-of-5 | pro-high-image N=5 N=5, 3-of-5 | 0.779 | 0.700 | +0.0790 | 0.0036 | 0.0049 | ** |
 | flash-high-text N=5 N=5, 5-of-5 | flash-min-image N=10 N=10, 8-of-10 | 0.779 | 0.680 | +0.0985 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=5 N=5, 5-of-5 | flash-min-image N=5 N=5, 4-of-5 | 0.779 | 0.664 | +0.1149 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=5 N=5, 5-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.779 | 0.661 | +0.1177 | 0.0000 | 0.0000 | *** |
@@ -203,10 +228,10 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-text N=5 N=5, 5-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.779 | 0.471 | +0.3076 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=5 N=5, 5-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.779 | 0.467 | +0.3118 | 0.0000 | 0.0000 | *** |
 | flash-high-text N=5 N=5, 5-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.779 | 0.462 | +0.3173 | 0.0000 | 0.0000 | *** |
-| flash-high-image-3-of-5--flash-min-vf (t | flash-high-image N=10 N=10, 7-of-10 | 0.778 | 0.750 | +0.0278 | 0.0819 | 0.0949 | ns |
+| flash-high-image-3-of-5--flash-min-vf (t | flash-high-image N=10 N=10, 7-of-10 | 0.778 | 0.750 | +0.0278 | 0.0819 | 0.0961 | ns |
 | flash-high-image-3-of-5--flash-min-vf (t | flash-high-image N=5 N=5, 3-of-5 | 0.778 | 0.727 | +0.0509 | 0.0004 | 0.0006 | *** |
 | flash-high-image-3-of-5--flash-min-vf (t | image-baseline--flash-min-vf (t=0.2) | 0.778 | 0.717 | +0.0611 | 0.0010 | 0.0014 | ** |
-| flash-high-image-3-of-5--flash-min-vf (t | pro-high-image N=5 N=5, 3-of-5 | 0.778 | 0.700 | +0.0780 | 0.0069 | 0.0091 | ** |
+| flash-high-image-3-of-5--flash-min-vf (t | pro-high-image N=5 N=5, 3-of-5 | 0.778 | 0.700 | +0.0780 | 0.0069 | 0.0093 | ** |
 | flash-high-image-3-of-5--flash-min-vf (t | flash-min-image N=10 N=10, 8-of-10 | 0.778 | 0.680 | +0.0975 | 0.0000 | 0.0000 | *** |
 | flash-high-image-3-of-5--flash-min-vf (t | flash-min-image N=5 N=5, 4-of-5 | 0.778 | 0.664 | +0.1139 | 0.0000 | 0.0000 | *** |
 | flash-high-image-3-of-5--flash-min-vf (t | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.778 | 0.661 | +0.1166 | 0.0000 | 0.0000 | *** |
@@ -217,10 +242,10 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-image-3-of-5--flash-min-vf (t | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.778 | 0.471 | +0.3065 | 0.0000 | 0.0000 | *** |
 | flash-high-image-3-of-5--flash-min-vf (t | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.778 | 0.467 | +0.3108 | 0.0000 | 0.0000 | *** |
 | flash-high-image-3-of-5--flash-min-vf (t | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.778 | 0.462 | +0.3162 | 0.0000 | 0.0000 | *** |
-| flash-high-image N=10 N=10, 7-of-10 | flash-high-image N=5 N=5, 3-of-5 | 0.750 | 0.727 | +0.0231 | 0.0643 | 0.0754 | ns |
-| flash-high-image N=10 N=10, 7-of-10 | image-baseline--flash-min-vf (t=0.2) | 0.750 | 0.717 | +0.0333 | 0.1293 | 0.1469 | ns |
-| flash-high-image N=10 N=10, 7-of-10 | pro-high-image N=5 N=5, 3-of-5 | 0.750 | 0.700 | +0.0502 | 0.0675 | 0.0788 | ns |
-| flash-high-image N=10 N=10, 7-of-10 | flash-min-image N=10 N=10, 8-of-10 | 0.750 | 0.680 | +0.0697 | 0.0001 | 0.0001 | *** |
+| flash-high-image N=10 N=10, 7-of-10 | flash-high-image N=5 N=5, 3-of-5 | 0.750 | 0.727 | +0.0231 | 0.0643 | 0.0763 | ns |
+| flash-high-image N=10 N=10, 7-of-10 | image-baseline--flash-min-vf (t=0.2) | 0.750 | 0.717 | +0.0333 | 0.1293 | 0.1490 | ns |
+| flash-high-image N=10 N=10, 7-of-10 | pro-high-image N=5 N=5, 3-of-5 | 0.750 | 0.700 | +0.0502 | 0.0675 | 0.0798 | ns |
+| flash-high-image N=10 N=10, 7-of-10 | flash-min-image N=10 N=10, 8-of-10 | 0.750 | 0.680 | +0.0697 | 0.0001 | 0.0002 | *** |
 | flash-high-image N=10 N=10, 7-of-10 | flash-min-image N=5 N=5, 4-of-5 | 0.750 | 0.664 | +0.0861 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=10 N=10, 7-of-10 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.750 | 0.661 | +0.0889 | 0.0005 | 0.0007 | *** |
 | flash-high-image N=10 N=10, 7-of-10 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.750 | 0.640 | +0.1103 | 0.0004 | 0.0006 | *** |
@@ -230,64 +255,64 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-high-image N=10 N=10, 7-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.750 | 0.471 | +0.2788 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=10 N=10, 7-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.750 | 0.467 | +0.2830 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=10 N=10, 7-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.750 | 0.462 | +0.2885 | 0.0000 | 0.0000 | *** |
-| flash-high-image N=5 N=5, 3-of-5 | image-baseline--flash-min-vf (t=0.2) | 0.727 | 0.717 | +0.0102 | 0.6073 | 0.6239 | ns |
-| flash-high-image N=5 N=5, 3-of-5 | pro-high-image N=5 N=5, 3-of-5 | 0.727 | 0.700 | +0.0271 | 0.2939 | 0.3160 | ns |
-| flash-high-image N=5 N=5, 3-of-5 | flash-min-image N=10 N=10, 8-of-10 | 0.727 | 0.680 | +0.0466 | 0.0074 | 0.0097 | ** |
-| flash-high-image N=5 N=5, 3-of-5 | flash-min-image N=5 N=5, 4-of-5 | 0.727 | 0.664 | +0.0630 | 0.0003 | 0.0004 | *** |
-| flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.727 | 0.661 | +0.0657 | 0.0062 | 0.0082 | ** |
+| flash-high-image N=5 N=5, 3-of-5 | image-baseline--flash-min-vf (t=0.2) | 0.727 | 0.717 | +0.0102 | 0.6073 | 0.6226 | ns |
+| flash-high-image N=5 N=5, 3-of-5 | pro-high-image N=5 N=5, 3-of-5 | 0.727 | 0.700 | +0.0271 | 0.2939 | 0.3152 | ns |
+| flash-high-image N=5 N=5, 3-of-5 | flash-min-image N=10 N=10, 8-of-10 | 0.727 | 0.680 | +0.0466 | 0.0074 | 0.0099 | ** |
+| flash-high-image N=5 N=5, 3-of-5 | flash-min-image N=5 N=5, 4-of-5 | 0.727 | 0.664 | +0.0630 | 0.0003 | 0.0005 | *** |
+| flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.727 | 0.661 | +0.0657 | 0.0062 | 0.0084 | ** |
 | flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.727 | 0.640 | +0.0872 | 0.0026 | 0.0036 | ** |
-| flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.727 | 0.633 | +0.0937 | 0.0003 | 0.0004 | *** |
+| flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.727 | 0.633 | +0.0937 | 0.0003 | 0.0005 | *** |
 | flash-high-image N=5 N=5, 3-of-5 | single-pass-t0 N=10 N=10, 10-of-10 | 0.727 | 0.552 | +0.1747 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=5 N=5, 3-of-5 | single-pass-t0 N=5 N=5, 5-of-5 | 0.727 | 0.544 | +0.1829 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.727 | 0.471 | +0.2557 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.727 | 0.467 | +0.2599 | 0.0000 | 0.0000 | *** |
 | flash-high-image N=5 N=5, 3-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.727 | 0.462 | +0.2653 | 0.0000 | 0.0000 | *** |
-| image-baseline--flash-min-vf (t=0.2) | pro-high-image N=5 N=5, 3-of-5 | 0.717 | 0.700 | +0.0169 | 0.5182 | 0.5361 | ns |
-| image-baseline--flash-min-vf (t=0.2) | flash-min-image N=10 N=10, 8-of-10 | 0.717 | 0.680 | +0.0364 | 0.0992 | 0.1132 | ns |
-| image-baseline--flash-min-vf (t=0.2) | flash-min-image N=5 N=5, 4-of-5 | 0.717 | 0.664 | +0.0528 | 0.0143 | 0.0182 | * |
-| image-baseline--flash-min-vf (t=0.2) | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.717 | 0.661 | +0.0556 | 0.0383 | 0.0465 | * |
-| image-baseline--flash-min-vf (t=0.2) | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.717 | 0.640 | +0.0770 | 0.0127 | 0.0163 | * |
+| image-baseline--flash-min-vf (t=0.2) | pro-high-image N=5 N=5, 3-of-5 | 0.717 | 0.700 | +0.0169 | 0.5182 | 0.5364 | ns |
+| image-baseline--flash-min-vf (t=0.2) | flash-min-image N=10 N=10, 8-of-10 | 0.717 | 0.680 | +0.0364 | 0.0992 | 0.1147 | ns |
+| image-baseline--flash-min-vf (t=0.2) | flash-min-image N=5 N=5, 4-of-5 | 0.717 | 0.664 | +0.0528 | 0.0143 | 0.0184 | * |
+| image-baseline--flash-min-vf (t=0.2) | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.717 | 0.661 | +0.0556 | 0.0383 | 0.0471 | * |
+| image-baseline--flash-min-vf (t=0.2) | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.717 | 0.640 | +0.0770 | 0.0127 | 0.0165 | * |
 | image-baseline--flash-min-vf (t=0.2) | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.717 | 0.633 | +0.0835 | 0.0032 | 0.0044 | ** |
 | image-baseline--flash-min-vf (t=0.2) | single-pass-t0 N=10 N=10, 10-of-10 | 0.717 | 0.552 | +0.1646 | 0.0000 | 0.0000 | *** |
 | image-baseline--flash-min-vf (t=0.2) | single-pass-t0 N=5 N=5, 5-of-5 | 0.717 | 0.544 | +0.1727 | 0.0000 | 0.0000 | *** |
 | image-baseline--flash-min-vf (t=0.2) | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.717 | 0.471 | +0.2455 | 0.0000 | 0.0000 | *** |
 | image-baseline--flash-min-vf (t=0.2) | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.717 | 0.467 | +0.2497 | 0.0000 | 0.0000 | *** |
 | image-baseline--flash-min-vf (t=0.2) | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.717 | 0.462 | +0.2552 | 0.0000 | 0.0000 | *** |
-| pro-high-image N=5 N=5, 3-of-5 | flash-min-image N=10 N=10, 8-of-10 | 0.700 | 0.680 | +0.0195 | 0.4479 | 0.4682 | ns |
-| pro-high-image N=5 N=5, 3-of-5 | flash-min-image N=5 N=5, 4-of-5 | 0.700 | 0.664 | +0.0359 | 0.1600 | 0.1791 | ns |
-| pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.700 | 0.661 | +0.0386 | 0.1888 | 0.2075 | ns |
-| pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.700 | 0.640 | +0.0601 | 0.0588 | 0.0694 | ns |
-| pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.700 | 0.633 | +0.0666 | 0.0273 | 0.0334 | * |
+| pro-high-image N=5 N=5, 3-of-5 | flash-min-image N=10 N=10, 8-of-10 | 0.700 | 0.680 | +0.0195 | 0.4479 | 0.4681 | ns |
+| pro-high-image N=5 N=5, 3-of-5 | flash-min-image N=5 N=5, 4-of-5 | 0.700 | 0.664 | +0.0359 | 0.1600 | 0.1812 | ns |
+| pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.700 | 0.661 | +0.0386 | 0.1888 | 0.2094 | ns |
+| pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.700 | 0.640 | +0.0601 | 0.0588 | 0.0703 | ns |
+| pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.700 | 0.633 | +0.0666 | 0.0273 | 0.0339 | * |
 | pro-high-image N=5 N=5, 3-of-5 | single-pass-t0 N=10 N=10, 10-of-10 | 0.700 | 0.552 | +0.1476 | 0.0000 | 0.0000 | *** |
 | pro-high-image N=5 N=5, 3-of-5 | single-pass-t0 N=5 N=5, 5-of-5 | 0.700 | 0.544 | +0.1558 | 0.0000 | 0.0000 | *** |
 | pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.700 | 0.471 | +0.2285 | 0.0000 | 0.0000 | *** |
 | pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.700 | 0.467 | +0.2328 | 0.0000 | 0.0000 | *** |
 | pro-high-image N=5 N=5, 3-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.700 | 0.462 | +0.2382 | 0.0000 | 0.0000 | *** |
-| flash-min-image N=10 N=10, 8-of-10 | flash-min-image N=5 N=5, 4-of-5 | 0.680 | 0.664 | +0.0164 | 0.0465 | 0.0556 | ns |
-| flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.680 | 0.661 | +0.0192 | 0.4197 | 0.4402 | ns |
-| flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.680 | 0.640 | +0.0406 | 0.1313 | 0.1486 | ns |
-| flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.680 | 0.633 | +0.0471 | 0.0581 | 0.0689 | ns |
+| flash-min-image N=10 N=10, 8-of-10 | flash-min-image N=5 N=5, 4-of-5 | 0.680 | 0.664 | +0.0164 | 0.0465 | 0.0564 | ns |
+| flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.680 | 0.661 | +0.0192 | 0.4197 | 0.4400 | ns |
+| flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.680 | 0.640 | +0.0406 | 0.1313 | 0.1508 | ns |
+| flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.680 | 0.633 | +0.0471 | 0.0581 | 0.0697 | ns |
 | flash-min-image N=10 N=10, 8-of-10 | single-pass-t0 N=10 N=10, 10-of-10 | 0.680 | 0.552 | +0.1282 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=10 N=10, 8-of-10 | single-pass-t0 N=5 N=5, 5-of-5 | 0.680 | 0.544 | +0.1363 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.680 | 0.471 | +0.2091 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.680 | 0.467 | +0.2133 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=10 N=10, 8-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.680 | 0.462 | +0.2188 | 0.0000 | 0.0000 | *** |
-| flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.664 | 0.661 | +0.0027 | 0.9171 | 0.9233 | ns |
-| flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.664 | 0.640 | +0.0242 | 0.3604 | 0.3848 | ns |
-| flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.664 | 0.633 | +0.0307 | 0.2231 | 0.2425 | ns |
+| flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t07 N=30 N=30, 29-of-30 | 0.664 | 0.661 | +0.0027 | 0.9171 | 0.9228 | ns |
+| flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.664 | 0.640 | +0.0242 | 0.3604 | 0.3840 | ns |
+| flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.664 | 0.633 | +0.0307 | 0.2231 | 0.2450 | ns |
 | flash-min-image N=5 N=5, 4-of-5 | single-pass-t0 N=10 N=10, 10-of-10 | 0.664 | 0.552 | +0.1117 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=5 N=5, 4-of-5 | single-pass-t0 N=5 N=5, 5-of-5 | 0.664 | 0.544 | +0.1199 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.664 | 0.471 | +0.1926 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.664 | 0.467 | +0.1969 | 0.0000 | 0.0000 | *** |
 | flash-min-image N=5 N=5, 4-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.664 | 0.462 | +0.2023 | 0.0000 | 0.0000 | *** |
-| flash-min-text-t07 N=30 N=30, 29-of-30 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.661 | 0.640 | +0.0214 | 0.1792 | 0.1984 | ns |
+| flash-min-text-t07 N=30 N=30, 29-of-30 | flash-min-text-t07 N=5 N=5, 5-of-5 | 0.661 | 0.640 | +0.0214 | 0.1792 | 0.2001 | ns |
 | flash-min-text-t07 N=30 N=30, 29-of-30 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.661 | 0.633 | +0.0280 | 0.0005 | 0.0007 | *** |
 | flash-min-text-t07 N=30 N=30, 29-of-30 | single-pass-t0 N=10 N=10, 10-of-10 | 0.661 | 0.552 | +0.1090 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=30 N=30, 29-of-30 | single-pass-t0 N=5 N=5, 5-of-5 | 0.661 | 0.544 | +0.1171 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=30 N=30, 29-of-30 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.661 | 0.471 | +0.1899 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=30 N=30, 29-of-30 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.661 | 0.467 | +0.1941 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=30 N=30, 29-of-30 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.661 | 0.462 | +0.1996 | 0.0000 | 0.0000 | *** |
-| flash-min-text-t07 N=5 N=5, 5-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.640 | 0.633 | +0.0065 | 0.6338 | 0.6489 | ns |
+| flash-min-text-t07 N=5 N=5, 5-of-5 | flash-min-text-t07 N=10 N=10, 10-of-10 | 0.640 | 0.633 | +0.0065 | 0.6338 | 0.6478 | ns |
 | flash-min-text-t07 N=5 N=5, 5-of-5 | single-pass-t0 N=10 N=10, 10-of-10 | 0.640 | 0.552 | +0.0876 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=5 N=5, 5-of-5 | single-pass-t0 N=5 N=5, 5-of-5 | 0.640 | 0.544 | +0.0957 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=5 N=5, 5-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.640 | 0.471 | +0.1685 | 0.0000 | 0.0000 | *** |
@@ -298,19 +323,19 @@ Buffer: 20m | Permutations: 10000 | Seed: 42
 | flash-min-text-t07 N=10 N=10, 10-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.633 | 0.471 | +0.1619 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=10 N=10, 10-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.633 | 0.467 | +0.1662 | 0.0000 | 0.0000 | *** |
 | flash-min-text-t07 N=10 N=10, 10-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.633 | 0.462 | +0.1716 | 0.0000 | 0.0000 | *** |
-| single-pass-t0 N=10 N=10, 10-of-10 | single-pass-t0 N=5 N=5, 5-of-5 | 0.552 | 0.544 | +0.0081 | 0.1758 | 0.1953 | ns |
-| single-pass-t0 N=10 N=10, 10-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.552 | 0.471 | +0.0809 | 0.0565 | 0.0673 | ns |
-| single-pass-t0 N=10 N=10, 10-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.552 | 0.467 | +0.0851 | 0.0237 | 0.0294 | * |
-| single-pass-t0 N=10 N=10, 10-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.552 | 0.462 | +0.0906 | 0.0259 | 0.0318 | * |
-| single-pass-t0 N=5 N=5, 5-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.544 | 0.471 | +0.0728 | 0.0869 | 0.1003 | ns |
-| single-pass-t0 N=5 N=5, 5-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.544 | 0.467 | +0.0770 | 0.0417 | 0.0502 | ns |
-| single-pass-t0 N=5 N=5, 5-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.544 | 0.462 | +0.0825 | 0.0454 | 0.0545 | ns |
-| flash-min-text-t10 N=5 N=5, 5-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.471 | 0.467 | +0.0042 | 0.8115 | 0.8225 | ns |
-| flash-min-text-t10 N=5 N=5, 5-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.471 | 0.462 | +0.0097 | 0.2706 | 0.2920 | ns |
-| flash-min-text-t10 N=30 N=30, 22-of-30 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.467 | 0.462 | +0.0055 | 0.6915 | 0.7032 | ns |
+| single-pass-t0 N=10 N=10, 10-of-10 | single-pass-t0 N=5 N=5, 5-of-5 | 0.552 | 0.544 | +0.0081 | 0.1758 | 0.1970 | ns |
+| single-pass-t0 N=10 N=10, 10-of-10 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.552 | 0.471 | +0.0809 | 0.0565 | 0.0680 | ns |
+| single-pass-t0 N=10 N=10, 10-of-10 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.552 | 0.467 | +0.0851 | 0.0237 | 0.0299 | * |
+| single-pass-t0 N=10 N=10, 10-of-10 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.552 | 0.462 | +0.0906 | 0.0259 | 0.0324 | * |
+| single-pass-t0 N=5 N=5, 5-of-5 | flash-min-text-t10 N=5 N=5, 5-of-5 | 0.544 | 0.471 | +0.0728 | 0.0869 | 0.1016 | ns |
+| single-pass-t0 N=5 N=5, 5-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.544 | 0.467 | +0.0770 | 0.0417 | 0.0509 | ns |
+| single-pass-t0 N=5 N=5, 5-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.544 | 0.462 | +0.0825 | 0.0454 | 0.0553 | ns |
+| flash-min-text-t10 N=5 N=5, 5-of-5 | flash-min-text-t10 N=30 N=30, 22-of-30 | 0.471 | 0.467 | +0.0042 | 0.8115 | 0.8216 | ns |
+| flash-min-text-t10 N=5 N=5, 5-of-5 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.471 | 0.462 | +0.0097 | 0.2706 | 0.2932 | ns |
+| flash-min-text-t10 N=30 N=30, 22-of-30 | flash-min-text-t10 N=10 N=10, 9-of-10 | 0.467 | 0.462 | +0.0055 | 0.6915 | 0.7023 | ns |
 
 ## Summary
 
-- **Total comparisons:** 300
-- **Significant after FDR:** 248
-- **Leaderboard:** 248/300 significant
+- **Total comparisons:** 325
+- **Significant after FDR:** 265
+- **Leaderboard:** 265/325 significant

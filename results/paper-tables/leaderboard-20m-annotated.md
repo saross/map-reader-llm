@@ -1,10 +1,10 @@
 # VLM Burial Mound Detection: Comprehensive Leaderboard
 
 **Evaluation tolerance**: 20m (preregistered primary)
-**Tier clustering**: 300 pairwise permutation tests (10,000 iterations,
+**Tier clustering**: 325 pairwise permutation tests (10,000 iterations,
 seed 42), FDR-corrected at q=0.05. Conditions within the same tier are
 statistically indistinguishable.
-**Date**: 2026-03-29
+**Date**: 2026-03-29 (updated with Pro N=10 results)
 
 ## How to read this table
 
@@ -51,7 +51,7 @@ from the large proposer pool.
 
 ---
 
-## Tier 2 — Strong PV and best consensus (F1: 0.840–0.864)
+## Tier 2 — Strong PV and best consensus (F1: 0.836–0.864)
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
@@ -59,10 +59,17 @@ from the large proposer pool.
 | 3 | FH text 4/5 + PV (med vf) | 0.859 | [0.827, 0.887] | 0.878 | 0.841 | 0.739 | [0.679, 0.793] | 0.804 | 0.926 |
 | 4 | FH text 9/10 + PV (min vf) | 0.856 | [0.825, 0.885] | **0.957** | 0.775 | 0.749 | [0.696, 0.797] | 0.738 | **0.981** |
 | 5 | Pro H text 3/5 + PV (min vf) | 0.849 | [0.812, 0.883] | **0.957** | 0.763 | 0.730 | [0.676, 0.783] | 0.703 | **0.988** |
-| 6 | Pro H text 3/5 (consensus) | 0.840 | [0.800, 0.875] | 0.918 | 0.775 | 0.736 | [0.682, 0.788] | 0.747 | 0.965 |
+| 6 | Pro H text 3/5 (N=5 cons.) | 0.840 | [0.800, 0.875] | 0.918 | 0.775 | 0.736 | [0.682, 0.788] | 0.747 | 0.965 |
+| 7 | Pro H text 6/10 (N=10 cons.) | 0.837 | [0.798, 0.874] | 0.921 | 0.767 | 0.710 | [0.654, 0.764] | 0.703 | 0.973 |
 
 **Key observations:**
 
+- **Pro N=10 (#7) does not improve over Pro N=5 (#6).** F1 drops
+  marginally from 0.840 to 0.837 (well within CIs). This confirms the
+  **pool-size plateau** — Pro does not benefit from larger consensus
+  pools, paralleling the Flash result where N=5→N=10 was also
+  non-significant. Pro's high per-run quality means consensus adds
+  little beyond N=5.
 - **Pro consensus without a verifier (#6) sits alongside Flash PV
   conditions.** Pro's inherent precision (0.918) is high enough that the
   verifier adds little (+0.009 F1, not significant at 20m).
@@ -83,22 +90,22 @@ from the large proposer pool.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 7 | Text baseline + PV | 0.814 | [0.780, 0.844] | 0.789 | 0.841 | 0.833 | [0.783, 0.877] | 0.869 | 0.957 |
-| 8 | FH text 26/30 (consensus) | 0.814 | [0.778, 0.846] | 0.834 | 0.795 | 0.620 | [0.549, 0.691] | 0.777 | 0.841 |
-| 9 | FH image 3/5 + PV | 0.778 | [0.735, 0.816] | 0.800 | 0.756 | 0.827 | [0.777, 0.873] | 0.847 | 0.969 |
+| 8 | Text baseline + PV | 0.814 | [0.780, 0.844] | 0.789 | 0.841 | 0.833 | [0.783, 0.877] | 0.869 | 0.957 |
+| 9 | FH text 26/30 (consensus) | 0.814 | [0.778, 0.846] | 0.834 | 0.795 | 0.620 | [0.549, 0.691] | 0.777 | 0.841 |
+| 10 | FH image 3/5 + PV | 0.778 | [0.735, 0.816] | 0.800 | 0.756 | 0.827 | [0.777, 0.873] | 0.847 | 0.969 |
 
 **Key observations:**
 
-- **The text baseline + PV (#7) is striking:** a naive single-pass
+- **The text baseline + PV (#8) is striking:** a naive single-pass
   proposer (no consensus, no HIGH thinking) plus a verifier outperforms
   most consensus-only conditions. The verifier compensates for poor
   proposer precision. This demonstrates that the verifier stage is
   independently valuable — it does not merely polish already-good
   consensus output.
-- **FH image 3/5 + PV (#9)** reaches this tier despite image modality's
+- **FH image 3/5 + PV (#10)** reaches this tier despite image modality's
   lower raw performance. The verifier rescues image-based detection,
   closing roughly half the text-image gap.
-- **Note the MCC divergence:** #7 and #9 have high tile-level MCC
+- **Note the MCC divergence:** #8 and #10 have high tile-level MCC
   (0.833, 0.827) despite lower mound-level F1, indicating accurate
   tile classification but imprecise mound localisation at 20m.
 
@@ -108,8 +115,8 @@ from the large proposer pool.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 10 | FH text 9/10 (consensus) | 0.797 | [0.757, 0.830] | 0.800 | 0.793 | 0.621 | [0.545, 0.691] | 0.795 | 0.826 |
-| 11 | FH text 5/5 (consensus) | 0.779 | [0.739, 0.817] | 0.798 | 0.761 | 0.600 | [0.529, 0.671] | 0.769 | 0.830 |
+| 11 | FH text 9/10 (consensus) | 0.797 | [0.757, 0.830] | 0.800 | 0.793 | 0.621 | [0.545, 0.691] | 0.795 | 0.826 |
+| 12 | FH text 5/5 (consensus) | 0.779 | [0.739, 0.817] | 0.798 | 0.761 | 0.600 | [0.529, 0.671] | 0.769 | 0.830 |
 
 Flash HIGH text consensus conditions **without a verifier**. The N=5 and
 N=10 pools are statistically indistinguishable — bigger pools do not
@@ -122,10 +129,10 @@ hits a ceiling around F1=0.80 for Flash.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 12 | FH image 7/10 (consensus) | 0.750 | [0.707, 0.790] | 0.778 | 0.724 | — | — | — | — |
-| 13 | FH image 3/5 (consensus) | 0.727 | [0.687, 0.765] | 0.676 | 0.786 | 0.665 | [0.598, 0.724] | 0.856 | 0.810 |
-| 14 | Image baseline + PV | 0.717 | [0.673, 0.754] | 0.663 | 0.779 | **0.877** | [0.833, 0.919] | **0.943** | 0.934 |
-| 15 | Pro H image 3/5 (consensus) | 0.700 | [0.653, 0.741] | 0.673 | 0.729 | 0.761 | [0.706, 0.816] | 0.843 | 0.915 |
+| 13 | FH image 7/10 (consensus) | 0.750 | [0.707, 0.790] | 0.778 | 0.724 | ~0.675 | [0.604, 0.736] | 0.838 | 0.837 |
+| 14 | FH image 3/5 (consensus) | 0.727 | [0.687, 0.765] | 0.676 | 0.786 | 0.665 | [0.598, 0.724] | 0.856 | 0.810 |
+| 15 | Image baseline + PV | 0.717 | [0.673, 0.754] | 0.663 | 0.779 | **0.877** | [0.833, 0.919] | **0.943** | 0.934 |
+| 16 | Pro H image 3/5 (consensus) | 0.700 | [0.653, 0.741] | 0.673 | 0.729 | 0.761 | [0.706, 0.816] | 0.843 | 0.915 |
 
 Image modality clusters here **regardless of model** (Flash or Pro) **or
 pipeline stage** (consensus or PV). The ceiling for image-only is ~0.75
@@ -133,15 +140,15 @@ F1 at 20m.
 
 **Key observations:**
 
-- **#14 (image baseline + PV) has the highest tile-level MCC of any
+- **#15 (image baseline + PV) has the highest tile-level MCC of any
   condition** (0.877) and tile sensitivity of 0.943 — it almost never
   misses a tile that contains mounds. But its mound-level localisation
   is imprecise at 20m, pushing it to Tier 5 on F1.
-- **Pro image (#15) does not outperform Flash image (#12–13).** The model
+- **Pro image (#16) does not outperform Flash image (#13–14).** The model
   upgrade does not overcome the image modality's fundamental
   localisation limitation.
-- MCC data not yet available for #12 (FH image 7/10) — this threshold
-  was added to the evaluation during this session.
+- MCC for #13 (FH image 7/10) is approximate (~), from the nearest
+  evaluated threshold (6-of-10).
 
 ---
 
@@ -149,10 +156,10 @@ F1 at 20m.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 16 | FM image 8/10 (consensus) | 0.680 | [0.634, 0.723] | 0.640 | 0.726 | 0.361 | [0.283, 0.433] | 0.860 | 0.477 |
-| 17 | FM image 4/5 (consensus) | 0.664 | [0.619, 0.706] | 0.608 | 0.731 | 0.390 | [0.310, 0.469] | 0.843 | 0.531 |
-| 18 | FM text T=0.7 29/30 | 0.661 | [0.610, 0.706] | 0.602 | 0.733 | 0.381 | [0.302, 0.460] | 0.817 | 0.554 |
-| 19 | FM text T=0.7 5/5 | 0.640 | [0.584, 0.690] | 0.533 | 0.800 | 0.315 | [0.230, 0.395] | 0.860 | 0.426 |
+| 17 | FM image 8/10 (consensus) | 0.680 | [0.634, 0.723] | 0.640 | 0.726 | ~0.361 | [0.283, 0.433] | 0.860 | 0.477 |
+| 18 | FM image 4/5 (consensus) | 0.664 | [0.619, 0.706] | 0.608 | 0.731 | 0.390 | [0.310, 0.469] | 0.843 | 0.531 |
+| 19 | FM text T=0.7 29/30 | 0.661 | [0.610, 0.706] | 0.602 | 0.733 | 0.381 | [0.302, 0.460] | 0.817 | 0.554 |
+| 20 | FM text T=0.7 5/5 | 0.640 | [0.584, 0.690] | 0.533 | 0.800 | 0.315 | [0.230, 0.395] | 0.860 | 0.426 |
 
 MINIMAL thinking produces high recall (0.73–0.80) but poor precision
 (0.53–0.61). **Tile specificity collapses to 0.43–0.55** — the model
@@ -167,7 +174,7 @@ distinction.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 20 | FM text T=0.7 10/10 | 0.633 | [0.583, 0.680] | 0.562 | 0.724 | 0.366 | [0.284, 0.444] | 0.834 | 0.516 |
+| 21 | FM text T=0.7 10/10 | 0.633 | [0.583, 0.680] | 0.562 | 0.724 | 0.366 | [0.284, 0.444] | 0.834 | 0.516 |
 
 Sits between Tiers 6 and 8 — significantly worse than the N=5 and N=30
 variants of the same condition. This is a non-monotonic pool-size
@@ -180,17 +187,17 @@ consensus than either N=5 or N=30.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 21 | Single-pass T=0 10/10 | 0.552 | [0.491, 0.610] | 0.410 | 0.846 | 0.212 | [0.126, 0.293] | 0.913 | 0.248 |
-| 22 | Single-pass T=0 5/5 | 0.544 | [0.481, 0.602] | 0.396 | 0.867 | 0.178 | [0.096, 0.255] | 0.926 | 0.198 |
-| 23 | FM text T=1.0 5/5 | 0.471 | [0.395, 0.535] | 0.583 | 0.395 | 0.257 | [0.176, 0.338] | 0.454 | 0.787 |
+| 22 | Single-pass T=0 10/10 | 0.552 | [0.491, 0.610] | 0.410 | 0.846 | 0.212 | [0.126, 0.293] | 0.913 | 0.248 |
+| 23 | Single-pass T=0 5/5 | 0.544 | [0.481, 0.602] | 0.396 | 0.867 | 0.178 | [0.096, 0.255] | 0.926 | 0.198 |
+| 24 | FM text T=1.0 5/5 | 0.471 | [0.395, 0.535] | 0.583 | 0.395 | 0.257 | [0.176, 0.338] | 0.454 | 0.787 |
 
-The single-pass conditions (#21–22) have excellent recall (0.85–0.87)
+The single-pass conditions (#22–23) have excellent recall (0.85–0.87)
 but ruinous precision (0.40) — they detect almost everything but
 generate massive false positive volumes. Tile specificity is ~0.20,
 meaning they flag 80% of empty tiles. These represent the **raw proposer
 output** before consensus filtering.
 
-T=1.0 (#23) shows the **opposite failure mode**: precision is acceptable
+T=1.0 (#24) shows the **opposite failure mode**: precision is acceptable
 but recall crashes to 0.395. The high temperature causes the model to
 miss real mounds rather than hallucinate false ones.
 
@@ -200,8 +207,8 @@ miss real mounds rather than hallucinate false ones.
 
 | # | Condition | F1 | 95% CI | P | R | MCC | MCC CI | Sens | Spec |
 |--:|---|:---:|---|:---:|:---:|:---:|---|:---:|:---:|
-| 24 | FM text T=1.0 22/30 | 0.467 | [0.395, 0.532] | 0.499 | 0.439 | 0.208 | [0.122, 0.298] | 0.498 | 0.705 |
-| 25 | FM text T=1.0 9/10 | 0.462 | [0.391, 0.526] | 0.545 | 0.400 | 0.212 | [0.122, 0.303] | 0.467 | 0.736 |
+| 25 | FM text T=1.0 22/30 | 0.467 | [0.395, 0.532] | 0.499 | 0.439 | 0.208 | [0.122, 0.298] | 0.498 | 0.705 |
+| 26 | FM text T=1.0 9/10 | 0.462 | [0.391, 0.526] | 0.545 | 0.400 | 0.212 | [0.122, 0.303] | 0.467 | 0.736 |
 
 T=1.0 was effectively a configuration error (the Gemini API default).
 Consensus voting on incoherent high-temperature outputs does not
@@ -233,6 +240,24 @@ that a stricter threshold would have excluded. The **large pool + low
 threshold + verifier** architecture outperforms **small pool + high
 threshold** because it separates the "find everything" and "confirm it's
 real" tasks.
+
+---
+
+## Pro pool-size plateau
+
+| Pool | Best threshold | F1 | 95% CI | P | R |
+|---|---|:---:|---|:---:|:---:|
+| N=5 | 3-of-5 | 0.843 | [0.806, 0.879] | 0.917 | 0.781 |
+| N=10 | 6-of-10 | 0.837 | [0.798, 0.874] | 0.921 | 0.767 |
+
+Pro N=10 is marginally **worse** than Pro N=5 (ΔF1 = -0.006, well within
+CIs). Adding 5 more Pro runs ($~60) produced no improvement. This
+parallels the Flash result (N=5→N=10 was non-significant, ΔF1=+0.018).
+
+The plateau is stronger for Pro than Flash because Pro's per-run quality
+is already high — individual runs agree more, so additional runs add
+less diversity. For both models, the consensus mechanism saturates at
+N=5; further gains require architectural change (the verifier stage).
 
 ---
 
@@ -270,6 +295,11 @@ neither modality is processed effectively.
 Pro vs Flash (text consensus): +0.062 (p=0.006). But with PV: -0.015
 (ns). Flash + pipeline matches Pro at ~1/10th the cost.
 
+### Pool size plateaus for both models
+
+Flash N=5→N=10: +0.018 (ns). Pro N=5→N=10: -0.006 (ns). Neither model
+benefits significantly from doubling the consensus pool beyond N=5.
+
 ---
 
 ## Summary: what works and what does not
@@ -303,24 +333,21 @@ Pro vs Flash (text consensus): +0.062 (p=0.006). But with PV: -0.015
    (0.06–0.17) are dwarfed by architectural effects (+0.50).
 5. **Consensus on incoherent outputs** — voting on high-temperature or
    MINIMAL-thinking runs does not recover quality.
+6. **Larger consensus pools** — N=10 does not improve over N=5 for
+   either Flash or Pro. The consensus mechanism saturates early;
+   further gains require the verifier stage.
 
 ---
 
-## Pending
-
-- **Pro N=10 runs** (5 additional proposer passes) are currently in the
-  Gemini Batch API queue. When complete, Pro N=10 consensus and PV
-  conditions will be added to the leaderboard. This tests whether Pro
-  benefits from larger pools (like Flash, which showed a non-significant
-  N=5→N=10 improvement).
-
 ## Statistics
 
-- 25 conditions evaluated at 20m spatial tolerance
-- 300 pairwise permutation tests (10,000 iterations, seed 42)
-- 248/300 significant after Benjamini-Hochberg FDR correction (q=0.05)
+- 26 conditions evaluated at 20m spatial tolerance
+- 325 pairwise permutation tests (10,000 iterations, seed 42)
+- 265/325 significant after Benjamini-Hochberg FDR correction (q=0.05)
 - 9 tiers identified via greedy clique-based clustering
 - Bootstrap CIs: 1,000 iterations, seed 42, stratified by map sheet
 - Ground truth: 569 hand-placed reference mounds across 4 Soviet
   topographic map sheets
 - Evaluation area: 487 tiles (384px, ~5 m/px)
+- Pro N=10 evaluation: 5 additional Batch API runs ($~60), consensus
+  clustering with DBSCAN (eps=30m), full threshold sweep at 20/30/40/50m

@@ -1,0 +1,438 @@
+======================================================================
+Study: H11: 384px Pro HIGH — Text N=10
+Phase: h11
+Hypothesis: H6-exploratory
+Version: 1.0
+Description: Extends the N=5 Pro HIGH text study to N=10 by adding 5 additional
+proposer passes. Tests whether Pro consensus benefits from larger
+pools (N=10 vs N=5), enabling matched-N comparison with Flash and
+testing for performance plateau. Uses --resume to skip runs 1-5.
+======================================================================
+
+Conditions: 1
+  - text-t0.7: prompts/configs/detect_brief-text.json
+    Overrides: T=0.7, thinking=high
+Runs per condition: 10
+Tiles per run: ALL
+Total execution units: 10
+
+  ** Model override: gemini-3.1-pro **
+
+Resuming: 5 units already completed, 5 remaining
+
+Manifest: /home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json
+
+Execution mode: BATCH (Gemini Batch API — parallel submission)
+
+Token quota: 3,000,000 enqueued tokens
+
+Phase 1: Preparing 5 execution units...
+  Tile size override: 384
+  Tiles directory override: /home/shawn/Code/map-reader-llm/inputs/tiles_384
+
+[1/5] text-t0.7/run_10 (T=0.7, thinking=high)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+  Built JSONL: 487 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_10/batch_working/detections_text-t0.7_run10.jsonl)
+  Token estimate: 698/tile (text=440 + images=258)
+  Unit total: 339,926 tokens (487 tiles × 698/tile)
+
+[2/5] text-t0.7/run_7 (T=0.7, thinking=high)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+  Built JSONL: 487 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_7/batch_working/detections_text-t0.7_run07.jsonl)
+  Unit total: 339,926 tokens (487 tiles × 698/tile)
+
+[3/5] text-t0.7/run_8 (T=0.7, thinking=high)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+  Built JSONL: 487 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_8/batch_working/detections_text-t0.7_run08.jsonl)
+  Unit total: 339,926 tokens (487 tiles × 698/tile)
+
+[4/5] text-t0.7/run_9 (T=0.7, thinking=high)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+  Built JSONL: 487 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_9/batch_working/detections_text-t0.7_run09.jsonl)
+  Unit total: 339,926 tokens (487 tiles × 698/tile)
+
+[5/5] text-t0.7/run_6 (T=0.7, thinking=high)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+  Built JSONL: 487 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_6/batch_working/detections_text-t0.7_run06.jsonl)
+  Unit total: 339,926 tokens (487 tiles × 698/tile)
+
+Phase 2: 5 new job(s) to submit, 0 already pending (cap: 50 concurrent)
+
+  Submitted batch job: batches/fb937k77e42lhyq64bu3q6vmau81ue4n87eh
+  Submitted batch job: batches/0yv4c7nhz3kcohqd8iycc8con5dzclmjkbqp
+  Submitted batch job: batches/l9axsyunsig6zsyunpc188lir3yhvyicceq7
+  Submitted batch job: batches/3edqbwi8dcqd1t2ix73vgp1wicfj4131uor1
+  Submitted batch job: batches/xff4lu3jp9l59yvoipqcdy8yhab2a3as9mmq
+  Submitted initial wave: 5 job(s), 5 in flight, 0 queued
+  BatchTokenLedger(enqueued=1,699,630/3,000,000, jobs=5)
+
+  ... 0/5 complete, 5 in flight, 0 queued (0.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  Proactive sweep: 1 orphaned file(s) removed (1.13 GB freed); 5 files remain (0.72 GB)
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (0.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (1.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.0h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.1h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.2h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.3h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.4h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.5h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.6h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.7h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.8h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+  ... 0/5 complete, 5 in flight, 0 queued (2.9h elapsed) [tokens: 1,699,630/3,000,000]
+[text-t0.7/run_6] Failed to delete file files/batch-xff4lu3jp9l59yvoipqcdy8yhab2a3as9mmq: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+  Batch complete: 487 tiles, 442 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [1/5] text-t0.7/run_6: OK
+  ... 1/5 complete, 4 in flight, 0 queued (2.9h elapsed) [tokens: 1,359,704/3,000,000]
+  ... 1/5 complete, 4 in flight, 0 queued (2.9h elapsed) [tokens: 1,359,704/3,000,000]
+  ... 1/5 complete, 4 in flight, 0 queued (2.9h elapsed) [tokens: 1,359,704/3,000,000]
+[text-t0.7/run_7] Failed to delete file files/batch-0yv4c7nhz3kcohqd8iycc8con5dzclmjkbqp: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+[text-t0.7/run_8] Failed to delete file files/batch-l9axsyunsig6zsyunpc188lir3yhvyicceq7: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+[text-t0.7/run_9] Failed to delete file files/batch-3edqbwi8dcqd1t2ix73vgp1wicfj4131uor1: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+  Batch complete: 487 tiles, 433 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [2/5] text-t0.7/run_7: OK
+  Batch complete: 487 tiles, 435 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [3/5] text-t0.7/run_8: OK
+  Batch complete: 487 tiles, 439 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [4/5] text-t0.7/run_9: OK
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+  ... 4/5 complete, 1 in flight, 0 queued (3.0h elapsed) [tokens: 339,926/3,000,000]
+[text-t0.7/run_10] Failed to delete file files/batch-fb937k77e42lhyq64bu3q6vmau81ue4n87eh: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+  Batch complete: 487 tiles, 448 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [5/5] text-t0.7/run_10: OK
+======================================================================
+Phase h11 Complete
+======================================================================
+Completed: 10 units
+Failed: 0 units
+Running cost: $0.0000
+Checkpoint: /home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-high-text-n5/checkpoint.json
+

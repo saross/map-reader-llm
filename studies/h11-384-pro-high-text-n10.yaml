@@ -1,0 +1,57 @@
+# H11: 384px Gemini 3.1 Pro HIGH Thinking — Text N=10
+# =====================================================
+# Extends pro-high-text-n5 from 5 to 10 text-track proposer passes.
+# Run with --resume to skip existing runs 1-5 and execute 6-10 only.
+#
+# Purpose: Test whether Pro benefits from larger consensus pools (N=10),
+# enabling fair Flash-vs-Pro comparison at matched pool sizes and
+# testing for a performance plateau analogous to Flash N=5->N=10.
+#
+# Run with:
+#   python scripts/run_phase2.py studies/h11-384-pro-high-text-n10.yaml \
+#       --model gemini-3.1-pro --mode batch --resume
+
+study:
+  name: "H11: 384px Pro HIGH — Text N=10"
+  version: "1.0"
+  description: |
+    Extends the N=5 Pro HIGH text study to N=10 by adding 5 additional
+    proposer passes. Tests whether Pro consensus benefits from larger
+    pools (N=10 vs N=5), enabling matched-N comparison with Flash and
+    testing for performance plateau. Uses --resume to skip runs 1-5.
+  phase: "h11"
+  hypothesis: "H6-exploratory"
+  created: "2026-03-29"
+
+carried_forward:
+  optimal_me_config: "prompts/configs/detect_brief-text.json"
+  optimal_me_name: "brief-text"
+  source: "Phase 2 — best single-pass text config"
+
+inputs:
+  manifest: "inputs/tiles_384/full_evaluation_manifest.json"
+  tile_size: 384
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+
+execution:
+  runs: 10
+  workers: 1
+  output_dir: "outputs/h11/pv-diag-384/pro-high-text-n5"
+
+conditions:
+- name: text-t0.7
+  config: "prompts/configs/detect_brief-text.json"
+  temperature: 0.7
+  thinking_level: high
+  description: "Text-only proposer, T=0.7, HIGH thinking, Gemini 3.1 Pro (via --model)"
+
+estimates:
+  tiles: 611
+  new_runs: 5
+  total_api_calls: 3055
+  cost_per_call_usd: 0.006
+  cost_batch_discount: 0.5
+  cost_usd_new_runs: 10.00
+  note: "Only runs 6-10 will execute when used with --resume"
