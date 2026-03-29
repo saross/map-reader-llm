@@ -305,15 +305,15 @@ family).
 
 ## Verification
 
-- [ ] Groups 3, 4 comparisons show small |ΔF1| — supports goal (b)
-- [ ] Groups 1, 7 show larger |ΔF1| — supports goal (c)
-- [ ] Group 2 shows text > image consistently — supports goal (d)
-- [ ] Leaderboard produces clear tier clustering at top
-- [ ] N=1 vs consensus comparisons are highly significant (large ΔF1)
-- [ ] FDR-adjusted p-values are ≥ raw p-values
-- [ ] Three FDR families corrected separately (confirmatory, exploratory, leaderboard)
-- [ ] Results at 20m and 30m are directionally consistent
-- [ ] All JSON outputs match the existing `pairwise_permutation_result.json` schema
+- [x] Groups 3, 4 comparisons show small |ΔF1| — supports goal (b) [2026-03-28]
+- [x] Groups 1, 7 show larger |ΔF1| — supports goal (c) [2026-03-28]
+- [x] Group 2 shows text > image consistently — supports goal (d) [2026-03-28]
+- [x] Leaderboard produces clear tier clustering at top — 9 tiers, top 3 indistinguishable [2026-03-28]
+- [x] N=1 vs consensus comparisons are highly significant (large ΔF1) [2026-03-28]
+- [x] FDR-adjusted p-values are ≥ raw p-values [2026-03-28]
+- [x] Three FDR families corrected separately (confirmatory, exploratory, leaderboard) [2026-03-28]
+- [x] Results at 20m and 30m are directionally consistent [2026-03-28]
+- [x] All JSON outputs match the existing `pairwise_permutation_result.json` schema [2026-03-28]
 
 ## Critical files
 
