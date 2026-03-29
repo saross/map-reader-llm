@@ -12,7 +12,7 @@ functions but add condition-specific logic. Use this script when you
 have plain detection GeoJSON files and want metrics.
 
 Usage:
-    # Single file at default 30m buffer
+    # Single file at default 20m buffer
     python scripts/evaluate_detections.py \\
         --detections path/to/detections.geojson
 
@@ -78,7 +78,7 @@ DEFAULT_GROUND_TRUTH = (
 DEFAULT_BOUNDS = (
     PROJECT_ROOT / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 )
-DEFAULT_BUFFERS = [30]
+DEFAULT_BUFFERS = [20]
 DEFAULT_BOOTSTRAP = 1000
 DEFAULT_SEED = 42
 

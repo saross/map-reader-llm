@@ -910,10 +910,10 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
-        "--buffer-metres", type=float, default=30,
+        "--buffer-metres", type=float, default=20,
         help=(
             "Spatial matching tolerance in metres for detection "
-            "matching (default: 30)"
+            "matching (default: 20)"
         ),
     )
     parser.add_argument(

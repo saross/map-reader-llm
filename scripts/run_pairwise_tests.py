@@ -19,15 +19,15 @@ Usage — hypothesis-driven comparisons:
 
     python scripts/run_pairwise_tests.py \\
         --config configs/pairwise-comparisons.yaml \\
-        --buffer-metres 30 \\
-        --output-dir results/pairwise/30m
+        --buffer-metres 20 \\
+        --output-dir results/pairwise/20m
 
 Usage — filter to a single group:
 
     python scripts/run_pairwise_tests.py \\
         --config configs/pairwise-comparisons.yaml \\
-        --buffer-metres 30 \\
-        --output-dir results/pairwise/30m \\
+        --buffer-metres 20 \\
+        --output-dir results/pairwise/20m \\
         --filter-group 6
 
 Usage — leaderboard round-robin:
@@ -36,8 +36,8 @@ Usage — leaderboard round-robin:
         --leaderboard configs/condition-registry.yaml \\
         --metrics results/paper-tables/metrics_master.csv \\
         --top-n 25 \\
-        --buffer-metres 30 \\
-        --output-dir results/pairwise/leaderboard-30m
+        --buffer-metres 20 \\
+        --output-dir results/pairwise/leaderboard-20m
 
 Created: 2026-03-28
 Author: Shawn Ross & Claude Code
@@ -743,8 +743,8 @@ def main() -> None:
         help="Root output directory for results",
     )
     parser.add_argument(
-        "--buffer-metres", type=int, default=30,
-        help="Spatial matching tolerance in metres (default: 30)",
+        "--buffer-metres", type=int, default=20,
+        help="Spatial matching tolerance in metres (default: 20)",
     )
     parser.add_argument(
         "--n-permutations", type=int, default=10_000,

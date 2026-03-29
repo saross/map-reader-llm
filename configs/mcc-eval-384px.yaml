@@ -15,7 +15,7 @@ metadata:
 defaults:
   bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
   ground_truth: inputs/vectors/references/mounds-reference.geojson
-  buffers: [30]
+  buffers: [20]
   bootstrap: 1000
   seed: 42
   glob: "*/detections_*.geojson"

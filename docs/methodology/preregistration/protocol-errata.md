@@ -1136,11 +1136,13 @@ aggregated across tiles to compute F1 for each permuted condition.
    tiles that contain detectable objects.
 
 **The change preserves**:
+
 - Tile-level exchangeability as the null hypothesis
 - Permutation-based inference (exact Type I error under the null)
 - Paired design (same tiles compared across conditions)
 
 **What changes**:
+
 - Test statistic: micro-average F1 difference (aggregate TP/FP/FN, then
   compute F1) instead of macro-average (per-tile F1, then average)
 - Output key renamed: `observed_f1_diff` (was `observed_mean_diff`)
@@ -1207,12 +1209,14 @@ true centre.
    performance gap narrows.
 
 **The change preserves**:
+
 - Centroid-to-centroid matching (not edge-to-point)
 - Hungarian algorithm for globally optimal one-to-one assignment
 - Per-map-sheet matching to prevent boundary effects
 - All 20 m results available as secondary analysis
 
 **What changes**:
+
 - Primary F1/P/R values reported in the paper use 30 m buffer
 - 20 m results reported as sensitivity analysis
 - The text-vs-image modality gap is smaller at 30 m (reflects detection
@@ -1223,6 +1227,61 @@ conditions (8 consensus, 8 PV) on 487 tiles with 435 reference mounds.
 Extended to 75 m and 100 m for image conditions to confirm plateau.
 See `results/paper-tables/spatial_tolerance_comparison.md` and
 Observations 196-198 in working notes.
+
+---
+
+### E47: Primary spatial matching buffer reverted to preregistered 20 m
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-03-29 |
+| Type | Reversion (restores preregistered value) |
+| Preregistration ref | Section 3.5 |
+| Supersedes | E46 |
+| Files | `scripts/run_pairwise_tests.py`, `scripts/evaluate_detections.py`, `scripts/compare_tile_sizes.py`, `configs/mcc-eval-384px.yaml`, `configs/tile-size-comparison.yaml`, `configs/condition-registry.yaml` |
+| Impact | Absolute F1/P/R values decrease slightly; greater discrimination between conditions; condition rankings unchanged |
+
+**Description**: The primary spatial matching tolerance is reverted from
+30 m (E46) to the preregistered 20 m. The 30 m analysis remains
+available and is recommended for production deployment, but 20 m is
+used as the paper's headline tolerance.
+
+**Rationale for the reversion**:
+
+1. **Preregistration alignment**: The preregistered primary tolerance is
+   20 m (Section 3.5). E46 changed this during analysis — reverting
+   restores alignment with the registered protocol and avoids the
+   appearance of post-hoc tolerance selection.
+
+2. **Greater statistical discrimination**: At 20 m, the leaderboard
+   round-robin (253 pairwise comparisons, FDR-corrected) produces a
+   solitary Tier 1 (best condition alone), whereas at 30 m the top 3
+   conditions are statistically indistinguishable. The tighter tolerance
+   better separates conditions for comparative purposes.
+
+3. **Conservative reporting**: 20 m is the more demanding evaluation.
+   Reporting the harder metric as the headline and showing improvement
+   at 30 m via the tolerance curve is more credible than the reverse.
+
+**The paper will present**:
+
+- 20 m as the primary (preregistered) evaluation tolerance
+- A spatial tolerance curve from 20–50 m showing sensitivity
+- An argument that 30 m (generalised to: minimum typical radius of
+  the target symbol) is better suited for production workflows where
+  the goal is flagging locations for human review, not measuring
+  sub-symbol localisation precision
+
+**The E46 rationale remains valid**: 30 m is a physically meaningful
+threshold (~1 symbol radius) and the text-track plateau begins there.
+The two tolerances answer different questions: 20 m measures detection
+quality under strict localisation; 30 m measures practical detection
+utility. Both are reported.
+
+**Changes to defaults**: Script defaults and config files updated from
+30 m to 20 m. The condition registry now includes threshold variants
+for both 20 m and 30 m optimal consensus thresholds (two N=10
+conditions have different optima at the two tolerances).
 
 ---
 
