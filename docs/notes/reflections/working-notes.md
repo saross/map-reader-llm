@@ -5782,6 +5782,116 @@ hierarchy should place modality in the second tier:
 
 ---
 
+## Observation 207: Five-Factor Lever Analysis — Architecture Dominates, Prompt Engineering is Inert (2026-03-30)
+
+*Session 61. Systematic analysis of five experimental levers across
+architecture levels, using 61 FDR-corrected pairwise permutation tests
+(10,000 iterations, seed 42, 20m buffer) grouped into 5 independent
+BH-correction families at q=0.05.*
+
+### The five factors
+
+| Factor | Family size | Significant | Max |ΔF1| | Verdict |
+|---|:---:|:---:|:---:|---|
+| Architecture (N=1→cons→PV) | 12 | **11/12** | 0.387 | Dominant |
+| Thinking (HIGH vs MINIMAL) | 6 | **5/6** | 0.164 | Large, consistent |
+| Temperature (T=0.7 vs T=1.0) | 6 | **5/6** | 0.194 | Large for text |
+| Modality (text vs image) | 9 | **8/9** | 0.149 | Consistent, amplifies |
+| Prompt engineering (library, treatment, ordering) | 28 | **0/28** | 0.061 | **Completely inert** |
+
+### Architecture (11/12 significant)
+
+Every architecture change is significant except Pro consensus→PV
+(where Pro's precision is already high enough that the verifier adds
+little). The N=1→consensus step produces the largest effect in the
+study (+0.387 F1 for Flash HIGH text, +0.212 for Flash HIGH image,
++0.147 for Flash MINIMAL text, +0.102 for Pro text). Consensus→PV
+adds +0.051 to +0.085 for Flash, and single-pass→PV (bypassing
+consensus) adds +0.173 to +0.270.
+
+### Thinking (5/6 significant)
+
+HIGH vs MINIMAL is significant at every architecture level for text
+(+0.101 at N=1, +0.139 to +0.164 at consensus). For image, the effect
+is smaller and only marginally significant at N=1 (ΔF1=-0.045,
+p_adj=0.059). At consensus N=5 image, it is significant (+0.063, ***).
+
+### Temperature (5/6 significant)
+
+T=0.7 vs T=1.0 is significant at every consensus level (+0.168 to
++0.194 at N=5 through N=30) and at N=1 for text (+0.103, **). For
+image at N=1 (512px), the effect is ns (+0.015, p=0.476). Temperature
+matters for text at all levels, but not for image.
+
+### Modality (8/9 significant)
+
+Text outperforms image at every architecture level and model except
+Flash MINIMAL consensus N=5 (the only ns: ΔF1=-0.024, p=0.360). The
+gap ranges from +0.052 (Flash HIGH consensus N=5) to +0.149 (Pro N=1).
+Notably, at N=1 Flash MINIMAL, text *still* outperforms image
+(ΔF1=-0.067, p=0.018 *) — contradicting the earlier suggestion that
+MINIMAL thinking can't exploit text. The N=1 comparison reveals the
+effect; the consensus averaging absorbs it.
+
+### Prompt engineering (0/28 significant)
+
+No comparison survives FDR correction. The largest effect (example
+ordering: canonical-last vs random, ΔF1=+0.061, raw p=0.002) has
+p_adj=0.053 — just above the threshold. Library composition (20
+comparisons, max ΔF1=0.031) and text treatment (2 comparisons, max
+ΔF1=0.015) are deeply non-significant. The model is indifferent to
+how the prompt is worded, what examples are included, or how they
+are ordered.
+
+### The hierarchy is quantified
+
+The ratio of effect sizes tells the story:
+
+| Comparison | Effect |
+|---|---|
+| Largest architecture effect | +0.387 F1 |
+| Largest thinking effect | +0.164 F1 |
+| Largest temperature effect | +0.194 F1 |
+| Largest modality effect | +0.149 F1 |
+| **Largest prompt engineering effect** | **+0.061 F1 (ns after FDR)** |
+
+Architecture effects are 6× larger than the largest prompt effect.
+Even the smallest significant architecture change (+0.051, Flash
+image consensus→PV) is close to the largest prompt effect — and the
+architecture change is statistically significant while the prompt
+effect is not.
+
+### Interaction patterns
+
+The ns results reveal meaningful interactions:
+
+1. **Pro consensus→PV (ns)**: The verifier adds nothing when the
+   proposer is already highly precise (Pro P=0.918).
+2. **Temperature × image (ns)**: Temperature doesn't affect image
+   detections at N=1 — the model's visual processing doesn't vary
+   with temperature the way textual generation does.
+3. **Thinking × image at N=1 (marginal)**: HIGH thinking helps image
+   less at the single-run level (p=0.059), but becomes significant
+   at consensus (p<0.001) — suggesting consensus amplifies a weak
+   per-run signal.
+4. **Modality × MINIMAL consensus (ns)**: At MINIMAL thinking with
+   consensus voting, the text advantage is absorbed by the consensus
+   mechanism. But at N=1 MINIMAL, text still wins — the averaging
+   obscures a real per-run difference.
+
+### Connection to prior observations
+
+- **Obs 202 (pipeline > prompt engineering)**: Now quantified. The
+  claim is not merely directional but measured: architecture effects
+  are 6× larger than the largest (non-significant) prompt effect.
+- **Obs 206 (modality amplification)**: Confirmed in the FDR-corrected
+  analysis. Text advantage survives correction at 8/9 comparisons.
+- **Obs 204 (pool-size plateau)**: Architecture effects come from
+  adding stages (consensus, verifier), not from scaling existing
+  stages (N=5→N=10).
+
+---
+
 ## Observation 205: Cost-Performance Pareto Frontier — The Verifier Dominates (2026-03-29)
 
 *Session 61. Cost analysis of all 26 leaderboard conditions at 20m

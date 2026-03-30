@@ -1,0 +1,160 @@
+# Factor Analysis Pairwise Comparisons
+# =====================================
+# 14 new comparisons testing four factors (architecture, thinking,
+# temperature, modality) across architecture levels. Used alongside
+# reused results from the existing 32 hypothesis-driven tests and
+# 28 prompt engineering tests, totalling ~60 comparisons across
+# 5 FDR families.
+#
+# N=1 conditions use run_1 GeoJSON (a priori choice to avoid
+# selection bias).
+#
+# Created: 2026-03-30
+
+metadata:
+  description: "Factor analysis: 14 new pairwise permutation tests"
+  n_permutations: 10000
+  seed: 42
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+
+comparisons:
+  # ── Factor 1: Architecture — N=1 vs consensus (4 new) ─────────
+
+  - group: 10
+    question: "N=1 vs consensus (FH text)"
+    family: architecture
+    label_a: "FH text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "FH text 5-of-5 consensus"
+    type_b: consensus
+    study_dir_b: outputs/h11/pv-diag-384/flash-high-text-n5
+    config_b: "text-t0.7,5,5"
+
+  - group: 10
+    question: "N=1 vs consensus (FH image)"
+    family: architecture
+    label_a: "FH image run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+    label_b: "FH image 3-of-5 consensus"
+    type_b: consensus
+    study_dir_b: outputs/h11/pv-diag-384/flash-high-image-n5
+    config_b: "image-t0.7,5,3"
+
+  - group: 10
+    question: "N=1 vs consensus (FM text)"
+    family: architecture
+    label_a: "FM text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "FM text 5-of-5 consensus"
+    type_b: consensus
+    study_dir_b: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+    config_b: "text-t0.7,5,5"
+
+  - group: 10
+    question: "N=1 vs consensus (Pro text)"
+    family: architecture
+    label_a: "Pro text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "Pro text 3-of-5 consensus"
+    type_b: consensus
+    study_dir_b: outputs/h11/pv-diag-384/pro-high-text-n5
+    config_b: "text-t0.7,5,3"
+
+  # ── Factor 2: Thinking — HIGH vs MINIMAL at N=1 (2 new) ───────
+
+  - group: 11
+    question: "HIGH vs MINIMAL (N=1 text)"
+    family: thinking
+    label_a: "FH text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "FM text run_1 (N=1)"
+    type_b: geojson
+    geojson_b: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+
+  - group: 11
+    question: "HIGH vs MINIMAL (N=1 image)"
+    family: thinking
+    label_a: "FH image run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+    label_b: "FM image run_1 (N=1)"
+    type_b: geojson
+    geojson_b: outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+
+  # ── Factor 3: Temperature — T=0.7 vs T=1.0 at N=1 (1 new) ────
+
+  - group: 12
+    question: "T=0.7 vs T=1.0 (N=1, 384px)"
+    family: temperature
+    label_a: "FM text T=0.7 run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "FM text T=1.0 run_1 (N=1)"
+    type_b: geojson
+    geojson_b: outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.geojson
+
+  # ── Factor 4: Modality — text vs image at N=1 (5 new) ─────────
+
+  - group: 13
+    question: "Text vs image (N=1, FH)"
+    family: modality
+    label_a: "FH text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "FH image run_1 (N=1)"
+    type_b: geojson
+    geojson_b: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+
+  - group: 13
+    question: "Text vs image (N=1, FM)"
+    family: modality
+    label_a: "FM text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "FM image run_1 (N=1)"
+    type_b: geojson
+    geojson_b: outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+
+  - group: 13
+    question: "Text vs image (N=1, Pro)"
+    family: modality
+    label_a: "Pro text run_1 (N=1)"
+    type_a: geojson
+    geojson_a: outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson
+    label_b: "Pro image run_1 (N=1)"
+    type_b: geojson
+    geojson_b: outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson
+
+  - group: 13
+    question: "Text vs image (Pro consensus N=5)"
+    family: modality
+    label_a: "Pro text 3-of-5 consensus"
+    type_a: consensus
+    study_dir_a: outputs/h11/pv-diag-384/pro-high-text-n5
+    config_a: "text-t0.7,5,3"
+    label_b: "Pro image 3-of-5 consensus"
+    type_b: consensus
+    study_dir_b: outputs/h11/pv-diag-384/pro-high-image-n5
+    config_b: "image-t0.7,5,3"
+
+  - group: 13
+    question: "Text vs image (baseline + PV)"
+    family: modality
+    label_a: "Text baseline + PV"
+    type_a: pv
+    probabilities_a: outputs/h11/pv-diag-384/verified/text-baseline/probabilities.json
+    manifest_a: outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json
+    threshold_a: 0.15
+    label_b: "Image baseline + PV"
+    type_b: pv
+    probabilities_b: outputs/h11/pv-diag-384/verified/image-baseline/probabilities.json
+    manifest_b: outputs/h11/pv-diag-384/crops/image-baseline/candidate_manifest.json
+    threshold_b: 0.20
