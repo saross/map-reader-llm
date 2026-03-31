@@ -5892,6 +5892,126 @@ The ns results reveal meaningful interactions:
 
 ---
 
+## Observation 208: The Thinking-Level Crossover — What's Optimal Depends on Architecture (2026-03-30)
+
+*Session 61. Extends Obs 207 by examining the direction, not just the
+magnitude, of factor effects across architecture levels.*
+
+### Framing: magnitude first, then direction
+
+The five-factor analysis (Obs 207) shows that some levers have large
+absolute effects on F1 (architecture, thinking, temperature, modality)
+while others have negligible effects (prompt engineering). But the
+magnitude question — "how much does this lever move the needle?" — is
+separable from the direction question — "does it move it up or down?"
+
+For prompt engineering, the direction question is moot: the lever barely
+moves the needle at all (max |ΔF1| = 0.061, ns after FDR). For the
+other four factors, the direction depends on architecture.
+
+### The thinking-level crossover
+
+| | N=1 F1 | N=1 P | N=1 R | Consensus N=5 F1 | Cons P | Cons R |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| Flash HIGH text | 0.387 | 0.249 | 0.869 | 0.779 | 0.798 | 0.761 |
+| Flash MINIMAL text | 0.488 | 0.341 | 0.863 | 0.640 | 0.533 | 0.800 |
+| **Δ(HIGH - MINIMAL)** | **-0.101** | -0.092 | +0.006 | **+0.139** | +0.265 | -0.039 |
+
+At N=1, HIGH thinking is **worse** by 0.10 F1. At consensus, HIGH is
+**better** by 0.14 F1. The effect reverses completely.
+
+The same pattern holds for image, though at smaller magnitude:
+- Image N=1: Δ = -0.055 (HIGH worse)
+- Image consensus N=5: Δ = +0.063 (HIGH better)
+
+### The mechanism: diversity, not quality
+
+The precision column reveals the mechanism:
+
+- HIGH text N=1: P = 0.249 (1 in 4 detections is correct)
+- MINIMAL text N=1: P = 0.341 (1 in 3 detections is correct)
+
+HIGH thinking generates ~30% more false positives per run. But the
+crucial property is that HIGH's false positives are **diverse across
+runs** — each run's extended reasoning explores different hypotheses,
+producing different errors. MINIMAL's errors are more consistent —
+the model makes the same mistakes repeatedly.
+
+Consensus voting exploits diversity. When 5 runs must agree, diverse
+noise is filtered (each run's unique errors are outvoted) while
+consistent signal is retained. The precision recovery tells the story:
+
+- HIGH: P jumps 0.249 → 0.798 at consensus (3.2× improvement)
+- MINIMAL: P jumps 0.341 → 0.533 at consensus (1.6× improvement)
+
+HIGH's ruinous N=1 precision becomes an asset because the noise it
+generates is filterable. MINIMAL's better N=1 precision is a liability
+because its noise is not filterable — it represents systematic model
+limitations, not stochastic variation.
+
+### Temperature parallels
+
+The same logic applies to temperature, though the data is less
+complete:
+
+- At N=1 (384px): T=0.0 (F1=0.503) > T=0.3 (0.499) > T=0.7 (0.488)
+  — lower temperature is better for single-pass
+- At consensus N=5: T=0.7 (F1=0.640) — only T=0.7 consensus data
+  exists, but the principle predicts T=0.7 > T=0.0 for consensus
+  because T=0.7 introduces inter-run diversity
+
+The T=1.0 result shows the limit: too much temperature degrades
+consensus (F1=0.471 at N=5) because the outputs become incoherent
+rather than diversely informative. There's a sweet spot — enough
+temperature for diversity (T=0.7) but not so much that the signal
+is destroyed (T=1.0).
+
+### Implication for the paper
+
+**The optimal parameter setting depends on the downstream
+architecture.** This is the deepest version of the "architecture >
+prompt engineering" argument. It's not just that architecture has
+larger effects — it's that architecture *determines the direction*
+of parameter effects. A parameter choice that appears suboptimal in
+isolation (HIGH thinking, T=0.7) becomes optimal in a consensus
+pipeline because the pipeline can exploit the diversity it generates.
+
+This means:
+
+1. **Single-pass benchmarks are misleading.** Evaluating VLM
+   configurations at N=1 and selecting the best would choose MINIMAL
+   thinking and T=0.0 — the opposite of what's optimal for the
+   consensus pipeline that produces the best results.
+
+2. **The interaction is the finding, not the main effects.** The
+   paper should present the crossover, not just the per-factor
+   significance tests. The factor analysis (Obs 207) shows that
+   thinking level matters (5/6 significant); this observation shows
+   that the *direction* of the effect depends on architecture.
+
+3. **Framing suggestion for the paper**: present the absolute
+   magnitude of each lever first (Obs 207's table — prompt
+   engineering barely moves the needle, everything else does), then
+   for the levers that matter, show how their effect direction
+   depends on architecture. This separates "does it matter?" from
+   "how does it matter?" and avoids the trap of reporting a single
+   direction for a factor that crosses over.
+
+### Connection to prior observations
+
+- **Obs 141 (diversity dividend)**: This is the formal quantification
+  of the diversity dividend. HIGH thinking at N=1 is the cost; the
+  consensus precision recovery is the dividend.
+- **Obs 202 (pipeline > prompt engineering)**: The crossover is the
+  strongest evidence for this claim. Not only does architecture have
+  larger effects — it reverses the sign of parameter effects.
+- **Obs 203 (tile size as pipeline optimisation)**: The same principle
+  applies to tile size: 384px tiles have worse N=1 F1 but better
+  pipeline F1 because they produce higher-recall raw material. The
+  crossover pattern generalises across multiple design decisions.
+
+---
+
 ## Observation 205: Cost-Performance Pareto Frontier — The Verifier Dominates (2026-03-29)
 
 *Session 61. Cost analysis of all 26 leaderboard conditions at 20m
