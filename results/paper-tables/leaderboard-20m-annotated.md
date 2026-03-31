@@ -210,8 +210,11 @@ miss real mounds rather than hallucinate false ones.
 | 25 | FM text T=1.0 22/30 | 0.467 | [0.395, 0.532] | 0.499 | 0.439 | 0.208 | [0.122, 0.298] | 0.498 | 0.705 |
 | 26 | FM text T=1.0 9/10 | 0.462 | [0.391, 0.526] | 0.545 | 0.400 | 0.212 | [0.122, 0.303] | 0.467 | 0.736 |
 
-T=1.0 was effectively a configuration error (the Gemini API default).
-Consensus voting on incoherent high-temperature outputs does not
+T=1.0 was a preregistered test condition (Phase 2b) that performs
+poorly — it is the API default temperature that most users would not
+change. Production consensus runs at T=1.0 were unintended (E43),
+but the Phase 2b results confirming T=1.0's poor performance are
+legitimate. Consensus voting on high-temperature outputs does not
 recover quality — larger pools just confirm the same noise.
 
 ---
@@ -322,8 +325,9 @@ benefits significantly from doubling the consensus pool beyond N=5.
 
 ### What does not work
 
-1. **T=1.0 (API default temperature)** halves detection quality. The
-   single most damaging parameter choice.
+1. **T=1.0 (API default temperature)** halves detection quality. A
+   preregistered finding (Phase 2b), not just a bug — T=1.0 is the
+   Gemini default that most users would leave unchanged.
 2. **MINIMAL thinking without pipeline** — tile specificity collapses to
    0.20–0.55. The model hallucinates detections on the majority of
    empty tiles.

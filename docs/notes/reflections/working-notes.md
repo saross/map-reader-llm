@@ -6012,6 +6012,118 @@ This means:
 
 ---
 
+## Observation 209: Paper Framing — Absolute Magnitude Then Direction, and the T=1.0 Distinction (2026-03-30)
+
+*Session 61. Meta-observation about how to present the five-factor
+results (Obs 204–208) in the paper, and a clarification about T=1.0.*
+
+### Two-stage presentation of factor effects
+
+The factor analysis (Obs 207) produces a clean hierarchy of effect
+magnitudes, but the interaction patterns (Obs 208) show that the
+*direction* of some effects depends on architecture. The paper should
+separate these two questions:
+
+**Stage 1: "How much does this lever move the needle?"** (absolute
+magnitude, regardless of direction)
+
+| Lever | Max |ΔF1| | Verdict |
+|---|:---:|---|
+| Architecture (N=1 → consensus → PV) | 0.387 | Dominant |
+| Temperature (T=0.7 vs T=1.0) | 0.194 | Large (text only) |
+| Thinking (HIGH vs MINIMAL) | 0.164 | Large (crosses over) |
+| Modality (text vs image) | 0.149 | Large (amplifies) |
+| Prompt engineering (28 comparisons) | 0.061 (ns) | **Negligible** |
+
+This immediately establishes the hierarchy. Prompt engineering barely
+moves the needle — the remaining four levers all produce effects 2.5–6×
+larger. This is the headline claim: *architecture and configuration
+matter; prompt wording does not.*
+
+**Stage 2: "In which direction, and under what circumstances?"** (for
+the factors that do matter)
+
+For the four significant levers, the direction and magnitude depend on
+architecture:
+
+- **Architecture**: always positive (consensus > N=1; PV > consensus).
+  The only exception is Pro, where the verifier adds little to an
+  already-precise proposer.
+- **Modality**: text > image in 8/9 comparisons, amplifying through
+  pipeline stages (+0.05 at consensus, +0.09 at PV, +0.14 for Pro).
+- **Thinking**: *reverses* — MINIMAL > HIGH at N=1, HIGH > MINIMAL at
+  consensus. The crossover is the diversity mechanism (Obs 208).
+- **Temperature**: T=0.7 > T=1.0 at all levels for text; no effect on
+  image. But within the sensible range (T=0.0–0.7), N=1 favours lower
+  temperatures while consensus benefits from T=0.7's inter-run
+  diversity.
+
+This two-stage framing avoids the trap of reporting a single effect
+size or direction for factors that interact with architecture.
+
+### The T=1.0 distinction
+
+T=1.0 requires careful language in the paper. Two separate things
+happened:
+
+1. **T=1.0 as a preregistered test condition (Phase 2b).** The
+   preregistration specified testing T=0.0, 0.3, 0.7, 1.0, and 1.3
+   to characterise the temperature response surface. The finding that
+   T=1.0 performs poorly (ΔF1 = -0.17 vs T=0.7 at consensus) is a
+   legitimate, preregistered result. T=1.0 is the Gemini API default
+   temperature — the finding that users should change this default is a
+   practical contribution.
+
+2. **T=1.0 as an accidental deployment (E43).** Separately, production
+   consensus runs at 384px were inadvertently run at T=1.0 when T=0.7
+   was intended. This was a configuration error documented in errata
+   E43, producing the `consensus-384-UNINTENDED-T1.0` dataset. The
+   error was detected via unexpected results and corrected.
+
+The paper should cite (1) as the evidence that T=1.0 is suboptimal,
+not (2). The accidental deployment is an honest-reporting detail for
+the errata, but the scientific claim about temperature rests on the
+preregistered Phase 2b comparison. The fact that T=1.0 is the API
+default — and that most practitioners would not think to change it —
+is the practitioner-facing insight.
+
+### Five design decisions that cross over
+
+Obs 208 identified the thinking-level crossover. But the pattern
+is more general — at least three design decisions have this property:
+
+| Decision | N=1 optimal | Consensus optimal | Why |
+|---|---|---|---|
+| Thinking level | MINIMAL | HIGH | Diversity of false positives |
+| Temperature | T=0.0 | T=0.7 | Inter-run variation |
+| Tile size | 512px | 384px | Higher recall raw material |
+
+In each case, the N=1-optimal choice produces cleaner individual
+outputs, but the consensus-optimal choice produces noisier outputs
+with higher recall and more diverse errors that consensus voting can
+filter. The pipeline converts individual-run noise into aggregate
+signal.
+
+Temperature T=1.0 is the exception — it does not follow this pattern
+because it produces incoherent outputs rather than diversely
+informative ones. The consensus-optimal temperature (T=0.7) is a
+sweet spot: enough diversity for voting, not so much that the signal
+is destroyed.
+
+### Connection to prior observations
+
+- **Obs 141 (diversity dividend)**: The crossover pattern is the
+  formal expression of the diversity dividend. "Diversity" here means
+  error diversity, not output diversity — the runs must still detect
+  real mounds, but their *mistakes* should differ.
+- **Obs 207 (five-factor analysis)**: This observation provides the
+  narrative structure for presenting those results in the paper.
+- **Obs 203 (tile size as pipeline optimisation)**: Adds a third
+  crossover example to the thinking and temperature cases, showing
+  the pattern generalises.
+
+---
+
 ## Observation 205: Cost-Performance Pareto Frontier — The Verifier Dominates (2026-03-29)
 
 *Session 61. Cost analysis of all 26 leaderboard conditions at 20m
