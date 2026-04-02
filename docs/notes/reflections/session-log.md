@@ -3418,6 +3418,101 @@ strategy.
 14. **Commits and cleanup** — 22 commits pushed, 171.7 GB freed on
     sapphire (319 batch_working dirs), all to-do items complete.
 
+## Session 61 — 2026-03-29 to 2026-04-02 (map-reader-llm)
+
+Transition from analysis to paper argumentation. 14 commits pushed.
+
+1. **Housekeeping** — confirmed all analyses complete, marked to-do
+   items done, archived 9 completed planning files to archive/planning/.
+
+2. **Primary tolerance reverted to 20m** — new errata E47 reinstating
+   preregistered 20m as headline tolerance (superseding E46's 30m).
+   Updated script defaults, configs, condition registry. 30m retained
+   for production recommendation via tolerance curve.
+
+3. **20m leaderboard round-robin** — ran full C(25,2) = 300 pairwise
+   permutation tests at 20m. Finding: best condition (FH text 16/30 +
+   PV) separates as solitary Tier 1 at 20m (indistinguishable from
+   top 3 at 30m). Greater discrimination at tighter tolerance.
+
+4. **Condition registry completed** — added 20m-optimal threshold
+   variants for FH image N=10 (7-of-10) and FM image N=10 (8-of-10).
+   Re-ran round-robin: all 25 conditions, 248/300 significant.
+
+5. **Pro N=10 expansion** — 5 additional Pro HIGH text Batch API runs
+   (~$60). Consensus evaluation at all thresholds and 20/30/40/50m
+   buffers. Result: Pro N=10 does NOT improve over N=5 (F1=0.837 vs
+   0.843, well within CIs). Pool-size plateau confirmed for both
+   models. PV stage skipped (consensus showed no improvement).
+
+6. **Leaderboard expanded to 26 conditions** — added Pro N=10 6-of-10.
+   Re-ran round-robin: 325 comparisons, 265/325 significant. Pro N=10
+   slots into Tier 2 at #7, just below Pro N=5 at #6. Tier structure
+   unchanged (9 tiers).
+
+7. **Annotated leaderboard document** — comprehensive briefing document
+   for co-authors with all 26 conditions, F1/P/R/MCC with CIs, tier
+   assignments, pipeline progression, pairwise results, and what-works
+   / what-doesn't summary. Updated three times as analysis progressed.
+
+8. **Pareto frontier analysis** — identified only 3 cost-optimal
+   configurations (all PV). Text baseline + PV at $0.25 outperforms
+   all consensus-only conditions. FH text 4/5 + PV at $3 is the knee.
+   Pro completely dominated by Flash + pipeline.
+
+9. **Five-factor lever analysis** — 61 FDR-corrected pairwise
+   permutation tests across 5 families:
+   - Architecture: 11/12 significant (max ΔF1 +0.387)
+   - Thinking: 5/6 significant (max ΔF1 +0.164)
+   - Temperature: 5/6 significant (max ΔF1 +0.194)
+   - Modality: 8/9 significant (max ΔF1 +0.149)
+   - Prompt engineering: 0/28 significant (max ΔF1 +0.061)
+   Created YAML config, ran 14 new tests (12 at 384px, 2 at 512px),
+   merged with 18 reused + 28 prompt engineering results.
+
+10. **Modality amplification** — text outperforms image in 5/6 matched
+    architecture comparisons (ΔF1 +0.047 to +0.141). Gap amplifies
+    through pipeline stages. Corrected earlier underestimate and ran
+    2 missing permutation tests (Pro text vs image ***, baseline PV
+    text vs image ***).
+
+11. **Thinking-level crossover** — HIGH is worse at N=1 (ΔF1=-0.101)
+    but better at consensus (+0.139). The diversity mechanism: HIGH's
+    false positives are diverse and filterable; MINIMAL's are consistent
+    and systematic. Single-pass benchmarks would select the wrong
+    configuration.
+
+12. **T=1.0 clarification** — corrected characterisation throughout.
+    T=1.0 is a preregistered test condition (Phase 2b), not
+    intrinsically a bug. The finding that T=1.0 performs poorly is
+    legitimate. The bug (E43) was deploying T=1.0 when T=0.7 was
+    intended — a separate incident.
+
+13. **Paper framing** — two-stage presentation: absolute effect
+    magnitude first (does the lever move the needle?), then direction
+    and interactions for factors that matter. Identified three design
+    decisions that cross over between N=1 and consensus (thinking,
+    temperature, tile size).
+
+14. **Experimental progression report** — three-act narrative for the
+    methods section: preregistered exploration (60 tiles), scaled
+    validation (340 tiles), production optimisation (487 tiles).
+    Documents what was tested where and why the design evolved.
+
+15. **Venue strategy** — ISPRS JPRS first (no word limit, IF~13,
+    CAUL-covered), cascade to JAG via Elsevier transfer if desk-
+    rejected. Four framing hooks: methodology not archaeology,
+    text-only novelty, Pareto costs, preregistration credibility.
+
+### Observations added
+
+- Obs 204: Pool-size plateau (Pro N=10 confirms N=5 saturation)
+- Obs 205: Cost-performance Pareto frontier
+- Obs 206: Text modality amplification through pipeline stages
+- Obs 207: Five-factor lever analysis (61 tests, 5 FDR families)
+- Obs 208: Thinking-level crossover (N=1 vs consensus direction reversal)
+- Obs 209: Paper framing and T=1.0 distinction
+
 ### Key findings
 
 - **Obs 203**: Tile size as pipeline optimisation — 384px provides

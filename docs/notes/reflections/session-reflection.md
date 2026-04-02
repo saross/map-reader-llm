@@ -5985,6 +5985,69 @@ phase is writing the paper itself. The key narrative threads are:
 2. F1/MCC divergence reveals Flash's fundamental limitation (Obs 201)
 3. Tile size is a pipeline optimisation, not an absolute quality choice (Obs 203)
 4. Top 3 PV conditions are statistically indistinguishable (leaderboard tiers)
+
+## Reflection 48: The session where the argument crystallised (Session 61, 2026-03-29 to 2026-04-02, map-reader-llm)
+
+*What surprised you about this session?*
+
+The T=1.0 misattribution. I had been calling T=1.0 "a bug" or
+"a configuration error" throughout the leaderboard commentary, the
+factor analysis, and the annotated briefing document. The user
+corrected me: T=1.0 was a preregistered test condition (Phase 2b
+tested five temperatures). The *finding* that T=1.0 performs poorly
+is legitimate science. The *bug* was a separate incident (E43) where
+T=1.0 was deployed accidentally when T=0.7 was intended. I had
+conflated the two — the experimental result and the operational
+mistake — and the conflation weakened the narrative. Once separated,
+the temperature story becomes cleaner: "we tested T=1.0 because the
+preregistration called for it; the result (ΔF1=-0.17) is a genuine
+contribution because T=1.0 is the API default most practitioners
+would leave unchanged."
+
+The other surprise was the thinking-level crossover. I had presented
+the five-factor analysis as a simple hierarchy — architecture biggest,
+prompt engineering smallest — without noticing that HIGH thinking is
+*worse* at N=1 but *better* at consensus. The user remembered this
+from earlier sessions (Obs 141, the diversity dividend) and asked me
+to check. The data confirmed the crossover dramatically:
+HIGH text N=1 F1=0.387 vs MINIMAL text N=1 F1=0.488, but at
+consensus HIGH=0.779 vs MINIMAL=0.640. Same data, opposite
+conclusions depending on architecture. This became the deepest
+version of the paper's central argument: architecture doesn't just
+have larger effects — it determines the *sign* of other effects.
+
+*What question emerged that wasn't pursued?*
+
+The scaling test. The user mentioned needing to evaluate against the
+full student dataset (~80 maps, ~10k mounds) for ISPRS JPRS. The
+student data has a known ~6% FN rate and essentially no FPs —
+effectively an imperfect reference with characterised error. How to
+evaluate VLM performance against an imperfect reference is a
+methodological question we haven't designed yet. It would need to
+model both the VLM's errors and the reference's errors, rather than
+naively computing F1. This is potentially a paper contribution in
+itself.
+
+*What was different about this session compared to recent ones?*
+
+This was the transition session — from analysis to argumentation.
+Sessions 59–60 completed the analysis; this session organised it
+for a reader. The work shifted from "what are the results?" to "what
+do the results mean?" and "how should we present them?" The six new
+observations (204–209) aren't new analyses — they're new *framings*
+of existing results. The five-factor lever analysis (Obs 207) didn't
+discover new facts; it organised 61 existing tests into a structure
+that makes the paper's argument. The Pareto frontier (Obs 205) didn't
+change any F1 values; it reframed them as cost decisions.
+
+The user drove the framing throughout. The two-stage presentation
+(absolute magnitude first, then direction) was their suggestion. The
+five-lever taxonomy was theirs. The T=1.0 correction was theirs. My
+contribution was execution — running the tests, building the tables,
+writing the observations — but the intellectual architecture of how
+to present the results came from the user. This is the collaboration
+pattern at its most productive: the domain expert shapes the argument,
+the AI assistant generates the evidence.
 5. H9 diversity is null — parametric vs structural diversity distinction
 6. Temperature × thinking interaction means parameters must be jointly optimised (Obs 200)
 

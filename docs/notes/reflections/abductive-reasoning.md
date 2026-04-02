@@ -2816,3 +2816,67 @@ cleaner, lower-recall input — provided the pipeline has effective
 filtering stages. This connects to Obs 141 (diversity dividend) and
 Obs 202 (pipeline > prompt engineering): the common thread is that
 ensemble methods benefit from noisy, diverse inputs.
+
+### Entry 16: The thinking-level crossover — when worse is better (Session 61, 2026-03-29/30)
+
+**Surprising fact**: Flash HIGH thinking produces N=1 F1=0.387
+(P=0.249, R=0.869). Flash MINIMAL produces N=1 F1=0.488 (P=0.341,
+R=0.863). HIGH is substantially worse — 0.10 F1 lower, with
+ruinous precision (1 in 4 detections correct). Yet at consensus
+N=5, HIGH achieves F1=0.779 while MINIMAL achieves only F1=0.640.
+The direction reverses completely, with HIGH now 0.14 better.
+
+**Prior belief**: Higher thinking budget should produce better
+results at all pipeline levels. A model that performs better at N=1
+should also perform better as a component of consensus voting.
+Performance should be monotonically related to component quality.
+
+**Probe sequence**:
+
+1. The five-factor analysis (Obs 207) showed HIGH vs MINIMAL as
+   significant (5/6 comparisons) but I only reported consensus-level
+   tests. The user asked about crossovers.
+
+2. Compared N=1 F1 directly: HIGH text 0.387 vs MINIMAL text 0.488.
+   HIGH is *worse* by 0.101 F1. This was already in the N=1
+   leaderboard data but I hadn't juxtaposed it with the consensus
+   results.
+
+3. The precision breakdown reveals the mechanism: HIGH P=0.249 vs
+   MINIMAL P=0.341. HIGH generates ~30% more false positives per run.
+   But recall is nearly identical (0.869 vs 0.863).
+
+4. At consensus, precision recovery tells the story: HIGH jumps
+   P 0.249→0.798 (3.2× improvement), while MINIMAL jumps
+   P 0.341→0.533 (only 1.6×). HIGH's false positives are diverse
+   across runs; MINIMAL's are consistent. Consensus filters diverse
+   noise effectively.
+
+**Revised belief**: Component quality and pipeline quality are not
+monotonically related when the pipeline has a filtering mechanism.
+A component that makes *diverse* errors is better raw material for
+an ensemble than a component that makes *consistent* errors — even
+if the diverse-error component looks worse in isolation. The "worse"
+component produces more filterable noise.
+
+**Abductive structure**: The best explanation for the crossover is
+that HIGH thinking explores multiple interpretive hypotheses per tile,
+producing different false positives on each run. MINIMAL thinking
+applies a fixed, fast heuristic that generates the same errors
+repeatedly. Consensus voting requires inter-run disagreement on false
+positives to filter them — when all runs make the same mistake,
+voting confirms rather than filters. The extended reasoning budget
+isn't improving detection quality; it's *diversifying detection errors*,
+which is more valuable in an ensemble context.
+
+**Generalised principle**: For ensemble or multi-pass systems, optimise
+component *error diversity*, not component *accuracy*. This unifies
+three crossovers observed in this study:
+- Thinking: HIGH (diverse errors) > MINIMAL (consistent errors)
+- Temperature: T=0.7 (stochastic) > T=0.0 (deterministic)
+- Tile size: 384px (liberal flagging) > 512px (conservative flagging)
+
+All three produce worse individual outputs but better ensemble outputs
+because they increase the diversity of the noise that the filtering
+mechanism can exploit. The common principle: *the downstream pipeline
+can only filter what varies between runs*.
