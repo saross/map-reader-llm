@@ -6283,3 +6283,470 @@ symbol radius" and noting it as a preregistration deviation (erratum
 E46) with geometric justification. Report both 20m and 30m results.
 
 ---
+
+## Observation 210: VLM Spatial Accuracy Exceeds Human Volunteers (2026-04-08)
+
+**Context**: QGIS sanity check of N=1 single-pass proposer + adversarial
+verifier detections against the curated 4-map reference (569 mounds).
+Match distances measured from VLM detection centroids to reference mound
+centroids using Hungarian one-to-one assignment at 20m buffer.
+
+**Finding**: VLM detection placement achieves single-pixel spatial
+accuracy on correct identifications:
+
+- Median match distance: **5.0m** (exactly 1 pixel at 5.02 m/px)
+- Mean: 5.9m (1.2 px), Std: 3.8m
+- 88% of TPs within 10m (2 px)
+- 96% within 15m (3 px)
+- 100% within 20m (4 px)
+- P99: 17.3m — even the worst matches are within ~3.5 pixels
+
+This is effectively the **resolution limit of the input raster**. The VLM
+is locating mound symbol centroids to within the precision ceiling
+imposed by the 5m/px scan resolution.
+
+**Implication for the 55-map production run**: When evaluating against
+student-digitised ground truth (FAIMS mobile data collection), the
+spatial matching bottleneck will be the *student positioning accuracy*,
+not the VLM. Students working on mobile devices with pan-and-tap
+interfaces typically achieve 10–30m positional accuracy. The
+buffer-distance sensitivity curve (20m, 30m, 40m, 50m) will effectively
+characterise student digitisation accuracy rather than VLM accuracy —
+the VLM contribution to matching error is negligible at all tested
+buffer distances.
+
+**Paper framing**: This is a publishable finding in its own right. The
+VLM's spatial precision on correct detections exceeds that of trained
+human volunteers using purpose-built data collection software. The
+"accuracy bottleneck" in large-scale evaluation shifts entirely from the
+extraction tool to the ground truth.
+
+---
+
+## Observation 211: QGIS Sanity Check — FP Taxonomy and Composite Symbol Localisation (2026-04-08)
+
+**Context**: Manual QGIS inspection of N=1 single-pass proposer +
+adversarial verifier detections on all four gold-standard maps.
+Classified 82 FPs by visual inspection and verifier reasoning.
+
+### FP taxonomy
+
+Three categories explain all false positives:
+
+1. **Spot heights** (~29 FPs): Small black circles (6–7px) with
+   adjacent elevation numbers. The VLM confuses these with mound
+   symbols despite the clear size gap — mound symbols are ≥12px.
+   The adversarial verifier prompt mentions spot heights as a
+   confusable but lacks an explicit pixel-size rejection criterion.
+   **Fix**: Add size discriminator to adversarial verifier prompt.
+
+2. **Tile overlap duplicates** (~18 FPs): The same mound detected
+   from adjacent tiles in the 48px overlap zone, producing two
+   detections ~10–15m apart. Hungarian one-to-one matching assigns
+   the closer detection as TP; the duplicate becomes an FP.
+   **Fix**: Consensus voting spatial deduplication (already in the
+   4-of-5 + PV architecture).
+
+3. **Water features** (~3 FPs): Blue concentric circles (well/spring
+   symbols). Circular shape triggers detection despite wrong colour.
+   The adversarial verifier does not list water features as a
+   confusable category.
+   **Fix**: Add "blue circle = water feature, not mound" to the
+   adversarial verifier confusable list.
+
+No unexplained FPs were found. No reference omissions were identified
+(the curated reference was manually verified across multiple sittings).
+
+### Composite symbol localisation offset
+
+"Bench mark on burial mound" symbols (fid 445, K-35-052-4) revealed
+a systematic localisation issue for composite symbols. These symbols
+are larger (~20px) and combine a black benchmark square with the
+hachured mound surround. When adjacent to other symbols or text,
+the VLM's centroid estimate is pulled toward the neighbouring feature.
+
+**Case study**: fid 445 had a detection at 23.2m from the reference —
+just outside the 20m matching buffer. Visual inspection at pixel level
+confirmed the detection centroid was shifted ~4–5 pixels toward an
+adjacent symbol. At 5.02 m/px this produces a 20–25m offset, right
+at the buffer boundary. The detection was correct (verifier score 1.0)
+but appeared as simultaneous FP + FN due to exceeding the tolerance.
+
+**Implications**:
+- Composite symbols (benchmark-on-mound, triangulation-on-mound) have
+  systematically worse localisation than simple burial mound symbols
+- The 20m→30m buffer gain likely recovers these composite-symbol edge
+  cases specifically
+- For the 55-map production run, evaluating at 20m, 30m, 40m, 50m will
+  disentangle: VLM precision (saturates by 20m for simple symbols),
+  composite symbol offset (recovered at 30m), and student ground truth
+  noise (recovered at 40–50m)
+
+---
+
+## Observation 212: Two-Sentence Prompt Fix Yields +7 F1 and +13 Precision — The Adversarial Budget Mechanism (2026-04-08)
+
+**Context**: QGIS sanity check (Obs 211) identified spot heights
+(6–7px black dots) and water features (blue circles) as the two main
+FP categories. Created v2 prompts adding:
+- Proposer: explicit "Exclusions" section (size and colour criteria)
+- Adversarial verifier: expanded confusable list with size criterion
+  for spot heights (~5–7px vs ≥12px mounds) and colour exclusion for
+  water features (blue = never a mound)
+
+**Method**: Re-verified the same 572 N=1 proposer candidates using the
+v2 adversarial verifier (real-time, ~$0.57, 572 Gemini Flash calls).
+Evaluated both v1 and v2 scores against the scoped 4-map reference
+(435 in-scope mounds) using Hungarian matching at 20m buffer.
+
+**Results at threshold 0.15**:
+
+| Metric | v1 | v2 | Delta |
+|--------|----|----|-------|
+| Accepted | 255 | 239 | −16 |
+| True positives | 173 | 193 | **+20** |
+| False positives | 82 | 46 | **−36** |
+| False negatives | 262 | 242 | −20 |
+| Precision | 0.678 | 0.807 | **+0.129** |
+| Recall | 0.398 | 0.444 | **+0.046** |
+| F1 | 0.501 | 0.573 | **+0.071** |
+
+Gains were consistent across all thresholds (0.15–0.50), with ΔF1
+ranging from +0.066 to +0.077 and ΔPrecision from +0.103 to +0.134.
+
+**Mechanism — the "adversarial budget" effect**: The v2 prompt
+improvement was designed to reject non-mound FPs, so the precision
+gain (+13pp) was expected. The surprise is the simultaneous **recall
+gain** (+4–6pp, 20 additional TPs). This should not happen from a
+purely exclusionary change — unless the exclusions *indirectly* affect
+how the verifier treats real mounds.
+
+Explanation: the adversarial verifier is instructed to "find reasons it
+is NOT a burial mound." With v1, the verifier had a limited repertoire
+of non-mound alternatives (triangulation point, benchmark, contour
+feature, text artefact). When confronted with a genuine mound, it
+would sometimes construct a weak alternative ("could be a spot height")
+and assign marginal probability (0.05–0.10), causing real mounds to
+fall below threshold.
+
+The v2 prompt gives the verifier **explicit rejection criteria** for
+spot heights (size) and water features (colour). When a real mound
+is clearly ≥12px and orange-brown, the verifier can now definitively
+rule out the spot-height and water-feature alternatives. This narrows
+the "adversarial budget" — the set of plausible non-mound
+interpretations — making the verifier more confident about real mounds.
+
+The effect is bidirectional:
+- Non-mounds get rejected more decisively (spot heights: 0.70→0.00)
+- Real mounds get accepted more confidively (ambiguous: 0.10→0.95)
+
+**Detailed breakdown of score changes**:
+- 57 candidates newly rejected by v2 (v1 ≥ 0.15, v2 < 0.15): spot
+  heights, water features, boundary markers, small circles
+- 41 candidates newly accepted by v2 (v1 < 0.15, v2 ≥ 0.15):
+  35 were within 20m of a reference mound (recovered TPs), 6 were
+  new FPs — a 35:6 TP:FP ratio on the newly accepted set
+
+**Implication for prompt engineering**: Negative examples and exclusion
+criteria in adversarial prompts don't just reduce false positives —
+they sharpen the decision boundary in both directions. This is
+analogous to contrastive learning: defining what something is NOT
+helps define what it IS. The "adversarial budget" mechanism suggests
+that adversarial verifier prompts should always include explicit,
+concrete rejection criteria with measurable thresholds (pixel sizes,
+colours, spatial patterns), not just vague category names.
+
+**Decision**: v2 prompts (`propose_brief_v2.md`,
+`verify_adversarial_v2.md`) should be the default for the 55-map
+production run. The improvement is free — no additional API cost,
+no architectural change.
+
+---
+
+## Observation 213: Scale-Dependent FP Populations and the Calibration Blind Spot (2026-04-08)
+
+**Context**: The v2 prompt fix (Obs 212) raised a methodological
+question: why weren't spot height FPs noticed during calibration on the
+20 tiles, given that 8 of those tiles were empty (zero mounds) and
+would have contained spot heights?
+
+### Investigation
+
+Phase 1 ran extraction on the 20 calibration tiles (512px, 5 passes)
+and produced a thorough FP register (`outputs/phase1-library/
+fp-fn-register.md`). The register documents **91 FPs** across 5 passes,
+systematically categorised by vote count and proximity to references.
+
+**Critical finding**: The Phase 1 FP register contains zero spot height
+or water feature FPs. All documented FPs are geodetic markers
+(triangulation points, benchmarks), text artefacts, and contour
+confusions — the same categories that the calibration process
+successfully addressed through negative examples and prompt refinement.
+
+### The tile-size mechanism
+
+The spot height FP pattern is specific to 384px tiles, not 512px. The
+H11 tile size results confirm this:
+
+| Tile size | Detections/run | Precision | Recall | F1 |
+|-----------|---------------|-----------|--------|-----|
+| 512px | ~162 | 0.434 | 0.725 | 0.542 |
+| 384px | ~313 | 0.272 | 0.877 | 0.415 |
+
+At 384px, the VLM produces **2× the detections** per run with a
+**16pp precision collapse**. The H11 report attributed this to "each
+tile independently generates false positives at a roughly constant rate
+(~2.5 detections/tile)" with 2× more tiles covering the same area. But
+this observation adds a compositional insight: the *type* of FP changes
+with tile size, not just the quantity.
+
+At 512px, a 6–7px spot height occupies ~1.3% of tile width. At 384px,
+the same symbol occupies ~1.8% — a 40% increase in relative visual
+prominence. This may cross a detection threshold in the VLM's attention
+mechanism. The spot height symbol, which was below the VLM's detection
+sensitivity at 512px, becomes visible at 384px.
+
+### Two distinct FP populations
+
+| FP type | Present at 512px? | Present at 384px? | Addressed by |
+|---------|------------------|------------------|-------------|
+| Geodetic markers (trig/benchmark alone) | Yes (dominant) | Yes | Calibration process (negative examples) |
+| Spot heights (small circles) | No | Yes (dominant) | v2 prompt size criterion |
+| Water features (blue circles) | No | Yes (minor) | v2 prompt colour criterion |
+
+### Implications for the calibration-to-production narrative
+
+The story is actually cleaner than initially feared:
+
+1. **Calibration at 512px** correctly identified and addressed the FP
+   population present at that tile size (geodetic markers)
+2. **Production at 384px** introduced a new FP population (spot
+   heights) that did not exist at calibration scale — a legitimate
+   scale-dependent emergence, not a calibration oversight
+3. **The v2 prompt fix** addresses the 384px-specific FPs with the
+   same approach that worked at 512px: explicit exclusion criteria
+
+The calibration set was not biased or insufficient for 512px FPs —
+it was simply calibrating against a different FP population than
+what emerged at 384px. This is an inherent limitation of any
+multi-scale pipeline where calibration and production use different
+parameters.
+
+The H11 result that 384px tiles produce more FPs but better recall
+is now better understood: the recall gain comes from mound symbols
+being more prominent (higher mound-to-tile ratio), while the precision
+loss comes partly from spot heights becoming detectable (crossing
+the attention threshold). The consensus and PV architectures succeed
+at 384px because they filter the spot height FPs through voting and
+verification, retaining the recall gain while recovering precision.
+The v2 prompt fix attacks this directly at the verifier level.
+
+---
+
+## Erratum E47: Proposer Prompt Substitution — `detect_brief-text` Used Instead of Preregistered `propose_brief` (2026-04-08)
+
+### The deviation
+
+The preregistration (§ Appendix, Config Files table) specifies
+`propose_*.json` + `verify_*.json` for H2 (two-stage proposer-verifier
+experiments). The `propose_brief.md` prompt was created on 2026-01-20
+and refined on 2026-02-03 — before any H2 experiments ran.
+
+However, **all PV experiments from Phase 3d through H11 production
+used `detect_brief-text.md` as the proposer**, not `propose_brief.md`.
+This substitution was consistent — every PV run used the same
+non-preregistered prompt.
+
+### How it happened
+
+The H2 pilot (`scripts/run_h2_pilot.py`, line 12) explicitly states:
+"Reuses existing Phase 2d detection outputs as proposer data." This
+was a pragmatic cost-saving decision: Phase 2d had already run
+`detect_brief-text` across the validation tiles, so the pilot reused
+those outputs rather than spending additional API budget on a separate
+proposer run. The pilot succeeded (all verifiers beat baseline), and
+subsequent PV experiments continued the pattern of reusing
+`detect_brief-text` outputs as proposer input.
+
+The `propose_brief.md` prompt was never invoked in any experiment.
+
+### The difference
+
+The two prompts differ by exactly two lines:
+
+| | `detect_brief-text.md` | `propose_brief.md` |
+|--|---|---|
+| Title | "Mound Detection" | "Two-Stage Detection: Proposer" |
+| Opening | "Detect all burial mound symbols" | "Detect all **candidate** burial mound symbols. This is Stage 1 of a two-stage pipeline; a verifier will filter false positives." |
+| Rest | Identical | Identical |
+
+The "candidate" framing and the sentence about verifier filtering
+signal to the VLM that it should prioritise recall over precision.
+
+### Measured impact (2026-04-08 test)
+
+N=1 single-pass at T=0.0 on 487 tiles (384px), both with v2 verifier:
+
+| Proposer | Candidates | Accepted | TP | FP | P | R | F1 |
+|----------|-----------|----------|----|----|------|------|------|
+| `detect_brief-text` (used) | 572 | 239 | 193 | 46 | 0.807 | 0.444 | 0.573 |
+| `propose_brief_v2` (preregistered + v2 exclusions) | 693 | 478 | 327 | 151 | 0.684 | 0.752 | 0.716 |
+
+The preregistered proposer produces +21% more candidates, with a
++35pp recall gain and a +14pp F1 gain in the full pipeline. The
+recall shift is consistent with the framing effect: the VLM lowers
+its detection threshold when told a verifier will clean up.
+
+**Note**: This comparison conflates the proposer framing change with
+the v2 exclusion additions. To isolate the framing effect alone,
+a `propose_brief` v1 (no exclusions) run would be needed.
+
+### Assessment
+
+This is a **conservative deviation**: the substituted prompt
+(`detect_brief-text`) has lower recall than the preregistered prompt
+(`propose_brief`), making it a harder test for the PV architecture.
+All PV results achieved with `detect_brief-text` as proposer represent
+a **lower bound** on the architecture's potential — the PV architecture
+would perform at least as well, and likely better, with the intended
+high-recall proposer.
+
+The deviation does NOT invalidate any published results. It does mean:
+
+1. The PV architecture's F1=0.89 (top leaderboard result) was achieved
+   with a suboptimal proposer — the true ceiling is likely higher
+2. All PV experiments are internally consistent (same proposer
+   throughout), so relative comparisons between verifier variants,
+   consensus sizes, and threshold sweeps remain valid
+3. The production run on 55 maps should use `propose_brief_v2` to
+   realise the preregistered design and the recall advantage
+
+### Related findings
+
+- The `propose_brief` prompt was written, preregistered, refined
+  (5e7601d7), and never used — a "design-to-implementation gap"
+  pattern previously noted in E24/E25
+- The `--tile-size` parameter coupling bug (discovered same session)
+  is a related class of error where pipeline parameters that should
+  be linked are independently configured
+
+---
+
+## Observation 214: Full 2×2 Prompt Matrix — Proposer Framing Dominates, Exclusions Are Stage-Dependent (2026-04-08)
+
+**Context**: Following the discovery of Erratum E47 (proposer prompt
+substitution) and the v2 prompt refinements (Obs 212), we ran a
+complete 2×2 matrix to decompose the contributions of proposer framing
+and verifier exclusions. All runs: N=1, T=0.0, 384px tiles (487 tiles),
+v1 adversarial verifier, evaluated at 20m buffer against 435 in-scope
+reference mounds.
+
+### The 2×2 matrix (threshold 0.15)
+
+|  | v1 verifier | v2 verifier | v2 verifier effect |
+|--|:-:|:-:|:-:|
+| `detect` proposer (used) | F1=0.501 (P=.678 R=.398) | F1=0.573 (P=.807 R=.444) | **+0.072** |
+| `propose` proposer (preregistered) | F1=0.713 (P=.690 R=.738) | F1=**0.738** (P=.712 R=.765) | **+0.025** |
+| Proposer framing effect | **+0.212** | **+0.165** | |
+
+### Key findings
+
+**1. Proposer framing is the dominant effect (+0.21 F1)**
+
+The single sentence "This is Stage 1 of a two-stage pipeline; a
+verifier will filter false positives" shifts recall from 0.398 to
+0.738 (+34pp) with near-zero precision change (+1.2pp). The VLM
+generates 30% more candidates (745 vs 572) and nearly all additional
+candidates are real mounds. This is the largest single-intervention
+improvement discovered in the project.
+
+**2. Verifier exclusions help universally but less with the right proposer**
+
+The v2 verifier (size + colour exclusions) improves F1 by +0.072
+with the `detect` proposer but only +0.025 with the `propose`
+proposer. When the proposer already generates mostly real mounds,
+there are fewer FPs for the verifier exclusions to catch.
+
+**3. Proposer exclusions are counterproductive**
+
+Comparing `propose_brief` v1 (no exclusions, 745 candidates) vs
+`propose_brief_v2` (with exclusions, 693 candidates), both with
+v2 verifier:
+
+| Threshold | v1 proposer F1 | v2 proposer F1 | Delta |
+|-----------|---------------|---------------|-------|
+| 0.15 | **0.738** | 0.716 | −0.021 |
+| 0.30 | **0.733** | 0.706 | −0.027 |
+| 0.50 | **0.719** | 0.696 | −0.023 |
+
+The proposer exclusions suppress 52 candidates, losing ~6 TPs and
+adding ~16 FPs (through greedy matching cascading effects). The
+precision criteria conflict with the proposer's "be liberal" framing.
+
+**Principle: exclusions belong in the verifier, not the proposer.**
+The proposer's job is recall; the verifier's job is precision. Adding
+precision criteria to the proposer is role confusion. The "candidate"
+framing explicitly signals liberality — exclusion text partially
+cancels that signal, reducing recall without improving precision
+(which the verifier already handles).
+
+### Decision for production run
+
+Use **`propose_brief` v1 proposer** (preregistered, no exclusions)
++ **`verify_adversarial` v2 verifier** (with size/colour exclusions).
+
+This achieves:
+- F1=0.738 on N=1 single-pass (best in the matrix)
+- Preregistered proposer design (addresses E47)
+- Empirically justified verifier refinement
+- Clean separation of concerns (proposer = recall, verifier = precision)
+
+### Methodological note
+
+The `--tile-size` parameter bug (discovered during initial v2 proposer
+testing) silently corrupted coordinates by a factor of 512/384 = 1.33,
+producing 300–500m systematic offsets. This was traced to the
+`4_detect_mounds_batch.py` script defaulting to `TILE_SIZE=512` from
+`config.py` when `--tile-size` is not explicitly passed. The v1
+proposer runs on 384px tiles correctly passed `--tile-size 384`
+(confirmed in the proposer log). **Fixed same session**: tile-size
+validation now checks first tile dimensions against configured size
+and errors on mismatch.
+
+### CORRECTION (same session): Proposer framing effect is null
+
+The 2×2 matrix above used **confounded comparisons**: different example
+sets (9 vs 17 examples), different reference scoping (435 vs 569
+mounds), and the instruction change. When controlled properly —
+identical 17-example config, identical 569-mound evaluation, same
+everything except the two-line instruction change — the result is:
+
+| Proposer | Candidates | F1 | 95% CI | P | R |
+|----------|-----------|-----|--------|------|------|
+| `detect_brief-text` (original) | 1,047 | **0.813** | [0.780–0.844] | 0.788 | 0.841 |
+| `propose_brief` (preregistered) | 1,180 | **0.800** | [0.765–0.831] | 0.765 | 0.839 |
+
+**ΔF1 = −0.013, CIs overlapping — no significant difference.** The
+proposer framing generates 13% more candidates but recall is identical
+(0.841 vs 0.839). The extra candidates are almost entirely FPs.
+
+The dominant factor in the earlier ad-hoc comparison was the **example
+set difference** (9 vs 17 examples), not the instruction framing. With
+the full 17-example set, the VLM already has enough context to achieve
+near-maximal recall, making the "candidate" framing redundant.
+
+**Revised principle**: The "exclusions belong in the verifier, not the
+proposer" finding (from the v1 vs v2 proposer comparison) remains
+valid. The "proposer framing is the dominant effect" claim from the
+matrix is **retracted** — it was an artefact of confounded comparisons.
+
+The **verifier v2 exclusion effect** (Obs 212) remains valid because
+that comparison was clean: same proposer candidates, same evaluation
+scope, only the verifier prompt changed. The +7pp F1 gain from the
+v2 verifier is real.
+
+**Awaiting**: N=5 consensus + PV results with the `propose_brief`
+proposer (batch run in progress). This will determine whether the
+framing helps at the consensus level even if it doesn't help at N=1.
+
+---

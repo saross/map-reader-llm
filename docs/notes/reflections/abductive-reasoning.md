@@ -2880,3 +2880,75 @@ All three produce worse individual outputs but better ensemble outputs
 because they increase the diversity of the noise that the filtering
 mechanism can exploit. The common principle: *the downstream pipeline
 can only filter what varies between runs*.
+
+### Entry 17: The confound that looked like a discovery — when ad-hoc testing deceives (Session 62, 2026-04-08)
+
+**Surprising fact**: A two-line prompt change (adding "candidate" and
+"a verifier will filter false positives") appeared to produce +21pp
+F1 and +34pp recall in an ad-hoc test. A controlled test with
+identical parameters except the instruction file showed ΔF1=−0.013
+(null, CIs overlapping). The entire effect was artefactual.
+
+**Prior belief**: The "candidate" framing would cause the VLM to
+lower its detection threshold, producing higher recall at modest
+precision cost — ideal for a proposer in a PV pipeline. The ad-hoc
+test confirmed this dramatically: 745 vs 572 candidates, recall
+0.738 vs 0.398. The theoretical mechanism ("adversarial budget")
+explained why: telling the proposer about the verifier safety net
+should rationally encourage liberal detection.
+
+**Probe sequence**:
+
+1. Initial test compared `propose_brief.json` (9 examples,
+   descriptive labels) vs `detect_brief-text.json` (17 examples,
+   generic labels). F1 jumped from 0.501 to 0.713 (+0.212).
+   Attributed to the instruction framing.
+
+2. Built a full 2×2 matrix (proposer × verifier). The framing
+   appeared dominant (+0.21 F1 vs +0.07 for verifier exclusions).
+   Wrote Obs 214 presenting this as a major finding.
+
+3. User insisted on matching all parameters exactly. Created
+   `propose_brief-text.json` — identical to `detect_brief-text.json`
+   except instruction_file. Same 17 examples, same labels.
+
+4. Controlled test: `detect_brief-text` F1=0.813 vs `propose_brief`
+   F1=0.800. CIs [0.780–0.844] vs [0.765–0.831]. Null.
+
+5. Recall identical (0.841 vs 0.839). The extra 133 candidates
+   from the `propose_brief` prompt were almost entirely FPs.
+
+**Revised belief**: The framing sentence is inert when the VLM has
+sufficient context from examples. The earlier +21pp effect was
+driven by the example set difference (9 vs 17 examples), not the
+instruction text. With only 9 examples, the VLM lacked context and
+the framing sentence provided a useful signal. With 17 examples,
+the VLM already knew what to do.
+
+**Abductive structure**: The best explanation for the confounded
+result is that **few-shot examples are the primary carrier of task
+specification**. Instruction text provides a frame, but the examples
+provide the decision boundary. When examples are sparse (9), the
+instruction frame has marginal influence. When examples are rich
+(17), the instruction frame is redundant — the VLM's detection
+behaviour is already determined by what it sees in the examples.
+
+This is consistent with the five-factor analysis (Obs 207) which
+found prompt engineering to be the weakest lever (0/28 significant
+comparisons). The prompt text matters less than the model's
+contextual evidence — and few-shot examples ARE contextual evidence.
+
+**Methodological lesson**: Ad-hoc A/B tests in multi-parameter
+systems are unreliable. Three confounds were stacked in the initial
+comparison (instruction text, example count, evaluation scoping)
+and the effect was attributed to the one variable under test. The
+correction required cloning the full config and changing only the
+target field — the kind of discipline that seems pedantic but
+prevented a false finding from propagating into the paper.
+
+**Self-correction note**: The belief revision happened within the
+same session — approximately 4 hours from "exciting discovery" to
+"null result, retracted." The speed of iteration is both a strength
+(rapid falsification) and a risk (the exciting result could have
+been published if the session had ended earlier). The user's
+insistence on controlled testing was the critical intervention.

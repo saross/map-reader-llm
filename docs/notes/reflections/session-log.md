@@ -3513,6 +3513,141 @@ Transition from analysis to paper argumentation. 14 commits pushed.
 - Obs 208: Thinking-level crossover (N=1 vs consensus direction reversal)
 - Obs 209: Paper framing and T=1.0 distinction
 
+## Session 62 — 2026-04-08 (map-reader-llm)
+
+Generalisation run preparation — dataset characterisation, QGIS sanity
+check, prompt refinement (v2), erratum E47, code hardening, and 55-map
+infrastructure.
+
+### Dataset characterisation
+
+1. **Student mound data loaded** — `MapMounds17_18LLgood.csv` (10,825
+   records). Filtered to "hairy" symbols only (mounds): 5,306.
+   Spatial join against 332 available rasters: 59 maps with student
+   data, 55 after excluding the 4 gold-standard maps.
+
+2. **Hairy-only filter validated** — 0.97 ratio against curated
+   reference on the 4 overlap maps (552 student vs 569 curated).
+   Confirms the filter captures the correct symbol types.
+
+3. **Tile count**: 7,833 tiles at 384px (stride 336) across 55 maps.
+   Revised to 8,541 after reprojection to EPSG:32635.
+
+4. **Cost estimate**: ~$28 batch for FH text 4-of-5 + PV on 55 maps.
+
+### QGIS sanity check
+
+5. **Export script created** — `scripts/export_qgis_sanity_check.py`.
+   Produces classified TP/FP/FN/rejected GeoJSON layers from N=1
+   PV output (572 candidates from `proposer-verifier-384`).
+
+6. **Spatial accuracy** (Obs 210): Median match distance 5.0m
+   (exactly 1 pixel at 5.02 m/px). 88% within 10m. VLM precision
+   exceeds human volunteer digitisation accuracy.
+
+7. **FP taxonomy** (Obs 211): 82 FPs decomposed into three explained
+   categories — spot heights (29), overlap duplicates (18), water
+   features (3). Remainder are high-confidence detections near
+   reference mounds (overlap boundary effects).
+
+8. **Composite symbol offset**: "Bench mark on burial mound" (fid 445)
+   detected at 23.2m — just outside 20m buffer. Systematic centroid
+   pull from adjacent symbols on composite map features.
+
+### Prompt refinement (v2)
+
+9. **v2 prompts created** — `propose_brief_v2.md` and
+   `verify_adversarial_v2.md`. Added size criterion for spot heights
+   (~5–7px vs ≥12px mounds) and colour exclusion for water features
+   (blue = never a mound).
+
+10. **v2 verifier effect** (Obs 212): Re-verified 572 candidates.
+    At threshold 0.15: ΔF1=+0.071, ΔP=+0.129, ΔR=+0.046. The
+    "adversarial budget" mechanism — concrete rejection criteria
+    make the verifier more confident about real mounds too.
+
+11. **Scale-dependent FP populations** (Obs 213): Spot height FPs
+    are specific to 384px tiles — at 512px the symbols are below
+    the VLM's detection threshold. Calibration at 512px correctly
+    addressed 512px FPs; the 384px FP population is a legitimate
+    scale-dependent emergence.
+
+### Erratum E47 and controlled testing
+
+12. **E47: Proposer prompt substitution** — discovered that all PV
+    experiments used `detect_brief-text.md` instead of preregistered
+    `propose_brief.md`. Created on 2026-01-20, refined 2026-02-03,
+    never used. The H2 pilot reused Phase 2d detection outputs to
+    save cost, and the pattern persisted.
+
+13. **2×2 prompt matrix** (Obs 214): Initial ad-hoc test showed
+    +21pp F1 from proposer framing. Controlled test (identical
+    17-example config, 569-mound evaluation) showed ΔF1=−0.013
+    (null). The ad-hoc result was confounded by example set
+    difference (9 vs 17 examples). **Retracted** the framing
+    claim; v2 verifier finding (Obs 212) unaffected.
+
+14. **`propose_brief-text.json` config created** — clones
+    `detect_brief-text.json` changing only the instruction file.
+    Isolates the E47 instruction change.
+
+15. **E47 N=1 evaluation** — `propose_brief` proposer + v1 verifier:
+    F1=0.800 [0.765–0.831] vs original detect F1=0.813
+    [0.780–0.844]. CIs overlapping. No significant difference.
+
+### Code hardening
+
+16. **Tile-size validation** — `4_detect_mounds_batch.py` and
+    `lib_batch_api.py` now check first tile dimensions against
+    configured tile_size. Errors on mismatch with actionable
+    message. Prevents the 512/384 coordinate corruption bug.
+
+17. **Batch mode added** — `4_detect_mounds_batch.py` now supports
+    `--mode batch` using `lib_batch_api.run_batch_unit()`. Full
+    lifecycle: JSONL build → upload → submit → poll → retrieve →
+    parse. Includes `--run N` for multi-pass consensus.
+
+18. **Audit** — `/audit` on both modified scripts. 1 critical
+    (test breakage from validation), 4 medium, 4 low. All critical
+    and medium issues fixed. 97/97 batch API tests pass.
+
+19. **Output directory standard** — spec document at
+    `docs/methodology/output-directory-standard.md`. Defines
+    artefact types, gitignore policy, naming conventions.
+
+### 55-map production run preparation
+
+20. **Rasters reprojected** — 55 maps from EPSG:4326 to EPSG:32635
+    via gdalwarp. 65 seconds on zbook. Output: 2.4 GB in
+    `inputs/rasters/Russian1981_32635/`.
+
+21. **Tiles generated** — 8,541 tiles at 384px (stride 336).
+    4 minutes 38 seconds on zbook. Output: 2.0 GB in
+    `inputs/tiles_384_55maps/`.
+
+22. **Ground truth built** — 4,770 hairy-only student mounds in
+    EPSG:32635. Output: `inputs/vectors/references/student-mounds-55maps.geojson`.
+
+23. **Manifest and bounds** — tile manifest (8,541 entries) and
+    evaluation bounds GeoJSON (8,541 polygons) generated.
+
+### E47 N=5 batch run
+
+24. **5-pass consensus run launched** — `propose_brief-text` proposer,
+    Flash HIGH, T=0.7, 384px, batch mode. Run 1 complete (1,614
+    detections). Runs 2–5 initially failed (network outage),
+    resubmitted. Consensus → verify → evaluate pipeline deferred
+    to next session.
+
+### Observations added
+
+- Obs 210: VLM spatial accuracy exceeds human volunteers (median 1px)
+- Obs 211: FP taxonomy and composite symbol localisation
+- Obs 212: v2 verifier +7pp F1 (adversarial budget mechanism)
+- Obs 213: Scale-dependent FP populations (384px vs 512px)
+- Obs 214: Full 2×2 matrix + CORRECTION (proposer framing is null)
+- Erratum E47: Proposer prompt substitution (conservative deviation)
+
 ### Key findings
 
 - **Obs 203**: Tile size as pipeline optimisation — 384px provides

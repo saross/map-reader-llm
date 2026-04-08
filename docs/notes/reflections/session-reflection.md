@@ -6055,3 +6055,76 @@ The data supports all six threads. The paper needs to weave them into a
 coherent argument about multi-stage VLM pipelines for detection tasks.
 
 ---
+
+## Reflection 49: The session where the confounds bit back (Session 62, 2026-04-08, map-reader-llm)
+
+*What surprised you about this session?*
+
+The speed at which a compelling finding dissolved under controlled
+testing. The "proposer framing effect" looked extraordinary in the
+ad-hoc comparison — +21pp F1, +34pp recall, nearly zero precision
+cost. I presented it with confidence across multiple analyses and
+built a theoretical explanation (the "adversarial budget mechanism").
+Then Shawn insisted on a controlled comparison: same examples, same
+evaluation scope, same everything except the two-line instruction
+change. Result: ΔF1 = −0.013, CIs overlapping. Null.
+
+The confound was the example set: 9 examples in the ad-hoc test vs
+17 in the formal evaluation. With 9 examples, the VLM lacked context
+and the framing sentence mattered. With 17 examples, the context was
+already sufficient and the framing was redundant noise. I had three
+confounds stacked (examples, reference scoping, instruction) and
+attributed the entire effect to the instruction because that was the
+variable I was testing. Classic multiple-variable confound.
+
+What made this session distinctive is that the correction happened
+*within the same session*. The progression — excitement, presentation
+of mechanism, controlled test, null result, retraction — took about
+four hours. In a traditional research setting this cycle might take
+weeks. The speed is both a strength (rapid iteration) and a danger
+(the compelling but confounded result could easily have been published
+if the session had ended after the ad-hoc test).
+
+*What would you do differently if you replayed this session?*
+
+Run the controlled comparison first. When I discovered the
+`propose_brief` prompt existed but was never used, I should have
+immediately cloned `detect_brief-text.json` (swapping only the
+instruction file) and run it. Instead I used the existing
+`propose_brief.json` config with its 9 examples and different labels,
+got an exciting result, and spent two hours building analyses on a
+confounded foundation. The user's pedantic insistence on matching
+parameters was the correction that saved us — but I should have
+applied that discipline myself.
+
+The tile-size bug also taught me something about silent failures.
+The `--tile-size` parameter defaulting to 512 when processing 384px
+tiles produced zero TPs with no error message. I initially attributed
+this to the prompt change rather than the coordinate conversion. If
+the validation check I subsequently implemented had existed from the
+start, I would have caught the bug immediately and saved 30 minutes
+of confused debugging.
+
+*What's the single most important thing a future instance should know?*
+
+Ad-hoc A/B tests in this project are dangerous. There are too many
+interacting parameters — example sets, evaluation scoping, tile sizes,
+temperature, thinking levels — for any uncontrolled comparison to be
+trusted. When testing a prompt change, clone the config file and
+change ONLY the target parameter. When evaluating, use the identical
+evaluation scope and reference set. When in doubt, diff the two
+configs and confirm only the intended field differs. The user has
+been burned by confounded comparisons before (the "hairy circles"
+FP analysis was also initially confounded) and has developed good
+instincts for demanding controlled tests — defer to those instincts.
+
+The session also produced genuine contributions: the QGIS sanity
+check workflow, the FP taxonomy (spot heights, water features, overlap
+duplicates), the spatial accuracy finding (median 1 pixel), and the
+v2 verifier exclusions (whose effect was measured in a clean
+comparison). The 55-map production run is fully prepped — rasters
+reprojected, tiles generated, ground truth built, manifests and
+bounds created. The infrastructure work was solid even though one
+of the analytical findings had to be retracted.
+
+---
