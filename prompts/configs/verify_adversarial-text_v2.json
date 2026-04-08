@@ -1,0 +1,27 @@
+{
+    "version": "verify_adversarial-text_v2",
+    "description": "Two-Stage Verifier (Stage 2) v2. Adds explicit size criterion for spot heights and colour exclusion for water features.",
+    "hypothesis": "H2",
+    "model": "gemini-3-flash",
+    "instruction_file": "verify_adversarial_v2.md",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "_config_notes": {
+        "source": "v2 of adversarial verifier. Based on QGIS sanity check (2026-04-08) which identified spot heights (29 FPs) and water features (3 FPs) as the main addressable FP categories.",
+        "changes_from_v1": "Added spot height size criterion (~5-7px vs >=12px mounds) and water feature colour exclusion (blue = never a mound) to confusable list.",
+        "temperature": "0.0 — unchanged from v1.",
+        "thinking_level": "Fixed at minimal — unchanged from v1.",
+        "track": "Track 2 — text-only."
+    },
+    "examples": [],
+    "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+    ],
+    "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+}

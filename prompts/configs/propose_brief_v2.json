@@ -1,0 +1,27 @@
+{
+    "version": "propose_brief_v2",
+    "description": "Two-Stage Proposer (Stage 1) v2. Adds explicit exclusions for spot heights (size) and water features (colour).",
+    "hypothesis": "H2",
+    "model": "gemini-3-flash",
+    "instruction_file": "propose_brief_v2.md",
+    "temperature": 1.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "_config_notes": {
+        "source": "v2 of proposer. Based on QGIS sanity check (2026-04-08, Obs 211-213).",
+        "changes_from_v1": "Added Exclusions section: spot height size criterion (~5-7px vs >=12px mounds) and water feature colour exclusion (blue = never a mound).",
+        "temperature": "1.0 — unchanged from v1.",
+        "thinking_level": "Fixed at minimal — unchanged from v1."
+    },
+    "examples": [
+        {"path": "neutral-naming/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_09.png", "label": "Negative: Triangulation Point ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_10.png", "label": "Negative: Benchmark ALONE (no mound)", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_15.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral-naming/example_16.png", "label": "Negative: Empty tile (no mounds)", "category": "null"},
+        {"path": "neutral-naming/example_17.png", "label": "Negative: Empty tile (no mounds)", "category": "null"}
+    ]
+}
