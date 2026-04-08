@@ -42,6 +42,7 @@ import geojson
 from shapely.geometry import box, mapping
 import rasterio
 import sys
+from PIL import Image as PILImage
 from datetime import datetime, timezone
 import concurrent.futures
 import threading
@@ -1018,6 +1019,22 @@ def detect_mounds_versioned(
         print(f"Applying --limit: {limit}")
         tiles_to_process = tiles_to_process[:limit]
 
+    # ── Tile-size validation ────────────────────────────────────
+    # Verify that the first tile's actual dimensions match the configured
+    # tile_size. A mismatch silently corrupts coordinate conversion
+    # (e.g., using 512 on 384px tiles produces 300–500m offsets).
+    if tiles_to_process:
+        _sample = PILImage.open(tiles_to_process[0])
+        _actual_w, _actual_h = _sample.size
+        _sample.close()
+        if _actual_w != effective_tile_size or _actual_h != effective_tile_size:
+            print(
+                f"\nERROR: Tile dimensions ({_actual_w}×{_actual_h}) do not "
+                f"match tile_size ({effective_tile_size}). "
+                f"Pass --tile-size {_actual_w} to fix coordinate conversion."
+            )
+            return None
+
     print(f"Processing {len(tiles_to_process)} new tiles...")
 
     if len(tiles_to_process) == 0:
@@ -1192,6 +1209,171 @@ def detect_mounds_versioned(
         "items_failed": metadata_tracker.stats.items_failed,
     }
 
+def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
+    """
+    Run detection via Gemini Batch API (50% cost discount).
+
+    Delegates to ``lib_batch_api.run_batch_unit()`` which handles the
+    full lifecycle: JSONL build → upload → submit → poll → retrieve →
+    parse → write GeoJSON/meta/tiles outputs.
+
+    The output format (.geojson, .tiles.json, .meta.json) is identical
+    to the real-time path, enabling seamless downstream consumption by
+    the PV pipeline and evaluation scripts.
+
+    Args:
+        args: Parsed CLI arguments (same as real-time mode).
+
+    Returns:
+        Dict with items_processed and items_failed counts, or None if
+        setup failed before processing could begin.
+    """
+    from scripts.lib_batch_api import run_batch_unit
+
+    # Load config
+    try:
+        with open(args.config, "r") as f:
+            config_json = json.load(f)
+    except Exception as e:
+        print(f"Error loading config: {e}")
+        return None
+
+    # Apply CLI overrides
+    if args.temperature is not None:
+        config_json["temperature"] = args.temperature
+    thinking_level = getattr(args, "thinking_level", None)
+    if thinking_level is not None:
+        config_json["thinking_level"] = thinking_level
+    if args.model:
+        config_json["model"] = args.model
+
+    # Resolve effective tile size and tiles directory
+    effective_tile_size = (
+        args.tile_size if args.tile_size is not None else TILE_SIZE
+    )
+    effective_tiles_dir = (
+        Path(args.tiles_dir) if args.tiles_dir is not None else TILES_DIR
+    )
+
+    # Resolve manifest path — use effective_tiles_dir for the default
+    # so that --tiles-dir inputs/tiles_384 loads the 384px manifest
+    manifest_path = args.manifest or str(
+        effective_tiles_dir / "full_evaluation_manifest.json"
+    )
+    try:
+        with open(manifest_path) as f:
+            json.load(f)  # Validate manifest is readable
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error reading manifest {manifest_path}: {e}")
+        return None
+
+    # Load system instruction
+    instruction_file = config_json.get(
+        "instruction_file", "detect_image-only.md"
+    )
+    prompt_path = (
+        Path(BASE_DIR) / "prompts" / "system-instructions" / instruction_file
+    )
+    try:
+        with open(prompt_path, "r") as f:
+            system_instruction = f.read()
+    except FileNotFoundError:
+        print(f"Error: System instruction not found at {prompt_path}")
+        return None
+
+    # Resolve model name
+    if not GOOGLE_API_KEY:
+        print("Error: GOOGLE_API_KEY not found.")
+        return None
+
+    client = genai.Client(
+        api_key=GOOGLE_API_KEY,
+        http_options={"api_version": "v1alpha"},
+    )
+    model_name = _resolve_model_name(client, config_json.get("model"))
+    if model_name is None:
+        return None
+
+    # Resolve output directory
+    if getattr(args, "output_dir", None):
+        output_dir = Path(args.output_dir)
+    else:
+        output_dir = RESULTS_DIR / config_json.get("version", "unknown")
+
+    config_version = config_json.get("version", "unknown")
+    examples = config_json.get("examples", [])
+
+    print("Mode: BATCH API (50% cost discount)")
+    print(f"Config: {config_version}")
+    print(f"Model: {model_name}")
+    print(f"System instruction: {instruction_file}")
+    print(f"Tile size: {effective_tile_size}")
+    print(f"Tiles dir: {effective_tiles_dir}")
+    print(f"Manifest: {manifest_path}")
+    print(f"Output: {output_dir}")
+    if args.dry_run:
+        print("Mode: DRY RUN (JSONL built but not submitted)")
+
+    # Construct unit and config dicts for run_batch_unit()
+    run_number = getattr(args, "run", 1)
+    unit = {
+        "condition_name": config_version,
+        "run": run_number,
+        "config": str(args.config),
+        "temperature": config_json.get("temperature"),
+        "thinking_level": config_json.get("thinking_level"),
+    }
+    batch_config = {
+        "inputs": {
+            "manifest": str(manifest_path),
+            "tile_size": effective_tile_size,
+            "tiles_dir": str(effective_tiles_dir),
+        },
+        "_project_root": str(BASE_DIR),
+    }
+
+    # Run the full batch lifecycle
+    success, message, cost_usd = run_batch_unit(
+        unit=unit,
+        config=batch_config,
+        output_dir=output_dir,
+        client=client,
+        model_name=model_name,
+        system_instruction=system_instruction,
+        examples=examples,
+        config_version=config_version,
+        limit=args.limit,
+        dry_run=args.dry_run,
+        tile_size=effective_tile_size,
+        tiles_dir=effective_tiles_dir,
+    )
+
+    if not success:
+        print(f"\nBatch failed: {message}")
+        return {"items_processed": 0, "items_failed": 1}
+
+    print(f"\nBatch complete: {message}")
+    print(f"Estimated cost: ${cost_usd:.4f}")
+
+    # Read tile counts from the .tiles.json written by complete_batch_unit()
+    run_dir = output_dir / config_version / f"run_{run_number}"
+    tiles_files = list(run_dir.glob("*.tiles.json"))
+    items_processed = 0
+    items_failed = 0
+    if tiles_files:
+        with open(tiles_files[0]) as f:
+            tiles_data = json.load(f)
+        completed = tiles_data.get("completed", [])
+        failed = tiles_data.get("failed", [])
+        items_processed = len(completed)
+        items_failed = len(failed)
+        print(f"Tiles processed: {items_processed}")
+        if items_failed:
+            print(f"Tiles failed: {items_failed}")
+
+    return {"items_processed": items_processed, "items_failed": items_failed}
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Batch mound detection using VLM",
@@ -1286,27 +1468,40 @@ Examples:
         help="Override tiles directory (default: from config.py). "
         "Use when processing tiles at a non-standard size (e.g., inputs/tiles_384).",
     )
+    parser.add_argument(
+        "--mode", choices=["realtime", "batch"], default="realtime",
+        help="Execution mode. 'batch' uses Gemini Batch API "
+        "(50%% discount, asynchronous). Default: realtime.",
+    )
+    parser.add_argument(
+        "--run", type=int, default=1,
+        help="Run number for batch mode (used in output path: "
+        "{output-dir}/{version}/run_{N}/). Default: 1.",
+    )
     args = parser.parse_args()
 
-    result = detect_mounds_versioned(
-        args.config,
-        manifest_path=args.manifest,
-        output_name=args.output,
-        output_dir=getattr(args, 'output_dir', None),
-        model_override=args.model,
-        temperature_override=args.temperature,
-        thinking_level_override=getattr(args, 'thinking_level', None),
-        ordering_override=args.ordering,
-        ordering_seed=getattr(args, 'ordering_seed', None),
-        workers=args.workers,
-        dry_run=args.dry_run,
-        limit=args.limit,
-        max_retries=args.max_retries,
-        base_wait=args.base_wait,
-        tile_size=args.tile_size,
-        tiles_dir_override=args.tiles_dir,
-        use_cache=args.use_cache,
-    )
+    if args.mode == "batch":
+        result = _detect_mounds_batch(args)
+    else:
+        result = detect_mounds_versioned(
+            args.config,
+            manifest_path=args.manifest,
+            output_name=args.output,
+            output_dir=getattr(args, 'output_dir', None),
+            model_override=args.model,
+            temperature_override=args.temperature,
+            thinking_level_override=getattr(args, 'thinking_level', None),
+            ordering_override=args.ordering,
+            ordering_seed=getattr(args, 'ordering_seed', None),
+            workers=args.workers,
+            dry_run=args.dry_run,
+            limit=args.limit,
+            max_retries=args.max_retries,
+            base_wait=args.base_wait,
+            tile_size=args.tile_size,
+            tiles_dir_override=args.tiles_dir,
+            use_cache=args.use_cache,
+        )
 
     # Exit code: 0 = success, 1 = setup error, 2 = partial failure
     if result is None:

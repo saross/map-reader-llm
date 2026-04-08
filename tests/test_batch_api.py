@@ -64,20 +64,24 @@ def _make_prompt_config() -> dict:
     }
 
 
-def _make_tile_image(tmp_dir: Path, name: str) -> Path:
-    """Create a minimal PNG file for testing."""
-    # Minimal valid PNG (1x1 pixel, white)
-    # PNG signature + IHDR + IDAT + IEND (smallest valid PNG)
-    png_bytes = (
-        b"\x89PNG\r\n\x1a\n"  # PNG signature
-        b"\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01"
-        b"\x08\x02\x00\x00\x00\x90wS\xde"  # 1x1 RGB
-        b"\x00\x00\x00\x0cIDATx\x9cc\xf8\x0f\x00\x00\x01\x01"
-        b"\x00\x05\x18\xd8N"  # compressed pixel data
-        b"\x00\x00\x00\x00IEND\xaeB`\x82"  # end
-    )
+def _make_tile_image(tmp_dir: Path, name: str, size: int = 512) -> Path:
+    """Create a PNG tile image for testing.
+
+    Args:
+        tmp_dir: Directory to write the tile into.
+        name: Filename for the tile (e.g., ``"tile_x0_y0.png"``).
+        size: Tile dimension in pixels (default 512, matching TILE_SIZE).
+            The tile-size validation in ``prepare_batch_unit()`` checks
+            that tile dimensions match the configured tile_size, so this
+            must align with the test's tile_size parameter.
+
+    Returns:
+        Path to the created PNG file.
+    """
+    from PIL import Image as _PILImage
+    img = _PILImage.new("RGB", (size, size), color=(255, 255, 255))
     tile_path = tmp_dir / name
-    tile_path.write_bytes(png_bytes)
+    img.save(tile_path, format="PNG")
     return tile_path
 
 

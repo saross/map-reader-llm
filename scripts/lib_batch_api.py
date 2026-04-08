@@ -1418,6 +1418,24 @@ def prepare_batch_unit(
     if not tile_paths:
         return None
 
+    # Use provided tile_size or fall back to config default
+    effective_tile_size = tile_size if tile_size is not None else TILE_SIZE
+
+    # Validate tile dimensions match configured tile_size BEFORE the
+    # expensive JSONL build. A mismatch silently corrupts coordinate
+    # conversion (e.g., 512 on 384px tiles → 300–500m offsets).
+    from PIL import Image as _PILImage
+    _sample = _PILImage.open(tile_paths[0])
+    _actual_w, _actual_h = _sample.size
+    _sample.close()
+    if _actual_w != effective_tile_size or _actual_h != effective_tile_size:
+        logger.error(
+            "Tile dimensions (%d×%d) do not match tile_size (%d). "
+            "Pass tile_size=%d to fix coordinate conversion.",
+            _actual_w, _actual_h, effective_tile_size, _actual_w,
+        )
+        return None
+
     # Load prompt config for generation settings
     prompt_config_path = (
         Path(config.get("_project_root", ".")) / unit["config"]
@@ -1446,9 +1464,6 @@ def prepare_batch_unit(
     )
 
     key = f"{unit['condition_name']}/run_{unit['run']}"
-
-    # Use provided tile_size or fall back to config default
-    effective_tile_size = tile_size if tile_size is not None else TILE_SIZE
 
     return BatchUnitContext(
         unit_key=key,
@@ -1765,6 +1780,8 @@ def run_batch_unit(
     dry_run: bool = False,
     on_submit: Callable[[str, list[str], str], None] | None = None,
     resume_job_name: str | None = None,
+    tile_size: int | None = None,
+    tiles_dir: Path | None = None,
 ) -> tuple[bool, str, float]:
     """
     Orchestrate the full batch lifecycle for one execution unit.
@@ -1797,6 +1814,10 @@ def run_batch_unit(
         resume_job_name: If provided, skip upload and submission — go
             straight to polling this existing batch job. Used on resume
             after a crash during the polling phase.
+        tile_size: Override tile dimension in pixels for coordinate
+            conversion. Forwarded to ``prepare_batch_unit()``.
+        tiles_dir: Override tiles directory. Forwarded to
+            ``prepare_batch_unit()``.
 
     Returns:
         Tuple of (success, message, cost_usd).
@@ -1811,6 +1832,8 @@ def run_batch_unit(
         examples=examples,
         config_version=config_version,
         limit=limit,
+        tile_size=tile_size,
+        tiles_dir=tiles_dir,
     )
     if ctx is None:
         return False, "no_tiles_found", 0.0

@@ -37,3 +37,12 @@ outputs/.active_files.*
 
 # Ephemeral lock files
 .claude/*.lock
+
+# Large regenerable artefacts (global — per output-directory-standard.md)
+outputs/**/batch_working/
+outputs/**/crops/
+inputs/tiles_384_55maps/
+inputs/rasters/Russian1981_32635/
+inputs/vectors/MapMoundsDigitised/
+# Bad tile-size run (archive candidate)
+outputs/h11/v2-proposer-test-BAD-TILESIZE/
