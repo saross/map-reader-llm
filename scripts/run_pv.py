@@ -216,6 +216,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
             iterations=args.iterations,
             temperature=args.temperature,
             model_override=args.model,
+            service_tier=getattr(args, "service_tier", None),
         )
 
 
@@ -396,6 +397,7 @@ def _verify_realtime(
     iterations: int,
     temperature: float | None,
     model_override: str | None,
+    service_tier: str | None = None,
 ) -> int:
     """Real-time API verification path.
 
@@ -437,7 +439,9 @@ def _verify_realtime(
     system_instruction = load_system_instruction(config)
     reference_items = build_reference_items(config)
     gen_config_dict = build_generation_config(config, temperature)
-    sdk_gen_config = gen_config_to_sdk(gen_config_dict, system_instruction)
+    sdk_gen_config = gen_config_to_sdk(
+        gen_config_dict, system_instruction, service_tier=service_tier,
+    )
 
     # Metadata tracker
     metadata_tracker = LLMMetadataTracker(
@@ -813,6 +817,14 @@ def _build_parser() -> argparse.ArgumentParser:
     verify_parser.add_argument(
         "--dry-run", action="store_true",
         help="Build JSONL without submitting (batch mode only)",
+    )
+    verify_parser.add_argument(
+        "--service-tier",
+        choices=["standard", "flex"],
+        default=None,
+        dest="service_tier",
+        help="Service tier for real-time API calls. 'flex' gives 50%% "
+        "discount with 1-15 min latency. Ignored in batch mode.",
     )
     verify_parser.set_defaults(func=cmd_verify)
 

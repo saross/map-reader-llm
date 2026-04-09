@@ -219,6 +219,7 @@ def build_generation_config(
 def gen_config_to_sdk(
     config_dict: dict[str, Any],
     system_instruction: str,
+    service_tier: str | None = None,
 ) -> Any:
     """Convert a plain-dict generation config to SDK GenerateContentConfig.
 
@@ -273,6 +274,7 @@ def gen_config_to_sdk(
         thinking_config=thinking_config,
         system_instruction=system_instruction,
         safety_settings=safety_settings,
+        service_tier=service_tier,
     )
 
 

@@ -1753,6 +1753,7 @@ class TestCompleteBatchUnit:
         assert "retrieve_error" in message
         assert cost == 0.0
 
+    @patch("scripts.lib_batch_api.MAX_SYNC_RETRIES", 10)
     @patch("scripts.lib_batch_api._retry_tile_sync")
     @patch("scripts.lib_batch_api.retrieve_batch_results")
     @patch("scripts.lib_batch_api.write_batch_outputs")

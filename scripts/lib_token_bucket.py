@@ -42,8 +42,8 @@ Usage:
 
     governor = TokenBucketGovernor(
         tokens_per_request=20_000,
-        tpm_limit=1_000_000,
-        rpm_limit=2_000,
+        tpm_limit=20_000_000,   # Tier 3: 20M TPM
+        rpm_limit=20_000,       # Tier 3: 20K RPM
     )
 
     # In each worker thread:
@@ -108,8 +108,8 @@ class TokenBucketGovernor:
 
     def __init__(
         self,
-        rpm_limit: int = 2_000,
-        tpm_limit: int = 1_000_000,
+        rpm_limit: int = 20_000,       # Tier 3 default
+        tpm_limit: int = 20_000_000,   # Tier 3 default
         target_utilisation: float = 0.72,
         cooldown_seconds: float = 15.0,
         tokens_per_request: int = 20_000,

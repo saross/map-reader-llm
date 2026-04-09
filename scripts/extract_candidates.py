@@ -97,8 +97,14 @@ def resolve_raster_path(tile_id: str, rasters_dir: Path) -> Path | None:
     if raster_path.exists():
         return raster_path
 
-    # Try case-insensitive glob as fallback
-    found = list(rasters_dir.glob(f"{map_name}.*tif*"))
+    # Recursive search for rasters in subdirectories
+    # (e.g., inputs/rasters/Russian1981_32635/K-35-042-3.tif)
+    found = list(rasters_dir.rglob(f"{map_name}.tif"))
+    if found:
+        return found[0]
+
+    # Case-insensitive recursive glob as final fallback
+    found = list(rasters_dir.rglob(f"{map_name}.*tif*"))
     if found:
         return found[0]
 

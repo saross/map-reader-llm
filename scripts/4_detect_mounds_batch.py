@@ -656,6 +656,7 @@ def detect_mounds_versioned(
     tile_size=None,
     tiles_dir_override=None,
     use_cache=False,
+    service_tier=None,
 ):
     """
     Executes the detection pipeline using a specific versioned configuration.
@@ -844,12 +845,17 @@ def detect_mounds_versioned(
         )
         print(f"Thinking level: {config['thinking_level']}")
 
+    # Log service tier if specified
+    if service_tier:
+        print(f"Service tier: {service_tier}")
+
     gen_config = types.GenerateContentConfig(
         temperature=config.get("temperature", 0.1),
         max_output_tokens=config.get("max_output_tokens", 8192),
         response_mime_type="application/json",
         thinking_config=thinking_config,
         system_instruction=system_instruction_text,
+        service_tier=service_tier,
         safety_settings=[
             types.SafetySetting(
                 category="HARM_CATEGORY_HARASSMENT", threshold="OFF"
@@ -975,7 +981,7 @@ def detect_mounds_versioned(
                 all_tiles_map = {}
                 for map_dir in effective_tiles_dir.iterdir():
                     if map_dir.is_dir():
-                        for t in map_dir.glob("*.png"):
+                        for t in map_dir.rglob("*.png"):
                             all_tiles_map[t.name] = t
 
                 found_count = 0
@@ -1005,7 +1011,7 @@ def detect_mounds_versioned(
         all_tiles = []
         for map_dir in effective_tiles_dir.iterdir():
             if map_dir.is_dir():
-                all_tiles.extend(list(map_dir.glob("*.png")))
+                all_tiles.extend(list(map_dir.rglob("*.png")))
         all_tiles = sorted(all_tiles)
         tiles_to_process = [t for t in all_tiles if t.name not in processed_tiles]
         print(f"Scanning all tiles. {len(tiles_to_process)} remaining.")
@@ -1332,46 +1338,146 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
         "_project_root": str(BASE_DIR),
     }
 
-    # Run the full batch lifecycle
-    success, message, cost_usd = run_batch_unit(
-        unit=unit,
-        config=batch_config,
-        output_dir=output_dir,
-        client=client,
-        model_name=model_name,
-        system_instruction=system_instruction,
-        examples=examples,
-        config_version=config_version,
-        limit=args.limit,
-        dry_run=args.dry_run,
-        tile_size=effective_tile_size,
-        tiles_dir=effective_tiles_dir,
+    # Determine tile count for chunking. The Batch API has a 2 GB file
+    # upload limit; each tile adds ~320 KB to the JSONL (base64 image +
+    # prompt). At 4,000 tiles per chunk the JSONL is ~1.3 GB, safely
+    # under the limit.
+    from scripts.lib_batch_api import _resolve_tile_paths
+
+    max_batch_tiles = getattr(args, "max_batch_tiles", 4000) or 4000
+    all_tile_paths = _resolve_tile_paths(
+        Path(manifest_path), tiles_dir=effective_tiles_dir,
     )
+    if args.limit and args.limit > 0:
+        total_tiles = min(args.limit, len(all_tile_paths))
+    else:
+        total_tiles = len(all_tile_paths)
 
-    if not success:
-        print(f"\nBatch failed: {message}")
-        return {"items_processed": 0, "items_failed": 1}
+    num_chunks = max(1, (total_tiles + max_batch_tiles - 1) // max_batch_tiles)
+    needs_chunking = num_chunks > 1
 
-    print(f"\nBatch complete: {message}")
-    print(f"Estimated cost: ${cost_usd:.4f}")
+    if needs_chunking:
+        print(
+            f"Chunking: {total_tiles} tiles into {num_chunks} batch jobs "
+            f"(max {max_batch_tiles} per job)"
+        )
 
-    # Read tile counts from the .tiles.json written by complete_batch_unit()
+    # Run batch lifecycle — chunked if needed, single job otherwise
     run_dir = output_dir / config_version / f"run_{run_number}"
-    tiles_files = list(run_dir.glob("*.tiles.json"))
-    items_processed = 0
-    items_failed = 0
-    if tiles_files:
-        with open(tiles_files[0]) as f:
-            tiles_data = json.load(f)
-        completed = tiles_data.get("completed", [])
-        failed = tiles_data.get("failed", [])
-        items_processed = len(completed)
-        items_failed = len(failed)
-        print(f"Tiles processed: {items_processed}")
-        if items_failed:
-            print(f"Tiles failed: {items_failed}")
+    total_cost = 0.0
+    total_processed = 0
+    total_failed = 0
+    chunk_failed = False
 
-    return {"items_processed": items_processed, "items_failed": items_failed}
+    for chunk_idx in range(num_chunks):
+        chunk_offset = chunk_idx * max_batch_tiles
+        chunk_limit = min(max_batch_tiles, total_tiles - chunk_offset)
+        suffix = f"_chunk{chunk_idx}" if needs_chunking else ""
+
+        # Skip chunks whose output already exists (resume support)
+        chunk_geojson = run_dir / (
+            f"detections_{config_version}_run{run_number:02d}"
+            f"{suffix}.geojson"
+        )
+        if chunk_geojson.exists():
+            print(
+                f"\n--- Chunk {chunk_idx + 1}/{num_chunks}: "
+                f"SKIPPING (output exists: {chunk_geojson.name}) ---"
+            )
+            # Count existing tiles for summary
+            chunk_tiles = chunk_geojson.with_suffix(".tiles.json")
+            if chunk_tiles.exists():
+                with open(chunk_tiles) as f:
+                    td = json.load(f)
+                total_processed += len(td.get("completed", []))
+                total_failed += len(td.get("failed", []))
+            continue
+
+        if needs_chunking:
+            print(
+                f"\n--- Chunk {chunk_idx + 1}/{num_chunks} "
+                f"(tiles {chunk_offset + 1}–{chunk_offset + chunk_limit}) ---"
+            )
+
+        success, message, cost_usd = run_batch_unit(
+            unit=unit,
+            config=batch_config,
+            output_dir=output_dir,
+            client=client,
+            model_name=model_name,
+            system_instruction=system_instruction,
+            examples=examples,
+            config_version=config_version,
+            limit=chunk_limit,
+            offset=chunk_offset,
+            dry_run=args.dry_run,
+            tile_size=effective_tile_size,
+            tiles_dir=effective_tiles_dir,
+            output_name_suffix=suffix,
+        )
+
+        total_cost += cost_usd
+
+        if not success:
+            print(f"\nBatch chunk {chunk_idx} failed: {message}")
+            chunk_failed = True
+            continue
+
+        # Count tiles from this chunk's .tiles.json
+        chunk_tiles_files = list(run_dir.glob(f"*{suffix}.tiles.json"))
+        for tf in chunk_tiles_files:
+            with open(tf) as f:
+                td = json.load(f)
+            total_processed += len(td.get("completed", []))
+            total_failed += len(td.get("failed", []))
+
+    # Merge chunk GeoJSONs into a single output if chunked
+    if needs_chunking and not args.dry_run:
+        chunk_geojsons = sorted(run_dir.glob("*_chunk*.geojson"))
+        if chunk_geojsons:
+            merged_features = []
+            merged_processed = []
+            crs_obj = None
+            for gj_path in chunk_geojsons:
+                with open(gj_path) as f:
+                    gj_data = json.load(f)
+                merged_features.extend(gj_data.get("features", []))
+                merged_processed.extend(
+                    gj_data.get("processed_tiles", [])
+                )
+                if crs_obj is None:
+                    crs_obj = gj_data.get("crs")
+
+            merged_output = run_dir / (
+                f"detections_{config_version}_run{run_number:02d}.geojson"
+            )
+            merged_data = {
+                "type": "FeatureCollection",
+                "features": merged_features,
+                "processed_tiles": sorted(set(merged_processed)),
+            }
+            if crs_obj:
+                merged_data["crs"] = crs_obj
+            with open(merged_output, "w") as f:
+                json.dump(merged_data, f)
+
+            print(
+                f"\nMerged {len(chunk_geojsons)} chunks → "
+                f"{merged_output.name}: "
+                f"{len(merged_features)} features, "
+                f"{len(merged_data['processed_tiles'])} tiles"
+            )
+
+    if chunk_failed:
+        print("\nBatch partially failed (some chunks errored)")
+        return {"items_processed": total_processed, "items_failed": total_failed}
+
+    print(f"\nBatch complete. Estimated cost: ${total_cost:.4f}")
+    print(f"Tiles processed: {total_processed}")
+    if total_failed:
+        print(f"Tiles failed: {total_failed}")
+
+    return {"items_processed": total_processed, "items_failed": total_failed}
 
 
 if __name__ == "__main__":
@@ -1478,6 +1584,24 @@ Examples:
         help="Run number for batch mode (used in output path: "
         "{output-dir}/{version}/run_{N}/). Default: 1.",
     )
+    parser.add_argument(
+        "--max-batch-tiles", type=int, default=4000,
+        dest="max_batch_tiles",
+        help="Maximum tiles per batch job. The Batch API has a 2 GB "
+        "file upload limit; each tile adds ~320 KB to the JSONL. "
+        "When the total tile count exceeds this, the work is "
+        "automatically split into multiple batch jobs and merged. "
+        "Default: 4000 (~1.3 GB per job).",
+    )
+    parser.add_argument(
+        "--service-tier",
+        choices=["standard", "flex"],
+        default=None,
+        dest="service_tier",
+        help="Service tier for real-time API calls. 'flex' gives 50%% "
+        "discount with 1-15 min latency (uses off-peak capacity). "
+        "Ignored in batch mode. Default: standard.",
+    )
     args = parser.parse_args()
 
     if args.mode == "batch":
@@ -1501,6 +1625,7 @@ Examples:
             tile_size=args.tile_size,
             tiles_dir_override=args.tiles_dir,
             use_cache=args.use_cache,
+            service_tier=args.service_tier,
         )
 
     # Exit code: 0 = success, 1 = setup error, 2 = partial failure

@@ -79,18 +79,22 @@ _TERMINAL_STATES = frozenset({
 # Script metadata for metadata tracker
 __version__ = "1.5.0"
 
-# Maximum tile-level failures before a batch unit is rejected.
-# At 340 tiles, 10 failures = ~3% — acceptable for consensus voting
-# studies (K=30 runs, each tile gets many chances). Individual failed
-# tiles can be patched later via --patch-tiles mode.
-MAX_ACCEPTABLE_TILE_FAILURES = 10
+# Maximum tile-level failure RATE before a batch unit is rejected.
+# Expressed as a fraction of submitted tiles. Individual failed tiles
+# can be patched later via --patch-tiles mode. With HIGH thinking,
+# ~14% of tiles produce truncated JSON; consensus voting (K=5)
+# provides redundancy so per-pass failures are acceptable.
+MAX_ACCEPTABLE_TILE_FAILURE_RATE = 0.20  # 20% tolerance
+
+# Legacy absolute threshold — used as a floor so small batches
+# (e.g., 60 tiles) still tolerate a few failures.
+MIN_ACCEPTABLE_TILE_FAILURES = 10
 
 # Maximum synchronous retry attempts for tiles that fail JSON parsing
-# after a batch job completes. Empirically, ~74% resolve on attempt 1,
-# ~98% by attempt 3. At 10 attempts, even 60% per-attempt failure
-# rates resolve with P(all fail) = 0.6%. No observed tile exceeds
-# 60% failure rate.
-MAX_SYNC_RETRIES = 10
+# after a batch job completes. Set to 0 to skip retries entirely and
+# defer to --patch-tiles cleanup (recommended for large runs where
+# consensus voting provides redundancy).
+MAX_SYNC_RETRIES = 0
 
 # Reduced max_output_tokens for safe-mode retries via --patch-tiles.
 # Failures are caused by output truncation: the model's thinking
@@ -1352,7 +1356,7 @@ def _resolve_tile_paths(
     all_tiles: dict[str, Path] = {}
     for map_dir in effective_dir.iterdir():
         if map_dir.is_dir():
-            for t in map_dir.glob("*.png"):
+            for t in map_dir.rglob("*.png"):
                 all_tiles[t.name] = t
 
     paths = []
@@ -1374,8 +1378,10 @@ def prepare_batch_unit(
     examples: list[dict],
     config_version: str,
     limit: int | None = None,
+    offset: int = 0,
     tile_size: int | None = None,
     tiles_dir: Path | None = None,
+    output_name_suffix: str = "",
 ) -> BatchUnitContext | None:
     """
     Prepare one execution unit for batch submission (Phase 1).
@@ -1393,10 +1399,16 @@ def prepare_batch_unit(
         examples: List of example dicts from prompt config.
         config_version: Version string from prompt config.
         limit: Optional tile limit for testing.
+        offset: Number of tiles to skip from the start of the manifest.
+            Used with ``limit`` for chunked batch submission when the
+            full tile set exceeds the Batch API file size limit (2 GB).
         tile_size: Tile dimension in pixels for coordinate conversion.
             Defaults to TILE_SIZE (512) when not specified.
         tiles_dir: Directory containing tile subdirectories. Defaults to
             TILES_DIR from config when not specified.
+        output_name_suffix: Optional suffix appended to output filenames
+            (e.g., ``"_chunk0"``). Used for chunked submissions to avoid
+            overwriting earlier chunks' output files.
 
     Returns:
         A ``BatchUnitContext`` carrying all state needed for submission
@@ -1407,11 +1419,16 @@ def prepare_batch_unit(
 
     # Build output path: {output_dir}/{condition_name}/run_{K}/
     run_dir = output_dir / unit["condition_name"] / f"run_{unit['run']}"
-    output_name = f"detections_{unit['condition_name']}_run{unit['run']:02d}"
+    output_name = (
+        f"detections_{unit['condition_name']}_run{unit['run']:02d}"
+        f"{output_name_suffix}"
+    )
     output_file = run_dir / f"{output_name}.geojson"
 
     # Resolve tiles (use overridden tiles_dir if provided)
     tile_paths = _resolve_tile_paths(manifest_path, tiles_dir=tiles_dir)
+    if offset > 0:
+        tile_paths = tile_paths[offset:]
     if limit and limit > 0:
         tile_paths = tile_paths[:limit]
 
@@ -1751,14 +1768,23 @@ def complete_batch_unit(
         f"${cost:.4f}"
     )
 
-    # Accept with small failure count — partial results are preserved
-    # on disk and missing tiles can be patched later via --patch-tiles.
-    if len(failed_tiles) <= MAX_ACCEPTABLE_TILE_FAILURES:
+    # Accept if failure count is within tolerance — partial results are
+    # preserved on disk and missing tiles can be patched later via
+    # --patch-tiles. Threshold scales with batch size (percentage-based)
+    # with a minimum floor for small batches.
+    total_submitted = len(processed_tiles) + len(failed_tiles)
+    max_failures = max(
+        MIN_ACCEPTABLE_TILE_FAILURES,
+        int(total_submitted * MAX_ACCEPTABLE_TILE_FAILURE_RATE),
+    )
+    if len(failed_tiles) <= max_failures:
         if failed_tiles:
             print(
                 f"  Accepting partial result: "
-                f"{len(failed_tiles)} tile(s) "
-                f"failed (≤ {MAX_ACCEPTABLE_TILE_FAILURES} threshold)"
+                f"{len(failed_tiles)} tile(s) failed "
+                f"(≤ {max_failures} threshold = "
+                f"{MAX_ACCEPTABLE_TILE_FAILURE_RATE:.0%} of "
+                f"{total_submitted})"
             )
         return True, "success", cost
 
@@ -1777,11 +1803,13 @@ def run_batch_unit(
     poll_interval: float = 30.0,
     max_poll_hours: float = 25.0,
     limit: int | None = None,
+    offset: int = 0,
     dry_run: bool = False,
     on_submit: Callable[[str, list[str], str], None] | None = None,
     resume_job_name: str | None = None,
     tile_size: int | None = None,
     tiles_dir: Path | None = None,
+    output_name_suffix: str = "",
 ) -> tuple[bool, str, float]:
     """
     Orchestrate the full batch lifecycle for one execution unit.
@@ -1804,6 +1832,7 @@ def run_batch_unit(
         poll_interval: Seconds between poll attempts.
         max_poll_hours: Maximum hours to poll.
         limit: Optional tile limit for testing.
+        offset: Number of tiles to skip from the start of the manifest.
         dry_run: If True, build JSONL but don't submit.
         on_submit: Optional callback invoked with
             ``(job_name, tile_keys, uploaded_file_name)`` immediately
@@ -1818,6 +1847,8 @@ def run_batch_unit(
             conversion. Forwarded to ``prepare_batch_unit()``.
         tiles_dir: Override tiles directory. Forwarded to
             ``prepare_batch_unit()``.
+        output_name_suffix: Suffix for output filenames (e.g.,
+            ``"_chunk0"``). Forwarded to ``prepare_batch_unit()``.
 
     Returns:
         Tuple of (success, message, cost_usd).
@@ -1832,8 +1863,10 @@ def run_batch_unit(
         examples=examples,
         config_version=config_version,
         limit=limit,
+        offset=offset,
         tile_size=tile_size,
         tiles_dir=tiles_dir,
+        output_name_suffix=output_name_suffix,
     )
     if ctx is None:
         return False, "no_tiles_found", 0.0

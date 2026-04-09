@@ -5,7 +5,7 @@
 
 # Core VLM / API
 google-generativeai
-google-genai
+google-genai>=1.69.0  # Minimum for ServiceTier (flex mode) support
 
 # Geospatial processing
 rasterio
