@@ -6745,8 +6745,39 @@ that comparison was clean: same proposer candidates, same evaluation
 scope, only the verifier prompt changed. The +7pp F1 gain from the
 v2 verifier is real.
 
-**Awaiting**: N=5 consensus + PV results with the `propose_brief`
-proposer (batch run in progress). This will determine whether the
-framing helps at the consensus level even if it doesn't help at N=1.
+### N=5 consensus + PV result (2026-04-09)
+
+The N=5 consensus run confirms the proposer framing is **harmful at
+consensus scale**, not just neutral. All 5 passes completed (Flash
+HIGH, T=0.7, 384px, 487 tiles). Verified with v1 adversarial
+verifier, evaluated against 569 mounds at 20m buffer.
+
+| x-of-5 | `detect` F1 | `propose` F1 | Delta |
+|---------|------------|-------------|-------|
+| 1 | 0.740 | 0.641 | −0.099 |
+| 2 | 0.830 | 0.760 | −0.070 |
+| 3 | 0.853 | 0.785 | −0.068 |
+| **4** | **0.864** | 0.784 | **−0.081** |
+| 5 | 0.837 | 0.752 | −0.085 |
+
+The `propose_brief` proposer generates ~60% more detections per pass
+(1,600+ vs ~1,000) but the extra candidates are systematically noisy.
+Even after 4-of-5 consensus voting and PV verification, precision
+drops from 0.915 to 0.776. The "be liberal, a verifier will clean up"
+framing doesn't just fail to help — it actively degrades consensus
+performance by introducing persistent FPs that survive voting.
+
+The optimal threshold also shifts: `detect` peaks at 4-of-5 (strong
+consensus filtering), while `propose` peaks at 3-of-5 (weaker
+filtering needed because strict thresholds discard too much signal
+along with noise). This is the opposite of what the proposer framing
+was designed to achieve.
+
+**Final E47 assessment**: The preregistered `propose_brief` proposer
+is inferior to the `detect_brief-text` proposer used in all prior
+experiments. The "conservative deviation" (Erratum E47) was
+accidentally the right design choice. The production run should use
+`detect_brief-text` with 4-of-5 consensus + v1 verifier — the proven
+architecture.
 
 ---
