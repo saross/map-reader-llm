@@ -5,10 +5,11 @@
 # study. Designed to run unattended overnight.
 #
 # Stages:
-#   1. Proposer: 5 batch runs (42,705 API calls, ~$28 batch pricing)
+#   1. Proposer: 5 real-time runs via Flex service tier
+#      (42,705 API calls, 50% discount, 1-15 min latency per call)
 #   2. Consensus: 4-of-5 voting, 20m clustering
 #   3. Crop extraction: 150x150 px from Russian1981 rasters
-#   4. Verifier: adversarial-text v1, batch mode (~$0.50-1.00)
+#   4. Verifier: adversarial-text v1, Flex mode (~$0.50-1.00)
 #
 # Usage:
 #   nohup bash scripts/55maps-overnight.sh \
@@ -17,6 +18,11 @@
 # Configuration frozen to match gold standard (F1=0.864 at 20m):
 #   Proposer: detect_brief-text.json, Flash HIGH, T=0.7
 #   Verifier: verify_adversarial-text.json (v1), Flash minimal, T=0.0
+#
+# Execution mode: realtime + --service-tier flex
+#   Flex gives 50% discount (same as batch) but avoids batch queue
+#   congestion by using synchronous requests with off-peak capacity.
+#   Combined with Tier 3 token bucket (60 workers, 20K RPM, 20M TPM).
 
 set -euo pipefail
 cd /home/shawn/Code/map-reader-llm
@@ -42,14 +48,19 @@ echo "============================================="
 echo ""
 
 # ─────────────────────────────────────────────────
-# Stage 1: Proposer — 5 Batch Runs
+# Stage 1: Proposer — 5 Flex Runs
 # ─────────────────────────────────────────────────
-echo "=== Stage 1: Proposer (5 batch runs) ==="
+echo "=== Stage 1: Proposer (5 runs via Flex) ==="
 echo ""
 
 proposer_failed=0
 
-for run in 1 2 3 4 5; do
+# Run 1 is already complete (99.41%, 8491/8541 tiles) from an earlier
+# invocation — skipping it here. Change the list to re-run run 1.
+# Stragglers in each run (tiles that never succeed) are tolerated —
+# consensus voting provides redundancy across the 5 passes, and a final
+# cleanup pass will recover any tiles still missing at the end.
+for run in 2 3 4 5; do
     echo "--- Proposer run $run/5 ---"
     echo "Started: $(date)"
     if python3 scripts/4_detect_mounds_batch.py \
@@ -59,10 +70,12 @@ for run in 1 2 3 4 5; do
         --tile-size 384 \
         --temperature 0.7 \
         --thinking-level high \
-        --mode batch \
-        --run "$run" \
-        --max-batch-tiles 4000 \
-        --output-dir "$OUTDIR/proposer"; then
+        --mode realtime \
+        --service-tier flex \
+        --workers 60 \
+        --max-retries 5 \
+        --base-wait 10 \
+        --output-dir "$OUTDIR/proposer/detect_brief-text/run_$run"; then
         echo "Completed run $run: $(date)"
     else
         echo "WARNING: Proposer run $run exited with error: $(date)"
@@ -127,16 +140,17 @@ echo "=== Stage 3 complete: $(date) ==="
 echo ""
 
 # ─────────────────────────────────────────────────
-# Stage 4: Verifier — Batch API
+# Stage 4: Verifier — Flex
 # ─────────────────────────────────────────────────
-echo "=== Stage 4: Verifier (adversarial-text v1, batch) ==="
+echo "=== Stage 4: Verifier (adversarial-text v1, flex) ==="
 echo "Started: $(date)"
 
 python3 scripts/run_pv.py verify \
     --crops-dir "$OUTDIR/crops" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$OUTDIR/verified" \
-    --mode batch
+    --mode realtime \
+    --service-tier flex
 
 echo "=== Stage 4 complete: $(date) ==="
 echo ""
