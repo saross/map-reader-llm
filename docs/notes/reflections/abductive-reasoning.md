@@ -2952,3 +2952,89 @@ same session — approximately 4 hours from "exciting discovery" to
 (rapid falsification) and a risk (the exciting result could have
 been published if the session had ended earlier). The user's
 insistence on controlled testing was the critical intervention.
+
+### Entry 18: The failure mode that wasn't — when a plausible mechanism is contradicted by evidence (Session 63, 2026-04-09/10)
+
+**Surprising fact**: Across 5 proposer runs with ~980 total straggler
+tiles, a 3-pass cleanup with escalating safe-mode recovered 99.9% of
+them. **Zero tiles required safe-mode** (reduced `max_output_tokens`).
+Every failure was a transient Flex API 503, not token exhaustion.
+
+**Prior belief**: HIGH thinking exhausts the `max_output_tokens` budget,
+leaving truncated JSON that deterministically fails parsing. This was
+supported by multiple earlier observations: (1) parse failure rates
+correlated with thinking level, (2) `SAFE_MODE_MAX_OUTPUT_TOKENS` in
+`lib_batch_api.py` was designed for exactly this, (3) the error
+messages ("Unterminated string", "Expecting property name") looked
+like truncation artifacts.
+
+**Evidence against**: The cleanup pass tested this directly. Pass A
+(standard config, same tokens) recovered 95–99% of stragglers. Pass B
+(longer backoff) recovered the rest. Pass C (safe-mode, 2048 tokens)
+recovered exactly 0. If token exhaustion were the cause, Pass C should
+have been the most effective — instead it had nothing to do.
+
+**Revised belief**: The parse failures during batch/Flex runs are
+**transient API errors** (503 "sheddable traffic" preemption,
+connection timeouts, partial responses) that look like truncation
+but are actually network-level failures. The JSON artifacts
+("Unterminated string at line 51") are caused by responses being
+cut off mid-stream during 503 preemption, not by the model running
+out of output tokens.
+
+**Abductive structure**: Two mechanisms produce identical symptoms
+(truncated JSON). The prior belief selected the mechanism consistent
+with the known design (SAFE_MODE exists therefore truncation is the
+problem). The evidence selected the alternative mechanism (transient
+API failures). The lesson: **a plausible mechanism with a designed
+countermeasure does not guarantee the mechanism is active**. The
+countermeasure's existence is evidence that someone *anticipated*
+the problem, not that the problem is *occurring*.
+
+### Entry 19: The prompt refinement ceiling — when domain expertise hits the feature space boundary (Session 63, 2026-04-10)
+
+**Surprising fact**: The v2 verifier prompt — empirically designed
+from a QGIS false positive taxonomy, targeting specific confusable
+categories (spot heights, water features), validated with a sign
+test at p=0.004 — yields ΔF1=+0.001 on the 55-map generalisation
+data. On the 4-map calibration data it yields +0.012 to +0.021.
+
+**Prior belief**: Well-targeted prompt refinements should transfer
+across datasets if they address real confusable categories. Spot
+heights and water features exist on all 55 maps, so the v2
+exclusion criteria should help everywhere.
+
+**Evidence**: The v2 improvement is strongly data-dependent:
+
+| Dataset | ΔF1 | Confusable fraction |
+|---------|-----|---------------------|
+| E47 (4 maps, propose) | +0.021 | High |
+| Gold standard (4 maps, detect) | +0.012 | Moderate |
+| 55-map generalisation | +0.001 | Low |
+
+The pattern: as the dataset broadens, the targeted confusables
+(spot heights, water features) become a smaller fraction of the
+total FP pool. On 55 diverse maps, the FP distribution includes
+many categories the v2 prompt doesn't address. The prompt's
+specificity becomes its limitation.
+
+**Revised belief**: Prompt refinements operate within the error budget
+that architecture defines. Once consensus voting and PV decomposition
+have filtered the obvious errors, the remaining FPs are a *long tail*
+of diverse confusable categories. A prompt targeting the top-2
+categories (spot heights, water) captures a large fraction of FPs on
+the calibration data (where those categories dominate) but a small
+fraction on broader data (where the long tail fills in).
+
+This is the feature-space analogy from Obs 219: **prompt refinements
+adjust the decision boundary, but architecture changes the feature
+space.** The ceiling on prompt improvement is set by how much of the
+FP population falls into addressable categories. On calibration data,
+that ceiling is high. On unseen data, it's low — because the
+calibration identified the *most common* confusables, not the *most
+general* ones.
+
+**Methodological implication**: When evaluating prompt refinements for
+a paper, always test on data independent of the data that motivated
+the refinement. The calibration → generalisation degradation pattern
+(+0.021 → +0.001) is itself a finding worth reporting.

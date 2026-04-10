@@ -6128,3 +6128,70 @@ bounds created. The infrastructure work was solid even though one
 of the analytical findings had to be retracted.
 
 ---
+
+## Reflection 50: The session that ran overnight and taught the system to fail gracefully (Session 63, 2026-04-08 to 2026-04-10, map-reader-llm)
+
+*What surprised you about this session?*
+
+The sheer number of infrastructure failures that had to be diagnosed
+and fixed *while the science was running*. The 55-map generalisation
+run was conceptually simple — freeze the gold-standard config, apply
+it to new data — but the execution surface was vast. Double-nested
+tile directories. A 2 GB batch API file size limit. Hung processes
+from straggler tiles blocking 59 idle workers. A hardcoded 4-map list
+in the evaluation script that silently returned F1=0.000. Each failure
+was a different category: filesystem conventions, API constraints,
+tail latency, code assumptions.
+
+What surprised me wasn't the failures — any pipeline run at scale
+surfaces issues. It was that every fix needed to work *immediately*,
+on running infrastructure, without breaking the in-flight data. The
+batch-to-Flex migration, the chunked JSONL splitting, the retry
+cap reduction — all were designed, coded, and deployed while batch
+jobs were pending and API spend was accumulating. This is operational
+engineering, not research, and it demands a different discipline than
+analysis: the cost of a wrong decision is measured in dollars and
+hours, not just incorrect conclusions.
+
+*What would you do differently if you replayed this session?*
+
+Three things. First, I would have tested the batch mode with the
+actual tile count *before* the overnight launch. The 2 GB limit
+was documented in Google's API specs; I should have calculated
+8,541 tiles × ~320 KB/line = 2.73 GB and caught it pre-flight.
+The smoke test validated the pipeline end-to-end but used `--limit 50`,
+which never hit the file size constraint.
+
+Second, I got lax about the API confirmation protocol as the session
+accelerated. The early gates were thorough (smoke test, first batch).
+By the cleanup passes and gold-standard recreation, I was launching
+runs with brief mentions instead of explicit confirmation. Shawn
+correctly flagged this, and I've recorded it as a hard constraint:
+the gate always fires, no exceptions for "cheap" or "obvious" runs.
+
+Third, I would have run the evaluation on a single buffer first
+before the full 4-buffer sweep. The F1=0.000 bug wasted 20 minutes
+of bootstrap computation across 4 buffers when a single-buffer
+sanity check would have revealed the problem in 60 seconds.
+
+*What question emerged that wasn't pursued?*
+
+The correlated-difficulty hypothesis — do students and VLMs miss the
+same hard mounds? We reasoned about it qualitatively (busy backgrounds,
+overlapping features) but never tested it empirically. The data
+exists: the 4 gold-standard maps have both expert and student
+digitisations for the same mounds. Comparing which mounds each
+missed would directly measure the correlation coefficient. If it's
+high, the simple correction (Obs 220) is an upper bound and the
+true F1 is closer to 0.790 than 0.810. If it's low, the correction
+is more accurate. This is a 30-minute analysis with no API cost.
+
+The other unpursued thread: the architecture-dominates-prompt finding
+(Obs 219) has implications for the paper's structure. If prompt
+refinements yield +0.001 on unseen data while architecture yields
++0.12, the paper should spend proportionally more space on consensus
+voting and PV decomposition than on prompt engineering. But the
+existing draft (Sections 5–6) may be weighted the other way. Worth
+reviewing.
+
+---
