@@ -52,6 +52,7 @@ import argparse
 import concurrent.futures
 import json
 import logging
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -218,6 +219,186 @@ def cmd_verify(args: argparse.Namespace) -> int:
             model_override=args.model,
             service_tier=getattr(args, "service_tier", None),
         )
+
+
+# =========================================================================
+# Cleanup Subcommand
+# =========================================================================
+
+
+def _compute_missing_candidates(
+    manifest: dict,
+    probs_path: Path,
+    iterations: int = 1,
+) -> tuple[set[str], dict]:
+    """Identify candidates missing from probabilities.json.
+
+    Args:
+        manifest: Candidate manifest dict.
+        probs_path: Path to existing probabilities.json.
+        iterations: Verifier iterations (affects key format).
+
+    Returns:
+        Tuple of (missing_ids set, loaded probs dict).
+    """
+    all_ids = {
+        _candidate_result_key(c, iterations)
+        for c in manifest.get("candidates", [])
+    }
+
+    probs: dict = {}
+    if probs_path.exists():
+        with open(probs_path) as f:
+            probs = json.load(f)
+
+    verified_ids = set(probs.get("results", {}).keys())
+    missing = all_ids - verified_ids
+    return missing, probs
+
+
+def cmd_cleanup(args: argparse.Namespace) -> int:
+    """Execute the cleanup subcommand.
+
+    Identifies candidates missing from an existing probabilities.json
+    and re-verifies them with iterative retries. Uses the resume logic
+    in ``_verify_realtime()`` to skip already-verified candidates.
+
+    Optionally applies safe-mode (reduced ``max_output_tokens``) on
+    the final attempt to recover candidates that fail due to thinking
+    token budget exhaustion.
+
+    Args:
+        args: Parsed CLI arguments.
+
+    Returns:
+        Exit code (0=all recovered, 1=some remain missing).
+    """
+    # Load manifest
+    manifest_path = args.crops_dir / "candidate_manifest.json"
+    if not manifest_path.exists():
+        logger.error("Manifest not found: %s", manifest_path)
+        return 1
+
+    with open(manifest_path) as f:
+        manifest = json.load(f)
+
+    # Load existing probabilities and compute missing set
+    probs_path = args.verified_dir / "probabilities.json"
+    if not probs_path.exists():
+        logger.error("probabilities.json not found in %s", args.verified_dir)
+        return 1
+
+    missing, _ = _compute_missing_candidates(
+        manifest, probs_path, args.iterations,
+    )
+    initial_missing = len(missing)
+
+    if initial_missing == 0:
+        logger.info("Nothing to clean up — all candidates already verified")
+        return 0
+
+    logger.info("Cleanup: %d candidates missing from %s", initial_missing, probs_path)
+
+    if args.dry_run:
+        logger.info("Dry run — missing candidate IDs:")
+        for mid in sorted(missing):
+            logger.info("  %s", mid)
+        return 0
+
+    # Load verifier config
+    with open(args.verifier_config) as f:
+        config = json.load(f)
+
+    # Apply thinking level override if specified
+    thinking_override = getattr(args, "thinking_level", None)
+    if thinking_override is not None:
+        config["thinking_level"] = thinking_override
+
+    # Backup before modifying
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    backup_path = probs_path.with_name(
+        f"probabilities.json.pre-cleanup-{timestamp}.backup"
+    )
+    shutil.copy(probs_path, backup_path)
+    logger.info("Backup: %s", backup_path.name)
+
+    # Iterative cleanup loop
+    attempts_used = 0
+    for attempt in range(1, args.max_attempts + 1):
+        missing, _ = _compute_missing_candidates(
+            manifest, probs_path, args.iterations,
+        )
+        if not missing:
+            break
+
+        attempts_used = attempt
+        logger.info(
+            "Attempt %d/%d: %d candidates remaining",
+            attempt, args.max_attempts, len(missing),
+        )
+
+        # Safe-mode on final attempt: override max_output_tokens
+        attempt_config = dict(config)
+        if (
+            args.safe_mode_tokens is not None
+            and attempt == args.max_attempts
+        ):
+            attempt_config["max_output_tokens"] = args.safe_mode_tokens
+            logger.info(
+                "Safe-mode: max_output_tokens → %d",
+                args.safe_mode_tokens,
+            )
+
+        # Call _verify_realtime() — resume logic skips verified candidates,
+        # incremental write saves progress, so this is safe to interrupt.
+        _verify_realtime(
+            manifest=manifest,
+            config=attempt_config,
+            crops_base_dir=args.crops_dir,
+            output_dir=args.verified_dir,
+            workers=args.workers,
+            iterations=args.iterations,
+            temperature=args.temperature,
+            model_override=args.model,
+            service_tier=getattr(args, "service_tier", None),
+        )
+
+    # Final tally
+    final_missing, probs = _compute_missing_candidates(
+        manifest, probs_path, args.iterations,
+    )
+    recovered = initial_missing - len(final_missing)
+
+    # Add cleanup_history audit trail
+    probs.setdefault("cleanup_history", []).append({
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "initial_missing": initial_missing,
+        "recovered": recovered,
+        "still_missing": len(final_missing),
+        "still_missing_ids": sorted(final_missing),
+        "attempts_used": attempts_used,
+        "max_attempts": args.max_attempts,
+        "safe_mode_used": args.safe_mode_tokens is not None,
+    })
+    probs["total_results"] = len(probs.get("results", {}))
+
+    with open(probs_path, "w") as f:
+        json.dump(probs, f, indent=2)
+
+    # Report
+    logger.info("=" * 50)
+    logger.info("Cleanup Report")
+    logger.info("=" * 50)
+    logger.info("Initial missing: %d", initial_missing)
+    logger.info("Recovered:       %d", recovered)
+    logger.info("Still missing:   %d", len(final_missing))
+    if final_missing:
+        for mid in sorted(final_missing):
+            logger.info("  %s", mid)
+    logger.info("Attempts used:   %d", attempts_used)
+    logger.info("Backup:          %s", backup_path.name)
+
+    return 1 if final_missing else 0
 
 
 # =========================================================================
@@ -929,6 +1110,69 @@ def _build_parser() -> argparse.ArgumentParser:
         "discount with 1-15 min latency. Ignored in batch mode.",
     )
     verify_parser.set_defaults(func=cmd_verify)
+
+    # --- Cleanup subcommand ---
+    cleanup_parser = subparsers.add_parser(
+        "cleanup",
+        help="Re-verify missing candidates with iterative retries",
+    )
+    cleanup_parser.add_argument(
+        "--crops-dir", type=Path, required=True,
+        help="Source crops directory with candidate_manifest.json",
+    )
+    cleanup_parser.add_argument(
+        "--verified-dir", type=Path, required=True,
+        help="Existing verifier output directory containing "
+        "the (possibly incomplete) probabilities.json to patch",
+    )
+    cleanup_parser.add_argument(
+        "--verifier-config", type=Path, required=True,
+        help="Path to verifier config JSON",
+    )
+    cleanup_parser.add_argument(
+        "--service-tier",
+        choices=["standard", "flex"],
+        default=None,
+        dest="service_tier",
+        help="Service tier for real-time API calls.",
+    )
+    cleanup_parser.add_argument(
+        "--workers", type=int, default=10,
+        help="Parallel workers (default: 10)",
+    )
+    cleanup_parser.add_argument(
+        "--iterations", type=int, default=1,
+        help="Verifier passes per candidate (default: 1)",
+    )
+    cleanup_parser.add_argument(
+        "--temperature", type=float, default=None,
+        help="Temperature override",
+    )
+    cleanup_parser.add_argument(
+        "--model", type=str, default=None,
+        help="Override model name from config",
+    )
+    cleanup_parser.add_argument(
+        "--thinking-level", type=str, default=None,
+        help="Override thinking level from config",
+    )
+    cleanup_parser.add_argument(
+        "--max-attempts", type=int, default=3,
+        dest="max_attempts",
+        help="Maximum cleanup rounds (default: 3). Each round "
+        "re-attempts only the candidates still missing.",
+    )
+    cleanup_parser.add_argument(
+        "--safe-mode-tokens", type=int, default=None,
+        dest="safe_mode_tokens",
+        help="Override max_output_tokens on the final attempt to "
+        "prevent thinking token exhaustion (e.g., 2048).",
+    )
+    cleanup_parser.add_argument(
+        "--dry-run", action="store_true",
+        help="Identify missing candidates without making API calls",
+    )
+    cleanup_parser.set_defaults(func=cmd_cleanup)
 
     return parser
 
