@@ -38,16 +38,54 @@ outputs/.active_files.*
 # Ephemeral lock files
 .claude/*.lock
 
-# Large regenerable artefacts (global — per output-directory-standard.md)
+# ─────────────────────────────────────────────────
+# Global rules: locally regenerable artefacts (no API cost)
+# ─────────────────────────────────────────────────
+# Batch API JSONL payloads (base64 images, rebuilt from tiles)
 outputs/**/batch_working/
-outputs/**/crops/
+# Verifier crop PNGs (extracted from rasters by extract_candidates.py)
+# Match both nested structures: crops/crops/ and crops/*/crops/
+outputs/**/crops/crops/
+outputs/**/crops/*/crops/
+# Rasters and tiles (large input data)
 inputs/tiles_384_55maps/
 inputs/rasters/Russian1981_32635/
 inputs/vectors/MapMoundsDigitised/
+
+# ─────────────────────────────────────────────────
+# 55-map generalisation run
+# ─────────────────────────────────────────────────
+# Principle: track anything that costs API money to recreate.
+# Ignore anything regenerable locally (no API).
+#
+# TRACKED (API-dependent, costs money to recreate):
+#   outputs/55maps-generalisation/proposer/       (5 × ~11 MB — proposer detections)
+#   outputs/55maps-generalisation/verified/        (v1 verifier probabilities)
+#   outputs/55maps-generalisation/verified-v2/     (v2 verifier probabilities)
+#   outputs/55maps-generalisation/verified-cleanup/ (cleanup pass results)
+#   outputs/55maps-generalisation/consensus/       (small, derived but convenient)
+#   outputs/55maps-generalisation/crops/candidate_manifest.json (small, convenient)
+#
+# IGNORED (locally regenerable, no API):
+outputs/55maps-generalisation/crops/crops/
+outputs/55maps-generalisation/crops-v1-failed/
+outputs/55maps-generalisation/smoke-test/
+outputs/55maps-generalisation/_archive-*/
+outputs/55maps-generalisation/_stale-files/
+outputs/55maps-generalisation/cleanup-records/
+outputs/55maps-generalisation/*.log
+
+# ─────────────────────────────────────────────────
+# Gold-standard v2 recreation (4-map, detect_brief-text)
+# ─────────────────────────────────────────────────
+# TRACKED: proposer/, verified-v1/, verified-v2/, consensus/
+# IGNORED:
+outputs/h11/gold-standard-v2/crops/crops/
+outputs/h11/gold-standard-v2/*.log
+
+# E47 cleanup subset crops (symlinks to main crops, regenerable)
+outputs/h11/e47-propose-brief/crops/flash-high-text-1of5-v2-failed/crops/
+outputs/h11/e47-propose-brief/crops/flash-high-text-1of5-v2-final-retry/crops/
+outputs/h11/e47-propose-brief/verified-v2-cleanup/
 # Bad tile-size run (archive candidate)
 outputs/h11/v2-proposer-test-BAD-TILESIZE/
-
-# 55-map generalisation run (large, regenerable)
-outputs/55maps-generalisation/
-# E47 v2 verifier still in progress
-outputs/h11/e47-propose-brief/verified-v2/

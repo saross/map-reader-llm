@@ -263,7 +263,8 @@ def cmd_sweep(args: argparse.Namespace) -> int:
 
     # Load reference data and verify CRS consistency
     bounds_path = args.bounds if args.bounds else _BOUNDS_PATH
-    gdf_ref = gpd.read_file(_REFERENCE_PATH)
+    ref_path = args.ground_truth if args.ground_truth else _REFERENCE_PATH
+    gdf_ref = gpd.read_file(ref_path)
     gdf_bounds = gpd.read_file(bounds_path)
     for name, gdf in [("reference", gdf_ref), ("bounds", gdf_bounds)]:
         if gdf.crs is None or gdf.crs.to_epsg() != 32635:
@@ -497,7 +498,8 @@ def cmd_compare(args: argparse.Namespace) -> int:
     pairwise: list[dict] = []
     if args.pairwise:
         bounds_path = args.bounds if args.bounds else _BOUNDS_PATH
-        gdf_ref = gpd.read_file(_REFERENCE_PATH)
+        ref_path = args.ground_truth if args.ground_truth else _REFERENCE_PATH
+        gdf_ref = gpd.read_file(ref_path)
         gdf_bounds = gpd.read_file(bounds_path)
 
         for i, va in enumerate(variants):
@@ -667,6 +669,15 @@ def _build_parser() -> argparse.ArgumentParser:
             "Spatial matching tolerance in metres for F1 evaluation — "
             "how close a detection must be to ground truth to count as "
             "a true positive (default: 20)."
+        ),
+    )
+    parser.add_argument(
+        "--ground-truth", type=Path, default=None,
+        help=(
+            "Override ground truth reference GeoJSON. Defaults to "
+            f"{_REFERENCE_PATH.relative_to(BASE_DIR)}. Use "
+            "inputs/vectors/references/student-mounds-55maps.geojson "
+            "for 55-map evaluations."
         ),
     )
 

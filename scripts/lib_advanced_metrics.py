@@ -21,6 +21,7 @@ Factorial interaction testing (preregistration Section 5.5, M/E × H5):
 
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
@@ -130,21 +131,28 @@ def load_data(
         return None, None, None
 
 
+_MAP_NAME_RE = re.compile(r'^(.+?)_x\d+_y\d+(?:\.png)?$')
+
+
 def get_map_name(tile_name: str) -> str:
     """
     Extract map name from tile filename.
 
+    Uses a regex to strip the ``_x{digits}_y{digits}.png`` suffix that
+    the tiling pipeline appends to every tile. This works for both the
+    4-map validation set (e.g., ``K-35-052-4_32635_x0_y0.png``) and the
+    55-map generalisation set (e.g., ``K-35-065-3_Glavan_4326_x0_y0.png``,
+    ``K-35-042-3_x0_y0.png``).
+
     Args:
-        tile_name: The tile filename (e.g., 'K-35-052-4_32635_tile_001.png').
+        tile_name: The tile filename (e.g., 'K-35-052-4_32635_x0_y0.png').
 
     Returns:
-        The map name prefix, or 'Unknown' if not recognised.
+        The map name (everything before the ``_x{N}_y{N}`` offset),
+        or 'Unknown' if the filename doesn't match the expected pattern.
     """
-    matches = ["K-35-062-2_Rakovski", "K-35-052-4_32635", "K-35-053-3_Elenovo", "K-35-078-1_Lesovo"]
-    for m in matches:
-        if tile_name.startswith(m):
-            return m
-    return "Unknown"
+    m = _MAP_NAME_RE.match(tile_name)
+    return m.group(1) if m else "Unknown"
 
 
 def normalise_ref_class(symbol: Any) -> str:
@@ -359,6 +367,17 @@ def compute_per_tile_tp_fp_fn(
         get_map_name(n) for n in gdf_bounds["tile_name"].unique()
     }
 
+    # Auto-detect the reference map column (see calculate_f1_internal).
+    if "Map" in gdf_ref.columns:
+        ref_map_col = "Map"
+    elif "source_map" in gdf_ref.columns:
+        ref_map_col = "source_map"
+    else:
+        raise ValueError(
+            "Reference GeoDataFrame has no 'Map' or 'source_map' column. "
+            f"Available columns: {list(gdf_ref.columns)}"
+        )
+
     for map_name in processed_maps:
         if map_name == "Unknown":
             continue
@@ -368,7 +387,7 @@ def compute_per_tile_tp_fp_fn(
         ]
 
         # Scope references to this map's tile bounds
-        ref_for_map = gdf_ref[gdf_ref["Map"] == map_name]
+        ref_for_map = gdf_ref[gdf_ref[ref_map_col] == map_name]
         if not ref_for_map.empty:
             ref_scope = scope_references_to_tiles(ref_for_map, map_bounds)
         else:
@@ -513,13 +532,27 @@ def calculate_f1_internal(
     # Scope by processed maps
     processed_maps = {get_map_name(n) for n in gdf_bounds['tile_name'].unique()}
 
+    # Auto-detect the reference map column:
+    #   - Gold standard (mounds-reference.geojson): 'Map'
+    #   - Student ground truth (student-mounds-55maps.geojson): 'source_map'
+    # Supporting both keeps the evaluator generic across datasets.
+    if 'Map' in gdf_ref.columns:
+        ref_map_col = 'Map'
+    elif 'source_map' in gdf_ref.columns:
+        ref_map_col = 'source_map'
+    else:
+        raise ValueError(
+            "Reference GeoDataFrame has no 'Map' or 'source_map' column. "
+            f"Available columns: {list(gdf_ref.columns)}"
+        )
+
     for map_name in processed_maps:
         if map_name == "Unknown":
             continue
 
         map_bounds = gdf_bounds[gdf_bounds['tile_name'].str.startswith(map_name)]
 
-        ref_scope = gdf_ref[gdf_ref['Map'] == map_name]
+        ref_scope = gdf_ref[gdf_ref[ref_map_col] == map_name]
         if not ref_scope.empty:
             ref_scope = scope_references_to_tiles(ref_scope, map_bounds)
 
