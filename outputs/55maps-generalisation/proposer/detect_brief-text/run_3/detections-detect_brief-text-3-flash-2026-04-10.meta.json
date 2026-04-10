@@ -1,0 +1,285 @@
+{
+  "run_id": "fca2c001-fa36-4c04-92d8-f0692d901845",
+  "timestamp": {
+    "start": "2026-04-10T01:15:12.995297+00:00",
+    "end": "2026-04-10T01:18:30.642741+00:00",
+    "duration_seconds": 197.647444
+  },
+  "environment": {
+    "git_commit": "d59798ac7f32c0f6a4a050eb40824fffea8ec029",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "6.0.0"
+  },
+  "configuration": {
+    "version": "detect_brief-text",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "detect_brief-text.md",
+    "system_instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+    "system_instruction_text": "# Mound Detection\n\nDetect all burial mound symbols in this Soviet topographic map tile.\n\n## Target Symbols\n\nAll mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a \"sunburst\" or \"gear\" pattern. This indicates elevated terrain.\n\n**Subtypes to detect:**\n\n- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or \"\u043a\u0443\u0440\u0433.\" label.\n- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).\n- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.\n- **Benchmark on mound**: Black square with central dot, surrounded by black rays.\n\nThe **rays pointing outward** are essential. Symbols without visible rays are not mounds.\n\n## Guidelines\n\n1. Provide individual bounding boxes for each symbol, even in clusters.\n2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.\n3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled \u2014 the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
+    "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+    "temperature": 0.7,
+    "max_output_tokens": 2048,
+    "thinking_level": "high",
+    "tile_size": null,
+    "include_example_images": false,
+    "example_count": 17,
+    "full_config_snapshot": {
+      "version": "detect_brief-text",
+      "description": "Safe-mode: max_output_tokens=2048 to prevent thinking token exhaustion. Output goes to detect_brief-text/ (same as standard config) so resume logic appends to existing GeoJSON.",
+      "hypothesis": "H1",
+      "model": "gemini-3-flash",
+      "instruction_file": "detect_brief-text.md",
+      "temperature": 0.7,
+      "max_output_tokens": 2048,
+      "include_example_images": false,
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_05.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_06.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_07.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_08.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_11.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_12.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_13.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_14.png",
+          "label": "Negative",
+          "category": "hard_negative"
+        },
+        {
+          "path": "neutral-naming/example_15.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_16.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_17.png",
+          "label": "Negative",
+          "category": "null"
+        }
+      ],
+      "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null (3). Total: 17 examples (Scale-8). Text-only modality tested at H5=Minimal only.",
+      "thinking_level": "high",
+      "manifest_path": "inputs/tiles_384_55maps/full_evaluation_manifest.json"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 1,
+    "items_skipped": 0,
+    "retries_total": 5,
+    "retries_rate_limit": 0,
+    "retries_server_error": 2,
+    "retries_timeout": 0,
+    "retries_other": 3,
+    "finish_reason_counts": {
+      "error": 1
+    },
+    "safety_blocks": 0,
+    "parse_failures": 1,
+    "empty_responses": 1,
+    "completed_items": [],
+    "failed_items": [
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "timestamp": "2026-04-10T01:18:30.338679+00:00"
+      }
+    ],
+    "retry_details": [
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-10T01:15:39.975000+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-04-10T01:15:47.771853+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-10T01:17:00.536577+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+        "attempt": 4,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-10T01:17:16.262573+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+        "attempt": 5,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-04-10T01:17:54.865655+00:00"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 0,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "request_count": 1
+      }
+    }
+  },
+  "results_summary": {
+    "total_detections": 0,
+    "class_counts": {}
+  },
+  "per_item_metadata": [
+    {
+      "request_id": null,
+      "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y2352.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3-flash-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-04-10T01:17:21.263404+00:00",
+      "response_timestamp": "2026-04-10T01:17:54.865595+00:00",
+      "latency_ms": 33602,
+      "attempt_number": 5,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    }
+  ],
+  "cost_estimate": {
+    "input_cost_usd": 0.0,
+    "output_cost_usd": 0.0,
+    "total_cost_usd": 0.0,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  },
+  "tpm_governor": {
+    "governor_type": "token_bucket",
+    "rpm_limit": 20000,
+    "tpm_limit": 20000000,
+    "target_rpm": 14400,
+    "target_tpm": 14400000,
+    "target_utilisation": 0.72,
+    "current_tpm": 3228,
+    "available_request_capacity": 14400.0,
+    "available_token_capacity": 14400000.0,
+    "cooldown_seconds": 15.0,
+    "tokens_per_request": 1500,
+    "total_tokens": 10607,
+    "total_requests": 5,
+    "total_rate_limits": 0,
+    "total_cooldown_seconds": 0.0,
+    "avg_latency_seconds": 24.85,
+    "peak_wait_seconds": 0.0,
+    "elapsed_seconds": 197.1
+  }
+}
