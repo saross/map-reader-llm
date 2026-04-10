@@ -173,7 +173,7 @@ class TestManifestStructure:
             "total_detections",
             "successful_extractions",
             "failed_extractions",
-            "missing_tiles",
+            "missing_sources",
             "candidates",
         ]
 
@@ -299,9 +299,11 @@ class TestExtractionLogic:
         self, sample_proposer_geojson, temp_dir
     ) -> None:
         """Verify missing tile files are tracked in manifest."""
-        # Use empty tiles directory (no actual tiles)
+        # Use empty tiles directory (no actual tiles) AND a
+        # non-existent rasters directory so raster fallback also fails.
         empty_tiles_dir = temp_dir / "empty_tiles"
         empty_tiles_dir.mkdir()
+        missing_rasters_dir = temp_dir / "no_rasters"
 
         output_dir = temp_dir / "output"
 
@@ -309,14 +311,15 @@ class TestExtractionLogic:
             proposer_geojson=sample_proposer_geojson,
             tiles_dir=empty_tiles_dir,
             output_dir=output_dir,
+            rasters_dir=missing_rasters_dir,
         )
 
         with open(result) as f:
             manifest = json.load(f)
 
-        # All should fail due to missing tiles
+        # All should fail due to missing tiles and rasters
         assert manifest["failed_extractions"] == 2
-        assert len(manifest["missing_tiles"]) > 0
+        assert len(manifest["missing_sources"]) > 0
 
 
 # =============================================================================

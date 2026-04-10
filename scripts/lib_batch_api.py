@@ -91,10 +91,11 @@ MAX_ACCEPTABLE_TILE_FAILURE_RATE = 0.20  # 20% tolerance
 MIN_ACCEPTABLE_TILE_FAILURES = 10
 
 # Maximum synchronous retry attempts for tiles that fail JSON parsing
-# after a batch job completes. Set to 0 to skip retries entirely and
-# defer to --patch-tiles cleanup (recommended for large runs where
-# consensus voting provides redundancy).
-MAX_SYNC_RETRIES = 0
+# after a batch job completes. Empirically, ~74% resolve on attempt 1,
+# ~98% by attempt 3. Set to 0 to skip retries entirely and defer to
+# --patch-tiles or cleanup subcommand (recommended for large runs
+# where consensus voting provides redundancy).
+MAX_SYNC_RETRIES = 3
 
 # Reduced max_output_tokens for safe-mode retries via --patch-tiles.
 # Failures are caused by output truncation: the model's thinking
