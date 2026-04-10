@@ -129,6 +129,32 @@ fails after the 1.56→1.71 upgrade. The sync retry mock is no longer
 called. Low priority — the retry logic works in production, the test
 may need updating for SDK internal changes.
 
+## 10. Incremental write for `run_pv.py verify`
+
+**Problem**: `_verify_realtime()` collects all results in memory and
+writes `probabilities.json` only after all candidates complete. If the
+process is killed (straggler hang, OOM, network drop), ALL results are
+lost — even candidates that verified successfully hours earlier.
+
+By contrast, the proposer (`4_detect_mounds_batch.py`) writes the
+GeoJSON incrementally after every tile, making it safe to kill and
+resume. The verifier has no equivalent.
+
+**Impact**: During the gold-standard v2 pipeline (2026-04-10),
+the verifier hung at 530/607 on a straggler. Killing it lost all
+530 results, requiring a full re-run. With incremental writes, we'd
+have kept the 530 and only needed to re-verify the remaining 77.
+
+**Fix**: Write `probabilities.json` incrementally (e.g., every 100
+candidates or every 60 seconds). The file format is already a simple
+dict, so overwriting the file is safe. Add resume logic: on startup,
+if `probabilities.json` exists, load existing results and skip those
+candidate IDs. This mirrors the proposer's `processed_tiles` pattern.
+
+**Files**: `scripts/run_pv.py` (`_verify_realtime()` function)
+
+**Reference**: Gold-standard v2 pipeline hang, 2026-04-10
+
 ## 9. ~~Update token bucket governor for Tier 3 limits~~ — DONE (2026-04-09)
 
 The `TokenBucketGovernor` defaults are calibrated for Tier 1
