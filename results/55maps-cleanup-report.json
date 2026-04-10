@@ -1,0 +1,96 @@
+{
+  "per_run": [
+    {
+      "run": 1,
+      "initial_processed": 28,
+      "initial_missing": 8513,
+      "final_processed": 8541,
+      "final_missing": 0,
+      "total_recovered": 8513,
+      "recovery_rate": 1.0,
+      "recovered_by_pass": {
+        "A-standard": 8512,
+        "B-longer-backoff": 1,
+        "C-safemode": 0
+      },
+      "still_missing_tiles": [],
+      "safe_mode_required_count": 0
+    },
+    {
+      "run": 2,
+      "initial_processed": 8039,
+      "initial_missing": 502,
+      "final_processed": 8541,
+      "final_missing": 0,
+      "total_recovered": 502,
+      "recovery_rate": 1.0,
+      "recovered_by_pass": {
+        "A-standard": 495,
+        "B-longer-backoff": 7,
+        "C-safemode": 0
+      },
+      "still_missing_tiles": [],
+      "safe_mode_required_count": 0
+    },
+    {
+      "run": 3,
+      "initial_processed": 8209,
+      "initial_missing": 332,
+      "final_processed": 8540,
+      "final_missing": 1,
+      "total_recovered": 331,
+      "recovery_rate": 0.9969879518072289,
+      "recovered_by_pass": {
+        "A-standard": 324,
+        "B-longer-backoff": 7,
+        "C-safemode": 0
+      },
+      "still_missing_tiles": [
+        "K-35-062-4_Asenovgrad_4326_x3696_y2352.png"
+      ],
+      "safe_mode_required_count": 0
+    },
+    {
+      "run": 4,
+      "initial_processed": 8436,
+      "initial_missing": 105,
+      "final_processed": 8541,
+      "final_missing": 0,
+      "total_recovered": 105,
+      "recovery_rate": 1.0,
+      "recovered_by_pass": {
+        "A-standard": 102,
+        "B-longer-backoff": 3,
+        "C-safemode": 0
+      },
+      "still_missing_tiles": [],
+      "safe_mode_required_count": 0
+    },
+    {
+      "run": 5,
+      "initial_processed": 8449,
+      "initial_missing": 92,
+      "final_processed": 8541,
+      "final_missing": 0,
+      "total_recovered": 92,
+      "recovery_rate": 1.0,
+      "recovered_by_pass": {
+        "A-standard": 88,
+        "B-longer-backoff": 4,
+        "C-safemode": 0
+      },
+      "still_missing_tiles": [],
+      "safe_mode_required_count": 0
+    }
+  ],
+  "cross_run": {
+    "tiles_needing_safemode_somewhere": 0,
+    "tile_success_distribution": {
+      "0": 0,
+      "4": 1,
+      "5": 8540
+    },
+    "safe_for_4of5_consensus": 8541,
+    "at_risk_4of5_consensus": 0
+  }
+}

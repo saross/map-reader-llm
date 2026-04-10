@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-09T22:27:23.442879+00:00",
+  "label": "E47 v2 adversarial",
+  "threshold": 0.15,
+  "n_accepted": 803,
+  "ground_truth_mounds": 569,
+  "evaluation_tiles": 487,
+  "bootstrap_iterations": 1000,
+  "seed": 42,
+  "buffers": [
+    {
+      "buffer_metres": 20,
+      "precision": 0.4857,
+      "recall": 0.8966,
+      "f1": 0.63,
+      "ci": {
+        "f1": {
+          "mean": 0.6297,
+          "lower": 0.5896,
+          "upper": 0.6684
+        },
+        "precision": {
+          "mean": 0.4855,
+          "lower": 0.4427,
+          "upper": 0.5284
+        },
+        "recall": {
+          "mean": 0.8968,
+          "lower": 0.8678,
+          "upper": 0.9249
+        }
+      }
+    }
+  ]
+}
