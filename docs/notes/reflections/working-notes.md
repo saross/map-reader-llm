@@ -7036,3 +7036,168 @@ tiles below the 4-of-5 consensus threshold. Perfect generalisation
 coverage.
 
 ---
+
+## Observation 220: Correcting for Student Ground Truth Errors — Precision Is Artificially Low (2026-04-10)
+
+**Context**: The 55-map generalisation study evaluates against
+student-digitised ground truth. Published QA data (Sobotkova et al.
+2023) documents the student error profile from a 4-map random sample
+(7% of maps, 834 features): 42 missed mounds (5.04%), 1
+classification error, 6 duplicates, **0 false positives**.
+
+### The asymmetric error profile
+
+The 0% student FP rate is the key insight. It means:
+- **Every GT point is a real mound** — the recall denominator is
+  clean (modulo ~5% missing mounds)
+- **Measured precision is artificially low** — some VLM detections
+  scored as FP are correct detections of mounds the students missed
+- The correction only needs to adjust for omission, not contamination
+
+### Quantitative correction (50m buffer, T=0.15)
+
+| Metric | Measured | Corrected | Notes |
+|--------|----------|-----------|-------|
+| TP | 3,492 | 3,676 | +184 phantom FPs reclassified |
+| FP | 576 | 392 | −184 |
+| P | 0.858 | 0.904 | +0.046 |
+| R | 0.732 | 0.732 | ~unchanged |
+| F1 | 0.790 | 0.809 | +0.019 |
+
+The correction assumes the VLM detects student-missed mounds at the
+same rate as GT-present mounds (recall ≈ 0.732). Approximately 32%
+of measured FPs (184/576) are estimated to be phantom FPs.
+
+### Correction bounds
+
+The correction of +0.019 F1 is an upper bound. Two factors narrow it:
+
+**1. Correlated difficulty (Obs 220a below)**
+
+If students and the VLM both struggle with the same hard mounds
+(busy backgrounds, overlapping features), then the VLM's detection
+rate for student-missed mounds is *lower* than overall recall. This
+reduces the phantom FP estimate from ~184 to ~100–150, yielding
+corrected F1 of 0.800–0.806 rather than 0.809.
+
+**2. Confidence interval on student error rate**
+
+The 5.04% FN rate comes from 49/834 errors in a 4-map sample.
+Binomial 95% CI: [4.3%, 7.5%]. With cluster adjustment for the
+4-map sampling unit: [3.6%, 8.2%].
+
+| Student FN rate | Corrected F1 | Scenario |
+|----------------|-------------|----------|
+| 3.6% (CI low) | 0.803 | Conservative |
+| 5.9% (point) | 0.809 | Central |
+| 8.2% (CI high) | 0.815 | Generous |
+
+**Combined honest range**: F1 ∈ [0.790, 0.810], where the lower
+bound is the uncorrected measurement and the upper bound assumes
+uncorrelated difficulty at the point estimate FN rate.
+
+### Generalisation gap after correction
+
+| Metric | Gold standard | 55-map (measured) | 55-map (corrected) |
+|--------|--------------|-------------------|--------------------|
+| F1 (50m) | 0.891 | 0.790 | 0.790–0.810 |
+| Gap | — | −0.101 | −0.081 to −0.101 |
+
+The correction narrows the generalisation gap by up to 20%, but a
+meaningful gap of ~0.08–0.10 F1 remains. This is a genuine
+generalisation effect — the pipeline performs less well on unseen
+maps, primarily due to reduced recall (0.732 vs 0.844).
+
+### Reporting recommendation
+
+> "Corrected for documented student omissions (5.0% FN rate,
+> 0% FP rate; Sobotkova et al. 2023), and accounting for the
+> likely positive correlation between student and VLM difficulty,
+> the corrected F1 lies in the range 0.790–0.810."
+
+---
+
+## Observation 221: CI on Student QA Sample — 4 Maps from 59 Is Adequate for Feature-Level Rates (2026-04-10)
+
+**Context**: The student QA (Sobotkova et al. 2023) reviewed 4 of 59
+maps (6.8%). How robust is this characterisation?
+
+### Feature-level vs map-level precision
+
+At the **feature level** (834 observations), the binomial CI on the
+5.87% error rate is tight: [4.3%, 7.5%] (Wilson interval). This is
+because 834 features is a substantial sample regardless of how many
+maps they come from.
+
+At the **map level** (4 cluster-level observations), the precision
+is lower. Errors are not independent across features within a map —
+one careless student inflates an entire map's error rate. The
+design effect for clustered sampling:
+
+```
+DEFF ≈ 1 + (m̄ − 1) × ICC
+```
+
+where m̄ ≈ 209 features/map and ICC is the intra-cluster correlation.
+Even a modest ICC of 0.01 gives DEFF ≈ 3.1, widening the CI to
+[3.6%, 8.2%].
+
+### What we can and can't say
+
+**We can say**: The overall student error rate is approximately 5–6%,
+dominated by missed mounds (false negatives). Student false positives
+are negligible (~0.1%). These rates are precise enough for the
+correction in Obs 220.
+
+**We can't say**: Whether individual maps deviate dramatically from
+the average. A map with 200 mounds in dense clusters could have a
+15% omission rate; a sparse map might have 1%. The 4-map sample
+doesn't resolve this heterogeneity.
+
+**Implication for our correction**: The range [3.6%, 8.2%] for the
+student FN rate translates to corrected F1 of [0.803, 0.815] — a
+span of 0.012. This uncertainty is small relative to the
+generalisation gap (0.08–0.10) and doesn't change the interpretation.
+
+---
+
+## Observation 222: The Evaluation Script Generalisation Bug — Hardcoded Map Lists (2026-04-10)
+
+**Context**: The first evaluation of the 55-map generalisation data
+returned F1=0.000 across all buffers, despite 3,547 of 4,068
+accepted detections being within 50m of a student ground truth mound.
+
+### Root cause
+
+`get_map_name()` in `lib_advanced_metrics.py` contained a hardcoded
+list of 4 map names:
+
+```python
+matches = ["K-35-062-2_Rakovski", "K-35-052-4_32635",
+           "K-35-053-3_Elenovo", "K-35-078-1_Lesovo"]
+```
+
+Any tile from the other 51 maps returned "Unknown" and was skipped.
+Additionally, `calculate_f1_internal()` used `gdf_ref['Map']` but
+the student GT has `source_map` as the column name.
+
+### Fix
+
+Replaced `get_map_name()` with a regex (`^(.+?)_x\d+_y\d+\.png$`)
+that extracts the map name from any tile filename. Added auto-
+detection of the reference map column ('Map' or 'source_map').
+
+### Lesson
+
+**Evaluation code hardcoded for the calibration dataset will silently
+produce zeros on new data.** The F1=0.000 didn't raise an error — it
+just reported zero precision, zero recall, zero F1 for every buffer.
+Without the earlier smoke test that validated coordinates were
+correct (Obs 215), this could have been misinterpreted as a genuine
+result rather than a bug.
+
+**Rule**: Evaluation scripts should never contain hardcoded dataset
+identifiers. Use pattern extraction (regex, string splitting) that
+generalises to any dataset following the naming convention.
+
+---
