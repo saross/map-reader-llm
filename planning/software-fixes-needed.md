@@ -129,7 +129,7 @@ fails after the 1.56→1.71 upgrade. The sync retry mock is no longer
 called. Low priority — the retry logic works in production, the test
 may need updating for SDK internal changes.
 
-## 10. Incremental write for `run_pv.py verify`
+## 10. ~~Incremental write for `run_pv.py verify`~~ — DONE (2026-04-10)
 
 **Problem**: `_verify_realtime()` collects all results in memory and
 writes `probabilities.json` only after all candidates complete. If the

@@ -384,6 +384,67 @@ def _verify_batch(
 
 
 # =========================================================================
+# Resume and Incremental Save Helpers
+# =========================================================================
+
+
+def _candidate_result_key(candidate: dict, iterations: int) -> str:
+    """Build the result key for a candidate, matching lib_verifier.py.
+
+    For single-iteration runs the key is ``candidate_NNNNN``.
+    For multi-iteration consensus the key is ``candidate_NNNNN_iter1``
+    (we check for the first iteration as a proxy — if iter1 exists,
+    the candidate was at least attempted).
+
+    Args:
+        candidate: Candidate dict with ``candidate_id``.
+        iterations: Number of verifier iterations.
+
+    Returns:
+        Result dict key string.
+    """
+    cid = candidate["candidate_id"]
+    if iterations > 1:
+        return f"candidate_{cid:05d}_iter1"
+    return f"candidate_{cid:05d}"
+
+
+def _save_probabilities_incremental(
+    results: dict[str, dict],
+    output_dir: Path,
+    config_version: str,
+    mode: str,
+    iterations: int,
+) -> None:
+    """Write probabilities.json incrementally for resume safety.
+
+    Uses atomic write (tmp file + rename) to prevent corruption if
+    killed mid-write. Called periodically from the ``as_completed()``
+    loop so that partial results survive process termination.
+
+    Args:
+        results: Current results dict (candidate keys → result dicts).
+        output_dir: Directory to write probabilities.json.
+        config_version: Verifier config version string.
+        mode: Execution mode (``"realtime"`` or ``"batch"``).
+        iterations: Number of verifier iterations per candidate.
+    """
+    probs = {
+        "version": "1.0",
+        "mode": mode,
+        "verifier_config": config_version,
+        "iterations": iterations,
+        "total_results": len(results),
+        "results": results,
+    }
+    out_path = output_dir / "probabilities.json"
+    tmp_path = out_path.with_suffix(".json.tmp")
+    with open(tmp_path, "w") as f:
+        json.dump(probs, f)
+    tmp_path.rename(out_path)
+
+
+# =========================================================================
 # Real-Time Verification Path
 # =========================================================================
 
@@ -453,6 +514,39 @@ def _verify_realtime(
     )
 
     candidates = manifest.get("candidates", [])
+    config_version = config.get("version", "unknown")
+
+    # ── Resume: load existing results and skip verified candidates ──
+    existing_results: dict[str, dict] = {}
+    probs_path = output_dir / "probabilities.json"
+    if probs_path.exists():
+        try:
+            with open(probs_path) as f:
+                existing = json.load(f)
+            existing_results = existing.get("results", {})
+            logger.info(
+                "Resuming: %d candidates already verified",
+                len(existing_results),
+            )
+        except (json.JSONDecodeError, KeyError):
+            logger.warning(
+                "Could not parse existing probabilities.json, starting fresh"
+            )
+
+    # Filter out already-verified candidates
+    if existing_results:
+        original_count = len(candidates)
+        candidates = [
+            c for c in candidates
+            if _candidate_result_key(c, iterations) not in existing_results
+        ]
+        skipped = original_count - len(candidates)
+        if skipped:
+            logger.info(
+                "Skipping %d already-verified candidates, %d remaining",
+                skipped, len(candidates),
+            )
+
     total = len(candidates)
     logger.info(
         "Starting real-time verification: %d candidates × %d iterations, "
@@ -460,8 +554,8 @@ def _verify_realtime(
         total, iterations, workers,
     )
 
-    # Submit to thread pool
-    all_results: dict[str, dict] = {}
+    # Submit to thread pool — seed with existing results for merge
+    all_results: dict[str, dict] = dict(existing_results)
     completed = 0
     verified_count = 0
     failed_count = 0
@@ -515,6 +609,14 @@ def _verify_realtime(
                 logger.info(
                     "Progress: %d/%d (verified: %d, failed: %d)",
                     completed, total, verified_count, failed_count,
+                )
+
+            # Incremental save every 100 candidates for resume safety.
+            # If killed mid-run, at most ~100 candidates of work is lost.
+            if completed % 100 == 0:
+                _save_probabilities_incremental(
+                    all_results, output_dir, config_version,
+                    "realtime", iterations,
                 )
 
     logger.info(
