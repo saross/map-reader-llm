@@ -1,0 +1,108 @@
+{
+  "created": "2026-04-11T07:33:10.584129+00:00",
+  "parameters": {
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "reference_path": "inputs/vectors/references/mounds-reference.geojson",
+    "calibration_size": 160,
+    "seed": 42,
+    "nested_sizes": [
+      20,
+      40,
+      80,
+      160
+    ]
+  },
+  "totals": {
+    "total_tiles": 487,
+    "total_mounds_per_tile_sum": 572,
+    "density_distribution": {
+      "empty": 258,
+      "sparse": 148,
+      "dense": 81
+    },
+    "per_map": {
+      "K-35-052-4_32635": 117,
+      "K-35-053-3_Elenovo": 125,
+      "K-35-062-2_Rakovski": 134,
+      "K-35-078-1_Lesovo": 111
+    }
+  },
+  "calibration_pools": {
+    "20": {
+      "n_tiles": 20,
+      "mounds_per_tile_sum": 24,
+      "density_distribution": {
+        "empty": 10,
+        "sparse": 6,
+        "dense": 4
+      },
+      "per_map": {
+        "K-35-052-4_32635": 5,
+        "K-35-053-3_Elenovo": 5,
+        "K-35-062-2_Rakovski": 5,
+        "K-35-078-1_Lesovo": 5
+      }
+    },
+    "40": {
+      "n_tiles": 40,
+      "mounds_per_tile_sum": 48,
+      "density_distribution": {
+        "empty": 22,
+        "sparse": 11,
+        "dense": 7
+      },
+      "per_map": {
+        "K-35-052-4_32635": 10,
+        "K-35-053-3_Elenovo": 10,
+        "K-35-062-2_Rakovski": 10,
+        "K-35-078-1_Lesovo": 10
+      }
+    },
+    "80": {
+      "n_tiles": 80,
+      "mounds_per_tile_sum": 86,
+      "density_distribution": {
+        "empty": 44,
+        "sparse": 23,
+        "dense": 13
+      },
+      "per_map": {
+        "K-35-052-4_32635": 20,
+        "K-35-053-3_Elenovo": 20,
+        "K-35-062-2_Rakovski": 20,
+        "K-35-078-1_Lesovo": 20
+      }
+    },
+    "160": {
+      "n_tiles": 160,
+      "mounds_per_tile_sum": 188,
+      "density_distribution": {
+        "empty": 86,
+        "sparse": 48,
+        "dense": 26
+      },
+      "per_map": {
+        "K-35-052-4_32635": 40,
+        "K-35-053-3_Elenovo": 40,
+        "K-35-062-2_Rakovski": 40,
+        "K-35-078-1_Lesovo": 40
+      }
+    }
+  },
+  "nesting_chain": "20 ⊂ 40 ⊂ 80 ⊂ 160",
+  "test_set": {
+    "n_tiles": 327,
+    "mounds_per_tile_sum": 384,
+    "density_distribution": {
+      "empty": 172,
+      "sparse": 100,
+      "dense": 55
+    },
+    "per_map": {
+      "K-35-052-4_32635": 77,
+      "K-35-053-3_Elenovo": 85,
+      "K-35-062-2_Rakovski": 94,
+      "K-35-078-1_Lesovo": 71
+    }
+  }
+}

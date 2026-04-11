@@ -57,7 +57,6 @@ from lib_consensus import (  # noqa: E402
     cluster_across_passes,
     deduplicate_within_pass,
     ensure_utm_crs,
-    load_run_detections,
 )
 
 logger = logging.getLogger(__name__)
@@ -65,6 +64,28 @@ logger = logging.getLogger(__name__)
 # =========================================================================
 # Constants
 # =========================================================================
+
+def _load_run_detections(run_dir: Path) -> list[dict]:
+    """Load GeoJSON detection features from a run directory.
+
+    Handles both naming conventions: ``detections_*.geojson`` (legacy
+    underscore) and ``detections-*.geojson`` (current hyphen).
+
+    Args:
+        run_dir: Path to a run directory.
+
+    Returns:
+        List of GeoJSON feature dictionaries.
+    """
+    features: list[dict] = []
+    # Try both naming conventions
+    for pattern in ["detections-*.geojson", "detections_*.geojson"]:
+        for geojson_file in sorted(run_dir.glob(pattern)):
+            with open(geojson_file, encoding="utf-8") as f:
+                data = json.load(f)
+                features.extend(data.get("features", []))
+    return features
+
 
 # Classification: FP is "consistent" if it appears in ≥60% of passes
 # (minimum 2 passes). With K=5 this gives ≥3; with K=2 it gives ≥2.
@@ -150,7 +171,7 @@ def analyse_detections(
 
     for pass_idx, run_dir in enumerate(detection_dirs):
         pass_id = run_dir.name
-        features = load_run_detections(run_dir)
+        features = _load_run_detections(run_dir)
         if not features:
             logger.warning("No features in %s", run_dir)
             continue
