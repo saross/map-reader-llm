@@ -149,6 +149,46 @@ spatially to identify where the student GT is most likely wrong.
   labels (which serve as ground truth for validating the D-S output)
 - **Compute**: Local (no API calls, no sapphire needed)
 
+## Status: COMPLETE (2026-04-11)
+
+Implemented as `scripts/analyse_dawid_skene.py` with 26 tier1 tests.
+
+### Key Results
+
+| Method | F1 | Precision | Recall |
+|--------|----|-----------|--------|
+| Measured (vs student GT) | 0.7898 | 0.8579 | 0.7317 |
+| Simple correction (5% FN) | 0.8084 | 0.9031 | 0.7317 |
+| Dawid-Skene posterior | 0.8144 | 0.9031 | 0.7416 |
+
+### Key Findings
+
+1. **D-S validates the simple correction**: Both agree on corrected
+   precision (0.903) and expected reclassification count (~184 of 578
+   VLM-only items).
+2. **2-annotator identifiability limitation**: With only 2 binary
+   annotators, D-S assigns a uniform posterior (0.318) to all VLM-only
+   items. It correctly estimates the aggregate fraction but cannot
+   discriminate individual items. Student sensitivity must be fixed at
+   the documented prior (0.95) — if free, EM converges to 1.0.
+3. **Verifier probability provides individual discrimination**: The 578
+   VLM-only items split bimodally: 348 with p≥0.8 (likely real mounds)
+   and 162 with p<0.3 (likely FPs). This is the primary input for the
+   candidate review app.
+4. **Recall difference between methods**: D-S gives slightly higher
+   recall (0.742 vs 0.732) because it operates on the observed item set
+   and does not count mounds missed by BOTH annotators. The simple
+   correction's estimate (R=0.732) is more conservative.
+5. **Consensus GeoJSON CRS bug found**: The consensus GeoJSON declares
+   EPSG:4326 but stores EPSG:32635 coordinates — requires `set_crs`
+   override rather than `to_crs` reprojection.
+
+### Output Files
+
+- `results/dawid-skene/dawid-skene-results.md` — Full report
+- `results/dawid-skene/dawid-skene-results.json` — Machine-readable
+- `results/dawid-skene/item-posteriors.csv` — Per-item data for review app
+
 ## References
 
 - Dawid, A.P. and Skene, A.M. (1979). "Maximum likelihood estimation
