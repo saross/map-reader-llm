@@ -36,7 +36,9 @@ from scripts.lib_advanced_metrics import (
 from scripts.merge_passes import (
     apply_threshold,
     cluster_across_passes,
+    coords_are_geographic,
     deduplicate_within_pass,
+    geojson_coords_to_utm,
 )
 
 # Test coordinates in EPSG:32635 (UTM 35N, Bulgaria)
@@ -408,11 +410,19 @@ class TestMergeToEvaluateContract:
         consensus_features = consensus.get("features", [])
         assert len(consensus_features) > 0, "Threshold T>=2 should retain some detections"
 
-        # Step 4: Convert to GeoDataFrame (mimicking what 6_accuracy_report does)
+        # Step 4: Convert to GeoDataFrame (mimicking what 6_accuracy_report does).
+        # Since merge_passes now writes EPSG:4326 coordinates per the GeoJSON
+        # spec, we reproject back to UTM for evaluation.
         records = []
         for feat in consensus_features:
             props = feat.get("properties", {})
-            geom = Point(feat["geometry"]["coordinates"])
+            coords = feat["geometry"]["coordinates"]
+            # Reproject from 4326 to UTM if needed (handles both old/new format)
+            if coords_are_geographic(coords[0], coords[1]):
+                utm_x, utm_y = geojson_coords_to_utm(coords[0], coords[1])
+                geom = Point(utm_x, utm_y)
+            else:
+                geom = Point(coords)
             source_tiles = props.get("source_tiles", [])
             # Apply the source_tile normalisation (E5b fix)
             source_tile = (

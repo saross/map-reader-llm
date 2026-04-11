@@ -62,10 +62,9 @@ def analyse_proposer(
     try:
         gdf_pred = gpd.read_file(union_path)
         if not gdf_pred.empty:
-            gdf_pred.set_crs(
-                "EPSG:32635",
-                allow_override=True,
-                inplace=True,
+            from lib_consensus import ensure_utm_crs
+            gdf_pred = ensure_utm_crs(
+                gdf_pred, source_label=str(union_path),
             )
             if gdf_pred.crs != gdf_ref.crs:
                 gdf_pred = gdf_pred.to_crs(gdf_ref.crs)

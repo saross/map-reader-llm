@@ -115,13 +115,14 @@ def analyse_consensus(
     # 2. Load consensus predictions
     try:
         gdf_pred = gpd.read_file(pred_path)
-        # Standardise Coordinate Reference System (CRS)
-        if not gdf_pred.empty:
-            gdf_pred.set_crs(
-                "EPSG:32635", allow_override=True, inplace=True,
-            )
-            if gdf_pred.crs != gdf_ref.crs:
-                gdf_pred = gdf_pred.to_crs(gdf_ref.crs)
+        # Standardise CRS — handles both legacy UTM-in-4326 and
+        # spec-compliant 4326 GeoJSON files
+        from lib_consensus import ensure_utm_crs
+        gdf_pred = ensure_utm_crs(
+            gdf_pred, source_label=str(pred_path),
+        )
+        if gdf_pred.crs != gdf_ref.crs:
+            gdf_pred = gdf_pred.to_crs(gdf_ref.crs)
     except Exception as e:
         print(f"Error loading predictions: {e}")
         return
@@ -323,8 +324,10 @@ def analyse_threshold_sweep(
             print("Warning: Empty predictions file")
             return _empty_sweep_result(max_n, cost_per_call, n_tiles)
 
-        gdf_pred.set_crs(
-            target_crs, allow_override=True, inplace=True,
+        from lib_consensus import ensure_utm_crs
+        gdf_pred = ensure_utm_crs(
+            gdf_pred, target_crs=target_crs,
+            source_label=str(pred_path),
         )
         if gdf_pred.crs != gdf_ref.crs:
             gdf_pred = gdf_pred.to_crs(gdf_ref.crs)

@@ -426,6 +426,64 @@ def build_pv_gdf(
     return gpd.GeoDataFrame(rows, crs=TARGET_CRS)
 
 
+def ensure_utm_crs(
+    gdf: gpd.GeoDataFrame,
+    target_crs: str = TARGET_CRS,
+    source_label: str = "",
+) -> gpd.GeoDataFrame:
+    """Ensure a GeoDataFrame is in the target projected CRS.
+
+    Handles backwards compatibility with GeoJSON files that declare
+    EPSG:4326 but actually contain EPSG:32635 (UTM) coordinates —
+    a legacy of ``merge_passes.py`` writing UTM coordinates without
+    CRS metadata (fixed in v1.1.0). Detected by checking whether
+    coordinate magnitudes exceed plausible lat/lon bounds.
+
+    Args:
+        gdf: Input GeoDataFrame (may have wrong CRS metadata).
+        target_crs: Desired output CRS (default EPSG:32635).
+        source_label: Optional label for log messages (e.g. filename).
+
+    Returns:
+        GeoDataFrame in target_crs (may be the same object if no
+        change was needed).
+    """
+    if gdf.empty:
+        if gdf.crs is None:
+            gdf = gdf.set_crs(target_crs)
+        elif str(gdf.crs) != target_crs:
+            gdf = gdf.to_crs(target_crs)
+        return gdf
+
+    if gdf.crs is None:
+        gdf = gdf.set_crs(target_crs)
+        return gdf
+
+    if str(gdf.crs) == target_crs:
+        return gdf
+
+    # CRS mismatch — check if coordinates are already projected
+    sample_geom = gdf.geometry.iloc[0]
+    sample_x = (
+        sample_geom.centroid.x if sample_geom is not None else 0
+    )
+    if abs(sample_x) > 1000:
+        # Coordinates are projected (UTM-scale), not geographic —
+        # override the incorrect CRS declaration
+        label = source_label or "GeoDataFrame"
+        logger.info(
+            "Overriding declared CRS %s → %s for %s "
+            "(coordinates are already projected, x=%.0f)",
+            gdf.crs, target_crs, label, sample_x,
+        )
+        gdf = gdf.set_crs(target_crs, allow_override=True)
+    else:
+        # Coordinates are genuinely geographic — reproject
+        gdf = gdf.to_crs(target_crs)
+
+    return gdf
+
+
 def load_geojson_gdf(geojson_path: Path) -> gpd.GeoDataFrame:
     """
     Load a detection GeoJSON as a GeoDataFrame with CRS correction.
@@ -443,32 +501,7 @@ def load_geojson_gdf(geojson_path: Path) -> gpd.GeoDataFrame:
         GeoDataFrame with 'source_tile' column and correct CRS.
     """
     gdf = gpd.read_file(geojson_path)
-
-    if gdf.crs is None:
-        gdf.set_crs(TARGET_CRS, inplace=True)
-    elif str(gdf.crs) != TARGET_CRS:
-        # Check if coordinates are already in projected CRS despite metadata
-        # saying otherwise (e.g., EPSG:4326 header with UTM coordinates).
-        # UTM easting/northing values are typically > 100000; lat/lon <= 180.
-        if not gdf.empty:
-            sample_geom = gdf.geometry.iloc[0]
-            sample_x = (
-                sample_geom.centroid.x
-                if sample_geom is not None
-                else 0
-            )
-            if abs(sample_x) > 1000:
-                # Coordinates are projected (UTM-scale), not geographic
-                logger.info(
-                    "Overriding declared CRS %s → %s for %s "
-                    "(coordinates are already projected, x=%.0f)",
-                    gdf.crs, TARGET_CRS, geojson_path.name, sample_x,
-                )
-                gdf.set_crs(TARGET_CRS, allow_override=True, inplace=True)
-            else:
-                gdf = gdf.to_crs(TARGET_CRS)
-        else:
-            gdf = gdf.to_crs(TARGET_CRS)
+    gdf = ensure_utm_crs(gdf, source_label=geojson_path.name)
 
     if "source_tile" not in gdf.columns:
         # Try to extract from properties

@@ -48,15 +48,59 @@ from pathlib import Path
 
 import geojson
 from geojson import Feature, FeatureCollection, Point
+from pyproj import Transformer
 from shapely.geometry import shape
 
 logger = logging.getLogger(__name__)
 
 # Script version
-__version__ = "1.0.0"
+__version__ = "1.1.0"
+
+# CRS constants — internal coordinates are EPSG:32635 (UTM Zone 35N);
+# GeoJSON spec (RFC 7946) mandates EPSG:4326 for output.
+_SOURCE_CRS = "EPSG:32635"
+_GEOJSON_CRS = "EPSG:4326"
+_TO_4326 = Transformer.from_crs(
+    _SOURCE_CRS, _GEOJSON_CRS, always_xy=True
+)
+_TO_UTM = Transformer.from_crs(
+    _GEOJSON_CRS, _SOURCE_CRS, always_xy=True
+)
 
 # Constants aligned with preregistration Section 8.5
 DISTANCE_THRESHOLD_METRES = 20.0  # Matches F1 evaluation tolerance
+
+
+def geojson_coords_to_utm(lon: float, lat: float) -> tuple[float, float]:
+    """Convert EPSG:4326 (lon, lat) to EPSG:32635 (easting, northing).
+
+    Convenience wrapper for downstream code that needs UTM coordinates
+    from GeoJSON features (e.g., raster crop extraction).
+
+    Args:
+        lon: Longitude in degrees.
+        lat: Latitude in degrees.
+
+    Returns:
+        Tuple of (easting, northing) in EPSG:32635 metres.
+    """
+    return _TO_UTM.transform(lon, lat)
+
+
+def coords_are_geographic(x: float, y: float) -> bool:
+    """Detect whether coordinates are geographic (EPSG:4326) or projected.
+
+    Uses a simple magnitude heuristic: UTM easting/northing values are
+    typically > 100,000, while lon/lat are bounded by ±180/±90.
+
+    Args:
+        x: X coordinate (easting or longitude).
+        y: Y coordinate (northing or latitude).
+
+    Returns:
+        True if coordinates appear to be geographic (EPSG:4326).
+    """
+    return abs(x) <= 180 and abs(y) <= 90
 
 
 def centroid_from_geometry(geom_dict: dict) -> tuple[float, float]:
@@ -296,8 +340,11 @@ def apply_threshold(
 
     for cluster in clusters:
         if cluster["vote_count"] >= threshold:
-            # Create Point geometry from centroid
-            geom = Point(cluster["centroid"])
+            # Reproject centroid from EPSG:32635 → EPSG:4326 for
+            # GeoJSON spec compliance (RFC 7946 mandates WGS 84)
+            utm_x, utm_y = cluster["centroid"]
+            lon, lat = _TO_4326.transform(utm_x, utm_y)
+            geom = Point((lon, lat))
 
             # Properties per preregistration Section 8.5 "Consensus Detection Output"
             props = {

@@ -300,7 +300,11 @@ class TestApplyThreshold:
         assert props["total_passes"] == 5
 
     def test_output_geometry_is_point(self) -> None:
-        """Output should have Point geometry at cluster centroid."""
+        """Output should have Point geometry reprojected to EPSG:4326.
+
+        Centroids are stored in EPSG:32635 (UTM) internally but
+        reprojected to EPSG:4326 (lon/lat) for GeoJSON spec compliance.
+        """
         clusters = [
             {"centroid": (500123.45, 4700678.90), "label": "mound", "vote_count": 3,
              "contributing_passes": ["pass_01", "pass_02", "pass_03"],
@@ -311,8 +315,13 @@ class TestApplyThreshold:
 
         geom = result["features"][0]["geometry"]
         assert geom["type"] == "Point"
-        assert geom["coordinates"][0] == 500123.45
-        assert geom["coordinates"][1] == 4700678.90
+        # Coordinates should be in EPSG:4326 (lon/lat), not UTM
+        lon, lat = geom["coordinates"]
+        assert -180 <= lon <= 180, f"Longitude {lon} out of range"
+        assert -90 <= lat <= 90, f"Latitude {lat} out of range"
+        # Verify approximate location (Bulgaria, ~42°N, ~27°E)
+        assert 20 < lon < 30, f"Expected longitude near Bulgaria, got {lon}"
+        assert 40 < lat < 45, f"Expected latitude near Bulgaria, got {lat}"
 
 
 @pytest.mark.tier1

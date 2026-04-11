@@ -48,11 +48,16 @@ import geojson
 import numpy as np
 import rasterio
 from PIL import Image
+from pyproj import Transformer
 from rasterio.windows import Window
 from shapely.geometry import shape
 
 # Script version
-__version__ = "2.0.0"  # E33: crop from source raster instead of tile
+__version__ = "2.1.0"  # CRS-aware: handles both 4326 and 32635 inputs
+
+# CRS transform for handling spec-compliant GeoJSON (EPSG:4326)
+# input when raster cropping needs EPSG:32635 (UTM Zone 35N)
+_TO_UTM = Transformer.from_crs("EPSG:4326", "EPSG:32635", always_xy=True)
 
 # Project root
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -337,10 +342,15 @@ def extract_candidates(
                 failed += 1
                 continue
 
-        # Calculate centroid
+        # Calculate centroid — reproject from EPSG:4326 to EPSG:32635
+        # if needed (GeoJSON spec mandates 4326; raster cropping needs UTM).
+        # Detects by coordinate magnitude: lat/lon ≤ 180, UTM > 100,000.
         try:
             geom_shape = shape(geom)
-            centroid = (geom_shape.centroid.x, geom_shape.centroid.y)
+            cx, cy = geom_shape.centroid.x, geom_shape.centroid.y
+            if abs(cx) <= 180 and abs(cy) <= 90:
+                cx, cy = _TO_UTM.transform(cx, cy)
+            centroid = (cx, cy)
         except Exception as e:
             print(f"Warning: Cannot compute centroid for detection {idx}: {e}")
             failed += 1
