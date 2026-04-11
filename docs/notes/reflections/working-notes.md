@@ -7201,3 +7201,350 @@ identifiers. Use pattern extraction (regex, string splitting) that
 generalises to any dataset following the naming convention.
 
 ---
+
+## Observation 223: Dawid-Skene 2-Annotator Identifiability — Aggregate Estimation Only (2026-04-11)
+
+**Context**: We applied the Dawid-Skene (D-S) latent truth model to
+the 55-map generalisation data to correct the measured precision for
+student ground-truth errors. The model treats students and the VLM
+pipeline as two noisy annotators and jointly estimates the latent
+true-mound labels.
+
+### The identifiability problem
+
+With only 2 binary annotators and a shared item set constructed from
+the union of positive annotations (matched + student-only + VLM-only),
+D-S assigns the **same posterior** to every item within a label class.
+All VLM-only items (student=0, vlm=1) received posterior P(T=1)=0.318
+— a uniform estimate across all 578 items. The model can estimate
+the **aggregate fraction** of real mounds among VLM-only detections
+but cannot discriminate which specific items are real.
+
+### The free-parameter failure
+
+When student sensitivity is left as a free EM parameter, the model
+converges to s_sens=1.0 (student never misses a mound) and
+reclassifies zero items. This is a valid maximum-likelihood estimate
+— the model can always explain VLM-only items as VLM false positives
+rather than student false negatives — but contradicts the documented
+5% student omission rate.
+
+**Fix**: Fix both student parameters at their externally validated
+values (sensitivity=0.95, specificity=1.0 from Sobotkova et al. 2023).
+With these constraints, the model produces principled aggregate
+corrections.
+
+### Results
+
+Three corrections agree on precision uplift (0.858 → 0.903) but
+differ on recall handling:
+
+| Method | F1 | P | R |
+|--------|-----|-----|-----|
+| Measured | 0.790 | 0.858 | 0.732 |
+| Simple correction (5% FN) | 0.808 | 0.903 | 0.732 |
+| D-S posterior (expected counts) | 0.814 | 0.903 | 0.742 |
+
+The difference in recall comes from how doubly-missed mounds are
+handled. The simple correction assumes uniform 5% FN and counts
+mounds that neither annotator found; D-S operates only on the
+observed item set and doesn't estimate these. The simple correction
+is more conservative and should be preferred for the paper.
+
+### The verifier probability as discriminator
+
+The 578 VLM-only items are strongly bimodal in verifier probability:
+348 items have p≥0.8 (likely real mounds students missed) and 162
+items have p<0.3 (likely genuine FPs). D-S with binary annotators
+cannot access this information, but it's exactly what human review
+can leverage — the review app presents items sorted by descending
+verifier probability, reviewing the most likely phantom FPs first.
+
+**General lesson**: 2-annotator D-S is a principled way to validate
+aggregate correction estimates, but for per-item discrimination you
+need either a third annotator or additional features (like the
+verifier's continuous probability output).
+
+**Outputs**: `scripts/analyse_dawid_skene.py`, 26 tier1 tests,
+`results/dawid-skene/` with full register, posteriors, and sensitivity
+analysis across FN rates (1-10%) and buffers (20-50m).
+
+---
+
+## Observation 224: Consensus GeoJSON CRS Bug — GeoJSON Spec Non-Compliance (2026-04-11)
+
+**Context**: During the D-S model implementation, the spatial join
+between the consensus GeoJSON and student GT produced `inf`
+coordinates, breaking the matching.
+
+### Root cause
+
+`merge_passes.py` wrote EPSG:32635 (UTM Zone 35N) coordinates into
+GeoJSON output without CRS metadata. The GeoJSON spec (RFC 7946)
+mandates EPSG:4326 (WGS 84). When geopandas reads the file, it
+correctly assumes EPSG:4326 per the spec and interprets UTM values
+(e.g., x=460316) as longitude in degrees — producing `inf` when
+reprojecting to actual projected coordinates.
+
+### Hidden by workarounds
+
+Five consumer scripts had accumulated ad-hoc `set_crs(target_crs,
+allow_override=True)` workarounds. `lib_consensus.load_geojson_gdf()`
+even had a coordinate-magnitude heuristic (`if abs(sample_x) > 1000`)
+to detect UTM-in-4326 mislabelled files. None of these workarounds
+solved the underlying problem — they just accommodated it.
+
+### Fix
+
+**Write side**: `apply_threshold()` in `merge_passes.py` now
+reprojects centroids from EPSG:32635 → EPSG:4326 via
+`pyproj.Transformer` before writing. Future consensus files are
+GeoJSON spec-compliant.
+
+**Read side**: Extracted `ensure_utm_crs()` into `lib_consensus.py`
+as a canonical helper. Detects legacy UTM-in-4326 files by
+coordinate magnitude (>1000 = projected) and handles both legacy
+and new-format files correctly.
+
+**Cross-module**: `extract_candidates.py` (which uses raw GeoJSON
+parsing, not geopandas) gained coordinate detection + pyproj
+reprojection, since raster cropping requires UTM coordinates but
+new GeoJSONs will be in EPSG:4326.
+
+### Scope of change
+
+6 scripts fixed, 2 tests updated, 0 regressions. The existing
+55-map generalisation results remain valid because the legacy
+coordinate-magnitude heuristic correctly handled them; the fix is
+for future correctness and code cleanliness.
+
+**Rule**: Never silently write non-compliant GeoJSON. If a CRS is
+known, declare it correctly or reproject to the spec-mandated CRS.
+Cascading workarounds in consumers are a code smell that indicates
+an upstream contract violation.
+
+---
+
+## Observation 225: Test Pollution via Python Module Caching (2026-04-11)
+
+**Context**: 8 tests in `test_reverify_image_only_experiments.py`
+failed when running the full tier1 suite but passed in isolation —
+a textbook test pollution symptom.
+
+### Root cause
+
+`test_batch_api.py` imports `from google.genai.types import JobState`,
+which loads the real `google.genai` module and caches it in
+`sys.modules`. The reverify tests mock `google.genai.types` via
+`patch.dict("sys.modules", {"google.genai.types": mock})`, but the
+production code uses `from google.genai import types` — which
+resolves via the parent module's `.types` attribute, **not** via
+`sys.modules["google.genai.types"]`.
+
+When the parent `google.genai` is already in `sys.modules` (because
+test_batch_api ran first), the attribute lookup bypasses the
+`sys.modules` patch entirely. The mock `Part` class has `._type`
+attributes; the real one doesn't → `AttributeError` on every
+test assertion.
+
+### Fix
+
+Patch the full module chain:
+
+```python
+mock_genai = MagicMock()
+mock_genai.types = mock_types
+with patch.dict("sys.modules", {
+    "google.genai": mock_genai,
+    "google.genai.types": mock_types,
+}):
+```
+
+### General pattern
+
+Submodule imports create two resolution paths:
+
+1. `sys.modules["pkg.submod"]` — used when `sys.modules` contains
+   the submodule directly
+2. `pkg.submod` via attribute access — used when `pkg` is already
+   imported (the parent attribute is set at first import)
+
+When mocking a submodule after the parent has been loaded, you must
+patch **both** the `sys.modules` entry and the parent module's
+attribute. This is a subtle and common Python testing gotcha.
+
+**Rule**: When `patch.dict("sys.modules")` doesn't work for a
+submodule, check whether the parent module was pre-loaded by another
+test. Mock the full chain, not just the leaf.
+
+---
+
+## Observation 226: Calibration Pool Expansion Unblocks Deferred Experiments (2026-04-11)
+
+**Context**: Three preregistered exploratory experiments (H8
+Scale-16/32, H9-C HP rotation, H12 HP:HN ratio) were deferred in
+Phase 2 due to HP pool exhaustion — the 20-tile calibration set
+yielded only 4 hard-positive candidates (recognition failures
+>50m from any detection), insufficient for any of the conditions
+requiring ≥6 HPs.
+
+### Expansion result
+
+Expanding calibration to 160 tiles at 384px (via the new generalised
+tile selector using the same hierarchical stratified sampling
+strategy as Phase 2) yielded:
+
+- **63 HP candidates** (48 borderline_tp + 15 consistent_fn) — a
+  **16× increase** from the 4 found at 20 tiles
+- **151 HN candidates** (consistent FPs in ≥3 of 5 passes)
+- All 4 maps represented in the HP pool
+
+The expansion unlocked all three deferred experiments:
+
+- H8 Scale-16 (needs 8 HPs): viable
+- H8 Scale-32 (needs 16 HPs): viable
+- H9-C HP rotation (needs ≥8 HPs for rotation): viable
+- H12 symmetric ratios (needs ≥6 for 3:1 HP-heavy): viable
+
+### Generalised pipeline
+
+The pipeline built for this is intentionally tile-size-agnostic and
+dataset-agnostic — the seed of the automated "map reading service"
+where users provide ground-truthed maps and target symbols, and
+optimal prompts are built automatically:
+
+1. `select_calibration_tiles.py` — hierarchical stratified
+   calibration/test split with nested pool generation (H10)
+2. `discover_hard_cases.py` — K-pass detection + Hungarian matching
+   + hard-case classification by run consistency
+3. `build_example_pool.py` — greedy diversity-optimised selection
+   with spatial penalties
+4. `generate_prompt_configs.py` — automated config assembly with
+   canonical-example preservation
+
+Total: 84 tier1 tests, 5 audit-cleaned scripts. The pipeline is the
+main deliverable of this session — usable for future research on
+any map + symbol combination.
+
+---
+
+## Observation 227: H10/H12 Null Results — Verifier Architecture Dominates Library Composition (2026-04-12)
+
+**Context**: We ran the full preregistered H10 (training pool size)
+and H12 (HP:HN ratio) experiments at K=10 on 327 test tiles with
+5 configurations:
+
+| Config | HP | HN | Total | Hypothesis |
+|--------|-----|-----|-------|------------|
+| hp4hn4 | 4 | 4 | 8 | H8 Scale-8 baseline |
+| hp2hn6 | 2 | 6 | 8 | H12 HN-heavy (1:3) |
+| hp6hn2 | 6 | 2 | 8 | H12 HP-heavy (3:1) |
+| hp8hn8 | 8 | 8 | 16 | H8 Scale-16 (deferred) |
+| hp16hn16 | 16 | 16 | 32 | H8 Scale-32 (deferred) |
+
+### Proposer-only results (no verifier)
+
+At 6-of-10 consensus (analogous to 4-of-5), larger libraries help:
+
+| Config | F1 | P | R |
+|--------|-----|-----|-----|
+| hp4hn4 (baseline) | 0.663 | 0.530 | 0.884 |
+| hp2hn6 (HN-heavy) | 0.663 | 0.528 | 0.890 |
+| hp6hn2 (HP-heavy) | 0.651 | 0.524 | 0.859 |
+| hp8hn8 (Scale-16) | 0.684 | 0.559 | 0.881 |
+| hp16hn16 (Scale-32) | **0.702** | 0.577 | 0.897 |
+
+Scale-32 is +0.039 F1 over baseline, entirely from improved precision.
+All recalls cluster around 0.88-0.90. The effect direction matches
+the H8 hypothesis: more diverse hard examples improve precision
+without sacrificing recall.
+
+### Full pipeline results (proposer + verifier)
+
+Applying the v1 adversarial verifier to the vote≥2 candidates and
+sweeping the full vote × probability grid produces dramatically
+different results:
+
+**Bootstrap 95% CIs (at vote≥6, prob≥0.15, 20m buffer):**
+
+| Config | F1 [95% CI] | P [95% CI] | R [95% CI] |
+|--------|-------------|------------|------------|
+| hp4hn4 (baseline) | **0.885 [0.848, 0.917]** | 0.913 [0.877, 0.943] | 0.859 [0.808, 0.904] |
+| hp2hn6 (HN-heavy) | 0.883 [0.846, 0.912] | 0.904 [0.867, 0.936] | 0.863 [0.810, 0.905] |
+| hp6hn2 (HP-heavy) | 0.860 [0.817, 0.897] | 0.884 [0.841, 0.921] | 0.838 [0.779, 0.887] |
+| hp8hn8 (Scale-16) | 0.880 [0.842, 0.911] | 0.901 [0.864, 0.937] | 0.859 [0.807, 0.901] |
+| hp16hn16 (Scale-32) | **0.885 [0.846, 0.918]** | 0.913 [0.878, 0.947] | 0.859 [0.805, 0.904] |
+
+**Round-robin pairwise permutation tests** (10,000 iterations each):
+**zero significant differences** at α=0.05. The closest are:
+
+- hp6hn2 vs hp4hn4: ΔF1=−0.025, p=0.061
+- hp6hn2 vs hp16hn16: ΔF1=−0.025, p=0.081
+
+All other pairs: p > 0.16. The H12 ratio effects and the H8 scaling
+effects are **not significant** after verifier application.
+
+### Interpretation
+
+The verifier **erases** the proposer-level differences. The Scale-32
+advantage at the proposer stage (+0.039 F1) collapses to zero after
+verification. The underperformer (hp6hn2, HP-heavy) is held to
+F1=0.860 — within 0.025 of the leaders but trending toward
+significance (p=0.061 vs baseline).
+
+This is consistent with Obs 219 (architecture dominates prompt
+refinement) extended to library composition:
+
+**Architecture > Library Composition > Prompt Wordsmithing**
+
+The verifier stage is the dominant factor in F1. Once you have a
+verifier, the library composition — size and HP:HN ratio — barely
+matters. The only composition that has (marginal, p=0.061) evidence
+of underperformance is HP-heavy: too many positive examples without
+corresponding negative guidance produces slightly worse precision,
+but even this doesn't reach significance.
+
+### The headline F1 = 0.885
+
+Matches the 4-map gold-standard production result (F1=0.885 with
+v2 verifier, F1=0.873 with v1). This is the first time we've
+matched gold-standard F1 on a held-out test set (327 tiles, disjoint
+from the 160 calibration tiles) using automated hard-case discovery.
+**The pipeline works.**
+
+### Implications for the paper
+
+1. **H8 scaling**: No evidence that libraries beyond Scale-8 improve
+   end-to-end F1. Scale-16 and Scale-32 produced results
+   indistinguishable from Scale-8. The preregistered hypothesis
+   predicted diminishing returns; the data show the returns
+   plateau at or before Scale-8.
+2. **H12 ratio**: No evidence that HP:HN ratio matters once a
+   verifier is applied. HP-heavy configurations show marginal
+   underperformance (p=0.061) but don't reach significance. The
+   symmetric HN-heavy (1:3) and balanced (1:1) configurations are
+   statistically equivalent.
+3. **H9-C HP rotation**: Not yet run with these results in hand —
+   but the prediction is the same: no significant effect after
+   verifier application.
+4. **Architecture finding**: The strongest result is the
+   **insensitivity** — the verifier stage does the heavy lifting,
+   and prompt engineering at the library level is not the right
+   lever for precision improvements beyond ~F1=0.88 on this task.
+
+### Cost and execution
+
+- Proposer (K=10, 5 configs × 327 tiles): 16,350 calls, $22.32
+- Retry cleanup (88 → 2 failures): ~$0.10, 3 retry passes
+- Verifier (7,766 candidates): 10,669 calls total, $10.69
+- **Total**: ~$33.11 for the complete H10/H12 evaluation
+- Wall clock: ~2 hours including retries and verifier
+
+**Operational note**: The ~0.5% parse failure rate at the proposer
+stage is persistent — 88 of 16,350 calls failed after 8 built-in
+retries each. Three additional retry passes recovered 86 of 88,
+leaving 2 permanently failed (same tile twice: Lesovo_x1344_y2352
+in hp4hn4 runs 3 and 4). Consensus voting across the remaining
+8+ passes compensates for sparse failures.
+
+---
