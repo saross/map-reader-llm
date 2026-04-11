@@ -189,6 +189,15 @@ class TestBuildContentParts:
         Returns a mock where Part.from_text and Part.from_bytes return
         distinguishable mock objects with a ._type attribute for
         introspection.
+
+        The production code does ``from google.genai import types``,
+        which resolves via the parent module's attribute — not just
+        ``sys.modules``. When another test has already loaded the real
+        ``google.genai`` package (e.g., test_batch_api imports
+        ``google.genai.types.JobState``), the parent module is cached
+        and ``patch.dict("sys.modules")`` alone is insufficient. This
+        fixture therefore builds a mock for the full module chain so
+        the import resolves to the mock regardless of cached state.
         """
         mock_module = MagicMock()
 
@@ -206,6 +215,12 @@ class TestBuildContentParts:
 
         mock_module.Part.from_text = MagicMock(side_effect=make_text_part)
         mock_module.Part.from_bytes = MagicMock(side_effect=make_bytes_part)
+
+        # Build the full module chain so `from google.genai import types`
+        # hits the mock even when the real google.genai is cached
+        mock_genai = MagicMock()
+        mock_genai.types = mock_module
+        mock_module._genai = mock_genai  # stash for the context manager
 
         return mock_module
 
@@ -232,7 +247,10 @@ class TestBuildContentParts:
         Total: 3 parts (1 text-only examples + 1 prompt + 1 image)
         """
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_content_parts(
                 dummy_crop,
@@ -257,7 +275,10 @@ class TestBuildContentParts:
         Total: 4 parts (1 extra vs baseline)
         """
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_content_parts(
                 dummy_crop,
@@ -296,7 +317,10 @@ class TestBuildContentParts:
         )
 
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_content_parts(
                 dummy_crop,
@@ -321,7 +345,10 @@ class TestBuildContentParts:
         """When provenance preamble is set, it must be the very first
         content part, before any examples or prompts."""
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_content_parts(
                 dummy_crop,
@@ -345,7 +372,10 @@ class TestBuildContentParts:
             {"include_examples": True, "provenance_preamble": False},
         ]:
             with patch.dict(
-                "sys.modules", {"google.genai.types": mock_types}
+                "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
             ):
                 parts = build_content_parts(dummy_crop, **kwargs)
 
@@ -456,7 +486,9 @@ class TestBuildComparativeContentParts:
         Mock google.genai.types to avoid import dependency.
 
         Returns a mock where Part.from_text and Part.from_bytes return
-        distinguishable mock objects with a ._type attribute.
+        distinguishable mock objects with a ._type attribute. Mocks the
+        full module chain to survive test ordering pollution (see
+        TestBuildContentParts.mock_types for rationale).
         """
         mock_module = MagicMock()
 
@@ -479,6 +511,10 @@ class TestBuildComparativeContentParts:
             side_effect=make_bytes_part
         )
 
+        mock_genai = MagicMock()
+        mock_genai.types = mock_module
+        mock_module._genai = mock_genai
+
         return mock_module
 
     @pytest.fixture
@@ -491,7 +527,10 @@ class TestBuildComparativeContentParts:
     def test_reference_header_is_first(self, mock_types, dummy_crop):
         """First part is the reference examples header text."""
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_comparative_content_parts(dummy_crop)
 
@@ -513,7 +552,10 @@ class TestBuildComparativeContentParts:
         )
 
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_comparative_content_parts(dummy_crop)
 
@@ -524,7 +566,10 @@ class TestBuildComparativeContentParts:
     def test_candidate_crop_is_last(self, mock_types, dummy_crop):
         """Candidate crop image is always the last part."""
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_comparative_content_parts(dummy_crop)
 
@@ -547,7 +592,10 @@ class TestBuildComparativeContentParts:
         )
 
         with patch.dict(
-            "sys.modules", {"google.genai.types": mock_types}
+            "sys.modules", {
+                "google.genai": mock_types._genai,
+                "google.genai.types": mock_types,
+            }
         ):
             parts = build_comparative_content_parts(dummy_crop)
 
