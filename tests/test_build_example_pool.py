@@ -165,15 +165,42 @@ class TestGetSourceTile:
             {"source_tiles": ["MapA_x0_y0.png"]}
         ) == "MapA_x0_y0.png"
 
-    def test_fallback_to_map_name(self):
-        assert _get_source_tile(
-            {"map_name": "MapA"}
-        ) == "MapA"
+    def test_fallback_to_grid_id(self):
+        """HP candidates without source_tiles get a grid-based ID."""
+        result = _get_source_tile(
+            {"map_name": "MapA", "x": 500, "y": 1000}
+        )
+        # Should include map name and grid coordinates, not just map
+        assert "MapA" in result
+        assert result != "MapA"  # More specific than just map name
 
-    def test_empty_source_tiles(self):
-        assert _get_source_tile(
-            {"source_tiles": [], "map_name": "MapB"}
-        ) == "MapB"
+    def test_empty_source_tiles_uses_grid(self):
+        """Empty source_tiles falls back to grid ID, not map name."""
+        result = _get_source_tile(
+            {"source_tiles": [], "map_name": "MapB", "x": 0, "y": 0}
+        )
+        assert "MapB" in result
+        assert result != "MapB"
+
+    def test_same_grid_cell_same_id(self):
+        """Two candidates in the same grid cell get the same ID."""
+        id_a = _get_source_tile(
+            {"map_name": "M", "x": 100, "y": 100}
+        )
+        id_b = _get_source_tile(
+            {"map_name": "M", "x": 200, "y": 200}
+        )
+        assert id_a == id_b  # Both in grid cell (0, 0)
+
+    def test_different_grid_cell_different_id(self):
+        """Candidates in different grid cells get different IDs."""
+        id_a = _get_source_tile(
+            {"map_name": "M", "x": 100, "y": 100}
+        )
+        id_b = _get_source_tile(
+            {"map_name": "M", "x": 5000, "y": 5000}
+        )
+        assert id_a != id_b
 
 
 # ---------------------------------------------------------------------------

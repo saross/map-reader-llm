@@ -137,12 +137,25 @@ def select_diverse_examples(
 
 
 def _get_source_tile(candidate: dict) -> str:
-    """Extract a single source tile identifier from a candidate."""
+    """Extract a tile-level identifier from a candidate.
+
+    For HN candidates (from FP register), returns the actual source
+    tile name. For HP candidates (from mound register, no source_tiles
+    field), synthesises a tile-level ID from map name + grid position
+    to avoid over-penalising at map level.
+    """
     tiles = candidate.get("source_tiles", [])
     if tiles:
         return tiles[0]
-    # For HP candidates (from mound register), derive from map_name
-    return candidate.get("map_name", "unknown")
+    # Synthesise tile-level ID from coordinates — two candidates on
+    # the same ~336m grid cell share an ID; different cells don't.
+    # Uses integer division by 336 (384px stride) as grid quantiser.
+    x = candidate.get("x", 0)
+    y = candidate.get("y", 0)
+    map_name = candidate.get("map_name", "unknown")
+    gx = int(x) // 336
+    gy = int(y) // 336
+    return f"{map_name}_g{gx}_{gy}"
 
 
 # =========================================================================
@@ -233,8 +246,15 @@ def _find_raster(map_name: str, rasters_dir: Path) -> Path | None:
     # Search recursively — rasters may be in subdirectories
     # (e.g., inputs/rasters/Russian1981_32635/K-35-052-4_32635.tif)
     for pattern in [f"{map_name}.tif", f"{map_name}*.tif"]:
-        matches = list(rasters_dir.rglob(pattern))
+        matches = sorted(rasters_dir.rglob(pattern))
         if matches:
+            if len(matches) > 1:
+                logger.warning(
+                    "Multiple rasters match '%s': %s; using %s",
+                    pattern,
+                    [m.name for m in matches],
+                    matches[0].name,
+                )
             return matches[0]
 
     return None
