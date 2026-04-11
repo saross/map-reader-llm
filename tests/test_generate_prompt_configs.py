@@ -33,7 +33,9 @@ def setup_dirs(tmp_path):
     # Base config
     config_dir = tmp_path / "prompts" / "configs"
     config_dir.mkdir(parents=True)
-    examples_root = tmp_path / "prompts" / "examples" / "neutral-naming"
+    # Canonical examples live at inputs/examples/ (matching config.py
+    # EXAMPLES_DIR). generate_prompt_configs resolves this via _REPO_ROOT.
+    examples_root = tmp_path / "inputs" / "examples" / "neutral-naming"
     examples_root.mkdir(parents=True)
 
     examples = []

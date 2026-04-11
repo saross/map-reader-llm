@@ -105,8 +105,8 @@ def generate_config(
         if e.get("category") in _PRESERVED_CATEGORIES
     ]
 
-    # Copy preserved example images to new location
-    base_examples_root = base_config_path.parent.parent / "examples"
+    # Copy preserved example images from the canonical examples directory
+    base_examples_root = _REPO_ROOT / "inputs" / "examples"
     new_examples: list[dict] = []
     example_idx = 1
 

@@ -1,0 +1,122 @@
+{
+  "hard_positives": [
+    {
+      "map_name": "K-35-052-4_32635",
+      "ref_index": 432,
+      "x": 407110.46853833314,
+      "y": 4705314.688271036,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hp_01.png"
+    },
+    {
+      "map_name": "K-35-052-4_32635",
+      "ref_index": 436,
+      "x": 407183.33056987904,
+      "y": 4704089.148900435,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hp_02.png"
+    }
+  ],
+  "hard_negatives": [
+    {
+      "map_name": "K-35-052-4_32635",
+      "x": 399052.2711841,
+      "y": 4701361.9742479,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 1473.26,
+      "source_tiles": [
+        "K-35-052-4_32635_x336_y672.png"
+      ],
+      "subtype": "burial_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hn_01.png"
+    },
+    {
+      "map_name": "K-35-052-4_32635",
+      "x": 400085.8011368,
+      "y": 4689807.486466199,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 2451.0,
+      "source_tiles": [
+        "K-35-052-4_32635_x336_y3024.png"
+      ],
+      "subtype": "burial_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hn_02.png"
+    },
+    {
+      "map_name": "K-35-052-4_32635",
+      "x": 409609.0139294,
+      "y": 4689354.9804261,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 1333.45,
+      "source_tiles": [
+        "K-35-052-4_32635_x2352_y3024.png"
+      ],
+      "subtype": "benchmark_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hn_03.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "x": 432753.2642501,
+      "y": 4699545.5728852,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 1343.09,
+      "source_tiles": [
+        "K-35-053-3_Elenovo_x2688_y1008.png"
+      ],
+      "subtype": "burial_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hn_04.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "x": 436671.9338009,
+      "y": 4699739.1111822,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 3247.37,
+      "source_tiles": [
+        "K-35-053-3_Elenovo_x3696_y1008.png"
+      ],
+      "subtype": "benchmark_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hn_05.png"
+    },
+    {
+      "map_name": "K-35-062-2_Rakovski",
+      "x": 325657.1611145,
+      "y": 4684936.3182513,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 1505.17,
+      "source_tiles": [
+        "K-35-062-2_Rakovski_x2016_y672.png"
+      ],
+      "subtype": "burial_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools/pool_160_hp2hn6/crops/hn_06.png"
+    }
+  ]
+}
