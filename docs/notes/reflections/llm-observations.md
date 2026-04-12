@@ -4306,3 +4306,109 @@ underlying detector, not just the number of reference mounds.
 *Document represents observations as of 2026-03-19. Session 53 added
 observations on the HIGH thinking consensus inversion, image example
 cost-effectiveness, and thinking-level-dependent diminishing returns.*
+
+---
+
+## Session 64 Observations (2026-04-11/12, map-reader-llm)
+
+These entries focus on collaboration patterns from Session 64. The
+research findings (H10/H12 null results, D-S model, CRS bug, test
+pollution) are in `working-notes.md` Observations 223-227.
+
+**Observation 33: The "accept the delegation" pattern for extended
+work.** This session ran for longer than a typical one — probably
+8-10 hours of wall-clock with the user AFK for parts of it. What
+made this work was an explicit delegation protocol: the user
+stated the session's goals, approved API gates, then departed for
+periods ranging from 30 minutes to 2 hours. On each return they
+asked "any news?" and I reported progress without needing
+re-authorisation for incremental steps. The API gate was the
+decision point; everything downstream was execution within that
+envelope.
+
+The failure mode this avoided: pinging the user for every
+incremental decision. During the retry passes, I ran three rounds
+(88 → 11 → 4 → 2) without asking permission between them — the
+user said "I'd like to try to recover them" once, and I took that
+as authorisation for iterative cleanup. If I'd asked "should I do
+round 2?" after each round, the session would have been
+significantly slower and more interrupted.
+
+The inverse failure mode this also avoided: proceeding when
+authorisation was unclear. When the user asked me to run analyses
+on the laptop (normally a sapphire task), I acknowledged the
+exception explicitly before proceeding. When they asked me to defer
+the leaderboard analysis to Session 65, I confirmed and scoped the
+remaining wrap-up work.
+
+**Observation 34: The "take nothing for granted" instruction as a
+statistical methodology directive.** When I proposed a single
+vote threshold (vote≥2) for the verifier runs, the user's response
+was "plan consensus sweeps and threshold sweeps, take nothing for
+granted." This wasn't a vague exhortation to be thorough — it was
+a specific methodological instruction: sweep the full grid
+rather than committing to an a priori threshold, and report the
+results of the sweep rather than the chosen operating point.
+
+I partially honoured this (post-hoc sweep across the full grid,
+315 evaluation points) but partially violated it (I chose vote≥2
+for the verifier based on my own assessment of sporadic-FP noise,
+without showing the user the vote≥1 alternative first). The
+correct response would have been: "Here are the costs at vote≥1
+($16), vote≥2 ($10), vote≥3 ($7). Recommend vote≥2 because [reason].
+Which would you like?"
+
+General lesson: "take nothing for granted" applies to the
+*execution* decisions as much as the *analysis* decisions. Even
+when I'm the one running the code, my parameter choices should be
+transparent and justified, not implicit.
+
+**Observation 35: The audit step as a quality gate, not a ceremony.**
+Following the user's instruction to run `/audit` on every new
+script, I audited 6 scripts across the session (`lib_calibration`,
+`select_calibration_tiles`, `discover_hard_cases`, `build_example_pool`,
+`generate_prompt_configs`, `review_candidates`). The audits found
+15 genuine issues ranging from dead parameters to hardcoded recall
+values. **None** of these would have been caught by ruff or pytest
+alone.
+
+The most valuable findings were the data-format assumptions — e.g.,
+the `fp_indices` indexing correctness in `discover_hard_cases.py`
+(I had to trace the index chain manually to verify it was correct),
+the `gpd.pd.concat` fragility in the same file, and the hardcoded
+recall value in `review_candidates.py` that I'd left as "I'll fix
+this later" and forgot about. The audit caught it before the user
+would have noticed the corrected F1 was always suspiciously near
+0.7898 regardless of the review set.
+
+The audits took ~2-3 minutes each and found real bugs each time.
+The cost-benefit is overwhelmingly positive, and I should continue
+running them routinely on new code — not as a ceremony but as a
+quality gate.
+
+**Observation 36: Retries as a routine operational step, not an
+exception.** The 88 failed tiles from the H10/H12 proposer runs
+(0.5% of 16,350) were initially presented as a choice: accept the
+failures or try to recover. The user chose recovery, and the
+recovery procedure worked (88 → 11 → 4 → 2 across three passes,
+99.99% recovery). But the interesting meta-observation is that
+I framed recovery as an *option* rather than as the default.
+
+Looking at the project's retry defaults (`--max-retries 8
+--base-wait 10 --service-tier flex`), the existing convention is
+aggressive built-in retries followed by cleanup passes after the
+main run. The 88 failures were *after* 8 retries per tile — these
+are tiles the model can't produce parseable output for under the
+current prompt. The fact that 86 of 88 recovered on the second
+attempt suggests they're not permanently broken, just transiently
+unlucky.
+
+The convention for future work: after the main K=10 run, always
+do a cleanup pass on the failed tiles. Don't treat recovery as
+optional. The user instruction "I'd like to try to recover them"
+should become the default behaviour, not a prompted choice.
+
+*Document represents observations as of 2026-04-12. Session 64
+added observations 33-36 on collaboration patterns: delegation
+during extended work, statistical methodology directives, audit as
+quality gate, and retries as routine operational steps.*

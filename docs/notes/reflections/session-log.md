@@ -3776,3 +3776,190 @@ hardening, and statistical correction framework.
 55-map generalisation study complete. E47 v1-vs-v2 analysis complete.
 Gold-standard v2 recreation complete. All code fixes resolved. Next:
 candidate review app, D-S model, paper writing.
+
+## Session 64 — 2026-04-11 to 2026-04-12 (map-reader-llm)
+
+D-S latent truth model, CRS bug fix, test pollution fix, full
+calibration pipeline, H10/H12 experiments with statistical analysis,
+and candidate review app.
+
+### D-S latent truth model
+
+- Implemented `scripts/analyse_dawid_skene.py` — two-annotator EM
+  model with fixed student parameters (sens=0.95, spec=1.0)
+- 26 tier1 tests, audit-clean after 5 fixes (surplus redistribution,
+  CRS handling, dedup, log message, unused constant)
+- Results: measured F1=0.790, simple correction F1=0.808,
+  D-S posterior F1=0.814 (expected counts)
+- Key finding: 2-annotator D-S can only estimate aggregate
+  fractions, not per-item classifications. All 578 VLM-only items
+  get the same posterior (0.318). Used `ensure_utm_crs` on read.
+
+### Consensus GeoJSON CRS bug
+
+- Found during D-S implementation: coordinate reprojection produced
+  `inf` values because `merge_passes.py` wrote EPSG:32635 into
+  GeoJSON without CRS metadata (GeoJSON spec mandates EPSG:4326).
+- 5 reader scripts had accumulated `set_crs(allow_override=True)`
+  workarounds; `lib_consensus.load_geojson_gdf()` had a coordinate-
+  magnitude heuristic.
+- Fix: reproject UTM→4326 at write time in `merge_passes.py`;
+  extracted `ensure_utm_crs()` as canonical helper in
+  `lib_consensus.py`; `extract_candidates.py` reprojects 4326→UTM
+  for raster cropping.
+- 6 scripts fixed, 2 tests updated, no regressions.
+
+### Test pollution fix
+
+- 8 reverify mock tests failed in full suite but passed in
+  isolation — classic test ordering issue.
+- Root cause: `test_batch_api.py` imports `google.genai.types`,
+  caching it in `sys.modules`. Reverify tests mocked
+  `sys.modules["google.genai.types"]` but production code uses
+  `from google.genai import types`, which bypasses the sys.modules
+  patch via parent attribute lookup.
+- Fix: mock the full module chain (`google.genai` +
+  `google.genai.types`).
+- Full tier1 suite: 589 passed, 0 failed (was 580 + 9 failed).
+
+### Generalised calibration pipeline (main deliverable)
+
+Built across 5 sprints, 84 tier1 tests, 6 audit passes:
+
+1. **`scripts/lib_calibration.py`** — shared library with
+   `enrich_bounds_with_mound_counts`, `categorise_density`,
+   `stratified_sample` (3-level hierarchical), `nested_subsample`
+   (for H10 nesting), `score_difficulty_hp/hn`. 32 tests.
+2. **`scripts/select_calibration_tiles.py`** — generalised tile
+   selector with nested pool generation. 13 tests. Dry run verified
+   on real data: 160 cal + 327 test = 487 total, perfect geographic
+   balance (40/map), density-proportional at every nesting level.
+3. **`scripts/discover_hard_cases.py`** — hard-case discovery from
+   K detection passes with per-map Hungarian matching, cross-pass
+   FP clustering. 17 tests. Fixed `gpd.pd.concat` fragility,
+   relative FP threshold, CRS validation warning, dead parameter.
+4. **`scripts/build_example_pool.py`** — diversity-optimised
+   selection with spatial (500m radius) and grid-based same-tile
+   penalties. 15 tests. Fixed HP granularity issue (grid ID instead
+   of map name), recursive raster glob.
+5. **`scripts/generate_prompt_configs.py`** — automated config
+   assembly preserving canonical examples. 9 tests. Fixed examples
+   path resolution (inputs/examples, not prompts/examples).
+
+Tile-size-agnostic, dataset-agnostic. Seed of the automated
+"map reading service" concept.
+
+### H10/H12 experiment execution
+
+**Calibration discovery** (API gate 1, $0.80):
+- K=5 detection passes on 160 calibration tiles
+- 63 HP candidates (48 borderline + 15 consistent FN) — 16×
+  expansion from the 20-tile Phase 2 calibration
+- 151 HN candidates
+- Unlocked all 3 deferred experiments (H8 Scale-16/32, H9-C)
+
+**Example pools** (no API):
+- Baseline: pool_160_hp4hn4 (H8 Scale-8)
+- H12 HN-heavy: pool_160_hp2hn6 (1:3)
+- H12 HP-heavy: pool_160_hp6hn2 (3:1)
+- H8 Scale-16: pool_160_hp8hn8
+- H8 Scale-32: pool_160_hp16hn16
+- All 5 crop sets extracted successfully, 0 failures
+
+**Proposer runs** (API gate 2, $22.32):
+- K=10 per config × 327 test tiles = 16,350 calls
+- 88 parse failures across 50 runs (0.5%)
+- 3-round retry cleanup: 88 → 11 → 4 → 2 remaining (99.99% recovery)
+
+**Verifier runs** (API gate 3, $10.69):
+- Adversarial verifier (v1) on vote≥2 candidates = 7,766 calls
+- Zero failures
+- Per config: ~1,500-1,600 candidates, ~$2 each
+
+**Full sweep evaluation** (no API):
+- 9 vote thresholds × 9 probability thresholds × 5 configs
+- 315 evaluation points at 20m buffer
+- Best F1: 0.885 for baseline and Scale-32, 0.883 HN-heavy,
+  0.882 Scale-16, 0.870 HP-heavy
+
+**Statistical analysis** (no API, ran on laptop as one-time
+exception to sapphire rule — user was travelling):
+- K=5 replicate sweeps (runs 1-5 and runs 6-10 independently)
+- Bootstrap 95% CIs at vote≥6, prob≥0.15
+- Round-robin pairwise permutation tests (10k iterations each)
+- Result: **zero significant differences** at α=0.05 across all
+  10 pairs. HP6:HN2 (HP-heavy) vs baseline closest at p=0.061.
+
+### Candidate review app
+
+- `scripts/review_candidates.py` — Streamlit app for human review
+  of measured FPs from 55-map generalisation data
+- 6-way classification: burial mound / settlement mound / bench mark
+  on mound / trig point on mound / not a mound / uncertain
+- Keyboard shortcuts: `f/d/s/a` (left hand) for positive types by
+  frequency, `j/k` (right hand) for negative/uncertain
+- Resume from CSV, undo last, running corrected P and F1 (computed
+  from matching results, not hardcoded)
+- Audit-clean after 3 fixes (hardcoded recall, CSV column validation,
+  measured baseline)
+- Ready to use but not yet run against real data
+
+### Symbol taxonomy investigation
+
+- Student data uses "Hairy black diamond" and "Hairy black square"
+  descriptively for what the legend calls "Bench mark on burial mound"
+  (a single symbol that students described inconsistently)
+- Cropped 6 examples of "Hairy black diamond" from source rasters
+  to verify — all matched the bench-mark-on-mound legend symbol
+- Settlement mounds (5 in gold standard) are distinct symbol but
+  students likely classified them as "Hairy brown circle" (lumped
+  with burial mounds) — no specific "settlement mound" option in
+  student taxonomy
+- Raw student data: 8,343 records; filtered (hairy only) 4,770
+- `MapMounds17_18LLgood.csv` has 93 "Hairy black square" entries
+  missing from the `Entity-*.csv` files — source of the student-
+  mounds-55maps.geojson filtered file
+
+### Key observations added to working notes
+
+- Obs 223: D-S 2-annotator identifiability
+- Obs 224: Consensus GeoJSON CRS bug
+- Obs 225: Test pollution via Python module caching
+- Obs 226: Calibration pool expansion unblocks deferred experiments
+- Obs 227: H10/H12 null results — verifier dominates library composition
+
+### Deferred to Session 65
+
+- Leaderboard comparison: round-robin permutation tests against
+  previous text-track and image-track configurations
+- Assessment of whether F1=0.885 beats or matches previous best
+- Paper integration of H10/H12 null results (implications for H8,
+  H12 hypothesis discussion)
+
+### Infrastructure additions
+
+- `inputs/calibration/h10-384/` — permanent calibration/test split
+  (160/327) with nested pools 20⊂40⊂80⊂160 at seed=42
+- `outputs/h10/evaluation/` — K=10 proposer detections per config
+- `outputs/h10/consensus/` — consensus at thresholds 1/2/4/5/6 of 10
+- `outputs/h10/verifier-crops/` — 7,766 crops for verifier
+- `outputs/h10/verified/` — verifier probabilities per config
+- `results/h10/sweep_results.json` — 315-point grid evaluation
+- `results/h10/k5_replicate_sweep.json` — independent K=5 replicates
+- `results/h10/statistical_analysis.json` — bootstrap CIs + pairwise
+
+### Total API spend
+
+| Phase | Calls | Cost |
+|-------|-------|------|
+| Calibration discovery (K=5) | 800 | $0.80 |
+| H10/H12 proposer (K=10 × 5) | 16,350 | $22.32 |
+| Retry cleanup (3 rounds) | ~170 | ~$0.10 |
+| Verifier (7,766 candidates) | 7,766 | $10.69 |
+| **Total** | **~25,000** | **~$33.91** |
+
+### Status
+
+Calibration pipeline built and tested. H10/H12 experiments complete
+with statistical analysis. Review app ready. Session 65 will tackle
+the leaderboard comparison and paper integration.

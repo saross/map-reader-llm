@@ -3038,3 +3038,182 @@ general* ones.
 a paper, always test on data independent of the data that motivated
 the refinement. The calibration → generalisation degradation pattern
 (+0.021 → +0.001) is itself a finding worth reporting.
+
+---
+
+## Session 64 — 2026-04-11/12 (map-reader-llm): The proposer advantage the verifier erased — or, when a stage dominates
+
+### The surprising fact
+
+On the 327-tile held-out test set, five H10/H12 configurations
+(Scale-8 baseline, Scale-16, Scale-32, HP-heavy 6:2, HN-heavy 2:6)
+produced dramatically different proposer-only F1 at 6-of-10
+consensus:
+
+| Config | Proposer-only F1 | Advantage over baseline |
+|--------|------------------|-------------------------|
+| hp4hn4 (Scale-8 baseline) | 0.663 | — |
+| hp2hn6 (HN-heavy) | 0.663 | +0.000 |
+| hp6hn2 (HP-heavy) | 0.651 | −0.012 |
+| hp8hn8 (Scale-16) | 0.684 | **+0.021** |
+| hp16hn16 (Scale-32) | 0.702 | **+0.039** |
+
+The +0.039 F1 advantage for Scale-32 was entirely from improved
+precision (0.577 vs 0.530), with recall essentially unchanged. A
+larger hard-example library produced a measurably stricter proposer
+that rejected more FPs while keeping recall. This aligned with the
+preregistered H8 hypothesis: scaling the library should improve F1
+with diminishing returns.
+
+Then the verifier ran and erased the distinction:
+
+| Config | Proposer F1 | Proposer+Verifier F1 |
+|--------|-------------|----------------------|
+| hp4hn4 (baseline) | 0.663 | **0.885** |
+| hp2hn6 (HN-heavy) | 0.663 | **0.883** |
+| hp6hn2 (HP-heavy) | 0.651 | 0.860 |
+| hp8hn8 (Scale-16) | 0.684 | **0.880** |
+| hp16hn16 (Scale-32) | **0.702** | **0.885** |
+
+Round-robin pairwise permutation tests (10,000 iterations each)
+confirmed: **zero significant differences at α=0.05** across all
+ten pairs. The Scale-32 advantage was a real, consistent effect at
+the proposer level — and completely null in the full pipeline.
+
+### The abductive problem
+
+Why did the verifier erase the proposer advantage? I didn't predict
+this. Going in, my belief was: the verifier is a downstream filter
+that refines proposer output, so proposer improvements should
+partially propagate through (perhaps attenuated, but not eliminated).
+The data falsifies that prediction.
+
+### Candidate mechanisms
+
+**Hypothesis 1: Independence of verifier judgment from proposer
+prompt.** The verifier sees only the candidate crop — it doesn't know
+which examples were in the proposer's prompt. If the verifier's
+per-candidate judgment is independent of the proposer's example
+library, then library differences only affect *which* candidates are
+proposed, not the verifier's probability for any given candidate. The
+verifier then filters all candidate pools to approximately the same
+final set.
+
+**Evidence for**: The five configs have very similar candidate counts
+at each vote threshold (1,508-1,591 at vote≥2). The verifier
+probability distributions look similar across configs. The final
+accepted counts converge.
+
+**Evidence against**: If this were purely independent, the
+underperformer (hp6hn2, proposer F1=0.651) should also converge to
+0.885 after verification. Instead it stays at 0.860 — the 0.025
+penalty persists. So library composition has *some* residual effect.
+
+**Hypothesis 2: The proposer advantage is in the "easy" space, the
+verifier operates in the "hard" space.** The larger libraries help
+the proposer catch/reject confident cases — confidently detect real
+mounds, confidently reject clear FPs. But the verifier is applied to
+borderline candidates (vote 2-10), so the "easy" cases are mostly
+outside its operating range. The verifier refines the hard middle,
+which is invariant to proposer library composition.
+
+**Evidence for**: The per-config precision/recall splits at the
+proposer level show the hp16hn16 advantage is in precision (0.577
+vs 0.530) — i.e., rejecting more FPs. If those FPs were already
+getting rejected by the verifier anyway, the proposer-level
+improvement is redundant.
+
+**Evidence against**: The hp16hn16 advantage comes through in the
+vote-count distribution. Fewer low-vote candidates from Scale-32
+means fewer candidates enter the verifier stage, which should affect
+the final count and the sweep results. But the sweep results don't
+show this — Scale-32 lands at F1=0.885, exactly matching baseline.
+
+**Hypothesis 3: Both configurations hit the same F1 ceiling.** The
+model has a fixed detection ceiling on this task (call it F1≈0.885
+at 20m buffer on gold-standard GT). The proposer-level differences
+reflect how efficiently each library gets to that ceiling on a
+single pass. With K=10 consensus + verifier, all configurations
+accumulate enough information to reach the ceiling, regardless of
+library composition.
+
+**Evidence for**: The matching F1 with the 4-map gold-standard
+production result (also 0.885) is strong evidence of a ceiling
+effect. The best configs from Phase 2-3d also cluster near F1≈0.79
+(single-track text) / F1≈0.885 (with verifier). Different
+configurations reach the same endpoint.
+
+**Evidence against**: If there were a hard ceiling, we'd expect
+hp6hn2 (HP-heavy) to also converge to 0.885 with enough passes.
+It doesn't — it stalls at 0.860. So either the ceiling is
+configuration-dependent, or HP-heavy has a specific deficit that
+doesn't disappear with more data.
+
+### Probe: which mechanism is right?
+
+The discriminating experiment: run K=10 on a FRESH unseen dataset
+(not the 327-tile test set) with just the baseline and Scale-32
+configurations. If Hypothesis 3 (ceiling) is right, they should again
+converge. If Hypothesis 2 (easy-vs-hard) is right, they should again
+converge (for the same reason). If Hypothesis 1 (independence) is
+right, they should again converge. So all three predict convergence
+— but they predict *different residuals* for HP-heavy vs the others.
+
+A better probe: **look at the verifier probability distribution for
+identical locations across configs**. Take a candidate location that
+appeared in all 5 configs' consensus outputs (at vote≥2) and compare
+the verifier probability assigned to it. If the probability is
+independent of proposer config (Hypothesis 1), the five values
+should be nearly identical. If the proposer influences the verifier
+(e.g., via the crop quality or some subtle metadata), they'll differ.
+
+I can run this probe with the existing data in Session 65 — it's a
+spatial join problem, no new API calls needed. This is the first
+thing I should check.
+
+### The tentative belief revision
+
+Pending the probe, my working belief is a mix of Hypotheses 2 and 3:
+**the verifier operates in a region where proposer-level library
+diversity doesn't matter, and both stages together hit a
+configuration-insensitive ceiling on this task**. This strengthens
+Obs 219 (architecture dominates prompt refinement) and extends it to
+library composition: **architecture dominates both prompt text AND
+example selection**.
+
+If this is right, the practical implication for future research and
+for the paper is stark: **spending time on library composition
+optimisation is wasted effort if you have a verifier**. The only
+library parameter that matters (marginally) is avoiding the HP-heavy
+configuration, which introduces a small but persistent penalty
+(−0.025 F1, p=0.061). Everything else — size, balance, HN-weight —
+is noise.
+
+### What I got wrong
+
+I predicted the proposer advantage would propagate through. It
+didn't. The magnitude of the erasure (full +0.039 → full 0.000) was
+larger than I'd have guessed for any mechanism. I also didn't predict
+that the null result would be *exactly* null — I'd have expected
+some residual effect from proposer diversity, even if attenuated. The
+fact that baseline and Scale-32 land at identical F1 (to three
+decimal places) is the most striking part.
+
+### The meta-question
+
+How often will this pattern repeat? Session 52 found that MORE
+diverse few-shot examples didn't help single-pass F1. Session 53
+found that HIGH thinking hurts single-pass but helps consensus.
+Session 63 found that v2 verifier prompts gave diminishing returns
+on broader data. Now Session 64 finds library composition gives
+null results when a verifier is applied. There's a pattern: **prompt-
+level interventions that look effective on narrow data become
+ineffective on broader / downstream data**. The true variable is
+further down the pipeline than any prompt.
+
+This is the strongest form of the architecture-over-prompts thesis
+we've encountered. The belief revision is not about this specific
+experiment but about how to interpret future prompt-engineering
+findings: **any effect observed at a single stage in isolation
+should be assumed to attenuate at the full-pipeline level**, and
+we should always test the full pipeline before claiming a result.

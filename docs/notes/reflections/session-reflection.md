@@ -6195,3 +6195,134 @@ existing draft (Sections 5–6) may be weighted the other way. Worth
 reviewing.
 
 ---
+
+### Session 64 Reflection — 2026-04-11/12 (map-reader-llm)
+
+*What surprised me about this session?*
+
+The H10/H12 null results. Going into the experiments I expected the
+Scale-32 library (16 HP + 16 HN) to meaningfully beat the Scale-8
+baseline — the preregistered hypothesis predicted diminishing returns
+from library scaling, not a plateau at Scale-8. The proposer-only
+results initially supported this: Scale-32 ran 0.039 F1 ahead of
+baseline at 6-of-10 consensus, a larger effect than most of the
+Phase 2 factors. Then the verifier erased it. All five configurations
+(Scale-8 baseline, Scale-16, Scale-32, HP-heavy, HN-heavy) collapsed
+into a statistical dead heat at F1≈0.885, with zero significant
+pairwise differences at α=0.05 across the full round-robin.
+
+This is the strongest form of Obs 219 yet: not just "architecture
+dominates prompt refinement" but "architecture dominates *library
+composition* too." The verifier isn't a downstream cleanup stage — it
+is the decisive factor in F1. Library size and HP:HN ratio barely
+matter once you have a verifier in place. The H12 hypothesis
+(ratio effects) and most of H8 (scaling effects) are null findings.
+
+What makes this a genuine surprise rather than a "I should have
+predicted it" moment: the proposer-level Scale-32 advantage was
+clearly visible in the data — +0.039 F1, real precision improvement,
+recall unchanged. It wasn't noise. The verifier took those
+distinctions and converted them into zero. I don't have a confident
+mechanism: is it that the verifier's per-candidate judgment is
+independent of which examples were in the proposer's prompt? That
+the vote-threshold + probability-threshold double filter is
+redundant with library diversity? Both? The data doesn't distinguish.
+
+And there's a second-order surprise: the headline F1=0.885 exactly
+matches the gold-standard production result. Different maps (327
+held-out test tiles disjoint from calibration), different example
+images (automatically mined rather than hand-curated), different
+prompt configs (5 different library compositions) — and the
+endpoint is the same. That's either strong evidence that F1≈0.885
+is the model's true ceiling on this task at this tile size, or
+strong evidence that the pipeline has converged to a stable
+operating point. Probably both.
+
+*What would I do differently if I replayed this session?*
+
+I'd catch the verifier CLI flag errors in a dry-run before launching
+the K=10 proposer runs. Both times the verifier errored out before
+making API calls (wrong flag name the first time, wrong file extension
+the second), so no spend was wasted — but each mistake forced me to
+re-explain to the user that the cost was zero. A 30-second dry-run
+(`--dry-run` flag) on one config would have caught both errors before
+the 50 proposer runs even started.
+
+More substantively: I'd estimate the verifier cost *before* committing
+to vote≥2 as the threshold. When I presented the API gate at ~$26
+total (with verifier at vote≥2), I picked vote≥2 because "it balances
+cost and flexibility." But the actual verifier cost came in at $10.69
+— under budget, but I didn't know that before running. A better
+practice would be to compute the vote≥1 and vote≥2 candidate counts
+upfront and present both options with accurate costs, not just a
+recommendation. The user explicitly said "take nothing for granted"
+earlier in the session and I partially honoured that by sweeping the
+full grid post-hoc, but I could have been more transparent about
+which specific vote thresholds I was choosing and why.
+
+The CRS bug fix was well-handled in retrospect. When I found the bug
+mid-implementation of the D-S model, I asked whether to fix it and
+the user said yes — and I then did the full fix (writer + 5 readers
++ tests) rather than just patching the reader I needed. The audit
+loop caught the test pollution issue as a follow-up. But the audit
+output format was noisy (JSONL buried inside other messages), and I
+had to grep through it to extract the findings. If I replayed this,
+I'd capture audit output to a file that I could read cleanly.
+
+*What felt uncertain or unresolved at the end?*
+
+The interpretation of the null H10/H12 results for the paper. The
+preregistered hypotheses predicted specific directional effects
+(H8: larger libraries help; H12: HN-heavy ratios improve precision).
+The data reject both. But "no significant effect" is a weak claim
+— the confidence intervals on the F1 differences are wide (the
+Scale-32 vs baseline CI includes 0, but it also includes +0.04),
+and with only 327 tiles we may be underpowered to detect smaller
+effects. The conservative interpretation is: "at the power available,
+we find no evidence of library composition effects after verifier
+application." The stronger interpretation is: "library composition
+is immaterial once you have a verifier." Which framing goes in the
+paper matters for the discussion section, and I'm not sure which
+is right.
+
+The second unresolved thread: the comparison with existing text-track
+and image-track leaderboards from earlier sessions. The user asked
+for this and I deferred it to Session 65 — it's a substantial
+analysis effort (round-robin permutation tests across ~10+ conditions
+per track), and I didn't want to rush it in the session's final
+hour. The deferral is the right call but it leaves the session with
+an open question: **is F1=0.885 the best we've achieved, or does
+one of the older image-track or text-track configurations beat it?**
+The headline claim depends on the answer.
+
+*What's the single most important thing a future instance should know?*
+
+The pipeline built this session is the deliverable, not the H10/H12
+results. `lib_calibration.py` + `select_calibration_tiles.py` +
+`discover_hard_cases.py` + `build_example_pool.py` +
+`generate_prompt_configs.py` form a reusable, tile-size-agnostic,
+dataset-agnostic chain from raw tiles to ready-to-run prompt configs.
+84 tier1 tests, audit-cleaned. It's the seed of the automated "map
+reading service" the user wants to build — provide
+ground-truthed maps and a legend, get optimal prompts. The H10/H12
+experiments exercised the pipeline and validated it works (F1=0.885
+matches gold standard), but the pipeline itself is the main
+contribution of the session.
+
+The other thing: the 384px switch is now load-bearing. Future work
+at 384px should follow this session's patterns (use `ensure_utm_crs`
+on all GeoJSON reads, use the generalised tile selector, reuse the
+K=5/K=10 evaluation protocol). The 512px legacy is documented in
+errata but no longer the default. Errata entry for the tile-size
+deviation from preregistration should be written before the paper
+draft.
+
+**Session**: 2026-04-11/12 (Session 64)
+**Key observation**: H10/H12 null results strengthen the
+architecture-over-composition thesis (Obs 219 → Obs 227). F1=0.885
+on 327 held-out test tiles matches the gold-standard production
+result — first time we've hit this on an independent test set with
+automatically mined examples. The calibration pipeline is the
+session's real deliverable.
+
+---
