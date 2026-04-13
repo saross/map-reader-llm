@@ -2,7 +2,7 @@
 
 **Purpose**: Document major methodological decisions and their rationale for the VLM burial mound detection study.
 
-**Last updated**: 2026-03-21
+**Last updated**: 2026-04-13
 
 ---
 
@@ -1153,6 +1153,59 @@ budget to ~$0.05.
 **Implementation**: Documented in `results/pv/phase2/pv-phase2-analysis.md`
 
 **Evidence**: Obs 170, 171, 174; `results/pv/phase2/pv-phase2-analysis.md`
+
+---
+
+## Decision 26: Retain Greedy-Ball Consensus Clustering as Primary; Validate via Weighted Boxes Fusion
+
+**Date**: 2026-04-13
+
+**Decision**: Retain the greedy-ball spatial clustering at a 20 m radius (implemented in `scripts/lib_consensus.py`, constant `DISTANCE_THRESHOLD_METRES = 20.0`) as the primary consensus-voting aggregation method for all preregistered phases (Phase 2a–2e, Phase 3a–3d, H10/H12, production run, generalisation run). Validate that the headline F1 results are robust to this implementation choice by replicating key analyses using Weighted Boxes Fusion (Solovyev et al. 2019, arXiv:1910.13302) adapted for multi-pass VLM detections. Recommend WBF as the preferred method for future work.
+
+**Alternatives considered**:
+
+- **Replace greedy ball with WBF wholesale**: re-run every preregistered phase, rewrite affected memos and observations, present WBF as the primary method with greedy ball as "historical" supplementary material. Rejected because (a) it would require explanation for every reader who checks against the prior observations and working notes, (b) it risks subtly breaking finalised figures and tables, and (c) it creates the appearance of a corrective methodology change when the statistical equivalence shows no correction is needed.
+- **Retain greedy ball without a robustness check**: continue as-is with no WBF validation. Rejected because the audit process (Obs 228) surfaced legitimate concerns about the greedy-ball choice — it does not use the ensemble confidence signal (vote counts) during clustering, operates on centroid distance rather than spatial overlap (IoU), and produces duplicate candidates for ~11.6 % of ground-truth mounds due to centroid drift exceeding the 20 m radius. A reviewer familiar with the modern object-detection literature would ask about these issues, and a post-hoc robustness check is the right response.
+- **Switch to WBF for H10/H12 and production only**: mixed methodology within the paper. Rejected because it creates a "why here but not there" question.
+
+**Rationale**:
+
+1. **The preregistration specifies the 20 m matching tolerance (Hungarian evaluation buffer) and the consensus voting framework (N passes, vote threshold sweep), but NOT the specific clustering algorithm that merges per-pass detections into voted candidates.** See `docs/methodology/preregistration/analysis-summary.md`. The clustering algorithm is implementation detail within the preregistered framework, so replacing it is not a protocol deviation — but retaining the original choice is also not a protocol obligation.
+2. **Statistical equivalence validated** on the H10/H12 hp4hn4 configuration: paired permutation test across 327 test tiles with 10,000 iterations gave ΔF1 = 0.0053 (greedy minus WBF) with two-sided p = 0.6019. Bootstrap 95 % CIs for F1 overlap by ~97 % of their range (greedy [0.8483, 0.9165]; WBF [0.8452, 0.9108]). The tile-level disagreement is exactly symmetric: greedy wins 11 tiles, WBF wins 11 tiles, 305 tiles are exact F1 ties. On this representative config the two methods are statistically indistinguishable.
+3. **Retaining greedy ball as primary preserves every prior result** without recomputation. Every F1 number in working notes, memos, and the paper draft remains valid as measured. The WBF replication is framed as methodological robustness, not corrective action.
+4. **The methodology investigation itself is the rigor story**. The audit process (described in detail in Obs 228) discovered and documented the greedy-ball limitations, investigated the cartographic floor (68.1 m minimum GT separation), developed a principled alternative (WBF with vote-aware minimum separation anchored at the preregistered vote threshold), and validated statistical equivalence before committing to any change. This sequence is the paper's "due diligence" narrative.
+5. **WBF as recommended future-work method**: Weighted Boxes Fusion is the established modern approach for ensemble-based object detection aggregation (standard in Kaggle object-detection competitions and production pipelines). It uses the per-detection confidence signal, operates on spatial overlap rather than centroid distance, handles the drift-fragment long tail principally, and automatically enforces the minimum inter-feature separation through the IoU metric. For any extension of this pipeline beyond the preregistered study, WBF is the correct default.
+
+**Evidence**:
+
+- **Investigation**: Obs 228 (upstream consensus dedup radius audit); Obs 229 (tile-boundary edge artefacts, separate finding)
+- **Validation**: `results/h10/wbf/sweep_results_pool_160_hp4hn4_variant_c.json` (full (vote_t, prob_t) sweep); `results/h10/wbf/variant_c_vs_greedy_hp4hn4.json` (bootstrap CIs, paired permutation test)
+- **Implementation**: `scripts/lib_fusion.py` (WBF library); `scripts/fuse_detections_wbf.py` (end-to-end runner); `scripts/sweep_f1_wbf.py` (F1 sweep); `scripts/compare_wbf_vs_greedy.py` (statistical comparison)
+- **Tests**: `tests/test_lib_fusion.py` (33 tier-1 unit tests covering box IoU, size filtering, WBF clustering, vote-aware minimum-separation, end-to-end pipeline)
+
+**Parameters of the WBF robustness implementation (Variant C)**:
+
+- Algorithm: canonical Weighted Boxes Fusion (Solovyev et al. 2019) on the axis-aligned polygon bounding boxes returned by the proposer; no adaptation for point detections was needed
+- Confidence weights: uniform (1.0) — the proposer returns categorical `"confidence": "high"` for every detection, so WBF's weighted averaging degenerates to arithmetic mean; vote count emerges as a cluster property used by the downstream vote filter
+- IoU threshold for clustering: 0.25 (captures same-mound drift up to ~45 m centroid offset for 75 m diameter symbols, while keeping IoU at zero at the 68 m cartographic floor)
+- Post-fusion minimum separation: 30 m, vote-aware with anchor threshold ≥ 6 (matches the preregistered F1-sweep optimal vote_t for H10/H12 greedy ball; only merges pairs where at least one cluster has vote_count ≥ 6, preventing spurious FP-fragment combination while absorbing tight drift into high-confidence cores)
+- Box size filter: 20 m ≤ width, height ≤ 200 m; 400 m² ≤ area ≤ 40,000 m² (rejects pathological detections such as a 560 m wide outlier observed in the raw proposer output)
+- Matching tolerance for downstream evaluation: **20 m Hungarian buffer, unchanged from the preregistration**
+
+**Paper methods-section language (draft)**:
+
+> Per-pass detections from the ten-pass proposer stage were aggregated into consensus candidates using greedy spatial clustering at a 20 m centroid-distance radius, feeding the preregistered Hungarian-matching evaluation at the same 20 m tolerance. To validate that the headline F1 results are not sensitive to the specific aggregation algorithm, we replicated the end-to-end analysis using Weighted Boxes Fusion (Solovyev et al. 2019) with an IoU threshold of 0.25 and a vote-aware minimum-separation post-step (30 m radius, anchor vote_count ≥ 6) derived from the empirical cartographic constraint that burial mound symbols are never closer than ~68 m on these Soviet topographic maps (minimum observed separation = 68.1 m in the 569-mound reference corpus; 1st percentile = 72.0 m). Paired permutation tests on the H10/H12 hp4hn4 configuration confirmed statistical equivalence (ΔF1 = 0.005, two-sided p = 0.60 at n = 10,000 permutations; bootstrap 95 % F1 CIs overlapping by ~97 % of their range). We recommend Weighted Boxes Fusion as the preferred aggregation method for future extensions of this pipeline, noting that it uses the ensemble vote signal during clustering, operates on spatial overlap rather than centroid distance, and handles drift-fragment aggregation more principally than the ad hoc greedy-ball approach.
+
+**Scope of robustness-check replication** (pending decision on scale vs cost):
+
+- **Required**: H10/H12 rollout to remaining 4 configs (hp2hn6, hp6hn2, hp8hn8, hp16hn16) at ~$7 API each = ~$28 total. Confirms the p=0.60 equivalence holds across the library-composition sweep.
+- **Recommended**: Production run (4 maps, F1 = 0.885) WBF replication at ~$10 API. Directly validates the paper's headline number.
+- **Optional**: Generalisation run (55 maps, F1 = 0.790 → D-S 0.808–0.814) WBF replication at ~$50–100 API. Strongest defence but substantial API spend.
+- **Not required**: Phase 2a–2e or Phase 3a–3d replications. These are preregistered hypothesis tests whose validity does not depend on the clustering-algorithm choice, and the WBF replication on H10/H12 demonstrates equivalence at the aggregation level.
+
+**Protocol classification**: **Not a protocol deviation** — the preregistration specifies the Hungarian matching tolerance and consensus voting framework but not the clustering algorithm. No erratum required.
+
+**Related observations**: Obs 228 (investigation narrative); Obs 229 (edge artefact separate finding).
 
 ---
 

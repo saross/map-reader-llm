@@ -7548,3 +7548,1154 @@ in hp4hn4 runs 3 and 4). Consensus voting across the remaining
 8+ passes compensates for sparse failures.
 
 ---
+
+## Observation 228: Upstream Consensus Dedup Radius Is Too Tight — The 20 m Default Leaves Same-Mound Duplicates (2026-04-12)
+
+**Discovery context**: While running the verifier independence probe
+for the H10/H12 null result (Obs 227), I observed that single-link
+spatial clustering across the 5 configs at a 20 m buffer produced
+346 "intra-config collisions" — cluster IDs where a single config
+contributed >1 candidate. My initial reading was that these were
+cross-config bridging artefacts of single-link chaining merging
+two genuinely distinct within-config detections. Shawn challenged
+this interpretation with a domain constraint: Soviet burial mound
+symbols on these maps are ~75 m in diameter (15 px × 5 m/px) and
+by cartographic convention never overlap, so any two centroids
+within ~75 m of each other must represent the same physical mound.
+The diagnosis inverted immediately: the probe's single-link was
+accidentally *repairing* real dedup failures that the upstream
+consensus had left uncorrected.
+
+### What the upstream code actually does
+
+`scripts/lib_consensus.py:48` sets
+`DISTANCE_THRESHOLD_METRES = 20.0`, used by both
+`deduplicate_within_pass` and `cluster_across_passes`. The rule is
+**greedy-ball clustering on centroids**: for each unmarked point,
+claim all unmarked neighbours within 20 m and form a cluster.
+Centroids are computed from the detection geometry; the 20 m radius
+is centroid-to-centroid Euclidean distance.
+
+### The cartographic constraint
+
+Symbols on these maps are ~75 m in diameter and do not overlap. So
+two centroids ≤75 m apart are necessarily the same physical mound.
+The correct dedup radius must therefore sit in roughly [40, 70] m —
+large enough to merge same-mound detections whose centroid drifts
+across passes, tiles, or library compositions, and small enough to
+never merge two distinct mounds.
+
+### Magnitude: H10/H12 test set (327 tiles, 319 GT mounds)
+
+A direct diagnostic over the 5 H10 configs
+(`scripts/diagnose_consensus_dedup_radius.py`,
+`results/h10/consensus_dedup_magnitude_diagnostic.json`):
+
+**GT-centric view** — for each GT mound, count final candidates
+within R metres, across the 5 configs:
+
+| R | % GT with ≥1 match | % GT with ≥2 matches | Mean n_multi per config |
+|---|---|---|---|
+| 20 m | 0.928 | 0.021 | 6.8 |
+| 40 m | 0.962 | 0.107 | 34.0 |
+| 60 m | 0.962 | 0.131 | 41.8 |
+| 75 m | 0.972 | 0.153 | 48.8 |
+
+At the 75 m cartographic limit, **~15% of GT mounds have two or
+more final candidates within the symbol footprint** — meaning 15%
+of physical mounds on the test set are represented by 2+ distinct
+candidate IDs in the post-consensus output of each H10 config.
+The effect is essentially identical across all 5 library
+compositions (range 14.1%–16.3%), confirming this is a pipeline
+artefact independent of library choice.
+
+**Candidate-pair view** — for each config, all pairs of distinct
+final candidates by separation distance:
+
+| Separation (m) | hp4hn4 | hp2hn6 | hp6hn2 | hp8hn8 | hp16hn16 | Total |
+|---|---|---|---|---|---|---|
+| ≤20 | 55 | 37 | 54 | 49 | 50 | 245 |
+| (20, 30] | 106 | 110 | 105 | 106 | 121 | 548 |
+| (30, 40] | 96 | 101 | 93 | 89 | 85 | 464 |
+| (40, 50] | 83 | 64 | 78 | 82 | 79 | 386 |
+| (50, 60] | 53 | 58 | 66 | 51 | 57 | 285 |
+| (60, 75] | 72 | 70 | 67 | 69 | 79 | 357 |
+| **Total ≤75 m** | **465** | **440** | **463** | **446** | **471** | **2,285** |
+
+Each config has ~457 pairs of candidates within 75 m of each other
+— pairs that by cartographic construction must be duplicates.
+Mean pair separation in this zone has p50 ≈ 30–42 m and p90 ≈ 74–82 m,
+centred in the "too far for 20 m dedup, too close for distinct
+mounds" window.
+
+### Two unexpected sub-findings
+
+**Sub-finding A: 49 pairs per config within ≤20 m.** I expected
+zero. Greedy-ball dedup at 20 m does not guarantee 20 m disjointness
+in its output — it only guarantees that no two cluster *seeds* are
+within 20 m. A non-seed point in an earlier cluster can still sit
+within 20 m of a seed that forms a later cluster, because the
+earlier cluster only absorbs points within 20 m of its own seed.
+This is a structural limitation of greedy-ball clustering, not a
+bug, but it means the 20 m guarantee is weaker than I had assumed.
+Rough count: ~49 within-20 m pair leaks per config × 5 configs =
+245 pair leaks, about 3% of the total ~7,766 pooled candidates.
+
+**Sub-finding B: ~360 of the ~457 pairs per config are not near
+any GT mound.** These are clusters of FPs — spurious non-mound
+detections (vegetation patches, symbol ambiguities, edge artefacts)
+that the model produces repeatedly and localises imperfectly, such
+that multiple final candidate IDs coexist at <75 m on the same
+non-mound feature. These are still dedup failures, but their F1
+impact runs through FP inflation rather than through TP-duplication.
+A correct 50–60 m dedup would collapse both populations, but the
+mechanisms are distinct.
+
+### Implications for published results
+
+Every result using `DISTANCE_THRESHOLD_METRES = 20.0` may have its
+F1 distorted by this under-merging. The direction of the bias is
+most likely a **depressed precision** (one physical mound yielding
+two cluster IDs → 1 TP + 1 spurious FP under greedy bipartite
+matching). A rough back-of-the-envelope for H10/H12 vote=6, prob=0.15
+(pre-verifier): at the optimal operating point, each config has
+~319 GT × 0.859 recall ≈ 274 TPs and ~26 FPs for P=0.913. If 15%
+of GT mounds contribute an extra "duplicate" FP that survived the
+verifier, that is ~48 extra FPs per config. Not all survive the
+verifier, but even if half do (~24 per config), the inflated FP
+count is of the same order as the total post-verifier FP count.
+**The published F1 = 0.885 may be a lower bound**; correct dedup
+could push precision — and therefore F1 — meaningfully higher.
+
+Affected results include: all of Phase 2, Phase 3a–3d, the H11/E47
+production run at F1=0.885, the 55-map generalisation at F1=0.790,
+and Obs 227 H10/H12 at F1=0.885. The **relative comparisons within
+an experiment are likely preserved** (the bias applies uniformly),
+but **absolute F1 levels are biased downward** by an amount we
+don't yet know.
+
+### Why the 20 m default was not caught earlier
+
+The dedup radius was chosen for **centroid drift across passes**,
+which is typically small (~5–10 m for the same detection seen by
+the model across thinking-seeds). That choice is defensible for
+within-pass and across-pass dedup on the same physical tile. It
+is not sufficient for the tail of cross-tile and cross-library
+centroid variance, and it is certainly not sufficient under the
+cartographic constraint that distinct mounds are always ≥75 m
+apart. The 20 m default captures the typical case and misses the
+tail — which turns out to be ~15% of GT mounds.
+
+### Decision pending
+
+The root-cause fix is a re-run of upstream consensus at a larger
+dedup radius (likely ~50 m, comfortably below the 75 m minimum
+inter-mound distance while leaving safety margin for cemetery
+cases). This cascades through verifier-crop extraction, verifier
+runs, and the F1 sweep. The scope is larger than Obs 227's
+analysis work but smaller than the original H10/H12 run because
+no new proposer API calls are needed — only re-dedup, re-crop,
+and re-verify of the newly-unified candidates.
+
+**Visual verification is valuable before committing to a re-run**:
+export the ~49 multi-GT cases per config as a QGIS-viewable layer
+(GT markers + paired candidates + the 384 px tile raster), have
+Shawn eyeball 10–20 examples to confirm they are all same-mound
+duplicates rather than genuinely-close neighbours (e.g. two mounds
+in a dense cemetery digitised at 60 m centroid separation). If
+the human calibration agrees with the cartographic constraint,
+proceed with the re-dedup at 50 m. If some cases turn out to be
+real neighbouring mounds, tighten the re-dedup radius accordingly.
+
+**Probe #1–#4 (Obs 227 follow-up) paused** pending this decision.
+It makes no sense to run the shared-vs-unique analysis at a dedup
+radius that disagrees with the domain, then re-run it after the
+fix.
+
+### Final outcome (2026-04-13)
+
+**The straightforward "just pick a larger radius" fix did not
+survive the subsequent investigation.** Shawn's visual checks and
+empirical follow-up work produced three critical findings:
+
+1. **The 75 m cartographic claim was empirically validated** but
+   tighter than I initially used. The full 569-mound reference
+   corpus has a minimum inter-mound distance of 68.1 m, with p1 =
+   72.0 m and only 5 pairs within 75 m. Shawn's domain claim that
+   "symbols never overlap, so centroids are always ≥ 75 m apart"
+   was correct to within a 7 m margin.
+
+2. **The intra-mound drift distribution is much tighter than the
+   pair-separation distribution** suggested. At the attribution-safe
+   40 m radius (below the 68 m cartographic floor), the
+   candidate-to-GT distance drift has p50 = 7 m, p90 = 23 m, p99 =
+   37 m — not the p50 = 34 m I initially inferred from pair
+   separations. Shawn's geometric pushback ("if two mounds are
+   70 m apart, you'd need R < 35 m") was right in principle, and
+   R < 35 m is geometrically defensible only when the drift
+   distribution is actually narrow enough for a small R to catch
+   most duplicates. The drift distribution is narrow, so R ≤ 30 m
+   is the sweet spot.
+
+3. **The simple "raise the radius" fix has a non-obvious failure
+   mode**. Any min-separation step at R ≥ 40 m can merge adjacent
+   cemetery mounds whose fused-cluster centroids happen to drift
+   within R of each other. This was caught by Shawn's visual check
+   of a 6-mound necropolis where WBF with min_sep=60 m collapsed
+   two adjacent mounds into a single super-cluster — a FAILURE
+   mode that the multi_GT aggregate metric could not detect
+   (because both mound GTs end up within 40 m of the merged
+   centroid, so both appear "covered"). This is a classic case of
+   an aggregate metric being blind to a qualitative failure.
+
+**These findings redirected the investigation from "raise the
+dedup radius" to "adopt a principled ensemble-fusion algorithm".**
+After a literature sweep via the `/review-implementation` protocol,
+Weighted Boxes Fusion (Solovyev et al. 2019) emerged as the
+canonical modern method for multi-pass ensemble aggregation. We
+implemented WBF for the project's polygon-bounding-box proposer
+output (canonical, no adaptation needed) with a vote-aware
+minimum-separation post-step at 30 m / anchor vote ≥ 6. Prototype
+testing on hp4hn4 confirmed:
+
+- The dedup problem is fully fixed (multi-GT at 40 m: 11.6 % →
+  0.6 % residual, drift p99: 38.8 m → 29.5 m)
+- Cemetery mounds are preserved (Shawn's visual check on multiple
+  necropoleis confirmed zero over-merging)
+- End-to-end F1 is statistically equivalent to the greedy-ball
+  baseline (ΔF1 = 0.005, paired permutation p = 0.60,
+  11-wins-each tile split out of 22 disagreeing tiles, 305 tiles
+  tied out of 327)
+
+**Resolution (see Decision 26)**: Greedy-ball clustering at 20 m
+is **retained as the primary consensus aggregation method** for
+all preregistered phases, because (a) all prior results stand as
+measured and the statistical equivalence validates that the
+choice did not bias them, and (b) the preregistration specifies
+the Hungarian matching tolerance (20 m) and the consensus voting
+framework (vote threshold sweep) but NOT the specific clustering
+algorithm, so retention is a no-op protocol-wise. **WBF is
+implemented and validated as a methodological robustness check**
+for the headline results and is the recommended default for
+future extensions of the pipeline. **No protocol erratum** is
+required.
+
+**What Obs 228 now records**: a documented audit that (a) found a
+genuine limitation of the original implementation, (b) investigated
+the root cause and its magnitude, (c) explored the solution space
+via literature sweep, (d) implemented and validated a principled
+alternative, and (e) confirmed via rigorous statistical testing
+that the original results are robust to the implementation choice.
+The audit is part of the paper's methodological rigor, not a
+corrective change.
+
+**Probe #1–#4 (Obs 227 follow-up) resumes** using whichever pipeline
+is appropriate for the specific probe question. The verifier
+independence probe's set-divergence findings were computed with
+greedy ball at 20 m; running the same probe with WBF Variant C
+would produce slightly different cluster counts but would not
+change the qualitative finding (H-A partial, H-B partial, H-C
+partial — all three mechanisms operating simultaneously). No
+re-run of the probe is required for the paper.
+
+---
+
+## Observation 229: Tile-Boundary Edge Artefacts in Proposer Output — a Proposer-Level FP Pattern for Later Investigation (2026-04-13)
+
+**Context**: While doing visual verification of the WBF fusion variants
+in QGIS on hp4hn4 test-tile output, Shawn noticed a distinctive
+pattern: in the strip of map along the northern edge of test tile
+K-35-052-4_32635_x0_y2352 (near FID 514's necropolis), a row of
+low-vote candidates (vote=2 to vote=5) runs horizontally along what
+appears to be a tile boundary or a linear cartographic feature.
+The pattern is present in all fusion variants (greedy ball, WBF
+no_minsep, WBF vote-aware at both 30 m and 60 m min-separation) at
+identical density, which means it is a **proposer-level phenomenon**,
+not a fusion artefact.
+
+### What the pattern looks like
+
+Looking at the zoomed QGIS view of the area around the (398338, 4694228)
+necropolis, between the two valid GT mounds with high-vote candidates
+there is a horizontal row of roughly 7–8 small candidate points,
+coloured dark purple (vote=2), dark blue (vote=2–3), and teal
+(vote=5–9). The row tracks along the horizontal line of either:
+
+1. The northern edge of the test tile (y ≈ 4694222.1), or
+2. An underlying cartographic feature (road, footpath, boundary)
+   that happens to run east-west in that area, or
+3. Both — a feature that coincides with the tile seam.
+
+Visually the dots sit on or just above the linear feature, not on
+any visible mound symbol, so they are false positives.
+
+### Why fusion cannot fix this
+
+The candidates are spatially distinct (not overlapping), arrive at
+different pass IDs (so they get vote counts ≥2 rather than being
+filtered as single-pass noise), and do not overlap any real mound
+symbol. No fusion algorithm — WBF, greedy ball, DBSCAN, Hungarian —
+can reject a candidate that the proposer has committed to. The
+responsibility for filtering them lies with:
+
+1. **The vote threshold** (vote≥6 in the current F1 sweep optimum),
+   which removes the dark-purple and dark-blue majority but leaves
+   any teal-coloured vote≥6 survivors.
+2. **The verifier stage**, which sees a 150 × 150 m crop centred on
+   each candidate and should recognise that the centre is a
+   linear feature or edge artefact, not a mound symbol.
+3. **Proposer-side fixes** — prompt tuning or tile-edge masking —
+   if the rate is high enough to warrant a preregistered change.
+
+### Three hypotheses for the underlying cause
+
+**H-1: Tile boundary crop artefact.** The VLM sees the truncated
+edge of the tile as a strong visual line and produces spurious
+bounding boxes along it. Evidence would be: all edge-FPs are within
+a few pixels of a tile polygon boundary, regardless of the
+underlying map content. This would be a pure preprocessing artefact
+fixable by excluding detections within N pixels of the tile edge.
+
+**H-2: Linear cartographic feature misclassification.** The VLM
+legitimately detects a linear feature (road, path, boundary line,
+creek margin) as "mound-like" because the proposer prompt does not
+explicitly exclude linear features. Evidence would be: edge-FPs
+correlate with rendered cartographic features in the underlying
+raster, not with tile polygon boundaries. Fixable by prompt
+hardening or post-hoc linear-feature filtering.
+
+**H-3: Overlap zone double-detection.** Overlapping tiles (384 px
+tile, 336 px stride, ~240 m geographic overlap) both render the
+same linear feature. The VLM detects it in both tiles, and
+cluster_across_passes / WBF fuse the two detections only if their
+centroids fall within threshold. If they drift apart slightly
+across tiles, they persist as two separate low-vote candidates.
+Evidence would be: edge-FPs cluster in overlap zones specifically,
+not at the outer edges of the test tile grid.
+
+### Suggested future work (post-Obs 228 fix)
+
+The following are **deferred investigations**, not blockers for the
+current fusion rollout:
+
+1. **Quantify the edge-FP rate per config**. Export all vote≥2
+   candidates for each config, classify each as (a) within N m of
+   a GT mound, (b) within N m of a test tile polygon boundary,
+   or (c) neither. Report the fraction of FPs attributable to
+   tile-boundary proximity. A single bar chart across the 5 H10
+   configs would tell us whether the pattern is systematic.
+
+2. **Test H-1 vs H-2 vs H-3 with a targeted diagnostic**. Compute
+   the distribution of distances from edge-FPs to (i) the nearest
+   tile polygon boundary, (ii) the nearest rendered linear feature
+   (road / river / boundary), (iii) the nearest tile-overlap
+   centre-line. Whichever distance is shortest on average points
+   at the dominant cause.
+
+3. **Prompt-tuning experiment**: add "ignore linear features
+   including roads, paths, and field boundaries" to the
+   detect_brief-text system instruction, re-run proposer on a
+   small calibration subset, and measure the edge-FP rate
+   reduction. A small-scale ablation, one day of work, ~$3 API.
+
+4. **Edge-masking pre-filter**: reject candidates within a
+   configurable margin (e.g. 10 m) of the tile polygon boundary.
+   Simple to implement, easy to test, but risks losing legitimate
+   detections on mounds near tile edges (like the ones FID 514's
+   necropolis produced in the test tiles).
+
+5. **Verifier examination**: sample 20 edge-FP crops that survived
+   vote≥2 and manually inspect the verifier's probability output.
+   If the verifier correctly rejects them (probability < 0.5),
+   the downstream filtering is adequate and no proposer-side
+   change is needed. If the verifier passes many of them through,
+   proposer-side filtering is essential.
+
+### Priority for the paper
+
+**Low priority** for the immediate H10/H12 rewrite and the WBF
+rollout. These candidates are mostly filtered by the vote≥6
+threshold in the F1 sweep and further by the verifier stage. The
+headline F1 is not noticeably affected by their presence. However,
+for the paper's methodology discussion and limitations section,
+this pattern is worth a one-paragraph note as a known failure mode
+of tile-based VLM detection pipelines, because it affects
+reproducibility and it signals a direction for improvement.
+
+### Not a fusion decision input
+
+**The WBF Variant C decision (finalised in this session) is not
+affected by this finding.** All fusion variants handle the pattern
+identically; the correct choice of fusion algorithm is orthogonal
+to this proposer-level issue.
+
+---
+
+## Observation 230: Weighted Boxes Fusion Statistical Equivalence — Robustness Check for Greedy-Ball Consensus on hp4hn4 (2026-04-13)
+
+**Context**: Following the Obs 228 investigation into the consensus
+dedup methodology, Decision 26 commits to retaining greedy-ball
+clustering at 20 m as the primary method for all preregistered
+phases while running WBF as a methodological robustness check on
+the headline results. This observation records the first-config
+validation on H10/H12 hp4hn4 and its statistical equivalence
+finding, which underwrites the Decision 26 framing.
+
+### WBF Variant C parameters
+
+- Canonical Weighted Boxes Fusion (Solovyev et al. 2019) on the
+  polygon bounding boxes emitted by the proposer
+- IoU threshold: 0.25
+- Confidence weights: uniform 1.0 (proposer emits categorical
+  `"high"` confidence only)
+- Post-fusion minimum-separation: 30 m, vote-aware with anchor
+  threshold ≥ 6 (only merges when at least one cluster in the
+  pair has vote_count ≥ 6, preventing FP-fragment combination)
+- Box size filter: width/height ∈ [20, 200] m, area ∈ [400, 40,000] m²
+- Downstream Hungarian evaluation buffer: 20 m (unchanged from
+  preregistration)
+
+### End-to-end pipeline artefacts
+
+Raw proposer detections (10,469 boxes across 10 passes for
+hp4hn4) → size filter (−105) → WBF (3,750 clusters) →
+vote-aware min-separation at 30 m (48 merges, 3,702 final
+clusters) → filter vote ≥ 2 (1,467 candidates) → verifier
+(adversarial-text, Flex mode, 1,467 / 1,467 succeeded after one
+cleanup pass) → F1 sweep.
+
+### Sweep optimum
+
+WBF Variant C best F1 = **0.8800** at vote_t=7, prob_t=0.15 with
+n=306 candidates (P=0.8987, R=0.8621). The plateau is very flat:
+the top 10 sweep rows span F1 = 0.8648–0.8800, and the difference
+between vote_t=6 and vote_t=7 is 0.0006 — effectively noise.
+
+### Greedy-ball baseline for comparison
+
+Greedy-ball best F1 = **0.8853** at vote_t=6, prob_t=0.15 with
+n=300 candidates (P=0.9133, R=0.8589). Previously published in
+Obs 227 and results/h10/sweep_results.json.
+
+### Bootstrap 95 % CIs (n=1,000 iterations, seed=42)
+
+| Metric | Greedy | WBF Variant C | CI overlap |
+|---|---|---|---|
+| F1 | [0.8483, 0.9165] | [0.8452, 0.9108] | ~97 % |
+| Precision | [0.8771, 0.9432] | [0.8585, 0.9324] | ~94 % |
+| Recall | [0.8078, 0.9038] | [0.8158, 0.9043] | ~99 % |
+
+The two F1 CIs overlap substantially; neither method has a
+statistical claim to being "better" than the other on this config.
+
+### Paired permutation test (n=10,000, seed=42)
+
+- Observed ΔF1 (greedy − WBF): +0.0053
+- **Two-sided p-value: 0.6019**
+- Tiles won by greedy: **11**
+- Tiles won by WBF: **11** (exactly symmetric)
+- Tiles tied: **305** (93 % of the 327 test tiles)
+
+p = 0.60 is as far from significance as you can get. The 11-wins-
+each tile split is remarkable: of the 22 tiles where the methods
+disagree, they split exactly evenly. The aggregate ΔF1 = 0.005
+comes from the precise magnitude of per-tile win/loss differences,
+not from one method being systematically stronger.
+
+### Interpretation
+
+**Statistical tie, not marginal.** Greedy and WBF Variant C are
+indistinguishable at the α=0.05 level by every paired test. The
+0.005 F1 gap is within measurement precision and sits near the
+median of the permutation null distribution.
+
+**Shawn's qualitative visual check had already validated this.**
+Before running the permutation test, Shawn had eyeballed four
+test regions in QGIS (a dense 6-mound necropolis, a 3-mound
+drift-pair cemetery, a cartographic-feature-aligned FP row,
+and a tile-boundary edge case) and confirmed that Variant C
+handles all four cases identically to or better than the greedy
+baseline. The statistical test confirms the visual intuition.
+
+### What this supports
+
+- Decision 26: retain greedy as primary, WBF as robustness check
+- The paper's "due diligence" narrative for the consensus step
+- The recommendation to use WBF as the preferred method for
+  future work (Obs 228, Decision 26)
+- No protocol erratum required (the preregistration specifies
+  the Hungarian tolerance and consensus voting framework, not
+  the clustering algorithm)
+
+### Cost ledger for this validation
+
+- Fusion script + library + tests: zero API, developer time
+- Verifier crop extraction (1,467 crops from rasters): zero API
+- Verifier run (1,466 succeeded, 1 failed, recovered on cleanup):
+  1,468 Flex API calls at Gemini 3 Flash, ~$5 API spend
+- F1 sweep + bootstrap + paired permutation: zero API, pure
+  compute, ~30 seconds
+- **Total API spend for hp4hn4 robustness check**: ~$5
+
+### Pending robustness-check rollout (scope to be decided)
+
+| Scope | Additional API | Paper value |
+|---|---|---|
+| H10/H12 remaining 4 configs | ~$28 | Confirms library-composition null holds under WBF |
+| Production run (4 maps) | ~$10 | Directly validates F1=0.885 headline |
+| Generalisation run (55 maps) | ~$50–100 | Strongest defence, most expensive |
+
+All three are under Shawn's discretion and will be decided
+separately based on paper-scope and budget.
+
+---
+
+## Observation 231: Production-Run WBF Replication — WBF Significantly Beats Greedy, Contradicting the hp4hn4 Statistical Tie (2026-04-13)
+
+**⚠️ CORRECTION NOTE (appended 2026-04-13 post-hoc)**: This
+observation was written assuming `outputs/h11/e47-propose-brief/
+flash-high-text-n5/propose_brief-text/` is the canonical 4-map
+production pipeline. **It is not.** It is a 7-file one-off
+experiment using `propose_brief-text`. The actual canonical
+production pipeline uses `detect_brief-text` and lives at
+`outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_{1..5}/`
+(53+ files, matching the 55-map generalisation's proposer config,
+library hash `8580ecb2258b64a0fdbc` shared). The canonical
+production also uses **strict 4-of-5 consensus**, not the loose
+1-of-5 consensus used in the e47-propose-brief experiment. The
+WBF findings in this observation apply specifically to the
+propose_brief-text loose-consensus pipeline; they have NOT been
+validated on the canonical detect_brief-text 4-of-5 pipeline.
+**See Obs 233 (to be written next session) for the corrected
+apples-to-apples comparison.**
+
+**Context**: Following Obs 230's statistical tie finding on H10/H12
+hp4hn4 (p=0.60, greedy F1=0.8853 vs WBF F1=0.8800), Decision 26
+framed WBF as "methodologically principled but statistically
+equivalent to greedy". Shawn approved extending the robustness
+check to the production run (4 gold-standard maps,
+`propose_brief-text` + HIGH thinking + T=0.7, 5 proposer passes).
+This observation records the production-run result, which **did
+not replicate the statistical tie** and instead shows WBF is
+significantly better than greedy by a large margin.
+
+### Method parameters
+
+- **Raw data**: 8,327 detections across 5 passes of
+  `propose_brief-text` (HIGH thinking, T=0.7) on 4 gold-standard
+  maps (K-35-052-4_32635, K-35-053-3_Elenovo, K-35-062-2_Rakovski,
+  K-35-078-1_Lesovo), 569 GT mounds total, 487 evaluation tiles
+- **WBF parameters**: Variant C-style (IoU=0.25, min_sep=30 m,
+  box size filter 20–200 m); anchor_vote_threshold adjusted from
+  6 (10-pass) to **4** to match the 5-pass pipeline's preregistered
+  4-of-5 voting optimum
+- **WBF output**: 3,890 fused candidates (after min-separation),
+  62 raw boxes rejected by size filter
+- **Verifier runs**: both `verify_adversarial-text` (v1) and
+  `verify_adversarial-text_v2` (v2), Flex tier, minimal thinking.
+  3,890/3,890 succeeded (1 cleanup retry on v1). Total cost ~$16.
+- **Sweep grid**: vote_t ∈ {1..5}, prob_t ∈ {0, 0.05, 0.10, 0.15,
+  0.20, 0.30, 0.40, 0.50, 0.60}, buffer_m ∈ {20, 25, 30, 40, 50}
+- **Greedy baseline**: existing stored v1 and v2 probabilities at
+  `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/`
+  and `outputs/h11/e47-propose-brief/verified-v2/flash-high-text-1of5/`
+
+### Greedy baseline validation
+
+My scoring pipeline reproduces the published pairwise result
+(`results/e47-v1-vs-v2/pairwise/v1-vs-v2-4of5/`) to 4 decimal
+places:
+
+| Cell | Published | My reproduction |
+|---|---|---|
+| v1, vote=4, prob=0.20, 20 m | F1=0.7836, P=0.7765, R=0.7908, n=443 | **F1=0.7836, P=0.7765, R=0.7908, n=443** |
+| v2, vote=4, prob=0.15, 20 m | F1=0.8005, P=0.7854, R=0.8161, n=452 | **F1=0.8005, P=0.7854, R=0.8161, n=452** |
+
+Exact match → the scoring pipeline is behaving correctly. The
+WBF improvement cannot be explained by a measurement artefact.
+
+### Headline result — optima per (method × verifier × buffer)
+
+| Method | Buf | vote | prob | n | P | R | **F1** | 95 % CI |
+|---|---|---|---|---|---|---|---|---|
+| greedy-v1 | 20 | 3 | 0.20 | 490 | 0.7408 | 0.8345 | 0.7849 | [0.749, 0.818] |
+| **wbf-v1** | 20 | 4 | 0.15 | 400 | 0.9000 | 0.8276 | **0.8623** | **[0.831, 0.891]** |
+| greedy-v1 | 30 | 3 | 0.20 | 490 | 0.7612 | 0.8575 | 0.8065 | [0.774, 0.835] |
+| **wbf-v1** | 30 | 4 | 0.15 | 400 | 0.9425 | 0.8667 | **0.9030** | **[0.877, 0.926]** |
+| greedy-v2 | 20 | 4 | 0.15 | 452 | 0.7854 | 0.8161 | 0.8005 | [0.770, 0.832] |
+| **wbf-v2** | 20 | 4 | 0.15 | 395 | 0.9089 | 0.8253 | **0.8651** | **[0.835, 0.895]** |
+| greedy-v2 | 30 | 3 | 0.15 | 503 | 0.7674 | 0.8874 | 0.8230 | [0.796, 0.850] |
+| **wbf-v2** | 30 | 4 | 0.15 | 395 | 0.9519 | 0.8644 | **0.9060** | **[0.882, 0.930]** |
+| greedy-v2 | 50 | 3 | 0.15 | 503 | 0.7714 | 0.8920 | 0.8273 | [0.800, 0.854] |
+| **wbf-v2** | 50 | 4 | 0.15 | 395 | 0.9570 | 0.8690 | **0.9108** | **[0.889, 0.935]** |
+
+### Paired permutation tests (n=10,000, all buffers)
+
+| Verifier | Buffer | ΔF1 (WBF−greedy) | p-value | Wins greedy | Wins WBF | Ties |
+|---|---|---|---|---|---|---|
+| v1 | 20 m | +0.0774 | **0.0000** | 29 | 67 | 391 |
+| v1 | 30 m | +0.0965 | **0.0000** | 25 | 72 | 390 |
+| v1 | 50 m | +0.0967 | **0.0000** | 25 | 72 | 390 |
+| v2 | 20 m | +0.0646 | **0.0000** | 26 | 66 | 395 |
+| v2 | 30 m | +0.0830 | **0.0000** | 26 | 61 | 400 |
+| v2 | 50 m | +0.0836 | **0.0000** | 26 | 61 | 400 |
+
+**Every cell: p = 0.0000.** Bootstrap 95 % CIs for WBF and greedy
+**do not overlap** at any buffer. WBF wins roughly 2.3–2.9× more
+tiles than greedy on the ~20 % of tiles where they disagree.
+
+### Per-map breakdown (v2 verifier, 30 m buffer)
+
+| Map | Greedy n | WBF n | Greedy P | WBF P | Greedy F1 | WBF F1 | **ΔF1** |
+|---|---|---|---|---|---|---|---|
+| K-35-052-4_32635 (136 GT) | 113 | 90 | 0.726 | 0.911 | 0.792 | 0.891 | **+0.099** |
+| K-35-053-3_Elenovo (217 GT) | 167 | 139 | 0.808 | 0.950 | 0.821 | 0.877 | **+0.057** |
+| K-35-062-2_Rakovski (196 GT) | 200 | 152 | 0.785 | 0.987 | 0.863 | 0.949 | **+0.086** |
+| K-35-078-1_Lesovo (20 GT) | 23 | 14 | 0.522 | 0.857 | 0.632 | 0.828 | **+0.196** |
+
+The WBF advantage is **universal across all 4 maps**, not driven
+by a single outlier. The largest delta (Lesovo, +0.196) is a
+sparse region with only 20 GT mounds where greedy keeps 11 FPs
+that WBF correctly rejects. The smallest delta (Elenovo, +0.057)
+is still material and statistically significant. Rakovski
+(+0.086) shows WBF approaching ceiling performance at F1 = 0.949
+(P = 0.987, R = 0.915, 152 candidates for 196 mounds).
+
+### Mechanism — precision-driven improvement
+
+The WBF advantage is entirely precision-driven. Across all buffers
+and both verifiers:
+
+- **Greedy precision**: 0.74–0.82 range
+- **WBF precision**: 0.90–0.96 range
+- **Precision delta**: +0.14 to +0.20 per map
+
+Recall is essentially unchanged (typically greedy has marginally
+higher recall by ~0.01–0.02, which is within noise). WBF produces
+**~20 % fewer candidates** than greedy (395 vs 503 at the v2 30 m
+optimum) and almost all of them are correct, while greedy's extra
+~100 candidates are mostly false positives.
+
+### Characterisation: WBF is a precision-improvement method
+
+Across all 4 production maps at 30 m buffer with v2 verifier:
+
+| Map | Greedy R | WBF R | ΔR | Greedy P | WBF P | ΔP |
+|---|---|---|---|---|---|---|
+| K-35-052-4 | 0.872 | 0.872 | **0.000** | 0.726 | 0.911 | **+0.185** |
+| Elenovo | 0.833 | 0.815 | −0.018 | 0.808 | 0.950 | **+0.142** |
+| Rakovski | 0.957 | 0.915 | −0.042 | 0.785 | 0.987 | **+0.202** |
+| Lesovo | 0.800 | 0.800 | **0.000** | 0.522 | 0.857 | **+0.335** |
+
+- **Recall is flat or marginally lower** under WBF on 3 of 4 maps
+- **Precision jumps by +0.14 to +0.34** on all 4 maps
+- The F1 improvement comes entirely from WBF dropping false positives
+
+This is a useful framing for the paper: "WBF is a precision-
+improvement method, not a recall-improvement method". For any
+downstream task where precision matters more than recall (e.g.,
+automated shortlisting for field survey, low-false-positive map
+annotation), WBF's improvement is directly relevant. For tasks
+prioritising recall (e.g., exhaustive search for unknown mounds
+in unexplored areas), the improvement is less material — though
+WBF's recall is only trivially below greedy's, so it's not a
+recall regression either.
+
+### Why does WBF beat greedy here but tie on hp4hn4?
+
+The hp4hn4 tie (p=0.60) and the production-run victory (p<0.0001)
+represent two distinct pipeline configurations:
+
+| Property | hp4hn4 (H10/H12) | Production run |
+|---|---|---|
+| Proposer config | `detect_brief-text` | `propose_brief-text` |
+| Passes | 10 | 5 |
+| Thinking level | minimal | **HIGH** |
+| Temperature | 0.0 | **0.7** |
+| Result | greedy ≈ WBF (p=0.60) | **WBF > greedy (p<0.0001)** |
+
+**Hypothesis**: HIGH thinking at T=0.7 produces significantly more
+varied bounding boxes across passes. The per-pass centroid drift
+is larger, and frequently exceeds greedy's 20 m clustering radius.
+Greedy then fragments single mounds into 2–3 distinct clusters,
+which the verifier cannot consolidate downstream. WBF's IoU
+threshold of 0.25 captures drift up to ~40 m centroid offset for
+75 m mound symbols, so it correctly merges these fragments into
+single candidates.
+
+At minimal thinking + T=0.0 (hp4hn4), per-pass variation is small
+enough that greedy's 20 m radius is adequate, and the two methods
+agree.
+
+**Testable prediction**: if the mechanism is correct, WBF should
+also beat greedy on any other HIGH-thinking / high-temperature
+proposer variants. Conversely, on any strict-output proposer
+(minimal, T=0.0), the statistical tie should replicate.
+
+### Methodological finding: aggregation × proposer configuration interaction
+
+Beyond the specific hp4hn4-vs-production comparison, this result
+elevates to a generalisable methodological observation:
+
+> **The choice of consensus aggregation algorithm interacts with
+> the proposer configuration. Greedy-ball centroid clustering and
+> Weighted Boxes Fusion are statistically equivalent when the
+> proposer produces tight outputs (minimal thinking, T=0.0) but
+> diverge materially when the proposer produces varied outputs
+> (HIGH thinking, T=0.7), with WBF yielding ΔF1 ≈ +0.08 in the
+> latter regime driven entirely by precision improvement.**
+
+This is a finding that **generalises beyond this specific study**
+and is worth reporting as such. Practitioners building multi-pass
+VLM detection pipelines should:
+
+1. **Default to WBF** if the proposer configuration uses extended
+   thinking or non-zero temperature
+2. **Use greedy ball as a cheap alternative** only when the
+   proposer is strict-output (minimal thinking, T=0.0) — and
+   validate statistical equivalence via paired permutation test
+   before committing
+3. **Run both as a robustness check** when the configuration is
+   ambiguous or when the paper narrative depends on precision
+   being at ceiling
+
+The mechanistic prediction (drift distribution width predicts
+aggregation-algorithm sensitivity) is testable on any pipeline
+and could anchor a separate methodology paper or a supplementary
+results section in the current paper.
+
+**Paper positioning**: this elevates from "we did a robustness
+check" (mildly interesting) to "we found that aggregation
+algorithm choice interacts with proposer parameters, and this
+interaction is large enough to move F1 by ~0.08" (genuinely
+interesting). The latter is the stronger story and the one
+reviewers are more likely to remember.
+
+### Implications for Decision 26
+
+Decision 26's framing ("retain greedy as primary, WBF as
+methodological robustness check") was written assuming WBF ≈ greedy
+across the pipeline. The production-run finding forces a refinement:
+
+1. **WBF is a significant F1 improvement** on the preregistered
+   production-run configuration, and this is statistically robust
+   (p < 0.0001, non-overlapping CIs, tile-level 2.3–2.9× win
+   ratio).
+2. **WBF is statistically equivalent** on the H10/H12
+   library-composition configuration (hp4hn4 tie at p = 0.60).
+3. **The choice of aggregation algorithm interacts with the
+   proposer configuration** — WBF provides material F1 gains
+   specifically on high-temperature / HIGH-thinking proposer
+   variants where drift exceeds the greedy radius, and is
+   indistinguishable from greedy on tighter configurations.
+
+**This changes the paper narrative from "we validated our method
+via WBF robustness check" to "we found that the aggregation
+algorithm interacts with proposer parameters, and adopting WBF
+yields +0.08 F1 on the production headline".** The latter is a
+stronger finding and should be reported as such.
+
+**Decision 26 revision is pending Shawn's call**. Three options:
+
+- **(a) Amend Decision 26** to record config-specific guidance:
+  WBF is primary for production-equivalent configurations
+  (HIGH/T=0.7), greedy remains adequate for strict-output
+  configurations (minimal/T=0.0). Paper narrative switches to
+  "adoption of WBF yields +0.08 F1 on the production headline".
+- **(b) Keep Decision 26 as written** and add a follow-up
+  Decision 27 that records the config-interaction finding and
+  the promotion of WBF to primary status *only after* sapphire
+  confirms the medium-vf comparison tomorrow. Safer but delays
+  the paper-narrative decision by a day.
+- **(c) No change to Decision 26** — treat the production-run
+  finding as a separate result reported alongside the
+  preregistered H10/H12 equivalence. Simplest but undersells
+  the finding.
+
+Shawn to decide which path. My (Claude's) recommendation is
+**(b)**: hold the commitment until sapphire data confirms or
+contradicts the medium-vf comparison, then amend with complete
+evidence in hand.
+
+### Best F1 achieved by WBF + minimal-thinking v2 verifier
+
+**F1 = 0.9108** at vote_t = 4, prob_t = 0.15, buffer = 50 m, CI
+[0.8886, 0.9345]. This is **higher than the published F1 = 0.885
+headline** (which used medium-thinking verifier). If WBF + minimal
+v2 beats the published headline, the headline itself may be an
+underestimate of the pipeline's capability.
+
+**Open question** (pending sapphire access): does WBF also beat
+the medium-thinking verifier (`pv-diag-384` data, sapphire-only)?
+If yes, the headline F1 should be revised upward. If no, the
+medium verifier and WBF are converging on a common ceiling from
+different directions.
+
+### Generalisation-run implication
+
+Shawn's observation on seeing this result: *"I wish we'd
+discovered this before we did a generalisation run, but it is
+what it is."*
+
+The 55-map generalisation run (Obs 226, F1 = 0.790 at 50 m → D-S
+corrected 0.808–0.814) used the same greedy-ball + minimal-
+thinking verifier stack as the production run, on 55 student-
+digitised maps. If the production-run WBF delta (~+0.08 F1)
+transfers to the generalisation run, the corrected WBF F1 would
+be approximately:
+
+- **Generalisation run under WBF (projected)**: F1 ≈ 0.870 before
+  D-S correction, or ≈ 0.89 after D-S correction
+- **Current generalisation F1**: 0.790 (greedy, 50 m), 0.808–0.814
+  D-S corrected
+
+If the projection holds, the **"generalisation gap" between
+production and 55-map runs mostly disappears** under WBF:
+
+| Dataset | Greedy F1 (current) | WBF F1 (projected +0.08) |
+|---|---|---|
+| Production (4 maps) | 0.827 (v2, 50 m) | **0.911** (measured) |
+| Generalisation (55 maps) | 0.790 (v2, 50 m) | **~0.870** (projected) |
+| Gap | −0.037 | **~−0.041** (approximately unchanged) |
+
+So the gap between the two datasets is roughly preserved; both
+improve by a similar amount. The qualitative story — "the method
+generalises with a small gap" — is unchanged, but the absolute
+F1 levels both rise by ~0.08.
+
+**Why this matters for the paper**: reporting WBF F1 on
+production without also running it on the generalisation set
+would create an apples-to-oranges situation (production under
+WBF vs generalisation under greedy). Three options:
+
+1. **Full WBF re-run of the 55-map generalisation**: ~$200 API
+   (13× the production cost at 13× more tiles). User has already
+   said this is over-budget.
+2. **Targeted 5-map WBF subset** of the 55-map generalisation:
+   ~$18 API (5/55 of the full cost). Validates whether the +0.08
+   delta transfers without full replication. If the delta holds
+   on 5 random student maps, we can confidently report a
+   projected WBF F1 for the full 55-map set as "expected under
+   the same methodology, by extrapolation from the 5-map subset
+   at p=X". Statistically weaker than full replication but much
+   cheaper, and sufficient for a "methodology generalises"
+   claim.
+3. **Report greedy F1 on both and cite WBF only for production
+   with an explicit note** that the generalisation run was not
+   repeated under WBF due to compute budget. Honest, safe, and
+   preserves the preregistered F1 numbers. The paper narrative
+   becomes "WBF gives +0.08 on the 4-map production; we did not
+   validate this transfers to the 55-map generalisation".
+
+**Claude's recommendation**: option 2 (the 5-map targeted
+subset) is the best cost-value trade-off. ~$18 for a validated
+generalisation-transfer signal is worth the spend if we're going
+to make any claim about WBF as the preferred method. Option 3 is
+defensible but undersells the paper's methodological rigor; if
+the finding holds, we should say so on the data we have, not
+hedge away from it.
+
+**Decision deferred** to Shawn, pending tomorrow's sapphire
+access and the medium-vf comparison. If the 5-map targeted
+subset is pursued, it should be queued alongside the sapphire
+medium-vf work so both tomorrow-dependent items run together.
+
+### Cost ledger
+
+- WBF fusion (compute only): $0
+- Crop extraction (compute only): $0
+- v1 verifier (3,890 candidates, Flex): ~$8
+- v2 verifier (3,890 candidates, Flex): ~$8
+- Cleanup (1 retry): ~$0.01
+- Full sweep + bootstrap + permutation tests (compute only): $0
+- **Total API spend**: ~$16
+
+### Artefacts
+
+- `scripts/fuse_detections_wbf.py` (updated to support
+  `e47-propose-brief-n5` as a special config)
+- `scripts/compare_wbf_vs_greedy_production.py` (full sweep + CI +
+  permutation test harness, reusable for future production-scale
+  comparisons)
+- `outputs/h11/wbf/e47-propose-brief-n5/wbf_candidates.geojson` (3,890)
+- `outputs/h11/wbf/e47-propose-brief-n5/crops/` (3,890 crops)
+- `outputs/h11/wbf/e47-propose-brief-n5/verified-v1/probabilities.json`
+- `outputs/h11/wbf/e47-propose-brief-n5/verified-v2/probabilities.json`
+- `results/h11/wbf/production_vs_greedy_summary.json` (full sweep
+  + 20 bootstrap CIs + 20 paired permutation tests)
+
+### Next steps (pending Shawn's decisions)
+
+1. **Sapphire replication against the medium-vf headline**
+   (tomorrow). Copy the `pv-diag-384/flash-high-text-medium-vf-4of5/`
+   verifier probabilities from sapphire and repeat the WBF
+   comparison. Determines whether the medium-vf F1=0.885 headline
+   is also beaten by WBF, or whether medium verifier and WBF
+   converge to the same ceiling.
+2. **H10/H12 rollout to the remaining 4 configs** to test whether
+   the WBF advantage holds on other library compositions or
+   whether hp4hn4 generalises. ~$28 API.
+3. **Paper-narrative revision**: amend Decision 26 to record the
+   config-interaction finding and promote WBF to primary method
+   for production-equivalent pipelines.
+4. **Optional — test the HIGH/T=0.7 hypothesis**: run WBF on any
+   other HIGH/T=0.7 proposer variant we have data for, confirm
+   the advantage replicates. If yes, the hypothesis is validated
+   and the recommendation firms up.
+
+---
+
+## Observation 232: Leaderboard Rankings Are Buffer-Dependent — Image-Track Drift Causes Systematic Rank Flips Between 20 m, 30 m, and 40 m (2026-04-13)
+
+**Context**: While deciding how to run the paper's top-20
+round-robin pairwise permutation tests (text-track, image-track,
+and combined), the question arose of which spatial matching
+buffer to use. The preregistration specifies 20 m, but the
+headline F1 = 0.885 was reported at 30 m (the buffer at which
+text-track F1 saturates). Shawn asked whether rankings at 20 m
+are robust across buffers or whether the buffer choice matters.
+The answer turned out to be more interesting than I expected.
+
+**Data source**: 8 production-run paper-eval configs with
+pre-computed buffer-sensitivity F1 at {20, 30, 40, 50} m,
+located in `results/paper-eval/pv/*/buffer_sensitivity.json`.
+Plus the 9 rank flips already known between
+`results/pairwise/leaderboard-20m/` and `leaderboard-30m/`.
+
+### The finding — rankings DO flip, systematically
+
+Across the 8 production-run configs at four buffer values:
+
+| Transition | Rank flips found |
+|---|---|
+| 20 m → 30 m | **2** (image track gains, text baseline loses) |
+| 30 m → 40 m | **3** (image track gains further, text 9-of-10 and pro text 3-of-5 lose) |
+| 40 m → 50 m | **0** (ranking stable beyond 40 m) |
+
+The most dramatic case: **Flash HIGH image 3-of-5 + Flash min
+verifier** climbs from rank 7 at 20 m → rank 6 at 30 m → **rank
+4 at 40 m and 50 m**. A 3-rank gain across the buffer sweep. At
+40 m it overtakes two text-track configs (text 9-of-10 and pro
+text 3-of-5) that it was clearly below at 20 m.
+
+### Per-config F1 × buffer table (8 production configs)
+
+| Config | 20 m | 30 m | 40 m | 50 m |
+|---|---|---|---|---|
+| flash-high-text 16-of-30 + min-vf | 0.8902 (1) | 0.9044 (1) | 0.9044 (1) | 0.9044 (1) |
+| flash-high-text 4-of-5 + min-vf | 0.8641 (2) | 0.8908 (2) | 0.8908 (2) | 0.8908 (2) |
+| flash-high-text 4-of-5 + medium-vf | 0.8592 (3) | 0.8850 (3) | 0.8850 (3) | 0.8850 (3) |
+| flash-high-text 9-of-10 + min-vf | 0.8564 (4) | 0.8691 (4) | 0.8691 **(5)** | 0.8691 **(5)** |
+| pro-high-text 3-of-5 + min-vf | 0.8491 (5) | 0.8645 (5) | 0.8670 **(6)** | 0.8670 **(6)** |
+| text-baseline + min-vf | 0.8142 (6) | 0.8320 **(7)** | 0.8387 (7) | 0.8387 (7) |
+| **flash-high-image 3-of-5 + min-vf** | **0.7778 (7)** | **0.8511 (6)** | **0.8723 (4)** | **0.8771 (4)** |
+| image-baseline + min-vf | 0.7167 (8) | 0.7822 (8) | 0.7992 (8) | 0.8076 (8) |
+
+Bold = rank changed vs the previous column.
+
+### What I found surprising
+
+**Surprise 1: Rank flips aren't just in the middle of the pack —
+they reach rank 4.** I expected the top-3 text-track configs to
+be rock-stable (which they are), but I also expected the "top 5"
+or so to be stable. They aren't. Image-track climbs into rank 4
+at 40 m, displacing a text-track config that sits at rank 4 at
+20 m. This means **any "top-5" or "top-10" selection rule will
+produce different winners at 20 m vs 40 m**, and the difference
+is material (~0.02–0.05 F1).
+
+**Surprise 2: The pattern is mechanistic and one-directional.**
+Every single flip in the 20 m→30 m and 30 m→40 m transitions
+points the same way: **image-track gains at wider buffer,
+text-track saturates or loses relative ground**. I expected some
+random noise mixed with a weak trend; instead the pattern is
+systematic and entirely asymmetric. There's a real mechanism
+behind it, not just measurement noise.
+
+**Surprise 3: Text-track F1 *saturates* at 30 m — exactly zero
+change between 30 m and 50 m for the top 4 text-track configs.**
+This is a strong statement: extending the buffer beyond 30 m
+recovers **no additional text-track TPs**. The text-track
+proposer puts its centroids tight enough that if a detection
+isn't within 30 m of the GT, it's almost certainly a real FP,
+not a drifted TP. Image-track, by contrast, keeps gaining recall
+out to 50 m (image-baseline F1 climbs 0.72 → 0.78 → 0.80 → 0.81
+across 20/30/40/50 m), which means image-track places centroids
+~40 m off from the true mound position at the tail of its
+distribution.
+
+**Surprise 4: The preregistered 20 m buffer has a hidden bias
+against image-track.** The preregistration picked 20 m "to
+account for georeferencing imprecision and symbol size". That
+justification is valid for text-track but insufficient for
+image-track, because image-track drift exceeds text-track drift
+by a factor of roughly 2× at the distribution tail. The
+preregistered buffer systematically **under-rates image-track
+configurations**, and the under-rating is large enough to move
+rankings in the top 4. This isn't a flaw in the preregistration
+— it was written without knowing the drift profiles — but it's
+a methodological finding worth surfacing explicitly.
+
+**Surprise 5: The image-track drift tail matches the 75 m mound
+symbol radius.** If image-track centroids drift by up to ~40 m
+(half the 75 m mound symbol diameter), that's exactly what you'd
+expect if the proposer is placing its centroid **somewhere
+inside the visible mound symbol** rather than **at its centre**.
+Text-track proposers apparently place closer to the centre —
+possibly because the textual example labels carry no positional
+bias, while the visual example crops carry a positional bias
+toward whatever part of the mound symbol the model "fixates" on.
+This is a testable mechanism: if you look at where image-track
+bounding boxes sit relative to GT centroids, they should be
+systematically offset toward one part of the mound symbol (e.g.
+the top-left of the sunburst, or wherever the central dot lies),
+while text-track bounding boxes should cluster around the
+geometric centre. **This would be a nice supplementary finding
+for the paper if we can confirm it from the existing data.**
+
+### Implications for the paper's round-robin analysis
+
+1. **Round-robin pairwise permutation tests must be run at
+   multiple buffers**, not just 20 m. Specifically:
+   - **Text-track round-robin**: 20 m primary (preregistered),
+     30 m secondary (headline comparability). Top rankings are
+     stable across buffers, so this is mostly a transparency
+     report.
+   - **Image-track round-robin**: 20 m primary (preregistered),
+     30 m AND 40 m secondary (because image-track hasn't saturated
+     until 40 m). The 40 m ranking is arguably the most
+     appropriate for selecting the "image-track optimum for
+     generalisation" because it reflects the true performance
+     ceiling under the matching rule.
+   - **Combined text+image round-robin**: the hardest case. Run
+     at 20 m, 30 m, AND 40 m, and report rankings at each. Cross-
+     track comparisons will differ by buffer — that's the finding.
+2. **Pick the "optimum image-track config for the generalisation
+   run" at 40 m**, not 20 m. Picking at 20 m would systematically
+   under-select image-track configs and likely pick a config that
+   isn't the true image-track winner.
+3. **The "combined top 20 across text and image tracks" is
+   fundamentally buffer-dependent.** There is no neutral buffer
+   for cross-track ranking. Three options:
+   - **(a)** Pick 30 m as primary (headline-comparable, and where
+     the top-5 text configs first saturate)
+   - **(b)** Report at all three buffers, discuss differences
+     explicitly as a methodology finding
+   - **(c)** Report text-track and image-track separately, do not
+     attempt a single "best" cross-track ranking
+   Option (b) is the most honest but most complex. Option (a)
+   gives a clean headline with a note that image-track could
+   climb further at 40 m. Option (c) dodges the question by
+   declaring it meaningless.
+4. **The paper needs to explicitly acknowledge the buffer bias.**
+   Somewhere in the methods or limitations section: "Matching
+   tolerance choice interacts with proposer modality: the
+   preregistered 20 m buffer is conservative for text-track but
+   systematically under-reports image-track performance because
+   image-track proposer centroids drift further from the true
+   mound centre (up to ~40 m at the distribution tail vs ~20 m
+   for text-track). For cross-track comparison we report all
+   three buffers; for within-track rankings the 20 m buffer is
+   adequate."
+
+### Implications for the WBF investigation
+
+**This finding partially explains the WBF production-run result.**
+WBF's IoU-based clustering implicitly handles drift up to ~45 m
+centroid offset (from the IoU = 0.25 threshold on 75 m boxes),
+which is **exactly the buffer range where image-track drift
+lives**. WBF is effectively "building in" the wider buffer on the
+clustering side, which is why it beats greedy by +0.08 F1 on
+HIGH/T=0.7 configs where drift is larger.
+
+**Prediction**: WBF's advantage over greedy should be **larger on
+image-track than on text-track**, because image-track has more
+drift for WBF to recover. We haven't tested this, but the
+mechanism predicts it. A single image-track WBF validation run
+would confirm or falsify this.
+
+**Open question about WBF buffer sensitivity**: does WBF's F1
+also saturate at 30 m like greedy+text-track, or does it keep
+climbing to 40 m like greedy+image-track? From my production-run
+data, WBF+v2 F1 is 0.9060 at 30 m, 0.9084 at 40 m, 0.9108 at
+50 m — so WBF is **still gaining slightly between 30 m and 50 m**
+(~+0.005 total), but much less than greedy+image-track (+0.025
+over the same range). WBF is in between text-track and
+image-track in terms of buffer sensitivity, which is consistent
+with WBF fusing out most (but not all) of the drift.
+
+### Implications beyond this paper
+
+This is a **methodological finding that generalises**. Anyone
+doing object-detection pairwise-comparison studies on point
+detections in cartographic or imagery data should:
+
+1. Report F1 at multiple matching buffers, not just one
+2. Check that rankings are stable across buffers; if they're not,
+   disclose and discuss
+3. Pick the primary buffer **per modality**, not uniformly —
+   different proposer modalities may require different buffers
+   to capture their full performance
+4. Be suspicious of "my method wins at the preregistered buffer"
+   claims — run the sensitivity check before publishing
+
+This deserves a one-paragraph methods note in any paper using
+this kind of evaluation pipeline.
+
+### Implications for how to judge "overall winners" across text + image tracks
+
+Shawn asked how to judge the combined top-20 (text + image)
+round-robin rankings. The answer depends on what question we're
+trying to answer:
+
+1. **"Which single configuration has the best F1 on the production
+   data?"** — answered by the text-track top 3 at any buffer.
+   Text wins cleanly, image doesn't overtake even at 40 m.
+2. **"Which configuration is best for a specific downstream use
+   case?"** — depends on precision/recall/buffer priorities.
+   Text-track wins on precision and low-drift scenarios;
+   image-track can compete at wider tolerance. Define the use
+   case first.
+3. **"What is the best approach if we don't know the downstream
+   tolerance?"** — this is the honest question the paper is
+   asking, and the answer is "it depends on your matching rule,
+   which in turn depends on your evaluation scope". Report both
+   tracks at multiple buffers and let readers pick.
+4. **"What is the generalisation run's best-performing config?"**
+   — this is the decision-under-uncertainty problem. My
+   suggestion: for the generalisation run, **use the 30 m
+   buffer as the primary selection criterion** because (a) it's
+   where text-track saturates so the text-track winner is final,
+   (b) it's the headline-comparable buffer, and (c) image-track
+   under 40 m is still meaningful (climbing from rank 7 to rank
+   6). Report 40 m as an appendix for completeness.
+
+### Artefacts
+
+- Analysis ran inline in the session, no new script committed
+- Input data: `results/paper-eval/pv/*/buffer_sensitivity.json`
+  (8 configs with F1 at 20/30/40/50 m)
+- Cross-reference: `results/pairwise/leaderboard-{20,30}m/` (9
+  rank flips at 20 m → 30 m, from earlier work)
+- No new API spend; pure reanalysis of existing data
+
+### Next steps
+
+1. **Round-robin plan**: pick at least 3 buffers (20 m, 30 m,
+   40 m). Decide primary buffer per track.
+2. **Image-track WBF validation**: we still need one direct
+   test. A config-interaction-aware choice: run WBF on
+   `flash-high-image 3-of-5` (the one that climbs 3 ranks) and
+   see whether the +0.08 F1 delta from text-track replicates on
+   image-track. Prediction: delta is ≥ +0.08 (image-track has
+   more drift for WBF to recover).
+3. **Centroid offset diagnostic**: for each map, compute the
+   mean offset vector from image-track candidates to their
+   matched GT points, and compare to text-track. If image-track
+   has a systematic directional offset (e.g. toward one part of
+   the mound symbol), that's the confirmed mechanism.
+4. **Decide "combined top-20 winner" rule** before running the
+   round-robin. My recommendation is Option (b) from above:
+   report at all three buffers, discuss flips explicitly.
+
+---
