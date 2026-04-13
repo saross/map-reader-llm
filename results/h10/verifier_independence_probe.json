@@ -1,0 +1,151 @@
+{
+  "buffer_m": 20.0,
+  "configs": [
+    "pool_160_hp4hn4",
+    "pool_160_hp2hn6",
+    "pool_160_hp6hn2",
+    "pool_160_hp8hn8",
+    "pool_160_hp16hn16"
+  ],
+  "overlap": {
+    "n_clusters": 2352,
+    "n_pooled_candidates": 6959,
+    "clusters_by_sharing": {
+      "1": 851,
+      "2": 275,
+      "3": 181,
+      "4": 210,
+      "5": 835
+    },
+    "n_shared_by_all": 835,
+    "n_unique_to_one": 851,
+    "fraction_pooled_in_full_overlap": 0.5999425204770801,
+    "intra_config_collision_count": 346
+  },
+  "pairwise": {
+    "pool_160_hp4hn4__vs__pool_160_hp2hn6": {
+      "n": 1063,
+      "pearson_r": 0.9299385445182576,
+      "mean_abs_diff": 0.05523988711194732,
+      "mean_diff": -0.0038758231420508004
+    },
+    "pool_160_hp4hn4__vs__pool_160_hp6hn2": {
+      "n": 1025,
+      "pearson_r": 0.9345422646272595,
+      "mean_abs_diff": 0.05587317073170731,
+      "mean_diff": -0.013043902439024391
+    },
+    "pool_160_hp4hn4__vs__pool_160_hp8hn8": {
+      "n": 1065,
+      "pearson_r": 0.9379007949850847,
+      "mean_abs_diff": 0.05335211267605634,
+      "mean_diff": -0.007906103286384976
+    },
+    "pool_160_hp4hn4__vs__pool_160_hp16hn16": {
+      "n": 1035,
+      "pearson_r": 0.9183160025763826,
+      "mean_abs_diff": 0.06427053140096618,
+      "mean_diff": -0.009101449275362319
+    },
+    "pool_160_hp2hn6__vs__pool_160_hp6hn2": {
+      "n": 1035,
+      "pearson_r": 0.9448065427215318,
+      "mean_abs_diff": 0.04840579710144928,
+      "mean_diff": -0.00676328502415459
+    },
+    "pool_160_hp2hn6__vs__pool_160_hp8hn8": {
+      "n": 1059,
+      "pearson_r": 0.9462023673550158,
+      "mean_abs_diff": 0.04825306893295562,
+      "mean_diff": -0.003305004721435316
+    },
+    "pool_160_hp2hn6__vs__pool_160_hp16hn16": {
+      "n": 1039,
+      "pearson_r": 0.9212922910920295,
+      "mean_abs_diff": 0.05914340712223292,
+      "mean_diff": -0.005437921077959577
+    },
+    "pool_160_hp6hn2__vs__pool_160_hp8hn8": {
+      "n": 1033,
+      "pearson_r": 0.9486514034504667,
+      "mean_abs_diff": 0.04782187802516941,
+      "mean_diff": 0.003678606001936107
+    },
+    "pool_160_hp6hn2__vs__pool_160_hp16hn16": {
+      "n": 1031,
+      "pearson_r": 0.9262552498676917,
+      "mean_abs_diff": 0.060717749757516974,
+      "mean_diff": 0.003200775945683802
+    },
+    "pool_160_hp8hn8__vs__pool_160_hp16hn16": {
+      "n": 1043,
+      "pearson_r": 0.9383617314002813,
+      "mean_abs_diff": 0.05258868648130394,
+      "mean_diff": 0.0008149568552253126
+    }
+  },
+  "complete_case": {
+    "n_complete_clusters": 835,
+    "icc_2_1": 0.9321478738372141,
+    "per_config_mean": {
+      "pool_160_hp4hn4": 0.3615928143712574,
+      "pool_160_hp2hn6": 0.3669461077844311,
+      "pool_160_hp6hn2": 0.3749101796407186,
+      "pool_160_hp8hn8": 0.3702994011976048,
+      "pool_160_hp16hn16": 0.36868263473053886
+    },
+    "per_config_std": {
+      "pool_160_hp4hn4": 0.43234370702423863,
+      "pool_160_hp2hn6": 0.4369170835061645,
+      "pool_160_hp6hn2": 0.4396925951770905,
+      "pool_160_hp8hn8": 0.4372335435923539,
+      "pool_160_hp16hn16": 0.43673295334770934
+    },
+    "max_pairwise_mean_abs_diff": 0.0682874251497006
+  },
+  "sweep_optima": {
+    "pool_160_hp4hn4": {
+      "vote_t": 6,
+      "prob_t": 0.15,
+      "f1": 0.8853,
+      "p": 0.9133,
+      "r": 0.8589
+    },
+    "pool_160_hp2hn6": {
+      "vote_t": 7,
+      "prob_t": 0.2,
+      "f1": 0.8849,
+      "p": 0.9308,
+      "r": 0.8433
+    },
+    "pool_160_hp6hn2": {
+      "vote_t": 7,
+      "prob_t": 0.2,
+      "f1": 0.8699,
+      "p": 0.9167,
+      "r": 0.8276
+    },
+    "pool_160_hp8hn8": {
+      "vote_t": 7,
+      "prob_t": 0.2,
+      "f1": 0.882,
+      "p": 0.9244,
+      "r": 0.8433
+    },
+    "pool_160_hp16hn16": {
+      "vote_t": 6,
+      "prob_t": 0.15,
+      "f1": 0.8853,
+      "p": 0.9133,
+      "r": 0.8589
+    }
+  },
+  "verdict": {
+    "verdict": "H-A",
+    "verdict_long": "Set divergence: configs propose substantially different candidate pools; equivalence is averaged-out at the F1 level rather than pointwise.",
+    "shared_fraction": 0.5999425204770801,
+    "icc_2_1": 0.9321478738372141,
+    "thresholds_identical": false,
+    "distinct_threshold_count": 2
+  }
+}
