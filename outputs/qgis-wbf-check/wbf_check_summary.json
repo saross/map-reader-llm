@@ -1,0 +1,38 @@
+[
+  {
+    "variant": "greedy_baseline",
+    "label": "Greedy 20m (current baseline)",
+    "n_candidates": 1558,
+    "n_near_gt": 367,
+    "n_far_gt": 1191,
+    "precision_proxy": 0.2355584082156611,
+    "out_path": "outputs/qgis-wbf-check/wbf_check_greedy_baseline.geojson"
+  },
+  {
+    "variant": "wbf_no_minsep",
+    "label": "WBF, no min-separation (Option A)",
+    "n_candidates": 1481,
+    "n_near_gt": 322,
+    "n_far_gt": 1159,
+    "precision_proxy": 0.2174206617150574,
+    "out_path": "outputs/qgis-wbf-check/wbf_check_wbf_no_minsep.geojson"
+  },
+  {
+    "variant": "wbf_voteaware_v6",
+    "label": "WBF + vote-aware min-separation anchor >= 6 @ 60m (Option B)",
+    "n_candidates": 1444,
+    "n_near_gt": 310,
+    "n_far_gt": 1134,
+    "precision_proxy": 0.2146814404432133,
+    "out_path": "outputs/qgis-wbf-check/wbf_check_wbf_voteaware_v6.geojson"
+  },
+  {
+    "variant": "wbf_variant_c",
+    "label": "WBF + vote-aware min-separation anchor >= 6 @ 30m (Option C)",
+    "n_candidates": 1467,
+    "n_near_gt": 320,
+    "n_far_gt": 1147,
+    "precision_proxy": 0.21813224267211997,
+    "out_path": "outputs/qgis-wbf-check/wbf_check_wbf_variant_c.geojson"
+  }
+]
