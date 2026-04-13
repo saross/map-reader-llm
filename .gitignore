@@ -93,3 +93,10 @@ outputs/h11/v2-proposer-test-BAD-TILESIZE/
 # WBF output crop directories — large PNG sets (regenerable from raw proposer data)
 outputs/h10/wbf/*/crops/
 outputs/h11/wbf/*/crops/
+
+# Verifier cleanup backup files (transient, regenerable)
+outputs/**/*.pre-cleanup-*.backup
+
+# Verifier HTTP request logs (noise, not useful for reproducibility)
+outputs/h10/wbf/**/*.log
+outputs/h11/wbf/**/*.log
