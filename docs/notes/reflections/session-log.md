@@ -3963,3 +3963,216 @@ exception to sapphire rule — user was travelling):
 Calibration pipeline built and tested. H10/H12 experiments complete
 with statistical analysis. Review app ready. Session 65 will tackle
 the leaderboard comparison and paper integration.
+
+---
+
+## Session 65 — 2026-04-13 (map-reader-llm)
+
+Consensus dedup audit (Obs 228), Weighted Boxes Fusion library
+implementation, two WBF validation runs (hp4hn4 tie, production
+run +0.08 on non-canonical baseline), buffer-sensitivity finding
+(Obs 232), and Decision 26 committing to the methodology.
+
+### Obs 228 — Consensus dedup radius audit
+
+- Obs 227 verifier-independence probe turned up ~346 intra-config
+  "collisions" at 20 m single-link cross-config clustering. Initially
+  read as "single-link is the wrong algorithm"; Shawn pushed back with
+  the cartographic constraint that mound symbols are ~75 m in diameter
+  and never overlap, so centroids must be ≥75 m apart.
+- Empirically verified: minimum GT–GT distance across all 569 reference
+  mounds is **68.1 m**; p1 is 72.0 m; only 5 pairs within 75 m in the
+  entire corpus. Shawn's claim confirmed to within 7 m.
+- Magnitude diagnostic (`scripts/diagnose_consensus_dedup_radius.py`):
+  ~11 % of GT mounds (per config) have ≥2 final candidates within the
+  attribution-safe 40 m radius → the upstream greedy-ball dedup at
+  20 m leaks same-mound duplicates because centroid drift can exceed
+  20 m. Drift distribution: p50 = 7 m, p90 = 23 m, p99 = 37 m.
+- Visual verification (`scripts/export_dedup_visual_check.py` + QGIS)
+  on a 6-mound cemetery caught that a naive 60 m min-separation
+  variant **lost a real mound** by over-merging adjacent cemetery
+  mounds into a single super-cluster. The aggregate multi-GT metric
+  was blind to this failure because both mounds fell within 40 m of
+  the merged centroid, so both appeared "covered".
+
+### WBF library + Variant C parameters
+
+- Ran `/review-implementation` protocol on the dedup problem →
+  Weighted Boxes Fusion (Solovyev et al. 2019) is the canonical
+  modern approach for multi-pass ensemble aggregation. Widely cited,
+  well-tested reference implementation.
+- Built `scripts/lib_fusion.py` implementing WBF with a vote-aware
+  minimum-separation post-step. 33 tier-1 tests covering IoU
+  (including the 68 m cartographic-floor safety property), size
+  filtering, WBF clustering (with and without merges), vote-aware
+  anchoring, end-to-end pipeline.
+- **Variant C finalised parameters** after visual iteration: IoU
+  threshold 0.25, min-separation 30 m, vote-aware with anchor ≥
+  vote_t (which equals 6 for 10-pass or 4 for 5-pass pipelines),
+  box size filter [20, 200] m per dimension, area [400, 40000] m².
+
+### Obs 230 — hp4hn4 WBF statistical equivalence
+
+- Applied Variant C to `outputs/h10/evaluation/pool_160_hp4hn4/run_{1..10}/`
+  (detect_brief-text, minimal, T=0.0, 10 passes)
+- Extracted 1,467 verifier crops, ran v1 verifier (minimal adversarial)
+  in Flex mode (~$5, 1 cleanup retry for a single failed candidate)
+- Full (vote_t × prob_t) F1 sweep at 20 m buffer → best WBF F1 = 0.8800
+  at vote=7, prob=0.15
+- Bootstrap 1000-iter CI: greedy [0.8483, 0.9165], WBF [0.8452,
+  0.9108] — overlap ~97 %
+- Paired permutation test (n=10,000): **ΔF1 = 0.0053, p = 0.6019**,
+  with 11 greedy wins, 11 WBF wins, 305 tied (exact symmetric split)
+- Interpretation: statistical tie. Decision 26 written: retain
+  greedy-ball as primary, WBF as methodological robustness check.
+  Protocol classification: not a deviation (preregistration
+  specifies Hungarian matching tolerance and consensus voting
+  framework but not the clustering algorithm).
+
+### Obs 231 — Production-run WBF comparison (⚠ NON-CANONICAL BASELINE)
+
+- Applied Variant C with anchor=4 to
+  `outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_{1..5}/`
+  — I assumed this was the 4-map gold-standard production run
+- Extracted 3,890 verifier crops, ran both v1 and v2 verifiers in
+  Flex mode (~$16 total, 1 cleanup retry on v1)
+- Full (vote_t × prob_t × buffer_m) sweep across 5 buffers:
+  - greedy v2 best F1 = 0.8273 at 50 m
+  - WBF v2 best F1 = 0.9108 at 50 m
+  - **ΔF1 = +0.083, paired permutation p = 0.0000** at every buffer
+  - CIs do not overlap on either verifier at any buffer
+  - Tile wins: ~25 greedy, ~61–72 WBF, ~390–400 ties per test
+  - Effect is universal across all 4 maps (+0.057 to +0.196 ΔF1)
+  - Precision-driven: WBF precision 0.90–0.99 vs greedy 0.52–0.82;
+    recall flat or marginally lower under WBF
+- **Correction discovered at session end**: the `e47-propose-brief/`
+  directory contains a **7-file `propose_brief-text` one-off
+  experiment**, not the canonical production run. The canonical run
+  uses `detect_brief-text` (53+ files across many directories) and
+  lives at `outputs/h11/gold-standard-v2/proposer/detect_brief-text/`.
+  My WBF-vs-greedy comparison is measured against the wrong baseline.
+  The +0.08 finding is real for that specific loose-consensus
+  propose_brief-text pipeline but does not directly validate WBF for
+  the paper headline. Correction note added to the top of Obs 231.
+- **Priority 1 for Session 66**: run the corrected apples-to-apples
+  comparison against `gold-standard-v2/detect_brief-text` + existing
+  v1/v2 verifier probabilities, which will cost ~$6–10 Flex and
+  reuse the local greedy baseline without re-running.
+
+### Obs 232 — Leaderboard rankings are buffer-dependent
+
+- Discovered while deciding the buffer for the top-20 round-robin
+  pairwise permutation tests. Shawn asked whether 20 m rankings are
+  stable across buffers.
+- Analysed `results/paper-eval/pv/*/buffer_sensitivity.json` (8
+  production configs at buffers {20, 30, 40, 50} m) and the existing
+  `results/pairwise/leaderboard-{20,30}m/` data (9 rank flips between
+  20 m and 30 m, all in one direction).
+- Found 3 additional rank flips between 30 m and 40 m (none between
+  40 m and 50 m — ranking stable beyond 40 m). Every flip is
+  **image-track gaining at wider buffers**. Text-track F1 saturates
+  at 30 m; image-track keeps climbing to 40 m.
+- Most dramatic case: Flash HIGH image 3-of-5 climbs rank 7 at 20 m
+  → rank 6 at 30 m → **rank 4 at 40/50 m**. A 3-rank gain across the
+  buffer sweep.
+- Mechanism hypothesis: image-track proposer centroids drift further
+  from true mound centres (~40 m tail) than text-track centroids
+  (~20 m tail), matching half the 75 m mound symbol diameter.
+  Image-track may be fixating on a salient feature within the mound
+  symbol (sunburst ray end, central dot) rather than the geometric
+  centre. Testable via per-map mean offset vector diagnostic —
+  deferred.
+- **Implication for round-robin plan**: must run at 3 buffers
+  {20 m, 30 m, 40 m}. Text-track top-3 is stable across buffers;
+  image-track ranking requires 40 m. Cross-track comparison is
+  buffer-dependent — pick a primary buffer per track.
+
+### Medium-vf is not the paper's best config
+
+- Investigated why the F1 = 0.885 headline is associated with the
+  medium-thinking verifier when minimal-vf beats it at the same
+  consensus level.
+- Leaderboard data: `flash-high-text 4-of-5 + min-vf` F1 = 0.8908 at
+  30 m beats `flash-high-text 4-of-5 + medium-vf` F1 = 0.8850.
+  `flash-high-text 16-of-30 + min-vf` F1 = 0.9044 (leaderboard rank 1).
+- The "F1 = 0.885 medium-vf" headline is likely a historical
+  preregistered result that was later surpassed by minimal-vf but
+  stuck around as the remembered number.
+- Priority 2 (sapphire medium-vf comparison) downgraded accordingly
+  — no longer the paper headline validator.
+
+### Decision 26
+
+Committed to `docs/methodology/preregistration/decisions-log.md`.
+Retain greedy-ball at 20 m as primary consensus aggregation method
+for all preregistered phases; adopt WBF as methodological robustness
+check; recommend WBF as preferred default for future work. Not a
+protocol deviation (preregistration doesn't specify the clustering
+algorithm). Pending revision after Priority 1 canonical test.
+
+### Commits + push
+
+Session produced 10 commits:
+
+1. `feat(wbf): add Weighted Boxes Fusion library` — lib_fusion.py +
+   tests (33 tier-1)
+2. `feat(wbf): add WBF runners, F1 sweep, and greedy comparison
+   scripts` — 5 runner scripts
+3. `feat(h10): add dedup audit + verifier independence probe
+   scripts` — 4 scripts + tests
+4. `feat(wbf): add Obs 228-231 result artefacts` — JSON results
+5. `feat(wbf): add QGIS visual-check layers` — 10 GeoJSONs
+6. `feat(wbf): add WBF candidate manifests, geojsons, and verifier
+   probabilities` — 28 output files + `.gitignore` crop exclusion
+7. `feat(wbf): add missed e47-propose-brief-n5 WBF candidates
+   geojson`
+8. `docs(wbf): Decision 26, Obs 228-232, and WBF continuity doc`
+9. `chore(gitignore): ignore verifier cleanup backups and WBF HTTP
+   logs`
+10. `feat(h10): add H10/H12 raw proposer data (calibration +
+    evaluation)` — 2.6 MB + 53 MB of Session 64 raw data committed
+    for reproducibility
+
+All pushed to `origin/main`. Working tree fully clean — every file
+now either tracked or formally gitignored.
+
+### Cost summary
+
+| Stage | API calls | Cost |
+|---|---|---|
+| hp4hn4 verifier run (v1 only) | 1,467 | ~$5 |
+| hp4hn4 verifier cleanup (1 retry) | 1 | ~$0.01 |
+| e47-propose-brief v1 verifier | 3,890 | ~$8 |
+| e47-propose-brief v2 verifier | 3,890 | ~$8 |
+| Cleanup retries | 1 | ~$0.01 |
+| **Total** | **~9,250** | **~$21** |
+
+### Status
+
+WBF library built, tested, and two validation variants run. Decision
+26 committed. Obs 228–232 written. Full continuity document at
+`planning/2026-04-13-wbf-investigation-continuity.md`. Priority 1
+for Session 66: run the corrected canonical WBF comparison against
+`gold-standard-v2/detect_brief-text` (~$6–10 Flex). Priority 2–7
+queued in the continuity doc.
+
+### Contextual assumptions
+
+- The "production run" label was used throughout the session to
+  refer to `outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/`
+  on the assumption it was the canonical 4-map gold-standard run.
+  This assumption was wrong — the canonical run is
+  `outputs/h11/gold-standard-v2/proposer/detect_brief-text/`. The
+  correction is documented in the Obs 231 correction note and in
+  the continuity doc.
+- The "F1 = 0.885 headline" is associated with multiple configs
+  depending on the source memo: MEMORY.md associates it with v2
+  minimal-vf; `results/paper-eval/pv/` associates it with
+  medium-vf. Both are valid results at different operating points;
+  the "headline" label is a session-to-session accumulation rather
+  than a single canonical number.
+- The `gold-standard-v2/` directory naming is confusing: "v2"
+  refers to the recreation script version
+  (`scripts/11maps-gold-standard-v2.sh`, the second iteration),
+  not the proposer version. The proposer inside is the standard
+  `detect_brief-text`.

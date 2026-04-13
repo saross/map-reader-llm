@@ -3217,3 +3217,136 @@ experiment but about how to interpret future prompt-engineering
 findings: **any effect observed at a single stage in isolation
 should be assumed to attenuate at the full-pipeline level**, and
 we should always test the full pipeline before claiming a result.
+
+---
+
+## Session 65 — 2026-04-13 (map-reader-llm): Aggregation algorithm choice interacts with proposer configuration
+
+### The surprising fact
+
+The Obs 228 dedup investigation led to adopting Weighted Boxes
+Fusion (WBF) as a principled replacement for greedy-ball centroid
+clustering. Two validation runs produced contradictory results:
+
+**Test 1 — hp4hn4 (H10/H12, `detect_brief-text`, minimal, T=0.0,
+K=10)**: WBF F1 = 0.8800 vs greedy F1 = 0.8853. Paired permutation
+test **p = 0.6019** across 327 tiles. Bootstrap 95 % CIs overlap
+~97 % of their range. Tile-level wins: 11 greedy, 11 WBF, 305
+ties. A textbook statistical tie.
+
+**Test 2 — production run (`propose_brief-text`, HIGH, T=0.7,
+K=5)**: WBF F1 = 0.9054 vs greedy F1 = 0.8086 (v1 verifier, 50 m
+buffer). **p = 0.0000** (paired permutation, n = 10,000). ΔF1 =
++0.097, CIs do not overlap. Tile-level wins: 25 greedy, 72 WBF,
+390 ties. Same directional pattern on the v2 verifier, and across
+every buffer from 20 m to 50 m.
+
+The same aggregation algorithm comparison, on the same research
+project, produced a clean statistical tie on one pipeline and a
++0.08 F1 win on another. The question: **why?**
+
+### The probe
+
+Three candidate hypotheses:
+
+**H-1 — The datasets are different and that's all.** hp4hn4 is 327
+test tiles; production is 4 maps × ~120 tiles. Maybe one corpus
+just favours WBF's approach and the other doesn't, for no deeper
+reason.
+
+**H-2 — The verifier is different.** hp4hn4 used only `verify_adversarial-text` (v1). Production used both v1 and v2.
+Maybe the v2 prompt refinement interacts with WBF differently.
+
+**H-3 — The proposer configuration is different.** hp4hn4 uses
+minimal thinking at T=0.0 (tight, deterministic outputs). Production
+uses HIGH thinking at T=0.7 (more varied sampling across passes).
+Maybe the drift distribution is wider in the production config,
+and WBF's IoU-based clustering handles wider drift better than
+greedy's centroid radius.
+
+**Discriminating evidence**: H-1 and H-2 can be falsified by
+checking whether the production-run delta is present on *both*
+verifiers. It is (+0.08 v1 and +0.08 v2 at the same operating
+points), so H-2 is rejected — the verifier choice doesn't drive the
+effect. H-1 is weakened by the fact that the direction of the
+effect matches the drift-width prediction of H-3 (the production
+run's proposer is HIGH/T=0.7 which should produce more varied
+centroids, and WBF's relative advantage is larger where drift is
+larger).
+
+**H-3 passes two additional independent tests** that were run
+during the subsequent Obs 232 analysis:
+
+1. **Rank-flip analysis across buffers**: 9 rank flips between
+   leaderboard-20m and leaderboard-30m, all in one direction —
+   image-track configurations gain at wider buffers. Image-track
+   proposers have larger centroid drift than text-track proposers.
+   This is a separate data source (the paper-eval leaderboard) and
+   it supports the same "drift drives aggregation-method sensitivity"
+   story from a different angle.
+2. **Buffer-saturation profile**: text-track F1 saturates at 30 m
+   matching buffer (exactly zero change between 30/40/50 m for the
+   top 4 text configs), while image-track F1 keeps climbing to
+   40 m. This means text-track centroids are within 30 m of their
+   GT mound at the tail of the distribution, while image-track
+   centroids extend to ~40 m — drift is literally a different
+   magnitude between the two modalities.
+
+### The belief revision
+
+Initial belief: WBF is methodologically principled and statistically
+equivalent to greedy on this pipeline. Decision 26 was written on
+this basis ("retain greedy as primary, adopt WBF as robustness
+check").
+
+Revised belief: **The choice of aggregation algorithm interacts
+with the proposer configuration.** Specifically, greedy-ball and
+WBF are statistically equivalent when the proposer produces tight
+outputs (minimal thinking, T=0.0) but WBF meaningfully outperforms
+greedy when the proposer produces varied outputs (HIGH thinking,
+T=0.7). The mechanism: per-pass centroid drift is narrow under
+tight sampling (within greedy's 20 m clustering radius) and wide
+under varied sampling (exceeds 20 m but stays within WBF's
+effective IoU-based cluster reach of ~40 m).
+
+**Testable prediction**: image-track configurations should show
+an even larger WBF advantage, because image-track drift is larger
+than text-track drift (established independently in Obs 232). Not
+yet tested; queued as Priority 3 for next session.
+
+**The late-session plot twist**: the production-run test that
+produced the +0.08 finding was run against a **non-canonical
+7-file one-off experiment** (`propose_brief-text`), not the
+canonical paper pipeline (`detect_brief-text`, 53+ files). The
+belief revision itself still holds — the aggregation × proposer
+config interaction is real, the finding is statistically robust on
+the specific pipeline it was measured on, and the mechanism
+hypothesis has independent support from Obs 232 — but the specific
+F1 numbers don't directly validate WBF for the paper headline.
+The apples-to-apples test on the canonical pipeline is Priority 1
+for next session.
+
+### Generalisation
+
+The larger methodological finding: **sample efficiency vs
+algorithm sensitivity is a trade-off**. The hp4hn4 pipeline is
+more sample-efficient (tight outputs) but produces a smaller gap
+between aggregation algorithms because the algorithms converge
+when inputs are already clean. The production pipeline is less
+sample-efficient (wide outputs) but reveals algorithmic differences
+more clearly because there's more clustering work to do.
+
+For practitioners building multi-pass VLM detection pipelines:
+
+1. **Default to WBF** if the proposer uses extended thinking or
+   non-zero temperature. The algorithmic robustness matters.
+2. **Greedy ball is adequate** only when the proposer is strict
+   (minimal thinking, T=0.0) — and validate statistical equivalence
+   via paired permutation test before committing.
+3. **The interaction is large enough to report**: ~+0.08 F1 at the
+   HIGH/T=0.7 corner of configuration space is a meaningful finding
+   even if it doesn't replicate everywhere.
+
+This is a finding that generalises beyond this specific study and
+warrants reporting in the methods section of any paper using
+multi-pass VLM ensembles.

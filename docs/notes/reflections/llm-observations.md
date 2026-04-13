@@ -4412,3 +4412,113 @@ should become the default behaviour, not a prompted choice.
 added observations 33-36 on collaboration patterns: delegation
 during extended work, statistical methodology directives, audit as
 quality gate, and retries as routine operational steps.*
+
+---
+
+## Session 65 Observations (2026-04-13, map-reader-llm)
+
+These entries focus on collaboration patterns from Session 65. The
+research findings (Obs 228–232, Decision 26, WBF library) are in
+`working-notes.md` and `session-log.md`.
+
+**Observation 37: The visual-check-as-metric-audit pattern.** Four
+times during this session, Shawn's QGIS visual inspection caught
+failure modes that the aggregate quantitative metrics missed. The
+cemetery-over-merge was the clearest case: every variant I was
+about to adopt showed zero multi-GT failures in the counting, but
+visual inspection revealed one variant was collapsing two
+neighbouring mounds into a single super-cluster. The metric was
+blind because both GTs ended up within 40 m of the merged
+centroid, so both appeared "covered".
+
+The pattern generalised: visual checks caught not just "is the
+answer right" but "is the metric capturing the thing I think
+it's capturing". In every single case, my trust in the aggregate
+number was misplaced. The metric told me "zero multi-GT failures"
+when the reality was "zero multi-GT failures by this specific
+definition, but a different failure mode (adjacent-mound
+over-merge) is happening that the metric doesn't penalise".
+
+The collaboration lesson: **when Shawn has the domain knowledge
+to visually verify, I should offer the visual check before
+committing to a quantitative finding, not after.** This shifts
+the visual check from "validation step if something seems wrong"
+to "required step before adopting a new method". The cost is
+10–20 minutes of Shawn's QGIS time; the value is catching the
+specific failure modes I'm blind to. This session's Obs 228 final
+outcome — the whole methodology redirection from "raise the
+radius" to "adopt WBF" — was enabled by one such visual check.
+
+**Observation 38: The correction-late-not-early pattern.** Near
+session end, Shawn asked a clarifying question ("are we using
+detect_brief consistently?") that revealed the entire WBF
+production-run comparison had been running against a non-canonical
+baseline. The comparison was done, documented, analysed, committed
+to observations, and recorded in Decision 26 — all before the
+question surfaced.
+
+What's interesting about the timing is that I had all the
+information needed to catch this myself earlier. Count of files
+by version across `outputs/h11/` would have shown `detect_brief-text`
+at 53+ files vs `propose_brief-text` at 7 files. The discrepancy
+was a single grep away. I didn't run that grep because the
+directory name `e47-propose-brief` combined with the presence of
+5-pass data was enough for me to treat it as canonical. I
+satisficed on the first directory that looked plausible rather
+than verifying against the full corpus.
+
+The collaboration lesson: **single-source identification is a
+trap when the identification determines the baseline of a
+comparison**. For research artefacts that will be compared
+against something, I should verify the identification from at
+least two independent signals: (a) the directory name, (b) the
+meta.json content, and (c) cross-config frequency (how many
+other directories use this same config). Any two out of three is
+a baseline confirmation; only one is a guess.
+
+Shawn caught it with a single clarifying question within seconds
+of my mentioning the inconsistency. The lesson is not "Shawn is
+good at catching errors" (he is) but "my default verification
+threshold is too low for consequential comparisons". The API gate
+protocol exists for cost-consequential decisions; I should have
+an analogous **baseline gate** for comparison-consequential
+decisions: explicitly state the baseline and verify cross-source
+before running.
+
+**Observation 39: The domain-knowledge-as-ground-truth pattern.**
+Three separate times in this session, Shawn stated a domain claim
+that I initially treated as soft heuristic but turned out to be
+a measurement statement exact to within a few percent:
+
+1. "Mound symbols are ~75 m in diameter and never overlap." —
+   Empirical verification: minimum GT–GT distance = 68.1 m,
+   p1 = 72 m, 5 pairs within 75 m out of 569 mounds. Claim exact
+   to within 7 m.
+2. "We consistently used detect_brief on the 55-map run, with
+   E47 noting it was a substitution from the preregistered
+   propose_brief." — Empirical verification: metadata confirms
+   detect_brief across all 5 passes of the 55-map and 53+ files
+   across the whole h11/ tree. Claim exact.
+3. "The 4-map gold-standard reference is expert-QA'd across four
+   passes, not raw student work." — Empirical verification (not
+   direct but inferred from the fact that 95.6 % of the dataset
+   traces to `reference-mounds-students-refactored.gpkg`, and
+   Shawn's statement that he personally QA'd all 544 student-
+   contributed points across four passes). Claim accepted on
+   reputation, confirmed by the 4.4 % `qa-refactored` layer that
+   matches the ~5 % student FN rate from the 55-map generalisation.
+
+The collaboration lesson: **when Shawn states a quantitative
+domain claim, treat it as a testable hypothesis to verify rather
+than a heuristic to weigh alongside model outputs**. The
+verification is usually a 30-second data check. Domain claims of
+this type are high-quality prior information that my default
+treatment (treat as uncertain) under-weights. Update the default:
+when Shawn provides a quantitative statement about the maps, the
+mounds, or the QA workflow, verify it, and update my model
+confidently on the result.
+
+*Document represents observations as of 2026-04-13. Session 65
+added observations 37-39 on collaboration patterns: visual check
+as metric audit, late-discovered baseline corrections, and
+domain-knowledge as ground truth.*

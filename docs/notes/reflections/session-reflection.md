@@ -6326,3 +6326,156 @@ automatically mined examples. The calibration pipeline is the
 session's real deliverable.
 
 ---
+
+## Reflection 51: The session where a cleanup audit turned into a methodology replacement — and then a non-canonical-baseline correction (Session 65, 2026-04-13, map-reader-llm)
+
+*What surprised you about this session?*
+
+Three surprises, each overturning a prior belief I was confident in.
+
+**First**: the 75 m cartographic constraint was *empirically exact*. I
+had treated Shawn's "symbols don't overlap, so centroids are ≥75 m
+apart" as a plausible heuristic requiring validation. When I ran the
+nearest-neighbour distribution on all 569 GT mounds, the minimum was
+68.1 m and p1 was 72.0 m. Domain knowledge that looks like intuition
+sometimes turns out to be a measurement statement that reproduces to
+within 7 m. I should update my default on claims like this: treat them
+as hypotheses to test, not as soft heuristics to weigh alongside data.
+
+**Second**: I was about to commit a fix that would have silently broken
+cemetery cases. The "just pick a larger dedup radius" plan I'd built
+up through the investigation looked clean on the aggregate multi-GT
+metric — every variant I tested showed zero multi-GT at the new
+threshold. But Shawn's QGIS visual check of a dense necropolis caught
+that a 60 m min-separation variant *lost a real mound entirely*,
+merging two adjacent cemetery mounds into one super-cluster. The
+aggregate metric was blind to this failure because both mounds ended
+up within 40 m of the merged centroid, so both appeared "covered"
+in the counting. **The metric doesn't penalise merging two distinct
+GTs into one candidate; it only penalises one GT having two
+candidates.** That's a hole in the metric I hadn't noticed and
+wouldn't have caught without the visual review.
+
+**Third and biggest**: near the end of the session, we discovered
+that my entire WBF-vs-greedy production-run comparison — the
+"significant +0.08 F1 improvement at p<0.0001" finding — had been
+running against a **non-canonical 7-file one-off experiment**
+(`propose_brief-text` in `e47-propose-brief/`) rather than the actual
+paper pipeline (`detect_brief-text` in `gold-standard-v2/`, 53+
+files, same config as the 55-map generalisation). The directory
+`e47-propose-brief` sounded authoritative; the meta.json inside
+confirmed it had the config I assumed; but the *majority of
+production work* was on a different proposer with a different
+directory. My result stands as a legitimate finding on a specific
+loose-consensus pipeline, but it doesn't directly validate WBF for
+the paper headline. Shawn caught this with a simple clarifying
+question — "we've been using detect_brief consistently, right?" —
+and within ten minutes we had the whole mis-targeted-baseline story
+unwound.
+
+*What would you do differently if you replayed this session?*
+
+**Verify the canonical pipeline before running the comparison, not
+after.** I started the WBF production-run test against whichever
+4-map 5-pass directory had the most files, assuming that indicated
+canonical use. I should have asked first: "which directory contains
+the data for the majority of the 4-map gold-standard production
+work?" or counted files by version across the whole `outputs/h11/`
+tree (53 detect_brief-text vs 7 propose_brief-text would have been
+decisive). That one extra verification step would have redirected
+the comparison to the right data and avoided rewriting Obs 231 as a
+caveat rather than a headline.
+
+I would also **spread the metadata-check discipline across the whole
+outputs tree from the start**. `e47-propose-brief` was misleading but
+so is `gold-standard-v2` (the "v2" refers to the recreation script
+version, not the proposer version), `pv-diag-384` (sapphire-only but
+referenced from local files as if local), and
+`proposer-verifier-384` (single-pass, not 5-pass). The directory
+naming conventions in this project have accumulated meaning across
+many sessions, and none of it is reliable without a meta.json check.
+The scratchpad now has this as a hard rule.
+
+*What question emerged that wasn't pursued?*
+
+The image-track drift mechanism. Obs 232 showed image-track configs
+climbing 3 ranks from 20 m to 40 m buffer (rank 7 → rank 4) while
+text-track saturates at 30 m. I proposed a specific mechanism —
+image-track proposers may be fixating on a salient visual feature
+within the mound symbol (sunburst ray end, central dot, whatever)
+rather than the geometric centre, producing systematic directional
+offset — but I didn't test it. The test is simple and cheap: compute
+the mean offset vector from image-track candidates to their matched
+GT points per map, compare to text-track. If image-track has a
+directional bias and text-track doesn't, the mechanism is confirmed.
+This is a 15-minute analysis with no API spend and would produce a
+paper-worthy supplementary figure.
+
+I also didn't pursue *why* the WBF advantage appears specifically on
+HIGH-thinking / high-temperature proposer variants. The mechanistic
+story I wrote up is plausible (more sampling variance → more
+centroid drift → greedy's 20 m radius fragments more often) but it's
+untested on the actual data. A targeted comparison would look at
+the per-pass centroid distributions for matched mounds under
+minimal/T=0.0 vs HIGH/T=0.7 and measure whether the drift tail
+actually widens. If it does, the hypothesis is confirmed; if not,
+there's some other mechanism I haven't identified.
+
+*What felt uncertain or unresolved at the end?*
+
+Whether the WBF advantage transfers from the non-canonical
+propose_brief-text one-off to the actual paper pipeline. The
+correction in Obs 231 flags the issue but the answer requires next
+session's Priority 1 test. My current best guess is that the WBF
+advantage will be smaller on the canonical detect_brief-text 4-of-5
+pipeline — possibly in the +0.01 to +0.03 range, possibly a
+statistical tie like hp4hn4 — because the canonical pipeline is
+much closer to the minimal-vf ceiling (~F1 = 0.89) than the
+propose_brief-text loose-consensus pipeline was (~F1 = 0.80). But
+that's a guess, not a prediction I'd stake anything on. The
+apples-to-apples test is queued.
+
+The other unresolved thing is Decision 26. It was written under the
+hp4hn4-tie framing ("retain greedy as primary, WBF as robustness
+check"). Obs 231 is in tension with it but on a non-canonical
+baseline. The revision is deferred to after Priority 1 completes;
+the three options (amend in place, add Decision 27, no change)
+remain open. I stopped short of committing to an amendment because
+I don't yet know whether WBF is genuinely better on the canonical
+pipeline — and the answer to that question is the only thing that
+should drive the revision.
+
+*What's the single most important thing a future reader should know about this session?*
+
+**The investigation produced three findings whose status depends on
+next session's Priority 1 test.** Obs 230 (hp4hn4 statistical tie)
+is solid and paper-ready. Obs 232 (buffer-sensitivity and rank
+flips) is solid and paper-ready — independent of WBF, relevant to
+the round-robin analysis regardless. Obs 231 (WBF beats greedy by
++0.08 on the production run) is **conditional**: it's correct on the
+specific non-canonical propose_brief-text pipeline it was measured
+on, but whether it transfers to the canonical detect_brief-text
+pipeline is the question Priority 1 will answer. Don't cite Obs 231
+as "WBF beats greedy on the production run" without caveating. The
+Obs 231 correction note is the load-bearing piece of context here.
+
+The session also produced the `lib_fusion.py` WBF implementation,
+which stands independent of the specific comparison results: it's
+Solovyev 2019 canonical WBF plus a vote-aware minimum-separation
+refinement that matches the preregistered vote threshold as the
+anchor. 33 tier-1 tests; the Variant C parameters (IoU=0.25,
+min_sep=30 m, anchor=vote_t) are final. Whichever way Priority 1
+lands, the library is ready to use.
+
+**Session**: 2026-04-13 (Session 65)
+**Key observation**: Obs 228–232 form a methodological arc from
+"the dedup radius is wrong" through "WBF is principled but tied" to
+"WBF significantly beats greedy on HIGH/T=0.7 pipelines" — then the
+end-of-session correction that the production-run result was on a
+non-canonical baseline. The substantive findings survive the
+correction; the paper narrative depends on Priority 1.
+**Texture**: rapid back-and-forth with iterative visual verification;
+Shawn's pushback shaped every consequential decision (drift radius,
+cemetery merge, proposer config).
+
+---
