@@ -657,6 +657,7 @@ def detect_mounds_versioned(
     tiles_dir_override=None,
     use_cache=False,
     service_tier=None,
+    skip_intent_check=False,
 ):
     """
     Executes the detection pipeline using a specific versioned configuration.
@@ -934,6 +935,22 @@ def detect_mounds_versioned(
     else:
         version_out_dir = RESULTS_DIR / config.get("version", "unknown")
     version_out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Launch-time experiment-intent guard (Fix #2 + #3 from 2026-04-14
+    # Obs 235 retrospective). Writes experiment_intent.md and diffs the
+    # variant config against its base, prompting the user to confirm if
+    # changed fields are flagged as no-ops under the current modality.
+    from lib_experiment_intent import run_launch_checks
+    proceed = run_launch_checks(
+        config=config,
+        config_path=Path(config_path),
+        experiment_root=version_out_dir,
+        dry_run=dry_run,
+        skip_intent_check=skip_intent_check,
+    )
+    if not proceed:
+        print("Aborted by user at launch-time intent check.")
+        return None
 
     output_file = version_out_dir / filename
     meta_file = output_file.with_suffix('.meta.json')
@@ -1306,6 +1323,22 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
     else:
         output_dir = RESULTS_DIR / config_json.get("version", "unknown")
 
+    # Launch-time experiment-intent guard (Fix #2 + #3 from 2026-04-14
+    # Obs 235 retrospective). Same helper as the realtime path, called
+    # once per batch launch before any jobs are submitted.
+    output_dir.mkdir(parents=True, exist_ok=True)
+    from lib_experiment_intent import run_launch_checks
+    proceed = run_launch_checks(
+        config=config_json,
+        config_path=Path(args.config),
+        experiment_root=output_dir,
+        dry_run=getattr(args, "dry_run", False),
+        skip_intent_check=getattr(args, "skip_intent_check", False),
+    )
+    if not proceed:
+        print("Aborted by user at launch-time intent check.")
+        return None
+
     config_version = config_json.get("version", "unknown")
     examples = config_json.get("examples", [])
 
@@ -1602,6 +1635,17 @@ Examples:
         "discount with 1-15 min latency (uses off-peak capacity). "
         "Ignored in batch mode. Default: standard.",
     )
+    parser.add_argument(
+        "--skip-intent-check",
+        action="store_true",
+        help=(
+            "Bypass the launch-time experiment-intent confirmation "
+            "prompt. Use in automation. Not recommended for "
+            "interactive runs; see "
+            "scripts/lib_experiment_intent.py and Obs 235 retrospective "
+            "for context."
+        ),
+    )
     args = parser.parse_args()
 
     if args.mode == "batch":
@@ -1626,6 +1670,7 @@ Examples:
             tiles_dir_override=args.tiles_dir,
             use_cache=args.use_cache,
             service_tier=args.service_tier,
+            skip_intent_check=args.skip_intent_check,
         )
 
     # Exit code: 0 = success, 1 = setup error, 2 = partial failure
