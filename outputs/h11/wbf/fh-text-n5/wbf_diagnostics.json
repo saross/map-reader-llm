@@ -1,0 +1,38 @@
+{
+  "config": "fh-text-n5",
+  "parameters": {
+    "iou_threshold": 0.25,
+    "min_separation_m": 60.0,
+    "anchor_vote_threshold": null,
+    "min_dim": 20.0,
+    "max_dim": 200.0,
+    "min_area": 400.0,
+    "max_area": 40000.0
+  },
+  "loader": {
+    "config": "fh-text-n5",
+    "per_pass_box_counts": {
+      "run_1": 1459,
+      "run_2": 1559,
+      "run_3": 1476,
+      "run_4": 1442,
+      "run_5": 1465
+    },
+    "total_raw_boxes": 7401
+  },
+  "fusion": {
+    "n_raw_boxes": 7401,
+    "n_rejected_by_size_filter": 109,
+    "n_filtered_boxes": 7292,
+    "n_clusters_after_wbf": 3491,
+    "n_clusters_after_min_separation": 2724,
+    "n_merged_by_min_separation": 767,
+    "iou_threshold": 0.25,
+    "min_separation_m": 60.0,
+    "anchor_vote_threshold": null
+  },
+  "comparison_to_existing_consensus": {
+    "available": false,
+    "note": "special config, use external comparison"
+  }
+}

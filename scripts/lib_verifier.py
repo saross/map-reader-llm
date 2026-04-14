@@ -267,15 +267,18 @@ def gen_config_to_sdk(
         ),
     ]
 
-    return types.GenerateContentConfig(
-        temperature=config_dict["temperature"],
-        max_output_tokens=config_dict["max_output_tokens"],
-        response_mime_type=config_dict["response_mime_type"],
-        thinking_config=thinking_config,
-        system_instruction=system_instruction,
-        safety_settings=safety_settings,
-        service_tier=service_tier,
-    )
+    kwargs: dict[str, Any] = {
+        "temperature": config_dict["temperature"],
+        "max_output_tokens": config_dict["max_output_tokens"],
+        "response_mime_type": config_dict["response_mime_type"],
+        "thinking_config": thinking_config,
+        "system_instruction": system_instruction,
+        "safety_settings": safety_settings,
+    }
+    if service_tier is not None:
+        kwargs["service_tier"] = service_tier
+
+    return types.GenerateContentConfig(**kwargs)
 
 
 # =========================================================================

@@ -66,6 +66,24 @@ SPECIAL_CONFIGS = {
         ],
         "default_output_dir": "outputs/h11/wbf/e47-propose-brief-n5",
     },
+    # FH text N=5 (Flash HIGH, T=0.7): PV proposer consensus stage.
+    # Leaderboard #2: FH text 4/5 + PV (min vf) = F1 0.864.
+    "fh-text-n5": {
+        "pass_files": [
+            f"outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_{i}/detections_text-t0.7_run{i:02d}.geojson"
+            for i in range(1, 6)
+        ],
+        "default_output_dir": "outputs/h11/wbf/fh-text-n5",
+    },
+    # FH text N=30 (Flash HIGH, T=0.7): PV proposer consensus stage.
+    # Leaderboard #1: FH text 16/30 + PV (min vf) = F1 0.890.
+    "fh-text-n30": {
+        "pass_files": [
+            f"outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_{i}/detections_text-t0.7_run{i:02d}.geojson"
+            for i in range(1, 31)
+        ],
+        "default_output_dir": "outputs/h11/wbf/fh-text-n30",
+    },
     # Canonical 4-map production pipeline (detect_brief-text, HIGH, T=0.7, K=5,
     # library 8580ecb2..., matches 55-map generalisation config). Obs 233 /
     # Priority 1 canonical WBF vs greedy comparison.
