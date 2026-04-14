@@ -1,0 +1,47 @@
+{
+  "comparison": "WBF_PV_vs_Greedy_PV",
+  "condition": "FH text N=30",
+  "buffer_m": 20,
+  "vote_t": 16,
+  "prob_t": 0.15,
+  "greedy": {
+    "n": 418,
+    "p": 0.906699,
+    "r": 0.871264,
+    "f1": 0.888628
+  },
+  "wbf": {
+    "n": 423,
+    "p": 0.87234,
+    "r": 0.848276,
+    "f1": 0.86014
+  },
+  "delta_f1": -0.028489,
+  "permutation_test": {
+    "n_permutations": 10000,
+    "seed": 42,
+    "observed_mean_diff": -0.018417,
+    "p_value_two_sided": 0.258,
+    "per_map": {
+      "K-35-052-4_32635": {
+        "greedy": 0.8877,
+        "wbf": 0.8586
+      },
+      "K-35-053-3_Elenovo": {
+        "greedy": 0.8328,
+        "wbf": 0.7883
+      },
+      "K-35-062-2_Rakovski": {
+        "greedy": 0.9726,
+        "wbf": 0.9544
+      },
+      "K-35-078-1_Lesovo": {
+        "greedy": 0.5625,
+        "wbf": 0.5806
+      }
+    },
+    "wbf_wins": 1,
+    "greedy_wins": 3,
+    "ties": 0
+  }
+}
