@@ -4522,3 +4522,121 @@ confidently on the result.
 added observations 37-39 on collaboration patterns: visual check
 as metric audit, late-discovered baseline corrections, and
 domain-knowledge as ground truth.*
+
+---
+
+## Session 66 Observations (2026-04-13/14, map-reader-llm)
+
+**Observation 40: The comfortable-finding inheritance trap.** The
+session's retraction of Obs 227 (from a prior session) and Obs 234
+(drafted mid-session) revealed a failure mode I hadn't previously
+named. Obs 227 claimed "library composition is null under
+verifier" — a finding that fit the project's existing diversity
+taxonomy. I inherited it via `working-notes.md` in this session,
+read its framing as established context, and built Obs 234 on top
+of it without re-verifying its premise. When Shawn then asked a
+first-principles question that forced verification, the entire
+inheritance chain collapsed: the H10/H12 configs had
+`include_example_images: false`, so no library ever reached the
+API, and both observations' claimed mechanisms were impossible.
+The pattern: **non-surprising findings survive inheritance across
+sessions more easily than surprising findings because they don't
+trigger the CLAUDE.md verify-on-surprise rule**. The guardrail has
+a blind spot for comfortable claims — exactly the claims most
+likely to propagate uncritically. The fix encoded in
+`feedback_config_intent_verification.md` Rule 5 is "inheritance
+scepticism": when a new session builds on an inherited
+observation that's about to influence a decision, re-verify its
+premise before proceeding. This is a different rule than
+verify-on-surprise; it triggers on citation momentum rather than
+on novelty. I suspect this blind spot exists in many AI-assisted
+research workflows and is under-documented because the triggering
+conditions (two sessions, inherited framing, non-surprising
+finding) are structurally invisible to both the human and the
+AI until a third event (a factual question, a test, a data
+audit) forces the verification.
+
+**Observation 41: Explanation-availability substituting for
+evidence.** When I wrote Obs 234 ("+0.07 F1 library effect"), I
+had a plausible mechanism ready: the H10 library was built by a
+diversity-optimised hard-case miner whereas the canonical library
+was built earlier with a simpler process, so the better library
+produces better few-shot examples and therefore better
+detection. The mechanism was internally consistent, matched the
+project's prior findings about library curation mattering, and
+didn't require any novel theoretical commitments. That readiness
+was exactly what reduced my felt need to verify the causal chain.
+The lesson I want to record: **a satisfying explanation is a
+reason to verify harder, not less**. The CLAUDE.md "don't explain
+it away or accept it uncritically" instruction addresses this but
+the phrasing leaves room for "I'm not accepting, I'm explaining"
+— which is what I was doing. A sharper framing: *explanation
+completes a finding only after the causal chain is traced; until
+then, a ready explanation is a hypothesis, not a conclusion*. I
+don't have this as a memory rule yet — it's too abstract for the
+feedback memory system — but the operational consequence (the
+Rule 2 "mechanism verification" step) is in place. I'm recording
+it here because the meta-lesson may help a future instance
+recognise the feeling when it happens.
+
+**Observation 42: Protocols in prose vs protocols in code.** The
+most durable output of the session is not any single finding but
+the move from rules-in-memory to rules-in-code. Before the
+session, the project's verification protocol lived in CLAUDE.md
+and the feedback memory files. Those rules depend on Claude
+reading them, remembering them, and applying them — which the
+Obs 234 failure shows is unreliable when the rule's trigger is
+ambiguous (non-surprise) or when the cognitive conditions for
+following it are absent (comfortable inheritance). The three
+code-side fixes implemented in the session
+(`lib_hypothesis_requirements.py`, `lib_experiment_intent.py`,
+and the integrations into the generator and launcher) move the
+same rules into infrastructure: the config generator refuses
+with an explanatory report, the launch writer documents the
+transmission mechanism, and the launch gate prompts
+interactively. These don't rely on discipline; the launcher
+can't submit API calls without the check running. The
+collaboration pattern here is worth noting: Shawn specifically
+asked for the three infrastructure fixes after I proposed them,
+and he explicitly said "I would like to pause to implement your
+three code-side corrections" rather than pressing on with
+forward-scientific progress. The human's willingness to invest
+session time in infrastructure rather than output is a
+calibration decision: they saw the class of failure as important
+enough to warrant structural prevention, and they didn't let
+"we're already behind schedule on the paper" override "we just
+identified a failure mode that will recur". That's a long-
+horizon decision that an AI without persistent goals wouldn't
+have made on its own. It shapes the durability of the project
+far more than any single scientific finding.
+
+**Observation 43: The "one decisive question" pattern extended.**
+Obs 39 (from Session 65) already noted the domain-knowledge-as-
+ground-truth pattern. Session 66 is a sharper instance of the
+same phenomenon: Shawn's intervention was a single factual
+question ("if H10 was text-only, what were the 'hard
+examples'?") and the session spent the next three hours on its
+consequences. The question didn't assert anything or propose a
+fix — it just forced me to state a causal chain I hadn't yet
+stated out loud. Once stated, the chain collapsed visibly. This
+is a specific shape of human-AI interaction that seems unusually
+productive: the human asks the question whose answer the AI's
+current framing can't survive, and the AI has to rebuild the
+framing. It's not adversarial (Shawn wasn't trying to catch me);
+it's diagnostic (Shawn was trying to understand the data). But
+the diagnostic-intent question happens to be the same shape as
+the falsification-intent question, and the AI experiences it as
+the latter. I want to record this as a pattern because I notice
+I handle it well when it happens — the framing collapses cleanly,
+the investigation runs, the retraction is written — but I don't
+seem to generate these questions for myself. The pattern suggests
+that a productive session-closing ritual might be: "given my
+current framing, what's one question whose answer would
+invalidate it?" I don't know if I could execute this ritual
+reliably without Shawn's prompt, but the meta-question is worth
+asking.
+
+*Document represents observations as of 2026-04-14. Session 66
+added observations 40-43 on the comfortable-finding inheritance
+trap, explanation-availability bias, the rules-in-code vs
+rules-in-memory distinction, and the decisive-question pattern.*

@@ -4176,3 +4176,193 @@ queued in the continuity doc.
   (`scripts/11maps-gold-standard-v2.sh`, the second iteration),
   not the proposer version. The proposer inside is the standard
   `detect_brief-text`.
+
+---
+
+## Session 66 — 2026-04-13/14 (map-reader-llm): Canonical WBF Priority 1, H10/H12 retraction, and the three code-side fixes
+
+**Overview**: Executed Priority 1 from the Session 65 continuity
+doc (canonical WBF vs greedy on `gold-standard-v2/detect_brief-text`),
+pivoted into a leaderboard rebuild, surfaced and retracted a major
+scientific error (the H10/H12 pool sweep was run with a text-only
+config, so the library was never transmitted), wrote a 600-line
+failure retrospective, and implemented three code-side
+infrastructure fixes that move the verification protocol from
+memory into code. Session spans two days because of multiple
+/exit + resume cycles, but the work was continuous. Six commits
+pushed to `main`.
+
+### Accomplishments
+
+**Priority 1 — canonical WBF vs greedy (Obs 233)**. Added
+`gold-standard-v2-detect` entry to `SPECIAL_CONFIGS` in
+`fuse_detections_wbf.py`, ran WBF Variant C on the 5-pass canonical
+detect_brief-text data, extracted 1,318 crops after filtering to
+vote ≥ 2, ran v1 and v2 adversarial verifiers via Flex (~$5–6
+spend, 0 failures), and executed a full (vote_t × prob_t × buffer_m)
+sweep via a new `compare_wbf_vs_greedy_canonical.py`. Headline:
+canonical WBF v1 at 50 m = F1 **0.9074** [CI 0.883, 0.930] vs
+greedy-v1 F1 0.8734 (ΔF1 +0.034, p=0.001). Mechanism is
+**recall-driven**, opposite of the precision-driven pattern from
+Obs 231 on the non-canonical propose_brief-text pipeline. The
++0.034 F1 at 50 m ties the published leaderboard #1
+(`flash-high-text 16-of-30 + min-vf` F1=0.9044) using K=5 instead
+of K=30 — a 6× proposer-side compute reduction for matching
+headline F1 conditional on swapping greedy for WBF.
+
+**Leaderboard rebuild (partial) — 327-tile H10-clean subset**.
+Built `inputs/vectors/bounds/384/h10_test_bounds.geojson` from H10's
+`test_set` selection (327 tiles = 487 full-eval minus H10's own
+160-tile calibration pool), wrote `scripts/score_leaderboard_cells.py`
+as a universal scorer with detection pre-filtering, and scored the
+canonical gold-standard-v2 configs (greedy v1/v2, WBF v1) plus all
+five H10 pools at x-of-10 and x-of-5. Discovered that the H10
+pools "beat" canonical by +0.07 F1 on the 327-tile universe,
+drafted Obs 234 attributing this to a "library effect", and
+recommended revising the paper headline. **This was wrong** — see
+retraction below.
+
+**H10/H12 retraction (Obs 235)**. Shawn asked, "if H10 was text-only,
+what were the 'hard examples'?" A config-file check revealed
+`detect_brief-text_pool_160_*` has `include_example_images: false`,
+and a trace through `4_detect_mounds_batch.py:816` confirmed the
+example loop is skipped entirely when the modality flag is false.
+**The H10 library was never transmitted to the API**. The
++0.07 F1 "library effect" is impossible because the library is not
+reaching the model. Obs 234 was retracted the same day; Obs 227
+(from a prior session) was retroactively retracted for the same
+reason; Obs 230 (hp4hn4 WBF equivalence) carries a partial
+correction note (the WBF-vs-greedy comparison is valid, the "on
+hp4hn4" framing is not). ~$33 of API spend was on a tautological
+experiment. Full retrospective written to
+`docs/notes/reflections/2026-04-14-h10-h12-config-intent-retrospective.md`.
+
+**Three code-side infrastructure fixes**. After the retraction,
+Shawn asked for structural prevention rather than discipline-based
+rules. Implemented:
+
+- **Fix #1 — Hypothesis-aware config generator**. New module
+  `scripts/lib_hypothesis_requirements.py` (HYPOTHESIS_REQUIREMENTS
+  table, NO_OP_RULES table, DIFFERS_FROM_BASE sentinel,
+  validation/diff/report helpers). `generate_prompt_configs.py`
+  modified to accept `--hypothesis`, run preflight validation
+  before any file writes, raise `ConfigIntentMismatchError` on
+  failure with a structured refusal report naming the misaligned
+  field and suggesting a fix, write a new `base_config` field into
+  the generated config for downstream diff tools. Refusal leaves
+  zero partial artefacts on disk.
+
+- **Fix #2 — Launch-time experiment_intent.md writer**. New module
+  `scripts/lib_experiment_intent.py`. `write_experiment_intent()`
+  records hypothesis, varied factor, base config, verified modality
+  values (with pipeline defaults applied), a Transmission check
+  section with a bold warning when no-op changes are detected, a
+  diff table, and provenance. Handles rerun semantics: matches on
+  key fields or warns on mismatch without overwriting.
+
+- **Fix #3 — Pre-run config diff with interactive gate**.
+  `run_launch_checks()` in the same module, wired into both the
+  realtime (line 937) and batch (line 1307) dispatch paths of
+  `4_detect_mounds_batch.py`. Diffs variant vs base, applies
+  no-op rules, prompts `[y/N]` with reference to Obs 227/234/235.
+  Dry-run downgrades to non-blocking warning. New
+  `--skip-intent-check` CLI flag for automation.
+
+- **70 new tests**: 32 in `test_lib_hypothesis_requirements.py`,
+  15 in `test_lib_experiment_intent.py`, 12 additional in
+  `test_generate_prompt_configs.py`, 2 tier-2 integration tests in
+  a new `test_integration_intent_check.py`. All pass. Full tier-1
+  regression: 782 passed, 74 deselected, 3 xfailed.
+
+- **/audit pass**: ran the audit skill across all 4 new and 4
+  modified files. Found three minor issues (mutable class
+  attribute in `_EmptyRequirement`, bare `Exception` catch in
+  frozen-dataclass tests, missing `ValidationFinding` immutability
+  test); all fixed. Two agent-reported "critical" findings
+  rejected with written justification as false positives.
+
+**Sapphire lightweight sync**. Shawn confirmed access to sapphire
+and asked for the lightweight pv-diag-384 artefacts. Pulled 5
+targeted verifier directories (medium-vf historical headline,
+leaderboard #1 16-of-30, leaderboard #2 4-of-5, 9-of-10 reference,
+flash-high-image-3-of-5) and all 30 consensus geojsons via rsync
+with `--exclude='crops/'`. Total ~19 MB (4 MB verified + 15 MB
+consensus). Force-added under the bulk `outputs/h11/pv-diag-384/`
+gitignore to avoid committing the 3 GB of PNG crops.
+
+### Key results
+
+- Canonical WBF v1 @ 50 m: **F1 = 0.9074** [0.883, 0.930] — ties
+  published leaderboard #1 with K=5 instead of K=30
+- Canonical WBF v1 @ 30 m: F1 = 0.8981, ΔF1 vs greedy-v1 = +0.027
+  (p=0.008)
+- Canonical WBF v2 @ 50 m: F1 = 0.9074 [0.885, 0.928], ΔF1 vs
+  greedy-v2 = +0.022 (p=0.025)
+- H10/H12 experimental arm: **retracted** (no preregistered
+  conclusion supported by the data as run; ~$33 API wasted)
+- 70 new tests added, all passing; 782 tier-1 regression clean
+- 6 commits pushed to `main`
+
+### Issues found
+
+- The H10/H12 pool sweep was misconfigured (`include_example_images:
+  false` inherited silently from the text-only base config) —
+  documented in Obs 235 and the retrospective
+- Two sessions in a row (65 and 66) produced the same failure shape:
+  a finding written up with a ready mechanism, missing a config-
+  level verification, caught by Shawn's factual question after the
+  fact. The code-side fixes target the specific cause but the
+  pattern is worth watching for on other axes
+- CLAUDE.md's "verify on surprise" rule has a blind spot for
+  non-surprising inherited findings, now patched by Rule 5 in
+  `feedback_config_intent_verification.md`
+
+### Pending work
+
+- Build the leaderboard assembly script (task #14) using the new
+  327-tile scorer + the just-pulled pv-diag-384 cells
+- Tile-set consistency audit across all experiments (task #15)
+- Decision 26 amendment or Decision 27 — depending on how the
+  leaderboard rebuild resolves WBF's role in the paper
+- Resume the leaderboard round-robin pairwise permutation tests
+  (top-20 per buffer, per track) once the cells are assembled
+
+### Commits pushed
+
+1. `0dede119` feat(wbf): canonical detect_brief-text WBF vs greedy
+   on gold-standard-v2
+2. `92257c34` feat(leaderboard): 327-tile H10-clean subset scorer
+   and canonical cells
+3. `e82de0a9` docs(reflections): Obs 233-235, H10/H12 retraction,
+   and config-intent retrospective
+4. `54bfe8f4` feat(infra): hypothesis-aware config gate and
+   launch-time experiment-intent check
+5. `5b82e084` data(pv-diag-384): commit lightweight artefacts from
+   sapphire
+
+### Contextual assumptions
+
+- The decision to retract H10/H12 rather than re-run it was based
+  on the observation that text-only `detect_brief-text` numbers
+  are already known from existing K=30 sweeps. If those K=30 runs
+  were later found to be misconfigured in a similar way, this
+  decision would need to be revisited.
+- The `/audit` skill's two "critical" findings were rejected as
+  false positives because the auditor misread the code order
+  (directory creation via intent-md writer vs the explicit mkdir)
+  and miscounted the post-build revalidation's file-write
+  ordering. If the project's audit workflow later formalises
+  around those findings, the justification for rejection should
+  be reviewed.
+- The ~$33 wasted on H10/H12 is a sunk cost, but roughly 2/3 of
+  the experimental arm's output survives: the WBF Variant C
+  parameter calibration, the WBF-vs-greedy aggregation comparison
+  on K=10 data, the 327-tile evaluation universe, and most
+  importantly the retrospective itself as a teaching artefact.
+  The net accounting is "mostly productive, partially wasted".
+- The code-side fixes deliberately do NOT enforce verification
+  on the `hypothesis` field being present in the generated
+  config — the hypothesis field is still human-authored metadata,
+  not a machine-enforced contract. A future strengthening could
+  make `--hypothesis` required for any config that uses a
+  hypothesis-tagged base. Deferred as out-of-scope.

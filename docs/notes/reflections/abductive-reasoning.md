@@ -3350,3 +3350,229 @@ For practitioners building multi-pass VLM detection pipelines:
 This is a finding that generalises beyond this specific study and
 warrants reporting in the methods section of any paper using
 multi-pass VLM ensembles.
+
+---
+
+## Session 66 — 2026-04-13/14 (map-reader-llm): The alarm that didn't ring, and the belief revision it delayed
+
+This entry records a particularly sharp abductive sequence: a
+prediction (written up as Obs 234) was confidently wrong, the
+error was caught by a single domain-intuition question from the
+user, and the ensuing investigation produced both a specific
+belief revision and a meta-level finding about when the project's
+surprise-verification protocol fails to fire. The meta-level
+finding is as important as the specific revision, because it
+explains why the abductive sequence was delayed when it should
+have been immediate.
+
+### The surprising fact (delayed)
+
+When I scored the H10 pool sweep on the 327-tile H10-clean subset,
+I found that all five H10 pool variants substantially outperformed
+the canonical gold-standard-v2 pipeline by +0.07 to +0.09 F1 on
+the same evaluation universe. At K=5, `pool_160_hp2hn6` hit F1 =
+0.9181 at 30 m vs canonical greedy-v2 F1 = 0.8351 — a +0.083 F1
+gap that would, if real, reframe the paper's headline. I wrote up
+Obs 234 with the mechanism "the H10 HP:HN calibration produced
+better few-shot libraries than the canonical library used in
+production", citing the fact that both configs shared instruction
+text, temperature, thinking level, and model, differing only in
+the `library_hash` field.
+
+The fact *should* have been surprising — it implied the project's
+production pipeline was not its best-performing configuration,
+and that the H10 exploratory experiments had silently produced a
+better headline. But I didn't experience it as surprising. The
+mechanism (better library → better detection) matched the
+project's existing diversity-taxonomy framing ("structural
+changes beat parameter tweaks"), and I had inherited Obs 227
+from a prior session where the same data had been interpreted as
+supporting the "verifier dominates library" finding. The
+comfortable fit between the inherited framing and the new
+result meant my surprise-verification alarm didn't fire. I wrote
+Obs 234 as a genuine finding, documented it with tables and
+confidence intervals, and nearly recommended revising the paper
+headline around it.
+
+The next day Shawn asked a single factual question: *"if H10 was
+text-only, what were the 'hard examples'?"*
+
+That was the moment the surprising fact became visible to me.
+
+### The probe
+
+The question forced me to state a causal chain I had not yet
+stated out loud: "the H10 library is transmitted to the model
+via the `examples` field, which is loaded by
+`4_detect_mounds_batch.py:800` iff `include_example_images:
+true`". One bash command later —
+
+```
+grep include_example_images prompts/configs/h10/detect_pool_160_hp4hn4.json
+```
+
+— and the answer was:
+
+```
+"include_example_images": false
+```
+
+I then traced `4_detect_mounds_batch.py:816` and confirmed that
+when the flag is false, the example loop is skipped entirely. No
+text labels, no image bytes, nothing from the library reaches
+the API. The library_hash difference between pools is bookkeeping
+only — the files exist on disk and their hashes are recorded in
+meta.json, but the contents never influence the API payload.
+
+The probe that would have caught this at write-time was
+identical in form to the probe that caught it at read-time: read
+the config file, look for the modality flag, trace the code
+path. Ten seconds of work. I did not run it when drafting Obs
+234 because my explanation felt satisfying.
+
+### The belief revision (specific)
+
+The +0.07 F1 gap I had attributed to "library effect" is not a
+library effect. The library was never transmitted. The actual
+decomposition of the apparent gap:
+
+1. **Consensus threshold difference (largest)**: the canonical
+   gold-standard-v2 manifest is strict 4-of-5 (vote_count ∈ {4, 5},
+   n = 607 candidates), while the H10 manifest is permissive 2-of-10
+   (vote_count ∈ {2..10}, n = 1,558 candidates). The sweep over
+   `vote_t × prob_t` searches a ~2.5× larger candidate space for
+   H10 than for canonical. Most of the apparent gap is this.
+2. **Apples-to-apples residual**: at matched K=5 and matched
+   vote_t=4 (= 80% consensus floor for both), the residual gap
+   shrinks to +0.055 F1. This residual is NOT a library effect
+   (impossible because the library isn't transmitted) and is
+   attributable to some combination of (a) x-of-5 estimation bias
+   from constructing the K=5 subset via `contributing_passes`
+   filtering on a 10-pass manifest, (b) Gemini 3 Flash model
+   drift between 2026-04-10 and 2026-04-11, and (c) code-version
+   differences between the git commits that ran the two configs.
+3. **The H12 preregistered hypothesis was not tested**. The
+   HP:HN ratio was varied in a library that wasn't being sent,
+   so the H12 null result documented in Obs 227 is tautological,
+   not scientific. H12 is deferred; if revived, it requires
+   `detect_brief-text-image` as the base config.
+
+The specific belief revision: *the H10/H12 experimental arm as
+executed does not support any preregistered conclusion about
+library composition or HP:HN ratio, and the ~$33 API spend was
+on a tautological experiment*. The WBF vs greedy aggregation
+comparison (Obs 230) remains valid because it operates on raw
+per-pass detections and doesn't depend on library transmission.
+
+### The belief revision (meta)
+
+The specific revision was predictable in shape once the probe
+ran — this is a normal abductive pattern where a surprising
+fact triggers an investigation that yields a replacement
+explanation. The more interesting belief revision is meta:
+**the surprise-verification protocol has a blind spot for
+non-surprising findings, and the blind spot is activated
+specifically when a finding is inherited from a prior session
+and fits the receiving session's prior model**.
+
+Before this session I would have said the CLAUDE.md rule
+"flag surprising results → verify the pipeline → document the
+finding" was sufficient to catch methodological errors in
+results-interpretation. After this session I believe:
+
+1. **Non-surprise bypasses step 1 of the rule.** A result that
+   fits the prior model doesn't trigger the "flag surprising"
+   clause and therefore doesn't get to the verification clause.
+2. **Ready explanations bypass step 2 of the rule.** Even when
+   the surprise clause fires, having a plausible mechanism ready
+   to hand reduces the felt need to verify, because explanation
+   feels like completion.
+3. **Inheritance across sessions compounds both bypasses.**
+   A finding inherited from a prior session has already passed
+   the prior session's verification (or appeared to), so the
+   new session reads it as "established context" and doesn't
+   re-run the check. Combined with the non-surprise bypass,
+   this produces a configuration where neither session verifies
+   and the error propagates silently.
+
+The rule needed to catch this class of error is not "verify
+when surprising" — it's "verify the causal chain of any F1
+effect ≥ 0.02 before writing it up, regardless of surprise".
+That rule is now encoded in `feedback_config_intent_verification.md`
+Rule 2. The complementary rule ("re-verify inherited observations
+on first use in a new session") is Rule 5.
+
+### The probe that would have worked earlier
+
+If I had forced myself to state the causal chain for Obs 234
+before writing it — "factor X is encoded in config field Y;
+field Y reaches the API via code path Z; I verified Z by
+reading file:line" — I would have tried to fill in the three
+slots for "the H10 library beats the canonical library". Slot
+1 (factor X = library contents, field Y = `examples`) would
+have been easy. Slot 2 (field Y reaches the API via
+`4_detect_mounds_batch.py:800-816`) would have been the
+verification step. I had not thought to state the chain,
+because I was documenting the effect, not its mechanism. The
+operational rule: **draft the causal chain before drafting
+the observation**. This is the active version of
+"don't explain it away" — instead of trying not to fall into
+explanation-availability, state the chain first, and the
+missing link will surface on its own.
+
+### Generalisation
+
+Two patterns from this session generalise beyond the map-reader
+project:
+
+**Pattern 1: Inheritance compounds non-surprise.** In any
+long-running project where context is carried across sessions
+via memory files or reflection documents, inherited findings
+that fit the receiving session's prior model are
+under-verified compared to both (a) new findings in the same
+session and (b) inherited findings that don't fit the prior
+model. The failure mode is structurally invisible to the
+receiving session because the conditions that trigger
+verification (surprise, cognitive dissonance) are absent. The
+fix is to add a separate verification trigger that activates
+on inheritance rather than on surprise. In this project that's
+Rule 5; in other projects it would look different but the
+principle is the same.
+
+**Pattern 2: Protocols in prose need infrastructure in code.**
+Any verification protocol that depends on Claude reading a
+memory file, remembering its contents, and applying them
+correctly under cognitive load is fragile against exactly the
+conditions that most need verification (comfortable findings,
+inherited contexts, ready explanations). The durable fix is to
+move the rule from prose to code — make the configuration
+generator refuse with a report, make the launcher require a
+pre-run check, make the verifier-bank loader validate the
+modality flag. The three code-side fixes implemented in this
+session are specific to the H10/H12 failure class, but the
+pattern (detect the failure mode in prose, encode the check
+in code) is general. For practitioners running AI-assisted
+research pipelines: if you find yourself writing "I should
+remember to X", write code that makes X happen automatically
+before you can skip it.
+
+### Meta-observation on this entry
+
+Reading Session 65's entry in this document against this one,
+I notice a structural similarity: both entries document a
+belief revision driven by Shawn's intervention after I had
+confidently written up a finding. In Session 65 the intervention
+was "check whether this was the canonical baseline" and the
+revision was "Obs 231 is on a non-canonical one-off". In
+Session 66 the intervention was "if H10 was text-only, what
+were the 'hard examples'?" and the revision was "Obs 234 is on
+a non-transmitted library". Two consecutive sessions, same
+shape of error (I wrote up a finding with a ready mechanism
+and missed a config-level verification), same shape of
+correction (Shawn asked the question whose answer my framing
+couldn't survive). That's not a coincidence — it's a stable
+pattern in my failure mode on this project. The Session 66
+infrastructure fixes target this specific pattern, but the
+pattern itself is probably broader than config-intent mismatch
+and probably recurs in any workflow where I'm interpreting
+results I didn't generate myself. Worth watching.

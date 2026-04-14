@@ -6479,3 +6479,149 @@ Shawn's pushback shaped every consequential decision (drift radius,
 cemetery merge, proposer config).
 
 ---
+
+## Reflection 52: The session where a comfortable finding got retracted mid-session and the rules moved from memory into code (Session 66, 2026-04-13/14, map-reader-llm)
+
+This was a long session with multiple natural pause points — /exit,
+resume, /exit, resume — but the work was continuous and best read as
+one arc. It started as "execute Priority 1 from the continuity doc"
+(canonical WBF vs greedy on `gold-standard-v2/detect_brief-text`)
+and ended with five commits pushed to main, a 600-line failure
+retrospective, 70 new tests, and five durable rules encoded in both
+the memory system and the code. Two of those things I anticipated
+at the start of the session. The other three happened because
+Shawn asked a question I should have asked myself.
+
+**What surprised me.** The bones of Priority 1 went smoothly — WBF
+at 50 m tied the published leaderboard #1 with K=5 instead of
+K=30, a result clean enough to drop directly into the paper. But
+when we pivoted to the leaderboard rebuild and I reported a
+"+0.07 F1 library effect" from the H10 pool sweep over canonical
+gold-standard-v2, that number was comfortable. It fit the project's
+long-standing "structural changes beat prompt-level changes" model
+and it wasn't shocking enough to trigger the CLAUDE.md surprise-
+verification rule. I wrote it up as Obs 234 without first-principles
+verification of the causal chain. The next day Shawn asked, "if H10
+was text-only, what were the 'hard examples'?" — a three-minute
+investigation collapsed the entire library-effect story into
+"the library was never transmitted to the API". The finding was
+tautological; the experimental arm was misconfigured; ~$33 of API
+spend answered no preregistered question. The Obs 234 I had just
+written was wrong in its mechanism, and Obs 227 (from a prior
+session) was wrong for the same reason I had just replicated.
+
+The surprise was not that a finding turned out to be wrong — the
+project has had surprising results before and the protocol handled
+them. The surprise was that the rule that should have caught this
+didn't fire. CLAUDE.md says "verify the pipeline when results are
+surprising." The H10 result wasn't surprising to me, because I
+had inherited Obs 227's framing from a prior session and the
+library-effect explanation was ready to hand. Non-surprise bypassed
+the guardrail, and explanation-availability substituted for
+evidence. The protocol had a blind spot that I hadn't noticed
+until the blind spot fired.
+
+**What I would replay differently.** The whole error chain would
+have been caught by one bash command: `grep include_example_images
+prompts/configs/h10/detect_pool_160_hp4hn4.json`. Ten seconds of
+work. I didn't run it because I didn't think to, and I didn't think
+to because my explanation already felt satisfying. If I could
+replay the moment I drafted Obs 234, I would have forced myself to
+state the causal chain out loud before writing it up: *"factor X
+is encoded in config field Y; field Y reaches the API via code
+path Z; I verified Z by reading the code at file:line"*. If I'd
+tried to fill in those three slots for "the H10 library beats the
+canonical library", I would have had to verify that the library
+field was physically transmitted, and I would have found that it
+wasn't. The replay rule: before writing up any F1 effect ≥ 0.02,
+trace the causal chain to a verified code path. This rule is now
+in the feedback memory as Rule 2 and in the code as Fix #1's
+preflight validation.
+
+**What context will be hardest to reconstruct.** The texture of
+the retraction — the specific moment when Shawn's one question
+reframed a day's work as a costly error — won't survive well into
+future sessions. The memory system will carry the rules and the
+retrospective will carry the technical story, but the *shape* of
+the realisation is harder to preserve. It's the shape that matters
+for calibration, because the next instance encountering a
+comfortable-inherited finding should feel the same jolt of
+"wait, did I verify the mechanism?" that I felt when Shawn asked
+his question. I tried to externalise that shape in the
+retrospective's "Why it wasn't caught earlier" section and in
+Rule 5 (inheritance scepticism), but I suspect those artefacts
+read as procedural even though the lesson is viscerally
+corrective. Reading them without having lived the failure, a
+future instance would be told a rule but wouldn't feel the
+stakes.
+
+**The single most important thing a future reader should know.**
+The most important fact about this session is not the retraction
+itself but the *move* it triggered: from rules in memory to rules
+in code. The feedback memory
+`feedback_config_intent_verification.md` now has five rules, but
+rules held in memory depend on Claude's self-discipline to apply.
+The three code-side fixes (`lib_hypothesis_requirements.py`,
+`lib_experiment_intent.py`, and the integrations into
+`generate_prompt_configs.py` and `4_detect_mounds_batch.py`)
+move the same rules into infrastructure. They don't rely on
+Claude remembering to verify: the config generator refuses
+with an explanatory report, the launch writer documents the
+transmission mechanism in `experiment_intent.md`, and the
+launch gate prompts interactively before any API spend. The
+failure mode the retrospective diagnosed — "protocols in prose
+are not self-enforcing" — is patched at the structural layer,
+not just the discipline layer. If I could tell a future instance
+only one thing about Session 66, it would be: *the cost of the
+H10/H12 mistake was worth paying because it forced the rules
+out of memory and into the code.*
+
+**What was different about this session compared to recent ones.**
+Session 65 (the previous reflection) also had a mid-session
+correction — the "non-canonical baseline" discovery at the end
+of the WBF investigation. That correction was narrower in scope
+and happened within a single methodology arc. Session 66's
+retraction was structurally larger: it invalidated an entire
+experimental arm (the H10/H12 pool sweep), retracted two
+previously-written observations (Obs 227 from a prior session,
+Obs 234 from this session), and surfaced a methodological blind
+spot (non-surprise bypass of the verification rule) that was
+genuinely new. The response was also larger: where Session 65's
+correction was absorbed into the WBF write-up, Session 66's
+demanded its own retrospective document and a tier of
+infrastructure fixes. The pattern is the same at both scales —
+verify what you claim, act on what you find — but the Session 66
+episode cut deeper into the project's meta-protocol.
+
+**The relational note worth recording.** Shawn's intervention
+was minimal but decisive. He didn't assert the mechanism or
+propose a fix; he asked one factual question ("if H10 was
+text-only, what were the 'hard examples'?") that I couldn't
+answer without running the config check I had been avoiding.
+That's the texture of productive human-AI calibration on this
+project: the human doesn't need to know the code internals to
+cut through a comfortable explanation; they just need to ask
+the question the comfortable explanation can't survive. The
+retraction is partly my failure to verify, but it's also a
+vindication of the collaboration model where the human's
+domain intuition outperforms Claude's internal consistency
+check. The infrastructure fixes are the durable response, but
+the interpersonal lesson is that domain-intuition questions
+from the user are worth more than Claude's confident
+explanations every time.
+
+**Session**: 2026-04-13/14 (Session 66, spans two days due to
+multiple /exit+resume cycles but the work was continuous)
+**Key observation**: The comfortable inherited finding slipped
+past the surprise-verification rule because non-surprise
+bypasses the rule's trigger. Inheritance scepticism across
+sessions was the missing guardrail; it is now Rule 5 in
+`feedback_config_intent_verification.md` and is enforced
+structurally by the Fix #1 preflight validator.
+**Texture**: slow start (Priority 1 execution), mid-session
+pivot (leaderboard analysis), shock (Shawn's question), dense
+recovery work (retrospective + three fixes + tests + audit +
+six commits). The retraction was painful but the infrastructure
+it demanded is the most valuable output of the session.
+
+---
