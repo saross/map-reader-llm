@@ -1,0 +1,20 @@
+{
+  "study": {
+    "name": "Retest: Phase 2d: H5 Negative Text Treatment \u2014 Track 2 (brief-text)",
+    "version": "2.0-retest",
+    "description": "Tests 3 exclusion guidance levels (Minimal, Terse, Verbose) at the\ncarried-forward brief-text (text-only) M/E with T=0.0.\n\nThis is a text-only analogue of the preregistered H5 test. Since no\nexample images are sent, the exclusion guidance is purely instructional\n\u2014 it tells the model what NOT to detect based on visual descriptions,\nwithout reference image anchoring.\n\nMinimal is the Phase 2b Track 2 T=0.0 baseline. Terse adds a brief\n\"do not mark\" list. Verbose adds detailed per-type exclusion criteria.\n\nSee Decision 16 (dual-track), Decision 17 (Phase 2d design).\n",
+    "phase": "2d",
+    "hypothesis": "H5",
+    "created": "2026-02-11",
+    "retest_notes": "H5 negative text Track 2 (text-only). All at T=0.0."
+  },
+  "generated": "2026-03-16T10:11:04.516018+00:00",
+  "conditions": [
+    "terse",
+    "verbose"
+  ],
+  "runs_per_condition": 1,
+  "total_units": 0,
+  "tile_limit": null,
+  "execution_order": []
+}

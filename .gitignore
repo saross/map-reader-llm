@@ -28,11 +28,20 @@ archive/cc-sessions/*.jsonl
 # Large verifier request payloads (contain base64-encoded images, >100 MB)
 **/verifier_requests.jsonl
 
-# Large raw output directories (regenerable from API; commit results/ instead)
-outputs/h11/pv-diag-256/
-outputs/h11/pv-diag-384/
-outputs/pv/
-outputs/retest/
+# ─────────────────────────────────────────────────
+# H11 PV-diag and retest: track detection GeoJSON + verifier results,
+# ignore bulk intermediates (crops PNGs, batch JSONL, logs).
+# Global rules already handle: **/batch_working/, outputs/**/crops/*/crops/
+# ─────────────────────────────────────────────────
+outputs/h11/pv-diag-384/**/*.log
+outputs/h11/pv-diag-256/**/*.log
+outputs/retest/**/*.log
+outputs/pv/**/*.log
+
+# Legacy 256px experiment (superseded by 384px; still track GeoJSON)
+outputs/h11/pv-diag-256/**/crops/
+outputs/pv/**/crops/
+
 outputs/.active_files.*
 
 # Ephemeral lock files

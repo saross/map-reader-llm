@@ -1,0 +1,36 @@
+{
+  "study": {
+    "name": "Retest: Phase 3a: H3 Consensus Voting \u2014 Track 2 (Text-Only, HIGH Thinking)",
+    "version": "2.0-retest",
+    "description": "Tests consensus voting with HIGH thinking level at elevated temperatures (T=0.3, T=0.7, T=1.0) using the text-only configuration with HIGH thinking enabled.\nT=0.7 data already exists in the Phase 3a replication study (outputs/retest/phase3a-replication/high/). This study adds T=0.3 and T=1.0 to complete the temperature sweep and enable comparison with the minimal thinking text track.\nThe replication study found HIGH thinking + consensus at T=0.7 achieves F1=0.771 (21-of-30) \u2014 the best result in the study.\n",
+    "phase": "3a",
+    "hypothesis": "H3",
+    "created": "2026-03-17",
+    "retest_notes": "H3 consensus voting Track 2 (text-only) with HIGH thinking. K=30 for full threshold sweep. T=0.7 already available from the replication study; T=0.3 and T=1.0 are new.\n"
+  },
+  "generated": "2026-03-20T13:22:34.515004+00:00",
+  "conditions": [
+    "T0.3",
+    "T0.7",
+    "T1.0"
+  ],
+  "runs_per_condition": 30,
+  "total_units": 14,
+  "tile_limit": null,
+  "execution_order": [
+    "T0.7/run_26",
+    "T0.3/run_28",
+    "T1.0/run_26",
+    "T0.3/run_17",
+    "T0.3/run_15",
+    "T0.3/run_20",
+    "T1.0/run_25",
+    "T0.3/run_26",
+    "T0.3/run_10",
+    "T0.7/run_4",
+    "T0.7/run_14",
+    "T0.3/run_7",
+    "T1.0/run_12",
+    "T1.0/run_28"
+  ]
+}

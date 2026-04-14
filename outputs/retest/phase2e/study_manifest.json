@@ -1,0 +1,25 @@
+{
+  "study": {
+    "name": "Retest: Phase 2e: H4 Example Ordering",
+    "version": "2.0-retest",
+    "description": "Tests 4 example ordering strategies to determine if position of canonical\nvs hard examples affects detection performance. Includes the config-default\nbaseline (reused from Phase 2c) plus 3 reordering variants.\nUses all optimal parameters from Phases 2a-2d.\nFinal phase before Phase 3 validation.\n",
+    "phase": "2e",
+    "hypothesis": "H4",
+    "created": "2026-01-21",
+    "updated": "2026-02-12",
+    "retest_notes": "H4 example ordering (image-using). All at T=0.0."
+  },
+  "generated": "2026-03-15T11:19:03.080305+00:00",
+  "conditions": [
+    "config-default",
+    "canonical-first",
+    "canonical-last",
+    "random"
+  ],
+  "runs_per_condition": 1,
+  "total_units": 1,
+  "tile_limit": null,
+  "execution_order": [
+    "random/run_1"
+  ]
+}

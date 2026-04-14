@@ -1,0 +1,24 @@
+{
+  "study": {
+    "name": "H11: 384px Pro HIGH \u2014 Image N=5",
+    "version": "1.0",
+    "description": "Gemini 3.1 Pro, 5 image-track proposer passes with HIGH thinking at\nT=0.7 on the full 384px evaluation area (611 tiles). Exploratory\nanalysis: the preregistration (\u00a78.9) fixed thinking at MINIMAL, but\npost-registration experiments found HIGH thinking improves consensus\nvoting at strict thresholds. Tests whether Pro with HIGH thinking\ncan outperform Flash consensus.\n",
+    "phase": "h11",
+    "hypothesis": "H6-exploratory",
+    "created": "2026-03-24"
+  },
+  "generated": "2026-03-24T02:56:00.168123+00:00",
+  "conditions": [
+    "image-t0.7"
+  ],
+  "runs_per_condition": 5,
+  "total_units": 5,
+  "tile_limit": null,
+  "execution_order": [
+    "image-t0.7/run_2",
+    "image-t0.7/run_5",
+    "image-t0.7/run_4",
+    "image-t0.7/run_1",
+    "image-t0.7/run_3"
+  ]
+}

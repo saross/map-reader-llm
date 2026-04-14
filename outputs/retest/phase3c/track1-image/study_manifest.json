@@ -1,0 +1,52 @@
+{
+  "study": {
+    "name": "Retest: Phase 3c: H9 Diversity \u2014 Track 1 (Image)",
+    "version": "2.0-retest",
+    "description": "Tests whether introducing diversity across consensus voting passes\nimproves detection accuracy compared to identical passes (H9).\n\nUses Scale-8 composition (17 examples: 4 Canon+, 4 HP, 2 Canon-,\n4 HN, 3 null) for all conditions. The Track 1 baseline (library_plus-hp)\nhad 0 HN; core HN (11-14) are added here for fair cross-condition\ncomparison \u2014 the HN rotation in Conditions C and E requires all\nconditions to start from the same example count.\n\nAll conditions use HIGH thinking level. Temperature is fixed at T=0.7\n(Phase 3a optimum) except where varied as the diversity dimension.\n",
+    "phase": "3c",
+    "hypothesis": "H9",
+    "created": "2026-03-07",
+    "retest_notes": "H9 diversity Track 1 (image-using). K=5 replications. DEFERRED."
+  },
+  "generated": "2026-03-24T20:34:35.176396+00:00",
+  "conditions": [
+    "h9-A-p1",
+    "h9-A-p2",
+    "h9-A-p3",
+    "h9-A-p4",
+    "h9-A-p5",
+    "h9-B-v1",
+    "h9-B-v2",
+    "h9-B-v3",
+    "h9-B-v4",
+    "h9-B-v5",
+    "h9-C-img1",
+    "h9-C-img2",
+    "h9-C-img3",
+    "h9-C-img4",
+    "h9-C-img5",
+    "h9-D-t1",
+    "h9-D-t2",
+    "h9-D-t3",
+    "h9-D-t4",
+    "h9-D-t5",
+    "h9-E-p1",
+    "h9-E-p2",
+    "h9-E-p3",
+    "h9-E-p4",
+    "h9-E-p5"
+  ],
+  "runs_per_condition": 5,
+  "total_units": 8,
+  "tile_limit": null,
+  "execution_order": [
+    "h9-E-p3/run_4",
+    "h9-A-p3/run_3",
+    "h9-A-p5/run_1",
+    "h9-A-p1/run_1",
+    "h9-E-p3/run_5",
+    "h9-C-img4/run_3",
+    "h9-D-t5/run_2",
+    "h9-B-v4/run_5"
+  ]
+}

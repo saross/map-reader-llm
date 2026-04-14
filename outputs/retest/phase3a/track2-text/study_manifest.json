@@ -1,0 +1,30 @@
+{
+  "study": {
+    "name": "Retest: Phase 3a: H3 Consensus Voting \u2014 Track 2 (Text-Only)",
+    "version": "2.0-retest",
+    "description": "Tests consensus voting at elevated temperatures (T=0.3, T=0.7, T=1.0) using\nthe carry-forward text-only configuration (F1=0.660 at T=0.0).\nT=0.0 is excluded because the model produces near-deterministic output\nat zero temperature, making consensus voting meaningless (Erratum E32).\n\nThis is the first consensus voting analysis for the text-only track.\nPhase 2b retroactive consensus analysis was only performed on the image\ntrack (canonical library), so no prior text-only consensus baseline exists.\n\nText-only prompts have a substantially smaller context window (no base64\nimages), which may produce different temperature sensitivity and\nconsensus behaviour compared to the image-using track.\n",
+    "phase": "3a",
+    "hypothesis": "H3",
+    "created": "2026-02-12",
+    "retest_notes": "H3 consensus voting Track 2 (text-only). K=30 for full threshold sweep."
+  },
+  "generated": "2026-03-16T10:19:26.933519+00:00",
+  "conditions": [
+    "T0.3",
+    "T0.7",
+    "T1.0"
+  ],
+  "runs_per_condition": 30,
+  "total_units": 8,
+  "tile_limit": null,
+  "execution_order": [
+    "T1.0/run_2",
+    "T1.0/run_5",
+    "T1.0/run_30",
+    "T0.7/run_21",
+    "T0.3/run_13",
+    "T0.3/run_21",
+    "T1.0/run_8",
+    "T0.7/run_15"
+  ]
+}

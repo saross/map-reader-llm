@@ -1,0 +1,30 @@
+{
+  "study": {
+    "name": "Retest: H11 Single-Pass 384px T=0.0 (corrected)",
+    "version": "1.0-retest",
+    "description": "Corrected rerun of single-pass-384 at T=0.0. Original runs executed at T=1.0 due to the same config propagation bug as consensus-384 (temperature from JSON config overrode the YAML-specified T=0.0).\nUses full_evaluation_manifest (487 tiles) to match all consensus and PV analyses. The 240-tile validation subset can be derived post-hoc by clipping to validation_bounds.geojson.\n",
+    "phase": "h11",
+    "hypothesis": "H11",
+    "created": "2026-03-25",
+    "retest_notes": "T=1.0 bug correction. Original single-pass-384 used detect_brief-text.json which has temperature: 1.0 hardcoded. The YAML specified T=0.0 in fixed and carried_forward sections, but the config file default was applied instead. This rerun uses explicit temperature: 0.0 in conditions to ensure the CLI --temperature flag is passed.\n"
+  },
+  "generated": "2026-03-25T06:40:01.294960+00:00",
+  "conditions": [
+    "brief-text-t0"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 10,
+  "tile_limit": null,
+  "execution_order": [
+    "brief-text-t0/run_10",
+    "brief-text-t0/run_7",
+    "brief-text-t0/run_5",
+    "brief-text-t0/run_3",
+    "brief-text-t0/run_4",
+    "brief-text-t0/run_8",
+    "brief-text-t0/run_2",
+    "brief-text-t0/run_1",
+    "brief-text-t0/run_9",
+    "brief-text-t0/run_6"
+  ]
+}

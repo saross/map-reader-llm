@@ -1,0 +1,20 @@
+{
+  "study": {
+    "name": "H11: 384px Pro Pilot \u2014 Image Baseline",
+    "version": "1.0",
+    "description": "Gemini 3.1 Pro single-pass image-track proposer (T=0.0) on the full 384px\nevaluation area (611 tiles). Direct comparison with Flash image baseline\n(F1=0.716 with PV). Tests whether a stronger proposer model improves\ndetection quality in the PV pipeline.\n",
+    "phase": "h11",
+    "hypothesis": "H11",
+    "created": "2026-03-23"
+  },
+  "generated": "2026-03-23T12:52:39.318734+00:00",
+  "conditions": [
+    "image-t0.0"
+  ],
+  "runs_per_condition": 1,
+  "total_units": 1,
+  "tile_limit": null,
+  "execution_order": [
+    "image-t0.0/run_1"
+  ]
+}

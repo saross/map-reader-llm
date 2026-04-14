@@ -1,0 +1,18 @@
+{
+  "study": {
+    "name": "H11: 384px PV Diagnostic \u2014 Text N=10",
+    "version": "1.0",
+    "description": "10 text-only proposer passes at T=0.7 on the full 384px evaluation area\n(611 tiles). Post-hoc consensus sweep at all thresholds (1-of-10 through\n10-of-10), each fed through the PV pipeline. Tests whether moderate\nconsensus + PV rescues 384px precision while retaining its high recall.\n",
+    "phase": "h11",
+    "hypothesis": "H11",
+    "created": "2026-03-21"
+  },
+  "generated": "2026-03-22T05:39:00.579309+00:00",
+  "conditions": [
+    "text-t0.7"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 0,
+  "tile_limit": null,
+  "execution_order": []
+}

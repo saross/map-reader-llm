@@ -1,0 +1,24 @@
+{
+  "study": {
+    "name": "H11: 384px Pro HIGH \u2014 Text N=10",
+    "version": "1.0",
+    "description": "Extends the N=5 Pro HIGH text study to N=10 by adding 5 additional\nproposer passes. Tests whether Pro consensus benefits from larger\npools (N=10 vs N=5), enabling matched-N comparison with Flash and\ntesting for performance plateau. Uses --resume to skip runs 1-5.\n",
+    "phase": "h11",
+    "hypothesis": "H6-exploratory",
+    "created": "2026-03-29"
+  },
+  "generated": "2026-03-29T01:09:52.043996+00:00",
+  "conditions": [
+    "text-t0.7"
+  ],
+  "runs_per_condition": 10,
+  "total_units": 5,
+  "tile_limit": null,
+  "execution_order": [
+    "text-t0.7/run_10",
+    "text-t0.7/run_7",
+    "text-t0.7/run_8",
+    "text-t0.7/run_9",
+    "text-t0.7/run_6"
+  ]
+}

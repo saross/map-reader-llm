@@ -1,0 +1,26 @@
+{
+  "study": {
+    "name": "Retest: Phase 2c: H8 Library Composition \u2014 Track 1 (brief-text-image)",
+    "version": "2.0-retest",
+    "description": "Tests 5 library compositions to determine optimal example set.\nUses optimal M/E from Phase 2a (brief-text-image, F1=0.4617) and\noptimal temperature from Phase 2b (T=0.0, F1=0.5574).\nResults inform library used in subsequent phases (2d-2e).\nScale-16 and Scale-32 deferred per E11 (HP pool exhausted at 4).\n\nDual-track context: Phase 2a found text-only brief-text (F1=0.5425)\noutperformed all image-using conditions, but no pairwise differences\nsurvived FDR correction. Both M/E levels are carried forward\nindependently. See Decision 16, Erratum E27.\n",
+    "phase": "2c",
+    "hypothesis": "H8",
+    "created": "2026-01-21",
+    "updated": "2026-02-08",
+    "retest_notes": "H8 library composition Track 1 (image-using). All at T=0.0."
+  },
+  "generated": "2026-03-15T11:16:53.396767+00:00",
+  "conditions": [
+    "pure-positive-canon",
+    "canonical",
+    "plus-hp",
+    "scale-4",
+    "scale-8"
+  ],
+  "runs_per_condition": 1,
+  "total_units": 1,
+  "tile_limit": null,
+  "execution_order": [
+    "scale-4/run_1"
+  ]
+}

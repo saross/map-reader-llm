@@ -1,0 +1,29 @@
+{
+  "study": {
+    "name": "Retest: Phase 2c: H8 Library Composition \u2014 Track 2 (brief-text)",
+    "version": "2.0-retest",
+    "description": "Tests 5 library compositions at the best text-only M/E from Phase 2a\n(brief-text, F1=0.5425) and optimal temperature from Phase 2b (T=0.0,\nF1=0.6602). This track explores whether library composition effects\ndiffer between text-only and image-using modalities.\n\nDual-track context: brief-text unexpectedly outperformed all image-using\nconditions in Phase 2a, but no pairwise differences survived FDR correction.\nBoth M/E levels are carried forward independently. See Decision 16.\n\nText-only prompts have a substantially smaller context window (no base64\nimages), which may cause different sensitivity to library composition\ncompared to the image-using track.\n",
+    "phase": "2c",
+    "hypothesis": "H8",
+    "created": "2026-02-08",
+    "retest_notes": "H8 library composition Track 2 (text-only). All at T=0.0."
+  },
+  "generated": "2026-03-15T10:26:14.676318+00:00",
+  "conditions": [
+    "pure-positive-canon",
+    "canonical",
+    "plus-hp",
+    "scale-4",
+    "scale-8"
+  ],
+  "runs_per_condition": 1,
+  "total_units": 5,
+  "tile_limit": null,
+  "execution_order": [
+    "canonical/run_1",
+    "scale-8/run_1",
+    "scale-4/run_1",
+    "pure-positive-canon/run_1",
+    "plus-hp/run_1"
+  ]
+}
