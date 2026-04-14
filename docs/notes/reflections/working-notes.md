@@ -7430,6 +7430,69 @@ any map + symbol combination.
 
 ## Observation 227: H10/H12 Null Results — Verifier Architecture Dominates Library Composition (2026-04-12)
 
+**⚠️ RETRACTED 2026-04-14**: This observation is fundamentally
+invalid and should be read as a cautionary example, not a finding.
+The entire H10/H12 run was executed with the text-only proposer
+config `detect_brief-text` (auto-generated as `detect_brief-text_
+pool_160_hp*hn*`), which has **`include_example_images: false`**.
+When that flag is false, `scripts/4_detect_mounds_batch.py:816`
+**skips the entire example loop** — no images AND no labels are
+sent to the API. The `library_hash` difference between pools is
+bookkeeping only; the pool-specific library **never reaches the
+model**. This means:
+
+1. **The "H8 scaling" and "H12 HP:HN ratio" results in this
+   observation cannot be about library composition**, because
+   the library was not transmitted to the proposer. The
+   hypothesis-factor was physically not manipulated.
+2. **The claim "verifier erases proposer-level differences" is
+   unfounded** because there were no real proposer-level
+   differences in the first place — the proposer saw the
+   same prompt for every pool. Any apparent proposer-stage
+   variation is stochastic noise across K=10 runs at T=0.7.
+3. **The "null result" is tautological, not scientific**. A
+   correct H12 test requires a proposer config with
+   `include_example_images: true` (e.g. `detect_brief-text-image`)
+   so the HP and HN crops actually reach the model.
+4. **The ~$33.11 API spend was wasted** on a misconfigured
+   experiment — see the "Cost and execution" section below. The
+   preregistered intent behind H10/H12 was to test image-based
+   library calibration; the config used was text-only by
+   inheritance from `detect_brief-text`, not by design.
+
+**Downstream observations invalidated by this correction:**
+
+- **Obs 230** (hp4hn4 WBF statistical equivalence, 2026-04-13):
+  the WBF-vs-greedy comparison itself is still valid as an
+  aggregation-method test, but the "on hp4hn4" framing implies
+  a connection to H12 that does not exist. The hp4hn4 pool was
+  functionally equivalent to any other text-only K=10
+  `detect_brief-text` run.
+- **Obs 234** (H10 pool sweep claimed to show +0.07 F1 "library
+  effect", 2026-04-14): the claimed library effect is impossible
+  because the library was not transmitted. The apparent +0.07 F1
+  gap over canonical gold-standard-v2 is driven by
+  **consensus-threshold differences** (strict 4-of-5 canonical
+  manifest vs permissive 2-of-10 H10 manifest) plus ~+0.055 F1
+  residual likely attributable to x-of-5 estimation bias, model
+  drift between 2026-04-10 and 2026-04-11, and/or code-version
+  differences (git commits d59798ac vs 3d120af7).
+
+**Formal retraction**: The H10/H12 experiment as executed
+answers no preregistered question and its findings should not
+be cited in the paper. The text-only proposer-only numbers are
+redundant with existing K=30 sweeps of the same config and
+provide no new information. The post-verifier numbers are
+influenced only by the non-library factors that differed
+between runs (candidate-pool availability, model drift, etc.),
+not by HP:HN ratio or library scale. **See Obs 235 below for
+the full retraction writeup and process lessons.**
+
+---
+
+**Original observation text (preserved for historical record,
+do not cite)**:
+
 **Context**: We ran the full preregistered H10 (training pool size)
 and H12 (HP:HN ratio) experiments at K=10 on 327 test tiles with
 5 configurations:
@@ -7933,6 +7996,20 @@ to this proposer-level issue.
 
 ## Observation 230: Weighted Boxes Fusion Statistical Equivalence — Robustness Check for Greedy-Ball Consensus on hp4hn4 (2026-04-13)
 
+**⚠️ PARTIAL CORRECTION 2026-04-14**: The WBF-vs-greedy
+aggregation comparison in this observation is still valid as a
+test of aggregation method (both greedy and WBF saw the same
+underlying per-pass detections, so the comparison isolates
+aggregation). However, the "on hp4hn4" framing implies a
+connection to the H10/H12 HP:HN experiment that does not exist
+— `hp4hn4` was a misconfigured text-only run in which the library
+was not transmitted to the proposer (see Obs 227 retraction and
+Obs 235). Treat this observation as "WBF vs greedy on a K=10
+`detect_brief-text` text-only run" — the `hp4hn4` label is
+meaningless for the aggregation comparison. The statistical
+equivalence finding (p=0.60) stands; the hypothesis attribution
+does not.
+
 **Context**: Following the Obs 228 investigation into the consensus
 dedup methodology, Decision 26 commits to retaining greedy-ball
 clustering at 20 m as the primary method for all preregistered
@@ -8066,8 +8143,10 @@ production also uses **strict 4-of-5 consensus**, not the loose
 WBF findings in this observation apply specifically to the
 propose_brief-text loose-consensus pipeline; they have NOT been
 validated on the canonical detect_brief-text 4-of-5 pipeline.
-**See Obs 233 (to be written next session) for the corrected
-apples-to-apples comparison.**
+**See Obs 233 below for the corrected apples-to-apples
+comparison**: the canonical Δ F1 is +0.012 to +0.034 (not +0.08),
+and the mechanism reverses from precision-driven (here) to
+recall-driven (canonical). The +0.08 finding does NOT replicate.
 
 **Context**: Following Obs 230's statistical tie finding on H10/H12
 hp4hn4 (p=0.60, greedy F1=0.8853 vs WBF F1=0.8800), Decision 26
@@ -8697,5 +8776,904 @@ trying to answer:
 4. **Decide "combined top-20 winner" rule** before running the
    round-robin. My recommendation is Option (b) from above:
    report at all three buffers, discuss flips explicitly.
+
+---
+
+## Observation 233: Canonical WBF vs Greedy on `gold-standard-v2/detect_brief-text` — Smaller Δ F1 Than Obs 231, Recall-Driven (Not Precision-Driven), WBF v1 at 50 m Matches Leaderboard #1 (2026-04-13)
+
+**Context**: Priority 1 of the 2026-04-13 WBF continuity document.
+Obs 231 reported a +0.08 F1 WBF advantage on the `e47-propose-brief`
+pipeline, but that comparison was discovered post-hoc to be on a
+**non-canonical baseline** (`propose_brief-text`, loose 1-of-5
+consensus, 7-file one-off). The actual canonical 4-map production
+pipeline uses `detect_brief-text` with strict 4-of-5 consensus and
+lives at `outputs/h11/gold-standard-v2/`. This observation records
+the corrected apples-to-apples comparison. The continuity doc
+predicted the canonical Δ would be smaller — "possibly in the +0.01
+to +0.03 range, possibly a statistical tie like hp4hn4. The +0.08
+production finding was on a pipeline already far from ceiling; the
+canonical pipeline is much closer to ceiling, so WBF has less room
+to improve." That prediction was exactly right.
+
+### Method parameters
+
+- **Raw data**: 7,561 detections across 5 passes of
+  `detect_brief-text` (HIGH thinking, T=0.7, library hash
+  `8580ecb2258b64a0fdbc`) on the 4 gold-standard maps (same
+  bounds file and ground truth as Obs 231)
+- **WBF parameters**: Variant C (IoU=0.25, min_sep=30 m vote-aware,
+  anchor_vote_threshold=4, size filter 20–200 m). Identical to
+  the e47 WBF run in Obs 231
+- **WBF output**: 3,580 fused clusters pre-filter; **1,318**
+  after filtering to vote ≥ 2 (matches downstream minimum). 87
+  raw boxes rejected by size filter
+- **Verifier runs**: both `verify_adversarial-text` (v1) and
+  `verify_adversarial-text_v2` (v2), Flex tier, minimal thinking.
+  1,318/1,318 succeeded on both (0 failures, 0 cleanup retries).
+  Total cost ~$5–6 Flex (pre-approved, gated)
+- **Sweep grid**: vote_t ∈ {1..5}, prob_t ∈ {0, 0.05, 0.10, 0.15,
+  0.20, 0.30, 0.40, 0.50, 0.60}, buffer_m ∈ {20, 25, 30, 40, 50}
+- **Greedy baseline**: canonical stored outputs at
+  `outputs/h11/gold-standard-v2/verified-v{1,2}/probabilities.json`.
+  The greedy candidate manifest is the 4-of-5 consensus output with
+  607 candidates; v1 has 597 completed verifications (10 missing,
+  likely historical API failures not cleaned up), v2 has the full
+  607. The loader skips missing entries — asymmetry does not bias
+  the comparison because each method is evaluated against its own
+  stored probabilities
+
+### Headline result — optima per (method × verifier × buffer)
+
+Note: every greedy optimum sits at `vote_t=1` because the canonical
+manifest is already 4-of-5 consensus-filtered upstream. The greedy
+method's ceiling is therefore fixed at 371 candidates (greedy's
+best prob-threshold selection from the 607-candidate manifest);
+WBF can pull in 418–429 by re-fusing across passes.
+
+| Method | Buf | vote_t | prob_t | n | P | R | **F1** | 95 % CI |
+|---|---|---|---|---|---|---|---|---|
+| greedy-v1 | 30 m | 1 | 0.15 | 371 | 0.9461 | 0.8069 | 0.8710 | [0.8408, 0.8990] |
+| **wbf-v1** | 30 m | 3 | 0.15 | 429 | 0.9044 | 0.8920 | **0.8981** | [0.8709, 0.9224] |
+| greedy-v1 | 50 m | 1 | 0.15 | 371 | 0.9488 | 0.8092 | 0.8734 | [0.8444, 0.9005] |
+| **wbf-v1** | 50 m | 3 | 0.15 | 429 | 0.9138 | 0.9011 | **0.9074** | [0.8827, 0.9297] |
+| greedy-v2 | 30 m | 1 | 0.20 | 371 | 0.9596 | 0.8184 | 0.8834 | [0.8547, 0.9095] |
+| wbf-v2 | 30 m | 3 | 0.20 | 418 | 0.9139 | 0.8782 | 0.8957 | [0.8702, 0.9191] |
+| greedy-v2 | 50 m | 1 | 0.20 | 371 | 0.9623 | 0.8207 | 0.8859 | [0.8581, 0.9113] |
+| **wbf-v2** | 50 m | 3 | 0.20 | 418 | 0.9258 | 0.8897 | **0.9074** | [0.8851, 0.9279] |
+
+### Paired permutation tests (n=10,000, all buffers)
+
+| Verifier | Buffer | Δ F1 (WBF−greedy) | p-value | Wins greedy | Wins WBF | Ties | Verdict |
+|---|---|---|---|---|---|---|---|
+| v1 | 20 m | +0.0176 | 0.0583 | 8 | 27 | 452 | marginal |
+| v1 | 25 m | +0.0207 | 0.0464 | 12 | 37 | 438 | significant |
+| v1 | 30 m | +0.0272 | 0.0078 | 11 | 38 | 438 | **significant** |
+| v1 | 40 m | +0.0341 | 0.0010 | 11 | 39 | 437 | **significant** |
+| v1 | 50 m | +0.0340 | 0.0013 | 11 | 39 | 437 | **significant** |
+| v2 | 20 m | +0.0017 | 0.8571 | 20 | 26 | 441 | **tie** |
+| v2 | 25 m | +0.0058 | 0.5554 | 18 | 28 | 441 | **tie** |
+| v2 | 30 m | +0.0123 | 0.2124 | 17 | 29 | 441 | **tie** |
+| v2 | 40 m | +0.0217 | 0.0241 | 15 | 31 | 441 | significant |
+| v2 | 50 m | +0.0215 | 0.0246 | 15 | 31 | 441 | significant |
+
+The WBF advantage is **buffer-contingent for v2**: a statistical tie
+at 20–30 m, becoming significant only at 40 m and beyond. For v1,
+WBF is significant from 25 m onwards. This matches Obs 232's
+finding that configurations gain at wider buffers — WBF candidates
+carry the same drift tail as image-track proposers (~45 m IoU
+threshold captures up to ~45 m centroid offset).
+
+### Mechanism — recall-driven, not precision-driven
+
+**This is the opposite of Obs 231.** Canonical WBF trades
+precision for recall:
+
+| Metric | Canonical greedy (v2, 30 m) | Canonical WBF (v2, 30 m) | Direction |
+|---|---|---|---|
+| P | 0.960 | 0.914 | **greedy wins** (−0.046) |
+| R | 0.818 | 0.878 | **WBF wins** (+0.060) |
+| F1 | 0.883 | 0.896 | WBF (+0.012, ns) |
+
+Compare to Obs 231 (e47-propose-brief, v2, 30 m):
+
+| Metric | e47 greedy | e47 WBF | Direction |
+|---|---|---|---|
+| P | 0.767 | 0.952 | **WBF wins** (+0.185) |
+| R | 0.887 | 0.864 | greedy wins (−0.023) |
+| F1 | 0.823 | 0.906 | **WBF (+0.083, p<0.0001)** |
+
+**The WBF algorithm does not do the same thing in both settings.**
+The operative variable is the **strictness of the upstream
+consensus**:
+
+- **Loose upstream consensus** (e47, 1-of-5): greedy keeps many
+  low-vote FPs that survive only because 1 pass saw them. WBF's
+  min-separation and IoU-based fusion kills those. → WBF is
+  precision-driven.
+- **Strict upstream consensus** (canonical, 4-of-5): greedy has
+  already killed the low-vote candidates. What's left is high
+  precision but over-pruned recall. WBF re-fuses across passes
+  using IoU, which recovers candidates that 4-of-5 voting
+  rejected because the bounding boxes drifted just enough across
+  passes to fall below the vote threshold. → WBF is recall-driven.
+
+This is a meaningful scientific finding: **WBF and greedy-ball
+clustering are not simply two implementations of the same
+aggregation goal.** They interact with the upstream consensus
+threshold in different directions, so the choice of aggregation
+method and the choice of consensus strictness cannot be made
+independently.
+
+### Comparison to Obs 230 (hp4hn4) and Obs 231 (e47)
+
+| Comparison | Δ F1 (WBF − greedy) | p-value | Verdict | Mechanism |
+|---|---|---|---|---|
+| Obs 230 hp4hn4 (H10/H12, detect_brief-text, 10-pass, 6-of-10) | −0.0053 | 0.60 | tie | N/A |
+| Obs 231 e47 (propose_brief-text, 5-pass, 1-of-5) v1 @ 30 m | +0.0965 | <0.0001 | WBF wins | precision-driven |
+| Obs 231 e47 (propose_brief-text, 5-pass, 1-of-5) v2 @ 30 m | +0.0830 | <0.0001 | WBF wins | precision-driven |
+| **Obs 233 canonical (detect_brief-text, 5-pass, 4-of-5) v1 @ 30 m** | **+0.0272** | **0.008** | **WBF wins (small)** | **recall-driven** |
+| **Obs 233 canonical (detect_brief-text, 5-pass, 4-of-5) v2 @ 30 m** | **+0.0123** | **0.212** | **tie** | recall-driven |
+| **Obs 233 canonical v2 @ 50 m** | **+0.0215** | **0.025** | WBF wins (small) | recall-driven |
+
+**The "+0.08" finding does not replicate on the canonical pipeline.**
+The corrected canonical result is +0.012 to +0.034 F1, consistent
+with the hp4hn4 near-tie extended to a slightly positive effect at
+wider buffers.
+
+### Verifier × aggregation interaction — v2 prompt improvement is not portable to WBF
+
+The v2 verifier (`verify_adversarial-text_v2`) was developed
+iteratively against greedy-ball outputs and reported as a small
+but consistent improvement over v1 (`verify_adversarial-text`).
+The canonical comparison data lets us isolate the verifier
+effect within each aggregation method:
+
+| Buffer | Greedy: v2 − v1 F1 | WBF: v2 − v1 F1 |
+|---|---|---|
+| 20 m | 0.8635 − 0.8536 = **+0.0099** | 0.8652 − 0.8712 = **−0.0060** |
+| 25 m | 0.8734 − 0.8635 = **+0.0099** | 0.8792 − 0.8843 = **−0.0051** |
+| 30 m | 0.8834 − 0.8710 = **+0.0124** | 0.8957 − 0.8981 = **−0.0024** |
+| 40 m | 0.8834 − 0.8710 = **+0.0124** | 0.9050 − 0.9051 = **−0.0001** |
+| 50 m | 0.8859 − 0.8734 = **+0.0125** | 0.9074 − 0.9074 = **±0.0000** |
+
+**Greedy: v2 is uniformly better by ~+0.012 F1.** **WBF: v2 is
+slightly worse at tight buffers and a dead heat at wide
+buffers — the v2 advantage vanishes.**
+
+Three numbers compared on the same data:
+
+- Prompt iteration (v1 → v2 verifier), greedy: **+0.012 F1**
+- Prompt iteration (v1 → v2 verifier), WBF: **0.000 F1**
+- Aggregation change (greedy → WBF), v1 verifier @ 30 m: **+0.027 F1**
+- Aggregation change (greedy → WBF), v1 verifier @ 50 m: **+0.034 F1**
+
+The "prompt improvement" we were claiming for v2 is **smaller
+than the aggregation effect by a factor of 2-3×**, and **entirely
+absorbed when the aggregation method changes underneath it**.
+This is not "prompt effects are a bit weaker than aggregation
+effects" — it is "the v2 prompt effect was a property of the
+greedy candidate distribution, not the prompt itself".
+
+#### Why the v2 advantage is greedy-specific
+
+v2 is a higher-precision verifier than v1. On the canonical
+greedy manifest (n=371, P already 0.95), the marginal candidates
+near the v1/v2 decision boundary are mostly FPs, so a stricter
+verifier kills FPs without losing TPs. On the WBF manifest
+(n=418-429, P 0.91), the marginal candidates near that same
+boundary include genuine TPs that greedy's strict 4-of-5
+consensus would have rejected upstream. v2 kills both populations
+indiscriminately. The two effects (FP removal, TP removal) cancel,
+and net Δ F1 ≈ 0.
+
+The structural point: **v2 was tuned against greedy's FP profile,
+not against an aggregation-agnostic notion of "verifier quality".**
+A verifier prompt iteration is implicitly an optimisation of the
+verifier-aggregation joint distribution at the aggregation that
+was used to generate training data. Swapping the aggregation
+breaks the optimisation.
+
+#### Connection to the Diversity Taxonomy (MEMORY.md)
+
+The project's Diversity Taxonomy (Sessions 3c, 43–48, in
+`MEMORY.md`) records that **parametric** diversity (prompts,
+examples, T, augmentation), **cognitive-scaffolding** diversity
+(holistic vs checklist), **reasoning-budget** diversity (HIGH
+thinking), **temperature-sampling** diversity, and **proposer
+recall-bias** all FAIL to improve F1, while **structural**
+changes (task decomposition, cross-modal union) and **WBF
+aggregation** SUCCEED. The verifier prompt iteration v1 → v2
+was treated as a separate axis from this taxonomy — a tuning
+improvement, not a diversity experiment — but the canonical
+numerical evidence places it in the same bucket as the
+parametric/cognitive failures: **+0.012 F1 within-aggregation,
+0.000 F1 cross-aggregation**.
+
+The sharper rule: **prompt-class effects on metric M measured
+against aggregation A do not transfer to aggregation B**. This
+extends the Diversity Taxonomy with an explicit non-portability
+claim. It also implies that the existing leaderboard cells in
+`results/paper-eval/pv/*/buffer_sensitivity.json` are not
+measuring "verifier quality" in any portable sense — they are
+measuring "verifier-aggregation joint distribution quality",
+and the joint distribution can be reshuffled by changing either
+coordinate.
+
+#### Methodological lesson for this project
+
+- **Default to investigating structural changes (aggregation,
+  task decomposition, cross-modal fusion) before iterating on
+  prompts.** The historical pattern is overwhelming: structural
+  changes have produced effects in the +0.03 to +0.10 F1 range;
+  prompt-class iterations produce effects of ±0.01 F1 that often
+  fail to replicate under method changes.
+- **Never report a prompt-iteration F1 improvement without
+  checking whether it survives an aggregation swap.** The v1 →
+  v2 + 0.012 was real for a single (verifier × aggregation) cell
+  but is not a property of the v2 prompt.
+- **Verifier and aggregation choices interact and cannot be
+  optimised sequentially.** Any experimental protocol that holds
+  one fixed while sweeping the other will systematically
+  overstate the portability of the swept dimension.
+
+#### Reviewer-defence framing for the paper
+
+*"Within-aggregation verifier comparisons systematically overstate
+the portability of verifier improvements. We observed a +0.012 F1
+v1 → v2 improvement on greedy outputs that vanished entirely under
+WBF aggregation. Verifier and aggregation choices interact and
+cannot be optimised sequentially; reported verifier improvements
+should therefore be replicated across multiple aggregation methods
+before being treated as portable."*
+
+### Practical headline for the paper
+
+- **WBF v1 at 50 m F1 = 0.9074** [95 % CI 0.8827, 0.9297]
+- **WBF v2 at 50 m F1 = 0.9074** [95 % CI 0.8851, 0.9279]
+- This ties the published leaderboard #1 config `flash-high-text
+  16-of-30 + min-vf` (F1 = 0.9044) using **only 5 passes instead
+  of 30**. That's a 6× reduction in proposer-side compute for the
+  same headline F1, conditional on replacing greedy-ball
+  aggregation with WBF Variant C.
+- The canonical greedy baseline tops out at F1 = 0.8859 (v2, 50 m),
+  which is already within CI of the historical "F1 = 0.885"
+  medium-vf headline and confirms minimal-vf as the better verifier.
+
+### Implications for Decision 26
+
+Decision 26 currently frames WBF as a "robustness check" with
+greedy as primary. **This framing needs revision**:
+
+1. The hp4hn4 statistical tie is confirmed extended: on the
+   canonical pipeline, WBF's advantage is small and
+   **buffer-contingent** for v2 (tie at 20–30 m, significant at
+   40–50 m), clearly significant for v1 from 25 m onwards.
+2. The large Obs 231 finding was driven by loose upstream
+   consensus — a pipeline variant we do not use in production.
+3. **However**, the canonical WBF result matches the leaderboard
+   #1 with a much cheaper proposer. If the paper's headline
+   config is driven by F1 × cost, WBF should be the recommended
+   aggregation method for `detect_brief-text + 4-of-5 + min-vf`.
+4. The recall-driven vs precision-driven mechanism inversion is
+   itself a finding worth reporting — it's the kind of result
+   that a reviewer would ask about, and having it documented
+   front-loads the defence.
+
+**Proposed amendment**: rather than "primary vs robustness check",
+frame greedy and WBF as **complementary aggregation methods whose
+relative advantage depends on upstream consensus strictness**.
+Recommend WBF for strict-consensus pipelines (including the
+55-map generalisation) and document the mechanism inversion.
+Defer final Decision 26 revision until Priority 3 (image-track
+WBF) and Priority 4 (5-map 55-map subset check) complete — those
+will tell us whether the canonical result generalises.
+
+### Data and code references
+
+- Sweep results: `results/h11/wbf/canonical_vs_greedy_summary.json`
+- Raw WBF output: `outputs/h11/wbf/gold-standard-v2-detect/`
+- WBF candidate filter (vote ≥ 2):
+  `outputs/h11/wbf/gold-standard-v2-detect/wbf_candidates_vote2plus.geojson`
+  (1,318 features)
+- Verifier probabilities:
+  `outputs/h11/wbf/gold-standard-v2-detect/verified-v{1,2}/probabilities.json`
+- Comparison script:
+  `scripts/compare_wbf_vs_greedy_canonical.py`
+- Fusion runner special-config entry: `gold-standard-v2-detect`
+  in `scripts/fuse_detections_wbf.py:SPECIAL_CONFIGS`
+
+### Limitations and caveats
+
+- **Greedy v1 baseline asymmetry**: the canonical v1 probabilities
+  file has 597/607 candidates (10 missing, likely historical API
+  failures). This cannot inflate WBF's measured advantage (WBF
+  has its own 1,318/1,318 complete verification) but it may
+  slightly understate greedy-v1's peak F1. Re-running the 10
+  missing candidates via `run_pv.py cleanup` would tighten the
+  comparison.
+- **Single proposer configuration**: this is `detect_brief-text`
+  HIGH T=0.7 K=5 only. Whether the canonical result generalises
+  to image-track or to a different K is the subject of
+  Priorities 3 and 4.
+- **WBF vote_t=3 optimum**: WBF's optimum is vote_t=3 on 5 passes,
+  not vote_t=4 like the canonical greedy. This means WBF is
+  effectively running with a looser consensus threshold than
+  canonical greedy, which is part of the mechanism story —
+  it's keeping 3-of-5 candidates that canonical greedy rejects
+  at 4-of-5 — but it also means the comparison is not isolating
+  "aggregation method" from "consensus threshold". A cleaner
+  future test would run greedy at vote_t=3 as well, to see
+  whether greedy at a matching threshold captures the same
+  recall gain or whether WBF's IoU-fusion is doing additional
+  work beyond the threshold drop.
+
+---
+
+## Observation 234: H10/H12 Pool Sweep — HP:HN Ratio Effect Is Small but Directional, Library Size Is a Null, and the Whole H10 Library Family Dominates Canonical by +0.07 F1 (2026-04-14) [RETRACTED]
+
+**⚠️ FULLY RETRACTED 2026-04-14 (same day)**: Every claim about
+"library effect" in this observation is wrong. The H10 pool
+configs use `detect_brief-text` with `include_example_images:
+false`, which means **no examples are ever transmitted to the
+API** — not as images, not as labels. The library_hash difference
+between pools is bookkeeping only. The apparent +0.07 F1 gap
+over canonical is driven by:
+
+1. **Consensus threshold difference**: canonical gold-standard-v2
+   manifest is strict 4-of-5 (vote_count ∈ {4, 5}); H10 manifests
+   are permissive 2-of-10 (vote_count ∈ {2..10}). H10 has ~2.5×
+   more candidates to choose from during the vote_t × prob_t
+   sweep. Most of the apparent gap is attributable to this.
+2. **At matched K=5 and matched vote_t=4 (both at 80% consensus)**,
+   the H10 hp4hn4 x-of-5 subset F1 = 0.8900 vs canonical
+   greedy-v2 F1 = 0.8351 — the residual +0.055 F1 is NOT a library
+   effect (impossible because the library isn't transmitted).
+3. **Likely causes of the residual +0.055**: (a) x-of-5 estimation
+   bias (the 10-pass H10 manifest has 10-pass centroids and
+   10-pass clustering, filtered retroactively to 5-pass votes —
+   not equivalent to a true 5-pass run), (b) possible Gemini 3
+   Flash model drift between 2026-04-10 (canonical) and 2026-04-11
+   (H10), and/or (c) code-version differences between git commits
+   d59798ac and 3d120af7.
+
+**The "HP:HN ratio" and "library size" findings in this
+observation are tautological, not scientific.** Varying a
+non-transmitted library cannot affect F1. The small within-H10
+variations (~0.02 F1 across hp2hn6, hp4hn4, hp6hn2, hp8hn8,
+hp16hn16) are stochastic noise across K=10 runs at T=0.7, not
+evidence for or against any preregistered hypothesis.
+
+**The scientific-calibration failure**: I (Claude Code) reported
+a +0.07 F1 "library effect" without first verifying that the
+library was physically reaching the model. The verification is
+a one-line grep for `include_example_images` in the config file.
+See Obs 235 for the process retrospective and the rules added to
+prevent this failure mode in future.
+
+**Do not cite this observation.** The correct H12 test requires
+re-running the pools with `include_example_images: true`. Per
+2026-04-14 decision, we are NOT re-running H10/H12 — the
+text-only numbers for detect_brief-text are already known from
+K=30 sweeps elsewhere, and the budget has already been
+over-expended. H12 is deferred to future work (if revived, use
+`detect_brief-text-image` as the proposer config).
+
+---
+
+**Original observation text (preserved for historical record,
+do not cite):**
+
+## Observation 234: H10/H12 Pool Sweep — HP:HN Ratio Effect Is Small but Directional, Library Size Is a Null, and the Whole H10 Library Family Dominates Canonical by +0.07 F1 (2026-04-14)
+
+**Context**: H12 (Hard Positive : Hard Negative ratio) was
+preregistered as a Tier B exploratory hypothesis. The H10 pool
+sweep produced 5 few-shot libraries at different (HP, HN) size
+combinations, all sharing the same proposer prompt
+(`detect_brief-text`, text-only), same instruction hash
+(`e169b72...`), same thinking level (HIGH), same temperature
+(T=0.7), and same example count (17). **The only thing that
+varies is which 17 example images were chosen for the library,
+drawn from H10's nested 160-tile calibration pool under different
+(HP, HN) size targets.** All 5 pools were verified with
+`verify_adversarial-text` v1 (the same verifier as tonight's
+canonical WBF run).
+
+This observation records the F1 sweep on the **327-tile H10-clean
+test universe** — the 487-tile gold-standard set minus H10's own
+160-tile calibration pool, restricted to avoid data leakage (the
+160 tiles were used to build the H10 libraries, so evaluating on
+them would be train-on-test).
+
+### Pool definitions
+
+| Pool | HP count | HN count | Ratio | Total library size |
+|---|---|---|---|---|
+| pool_160_hp2hn6 | 2 | 6 | 1:3 (HN-heavy) | 8 hard + 9 other = 17 |
+| pool_160_hp4hn4 | 4 | 4 | 1:1 (balanced) | 8 hard + 9 other = 17 |
+| pool_160_hp6hn2 | 6 | 2 | 3:1 (HP-heavy) | 8 hard + 9 other = 17 |
+| pool_160_hp8hn8 | 8 | 8 | 1:1 (balanced, ×2) | 16 hard + 1 other = 17 |
+| pool_160_hp16hn16 | 16 | 16 | 1:1 (balanced, ×4) | capped to 17 |
+
+Note: the total library size is fixed at 17 examples, so the
+larger pools substitute hard examples for other categories
+(canonical positive, canonical negative, null). The "size" dimension
+tested here is therefore the *fraction of the library that is hard*,
+not the total library size — a subtle design feature worth noting.
+
+### Method
+
+- **Evaluation universe**: 327-tile H10-clean test subset of the 4
+  gold-standard maps (K-35-052-4, K-35-053-3 Elenovo, K-35-062-2
+  Rakovski, K-35-078-1 Lesovo), 384 GT mounds, sourced from
+  `inputs/vectors/bounds/384/h10_test_bounds.geojson`
+- **Scorer**: `scripts/score_leaderboard_cells.py` — pre-filters
+  detections to the 327-tile universe before F1 calculation
+- **Sweep grid**: vote_t ∈ {2..10} for x-of-10, vote_t ∈ {2..5}
+  for x-of-5 (runs 1–5 subset of the 10-pass bank); prob_t ∈
+  {0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60};
+  buffer_m ∈ {20, 30, 40, 50}
+- **x-of-5 construction**: filters each candidate's
+  `contributing_passes` to {run_1..run_5} and re-counts votes;
+  uses existing verifier probabilities (no API spend)
+
+### Headline result — best F1 per pool (30 m buffer, 327 tiles)
+
+| Pool | HP:HN | K=5 best F1 | K=10 best F1 | ΔF1 (K=10 − K=5) |
+|---|---|---|---|---|
+| **pool_160_hp2hn6** | **1:3** | **0.9181** (vt=3, pt=0.20) | 0.9103 (vt=5, pt=0.20) | **−0.0078** |
+| pool_160_hp4hn4 | 1:1 | 0.9076 (vt=3, pt=0.15) | 0.9111 (vt=6, pt=0.15) | +0.0035 |
+| pool_160_hp6hn2 | 3:1 | 0.8935 (vt=3, pt=0.20) | 0.8962 (vt=7, pt=0.20) | +0.0027 |
+| pool_160_hp8hn8 | 1:1 (size 16) | 0.9065 (vt=3, pt=0.20) | 0.9115 (vt=7, pt=0.20) | +0.0050 |
+| pool_160_hp16hn16 | 1:1 (size 32) | 0.8992 (vt=3, pt=0.20) | 0.9079 (vt=6, pt=0.15) | +0.0087 |
+
+### Three findings
+
+**(1) HP:HN ratio is small but directional.** Holding library size
+at ~8 hard examples (hp2hn6, hp4hn4, hp6hn2), the F1 range
+is:
+
+| Ratio | K=5 F1 | K=10 F1 |
+|---|---|---|
+| 1:3 (HN-heavy) | **0.9181** | 0.9103 |
+| 1:1 (balanced) | 0.9076 | 0.9111 |
+| 3:1 (HP-heavy) | 0.8935 | 0.8962 |
+
+The range at K=5 is **0.0246 F1** (~2.5 points). The direction is
+**HN-heavy > balanced > HP-heavy** — consistent with the prior
+Phase 2c finding (`reports/phase2c-pn-ratio-analysis.md`) that
+hard negatives are more informative than hard positives at a
+fixed total count. The effect is not null, but it's also not
+large — a few percentage points of F1, roughly matching the size
+of an aggregation-method swap.
+
+**(2) Library size (holding ratio at 1:1) is a null.** hp4hn4 (8
+examples), hp8hn8 (16 examples), hp16hn16 (32 examples) at
+K=10 produce F1 = 0.9111, 0.9115, 0.9079 respectively — a range
+of **0.0036 F1**, well inside any plausible confidence interval.
+At K=5 the range is **0.0084 F1** (0.9076, 0.9065, 0.8992) — still
+small and arguably in the opposite direction (larger libraries
+slightly worse). **Doubling or quadrupling the hard-example
+count from 8 to 32 produces no meaningful F1 gain.** This is a
+clean null for the size dimension of the library-composition
+question — the model's performance is not hard-example-limited
+at 8 examples.
+
+**(3) The K effect averages out the ratio effect.** At K=5 the
+HP:HN ratio spread is 0.0246 F1; at K=10 it shrinks to 0.0153
+F1. Consensus voting across 10 passes *averages out* the
+library-specific variance — a 10-pass run with a worse library
+produces roughly the same F1 as a 5-pass run with a better one,
+because the extra passes provide more opportunities to catch
+the mounds the library missed. This has a practical implication:
+**if you're running K=10, the library choice matters less; if
+you're running K=5, pick the HN-heavy library**. At K=10 you can
+get away with a balanced 1:1 library, which is easier to
+construct.
+
+### The real finding — H10 library family dominates canonical by +0.07 F1
+
+All five H10 libraries **substantially outperform** the canonical
+gold-standard-v2 library (`8580ecb2...`) on the same 327-tile
+test universe:
+
+| Config | Library hash | F1@30m (327 tiles) | Δ vs canonical |
+|---|---|---|---|
+| pool_160_hp2hn6 K=5 | `a168f1cc...` | **0.9181** | **+0.0830** |
+| pool_160_hp8hn8 K=10 | `a168f1cc...` | 0.9115 | +0.0764 |
+| pool_160_hp4hn4 K=10 | `a168f1cc...` | 0.9111 | +0.0760 |
+| pool_160_hp6hn2 K=10 | `a168f1cc...` | 0.8962 | +0.0611 |
+| gold-standard-v2 greedy-v2 | `8580ecb2...` | 0.8351 | — (canonical) |
+| gold-standard-v2 greedy-v1 | `8580ecb2...` | 0.8225 | −0.0126 |
+
+The canonical pipeline shares everything with the H10 pools
+EXCEPT the library hash and K=5 (not K=10). The x-of-5 variants
+of H10 (K=5, same proposer budget as canonical) still dominate
+canonical by +0.06 to +0.08 F1. **The K effect is small; the
+library effect is large.**
+
+**Same prompt text** (instruction hash `e169b72...` identical),
+**same example count** (17), **same thinking level** (HIGH),
+**same temperature** (0.7), **same model** (gemini-3-flash), **same
+verifier** (adversarial v1). The only structural difference
+between the worst H10 pool (hp6hn2 F1=0.8962) and the best
+canonical (greedy-v2 F1=0.8351) is **which 17 example images the
+library contained**. That's a +0.06 F1 effect from choosing
+better few-shot examples.
+
+### Mechanistic interpretation (preliminary)
+
+The H10 libraries were constructed through a calibrated
+selection process on H10's 160-tile calibration pool: for each
+(HP, HN) target, the library-builder selected example tiles
+using the Phase 2c + H8 scoring methodology (density
+stratification, hard-example mining from FP/FN clusters). The
+canonical library `8580ecb2...` was built earlier in the project
+using an older selection process — likely without the refined
+hard-example mining approach.
+
+**The implication is that the project's canonical production
+pipeline is NOT using its best-available few-shot library.** The
+H10 library family — developed as exploratory H12 ablations —
+turns out to produce better detection F1 than the library
+chosen for production. This is an inversion of the usual
+"exploratory extends confirmatory" relationship: here, the
+exploratory hypothesis test produced the best-performing
+configurations in the entire project.
+
+### Caveats
+
+- **Single-sample F1**, no bootstrap CIs yet. The ~0.02 F1 range
+  across HP:HN ratios may not be statistically significant;
+  pairwise permutation tests are pending as part of the
+  leaderboard assembly.
+- **No WBF on H10 pools**. All H10 results use greedy-ball
+  clustering; WBF has not yet been applied to any H10 pool on
+  the 327-tile universe. WBF may produce different optima and
+  shift the relative ordering of HP:HN variants.
+- **Verifier uniform, aggregation uniform**. Every H10 cell
+  uses verify_adversarial-text v1 + greedy aggregation. The v1
+  vs v2 verifier comparison has only been done on
+  gold-standard-v2, where Obs 233 showed v2 helps greedy by
+  +0.012 but not WBF.
+- **x-of-5 uses runs 1–5 only**. Variance from different 5-pass
+  subsets (e.g. runs 2–6, runs 3–7) has not been estimated. The
+  reported K=5 number is a single sample, not a mean over
+  5-pass subsamples.
+- **Library "size" at fixed total 17 examples is really
+  "fraction hard"**. hp16hn16 doesn't mean "32 examples" — it
+  means "16 HP + 16 HN capped at 17 total, so the library is
+  dominated by hard examples with minimal other categories".
+  The pure size question (e.g. 8 vs 17 vs 34 example total) is
+  not answered by this data.
+
+### Implications for the paper
+
+1. **H12 preregistered hypothesis is largely a null with a
+   small directional effect.** Write up as: "The HP:HN ratio
+   effect is small (~0.02 F1 at K=5), directional (HN-heavy
+   > balanced > HP-heavy), and shrinks further under 10-pass
+   consensus. Library size at a fixed 17-example total is
+   a null."
+2. **The calibrated H10 library family produces the
+   project's best detection performance**, not the canonical
+   production library. The paper's headline configuration
+   should be revisited; current leader is
+   `pool_160_hp2hn6` K=5 at F1 = 0.9181 @ 30 m on the
+   327-tile H10-clean universe.
+3. **The library-composition question is the dominant
+   lever** for F1 improvement in this project, not prompt
+   iteration, not aggregation method, not thinking level,
+   not temperature. This reframes the project's experimental
+   hierarchy: library curation > structural aggregation >
+   everything else.
+4. **The canonical-vs-H10 comparison is not a paper
+   contradiction — it's a paper finding.** The canonical
+   pipeline was chosen early in the project with an older
+   library; the H10 sweep revealed a better library family.
+   Reporting this transparently (rather than retroactively
+   re-declaring H10 as "the production pipeline") preserves
+   the preregistered narrative and documents the library
+   calibration as a genuine discovery.
+
+### Data and code references
+
+- Scored cells: `results/leaderboard/cells/pool_160_*-x-of-{5,10}-327tile.json`
+- Canonical baseline cells: `results/leaderboard/cells/gold-standard-v2-{greedy,wbf}-v{1,2}-327tile.json`
+- Scorer: `scripts/score_leaderboard_cells.py`
+- Evaluation bounds: `inputs/vectors/bounds/384/h10_test_bounds.geojson` (327 tiles, constructed from H10's `test_set` selection in `inputs/calibration/h10-384/tile_selection_metadata.json`)
+- Raw H10 verifier banks: `outputs/h10/verified/pool_160_*/probabilities.json`
+- Raw H10 greedy manifests: `outputs/h10/verifier-crops/pool_160_*/candidate_manifest.json`
+
+---
+
+## Observation 235: Formal Retraction of H10/H12 "Findings" (Obs 227, Obs 234) — Config-Intent Mismatch, Process Failure, and Rules Added to Prevent Recurrence (2026-04-14)
+
+**Summary**: The entire H10/H12 experimental arm
+(`outputs/h10/evaluation/pool_160_{hp2hn6, hp4hn4, hp6hn2,
+hp8hn8, hp16hn16}/`, ~$33 in proposer + verifier API spend) was
+executed with a text-only proposer config
+(`detect_brief-text_pool_160_*`) that has
+`include_example_images: false`. Under that flag,
+`scripts/4_detect_mounds_batch.py:816` skips the entire example
+loop — the 17 "library" examples per pool (including the HP and
+HN crops central to H12's preregistered question) are **never
+transmitted to the API**. The library_hash difference between
+pools is bookkeeping only.
+
+**Scope of the retraction**:
+
+- **Obs 227** (H10/H12 "null results — verifier architecture
+  dominates library composition", 2026-04-12) — RETRACTED. The
+  "null result" is tautological because the library was not
+  manipulated. The "architecture dominates" framing has no
+  support from this data.
+- **Obs 234** (H10 pool sweep "library effect" +0.07 F1,
+  2026-04-14) — RETRACTED. The claimed library effect is
+  physically impossible; the apparent F1 gap is driven by
+  consensus-threshold differences in the manifests plus a
+  residual attributable to estimation bias, model drift, and
+  code-version differences.
+- **Obs 230** (hp4hn4 WBF statistical equivalence, 2026-04-13) —
+  PARTIAL CORRECTION. The WBF-vs-greedy aggregation comparison
+  is still valid (both methods saw the same underlying per-pass
+  detections), but the "on hp4hn4" framing implies a connection
+  to H12 that does not exist. Read it as "WBF vs greedy on a
+  K=10 `detect_brief-text` text-only run" — the pool label is
+  meaningless for the aggregation comparison.
+
+**What the H10/H12 run does and does not tell us**:
+
+- ✅ **Per-pass detection counts for detect_brief-text at K=10**
+  — already known from K=30 sweeps elsewhere; the H10 data is
+  redundant.
+- ✅ **WBF vs greedy on K=10 aggregation** — Obs 230 finding
+  (statistical tie, p=0.60) still valid as an aggregation-method
+  test.
+- ❌ **H8 library scaling effect** — NOT TESTED. Libraries were
+  never transmitted.
+- ❌ **H12 HP:HN ratio effect** — NOT TESTED. Ratio was varied
+  in a library that was not transmitted.
+- ❌ **H10 training pool size effect** — NOT TESTED. The
+  "different training pool sizes" only affected which crops
+  were stored as example files on disk, not what the model saw.
+
+### Why this happened — the intent-execution gap
+
+The user's intent for H10/H12 was to test **image-based library
+calibration**: the HP and HN crops produced by
+`scripts/build_example_pool.py` (128×128 image crops of hard
+cases mined from the calibration pool) were supposed to be sent
+to the model as few-shot reference images, testing whether
+hard-example curation improves detection performance.
+
+The config actually used was `detect_brief-text_pool_160_*`,
+which was auto-generated by the pool-building script as a
+variant of `detect_brief-text` (H1's text-only baseline). It
+inherited `include_example_images: false` from the base config.
+**The auto-generation did not flip the flag to true for the
+pool variants, even though the whole point of the pool variants
+was to test image-based calibration.**
+
+The correct base config would have been
+`detect_brief-text-image` (`include_example_images: true`),
+which actually sends both the text labels and the image crops.
+A one-line fix in `build_example_pool.py` (change the base
+config reference) would have made the entire H10/H12 run
+actually test what was preregistered.
+
+### My scientific-calibration failure
+
+In Obs 234 (last session, 2026-04-14), I reported a +0.07 F1
+"library effect" without verifying that the library was
+physically reaching the model. The verification is one bash
+command:
+
+```bash
+grep include_example_images prompts/configs/h10/detect_pool_160_hp4hn4.json
+# → "include_example_images": false
+```
+
+I failed to run this check before writing Obs 234. The
+theoretical mechanism I claimed ("the H10 library beats the
+canonical library because it contains better hard examples")
+was impossible because neither library reached the API. A
+first-principles verification would have caught this in 30
+seconds and saved an hour of wrong conclusions plus a
+downstream paper-framing decision based on those conclusions.
+
+The project's `CLAUDE.md` specifically warns about this:
+
+> **Flag surprising results.** ... The appropriate response to
+> a surprising finding is not to explain it away or accept it
+> uncritically, but to: (1) Flag the surprise explicitly, (2)
+> **Verify the data pipeline is correct (are we analysing what
+> we think we're analysing?)**, (3) If the pipeline is correct,
+> document the finding as a genuine scientific result worth
+> explaining.
+
+I completed steps (1) and (3) without completing step (2). The
++0.07 F1 surprise warranted a pipeline-correctness check; I
+skipped it and wrote up the explanation.
+
+Worse: I also failed to notice the SAME error in Obs 227 (which
+I inherited from an earlier Claude Code session). Obs 227 made
+the same implicit "library composition" claim on the same data
+and I accepted its framing without checking the config. Two
+Claude Code sessions in sequence made the same unverified
+assumption.
+
+### Rules added to prevent recurrence
+
+**Rule 1 (automatic) — Config sanity check before API gate**: At
+every API-cost gate, before asking for approval, I will read
+the config file(s) involved and state in the approval proposal:
+
+- Proposer modality (`include_example_images: true|false`)
+- Temperature, thinking level, K passes
+- Instruction file and its system_instruction_hash
+- Example count and library_hash (noting whether it will
+  actually be transmitted given the modality flag)
+
+The explicit text the user will see before approving:
+*"This run uses `<config_name>` which sends `<N>` example
+images and `<M>` text labels per call. The proposer will/will
+not see the few-shot library. Temperature=X, K=Y, thinking=Z."*
+
+**Rule 2 (automatic) — Mechanism verification before
+celebrating effects**: When I observe an effect ≥ 0.02 F1 that
+I propose to attribute to a specific experimental factor, I
+must explicitly state the causal chain and verify that the
+factor is physically present in the API payload before writing
+up the finding. The check is one of:
+
+- `grep` the config field for the factor (e.g.
+  `include_example_images`, `thinking_level`, `temperature`)
+- Read the meta.json to confirm the field is in the full
+  configuration snapshot
+- For prompt-based factors: read the instruction file AND
+  confirm no template substitution is being relied upon
+- For aggregation factors: confirm both conditions use the
+  same underlying detection set
+
+If I cannot verify the causal chain, I must flag the finding
+as "apparent effect, mechanism unverified" and request
+verification before writing it up as Obs N.
+
+**Rule 3 (automatic) — Intent statement for hypothesis
+experiments**: When running any experiment labelled with a
+preregistered hypothesis ID (H1-H15), I must first read the
+hypothesis description in
+`docs/methodology/preregistration/hypothesis-tracking.md` and
+confirm that the config being used actually manipulates the
+hypothesis's factor. If the config's modality flag, temperature,
+or library contents do not match the hypothesis's preregistered
+manipulation, **STOP** and raise the mismatch as a blocker
+before launching the run.
+
+**Rule 4 (user-side suggestion, already proposed by Shawn) —
+Modality in API-gate proposals**: Every API-cost proposal must
+name the modality explicitly ("text-only K=5 brief-text" vs
+"image+text K=5 brief-text-image") so that both parties can
+catch a mismatch before spending money.
+
+### What I could have done that would have caught this earlier
+
+1. **Before running H10**: the auto-generated config in
+   `prompts/configs/h10/detect_pool_160_hp4hn4.json` could have
+   been diffed against its base `prompts/configs/detect_brief-text.json`
+   to confirm that everything except the library changed. That
+   diff would have shown both files had `include_example_images:
+   false`, prompting the question: "if examples aren't being
+   sent, why are we varying the library?"
+2. **Before writing Obs 227**: the same config check.
+3. **Before writing Obs 234**: the same config check, plus
+   reading `4_detect_mounds_batch.py` to see what happens when
+   `include_example_images=false`.
+4. **While writing Obs 234**: the claim "the H10 library beats
+   the canonical library" should have triggered a "how does
+   the library reach the model?" sub-question. A five-minute
+   read of the API payload construction code would have caught
+   the issue.
+
+### What Shawn could have done to communicate intent better
+
+Shawn's own suggestion (include modality in the API-gate
+proposal) is good. Additional process improvements that would
+have caught this:
+
+1. **Intent statement at experiment launch**: a one-liner in
+   the launch request that specifies what the experiment is
+   varying and which config field carries that variation.
+   Example: *"This is an H12 test — varying HP:HN ratio in the
+   few-shot library. The ratio is transmitted via the
+   `examples` field when `include_example_images=true`. Base
+   config: detect_brief-text-image.json."* A pre-run check
+   would verify the config actually has
+   `include_example_images=true`, and if not, the launch
+   would be blocked.
+2. **Hypothesis-tagged config generation**: when
+   `build_example_pool.py` generates a config for a
+   hypothesis test, it should read the hypothesis's
+   preregistered "required config fields" (e.g. H12 requires
+   `include_example_images: true`) and refuse to generate a
+   config that doesn't satisfy them. This is a code-level
+   safety check that prevents the current failure entirely.
+3. **Experiment README**: each experiment output directory
+   could have a short `README.md` auto-written at launch
+   time: "This experiment tests H12 by varying HP:HN ratios
+   in the few-shot library. The library is transmitted via
+   `include_example_images: true` (verified at launch). Base
+   config: X. Library source: Y." The README is both
+   documentation and a self-audit: if the claim in the
+   README is falsified by the actual config used, the
+   launcher has bugs.
+4. **"Experiment intent" memory or scratchpad note**: when an
+   experiment has non-obvious intent (e.g. "H10/H12 is
+   image-based calibration, not text-based"), a one-line
+   memory that says so would catch later misreadings. Shawn
+   already uses scratchpad for constraints; this category
+   would fit there.
+5. **Post-run sanity check prompt**: after every API run
+   completes, before writing results observations, Claude
+   Code should be prompted to answer: "what experimental
+   factor was varied, and how was it transmitted to the
+   model?" If the answer names a config field that the meta
+   confirms is set to a no-op value, the observation should
+   be blocked until the mismatch is resolved.
+
+### Cost of the failure
+
+- **Direct API spend**: ~$33.11 for the H10/H12 run itself
+  (per Obs 227's cost accounting)
+- **Downstream analysis spend**: ~$0 (tonight's WBF work on
+  hp4hn4 was CPU-only; but the WBF-on-gold-standard-v2 work
+  was still valid because it wasn't about libraries)
+- **Opportunity cost**: tonight's analysis hour, plus last
+  session's entire "library effect" discussion and the draft
+  "revisit paper headline" plan, plus two hours of my
+  investigation tonight — all building on an unverified
+  premise
+- **Paper-narrative risk**: last session's Obs 234 nearly
+  became the paper's new headline ("the project's best
+  configuration was hiding in H10's exploratory results"). If
+  that had been written up in a draft before verification, it
+  would have been a public scientific error.
+
+### Decision
+
+**Do not re-run H10/H12**. The text-only numbers are redundant
+with existing K=30 sweeps of `detect_brief-text`. The
+image-track H12 question (whether HP:HN ratio affects F1 in a
+config that actually transmits the library) remains
+un-answered, but the project budget has already been
+over-spent and re-running is not justified by the marginal
+scientific value. H12 is formally deferred to future work.
+
+**Cite Obs 235, not Obs 227 or Obs 234, when discussing the
+H10/H12 experimental arm in the paper.** The paper methods
+section should describe the experimental arm honestly: an
+auto-generated config inherited `include_example_images: false`
+from its base, so the intended image-based library calibration
+test was not performed; the data exists but does not answer
+the preregistered question.
+
+### What IS still valid from the H10/H12 run
+
+- The **per-pass detection counts** at K=10 on 327 test tiles
+  (redundant with K=30 sweeps but consistent — useful as a
+  cross-check of reproducibility)
+- The **WBF-vs-greedy aggregation comparison** on a K=10 run
+  (Obs 230, with the correction note)
+- The **327-tile evaluation universe itself** — useful as a
+  common denominator for the leaderboard because it's disjoint
+  from the H10 calibration pool, even though the calibration
+  pool itself didn't affect the proposer's output
+- The **WBF Variant C parameter calibration** (Obs 228, 229) —
+  done using hp4hn4 data but the parameters themselves
+  (IoU=0.25, min_sep=30 m, vote-aware) are library-agnostic
+- **The test set's data-leakage hygiene intent** — the 327-tile
+  subset was chosen to exclude the H10 calibration pool, which
+  is still a correct principle even if the calibration pool
+  turned out not to affect the text-only proposer
 
 ---
