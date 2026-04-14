@@ -66,6 +66,19 @@ SPECIAL_CONFIGS = {
         ],
         "default_output_dir": "outputs/h11/wbf/e47-propose-brief-n5",
     },
+    # Canonical 4-map production pipeline (detect_brief-text, HIGH, T=0.7, K=5,
+    # library 8580ecb2..., matches 55-map generalisation config). Obs 233 /
+    # Priority 1 canonical WBF vs greedy comparison.
+    "gold-standard-v2-detect": {
+        "pass_files": [
+            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+        ],
+        "default_output_dir": "outputs/h11/wbf/gold-standard-v2-detect",
+    },
 }
 
 
