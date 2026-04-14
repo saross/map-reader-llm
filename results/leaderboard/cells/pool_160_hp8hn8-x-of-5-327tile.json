@@ -1,0 +1,1686 @@
+{
+  "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+  "track": "text",
+  "aggregation": "greedy",
+  "verifier": "flash-adversarial-v1",
+  "bounds_file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+  "n_bounds_tiles": 327,
+  "n_candidates_loaded": 1442,
+  "allowed_passes": [
+    "run_1",
+    "run_2",
+    "run_3",
+    "run_4",
+    "run_5"
+  ],
+  "parameters": {
+    "vote_thresholds": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 925,
+      "p": 0.3157,
+      "r": 0.9154,
+      "f1": 0.4695
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 925,
+      "p": 0.3265,
+      "r": 0.9467,
+      "f1": 0.4855
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 925,
+      "p": 0.3276,
+      "r": 0.9498,
+      "f1": 0.4871
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 925,
+      "p": 0.3286,
+      "r": 0.953,
+      "f1": 0.4887
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 669,
+      "p": 0.435,
+      "r": 0.9122,
+      "f1": 0.5891
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 669,
+      "p": 0.4499,
+      "r": 0.9436,
+      "f1": 0.6093
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 669,
+      "p": 0.4514,
+      "r": 0.9467,
+      "f1": 0.6113
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 669,
+      "p": 0.4529,
+      "r": 0.9498,
+      "f1": 0.6134
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 482,
+      "p": 0.5996,
+      "r": 0.906,
+      "f1": 0.7216
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 482,
+      "p": 0.6203,
+      "r": 0.9373,
+      "f1": 0.7466
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 482,
+      "p": 0.6224,
+      "r": 0.9404,
+      "f1": 0.7491
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 482,
+      "p": 0.6245,
+      "r": 0.9436,
+      "f1": 0.7516
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 354,
+      "p": 0.7966,
+      "r": 0.884,
+      "f1": 0.838
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 354,
+      "p": 0.8249,
+      "r": 0.9154,
+      "f1": 0.8678
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 354,
+      "p": 0.8277,
+      "r": 0.9185,
+      "f1": 0.8707
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 354,
+      "p": 0.8305,
+      "r": 0.9216,
+      "f1": 0.8737
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 351,
+      "p": 0.8034,
+      "r": 0.884,
+      "f1": 0.8418
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 351,
+      "p": 0.8319,
+      "r": 0.9154,
+      "f1": 0.8716
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 351,
+      "p": 0.8348,
+      "r": 0.9185,
+      "f1": 0.8746
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 351,
+      "p": 0.8376,
+      "r": 0.9216,
+      "f1": 0.8776
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.8302,
+      "r": 0.8276,
+      "f1": 0.8289
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8616,
+      "r": 0.8589,
+      "f1": 0.8603
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.8648,
+      "r": 0.8621,
+      "f1": 0.8634
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.8648,
+      "r": 0.8621,
+      "f1": 0.8634
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.8302,
+      "r": 0.8276,
+      "f1": 0.8289
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8616,
+      "r": 0.8589,
+      "f1": 0.8603
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.8648,
+      "r": 0.8621,
+      "f1": 0.8634
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.8648,
+      "r": 0.8621,
+      "f1": 0.8634
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 313,
+      "p": 0.8371,
+      "r": 0.8213,
+      "f1": 0.8291
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 313,
+      "p": 0.8658,
+      "r": 0.8495,
+      "f1": 0.8576
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 313,
+      "p": 0.869,
+      "r": 0.8527,
+      "f1": 0.8608
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 313,
+      "p": 0.869,
+      "r": 0.8527,
+      "f1": 0.8608
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 300,
+      "p": 0.8533,
+      "r": 0.8025,
+      "f1": 0.8271
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 300,
+      "p": 0.88,
+      "r": 0.8276,
+      "f1": 0.853
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 300,
+      "p": 0.8833,
+      "r": 0.8307,
+      "f1": 0.8562
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 300,
+      "p": 0.8833,
+      "r": 0.8307,
+      "f1": 0.8562
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 300,
+      "p": 0.8533,
+      "r": 0.8025,
+      "f1": 0.8271
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 300,
+      "p": 0.88,
+      "r": 0.8276,
+      "f1": 0.853
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 300,
+      "p": 0.8833,
+      "r": 0.8307,
+      "f1": 0.8562
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 300,
+      "p": 0.8833,
+      "r": 0.8307,
+      "f1": 0.8562
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 584,
+      "p": 0.488,
+      "r": 0.8934,
+      "f1": 0.6312
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 584,
+      "p": 0.5051,
+      "r": 0.9248,
+      "f1": 0.6534
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 584,
+      "p": 0.5068,
+      "r": 0.9279,
+      "f1": 0.6556
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 584,
+      "p": 0.5068,
+      "r": 0.9279,
+      "f1": 0.6556
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 467,
+      "p": 0.6081,
+      "r": 0.8903,
+      "f1": 0.7226
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 467,
+      "p": 0.6296,
+      "r": 0.9216,
+      "f1": 0.7481
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 467,
+      "p": 0.6317,
+      "r": 0.9248,
+      "f1": 0.7506
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 467,
+      "p": 0.6317,
+      "r": 0.9248,
+      "f1": 0.7506
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 363,
+      "p": 0.7769,
+      "r": 0.884,
+      "f1": 0.827
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 363,
+      "p": 0.8044,
+      "r": 0.9154,
+      "f1": 0.8563
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 363,
+      "p": 0.8072,
+      "r": 0.9185,
+      "f1": 0.8592
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 363,
+      "p": 0.8072,
+      "r": 0.9185,
+      "f1": 0.8592
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 313,
+      "p": 0.8818,
+      "r": 0.8652,
+      "f1": 0.8734
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 313,
+      "p": 0.9137,
+      "r": 0.8966,
+      "f1": 0.9051
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 313,
+      "p": 0.9169,
+      "r": 0.8997,
+      "f1": 0.9082
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 313,
+      "p": 0.9169,
+      "r": 0.8997,
+      "f1": 0.9082
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 312,
+      "p": 0.8846,
+      "r": 0.8652,
+      "f1": 0.8748
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 312,
+      "p": 0.9167,
+      "r": 0.8966,
+      "f1": 0.9065
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 312,
+      "p": 0.9199,
+      "r": 0.8997,
+      "f1": 0.9097
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 312,
+      "p": 0.9199,
+      "r": 0.8997,
+      "f1": 0.9097
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 289,
+      "p": 0.8997,
+      "r": 0.815,
+      "f1": 0.8553
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 289,
+      "p": 0.9308,
+      "r": 0.8433,
+      "f1": 0.8849
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 289,
+      "p": 0.9308,
+      "r": 0.8433,
+      "f1": 0.8849
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 289,
+      "p": 0.9308,
+      "r": 0.8433,
+      "f1": 0.8849
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 289,
+      "p": 0.8997,
+      "r": 0.815,
+      "f1": 0.8553
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 289,
+      "p": 0.9308,
+      "r": 0.8433,
+      "f1": 0.8849
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 289,
+      "p": 0.9308,
+      "r": 0.8433,
+      "f1": 0.8849
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 289,
+      "p": 0.9308,
+      "r": 0.8433,
+      "f1": 0.8849
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 286,
+      "p": 0.9021,
+      "r": 0.8088,
+      "f1": 0.8529
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 286,
+      "p": 0.9336,
+      "r": 0.837,
+      "f1": 0.8826
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 286,
+      "p": 0.9336,
+      "r": 0.837,
+      "f1": 0.8826
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 286,
+      "p": 0.9336,
+      "r": 0.837,
+      "f1": 0.8826
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 275,
+      "p": 0.9164,
+      "r": 0.79,
+      "f1": 0.8485
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 275,
+      "p": 0.9455,
+      "r": 0.815,
+      "f1": 0.8754
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 275,
+      "p": 0.9455,
+      "r": 0.815,
+      "f1": 0.8754
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 275,
+      "p": 0.9455,
+      "r": 0.815,
+      "f1": 0.8754
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 275,
+      "p": 0.9164,
+      "r": 0.79,
+      "f1": 0.8485
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 275,
+      "p": 0.9455,
+      "r": 0.815,
+      "f1": 0.8754
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 275,
+      "p": 0.9455,
+      "r": 0.815,
+      "f1": 0.8754
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 275,
+      "p": 0.9455,
+      "r": 0.815,
+      "f1": 0.8754
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 417,
+      "p": 0.6451,
+      "r": 0.8433,
+      "f1": 0.731
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 417,
+      "p": 0.6667,
+      "r": 0.8715,
+      "f1": 0.7554
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 417,
+      "p": 0.6667,
+      "r": 0.8715,
+      "f1": 0.7554
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 417,
+      "p": 0.6667,
+      "r": 0.8715,
+      "f1": 0.7554
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 358,
+      "p": 0.7514,
+      "r": 0.8433,
+      "f1": 0.7947
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 358,
+      "p": 0.7765,
+      "r": 0.8715,
+      "f1": 0.8213
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 358,
+      "p": 0.7765,
+      "r": 0.8715,
+      "f1": 0.8213
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 358,
+      "p": 0.7765,
+      "r": 0.8715,
+      "f1": 0.8213
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 306,
+      "p": 0.8725,
+      "r": 0.837,
+      "f1": 0.8544
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 306,
+      "p": 0.902,
+      "r": 0.8652,
+      "f1": 0.8832
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 306,
+      "p": 0.902,
+      "r": 0.8652,
+      "f1": 0.8832
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 306,
+      "p": 0.902,
+      "r": 0.8652,
+      "f1": 0.8832
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 284,
+      "p": 0.9261,
+      "r": 0.8245,
+      "f1": 0.8723
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 284,
+      "p": 0.9577,
+      "r": 0.8527,
+      "f1": 0.9022
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 284,
+      "p": 0.9577,
+      "r": 0.8527,
+      "f1": 0.9022
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 284,
+      "p": 0.9577,
+      "r": 0.8527,
+      "f1": 0.9022
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 283,
+      "p": 0.9293,
+      "r": 0.8245,
+      "f1": 0.8738
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 283,
+      "p": 0.9611,
+      "r": 0.8527,
+      "f1": 0.9037
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 283,
+      "p": 0.9611,
+      "r": 0.8527,
+      "f1": 0.9037
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 283,
+      "p": 0.9611,
+      "r": 0.8527,
+      "f1": 0.9037
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 265,
+      "p": 0.9321,
+      "r": 0.7743,
+      "f1": 0.8459
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 265,
+      "p": 0.9623,
+      "r": 0.7994,
+      "f1": 0.8733
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 265,
+      "p": 0.9623,
+      "r": 0.7994,
+      "f1": 0.8733
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 265,
+      "p": 0.9623,
+      "r": 0.7994,
+      "f1": 0.8733
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 265,
+      "p": 0.9321,
+      "r": 0.7743,
+      "f1": 0.8459
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 265,
+      "p": 0.9623,
+      "r": 0.7994,
+      "f1": 0.8733
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 265,
+      "p": 0.9623,
+      "r": 0.7994,
+      "f1": 0.8733
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 265,
+      "p": 0.9623,
+      "r": 0.7994,
+      "f1": 0.8733
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 262,
+      "p": 0.9351,
+      "r": 0.768,
+      "f1": 0.8434
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 262,
+      "p": 0.9656,
+      "r": 0.7931,
+      "f1": 0.8709
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 262,
+      "p": 0.9656,
+      "r": 0.7931,
+      "f1": 0.8709
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 262,
+      "p": 0.9656,
+      "r": 0.7931,
+      "f1": 0.8709
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 253,
+      "p": 0.9486,
+      "r": 0.7524,
+      "f1": 0.8392
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 253,
+      "p": 0.9763,
+      "r": 0.7743,
+      "f1": 0.8636
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 253,
+      "p": 0.9763,
+      "r": 0.7743,
+      "f1": 0.8636
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 253,
+      "p": 0.9763,
+      "r": 0.7743,
+      "f1": 0.8636
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 253,
+      "p": 0.9486,
+      "r": 0.7524,
+      "f1": 0.8392
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 253,
+      "p": 0.9763,
+      "r": 0.7743,
+      "f1": 0.8636
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 253,
+      "p": 0.9763,
+      "r": 0.7743,
+      "f1": 0.8636
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 253,
+      "p": 0.9763,
+      "r": 0.7743,
+      "f1": 0.8636
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 311,
+      "p": 0.7846,
+      "r": 0.7649,
+      "f1": 0.7746
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 311,
+      "p": 0.8006,
+      "r": 0.7806,
+      "f1": 0.7905
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 311,
+      "p": 0.8006,
+      "r": 0.7806,
+      "f1": 0.7905
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 311,
+      "p": 0.8006,
+      "r": 0.7806,
+      "f1": 0.7905
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 284,
+      "p": 0.8592,
+      "r": 0.7649,
+      "f1": 0.8093
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 284,
+      "p": 0.8768,
+      "r": 0.7806,
+      "f1": 0.8259
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 284,
+      "p": 0.8768,
+      "r": 0.7806,
+      "f1": 0.8259
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 284,
+      "p": 0.8768,
+      "r": 0.7806,
+      "f1": 0.8259
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 262,
+      "p": 0.9275,
+      "r": 0.7618,
+      "f1": 0.8365
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 262,
+      "p": 0.9466,
+      "r": 0.7774,
+      "f1": 0.8537
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 262,
+      "p": 0.9466,
+      "r": 0.7774,
+      "f1": 0.8537
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 262,
+      "p": 0.9466,
+      "r": 0.7774,
+      "f1": 0.8537
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 252,
+      "p": 0.9524,
+      "r": 0.7524,
+      "f1": 0.8406
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 252,
+      "p": 0.9722,
+      "r": 0.768,
+      "f1": 0.8581
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 252,
+      "p": 0.9722,
+      "r": 0.768,
+      "f1": 0.8581
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 252,
+      "p": 0.9722,
+      "r": 0.768,
+      "f1": 0.8581
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 252,
+      "p": 0.9524,
+      "r": 0.7524,
+      "f1": 0.8406
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 252,
+      "p": 0.9722,
+      "r": 0.768,
+      "f1": 0.8581
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 252,
+      "p": 0.9722,
+      "r": 0.768,
+      "f1": 0.8581
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 252,
+      "p": 0.9722,
+      "r": 0.768,
+      "f1": 0.8581
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 239,
+      "p": 0.9498,
+      "r": 0.7116,
+      "f1": 0.8136
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 239,
+      "p": 0.9707,
+      "r": 0.7273,
+      "f1": 0.8315
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 239,
+      "p": 0.9707,
+      "r": 0.7273,
+      "f1": 0.8315
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 239,
+      "p": 0.9707,
+      "r": 0.7273,
+      "f1": 0.8315
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 239,
+      "p": 0.9498,
+      "r": 0.7116,
+      "f1": 0.8136
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 239,
+      "p": 0.9707,
+      "r": 0.7273,
+      "f1": 0.8315
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 239,
+      "p": 0.9707,
+      "r": 0.7273,
+      "f1": 0.8315
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 239,
+      "p": 0.9707,
+      "r": 0.7273,
+      "f1": 0.8315
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 236,
+      "p": 0.9534,
+      "r": 0.7053,
+      "f1": 0.8108
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 236,
+      "p": 0.9746,
+      "r": 0.721,
+      "f1": 0.8288
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 236,
+      "p": 0.9746,
+      "r": 0.721,
+      "f1": 0.8288
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 236,
+      "p": 0.9746,
+      "r": 0.721,
+      "f1": 0.8288
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 228,
+      "p": 0.9649,
+      "r": 0.6897,
+      "f1": 0.8044
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 228,
+      "p": 0.9868,
+      "r": 0.7053,
+      "f1": 0.8227
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 228,
+      "p": 0.9868,
+      "r": 0.7053,
+      "f1": 0.8227
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 228,
+      "p": 0.9868,
+      "r": 0.7053,
+      "f1": 0.8227
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 228,
+      "p": 0.9649,
+      "r": 0.6897,
+      "f1": 0.8044
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 228,
+      "p": 0.9868,
+      "r": 0.7053,
+      "f1": 0.8227
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 228,
+      "p": 0.9868,
+      "r": 0.7053,
+      "f1": 0.8227
+    },
+    {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 228,
+      "p": 0.9868,
+      "r": 0.7053,
+      "f1": 0.8227
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 312,
+      "p": 0.8846,
+      "r": 0.8652,
+      "f1": 0.8748
+    },
+    "30": {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 312,
+      "p": 0.9167,
+      "r": 0.8966,
+      "f1": 0.9065
+    },
+    "40": {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 312,
+      "p": 0.9199,
+      "r": 0.8997,
+      "f1": 0.9097
+    },
+    "50": {
+      "label": "pool_160_hp8hn8--adv-v1 (x-of-5 runs 1-5)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 312,
+      "p": 0.9199,
+      "r": 0.8997,
+      "f1": 0.9097
+    }
+  }
+}

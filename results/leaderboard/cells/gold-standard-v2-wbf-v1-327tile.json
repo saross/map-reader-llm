@@ -1,0 +1,1680 @@
+{
+  "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+  "track": "text",
+  "aggregation": "wbf",
+  "verifier": "flash-adversarial-v1",
+  "bounds_file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+  "n_bounds_tiles": 327,
+  "n_candidates_loaded": 917,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 917,
+      "p": 0.2923,
+      "r": 0.8401,
+      "f1": 0.4337
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 917,
+      "p": 0.3032,
+      "r": 0.8715,
+      "f1": 0.4498
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 917,
+      "p": 0.3064,
+      "r": 0.8809,
+      "f1": 0.4547
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 917,
+      "p": 0.3086,
+      "r": 0.8871,
+      "f1": 0.4579
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 621,
+      "p": 0.4283,
+      "r": 0.8339,
+      "f1": 0.566
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 621,
+      "p": 0.4444,
+      "r": 0.8652,
+      "f1": 0.5872
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 621,
+      "p": 0.4493,
+      "r": 0.8746,
+      "f1": 0.5936
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 621,
+      "p": 0.4525,
+      "r": 0.8809,
+      "f1": 0.5979
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 438,
+      "p": 0.6005,
+      "r": 0.8245,
+      "f1": 0.6948
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 438,
+      "p": 0.6233,
+      "r": 0.8558,
+      "f1": 0.7213
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 438,
+      "p": 0.6301,
+      "r": 0.8652,
+      "f1": 0.7292
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 438,
+      "p": 0.6347,
+      "r": 0.8715,
+      "f1": 0.7345
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 312,
+      "p": 0.8173,
+      "r": 0.7994,
+      "f1": 0.8082
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 312,
+      "p": 0.8429,
+      "r": 0.8245,
+      "f1": 0.8336
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 312,
+      "p": 0.8526,
+      "r": 0.8339,
+      "f1": 0.8431
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 312,
+      "p": 0.859,
+      "r": 0.8401,
+      "f1": 0.8494
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 310,
+      "p": 0.8161,
+      "r": 0.7931,
+      "f1": 0.8045
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 310,
+      "p": 0.8419,
+      "r": 0.8182,
+      "f1": 0.8299
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 310,
+      "p": 0.8516,
+      "r": 0.8276,
+      "f1": 0.8394
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 310,
+      "p": 0.8581,
+      "r": 0.8339,
+      "f1": 0.8458
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 281,
+      "p": 0.8399,
+      "r": 0.7398,
+      "f1": 0.7867
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 281,
+      "p": 0.8648,
+      "r": 0.7618,
+      "f1": 0.81
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 281,
+      "p": 0.8754,
+      "r": 0.7712,
+      "f1": 0.82
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 281,
+      "p": 0.8826,
+      "r": 0.7774,
+      "f1": 0.8267
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 281,
+      "p": 0.8399,
+      "r": 0.7398,
+      "f1": 0.7867
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 281,
+      "p": 0.8648,
+      "r": 0.7618,
+      "f1": 0.81
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 281,
+      "p": 0.8754,
+      "r": 0.7712,
+      "f1": 0.82
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 281,
+      "p": 0.8826,
+      "r": 0.7774,
+      "f1": 0.8267
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 276,
+      "p": 0.8478,
+      "r": 0.7335,
+      "f1": 0.7866
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 276,
+      "p": 0.8732,
+      "r": 0.7555,
+      "f1": 0.8101
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 276,
+      "p": 0.8841,
+      "r": 0.7649,
+      "f1": 0.8202
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 276,
+      "p": 0.8913,
+      "r": 0.7712,
+      "f1": 0.8269
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 263,
+      "p": 0.8555,
+      "r": 0.7053,
+      "f1": 0.7732
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 263,
+      "p": 0.8821,
+      "r": 0.7273,
+      "f1": 0.7973
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 263,
+      "p": 0.8935,
+      "r": 0.7367,
+      "f1": 0.8076
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 263,
+      "p": 0.9011,
+      "r": 0.7429,
+      "f1": 0.8144
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 263,
+      "p": 0.8555,
+      "r": 0.7053,
+      "f1": 0.7732
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 263,
+      "p": 0.8821,
+      "r": 0.7273,
+      "f1": 0.7973
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 263,
+      "p": 0.8935,
+      "r": 0.7367,
+      "f1": 0.8076
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 263,
+      "p": 0.9011,
+      "r": 0.7429,
+      "f1": 0.8144
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 600,
+      "p": 0.44,
+      "r": 0.8276,
+      "f1": 0.5745
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 600,
+      "p": 0.455,
+      "r": 0.8558,
+      "f1": 0.5941
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 600,
+      "p": 0.46,
+      "r": 0.8652,
+      "f1": 0.6007
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 600,
+      "p": 0.4633,
+      "r": 0.8715,
+      "f1": 0.605
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 450,
+      "p": 0.5822,
+      "r": 0.8213,
+      "f1": 0.6814
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 450,
+      "p": 0.6022,
+      "r": 0.8495,
+      "f1": 0.7048
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 450,
+      "p": 0.6089,
+      "r": 0.8589,
+      "f1": 0.7126
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 450,
+      "p": 0.6133,
+      "r": 0.8652,
+      "f1": 0.7178
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 362,
+      "p": 0.7155,
+      "r": 0.8119,
+      "f1": 0.7606
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 362,
+      "p": 0.7403,
+      "r": 0.8401,
+      "f1": 0.7871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 362,
+      "p": 0.7486,
+      "r": 0.8495,
+      "f1": 0.7959
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 362,
+      "p": 0.7541,
+      "r": 0.8558,
+      "f1": 0.8018
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 290,
+      "p": 0.8655,
+      "r": 0.7868,
+      "f1": 0.8243
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 290,
+      "p": 0.8931,
+      "r": 0.8119,
+      "f1": 0.8506
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 290,
+      "p": 0.9034,
+      "r": 0.8213,
+      "f1": 0.8604
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 290,
+      "p": 0.9103,
+      "r": 0.8276,
+      "f1": 0.867
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 288,
+      "p": 0.8646,
+      "r": 0.7806,
+      "f1": 0.8204
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 288,
+      "p": 0.8924,
+      "r": 0.8056,
+      "f1": 0.8468
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 288,
+      "p": 0.9028,
+      "r": 0.815,
+      "f1": 0.8567
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 288,
+      "p": 0.9097,
+      "r": 0.8213,
+      "f1": 0.8633
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 266,
+      "p": 0.8797,
+      "r": 0.7335,
+      "f1": 0.8
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 266,
+      "p": 0.906,
+      "r": 0.7555,
+      "f1": 0.8239
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 266,
+      "p": 0.9173,
+      "r": 0.7649,
+      "f1": 0.8342
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 266,
+      "p": 0.9248,
+      "r": 0.7712,
+      "f1": 0.841
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 266,
+      "p": 0.8797,
+      "r": 0.7335,
+      "f1": 0.8
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 266,
+      "p": 0.906,
+      "r": 0.7555,
+      "f1": 0.8239
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 266,
+      "p": 0.9173,
+      "r": 0.7649,
+      "f1": 0.8342
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 266,
+      "p": 0.9248,
+      "r": 0.7712,
+      "f1": 0.841
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 264,
+      "p": 0.8788,
+      "r": 0.7273,
+      "f1": 0.7959
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 264,
+      "p": 0.9053,
+      "r": 0.7492,
+      "f1": 0.8199
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 264,
+      "p": 0.9167,
+      "r": 0.7586,
+      "f1": 0.8302
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 264,
+      "p": 0.9242,
+      "r": 0.7649,
+      "f1": 0.837
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 251,
+      "p": 0.8884,
+      "r": 0.6991,
+      "f1": 0.7825
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 251,
+      "p": 0.9163,
+      "r": 0.721,
+      "f1": 0.807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 251,
+      "p": 0.9283,
+      "r": 0.7304,
+      "f1": 0.8175
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 251,
+      "p": 0.9363,
+      "r": 0.7367,
+      "f1": 0.8246
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 251,
+      "p": 0.8884,
+      "r": 0.6991,
+      "f1": 0.7825
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 251,
+      "p": 0.9163,
+      "r": 0.721,
+      "f1": 0.807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 251,
+      "p": 0.9283,
+      "r": 0.7304,
+      "f1": 0.8175
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 251,
+      "p": 0.9363,
+      "r": 0.7367,
+      "f1": 0.8246
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 431,
+      "p": 0.5824,
+      "r": 0.7868,
+      "f1": 0.6693
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 431,
+      "p": 0.5963,
+      "r": 0.8056,
+      "f1": 0.6853
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 431,
+      "p": 0.6032,
+      "r": 0.815,
+      "f1": 0.6933
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 431,
+      "p": 0.6032,
+      "r": 0.815,
+      "f1": 0.6933
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 353,
+      "p": 0.7082,
+      "r": 0.7837,
+      "f1": 0.744
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 353,
+      "p": 0.7252,
+      "r": 0.8025,
+      "f1": 0.7619
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 353,
+      "p": 0.7337,
+      "r": 0.8119,
+      "f1": 0.7708
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 353,
+      "p": 0.7337,
+      "r": 0.8119,
+      "f1": 0.7708
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 308,
+      "p": 0.8019,
+      "r": 0.7743,
+      "f1": 0.7879
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 308,
+      "p": 0.8214,
+      "r": 0.7931,
+      "f1": 0.807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 308,
+      "p": 0.8312,
+      "r": 0.8025,
+      "f1": 0.8166
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 308,
+      "p": 0.8312,
+      "r": 0.8025,
+      "f1": 0.8166
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 266,
+      "p": 0.9023,
+      "r": 0.7524,
+      "f1": 0.8205
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 266,
+      "p": 0.9211,
+      "r": 0.768,
+      "f1": 0.8376
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 266,
+      "p": 0.9323,
+      "r": 0.7774,
+      "f1": 0.8479
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 266,
+      "p": 0.9323,
+      "r": 0.7774,
+      "f1": 0.8479
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 264,
+      "p": 0.9015,
+      "r": 0.7461,
+      "f1": 0.8165
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 264,
+      "p": 0.9205,
+      "r": 0.7618,
+      "f1": 0.8336
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 264,
+      "p": 0.9318,
+      "r": 0.7712,
+      "f1": 0.8439
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 264,
+      "p": 0.9318,
+      "r": 0.7712,
+      "f1": 0.8439
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 246,
+      "p": 0.9065,
+      "r": 0.6991,
+      "f1": 0.7894
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 246,
+      "p": 0.9268,
+      "r": 0.7147,
+      "f1": 0.8071
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 246,
+      "p": 0.939,
+      "r": 0.7241,
+      "f1": 0.8177
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 246,
+      "p": 0.939,
+      "r": 0.7241,
+      "f1": 0.8177
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 246,
+      "p": 0.9065,
+      "r": 0.6991,
+      "f1": 0.7894
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 246,
+      "p": 0.9268,
+      "r": 0.7147,
+      "f1": 0.8071
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 246,
+      "p": 0.939,
+      "r": 0.7241,
+      "f1": 0.8177
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 246,
+      "p": 0.939,
+      "r": 0.7241,
+      "f1": 0.8177
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 244,
+      "p": 0.9057,
+      "r": 0.6928,
+      "f1": 0.7851
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 244,
+      "p": 0.9262,
+      "r": 0.7085,
+      "f1": 0.8028
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 244,
+      "p": 0.9385,
+      "r": 0.7179,
+      "f1": 0.8135
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 244,
+      "p": 0.9385,
+      "r": 0.7179,
+      "f1": 0.8135
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 232,
+      "p": 0.9181,
+      "r": 0.6677,
+      "f1": 0.7731
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 232,
+      "p": 0.9397,
+      "r": 0.6834,
+      "f1": 0.7913
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 232,
+      "p": 0.9526,
+      "r": 0.6928,
+      "f1": 0.8022
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 232,
+      "p": 0.9526,
+      "r": 0.6928,
+      "f1": 0.8022
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 232,
+      "p": 0.9181,
+      "r": 0.6677,
+      "f1": 0.7731
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 232,
+      "p": 0.9397,
+      "r": 0.6834,
+      "f1": 0.7913
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 232,
+      "p": 0.9526,
+      "r": 0.6928,
+      "f1": 0.8022
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 232,
+      "p": 0.9526,
+      "r": 0.6928,
+      "f1": 0.8022
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 326,
+      "p": 0.6994,
+      "r": 0.7147,
+      "f1": 0.707
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 326,
+      "p": 0.7178,
+      "r": 0.7335,
+      "f1": 0.7256
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 326,
+      "p": 0.7209,
+      "r": 0.7367,
+      "f1": 0.7287
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 326,
+      "p": 0.7209,
+      "r": 0.7367,
+      "f1": 0.7287
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 288,
+      "p": 0.7917,
+      "r": 0.7147,
+      "f1": 0.7512
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 288,
+      "p": 0.8125,
+      "r": 0.7335,
+      "f1": 0.771
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 288,
+      "p": 0.816,
+      "r": 0.7367,
+      "f1": 0.7743
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 288,
+      "p": 0.816,
+      "r": 0.7367,
+      "f1": 0.7743
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 263,
+      "p": 0.8555,
+      "r": 0.7053,
+      "f1": 0.7732
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 263,
+      "p": 0.8783,
+      "r": 0.7241,
+      "f1": 0.7938
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 263,
+      "p": 0.8821,
+      "r": 0.7273,
+      "f1": 0.7973
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 263,
+      "p": 0.8821,
+      "r": 0.7273,
+      "f1": 0.7973
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 239,
+      "p": 0.9163,
+      "r": 0.6865,
+      "f1": 0.7849
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 239,
+      "p": 0.9372,
+      "r": 0.7022,
+      "f1": 0.8029
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 239,
+      "p": 0.9414,
+      "r": 0.7053,
+      "f1": 0.8065
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 239,
+      "p": 0.9414,
+      "r": 0.7053,
+      "f1": 0.8065
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 237,
+      "p": 0.9156,
+      "r": 0.6803,
+      "f1": 0.7806
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 237,
+      "p": 0.9367,
+      "r": 0.6959,
+      "f1": 0.7986
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 237,
+      "p": 0.9409,
+      "r": 0.6991,
+      "f1": 0.8022
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 237,
+      "p": 0.9409,
+      "r": 0.6991,
+      "f1": 0.8022
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 220,
+      "p": 0.9182,
+      "r": 0.6332,
+      "f1": 0.7495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 220,
+      "p": 0.9409,
+      "r": 0.6489,
+      "f1": 0.7681
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 220,
+      "p": 0.9455,
+      "r": 0.652,
+      "f1": 0.7718
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 220,
+      "p": 0.9455,
+      "r": 0.652,
+      "f1": 0.7718
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 220,
+      "p": 0.9182,
+      "r": 0.6332,
+      "f1": 0.7495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 220,
+      "p": 0.9409,
+      "r": 0.6489,
+      "f1": 0.7681
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 220,
+      "p": 0.9455,
+      "r": 0.652,
+      "f1": 0.7718
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 220,
+      "p": 0.9455,
+      "r": 0.652,
+      "f1": 0.7718
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 218,
+      "p": 0.9174,
+      "r": 0.627,
+      "f1": 0.7449
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 218,
+      "p": 0.9404,
+      "r": 0.6426,
+      "f1": 0.7635
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 218,
+      "p": 0.945,
+      "r": 0.6458,
+      "f1": 0.7672
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 218,
+      "p": 0.945,
+      "r": 0.6458,
+      "f1": 0.7672
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 209,
+      "p": 0.9234,
+      "r": 0.605,
+      "f1": 0.7311
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 209,
+      "p": 0.9474,
+      "r": 0.6207,
+      "f1": 0.75
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 209,
+      "p": 0.9522,
+      "r": 0.6238,
+      "f1": 0.7538
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 209,
+      "p": 0.9522,
+      "r": 0.6238,
+      "f1": 0.7538
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 209,
+      "p": 0.9234,
+      "r": 0.605,
+      "f1": 0.7311
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 209,
+      "p": 0.9474,
+      "r": 0.6207,
+      "f1": 0.75
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 209,
+      "p": 0.9522,
+      "r": 0.6238,
+      "f1": 0.7538
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 209,
+      "p": 0.9522,
+      "r": 0.6238,
+      "f1": 0.7538
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 290,
+      "p": 0.8655,
+      "r": 0.7868,
+      "f1": 0.8243
+    },
+    "30": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 290,
+      "p": 0.8931,
+      "r": 0.8119,
+      "f1": 0.8506
+    },
+    "40": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 290,
+      "p": 0.9034,
+      "r": 0.8213,
+      "f1": 0.8604
+    },
+    "50": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical WBF)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 290,
+      "p": 0.9103,
+      "r": 0.8276,
+      "f1": 0.867
+    }
+  }
+}
