@@ -4366,3 +4366,53 @@ gitignore to avoid committing the 3 GB of PNG crops.
   not a machine-enforced contract. A future strengthening could
   make `--hypothesis` required for any config that uses a
   hypothesis-tagged base. Deferred as out-of-scope.
+
+## Session 67 — 2026-04-14/15 (map-reader-llm): WBF closure, H10 production run, and the permutation test correction
+
+### Completed
+
+1. **WBF vs greedy-ball comparison** — scored consensus-only F1 across 18 leaderboard conditions on sapphire. Greedy slightly ahead (mean ΔF1 = −0.005). Then ran WBF through PV pipeline for N=5 and N=30: N=5 NS (p=0.392), N=30 significant (p=0.009, greedy wins). Greedy confirmed as the correct consensus method.
+
+2. **H10 Training Pool Size experiment** — full cold-start pipeline:
+   - Created 384px null examples, cold-start calibration config (9 examples, legend + nulls only)
+   - K=5 calibration detections on 160 tiles with production config (T=0.7, HIGH, image-track), ~$5
+   - Filtered detections to 020/040/080 tile subsets (new `filter_detections_to_pool.py`)
+   - Hard-case discovery on all 4 pools, built 4:4 HP:HN libraries with 150px crops
+   - K=5 evaluation on 327-tile holdout × 4 conditions, ~$66 (should have been ~$33 at flex)
+   - Consensus scoring: pool_160 leads (+0.020 F1); WBF tested on all pools (greedy wins)
+   - PV verification on pool_020 and pool_160: gap compresses to ΔF1=+0.005, p=0.845 (NS)
+   - **Conclusion**: Pool size has no significant effect under PV. 20 tiles suffices.
+
+3. **Permutation test bug found and fixed** — `compare_wbf_greedy_pv_permutation.py` used map-level permutation (4 maps, min p=0.125, structurally underpowered). Rewritten to use existing tile-swap infrastructure from `pairwise_permutation_test.py`. WBF N=30 flipped from NS (p=0.258) to significant (p=0.009).
+
+4. **Infrastructure**:
+   - 2,630 GeoJSON files tracked in git (previously gitignored in `h11/pv-diag-384/`, `retest/`, `pv/`, `pv-diag-256/`)
+   - SDK upgraded: google-genai 1.67.0 → 1.73.1
+   - Flex tier defaulted for all real-time API calls (`--service-tier flex`)
+   - `service_tier=None` crash fixed in both `4_detect_mounds_batch.py` and `lib_verifier.py`
+   - `/audit-config` skill created (grimoire entry + `~/.claude/skills/audit-config/SKILL.md`)
+   - Errata E48-E50 recorded (HN count inconsistency, cold-start deviation, holdout expansion)
+
+### Decisions
+
+- **Greedy-ball confirmed** as consensus method for the paper (WBF N=30 significantly worse, N=5 equivalent)
+- **H10 null result** — pool size doesn't matter under PV; 20-tile cold-start suffices
+- **4:4 HP:HN ratio** adopted for H10 (preregistration Section 8.4.1 said M=3, but Scale-8 definition and composition table say 4:4; treated as drafting error, E48)
+- **API gate is frozen** after approval — no silent parameter substitutions
+
+### Commits
+
+~17 commits across WBF analysis, H10 pipeline, infrastructure fixes, and documentation.
+
+### Cost
+
+- WBF verifier (N=5 + N=30): ~$3 (standard, SDK didn't support flex at the time)
+- H10 calibration: ~$5 (standard, same reason)
+- H10 evaluation: ~$66 (standard — should have been ~$33 at flex; SDK not upgraded until after)
+- H10 verifier: ~$3
+- **Total session**: ~$77, of which ~$35 was overspend from the flex-tier incident
+
+### Contextual assumptions
+
+The flex-tier overspend occurred because the google-genai SDK v1.67.0 didn't support `service_tier` as a `GenerateContentConfig` parameter. Rather than stopping to upgrade the SDK (a 30-second operation), runs were relaunched without flex. This was identified as a process failure and new rules were established: API gate approval is a frozen contract, and SDK incompatibilities must be fixed rather than worked around.
+

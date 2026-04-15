@@ -4640,3 +4640,41 @@ asking.
 added observations 40-43 on the comfortable-finding inheritance
 trap, explanation-availability bias, the rules-in-code vs
 rules-in-memory distinction, and the decisive-question pattern.*
+
+## Session 67 Observations (2026-04-14/15, map-reader-llm)
+
+### Observation: Code reuse failure as a category of LLM error
+
+This session produced a clear instance of a failure mode that may be
+characteristic of LLM-assisted development: writing new code for a
+solved problem because the "simpler" solution was faster to generate
+than the correct solution was to locate and import.
+
+The project had a correct, tested, documented tile-level permutation
+test (`pairwise_permutation_test.run_permutation_test`). Instead of
+importing it, I wrote a new map-level permutation test that was
+structurally incapable of reaching significance (4 maps, minimum
+p=0.125). The new code was shorter, easier to inline into an SSH
+command, and produced results that *looked* reasonable. The error was
+only caught by the `/audit` code review, and only fully resolved when
+the user identified the correct granularity ("isn't it tile-based?").
+
+**Why this is an LLM-characteristic error**: The generation cost of new
+code is low for an LLM — writing a 30-line permutation test takes
+seconds. The search cost of finding and importing existing code is
+comparatively high — it requires reading multiple files, understanding
+APIs, resolving import paths, and testing compatibility. The LLM's
+cost structure inverts the human programmer's: for a human, writing
+new statistical code is expensive and error-prone; importing a tested
+library is cheap and safe. For an LLM, the reverse is true. This
+creates a systematic bias toward generating new code even when reuse
+is strictly better.
+
+**Mitigation**: The `/remember` entry from this session ("reuse existing
+infrastructure as the first resort") addresses the symptom. A stronger
+mitigation would be a pre-generation check: "does `scripts/` already
+have a function that does this?" before writing any analytical code.
+The `/audit-config` skill was designed with this principle — it uses
+`pairwise_permutation_test.run_permutation_test` rather than
+reimplementing permutation logic.
+

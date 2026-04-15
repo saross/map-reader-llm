@@ -3576,3 +3576,24 @@ infrastructure fixes target this specific pattern, but the
 pattern itself is probably broader than config-intent mismatch
 and probably recurs in any workflow where I'm interpreting
 results I didn't generate myself. Worth watching.
+
+## Session 67 — 2026-04-14/15 (map-reader-llm): The verifier as equaliser — when a precision filter creates a recall-driven convergence
+
+### Surprising fact
+
+H10 consensus results showed pool_160 leading pool_020 by +0.020 F1 — a modest but consistent advantage from 8× more calibration data. My prediction: the PV pipeline would amplify this, because pool_160's better hard examples would produce candidates the verifier could more effectively confirm.
+
+### Probe
+
+The user corrected the prediction in one sentence: "the verifier cannot recover missed detections, can it?" This reframed the entire expected interaction. The verifier is a precision filter, not a recall booster. pool_160's advantage was *precision-driven* (P=0.843 vs P=0.672), but the verifier can only improve precision — it can't help pool_160's recall deficit (R=0.624 vs R=0.724). Meanwhile, pool_020's lower precision gives the verifier more false positives to reject, which is exactly what the verifier is designed to do.
+
+### Belief revision
+
+PV didn't amplify the gap; it erased it (ΔF1 = +0.005, p = 0.845). The revision: *the PV pipeline is an equaliser, not an amplifier*. It preferentially helps weaker-precision conditions because that's where the verifier has work to do. This has a specific structural prediction: any factor that primarily affects proposer precision (rather than recall) will show a compressed effect under PV. Factors that affect recall — which the verifier cannot address — will persist through PV unchanged.
+
+This is testable against the existing leaderboard data: conditions where PV helped most should be those with the largest precision gap before verification.
+
+### Reasoning pattern
+
+The interesting moment was the user's one-sentence correction, which functioned as what the abductive reasoning literature calls a "decisive question" — a question that immediately restructures the hypothesis space by eliminating a load-bearing assumption. My prediction was built on the implicit assumption that the verifier helps all conditions roughly equally. The question "can it recover missed detections?" eliminates that assumption and forces a new prediction in about three seconds. This is the same pattern noted in Obs 235 ("if H10 was text-only, what were the hard examples?") — a brief domain-knowledge intervention that does more analytical work than paragraphs of reasoning.
+

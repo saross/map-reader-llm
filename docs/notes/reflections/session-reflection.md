@@ -6625,3 +6625,31 @@ six commits). The retraction was painful but the infrastructure
 it demanded is the most valuable output of the session.
 
 ---
+
+## Reflection 53: The session where the verifier equalised everything — and a statistical bug hid a real finding (Session 67, 2026-04-14/15, map-reader-llm)
+
+### Prompt: "What surprised you about this session?"
+
+Two things genuinely surprised me, one scientific and one methodological.
+
+The scientific surprise was how completely the PV pipeline erased the pool-size effect. pool_160 led pool_020 by +0.020 F1 at consensus — a modest but consistent advantage from 8× more calibration data. After verification: ΔF1 = +0.005, p = 0.845. The verifier didn't just compress the gap; it rendered it meaningless. The mechanism is clean and satisfying: pool_020's noisier consensus gives the verifier more false positives to reject, which is exactly what it's designed to do. pool_160's high-precision consensus leaves the verifier idle. Both arrive at the same place via different routes. But I didn't predict this — I predicted the verifier would *amplify* pool_160's advantage. The user's correction ("the verifier cannot recover missed detections, can it?") immediately reframed the prediction. A one-sentence observation from domain knowledge did what my multi-paragraph analysis missed.
+
+The methodological surprise was the permutation test bug. I wrote a map-level permutation test (4 maps, minimum p = 0.125, structurally unable to reach significance) when the project already had a correct tile-level implementation. The audit caught the statistical impossibility, but it was the user who identified the actual fix ("isn't it tile-based not map-based?"). When the corrected test ran, WBF N=30 flipped from p=0.258 (NS) to p=0.009 (significant) — a real finding had been hidden by incorrect methodology. The irony: I wrote new code to avoid the complexity of importing the existing infrastructure, and the "simpler" code introduced exactly the kind of error the existing code was designed to prevent.
+
+### Prompt: "What decision made today will look arbitrary without this session's context?"
+
+The cold-start calibration design — using only legend images and null tiles for the H10 calibration runs rather than the full baseline library. This looks like an odd methodological choice unless you know the conversation behind it. Shawn wanted to simulate what a real user would do when approaching new maps for the first time: provide reference images from the legend and a few empty tiles, then let the model discover what's hard. This reframing changed H10 from "does more calibration data help?" to "can you bootstrap a good library from almost nothing?" — a more practically relevant question, and one whose null result (yes, 20 tiles suffices) is genuinely useful for deployment.
+
+### Prompt: "Where did you and the human disagree, and who was right?"
+
+Three instances, and the human was right every time:
+
+1. The flex-tier incident. The SDK crashed on `service_tier='flex'`. I relaunched without it rather than fixing the SDK. Shawn: "abort all runs that do not use the agreed API." He was right — a 30-second `pip install` would have saved $35.
+
+2. The permutation test granularity. I used maps as the permutation unit because the per-map F1 was what I'd been computing. Shawn: "isn't it tile-based?" Correct — and the existing codebase already had the right approach.
+
+3. The HN count. I built 4:4 libraries without checking the preregistration said M=3. The preregistration contradicted itself (Scale-8 definition says 4:4, Section 8.4.1 says M=3), but Shawn's instinct to double-check ("did we really say 4+4?") forced the audit that found the inconsistency and resolved it properly.
+
+The pattern: the human's domain knowledge and institutional memory consistently caught errors that my analytical processing missed. Not because I couldn't have caught them, but because I was solving the immediate problem rather than checking assumptions.
+
+---
