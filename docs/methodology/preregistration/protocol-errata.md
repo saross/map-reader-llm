@@ -1360,4 +1360,108 @@ calibration/holdout disjointness constraint.
 
 ---
 
+### E51: H8 library composition re-run under production carry-forward (384 px / v2 pipeline)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-15 |
+| Type | Deviation |
+| Sections | §8.3.4 H8, Phase 2c |
+| Impact | Changes the evaluation pipeline on which H8 results are reported; re-enables Scale-16/Scale-32 |
+
+**Description**: The original H8 (Phase 2c, completed 2026-02-09) ran at 512 px
+tiles with prereg carry-forward parameters (T=0.0 from H7, minimal thinking per
+Decision 2, canonical-first ordering) and deferred Scale-16 and Scale-32 due to
+HP pool exhaustion (E11 — only 4 hard positives available under the v1 mining
+definition). The v2 re-run (Phase h8-v2, launched 2026-04-15) instead uses:
+
+| Parameter | Original H8 (Phase 2c) | H8 v2 |
+|-----------|------------------------|-------|
+| Tile size | 512 px | 384 px |
+| Stride | 448 px | 336 px |
+| Temperature | T=0.0 (H7 optimum) | T=0.7 (production carry-forward) |
+| Thinking level | Minimal | HIGH |
+| Instruction file | detect_brief-text-image.md | detect_brief-text-image.md (unchanged) |
+| K (passes) | 10 | 5 (production n=5 consensus) |
+| Service tier | standard | **flex** (50 % off-peak discount) |
+| Context caching | none | **enabled** (reduces input cost 50–90 %) |
+| Hard-example crop size | 128 px (v1) | 150 px (v2, verifier-aligned) |
+| Hard-case register | v1 (pool_160, 63 HP / 151 HN) | v2 (pool_160, 108 HP / 57 HN) |
+| Scale-16 | DEFERRED (HP pool exhausted) | **RE-ENABLED** (pool_160_hp8hn8) |
+| Scale-32 | DEFERRED (HP pool exhausted) | **RE-ENABLED** (pool_160_hp16hn16) |
+| Evaluation manifest | `inputs/tiles/validation_manifest.json` (60 tiles @ 512 px) | `inputs/calibration/h10-384/test_manifest.json` (327 tiles @ 384 px) |
+
+The v2 re-run also reuses the existing H10 v2 `pool_160_hp4hn4` run as the
+Scale-8 condition. Prefix nestedness of greedy example selection was verified
+on 2026-04-15 by byte-hash of the first 4 HP/HN crops across hp4hn4, hp8hn8,
+and hp16hn16 pools — all identical. Model, temperature, thinking, instruction,
+K, manifest, and tile size are identical between H10 v2 `pool_160_hp4hn4` and
+H8 v2 `scale-8`, so the existing `outputs/h10/evaluation-v2/pool_160_hp4hn4/`
+run_1..run_5 directories are referenced directly in H8-v2 analysis rather than
+re-launched.
+
+**Rationale**: Three independent motivations converge on the re-run.
+
+1. **Pipeline alignment.** H11 closed the 384 px pathway (E41) and the
+   production proposer is now 384-tile. The original 512 px H8 numbers are
+   off-pipeline and cannot be directly compared with downstream work. Re-running
+   at 384 px restores comparability with H10 v2 and the 55-maps generalisation
+   study (F1=0.891 on gold standard, 2026-04-08).
+2. **HP pool exhaustion resolved.** The v2 hard-case register (mined under
+   production image-track settings from the 160-tile calibration pool)
+   yields 108 HP / 57 HN, both sufficient for Scale-32 (16 HP + 16 HN) with
+   comfortable diversity-selection headroom. Scale-16 and Scale-32 were
+   preregistered and can now be executed as originally intended.
+3. **Internal consistency with H10 v2.** H10 v2 used the production carry-
+   forward settings (T=0.7, thinking=high) rather than the prereg H7 optimum
+   (T=0.0, thinking=minimal). Running H8 v2 under the same settings keeps
+   the library-composition story on a single pipeline: H10 asks whether
+   calibration-pool size matters (null, 2026-04-14); H8 v2 asks whether
+   library composition matters; H12 v2 will ask whether HP:HN ratio matters
+   at the H8-selected optimum.
+
+The K=5 reduction from the preregistered K=10 matches production n=5 consensus
+voting (validated in the 55-maps study) and halves the API spend without
+sacrificing the ability to detect library-composition effects larger than
+prior-phase noise.
+
+**Reference artefacts**:
+
+- Study YAML: `studies/h8-v2-library.yaml`
+- Per-condition configs: `prompts/configs/h8/v2/detect_h8_*_v2.json` (7 files)
+- v2 pool mining provenance: `outputs/h10/example-pools-v2/pool_160_hp{4hn4,8hn8,16hn16}/pool_metadata.json`
+- Retrospective informing the re-run: `docs/notes/reflections/2026-04-14-h10-h12-config-intent-retrospective.md`
+- Formal retraction of the v1 H10/H12 pass: Obs 235 (2026-04-14)
+
+**Runtime parallelism note (2026-04-15)**: The H8 v2 launch uses
+`--workers 250` on Tier 3 API quota (20 M TPM / 20 K RPM), targeting ~72 %
+TPM utilisation via the existing token-bucket governor
+(`scripts/lib_token_bucket.py`). The detect script's hard-coded thread-pool
+ceiling of 60 was the binding constraint at Tier 2 (observed peak 4.12 M TPM
+= 20.6 % utilisation), bottlenecking on worker availability rather than on
+rate limits. The ceiling has been changed to `max(60, workers)` when the
+governor is active, preserving backward compatibility while allowing
+runtime scaling via `--workers N`. Parallelism is an operational parameter
+and does not affect the content of the API payload; it does not impact the
+experimental validity of the results. Recorded here for reproducibility.
+
+**Edge-of-raster exclusion fix (2026-04-15)**: During the pre-launch audit of
+the H8 v2 configs, three crops in the initial `pool_160_hp16hn16` mining were
+found to be clipped by the raster boundary (`hp_11.png` 95 × 150, `hn_11.png`
+150 × 100, `hn_16.png` 150 × 149). This created a Scale-32-specific
+dimensional-uniformity confound that would have muddied the interpretation of
+the S3 (Scale-16 → Scale-32) contrast. Resolution: `scripts/build_example_pool.py`
+was extended with an `--exclude-edge-crops` flag (default on) that pre-filters
+candidates whose `crop_size` window would extend beyond the source raster's
+pixel grid. Both `pool_160_hp8hn8` and `pool_160_hp16hn16` were re-mined with
+the filter. `pool_160_hp8hn8` picks are byte-identical to the pre-filter
+mining (none of the top 8 HP or HN candidates were edge cases, so the filter
+was a no-op at this rung); `pool_160_hp16hn16` preserves picks 1–10 and
+shifts picks 11–16. Prefix nestedness (pool_160_hp4hn4 ⊂ pool_160_hp8hn8 ⊂
+pool_160_hp16hn16) is preserved for both HP and HN. Pre-filter pools archived
+to `archive/h10-v2-prefilter-pools/`. Audit report:
+`reports/configuration-audit-2026-04-15-h8-v2.md`.
+
+---
+
 *End of errata. New entries should be appended above this line.*

@@ -1,0 +1,240 @@
+# H8 v2 — Library Composition and Scaling (384 px / v2 pipeline)
+# ================================================================
+#
+# Re-runs the preregistered H8 library-composition experiment under the
+# production image-track pipeline, including the previously deferred
+# Scale-16 and Scale-32 rungs. Replaces the original Phase 2c H8 study
+# (`studies/phase2c-h8-library.yaml`), which ran at 512 px tiles with
+# minimal thinking under the prereg carry-forward parameters.
+#
+# Rationale for re-running (documented in protocol-errata entry E49):
+#
+# - H11 closed the 384 px pathway; the production proposer is now
+#   384-tile, so the original 512 px H8 numbers are off-pipeline.
+# - The v2 hard-case register (mined 2026-04-15) yields 108 HP / 57 HN
+#   from pool_160 — ample for Scale-32, resolving the HP-exhaustion
+#   deferral of Scale-16/Scale-32 recorded in E11 (2026-02).
+# - The v2 pipeline uses 150 px crops aligned with the tile-size-
+#   independent 150 px verifier crop (E33 fix), carries forward
+#   production image-track settings (T=0.7, thinking=high,
+#   detect_brief-text-image.md), and produced a meaningful null
+#   result for H10 (calibration-pool size does not affect F1).
+# - Re-running H8 on the same production settings closes the
+#   library-composition story alongside H10 and sets up H12 (ratio)
+#   at whichever rung proves optimal.
+#
+# Reuse: Scale-8 results already exist from the H10 v2 pool_160_hp4hn4
+# run (same model, T, thinking, instruction, K, manifest, crops). The
+# prefix nestedness of greedy example selection was verified on
+# 2026-04-15 by byte-hash of hp_01..hp_04 and hn_01..hn_04 across
+# hp4hn4 / hp8hn8 / hp16hn16 pools, so Scale-8 crops are byte-identical
+# between H10 v2 and H8 v2. Scale-8 does not need to be re-launched;
+# its run_1..run_5 outputs are at
+# `outputs/h10/evaluation-v2/pool_160_hp4hn4/` and can be symlinked or
+# referenced directly in analysis.
+#
+# Usage:
+#   # Dry-run a single condition:
+#   .venv/bin/python scripts/4_detect_mounds_batch.py \
+#       --config prompts/configs/h8/v2/detect_h8_scale-32_v2.json \
+#       --manifest inputs/calibration/h10-384/test_manifest.json \
+#       --tiles-dir inputs/tiles_384 \
+#       --tile-size 384 \
+#       --output-dir outputs/h8-v2/scale-32/run_1 \
+#       --mode realtime \
+#       --service-tier flex \
+#       --use-cache \
+#       --workers 12 \
+#       --dry-run
+#
+#   # Launch one pass for one condition:
+#   .venv/bin/python scripts/4_detect_mounds_batch.py \
+#       --config prompts/configs/h8/v2/detect_h8_scale-32_v2.json \
+#       --manifest inputs/calibration/h10-384/test_manifest.json \
+#       --tiles-dir inputs/tiles_384 \
+#       --tile-size 384 \
+#       --output-dir outputs/h8-v2/scale-32/run_1 \
+#       --mode realtime \
+#       --service-tier flex \
+#       --use-cache \
+#       --workers 12
+#
+# Repeat per pass (run_1..run_5) and per condition (6 of the 7 —
+# Scale-8 is reused from H10 v2 and not re-launched).
+
+study:
+  name: "H8 v2: Library Composition and Scaling (384 px / production carry-forward)"
+  version: "1.0"
+  description: |
+    Re-run of Phase 2c H8 under the production image-track pipeline.
+    Tests 7 library compositions including the previously deferred
+    Scale-16 and Scale-32 conditions, at 384 px tiles with T=0.7,
+    thinking=high, and v2 150 px hard-example crops.
+  phase: "h8-v2"
+  hypothesis: "H8"
+  created: "2026-04-15"
+
+# Carried-forward parameters — production image-track settings aligned
+# with the 55-maps generalisation baseline (F1=0.891 on gold standard,
+# 2026-04-08) and the H10 v2 re-run. These deviate from the original
+# preregistration's H7 carry-forward (T=0.0, thinking=minimal) and are
+# documented in protocol-errata entry E49.
+carried_forward:
+  model: "gemini-3-flash"
+  modality_config: "prompts/configs/detect_brief-text-image.json"
+  instruction_file: "detect_brief-text-image.md"
+  temperature: 0.7
+  thinking_level: "high"
+  tile_size: 384
+  stride: 336
+  ordering: "canonical-first"
+  # Library crops:
+  crop_size_px: 150
+  hard_cases_source: "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json"
+  pool_mining_seed: 42
+  source_phase: "H10 v2 (2026-04-15)"
+
+# Factor under test
+factors:
+  library_composition:
+    description: "Example library composition and scaling"
+    levels:
+      - name: "pure-positive-canon"
+        config: "prompts/configs/h8/v2/detect_h8_pure-positive-canon_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 0, hard_positive: 0, hard_negative: 0, null_examples: 3, total: 7 }
+        source_pool: null
+      - name: "canonical"
+        config: "prompts/configs/h8/v2/detect_h8_canonical_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 0, hard_negative: 0, null_examples: 3, total: 9 }
+        source_pool: null
+      - name: "plus-hp"
+        config: "prompts/configs/h8/v2/detect_h8_plus-hp_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 4, hard_negative: 0, null_examples: 3, total: 13 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp4hn4"
+      - name: "scale-4"
+        config: "prompts/configs/h8/v2/detect_h8_scale-4_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 2, hard_negative: 2, null_examples: 3, total: 13 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp4hn4"
+      - name: "scale-8"
+        config: "prompts/configs/h8/v2/detect_h8_scale-8_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 4, hard_negative: 4, null_examples: 3, total: 17 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp4hn4"
+        reuse_from: "outputs/h10/evaluation-v2/pool_160_hp4hn4"
+        reuse_note: |
+          Scale-8 is byte-identical to the existing H10 v2
+          pool_160_hp4hn4 run (same config, same crops, same K=5,
+          same manifest). Do not re-launch — reference the existing
+          run_1..run_5 directories directly in analysis.
+      - name: "scale-16"
+        config: "prompts/configs/h8/v2/detect_h8_scale-16_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 8, hard_negative: 8, null_examples: 3, total: 25 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp8hn8"
+      - name: "scale-32"
+        config: "prompts/configs/h8/v2/detect_h8_scale-32_v2.json"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 16, hard_negative: 16, null_examples: 3, total: 41 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp16hn16"
+
+# Fixed parameters (common across conditions)
+fixed:
+  ordering: "canonical-first"
+  # Model, temperature, thinking, instruction, tile_size per carried_forward.
+
+inputs:
+  manifest: "inputs/calibration/h10-384/test_manifest.json"   # 327 tiles (H10 test set)
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+
+execution:
+  # K=5 matches the production n=5 consensus configuration used by
+  # H10 v2 and the 55-maps generalisation study. This is a deviation
+  # from the preregistered K=10; see protocol-errata E49.
+  runs: 5
+  output_dir: "outputs/h8-v2"
+  mode: "realtime"                # flex + cache are realtime-only
+  service_tier: "flex"            # 50 % off-peak discount
+  use_cache: true                 # cached content reduces input cost 50–90 %
+  workers: 12                     # set via --workers at runtime
+
+# Command pattern for execution — one invocation per condition × run.
+# Scale-8 is SKIPPED (reused from H10 v2).
+command_template: |
+  .venv/bin/python scripts/4_detect_mounds_batch.py \
+    --config {factor_config} \
+    --manifest {inputs.manifest} \
+    --tiles-dir {inputs.tiles_dir} \
+    --tile-size {carried_forward.tile_size} \
+    --output-dir {execution.output_dir}/{condition_name}/run_{run} \
+    --mode {execution.mode} \
+    --service-tier {execution.service_tier} \
+    --use-cache \
+    --workers {execution.workers}
+
+# Conditions to launch — six of the seven; Scale-8 is reused.
+launch_conditions:
+  - pure-positive-canon
+  - canonical
+  - plus-hp
+  - scale-4
+  # scale-8 — SKIP, reuse outputs/h10/evaluation-v2/pool_160_hp4hn4
+  - scale-16
+  - scale-32
+
+analysis:
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  aggregation: "wbf_variant_c"        # Obs 228–230 parameters
+  planned_contrasts:
+    # Sequential addition contrasts (C1–C3)
+    - ["pure-positive-canon", "canonical"]   # C1: effect of adding Canon-
+    - ["canonical", "plus-hp"]               # C2: effect of adding HP
+    - ["plus-hp", "scale-4"]                 # C3 / B1: HP-only vs balanced at total=13
+    # Scaling contrasts (S1–S3), with S2 and S3 re-enabled
+    - ["scale-4", "scale-8"]                 # S1: 13 → 17
+    - ["scale-8", "scale-16"]                # S2: 17 → 25 (re-enabled)
+    - ["scale-16", "scale-32"]               # S3: 25 → 41 (re-enabled)
+  metrics: ["f1", "precision", "recall"]
+  output:
+    report: "results/h8-v2/analysis_report.json"
+    summary: "results/h8-v2/analysis_summary.md"
+
+outcome:
+  determines: "optimal_library_rung_for_H12"
+  carries_forward_to: "h12-v2"
+  decision_rule: |
+    Select rung with highest mean F1. Break ties by parsimony
+    (smallest library among statistical ties via FDR-corrected
+    pairwise CIs). Record the selected rung in protocol-errata
+    before launching H12 v2.
+
+# Cost envelope — fill in after /audit-config dry-run returns exact
+# token counts per condition. Preliminary estimate uses H10 v2
+# pool_160_hp4hn4 actual usage stats as the baseline.
+estimates:
+  cells: 6                            # 7 preregistered, 1 reused
+  tiles_per_cell: 327
+  passes_per_cell: 5
+  api_calls_per_cell: 1635            # 327 tiles × 5 passes
+  total_api_calls: 9810                # 6 cells × 1635
+  # Cost breakdown requires dry-run token counts.
+  cost_usd: "TBD — see /audit-config output and API-gate proposal"
+  time_hours: "TBD — flex tier has 1–15 min latency per call"
+
+notes: |
+  - Context caching is opt-in (--use-cache) and realtime-only. Cache
+    creation may fail for pure-positive-canon if the library falls
+    below the minimum cacheable token count; the script falls back
+    gracefully to uncached. Verify cache creation success in run
+    stdout ("Context cache created: ...") for all other conditions.
+  - Flex tier is default on (--service-tier flex). Verify at
+    run.meta.json post-run that service_tier was honoured by the API
+    (see Obs 20 for the historical silent-fallback issue on an
+    outdated SDK; SDK is now google-genai 1.73.1).
+  - Scale-8 reuse requires identical model, temperature, thinking,
+    instruction file, example library, K, manifest, and tile size
+    between H10 v2 and H8 v2. All seven were verified on 2026-04-15.
+    If any parameter drifts, Scale-8 must be re-launched.
+  - The launch-time experiment-intent guard in 4_detect_mounds_batch.py
+    will prompt for confirmation per condition. Do NOT pass
+    --skip-intent-check without first reviewing the intent diff.
