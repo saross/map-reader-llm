@@ -1285,4 +1285,79 @@ conditions have different optima at the two tolerances).
 
 ---
 
+### E48: Section 8.4.1 HN target M=3 inconsistent with Scale-8 definition
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-15 |
+| Type | Correction |
+| Sections | §8.4.1 (line 1460), §8.4.2 (line 1514, table line 769) |
+| Impact | None (internal inconsistency in preregistration text) |
+
+**Description**: Section 8.4.1 specifies "Top M FPs (target M=3)" for hard
+negative selection. However, the Scale-8 library composition table (§8.4.2,
+line 769) defines Scale-8 as `HP=4, HN=4, Total hard=8`, and the category
+ratio (line 1514) is explicitly stated as `4:2:4:4:3 = 17 examples`. The M=3
+target is a stale draft value that was not updated when the library design
+settled on Scale-8 (4+4). All H8 contrasts, the Scale-8 naming convention,
+and the 1:1 HP:HN ratio specification (line 813) are built around HN=4.
+
+**Resolution**: Use HN=4 (consistent with Scale-8 and the composition table).
+The M=3 value in §8.4.1 is treated as a drafting error.
+
+---
+
+### E49: H10 calibration uses cold-start production config instead of preregistered image-only baseline
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-15 |
+| Type | Deviation |
+| Sections | §8.4.1 Step 1, H10 |
+| Impact | Changes which examples are identified as "hard" |
+
+**Description**: The preregistration specifies calibration runs using an
+image-only baseline at T=1.0 with K=5 passes. The H10 v2 implementation
+instead uses a cold-start production config with the following changes:
+
+| Parameter | Preregistered | H10 v2 |
+|-----------|---------------|--------|
+| Temperature | T=1.0 | T=0.7 |
+| Thinking level | (unspecified, implied minimal) | HIGH |
+| Instruction file | image-only | detect_brief-text-image (text+image) |
+| Examples | Full baseline library (17) | Cold-start: legend + nulls only (9) |
+| Crop size | 128px | 150px (aligned with verifier standard) |
+
+**Rationale**: The cold-start config better simulates a realistic deployment
+scenario — a user approaching new maps with only legend reference images. The
+production-quality settings (T=0.7, HIGH thinking) discover hard cases that
+are genuinely hard for the configuration that will use them, avoiding the
+confound of mining hard cases under an inferior config. The 150px crop size
+aligns with the verifier crop standard (75px padding × 2).
+
+---
+
+### E50: H10 holdout expanded from 60 to 327 tiles
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-15 |
+| Type | Deviation |
+| Sections | H10 (lines 914-919) |
+| Impact | Increased statistical power |
+
+**Description**: The preregistration specifies a 60-tile holdout for H10
+evaluation. The actual holdout is 327 tiles — the remainder after removing
+160 calibration tiles from 487 total. This expansion results from the move
+to 384px tiles (E36/H11), which increased the total tile count from 361
+(at 512px) to 487 (at 384px). The calibration pool sizes (20, 40, 80, 160)
+remain as preregistered; only the holdout expanded.
+
+**Rationale**: The original 60-tile holdout was found to have insufficient
+statistical power for detecting pool-size effects. The 327-tile holdout
+provides substantially more power while maintaining the preregistered
+calibration/holdout disjointness constraint.
+
+---
+
 *End of errata. New entries should be appended above this line.*
