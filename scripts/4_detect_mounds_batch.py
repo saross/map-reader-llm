@@ -1108,9 +1108,16 @@ def detect_mounds_versioned(
             f"tokens_per_request={tokens_per_request}"
         )
 
-    # Thread pool ceiling matches governor max; the governor semaphore
-    # is the actual throttle, not the pool size.
-    pool_size = 60 if governor else workers
+    # Thread pool ceiling. The token-bucket governor is the real
+    # throttle (paces dispatches within RPM/TPM), so the pool just
+    # needs to be large enough that workers aren't idling while the
+    # governor has capacity to spare. Flex-tier latency of ~15-60 s
+    # per call means a pool of 200-400 is typical for Tier 3 TPM
+    # targets. Floor of 60 preserves the pre-2026-04-15 default;
+    # set --workers above 60 to raise the ceiling explicitly.
+    pool_size = max(60, workers) if governor else workers
+    if governor:
+        print(f"Thread pool size: {pool_size} (governor active)")
     with concurrent.futures.ThreadPoolExecutor(max_workers=pool_size) as executor:
         # Submit all tasks
         futures = {

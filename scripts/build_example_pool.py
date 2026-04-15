@@ -36,7 +36,10 @@ import argparse
 import json
 import logging
 import sys
+from functools import lru_cache
 from pathlib import Path
+
+import rasterio
 
 # ---------------------------------------------------------------------------
 # Path setup — allow imports from scripts/
@@ -134,6 +137,94 @@ def select_diverse_examples(
         s.pop("_source_tile", None)
 
     return selected
+
+
+@lru_cache(maxsize=128)
+def _raster_shape(raster_path: str) -> tuple[int, int] | None:
+    """Return (width, height) of a raster in pixels, cached.
+
+    Returns None if the raster can't be opened.
+    """
+    try:
+        with rasterio.open(raster_path) as src:
+            return src.width, src.height
+    except Exception as e:
+        logger.warning("Cannot open raster %s: %s", raster_path, e)
+        return None
+
+
+def _crop_fully_in_bounds(
+    raster_path: Path,
+    x: float,
+    y: float,
+    crop_size: int,
+) -> bool:
+    """Return True iff a `crop_size × crop_size` window centred on (x, y)
+    falls fully within the raster's pixel grid.
+
+    Used to reject candidates that would produce edge-clipped crops,
+    which create a dimensional-uniformity confound when mixed with
+    full-size crops in the same example library.
+    """
+    dims = _raster_shape(str(raster_path))
+    if dims is None:
+        return False
+    width, height = dims
+    half = crop_size // 2
+    try:
+        with rasterio.open(raster_path) as src:
+            row, col = src.index(x, y)
+    except Exception as e:
+        logger.warning(
+            "Cannot resolve pixel coord for (%.0f, %.0f) in %s: %s",
+            x, y, raster_path.name, e,
+        )
+        return False
+    return (
+        col - half >= 0
+        and row - half >= 0
+        and col + half <= width
+        and row + half <= height
+    )
+
+
+def filter_edge_candidates(
+    candidates: list[dict],
+    rasters_dir: Path,
+    crop_size: int,
+) -> list[dict]:
+    """Filter candidates whose `crop_size` window would be clipped by
+    the raster boundary.
+
+    Preserves the input ordering so downstream greedy diversity selection
+    still operates on a difficulty-ranked list.
+
+    Args:
+        candidates: Difficulty-ranked candidate list (HP or HN).
+        rasters_dir: Directory containing source rasters.
+        crop_size: Crop dimension in pixels.
+
+    Returns:
+        Subset of `candidates` whose crop fits fully within its raster.
+    """
+    kept = []
+    rejected = 0
+    for c in candidates:
+        map_name = c.get("map_name", "unknown")
+        raster_path = _find_raster(map_name, rasters_dir)
+        if raster_path is None:
+            # Unknown rasters are rejected too — cropping would fail
+            rejected += 1
+            continue
+        if _crop_fully_in_bounds(raster_path, c["x"], c["y"], crop_size):
+            kept.append(c)
+        else:
+            rejected += 1
+    logger.info(
+        "Edge-exclusion filter: kept %d, rejected %d (crop_size=%d)",
+        len(kept), rejected, crop_size,
+    )
+    return kept
 
 
 def _get_source_tile(candidate: dict) -> str:
@@ -342,6 +433,17 @@ def main(argv: list[str] | None = None) -> None:
         help="Output directory for selected examples and crops",
     )
     parser.add_argument(
+        "--exclude-edge-crops",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=(
+            "Reject candidates whose crop window would extend beyond "
+            "the source raster boundary. Prevents dimensional-uniformity "
+            "confounds in the example library. Enabled by default; use "
+            "--no-exclude-edge-crops to include edge-clipped candidates."
+        ),
+    )
+    parser.add_argument(
         "--verbose", "-v", action="store_true",
         help="Enable verbose logging",
     )
@@ -374,9 +476,25 @@ def main(argv: list[str] | None = None) -> None:
     )
 
     logger.info(
-        "Available candidates: %d HP, %d HN",
+        "Available candidates (raw): %d HP, %d HN",
         len(hp_candidates), len(hn_candidates),
     )
+
+    # Edge-of-raster exclusion — reject candidates whose crop window
+    # would be clipped by the raster boundary. Default ON. Prevents the
+    # dimensional-uniformity confound documented in the H8 v2 audit
+    # (reports/configuration-audit-2026-04-15-h8-v2.md, blocker B1).
+    if args.exclude_edge_crops:
+        hp_candidates = filter_edge_candidates(
+            hp_candidates, args.rasters_dir, args.crop_size,
+        )
+        hn_candidates = filter_edge_candidates(
+            hn_candidates, args.rasters_dir, args.crop_size,
+        )
+        logger.info(
+            "Available candidates (post-filter): %d HP, %d HN",
+            len(hp_candidates), len(hn_candidates),
+        )
 
     # Check availability
     if len(hp_candidates) < args.hp_count:
@@ -423,6 +541,7 @@ def main(argv: list[str] | None = None) -> None:
         "hn_available": len(hn_candidates),
         "seed": args.seed,
         "crop_size": args.crop_size,
+        "exclude_edge_crops": args.exclude_edge_crops,
         "hard_cases_source": str(args.hard_cases),
         "diversity_params": {
             "spatial_penalty_radius_m": _SPATIAL_PENALTY_RADIUS,
