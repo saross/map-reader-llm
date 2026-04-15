@@ -555,11 +555,14 @@ def process_single_tile(
                 metadata_tracker.log_response(tile_filename, response_metadata)
             return None
 
-        # Log successful response metadata
+        # Log successful response metadata. Note: log_success() is
+        # deferred to the very end of the function so that tiles which
+        # return a valid API response but fail downstream processing
+        # (JSON parse, rasterio open, feature extraction) are logged
+        # as failures only, not as both success AND failure. See
+        # scripts/lib_llm_metadata.py log_success vs log_failure.
         if response_metadata:
             metadata_tracker.log_response(tile_filename, response_metadata)
-
-        metadata_tracker.log_success(tile_filename)
 
         # Parse detections
         detections = []
@@ -628,6 +631,12 @@ def process_single_tile(
             )
             features.append(feature)
 
+        # Log success only after the full pipeline (API call, JSON
+        # parse, rasterio open, feature extraction) has completed
+        # without exception. This prevents the same tile appearing
+        # in both completed_items and failed_items when a valid API
+        # response fails downstream processing.
+        metadata_tracker.log_success(tile_filename)
         return features
 
     except Exception as e:
