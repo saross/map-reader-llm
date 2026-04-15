@@ -1,54 +1,46 @@
 {
-  "comparison": "H10_pool_size_PV",
-  "conditions": {
-    "pool_020": {
-      "vote_t": 3,
-      "prob_t": 0.15
-    },
-    "pool_160": {
-      "vote_t": 4,
-      "prob_t": 0.05
-    }
-  },
+  "comparison": "pool_020_pv_vs_pool_160_pv",
+  "method": "tile-level micro-average F1 permutation test (E45)",
   "buffer_m": 20,
-  "pool_020": {
-    "n": 289,
-    "p": 0.764706,
-    "r": 0.69279,
-    "f1": 0.726974
+  "thresholds_a": {
+    "vote_t": 3,
+    "prob_t": 0.15
   },
-  "pool_160": {
-    "n": 232,
-    "p": 0.857759,
-    "r": 0.623824,
-    "f1": 0.722323
+  "thresholds_b": {
+    "vote_t": 4,
+    "prob_t": 0.05
   },
-  "delta_f1": -0.004651,
+  "global_a": {
+    "f1": 0.726974,
+    "precision": 0.764706,
+    "recall": 0.69279,
+    "n_detections": 289,
+    "tp": 221,
+    "fp": 68,
+    "fn": 98
+  },
+  "global_b": {
+    "f1": 0.722323,
+    "precision": 0.857759,
+    "recall": 0.623824,
+    "n_detections": 232,
+    "tp": 199,
+    "fp": 33,
+    "fn": 120
+  },
   "permutation_test": {
+    "observed_f1_diff": 0.004651,
+    "p_value": 0.8453,
     "n_permutations": 10000,
-    "seed": 42,
-    "observed_mean_diff": -0.004945,
-    "p_value_two_sided": 1.0,
-    "per_map": {
-      "K-35-052-4_32635": {
-        "pool_020": 0.6406,
-        "pool_160": 0.708
-      },
-      "K-35-053-3_Elenovo": {
-        "pool_020": 0.6941,
-        "pool_160": 0.7024
-      },
-      "K-35-062-2_Rakovski": {
-        "pool_020": 0.8235,
-        "pool_160": 0.7736
-      },
-      "K-35-078-1_Lesovo": {
-        "pool_020": 0.5217,
-        "pool_160": 0.4762
-      }
-    },
-    "wins_160": 2,
-    "wins_020": 2,
-    "ties": 0
+    "n_tiles": 327,
+    "wins_a": 35,
+    "losses_a": 33,
+    "ties": 259,
+    "null_distribution": {
+      "mean": -0.000223,
+      "std": 0.023468,
+      "percentile_2.5": -0.045771,
+      "percentile_97.5": 0.045882
+    }
   }
 }

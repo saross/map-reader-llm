@@ -1,47 +1,46 @@
 {
-  "comparison": "WBF_PV_vs_Greedy_PV",
-  "condition": "FH text N=5",
+  "comparison": "greedy_pv_vs_wbf_pv",
+  "method": "tile-level micro-average F1 permutation test (E45)",
   "buffer_m": 20,
-  "vote_t": 4,
-  "prob_t": 0.15,
-  "greedy": {
-    "n": 389,
-    "p": 0.915167,
-    "r": 0.818391,
-    "f1": 0.864078
+  "thresholds_a": {
+    "vote_t": 4,
+    "prob_t": 0.15
   },
-  "wbf": {
-    "n": 411,
-    "p": 0.880779,
-    "r": 0.832184,
-    "f1": 0.855792
+  "thresholds_b": {
+    "vote_t": 4,
+    "prob_t": 0.15
   },
-  "delta_f1": -0.008286,
+  "global_a": {
+    "f1": 0.864078,
+    "precision": 0.915167,
+    "recall": 0.818391,
+    "n_detections": 389,
+    "tp": 356,
+    "fp": 33,
+    "fn": 79
+  },
+  "global_b": {
+    "f1": 0.855792,
+    "precision": 0.880779,
+    "recall": 0.832184,
+    "n_detections": 411,
+    "tp": 362,
+    "fp": 49,
+    "fn": 73
+  },
   "permutation_test": {
+    "observed_f1_diff": 0.008286,
+    "p_value": 0.3919,
     "n_permutations": 10000,
-    "seed": 42,
-    "observed_mean_diff": -0.032777,
-    "p_value_two_sided": 0.3707,
-    "per_map": {
-      "K-35-052-4_32635": {
-        "greedy": 0.8743,
-        "wbf": 0.8663
-      },
-      "K-35-053-3_Elenovo": {
-        "greedy": 0.7838,
-        "wbf": 0.7947
-      },
-      "K-35-062-2_Rakovski": {
-        "greedy": 0.959,
-        "wbf": 0.9448
-      },
-      "K-35-078-1_Lesovo": {
-        "greedy": 0.5714,
-        "wbf": 0.4516
-      }
-    },
-    "wbf_wins": 1,
-    "greedy_wins": 3,
-    "ties": 0
+    "n_tiles": 487,
+    "wins_a": 20,
+    "losses_a": 20,
+    "ties": 447,
+    "null_distribution": {
+      "mean": -8.6e-05,
+      "std": 0.009754,
+      "percentile_2.5": -0.019162,
+      "percentile_97.5": 0.018491
+    }
   }
 }
