@@ -9677,3 +9677,88 @@ the preregistered question.
   turned out not to affect the text-only proposer
 
 ---
+
+## Observation 236: H10 Pool Size Is a Null — 20-Tile Calibration Matches 160-Tile Under PV (2026-04-15)
+
+**Context**: H10 (Training Pool Size Effects on Library Quality) tests
+whether larger calibration pools produce better few-shot libraries.
+This is the clean re-run following the Obs 235 retraction — now with
+image-track production settings (T=0.7, HIGH thinking,
+`include_example_images: true`), cold-start calibration (legend + nulls
+only, no pre-existing hard examples), and 150px crop alignment with the
+verifier standard.
+
+**Design**: Four nested calibration pools (20 ⊂ 40 ⊂ 80 ⊂ 160 tiles),
+each mined for hard cases via K=5 detection passes. Balanced 4:4 HP:HN
+libraries built from each pool's discovery results. Evaluation on 327
+disjoint holdout tiles.
+
+**Consensus-only results (20m)**:
+
+| Pool | Best T | F1 | P | R |
+|---|---|---|---|---|
+| 020 | ≥3 | 0.697 | 0.672 | 0.724 |
+| 040 | ≥3 | 0.694 | 0.669 | 0.721 |
+| 080 | ≥3 | 0.688 | 0.666 | 0.712 |
+| 160 | ≥4 | **0.717** | 0.843 | 0.624 |
+
+Pool_160 leads by +0.020 F1 at consensus, but achieves this through a
+fundamentally different operating point — much higher precision, much
+lower recall. The three smaller pools are essentially indistinguishable
+(ΔF1 < 0.01). Pool_160's larger calibration set produces hard examples
+that make the model more conservative.
+
+**PV pipeline results (20m)**:
+
+| Pool | Best (vote_t, prob_t) | F1 | P | R |
+|---|---|---|---|---|
+| 020 | (3, 0.15) | **0.727** | 0.765 | 0.693 |
+| 160 | (4, 0.05) | 0.722 | 0.858 | 0.624 |
+
+The verifier **compresses the gap to near-zero** (ΔF1 = −0.005).
+pool_020 actually edges slightly ahead because the verifier has more
+false positives to filter from its noisier consensus output (+0.093
+precision gain), while pool_160's already-high precision leaves the
+verifier with little to improve and its recall deficit cannot be
+recovered (the verifier only filters, it cannot add detections).
+
+**Permutation test**: ΔF1 = −0.005, p = 1.000. Per-map: pool_160 wins
+2, pool_020 wins 2, 0 ties. Completely non-significant.
+
+**WBF comparison**: WBF consensus was also tested on all four pools.
+Greedy-ball slightly outperforms WBF across all pool sizes (Δ −0.001 to
+−0.018), consistent with the text-track WBF findings (Obs 230). The
+image-track spatial distribution does not change the greedy-vs-WBF
+ranking.
+
+**Key findings**:
+
+1. **Pool size is a null under PV** — a 20-tile calibration set produces
+   hard examples that perform equivalently to 160 tiles (p=1.000). The
+   verifier compensates for library quality differences.
+2. **Pool size affects the precision-recall trade-off at consensus** —
+   larger pools yield more conservative models (higher P, lower R), but
+   this stylistic difference washes out after verification.
+3. **The cold-start design worked** — calibrating with only legend
+   examples and null tiles (no pre-existing hard examples) produced
+   viable hard-case libraries at all pool sizes. This validates the
+   cold-start deployment scenario.
+4. **Diminishing returns are immediate** — there is no pool-size regime
+   where additional calibration tiles help. Even the 20→40 step shows
+   no improvement. The hard-example mining procedure saturates at the
+   smallest tested pool.
+
+**Practical implication**: For a new deployment, a user can calibrate on
+~20 tiles (5 per map sheet), mine hard examples, and achieve
+PV-pipeline performance equivalent to calibrating on 160 tiles. This
+makes the system substantially more practical — a small initial
+calibration campaign suffices.
+
+**Methodological note**: The prior H10/H12 attempt (Obs 234/235,
+retracted) ran with `include_example_images: false`, making the
+few-shot library invisible to the model. That run's null result was a
+true null — but for the wrong reason (the factor wasn't transmitted).
+This clean re-run confirms the null, but now for the right reason: the
+PV pipeline genuinely compensates for library quality variation.
+
+---
