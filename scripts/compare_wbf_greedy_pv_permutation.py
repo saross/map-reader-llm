@@ -1,15 +1,23 @@
 #!/usr/bin/env python3
 """
-Paired Permutation Test: WBF PV vs Greedy PV
-=============================================
+Paired Tile-Level Permutation Test for PV Pipeline Comparisons
+==============================================================
 
-Compares WBF and greedy-ball proposer consensus through the same
-adversarial verifier pipeline, using a paired permutation test
-on per-map F1 scores.
+Compares two detection sets using the project's standard tile-swap
+permutation test (micro-average F1, per-tile TP/FP/FN swap). This is
+the same methodology used for the leaderboard pairwise tests (see E45).
+
+Supports two comparison modes:
+
+1. **WBF vs Greedy PV** (--mode wbf): Compares WBF and greedy-ball
+   consensus through the same adversarial verifier.
+2. **H10 Pool Size** (--mode h10): Compares pool_020 vs pool_160
+   PV pipeline outputs.
 
 Usage:
-    python scripts/compare_wbf_greedy_pv_permutation.py --pool-size 5
-    python scripts/compare_wbf_greedy_pv_permutation.py --pool-size 30
+    python scripts/compare_wbf_greedy_pv_permutation.py --mode wbf --pool-size 5
+    python scripts/compare_wbf_greedy_pv_permutation.py --mode wbf --pool-size 30
+    python scripts/compare_wbf_greedy_pv_permutation.py --mode h10
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -23,35 +31,61 @@ import sys
 from pathlib import Path
 
 import geopandas as gpd
-import numpy as np
 from shapely.geometry import Point
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT / "scripts"))
 
-from lib_advanced_metrics import calculate_f1_internal, get_map_name  # noqa: E402
+from lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from pairwise_permutation_test import run_permutation_test  # noqa: E402
 
 GT_PATH = _PROJECT_ROOT / "inputs/vectors/references/mounds-reference.geojson"
-BOUNDS_PATH = _PROJECT_ROOT / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
-OUTPUT_DIR = _PROJECT_ROOT / "results/wbf-greedy-comparison"
 
-CONFIGS = {
+# ── Comparison configurations ──
+
+WBF_CONFIGS = {
     5: {
-        "greedy_manifest": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/candidate_manifest.json",
-        "greedy_probs": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/probabilities.json",
-        "wbf_manifest": "outputs/h11/wbf/fh-text-n5/crops/candidate_manifest.json",
-        "wbf_probs": "outputs/h11/wbf/fh-text-n5/verified/probabilities.json",
+        "label_a": "greedy_pv",
+        "label_b": "wbf_pv",
+        "manifest_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/candidate_manifest.json",
+        "probs_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/probabilities.json",
+        "manifest_b": "outputs/h11/wbf/fh-text-n5/crops/candidate_manifest.json",
+        "probs_b": "outputs/h11/wbf/fh-text-n5/verified/probabilities.json",
         "vote_t": 4,
         "prob_t": 0.15,
+        "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "output_dir": "results/wbf-greedy-comparison",
+        "output_name": "wbf_vs_greedy_pv_n5_permutation.json",
     },
     30: {
-        "greedy_manifest": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/candidate_manifest.json",
-        "greedy_probs": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/probabilities.json",
-        "wbf_manifest": "outputs/h11/wbf/fh-text-n30/crops/candidate_manifest.json",
-        "wbf_probs": "outputs/h11/wbf/fh-text-n30/verified/probabilities.json",
+        "label_a": "greedy_pv",
+        "label_b": "wbf_pv",
+        "manifest_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/candidate_manifest.json",
+        "probs_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/probabilities.json",
+        "manifest_b": "outputs/h11/wbf/fh-text-n30/crops/candidate_manifest.json",
+        "probs_b": "outputs/h11/wbf/fh-text-n30/verified/probabilities.json",
         "vote_t": 16,
         "prob_t": 0.15,
+        "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "output_dir": "results/wbf-greedy-comparison",
+        "output_name": "wbf_vs_greedy_pv_n30_permutation.json",
     },
+}
+
+H10_CONFIG = {
+    "label_a": "pool_020_pv",
+    "label_b": "pool_160_pv",
+    "manifest_a": "outputs/h10/evaluation-v2/pool_020_hp4hn4/crops/candidate_manifest.json",
+    "probs_a": "outputs/h10/evaluation-v2/pool_020_hp4hn4/verified/probabilities.json",
+    "manifest_b": "outputs/h10/evaluation-v2/pool_160_hp4hn4/crops/candidate_manifest.json",
+    "probs_b": "outputs/h10/evaluation-v2/pool_160_hp4hn4/verified/probabilities.json",
+    "vote_t_a": 3,
+    "prob_t_a": 0.15,
+    "vote_t_b": 4,
+    "prob_t_b": 0.05,
+    "bounds": "inputs/calibration/h10-384/test_bounds.geojson",
+    "output_dir": "results/h10",
+    "output_name": "h10_pv_permutation_020_vs_160.json",
 }
 
 
@@ -100,12 +134,108 @@ def load_pv_candidates(
     )
 
 
+def run_comparison(
+    cfg: dict,
+    n_permutations: int,
+    seed: int,
+    buffer_m: int,
+) -> None:
+    """Run tile-level permutation test for one comparison."""
+    # Load bounds and GT
+    bounds_path = _PROJECT_ROOT / cfg["bounds"]
+    bounds = gpd.read_file(bounds_path)
+    if bounds.crs != "EPSG:32635":
+        bounds = bounds.to_crs("EPSG:32635")
+
+    gt = gpd.read_file(GT_PATH)
+    if gt.crs != "EPSG:32635":
+        gt = gt.to_crs("EPSG:32635")
+
+    # Load candidates — handle per-condition thresholds (H10) or shared (WBF)
+    vote_t_a = cfg.get("vote_t_a", cfg.get("vote_t"))
+    prob_t_a = cfg.get("prob_t_a", cfg.get("prob_t"))
+    vote_t_b = cfg.get("vote_t_b", cfg.get("vote_t"))
+    prob_t_b = cfg.get("prob_t_b", cfg.get("prob_t"))
+
+    print(f"Loading {cfg['label_a']} (vote>={vote_t_a}, prob>={prob_t_a})...")
+    gdf_a = load_pv_candidates(
+        str(_PROJECT_ROOT / cfg["manifest_a"]),
+        str(_PROJECT_ROOT / cfg["probs_a"]),
+        vote_t_a, prob_t_a,
+    )
+    print(f"  {cfg['label_a']}: {len(gdf_a)} candidates")
+
+    print(f"Loading {cfg['label_b']} (vote>={vote_t_b}, prob>={prob_t_b})...")
+    gdf_b = load_pv_candidates(
+        str(_PROJECT_ROOT / cfg["manifest_b"]),
+        str(_PROJECT_ROOT / cfg["probs_b"]),
+        vote_t_b, prob_t_b,
+    )
+    print(f"  {cfg['label_b']}: {len(gdf_b)} candidates")
+
+    # Global F1 for reporting
+    pa, ra, f1a = calculate_f1_internal(gdf_a, gt, bounds, buffer_metres=buffer_m)
+    pb, rb, f1b = calculate_f1_internal(gdf_b, gt, bounds, buffer_metres=buffer_m)
+    print(f"\nGlobal F1 at {buffer_m}m:")
+    print(f"  {cfg['label_a']}: P={pa:.4f}, R={ra:.4f}, F1={f1a:.4f}")
+    print(f"  {cfg['label_b']}: P={pb:.4f}, R={rb:.4f}, F1={f1b:.4f}")
+    print(f"  Delta F1 ({cfg['label_a']} - {cfg['label_b']}): {f1a - f1b:+.4f}")
+
+    # Tile-level permutation test
+    print(f"\nRunning tile-level permutation test ({n_permutations:,} iterations, "
+          f"{len(bounds)} tiles, seed {seed})...")
+    perm_result = run_permutation_test(
+        gdf_a, gdf_b, gt, bounds,
+        buffer_metres=buffer_m,
+        n_permutations=n_permutations,
+        seed=seed,
+    )
+
+    obs_diff = perm_result["permutation_test"]["observed_f1_diff"]
+    p_value = perm_result["permutation_test"]["p_value"]
+    wins_a = perm_result["permutation_test"]["wins_a"]
+    losses_a = perm_result["permutation_test"]["losses_a"]
+    ties = perm_result["permutation_test"]["ties"]
+
+    sig = "SIGNIFICANT" if p_value < 0.05 else "NOT significant"
+    print("\nResults:")
+    print(f"  Observed F1 diff ({cfg['label_a']} - {cfg['label_b']}): {obs_diff:+.4f}")
+    print(f"  p-value (two-sided): {p_value:.4f}")
+    print(f"  {sig} (p {'<' if p_value < 0.05 else '>='} 0.05)")
+    print(f"  Per-tile: {cfg['label_a']} wins {wins_a}, "
+          f"{cfg['label_b']} wins {losses_a}, ties {ties}")
+
+    # Save — wrap the perm_result with comparison metadata
+    output = {
+        "comparison": f"{cfg['label_a']}_vs_{cfg['label_b']}",
+        "method": "tile-level micro-average F1 permutation test (E45)",
+        "buffer_m": buffer_m,
+        "thresholds_a": {"vote_t": vote_t_a, "prob_t": prob_t_a},
+        "thresholds_b": {"vote_t": vote_t_b, "prob_t": prob_t_b},
+        **perm_result,
+    }
+
+    # Remove per_tile details from saved output (large, not needed for summary)
+    output.pop("per_tile", None)
+
+    out_dir = _PROJECT_ROOT / cfg["output_dir"]
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / cfg["output_name"]
+    with open(out_path, "w") as f:
+        json.dump(output, f, indent=2)
+    print(f"\nSaved to {out_path}")
+
+
 def main() -> None:
-    """Run paired permutation test."""
+    """Run tile-level permutation test."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--pool-size", type=int, required=True, choices=[5, 30],
-        help="Pool size: 5 or 30",
+        "--mode", required=True, choices=["wbf", "h10"],
+        help="Comparison mode: 'wbf' (WBF vs greedy PV) or 'h10' (pool size)",
+    )
+    parser.add_argument(
+        "--pool-size", type=int, choices=[5, 30], default=None,
+        help="Pool size for WBF mode (required for --mode wbf)",
     )
     parser.add_argument(
         "--n-permutations", type=int, default=10000,
@@ -121,127 +251,14 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    cfg = CONFIGS[args.pool_size]
+    if args.mode == "wbf":
+        if args.pool_size is None:
+            parser.error("--pool-size required for --mode wbf")
+        cfg = WBF_CONFIGS[args.pool_size]
+    else:
+        cfg = H10_CONFIG
 
-    # Load evaluation data
-    gt = gpd.read_file(GT_PATH)
-    bounds = gpd.read_file(BOUNDS_PATH)
-
-    # Load candidates at thresholds
-    print(f"Loading greedy PV candidates (vote>={cfg['vote_t']}, prob>={cfg['prob_t']})...")
-    greedy_gdf = load_pv_candidates(
-        str(_PROJECT_ROOT / cfg["greedy_manifest"]),
-        str(_PROJECT_ROOT / cfg["greedy_probs"]),
-        cfg["vote_t"], cfg["prob_t"],
-    )
-    print(f"  Greedy: {len(greedy_gdf)} candidates")
-
-    print(f"Loading WBF PV candidates (vote>={cfg['vote_t']}, prob>={cfg['prob_t']})...")
-    wbf_gdf = load_pv_candidates(
-        str(_PROJECT_ROOT / cfg["wbf_manifest"]),
-        str(_PROJECT_ROOT / cfg["wbf_probs"]),
-        cfg["vote_t"], cfg["prob_t"],
-    )
-    print(f"  WBF: {len(wbf_gdf)} candidates")
-
-    # Global F1
-    gp, gr, gf1 = calculate_f1_internal(
-        greedy_gdf, gt, bounds, buffer_metres=args.buffer
-    )
-    wp, wr, wf1 = calculate_f1_internal(
-        wbf_gdf, gt, bounds, buffer_metres=args.buffer
-    )
-    print(f"\nGlobal F1 at {args.buffer}m:")
-    print(f"  Greedy PV: P={gp:.4f}, R={gr:.4f}, F1={gf1:.4f}")
-    print(f"  WBF PV:    P={wp:.4f}, R={wr:.4f}, F1={wf1:.4f}")
-    print(f"  Delta F1:  {wf1 - gf1:+.4f}")
-
-    # Per-map F1 for paired test
-    map_names = sorted(
-        {get_map_name(n) for n in bounds["tile_name"].unique()} - {"Unknown"}
-    )
-    print(f"\nPer-map breakdown ({len(map_names)} maps):")
-
-    greedy_per_map = []
-    wbf_per_map = []
-    for map_name in map_names:
-        map_bounds = bounds[bounds["tile_name"].str.startswith(map_name)]
-        gp_m, gr_m, gf1_m = calculate_f1_internal(
-            greedy_gdf, gt, map_bounds, buffer_metres=args.buffer
-        )
-        wp_m, wr_m, wf1_m = calculate_f1_internal(
-            wbf_gdf, gt, map_bounds, buffer_metres=args.buffer
-        )
-        greedy_per_map.append(gf1_m)
-        wbf_per_map.append(wf1_m)
-        print(
-            f"  {map_name}: greedy={gf1_m:.4f}, wbf={wf1_m:.4f}, "
-            f"delta={wf1_m - gf1_m:+.4f}"
-        )
-
-    # Paired permutation test
-    greedy_arr = np.array(greedy_per_map)
-    wbf_arr = np.array(wbf_per_map)
-    diffs = wbf_arr - greedy_arr
-    obs_mean_diff = float(np.mean(diffs))
-
-    rng = np.random.RandomState(args.seed)
-    n_extreme = 0
-    for _ in range(args.n_permutations):
-        swaps = rng.randint(0, 2, size=len(diffs))
-        perm_diffs = np.where(swaps, -diffs, diffs)
-        if abs(np.mean(perm_diffs)) >= abs(obs_mean_diff):
-            n_extreme += 1
-
-    p_value = n_extreme / args.n_permutations
-
-    sig = "SIGNIFICANT" if p_value < 0.05 else "NOT significant"
-    print(f"\nPaired permutation test ({args.n_permutations:,} iterations, seed {args.seed}):")
-    print(f"  Observed mean delta F1: {obs_mean_diff:+.4f}")
-    print(f"  p-value (two-sided): {p_value:.4f}")
-    print(f"  Result: {sig} (p {'<' if p_value < 0.05 else '>='} 0.05)")
-
-    # Wins/losses
-    wbf_wins = int(np.sum(diffs > 0))
-    greedy_wins = int(np.sum(diffs < 0))
-    ties = int(np.sum(diffs == 0))
-    print(f"  Per-map: WBF wins {wbf_wins}, greedy wins {greedy_wins}, ties {ties}")
-
-    # Save results
-    result = {
-        "comparison": "WBF_PV_vs_Greedy_PV",
-        "condition": f"FH text N={args.pool_size}",
-        "buffer_m": args.buffer,
-        "vote_t": cfg["vote_t"],
-        "prob_t": cfg["prob_t"],
-        "greedy": {
-            "n": len(greedy_gdf), "p": round(gp, 6),
-            "r": round(gr, 6), "f1": round(gf1, 6),
-        },
-        "wbf": {
-            "n": len(wbf_gdf), "p": round(wp, 6),
-            "r": round(wr, 6), "f1": round(wf1, 6),
-        },
-        "delta_f1": round(wf1 - gf1, 6),
-        "permutation_test": {
-            "n_permutations": args.n_permutations,
-            "seed": args.seed,
-            "observed_mean_diff": round(obs_mean_diff, 6),
-            "p_value_two_sided": p_value,
-            "per_map": {
-                m: {"greedy": round(g, 4), "wbf": round(w, 4)}
-                for m, g, w in zip(map_names, greedy_per_map, wbf_per_map)
-            },
-            "wbf_wins": wbf_wins,
-            "greedy_wins": greedy_wins,
-            "ties": ties,
-        },
-    }
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = OUTPUT_DIR / f"wbf_vs_greedy_pv_n{args.pool_size}_permutation.json"
-    with open(out_path, "w") as f:
-        json.dump(result, f, indent=2)
-    print(f"\nSaved to {out_path}")
+    run_comparison(cfg, args.n_permutations, args.seed, args.buffer)
 
 
 if __name__ == "__main__":
