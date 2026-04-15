@@ -3597,3 +3597,51 @@ This is testable against the existing leaderboard data: conditions where PV help
 
 The interesting moment was the user's one-sentence correction, which functioned as what the abductive reasoning literature calls a "decisive question" — a question that immediately restructures the hypothesis space by eliminating a load-bearing assumption. My prediction was built on the implicit assumption that the verifier helps all conditions roughly equally. The question "can it recover missed detections?" eliminates that assumption and forces a new prediction in about three seconds. This is the same pattern noted in Obs 235 ("if H10 was text-only, what were the hard examples?") — a brief domain-knowledge intervention that does more analytical work than paragraphs of reasoning.
 
+---
+
+## Session 68 — 2026-04-15 (map-reader-llm): A bug where the symmetric counter was wrong, not the obvious one
+
+### Surprising fact
+
+Two H8 v2 runs (`canonical` run_2 and `plus-hp` run_4) reported `items_failed: 1` despite `finish_reason_counts: {'success': 327}`. The counts literally did not add up: `items_processed (327) + items_failed (1) = 328`, while the manifest contained only 327 tiles. Somewhere, a single tile was being counted twice. The observation was robust — same pattern in both runs, consistent with the pipeline-level invariant "every tile gets exactly one final outcome".
+
+### Initial hypothesis (wrong in detail, right about the symptom)
+
+My first hypothesis: `items_failed` counts retries as failures, so a tile that hit MAX_TOKENS on attempt 1 and succeeded on attempt 2 would be credited as both "failed once" and "processed once". This is a common pattern in observability code — counters get incremented per-attempt instead of per-outcome, and the aggregate becomes meaningless.
+
+I traced the retry loop carefully: `log_retry()` → `continue` → new API call → success → `break`. `log_retry()` increments `retries_total` but NOT `items_failed`. So retries are not counted as failures. The hypothesis was wrong.
+
+But the symptom was still there: tile counted twice. If retries aren't the source, what is?
+
+### Probe
+
+I looked at the `per_item_metadata` for the affected runs and found that the "failed" tile (`K-35-062-2_Rakovski_x2688_y3024.png`) was ALSO in `completed_items`. Literally the same tile ID appeared in both lists. That ruled out "retry counting" and pointed at "the same tile is reaching both `log_success()` AND `log_failure()` within a single invocation of `process_single_tile()`".
+
+That shouldn't be possible given the control flow I had assumed. A single call to `process_single_tile()` should log success XOR failure, not both. But it was happening, so my assumption about the control flow was wrong somewhere. I re-read the entire function from line 300 to line 637.
+
+### Belief revision
+
+The bug was not in the failure path, which I had been staring at. It was in the success path. `log_success(tile_filename)` was called at line 562 — **immediately after the API response was validated, before JSON parsing, rasterio opening, or feature extraction**. The worker then continued through the downstream processing steps, any one of which could throw. If JSON parse threw, the inner `except` at line 583 called `log_failure()`. If rasterio or feature extraction threw, the outer `except` at line 636 called `log_failure()`. Either way, the same tile had already been logged as success at line 562 AND was now being logged as failure. Both lists retained the entry.
+
+The bug had been there for some time but was invisible because:
+
+1. `finish_reason_counts` reflects the last API response only, which was successful — so the aggregate metadata looked consistent.
+2. The detection output file was written correctly (because the worker returned `None` and the worker pool treated that as "no new features to append"), so users looking at the GeoJSON saw the right thing.
+3. The only visible symptom was the `items_failed` counter and the `tiles.json.failed` list, which almost nobody reads unless investigating.
+
+**The revision**: when a counter-symmetry invariant is violated (`items_processed + items_failed > total_tiles`), the error can be in the counter you aren't looking at. I had assumed `log_failure()` was over-counting. The actual problem was `log_success()` being called too early in the success path. The fix is to move `log_success()` to the very end of the function, just before `return features`, so it fires only when the full pipeline has completed without exception.
+
+### Reasoning pattern
+
+This is an example of what I'd call **asymmetric hypothesis search bias**: when a counter looks wrong, I start by examining the code path that produces the suspect value (here: "something is being incorrectly counted as a failure"). But a counter-imbalance is a *joint* property of both counters — either one could be wrong, and without an arithmetic invariant check, there's no way to tell which. I spent ~5 minutes in the failure-side code before I did the basic check that told me to look elsewhere: **is the failed tile also in the completed list?** That check takes 30 seconds and immediately redirects the search. It should have been my first move.
+
+The generalisable rule: when debugging a counter discrepancy, *first* test whether the affected items appear in multiple mutually-exclusive lists. Only after ruling out double-counting should you investigate the single-counter logic. Double-counting is the structurally simpler error and it should be excluded before more elaborate hypotheses.
+
+Secondary observation: the bug is a textbook violation of the "log outcomes, not intermediate states" pattern. `log_success()` was semantically claiming "this tile succeeded" when it actually meant "this tile's API call returned a valid response". Those are different claims. The fix is not just mechanical reordering — it's aligning the semantics of the log call with the name of the function. A tile has succeeded only when the full pipeline has produced an output.
+
+### Epistemic note
+
+The bug survived the Session 66 `/audit` pass (which ran across the very file containing this bug). The auditor did not flag it. Why? Probably because the audit was looking for correctness bugs ("does this code do what it claims?") and the function DOES do what it claims — it logs success when the API call succeeds. The bug is a semantic mismatch between "log" and "outcome", which is not the kind of thing a line-by-line audit is good at catching. It would have taken a run-time invariant check (`assert len(set(completed_items) & set(failed_items)) == 0` after the worker pool drains) to catch it — which is the kind of assertion that only gets written after the bug is found.
+
+This suggests an anti-satisficing rule for audits: in addition to "does this code do what it claims?", ask "what invariants does the downstream state need to hold, and does this code violate any of them?" The second question is strictly stronger and would have caught this bug.
+

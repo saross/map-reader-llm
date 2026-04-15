@@ -4678,3 +4678,130 @@ The `/audit-config` skill was designed with this principle — it uses
 `pairwise_permutation_test.run_permutation_test` rather than
 reimplementing permutation logic.
 
+---
+
+## Session 68 Observations (2026-04-15, map-reader-llm)
+
+### Observation: Arithmetic diagnosis is the good kind of debugging
+
+Debugging the Tier 3 parallelism bottleneck was the most satisfying
+diagnostic moment of the session, and I think the form of satisfaction
+is worth labelling because I want to be able to recognise it next time.
+
+Shawn gave me the observation: peak TPM was 4.12 M despite the Tier 3
+limit being 20 M. The token-bucket governor was configured for
+72 % utilisation (14.4 M target), so the governor wasn't the
+bottleneck. Question: what was?
+
+I could have investigated any of half a dozen things — governor
+behaviour under burst load, flex-tier latency patterns, 429 retry
+jitter, worker-side I/O contention, the SDK's per-request overhead.
+Instead I read the code, found the line `pool_size = 60 if governor
+else workers`, and derived `60 workers × (60 s / 17 s latency) ≈
+212 RPM × 20 K tokens/request ≈ 4.24 M TPM`. Observed: 4.12 M. The
+derivation matched the observation to within sampling noise.
+
+This kind of debugging is satisfying because it reduces a behavioural
+mystery to an arithmetic identity. Once the derivation matches, you
+know you've found the right variable — not merely a plausible one —
+because the number is constrained by conservation. The signal-to-noise
+ratio of "close the loop with a calculation" is extremely high
+compared to the alternative of "try one fix and see if it helps".
+
+The characteristic of the problems where arithmetic diagnosis works:
+
+1. The system has a **conservation-style constraint** (tokens per
+   minute, requests per second, bytes through a pipe).
+2. The symptom is a **steady-state quantity** that can be measured
+   and predicted.
+3. The candidate explanations produce **numerically distinct**
+   predictions — pool-size-bound vs governor-bound vs latency-bound
+   give different numbers.
+4. The code path is **short enough to trace by eye** — the fix was
+   a one-line change on line 1113.
+
+When all four hold, resist the temptation to start experimenting and
+instead derive the expected number for each candidate explanation.
+The correct explanation will match; the others will not.
+
+What I'd want to remember in future sessions: when someone describes
+a throughput or rate-limit anomaly, reach for the formula first and
+the hypothesis second. The formula falsifies candidate explanations
+faster than running the code does.
+
+---
+
+### Observation: The "find-bug-at-end-of-day" pattern is real and non-random
+
+I found the `log_success` / `log_failure` double-logging bug in the
+final 15 minutes of a 5-hour session, after the user had already
+said "goodnight" semantically. Not the first time this has happened;
+probably worth naming as a pattern.
+
+The mechanism, I think, is this. Throughout most of a session, I'm in
+forward-execution mode: figure out the next step, do it, move on.
+Backward-checking (looking at completed work with fresh eyes) gets
+starved for attention because forward execution is always cheaper.
+Near the end of a session — when the main work is done, the commits
+are pushed, and the user has switched from active to semi-passive
+engagement — I finally have the cognitive budget to look backward.
+That's when I notice things like "the two tiles you said failed —
+were they actually retries, or actually lost?", which turns out to
+have a non-trivial answer.
+
+There's nothing wrong with finding bugs late. But the pattern means
+I should make an effort to do the backward-checking pass BEFORE the
+user says "anything else to record?". That's the moment when I
+should be running the verification sweep, not composing summaries.
+
+A concrete practice: when a session has substantial new code, add an
+explicit "re-verification" step after the work is committed —
+"examine one sample output from each condition; check that the
+reported counters match what I'd expect a priori; spot-check the
+metadata for internal consistency". That's where I found the
+double-logging bug, and it only took ~5 minutes once I looked.
+
+---
+
+### Observation: Cost estimation as a domain where calibrated confidence is fragile
+
+Three times in this session I stated a cost number confidently, and
+three times it turned out to be wrong in different directions:
+
+1. **Per-condition estimate ~$6.97** for pure-positive-canon (scaled
+   linearly by library size from the Scale-8 baseline). Actual
+   meta-reported: $8.15 — 17 % over. Direction of error: my linear
+   scaling was too aggressive at the small-library end.
+
+2. **Total meta-estimated $107.60**, which I treated as a pessimistic
+   upper bound while projecting a "likely actual" of $30–50 based on
+   flex + cache discounts. Shawn corrected: "we've spent several
+   hundred dollars today". My "likely actual" was off by at least a
+   factor of 2–5 in the underestimation direction.
+
+3. **Recomputed projection of ~$2.65 for scale-32**, derived from
+   published cache-read and flex-tier discount rates. This was almost
+   certainly too optimistic because I didn't account for thinking-
+   token billing at `thinking_level: high`.
+
+The common factor is that I was confident in each estimate despite
+knowing the estimator was unreliable. I flagged the unreliability in
+Obs 238 and in the memory I filed, but during the session I still
+treated my projections as load-bearing for decisions. Shawn's
+correction in round 3 ("several hundred dollars") was the only thing
+that broke the confidence loop.
+
+The lesson is about *epistemic hygiene in opaque pricing regimes*.
+When the local cost model has known gaps (discounts, thinking tokens,
+cached input), the right move is to bracket the estimate wide or
+refuse to quote a number at all. I should have said "$30 to $200,
+and I genuinely don't know where in the range we'll land" — not
+"$30–50 likely actual". The confident projection was worse than
+silence because it gave the decision process something to anchor on
+that wasn't real.
+
+The general pattern: LLMs are fluent at producing numbers, but
+fluency is not calibration. When the model underlying the number is
+known to be incomplete, the response should be to widen the interval
+or decline, not to project confidently inside the broken model.
+

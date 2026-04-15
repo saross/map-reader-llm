@@ -4367,6 +4367,228 @@ gitignore to avoid committing the 3 GB of PNG crops.
   make `--hypothesis` required for any config that uses a
   hypothesis-tagged base. Deferred as out-of-scope.
 
+---
+
+## Session 68 — 2026-04-15 (map-reader-llm): H8 v2 library-composition re-run, strong null, bug found at end of session
+
+### Completed
+
+1. **H8 v2 scaffolding** — seven condition configs, study YAML, errata E51
+   (15 deviations from the original Phase 2c H8), audit-config audit
+   (`reports/configuration-audit-2026-04-15-h8-v2.md`), Phase 0 archival of
+   v1 pools and retracted configs to `archive/h10-v1-*/`.
+
+2. **Infrastructure fixes uncovered during setup**:
+   - **Edge-of-raster crop filter** added to `scripts/build_example_pool.py`
+     (`--exclude-edge-crops`, default on). Found three off-size crops in
+     `pool_160_hp16hn16` during the pre-launch audit; re-mined both
+     `pool_160_hp8hn8` and `pool_160_hp16hn16` under the filter, preserving
+     prefix nestedness (verified by byte-hash).
+   - **Thread pool size fix** in `scripts/4_detect_mounds_batch.py`. The
+     hardcoded `pool_size = 60 if governor else workers` was the binding
+     constraint at Tier 2 (observed peak 4.12 M TPM = 60 workers × 60/17 s
+     latency × 20 K tokens/req, matching derivation to three significant
+     figures). Changed to `max(60, workers)` when governor is active.
+     Backward-compatible; `--workers 250` now actually works.
+
+3. **H8 v2 launch on sapphire** — 6 new conditions × K=5 passes (Scale-8
+   was originally to be reused from H10 v2 `pool_160_hp4hn4`, then re-run
+   mid-session per Shawn's unified-pipeline instruction). Total 9,810 API
+   calls, 1 h 24 min wall time, zero 429s, 97.6 % peak cache hit rate
+   (Scale-32), 72 % peak Tier 3 TPM utilisation (14.4 M / 20 M). Realtime
+   + flex + cache throughout; `--workers 250`. Google-genai SDK on sapphire
+   upgraded 1.68.0 → 1.71.0 pre-launch to restore flex-tier support (Obs 20
+   regression resolved).
+
+4. **Aggregation and evaluation** (local analysis pipeline on sapphire):
+   - WBF Variant C for all 7 conditions via the existing
+     `scripts/fuse_detections_wbf.py` (added 7 `SPECIAL_CONFIGS` entries
+     for `h8v2-*`).
+   - Greedy threshold sweep (t=1..5) for all 7 conditions via
+     `scripts/merge_passes.py --sweep`.
+   - 42 evaluations (7 WBF + 35 greedy) via `scripts/evaluate_detections.py`
+     at 20 m buffer, 1000 bootstrap, on the 327-tile H10 test set.
+   - **Bug fix**: `scripts/evaluate_detections.py` crashed on WBF output
+     with "cannot reindex on an axis with duplicate labels" when a
+     detection intersected multiple overlapping tile bounds (384 px tiles
+     with 336 stride overlap by 48 px). Added `keep="first"` deduplication
+     after the sjoin.
+
+5. **Preregistered contrasts with BH-FDR** — 7 tile-level permutation tests
+   (C1–C3, B1, S1–S3) via `scripts/pairwise_permutation_test.py --mode
+   geojson`, 10,000 permutations each, seed 42, at greedy t=4. BH-FDR
+   applied at q=0.05 across the 7 contrasts via the new
+   `scripts/apply_fdr_h8v2.py`.
+
+6. **Sanity check**: fresh H8 v2 Scale-8 vs existing H10 v2
+   `pool_160_hp4hn4` at greedy t=4: F1 = 0.710 and 0.717 respectively,
+   ΔF1 = 0.007, within sampling noise. The aggregation + evaluation
+   pipeline is internally consistent.
+
+7. **Post-launch observability bug found and fixed**: `items_failed: 1`
+   appeared in two runs (canonical run_2, plus-hp run_4) despite
+   `finish_reason_counts: {success: 327}`. Investigation showed the same
+   tile was logged in BOTH `completed_items` AND `failed_items`. Root
+   cause: `log_success()` was called at line 562 before JSON parse /
+   rasterio / feature extraction, and `log_failure()` was called later
+   via the inner or outer exception handler when those downstream steps
+   threw. Fix (`6a7c3ed8`): move `log_success()` to just before
+   `return features` so success is logged only after the full pipeline
+   completes.
+
+8. **Observation 238** written for `working-notes.md` — 213-line entry
+   documenting the null result, the sanity check, the per-tile tie
+   pattern (260–280 of 327 tiles tie on every contrast), the domain
+   interpretation (library axis closed), and methodological caveats
+   (proposer-only, B1 is the largest weak signal, cost estimator
+   unreliable).
+
+9. **Four memories** captured via `/remember`:
+   - `gotcha` / cost-estimation: `lib_llm_metadata.py` `estimate_cost()`
+     ignores flex, cache, and thinking-token billing.
+   - `pattern` / parallelism: Tier 3 pool-size rule
+     (`≥ target_rpm × avg_latency / 60`); use `--workers 250`.
+   - `architecture` / pool mining: greedy diversity selection is
+     prefix-preserving byte-identically with fixed seed.
+   - `provenance` / SDK: google-genai ≥1.69.0 forwards
+     `service_tier='flex'` correctly.
+
+### Key results
+
+- **Null across all 7 preregistered contrasts.** Smallest raw p =
+  0.164 (B1, HP-only vs balanced at size 13), nowhere near significant
+  even uncorrected. All BH-adjusted p-values ≥ 0.83.
+- **Spread across 7 conditions at fixed greedy t=4: 0.040 F1.** Best:
+  Scale-4 at 0.733 [0.680, 0.777]; worst: Scale-16 at 0.693. Every CI
+  contains every other condition's point estimate.
+- **Per-tile pattern**: 257–276 of 327 tiles tie on every contrast;
+  the 51–70 tiles that differ split roughly 50:50 between conditions.
+- **Combined with H10 v2 null (Obs 236)**, H8 v2 closes the library
+  axis: pool size, composition, and scaling all null at the proposer
+  stage.
+- **Tier 3 parallelism unlocked**: `--workers 250` saturates 72 % TPM
+  / 72 % RPM, 2 min 18 s wall time per 327-tile K=1 pass (vs ~25 min
+  at the old 60-worker cap).
+
+### Decisions
+
+- **Scale-8 re-run rather than symlinked** from H10 v2. Shawn reversed
+  the original reuse decision mid-session to produce a self-contained
+  H8 v2 output tree. The re-run also served as the pipeline sanity
+  check (two independent K=5 draws at identical settings converged to
+  ΔF1 = 0.007).
+- **Edge-exclusion default on** in `build_example_pool.py`. Resolves
+  the Scale-32 dimensional-uniformity confound from the audit.
+- **No verifier runs** on H8 v2 conditions. The library-axis null is
+  as tight as this experimental design can make it; the verifier only
+  compresses noise (cf. H10 v2 Obs 236), and Scale-8 already has its
+  post-verifier number via the existing H10 v2 pool_160_hp4hn4 data.
+- **H12 deferred** — given H8 null, H12 is very likely null too.
+  Shawn proposed running only the two extremes (R1 = 2:6, R3 = 6:2)
+  and reusing R2 (= Scale-8) for ~$34 meta-estimated, but deferred to
+  a fresh session with clearer billing data.
+- **`items_failed` renamed-in-spirit by the fix** — the counter now
+  correctly reflects terminal failures rather than retries or
+  downstream-exception-after-valid-response cases.
+
+### Commits pushed
+
+1. `85315cfa` archive(h10): move v1 H10/H12 pools, hard-cases, and
+   retracted configs (91 files via `git mv`)
+2. `f9efabfc` feat(detect): edge-of-raster exclusion + pool-size fix
+   for governor mode
+3. `e575a57d` feat(h8-v2): seven-condition library-composition re-run
+   at 384 px (7 configs, study YAML, audit report, E51, 162 files)
+4. `5a9db98d` feat(wbf): register H8 v2 conditions in SPECIAL_CONFIGS
+5. `99ee2600` fix(eval): deduplicate spatial join when bounds tiles
+   overlap
+6. `23df1a44` feat(analysis): H8 v2 summariser + BH-FDR applier
+7. `b57cf6c2` data(h8-v2): complete Phase 2.8 acquisition + analysis
+   (376 files from sapphire — aggregation outputs, evaluations,
+   permutation tests, FDR summary)
+8. `88d9d9a0` docs(obs-238): H8 v2 library null — all 7 contrasts fail
+   after BH-FDR
+9. `6a7c3ed8` fix(detect): log tile success only after full processing
+   succeeds (the end-of-session bug fix)
+
+### Cost
+
+- Meta-reported: ~$107.60 total across 9,810 H8 v2 calls + ~$16.93
+  for the Scale-8 re-run (also counted in the 9,810). These figures
+  are known to be unreliable — see memory
+  `2026-04-15-ffa433f8e5f6` and Obs 238's methodological caveat
+  section.
+- Real billing: pending Google Cloud console refresh. Shawn's preview
+  at end-of-session: "several hundred dollars today" across this and
+  other work, implying the meta under-reports (probably via
+  thinking-token billing at the output rate).
+
+### Issues found
+
+- **Thread pool hardcap** (`pool_size = 60` regardless of `--workers`)
+  was leaving ~80 % of Tier 3 capacity on the table. Fixed in
+  `f9efabfc`.
+- **Edge-clipped crops** in `pool_160_hp16hn16` (3 of 32) created a
+  Scale-32 dimensional confound. Fixed in `f9efabfc` + re-mine.
+- **Spatial-join dedup** in `evaluate_detections.py` crashed on WBF
+  output. Fixed in `99ee2600`.
+- **`log_success()` ordering** caused double-logging of tiles that
+  returned valid API responses but failed downstream processing.
+  Fixed in `6a7c3ed8`. (This bug survived the Session 66 `/audit`
+  pass — see the abductive-reasoning.md entry for why.)
+- **`estimate_cost()` fundamentally incomplete** — no flex, no cache,
+  no thinking-token accounting. Documented but not fixed this session.
+
+### Pending work
+
+- Real-billing reconciliation of the H8 v2 run once Google Cloud
+  catches up.
+- Patch `lib_llm_metadata.estimate_cost()` to apply flex + cache
+  discounts and include thinking-token billing.
+- Fresh `/audit` pass on code modified since Session 66 (Shawn will
+  do this in a new session).
+- Decision on running H12 (R1 + R3 extremes, reusing Scale-8 for R2)
+  once real billing is known.
+- Observation 238 is the primary scientific artefact; a paper-section
+  draft for the library-axis closure (H10 + H8 v2, with H12 either as
+  "deferred" or as a third null) is ready to be written whenever
+  paper work resumes.
+
+### Contextual assumptions
+
+- **Cost figures are quoted from the meta-estimate throughout this
+  log**, and the meta-estimate is known to be unreliable (details in
+  Obs 238 and the gotcha memory). Future readers should treat the
+  ~$107 and ~$34 figures as order-of-magnitude indicators, not
+  accurate accounting. The real billing console is authoritative.
+- **The "Scale-8 reuse" decision was reversed mid-session.** The API
+  gate proposal (v1 and v2) originally planned to reuse H10 v2
+  `pool_160_hp4hn4` as the Scale-8 condition (saving ~$17). Shawn
+  reversed this during Phase 2.6 in the interest of a self-contained
+  unified pipeline. The re-run value came partly from the
+  cross-check it enabled (two independent K=5 draws agreeing to
+  within 0.007 F1), which was not anticipated in the reversal
+  rationale but turned out to be load-bearing for trusting the
+  whole analysis.
+- **All commits on sapphire used `git -c user.name=... -c
+  user.email=...`** as an inline override because sapphire's git
+  config did not have a user identity set and I did not want to
+  modify the persistent config. The commit `b57cf6c2` is authored
+  correctly as a result.
+- **The pre-existing uncommitted files** in `git status` at the end
+  of the session (`M docs/notes/user_observations.md`, two `??`
+  `outputs/h10/evaluation-v2/pool_*_hp4hn4/crops/` directories) are
+  from sessions before this one and were deliberately not touched.
+- **The `items_failed` bug was in the production code during the
+  H8 v2 run.** This means `run.meta.json` files for runs from this
+  session (and from prior sessions using this script) may report
+  `items_failed > 0` even when no tiles were actually lost. The
+  correct count is always `len(per_item_metadata)` where
+  `finish_reason in {"success", "STOP"}`, or equivalently
+  `finish_reason_counts["success"]`. Going forward, the fix in
+  `6a7c3ed8` will produce accurate counts for new runs, but
+  historical run metadata should be interpreted with caution.
+
 ## Session 67 — 2026-04-14/15 (map-reader-llm): WBF closure, H10 production run, and the permutation test correction
 
 ### Completed
