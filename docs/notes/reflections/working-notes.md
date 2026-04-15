@@ -9819,3 +9819,217 @@ This clean re-run confirms the null, but now for the right reason: the
 PV pipeline genuinely compensates for library quality variation.
 
 ---
+
+## Observation 238: H8 v2 Library Composition and Scaling Is a Null — All Seven Preregistered Contrasts Fail After BH-FDR (2026-04-15)
+
+**Context**: H8 (Library Composition and Scaling) is the last confirmatory
+hypothesis in the preregistration's library-axis arm. After the H10 v2
+pool-size null (Obs 236), the question remained: does library *composition*
+(which examples) or *size* (how many) affect proposer F1 once you have
+canonical positives and nulls? This re-run executes H8 on the production
+pipeline at 384 px with the v2 hard-case register, including the previously
+deferred Scale-16 and Scale-32 rungs that are now feasible because the v2
+mining yields 108 HP / 57 HN (vs v1's 4 HP). All deviations from the original
+Phase 2c H8 are documented in protocol-errata E51 (15 changes).
+
+**Design**: Seven preregistered conditions at K=5 passes on the 327-tile H10
+test set under T=0.7, thinking=high, detect_brief-text-image.md, 150 px
+crops, canonical-first ordering. Realtime mode with `--service-tier flex` and
+`--use-cache` on Tier 3 quota (20 M TPM / 20 K RPM targets, 72 %
+utilisation). Per-pass aggregation via both greedy (threshold sweep t=1..5)
+and WBF Variant C (IoU 0.25, min_sep 60 m). Evaluation at 20 m buffer with
+1000 bootstrap CIs, tile-level paired permutation tests (Obs 237
+methodology) at 10,000 permutations, Benjamini-Hochberg FDR at q=0.05 across
+the 7 preregistered contrasts.
+
+**Acquisition quality**: 9,810 tile-passes, zero actual tile failures (the
+two "items_failed" flags turned out to be retries-to-success, not lost
+tiles). 1 h 24 min wall time on sapphire at 72 % Tier 3 TPM utilisation.
+Cache hit rates increase monotonically with library size: 87.8 % (7
+examples) → 97.6 % (41 examples), because the fixed tile-image component
+shrinks as a fraction of total input.
+
+**Sanity check (critical for trusting the pipeline)**: the fresh Scale-8 run
+(K=5 on the unified H8-v2 pipeline) and the existing H10 v2
+`pool_160_hp4hn4` run (identical model, temperature, thinking, instruction,
+example library, K, manifest, and tile size) give F1 = 0.710 [0.648, 0.765]
+and 0.717 [0.661, 0.768] respectively at greedy t=4. ΔF1 = 0.007, well
+within sampling noise, consistent 95 % CI overlap. Two independent K=5
+draws converge — the aggregation + evaluation pipeline is internally
+consistent and results are trustworthy.
+
+### Headline: F1 by condition at greedy t=4 (proposer-only, no verifier)
+
+| Condition | Examples | F1 [95 % CI] | P | R |
+|---|---:|---|---:|---:|
+| pure-positive-canon | 7 | 0.697 [0.643, 0.747] | 0.753 | 0.649 |
+| canonical | 9 | 0.707 [0.648, 0.766] | 0.791 | 0.639 |
+| plus-hp | 13 | 0.705 [0.648, 0.758] | 0.795 | 0.633 |
+| scale-4 | 13 | **0.733 [0.680, 0.777]** | 0.821 | 0.661 |
+| scale-8 | 17 | 0.710 [0.648, 0.765] | 0.808 | 0.633 |
+| scale-16 | 25 | 0.693 [0.633, 0.749] | 0.811 | 0.605 |
+| scale-32 | 41 | 0.713 [0.660, 0.763] | 0.826 | 0.627 |
+
+Spread across all 7 conditions at fixed t=4: **0.040 F1**. Scale-4 has the
+highest observed F1 (0.733) with a 0.023 lead over Scale-8. Every CI
+contains every other condition's point estimate — no condition statistically
+dominates any other.
+
+### Preregistered contrasts (10,000-iter tile-level permutation + BH-FDR)
+
+| Code | Contrast | ΔF1 | raw p | BH-adj p | Significant? |
+|---|---|---:|---:|---:|---|
+| C1 | add Canon- | −0.010 | 0.659 | 0.923 | no |
+| C2 | add HP | +0.002 | 0.932 | 0.932 | no |
+| C3 | add HN | −0.005 | 0.854 | 0.932 | no |
+| B1 | HP-only vs balanced at size 13 | −0.028 | 0.164 | 0.834 | no |
+| S1 | Scale-4 → Scale-8 | +0.023 | 0.330 | 0.834 | no |
+| S2 | Scale-8 → Scale-16 | +0.017 | 0.477 | 0.834 | no |
+| S3 | Scale-16 → Scale-32 | −0.020 | 0.394 | 0.834 | no |
+
+**Zero of seven contrasts reach significance after BH-FDR at q=0.05.** The
+smallest raw p-value is 0.164 (B1), nowhere near significant even
+uncorrected. Four of the six directional predictions from the preregistration
+(§H8 lines 799–806) fail or reverse — C2, S1, S2 all point in the wrong
+direction (within noise); C1, C3, S3 point in the predicted direction (all
+within noise). The only contrast with any lean — B1, the bonus
+composition-vs-size test — suggests that balanced HP:HN (scale-4) beats
+HP-only (plus-hp) at the same total library size of 13, but the effect is
+tiny (−0.028) and non-significant.
+
+### Per-tile pairing pattern
+
+Across all 7 contrasts, **257–276 of 327 tiles are ties**. Only 51–70 tiles
+per contrast show any difference at all, and the difference-showing tiles
+split roughly evenly between conditions:
+
+| Code | A wins | B wins | Ties |
+|---|---:|---:|---:|
+| C1 | 27 | 30 | 270 |
+| C2 | 33 | 26 | 268 |
+| C3 | 37 | 33 | 257 |
+| B1 | 19 | 34 | 274 |
+| S1 | 35 | 25 | 267 |
+| S2 | 27 | 24 | 276 |
+| S3 | 27 | 26 | 274 |
+
+This is *why* the contrasts are null: on ~82 % of tiles, swapping the
+library has literally no effect on the tile's TP/FP/FN tally. The remaining
+~18 % of tiles split close to 50:50 between the two conditions. The model's
+per-tile output is dominated by factors other than the hard-example library.
+
+### Threshold sensitivity
+
+The null holds across the greedy threshold sweep. At t=3 (where Scale-8
+technically leads at 0.730), at t=4 (where Scale-4 leads at 0.733), and at
+t=5 (where Scale-4 again leads at 0.632), the spread across conditions is
+always ≤ 0.04 and no condition's CI excludes any other's point estimate.
+The WBF view at Variant C defaults gives a parallel story (Scale-8 best at
+F1=0.356 without verifier), with the same <0.05 spread. **Condition ranking
+is unstable across thresholds** — Scale-4 is best at t=4, Scale-8 is best
+at t=3, neither significantly — which is itself evidence that the
+differences are noise rather than structure.
+
+### Relationship to H10 (Obs 236) — closing the library axis
+
+Combined with the H10 v2 pool-size null, H8 v2 closes the library axis at
+the proposer stage. The three axes tested to date are:
+
+- **H10** — how many calibration tiles we mine hard examples from
+  (20, 40, 80, 160) → null
+- **H8 composition** — which example categories are present
+  (Canon+, Canon−, HP, HN) → null
+- **H8 scaling** — how many hard examples we include
+  (0, 4, 8, 16, 32) → null
+
+All three are null. **The library has four slots of canonical positives
+and three slots of null examples; what fills the remaining slots does not
+measurably affect proposer F1 on this task.** This is a far stronger
+statement than either H10 or H8 alone.
+
+### Caveats
+
+1. **Proposer-only, not post-verifier.** The 55-maps generalisation study
+   achieved F1=0.891 on gold standard with a post-verifier pipeline; H8 v2
+   numbers (F1 in the 0.70s) are proposer-only. The verifier typically
+   lifts both precision and F1 substantially. H10 v2 under PV showed that
+   the verifier **compresses library-quality differences to near-zero**
+   (Obs 236, ΔF1 = −0.005 between pool_020 and pool_160 at their optimal
+   operating points) — so the H8 v2 null is very likely to hold after
+   verification too, but this has not been directly tested. Advancing the
+   best-looking condition (Scale-4 at t=4) through the verifier would
+   confirm this.
+2. **B1 is the largest observed effect** (plus-hp vs scale-4 at size=13,
+   ΔF1 = −0.028, raw p = 0.164). Still null after correction, but if this
+   study were replicated with larger K or more test tiles, B1 is the
+   contrast most likely to become significant — *balanced HP:HN beats
+   HP-only at the same total library size*. Practically this means: if
+   hard negatives are available, include them; don't pack a size-13 budget
+   with HPs only. This is a weak hint, not a finding.
+3. **327 test tiles is already the full H10 test set**, not the 60-tile
+   preregistered holdout. This is the largest feasible test set under the
+   4-map corpus. Increasing N further requires additional maps (the
+   55-maps generalisation arm) or a different test set (verifier-stage
+   evaluation).
+4. **Library nestedness is mechanical.** Greedy diversity selection is
+   prefix-preserving (verified 2026-04-15 by byte-hash of `hp_01..hp_04`
+   and `hn_01..hn_04` across pool_160_hp4hn4 / hp8hn8 / hp16hn16). So the
+   scaling comparison is clean — any differences between Scale-4 and
+   Scale-32 come from the *additional* examples, not from different
+   samples of the same budget. This sharpens the null result: the marginal
+   hard example *at the margin* has zero detectable effect.
+
+### Methodological note — cost estimate is untrustworthy in both directions
+
+`scripts/lib_llm_metadata.py`'s `estimate_cost()` computes cost by
+multiplying `total_input_tokens × standard_tier_rate`, ignoring both the
+`--service-tier flex` discount (50 %) and the cache-read discount
+(~75 % off cached input tokens under Gemini's published schedule). The
+total meta-reported cost for this H8 v2 run was ~$107 (plus $16.94 for
+Scale-8 re-run), but the real bill from Google Cloud has not yet arrived
+and could differ substantially in either direction. Shawn's billing
+preview for the day (several hundred dollars total) suggests the meta
+estimate is *too low*, not too high, possibly because thinking-token billing
+at `thinking_level=high` is not accounted for. The meta-reported numbers
+should NOT be trusted as either upper or lower bounds without
+cross-referencing the real Google Cloud bill. A follow-up fix to
+`estimate_cost()` is warranted: add per-token-category rates (standard,
+cached, thinking) and a service-tier multiplier.
+
+### Implications for H12
+
+The preregistered H12 (HP:HN ratio at fixed library size) is conditional on
+H8's "optimal size". Given H8 is uniformly null, no optimal size exists in a
+meaningful sense. H12 is still worth running for completeness — it closes
+the library story and its null (if confirmed) would be a publishable finding
+in aggregate — but it is very likely to null out too, given that the HP:HN
+axis is a strict subset of what H8 already varied. **If H12 is also null,
+the three-axis library story (pool size, composition/size, ratio) becomes
+the paper narrative**: *library curation is not a lever for proposer
+performance; only the canonical positives + nulls matter*.
+
+### Decision deferred
+
+Whether to advance any condition through the adversarial-text verifier, and
+which. Scale-4 at t=4 has the highest observed proposer F1 (0.733); Scale-8
+at t=3 is the H10-v2-consistent operating point (0.730). These are
+effectively tied and within each other's CI. Running both through the
+verifier would cost additional API spend but is the standard next step for
+any condition that needs to be compared against the F1=0.891 production
+baseline.
+
+### Data and code references
+
+- Raw detections: `outputs/h8-v2/<cond>/run_{1..5}/detections-*.geojson`
+- Aggregation outputs: `outputs/h8-v2/{greedy,wbf}/<cond>/`
+- Evaluations: `results/h8-v2/{wbf,greedy}/<cond>/evaluation.json`
+- Permutation tests: `results/h8-v2/permutation-t4/<code>-<a>-vs-<b>/pairwise_permutation_result.json`
+- FDR summary: `results/h8-v2/permutation-t4/fdr_summary.json`
+- Analysis helpers: `scripts/summarise_h8v2.py`, `scripts/apply_fdr_h8v2.py`
+- Audit report: `reports/configuration-audit-2026-04-15-h8-v2.md`
+- Errata entry E51 (15 deviations): `docs/methodology/preregistration/protocol-errata.md`
+- Study YAML: `studies/h8-v2-library.yaml`
+- Commits: `85315cfa` (archive v1), `f9efabfc` (edge-exclusion + pool-size fix), `e575a57d` (H8-v2 scaffolding), `5a9db98d` (WBF configs), `99ee2600` (eval dedup fix), `23df1a44` (analysis scripts), `b57cf6c2` (acquisition + analysis data)
+- Related observations: Obs 235 (H10/H12 retraction), Obs 236 (H10 null), Obs 237 (tile-level permutation correction)
+
+---
