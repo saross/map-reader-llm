@@ -97,6 +97,29 @@ SPECIAL_CONFIGS = {
         ],
         "default_output_dir": "outputs/h11/wbf/gold-standard-v2-detect",
     },
+    # H8 v2 library-composition re-run (7 conditions, 384 px tiles, production
+    # carry-forward: T=0.7, thinking=high, detect_brief-text-image.md, K=5).
+    # Raw detections live at outputs/h8-v2/<cond>/run_{1..5}/
+    # detections-detect_h8_<cond>_v2-3-flash-2026-04-15.geojson. See study
+    # YAML (studies/h8-v2-library.yaml) and protocol-errata E51.
+    **{
+        f"h8v2-{cond}": {
+            "pass_files": [
+                f"outputs/h8-v2/{cond}/run_{i}/detections-detect_h8_{cond}_v2-3-flash-2026-04-15.geojson"
+                for i in range(1, 6)
+            ],
+            "default_output_dir": f"outputs/h8-v2/wbf/{cond}",
+        }
+        for cond in (
+            "pure-positive-canon",
+            "canonical",
+            "plus-hp",
+            "scale-4",
+            "scale-8",
+            "scale-16",
+            "scale-32",
+        )
+    },
 }
 
 
