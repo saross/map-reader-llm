@@ -1,0 +1,38 @@
+{
+  "config": "h8v2-canonical",
+  "parameters": {
+    "iou_threshold": 0.25,
+    "min_separation_m": 60.0,
+    "anchor_vote_threshold": null,
+    "min_dim": 20.0,
+    "max_dim": 200.0,
+    "min_area": 400.0,
+    "max_area": 40000.0
+  },
+  "loader": {
+    "config": "h8v2-canonical",
+    "per_pass_box_counts": {
+      "run_1": 614,
+      "run_2": 670,
+      "run_3": 592,
+      "run_4": 570,
+      "run_5": 613
+    },
+    "total_raw_boxes": 3059
+  },
+  "fusion": {
+    "n_raw_boxes": 3059,
+    "n_rejected_by_size_filter": 46,
+    "n_filtered_boxes": 3013,
+    "n_clusters_after_wbf": 1330,
+    "n_clusters_after_min_separation": 1167,
+    "n_merged_by_min_separation": 163,
+    "iou_threshold": 0.25,
+    "min_separation_m": 60.0,
+    "anchor_vote_threshold": null
+  },
+  "comparison_to_existing_consensus": {
+    "available": false,
+    "note": "special config, use external comparison"
+  }
+}
