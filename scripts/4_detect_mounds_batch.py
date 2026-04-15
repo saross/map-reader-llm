@@ -1631,11 +1631,11 @@ Examples:
     parser.add_argument(
         "--service-tier",
         choices=["standard", "flex"],
-        default=None,
+        default="flex",
         dest="service_tier",
         help="Service tier for real-time API calls. 'flex' gives 50%% "
         "discount with 1-15 min latency (uses off-peak capacity). "
-        "Ignored in batch mode. Default: standard.",
+        "Ignored in batch mode. Default: flex.",
     )
     parser.add_argument(
         "--skip-intent-check",

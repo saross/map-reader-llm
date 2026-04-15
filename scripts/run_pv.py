@@ -1104,10 +1104,11 @@ def _build_parser() -> argparse.ArgumentParser:
     verify_parser.add_argument(
         "--service-tier",
         choices=["standard", "flex"],
-        default=None,
+        default="flex",
         dest="service_tier",
         help="Service tier for real-time API calls. 'flex' gives 50%% "
-        "discount with 1-15 min latency. Ignored in batch mode.",
+        "discount with 1-15 min latency. Ignored in batch mode. "
+        "Default: flex.",
     )
     verify_parser.set_defaults(func=cmd_verify)
 
@@ -1132,9 +1133,9 @@ def _build_parser() -> argparse.ArgumentParser:
     cleanup_parser.add_argument(
         "--service-tier",
         choices=["standard", "flex"],
-        default=None,
+        default="flex",
         dest="service_tier",
-        help="Service tier for real-time API calls.",
+        help="Service tier for real-time API calls. Default: flex.",
     )
     cleanup_parser.add_argument(
         "--workers", type=int, default=10,
