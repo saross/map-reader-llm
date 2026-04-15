@@ -9678,6 +9678,63 @@ the preregistered question.
 
 ---
 
+## Observation 237: Map-Level Permutation Test Was Structurally Underpowered — Tile-Level Correction Reveals Significant WBF Result (2026-04-15)
+
+**Error**: The `compare_wbf_greedy_pv_permutation.py` script permuted
+at the **map level** (4 maps, 2^4 = 16 unique permutations, minimum
+achievable two-sided p = 0.125). This meant the test could never reach
+significance at alpha=0.05 regardless of effect size. All three
+comparisons reported "NOT significant" — two correctly, one wrongly.
+
+**Detection**: Caught by `/audit` code review, which flagged the
+statistical impossibility. The user then corrected the unit of analysis:
+"isn't it tile-based not map-based?"
+
+**Correction**: Rewrote to use the project's existing tile-swap
+permutation test (`pairwise_permutation_test.run_permutation_test`),
+which permutes per-tile TP/FP/FN assignments across 327-487 tiles using
+micro-average F1 as the test statistic (per E45).
+
+**Impact on conclusions**:
+
+| Comparison | Old p (map-level) | New p (tile-level) | Change |
+|---|---:|---:|---|
+| WBF vs Greedy PV, N=5 | 0.371 | 0.392 | No change (NS both) |
+| WBF vs Greedy PV, N=30 | 0.258 | **0.009** | **Now significant** |
+| H10 pool_020 vs pool_160 | 1.000 | 0.845 | No change (NS both) |
+
+The N=30 WBF comparison flipped from "inconclusive null" to "greedy
+significantly outperforms WBF" (p=0.009, greedy wins 27 tiles, WBF
+wins 12). This changes the WBF narrative for the paper: at N=30 scale,
+greedy-ball is not just slightly better — it is *statistically
+significantly* better.
+
+**Root cause**: I wrote a new permutation test from scratch instead of
+using the existing `pairwise_permutation_test.py` infrastructure. The
+existing code already solved the tile-level permutation problem
+correctly (including the E45 micro-average decision). Writing new code
+for a solved problem introduced a methodological error that the existing
+code would have prevented.
+
+**Lessons**:
+
+1. **Reuse existing statistical infrastructure.** The project already
+   had a correct, tested, documented tile-level permutation test. Using
+   it would have been both faster and correct. The impulse to write
+   "something simpler" for a one-off comparison is how statistical bugs
+   enter the pipeline.
+2. **Code audit caught a statistical error.** The `/audit` skill's
+   structured review identified the power ceiling as a critical finding.
+   Without the audit, the wrong p-values would have been reported in the
+   paper.
+3. **The user's domain knowledge was essential.** The audit flagged the
+   issue but misidentified the fix (it suggested adding a power warning).
+   The user immediately identified the correct fix: "isn't it tile-based
+   not map-based?" — a one-sentence correction that changed a
+   structurally broken test into a valid one.
+
+---
+
 ## Observation 236: H10 Pool Size Is a Null — 20-Tile Calibration Matches 160-Tile Under PV (2026-04-15)
 
 **Context**: H10 (Training Pool Size Effects on Library Quality) tests
