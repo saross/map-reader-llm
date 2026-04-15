@@ -773,6 +773,12 @@ def _evaluate_condition(
                 gdf_det, gdf_bounds[["tile_name", "geometry"]],
                 how="left", predicate="intersects",
             )
+            # Deduplicate: a single detection may intersect multiple
+            # bounds tiles when tiles overlap (e.g. tile_size=384 with
+            # stride=336 overlaps neighbours by 48 px). Keep the first
+            # matching tile per detection so the index aligns with
+            # gdf_det for assignment.
+            joined = joined[~joined.index.duplicated(keep="first")]
             gdf_det["source_tile"] = joined["tile_name"]
 
         result = evaluate_single_run(
