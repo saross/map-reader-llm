@@ -850,14 +850,13 @@ def detect_mounds_versioned(
     if service_tier:
         print(f"Service tier: {service_tier}")
 
-    gen_config = types.GenerateContentConfig(
-        temperature=config.get("temperature", 0.1),
-        max_output_tokens=config.get("max_output_tokens", 8192),
-        response_mime_type="application/json",
-        thinking_config=thinking_config,
-        system_instruction=system_instruction_text,
-        service_tier=service_tier,
-        safety_settings=[
+    gen_config_kwargs = {
+        "temperature": config.get("temperature", 0.1),
+        "max_output_tokens": config.get("max_output_tokens", 8192),
+        "response_mime_type": "application/json",
+        "thinking_config": thinking_config,
+        "system_instruction": system_instruction_text,
+        "safety_settings": [
             types.SafetySetting(
                 category="HARM_CATEGORY_HARASSMENT", threshold="OFF"
             ),
@@ -871,7 +870,10 @@ def detect_mounds_versioned(
                 category="HARM_CATEGORY_DANGEROUS_CONTENT", threshold="OFF"
             ),
         ],
-    )
+    }
+    if service_tier is not None:
+        gen_config_kwargs["service_tier"] = service_tier
+    gen_config = types.GenerateContentConfig(**gen_config_kwargs)
 
     # ── Context caching (opt-in) ─────────────────────────────────
     # Cache the shared prompt prefix (system instruction + examples)

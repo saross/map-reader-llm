@@ -1,0 +1,118 @@
+{
+  "hard_positives": [
+    {
+      "map_name": "K-35-052-4_32635",
+      "ref_index": 438,
+      "x": 398436.972303111,
+      "y": 4704218.843316585,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hp_01.png"
+    },
+    {
+      "map_name": "K-35-052-4_32635",
+      "ref_index": 448,
+      "x": 398796.9107389476,
+      "y": 4702830.09299532,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hp_02.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "ref_index": 110,
+      "x": 425946.0323132599,
+      "y": 4695768.304897891,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hp_03.png"
+    },
+    {
+      "map_name": "K-35-062-2_Rakovski",
+      "ref_index": 338,
+      "x": 328091.9596369802,
+      "y": 4681586.803387975,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hp_04.png"
+    }
+  ],
+  "hard_negatives": [
+    {
+      "map_name": "K-35-078-1_Lesovo",
+      "x": 461289.19457725,
+      "y": 4643882.509713,
+      "vote_count": 4,
+      "k_passes": 5,
+      "nearest_ref_distance": 10515.64,
+      "source_tiles": [
+        "K-35-078-1_Lesovo_x336_y1008.png"
+      ],
+      "subtype": "burial_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 0.86,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hn_01.png"
+    },
+    {
+      "map_name": "K-35-062-2_Rakovski",
+      "x": 321498.333977875,
+      "y": 4682201.331836125,
+      "vote_count": 4,
+      "k_passes": 5,
+      "nearest_ref_distance": 573.78,
+      "source_tiles": [
+        "K-35-062-2_Rakovski_x1344_y1344.png"
+      ],
+      "subtype": "settlement_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 0.7321,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hn_02.png"
+    },
+    {
+      "map_name": "K-35-052-4_32635",
+      "x": 400090.7391986667,
+      "y": 4689797.738603666,
+      "vote_count": 3,
+      "k_passes": 5,
+      "nearest_ref_distance": 13003.03,
+      "source_tiles": [
+        "K-35-052-4_32635_x336_y3024.png"
+      ],
+      "subtype": "burial_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 0.72,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hn_03.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "x": 429555.52164849994,
+      "y": 4689180.885269,
+      "vote_count": 3,
+      "k_passes": 5,
+      "nearest_ref_distance": 7475.71,
+      "source_tiles": [
+        "K-35-053-3_Elenovo_x2352_y3024.png"
+      ],
+      "subtype": "benchmark_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 0.72,
+      "crop_path": "outputs/h10/example-pools-v2/pool_020_hp4hn4/crops/hn_04.png"
+    }
+  ]
+}

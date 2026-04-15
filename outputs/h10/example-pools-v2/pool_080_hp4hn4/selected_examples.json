@@ -1,0 +1,118 @@
+{
+  "hard_positives": [
+    {
+      "map_name": "K-35-052-4_32635",
+      "ref_index": 438,
+      "x": 398436.972303111,
+      "y": 4704218.843316585,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hp_01.png"
+    },
+    {
+      "map_name": "K-35-052-4_32635",
+      "ref_index": 448,
+      "x": 398796.9107389476,
+      "y": 4702830.09299532,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hp_02.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "ref_index": 30,
+      "x": 430615.75991503557,
+      "y": 4705348.204805545,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hp_03.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "ref_index": 110,
+      "x": 425946.0323132599,
+      "y": 4695768.304897891,
+      "vote_count": 0,
+      "k_passes": 5,
+      "mean_match_distance": null,
+      "min_match_distance": null,
+      "classification": "consistent_fn",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hp_04.png"
+    }
+  ],
+  "hard_negatives": [
+    {
+      "map_name": "K-35-052-4_32635",
+      "x": 409605.358481,
+      "y": 4689353.826074,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 1438.66,
+      "source_tiles": [
+        "K-35-052-4_32635_x2352_y3024.png"
+      ],
+      "subtype": "benchmark_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hn_01.png"
+    },
+    {
+      "map_name": "K-35-053-3_Elenovo",
+      "x": 436669.8175769,
+      "y": 4699737.379726199,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 3247.21,
+      "source_tiles": [
+        "K-35-053-3_Elenovo_x3696_y1008.png"
+      ],
+      "subtype": "benchmark_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hn_02.png"
+    },
+    {
+      "map_name": "K-35-078-1_Lesovo",
+      "x": 459409.9517972,
+      "y": 4645592.3569133,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 11978.97,
+      "source_tiles": [
+        "K-35-078-1_Lesovo_x0_y672.png"
+      ],
+      "subtype": "triangulation_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hn_03.png"
+    },
+    {
+      "map_name": "K-35-078-1_Lesovo",
+      "x": 477720.5175229,
+      "y": 4645500.776069401,
+      "vote_count": 5,
+      "k_passes": 5,
+      "nearest_ref_distance": 2126.89,
+      "source_tiles": [
+        "K-35-078-1_Lesovo_x3696_y672.png"
+      ],
+      "subtype": "benchmark_mound",
+      "classification": "consistent_fp",
+      "difficulty_score": 1.0,
+      "crop_path": "outputs/h10/example-pools-v2/pool_080_hp4hn4/crops/hn_04.png"
+    }
+  ]
+}

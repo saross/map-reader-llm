@@ -1,0 +1,100 @@
+{
+  "model": "gemini-3-flash",
+  "instruction_file": "detect_brief-text-image.md",
+  "temperature": 0.7,
+  "max_output_tokens": 8192,
+  "include_example_images": true,
+  "thinking_level": "high",
+  "version": "detect_pool_160_hp4hn4_v2",
+  "description": "H10 pool size 160. Cold-start calibration with production image-track settings. 4 HP + 4 HN from 160-tile calibration pool, 150px crops. Canonical-first ordering.",
+  "hypothesis": "H10",
+  "examples": [
+    {
+      "path": "neutral-naming/example_01.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_02.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_03.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "neutral-naming/example_04.png",
+      "label": "Positive",
+      "category": "canonical_positive"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hp_01.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hp_02.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hp_03.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hp_04.png",
+      "label": "Positive",
+      "category": "hard_positive"
+    },
+    {
+      "path": "neutral-naming/example_09.png",
+      "label": "Negative",
+      "category": "canonical_negative"
+    },
+    {
+      "path": "neutral-naming/example_10.png",
+      "label": "Negative",
+      "category": "canonical_negative"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hn_01.png",
+      "label": "Negative",
+      "category": "hard_negative"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hn_02.png",
+      "label": "Negative",
+      "category": "hard_negative"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hn_03.png",
+      "label": "Negative",
+      "category": "hard_negative"
+    },
+    {
+      "path": "h10-v2/pool_160_hp4hn4/hn_04.png",
+      "label": "Negative",
+      "category": "hard_negative"
+    },
+    {
+      "path": "neutral-naming-384/null_01.png",
+      "label": "Negative",
+      "category": "null"
+    },
+    {
+      "path": "neutral-naming-384/null_02.png",
+      "label": "Negative",
+      "category": "null"
+    },
+    {
+      "path": "neutral-naming-384/null_03.png",
+      "label": "Negative",
+      "category": "null"
+    }
+  ],
+  "ordering_note": "Canonical-first: Canon+ (4), HP (4), Canon- (2), HN (4), null-384px (3). Total: 17 examples.",
+  "pool_source": "outputs/h10/example-pools-v2/pool_160_hp4hn4"
+}
