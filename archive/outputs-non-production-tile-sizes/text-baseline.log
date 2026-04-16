@@ -1,0 +1,59 @@
+======================================================================
+Study: H11: 256px PV Diagnostic — Text Baseline
+Phase: h11
+Hypothesis: H11
+Version: 1.0
+Description: Single deterministic text-only proposer pass (T=0.0) on the full 256px
+evaluation area (1032 tiles, calibration areas excluded). Fed through
+PV verifier. Smoke test — if N=1 + PV F1 < 0.75, the 256px pathway
+is unlikely to beat 384px best (F1=0.883) and we stop.
+======================================================================
+
+Conditions: 1
+  - text-t0.0: prompts/configs/detect_brief-text.json
+    Overrides: T=0.0
+Runs per condition: 1
+Tiles per run: ALL
+Total execution units: 1
+
+Manifest: /home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-baseline/study_manifest.json
+
+Execution mode: BATCH (Gemini Batch API — parallel submission)
+
+Token quota: 3,000,000 enqueued tokens
+
+Phase 1: Preparing 1 execution units...
+  Tile size override: 256
+  Tiles directory override: /home/shawn/Code/map-reader-llm/inputs/tiles_256
+
+[1/1] text-t0.0/run_1 (T=0.0)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 1032 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-baseline/text-t0.0/run_1/batch_working/detections_text-t0.0_run01.jsonl)
+  Token estimate: 698/tile (text=440 + images=258)
+  Unit total: 720,336 tokens (1032 tiles × 698/tile)
+
+Phase 2: 1 new job(s) to submit, 0 already pending (cap: 5 concurrent)
+
+  Submitted batch job: batches/8bs8dz80u50vij5qvpuefgqb52k2xkuixmgn
+  Submitted initial wave: 1 job(s), 1 in flight, 0 queued
+  BatchTokenLedger(enqueued=720,336/3,000,000, jobs=1)
+
+  ... 0/1 complete, 1 in flight, 0 queued (0.0h elapsed) [tokens: 720,336/3,000,000]
+  ... 0/1 complete, 1 in flight, 0 queued (0.0h elapsed) [tokens: 720,336/3,000,000]
+  ... 0/1 complete, 1 in flight, 0 queued (0.0h elapsed) [tokens: 720,336/3,000,000]
+  ... 0/1 complete, 1 in flight, 0 queued (0.0h elapsed) [tokens: 720,336/3,000,000]
+  ... 0/1 complete, 1 in flight, 0 queued (0.0h elapsed) [tokens: 720,336/3,000,000]
+  ... 0/1 complete, 1 in flight, 0 queued (0.0h elapsed) [tokens: 720,336/3,000,000]
+  ... 0/1 complete, 1 in flight, 0 queued (0.1h elapsed) [tokens: 720,336/3,000,000]
+[text-t0.0/run_1] Failed to delete file files/batch-8bs8dz80u50vij5qvpuefgqb52k2xkuixmgn: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+  Batch complete: 1032 tiles, 1828 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [1/1] text-t0.0/run_1: OK
+======================================================================
+Phase h11 Complete
+======================================================================
+Completed: 1 units
+Failed: 0 units
+Running cost: $0.0000
+Checkpoint: /home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-baseline/checkpoint.json
+

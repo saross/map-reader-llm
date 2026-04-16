@@ -1,0 +1,134 @@
+======================================================================
+Study: H11: 256px PV Diagnostic — Text N=5
+Phase: h11
+Hypothesis: H11
+Version: 1.0
+Description: 5 text-only proposer passes at T=0.7 on the full 256px evaluation area
+(1032 tiles). Post-hoc consensus sweep at all thresholds (1-of-5 through
+5-of-5), each fed through the PV pipeline.
+======================================================================
+
+Conditions: 1
+  - text-t0.7: prompts/configs/detect_brief-text.json
+    Overrides: T=0.7
+Runs per condition: 5
+Tiles per run: ALL
+Total execution units: 5
+
+Manifest: /home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/study_manifest.json
+
+Execution mode: BATCH (Gemini Batch API — parallel submission)
+
+Token quota: 3,000,000 enqueued tokens
+
+Phase 1: Preparing 5 execution units...
+  Tile size override: 256
+  Tiles directory override: /home/shawn/Code/map-reader-llm/inputs/tiles_256
+
+[1/5] text-t0.7/run_2 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 1032 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/text-t0.7/run_2/batch_working/detections_text-t0.7_run02.jsonl)
+  Token estimate: 698/tile (text=440 + images=258)
+  Unit total: 720,336 tokens (1032 tiles × 698/tile)
+
+[2/5] text-t0.7/run_5 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 1032 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/text-t0.7/run_5/batch_working/detections_text-t0.7_run05.jsonl)
+  Unit total: 720,336 tokens (1032 tiles × 698/tile)
+
+[3/5] text-t0.7/run_4 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 1032 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/text-t0.7/run_4/batch_working/detections_text-t0.7_run04.jsonl)
+  Unit total: 720,336 tokens (1032 tiles × 698/tile)
+
+[4/5] text-t0.7/run_1 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 1032 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/text-t0.7/run_1/batch_working/detections_text-t0.7_run01.jsonl)
+  Unit total: 720,336 tokens (1032 tiles × 698/tile)
+
+[5/5] text-t0.7/run_3 (T=0.7)
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+  Built JSONL: 1032 lines (/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/text-t0.7/run_3/batch_working/detections_text-t0.7_run03.jsonl)
+  Unit total: 720,336 tokens (1032 tiles × 698/tile)
+
+Phase 2: 5 new job(s) to submit, 0 already pending (cap: 5 concurrent)
+
+  Submitted batch job: batches/gs2v0mva7tqblmke6f8i7cd1os7sm4gi4yqv
+  Submitted batch job: batches/74czft4uc7ka744sfytb5otu2u9kx3279qhb
+  Submitted batch job: batches/oizg9rdfvbe9gzzp40qo4xwwb3hf1rznt6ut
+  Submitted initial wave: 3 job(s), 3 in flight, 2 queued
+  BatchTokenLedger(enqueued=2,161,008/3,000,000, jobs=3)
+
+  ... 0/5 complete, 3 in flight, 2 queued (0.0h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.0h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.0h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.0h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.0h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.0h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+  ... 0/5 complete, 3 in flight, 2 queued (0.1h elapsed) [tokens: 2,161,008/3,000,000]
+Failed to parse detections for K-35-052-4_32635_x224_y2688.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-053-3_Elenovo_x1344_y672.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-052-4_32635_x224_y2688.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+[text-t0.7/run_2] Failed to delete file files/batch-gs2v0mva7tqblmke6f8i7cd1os7sm4gi4yqv: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+Failed to parse detections for K-35-052-4_32635_x4032_y0.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-062-2_Rakovski_x2240_y448.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-062-2_Rakovski_x3808_y2464.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+[text-t0.7/run_5] Failed to delete file files/batch-74czft4uc7ka744sfytb5otu2u9kx3279qhb: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+Failed to parse detections for K-35-052-4_32635_x224_y2688.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-062-2_Rakovski_x1120_y448.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+[text-t0.7/run_4] Failed to delete file files/batch-oizg9rdfvbe9gzzp40qo4xwwb3hf1rznt6ut: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+  Retried 2/2 parse-failed tile(s) successfully
+  Batch complete: 1032 tiles, 1859 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [1/5] text-t0.7/run_2: OK
+  Retried 3/3 parse-failed tile(s) successfully
+  Batch complete: 1032 tiles, 1856 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [2/5] text-t0.7/run_5: OK
+  Retried 2/2 parse-failed tile(s) successfully
+  Batch complete: 1032 tiles, 1838 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [3/5] text-t0.7/run_4: OK
+  Submitted batch job: batches/f2jxgbkdpvrez0du4plgd9h5zvqj5ml1e6i0
+  Submitted batch job: batches/io8eertx67vwu36u54sjuvn88sae8yqdwdry
+  Submitted 2 more job(s), 2 in flight, 0 queued (BatchTokenLedger(enqueued=1,440,672/3,000,000, jobs=2))
+  ... 3/5 complete, 2 in flight, 0 queued (0.2h elapsed) [tokens: 1,440,672/3,000,000]
+  ... 3/5 complete, 2 in flight, 0 queued (0.2h elapsed) [tokens: 1,440,672/3,000,000]
+  ... 3/5 complete, 2 in flight, 0 queued (0.2h elapsed) [tokens: 1,440,672/3,000,000]
+  ... 3/5 complete, 2 in flight, 0 queued (0.2h elapsed) [tokens: 1,440,672/3,000,000]
+  ... 3/5 complete, 2 in flight, 0 queued (0.2h elapsed) [tokens: 1,440,672/3,000,000]
+  ... 3/5 complete, 2 in flight, 0 queued (0.2h elapsed) [tokens: 1,440,672/3,000,000]
+Failed to parse detections for K-35-052-4_32635_x224_y2688.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-053-3_Elenovo_x3136_y0.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-078-1_Lesovo_x2240_y1568.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-052-4_32635_x224_y2688.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+[text-t0.7/run_1] Failed to delete file files/batch-f2jxgbkdpvrez0du4plgd9h5zvqj5ml1e6i0: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+Failed to parse detections for K-35-052-4_32635_x3808_y448.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+Failed to parse detections for K-35-053-3_Elenovo_x1344_y672.png: Illegal trailing comma before end of array: line 8 column 12 (char 94)
+[text-t0.7/run_3] Failed to delete file files/batch-io8eertx67vwu36u54sjuvn88sae8yqdwdry: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': "* DeleteFileRequest.name: File ID (name excluding 'files/') cannot be more than 40 characters.\n", 'status': 'INVALID_ARGUMENT'}}
+  Retried 3/3 parse-failed tile(s) successfully
+  Batch complete: 1032 tiles, 1843 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [4/5] text-t0.7/run_1: OK
+  Retried 2/2 parse-failed tile(s) successfully
+  Batch complete: 1032 tiles, 1829 detections, 0 failed, $0.0000
+    Cleaned up 1 file(s) (1 errors)
+  [5/5] text-t0.7/run_3: OK
+======================================================================
+Phase h11 Complete
+======================================================================
+Completed: 5 units
+Failed: 0 units
+Running cost: $0.0000
+Checkpoint: /home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-256/text-n5/checkpoint.json
+
