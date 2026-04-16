@@ -120,6 +120,31 @@ SPECIAL_CONFIGS = {
             "scale-32",
         )
     },
+    # H12 v2 HP:HN ratio experiment (3 conditions; R2 reuses the H10 v2
+    # pool_160_hp4hn4 run per errata E52). Raw detections for the two new
+    # conditions live at outputs/h12-v2/{r1-hn-heavy,r3-hp-heavy}/run_{1..5}/.
+    # See studies/h12-v2-ratio.yaml and protocol-errata E52.
+    "h12v2-r1-hn-heavy": {
+        "pass_files": [
+            f"outputs/h12-v2/r1-hn-heavy/run_{i}/detections-detect_h12_r1-hn-heavy_v2-3-flash-2026-04-15.geojson"
+            for i in range(1, 6)
+        ],
+        "default_output_dir": "outputs/h12-v2/wbf/r1-hn-heavy",
+    },
+    "h12v2-r2-balanced": {
+        "pass_files": [
+            f"outputs/h10/evaluation-v2/pool_160_hp4hn4/run_{i}/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson"
+            for i in range(1, 6)
+        ],
+        "default_output_dir": "outputs/h12-v2/wbf/r2-balanced",
+    },
+    "h12v2-r3-hp-heavy": {
+        "pass_files": [
+            f"outputs/h12-v2/r3-hp-heavy/run_{i}/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.geojson"
+            for i in range(1, 6)
+        ],
+        "default_output_dir": "outputs/h12-v2/wbf/r3-hp-heavy",
+    },
 }
 
 
