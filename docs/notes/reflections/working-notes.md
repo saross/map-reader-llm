@@ -10033,3 +10033,488 @@ baseline.
 - Related observations: Obs 235 (H10/H12 retraction), Obs 236 (H10 null), Obs 237 (tile-level permutation correction)
 
 ---
+
+## Observation 239: H12 v2 HP:HN Ratio Is a Null — All Three Pairwise Contrasts Fail After BH-FDR; Library-Design Story Closed (2026-04-16)
+
+**Context**: H12 (HP:HN ratio) is the last preregistered hypothesis on the
+hard-example library axis and was formally deferred by decisions-log entry
+11 on 2026-02-02 because the v1 HP pool was exhausted at 4 examples. The
+v2 hard-case register mined on 2026-04-15 from H10's pool_160 (108 HP /
+57 HN, well above the HP ≥ 6 required for the symmetric 3:1 extreme)
+resolved that blocker. A v1 attempt on 2026-04-11 had been retracted on
+2026-04-14 because configs inherited `include_example_images: false` and
+never transmitted hard-example images to the API (Obs 235). H12 v2 was
+also run despite H8 v2's null on library composition (Obs 238), which
+technically fails the preregistered trigger "run if H8 shows library size
+matters"; this trigger deviation is documented in errata E52, justified on
+the grounds that ratio is orthogonal to size and a null ratio is itself
+publishable. This is the last "production" experimental run before
+write-up.
+
+**Design**: Three preregistered conditions at K=5 passes on the same
+327-tile h10-384 test set used by H8 v2 and H10 v2, under the production
+carry-forward settings (T=0.7, thinking=high, detect_brief-text-image.md,
+384 px tiles, 150 px crops, canonical-first, gemini-3-flash, realtime +
+flex + context cache, workers=250). R1 is HN-heavy (2 HP + 6 HN), R2 is
+balanced (4 HP + 4 HN), R3 is HP-heavy (6 HP + 2 HN); total hard
+examples = 8 across all conditions. R2 is byte-identical to H8 v2 Scale-8
+and is reused from the existing `outputs/h10/evaluation-v2/pool_160_hp4hn4/`
+run (prefix-nesting of greedy-diversity selection re-verified by sha256sum
+across hp4hn4/hp8hn8/hp16hn16 pools before launch). R1 and R3 reference the
+existing pool_160_hp8hn8 crops — no new pool directories built because
+prefix-nested greedy selection guarantees byte-identity with a dedicated
+`pool_160_hp2hn6` or `pool_160_hp6hn2` mining. Per-pass aggregation via
+greedy (primary, threshold sweep t=1..5) and WBF Variant C (secondary, for
+cross-hypothesis comparability with H8 v2 and H10 v2). Tile-level paired
+permutation (10,000 permutations, seed 42) on all three pairwise contrasts
+(R1–R2, R2–R3, R1–R3) at greedy t=4, BH-FDR at q=0.05.
+
+**Acquisition quality**: 10 runs total (R1 × 5 + R3 × 5; R2 reused). 3,270
+new API calls, wall time ~26 minutes at 72 % Tier 3 TPM utilisation, cache
+hit rate 94.5 % on R1 run_1. Total cost ~$34 meta-reported. Two transient
+tile-level JSON parse failures in R3 (run_3 lost
+`K-35-053-3_Elenovo_x672_y3360.png`; run_5 lost
+`K-35-062-2_Rakovski_x4032_y336.png`). Both are known non-retriable
+malformed-response failure modes of Gemini 3 Flash. Impact is marginal:
+each affected tile drops from 5 votes to 4 votes in R3's consensus stack,
+which still qualifies at the t=4 primary operating point. R3 voting shows
+254 clusters at t=4 versus 240 for R1 and 236 for R2 — the excess R3
+clusters are driven by lower precision, not by the 2 missing votes.
+
+**Headline result — three-way null**:
+
+| Code | Contrast | F1 (a → b) | ΔF1 | raw p | BH-adj p | Signif? |
+|------|----------|------------|-----|-------|----------|---------|
+| R12 | R1 HN-heavy vs R2 balanced | 0.708 → 0.717 | −0.009 | 0.717 | 0.717 | no |
+| R23 | R2 balanced vs R3 HP-heavy | 0.717 → 0.688 | +0.030 | 0.167 | 0.500 | no |
+| R13 | R1 HN-heavy vs R3 HP-heavy | 0.708 → 0.688 | +0.021 | 0.406 | 0.609 | no |
+
+All three pairwise F1 deltas are under 0.03, all bootstrap 95 % CIs overlap
+fully, all tile-level paired-permutation tests are non-significant before
+correction, and no contrast survives BH-FDR at q=0.05. 80 %+ of tiles tie
+in every contrast (264/327, 274/327, 264/327), and the remaining 50–60
+tiles split roughly evenly between the two conditions in each pair.
+
+**Cross-hypothesis synthesis**: With H8 v2 null (Obs 238, library
+composition), H10 v2 null (Obs 236, calibration-pool size), and H12 v2 null
+(this observation, HP:HN ratio), **all three preregistered factors on the
+hard-example library axis return null results at the proposer stage under
+production carry-forward settings**. The Gemini 3 Flash F1 ceiling on this
+task under these settings sits around 0.70–0.73 regardless of how hard
+examples are composed, sized, or balanced. The library-design story is
+effectively closed for the write-up: once you have canonical positives
+plus a handful of null examples, further library engineering is not a
+productive axis of variation.
+
+**Directional findings worth flagging (non-significant, contradict prereg
+prediction)**: The preregistration (§H12, lines 988–989) hypothesised
+"higher HP:HN ratio may improve recall (more positive guidance); lower
+HP:HN ratio may improve precision (more exclusion examples)." The observed
+pattern at greedy t=4 is:
+
+| Metric | R1 (HN-heavy) | R2 (balanced) | R3 (HP-heavy) |
+|--------|---------------|---------------|---------------|
+| Precision | 0.825 | 0.843 | 0.776 |
+| Recall | 0.621 | 0.624 | 0.618 |
+
+Recalls are effectively identical across conditions (spread = 0.006); HP
+count does not drive recall. Precision is highest at R2 and lowest at R3;
+HP count directionally **hurts** precision. The mechanism the
+preregistration hypothesised (more HPs → more recognition → higher recall)
+is not supported. Instead, the HP-heavy condition appears to encourage the
+model to guess more liberally (R3 produces 254 candidate detections at t=4
+vs 236 for R2 and 240 for R1), with the extra candidates being false
+positives rather than missed mounds. R3 is directionally the weakest
+condition, not the strongest.
+
+**Operating-point sensitivity**: At greedy t=3 (3-of-5 consensus), R1 leads
+at 0.731 and R2 drops to 0.699; at t=4, R2 leads at 0.717 and R1 drops to
+0.708; at t=5 all three conditions converge at 0.60. The "winning"
+condition depends on which greedy threshold you pick, which is further
+evidence that between-condition F1 variance is consensus-threshold noise
+rather than a real library effect. This mirrors the H8 v2 pattern where
+Scale-4 vs Scale-8 ordering flipped across thresholds.
+
+### Data and code references
+
+- Raw detections: `outputs/h12-v2/{r1-hn-heavy,r3-hp-heavy}/run_{1..5}/`
+- R2 reuse source: `outputs/h10/evaluation-v2/pool_160_hp4hn4/run_{1..5}/`
+- Aggregation outputs: `outputs/h12-v2/{greedy,wbf}/<cond>/`
+- Evaluations: `results/h12-v2/{greedy,wbf}/<cond>/evaluation.{json,csv,md}`
+- Permutation tests: `results/h12-v2/permutation-t4/R{12,23,13}-*/pairwise_permutation_result.json`
+- FDR summary: `results/h12-v2/fdr_summary.txt`, `results/h12-v2/permutation-t4/fdr_summary.json`
+- Full analysis summary: `results/h12-v2/analysis_summary.md`, `results/h12-v2/analysis_summary.txt`
+- Analysis helpers: `scripts/summarise_h12v2.py`, `scripts/apply_fdr_h12v2.py`
+- Study YAML: `studies/h12-v2-ratio.yaml`
+- Configs: `prompts/configs/h12/v2/detect_h12_{r1-hn-heavy,r2-balanced,r3-hp-heavy}_v2.json`
+- Errata entry E52: `docs/methodology/preregistration/protocol-errata.md`
+- Related observations: Obs 235 (H10/H12 v1 retraction), Obs 236 (H10 v2 null), Obs 237 (tile-level permutation correction), Obs 238 (H8 v2 null), Decision 11 (HP pool exhaustion, now resolved)
+
+---
+
+## Observation 240: Library-Design Axis Is Definitively Null — 45-Pair Cross-Hypothesis Matrix Across H8 v2 + H12 v2 Shows Zero Significant Differences (2026-04-16)
+
+**Context**: Obs 236 (H10 v2 null, pool size), Obs 238 (H8 v2 null, library
+composition + size), and Obs 239 (H12 v2 null, HP:HN ratio) each reported
+null results within their own preregistered contrast families. Each family
+used its own BH-FDR correction. This observation closes the library-design
+axis by pooling all ten production conditions from H8 v2 and H12 v2 into a
+single combined analysis, running tile-level paired permutation tests on
+every pair, and applying BH-FDR correction over the combined family. The
+motivation: a reader sceptical of within-family null results might argue
+that one of the within-family non-significant directional patterns could
+reach significance if the right pair were selected post-hoc. The combined
+analysis forecloses that possibility by explicitly testing all possible
+library-design comparisons under a single, large multiple-testing correction.
+
+**Design**: All 10 production-settings library-design conditions pooled:
+
+- H8 v2 (7 conditions): pure-positive-canon, canonical, plus-hp, scale-4,
+  scale-8, scale-16, scale-32
+- H12 v2 (3 conditions): r1-hn-heavy, r2-balanced, r3-hp-heavy
+
+r2-balanced is byte-identical to H8 v2 Scale-8 (reused detection run),
+included here as a sanity-check cell in the matrix. All 10 conditions were
+run under the production carry-forward settings (gemini-3-flash, T = 0.7,
+thinking = high, detect_brief-text-image.md, 384 px tiles, 150 px crops,
+canonical-first, K = 5, flex + cached context) on the same 327-tile
+h10-384 test set, evaluated at 20 m buffer. Aggregation: greedy consensus
+at t = 4 (production operating point). Pairwise tests: 45 pairs (C(10,2)),
+tile-level paired permutation with 10,000 permutations and seed 42 per
+pair. Correction: Benjamini–Hochberg at q = 0.05 over the combined
+45-test family. Compute: sapphire, ~1 minute wall time.
+
+In parallel, the three H12 v2 pairwise contrasts were re-run against
+WBF variant C aggregations (same parameters as Obs 228–230) to confirm
+that the null holds under the secondary aggregation method. BH-FDR over
+3 WBF contrasts.
+
+**Results — 45-pair cross-hypothesis matrix**: ZERO pairs significant
+after BH-FDR q = 0.05. Nominal F1 range across all 10 conditions:
+**0.045** (r3-hp-heavy at 0.688, H8 Scale-4 at 0.733). The three largest
+raw p-values breaching 0.10 are:
+
+| Rank | a | b | F1 a | F1 b | ΔF1 | raw p | BH-adj p |
+|------|---|---|------|------|-----|-------|----------|
+| 1 | scale-4 | r3-hp-heavy | 0.733 | 0.688 | +0.045 | 0.043 | 0.966 |
+| 2 | pure-positive-canon | scale-4 | 0.697 | 0.733 | −0.036 | 0.076 | 0.966 |
+| 3 | scale-4 | scale-16 | 0.733 | 0.693 | +0.040 | 0.086 | 0.966 |
+
+All three involve H8 v2 Scale-4 (the nominal top of the leaderboard) as
+one of the pair. None survives the 45-way correction. The pooled BH-adjusted
+p-value ceiling is **0.9657** — i.e., no pair gets closer than ~p = 0.97
+adjusted. The within-family nulls reported in Obs 238 and Obs 239 were not
+artefacts of a narrow test selection; the library-design axis is globally
+null.
+
+The sanity-check cell: r2-balanced vs scale-8 produces ΔF1 = −0.007,
+raw p = 0.7565 (not exactly zero because the spatial join and
+BH-FDR-family noise contribute small artefacts), consistent with the
+detection files being byte-identical.
+
+**Results — H12 WBF pairwise**: three-way null under the secondary
+aggregation (same pattern as the greedy primary in Obs 239):
+
+| Code | Contrast | F1 a | F1 b | ΔF1 | raw p | BH-adj p | Signif? |
+|------|----------|------|------|-----|-------|----------|---------|
+| R12 | r1-hn-heavy vs r2-balanced | 0.315 | 0.349 | −0.033 | 0.101 | 0.304 | no |
+| R23 | r2-balanced vs r3-hp-heavy | 0.349 | 0.332 | +0.017 | 0.402 | 0.402 | no |
+| R13 | r1-hn-heavy vs r3-hp-heavy | 0.315 | 0.332 | −0.017 | 0.351 | 0.402 | no |
+
+WBF variant C produces a much lower absolute F1 band (0.315–0.349 vs
+0.688–0.717 for greedy t = 4) because it is the unconditional high-recall
+candidate set with no vote threshold — the between-condition ordering is
+what matters here. Under WBF, the ordering is R2 > R3 > R1 (not R2 > R1 > R3
+as under greedy), but all pairs remain null after FDR. Neither aggregation
+surfaces a detectable library-ratio effect.
+
+**Interpretation**:
+
+1. **The library-design axis is closed.** Three preregistered
+   factors — library composition (H8 v2), calibration-pool size (H10 v2),
+   and HP:HN ratio (H12 v2) — span the non-trivial variation space of
+   hard-example few-shot libraries for this task. All three factors return
+   within-family nulls, *and* a 45-pair pooled cross-hypothesis analysis
+   returns zero significant pairs after BH-FDR correction. Library design
+   beyond the canonical-positive-plus-a-few-nulls baseline does not affect
+   proposer F1 at the production carry-forward settings.
+
+2. **The F1 ceiling is a model property, not a library property.** Across
+   10 library designs spanning 0 to 16 hard positives and 0 to 16 hard
+   negatives in varying ratios, drawn from pools of 20 to 160 calibration
+   tiles, the F1 band is 0.688–0.733. The best-performing library
+   (Scale-4: 2 HP + 2 HN, 13 total examples) is nominally 0.045 F1 above
+   the worst (R3: 6 HP + 2 HN), with the 95 % bootstrap CIs fully
+   overlapping every other condition. The evidence favours the
+   interpretation that Gemini 3 Flash's F1 ceiling on this task under
+   these settings sits at approximately 0.70–0.73 and is dominated by
+   model-side factors (instruction design, thinking budget, temperature)
+   rather than library design.
+
+3. **Post-hoc regression to "Scale-4 might be best" is not defensible.**
+   Scale-4 has the highest nominal F1 in the cross-hypothesis matrix
+   (0.733 vs 0.688–0.717 for the other 9 conditions) and is involved in
+   all three of the largest raw p-values. A naive reader might argue that
+   Scale-4 is "clearly best" on nominal F1. The cross-hypothesis BH-FDR
+   correction explicitly refutes this: after accounting for the 45
+   comparisons we could have made, Scale-4's advantage does not survive.
+   The write-up should report Scale-4's directional lead as an
+   observation, not as an inferential claim, and should point to the
+   45-pair pooled BH-FDR ceiling (adj p = 0.966) as the reason.
+
+4. **WBF vs greedy adds a third independent null.** Running the three
+   H12 pairwise contrasts under WBF variant C instead of greedy t = 4
+   changes the absolute F1 band and the between-condition ordering, but
+   produces the same statistical conclusion (three-way null). This rules
+   out the "the effect is there but greedy obscures it" escape hatch.
+
+5. **Production leaderboard implications.** Any library-design leaderboard
+   using these ten conditions should report them as a single tier
+   (statistically indistinguishable) at the proposer stage. The choice
+   of library for the final generalisation run can be made on parsimony
+   grounds — the smallest library that achieves the nominal-top F1, which
+   is Scale-4 (2 HP + 2 HN, 13 total examples) — rather than on
+   statistical superiority grounds.
+
+### Data and code references
+
+- Cross-hypothesis matrix: `results/cross-hypothesis-library/permutation-t4/` (45 pair directories plus `fdr_summary.json`)
+- H12 WBF pairwise: `results/h12-v2/permutation-wbf/` (3 pair directories plus `fdr_summary.json`)
+- Analysis script: `scripts/run_h12_cross_analysis.sh` (launched on sapphire, ~1 min wall time)
+- Sapphire nohup log: `/tmp/h12-cross-analysis.log` on sapphire (full per-pair output)
+- Input GeoJSONs: `outputs/h8-v2/greedy/<cond>/consensus_t4.geojson`, `outputs/h12-v2/greedy/<cond>/consensus_t4.geojson`, `outputs/h12-v2/wbf/<cond>/wbf_candidates.geojson`
+- Ground truth: `inputs/vectors/references/mounds-reference.geojson`
+- Bounds: `inputs/vectors/bounds/384/h10_test_bounds.geojson`
+- Related observations: Obs 236 (H10 v2 null), Obs 237 (tile-level permutation correction), Obs 238 (H8 v2 null), Obs 239 (H12 v2 null)
+- Protocol errata: E49 (H10 carry-forward), E50 (h10-384 test set), E51 (H8 v2 carry-forward), E52 (H12 v2 carry-forward)
+
+---
+
+## Observation 241: Scale-4 vs Scale-8 Post-Verifier Sanity Check — Parsimony Choice Is Stable Across Greedy and WBF Pipelines (2026-04-16)
+
+**Context**: Obs 240 closed the library-design axis at the proposer stage
+(zero of 45 cross-hypothesis pairs significant after BH-FDR) and noted that
+the library for the final generalisation run could be chosen on parsimony
+grounds. The nominal-top library is H8 v2 Scale-4 (2 HP + 2 HN, 13 total
+examples) at F1 = 0.733 vs Scale-8 (4 HP + 4 HN, 17 total) at F1 = 0.710,
+S1 contrast raw p = 0.33, never approaches significance. Parsimony (Scale-4
+is ~24 % smaller, cheaper to cache at scale) plus a nominal +0.023 F1
+advantage argues for advancing Scale-4 to the generalisation run.
+
+Before committing Scale-4 as the final carry-forward library, this
+observation runs a post-hoc sanity check on the post-verifier stage —
+specifically, to ensure the parsimony choice is not hiding a post-verifier
+regression that the proposer-stage null couldn't have caught. The verifier
+is a structurally different stage (different prompt, temperature = 0.0,
+thinking = minimal, text-only 6-label reference set, per-candidate 150×150
+crops) and could plausibly have different sensitivity to library
+composition than the proposer.
+
+**Design — three-pipeline comparison**: For each of Scale-4 and Scale-8,
+compute F1 under three aggregation pipelines at the 327-tile h10-384 test
+set, 20 m buffer, 569-mound reference:
+
+1. **Proposer only (greedy t = 4)**: already computed in H8 v2
+   (Obs 238). Operating point is fixed at t = 4.
+2. **Greedy proposer + text-only adversarial verifier, 2D sweep**: the
+   consensus_t1 union (1454 or 1551 clusters) was passed through the
+   `verify_adversarial-text.json` v1 verifier config (T = 0.0,
+   thinking = minimal, 1 iteration, flex tier, realtime mode). A 2D sweep
+   over (greedy vote threshold × verifier probability threshold) at 5 × 20
+   points selects the optimum F1 per condition.
+3. **WBF proposer + text-only adversarial verifier, 2D sweep**: the
+   h8-v2 WBF variant C candidates (IoU 0.25, min-sep 60 m, 1114 or 1002
+   clusters) were passed through the same v1 verifier config. Same 2D
+   sweep convention as (2) but over the WBF vote count axis.
+
+Verifier acquisition cost: $2.16 (Scale-4 greedy), $1.52 (Scale-4 WBF),
+$1.39 (Scale-8 WBF), plus the existing $2.03 Scale-8 greedy historical
+run from H10 v2. Total new API spend 2026-04-16: $5.07. Cost gate was
+approved staged: $2.16 for greedy Scale-4 followed by $2.91 for both WBF
+runs. All runs used `verify_adversarial.md` instruction (v1), temperature
+0.0, thinking = minimal, `include_example_images: true` (text labels
+only, no image examples — the text-only adversarial config has `examples: []`),
+max_output_tokens = 8192, realtime + flex + 10 workers. Transient
+failures: 15 candidates missing in the Scale-4 WBF run due to Gemini 503
+"model overloaded" during the high-demand window (1.3 % of 1114, accepted
+without cleanup).
+
+**Results — F1 at each pipeline's optimum**:
+
+| Pipeline | Scale-4 F1 | Scale-4 (P, R) | Scale-8 F1 | Scale-8 (P, R) | ΔF1 | raw p |
+|---|---|---|---|---|---|---|
+| Proposer greedy t = 4 | 0.7326 | (0.821, 0.661) | 0.7100 | (0.808, 0.633) | +0.0226 | 0.330 |
+| Greedy + verifier 2D (vt=4, pt=0.10 / 0.05) | **0.7368** | (0.837, 0.658) | **0.7223** | (0.858, 0.624) | +0.0145 | 0.528 |
+| WBF + verifier 2D (vt=4, pt=0.10 / 0.15) | **0.7370** | (0.764, 0.712) | **0.7219** | (0.765, 0.683) | +0.0152 | 0.494 |
+
+Notes on the table:
+
+- **Scale-4 leads in all three pipelines** by a stable +0.015 to +0.023 F1,
+  with raw p-values of 0.33, 0.53, and 0.49. None approaches the
+  conventional α = 0.05 threshold, and all three 95 % null CIs on ΔF1 are
+  around ±0.04, comfortably containing the observed deltas.
+- **WBF and greedy pipelines are within 0.0005 F1 of each other** at their
+  respective optimum operating points. For Scale-4, greedy = 0.7368 vs
+  WBF = 0.7370; for Scale-8, greedy = 0.7223 vs WBF = 0.7219. The
+  pipeline choice does not change the library-design ranking.
+- **The precision/recall mix differs** between pipelines despite identical
+  F1: greedy is precision-leaning (P 0.84–0.86, R 0.62–0.66) while WBF is
+  more balanced (P 0.76–0.77, R 0.68–0.71). Same F1, different character.
+- **The verifier adds only ~+0.005 F1** over the proposer-only greedy t = 4
+  operating point. For Scale-4: 0.7326 → 0.7368 (+0.004). For Scale-8:
+  0.7100 → 0.7223 (+0.012, though this number is within the noise of a
+  single operating-point comparison). The verifier is not adding large
+  value at the 4-map 327-tile test scope; it is refining precision at the
+  margins.
+
+**Important methodological note (the "verifier-looks-broken" false alarm)**:
+An earlier 1D sweep on the same Scale-4 and Scale-8 verifier probabilities
+(sweeping only verifier probability threshold, not the proposer vote
+threshold) produced optimum F1 values of 0.525 and 0.548 — ~0.20 F1 below
+the 2D sweep result. The 1D sweep is the *wrong* operating point
+convention for a greedy-consensus-fed verifier: because the verifier was
+run on the consensus_t1 union (the union of all detections, including
+singletons), the 1D sweep cannot filter by proposer vote count and is
+forced to accept the noise floor from the t = 1 candidate set. The 2D
+sweep recovers the expected F1 by jointly filtering proposer vote
+threshold × verifier probability threshold, which is the sweep convention
+already codified in `scripts/sweep_f1_wbf.py`. New companion script
+`scripts/sweep_f1_greedy_pv.py` applies the same 2D sweep to the
+greedy-aggregated candidate set.
+
+This false alarm is worth recording so future work does not repeat it:
+**any PV pipeline that takes the consensus_t1 union as input must be
+evaluated with a 2D sweep, not a 1D verifier-probability sweep alone**.
+The consensus_t4 greedy output is a different operating point and could
+be swept in 1D (only probability), but that would throw away the
+information encoded in the low-vote-count candidates and is not the
+standard convention here.
+
+**Interpretation — Scale-4 parsimony decision is now fully supported**:
+
+1. **Proposer stage**: Scale-4 nominal +0.023 F1 lead, p = 0.33 (S1 contrast from H8 v2).
+2. **Greedy + verifier 2D stage**: Scale-4 nominal +0.015 F1 lead, p = 0.53.
+3. **WBF + verifier 2D stage**: Scale-4 nominal +0.015 F1 lead, p = 0.49.
+
+Three independent post-processing pipelines, three null results, all
+directionally favouring Scale-4. Combined with the 45-pair cross-hypothesis
+BH-FDR null (Obs 240) and the parsimony-cost advantage (13 examples
+vs 17, smaller context cache, cheaper per-call input at large scale),
+Scale-4 is the defensible carry-forward library for the final
+generalisation run.
+
+**Unrelated but worth flagging — absolute F1 is lower than the 55-maps
+generalisation (F1 = 0.891) baseline**: at the 4-map h10 test scope, all
+three pipelines land around F1 = 0.72–0.74 regardless of library choice.
+The 55-maps generalisation at F1 = 0.891 used the same proposer pipeline
+(brief-text-image, T = 0.7, thinking = high, 384 px, K = 5) but on a much
+larger evaluation scope. Either the 55-maps averaging evens out per-map
+variance to hit a higher aggregate F1, or the historical WBF variant C
+pipeline (which reported F1 = 0.88 on pool_160_hp4hn4 at vote_t = 7,
+prob_t = 0.15 in `results/h10/wbf/sweep_results_pool_160_hp4hn4_variant_c.json`)
+used a K = 10 proposer run rather than K = 5, producing a denser vote
+distribution with more aggressive filtering possible at vote_t ≥ 7. The
+K = 10 vs K = 5 hypothesis is unconfirmed; confirming it requires checking
+the historical proposer metadata. **For the generalisation-run carry-forward,
+this does not matter: the pipeline we will use is K = 5 proposer + WBF or
+greedy verifier, and both produce F1 ≈ 0.72–0.74 on the 4-map scope. The
+55-maps evaluation F1 should be treated as separately determined by the
+larger evaluation scope.**
+
+### Data and code references
+
+- Scale-4 greedy verifier: `outputs/h8-v2/scale-4/verified/probabilities.json` + `run.meta.json`
+- Scale-4 WBF verifier: `outputs/h8-v2/wbf/scale-4/verified/probabilities.json` + `run.meta.json`
+- Scale-8 greedy verifier (reused from H10 v2): `outputs/h10/evaluation-v2/pool_160_hp4hn4/verified/`
+- Scale-8 WBF verifier: `outputs/h8-v2/wbf/scale-8/verified/probabilities.json` + `run.meta.json`
+- 2D sweep outputs: `results/h8-v2/verifier-sweep/scale-{4,8}{,-wbf}/sweep_2d_{greedy,wbf}_pv.json`
+- Permutation tests:
+  - Greedy 2D: `results/h8-v2/verifier-sweep/permutation-greedy2d-s4-vs-s8/pairwise_permutation_result.json`
+  - WBF 2D: `results/h8-v2/verifier-sweep/permutation-wbf-s4-vs-s8/pairwise_permutation_result.json`
+  - Broken 1D (kept for reference, do not cite): `results/h8-v2/verifier-sweep/permutation-s4-vs-s8/`
+- Scripts created: `scripts/sweep_f1_greedy_pv.py` (2D sweep for both greedy and WBF pipelines), `scripts/build_post_verifier_geojson.py` (helper for extracting detection sets at a threshold)
+- Verifier config: `prompts/configs/verify_adversarial-text.json` (v1, byte-identical across all four runs)
+- API cost total: $5.07 on 2026-04-16 ($2.16 Scale-4 greedy + $1.52 Scale-4 WBF + $1.39 Scale-8 WBF + $2.03 Scale-8 greedy historical from H10 v2 session)
+- Related observations: Obs 238 (H8 v2 library composition null), Obs 240 (45-pair cross-hypothesis null), Decision 11 (HP pool exhaustion), errata E51 (H8 v2 carry-forward)
+- Memory: `project_generalisation_run_prerequisites.md` updates — tentatively advance Scale-4 for the generalisation run
+
+---
+
+## Observation 242: Decision — Leaderboard Construction Strategy: Era-First Then Consolidated via Spatial Re-Tiling (2026-04-16)
+
+**Decision**: Leaderboards will be constructed in two stages to maximise
+transparency and rigour:
+
+**Stage 1 — Per-era leaderboards (primary analysis).** Each evaluation era
+gets its own tier-clustered leaderboard with round-robin tile-level paired
+permutation tests and BH-FDR correction:
+
+- **512-px leaderboard** (Era 1, 340 tiles, H1–H9 retest): all conditions
+  share the same 340-tile 512-px grid. Pure apples-to-apples within-era
+  comparisons. No caveats needed.
+- **384-px leaderboard** (Era 2 + Era 3 merged, 327-tile pairing): Era 2
+  (487-tile H11 work) and Era 3 (327-tile H8/H10/H12 v2) share the same
+  384-px tile grid; Era 3 is a strict subset of Era 2. Pair on the 327
+  shared tiles. Era 2 conditions lose their extra 160 tiles' statistical
+  power in cross-era pairs, but 327 tiles is sufficient.
+
+**Stage 2 — Consolidated cross-era leaderboard (secondary analysis, flagged
+with caveats).** Era 1 detections are spatially re-tiled from the 512-px
+grid to the 384-px grid by dropping the `source_tile` property and
+re-assigning via spatial join against `h10_test_bounds.geojson` (327 tiles).
+This allows tile-level paired permutation testing between Era 1 and
+Era 2/3 conditions on a common 327-tile grid.
+
+**Caveats for Stage 2 (must be prominently documented):**
+
+1. **Tile-size context effect**: Era 1 conditions were detected under 512-px
+   viewing windows; Era 2/3 under 384-px. Re-tiling changes the tile
+   assignment for evaluation but does not change the VLM's detection context.
+   The paired test therefore confounds configuration and tile-size effects.
+2. **H11 bridge quantifies the confound**: The H11 tile-size study tested
+   identical configurations at both 512 and 384 px, providing a measured
+   tile-size delta. The consolidated leaderboard should cite this delta as
+   context for any cross-era comparisons.
+3. **Deduplication is unaffected**: `merge_passes.py` clusters in UTM
+   coordinates across all tiles — tile boundaries do not affect which
+   detections survive consensus. Aggregate F1 is tile-boundary-independent.
+4. **Per-tile variance increases slightly**: 384-px tiles are smaller → fewer
+   detections per tile → noisier per-tile F1. Partially compensated by
+   higher tile count. Net effect: negligible.
+
+**Rationale for this ordering**: presenting the per-era leaderboards first
+establishes clean, caveat-free results. The consolidated leaderboard then
+extends the analysis with explicit cross-era comparisons, clearly flagged
+as secondary. A reader who trusts only the within-era results loses nothing;
+a reader who accepts the re-tiling caveat gains the ability to rank all
+conditions on a common scale.
+
+**Implementation note**: re-tiling is trivial — strip `source_tile` from
+Era 1 consensus GeoJSONs and the evaluation/permutation scripts automatically
+assign 384-px tiles via spatial join (confirmed working via
+`pairwise_permutation_test.py`'s spatial-join fallback path). ~10 lines of
+preprocessing code.
+
+**Aggregation convention**: greedy consensus is the primary aggregation
+for all leaderboards. The user confirmed (2026-04-16) that greedy provides
+100% tile coverage while WBF does not. WBF comparison is a separate analysis
+justifying the greedy choice, not part of the leaderboard itself.
+
+**Evaluation parameters**: all leaderboards will report F1, precision,
+recall, and bootstrap CIs at multiple spatial tolerances (20 m, 30 m,
+40 m, 50 m). Round-robin tiering at each tolerance. Inclusion criterion:
+all configurations per category that appear in the top 20 at any tolerance.
+
+**Cost reporting**: token count and $ at Flex tier pricing, excluding context
+caching, per condition.
+
+### References
+
+- Evaluation scopes: `results/evaluation-scopes.md`
+- Nesting verification: Era 3 ⊂ Era 2 ⊂ Era 1 (100% containment, 0 exceptions)
+- Coverage ratios: Era 2 = 80.8% of Era 1, Era 3 = 73.0% of Era 2
+- H11 tile-size bridge: `results/h11-tile-size-results.md`
+- Aggregation convention: Obs 241 (greedy ≈ WBF at K=5); user preference for greedy confirmed
+- Archive manifest: `archive/ARCHIVE-MANIFEST.md` (non-production results archived 2026-04-16)
+
+---

@@ -59,3 +59,9 @@ Although CC did very well mining the session archives for 'eta' human-llm-intera
 
 Observation 19:
 Throughout most of this project, CC has been extemely corrigible. Specifically, CC has regularly grasped the *intent* of prompts, instructions, experiments, etc. For some reason that broke down with the H10/H12 exploratory tests, where CC correctly assembled few-shot image libraries from an expanded calibration tile set, but then *ran the prompt text-only*. Not only did this error cost significant (wasted) API credits (we already completed n=30 runs on the underlying text-only config and had nothing new to learn), but also wasted half a day's time trying to understand performance (which looked strong but was just an artefact arising from statitistical variation and operation over a smaller test tile set). On reflection, not an entire waste of API / time since we did get the superior WBF aggregation, and development of more robust experimental protocols.
+
+Observation 20:
+Has been difficult to get my intent regarding API usage to stick: gate all useage with a review presented to me, only proceed with my approval after confirming configuration - when an outdated SDK on this machine cause 'flex' mode on the gemini API to fail, CC just ran it in 'normal' mode, costing some $30-35 extra for no benefit. Have now tried to ensure that the intent is in memory and scratchpad (with defaults how I want them in code).
+
+Observation 21: 
+Need to do better with recording past decisions and recording intent - it was a real struggle to get to the point where CC and I agreed on what tile sets were 'production' - I had one mistake in my mental model, and I really had to coax CC along to get us on the same page. 
