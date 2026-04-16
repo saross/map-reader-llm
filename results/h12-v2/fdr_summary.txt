@@ -1,0 +1,30 @@
+============================================================================================================
+H12 v2 — tile-level permutation tests, greedy t=4, 10,000 permutations, seed 42
+Benjamini-Hochberg FDR correction at q=0.05 over 3 pairwise contrasts
+============================================================================================================
+
+Code Contrast                                F1 (a -> b)                 ΔF1     raw p   BH-adj p   signif?
+------------------------------------------------------------------------------------------------------------
+R12  R1 (HN-heavy)   vs R2 (balanced)        0.708 -> 0.717          -0.0087    0.7168     0.7168        no
+R23  R2 (balanced)   vs R3 (HP-heavy)        0.717 -> 0.688          +0.0295    0.1667     0.5001        no
+R13  R1 (HN-heavy)   vs R3 (HP-heavy)        0.708 -> 0.688          +0.0208    0.4060     0.6090        no
+
+============================================================================================================
+Per-tile pairing (327 tiles, paired micro-F1 swap)
+============================================================================================================
+Code Contrast                                    A wins    B wins      Ties
+------------------------------------------------------------------------------------------------------------
+R12  R1 (HN-heavy)   vs R2 (balanced)                33        30       264
+R23  R2 (balanced)   vs R3 (HP-heavy)                32        21       274
+R13  R1 (HN-heavy)   vs R3 (HP-heavy)                36        27       264
+
+============================================================================================================
+OVERALL:
+  ZERO contrasts are significant after BH-FDR correction at q=0.05.
+  All three H12 v2 pairwise contrasts are NULL.
+  Combined with the H8 v2 null (library composition) and the H10 v2
+  null (calibration-pool size), this closes the hard-example library
+  axis at the proposer stage across all three preregistered factors.
+============================================================================================================
+
+Summary written to: results/h12-v2/permutation-t4/fdr_summary.json

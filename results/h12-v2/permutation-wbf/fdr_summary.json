@@ -1,0 +1,45 @@
+{
+  "method": "BH-FDR q=0.05 over 3 H12 WBF contrasts",
+  "contrasts": [
+    {
+      "code": "R12",
+      "a": "r1-hn-heavy",
+      "b": "r2-balanced",
+      "f1_a": 0.315436,
+      "f1_b": 0.348529,
+      "delta": -0.033093,
+      "p": 0.1014,
+      "wins_a": 26,
+      "losses_a": 42,
+      "ties": 259,
+      "bh_adj_p": 0.3042
+    },
+    {
+      "code": "R23",
+      "a": "r2-balanced",
+      "b": "r3-hp-heavy",
+      "f1_a": 0.348529,
+      "f1_b": 0.331921,
+      "delta": 0.016609,
+      "p": 0.402,
+      "wins_a": 40,
+      "losses_a": 25,
+      "ties": 262,
+      "bh_adj_p": 0.40199999999999997
+    },
+    {
+      "code": "R13",
+      "a": "r1-hn-heavy",
+      "b": "r3-hp-heavy",
+      "f1_a": 0.315436,
+      "f1_b": 0.331921,
+      "delta": -0.016485,
+      "p": 0.351,
+      "wins_a": 41,
+      "losses_a": 41,
+      "ties": 245,
+      "bh_adj_p": 0.40199999999999997
+    }
+  ],
+  "any_significant": false
+}
