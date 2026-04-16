@@ -2,7 +2,7 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-03-15
+**Last updated**: 2026-04-15
 
 ---
 
@@ -28,7 +28,7 @@
 | H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | Complete (implicit) | 2026-03-07 |
 | H10 | Training Pool Size | Pool size | B | Not started (HP pool exhausted) | — |
 | H11 | Tile Size Effects | Tile dimensions | B | Complete (384 pathway closed) | 2026-03-15 |
-| H12 | HP:HN Ratio | Hard example ratio | B | Deferred (post-H10; HP pool exhausted) | — |
+| H12 | HP:HN Ratio | Hard example ratio | B | In progress — h12-v2 (deferral resolved by H10 v2 pool mining; see errata E52) | 2026-04-15 |
 | H13 | Overlap/Stride Effects | Tile overlap | B | Not started (low priority) | — |
 | H14 | Cross-Model Consistency | Provider | C | Deferred to future work | — |
 | H15 | Cross-Model Voting | Multi-provider voting | C | Deferred to future work | — |

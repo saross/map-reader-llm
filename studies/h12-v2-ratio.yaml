@@ -1,0 +1,273 @@
+# H12 v2 — HP:HN Ratio (384 px / v2 pipeline)
+# ==============================================
+#
+# Tests whether the ratio of hard positives to hard negatives in the
+# few-shot library affects detection performance, holding total hard
+# examples constant at 8. Three conditions — HN-heavy (1:3), balanced
+# (1:1), HP-heavy (3:1) — using the H8 v2 production carry-forward
+# settings (gemini-3-flash, T=0.7, thinking=high,
+# detect_brief-text-image.md, 384 px tiles, 150 px crops, K=5, flex +
+# cache).
+#
+# Rationale for running:
+#
+# - H12 was formally deferred in decisions-log entry 11 (2026-02-02)
+#   because the HP pool was exhausted at 4 examples. The v2 hard-case
+#   register mined on 2026-04-15 from H10's pool_160 now contains 108
+#   HP and 57 HN candidates — ample for HP=6. The Decision 11 blocker
+#   is resolved.
+# - H12's preregistered trigger ("run if H8 shows library composition
+#   matters") is not strictly met — H8 v2 returned a null result for
+#   all 7 library-composition contrasts (Obs 238). H12 is being run
+#   anyway as the final production experiment before write-up: the
+#   ratio axis is orthogonal to the size axis tested in H8, and a null
+#   ratio result is itself a publishable finding. This deviation is
+#   documented in a new protocol-errata entry alongside E49/E50/E51.
+# - The v1 attempt on 2026-04-11 was retracted on 2026-04-14 because
+#   auto-generated configs inherited include_example_images: false
+#   from detect_brief-text.json and never transmitted the hard-example
+#   images to the API. H12 v2 uses hand-written configs modelled on
+#   detect_h8_scale-8_v2.json, all with include_example_images: true,
+#   and honours the launch-time experiment-intent guard.
+#
+# Reuse: R2 (balanced, 4 HP + 4 HN) is byte-identical to H8 v2 Scale-8
+# and the H10 v2 pool_160_hp4hn4 run. Prefix-nesting of greedy-diversity
+# selection was re-verified on 2026-04-15 by sha256sum across
+# pool_160_hp4hn4 / hp8hn8 / hp16hn16 for hp_01..hp_04 and hn_01..hn_04.
+# R2 is NOT re-launched; analysis references
+# `outputs/h10/evaluation-v2/pool_160_hp4hn4/run_{1..5}/` directly.
+#
+# Library layout: R1 and R3 reference existing crops under
+# `inputs/examples/h10-v2/pool_160_hp8hn8/` (hp_01..06 and hn_01..06).
+# No new pool directories are built — the prefix-nested greedy
+# selection guarantees these bytes are identical to what
+# `build_example_pool.py --hp-count 2 --hn-count 6` or
+# `--hp-count 6 --hn-count 2` with seed=42 would produce.
+#
+# Usage:
+#   # Dry-run a single condition:
+#   .venv/bin/python scripts/4_detect_mounds_batch.py \
+#       --config prompts/configs/h12/v2/detect_h12_r1-hn-heavy_v2.json \
+#       --manifest inputs/calibration/h10-384/test_manifest.json \
+#       --tiles-dir inputs/tiles_384 \
+#       --tile-size 384 \
+#       --output-dir outputs/h12-v2/r1-hn-heavy/run_1 \
+#       --mode realtime \
+#       --service-tier flex \
+#       --use-cache \
+#       --workers 250 \
+#       --dry-run
+#
+#   # Launch one pass for one condition:
+#   .venv/bin/python scripts/4_detect_mounds_batch.py \
+#       --config prompts/configs/h12/v2/detect_h12_r1-hn-heavy_v2.json \
+#       --manifest inputs/calibration/h10-384/test_manifest.json \
+#       --tiles-dir inputs/tiles_384 \
+#       --tile-size 384 \
+#       --output-dir outputs/h12-v2/r1-hn-heavy/run_1 \
+#       --mode realtime \
+#       --service-tier flex \
+#       --use-cache \
+#       --workers 250
+#
+# Repeat per pass (run_1..run_5) and per condition (2 of the 3 —
+# R2 is reused from H10 v2 / H8 v2 and not re-launched).
+
+study:
+  name: "H12 v2: HP:HN Ratio (384 px / production carry-forward)"
+  version: "1.0"
+  description: |
+    Tests the HP:HN ratio in the few-shot library at fixed total hard
+    count = 8. Three conditions: R1 HN-heavy (2 HP + 6 HN), R2 balanced
+    (4 HP + 4 HN, reused from H8 v2 Scale-8), R3 HP-heavy (6 HP + 2 HN).
+    Runs at 384 px tiles with T=0.7, thinking=high, K=5, v2 150 px
+    hard-example crops, flex tier + cached context.
+  phase: "h12-v2"
+  hypothesis: "H12"
+  created: "2026-04-15"
+
+# Carried-forward parameters — production image-track settings aligned
+# with H8 v2 and H10 v2. These deviate from the original preregistration
+# (T=0.0, thinking=minimal, 512 px, K=10) and are documented across
+# protocol-errata entries E49/E50/E51 plus the new H12 v2 entry.
+carried_forward:
+  model: "gemini-3-flash"
+  modality_config: "prompts/configs/detect_brief-text-image.json"
+  instruction_file: "detect_brief-text-image.md"
+  temperature: 0.7
+  thinking_level: "high"
+  tile_size: 384
+  stride: 336
+  ordering: "canonical-first"
+  # Library crops:
+  crop_size_px: 150
+  hard_cases_source: "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json"
+  pool_mining_seed: 42
+  source_phase: "H10 v2 (2026-04-15)"
+  # Hard-example crop location (shared with H8 v2 Scale-16 and R3):
+  shared_pool: "outputs/h10/example-pools-v2/pool_160_hp8hn8"
+  shared_pool_frozen: "inputs/examples/h10-v2/pool_160_hp8hn8"
+
+# Factor under test
+factors:
+  hp_hn_ratio:
+    description: "Hard-positive to hard-negative ratio at fixed total hard = 8"
+    levels:
+      - name: "r1-hn-heavy"
+        config: "prompts/configs/h12/v2/detect_h12_r1-hn-heavy_v2.json"
+        ratio_label: "1:3 (HN-heavy)"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 2, hard_negative: 6, null_examples: 3, total: 17 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp8hn8"
+        crop_paths:
+          hard_positive: ["h10-v2/pool_160_hp8hn8/hp_01.png", "h10-v2/pool_160_hp8hn8/hp_02.png"]
+          hard_negative:
+            - "h10-v2/pool_160_hp8hn8/hn_01.png"
+            - "h10-v2/pool_160_hp8hn8/hn_02.png"
+            - "h10-v2/pool_160_hp8hn8/hn_03.png"
+            - "h10-v2/pool_160_hp8hn8/hn_04.png"
+            - "h10-v2/pool_160_hp8hn8/hn_05.png"
+            - "h10-v2/pool_160_hp8hn8/hn_06.png"
+      - name: "r2-balanced"
+        config: "prompts/configs/h12/v2/detect_h12_r2-balanced_v2.json"
+        ratio_label: "1:1 (balanced) — central"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 4, hard_negative: 4, null_examples: 3, total: 17 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp4hn4"
+        reuse_from: "outputs/h10/evaluation-v2/pool_160_hp4hn4"
+        reuse_note: |
+          R2 is byte-identical to H8 v2 Scale-8, which is itself the
+          existing H10 v2 pool_160_hp4hn4 run (same config, same crops,
+          same K=5, same manifest, same tile size). Chain:
+          H10 v2 → H8 v2 Scale-8 → H12 v2 R2. Do not re-launch —
+          reference the existing run_1..run_5 directories directly in
+          analysis.
+      - name: "r3-hp-heavy"
+        config: "prompts/configs/h12/v2/detect_h12_r3-hp-heavy_v2.json"
+        ratio_label: "3:1 (HP-heavy)"
+        composition: { canonical_positive: 4, canonical_negative: 2, hard_positive: 6, hard_negative: 2, null_examples: 3, total: 17 }
+        source_pool: "outputs/h10/example-pools-v2/pool_160_hp8hn8"
+        crop_paths:
+          hard_positive:
+            - "h10-v2/pool_160_hp8hn8/hp_01.png"
+            - "h10-v2/pool_160_hp8hn8/hp_02.png"
+            - "h10-v2/pool_160_hp8hn8/hp_03.png"
+            - "h10-v2/pool_160_hp8hn8/hp_04.png"
+            - "h10-v2/pool_160_hp8hn8/hp_05.png"
+            - "h10-v2/pool_160_hp8hn8/hp_06.png"
+          hard_negative:
+            - "h10-v2/pool_160_hp8hn8/hn_01.png"
+            - "h10-v2/pool_160_hp8hn8/hn_02.png"
+
+# Fixed parameters (common across conditions)
+fixed:
+  ordering: "canonical-first"
+  # Model, temperature, thinking, instruction, tile_size per carried_forward.
+
+inputs:
+  manifest: "inputs/calibration/h10-384/test_manifest.json"   # 327 tiles (H10 test set)
+  tiles_dir: "inputs/tiles_384"
+  ground_truth: "inputs/vectors/references/mounds-reference.geojson"
+  bounds: "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+
+execution:
+  # K=5 matches the production n=5 consensus configuration used by
+  # H8 v2, H10 v2, and the 55-maps generalisation study. This is a
+  # deviation from the preregistered K=10; see protocol-errata E49.
+  runs: 5
+  output_dir: "outputs/h12-v2"
+  mode: "realtime"                # flex + cache are realtime-only
+  service_tier: "flex"            # 50 % off-peak discount
+  use_cache: true                 # cached content reduces input cost 50–90 %
+  workers: 250                    # set via --workers at runtime
+
+# Command pattern for execution — one invocation per condition × run.
+# R2 is SKIPPED (reused from H10 v2 / H8 v2 Scale-8).
+command_template: |
+  .venv/bin/python scripts/4_detect_mounds_batch.py \
+    --config {factor_config} \
+    --manifest {inputs.manifest} \
+    --tiles-dir {inputs.tiles_dir} \
+    --tile-size {carried_forward.tile_size} \
+    --output-dir {execution.output_dir}/{condition_name}/run_{run} \
+    --mode {execution.mode} \
+    --service-tier {execution.service_tier} \
+    --use-cache \
+    --workers {execution.workers}
+
+# Conditions to launch — two of the three; R2 is reused.
+launch_conditions:
+  - r1-hn-heavy
+  # r2-balanced — SKIP, reuse outputs/h10/evaluation-v2/pool_160_hp4hn4
+  - r3-hp-heavy
+
+analysis:
+  # Greedy consensus is the primary / headline method for H12 (user
+  # preference, 2026-04-15). WBF variant C is reported alongside for
+  # cross-hypothesis comparability with H8 v2 and H10 v2, which used
+  # the Obs 228–230 parameters as the canonical aggregation.
+  aggregation:
+    primary: "greedy"
+    secondary: "wbf_variant_c"
+  method: "bootstrap_ci"
+  n_iterations: 1000
+  fdr_q: 0.05
+  consensus_threshold: 4        # t=4 greedy / matches H8 v2 evaluation
+  planned_contrasts:
+    - ["r1-hn-heavy", "r2-balanced"]   # C1: HN-heavy vs balanced
+    - ["r2-balanced", "r3-hp-heavy"]   # C2: balanced vs HP-heavy
+    - ["r1-hn-heavy", "r3-hp-heavy"]   # C3: extreme vs extreme
+  metrics: ["f1", "precision", "recall"]
+  secondary_analysis: |
+    Precision vs recall differential across the ratio axis. The
+    preregistered prediction is HN-heavy → higher precision and
+    HP-heavy → higher recall. Report precision and recall under both
+    greedy and WBF variant C aggregations.
+  output:
+    report: "results/h12-v2/analysis_report.json"
+    summary: "results/h12-v2/analysis_summary.md"
+
+outcome:
+  determines: "effect_of_hp_hn_ratio_on_detection_f1"
+  carries_forward_to: "write-up"
+  decision_rule: |
+    Compare R1, R2, R3 under greedy primary aggregation. Report the
+    mean F1 with BH-FDR-corrected bootstrap CIs, the precision/recall
+    differential, and the same under WBF variant C secondary. A null
+    result (all CIs overlap) is itself a publishable finding given
+    the orthogonal axis to H8.
+
+# Cost envelope — fill in exact token counts after /audit-config
+# dry-run. Preliminary estimate uses H8 v2 actuals (9,810 calls, ~84
+# min, ~$107 meta-reported) scaled linearly to H12's smaller call
+# count.
+estimates:
+  cells: 2                            # 3 preregistered, 1 reused
+  tiles_per_cell: 327
+  passes_per_cell: 5
+  api_calls_per_cell: 1635            # 327 tiles × 5 passes
+  total_api_calls: 3270                # 2 cells × 1635
+  # Cost breakdown requires dry-run token counts.
+  cost_usd: "TBD — see /audit-config output and API-gate proposal"
+  time_hours: "~0.5 (estimate from H8 v2 scaling; flex tier adds latency jitter)"
+
+notes: |
+  - Context caching is opt-in (--use-cache) and realtime-only. For
+    R1 and R3, the cached content should include the system
+    instruction + 17 example images, so cache creation should
+    succeed comfortably above the minimum token threshold. Verify
+    cache creation success in run stdout ("Context cache created:
+    ...") on the first tile of run_1 for each condition.
+  - Flex tier is default on (--service-tier flex). Verify at
+    run.meta.json post-run that service_tier was honoured by the API
+    (see Obs 20 for the historical silent-fallback issue on an
+    outdated SDK; SDK is now google-genai 1.73.1).
+  - R2 reuse requires identical model, temperature, thinking,
+    instruction file, example library, K, manifest, and tile size
+    between H10 v2, H8 v2 Scale-8, and H12 v2 R2. The chain is
+    byte-verified by prefix-nested greedy selection. If any parameter
+    drifts, R2 must be re-launched.
+  - The launch-time experiment-intent guard in 4_detect_mounds_batch.py
+    will prompt for confirmation per condition. Do NOT pass
+    --skip-intent-check without first reviewing the intent diff.
+  - Prefix-nesting of hp_01..06 and hn_01..06 was verified by
+    sha256sum on 2026-04-15 across pool_160_hp4hn4 / hp8hn8 /
+    hp16hn16. Hashes recorded in session log.

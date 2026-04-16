@@ -1462,6 +1462,117 @@ pool_160_hp16hn16) is preserved for both HP and HN. Pre-filter pools archived
 to `archive/h10-v2-prefilter-pools/`. Audit report:
 `reports/configuration-audit-2026-04-15-h8-v2.md`.
 
+### E52: H12 HP:HN ratio re-run under production carry-forward (384 px / v2 pipeline)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-15 |
+| Type | Deviation + deferral resolution |
+| Sections | §H12 (preregistration lines 980–1011), Decision 11 (decisions-log.md) |
+| Impact | Runs H12 at production carry-forward settings with R2 reused from H8 v2 Scale-8; resolves the Decision 11 deferral; relaxes the "H8 shows library size matters" trigger |
+
+**Description**: The preregistered H12 (hard-positive to hard-negative ratio)
+was formally deferred on 2026-02-02 in decisions-log entry 11 because the v1
+hard-positive pool was structurally exhausted at 4 examples under the 50 m
+recognition/localisation threshold. Under Decision 11, the only testable
+ratios were HP-constant with varying HN (e.g., 4:4, 4:8), which confounds
+ratio with total hard count. H12 was deferred until H10 had expanded the HP
+pool via calibration tile expansion.
+
+**Deferral resolved**: The v2 hard-case register mined on 2026-04-15 from
+H10's pool_160 (`outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json`)
+yields **108 hard positives and 57 hard negatives** after the edge-of-raster
+exclusion filter, well above the HP ≥ 6 required for the symmetric 3:1
+HP-heavy extreme. The full preregistered H12 condition matrix is therefore
+executable:
+
+| Condition | HP | HN | Total Hard | Ratio |
+|-----------|----|----|------------|-------|
+| R1 | 2 | 6 | 8 | 1:3 (HN-heavy) |
+| R2 | 4 | 4 | 8 | 1:1 (balanced) |
+| R3 | 6 | 2 | 8 | 3:1 (HP-heavy) |
+
+**Trigger deviation**: H12's preregistered trigger is "run if H8 shows library
+size matters" (preregistration line 1010). H8 v2 (completed 2026-04-15,
+Observation 238) returned a null result: all seven library-composition
+contrasts (C1, C2, C3, B1, S1, S2, S3) null after Benjamini–Hochberg FDR
+correction at q = 0.05, with an F1 spread of only 0.040 across all seven
+conditions at greedy consensus threshold t = 4. Strictly read, the trigger is
+not met.
+
+H12 is being run anyway for two reasons:
+
+1. **Orthogonal axis.** H8 tests library *size* and *composition* (the number
+   of hard examples, and their canonical/empirical mix). H12 tests the
+   *balance* between hard positives and hard negatives at fixed total. A null
+   effect on size does not imply a null effect on balance, and the
+   preregistered secondary analysis (precision vs. recall differential;
+   preregistration line 1007) predicts a directional effect even in the
+   absence of an overall F1 difference.
+2. **Null results are publishable.** A null ratio result corroborates the H8
+   v2 null: together they close the library-design story for the write-up
+   with two independently-preregistered axes. Deferring H12 would leave that
+   story incomplete.
+
+**Parameter deviations** (applied to match H8 v2 and H10 v2, per E49/E50/E51):
+
+| Parameter | Original H12 prereg (carried from H7/H8) | H12 v2 |
+|-----------|------------------------------------------|--------|
+| Tile size | 512 px | 384 px (E41/E51) |
+| Stride | 448 px | 336 px (E51) |
+| Temperature | T = 0.0 (H7 optimum) | T = 0.7 (production carry-forward, E49/E51) |
+| Thinking level | Minimal (Decision 2) | **HIGH** (E49/E51) |
+| Instruction file | detect_brief-text-image.md | detect_brief-text-image.md (unchanged) |
+| K (passes) | 10 | **5** (production n = 5 consensus; E49/E51) |
+| Service tier | standard | **flex** (50 % off-peak discount) |
+| Context caching | none | **enabled** (reduces input cost 50–90 %) |
+| Hard-example crop size | 128 px (v1) | **150 px** (v2, verifier-aligned) |
+| Evaluation manifest | 60-tile validation holdout | **327-tile h10-384 test manifest** (E50) |
+
+**R2 reuse**: R2 (4 HP + 4 HN) is byte-identical to H8 v2 Scale-8, which is
+itself the existing H10 v2 `pool_160_hp4hn4` run. Prefix nestedness of
+greedy-diversity example selection was verified on 2026-04-15 by
+`sha256sum` across `pool_160_hp4hn4`, `pool_160_hp8hn8`, and
+`pool_160_hp16hn16` for `hp_01..hp_04` and `hn_01..hn_04` — all hashes
+identical. Model, temperature, thinking, instruction, K, manifest, and tile
+size are identical between H10 v2 `pool_160_hp4hn4`, H8 v2 `scale-8`, and
+H12 v2 `r2-balanced`, so R2 is NOT re-launched. Analysis references the
+existing `outputs/h10/evaluation-v2/pool_160_hp4hn4/run_{1..5}/` directories
+directly.
+
+**No new example pools are built.** R1 (HP=2, HN=6) and R3 (HP=6, HN=2) both
+reference the existing `inputs/examples/h10-v2/pool_160_hp8hn8/` crops
+(`hp_01..hp_06.png` and `hn_01..hn_06.png`). Because prefix-nested greedy
+selection with `seed=42` is deterministic, these bytes are identical to what
+`build_example_pool.py --hp-count 2 --hn-count 6` or `--hp-count 6 --hn-count 2`
+would produce as dedicated `pool_160_hp2hn6` / `pool_160_hp6hn2` directories.
+This mirrors the H8 v2 Scale-16 pattern, which references `pool_160_hp8hn8`
+directly rather than building a dedicated `pool_160_hp8hn8` alias.
+
+**Analysis aggregation**: Greedy consensus at t = 4 is the primary / headline
+aggregation method for H12 (user preference, 2026-04-15); WBF variant C
+(Obs 228–230 parameters) is reported alongside as the secondary method so
+H12 results remain directly comparable to H8 v2 and H10 v2 (both of which
+were analysed under WBF variant C as the primary method). BH-FDR-corrected
+pairwise contrasts (R1 vs R2, R2 vs R3, R1 vs R3) at q = 0.05 are computed on
+the greedy primary metric.
+
+**Reference artefacts**:
+
+- Study YAML: `studies/h12-v2-ratio.yaml`
+- Per-condition configs: `prompts/configs/h12/v2/detect_h12_{r1-hn-heavy,r2-balanced,r3-hp-heavy}_v2.json`
+- Pre-launch audit (via `/audit-config`): 2026-04-15 session — all technical checks PASS
+- Retrospective informing the v1 retraction: `docs/notes/reflections/2026-04-14-h10-h12-config-intent-retrospective.md`
+- Formal retraction of the v1 H10/H12 pass: Obs 235 (2026-04-14)
+- H8 v2 null-result source: Obs 238 (2026-04-15)
+- Decision 11 (HP pool exhaustion, now resolved): `docs/methodology/preregistration/decisions-log.md` §11
+
+**Runtime parallelism note (2026-04-15)**: H12 v2 uses `--workers 250` on
+Tier 3 quota, matching H8 v2 (Session 68 observed ~72 % TPM utilisation with
+zero 429 errors at that worker count). Parallelism is an operational
+parameter; it does not affect the content of the API payload and does not
+impact experimental validity.
+
 ---
 
 *End of errata. New entries should be appended above this line.*
