@@ -1,0 +1,1363 @@
+#!/usr/bin/env python3
+"""
+Build Tiered Leaderboard from Detection Conditions
+====================================================
+
+General-purpose orchestrator for building statistically tiered leaderboards.
+Evaluates detection conditions at multiple spatial buffers, finds optimal
+consensus thresholds, runs round-robin pairwise permutation tests, applies
+Benjamini-Hochberg False Discovery Rate (FDR) correction, and groups
+conditions into statistically distinguishable tiers.
+
+Six pipeline stages, each independently cacheable:
+
+1. **Resolve conditions** — from YAML spec or condition inventory
+2. **Evaluate** — threshold sweep at all buffers (parallelised)
+3. **Select thresholds** — pick optimal consensus threshold per condition
+4. **Pairwise tests** — C(N,2) tile-level paired permutation tests
+5. **FDR + tier** — BH-FDR correction → greedy clique-based tiering
+6. **Output** — Markdown + JSON (JavaScript Object Notation) leaderboard tables
+
+Usage::
+
+    # From YAML spec
+    python scripts/build_tiered_leaderboard.py \\
+        --spec leaderboard-era1.yaml \\
+        --output-dir results/leaderboard/era1/
+
+    # From condition inventory with era filter
+    python scripts/build_tiered_leaderboard.py \\
+        --inventory planning/condition-inventory.json \\
+        --era 3 \\
+        --bounds inputs/vectors/bounds/384/h10_test_bounds.geojson \\
+        --output-dir results/leaderboard/era3/
+
+    # Dry run — list conditions without executing
+    python scripts/build_tiered_leaderboard.py \\
+        --inventory planning/condition-inventory.json --era 1 --dry-run
+
+    # Re-run tiering only (cached evaluations + pairwise)
+    python scripts/build_tiered_leaderboard.py \\
+        --spec leaderboard-era1.yaml \\
+        --skip-evaluation --skip-pairwise \\
+        --output-dir results/leaderboard/era1/
+
+Inputs:
+    - Condition inventory (``planning/condition-inventory.json``) or YAML spec
+    - Consensus GeoJSON detection files (``outputs/**/consensus_t*.geojson``)
+    - Ground truth reference (``inputs/vectors/references/mounds-reference.geojson``)
+    - Evaluation bounds (``inputs/vectors/bounds/*.geojson``)
+
+Outputs:
+    - ``leaderboard_tiers_{buffer}m.md`` — Markdown table grouped by tier
+    - ``leaderboard_tiers_{buffer}m.json`` — Machine-readable with provenance
+    - ``leaderboard_all_evaluations.json`` — Full threshold × buffer sweep
+    - ``leaderboard_tiers_{buffer}m.json`` includes BH-FDR correction details
+
+Exit Codes:
+    0 - Success
+    1 - Some conditions failed evaluation (partial)
+    2 - Fatal error (bad configuration, missing files)
+
+Author: Shawn Ross, Claude Code
+Licence: Apache 2.0
+Created: 2026-04-16
+"""
+
+from __future__ import annotations
+
+import argparse
+import dataclasses
+import itertools
+import json
+import logging
+import re
+import subprocess
+import sys
+import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+__version__ = "1.0.0"
+
+# ---------------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------------
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_GROUND_TRUTH = (
+    PROJECT_ROOT / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
+)
+DEFAULT_BOUNDS = (
+    PROJECT_ROOT / "inputs" / "vectors" / "bounds" / "full_evaluation_bounds.geojson"
+)
+DEFAULT_BUFFERS = [20, 30, 40, 50]
+DEFAULT_BOOTSTRAP = 1000
+DEFAULT_SEED = 42
+DEFAULT_FDR_Q = 0.05
+DEFAULT_N_PERMUTATIONS = 10_000
+DEFAULT_TOP_N = 20
+
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Imports from existing scripts (library-style reuse)
+# ---------------------------------------------------------------------------
+
+# Add scripts/ to path for imports
+sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+
+from evaluate_detections import (  # noqa: E402
+    evaluate_single_run,
+    load_geojson,
+    slugify,
+)
+from pairwise_permutation_test import (  # noqa: E402
+    load_geojson_detections,
+    run_permutation_test,
+)
+from apply_fdr_correction import apply_bh_correction  # noqa: E402
+
+
+# ---------------------------------------------------------------------------
+# Data classes
+# ---------------------------------------------------------------------------
+
+
+@dataclasses.dataclass
+class ConditionSpec:
+    """A condition to evaluate on the leaderboard."""
+
+    label: str
+    geojson_paths: list[Path]  # One per threshold (t=1..K), sorted
+    thresholds: list[int]      # Corresponding threshold values
+    era: int
+    track: str
+    category: str              # "consensus" | "single-pass"
+    k: int
+    condition_id: str = ""
+    metadata: dict = dataclasses.field(default_factory=dict)
+
+
+@dataclasses.dataclass
+class SelectedCondition:
+    """A condition after threshold selection — ready for pairwise tests."""
+
+    label: str
+    geojson_path: Path
+    best_threshold: int
+    era: int
+    track: str
+    category: str
+    k: int
+    evaluations: dict  # buffer_metres -> evaluation result dict
+    condition_id: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+
+
+def setup_logging(log_file: Path | None = None) -> None:
+    """Configure dual-output logging (console INFO, file DEBUG)."""
+    root = logging.getLogger()
+    root.setLevel(logging.DEBUG)
+
+    # Prevent duplicate handlers on repeated calls (e.g., in tests)
+    root.handlers.clear()
+
+    fmt = logging.Formatter(
+        "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+    )
+
+    console = logging.StreamHandler(sys.stderr)
+    console.setLevel(logging.INFO)
+    console.setFormatter(fmt)
+    root.addHandler(console)
+
+    if log_file:
+        log_file.parent.mkdir(parents=True, exist_ok=True)
+        fh = logging.FileHandler(log_file, encoding="utf-8")
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(fmt)
+        root.addHandler(fh)
+
+
+def get_git_commit() -> str:
+    """Return short git commit hash, or ``'(unknown)'`` on failure."""
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, timeout=2,
+            cwd=str(PROJECT_ROOT),
+        )
+        if out.returncode == 0:
+            return out.stdout.strip()
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+    return "(unknown)"
+
+
+# ---------------------------------------------------------------------------
+# Stage 1: Condition resolution
+# ---------------------------------------------------------------------------
+
+
+def discover_consensus_geojsons(
+    base_path: Path,
+) -> list[tuple[int, Path]]:
+    """Find all consensus threshold GeoJSONs for a condition.
+
+    Searches for ``consensus_t{N}.geojson`` in the condition directory
+    and its ``consensus/``, ``greedy/``, and sibling ``greedy/{name}/``
+    subdirectories. Also handles the H11-era ``{prefix}-{N}of{M}.geojson``
+    naming convention.
+
+    Args:
+        base_path: Path to the condition output directory.
+
+    Returns:
+        List of ``(threshold, path)`` tuples sorted by threshold.
+    """
+    candidates: list[tuple[int, Path]] = []
+    search_dirs = [base_path]
+
+    for subdir in ["consensus", "greedy", "voting"]:
+        d = base_path / subdir
+        if d.is_dir():
+            search_dirs.append(d)
+
+    # Era 3 pattern: greedy tree lives at parent/greedy/{condition_name}/
+    greedy_sibling = base_path.parent / "greedy" / base_path.name
+    if greedy_sibling.is_dir():
+        search_dirs.append(greedy_sibling)
+
+    for d in search_dirs:
+        # Pattern: consensus_t{N}.geojson
+        for f in d.glob("consensus_t*.geojson"):
+            match = re.search(r"consensus_t(\d+)", f.stem)
+            if match:
+                candidates.append((int(match.group(1)), f))
+
+        # Pattern: {prefix}-{N}of{M}.geojson (H11-era)
+        for f in d.glob("*-*of*.geojson"):
+            match = re.search(r"-(\d+)of(\d+)", f.stem)
+            if match:
+                candidates.append((int(match.group(1)), f))
+
+    # Deduplicate (same threshold from different search paths)
+    seen: dict[int, Path] = {}
+    for t, p in candidates:
+        if t not in seen:
+            seen[t] = p
+    return sorted(seen.items(), key=lambda x: x[0])
+
+
+def resolve_conditions_from_inventory(
+    inventory_path: Path,
+    *,
+    era: int | None = None,
+    track: str | None = None,
+    hypothesis: str | None = None,
+    status_filter: str = "READY",
+) -> list[ConditionSpec]:
+    """Build condition list from condition-inventory.json with filters.
+
+    Args:
+        inventory_path: Path to condition-inventory.json.
+        era: Filter to this era. ``None`` = all.
+        track: Filter to track. ``None`` = all.
+        hypothesis: Filter to hypothesis prefix. ``None`` = all.
+        status_filter: Only include conditions with this status.
+
+    Returns:
+        List of ConditionSpec instances, sorted by label.
+    """
+    with open(inventory_path, encoding="utf-8") as f:
+        inventory = json.load(f)
+
+    specs: list[ConditionSpec] = []
+    for cond in inventory:
+        if status_filter and cond.get("status") != status_filter:
+            continue
+        if era is not None and cond.get("era") != era:
+            continue
+        if track is not None and cond.get("track") != track:
+            continue
+        if hypothesis and not cond.get("hypothesis", "").startswith(hypothesis):
+            continue
+
+        cond_path = PROJECT_ROOT / cond["path"]
+        k = cond.get("K", 1)
+
+        if k <= 1:
+            # Single-pass: find the detection GeoJSON directly
+            det_files = sorted(cond_path.glob("run_*/detections_*.geojson"))
+            if det_files:
+                specs.append(ConditionSpec(
+                    label=cond["id"],
+                    geojson_paths=[det_files[0]],
+                    thresholds=[1],
+                    era=cond.get("era", 0),
+                    track=cond.get("track", "unknown"),
+                    category="single-pass",
+                    k=k,
+                    condition_id=cond["id"],
+                    metadata={"hypothesis": cond.get("hypothesis", "")},
+                ))
+        else:
+            # Consensus: discover threshold GeoJSONs
+            threshold_files = discover_consensus_geojsons(cond_path)
+            if threshold_files:
+                thresholds, paths = zip(*threshold_files)
+                specs.append(ConditionSpec(
+                    label=cond["id"],
+                    geojson_paths=list(paths),
+                    thresholds=list(thresholds),
+                    era=cond.get("era", 0),
+                    track=cond.get("track", "unknown"),
+                    category="consensus",
+                    k=k,
+                    condition_id=cond["id"],
+                    metadata={"hypothesis": cond.get("hypothesis", "")},
+                ))
+            else:
+                logger.warning(
+                    "No consensus GeoJSONs found for %s at %s",
+                    cond["id"], cond_path,
+                )
+
+    specs.sort(key=lambda s: s.label)
+    logger.info(
+        "Resolved %d conditions from inventory (era=%s, track=%s)",
+        len(specs), era, track,
+    )
+    return specs
+
+
+def resolve_conditions_from_yaml(spec_path: Path) -> tuple[dict, list[ConditionSpec]]:
+    """Load conditions from a YAML leaderboard spec file.
+
+    Args:
+        spec_path: Path to the YAML spec file.
+
+    Returns:
+        Tuple of ``(config_dict, conditions_list)``.
+    """
+    import yaml
+
+    with open(spec_path, encoding="utf-8") as f:
+        spec = yaml.safe_load(f)
+
+    config = {
+        "metadata": spec.get("metadata", {}),
+        "evaluation": spec.get("evaluation", {}),
+        "tiering": spec.get("tiering", {}),
+    }
+
+    specs: list[ConditionSpec] = []
+    for entry in spec.get("conditions", []):
+        geojson_path = PROJECT_ROOT / entry["geojson"]
+        specs.append(ConditionSpec(
+            label=entry["label"],
+            geojson_paths=[geojson_path],
+            thresholds=[entry.get("threshold", 1)],
+            era=entry.get("era", 0),
+            track=entry.get("track", "unknown"),
+            category=entry.get("category", "consensus"),
+            k=entry.get("k", 1),
+            condition_id=entry.get("id", entry["label"]),
+            metadata=entry.get("metadata", {}),
+        ))
+
+    specs.sort(key=lambda s: s.label)
+    return config, specs
+
+
+# ---------------------------------------------------------------------------
+# Stage 2: Evaluation (threshold sweep)
+# ---------------------------------------------------------------------------
+
+
+def _cache_path_eval(cache_dir: Path, label: str, threshold: int, buffer_m: int) -> Path:
+    """Build the cache file path for an evaluation result."""
+    return cache_dir / "evaluations" / slugify(label) / f"t{threshold}_{buffer_m}m.json"
+
+
+def _evaluate_single_threshold(
+    geojson_path: Path,
+    ref_path: Path,
+    bounds_path: Path,
+    buffers: list[int],
+    n_bootstrap: int,
+    seed: int,
+    label: str,
+) -> dict:
+    """Worker function: evaluate one GeoJSON at all buffers.
+
+    Loads reference data from disk (each worker is independent).
+    Designed to be called from ProcessPoolExecutor.
+
+    Args:
+        geojson_path: Detection GeoJSON to evaluate.
+        ref_path: Ground truth reference path.
+        bounds_path: Evaluation bounds path.
+        buffers: Buffer distances.
+        n_bootstrap: Bootstrap iterations.
+        seed: Random seed.
+        label: Human-readable label.
+
+    Returns:
+        Evaluation result dict from ``evaluate_single_run()``.
+    """
+    gdf_det = load_geojson(geojson_path)
+    gdf_ref = load_geojson(ref_path)
+    gdf_bounds = load_geojson(bounds_path)
+
+    return evaluate_single_run(
+        gdf_det, gdf_ref, gdf_bounds,
+        buffers=buffers,
+        n_bootstrap=n_bootstrap,
+        seed=seed,
+        label=label,
+    )
+
+
+def evaluate_all_conditions(
+    conditions: list[ConditionSpec],
+    ref_path: Path,
+    bounds_path: Path,
+    buffers: list[int],
+    n_bootstrap: int,
+    seed: int,
+    cache_dir: Path,
+    workers: int = 4,
+    force: bool = False,
+) -> dict[str, dict[int, dict]]:
+    """Evaluate all conditions at all thresholds and buffers.
+
+    Results are cached per (condition, threshold, buffer) triple.
+    Returns a nested dict: ``{label: {threshold: eval_result_dict}}``.
+
+    Args:
+        conditions: Conditions to evaluate.
+        ref_path: Ground truth path.
+        bounds_path: Bounds path.
+        buffers: Buffer distances.
+        n_bootstrap: Bootstrap iterations.
+        seed: Random seed.
+        cache_dir: Cache directory.
+        workers: Number of parallel workers.
+        force: Recompute ignoring cache.
+
+    Returns:
+        Nested dict mapping label → threshold → evaluation result.
+    """
+    all_results: dict[str, dict[int, dict]] = {}
+
+    # Build task list: (condition, threshold_idx)
+    tasks: list[tuple[ConditionSpec, int, int, Path]] = []
+    cached_count = 0
+
+    for cond in conditions:
+        all_results[cond.label] = {}
+        for i, (threshold, gj_path) in enumerate(
+            zip(cond.thresholds, cond.geojson_paths)
+        ):
+            # Check cache for ALL buffers at this threshold
+            all_cached = not force and all(
+                _cache_path_eval(cache_dir, cond.label, threshold, b).is_file()
+                for b in buffers
+            )
+            if all_cached:
+                # Load from cache
+                merged = {"label": cond.label, "n_detections": 0, "buffers": []}
+                for b in buffers:
+                    cp = _cache_path_eval(cache_dir, cond.label, threshold, b)
+                    with open(cp, encoding="utf-8") as f:
+                        buf_data = json.load(f)
+                    # Recover n_detections from cache (stored per-buffer)
+                    if "n_detections" in buf_data:
+                        merged["n_detections"] = buf_data.pop("n_detections")
+                    merged["buffers"].append(buf_data)
+                all_results[cond.label][threshold] = merged
+                cached_count += 1
+            else:
+                tasks.append((cond, i, threshold, gj_path))
+
+    logger.info(
+        "Evaluation: %d cached, %d to compute (%d workers)",
+        cached_count, len(tasks), workers,
+    )
+
+    if not tasks:
+        return all_results
+
+    # Execute evaluations
+    if workers <= 1:
+        for cond, _idx, threshold, gj_path in tasks:
+            logger.info("Evaluating %s t=%d...", cond.label, threshold)
+            result = _evaluate_single_threshold(
+                gj_path, ref_path, bounds_path,
+                buffers, n_bootstrap, seed, cond.label,
+            )
+            all_results[cond.label][threshold] = result
+            _write_eval_cache(cache_dir, cond.label, threshold, result)
+    else:
+        with ProcessPoolExecutor(max_workers=workers) as executor:
+            future_map = {}
+            for cond, _idx, threshold, gj_path in tasks:
+                fut = executor.submit(
+                    _evaluate_single_threshold,
+                    gj_path, ref_path, bounds_path,
+                    buffers, n_bootstrap, seed, cond.label,
+                )
+                future_map[fut] = (cond, threshold)
+
+            completed = 0
+            for fut in as_completed(future_map):
+                cond, threshold = future_map[fut]
+                completed += 1
+                try:
+                    result = fut.result()
+                    all_results[cond.label][threshold] = result
+                    _write_eval_cache(cache_dir, cond.label, threshold, result)
+                    logger.info(
+                        "[%d/%d] %s t=%d done",
+                        completed, len(tasks), cond.label, threshold,
+                    )
+                except Exception as exc:
+                    logger.error(
+                        "[%d/%d] %s t=%d FAILED: %s",
+                        completed, len(tasks), cond.label, threshold, exc,
+                    )
+
+    return all_results
+
+
+def _write_eval_cache(
+    cache_dir: Path, label: str, threshold: int, result: dict,
+) -> None:
+    """Write per-buffer cache files for an evaluation result."""
+    n_det = result.get("n_detections", 0)
+    for buf_result in result.get("buffers", []):
+        buf_m = buf_result["buffer_metres"]
+        cp = _cache_path_eval(cache_dir, label, threshold, buf_m)
+        cp.parent.mkdir(parents=True, exist_ok=True)
+        # Include n_detections in each cache file for reconstruction
+        cached = {**buf_result, "n_detections": n_det}
+        with open(cp, "w", encoding="utf-8") as f:
+            json.dump(cached, f, indent=2)
+
+
+# ---------------------------------------------------------------------------
+# Stage 3: Threshold selection
+# ---------------------------------------------------------------------------
+
+
+def select_best_thresholds(
+    conditions: list[ConditionSpec],
+    all_evaluations: dict[str, dict[int, dict]],
+    primary_buffer: int,
+    top_n: int | None = None,
+) -> list[SelectedCondition]:
+    """Select the best consensus threshold per condition by F1.
+
+    For each condition, finds the threshold that maximises F1 at the
+    primary buffer. Optionally filters to the top-N conditions by F1
+    at any buffer (union criterion).
+
+    Args:
+        conditions: Original condition specs.
+        all_evaluations: Nested dict from ``evaluate_all_conditions()``.
+        primary_buffer: Buffer for threshold selection.
+        top_n: If set, include only conditions in the top-N at any buffer.
+
+    Returns:
+        List of SelectedCondition, sorted by F1 descending at primary buffer.
+    """
+    selected: list[SelectedCondition] = []
+
+    for cond in conditions:
+        evals = all_evaluations.get(cond.label, {})
+        if not evals:
+            logger.warning("No evaluations for %s — skipping", cond.label)
+            continue
+
+        # Find threshold with best F1 at primary buffer
+        best_t = None
+        best_f1 = -1.0
+        for threshold, result in evals.items():
+            for buf in result.get("buffers", []):
+                if buf["buffer_metres"] == primary_buffer:
+                    if buf["f1"] > best_f1:
+                        best_f1 = buf["f1"]
+                        best_t = threshold
+                    break
+
+        if best_t is None:
+            logger.warning(
+                "No evaluation at %dm for %s — skipping",
+                primary_buffer, cond.label,
+            )
+            continue
+
+        # Build per-buffer evaluation dict at the best threshold
+        best_eval = evals[best_t]
+        buf_dict = {
+            b["buffer_metres"]: b for b in best_eval.get("buffers", [])
+        }
+
+        # Find the GeoJSON path for the best threshold
+        try:
+            t_idx = cond.thresholds.index(best_t)
+            gj_path = cond.geojson_paths[t_idx]
+        except ValueError:
+            logger.warning(
+                "Threshold %d not in paths for %s — skipping",
+                best_t, cond.label,
+            )
+            continue
+
+        selected.append(SelectedCondition(
+            label=cond.label,
+            geojson_path=gj_path,
+            best_threshold=best_t,
+            era=cond.era,
+            track=cond.track,
+            category=cond.category,
+            k=cond.k,
+            evaluations=buf_dict,
+            condition_id=cond.condition_id,
+        ))
+
+    # Sort by F1 descending at primary buffer
+    selected.sort(
+        key=lambda c: c.evaluations.get(primary_buffer, {}).get("f1", 0),
+        reverse=True,
+    )
+
+    # Top-N filtering (union across all buffers)
+    if top_n is not None and len(selected) > top_n:
+        # Collect sets of top-N labels at each buffer
+        all_buffers = set()
+        for c in selected:
+            all_buffers.update(c.evaluations.keys())
+
+        included_labels: set[str] = set()
+        for buf_m in sorted(all_buffers):
+            ranked = sorted(
+                selected,
+                key=lambda c: c.evaluations.get(buf_m, {}).get("f1", 0),
+                reverse=True,
+            )
+            for c in ranked[:top_n]:
+                included_labels.add(c.label)
+
+        before = len(selected)
+        selected = [c for c in selected if c.label in included_labels]
+        logger.info(
+            "Top-%d filter: %d → %d conditions (union across %d buffers)",
+            top_n, before, len(selected), len(all_buffers),
+        )
+
+    logger.info(
+        "Selected %d conditions (best F1=%.3f at %dm)",
+        len(selected),
+        selected[0].evaluations.get(primary_buffer, {}).get("f1", 0)
+        if selected else 0,
+        primary_buffer,
+    )
+    return selected
+
+
+# ---------------------------------------------------------------------------
+# Stage 4: Pairwise permutation tests
+# ---------------------------------------------------------------------------
+
+
+def _cache_path_pairwise(cache_dir: Path, label_a: str, label_b: str) -> Path:
+    """Build canonical cache path for a pairwise test (alphabetical order)."""
+    a, b = sorted([slugify(label_a), slugify(label_b)])
+    return cache_dir / "pairwise" / f"{a}_vs_{b}.json"
+
+
+def run_all_pairwise_tests(
+    conditions: list[SelectedCondition],
+    ref_path: Path,
+    bounds_path: Path,
+    buffer_metres: int,
+    n_permutations: int,
+    seed: int,
+    cache_dir: Path,
+    force: bool = False,
+) -> list[dict]:
+    """Run C(N,2) pairwise permutation tests between all conditions.
+
+    Caches GeoDataFrames in memory to avoid reloading. Each pairwise
+    result is cached to disk.
+
+    Args:
+        conditions: Selected conditions for the leaderboard.
+        ref_path: Ground truth path.
+        bounds_path: Bounds path.
+        buffer_metres: Buffer for F1 computation.
+        n_permutations: Number of permutations.
+        seed: Random seed.
+        cache_dir: Cache directory.
+        force: Force recomputation.
+
+    Returns:
+        List of pairwise result dicts.
+    """
+    gdf_ref = load_geojson(ref_path)
+    gdf_bounds = load_geojson(bounds_path)
+
+    # GeoDataFrame cache (in-memory)
+    gdf_cache: dict = {}
+
+    def _load_gdf(cond: SelectedCondition):
+        if cond.label not in gdf_cache:
+            gdf_cache[cond.label] = load_geojson_detections(cond.geojson_path)
+        return gdf_cache[cond.label]
+
+    pairs = list(itertools.combinations(conditions, 2))
+    n_pairs = len(pairs)
+    results: list[dict] = []
+    cached = 0
+
+    logger.info(
+        "Pairwise tests: %d pairs at %dm (%d permutations)",
+        n_pairs, buffer_metres, n_permutations,
+    )
+
+    for i, (cond_a, cond_b) in enumerate(pairs, 1):
+        cp = _cache_path_pairwise(cache_dir, cond_a.label, cond_b.label)
+
+        if not force and cp.is_file():
+            with open(cp, encoding="utf-8") as f:
+                result = json.load(f)
+            results.append(result)
+            cached += 1
+            continue
+
+        logger.info(
+            "[%d/%d] %s vs %s...", i, n_pairs, cond_a.label, cond_b.label,
+        )
+        gdf_a = _load_gdf(cond_a)
+        gdf_b = _load_gdf(cond_b)
+
+        perm_result = run_permutation_test(
+            gdf_a, gdf_b, gdf_ref, gdf_bounds,
+            buffer_metres=buffer_metres,
+            n_permutations=n_permutations,
+            seed=seed,
+        )
+
+        # Build compact result (drop per-tile details for cache)
+        result = {
+            "label_a": cond_a.label,
+            "label_b": cond_b.label,
+            "f1_a": perm_result["global_a"]["f1"],
+            "f1_b": perm_result["global_b"]["f1"],
+            "delta_f1": perm_result["permutation_test"]["observed_f1_diff"],
+            "p_value": perm_result["permutation_test"]["p_value"],
+            "n_permutations": perm_result["permutation_test"]["n_permutations"],
+            "n_tiles": perm_result["permutation_test"]["n_tiles"],
+        }
+
+        # Cache
+        cp.parent.mkdir(parents=True, exist_ok=True)
+        with open(cp, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2)
+
+        results.append(result)
+
+    logger.info("Pairwise: %d cached, %d computed", cached, n_pairs - cached)
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Stage 5: BH-FDR correction and tiering
+# ---------------------------------------------------------------------------
+
+
+def apply_fdr_and_tier(
+    pairwise_results: list[dict],
+    conditions: list[SelectedCondition],
+    fdr_q: float = DEFAULT_FDR_Q,
+) -> tuple[list[dict], list[list[SelectedCondition]]]:
+    """Apply BH-FDR correction and group conditions into tiers.
+
+    Uses a greedy clique-based algorithm: conditions sorted by F1
+    descending. Each condition is added to the current tier if it is
+    statistically indistinguishable from ALL existing members.
+    Otherwise, a new tier starts.
+
+    Args:
+        pairwise_results: All C(N,2) pairwise test results.
+        conditions: Selected conditions sorted by F1 descending.
+        fdr_q: FDR threshold for significance.
+
+    Returns:
+        Tuple of ``(annotated_results, tiers)`` where tiers is a list
+        of lists, each inner list being conditions in that tier.
+    """
+    if not pairwise_results:
+        return [], [conditions] if conditions else []
+
+    # Apply BH-FDR
+    raw_pvalues = [r["p_value"] for r in pairwise_results]
+    adjusted = apply_bh_correction(raw_pvalues, q=fdr_q)
+
+    # Annotate results
+    annotated: list[dict] = []
+    for r, adj_p in zip(pairwise_results, adjusted):
+        annotated.append({
+            **r,
+            "bh_adjusted_p": round(adj_p, 6),
+            "significant": adj_p < fdr_q,
+        })
+
+    # Build lookup: (label_a, label_b) -> significant?
+    sig_lookup: dict[tuple[str, str], bool] = {}
+    for r in annotated:
+        key = tuple(sorted([r["label_a"], r["label_b"]]))
+        sig_lookup[key] = r["significant"]
+
+    # Greedy clique-based tiering
+    tiers: list[list[SelectedCondition]] = []
+    current_tier: list[SelectedCondition] = []
+
+    for cond in conditions:
+        if not current_tier:
+            current_tier.append(cond)
+            continue
+
+        # Check if this condition is indistinguishable from ALL in current tier
+        all_indistinguishable = True
+        for member in current_tier:
+            key = tuple(sorted([cond.label, member.label]))
+            if sig_lookup.get(key, False):
+                all_indistinguishable = False
+                break
+
+        if all_indistinguishable:
+            current_tier.append(cond)
+        else:
+            tiers.append(current_tier)
+            current_tier = [cond]
+
+    if current_tier:
+        tiers.append(current_tier)
+
+    n_sig = sum(1 for r in annotated if r["significant"])
+    logger.info(
+        "FDR: %d/%d pairs significant at q=%.2f → %d tiers",
+        n_sig, len(annotated), fdr_q, len(tiers),
+    )
+    return annotated, tiers
+
+
+# ---------------------------------------------------------------------------
+# Stage 6: Output
+# ---------------------------------------------------------------------------
+
+
+def write_leaderboard_markdown(
+    tiers: list[list[SelectedCondition]],
+    buffer_metres: int,
+    output_path: Path,
+    metadata: dict,
+) -> None:
+    """Write Markdown leaderboard table grouped by tier.
+
+    Args:
+        tiers: List of tiers (each a list of SelectedConditions).
+        buffer_metres: Buffer distance for displayed metrics.
+        output_path: Output .md file path.
+        metadata: Leaderboard metadata.
+    """
+    lines: list[str] = []
+    lines.append(f"# Leaderboard — {buffer_metres}m buffer")
+    lines.append("")
+    lines.append(
+        f"**Generated**: {datetime.now(tz=timezone.utc).isoformat()}"
+    )
+    if metadata.get("name"):
+        lines.append(f"**Scope**: {metadata['name']}")
+    lines.append(
+        f"**Conditions**: {sum(len(t) for t in tiers)} "
+        f"in {len(tiers)} tier(s)"
+    )
+    lines.append("")
+
+    rank = 0
+    for tier_idx, tier in enumerate(tiers, 1):
+        f1_vals = [
+            c.evaluations.get(buffer_metres, {}).get("f1", 0) for c in tier
+        ]
+        f1_min = min(f1_vals) if f1_vals else 0
+        f1_max = max(f1_vals) if f1_vals else 0
+
+        lines.append(
+            f"## Tier {tier_idx} (F1: {f1_min:.3f}–{f1_max:.3f})"
+        )
+        lines.append("")
+        lines.append(
+            "| # | Condition | Era | Track | K | t | "
+            "F1 | 95% CI | P | R |"
+        )
+        lines.append(
+            "|--:|-----------|:---:|:-----:|--:|--:|"
+            "---:|:------:|---:|---:|"
+        )
+
+        for cond in tier:
+            rank += 1
+            e = cond.evaluations.get(buffer_metres, {})
+            f1 = e.get("f1", 0)
+            ci_lo = e.get("f1_ci_lower", 0)
+            ci_hi = e.get("f1_ci_upper", 0)
+            p = e.get("precision", 0)
+            r = e.get("recall", 0)
+
+            lines.append(
+                f"| {rank} | {cond.label} | {cond.era} | "
+                f"{cond.track} | {cond.k} | {cond.best_threshold} | "
+                f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
+                f"{p:.3f} | {r:.3f} |"
+            )
+
+        lines.append("")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines), encoding="utf-8")
+    logger.info("Markdown leaderboard written to %s", output_path)
+
+
+def write_leaderboard_json(
+    tiers: list[list[SelectedCondition]],
+    all_evaluations: dict[str, dict[int, dict]],
+    pairwise_annotated: list[dict],
+    metadata: dict,
+    output_path: Path,
+) -> None:
+    """Write machine-readable leaderboard with full provenance.
+
+    Args:
+        tiers: Tier assignments.
+        all_evaluations: Complete evaluation data.
+        pairwise_annotated: Annotated pairwise results with FDR.
+        metadata: Leaderboard metadata.
+        output_path: Output .json file path.
+    """
+    tier_data = []
+    for tier_idx, tier in enumerate(tiers, 1):
+        tier_data.append({
+            "tier": tier_idx,
+            "conditions": [
+                {
+                    "label": c.label,
+                    "era": c.era,
+                    "track": c.track,
+                    "category": c.category,
+                    "k": c.k,
+                    "best_threshold": c.best_threshold,
+                    "geojson": str(c.geojson_path),
+                    "evaluations": c.evaluations,
+                }
+                for c in tier
+            ],
+        })
+
+    output = {
+        "script": "build_tiered_leaderboard.py",
+        "version": __version__,
+        "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+        "git_commit": get_git_commit(),
+        "metadata": metadata,
+        "n_conditions": sum(len(t) for t in tiers),
+        "n_tiers": len(tiers),
+        "tiers": tier_data,
+        "pairwise_tests": pairwise_annotated,
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2)
+    logger.info("JSON leaderboard written to %s", output_path)
+
+
+def write_all_evaluations_json(
+    all_evaluations: dict[str, dict[int, dict]],
+    output_path: Path,
+) -> None:
+    """Write complete threshold × buffer sweep for all conditions.
+
+    Args:
+        all_evaluations: Nested dict from ``evaluate_all_conditions()``.
+        output_path: Output .json file path.
+    """
+    # Convert int keys to strings for JSON
+    serialisable = {}
+    for label, thresholds in all_evaluations.items():
+        serialisable[label] = {
+            str(t): result for t, result in thresholds.items()
+        }
+
+    output = {
+        "script": "build_tiered_leaderboard.py",
+        "version": __version__,
+        "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+        "n_conditions": len(serialisable),
+        "evaluations": serialisable,
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2)
+    logger.info("All evaluations written to %s", output_path)
+
+
+def print_tier_summary(
+    tiers: list[list[SelectedCondition]],
+    primary_buffer: int,
+) -> None:
+    """Print a human-readable tier summary to the console.
+
+    Args:
+        tiers: Tier assignments.
+        primary_buffer: Buffer for displayed F1.
+    """
+    print(f"\n{'=' * 72}")
+    print(f"LEADERBOARD TIERS ({primary_buffer}m buffer)")
+    print(f"{'=' * 72}")
+
+    rank = 0
+    for tier_idx, tier in enumerate(tiers, 1):
+        f1_vals = [
+            c.evaluations.get(primary_buffer, {}).get("f1", 0)
+            for c in tier
+        ]
+        print(
+            f"\nTier {tier_idx} "
+            f"(F1: {min(f1_vals):.3f}–{max(f1_vals):.3f}, "
+            f"{len(tier)} conditions)"
+        )
+        for cond in tier:
+            rank += 1
+            f1 = cond.evaluations.get(primary_buffer, {}).get("f1", 0)
+            print(f"  {rank:>3}. {cond.label:<40} F1={f1:.3f}  t={cond.best_threshold}")
+
+    print(f"\n{'=' * 72}")
+    print(
+        f"Total: {sum(len(t) for t in tiers)} conditions "
+        f"in {len(tiers)} tiers"
+    )
+    print(f"{'=' * 72}")
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+
+def build_cli() -> argparse.ArgumentParser:
+    """Construct the argument parser."""
+    parser = argparse.ArgumentParser(
+        description=(
+            "Build tiered leaderboard from detection conditions. "
+            "Evaluates conditions, runs round-robin pairwise permutation "
+            "tests, applies BH-FDR correction, and groups into tiers."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__,
+    )
+
+    # Input mode
+    input_group = parser.add_mutually_exclusive_group(required=True)
+    input_group.add_argument(
+        "--spec", type=Path,
+        help="YAML leaderboard spec file",
+    )
+    input_group.add_argument(
+        "--inventory", type=Path,
+        help="Condition inventory JSON (with --era, --track filters)",
+    )
+
+    # Inventory filters
+    parser.add_argument("--era", type=int, choices=[1, 2, 3])
+    parser.add_argument("--track", choices=["text", "image"])
+    parser.add_argument("--hypothesis", type=str)
+
+    # Evaluation
+    parser.add_argument(
+        "--bounds", type=Path, default=DEFAULT_BOUNDS,
+        help=f"Evaluation bounds GeoJSON (default: {DEFAULT_BOUNDS.name})",
+    )
+    parser.add_argument(
+        "--ground-truth", type=Path, default=DEFAULT_GROUND_TRUTH,
+        help="Ground truth reference GeoJSON",
+    )
+    parser.add_argument(
+        "--buffers", type=int, nargs="+", default=DEFAULT_BUFFERS,
+        help=f"Buffer distances in metres (default: {DEFAULT_BUFFERS})",
+    )
+    parser.add_argument(
+        "--primary-buffer", type=int, default=20,
+        help="Buffer for threshold selection + pairwise (default: 20)",
+    )
+    parser.add_argument(
+        "--bootstrap", type=int, default=DEFAULT_BOOTSTRAP,
+        help=f"Bootstrap iterations for CIs (default: {DEFAULT_BOOTSTRAP})",
+    )
+    parser.add_argument(
+        "--seed", type=int, default=DEFAULT_SEED,
+        help=f"Random seed (default: {DEFAULT_SEED})",
+    )
+
+    # Tiering
+    parser.add_argument(
+        "--fdr-q", type=float, default=DEFAULT_FDR_Q,
+        help=f"BH-FDR threshold (default: {DEFAULT_FDR_Q})",
+    )
+    parser.add_argument(
+        "--n-permutations", type=int, default=DEFAULT_N_PERMUTATIONS,
+        help=f"Permutation test iterations (default: {DEFAULT_N_PERMUTATIONS:,})",
+    )
+    parser.add_argument(
+        "--top-n", type=int, default=DEFAULT_TOP_N,
+        help=f"Inclusion: top-N at any buffer (default: {DEFAULT_TOP_N})",
+    )
+
+    # Execution
+    parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--workers", type=int, default=4,
+        help="Parallel evaluation workers (default: 4)",
+    )
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--skip-evaluation", action="store_true",
+        help="Use cached evaluations only",
+    )
+    parser.add_argument(
+        "--skip-pairwise", action="store_true",
+        help="Use cached pairwise results only",
+    )
+    parser.add_argument("--force", action="store_true")
+
+    # Meta
+    parser.add_argument(
+        "--version", action="version",
+        version=f"%(prog)s {__version__}",
+    )
+
+    return parser
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+
+def main() -> int:
+    """Build tiered leaderboard: evaluate, test, tier, output.
+
+    Returns:
+        Exit code: 0 = success, 1 = partial failure, 2 = fatal.
+    """
+    args = build_cli().parse_args()
+    setup_logging()
+
+    logger.info(
+        "build_tiered_leaderboard.py v%s — git %s",
+        __version__, get_git_commit(),
+    )
+
+    # Stage 1: Resolve conditions
+    if args.spec:
+        config, conditions = resolve_conditions_from_yaml(args.spec)
+        # Override defaults from YAML config
+        eval_cfg = config.get("evaluation", {})
+        if "bounds" in eval_cfg:
+            args.bounds = PROJECT_ROOT / eval_cfg["bounds"]
+        if "ground_truth" in eval_cfg:
+            args.ground_truth = PROJECT_ROOT / eval_cfg["ground_truth"]
+        if "buffers" in eval_cfg:
+            args.buffers = eval_cfg["buffers"]
+    else:
+        conditions = resolve_conditions_from_inventory(
+            args.inventory,
+            era=args.era,
+            track=args.track,
+            hypothesis=args.hypothesis,
+        )
+        config = {}
+
+    if not conditions:
+        logger.error("No conditions resolved — nothing to do")
+        return 2
+
+    logger.info("Resolved %d conditions", len(conditions))
+
+    if args.dry_run:
+        print(f"\nDry run: {len(conditions)} conditions")
+        print(f"{'Label':<45} {'Era':>3} {'Track':<6} {'K':>3} {'Thresholds'}")
+        print("-" * 80)
+        for c in conditions:
+            t_range = (
+                f"t={c.thresholds[0]}..{c.thresholds[-1]}"
+                if len(c.thresholds) > 1
+                else f"t={c.thresholds[0]}"
+            )
+            print(f"{c.label:<45} {c.era:>3} {c.track:<6} {c.k:>3} {t_range}")
+        return 0
+
+    # Validate paths
+    if not args.bounds.is_file():
+        logger.error("Bounds file not found: %s", args.bounds)
+        return 2
+    if not args.ground_truth.is_file():
+        logger.error("Ground truth not found: %s", args.ground_truth)
+        return 2
+
+    cache_dir = args.output_dir / ".cache"
+    metadata = {
+        "name": config.get("metadata", {}).get("name", ""),
+        "primary_buffer": args.primary_buffer,
+        "buffers": args.buffers,
+        "fdr_q": args.fdr_q,
+        "n_permutations": args.n_permutations,
+        "top_n": args.top_n,
+        "bootstrap": args.bootstrap,
+        "seed": args.seed,
+        "bounds": str(args.bounds),
+        "n_conditions_input": len(conditions),
+    }
+
+    # Stage 2: Evaluate
+    if not args.skip_evaluation:
+        start = time.monotonic()
+        all_evaluations = evaluate_all_conditions(
+            conditions,
+            ref_path=args.ground_truth,
+            bounds_path=args.bounds,
+            buffers=args.buffers,
+            n_bootstrap=args.bootstrap,
+            seed=args.seed,
+            cache_dir=cache_dir,
+            workers=args.workers,
+            force=args.force,
+        )
+        logger.info("Stage 2 complete in %.1fs", time.monotonic() - start)
+    else:
+        logger.info("Skipping evaluation (--skip-evaluation)")
+        # Load from cache
+        all_evaluations = {}
+        for cond in conditions:
+            all_evaluations[cond.label] = {}
+            for t in cond.thresholds:
+                merged = {"label": cond.label, "n_detections": 0, "buffers": []}
+                all_cached = True
+                for b in args.buffers:
+                    cp = _cache_path_eval(cache_dir, cond.label, t, b)
+                    if cp.is_file():
+                        with open(cp, encoding="utf-8") as f:
+                            buf_data = json.load(f)
+                        if "n_detections" in buf_data:
+                            merged["n_detections"] = buf_data.pop("n_detections")
+                        merged["buffers"].append(buf_data)
+                    else:
+                        all_cached = False
+                        break
+                if all_cached and merged["buffers"]:
+                    all_evaluations[cond.label][t] = merged
+
+    # Stage 3: Select thresholds
+    selected = select_best_thresholds(
+        conditions, all_evaluations,
+        primary_buffer=args.primary_buffer,
+        top_n=args.top_n,
+    )
+
+    if not selected:
+        logger.error("No conditions survived threshold selection")
+        return 2
+
+    # Stage 4: Pairwise tests
+    if not args.skip_pairwise and len(selected) > 1:
+        start = time.monotonic()
+        pairwise_results = run_all_pairwise_tests(
+            selected,
+            ref_path=args.ground_truth,
+            bounds_path=args.bounds,
+            buffer_metres=args.primary_buffer,
+            n_permutations=args.n_permutations,
+            seed=args.seed,
+            cache_dir=cache_dir,
+            force=args.force,
+        )
+        logger.info("Stage 4 complete in %.1fs", time.monotonic() - start)
+    elif args.skip_pairwise and len(selected) > 1:
+        logger.info("Skipping pairwise (--skip-pairwise)")
+        # Load from cache
+        pairwise_results = []
+        expected_pairs = len(selected) * (len(selected) - 1) // 2
+        missing_pairs = 0
+        for a, b in itertools.combinations(selected, 2):
+            cp = _cache_path_pairwise(cache_dir, a.label, b.label)
+            if cp.is_file():
+                with open(cp, encoding="utf-8") as f:
+                    pairwise_results.append(json.load(f))
+            else:
+                missing_pairs += 1
+                logger.warning(
+                    "Missing cached pairwise: %s vs %s", a.label, b.label,
+                )
+        if missing_pairs > 0:
+            logger.error(
+                "%d/%d pairwise results missing from cache. "
+                "Run without --skip-pairwise to compute them.",
+                missing_pairs, expected_pairs,
+            )
+            return 2
+    else:
+        pairwise_results = []
+
+    # Stage 5: FDR + tiering
+    pairwise_annotated, tiers = apply_fdr_and_tier(
+        pairwise_results, selected, fdr_q=args.fdr_q,
+    )
+
+    # Stage 6: Output
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+
+    for buf_m in args.buffers:
+        write_leaderboard_markdown(
+            tiers, buf_m,
+            args.output_dir / f"leaderboard_tiers_{buf_m}m.md",
+            metadata,
+        )
+
+    write_leaderboard_json(
+        tiers, all_evaluations, pairwise_annotated,
+        metadata,
+        args.output_dir / f"leaderboard_tiers_{args.primary_buffer}m.json",
+    )
+    write_all_evaluations_json(
+        all_evaluations,
+        args.output_dir / "leaderboard_all_evaluations.json",
+    )
+
+    print_tier_summary(tiers, args.primary_buffer)
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

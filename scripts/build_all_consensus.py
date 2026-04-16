@@ -113,6 +113,9 @@ def setup_logging(
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
 
+    # Prevent duplicate handlers on repeated calls (e.g., in tests)
+    root.handlers.clear()
+
     fmt = logging.Formatter(
         "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
     )
