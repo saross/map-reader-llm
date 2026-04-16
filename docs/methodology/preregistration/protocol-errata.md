@@ -1575,4 +1575,96 @@ impact experimental validity.
 
 ---
 
+### E53: Phase 3a-HIGH image track moved from 512 px (Era 1) to 384 px (Era 2)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-16 |
+| Type | Deviation |
+| Sections | §H3 (preregistration lines 497–531), Phase 3a study YAML |
+| Impact | H3 image-track consensus analysis reported on Era 2 scope (487 tiles, 384 px) rather than Era 1 (340 tiles, 512 px) |
+
+**Description**: The preregistered Phase 3a study
+(`studies/retest/phase3a-h3-voting-track1-high.yaml`) defined K = 30
+consensus voting experiments for the image track at 512 px (Era 1, 340
+tiles) with HIGH thinking at T = 0.3, T = 0.7, and T = 1.0. The study
+manifest was generated (2026-03-18) and run directories created, but the
+detection runs were never launched. The text-track counterpart completed
+(90/90 runs). The image track was queued behind the text track and
+deprioritised when the project moved to Phase 3c, H11, and the v2
+hypothesis series.
+
+Investigation during Session 70 (2026-04-16) revealed that:
+
+1. **The same experiment already exists at 384 px.** The H11 PV-diag
+   condition `flash-high-image-n5` (Flash, HIGH thinking, image track,
+   plus-hp library, T = 0.7, K = 10) was run on the full 487-tile 384-px
+   evaluation manifest. A matched MINIMAL-thinking condition (`image-n5`)
+   also exists at T = 0.7 with K = 10.
+
+2. **The archived 60-tile preliminary data was mislabelled.** The
+   pre-retest `track1-image-high` directory (archived at
+   `archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/`) was
+   labelled as HIGH thinking but the study notes confirm it "actually used
+   minimal thinking" (study YAML `retest_notes` field).
+
+3. **The library-design axis is null** (Obs 240). All 10 library-design
+   conditions span F1 = 0.688–0.733 with zero significant pairwise
+   differences after BH-FDR. Temperature and thinking-level findings from
+   the plus-hp library transfer to the scale-4 generalisation library.
+
+**Resolution**: The 512-px experiment is omitted. Instead, a complete
+2 × 4 thinking × temperature matrix is run at 384 px (487 tiles) using
+the existing H11 infrastructure:
+
+| | T = 0.0 (K = 3) | T = 0.3 (K = 10) | T = 0.7 (K = 10) | T = 1.0 (K = 10) |
+|---|---|---|---|---|
+| **HIGH** | New | New | Exists | New |
+| **MINIMAL** | Exists | New | Exists | New |
+
+This design provides: (a) clean paired HIGH vs MINIMAL comparison at three
+consensus-relevant temperatures; (b) T = 0.0 baselines for both thinking
+levels; (c) N = 5 and N = 10 consensus threshold sweeps at each cell.
+
+**Justification**:
+
+1. **More informative than the original design.** The 512-px study tested
+   only HIGH thinking at three temperatures. The 384-px matrix adds the
+   MINIMAL comparison, enabling direct quantification of the thinking-level
+   effect on consensus voting — the key scientific question.
+
+2. **Consistent evaluation scope.** The 384-px data integrates cleanly with
+   the Era 2+3 leaderboard (H8 v2, H10 v2, H11, H12 v2). H11 provides the
+   tile-size bridge (384 px vs 512 px) for cross-era comparison.
+
+3. **Library choice is orthogonal.** Obs 240 confirms that library
+   composition does not interact with detection performance at the proposer
+   stage. Findings about optimal T and thinking level on the plus-hp library
+   will transfer to the scale-4 library used in the generalisation run.
+
+**Parameter summary**:
+
+| Parameter | Original Phase 3a-HIGH (512 px) | E53 replacement (384 px) |
+|-----------|--------------------------------|--------------------------|
+| Tile size | 512 px | 384 px |
+| Tiles | 340 (Era 1) | 487 (Era 2 full evaluation) |
+| K | 30 | 10 (K = 30 if needed after initial analysis) |
+| Temperatures | T = 0.3, 0.7, 1.0 | T = 0.0, 0.3, 0.7, 1.0 |
+| Thinking levels | HIGH only | **HIGH + MINIMAL** |
+| Config | library_plus-hp-high.json | library_plus-hp.json + CLI override |
+| Execution mode | Not specified | Realtime flex + context caching |
+| Workers | Not specified | 250 (Tier 3 standard) |
+
+**Reference artefacts**:
+
+- Launcher script: `scripts/run_phase3a_image_matrix.sh`
+- Config: `prompts/configs/library_plus-hp.json`
+- Existing HIGH T = 0.7: `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/`
+- Existing MINIMAL T = 0.7: `outputs/h11/pv-diag-384/image-n5/image-t0.7/`
+- Pre-launch audit (via `/audit-config`): 2026-04-16 Session 70
+- Library-design null: Obs 240 (2026-04-16)
+- Mislabelling discovery: Session 70 investigation of empty `outputs/retest/phase3a-high/track1-image/`
+
+---
+
 *End of errata. New entries should be appended above this line.*
