@@ -512,7 +512,11 @@ def merge_passes(
     return stats
 
 
-def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
+def threshold_sweep(
+    input_dir: Path,
+    output_dir: Path,
+    pass_filter: list[int] | None = None,
+) -> None:
     """
     Generate consensus outputs for every possible threshold value.
 
@@ -522,9 +526,12 @@ def threshold_sweep(input_dir: Path, output_dir: Path) -> None:
     Args:
         input_dir: Directory containing pass subdirectories.
         output_dir: Directory for output files.
+        pass_filter: Optional list of pass numbers to include (1-indexed).
+            When provided, only these passes are loaded and total_passes
+            reflects the filtered count.
     """
     logger.info("Loading passes from %s...", input_dir)
-    raw_passes = load_pass_detections(input_dir)
+    raw_passes = load_pass_detections(input_dir, pass_filter=pass_filter)
 
     if not raw_passes:
         logger.error("No passes loaded.")
@@ -659,7 +666,7 @@ Notes:
         if not args.output_dir:
             logger.error("--sweep requires --output-dir")
             sys.exit(1)
-        threshold_sweep(args.input_dir, args.output_dir)
+        threshold_sweep(args.input_dir, args.output_dir, pass_filter=pass_filter)
     else:
         if not args.output:
             logger.error("--output required (unless using --sweep)")
