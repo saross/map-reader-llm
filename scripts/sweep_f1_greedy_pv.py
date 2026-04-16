@@ -55,8 +55,9 @@ DEFAULT_BOUNDS = (
     BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "h10_test_bounds.geojson"
 )
 
-#: K=5 greedy consensus → valid vote thresholds are 1..5.
-VOTE_THRESHOLDS = [1, 2, 3, 4, 5]
+#: Default K=5 greedy consensus → valid vote thresholds are 1..5.
+#: Override with --vote-thresholds or auto-detect from manifest total_passes.
+DEFAULT_VOTE_THRESHOLDS = [1, 2, 3, 4, 5]
 
 #: Fine-grained probability grid that matches the step=0.05 convention
 #: used by ``evaluate_pv_results.py sweep``. Extends to 0.95 so the
@@ -73,9 +74,12 @@ def run_sweep(
     gt: gpd.GeoDataFrame,
     bounds: gpd.GeoDataFrame,
     buffer_m: int = 20,
+    vote_thresholds: list[int] | None = None,
 ) -> list[dict]:
+    if vote_thresholds is None:
+        vote_thresholds = DEFAULT_VOTE_THRESHOLDS
     rows: list[dict] = []
-    for vt in VOTE_THRESHOLDS:
+    for vt in vote_thresholds:
         for pt in PROB_THRESHOLDS:
             sub = cands[
                 (cands["vote_count"] >= vt)
@@ -127,7 +131,10 @@ def main() -> int:
     parser.add_argument("--verified-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--bounds", type=Path, default=DEFAULT_BOUNDS)
-    parser.add_argument("--buffer-m", type=int, default=20)
+    parser.add_argument("--buffer-m", type=int, nargs="+", default=[20],
+                        help="Buffer distance(s) in metres (default: 20)")
+    parser.add_argument("--vote-thresholds", type=int, nargs="+", default=None,
+                        help="Vote thresholds to sweep (default: auto-detect from manifest)")
     args = parser.parse_args()
 
     manifest = args.crops_dir / "candidate_manifest.json"
@@ -145,15 +152,45 @@ def main() -> int:
     bounds = gpd.read_file(args.bounds).to_crs("EPSG:32635")
     print(f"  {len(gt)} GT mounds, {len(bounds)} bounds tiles")
 
-    print(f"\nRunning 2D sweep: {len(VOTE_THRESHOLDS)} vote × {len(PROB_THRESHOLDS)} prob")
-    rows = run_sweep(args.config, cands, gt, bounds, buffer_m=args.buffer_m)
+    # Auto-detect vote thresholds from manifest if not specified
+    vote_thresholds = args.vote_thresholds
+    if vote_thresholds is None:
+        with open(manifest, encoding="utf-8") as f:
+            mf = json.load(f)
+        # Find max vote_count across all candidates
+        max_votes = max(
+            (c.get("properties", {}).get("vote_count", 1)
+             for c in mf.get("candidates", [])),
+            default=5,
+        )
+        vote_thresholds = list(range(1, max_votes + 1))
+        print(f"  Auto-detected vote thresholds: 1..{max_votes}")
+
+    buffers = args.buffer_m if isinstance(args.buffer_m, list) else [args.buffer_m]
+    all_rows: list[dict] = []
+
+    for buffer_m in buffers:
+        print(f"\nRunning 2D sweep: {len(vote_thresholds)} vote × {len(PROB_THRESHOLDS)} prob @ {buffer_m}m")
+        rows = run_sweep(
+            args.config, cands, gt, bounds,
+            buffer_m=buffer_m, vote_thresholds=vote_thresholds,
+        )
+        # Tag rows with buffer
+        for r in rows:
+            r["buffer_m"] = buffer_m
+        all_rows.extend(rows)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with open(args.output, "w") as f:
-        json.dump(rows, f, indent=2)
-    print(f"Wrote {len(rows)} rows to {args.output}")
+        json.dump(all_rows, f, indent=2)
+    print(f"\nWrote {len(all_rows)} rows to {args.output}")
 
-    print_top(rows)
+    # Print top results per buffer
+    for buffer_m in buffers:
+        buf_rows = [r for r in all_rows if r.get("buffer_m") == buffer_m]
+        if buf_rows:
+            print(f"\n--- {buffer_m}m buffer ---")
+            print_top(buf_rows)
     return 0
 
 
