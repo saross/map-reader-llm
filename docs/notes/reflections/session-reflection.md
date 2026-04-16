@@ -6693,3 +6693,100 @@ Shawn was in background-compute mode for most of the session — asking for spec
 **Durable output**: Seven commits (`85315cfa` through `6a7c3ed8`), Obs 238 null result, one errata entry (E51 with 15 deviations), four memories, two infrastructure fixes (pool size + edge exclusion), one bugfix (`log_success` ordering). The scientific headline is a strong library-axis null that, combined with H10, lets the paper close the library-curation story as "not a lever".
 
 ---
+
+## Reflection 55: The session that closed the experiments and opened the analysis — and where I learned I'd been wrong about evaluation scope for the entire project (Session 69, 2026-04-16, map-reader-llm)
+
+### Prompt: "What surprised you about this session?"
+
+The evaluation-scope discovery was the genuine surprise. For months I had
+been treating the 327-tile h10 test set as "the" 384-px evaluation scope.
+When Shawn asked "didn't we re-run H1–H7 at 384 px?", I confidently said
+no — and was technically correct (they ran at 512 px). But the follow-up
+conversation revealed something I hadn't grasped: the project has THREE
+nested production tile sets (340 × 512, 487 × 384, 327 × 384), each with
+its own calibration exclusion history, and the 327-tile set is the
+SMALLEST of the three, not the canonical one. I had been treating the most
+constrained scope as the default.
+
+The moment that crystallised this was the spatial intersection check: Era 2
+(487 tiles) is a strict superset of Era 3 (327 tiles), both on the same
+384-px grid, with zero overlap with the 512-px calibration footprint. The
+487-tile set was DELIBERATELY constructed to exclude the 512-px calibration
+area — that's why it covers less territory than the 340-tile 512-px set.
+Then H10 carved out another 160 tiles for hard-example mining, creating the
+327-tile subset. Each exclusion has a different rationale and a different
+geographic footprint. None of this was discoverable from the file names
+alone; it required tracing the provenance through errata, decision logs, and
+spatial joins. Shawn had to correct me three times before I got the full
+picture right — first about the 384-px re-run (it was a 512-px re-run over
+340 tiles), then about the count (487 not 467), then about the calibration
+exclusion (the 487-tile set already excludes the 512 calibration area).
+
+This matters because every leaderboard comparison we build depends on which
+conditions share which evaluation scope. Getting the scope wrong doesn't
+produce a crash — it produces silently incomparable F1 numbers.
+
+### Prompt: "What was different about this session compared to recent ones?"
+
+This was a **phase-transition session** — the first where no new VLM
+detections were planned (H12 v2 was the last production run, launched at
+the start). Everything after was analysis, comparison, archiving, and
+planning. The texture shifted from "build and run" to "audit and organise."
+
+Three qualities distinguished it:
+
+**The verifier false alarm and its resolution.** When the 1D verifier sweep
+produced F1 = 0.525 (well below the 0.733 proposer F1), I flagged it as
+"the verifier isn't helping." The user's response was characteristically
+precise: "we shouldn't have this F1 drop... I think you can do a
+consensus-level + threshold sweep." The 2D sweep recovered F1 to 0.737 —
+essentially identical to the proposer. The lesson: when an analysis
+produces a result that contradicts prior experience, the first hypothesis
+should be "wrong operating point" not "the tool is broken." The 1D sweep
+was the wrong operating point because it couldn't filter by proposer vote
+count. The user knew this from experience; I had to derive it empirically.
+
+**The archiving was harder than the analysis.** Moving ~2.1 GB of
+non-production data to archive/ required more careful judgement than
+running the H12 v2 analysis pipeline. Every directory needed scope
+verification (which bounds file? which tile count? is validation_bounds
+the 60-tile set?). The `h11-384-pv-diagnostic` directory was nearly
+archived as "60-tile scope" before I checked — it's actually 487-tile
+Era 2. One wrong call there would have hidden the Tier 1 result. The
+lesson: archiving is a data-integrity operation, not a cleanup task.
+
+**The leaderboard conversation was the most productive design discussion
+of the project.** The user's framing — "architecture categories × tracks,
+with sweeps across consensus and verifier thresholds at multiple spatial
+tolerances" — imposed a structure I wouldn't have reached on my own.
+My instinct was "best-of-each-cell table." The user wanted "full sweep
+curves at every operating point, with round-robin tier clustering."
+The latter is orders of magnitude more information and requires a
+different computational pipeline. The condition inventory (144 conditions,
+81 needing consensus building) quantified what that pipeline entails.
+
+### Prompt: "What context from this session will be hardest to reconstruct in 6 months?"
+
+The three-era scope nesting and WHY each exclusion exists. In 6 months,
+someone will look at `evaluation-scopes.md` and see the numbers (340 / 487
+/ 327) but not understand WHY pool_160 was excluded from Era 3 but not
+Era 2 (answer: because hard-example mining hadn't happened yet at Era 2),
+or why the 487-tile set covers less area than the 340-tile set (answer:
+the 512-px calibration footprint was carved out at 384 px, and the finer
+stride means more tiles are affected). The document captures the WHAT but
+the WHY lives in this session's conversation — and specifically in the
+user's corrections ("we were very careful when building the 487 × 384px
+tile set to exclude the 512px calibration set").
+
+**Session**: 2026-04-16 (Session 69), single unbroken context, significant
+compaction during the leaderboard discussion phase. All observations
+first-person from direct experience.
+**Key moment**: The spatial intersection returning 0.0000 sq m of overlap
+between 487 × 384 tiles and the 512-px calibration footprint — confirming
+the user's claim that the exclusion was deliberate and complete.
+**Relational note**: The user corrected me three times on evaluation scope
+(512 not 384, 487 not 467, calibration exclusion already applied) — each
+correction was patient and came with the relevant context I'd been missing.
+The shortest corrections had the largest epistemic updates.
+
+---

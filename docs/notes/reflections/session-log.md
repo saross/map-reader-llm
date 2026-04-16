@@ -4638,3 +4638,74 @@ gitignore to avoid committing the 3 GB of PNG crops.
 
 The flex-tier overspend occurred because the google-genai SDK v1.67.0 didn't support `service_tier` as a `GenerateContentConfig` parameter. Rather than stopping to upgrade the SDK (a 30-second operation), runs were relaunched without flex. This was identified as a process failure and new rules were established: API gate approval is a frozen contract, and SDK incompatibilities must be fixed rather than worked around.
 
+---
+
+## Session 69 — 2026-04-15/16 (map-reader-llm): H12 v2 (last production run), library-axis closure, Scale-4 verifier sanity check, scope discovery, archiving, leaderboard planning
+
+### H12 v2 execution (the last production hypothesis run)
+
+1. **Planned and configured** H12 v2 (HP:HN ratio, 3 conditions: R1 2:6, R2 4:4 reused, R3 6:2). Errata E52 appended. `/audit-config` passed all technical checks.
+2. **Launched overnight**: 10 detection runs (R1 × 5 + R3 × 5), 3,270 API calls, ~$34, 26 min wall time, 94.5% cache hit rate. Two transient JSON parse failures in R3 (1.3% loss).
+3. **Full analysis pipeline**: greedy t=1..5 + WBF variant C → multi-buffer evaluation → tile-level paired permutation → BH-FDR.
+4. **Result** (Obs 239): three-way null. F1 band 0.688–0.717 at greedy t=4. All CIs overlap. HP-heavy (R3) directionally worst — contradicts prereg prediction.
+
+### Cross-hypothesis library-design closure
+
+5. **45-pair cross-hypothesis matrix** (all H8 v2 + H12 v2 conditions) run on sapphire. Zero significant after BH-FDR; pooled adj-p ceiling 0.966 (Obs 240).
+6. **WBF H12 pairwise**: also null under secondary aggregation.
+7. Combined with H8 v2 null (Obs 238) and H10 v2 null (Obs 236): **library-design axis definitively closed**.
+
+### Scale-4 vs Scale-8 post-verifier comparison
+
+8. **Scale-4 advanced** for generalisation run on parsimony grounds.
+9. **Greedy verifier** (Scale-4 $2.16 API): 1551 candidates verified, 0 failed. Initial 1D sweep gave artificially low F1 (0.525) because the t=1 union is too noisy for a single-threshold sweep.
+10. **2D sweep** (vote_t × prob_t) recovered F1 to 0.737 (Scale-4) / 0.722 (Scale-8).
+11. **WBF verifier** (Scale-4 $1.52 + Scale-8 $1.39): same story — WBF matches greedy within 0.0005 F1.
+12. **Three-pipeline comparison** (Obs 241): Scale-4 leads by +0.015 in all three pipelines, none significant. Parsimony choice confirmed.
+
+### Evaluation scope discovery
+
+13. User questioned whether H1–H7 were re-run at 384 px. Investigation revealed: retest was at 512 px over 340 tiles (not 384 px), correcting my assumption.
+14. **Three production test tile sets** identified and locked in: Era 1 (340 × 512), Era 2 (487 × 384), Era 3 (327 × 384). Fully nested, verified by spatial intersection.
+15. Key finding: the 487-tile 384-px set already excludes the 512-px calibration footprint (zero overlap confirmed). The pool_160 exclusion for Era 3 is geographically separate.
+16. Coverage quantified: 80.8% / 73.0% / 59.0%. Documented in `results/evaluation-scopes.md`. Decision (Obs 242): era-first leaderboards (primary) + consolidated via spatial re-tiling (secondary).
+
+### Archiving
+
+17. **~2.1 GB archived** across 5 categories: 60-tile validation results, 256-px data, pre-retest outputs, experimental pilots, intermediate calibration. Manifest at `archive/ARCHIVE-MANIFEST.md`.
+
+### Leaderboard planning
+
+18. Architecture grid: 2 × 2 (single-pass / consensus × no-PV / +PV) × 3 tracks.
+19. Sweep convention locked: consensus threshold (1-of-K..K-of-K) × verifier probability (0.0–1.0) × spatial buffer (20/30/40/50 m).
+20. **Condition inventory built**: 144 conditions (96 Era 1, 34 Era 2, 14 Era 3). 81 need consensus building; 67 already have pre-computed F1 data in aggregate bootstrap-CIs files.
+21. Externalised to `planning/leaderboard-construction-plan.md`.
+
+### Decisions and observations
+
+- **Obs 239**: H12 v2 HP:HN ratio null (three-way)
+- **Obs 240**: 45-pair cross-hypothesis library-design null (closure)
+- **Obs 241**: Scale-4 vs Scale-8 three-pipeline verifier sanity check
+- **Obs 242**: Leaderboard construction strategy (era-first + re-tiling)
+- **Scale-4 confirmed** as generalisation-run library
+- **Greedy** confirmed as primary aggregation (100% tile coverage)
+- **v2 verifier quarantined** (data leakage from test pool)
+- **Phase transition**: pure analysis mode entered
+
+### Commits
+
+- `4be2d68a` feat(h12-v2): H12 experiment setup + errata E52
+- `9009a65b` feat(analysis): 7 new/modified analysis scripts
+- `6d804934` data(analysis): H12 + cross-hypothesis + verifier results
+- `b7460aae` docs(session-69): Obs 239–242 + leaderboard plan + inventory
+- `276e4ca8` refactor(archive): ~2.1 GB non-production data pruned
+- `2e84d4a6` data(h12-v2): detection data + verifier outputs
+
+### API spend
+
+~$39 total: H12 v2 detections ($34) + Scale-4/Scale-8 verifier runs ($5.07).
+
+### Contextual assumptions
+
+The 2D sweep (vote_t × prob_t) resolution of the "verifier looks broken" false alarm is important context. The 1D sweep on consensus_t1 (the union of all detections) produces artificially low F1 because the verifier cannot substitute for the proposer's vote-count filter. Any future PV pipeline that takes the consensus_t1 union as input MUST be evaluated with a 2D sweep, not a 1D verifier-probability sweep alone. This lesson is documented in Obs 241 and should prevent future confusion.
+
