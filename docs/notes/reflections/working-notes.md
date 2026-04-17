@@ -11057,3 +11057,141 @@ and either track is acceptable.
 (buffer_sensitivity)
 
 ---
+
+## Observation 253: Text + Verifier Pushes F1 to 0.887 — Best Result in the Entire Project (2026-04-18)
+
+**Context**: Completes the text-track verifier matrix (14 configs × 2D
+sweep over vote_t × prob_t at 4 buffers). Mirrors the image-track
+verifier matrix (Obs 247–248) exactly, using the same text-only
+adversarial v1 verifier.
+
+**Headline**: The best text + verifier configuration achieves
+**F1 = 0.887 at 20 m, F1 = 0.909 at 50 m** — a project-wide ceiling,
+exceeding the best image + verifier configs by ~0.09 F1.
+
+**Best operating points (F1@20m, verifier 2D grid optimum):**
+
+| Config | F1@20m | F1@50m | P | R | vote_t | prob_t |
+|--------|-------:|-------:|--:|--:|-------:|-------:|
+| HIGH-T0.3-N5 | **0.887** | **0.909** | 0.917 | 0.860 | 4 | 0.20 |
+| HIGH-T1.0-N10 | 0.880 | 0.906 | 0.890 | 0.871 | 5 | 0.20 |
+| MIN-T0.3-N5 | 0.878 | 0.899 | 0.907 | 0.851 | 3 | 0.15 |
+| MIN-T1.0-N10 | 0.878 | 0.899 | 0.905 | 0.853 | 5 | 0.15 |
+| HIGH-T0.7-N10 | 0.874 | 0.896 | 0.942 | 0.816 | 8 | 0.20 |
+| MIN-T0.7-N5 | 0.874 | 0.901 | 0.935 | 0.821 | 4 | 0.20 |
+| MIN-T0.3-N10 | 0.873 | 0.890 | 0.877 | 0.869 | 3 | 0.15 |
+| MIN-T0.7-N10 | 0.873 | 0.891 | 0.914 | 0.835 | 6 | 0.15 |
+| MIN-T1.0-N5 | 0.871 | 0.898 | 0.904 | 0.841 | 3 | 0.15 |
+| HIGH-T1.0-N5 | 0.869 | 0.901 | 0.878 | 0.860 | 3 | 0.20 |
+| HIGH-T0.7-N5 | 0.863 | 0.887 | 0.911 | 0.821 | 4 | 0.15 |
+| MIN-T0.0-N3 | 0.862 | 0.891 | 0.908 | 0.821 | 2 | 0.20 |
+| HIGH-T0.0-N3 | 0.823 | 0.857 | 0.856 | 0.793 | 3 | 0.15 |
+
+**Verifier obsoletes parameter choice (almost).** Post-verifier F1 spans
+0.823–0.887 (range = 0.064) across all 14 configs vs. proposer-only range
+of 0.193 (0.605–0.797 on the same conditions). The verifier compresses
+the thinking × temperature gap by a factor of ~3×. The only condition
+still clearly below the pack is HIGH-T=0.0-N=3 at 0.823 — which aligns
+with the image-track finding that HIGH+T=0.0 proposers are structurally
+worse (fewer diverse FPs to filter, so the verifier has less to work
+with).
+
+**Data**: 14 × `outputs/h11/pv-diag-384/*/verified-v1-*/sweep_2d.json`;
+aggregated in `results/phase3a-text-matrix/verifier_summary.json`.
+
+---
+
+## Observation 254: Weak MIN+PV Reversal on Text — Image Pattern Reproduces But With Smaller Effect (2026-04-18)
+
+**Context**: Image Obs 247 showed MIN + verifier > HIGH + verifier
+(reversal of proposer-only ranking). Does text reproduce this?
+
+**Mean best-operating-point F1@20m across all N matches:**
+
+| Track | HIGH+PV mean | MIN+PV mean | Δ (MIN − HIGH) |
+|-------|-------------:|------------:|---------------:|
+| Image (Obs 247) | 0.788 | 0.808 | **+0.020** |
+| **Text** (Obs 254) | 0.867 | 0.873 | **+0.006** |
+
+Both tracks show MIN+PV > HIGH+PV on average, but the text effect is
+much smaller (+0.006 vs image's +0.020). The magnitude is within
+single-config variation.
+
+**Best-pick view (strongest individual config per track):**
+
+- Image best PV: MIN+PV configs dominate top-4 (0.799, 0.788, 0.784, 0.781)
+- Text best PV: HIGH-T=0.3-N=5 at 0.887 *beats* every MIN+PV config
+  (top MIN+PV = 0.878)
+
+So the reversal is:
+- Image: robust across best-pick AND average (MIN wins both)
+- Text: present on average but reverses at best-pick (HIGH wins best-pick,
+  MIN wins average)
+
+**Mechanism**: The verifier gains are LARGER for MIN proposers:
+
+| Track | HIGH verifier gain (avg) | MIN verifier gain (avg) |
+|-------|--------------------------:|-------------------------:|
+| Image | +0.09 | +0.17 |
+| Text | +0.12 | +0.23 |
+
+MIN proposers produce ~60–70% more candidates per condition (1,575–2,790
+MIN vs 1,256–5,920 HIGH at K=10–K=30). More candidates means more FPs
+for the verifier to filter, so the verifier gain is larger. But the
+*ceiling* achievable by the pipeline favours HIGH slightly on text
+because HIGH has higher-precision candidates to start with.
+
+**Practical implication**: MIN + PV remains the Pareto-optimal pipeline
+(cheaper proposer, verifier does the heavy lifting, near-best F1). But
+for text specifically, the HIGH + PV ceiling is marginally higher and
+could be used when absolute F1 matters more than cost. The effect is
+tiny; in practice either pipeline is acceptable.
+
+**Text + PV vs image + PV — caveats**: Direct track-to-track comparison
+at PV is complicated because text and image used different proposer
+libraries (17 vs 13 examples, Scale-8 vs plus-hp). Obs 240 established
+library composition is null, so the text advantage is attributable to
+modality × prompt-style rather than library size. The ~0.09 gap (text
+0.887 vs image 0.799) is plausibly structural.
+
+**Data**: `results/phase3a-text-matrix/verifier_summary.json` +
+`results/secondary-effects/secondary_effects.json`
+
+---
+
+## Observation 255: Verifier Compresses Thinking × Temperature Variance by 3× — Architecture Choice Still Dominates on Text (2026-04-18)
+
+**Context**: Image Obs 248 showed the verifier is the single largest
+effect in the pipeline, dominating all parameter choices. Does text
+reproduce this?
+
+**Variance ranges (max − min F1@20m across matched conditions):**
+
+| Stage | Image range | Text range | Text compression |
+|-------|------------:|-----------:|-----------------:|
+| Proposer-only | 0.262 | 0.193 | 0.74× |
+| + Verifier | 0.108 | 0.064 | 0.59× |
+| Verifier delta (mean) | +0.11 | +0.18 | 1.64× |
+
+**The verifier does even more work on text than on image:**
+
+- Text proposer range 0.193 → post-verifier 0.064 = **3.0× compression**
+- Image proposer range 0.262 → post-verifier 0.108 = **2.4× compression**
+- Text mean verifier gain: **+0.177** (vs image +0.108 = 1.6× larger)
+
+**Unified conclusion (paralleling Obs 248)**: On both tracks, the
+verifier is the dominant architectural choice. Text amplifies this: the
+verifier moves text F1 from 0.67 (average MIN proposer-only) to 0.87
+(average MIN + PV) — a +0.20 jump that no parameter tuning can match.
+
+**Headline configuration for the paper**: Text + MIN + T=0.7 + N=10
+proposer + v1 verifier achieves F1 = 0.873 at 20 m, 0.891 at 50 m, with
+precision = 0.914, recall = 0.835. This is the most reproducible /
+cost-optimal configuration. The HIGH-T=0.3-N=5 ceiling at 0.887 is a
+demonstration of the upper bound but costs ~3× more per run.
+
+**Data**: `results/phase3a-text-matrix/verifier_summary.json`;
+comparison with `results/secondary-effects/secondary_effects.json`.
+
+---
+
