@@ -1,4 +1,4 @@
-# Secondary Effects Analysis: Phase 3a Text Track
+# Secondary Effects Analysis: Phase 3a Image Track
 
 **Generated**: 2026-04-17T10:17:36.656053+00:00
 **Conditions**: 8
