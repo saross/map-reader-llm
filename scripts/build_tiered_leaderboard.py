@@ -413,9 +413,21 @@ def _evaluate_single_threshold(
     Returns:
         Evaluation result dict from ``evaluate_single_run()``.
     """
+    import geopandas as gpd
+
     gdf_det = load_geojson(geojson_path)
     gdf_ref = load_geojson(ref_path)
     gdf_bounds = load_geojson(bounds_path)
+
+    # Assign source_tile if missing (consensus GeoJSONs have source_tiles
+    # but not source_tile). Matches evaluate_detections.py lines 770-782.
+    if "source_tile" not in gdf_det.columns and not gdf_det.empty:
+        joined = gpd.sjoin(
+            gdf_det, gdf_bounds[["tile_name", "geometry"]],
+            how="left", predicate="intersects",
+        )
+        joined = joined[~joined.index.duplicated(keep="first")]
+        gdf_det["source_tile"] = joined["tile_name"]
 
     return evaluate_single_run(
         gdf_det, gdf_ref, gdf_bounds,
@@ -721,7 +733,18 @@ def run_all_pairwise_tests(
 
     def _load_gdf(cond: SelectedCondition):
         if cond.label not in gdf_cache:
-            gdf_cache[cond.label] = load_geojson_detections(cond.geojson_path)
+            import geopandas as _gpd
+
+            gdf = load_geojson_detections(cond.geojson_path)
+            # Assign source_tile if missing (consensus GeoJSONs)
+            if "source_tile" not in gdf.columns and not gdf.empty:
+                joined = _gpd.sjoin(
+                    gdf, gdf_bounds[["tile_name", "geometry"]],
+                    how="left", predicate="intersects",
+                )
+                joined = joined[~joined.index.duplicated(keep="first")]
+                gdf["source_tile"] = joined["tile_name"]
+            gdf_cache[cond.label] = gdf
         return gdf_cache[cond.label]
 
     pairs = list(itertools.combinations(conditions, 2))
