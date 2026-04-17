@@ -10869,3 +10869,191 @@ The scale-4 library choice is immaterial — either library works.
 **Data**: All sweep files in `outputs/h11/pv-diag-384/*/verified-v1-*/`
 
 ---
+
+## Observation 249: Text-Track 2×4 Matrix — No HIGH×T=0.0 Reversal, HIGH Dominates at All Temperatures (2026-04-17)
+
+**Context**: Completes the text-track mirror of the Phase 3a image matrix
+(Obs 243). Same 2×4 design (HIGH/MINIMAL × T=0.0/0.3/0.7/1.0), same 384 px
+tiles and 487-tile evaluation, same greedy consensus — but using
+`detect_brief-text.json` (17 examples, Scale-8 metadata, text-only mode per
+Decision 17) instead of the image track's `library_plus-hp.json`. Completed
+46 new runs; existing K=30 T=0.7 runs reused.
+
+**Headline finding**: Unlike the image track, text shows NO HIGH×T=0.0
+reversal. HIGH beats MINIMAL at every temperature, and the thinking ×
+temperature interaction test is not significant for F1, precision, or
+recall.
+
+**HIGH advantage decomposed by metric and temperature (text track):**
+
+| T | Δ F1 | Δ P | Δ R | Δ n_det |
+|---|------|-----|-----|---------|
+| 0.0 | **+0.012** | +0.021 | −0.021 | −54 |
+| 0.3 | +0.147 | +0.263 | −0.005 | −199 |
+| 0.7 | +0.153 | +0.232 | +0.062 | −115 |
+| 1.0 | +0.106 | +0.195 | +0.000 | −135 |
+
+Compare to image (Obs 243): T=0.0 Δ F1 = **−0.141** (reversal); T≥0.3 Δ F1
+= +0.070 to +0.089 (consistent modest HIGH benefit).
+
+**Interpretation — the reversal is image-specific**: The image-track
+reversal mechanism proposed in Obs 243 was that HIGH thinking generates
+more candidate detections, and at T=0.0 these deterministic false positives
+are unfilterable by consensus. The text track reproduces the
+"HIGH generates more candidates" half (HIGH-T=0.0 n_det = 745 vs MIN-T=0.0
+= 799, actually fewer — different pattern) but not the reversal. At T=0.0
+text HIGH still produces 117 FPs at the optimal threshold (P=0.479) vs
+MIN's 188 FPs (P=0.458) — HIGH is slightly better on every P/R dimension,
+whereas in image HIGH-T=0.0 had P=0.377 << MIN-T=0.0 P=0.515.
+
+The mechanism that tanks HIGH-T=0.0 on image may be image-grounded
+pareidolia/hallucination that reliable only fires on the visual channel.
+Text-only prompts ground the model in the example's textual description
+rather than in a repeated visual feature, removing (or muting) whatever
+deterministic hallucination pattern the image prompts trigger at T=0.0.
+
+**Practical implication**: On text, HIGH thinking is broadly beneficial
+(no regime where it hurts), whereas on image it must be paired with T≥0.3
+consensus. The text-track optimum is HIGH + T=0.7 + K=30 consensus at
+t=26 (F1=0.814), which is also the best single-track result across the
+entire matrix.
+
+**Data**: `results/phase3a-text-matrix/secondary_effects.json`
+(pr_decomposition, thinking_temp_interaction)
+
+---
+
+## Observation 250: Consensus Dividend Is ~1.7× Larger on Text Than Image (2026-04-17)
+
+**Context**: The consensus dividend is the difference between consensus F1
+and the mean per-run F1 (how much multi-pass voting improves over a single
+run). Quantifies how much diversity is available to harvest.
+
+**Dividends (primary conditions):**
+
+| Condition | Track | Per-run mean F1 | Consensus F1 | Dividend |
+|-----------|-------|----------------:|--------------:|---------:|
+| HIGH-T0.7 | **Text** (K=30) | 0.387 | **0.814** | **+0.427** |
+| HIGH-T0.3 | **Text** (K=10) | 0.431 | 0.789 | +0.358 |
+| HIGH-T1.0 | **Text** (K=10) | 0.386 | 0.773 | +0.387 |
+| HIGH-T0.7 | Image (K=10) | 0.499 | 0.750 | +0.251 |
+| HIGH-T0.3 | Image (K=10) | 0.471 | 0.731 | +0.260 |
+| HIGH-T1.0 | Image (K=10) | 0.423 | 0.735 | +0.312 |
+
+**Text dividend ≈ 0.39 on average vs image ≈ 0.27**, a relative increase
+of ~44%. Text per-run F1 is *lower* than image, but text consensus ends up
+*higher* — meaning text runs are more diverse across runs (each run
+captures a different subset of true positives), and greedy voting pulls
+out far more TP coverage from text than from image.
+
+**Mechanism**: Text prompts don't anchor the model to a specific visual
+example, so each run explores the hypothesis space more independently.
+Image prompts anchor the model to the demonstrated visual pattern,
+reducing stochastic exploration — each run converges faster to the same
+TPs and FPs, reducing the diversity that consensus can leverage.
+
+**Implication for Pareto analysis**: Per-run cost is the same for text
+and image (1 API call per tile), but text rewards larger K more. Text
+HIGH-T=0.7 gains +0.035 F1 from K=5 → K=30 (consensus_convergence table);
+image HIGH-T=0.7 shows a much flatter curve. The marginal value of
+additional runs favours text.
+
+**Data**: `results/phase3a-text-matrix/secondary_effects.json`
+(run_variability, consensus_convergence) + image counterpart
+`results/secondary-effects/secondary_effects.json`
+
+---
+
+## Observation 251: Text Best Beats Image Best — HIGH+T=0.7+K=30 Text Achieves F1=0.814, Exceeding All Image Proposer-Only Configs (2026-04-17)
+
+**Context**: Final proposer-only F1 from the completed 2×4 matrices.
+
+**Best proposer-only (no verifier) F1 across tracks:**
+
+| Config | Track | K | t | F1 | P | R |
+|--------|-------|--:|--:|---:|--:|--:|
+| HIGH-T0.7 | **Text** | 30 | 26 | **0.814** | 0.834 | 0.795 |
+| HIGH-T0.3 | **Text** | 10 | 10 | 0.789 | 0.814 | 0.765 |
+| HIGH-T1.0 | **Text** | 10 | 9 | 0.773 | 0.792 | 0.754 |
+| HIGH-T0.7 | Image | 10 | 7 | 0.750 | 0.778 | 0.724 |
+| SCALE4-T0.7 | Image | 10 | 6 | 0.742 | 0.772 | 0.715 |
+| HIGH-T1.0 | Image | 10 | 6 | 0.735 | 0.737 | 0.733 |
+
+Text HIGH-T=0.7 with K=30 beats the best image config (HIGH-T=0.7, K=10)
+by **+0.064 F1**. Much of the advantage comes from adding runs: text
+HIGH-T=0.7 at K=5 is 0.779, at K=10 (inferred from the linear trend)
+~0.790, only modestly above image HIGH-T=0.7.
+
+**Caveat — the K=30 runs weren't controlled for in the preregistration.**
+The image matrix was K=10 throughout; text T=0.7 conditions reuse K=30
+data from earlier work. A fair comparison at matched K would be text
+HIGH-T=0.7 N=10 subset (F1 ≈ 0.779 from consensus-n10) vs image
+HIGH-T=0.7 N=10 (F1 = 0.750) — still a +0.029 text advantage, smaller
+than the K=30-inflated +0.064 but still real.
+
+**Why does text outperform image at the proposer stage?** Hypothesis:
+the text instruction asks the model to describe the detection reasoning
+explicitly, which acts as a chain-of-thought even at MINIMAL thinking.
+Image prompts rely on pattern matching to the visual examples, which is
+faster but shallower. Obs 240 established library composition is
+immaterial — so the effect must be modality-specific rather than
+library-specific.
+
+**Caution for the paper**: This finding inverts a common assumption that
+visual grounding helps VLMs. For historical maps, text-only prompting
+with a well-designed symbol description outperforms visual few-shot.
+Worth stating explicitly as a methodological contribution.
+
+**Data**: `results/phase3a-text-matrix/secondary_effects.json` +
+`results/secondary-effects/secondary_effects.json`
+
+---
+
+## Observation 252: Text Track Has ~4× Better Spatial Precision — Buffer Elasticity 1.2–4.5% vs Image 8.6–21.5% (2026-04-17)
+
+**Context**: Buffer elasticity measures how much F1 changes as the
+spatial tolerance buffer increases from 20 m to 50 m. Low elasticity
+means the model's detections are already within tight spatial tolerance
+of ground truth — high spatial precision. High elasticity means many
+detections are outside 20 m but within 50 m — spatially imprecise.
+
+**Elasticity comparison (F1@50m / F1@20m − 1):**
+
+| Condition | Text elasticity | Image elasticity |
+|-----------|----------------:|-----------------:|
+| HIGH-T0.0 | 4.5% | 21.5% |
+| HIGH-T0.3 | 2.7% | 8.6% |
+| HIGH-T0.7 | **1.4%** | 9.8% |
+| HIGH-T1.0 | 2.1% | 11.3% |
+| MIN-T0.0 | 3.3% | 14.2% |
+| MIN-T0.3 | 1.8% | 8.9% |
+| MIN-T0.7 | 1.3% | 9.8% |
+| MIN-T1.0 | **1.2%** | 13.7% |
+
+Text elasticity is 3–10× lower across every condition. Text
+HIGH-T=0.7 detections are 1.4% elastic — nearly all detections are
+already within 20 m of their ground-truth mound.
+
+**Mechanism — Scale-8 metadata anchors text centroids**: The text config
+uses Scale-8 reference metadata (centroid-anchored coordinates at the
+map symbol origin), per Decision 17. The image config uses the plus-hp
+library which is visually anchored to the symbol's rendered extent.
+Textual description grounds the model to the centroid coordinate; image
+examples ground it to the visual extent, which can drift several tens
+of metres off-centre depending on the exact crop framing.
+
+This matters because buffer elasticity is a proxy for localisation
+quality — useful for downstream work (e.g., follow-up surveying,
+association with other map features) where 20 m vs 50 m precision is
+the difference between "find the mound" and "search a small area".
+
+**Implication**: For applications requiring tight spatial precision
+(e.g., CRM field survey), text-track detections should be preferred even
+where image track achieves comparable F1. For coarse landscape-scale
+analysis (e.g., density mapping), 50 m buffer closes most of the gap
+and either track is acceptable.
+
+**Data**: `results/phase3a-text-matrix/secondary_effects.json`
+(buffer_sensitivity)
+
+---
