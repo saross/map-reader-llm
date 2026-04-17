@@ -10518,3 +10518,222 @@ caching, per condition.
 - Archive manifest: `archive/ARCHIVE-MANIFEST.md` (non-production results archived 2026-04-16)
 
 ---
+
+## Observation 243: HIGH Thinking × Temperature Interaction — HIGH Thinking Requires Consensus Voting to Be Beneficial (2026-04-17)
+
+**Context**: The Phase 3a image-track 2×4 matrix (HIGH/MINIMAL × T=0.0/0.3/
+0.7/1.0) was designed to test consensus voting on the image track at 384 px
+(487 tiles, K=10). Per erratum E53, this replaces the originally preregistered
+512-px experiment. The matrix enables direct quantification of the thinking ×
+temperature interaction, which was not preregistered as a formal test.
+
+**Headline finding**: HIGH thinking and temperature INTERACT rather than acting
+independently. HIGH thinking at T=0.0 **hurts** F1 by −0.141 compared to
+MINIMAL, reversing the direction seen at all other temperatures where HIGH
+helps by +0.070 to +0.089. This is not a small effect — the T=0.0 reversal is
+larger than the T>0 advantage.
+
+**HIGH advantage decomposed by metric and temperature:**
+
+| T | Δ F1 | Δ P | Δ R | Δ n_det |
+|---|------|-----|-----|---------|
+| 0.0 | **−0.141** | −0.139 | −0.113 | +121 |
+| 0.3 | +0.071 | **+0.199** | −0.053 | −156 |
+| 0.7 | +0.070 | **+0.138** | −0.002 | −89 |
+| 1.0 | +0.089 | +0.112 | +0.064 | −33 |
+
+**Mechanistic interpretation**: HIGH thinking generates more candidate
+detections (n_det is always higher than MINIMAL at T=0.0, before consensus
+filtering). At T=0.0, output is near-deterministic, so consensus voting cannot
+filter stochastic false positives — every run produces the same FPs, and they
+all survive to the t=1 threshold. The extra FPs tank precision (−0.139) and
+the slightly lower recall (−0.113) suggests some TPs are also lost to the
+increased noise floor.
+
+At T>0, the FPs become stochastic across runs. Consensus voting filters them
+effectively because true positives are spatially consistent (real mound
+symbols appear in the same location across runs) while false positives are
+not. The net effect: HIGH + T>0 produces FEWER detections after consensus
+filtering (−33 to −156) but with much higher precision (+0.112 to +0.199).
+
+**The precision channel dominates.** At T>0, the HIGH advantage in F1 is
+driven almost entirely by precision gains. Recall is flat at T=0.7 (Δ R =
+−0.002) and only modestly positive at T=1.0 (+0.064). HIGH thinking doesn't
+help the model find more mounds — it helps the consensus mechanism reject
+more false alarms.
+
+**Practical implication**: HIGH thinking should only be used with consensus
+voting at T>0. Using HIGH thinking for single-pass detection (or at T=0.0)
+is actively counterproductive. The optimal configuration for the image track
+is HIGH + T=0.7 + N=10 consensus at t=7 (F1=0.750).
+
+**Data**: `results/secondary-effects/secondary_effects.json` (thinking_temp_interaction)
+
+---
+
+## Observation 244: Vote Distribution Fingerprints Confirm the Stochastic FP Mechanism (2026-04-17)
+
+**Context**: Each consensus condition's `voting_summary.json` records how many
+detections survive at each vote threshold. The distribution reveals the
+"agreement structure" of the detection set — how many detections are unanimous
+(all K runs agree) vs contentious (seen in only 1–2 runs).
+
+**Vote distributions (K=10 conditions, t=1 union):**
+
+| Condition | Candidates | Unanimous | Contentious (t=1 only) | Mean vote |
+|-----------|------------|-----------|------------------------|-----------|
+| HIGH T=0.0 (K=3) | 802 | 89.5% | 8.2% | 2.8 |
+| HIGH T=0.3 | 3,412 | 8.2% | 62.9% | 2.6 |
+| HIGH T=0.7 | 3,211 | 6.4% | 65.4% | 2.5 |
+| HIGH T=1.0 | 4,638 | 3.6% | 72.1% | 2.0 |
+| MIN T=0.0 (K=3) | 690 | 97.8% | 1.3% | 3.0 |
+| MIN T=0.3 | 1,114 | 46.4% | 20.2% | 6.6 |
+| MIN T=0.7 | 1,450 | 24.9% | 34.3% | 4.8 |
+| MIN T=1.0 | 1,975 | 15.5% | 41.9% | 3.8 |
+| Scale-4 T=0.7 | 3,601 | 5.1% | 68.8% | 2.2 |
+
+**Key patterns:**
+
+1. **T=0.0 is near-deterministic**: MIN T=0.0 has 97.8% unanimous detections
+   (nearly every detection is seen in all 3 runs). HIGH T=0.0 is slightly less
+   deterministic (89.5%) despite both using the same temperature — HIGH
+   thinking introduces some stochasticity even at T=0.0.
+
+2. **Temperature drives contentious detection volume**: The fraction of
+   contentious (single-run) detections rises monotonically with temperature
+   for both thinking levels. HIGH T=1.0 produces 4,638 candidates of which
+   72% are contentious — these are the stochastic FPs that consensus filters.
+
+3. **HIGH thinking amplifies the contentious fraction**: At every temperature,
+   HIGH produces more contentious detections than MINIMAL (e.g., T=0.7:
+   HIGH 65.4% vs MIN 34.3%). This confirms that HIGH thinking generates more
+   speculative detections that get filtered by consensus.
+
+4. **Mean vote count is the consensus "signal strength"**: MIN T=0.3 has mean
+   vote 6.6 (of 10) — most detections are well-supported. HIGH T=1.0 has
+   mean vote 2.0 — most detections are barely above noise. Yet HIGH T=1.0
+   achieves F1=0.735 vs MIN T=0.3's F1=0.660 after optimal thresholding,
+   because the signal (TPs) is concentrated in the high-vote tail.
+
+5. **Scale-4 behaves like HIGH T=0.7**: 68.8% contentious, mean vote 2.2 —
+   very similar to HIGH T=0.7 (65.4%, 2.5). Different library, same detection
+   "fingerprint", consistent with the library-design null.
+
+**Interpretation**: The vote distribution is a diagnostic signature of the
+detection strategy. MINIMAL conditions produce a bimodal distribution
+(unanimous TPs + a few contentious FPs). HIGH conditions produce a
+right-skewed distribution (a small TP peak at high votes + a large FP mass
+at low votes). Consensus voting acts as a low-pass filter that separates
+the modes. The effectiveness of this filter depends on the separation between
+the TP and FP vote distributions — which is why T>0 (more stochastic FPs)
+works better than T=0 (FPs stuck in the TP mode).
+
+**Data**: `results/secondary-effects/secondary_effects.json` (vote_distribution)
+
+---
+
+## Observation 245: Run-to-Run Variability Differs Significantly Across Conditions — Levene's p=0.004 (2026-04-17)
+
+**Context**: Per-run single-pass F1 was computed for all 76 runs across 9
+conditions (K=10 for 7 conditions, K=3 for 2 T=0.0 conditions). This
+quantifies how consistent each condition is before consensus aggregation.
+
+**Key results:**
+
+| Condition | Mean F1 | SD | CV |
+|-----------|---------|------|------|
+| MIN T=0.0 | 0.598 | 0.0024 | 0.004 |
+| MIN T=0.3 | 0.557 | 0.0068 | 0.012 |
+| MIN T=1.0 | 0.498 | 0.0072 | 0.014 |
+| HIGH T=0.3 | 0.471 | 0.0089 | 0.019 |
+| MIN T=0.7 | 0.553 | 0.0137 | 0.025 |
+| HIGH T=0.7 | 0.499 | 0.0177 | 0.035 |
+| HIGH T=0.0 | 0.455 | 0.0170 | 0.037 |
+| SCALE4 T=0.7 | 0.472 | 0.0229 | 0.049 |
+| HIGH T=1.0 | 0.423 | 0.0224 | 0.053 |
+
+Levene's test (Brown-Forsythe): W=3.192, **p=0.004** — variability differs
+significantly across conditions.
+
+**Patterns:**
+
+1. **MINIMAL conditions have lower single-pass F1 variance** (CV 0.004–0.025)
+   than HIGH conditions (CV 0.019–0.053). This is expected: HIGH thinking
+   produces more variable outputs per run.
+
+2. **Temperature amplifies variance for HIGH** (CV: T=0.3→0.019, T=0.7→0.035,
+   T=1.0→0.053) but the pattern is weaker for MINIMAL. This supports the
+   stochastic FP mechanism: higher temperature + HIGH thinking = more random
+   variation per run.
+
+3. **MINIMAL T=0.0 has the lowest variance** (CV=0.004, effectively
+   deterministic). MINIMAL at T>0 has modest variance. HIGH at T>0 has the
+   highest variance.
+
+4. **Single-pass F1 is NOT the same as consensus F1**. HIGH T=0.7 has a
+   LOWER single-pass mean (0.499) than MIN T=0.7 (0.553), but a HIGHER
+   consensus F1 (0.750 vs 0.680). The consensus mechanism creates value
+   from the variation — it is not merely averaging the single-pass results.
+
+**This is the paradox of consensus voting with HIGH thinking**: worse
+individual runs produce better aggregated results, because the increased
+variation enables more effective noise filtering. The single-pass F1 is a
+misleading predictor of consensus performance for HIGH thinking conditions.
+
+**Data**: `results/secondary-effects/secondary_effects.json` (run_variability)
+
+---
+
+## Observation 246: Tile-Level Discrimination (MCC) Separates Conditions That F1 Cannot (2026-04-17)
+
+**Context**: Tile-level Matthews Correlation Coefficient (MCC) measures
+whether the model can distinguish tiles that contain mounds from tiles that
+are empty. This is a different capability from F1, which measures per-symbol
+detection accuracy. A model could achieve reasonable F1 by detecting in every
+tile (high sensitivity, zero specificity) if enough tiles actually have mounds.
+
+**Results (at optimal consensus threshold, 20m buffer):**
+
+| Condition | MCC | Sensitivity | Specificity |
+|-----------|-----|-------------|-------------|
+| Scale-4 T=0.7 | **0.746** | 0.817 | **0.922** |
+| HIGH T=0.3 | 0.683 | 0.751 | 0.919 |
+| HIGH T=0.7 | 0.678 | 0.803 | 0.872 |
+| HIGH T=1.0 | 0.549 | 0.921 | 0.623 |
+| MIN T=1.0 | 0.527 | 0.956 | 0.527 |
+| MIN T=0.7 | 0.406 | 0.825 | 0.570 |
+| HIGH T=0.0 | 0.452 | 1.000 | 0.353 |
+| MIN T=0.3 | 0.340 | 0.821 | 0.504 |
+| MIN T=0.0 | **0.216** | 0.873 | **0.306** |
+
+**Key findings:**
+
+1. **MCC reveals a much wider spread than F1.** The F1 range across conditions
+   is 0.488–0.750 (0.262 spread). The MCC range is 0.216–0.746 (0.530 spread).
+   MCC discriminates conditions that F1 treats as similar.
+
+2. **Specificity is the differentiator.** All conditions have high sensitivity
+   (0.751–1.000) — they detect mounds in tiles that have them. The separation
+   comes from specificity: Scale-4 correctly ignores 92.2% of empty tiles,
+   while MIN T=0.0 only ignores 30.6%.
+
+3. **Scale-4 leads on MCC despite being #2 on F1.** Scale-4 (MCC=0.746,
+   F1=0.742) outperforms HIGH T=0.7 (MCC=0.678, F1=0.750) on tile
+   discrimination. The hard negatives in scale-4's library (2 HN examples)
+   may help the model learn what is NOT a mound, improving empty-tile rejection
+   even though this doesn't translate to higher symbol-level F1.
+
+4. **MINIMAL conditions hallucinate more on empty tiles.** MIN T=0.0 has
+   specificity 0.306 (detects in 69.4% of empty tiles). After consensus at
+   the optimal threshold (t=2), it still produces 214 false-positive tiles
+   out of 258 empty ones.
+
+**Implication for deployment**: If the use case requires surveying large areas
+where most tiles are empty (true of most archaeological survey), MCC and
+specificity matter more than F1. A model that detects everywhere wastes human
+review time. Scale-4 + HIGH thinking + consensus voting offers the best
+balance of symbol-level accuracy (F1) and tile-level discrimination (MCC).
+
+**Data**: `results/secondary-effects/secondary_effects.json` (tile_mcc)
+
+---
