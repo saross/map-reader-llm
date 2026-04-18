@@ -55,6 +55,7 @@ import platform
 import re
 import shlex
 import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -421,6 +422,50 @@ def tile_to_map(tile_name: str) -> str:
 # ---------------------------------------------------------------------------
 # Stage runners — thin subprocess wrappers around existing scripts
 # ---------------------------------------------------------------------------
+# Subprocess dispatch with signal propagation
+# ---------------------------------------------------------------------------
+# Module-level handle to the active child process so our signal handler can
+# terminate it cleanly when the launcher itself receives SIGINT or SIGTERM.
+# Without this, a killed launcher leaves orphaned proposer/verifier
+# subprocesses that keep spending API credit (observed during the 55-map
+# worker-switch restart on 2026-04-18).
+_active_subprocess: subprocess.Popen | None = None
+
+
+def _forward_signal(sig: int, frame: Any) -> None:
+    """Terminate the active subprocess (if any), then exit.
+
+    Installed for SIGINT and SIGTERM at startup. Exit code follows the
+    POSIX convention of 128 + signal number so callers can distinguish
+    signal-driven exits.
+    """
+    proc = _active_subprocess
+    if proc is not None and proc.poll() is None:
+        logger.warning(
+            "Received signal %d; terminating active subprocess (PID %d)...",
+            sig, proc.pid,
+        )
+        try:
+            proc.terminate()
+            try:
+                proc.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                logger.warning(
+                    "Subprocess did not exit on SIGTERM; sending SIGKILL.",
+                )
+                proc.kill()
+                proc.wait(timeout=5)
+        except Exception as exc:  # pragma: no cover - best-effort cleanup
+            logger.warning("Error while terminating subprocess: %s", exc)
+    sys.exit(128 + sig)
+
+
+def _install_signal_handlers() -> None:
+    """Attach ``_forward_signal`` to SIGINT and SIGTERM."""
+    signal.signal(signal.SIGINT, _forward_signal)
+    signal.signal(signal.SIGTERM, _forward_signal)
+
+
 def _run_subprocess(
     cmd: list[str],
     *,
@@ -432,7 +477,12 @@ def _run_subprocess(
     Raises CalledProcessError-style SystemExit on unexpected exits so
     the pipeline fails fast. Exit codes in ``allowed_exits`` are
     returned without raising.
+
+    Uses ``Popen`` + explicit ``wait`` rather than ``subprocess.run`` so
+    that the signal handler in ``_forward_signal`` can reach into the
+    active child and terminate it on SIGINT / SIGTERM.
     """
+    global _active_subprocess
     logger.info("Running: %s", " ".join(shlex.quote(c) for c in cmd))
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("a", encoding="utf-8") as log_fh:
@@ -440,11 +490,14 @@ def _run_subprocess(
         log_fh.write("$ " + " ".join(shlex.quote(c) for c in cmd) + "\n")
         log_fh.flush()
         # Inherit environment; subprocess handles its own API key, logging
-        proc = subprocess.run(
+        proc = subprocess.Popen(
             cmd, cwd=BASE_DIR, stdout=log_fh, stderr=subprocess.STDOUT,
-            check=False,
         )
-    rc = proc.returncode
+        _active_subprocess = proc
+        try:
+            rc = proc.wait()
+        finally:
+            _active_subprocess = None
     logger.info("Exit code: %d  (log: %s)", rc, log_path)
     if rc not in allowed_exits:
         raise SystemExit(
@@ -465,10 +518,14 @@ def run_proposer(
 
     per_pass: list[dict[str, Any]] = []
     stage_start = time.monotonic()
-    failed_passes = 0
+    partial_passes = 0
     for i in range(1, k + 1):
         run_dir = output_base / f"run_{i}"
-        if run_dir.is_dir() and list(run_dir.glob("*.geojson")):
+        # Test for a *.meta.json — the proposer writes this only after
+        # a successful completion, so its presence guarantees the pass
+        # is truly done. A bare *.geojson can be partial since the
+        # proposer appends tile detections incrementally.
+        if run_dir.is_dir() and list(run_dir.glob("*.meta.json")):
             logger.info(
                 "Proposer run %d/%d already has outputs; skipping. "
                 "Remove %s to force re-run.", i, k, run_dir,
@@ -514,17 +571,28 @@ def run_proposer(
             "output_dir": str(run_dir),
         })
         if rc == PROPOSER_PARTIAL_EXIT:
-            failed_passes += 1
+            partial_passes += 1
 
-    if failed_passes >= 3:
-        raise SystemExit(
-            f"Proposer stage aborted: {failed_passes}/{k} passes had "
-            f"partial failures (threshold=3 per scripts/55maps-overnight.sh)."
+    # Exit code 2 is the proposer's documented "log and continue" signal
+    # (per its own CLI contract — a small fraction of tiles fail retry
+    # budget but the overall run is valid). At Flex tier ~0.1% of tiles
+    # hit this per pass, so K passes at K>=3 routinely produce 3+
+    # exit-code-2 returns even on a healthy run. We therefore do NOT
+    # abort on partial_passes count. Downstream consensus and cost
+    # aggregation use the per-tile failure rate (via
+    # execution_stats.items_failed) so a genuine failure escalation
+    # would surface in the cost manifest and in per-pass audits.
+    if partial_passes:
+        logger.info(
+            "Proposer stage: %d/%d passes returned exit code 2 "
+            "(partial tile failure — expected at Flex tier).",
+            partial_passes, k,
         )
     return {
         "output_base": str(output_base),
         "passes": k,
         "per_pass": per_pass,
+        "partial_passes": partial_passes,
         "stage_duration_seconds": monotonic_seconds_since(stage_start),
     }
 
@@ -1606,6 +1674,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    _install_signal_handlers()
     parser = build_arg_parser()
     args = parser.parse_args(argv)
     if not getattr(args, "func", None):
