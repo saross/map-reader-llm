@@ -41,7 +41,14 @@ Key findings:
   work as well out-of-sample on at least some maps.
 - **K-35-075-3** is a persistent low-outlier (F1 = 0.286 across all
   buffers); buffer loosening does not help, indicating an FP problem
-  rather than a spatial-precision problem.
+  rather than a spatial-precision problem. **Diagnosed as an
+  under-annotation artefact** (see
+  `results/55maps-image-generalisation/k35-075-3-diagnostic.md`):
+  the student ground truth has only 2 mounds, vs 58–142 in the three
+  adjacent same-row maps. Two of the 10 "FPs" are verifier-confirmed
+  at p ≥ 0.95 and are almost certainly real mounds that annotators
+  missed. Excluding this single map tightens SD @ 50 m from 0.093 to
+  0.069 (−26%) and raises the minimum F1 from 0.286 to 0.587.
 - Cost per map is uniform (r ≈ 0 with F1); cost cannot predict
   difficulty on a new map.
 - Candidate count weakly predicts F1 (r = +0.16 to +0.30) — denser
