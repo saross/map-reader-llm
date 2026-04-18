@@ -6790,3 +6790,105 @@ correction was patient and came with the relevant context I'd been missing.
 The shortest corrections had the largest epistemic updates.
 
 ---
+
+## Reflection 56: Two runs, one split decision, and a launcher infrastructure that matured mid-session (Sessions 70–71, 2026-04-17/18, map-reader-llm)
+
+This session spanned two days and bookended two full API runs of the
+55-map generalisation pipeline — image HIGH (Friday) and text MIN
+(Saturday) — with a retrospective-documentation pass for the
+2026-04-10 text HIGH run sandwiched between. The *throughput* of the
+session is unusual: 15+ commits, $426 of API spend, five GitHub
+issues filed, a comprehensive paired permutation test, a Dawid-Skene
+correction applied three times, a plan for a fourth run written and
+committed. But the session's *character* is about infrastructure
+maturing. I entered the session with a launcher that had never run at
+scale; I leave with a three-run comparison where each run has a YAML
+config, pre-launch audit, post-run report, paired permutation tests,
+and D-S-corrected metrics in the same template. The template did not
+exist at the start of Friday.
+
+### Prompt: "What surprised you about this session?"
+
+The paired permutation test returned a split decision I did not
+expect: HIGH vs MIN thinking on text is statistically indistinguishable
+at 20 m (p = 0.42) but HIGH wins highly significantly at 30 / 40 / 50 m
+(p < 0.0001 each). I had anticipated a monotone result — either HIGH
+wins at every buffer or at none — because that's what my prior
+Phase 3a matrix data had suggested for K=5+PV. Instead the answer
+bifurcates sharply by buffer, and the mechanism turned out to be
+clean once forced: HIGH's advantage is entirely recall (+0.045 R at
+50 m, precision delta trivial). HIGH thinking surfaces additional
+candidate mounds the shorter MIN chain misses; the verifier accepts
+them at the same rate; the extra hits only survive the matching step
+when the spatial tolerance is generous. Thinking helps *enumeration*,
+not *localisation*. This is a real mechanistic finding, and the user
+should get credit for pressing on the MIN-vs-HIGH comparison when I
+was initially content to recommend HIGH by inertia. Running the
+explicit comparison exposed a structure I would have missed otherwise.
+
+The K-35-075-3 outlier diagnostic was a smaller surprise of a similar
+shape. I flagged it as a pipeline failure (F1 = 0.286 at every
+buffer, unchanged by buffer widening — "not a spatial-precision
+issue"), and then the investigation revealed it wasn't a pipeline
+failure at all: the student ground truth has two mounds on that map
+versus 58–142 on every adjacent sheet, and the pipeline was finding
+real mounds the annotators had missed. The 10 "false positives"
+included two at verifier probability ≥ 0.95 — the same confidence
+the pipeline assigned to its two confirmed true positives. "The
+pipeline is under-performing" was the wrong frame; "the ground
+truth is under-annotated" was the right one. Buffer-invariance was
+the clue, but I had to do the ref-count comparison with neighbours
+before the diagnosis clicked.
+
+### Prompt: "What decision or trade-off made today will look arbitrary without this session's context?"
+
+Several. First, `workers: 250` in the MIN and planned HIGH re-run
+configs — I picked this because the image run proved 250 workers is
+safe, but no one will know from the config file why 60 was the old
+default and 250 is now defensible. Second, the decision to NOT
+re-run image MIN for a four-way comparison — because the per-call
+cost on image is dominated by cached example images so MIN saves
+~0.7 % ($3), below the 10 % threshold we use for cost-driven
+switches. Third, committing the retrospective YAML for the 2026-04-10
+text HIGH run with `workers: 60` even though it can't be used to
+reproduce that run exactly — because the file documents what was
+run, not what future runs should use. Each of these is defensible
+with ~1 paragraph of context. None would survive a blind "what does
+this mean?" reading of the config files alone.
+
+### Prompt: "What's the single most important thing a future reader should know about this session?"
+
+Run `configs/run-configs/55maps_text_min_generalisation_post_run_report.md`
+and `configs/run-configs/55maps_image_generalisation_post_run_report.md`
+before touching any of the YAMLs. The post-run reports are where the
+actual story lives — cost accounting, operational telemetry,
+reproducibility caveats, side-by-side comparisons, the paired
+permutation test split decision. The YAMLs and audit MDs were
+generated at plan time and document intent; the post-run reports
+document what happened, and the discrepancies between intent and
+outcome (the $355 expected cost estimator firing on the text MIN
+run when actual was $61 — launcher-side bug filed as GH #1; the
+stale sapphire git HEAD that made `launch_manifest.git.commit_sha`
+point to an old commit — launcher-side bug filed as GH #5) are
+where the reproducibility polish still lives.
+
+The infrastructure the session built (YAML → /audit → /audit-config
+→ dry-run → smoke-test → commit → launch → monitor → sync → D-S →
+paired test → post-run report → commit → pull everywhere) is
+deliberately verbose. It took ~90 % of the context to execute the
+second run end-to-end because of this verbosity. The next run (text
+HIGH re-run, planned) should be substantially faster because the
+template is settled and I wrote a plan in `planning/55maps-text-high-rerun-plan.md`
+that the new session can work through.
+
+**Session**: 2026-04-17/18, spans two days, heavy compaction between
+and within sessions. Most observations first-person from direct
+experience; a few from the compaction summary at session start.
+**Key moment**: `ΔF1=+0.0052, p=0.4217 ns` on the 20 m paired test
+vs `ΔF1=+0.0306, p=0.0000 ***` on 50 m. Staring at those two lines
+side-by-side and realising the mechanism.
+**Relational note**: The user's line "are there remaining errors in
+the code?" after three `/audit` cycles produced the cleanest-yet
+catalogue of what was fixed, what was accepted, and what was
+cosmetic. That question format — "give me the inventory" — pulled
+tidier output from me than any individual audit pass did.

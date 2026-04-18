@@ -11367,3 +11367,92 @@ distribution, not a scalar.
 - `results/55maps-image-generalisation/k35-075-3-diagnostic.md`
 
 ---
+
+## Observation 258: HIGH thinking helps enumeration, not localisation — paired permutation test on 55-map text generalisation reveals a buffer-dependent split (2026-04-18)
+
+**Context**: Paired text HIGH vs text MIN generalisation run comparison
+on the 55-map out-of-sample set. Same config except `thinking_level`
+(high vs minimal); matched operating point (K=5, vote_t=4, prob_t=0.15).
+HIGH run from 2026-04-10 (`outputs/55maps-generalisation/`), MIN run
+from 2026-04-18 (`outputs/55maps-text-min-generalisation/`). Paired
+permutation test: 10,000 iterations, seed 42, tile-level pairing
+with identical ground truth.
+
+**Headline**: the thinking-level effect is statistically significant
+at every buffer *except* 20 m.
+
+| Buffer | HIGH F1 | MIN F1 | ΔF1 (HIGH − MIN) | p-value | Verdict |
+|:------:|:-------:|:------:|:----------------:|:-------:|:-------:|
+| **20 m** | 0.623 | 0.618 | **+0.0052** | **0.42** | **ns** |
+| 30 m | 0.755 | 0.727 | +0.0278 | < 0.0001 | *** |
+| 40 m | 0.783 | 0.754 | +0.0294 | < 0.0001 | *** |
+| 50 m | 0.790 | 0.759 | +0.0306 | < 0.0001 | *** |
+
+This is not a buffer-width-increases-noise artefact (the confidence
+intervals at each buffer are tight; nulls at 20 m are not from
+insufficient sample). The ΔF1 is near zero at 20 m and a clean
+~+0.030 at the three looser buffers.
+
+**Mechanism**: the effect is recall-driven, not precision-driven.
+
+| | HIGH @ 50 m | MIN @ 50 m | Δ |
+|---|---:|---:|---:|
+| Precision | 0.858 | 0.849 | −0.009 |
+| **Recall** | **0.732** | **0.687** | **−0.045** |
+
+HIGH proposes more candidates per tile; the verifier accepts them
+at roughly the same rate (precision near-flat). Those extra
+accepted candidates are real mounds — they match ground truth —
+but they match at spatial distances that only count under the
+looser buffer. HIGH thinking surfaces mounds MIN thinking misses,
+but the surfaced mounds are not localised precisely enough for a
+20 m tolerance to catch them.
+
+**Generalisable interpretation**: thinking-level appears to control
+candidate *enumeration*, not candidate *spatial accuracy*. The
+longer reasoning chain enumerates more candidate symbols per tile;
+the spatial precision of each enumerated candidate is independent
+of reasoning length. If this pattern holds across tasks (a claim
+this single experiment cannot support), it predicts: tasks where
+the primary difficulty is finding candidates in the first place
+benefit from HIGH thinking; tasks where the difficulty is
+localising already-nominated candidates do not.
+
+**Cost implication**: the 19 % HIGH-over-MIN cost premium on the
+text pipeline ($75 vs $61) buys a recall gain of +0.045 at loose
+buffer and nothing at tight. Whether the premium is justified
+depends entirely on which buffer is the paper's primary metric.
+
+- Preregistered primary per §4.1.1, E47: **20 m** → MIN preferred
+  (per the ≥10% cost-saving + statistical-indistinguishability
+  rule; $14 saved for no detectable F1 loss).
+- Recent reporting convention for generalisation runs: **50 m** →
+  HIGH preferred (significant F1 advantage, premium justified).
+
+The paper should report both buffers and the p-value split; the
+decision is not ours to make implicitly.
+
+**Caveats**:
+
+- Single paired comparison at 55-map scale. The Phase 3a text
+  matrix at K=5+PV on Era 2 (487 tiles) also found HIGH-vs-MIN
+  p=0.43 ns at 20 m — consistent, but not independent
+  replication.
+- HIGH K=5 run is 2026-04-10 (pre-launcher), MIN K=5 run is
+  2026-04-18 (publishable launcher). Launcher + orchestrator
+  differ. Per-call API payloads are identical in both cases, so
+  this is not a measurement confound, but it is a clean-room
+  caveat.
+- The student ground truth is incomplete (Obs 256, 257, D-S
+  corrections). The +0.045 recall gap is measured against
+  incomplete truth; the true gap may differ after human review
+  of VLM-only candidates completes.
+
+**Data**:
+
+- `results/55maps-text-min-generalisation/paired-vs-high/pairwise_permutation_result.json` (50 m)
+- `results/55maps-text-min-generalisation/paired-vs-high-20m/pairwise_permutation_result.json` (20 m)
+- `results/55maps-text-min-generalisation/dawid-skene/` (D-S correction on MIN: +0.024 F1, matching prior runs)
+- Post-run report: `configs/run-configs/55maps_text_min_generalisation_post_run_report.md`
+
+---

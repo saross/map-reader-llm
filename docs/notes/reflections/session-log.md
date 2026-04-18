@@ -4709,3 +4709,97 @@ The flex-tier overspend occurred because the google-genai SDK v1.67.0 didn't sup
 
 The 2D sweep (vote_t × prob_t) resolution of the "verifier looks broken" false alarm is important context. The 1D sweep on consensus_t1 (the union of all detections) produces artificially low F1 because the verifier cannot substitute for the proposer's vote-count filter. Any future PV pipeline that takes the consensus_t1 union as input MUST be evaluated with a 2D sweep, not a 1D verifier-probability sweep alone. This lesson is documented in Obs 241 and should prevent future confusion.
 
+
+## Session 70–71 — 2026-04-17/18 (map-reader-llm): Two 55-map generalisation runs, paired permutation test split decision, publishable launcher infrastructure matured
+
+### Work completed
+
+**Image HIGH generalisation run** (2026-04-17 → 04-18):
+
+- Designed and wrote the publishable launcher `scripts/run_generalisation.py` (~1,600 LOC) with YAML run-configs, launch_manifest, cost_manifest, pre/post-run audit copying, signal-handler subprocess tracking.
+- Built YAML config + pre-launch audit for the image run.
+- `/audit` on launcher code: found and fixed 5 Critical bugs (token-key mapping, cache-rate denominator, yaml.safe_dump Path crash, top-level service_tier dead key, git-dirty false positives on untracked outputs).
+- `/audit-config`: 20/20 preregistration requirements matched. 1 blocker fixed: `include_example_images: true` made explicit in `library_plus-hp.json`.
+- Dry-run + single-tile live smoke test ($0.05) on sapphire.
+- Launched headless on sapphire 2026-04-17 00:15 UTC. Pass 1 ran at 60 workers; switched to 250 for passes 3-5 (workers can only be changed between passes).
+- Operational issues mid-run: orphaned subprocess during worker switch (cleaned up manually); launcher's `failed_passes >= 3` safety gate aborted after all 5 passes succeeded because exit-code-2 is the proposer's normal "log and continue" signal (recovered with `--resume`). Three post-run launcher fixes applied and committed as `b80cfc30`: pass-skip check uses `*.meta.json`, SIGINT/SIGTERM handler propagates to subprocess, `failed_passes` gate removed.
+- Final result: **F1 = 0.771 [0.760, 0.782] @ 50 m, cost $364.70** (within $355–385 budget). Runtime 4h 55m. Cache hit 91.0 %, tile failure 0.06 %.
+
+**Post-run analysis on image run**:
+
+- Dawid-Skene correction: F1 0.771 → **0.795** (ΔF1 = +0.024). 
+- Per-map heterogeneity analysis: SD @ 50 m widens from 0.021 (4-map calibration) → 0.094 (55-map out-of-sample), ~4.4× wider. K-35-075-3 is a persistent low-outlier (F1 = 0.286 all buffers) — diagnosed as under-annotation (2 refs vs 58-142 adjacent), not pipeline failure. Excluding it tightens SD to 0.069.
+- Obs 256 (image headline + D-S) and Obs 257 (heterogeneity + K-35-075-3 diagnostic) written to working-notes.md.
+- Pre-launch audit, post-run report, and heterogeneity script `analyse_55maps_heterogeneity.py` all committed.
+
+**Retrospective documentation pass** (2026-04-18 afternoon):
+
+- Reconstructed pre/post-run docs for the 2026-04-10 text HIGH generalisation run using the image HIGH template. Honest labelling of what's measured vs estimated vs unrecoverable: proposer cost estimated (~$62) because the cleanup-retry loop overwrote per-pass meta.json totals; per-map cost attribution unrecoverable; cache hit rate N/A (text preamble below Flash's 1024-tok cache minimum).
+- Files: `configs/run-configs/55maps_text_generalisation_retrospective.yaml` + `..._retrospective_post_run_report.md`.
+
+**Text MIN comparison run** (2026-04-18 afternoon):
+
+- Paired design against the 2026-04-10 text HIGH run: same config except `thinking_level: high → minimal` + `workers: 60 → 250` (orchestration-only).
+- Full pipeline: YAML config + pre-launch audit → `/audit` (1 Medium: overstated "ONLY difference" claim — fixed) → `/audit-config` (13/13 prereg matches, 0 blockers) → dry-run on sapphire → commit before launch (`6b1d9192`) → launch.
+- Runtime: 2h 6m (substantially faster than image — text payloads smaller at 250 workers, Flex less saturated).
+- Result: **F1 = 0.759 [0.747, 0.771] @ 50 m, cost $60.79** (below $65–80 budget). Thinking tokens: 0 (confirms MIN forwarding to API). Cache hit 0.0 % (expected — text preamble below cache minimum). Tile failure 0.29 %.
+
+**Paired permutation test text HIGH vs text MIN** (10,000 iter, seed 42):
+
+| Buffer | ΔF1 (HIGH−MIN) | p-value | Verdict |
+|:------:|:--------------:|:-------:|:-------:|
+| 20 m | +0.0052 | 0.42 | **ns** |
+| 30 m | +0.0278 | < 0.0001 | *** |
+| 40 m | +0.0294 | < 0.0001 | *** |
+| 50 m | +0.0306 | < 0.0001 | *** |
+
+- Split decision: HIGH wins significantly at ≥30 m, indistinguishable at 20 m (the preregistered primary per §4.1.1, E47).
+- P/R decomposition: HIGH's advantage is entirely recall-driven (+0.045 R at 50 m, P delta −0.009 trivial). Mechanistic interpretation: thinking helps *enumeration*, not *localisation*.
+- Dawid-Skene correction on MIN: F1 0.759 → **0.783** (ΔF1 = +0.024, matching the other two runs exactly — constant correction magnitude across runs).
+
+**GitHub issues filed for deferred code fixes** (5 issues #1-#5):
+
+- #1: `_estimate_cost()` image-biased (manifest expected_cost_usd = $355 on text MIN run when actual was $61)
+- #2: Theoretical Popen-assignment microsecond race in signal handler
+- #3: Pass-skip check fragile to corrupt `.meta.json`
+- #4: Heterogeneity script polish bundle
+- #5: Record launcher SHA256 in launch_manifest (closes the stale-git-HEAD provenance caveat observed on sapphire)
+
+**Environment sync**:
+
+- Resolved divergent state on sapphire: 7 tracked-file modifications were mostly identical-to-main (rsync artefacts); one cosmetic diff in `run_generalisation.py`; one misfired-rsync content replacement in `scripts/README.md`. Reset sapphire to origin/main with user approval, then pulled. All three environments (amd-tower, sapphire, zbook) now at commit `ac4ba4e0`, later `6f2bdd9a` after plan commit.
+
+**Plan for text HIGH re-run** (next session):
+
+- Planning doc at `planning/55maps-text-high-rerun-plan.md` committed as `6f2bdd9a`.
+- Hand-off prompt written for a new session to execute the re-run with full publishable-launcher documentation.
+
+### Artefacts produced
+
+- 3 pre-launch audits, 3 post-run reports (image HIGH, text HIGH retrospective, text MIN), 1 planning doc, 5 GitHub issues.
+- 2 run YAML configs (image HIGH, text MIN), 1 retrospective YAML (text HIGH old run), 1 heterogeneity analysis script, 1 D-S CLI extension (`--consensus`, `--probs`, `--ground-truth`, `--bounds` flags added to `analyse_dawid_skene.py`).
+- 4 new/updated memory files under the auto-memory system.
+
+### Observations (working-notes.md)
+
+- **Obs 256**: 55-map image generalisation F1 = 0.771 measured / 0.795 D-S-corrected.
+- **Obs 257**: Generalisation widens F1 distribution ~4×; K-35-075-3 under-annotation diagnostic.
+- **Obs 258**: HIGH thinking helps enumeration not localisation — paired permutation split decision.
+
+### Commits (chronological, 15+)
+
+Key commits: `b84925d2` (launcher publication), `4c147af6` (image run outputs), `b80cfc30` (launcher fixes), `3acba058` (followup tracking), `57f8bfe4` (heterogeneity analysis), `a10caa8d` (K-35-075-3 diagnostic), `a5f28fe9` (D-S on image), `15eb9383` (Obs 256-257), `badddf92` (text HIGH retrospective docs), `6b1d9192` (text MIN config), `f0f7158e` (text MIN run + analysis), `ac4ba4e0` (paired geojson), `6f2bdd9a` (text HIGH re-run plan).
+
+### API spend
+
+- Image HIGH run: $364.70 (Flex tier, measured via cost_manifest).
+- Text MIN run: $60.79 (Flex tier, measured via cost_manifest).
+- Incidental: single-tile smoke test ($0.05), D-S analyses on sapphire (local compute only), HIGH text retrospective evaluation on sapphire (local compute only).
+- **Session total: ~$425.**
+
+### Contextual assumptions
+
+- Sapphire's git HEAD was stale (`b57cf6c2`, ~33 commits behind `origin/main`) at the time of the text MIN run launch. The actual launcher file that ran was the latest content (rsynced from amd-tower), but `launch_manifest.json` recorded `git.commit_sha: b57cf6c2`. This is a provenance gap filed as GH issue #5. Mitigation: replicators should reference the `resolved_config.yaml` in the output dir, which fully documents what was actually used.
+- The `_estimate_cost()` helper is calibrated on the image proposer per-tile rate (~$0.0082/call) and reports 5.8× overestimates on text runs. Visible in `launch_manifest.json` and `experiment_intent.md` during dry-run. Does not affect the actual run cost tracking (cost_manifest.json is measured from per-run meta files). Filed as GH #1.
+- The 2026-04-10 text HIGH run's `outputs/55maps-generalisation/verified/verified_detections_paired.geojson` was created this session by retrospectively filtering the original consensus + probabilities at the same (vote_t=4, prob_t=0.15) operating point the text MIN run used. Committed for downstream-tool reproducibility; derivation is deterministic from already-committed artefacts so it could also be regenerated.
+- Claim in YAML/audit that "ONLY differences are thinking_level and run_name" was initially false (omitted workers: 60→250); `/audit` caught it, both files amended to document workers as orchestration-only. The scientific claim (paired permutation test measures thinking-level effect cleanly) is unaffected because workers is not a payload parameter.

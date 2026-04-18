@@ -3645,3 +3645,154 @@ The bug survived the Session 66 `/audit` pass (which ran across the very file co
 
 This suggests an anti-satisficing rule for audits: in addition to "does this code do what it claims?", ask "what invariants does the downstream state need to hold, and does this code violate any of them?" The second question is strictly stronger and would have caught this bug.
 
+
+## Session 70–71 — 2026-04-17/18 (map-reader-llm): Two belief revisions under "wrong axis" hypotheses
+
+Two diagnostic episodes this session shared a structural failure
+mode: I approached each with a single-axis hypothesis and the data
+forced a more structured understanding. Worth recording both because
+the shared pattern generalises better than either one alone.
+
+### Episode A: the HIGH-vs-MIN paired permutation test split decision
+
+**Surprising fact**: The paired permutation test comparing text HIGH
+vs text MIN thinking at matched (K=5, vote_t=4, prob_t=0.15) on 55
+out-of-sample maps returned a split decision. At 20 m buffer: ΔF1 =
++0.005, p = 0.42 (ns). At 30, 40, 50 m buffers: ΔF1 = +0.028 to
++0.031, p < 0.0001 (all ***).
+
+**Prior belief**: HIGH vs MIN comparisons on this pipeline either
+show significance at every buffer or at none. I had this prior
+because the Phase 3a text matrix at K=5+PV on 487 tiles had
+returned p=0.43 (ns) across the comparison I ran in that session,
+which I'd generalised as "HIGH ≈ MIN at K=5+PV when there's a
+verifier". The single-number result supported a single-axis
+interpretation: "the verifier equalises them".
+
+**The hypothesis this would have suggested**: HIGH's F1 premium on
+the 55-map run is a noise artefact from scale, the verifier should
+close it, the 19 % cost premium is unjustifiable.
+
+**What happened instead**: the result didn't fit one axis. HIGH
+significantly beats MIN at 30 / 40 / 50 m but not 20 m. Monotone
+models can't produce this pattern without a structural reason.
+
+**Belief revision**: The thinking-level effect is not one axis
+(does-it-help-or-not) but at least two (does-it-enumerate-more vs
+does-it-localise-better). Once I forced the P/R decomposition at
+50 m, the pattern was unambiguous: Δ Precision = −0.009, Δ Recall
+= −0.045. HIGH thinking's effect is almost entirely on recall —
+it proposes more candidates that pass the verifier. The verifier
+doesn't have a precision-specific behaviour at MIN-vs-HIGH; it
+accepts candidates at the same rate. The recall gain only *shows
+up in F1* when the spatial tolerance is generous enough to count
+those extra hits as matches. At 20 m the extra hits are present in
+the output but don't match reference points at the strict
+tolerance, so F1 looks flat.
+
+**The generalisable inference**: thinking level controls candidate
+*enumeration*, not spatial *localisation*. Enumeration shows up
+through recall; localisation would show up through precision or
+F1-sensitivity-to-buffer. The recall channel is live; the
+localisation channel appears dead. This is a mechanistic claim
+about thinking-level effects in VLM detection pipelines that I
+would not have formulated without the split-decision data.
+
+**Reasoning pattern I should notice**: when I have a prior from
+single-number evidence ("p=0.43 at K=5+PV"), my instinct is to
+generalise it to a single-axis claim. The better move when the
+original evidence is a single number is to predict what the
+next-level-down decomposition would look like IF the single-axis
+claim were true, and to check against it. If I had said "under
+the single-axis claim, F1 should be flat at every buffer" BEFORE
+running the test, the 50 m ΔF1=+0.031 would have been a clear
+falsification of the claim. Instead, I fell back to "the result
+is surprising" as a post-hoc label.
+
+### Episode B: K-35-075-3 as "pipeline failure" before becoming "annotation gap"
+
+**Surprising fact**: On the 55-map image heterogeneity analysis,
+one map (K-35-075-3) returned F1 = 0.286 at every buffer. Widening
+the buffer from 20 m to 50 m did not change F1 at all.
+
+**Prior belief**: A persistent low-outlier across buffers indicates
+a pipeline problem on that specific map, because buffer-invariance
+rules out spatial-precision issues. I wrote this exact framing in
+the initial report: "not a spatial-precision problem, therefore an
+FP problem in the pipeline".
+
+**The hypothesis this would have suggested**: investigate what
+feature of K-35-075-3 triggers over-detection. The 10 FPs at the
+optimum threshold are the model hallucinating. Map-specific prompt
+sensitivity, rare land-cover features, etc.
+
+**What happened instead**: I checked reference counts per map as a
+sanity step before investigating pipeline behaviour. K-35-075-3
+has 2 reference mounds. The three adjacent same-row maps have 58,
+73, 142. The median across all 55 maps is 82. K-35-075-3 is 28×
+below the median — not a pipeline outlier, a reference-data
+outlier.
+
+**Belief revision**: the map's F1 is low because the ground truth
+is incomplete, not because the pipeline fails. 2 of the 10
+"FPs" carry verifier probability ≥ 0.95 — the same confidence
+threshold the pipeline applied to its two confirmed TPs. They're
+real mounds the student annotators missed. Frame: "pipeline
+error" → "annotation gap". The low F1 is a measurement artefact
+of an incomplete reference.
+
+**The generalisable inference**: when a metric is anomalous for a
+specific subunit (map, condition, tile), the right first question
+is "is the anomaly in the measurement or in the object being
+measured?" I jumped to the second. The first check — compare
+subunit-level summary statistics against peers — takes 30 seconds
+and immediately redirects the investigation. In this case, ref
+count per map is a peer-relative statistic that exposes the
+measurement anomaly. I should run it before any pipeline
+hypothesis for a subunit-specific metric deviation.
+
+### Shared pattern
+
+Both episodes have the same structure:
+
+1. **Single-axis prior**: "thinking level is one thing"; "F1 anomaly
+   is one kind of failure".
+2. **Surprising fact inside the single-axis framing**: split p-value;
+   persistent low F1.
+3. **Jumped to single-axis explanation**: "verifier equalises both";
+   "pipeline has a problem on this map".
+4. **Check that should have come first**: P/R decomposition; peer-
+   relative summary.
+5. **Belief revision to a two-axis framing**: enumeration vs
+   localisation; measurement vs object.
+
+The structural failure is treating a single-number observation as
+evidence for a single-axis claim. When the measurement is an F1 or a
+p-value, the number compresses multiple independent channels
+(precision, recall; measurement, object). The single number is
+consistent with a multi-axis explanation, not definitive of a
+single-axis one. The right posterior is "something is happening
+along one or more of [enumeration, localisation, measurement, object]"
+— not "this means HIGH ≈ MIN" or "this means the pipeline is
+broken".
+
+### Epistemic note
+
+Both belief revisions were prompted by checks I could have run
+*before* forming the initial hypothesis. The PR decomposition is a
+routine analysis step I already have library support for. The
+per-map reference count is a one-line pandas groupby. The issue is
+not tooling or capability; it's ordering. I formed the initial
+framing, then investigated within the framing. The correction came
+only because the investigation happened to surface a decomposition
+that didn't fit. If the investigation had stayed inside the framing
+(e.g., "is the verifier too strict at MIN?"), the correction might
+never have arrived.
+
+Anti-satisficing rule to carry into next session: for any metric-
+level anomaly on a single-number statistic (F1, accuracy, p-value,
+mean), the first move is to decompose or stratify. Only after
+decomposition/stratification is consistent with a single-axis
+explanation should I hypothesise that explanation. The decomposition
+is cheap; the premature hypothesis is expensive in re-direction
+time.
