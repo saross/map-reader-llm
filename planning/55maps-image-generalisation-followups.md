@@ -106,6 +106,58 @@ microsecond Popen-assignment race — acceptable for publication).
 4. (2) Per-map heterogeneity — feeds into paper discussion
 5. (5) Launcher fixes — robustness for future runs, no urgency
 
+## Added 2026-04-18
+
+### 6. Dawid-Skene corrected F1 — **RESOLVED 2026-04-18** (commit `[pending]`)
+
+Ran `scripts/analyse_dawid_skene.py` against the image run's
+consensus + verifier probabilities (newly added CLI path overrides
+to the script so it can target any run, not just the legacy text
+run). Results under
+`results/55maps-image-generalisation/dawid-skene/`.
+
+Headline:
+
+| Method | F1 | P | R |
+|--------|---:|--:|--:|
+| Measured (vs student GT) | 0.771 | 0.780 | 0.763 |
+| Simple FN correction (5%) | 0.790 | 0.821 | 0.762 |
+| **Dawid-Skene posterior** | **0.795** | **0.821** | **0.772** |
+
++0.024 F1 correction vs measured — the same magnitude as the prior
+text-run correction (0.790 → 0.814). Shared item set: 5,798 items
+(3,637 matched, 1,133 student-only, 1,028 VLM-only). EM converged
+in 11 iterations. Estimated VLM-only posterior P(true=1) = 0.186.
+
+### 7. Human verification pass of VLM-only candidates — **URGENT, PENDING**
+
+The D-S analysis (item 6) identifies 1,028 VLM-only candidates —
+detections the pipeline produced that don't match any student
+ground-truth mound. D-S's aggregate posterior estimates ~186 of
+these are real mounds missed by annotators, but cannot discriminate
+individual items (2-annotator identifiability limit).
+
+Per-item discrimination requires human review. Use the existing
+Streamlit app:
+
+```bash
+streamlit run scripts/review_candidates.py -- \
+    --crops-dir outputs/55maps-image-generalisation/crops \
+    --probabilities outputs/55maps-image-generalisation/verified/probabilities.json \
+    --ground-truth inputs/vectors/references/student-mounds-55maps.geojson \
+    --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson \
+    --output results/55maps-image-generalisation/human-review.csv
+```
+
+Output: CSV with human classification (mound / not-mound / uncertain)
+for each VLM-only candidate. Results feed back into the corrected
+F1 calculation — replacing D-S's aggregate posterior with item-level
+ground truth, which is identifiable and far more defensible.
+
+This is an urgent pre-publication item: the paper's generalisation
+F1 should be accompanied by a human-verified correction, not just
+the D-S aggregate estimate.
+
 ## Related documents
 
 - `configs/run-configs/55maps_image_generalisation.yaml`

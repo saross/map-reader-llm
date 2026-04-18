@@ -912,7 +912,8 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument(
         "--verifier", choices=["v1", "v2"], default="v1",
-        help="Which verifier probabilities to use (default: v1)",
+        help="Which verifier probabilities to use (default: v1). "
+             "Ignored if --probs is given.",
     )
     parser.add_argument(
         "--sensitivity-analysis", action="store_true",
@@ -922,6 +923,29 @@ def main(argv: list[str] | None = None) -> None:
         "--output-dir", type=Path,
         default=_REPO_ROOT / "results" / "dawid-skene",
         help="Output directory (default: results/dawid-skene/)",
+    )
+    # Path overrides — supplied when analysing a run other than the
+    # historical text-based 55-map generalisation (whose paths are the
+    # legacy defaults above). The image-based 55-map run, for example,
+    # lives under outputs/55maps-image-generalisation/.
+    parser.add_argument(
+        "--consensus", type=Path, default=None,
+        help="Consensus GeoJSON (default: text 55-map run). "
+             "E.g. outputs/55maps-image-generalisation/consensus/"
+             "consensus-3of5.geojson",
+    )
+    parser.add_argument(
+        "--probs", type=Path, default=None,
+        help="Verifier probabilities JSON. Overrides --verifier.",
+    )
+    parser.add_argument(
+        "--ground-truth", type=Path, default=None,
+        help="Student ground-truth GeoJSON (default: "
+             "student-mounds-55maps.geojson).",
+    )
+    parser.add_argument(
+        "--bounds", type=Path, default=None,
+        help="Evaluation bounds GeoJSON (default: 55maps bounds).",
     )
     parser.add_argument(
         "--verbose", "-v", action="store_true",
@@ -935,19 +959,31 @@ def main(argv: list[str] | None = None) -> None:
     )
 
     # ---------------------------------------------------------------
-    # Load data
+    # Load data (CLI overrides fall back to the legacy text-run paths)
     # ---------------------------------------------------------------
-    probs_path = _PROBS_V1_PATH if args.verifier == "v1" else _PROBS_V2_PATH
-    logger.info("Loading data (verifier=%s, threshold=%.2f, buffer=%dm)",
-                args.verifier, args.threshold, args.buffer)
+    consensus_path = args.consensus or _CONSENSUS_PATH
+    if args.probs is not None:
+        probs_path = args.probs
+    else:
+        probs_path = _PROBS_V1_PATH if args.verifier == "v1" else _PROBS_V2_PATH
+    gt_path = args.ground_truth or _STUDENT_GT_PATH
+    bounds_path = args.bounds or _BOUNDS_PATH
+
+    logger.info(
+        "Loading data (threshold=%.2f, buffer=%dm)\n"
+        "  consensus: %s\n  probabilities: %s\n"
+        "  ground truth: %s\n  bounds: %s",
+        args.threshold, args.buffer,
+        consensus_path, probs_path, gt_path, bounds_path,
+    )
 
     gdf_det = load_detections(
-        _CONSENSUS_PATH, probs_path, args.threshold,
+        consensus_path, probs_path, args.threshold,
     )
-    gdf_ref = gpd.read_file(_STUDENT_GT_PATH)
+    gdf_ref = gpd.read_file(gt_path)
     if gdf_ref.crs != _TARGET_CRS:
         gdf_ref = gdf_ref.to_crs(_TARGET_CRS)
-    gdf_bounds = gpd.read_file(_BOUNDS_PATH)
+    gdf_bounds = gpd.read_file(bounds_path)
     if gdf_bounds.crs != _TARGET_CRS:
         gdf_bounds = gdf_bounds.to_crs(_TARGET_CRS)
 
