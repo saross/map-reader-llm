@@ -1,0 +1,66 @@
+{
+  "proposer": {
+    "completed_at": "2026-04-18T04:12:39Z",
+    "summary": {
+      "output_base": "outputs/55maps-image-generalisation/proposer/library_plus-hp",
+      "passes": 5,
+      "per_pass": [
+        {
+          "pass": 1,
+          "status": "skipped-existing",
+          "output_dir": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_1"
+        },
+        {
+          "pass": 2,
+          "status": "skipped-existing",
+          "output_dir": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_2"
+        },
+        {
+          "pass": 3,
+          "status": "skipped-existing",
+          "output_dir": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_3"
+        },
+        {
+          "pass": 4,
+          "status": "skipped-existing",
+          "output_dir": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_4"
+        },
+        {
+          "pass": 5,
+          "status": "skipped-existing",
+          "output_dir": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_5"
+        }
+      ],
+      "stage_duration_seconds": 0.0
+    }
+  },
+  "consensus": {
+    "completed_at": "2026-04-18T04:23:51Z",
+    "summary": {
+      "consensus_file": "outputs/55maps-image-generalisation/consensus/consensus-3of5.geojson",
+      "stage_duration_seconds": 672.154
+    }
+  },
+  "extract": {
+    "completed_at": "2026-04-18T04:24:58Z",
+    "summary": {
+      "crops_dir": "outputs/55maps-image-generalisation/crops",
+      "stage_duration_seconds": 66.541
+    }
+  },
+  "verify": {
+    "completed_at": "2026-04-18T05:05:29Z",
+    "summary": {
+      "verified_dir": "outputs/55maps-image-generalisation/verified",
+      "stage_duration_seconds": 2431.214
+    }
+  },
+  "evaluate": {
+    "completed_at": "2026-04-18T05:10:24Z",
+    "summary": {
+      "eval_dir": "outputs/55maps-image-generalisation/evaluation",
+      "final_geojson": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+      "stage_duration_seconds": 294.671
+    }
+  }
+}
