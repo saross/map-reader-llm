@@ -1,0 +1,90 @@
+# 55-Map Image Generalisation Run (paper headline)
+# =================================================
+#
+# End-to-end proposer-consensus-verifier-evaluate configuration for the
+# final generalisation run reported in the paper. Captures the exact
+# parameter set used so readers can reproduce the headline image-track
+# generalisation F1 from this file plus ``scripts/run_generalisation.py``.
+#
+# Invocation (from repo root, after uv sync / pip install):
+#
+#   python scripts/run_generalisation.py all \
+#       --run-config configs/run-configs/55maps_image_generalisation.yaml \
+#       --run-name 55maps-image-generalisation
+#
+# Decisions captured here (see docs/notes/reflections/working-notes.md
+# observations 247, 248, 253, 255):
+#
+# - Library: plus-hp (13 examples, 4 canonical_positive + 4 hard_positive
+#   + 2 canonical_negative + 3 null). Paired permutation test vs Scale-4
+#   on Era 2 487-tile PV sweep: ΔF1 = -0.023, p = 0.26 (ns).
+# - Thinking: HIGH. MIN at K=5 + PV is statistically indistinguishable
+#   (ΔF1 = +0.013, p = 0.43) but cost savings on image proposer are
+#   <1 %, below the 10 % threshold we set for swapping to cheaper.
+# - Temperature: 0.7. Production default.
+# - K = 5. Matches prior text-generalisation run. K=10 gains +0.005 F1
+#   for 2× proposer cost — not worth it.
+# - Consensus vote threshold: 3 of 5. Sweep optimum on Era 2 487-tile PV.
+# - Verifier: text-only adversarial v1 (matches prior text-generalisation
+#   for direct cross-modality comparison).
+# - Verifier probability threshold: 0.15. Sweep optimum on both Era 2
+#   and prior 55-map text runs.
+# - Evaluation buffers: 20 / 30 / 40 / 50 m with 1000-iteration bootstrap
+#   at seed 42 (production standard).
+
+run_name: 55maps-image-generalisation
+output_root: outputs
+# service_tier applies to proposer and verify; Flex gives ~50 % discount
+# at the cost of 1-15 min latency per call (acceptable for overnight run).
+service_tier: flex
+
+# ---------------------------------------------------------------------------
+# Stage 1: proposer (K passes of the detection model over every tile)
+# ---------------------------------------------------------------------------
+proposer:
+  config: prompts/configs/library_plus-hp.json
+  manifest: inputs/tiles_384_55maps/full_evaluation_manifest.json
+  tiles_dir: inputs/tiles_384_55maps
+  tile_size: 384
+  temperature: 0.7
+  thinking_level: high
+  passes: 5                 # K
+  mode: realtime            # passed through to 4_detect_mounds_batch.py --mode; keep realtime for Flex tier
+  workers: 60               # Tier 3 token-bucket governor default
+  max_retries: 15
+  use_cache: true           # Enable Gemini context caching
+
+# ---------------------------------------------------------------------------
+# Stage 2: greedy consensus voting
+# ---------------------------------------------------------------------------
+consensus:
+  vote_threshold: 3         # Retain detections with ≥ 3/5 passes agreeing
+  dedup_radius_m: 20.0      # Preregistered (Decision 26)
+
+# ---------------------------------------------------------------------------
+# Stage 3: extract candidate crops from consensus detections
+# ---------------------------------------------------------------------------
+extract:
+  padding: 75               # 150 x 150 px crop centred on detection
+  rasters_dir: inputs/rasters/Russian1981_32635
+  # Optional: fall back to tiles_dir if rasters don't cover a detection
+  tiles_dir: inputs/tiles_384_55maps
+
+# ---------------------------------------------------------------------------
+# Stage 4: verifier (text-only adversarial v1)
+# ---------------------------------------------------------------------------
+verify:
+  config: prompts/configs/verify_adversarial-text.json
+  mode: realtime
+  workers: 20               # Verifier parallelism (per run_pv.py default)
+
+# ---------------------------------------------------------------------------
+# Stage 5: evaluation
+# ---------------------------------------------------------------------------
+evaluate:
+  prob_threshold: 0.15      # Keep candidates with mound_probability ≥ 0.15
+  buffers: [20, 30, 40, 50] # Hungarian matching tolerance in metres
+  bootstrap: 1000           # Bootstrap iterations for CI
+  seed: 42                  # Preregistered RNG seed
+  ground_truth: inputs/vectors/references/student-mounds-55maps.geojson
+  bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
