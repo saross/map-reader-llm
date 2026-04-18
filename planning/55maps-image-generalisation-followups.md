@@ -61,26 +61,25 @@ report updated with the real numbers.
   - Cache hit rate 91% (demonstrating caching ROI at scale)
   - 0.06% tile failure rate (operational reliability confirmed)
 
-### 5. Launcher robustness fixes
+### 5. Launcher robustness fixes — **RESOLVED 2026-04-18** (commit `b80cfc30`)
 
 Three latent bugs surfaced during the run, all recovered operationally
-without data loss. Apply to `scripts/run_generalisation.py`:
+without data loss. Applied to `scripts/run_generalisation.py`:
 
-- **Task #15**: Pass-skip check should use `*.meta.json` not
-  `*.geojson`. `.geojson` is written incrementally; `.meta.json` is
-  written at end-of-run only. Current check wrongly skips interrupted
-  passes that have partial geojson.
-- **Task #16**: SIGINT/SIGTERM handler should propagate to the active
-  subprocess so killing the launcher also kills the in-flight proposer
-  or verifier. Observed: 5-second orphan window during the worker
-  switch, cleaned up manually.
-- **Task #17**: Remove or relax the `failed_passes >= 3` gate.
-  Exit-code-2 is the proposer's "log and continue" signal per its own
-  contract, but my launcher counted every exit-code-2 pass toward the
-  "aborted" threshold. Fired after all 5 proposer passes succeeded.
-  Either drop the gate entirely (proposer manages tile-level failures
-  itself) or gate on aggregate tile-failure rate (e.g., abort if
-  overall rate > 1%).
+- **Task #15 (resolved)**: Pass-skip check now uses `*.meta.json`
+  (proposer writes this only on successful completion), not
+  `*.geojson` (partial during run).
+- **Task #16 (resolved)**: SIGINT/SIGTERM handler propagates to the
+  active subprocess via Popen + module-level `_active_subprocess`
+  handle; launcher terminates child on signal before exiting
+  128+signum.
+- **Task #17 (resolved)**: Removed the `failed_passes >= 3` gate.
+  Exit-code-2 is the proposer's documented "log and continue" signal.
+  Partial-pass count is still logged for audit. Genuine escalation
+  surfaces via `execution_stats.items_failed` in the cost manifest.
+
+Audited via `/audit`: no Critical findings; one Medium (theoretical
+microsecond Popen-assignment race — acceptable for publication).
 
 ## Priority order
 
