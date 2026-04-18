@@ -66,17 +66,19 @@ Key findings:
 - Command: `git add configs/run-configs/55maps_image_generalisation_post_run_report.md
   outputs/55maps-image-generalisation/` then commit.
 
-### 4. Write the observation
+### 4. Write the observation — **RESOLVED 2026-04-18**
 
-- Add a new observation to `docs/notes/reflections/working-notes.md`
-  (next after Obs 255, so Obs 256 or 257) documenting:
-  - F1 = 0.771 @ 50 m image-track (vs 0.791 text-track → −0.020)
-  - Cross-modality pattern consistent with Era 2: text outperforms
-    image at generalisation scale
-  - Cost $365 at Flex; per-tile $0.043, per-map $6.63, per-detection
-    $0.078
-  - Cache hit rate 91% (demonstrating caching ROI at scale)
-  - 0.06% tile failure rate (operational reliability confirmed)
+Two observations added to `docs/notes/reflections/working-notes.md`:
+
+- **Obs 256**: 55-Map Image Generalisation — F1 = 0.771 Measured
+  (0.795 Dawid-Skene Corrected), Image Trails Text by 0.02
+  Out-of-Sample. Includes the measured-vs-D-S-corrected comparison
+  and cross-modality numbers.
+- **Obs 257**: Generalisation Widens the F1 Distribution ~4× —
+  Per-Map Heterogeneity on the 55-Map Image Run, Dominated by One
+  Under-Annotated Outlier. Covers the 4-map-vs-55-map SD ratio, the
+  K-35-075-3 diagnostic, cost/difficulty correlation nulls, and the
+  sensitivity analysis.
 
 ### 5. Launcher robustness fixes — **RESOLVED 2026-04-18** (commit `b80cfc30`)
 

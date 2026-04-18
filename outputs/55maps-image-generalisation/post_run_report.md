@@ -14,6 +14,8 @@ supplement.
 
 ## Top-line result
 
+### Measured (against student-annotated ground truth)
+
 | Buffer | F1 | 95% CI | Precision | Recall |
 |-------:|---:|:------:|---------:|------:|
 | 20 m | 0.506 | [0.492, 0.520] | 0.512 | 0.500 |
@@ -25,6 +27,37 @@ CIs are from 1,000-iteration tile-level bootstrap at seed 42.
 
 Detections at the configured vote_t=3 / prob_t=0.15 operating point:
 **4,665** across 4,770 reference mounds and 8,541 tiles.
+
+### Corrected for annotator incompleteness (50 m buffer)
+
+Student-annotated ground truth is incomplete at the aggregate level
+(see Sobotkova et al. 2023 for the ~5 % baseline false-negative
+rate). The Dawid-Skene latent-truth model jointly estimates
+annotator confusion matrices and corrected pipeline metrics from
+the shared item set of 5,798 candidates (matched + student-only +
+VLM-only).
+
+| Method | F1 | Precision | Recall |
+|--------|---:|---------:|------:|
+| Measured (vs student GT) | 0.771 | 0.780 | 0.763 |
+| Simple correction (5 % FN) | 0.790 | 0.821 | 0.762 |
+| **Dawid-Skene posterior** | **0.795** | **0.821** | **0.772** |
+
+Δ F1 = **+0.024** after correction — the same magnitude as the
+prior text-run correction (0.790 → 0.814). The shared item set
+breaks down as 3,637 matched + 1,133 student-only + 1,028 VLM-only;
+D-S assigns an aggregate posterior P(true=1) = 0.186 to the
+VLM-only set, implying ~190 of those 1,028 are real mounds that
+student annotators missed.
+
+D-S's aggregate identifiability is a 2-annotator limit; per-item
+ground truth for the 1,028 VLM-only candidates will be obtained
+via the human-review Streamlit app
+(`scripts/review_candidates.py`) and will refine the corrected F1
+with an identifiable estimator.
+
+Artefacts: `results/55maps-image-generalisation/dawid-skene/`
+(``dawid-skene-results.md``, ``.json``, ``item-posteriors.csv``).
 
 ### Comparison to prior text-based 55-map run (F1 @ 50 m)
 

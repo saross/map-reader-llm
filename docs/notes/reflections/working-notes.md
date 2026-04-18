@@ -11195,3 +11195,175 @@ comparison with `results/secondary-effects/secondary_effects.json`.
 
 ---
 
+
+## Observation 256: 55-Map Image Generalisation — F1 = 0.771 Measured (0.795 Dawid-Skene Corrected), Image Trails Text by 0.02 Out-of-Sample (2026-04-18)
+
+**Context**: The final production compute step of the project — the
+55-map image-based generalisation run — completed overnight on
+2026-04-18. This was preregistered as the cross-modality pair of the
+prior text-based 55-map run (2026-04-10, F1 = 0.790 → D-S 0.814) and
+is the last big-API-spend gate before the paper. Configuration:
+`library_plus-hp.json` proposer (13 examples, 4 canon+ / 4 HP / 2
+canon− / 3 null), HIGH thinking, T = 0.7, K = 5 proposer passes;
+greedy 3-of-5 consensus at 20 m radius; text-only adversarial v1
+verifier at prob_t = 0.15; evaluation at 20 / 30 / 40 / 50 m buffers
+with 1,000-iteration bootstrap CIs.
+
+**Headline** (measured, against student-annotated ground truth):
+
+| Buffer | F1 | 95% CI | P | R |
+|-------:|---:|:------:|--:|--:|
+| 20 m | 0.506 | [0.492, 0.520] | 0.512 | 0.500 |
+| 30 m | 0.686 | [0.672, 0.697] | 0.693 | 0.678 |
+| 40 m | 0.748 | [0.737, 0.760] | 0.757 | 0.740 |
+| **50 m** | **0.771** | **[0.760, 0.782]** | 0.780 | 0.763 |
+
+**Dawid-Skene correction**: The student-annotated ground truth is
+incomplete in aggregate (Sobotkova et al. 2023 baseline ~5 % FN
+rate; our K-35-075-3 diagnostic — Obs 257 — confirms per-map
+variation). Applying the D-S latent-truth model jointly to student
+and VLM annotators on the shared item set of 5,798 candidates
+(3,637 matched + 1,133 student-only + 1,028 VLM-only) yields:
+
+| Method | F1 | P | R |
+|--------|---:|--:|--:|
+| Measured (vs student GT) | 0.771 | 0.780 | 0.763 |
+| Simple correction (5 % FN) | 0.790 | 0.821 | 0.762 |
+| **Dawid-Skene posterior** | **0.795** | 0.821 | 0.772 |
+
+ΔF1 = **+0.024** after correction, identical magnitude to the text
+run (+0.024). Aggregate VLM-only posterior P(true = 1) = 0.186 →
+~190 of the 1,028 VLM-only candidates are likely real mounds the
+student annotators missed. The 2-annotator D-S model cannot
+discriminate which individual items are real; per-item ground truth
+requires the human-review Streamlit app.
+
+**Cross-modality comparison** (both at K = 5, vote_t = 3, prob_t =
+0.15, buffer 50 m, student-annotated GT, D-S-corrected):
+
+| Track | Measured F1 | D-S corrected F1 | Δ (image − text) |
+|-------|------------:|-----------------:|-----------------:|
+| Text (2026-04-10) | 0.790 | 0.814 | — |
+| **Image (2026-04-18)** | **0.771** | **0.795** | **−0.019** |
+
+Image trails text by ~0.02 F1 at generalisation scale, whether
+measured or D-S-corrected. The gap matches the Era 2 pattern (Obs
+250–251): text consensus has a larger dividend than image. What's
+new: this persists at 55-map scale against a richer out-of-sample
+reference set (4,770 mounds), confirming the modality gap is not an
+artefact of the 4-map calibration scope.
+
+**Cost**: $364.70 Flex-tier total (pre-launch budget $355–385).
+Proposer 97 % of cost, verifier 3 %. Cache hit rate 91 %. Per
+tile $0.043, per map $6.63, per detection $0.078. Tile failure
+rate 0.06 % (26 / 42,705 proposer calls). End-to-end ~4.9 h
+elapsed; published launcher + config + pre/post-run audits in
+`configs/run-configs/`.
+
+**Paper implication**: The headline image-track generalisation F1
+is **0.771 measured / 0.795 Dawid-Skene-corrected** — the image
+counterpart to the prior text-track generalisation 0.790 / 0.814.
+The per-item ground-truth refinement (once human review is
+complete) will replace the D-S aggregate estimator with an
+identifiable one. The paper's generalisation section should report
+all three: measured, D-S-corrected, and human-verified.
+
+**Data**:
+- `outputs/55maps-image-generalisation/evaluation/evaluation.json`
+- `outputs/55maps-image-generalisation/cost_manifest.json`
+- `outputs/55maps-image-generalisation/launch_manifest.json`
+- `results/55maps-image-generalisation/dawid-skene/`
+- `configs/run-configs/55maps_image_generalisation_post_run_report.md`
+
+---
+
+## Observation 257: Generalisation Widens the F1 Distribution ~4× — Per-Map Heterogeneity on the 55-Map Image Run, Dominated by One Under-Annotated Outlier (2026-04-18)
+
+**Context**: The headline F1 = 0.771 (0.795 D-S-corrected) is an
+aggregate tile-level Hungarian match across 8,541 tiles. It does
+not say whether the score is the average of 55 similar results or
+the average of 55 variable results. To distinguish, we computed
+per-map F1 / P / R at 20 / 30 / 40 / 50 m buffers on the 55
+out-of-sample maps and on the 4 Era 2 calibration maps at the
+matched configuration (plus-hp + HIGH + T = 0.7 + K = 5 + vote_t = 3
++ prob_t = 0.15). Script
+`scripts/analyse_55maps_heterogeneity.py`; artefacts under
+`results/55maps-image-generalisation/`.
+
+**Headline — generalisation widens the distribution ~4×, not just
+shifts it:**
+
+| Quantity | 4-map (Era 2 calibration) | 55-map (out-of-sample) | Ratio |
+|----------|:-------------------------:|:----------------------:|:-----:|
+| Mean F1 @ 50 m | 0.887 | 0.750 | −0.137 absolute |
+| SD F1 @ 50 m | **0.021** | **0.093** | **4.4×** |
+| Range F1 @ 50 m | [0.856, 0.903] | [0.286, 0.894] | — |
+| n | 4 | 55 | — |
+
+**Best 55-map F1 (0.894) matches the best 4-map F1 (0.903)** — the
+pipeline *can* work as well out-of-sample on some sheets. The
+aggregate underperforms because many sheets score 0.65–0.75 rather
+than 0.85–0.90, not because the ceiling drops.
+
+**One outlier drives a quarter of the measured spread**:
+
+- `K-35-075-3` scores F1 = 0.286 at every buffer (buffer loosening
+  does not help — not a spatial-precision issue).
+- The map has only **2** student-annotated mounds vs 73 / 142 / 58
+  in its 3 adjacent same-row maps (K-35-075-1 / -2 / -4). Median
+  across all 55 maps = 82. The map is 28× below median and 29×
+  below its row neighbours.
+- Both annotated mounds are found by the pipeline with 11–12 m
+  spatial precision, vote_count 4–5, verifier p = 1.0.
+- Among the 10 "false positives": two carry verifier p ≥ 0.95 —
+  the same confidence threshold the pipeline applied to the two
+  confirmed TPs. Almost certainly real mounds the student
+  annotators missed.
+
+Excluding K-35-075-3 (n = 54):
+
+| Metric | With K-35-075-3 | Without | Δ |
+|--------|:---------------:|:-------:|:--:|
+| Mean F1 @ 50 m | 0.750 | 0.759 | +0.009 |
+| SD @ 50 m | 0.093 | **0.069** | **−26 %** |
+| Min F1 @ 50 m | 0.286 | 0.587 | +0.301 |
+
+The sensitivity tells two things: (i) generalisation genuinely
+widens the distribution — SD = 0.069 is still ~3× the 4-map SD of
+0.021, i.e., this is not solely an outlier story; (ii) a single
+under-annotated map accounts for a quarter of the measured spread.
+
+**Cost is not a difficulty predictor**. Per-map Pearson r between
+F1 @ 50 m and total cost is ≈ 0 (cost is uniform across maps because
+the tile count and per-tile proposer payload are uniform).
+Candidate count per map is a weak positive predictor (r = +0.16 to
++0.30 across buffers), reflecting the fact that denser mound maps
+have more TP matches to find. Neither metric lets us predict F1 on
+an unseen map, which matters for deployment.
+
+**Relationship to Obs 256 D-S correction**: K-35-075-3 is the
+single most extreme case, but the broader under-annotation pattern
+is what the Dawid-Skene correction picks up in aggregate. The 1,028
+VLM-only items across the 55 maps are distributed across sheets,
+not concentrated in K-35-075-3. The D-S 0.795 corrected F1 already
+incorporates the expected 190 missed mounds at the aggregate level;
+the per-map heterogeneity analysis here shows the under-annotation
+effect concretely on one sheet and gives the paper a clean
+illustrative example.
+
+**Paper implication**: Report both distributions (with and without
+K-35-075-3) in supplementary material so readers can see the single
+outlier's contribution. The headline aggregate F1 = 0.771 is less
+affected than the per-map mean (0.750) because Hungarian matching
+weights by count, and K-35-075-3 has only 2 refs to match. Report
+heterogeneity explicitly — generalisation performance is a
+distribution, not a scalar.
+
+**Data**:
+- `results/55maps-image-generalisation/per_map_metrics.csv`
+  (59 maps × 4 buffers = 236 rows)
+- `results/55maps-image-generalisation/per_map_summary.md`
+- `results/55maps-image-generalisation/heterogeneity_summary.json`
+- `results/55maps-image-generalisation/k35-075-3-diagnostic.md`
+
+---
