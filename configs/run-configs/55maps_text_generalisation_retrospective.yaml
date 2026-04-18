@@ -1,0 +1,85 @@
+# 55-Map Text Generalisation Run (retrospective config reconstruction)
+# ===================================================================
+#
+# This YAML reconstructs the parameter set of the text-based 55-map
+# generalisation run completed 2026-04-10, BEFORE the publishable
+# launcher (scripts/run_generalisation.py) existed. That run was
+# orchestrated by the session-specific bash script
+# scripts/55maps-overnight.sh and its companion cleanup scripts
+# (scripts/55maps-cleanup-*).
+#
+# The values below are reverse-engineered from:
+#   - outputs/55maps-generalisation/proposer/detect_brief-text/run_1/*.meta.json
+#     (full_config_snapshot, git_commit, environment)
+#   - outputs/55maps-generalisation/verified/run.meta.json (verifier)
+#   - scripts/55maps-overnight.sh (orchestration)
+#   - results/55maps-generalisation/threshold-sweep-50m/* (operating point)
+#
+# This file is NOT the file that drove the 2026-04-10 run — the
+# launcher did not read YAML. It is a retrospective artefact so
+# the text run can be cited and reproduced symmetrically with the
+# image run (configs/run-configs/55maps_image_generalisation.yaml).
+# Rerunning it under the publishable launcher requires a companion
+# analyse/review of the cleanup-retry loop the bash script managed
+# outside the launcher's pipeline (see retrospective post-run report).
+
+run_name: 55maps-text-generalisation
+output_root: outputs
+service_tier: flex
+
+# ---------------------------------------------------------------------------
+# Stage 1: proposer
+# ---------------------------------------------------------------------------
+proposer:
+  config: prompts/configs/detect_brief-text.json
+  manifest: inputs/tiles_384_55maps/full_evaluation_manifest.json
+  tiles_dir: inputs/tiles_384_55maps
+  tile_size: 384
+  temperature: 0.7
+  thinking_level: high
+  passes: 5
+  mode: realtime
+  workers: 60
+  max_retries: 15
+  use_cache: true
+
+# ---------------------------------------------------------------------------
+# Stage 2: consensus
+# ---------------------------------------------------------------------------
+consensus:
+  vote_threshold: 4         # 4-of-5 — ONE LEVEL STRICTER than the image
+                            # run's 3-of-5 (image uses vote_t=3)
+  dedup_radius_m: 20.0
+
+# ---------------------------------------------------------------------------
+# Stage 3: extract
+# ---------------------------------------------------------------------------
+extract:
+  padding: 75
+  rasters_dir: inputs/rasters/Russian1981_32635
+  tiles_dir: inputs/tiles_384_55maps
+
+# ---------------------------------------------------------------------------
+# Stage 4: verifier (text-only adversarial v1)
+# ---------------------------------------------------------------------------
+# The run used BOTH verify_adversarial-text.json (v1) and
+# verify_adversarial-text_v2.json (v2). The headline result reported
+# in the paper uses v1 (matches the image run for cross-modality
+# comparability). v2 was run for sensitivity analysis and is
+# "contaminated" by feedback from all four calibration maps per the
+# prereg memory.
+verify:
+  config: prompts/configs/verify_adversarial-text.json
+  mode: realtime
+  workers: 20
+
+# ---------------------------------------------------------------------------
+# Stage 5: evaluation
+# ---------------------------------------------------------------------------
+evaluate:
+  prob_threshold: 0.15      # v1 optimum on this run
+  buffers: [20, 30, 40, 50] # Documented primary = 50 m per Sobotkova et al.
+  bootstrap: 1000
+  seed: 42
+  ground_truth: inputs/vectors/references/student-mounds-55maps.geojson
+  bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
