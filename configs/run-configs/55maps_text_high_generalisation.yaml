@@ -1,0 +1,104 @@
+# 55-Map Text Generalisation Run — HIGH thinking (publishable re-run)
+# ====================================================================
+#
+# Re-run of the 2026-04-10 text HIGH generalisation under the
+# publishable launcher (`scripts/run_generalisation.py`) so the run
+# sits alongside the 2026-04-18 text MIN and image HIGH runs with
+# equivalent documentation: pre-launch audit, post-run report,
+# launch_manifest, cost_manifest, per-map cost attribution, and
+# reproducibility artefacts.
+#
+# The 2026-04-10 run remains intact at `outputs/55maps-generalisation/`
+# with its retrospective post-run report honestly labelling its
+# limitations (proposer cost estimated, no per-map attribution, no
+# cache-hit rate). This re-run closes those gaps with measured values.
+#
+# Scientifically relevant differences from
+# `55maps_text_min_generalisation.yaml` (the paired MIN template):
+#
+#   - thinking_level: minimal  →  high   (the factor under test)
+#   - run_name: 55maps-text-min-generalisation
+#       →  55maps-text-high-generalisation
+#
+# Scientifically relevant differences from
+# `55maps_text_generalisation_retrospective.yaml` (the 2026-04-10
+# parameter baseline):
+#
+#   - workers: 60  →  250 (Tier 3 max; orchestration-only, does not
+#     affect per-call model output — only wall-clock and retry
+#     behaviour)
+#   - run via publishable launcher rather than the ad-hoc 2026-04-10
+#     pipeline (captures cost, provenance, and per-map attribution)
+#
+# Everything affecting the API payload (config, K, vote_threshold,
+# verifier, prob_threshold, buffers, bootstrap, seed) is held
+# identical to both reference configs.
+#
+# Planned analysis:
+#   - Measure F1@{20,30,40,50} m against student GT, matched
+#     prob_t=0.15 / vote_t=4.
+#   - Dawid-Skene correction (expect ΔF1 ≈ +0.024, consistent with
+#     text MIN and image HIGH corrections).
+#   - Paired permutation test on per-tile TP/FP/FN vs text MIN,
+#     10,000 iterations, seed=42. Should reproduce the 2026-04-10 vs
+#     2026-04-18 MIN pattern: significant at 30/40/50 m (p<0.0001),
+#     ns at 20 m (p≈0.4).
+#
+# Budget: ~$75 at Flex tier (text MIN measured $60.79; HIGH thinking
+# adds ~19 % for proposer thinking tokens).
+
+run_name: 55maps-text-high-generalisation
+output_root: outputs
+service_tier: flex
+
+# ---------------------------------------------------------------------------
+# Stage 1: proposer — matches text MIN EXCEPT thinking_level
+# ---------------------------------------------------------------------------
+proposer:
+  config: prompts/configs/detect_brief-text.json
+  manifest: inputs/tiles_384_55maps/full_evaluation_manifest.json
+  tiles_dir: inputs/tiles_384_55maps
+  tile_size: 384
+  temperature: 0.7
+  thinking_level: high       # ← ONLY DIFFERENCE from text MIN run
+  passes: 5
+  mode: realtime
+  workers: 250               # Tier 3 max; ~1.7× faster than 60
+  max_retries: 15
+  use_cache: true
+
+# ---------------------------------------------------------------------------
+# Stage 2: consensus — matches text MIN and 2026-04-10 text HIGH run
+# ---------------------------------------------------------------------------
+consensus:
+  vote_threshold: 4         # 4-of-5, matching the 2026-04-10 text run
+                            # (text-track sweep optimum, distinct from
+                            # image track's 3-of-5)
+  dedup_radius_m: 20.0
+
+# ---------------------------------------------------------------------------
+# Stage 3: extract — matches text MIN and 2026-04-10 text HIGH run
+# ---------------------------------------------------------------------------
+extract:
+  padding: 75
+  rasters_dir: inputs/rasters/Russian1981_32635
+  tiles_dir: inputs/tiles_384_55maps
+
+# ---------------------------------------------------------------------------
+# Stage 4: verifier — text-only adversarial v1 (matches both references)
+# ---------------------------------------------------------------------------
+verify:
+  config: prompts/configs/verify_adversarial-text.json
+  mode: realtime
+  workers: 20
+
+# ---------------------------------------------------------------------------
+# Stage 5: evaluation — matches text MIN and 2026-04-10 text HIGH run
+# ---------------------------------------------------------------------------
+evaluate:
+  prob_threshold: 0.15      # v1 @ 0.15 was the matched operating point
+  buffers: [20, 30, 40, 50]
+  bootstrap: 1000
+  seed: 42
+  ground_truth: inputs/vectors/references/student-mounds-55maps.geojson
+  bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
