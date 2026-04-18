@@ -118,12 +118,30 @@ now p < 0.0001 at all; effect sizes match within 0.002 F1).
 | Precision | 0.848 | 0.849 | −0.001 |
 | **Recall** | **0.737** | **0.687** | **+0.050** |
 
-Identical mechanism to the MIN post-run finding: HIGH's F1 premium
-is entirely recall-driven — its longer reasoning chain surfaces
-additional candidate mounds that MIN misses; the verifier accepts
-them at the same rate. Spatial localisation (reflected in
-precision and in the 20-m buffer result) is unaffected by thinking
-level.
+Same mechanism as the MIN post-run finding, with a sharper picture
+now that this re-run's pipeline-health check exposed the full
+stage-by-stage counts:
+
+| Stage | HIGH (this re-run) | MIN | Δ |
+|-------|-------------------:|----:|---:|
+| Consensus candidates (4-of-5) | 9,131 | 10,131 | **−1,000** |
+| Verifier retention rate | 45.4 % | 38.1 % | **+7.3 pp** |
+| Verified detections | 4,143 | 3,861 | **+282** |
+| TP @ 20 m | 2,775 | 2,667 | +108 |
+| TP @ 50 m | 3,513 | 3,276 | +237 |
+| FP @ 20 m | 1,368 | 1,194 | **+174** |
+| FP @ 50 m | 630 | 585 | +45 |
+
+HIGH's proposer is more *selective* (produces fewer consensus
+candidates), but its candidates are higher-quality — the verifier
+retains them at a much higher rate. The net-extra 282 verified
+detections are approximately-localised real mounds: at 20 m
+tolerance most count as FPs (ΔFP = +174), but at 50 m most become
+TPs (ΔFP = +45; ΔTP = +237). Spatial localisation per candidate is
+unchanged by thinking level (precision is essentially flat at 50 m);
+what changes is how many approximately-matched real mounds the
+pipeline retains. See working-notes Obs 258 (amended 2026-04-19)
+for the generalisable interpretation.
 
 ### Side-by-side with the three 55-map runs
 

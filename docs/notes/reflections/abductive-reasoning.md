@@ -3698,6 +3698,23 @@ localisation channel appears dead. This is a mechanistic claim
 about thinking-level effects in VLM detection pipelines that I
 would not have formulated without the split-decision data.
 
+*(**Amendment 2026-04-19**: this "enumeration" framing was
+subsequently falsified by pipeline-health data from the HIGH re-run.
+At the 4-of-5 consensus stage HIGH actually produces *fewer*
+candidates than MIN (9,131 vs 10,131), not more. What changes is
+verifier retention rate (45 % vs 38 %), which yields net-extra
+verified detections downstream. The revised mechanistic claim is
+**proposer selectivity + verifier retention**, not enumeration. See
+working-notes Obs 258 amendment for the stage-by-stage counts. The
+meta-lesson reinforces itself: even after the split-decision data
+justified the "enumeration" claim, I was still one further
+decomposition away from the actual mechanism — the recall channel
+is live, but the stage where the extra candidates originate was
+wrong in my original account. The better habit is: **before
+accepting any mechanistic claim, ask what the stage-by-stage
+pipeline counts would look like under it, and whether I've checked
+them.**)*
+
 **Reasoning pattern I should notice**: when I have a prior from
 single-number evidence ("p=0.43 at K=5+PV"), my instinct is to
 generalise it to a single-axis claim. The better move when the

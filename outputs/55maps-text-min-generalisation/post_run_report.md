@@ -98,11 +98,16 @@ at every looser buffer HIGH wins significantly.
 | **Recall** | **0.732** | **0.687** | **−0.045** |
 
 HIGH's F1 premium is entirely driven by recall. Precision is
-essentially unchanged. Interpretation: HIGH thinking's longer
-reasoning chain surfaces additional candidate mounds the shorter
-MIN chain misses; the verifier accepts them as mounds at roughly
-the same rate. So the thinking-level effect is in candidate
-*enumeration*, not in spatial *localisation*.
+essentially unchanged. Interpretation *(refined 2026-04-19 after
+the HIGH re-run pipeline-health check — see working-notes Obs 258
+amendment)*: HIGH thinking produces *fewer* consensus candidates
+than MIN (9,131 vs 10,131 on the re-run), but higher per-candidate
+quality. The verifier retains HIGH's candidates at a much higher
+rate (~45 % vs ~38 %), and the resulting extra verified detections
+are *approximately-localised* real mounds — they count as TPs at
+loose buffers (30–50 m) but not at the tight 20 m primary. So the
+thinking-level effect is in candidate *quality and retention*, not
+in spatial *localisation*.
 
 **Applying the project's ≥10 % cheaper + statistically indistinguishable
 heuristic:**
@@ -282,16 +287,23 @@ The core question this run was designed to answer:
 - At looser 30/40/50 m buffers: **yes, highly significantly**
   (p < 0.0001 each; +0.028–0.031 F1).
 
-The split is not an artefact — it reveals a clean mechanism:
+The split is not an artefact — it reveals a clean mechanism
+(refined 2026-04-19 after the HIGH re-run exposed the full
+pipeline-health picture; see working-notes Obs 258 amendment):
 
-**HIGH thinking helps candidate enumeration, not spatial
+**HIGH thinking helps approximate-match retention, not spatial
 localisation.** The precision/recall decomposition at 50 m shows
 HIGH's advantage is entirely recall (+0.045 R, −0.009 P vs MIN).
-HIGH's longer reasoning chain surfaces additional mound candidates
-that MIN misses; the verifier accepts them at the same rate. Once
-you tighten the spatial tolerance to 20 m, those extra candidates
-no longer match their ground-truth neighbours reliably, so the
-recall advantage collapses.
+HIGH's proposer actually produces *fewer* consensus candidates
+than MIN's (55-map re-run: 9,131 vs 10,131) but of higher quality:
+the verifier retains HIGH's candidates at a substantially higher
+rate (~45 % vs ~38 %), yielding more verified detections overall
+(4,143 vs 3,861). The net-extra detections are approximately-
+localised real mounds — they match ground truth at loose tolerance
+but drift out of range at 20 m. So tightening the spatial
+tolerance to 20 m collapses HIGH's recall advantage because those
+extras lose their matches; the tight-buffer precision gap (HIGH
+0.670 vs MIN 0.691) reflects the same dynamic from the other side.
 
 **Practical implication for the paper**:
 
@@ -376,6 +388,7 @@ one that ran. Mitigations:
   posterior with per-item ground truth. Scope is smaller than the
   HIGH run's VLM-only set (585 vs 1,028) — faster to complete.
 - Observation write-up: document the HIGH-vs-MIN mechanistic finding
-  (thinking helps enumeration, not localisation) in
+  (thinking helps approximate-match retention, not localisation —
+  see working-notes Obs 258 amendment) in
   `docs/notes/reflections/working-notes.md` after the paper section
   using it is drafted.

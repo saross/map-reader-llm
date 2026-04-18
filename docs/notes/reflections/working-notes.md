@@ -11368,7 +11368,7 @@ distribution, not a scalar.
 
 ---
 
-## Observation 258: HIGH thinking helps enumeration, not localisation — paired permutation test on 55-map text generalisation reveals a buffer-dependent split (2026-04-18)
+## Observation 258: HIGH thinking helps approximate-match retention, not precise localisation — paired permutation test on 55-map text generalisation reveals a buffer-dependent split (2026-04-18; mechanism amended 2026-04-19)
 
 **Context**: Paired text HIGH vs text MIN generalisation run comparison
 on the 55-map out-of-sample set. Same config except `thinking_level`
@@ -11400,23 +11400,58 @@ insufficient sample). The ΔF1 is near zero at 20 m and a clean
 | Precision | 0.858 | 0.849 | −0.009 |
 | **Recall** | **0.732** | **0.687** | **−0.045** |
 
-HIGH proposes more candidates per tile; the verifier accepts them
-at roughly the same rate (precision near-flat). Those extra
-accepted candidates are real mounds — they match ground truth —
-but they match at spatial distances that only count under the
-looser buffer. HIGH thinking surfaces mounds MIN thinking misses,
-but the surfaced mounds are not localised precisely enough for a
-20 m tolerance to catch them.
+*(**Amendment 2026-04-19**: the original framing below claimed "HIGH
+proposes more candidates per tile" and that thinking-level
+"controls enumeration". The 2026-04-19 text HIGH re-run
+pipeline-health check contradicted this — HIGH's proposer actually
+emits *fewer* consensus candidates than MIN's. See corrected
+mechanism immediately below. The contradiction with Obs 254 —
+which had already established "MIN proposers produce ~60–70 % more
+candidates per condition" — was an internal inconsistency in Obs
+258's original mechanism paragraph, now resolved.)*
 
-**Generalisable interpretation**: thinking-level appears to control
-candidate *enumeration*, not candidate *spatial accuracy*. The
-longer reasoning chain enumerates more candidate symbols per tile;
-the spatial precision of each enumerated candidate is independent
-of reasoning length. If this pattern holds across tasks (a claim
-this single experiment cannot support), it predicts: tasks where
-the primary difficulty is finding candidates in the first place
-benefit from HIGH thinking; tasks where the difficulty is
-localising already-nominated candidates do not.
+**Corrected mechanism** (established by 2026-04-19 re-run data):
+at the raw consensus-candidate level, HIGH actually proposes
+*fewer* candidates than MIN (9,131 vs 10,131 on the 55-map scope —
+consistent with Obs 254's Era 2 finding that MIN proposers produce
+~60–70 % more candidates per condition at larger K). HIGH's
+advantage emerges downstream, not at the proposer:
+
+| Stage | HIGH (55-map re-run) | MIN (55-map) | Δ |
+|-------|---------------------:|-------------:|---:|
+| Consensus candidates (4-of-5) | 9,131 | 10,131 | **−1,000** |
+| Verifier retention rate | 45.4 % | 38.1 % | **+7.3 pp** |
+| Verified detections (prob ≥ 0.15) | 4,143 | 3,861 | **+282** |
+| TPs at 20 m | 2,775 | 2,667 | +108 |
+| TPs at 50 m | 3,513 | 3,276 | +237 |
+| FPs at 20 m | 1,368 | 1,194 | **+174** |
+| FPs at 50 m | 630 | 585 | +45 |
+
+Two things fall out of this table:
+
+1. **HIGH's proposer is more selective, not more prolific.**
+   Thinking tokens go into candidate quality at the proposer stage,
+   not candidate count. HIGH fires fewer distinct locations per
+   tile but proposes them with higher confidence / agreement
+   across passes.
+2. **The verifier retains HIGH's candidates at a much higher rate
+   (45.4 % vs 38.1 %).** This is where HIGH's net-extra 282 final
+   detections come from. The extras are *approximate* spatial
+   matches — at 20 m tolerance they mostly count as FPs (ΔFP =
+   +174); at 50 m most of those FPs become TPs (ΔFP shrinks to
+   +45) because the loose buffer absorbs near-miss localisation.
+
+**Revised generalisable interpretation**: thinking-level appears
+to control proposer *selectivity* + candidate *quality*, which
+propagates to verifier retention. The spatial precision of each
+accepted candidate is ~constant (precision is flat across HIGH/MIN
+at 50 m). What changes is how many *approximately-localised* real
+mounds the pipeline retains. If this pattern holds across tasks
+(one experiment, replicated: Obs 254 on Era 2 + the 2026-04-19
+re-run on 55-map), it predicts: HIGH wins when the task rewards
+approximate matches (loose buffer, broad classification). HIGH is
+indistinguishable from MIN when the task demands precise
+localisation (tight buffer).
 
 **Cost implication**: the 19 % HIGH-over-MIN cost premium on the
 text pipeline ($75 vs $61) buys a recall gain of +0.045 at loose
