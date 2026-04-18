@@ -25,17 +25,27 @@ and silently returned 0 for every value.
 Half-widths ~0.01; publication-quality. No re-run needed. Post-run
 report updated with the real numbers.
 
-### 2. Examine per-map breakdown for heterogeneity
+### 2. Examine per-map breakdown for heterogeneity — **RESOLVED 2026-04-18**
 
-- `cost_manifest.json` has per-map candidate counts that range 60–298
-  (~5× spread). Evaluate F1 per map to see where the pipeline is
-  working vs failing.
-- Useful for the paper's transfer-learning narrative: does the pipeline
-  generalise uniformly across the 55 maps, or are there systematic
-  failure modes (e.g., heavy-forest maps with low mound density
-  failing, sparse-feature maps OK)?
-- Script: adapt `analyse_secondary_effects.py` per-map-sheet analysis
-  (already exists for Era 2 4-map study) to the 55-map scope.
+Matched-configuration per-map F1 analysis completed for the 55 maps
+plus the 4 Era 2 calibration maps as a baseline. Script
+`scripts/analyse_55maps_heterogeneity.py`; artefacts under
+`results/55maps-image-generalisation/`.
+
+Key findings:
+
+- Mean F1 @ 50 m drops from 0.887 (4-map) to 0.750 (55-map) = −0.137
+- SD @ 50 m widens ~4.4× (0.021 → 0.094). Generalisation widens the
+  distribution, not just shifts it.
+- Best 55-map (F1 = 0.894) matches best 4-map (0.903) — pipeline can
+  work as well out-of-sample on at least some maps.
+- **K-35-075-3** is a persistent low-outlier (F1 = 0.286 across all
+  buffers); buffer loosening does not help, indicating an FP problem
+  rather than a spatial-precision problem.
+- Cost per map is uniform (r ≈ 0 with F1); cost cannot predict
+  difficulty on a new map.
+- Candidate count weakly predicts F1 (r = +0.16 to +0.30) — denser
+  mound maps produce more true-positive matches.
 
 ### 3. Commit the outputs
 
