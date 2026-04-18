@@ -1,0 +1,38 @@
+run_name: 55maps-text-high-generalisation
+output_root: outputs
+proposer:
+  config: prompts/configs/detect_brief-text.json
+  manifest: inputs/tiles_384_55maps/full_evaluation_manifest.json
+  tiles_dir: inputs/tiles_384_55maps
+  tile_size: 384
+  temperature: 0.7
+  thinking_level: high
+  passes: 5
+  mode: realtime
+  workers: 250
+  max_retries: 15
+  use_cache: true
+  service_tier: flex
+consensus:
+  vote_threshold: 4
+  dedup_radius_m: 20.0
+extract:
+  padding: 75
+  rasters_dir: inputs/rasters/Russian1981_32635
+  tiles_dir: inputs/tiles_384_55maps
+verify:
+  config: prompts/configs/verify_adversarial-text.json
+  mode: realtime
+  workers: 20
+  service_tier: flex
+evaluate:
+  prob_threshold: 0.15
+  buffers:
+  - 20
+  - 30
+  - 40
+  - 50
+  bootstrap: 1000
+  seed: 42
+  ground_truth: inputs/vectors/references/student-mounds-55maps.geojson
+  bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson

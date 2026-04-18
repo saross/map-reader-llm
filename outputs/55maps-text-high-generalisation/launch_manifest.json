@@ -1,0 +1,91 @@
+{
+  "run_name": "55maps-text-high-generalisation",
+  "started_at": "2026-04-18T14:27:03Z",
+  "status": "completed",
+  "git": {
+    "commit_sha": "01df51c601264180f2a29551e96a3aa4c8fd7361",
+    "branch": "main",
+    "dirty": false,
+    "untracked_file_count": 87
+  },
+  "hostname": "sapphire",
+  "user": "shawn",
+  "python_version": "3.13.3",
+  "cli_invocation": [
+    "scripts/run_generalisation.py",
+    "all",
+    "--run-config",
+    "configs/run-configs/55maps_text_high_generalisation.yaml",
+    "--run-name",
+    "55maps-text-high-generalisation",
+    "--yes"
+  ],
+  "script_version": "1.0.0",
+  "resolved_config": {
+    "proposer": {
+      "config": "prompts/configs/detect_brief-text.json",
+      "manifest": "inputs/tiles_384_55maps/full_evaluation_manifest.json",
+      "tiles_dir": "inputs/tiles_384_55maps",
+      "tile_size": 384,
+      "temperature": 0.7,
+      "thinking_level": "high",
+      "passes": 5,
+      "mode": "realtime",
+      "workers": 250,
+      "max_retries": 15,
+      "use_cache": true,
+      "service_tier": "flex"
+    },
+    "consensus": {
+      "vote_threshold": 4,
+      "dedup_radius_m": 20.0
+    },
+    "extract": {
+      "padding": 75,
+      "rasters_dir": "inputs/rasters/Russian1981_32635",
+      "tiles_dir": "inputs/tiles_384_55maps"
+    },
+    "verify": {
+      "config": "prompts/configs/verify_adversarial-text.json",
+      "mode": "realtime",
+      "workers": 20,
+      "service_tier": "flex"
+    },
+    "evaluate": {
+      "prob_threshold": 0.15,
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "bootstrap": 1000,
+      "seed": 42,
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    },
+    "global_opts": {
+      "output_root": "outputs",
+      "service_tier": "flex"
+    }
+  },
+  "config_file_path": "configs/run-configs/55maps_text_high_generalisation.yaml",
+  "config_file_sha256": "6a3f3c9f3dd1b4ede0cdf5dfb0d17831f9d57ff82f5fe95bd8554575f8f9fb7e",
+  "pre_launch_audit": {
+    "path": "configs/run-configs/55maps_text_high_generalisation_pre_launch_audit.md",
+    "sha256": "c0dd780117d8f7fa159b62fb6f046145011e5d0f0be84418963bca5e12d53608",
+    "copied_to": "outputs/55maps-text-high-generalisation/pre_launch_audit.md"
+  },
+  "input_sha256": {
+    "manifest": "1150e8bb502d6824bc4e4307e2de4967595487c50443c3de187e5f662511a019",
+    "ground_truth": "9c2c747ecd2db4cde007abcffe0af74ee9942a94b130b7884df46bd730cd8ec6",
+    "bounds": "dfa1ef6e0004e0f5359a78d33075bb6e84e6e239e18b3653bc7a41ef31381bda",
+    "proposer_config": "a389b24e61b5aa8e66a354054943927ec52baab81e5380d430929350b2cc3863",
+    "verifier_config": "357d8a87d6127e9592740dfd4a23cd3a64d58f605140f9676eece6c06db21a45",
+    "rasters_dir_listing": "37467e43957ac4e98f0cc403a5f2433fcc5da4ee1f79449baafb52b727715e7f"
+  },
+  "seed": 42,
+  "service_tier": "flex",
+  "expected_cost_usd": 355.18,
+  "completed_at": "2026-04-18T17:48:24Z"
+}

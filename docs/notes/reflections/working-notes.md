@@ -11456,3 +11456,85 @@ decision is not ours to make implicitly.
 - Post-run report: `configs/run-configs/55maps_text_min_generalisation_post_run_report.md`
 
 ---
+
+## Observation 259: Text HIGH thinks ~20 % more tokens per call than image HIGH — possible evidence visual context offloads reasoning (2026-04-19)
+
+**Context**: 55-map text HIGH generalisation re-run under the
+publishable launcher (`outputs/55maps-text-high-generalisation/`,
+2026-04-19). Same experimental design as the 2026-04-18 image HIGH
+and text MIN runs: K=5, 8,541 tiles, 55 maps, Flex tier, HIGH
+thinking, Gemini 3 Flash. Measured cost $69.60, F1 @ 50 m = 0.788
+(matches the 2026-04-10 HIGH run's 0.790 within noise; paired
+sanity test p = 0.75).
+
+**Headline**: at equal K, equal tile count, and equal HIGH thinking
+ceiling, text HIGH consumed **more thinking tokens than image HIGH**
+— 115.0 M vs 95.3 M total, or ~2,692 vs ~2,229 per call (+20.8 %).
+
+| Run | Modality | Calls | Thinking tokens (total) | Per-call |
+|-----|:--------:|:-----:|:-----------------------:|:--------:|
+| Image HIGH K=5 55-map | Image+text | 42,705 | 95.3 M | 2,229 |
+| **Text HIGH K=5 55-map (re-run)** | **Text only** | **42,545** | **115.0 M** | **2,692** |
+| Text MIN K=5 55-map | Text only | 42,545 | 0 | 0 |
+
+Caveats:
+
+- N=1 per modality; one experimental pairing, not a population.
+- The text and image prompts differ in structure: text embeds 17
+  example descriptions in the system instruction; image sends 17
+  example PNGs as inline content. Per-call payload sizes and
+  cacheable structure differ.
+- Input tokens also differ (text: 80.5 M, image: ~620 M cached +
+  ~56 M fresh). Comparing *thinking* tokens per call at equivalent
+  output lengths is the cleanest apples-to-apples slice, but output
+  lengths are modality-dependent too.
+
+**Plausible mechanism**: visual context offloads reasoning. The
+image track sees the ground truth directly — the 17 reference crops
+are rendered into the prompt — so the model's reasoning shortcircuits
+to "compare target against seen examples" after a shorter chain.
+The text track forces the model to reconstruct "what a mound looks
+like" from descriptive language on every call, and to hold that
+reconstructed mental model while scanning the target image. That's
+an additional abstract-reasoning step.
+
+**Alternative interpretations**:
+
+1. Text is harder than image at this task (the model needs more
+   thinking because it has less information per call). Consistent
+   with information theory but inconsistent with F1: text HIGH
+   beats image HIGH on F1 @ 50 m (0.788 vs 0.771), so more thinking
+   is not compensating for worse information — if anything it is
+   being converted into higher recall.
+2. The model's thinking budget is elastic and scales with available
+   room in the context. Image prompts consume ~15 K tokens of
+   cached input, leaving less room for thinking; text prompts
+   consume ~400 tokens, leaving more. The model fills the slack.
+   Falsifiable: run text HIGH with an artificially padded system
+   instruction matching image's cache-lock size; if thinking tokens
+   drop, this explanation wins.
+
+**If the visual-offload interpretation is right**, it generalises:
+modalities that provide richer context should reduce per-call
+thinking, not just in mound detection but in VLM tasks broadly.
+Generalising from N=1 is premature, but the observation is cheap
+to flag for future investigation.
+
+**Ancillary finding — reproduction at the re-run level**: the new
+HIGH run reproduces the 2026-04-10 HIGH run to within Δ F1 = 0.0015
+(paired permutation p = 0.75 at 50 m). Evidence that K = 5
+aggregation + Flex-tier per-call stochasticity yields very stable
+downstream F1 at this scale. The pattern in Obs 258 (HIGH-vs-MIN
+buffer-dependent split) replicates under this re-run with
+effectively identical effect sizes (Δ F1 at 20 m: +0.005 prior vs
++0.005 re-run; Δ F1 at 50 m: +0.031 prior vs +0.029 re-run).
+
+**Data**:
+
+- `outputs/55maps-text-high-generalisation/cost_manifest.json` (token totals)
+- `outputs/55maps-image-generalisation/cost_manifest.json` (image HIGH comparator)
+- `results/55maps-text-high-generalisation/paired-vs-high-2026-04-10-50m/` (reproduction sanity test)
+- `results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/` (replication of Obs 258 under re-run)
+- Post-run report: `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`
+
+---

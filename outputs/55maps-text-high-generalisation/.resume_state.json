@@ -1,0 +1,77 @@
+{
+  "proposer": {
+    "completed_at": "2026-04-18T17:03:23Z",
+    "summary": {
+      "output_base": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text",
+      "passes": 5,
+      "per_pass": [
+        {
+          "pass": 1,
+          "status": "partial",
+          "exit_code": 2,
+          "duration_seconds": 1912.829,
+          "output_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1"
+        },
+        {
+          "pass": 2,
+          "status": "partial",
+          "exit_code": 2,
+          "duration_seconds": 1846.728,
+          "output_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2"
+        },
+        {
+          "pass": 3,
+          "status": "partial",
+          "exit_code": 2,
+          "duration_seconds": 1943.161,
+          "output_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3"
+        },
+        {
+          "pass": 4,
+          "status": "partial",
+          "exit_code": 2,
+          "duration_seconds": 1837.199,
+          "output_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4"
+        },
+        {
+          "pass": 5,
+          "status": "partial",
+          "exit_code": 2,
+          "duration_seconds": 1839.932,
+          "output_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5"
+        }
+      ],
+      "partial_passes": 5,
+      "stage_duration_seconds": 9379.849
+    }
+  },
+  "consensus": {
+    "completed_at": "2026-04-18T17:19:06Z",
+    "summary": {
+      "consensus_file": "outputs/55maps-text-high-generalisation/consensus/consensus-4of5.geojson",
+      "stage_duration_seconds": 943.657
+    }
+  },
+  "extract": {
+    "completed_at": "2026-04-18T17:20:23Z",
+    "summary": {
+      "crops_dir": "outputs/55maps-text-high-generalisation/crops",
+      "stage_duration_seconds": 76.98
+    }
+  },
+  "verify": {
+    "completed_at": "2026-04-18T17:43:27Z",
+    "summary": {
+      "verified_dir": "outputs/55maps-text-high-generalisation/verified",
+      "stage_duration_seconds": 1384.23
+    }
+  },
+  "evaluate": {
+    "completed_at": "2026-04-18T17:48:23Z",
+    "summary": {
+      "eval_dir": "outputs/55maps-text-high-generalisation/evaluation",
+      "final_geojson": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "stage_duration_seconds": 295.912
+    }
+  }
+}
