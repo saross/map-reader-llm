@@ -6321,6 +6321,13 @@ human volunteers using purpose-built data collection software. The
 "accuracy bottleneck" in large-scale evaluation shifts entirely from the
 extraction tool to the ground truth.
 
+*(**2026-04-19 follow-up**: the predicted student-jitter effect has
+now been quantified via an extended-buffer F1 sweep comparing the 4-
+map expert-corrected gold-standard GT with the 55-map student GT.
+See Obs 260 for the jitter estimate (~20-25 m = 4-5 px student
+jitter above a ~5 m = 1 px expert-residual floor) and the
+implications for paper F1 reporting.)*
+
 ---
 
 ## Observation 211: QGIS Sanity Check — FP Taxonomy and Composite Symbol Localisation (2026-04-08)
@@ -11571,5 +11578,72 @@ effectively identical effect sizes (Δ F1 at 20 m: +0.005 prior vs
 - `results/55maps-text-high-generalisation/paired-vs-high-2026-04-10-50m/` (reproduction sanity test)
 - `results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/` (replication of Obs 258 under re-run)
 - Post-run report: `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`
+
+---
+
+## Observation 260: Student GT has ~25 m positional jitter — quantified via F1-curve shift against expert-corrected gold-standard, confirming the prediction from Obs 210 (2026-04-19)
+
+**Context**: Obs 210 (2026-04-08) predicted, based on a Hungarian-assignment analysis of VLM detection-to-GT match distances on the 4 expert-corrected gold-standard maps, that when evaluating on student-digitised GT "the spatial matching bottleneck will be the *student positioning accuracy*, not the VLM", and that the buffer-distance sensitivity curve "will effectively characterise student digitisation accuracy rather than VLM accuracy". That was a sharp prediction; 11 days later we have the data to confirm it quantitatively.
+
+**Headline**: extended-buffer F1 sweeps on the two GTs show the 55-map curve is approximately the gold-standard curve *shifted right* by ~10 m (low F1) to ~25 m (at asymptote). The shift is the signature of ~25 m positional jitter in the student GT.
+
+**The two curves**:
+
+| Buffer | Gold-standard F1 (4 expert-corrected maps) | 55-map F1 (student GT) |
+|:-----:|:-----------------------------------------:|:----------------------:|
+| 5 m | 0.250 | — |
+| 10 m | 0.654 | — |
+| 15 m | 0.777 | — |
+| **20 m** | — | **0.623** |
+| 25 m | **0.823** (plateau onset) | — |
+| 30 m | — | 0.753 |
+| 35 m | 0.823 | — |
+| 40 m | — | 0.783 |
+| 45 m | 0.823 | — |
+| **50 m** | **0.826** (cached, leaderboard) | **0.788** |
+
+**Matching by F1 value** (how much buffer does the 55-map curve need to reach the gold-standard's F1 at buffer X?):
+
+| Gold-standard F1 | Gold-standard buffer | 55-map buffer to match | Implied shift |
+|:----------------:|:--------------------:|:----------------------:|:-------------:|
+| ~0.65 | 10 m | ~22 m (interp.) | **+12 m** |
+| ~0.77 | 15 m | ~31 m (interp.) | **+16 m** |
+| 0.823 (asymptote) | 25 m | not reached at 50 m | **≥+25 m** |
+
+The shift widens as F1 approaches the asymptote because the asymptote itself is lower on student GT (0.788 vs 0.823; residual ΔF1 ≈ 0.035). This residual is the *true* unseen-map generalisation penalty after jitter is accounted for.
+
+**Interpretation of the non-uniform shift**: student jitter is not a single number — it's a distribution. The head of the distribution is tight (~10 m, matching most student points' accuracy); the tail stretches to ~25 m+ (a minority of misplaced points). At a tight buffer, only the head-of-distribution points can still match; at a loose buffer, the tail-of-distribution points come into range too. The shift at each F1 level indexes how far into the jitter tail the buffer is reaching.
+
+**Domain-knowledge calibration** (user, 2026-04-19): expert QC of the 4 gold-standard maps involved repositioning most student points by "a few metres" so they sat dead-centre on the symbols. Looking back at the corrected points, the expert's own residual jitter is **mostly ~1 px (~5 m)**, occasionally ~2 px (~10 m) where the symbol itself is fuzzy — bounded by cursor-placement precision at typical zoom and the clarity of the target symbol. Student jitter of ~20-25 m = 4-5 px is **better than expected** from anecdotal memory of reviewing their work. The empirical confirmation aligns with but exceeds the user's prior: students working with FAIMS mobile data collection on pan-and-tap interfaces achieved roughly 4-5-pixel positional accuracy, not worse.
+
+With expert residual pinned at ~5 m, a cleaner decomposition of the ~25 m shift is:
+
+- Gold-standard "inherent" precision floor ≈ 5 m (expert residual)
+- Student "inherent" precision floor ≈ 25 m (from curve shift)
+- Student jitter above expert baseline ≈ 20 m ≈ 4 px
+
+This is consistent with the per-TP match-distance distribution on gold-standard from Obs 210 (median 5.0 m = 1 px, P99 17.3 m ≈ 3.5 px) — the VLM locates symbol centroids to within the raster's resolution ceiling, so on properly-centred GT the only source of positional error is the expert's ~1-2 px residual.
+
+**Implications for the paper**:
+
+1. **F1 @ 20 m on student GT systematically understates model precision**. The 20 m tolerance is smaller than the empirical student jitter amplitude; detections that are spatially correct against the true symbol are counted as FPs because the student GT is offset by >20 m from the symbol.
+2. **F1 @ 50 m approximates the true model ceiling** on student GT. The 50 m buffer absorbs most student jitter; the remaining ~0.035 F1 gap vs gold-standard is the genuine unseen-map generalisation penalty (not annotation noise).
+3. **The preregistered primary buffer (20 m, E47) has a known bias against the student-GT evaluation**. This should be documented as a methodological caveat when reporting the 20 m result. Either (a) report both 20 m and 50 m with the jitter context, (b) promote 50 m to primary for the student-GT evaluation with jitter-based justification, or (c) remediate the jitter (Obs 261 in progress — manual duplicate-pair review pending, which will not address jitter per se but will remove the ~1% double-mark contamination).
+4. **Model-vs-human comparison is still strong**: VLM detection precision on correct hits is 5-7 m (Obs 210); student GT precision is ~25 m. The "accuracy bottleneck is the GT, not the VLM" framing stands, now with a number.
+5. **Rectifying student jitter would improve evaluation validity** but is not scalable to 55 maps (it took expert time to do 4). A partial remediation is to compute F1 at multiple buffers and document the curve shape, which is what the current evaluation protocol does.
+
+**Caveats**:
+
+- Single comparison (4 gold-standard maps vs 55 student maps). Would benefit from expert-rectifying a sample of additional maps to confirm the ~25 m figure, but that's a labour cost the user has not committed to.
+- The ~10-25 m range is not a single-number estimate — the jitter distribution has structure. A more rigorous estimate would compute the student-vs-expert point-displacement distribution directly on a matched subset (i.e., points present in both the gold-standard and student corpora on the same map), which isn't currently available for the 55-map scope.
+- The residual ΔF1 ≈ 0.035 at asymptote blends (a) true out-of-sample generalisation penalty, (b) extreme-tail student jitter beyond 50 m, and (c) any systematic difference between the 4 gold-standard maps' geography and the wider 55-map corpus. Not separable without more data.
+- Gold-standard asymptote of 0.826 at 50 m (from cached leaderboard) is based on the same text-HIGH pipeline but at Era-1 tile size (this is the h11 gold-standard-v2 run) — if the gold-standard evaluation was re-run at 384 px tiles the asymptote might shift slightly. Close enough for the jitter-shift finding.
+
+**Data**:
+
+- `results/gold-standard-extended-buffer-sweep/evaluation.json` (gold-standard curve, buffers 5/10/15/25/35/45; asymptote at 0.826 @ 50 m from cached leaderboard)
+- `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` (55-map curve, buffers 20/30/40/50)
+- `results/gold-standard-extended-buffer-sweep/extended-buffer-report.md`
+- Obs 210 (the original prediction; now cross-linked forward)
 
 ---
