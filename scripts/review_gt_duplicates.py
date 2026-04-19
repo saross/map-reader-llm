@@ -1119,21 +1119,36 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
             doc.removeEventListener('keydown', doc.__gtReviewKeyHandler);
         }
 
-        // Click a Streamlit-rendered button. Streamlit's React tree
-        // doesn't always process a plain .click() as a user-initiated
-        // event, so we dispatch a full MouseEvent sequence (pointerdown,
-        // mousedown, mouseup, click) which matches a trusted click more
-        // closely. Also blurs any currently-focused element first so
-        // Streamlit's state machine sees a fresh interaction.
-        const simulateClick = function(btn) {
+        const LOG = function() {
+            console.log.apply(console, ['[gt-review]'].concat(
+                Array.prototype.slice.call(arguments)
+            ));
+        };
+
+        // Click a Streamlit-rendered button. We dispatch a full
+        // MouseEvent sequence (React sometimes ignores plain .click()).
+        // The click itself is wrapped in setTimeout(0) so any pending
+        // React render/reconciliation from a prior keystroke has a
+        // chance to flush before this one fires, which avoids stale-
+        // target bugs when the user presses keys in quick succession.
+        const simulateClick = function(btn, label) {
             if (!btn) return;
             btn.scrollIntoView({block: 'nearest', behavior: 'instant'});
-            const active = doc.activeElement;
-            if (active && active.blur) active.blur();
-            const opts = {bubbles: true, cancelable: true, view: window};
-            btn.dispatchEvent(new MouseEvent('mousedown', opts));
-            btn.dispatchEvent(new MouseEvent('mouseup', opts));
-            btn.dispatchEvent(new MouseEvent('click', opts));
+            setTimeout(function() {
+                const opts = {bubbles: true, cancelable: true, view: window};
+                try {
+                    btn.dispatchEvent(new MouseEvent('mousedown', opts));
+                    btn.dispatchEvent(new MouseEvent('mouseup', opts));
+                    btn.dispatchEvent(new MouseEvent('click', opts));
+                    // Fallback: also call the element's native click()
+                    // in case React's synthetic-event handler is bound
+                    // differently on this button.
+                    if (typeof btn.click === 'function') btn.click();
+                    LOG('clicked', label || btn.textContent.trim());
+                } catch (err) {
+                    LOG('click failed', err);
+                }
+            }, 0);
         };
 
         const handler = function(e) {
@@ -1150,28 +1165,28 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
                 const text = (btn.textContent || '').trim().toLowerCase();
                 if (text.startsWith(key + ':')) matches.push(btn);
             }
-            if (matches.length === 0) {
-                console.debug('[gt-review] key', key,
-                              '— no matching button');
-                return;
-            }
-            if (matches.length > 1) {
-                console.debug('[gt-review] key', key,
-                              '— multiple matches, clicking last (most '
-                              + 'recently rendered):',
-                              matches.map(b => b.textContent.trim()));
-            }
+            LOG('key', key, '→', matches.length, 'match(es)',
+                matches.map(function(b) {
+                    return (b.textContent || '').trim().slice(0, 40);
+                }));
+            if (matches.length === 0) return;
             // When multiple buttons share a prefix, prefer the LAST one
             // in document order — Streamlit renders new widget groups
             // after old ones, so the bottom-most match is almost always
             // the one currently visible to the user.
             const btn = matches[matches.length - 1];
-            simulateClick(btn);
+            // Blur any currently-focused element so Streamlit's state
+            // machine sees a fresh interaction. Do this BEFORE the
+            // setTimeout so focus is clean when React observes.
+            const focused = doc.activeElement;
+            if (focused && focused.blur) focused.blur();
+            simulateClick(btn, (btn.textContent || '').trim());
             e.preventDefault();
             e.stopPropagation();
         };
         doc.addEventListener('keydown', handler);
         doc.__gtReviewKeyHandler = handler;
+        LOG('handler attached at', new Date().toISOString());
     })();
     </script>
     """
