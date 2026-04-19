@@ -1106,18 +1106,22 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
     js = """
     <script>
     (function() {
-        // Walk up frames until we find the top Streamlit document.
-        let doc = null;
+        // Candidate documents that might receive keydown events.
+        // After a simulated click, focus can end up in any of:
+        //   - window.parent.document (the Streamlit main page)
+        //   - window.top.document (if Streamlit itself is iframed)
+        //   - document (this component iframe)
+        // We attach to all three so that wherever the focus lands,
+        // at least one listener fires. A shared dedupe token prevents
+        // a single keypress from being processed more than once.
+        const docs = [];
+        try { docs.push(window.parent.document); } catch (e) {}
         try {
-            doc = window.parent.document;
-        } catch (e) {
-            doc = document;  // fallback; likely non-functional
-        }
-        // Remove any previous listener (Streamlit reruns inject a fresh
-        // iframe on every pass; without this guard, listeners stack).
-        if (doc.__gtReviewKeyHandler) {
-            doc.removeEventListener('keydown', doc.__gtReviewKeyHandler);
-        }
+            if (window.top && window.top.document !== window.parent.document) {
+                docs.push(window.top.document);
+            }
+        } catch (e) {}
+        docs.push(document);
 
         const LOG = function() {
             console.log.apply(console, ['[gt-review]'].concat(
@@ -1125,12 +1129,23 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
             ));
         };
 
-        // Click a Streamlit-rendered button. We dispatch a full
-        // MouseEvent sequence (React sometimes ignores plain .click()).
-        // The click itself is wrapped in setTimeout(0) so any pending
-        // React render/reconciliation from a prior keystroke has a
-        // chance to flush before this one fires, which avoids stale-
-        // target bugs when the user presses keys in quick succession.
+        // Each docs[0] (the parent) holds the canonical click target
+        // for querySelectorAll — Streamlit buttons live there.
+        const streamlitDoc = docs[0] || document;
+
+        // Shared dedupe — if the same event is seen on multiple docs
+        // (bubbling/capture), only process once.
+        const seen = {token: 0};
+
+        // Remove any prior listeners to avoid accumulation across
+        // Streamlit reruns.
+        for (const d of docs) {
+            if (d.__gtReviewKeyHandler) {
+                d.removeEventListener('keydown', d.__gtReviewKeyHandler,
+                                      true);
+            }
+        }
+
         const simulateClick = function(btn, label) {
             if (!btn) return;
             btn.scrollIntoView({block: 'nearest', behavior: 'instant'});
@@ -1140,9 +1155,6 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
                     btn.dispatchEvent(new MouseEvent('mousedown', opts));
                     btn.dispatchEvent(new MouseEvent('mouseup', opts));
                     btn.dispatchEvent(new MouseEvent('click', opts));
-                    // Fallback: also call the element's native click()
-                    // in case React's synthetic-event handler is bound
-                    // differently on this button.
                     if (typeof btn.click === 'function') btn.click();
                     LOG('clicked', label || btn.textContent.trim());
                 } catch (err) {
@@ -1151,42 +1163,58 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
             }, 0);
         };
 
-        const handler = function(e) {
-            if (e.ctrlKey || e.altKey || e.metaKey) return;
-            const active = doc.activeElement;
-            if (active && (active.tagName === 'INPUT' ||
-                           active.tagName === 'TEXTAREA' ||
-                           active.isContentEditable)) return;
-            const key = (e.key || '').toLowerCase();
-            if (!key) return;
-            const buttons = doc.querySelectorAll('button');
-            const matches = [];
-            for (const btn of buttons) {
-                const text = (btn.textContent || '').trim().toLowerCase();
-                if (text.startsWith(key + ':')) matches.push(btn);
-            }
-            LOG('key', key, '→', matches.length, 'match(es)',
-                matches.map(function(b) {
-                    return (b.textContent || '').trim().slice(0, 40);
-                }));
-            if (matches.length === 0) return;
-            // When multiple buttons share a prefix, prefer the LAST one
-            // in document order — Streamlit renders new widget groups
-            // after old ones, so the bottom-most match is almost always
-            // the one currently visible to the user.
-            const btn = matches[matches.length - 1];
-            // Blur any currently-focused element so Streamlit's state
-            // machine sees a fresh interaction. Do this BEFORE the
-            // setTimeout so focus is clean when React observes.
-            const focused = doc.activeElement;
-            if (focused && focused.blur) focused.blur();
-            simulateClick(btn, (btn.textContent || '').trim());
-            e.preventDefault();
-            e.stopPropagation();
+        const makeHandler = function(source) {
+            return function(e) {
+                if (e.ctrlKey || e.altKey || e.metaKey) return;
+                // Dedupe: same keydown from multi-doc capture fires
+                // once. Use a per-event stamp.
+                if (e.__gtReviewSeen) return;
+                e.__gtReviewSeen = true;
+
+                const active = (streamlitDoc.activeElement || null);
+                const activeTag = active ? active.tagName : '(none)';
+                if (active && (active.tagName === 'INPUT' ||
+                               active.tagName === 'TEXTAREA' ||
+                               active.isContentEditable)) return;
+                const key = (e.key || '').toLowerCase();
+                if (!key) return;
+
+                // Find buttons in the Streamlit main-page document.
+                const buttons =
+                    streamlitDoc.querySelectorAll('button');
+                const matches = [];
+                for (const btn of buttons) {
+                    const text = (btn.textContent || '').trim()
+                                    .toLowerCase();
+                    if (text.startsWith(key + ':')) matches.push(btn);
+                }
+                LOG('key', key, 'source', source, 'active', activeTag,
+                    '→', matches.length, 'match(es)',
+                    matches.map(function(b) {
+                        return (b.textContent || '').trim().slice(0, 40);
+                    }));
+                if (matches.length === 0) return;
+                const btn = matches[matches.length - 1];
+                const focused = streamlitDoc.activeElement;
+                if (focused && focused.blur) focused.blur();
+                simulateClick(btn, (btn.textContent || '').trim());
+                e.preventDefault();
+                e.stopPropagation();
+            };
         };
-        doc.addEventListener('keydown', handler);
-        doc.__gtReviewKeyHandler = handler;
-        LOG('handler attached at', new Date().toISOString());
+
+        // Attach to every doc in the capture phase so we fire before
+        // any bubble-phase handler can call stopPropagation.
+        for (let i = 0; i < docs.length; i++) {
+            const label = i === 0 ? 'parent' :
+                          (i === 1 && docs[i] !== document ? 'top' :
+                           'iframe');
+            const h = makeHandler(label);
+            docs[i].addEventListener('keydown', h, true);
+            docs[i].__gtReviewKeyHandler = h;
+        }
+        LOG('handler attached to', docs.length, 'doc(s) at',
+            new Date().toISOString());
     })();
     </script>
     """
