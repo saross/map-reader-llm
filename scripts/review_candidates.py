@@ -246,7 +246,13 @@ def save_reviews(
     candidates: list[dict],
     csv_path: Path,
 ) -> None:
-    """Save all reviews to CSV."""
+    """Save all reviews to CSV via atomic tmp-then-rename.
+
+    Atomic write guards against a partial file on user-triggered
+    crashes or Streamlit re-runs mid-save. Without this, an
+    interrupted write would leave a truncated CSV and lose review
+    history.
+    """
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     # Build a lookup for candidate metadata
@@ -266,7 +272,9 @@ def save_reviews(
             "y": cand.get("centroid_y", ""),
             "timestamp": review["timestamp"],
         })
-    pd.DataFrame(rows).to_csv(csv_path, index=False)
+    tmp = csv_path.with_suffix(csv_path.suffix + ".tmp")
+    pd.DataFrame(rows).to_csv(tmp, index=False)
+    tmp.replace(csv_path)
 
 
 # =========================================================================
@@ -327,10 +335,21 @@ def main() -> None:
     # Initialise session state
     if "reviews" not in st.session_state:
         st.session_state.reviews = load_existing_reviews(output_path)
-    if "history" not in st.session_state:
-        st.session_state.history = []
-
     reviews = st.session_state.reviews
+    # Seed history from previously-saved reviews so Undo can undo
+    # prior-session work, not just this-session reviews. (Order is
+    # deterministic — sorted by candidate_id — so the undo order is
+    # predictable; it doesn't reflect the actual chronological order
+    # of the original reviews, but that information isn't available
+    # from the CSV anyway.)
+    if "history" not in st.session_state:
+        st.session_state.history = sorted(reviews.keys())
+    # Reconcile history with the reviews dict in case the CSV was
+    # externally edited between reruns — otherwise Undo would try to
+    # pop candidate_ids that no longer exist.
+    st.session_state.history[:] = [
+        h for h in st.session_state.history if h in reviews
+    ]
 
     # Find first unreviewed candidate
     current_idx = 0
@@ -493,31 +512,110 @@ def main() -> None:
             ):
                 button_pressed = sym_type
 
-    # Keyboard shortcut listener
+    # Keyboard shortcut listener. The naive approach — listening on
+    # the component iframe's own ``document`` — doesn't work because
+    # the iframe is zero-height and never has keyboard focus, so
+    # keydown events fire on the parent Streamlit page and never reach
+    # this listener. We attach in the CAPTURE phase to every
+    # reachable document (parent, top, self) so the keystroke is
+    # caught wherever focus happens to be. Simulated clicks use a
+    # full MouseEvent sequence (mousedown + mouseup + click) plus a
+    # native ``.click()`` fallback, wrapped in ``setTimeout(0)`` so
+    # any pending React render from a prior keystroke flushes before
+    # the next click fires — without this, Streamlit's React state
+    # machine sometimes ignores the click as non-trusted.
     shortcut_js = """
     <script>
-    document.addEventListener('keydown', function(e) {
-        const keyMap = {
-            'f': 0, 'd': 1, 's': 2, 'a': 3, 'j': 4, 'k': 5
-        };
-        if (e.key in keyMap && !e.ctrlKey && !e.altKey && !e.metaKey) {
-            // Don't fire if user is typing in an input
-            if (document.activeElement.tagName === 'INPUT' ||
-                document.activeElement.tagName === 'TEXTAREA') {
-                return;
+    (function() {
+        const docs = [];
+        try { docs.push(window.parent.document); } catch (e) {}
+        try {
+            if (window.top && window.top.document !== window.parent.document) {
+                docs.push(window.top.document);
             }
-            const buttons = parent.document.querySelectorAll(
-                'button[kind="secondary"]'
-            );
-            // Find the button whose text starts with the key
-            for (const btn of buttons) {
-                if (btn.textContent.trim().startsWith(e.key + ':')) {
-                    btn.click();
-                    break;
-                }
+        } catch (e) {}
+        docs.push(document);
+
+        const LOG = function() {
+            console.log.apply(console, ['[candidate-review]'].concat(
+                Array.prototype.slice.call(arguments)
+            ));
+        };
+
+        const streamlitDoc = docs[0] || document;
+
+        for (const d of docs) {
+            if (d.__candidateReviewKeyHandler) {
+                d.removeEventListener(
+                    'keydown', d.__candidateReviewKeyHandler, true,
+                );
             }
         }
-    });
+
+        const simulateClick = function(btn, label) {
+            if (!btn) return;
+            btn.scrollIntoView({block: 'nearest', behavior: 'instant'});
+            setTimeout(function() {
+                const opts = {bubbles: true, cancelable: true, view: window};
+                try {
+                    btn.dispatchEvent(new MouseEvent('mousedown', opts));
+                    btn.dispatchEvent(new MouseEvent('mouseup', opts));
+                    btn.dispatchEvent(new MouseEvent('click', opts));
+                    if (typeof btn.click === 'function') btn.click();
+                    LOG('clicked', label || btn.textContent.trim());
+                } catch (err) {
+                    LOG('click failed', err);
+                }
+            }, 0);
+        };
+
+        const makeHandler = function(source) {
+            return function(e) {
+                if (e.ctrlKey || e.altKey || e.metaKey) return;
+                if (e.__candidateReviewSeen) return;
+                e.__candidateReviewSeen = true;
+
+                const active = (streamlitDoc.activeElement || null);
+                const activeTag = active ? active.tagName : '(none)';
+                if (active && (active.tagName === 'INPUT' ||
+                               active.tagName === 'TEXTAREA' ||
+                               active.isContentEditable)) return;
+                const key = (e.key || '').toLowerCase();
+                if (!key) return;
+
+                const buttons = streamlitDoc.querySelectorAll('button');
+                const matches = [];
+                for (const btn of buttons) {
+                    const text = (btn.textContent || '').trim()
+                                    .toLowerCase();
+                    if (text.startsWith(key + ':')) matches.push(btn);
+                }
+                LOG('key', key, 'source', source, 'active', activeTag,
+                    '→', matches.length, 'match(es)',
+                    matches.map(function(b) {
+                        return (b.textContent || '').trim().slice(0, 40);
+                    }));
+                if (matches.length === 0) return;
+                const btn = matches[matches.length - 1];
+                const focused = streamlitDoc.activeElement;
+                if (focused && focused.blur) focused.blur();
+                simulateClick(btn, (btn.textContent || '').trim());
+                e.preventDefault();
+                e.stopPropagation();
+            };
+        };
+
+        for (let i = 0; i < docs.length; i++) {
+            const label = i === 0 ? 'parent' :
+                          (i === 1 && docs[i] !== document ? 'top' :
+                           'iframe');
+            const h = makeHandler(label);
+            docs[i].addEventListener('keydown', h, true);
+            docs[i].__candidateReviewKeyHandler = h;
+        }
+        LOG('handler attached to', docs.length, 'doc(s) at',
+            new Date().toISOString());
+    })();
     </script>
     """
     st.components.v1.html(shortcut_js, height=0)
@@ -535,6 +633,10 @@ def main() -> None:
                 timezone.utc
             ).isoformat(),
         }
+        # Dedupe history so Undo is always a single-press undo, even
+        # when the user re-reviews the same candidate.
+        if cid in st.session_state.history:
+            st.session_state.history.remove(cid)
         st.session_state.history.append(cid)
 
         # Save incrementally
