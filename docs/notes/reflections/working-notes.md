@@ -11647,3 +11647,132 @@ This is consistent with the per-TP match-distance distribution on gold-standard 
 - Obs 210 (the original prediction; now cross-linked forward)
 
 ---
+
+## Observation 261: Student GT duplicates cluster bimodally at ~50 m — below that, double-marks; above, real neighbours (2026-04-19)
+
+**Context**: 96-cluster manual review of the 55-map student GT using
+the new `scripts/review_gt_duplicates.py` Streamlit tool. Run in two
+passes: 50 m threshold (28 clusters, all pairs) → apply → 75 m
+threshold (96 clusters total; 27 of the original 28 auto-skipped as
+exact matches, 1 superset banner for a cluster that gained a third
+member between 50 m and 75 m, 68 fresh clusters). All clusters on the
+55-map corpus at threshold ≤ 75 m.
+
+**Headline**: the 50 m threshold is a natural break. Below it the
+clustering signal is almost entirely student-annotation error (double-
+marks of the same physical mound); above it the clustering signal is
+genuine mound-to-mound spacing.
+
+**Decision breakdown (96 decisions total)**:
+
+| Threshold band | Total clusters | Decision | Share |
+|:--:|:--:|:--:|:--:|
+| 0–50 m (28 clusters) | 28 | merge 26, keep_all 2 | **93 % merge** |
+| 50–75 m (68 clusters) | 68 | merge 0, keep_all 68 | **0 % merge** |
+| **All 96** | 96 | **merge 26, keep_all 70** | |
+
+The jump from 93 % merge to 0 % merge across the 50 m threshold is
+the cleanest bimodal signal we've seen in the spacing analysis. A
+future pass at 100 m would likely produce a similarly high
+keep-all fraction — mounds simply aren't spaced that tightly in this
+landscape.
+
+**Corroboration from the spacing analysis** (Obs 260 + the
+`results/gt-spacing-analysis/` reports):
+
+- 55-map student GT: pooled median NN = 506.8 m, p05 = 80.1 m. The
+  sub-50 m tail (56 points, 1.2 % of the GT) is precisely where the
+  double-marking error lives.
+- 4-map expert-corrected gold standard: pooled median NN = 449 m,
+  p05 = 83.2 m, minimum = 68.1 m. **Zero mounds with NN < 50 m on
+  the expert-corrected GT** — consistent with the ≥ 50 m boundary
+  being the true floor for real mound-to-mound spacing in the
+  Stara Zagora region, not a student-digitisation artefact.
+
+The 50 m boundary is about right: close enough to catch double-marks
+even when the student clicked the same symbol twice with a few
+metres of jitter; far enough not to catch real adjacent mounds whose
+centroids sit in the 60-100 m range.
+
+**Practical rule for similar archaeological projects**:
+
+- When reviewing student-annotated point data against 1:25k-scale
+  topographic rasters for burial-mound-sized features, a 50 m
+  automatic-merge threshold flags double-marks reliably without
+  false positives on genuinely adjacent features.
+- A second-pass review at a wider threshold (e.g. 75 m) catches
+  edge cases and lets the expert verify what the automatic merge
+  didn't touch.
+- The `--threshold-m` CLI makes this workflow cheap to replicate.
+
+**Cleaned-GT impact**:
+
+- Original: 4770 points. Cleaned: 4744 points. Δ = −26 (all merges;
+  `keep_all` doesn't change row count).
+- Cleaned GT written to
+  `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
+  as a sidecar file (the canonical GT is preserved verbatim).
+
+**Downstream F1 impact** (same text/image detections, evaluated
+against cleaned GT instead of original):
+
+| Run | Buffer | Δ F1 | Δ P | Δ R |
+|-----|:------:|:----:|:---:|:---:|
+| Text HIGH | 20 m | +0.0020 | +0.0002 | +0.0034 |
+| Text HIGH | 50 m | +0.0023 | 0.0000 | +0.0040 |
+| Text MIN | 20 m | +0.0019 | 0.0000 | +0.0031 |
+| Text MIN | 50 m | +0.0023 | 0.0000 | +0.0038 |
+| Image HIGH | 20 m | +0.0010 | −0.0004 | +0.0023 |
+| Image HIGH | 50 m | +0.0019 | −0.0002 | +0.0039 |
+
+Two things fall out of this:
+
+1. **The uplift is entirely recall-driven** (precision is flat to
+   three decimal places across all three runs, all four buffers).
+   That's the expected mechanism: removing a student duplicate
+   converts a previous (one-TP-one-FN) pair into a single cleaner
+   TP, which lifts recall without changing precision.
+
+2. **All three runs benefit about the same amount**
+   (~0.002 F1). The small magnitude reflects that only 26/4770 ≈
+   0.55 % of GT points were cleaned up. The 3-way ranking, the
+   D-S correction offsets, and the paired permutation p-values
+   from the earlier post-run reports are all unchanged by the
+   cleaning. The cleaned GT is a cleaner evaluation baseline, not
+   a different finding.
+
+The small uplift is worth mentioning in the paper's methodology
+but does not change any scientific claim. The cleaner GT is
+primarily useful for future evaluations, particularly at tighter
+buffers where the 26-point jitter noise is proportionally larger.
+
+**Caveats**:
+
+- Sample size is 96 clusters — small but each decision is a
+  human-expert call, so confidence in the individual classifications
+  is high. The bimodal claim is a description of THIS review, not a
+  guarantee for other corpora.
+- The "50 m floor for real mound spacing" matches the Stara Zagora
+  landscape and cadastral context. Densely-packed tell sites in
+  other regions (e.g. Near Eastern proto-urban mounds) could
+  genuinely sit <50 m apart. The rule generalises to *this project's*
+  corpus; it doesn't generalise to all burial-mound datasets.
+- Merge subtype selections (burial_mound vs bench_mark_on_mound vs
+  trig_point_on_mound vs settlement_mound) were applied per-cluster
+  based on expert judgement of the map symbols. These are now
+  attached as `_reviewed_subtype` on the merged points in the
+  cleaned GT — a richer annotation than the students originally
+  produced.
+
+**Data**:
+
+- `results/gt-duplicate-review/gt-duplicate-decisions.csv` (96
+  decisions)
+- `results/gt-duplicate-review/gt-duplicate-diff.md` (human-readable
+  diff)
+- `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
+  (cleaned GT, 4744 points)
+- `results/55maps-cleaned-gt-evaluation/` (F1/P/R re-evaluation of
+  text HIGH, text MIN, image HIGH runs against the cleaned GT)
+
+---
