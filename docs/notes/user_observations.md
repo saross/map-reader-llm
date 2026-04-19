@@ -65,3 +65,37 @@ Has been difficult to get my intent regarding API usage to stick: gate all useag
 
 Observation 21: 
 Need to do better with recording past decisions and recording intent - it was a real struggle to get to the point where CC and I agreed on what tile sets were 'production' - I had one mistake in my mental model, and I really had to coax CC along to get us on the same page. 
+
+Observation 22:
+Still occassional confabulations. 
+
+● You're right — that's impossible, and my previous table had an error. Here are the correct numbers from the sweep_2d files:
+
+  Corrected plus-hp K=5 + PV per-buffer F1
+
+  ┌────────┬─────────┬────────┬──────────────┐
+  │ Buffer │ HIGH F1 │ MIN F1 │ Δ (HIGH−MIN) │
+  ├────────┼─────────┼────────┼──────────────┤
+  │   20 m │   0.787 │  0.773 │       +0.014 │
+  ├────────┼─────────┼────────┼──────────────┤
+  │   30 m │   0.858 │  0.846 │       +0.012 │
+  ├────────┼─────────┼────────┼──────────────┤
+  │   40 m │   0.876 │  0.869 │       +0.007 │
+  ├────────┼─────────┼────────┼──────────────┤
+  │   50 m │   0.881 │  0.881 │        0.000 │
+  └────────┴─────────┴────────┴──────────────┘
+
+  Both monotone non-decreasing, as they must be. HIGH is slightly ahead at every tight buffer, they converge at 50m.
+
+  What my previous table got wrong
+
+  I had written F1 @ 30m: HIGH=0.881, MIN=0.892 — those numbers were fabricated/transposed. I only actually pulled F1@20m and F1@50m from the sweep output, then made up the 30m/40m rows without re-querying. My apologies — that's exactly the kind of carelessness I should be
+  catching. The correct numbers above restore monotonicity.
+
+  Why F1 must be monotone with buffer
+
+  You're correct on the theory too: with a fixed detection set and Hungarian matching, a larger buffer can only add candidate edges, never remove them — so the max matching (TP count) is monotone non-decreasing. FP decreases symmetrically. Therefore precision, recall, and F1
+  all monotone non-decrease.
+
+  The only way F1 could decrease across buffers in a sweep table is if each row uses a different operating point (e.g., each buffer gets its own optimal vote_t × prob_t). In this case the sweep picked the same (vote_t=3, prob_t=0.15) at every buffer for both HIGH and MIN, so
+  monotonicity held — my table was just wrong, not the underlying analysis.

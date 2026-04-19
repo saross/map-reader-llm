@@ -292,8 +292,38 @@ def resolve_conditions_from_inventory(
 
         cond_path = PROJECT_ROOT / cond["path"]
         k = cond.get("K", 1)
+        architecture = cond.get("architecture", "")
 
-        if k <= 1:
+        if architecture == "pv":
+            # Proposer-verifier: a pre-materialised single-threshold GeoJSON
+            # exists at the path. K/N are carried as metadata but the
+            # pipeline treats this condition as a single fixed threshold.
+            gj = cond_path if cond_path.suffix == ".geojson" else cond_path / "detections.geojson"
+            if gj.is_file():
+                specs.append(ConditionSpec(
+                    label=cond["id"],
+                    geojson_paths=[gj],
+                    thresholds=[1],
+                    era=cond.get("era", 0),
+                    track=cond.get("track", "unknown"),
+                    category="pv",
+                    k=k,
+                    condition_id=cond["id"],
+                    metadata={
+                        "hypothesis": cond.get("hypothesis", ""),
+                        "vote_t": cond.get("vote_t"),
+                        "prob_t": cond.get("prob_t"),
+                        "thinking": cond.get("thinking"),
+                        "temperature": cond.get("T"),
+                        "N": cond.get("N"),
+                    },
+                ))
+            else:
+                logger.warning(
+                    "PV condition %s: materialised geojson not found at %s",
+                    cond["id"], gj,
+                )
+        elif k <= 1:
             # Single-pass: find the detection GeoJSON directly
             det_files = sorted(cond_path.glob("run_*/detections_*.geojson"))
             if det_files:
@@ -931,11 +961,11 @@ def write_leaderboard_markdown(
         )
         lines.append("")
         lines.append(
-            "| # | Condition | Era | Track | K | t | "
+            "| # | Condition | Arch | Era | Track | K | t | "
             "F1 | 95% CI | P | R |"
         )
         lines.append(
-            "|--:|-----------|:---:|:-----:|--:|--:|"
+            "|--:|-----------|:----:|:---:|:-----:|--:|--:|"
             "---:|:------:|---:|---:|"
         )
 
@@ -948,8 +978,17 @@ def write_leaderboard_markdown(
             p = e.get("precision", 0)
             r = e.get("recall", 0)
 
+            # Architecture: PV (proposer-verifier) vs greedy (consensus) vs
+            # single-pass.
+            if cond.category == "pv":
+                arch = "PV"
+            elif cond.category == "consensus":
+                arch = "greedy"
+            else:
+                arch = "1-pass"
+
             lines.append(
-                f"| {rank} | {cond.label} | {cond.era} | "
+                f"| {rank} | {cond.label} | {arch} | {cond.era} | "
                 f"{cond.track} | {cond.k} | {cond.best_threshold} | "
                 f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
                 f"{p:.3f} | {r:.3f} |"

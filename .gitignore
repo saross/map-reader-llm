@@ -56,6 +56,9 @@ outputs/**/batch_working/
 # Match both nested structures: crops/crops/ and crops/*/crops/
 outputs/**/crops/crops/
 outputs/**/crops/*/crops/
+# Per-cell leaderboard caches (evaluations + pairwise; regenerable from
+# tracked condition-inventory + source detections)
+results/leaderboard/*/.cache/
 # Rasters and tiles (large input data)
 inputs/tiles_384_55maps/
 inputs/rasters/Russian1981_32635/
