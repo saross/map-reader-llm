@@ -893,32 +893,63 @@ def _save_decision(
 
 
 def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
-    """Bind single-key shortcuts to the button rows via inline JS."""
+    """Bind single-key shortcuts to the button rows via inline JS.
+
+    Streamlit's ``components.v1.html`` renders inside an iframe, so a
+    naive ``document.addEventListener`` only catches keystrokes that
+    happen *inside that iframe* — which is empty and zero-height, so
+    it's never focused. The fix is to attach the listener to
+    ``window.parent.document`` (same-origin, allowed). A reference is
+    cached on the parent document so repeated Streamlit reruns don't
+    stack duplicate listeners.
+
+    The JS scans buttons by visible text prefix ``"{key}:"`` and clicks
+    the first match. Labels produced by the Python code (``"k: Keep
+    all"``, ``"1: keep only #1"``, etc.) are constructed to match this
+    convention.
+    """
     import streamlit as st
 
-    # (The actual wiring is done on the client side: the JS below scans all
-    # visible buttons and matches those whose label starts with "{key}:". We
-    # don't need a Python-side key map — just ensure Streamlit has rendered
-    # labels like "k: Keep all" / "1: keep only #1" so the JS can find them.)
-    _ = (n_points, merge_pending)  # kept for future server-side routing
+    # n_points and merge_pending are accepted for future server-side
+    # routing; the JS handler reads the current buttons directly from
+    # the DOM each keystroke so it stays in sync without a re-render.
+    _ = (n_points, merge_pending)
 
     js = """
     <script>
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey || e.altKey || e.metaKey) return;
-        if (document.activeElement.tagName === 'INPUT' ||
-            document.activeElement.tagName === 'TEXTAREA') return;
-        const key = e.key.toLowerCase();
-        const buttons = parent.document.querySelectorAll('button');
-        for (const btn of buttons) {
-            const text = btn.textContent.trim().toLowerCase();
-            if (text.startsWith(key + ':')) {
-                btn.click();
-                e.preventDefault();
-                return;
-            }
+    (function() {
+        // Walk up frames until we find the top Streamlit document.
+        let doc = null;
+        try {
+            doc = window.parent.document;
+        } catch (e) {
+            doc = document;  // fallback; likely non-functional
         }
-    });
+        // Remove any previous listener (Streamlit reruns inject a fresh
+        // iframe on every pass; without this guard, listeners stack).
+        if (doc.__gtReviewKeyHandler) {
+            doc.removeEventListener('keydown', doc.__gtReviewKeyHandler);
+        }
+        const handler = function(e) {
+            if (e.ctrlKey || e.altKey || e.metaKey) return;
+            const active = doc.activeElement;
+            if (active && (active.tagName === 'INPUT' ||
+                           active.tagName === 'TEXTAREA')) return;
+            const key = (e.key || '').toLowerCase();
+            if (!key) return;
+            const buttons = doc.querySelectorAll('button');
+            for (const btn of buttons) {
+                const text = (btn.textContent || '').trim().toLowerCase();
+                if (text.startsWith(key + ':')) {
+                    btn.click();
+                    e.preventDefault();
+                    return;
+                }
+            }
+        };
+        doc.addEventListener('keydown', handler);
+        doc.__gtReviewKeyHandler = handler;
+    })();
     </script>
     """
     st.components.v1.html(js, height=0)
