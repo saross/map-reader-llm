@@ -361,6 +361,28 @@ def _resolve_raster(rasters_dir: Path, map_id: str) -> Path | None:
     return found[0] if found else None
 
 
+def _estimate_black_fraction(img: "PILImage") -> float:
+    """Return the fraction of near-black pixels in the rendered crop.
+
+    Used to detect edge-of-raster crops: ``rasterio.read(boundless=True,
+    fill_value=0)`` pads out-of-raster pixels with RGB (0, 0, 0), so a
+    high black fraction means the cluster sits near the map edge.
+
+    Threshold is generous (RGB values ≤ 8 each) to account for slight
+    LANCZOS interpolation of the boundary with genuine map pixels.
+    Counts only fully-black pixels — will underestimate if the raster
+    itself contains genuinely-black symbols, but those are a small
+    fraction of 1:25k topographic rasters so the heuristic is
+    conservative-enough for an advisory warning.
+    """
+    arr = np.asarray(img)
+    if arr.ndim != 3 or arr.shape[2] < 3:
+        return 0.0
+    rgb = arr[:, :, :3]
+    near_black = (rgb[:, :, 0] <= 8) & (rgb[:, :, 1] <= 8) & (rgb[:, :, 2] <= 8)
+    return float(near_black.mean())
+
+
 def _placeholder_image(cluster: Cluster, size: int = 600) -> "PILImage":
     """Fall back to a grey canvas with relative-coordinate markers."""
     from PIL import Image, ImageDraw
@@ -728,22 +750,42 @@ def run_streamlit(args: argparse.Namespace) -> None:
             cid for cid in sorted(decisions) if cid
         ]
     history: list[str] = st.session_state["history"]
+    # Skipped clusters are session-state only — never persisted to the
+    # CSV, so they reappear on next launch. This is the correct
+    # semantic for "defer until I've checked the adjacent map sheet".
+    skipped: set[str] = st.session_state.setdefault("skipped", set())
 
-    # Find next unreviewed cluster
+    # Find next cluster not yet decided AND not skipped this session.
     idx = 0
     for i, c in enumerate(clusters):
-        if c.cluster_id not in decisions:
-            idx = i
-            break
+        if c.cluster_id in decisions or c.cluster_id in skipped:
+            continue
+        idx = i
+        break
     else:
         idx = len(clusters)
 
     done = sum(1 for c in clusters if c.cluster_id in decisions)
     total = len(clusters)
-    st.progress(done / total if total else 1.0,
-                text=f"Progress: {done} / {total} clusters reviewed")
+    progress_text = f"Progress: {done} / {total} clusters reviewed"
+    if skipped:
+        progress_text += f" ({len(skipped)} skipped this session)"
+    st.progress(done / total if total else 1.0, text=progress_text)
 
     if idx >= total:
+        if skipped:
+            st.info(
+                f"First pass complete: {done} decided, {len(skipped)} "
+                f"skipped. Click *Revisit skipped* to go through the "
+                f"skipped clusters now, or close the app and relaunch "
+                f"later — skipped clusters are session-only and will "
+                f"reappear automatically next time."
+            )
+            if st.button("Revisit skipped"):
+                st.session_state["skipped"] = set()
+                st.rerun()
+            _render_summary(decisions)
+            return
         st.success("All clusters reviewed. Run with --apply to generate the "
                    "cleaned GT and diff report.")
         _render_summary(decisions)
@@ -760,6 +802,20 @@ def run_streamlit(args: argparse.Namespace) -> None:
     with st.spinner("Rendering context crop..."):
         img = render_cluster_image(cluster, rasters_dir, context_m)
     st.image(img, width="stretch")
+
+    # Edge-of-raster heuristic: ``rasterio.read(..., boundless=True,
+    # fill_value=0)`` pads out-of-raster pixels with black. If a large
+    # fraction of the crop is black, the cluster is near the raster
+    # edge and the user probably wants to check an adjacent map sheet
+    # before deciding.
+    black_frac = _estimate_black_fraction(img)
+    if black_frac > 0.25:
+        st.warning(
+            f"⚠️ Edge of raster detected "
+            f"({black_frac * 100:.0f}% of the crop is no-data black "
+            f"fill). Consider pressing **n: Skip** and checking the "
+            f"adjacent map sheet before deciding."
+        )
 
     # Per-member metadata
     with st.expander("Member points"):
@@ -778,12 +834,13 @@ def run_streamlit(args: argparse.Namespace) -> None:
         "**`k`** Keep all distinct &nbsp;&nbsp; "
         "**`m`** Merge (select subtype) &nbsp;&nbsp; "
         "**`1`..`9`** Keep only point N &nbsp;&nbsp; "
-        "**`u`** Uncertain &nbsp;&nbsp; "
+        "**`u`** Uncertain (flagged) &nbsp;&nbsp; "
+        "**`n`** Skip (revisit later) &nbsp;&nbsp; "
         "**`b`** Back (undo)"
     )
 
     pending_merge = st.session_state.get("pending_merge")
-    col_main = st.columns([1, 1, 1, 1])
+    col_main = st.columns([1, 1, 1, 1, 1])
     if col_main[0].button("k: Keep all", key=f"keep_all_{cluster.cluster_id}",
                           use_container_width=True):
         _save_decision(
@@ -802,6 +859,12 @@ def run_streamlit(args: argparse.Namespace) -> None:
             cluster, DECISION_UNCERTAIN, decisions, history, output_path,
         )
         st.rerun()
+    if col_main[3].button("n: Skip",
+                          key=f"skip_{cluster.cluster_id}",
+                          use_container_width=True):
+        skipped.add(cluster.cluster_id)
+        st.session_state.pop("pending_merge", None)
+        st.rerun()
     # Back button. Semantics:
     #   - If a merge is pending (user clicked Merge but hasn't picked a
     #     subtype yet), Back cancels the pending merge without popping
@@ -815,7 +878,7 @@ def run_streamlit(args: argparse.Namespace) -> None:
     back_enabled = (
         pending_merge == cluster.cluster_id or bool(history)
     )
-    if back_enabled and col_main[3].button(
+    if back_enabled and col_main[4].button(
         back_label, key="back_btn", use_container_width=True,
     ):
         if pending_merge == cluster.cluster_id:
