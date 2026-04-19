@@ -24,6 +24,9 @@ from scripts.review_gt_duplicates import (
     DECISION_UNCERTAIN,
     apply_decisions,
     build_clusters,
+    decisions_index,
+    detect_overlapping_decisions,
+    find_subsumed_decisions,
     format_decision,
     load_decisions,
     save_decisions,
@@ -352,3 +355,146 @@ def test_apply_keep_only_stranger_raises() -> None:
     d = format_decision(clusters[0], DECISION_KEEP_ONLY, kept_row_ids=[999])
     with pytest.raises(ValueError, match="not in the cluster"):
         apply_decisions(gt, {d["cluster_id"]: d})
+
+
+# =========================================================================
+# Multi-threshold workflow: subsumption + overlap detection
+# =========================================================================
+
+
+@pytest.mark.tier1
+def test_decisions_index_maps_member_sets_to_cluster_ids() -> None:
+    """decisions_index is keyed by frozenset of point_ids_in."""
+    gt = _sample_gt()
+    clusters = build_clusters(gt, threshold_m=50.0)
+    d = format_decision(
+        clusters[0], DECISION_MERGE, merged_subtype="burial_mound",
+    )
+    idx = decisions_index({d["cluster_id"]: d})
+    assert idx == {frozenset({0, 1}): d["cluster_id"]}
+
+
+@pytest.mark.tier1
+def test_find_subsumed_decisions_proper_subset() -> None:
+    """A cluster {A,B,C} finds the prior decision {A,B} as subsumed."""
+    # Build GT with three nearby points: 0 @ 0m, 1 @ 10m, 2 @ 40m.
+    gt = _make_gt([
+        {"source_map": "M1", "FeatureType": "Mound",
+         "MapSymbol": "Hairy brown circle",
+         "geometry": Point(0.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound",
+         "MapSymbol": "Hairy brown circle",
+         "geometry": Point(10.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound",
+         "MapSymbol": "Hairy brown circle",
+         "geometry": Point(40.0, 0.0)},
+    ])
+    # At 20 m: only {0, 1} are a cluster.
+    tight = build_clusters(gt, threshold_m=20.0)
+    assert len(tight) == 1
+    tight_cluster = tight[0]
+    tight_decision = format_decision(
+        tight_cluster, DECISION_MERGE, merged_subtype="burial_mound",
+    )
+    decisions = {tight_decision["cluster_id"]: tight_decision}
+    # At 50 m: all three form one cluster.
+    wide = build_clusters(gt, threshold_m=50.0)
+    assert len(wide) == 1
+    wide_cluster = wide[0]
+    assert wide_cluster.n_points == 3
+    subsumed = find_subsumed_decisions(wide_cluster, decisions)
+    assert len(subsumed) == 1
+    subsumed_cid, subsumed_pts = subsumed[0]
+    assert subsumed_cid == tight_decision["cluster_id"]
+    assert subsumed_pts == {0, 1}
+
+
+@pytest.mark.tier1
+def test_find_subsumed_decisions_disjoint_is_empty() -> None:
+    """A cluster with no common points returns no subsumed decisions."""
+    gt = _make_gt([
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(0.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(10.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(1000.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(1010.0, 0.0)},
+    ])
+    clusters = build_clusters(gt, threshold_m=50.0)
+    assert len(clusters) == 2
+    # Decide on the first cluster
+    d0 = format_decision(clusters[0], DECISION_KEEP_ALL)
+    decisions = {d0["cluster_id"]: d0}
+    # The second cluster has no common members with the first
+    subsumed = find_subsumed_decisions(clusters[1], decisions)
+    assert subsumed == []
+
+
+@pytest.mark.tier1
+def test_detect_overlapping_decisions_proper_overlap() -> None:
+    """Two decisions sharing any point id are flagged as overlapping."""
+    # Points at 0, 10, 40: pairwise distances 10, 30, 40.
+    #   threshold 15 m → only {0, 1}
+    #   threshold 35 m → {0, 1, 2} via transitive (0-1) + (1-2)
+    gt = _make_gt([
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(0.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(10.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound", "MapSymbol": "X",
+         "geometry": Point(40.0, 0.0)},
+    ])
+    tight = build_clusters(gt, threshold_m=15.0)
+    wide = build_clusters(gt, threshold_m=35.0)
+    assert tight[0].n_points == 2
+    assert wide[0].n_points == 3
+    d_tight = format_decision(
+        tight[0], DECISION_MERGE, merged_subtype="burial_mound",
+    )
+    d_wide = format_decision(
+        wide[0], DECISION_MERGE, merged_subtype="burial_mound",
+    )
+    # The two decisions' cluster_ids will collide under the normal
+    # min-point-id convention, so override one to exercise the
+    # overlap detection path (simulates a manually-edited CSV).
+    d_wide_alt = dict(d_wide)
+    d_wide_alt["cluster_id"] = "extended_cluster"
+    overlaps = detect_overlapping_decisions({
+        d_tight["cluster_id"]: d_tight,
+        "extended_cluster": d_wide_alt,
+    })
+    assert len(overlaps) == 1
+    c1, c2, shared = overlaps[0]
+    assert {c1, c2} == {d_tight["cluster_id"], "extended_cluster"}
+    assert shared == {0, 1}  # members common to both
+
+
+@pytest.mark.tier1
+def test_detect_overlapping_decisions_disjoint_empty() -> None:
+    """Decisions with disjoint member sets produce no overlaps."""
+    d1 = {"cluster_id": "a", "point_ids_in": "1;2"}
+    d2 = {"cluster_id": "b", "point_ids_in": "3;4"}
+    assert detect_overlapping_decisions({"a": d1, "b": d2}) == []
+
+
+@pytest.mark.tier1
+def test_apply_decisions_raises_on_overlapping_decisions() -> None:
+    """apply_decisions refuses to run if the CSV contains overlapping entries."""
+    gt = _sample_gt()
+    # Two decisions both acting on point 0 — manually constructed to
+    # simulate a stale CSV that missed subsumption cleanup.
+    d1 = {
+        "cluster_id": "c1", "map_id": "M1", "n_points": "2",
+        "point_ids_in": "0;1", "pairwise_distances_m": "10.0",
+        "decision": DECISION_KEEP_ALL,
+        "point_ids_kept": "0;1",
+        "merged_subtype": "", "merged_centroid_x": "",
+        "merged_centroid_y": "", "timestamp": "2026-01-01T00:00:00+00:00",
+    }
+    d2 = dict(d1)
+    d2["cluster_id"] = "c2"
+    d2["point_ids_in"] = "0;2"  # shares point 0 with d1
+    with pytest.raises(ValueError, match="Overlapping decisions"):
+        apply_decisions(gt, {"c1": d1, "c2": d2})

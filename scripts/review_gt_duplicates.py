@@ -29,6 +29,36 @@ Usage (apply decisions)::
         --ground-truth inputs/vectors/references/student-mounds-55maps.geojson \\
         --decisions results/gt-duplicate-review/gt-duplicate-decisions.csv
 
+Multi-threshold workflow
+------------------------
+
+Decisions persist in the CSV across threshold changes, so a common
+workflow is to do a tight first pass then widen. E.g. review at
+50 m, then relaunch at 75 m:
+
+- Clusters whose exact member-set is already in the CSV are
+  auto-skipped (no re-review).
+- Clusters that are proper supersets of an existing decision (i.e.
+  the wider threshold pulled in one or more additional points
+  beyond a previously-decided pair or triplet) appear for review
+  with a banner listing the subsumed decision(s).
+- When the user saves a new decision on a superset cluster, any
+  subsumed decisions are automatically removed from the CSV. This
+  preserves the invariant that ``apply_decisions`` sees no two
+  decisions acting on overlapping point sets — otherwise ``--apply``
+  would try to delete the same rows twice or append two merged
+  points for what the user intends as a single resolution.
+
+Known edge cases (resolve manually by editing the CSV):
+
+- If the user wants to KEEP a previously-decided inner merge AND
+  separately handle the newly-added outer member (not as a merge
+  of all), the current UI doesn't offer a nested choice. Workaround:
+  Skip the superset cluster, leave the old merge decision in place,
+  and optionally add a new single-point keep-only decision by
+  hand. A future UI could offer "Merge all", "Separate all", or
+  "Keep inner merge and add outer separately" as a third branch.
+
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -646,11 +676,27 @@ def apply_decisions(
     Raises:
         ValueError: if a decision row has an unrecognised ``decision``
             code, or a ``merge`` row lacks valid centroid coordinates, or
-            a ``keep_only`` row lists no kept points. These signal a
-            malformed or stale CSV that should be corrected before the
-            cleaned GT is produced — silent pass-through would corrupt
-            the output.
+            a ``keep_only`` row lists no kept points, or two decisions
+            share overlapping point ids (invariant violation — each
+            point must be governed by at most one decision). These
+            signal a malformed or stale CSV that should be corrected
+            before the cleaned GT is produced — silent pass-through
+            would corrupt the output.
     """
+    # Invariant: no two decisions may govern the same point id. This
+    # is maintained automatically by ``_save_decision``'s subsumption
+    # removal, but a manually-edited CSV could break it.
+    overlaps = detect_overlapping_decisions(decisions)
+    if overlaps:
+        cid1, cid2, shared = overlaps[0]
+        raise ValueError(
+            f"Overlapping decisions in CSV: {cid1!r} and {cid2!r} "
+            f"both govern points {sorted(shared)}. Every point may "
+            f"be in at most one decision. Edit the CSV to remove the "
+            f"stale entry before re-running --apply. Total overlap "
+            f"pairs detected: {len(overlaps)}."
+        )
+
     clean = gt.copy()
     clean["_merged"] = False
     clean["_reviewed_subtype"] = None
@@ -760,6 +806,81 @@ def _parse_id_list(raw: str) -> list[int]:
     return [int(x) for x in raw.split(";") if x.strip()]
 
 
+def decisions_index(
+    decisions: dict[str, dict],
+) -> dict[frozenset[int], str]:
+    """Map each decision's member-set (as frozenset) to its cluster_id.
+
+    Used by the review loop to identify clusters whose membership
+    exactly matches an already-decided entry, so the UI can skip them
+    without forcing a re-review (supports the multi-threshold
+    workflow: tight pass, widen, repeat).
+    """
+    out: dict[frozenset[int], str] = {}
+    for cid, d in decisions.items():
+        ids = frozenset(_parse_id_list(d.get("point_ids_in", "")))
+        if ids:
+            out[ids] = cid
+    return out
+
+
+def find_subsumed_decisions(
+    cluster: Cluster,
+    decisions: dict[str, dict],
+) -> list[tuple[str, set[int]]]:
+    """Return the list of decisions subsumed by this cluster's members.
+
+    A decision is *subsumed* when its ``point_ids_in`` is a proper
+    subset of the cluster's member set — typical when a wider
+    threshold pulls in additional points around an earlier, tighter
+    decision. Callers use this list to warn the user before they
+    make a new decision that will replace the prior ones.
+
+    Returns a list of ``(cluster_id, point_ids_set)`` sorted by
+    cluster_id for stable display.
+    """
+    cluster_set = set(cluster.point_ids)
+    out: list[tuple[str, set[int]]] = []
+    for cid, d in decisions.items():
+        d_set = set(_parse_id_list(d.get("point_ids_in", "")))
+        if d_set and d_set < cluster_set:
+            out.append((cid, d_set))
+    out.sort(key=lambda t: t[0])
+    return out
+
+
+def detect_overlapping_decisions(
+    decisions: dict[str, dict],
+) -> list[tuple[str, str, set[int]]]:
+    """Return all pairs of decisions whose point_ids_in overlap.
+
+    Two decisions overlap when their member sets share at least one
+    point id. Overlap is an invariant violation: ``apply_decisions``
+    assumes each point id is governed by at most one decision. The
+    save-time subsumption removal in ``_save_decision`` maintains
+    this invariant automatically, but a manually-edited CSV could
+    break it — this helper lets callers detect the problem before
+    it produces a mangled cleaned GT.
+
+    Returns ``[(cid1, cid2, overlap_set)]``.
+    """
+    items = [
+        (cid, set(_parse_id_list(d.get("point_ids_in", ""))))
+        for cid, d in decisions.items()
+    ]
+    out: list[tuple[str, str, set[int]]] = []
+    for i in range(len(items)):
+        cid1, s1 = items[i]
+        if not s1:
+            continue
+        for j in range(i + 1, len(items)):
+            cid2, s2 = items[j]
+            overlap = s1 & s2
+            if overlap:
+                out.append((cid1, cid2, overlap))
+    return out
+
+
 def _safe_float(raw: str) -> float:
     try:
         return float(raw)
@@ -865,31 +986,59 @@ def run_streamlit(args: argparse.Namespace) -> None:
     # semantic for "defer until I've checked the adjacent map sheet".
     skipped: set[str] = st.session_state.setdefault("skipped", set())
 
-    # Find next cluster not yet decided AND not skipped this session.
+    # Surface a notification if the most recent save removed subsumed
+    # decisions (threshold-widening workflow). Shown once then cleared.
+    last_removed = st.session_state.pop("last_subsumed_removed", None)
+    if last_removed:
+        st.success(
+            f"✅ Replaced {len(last_removed)} subsumed decision(s) "
+            f"covered by your most recent decision: "
+            f"{', '.join(f'`{c}`' for c in last_removed)}"
+        )
+
+    # Build content-based index of decided clusters. At the current
+    # threshold, any cluster whose exact member set matches an
+    # existing decision is treated as "already done" and skipped
+    # in the review queue. Supersets still appear for review
+    # (with a banner).
+    decided_sets = decisions_index(decisions)
+
+    # Find next cluster to review: not an exact match of an existing
+    # decision AND not skipped this session.
     idx = 0
     for i, c in enumerate(clusters):
-        if c.cluster_id in decisions or c.cluster_id in skipped:
+        if frozenset(c.point_ids) in decided_sets:
+            continue
+        if c.cluster_id in skipped:
             continue
         idx = i
         break
     else:
         idx = len(clusters)
 
-    done = sum(1 for c in clusters if c.cluster_id in decisions)
+    already_decided = sum(
+        1 for c in clusters if frozenset(c.point_ids) in decided_sets
+    )
     total = len(clusters)
-    progress_text = f"Progress: {done} / {total} clusters reviewed"
+    progress_text = (
+        f"Progress: {already_decided} / {total} already decided at "
+        f"this threshold"
+    )
     if skipped:
-        progress_text += f" ({len(skipped)} skipped this session)"
-    st.progress(done / total if total else 1.0, text=progress_text)
+        progress_text += f" • {len(skipped)} skipped this session"
+    # Progress bar reflects (decided + skipped) as "not still pending".
+    handled = already_decided + len(skipped)
+    st.progress(handled / total if total else 1.0, text=progress_text)
 
     if idx >= total:
         if skipped:
             st.info(
-                f"First pass complete: {done} decided, {len(skipped)} "
-                f"skipped. Click *Revisit skipped* to go through the "
-                f"skipped clusters now, or close the app and relaunch "
-                f"later — skipped clusters are session-only and will "
-                f"reappear automatically next time."
+                f"First pass complete: {already_decided} decided, "
+                f"{len(skipped)} skipped. Click *Revisit skipped* to "
+                f"go through the skipped clusters now, or close the "
+                f"app and relaunch later — skipped clusters are "
+                f"session-only and will reappear automatically next "
+                f"time."
             )
             if st.button("Revisit skipped"):
                 st.session_state["skipped"] = set()
@@ -942,15 +1091,53 @@ def run_streamlit(args: argparse.Namespace) -> None:
             f"adjacent map sheet before deciding."
         )
 
+    # Subsumption banner — this cluster is a proper superset of one
+    # or more existing decisions. Saving a new decision will remove
+    # those subsumed decisions from the CSV automatically.
+    subsumed = find_subsumed_decisions(cluster, decisions)
+    subsumed_member_ids: set[int] = set()
+    if subsumed:
+        for _, pts in subsumed:
+            subsumed_member_ids.update(pts)
+        rows = []
+        for cid, pts in subsumed:
+            prev = decisions.get(cid, {})
+            dec = prev.get("decision", "?")
+            sub = prev.get("merged_subtype", "") or ""
+            sub_note = f", subtype={sub}" if sub else ""
+            rows.append(
+                f"- `{cid}` ({dec}{sub_note}, members "
+                f"{sorted(pts)})"
+            )
+        st.warning(
+            "⚠️ **Threshold widening: this cluster extends "
+            f"{len(subsumed)} previous decision(s).**\n\n"
+            "Saving a new decision here will *replace* these "
+            "(they'll be removed from the CSV automatically so "
+            "``--apply`` doesn't double-process their points):\n\n"
+            + "\n".join(rows)
+            + "\n\nIf you want to keep a previous inner decision "
+            "and handle only the newly-added member separately, "
+            "press **n: Skip** instead and note the cluster id "
+            f"(`{cluster.cluster_id}`) for manual CSV editing "
+            "afterwards — see the docstring at the top of the "
+            "script for the nested-merge edge case."
+        )
+
     # Per-member metadata
     with st.expander("Member points"):
         for i, (rid, ft, sym, (px, py)) in enumerate(zip(
             cluster.point_ids, cluster.feature_types, cluster.map_symbols,
             cluster.coords, strict=True,
         )):
+            prior_flag = (
+                "  •  **in previous decision**"
+                if rid in subsumed_member_ids else ""
+            )
             st.write(
                 f"**{i+1}.** id=`{rid}`  •  FeatureType: {ft}  •  "
                 f"MapSymbol: {sym}  •  ({px:.2f}, {py:.2f})"
+                f"{prior_flag}"
             )
 
     # --- Decision buttons -------------------------------------------------
@@ -968,9 +1155,11 @@ def run_streamlit(args: argparse.Namespace) -> None:
     col_main = st.columns([1, 1, 1, 1, 1])
     if col_main[0].button("k: Keep all", key=f"keep_all_{cluster.cluster_id}",
                           use_container_width=True):
-        _save_decision(
+        removed = _save_decision(
             cluster, DECISION_KEEP_ALL, decisions, history, output_path,
         )
+        if removed:
+            st.session_state["last_subsumed_removed"] = removed
         st.rerun()
     if col_main[1].button("m: Merge",
                           key=f"merge_{cluster.cluster_id}",
@@ -980,9 +1169,11 @@ def run_streamlit(args: argparse.Namespace) -> None:
     if col_main[2].button("u: Uncertain",
                           key=f"unc_{cluster.cluster_id}",
                           use_container_width=True):
-        _save_decision(
+        removed = _save_decision(
             cluster, DECISION_UNCERTAIN, decisions, history, output_path,
         )
+        if removed:
+            st.session_state["last_subsumed_removed"] = removed
         st.rerun()
     if col_main[3].button("n: Skip",
                           key=f"skip_{cluster.cluster_id}",
@@ -1023,10 +1214,12 @@ def run_streamlit(args: argparse.Namespace) -> None:
             key=f"keep_{i}_{cluster.cluster_id}",
             use_container_width=True,
         ):
-            _save_decision(
+            removed = _save_decision(
                 cluster, DECISION_KEEP_ONLY, decisions, history,
                 output_path, kept_row_ids=[cluster.point_ids[i]],
             )
+            if removed:
+                st.session_state["last_subsumed_removed"] = removed
             st.rerun()
     if cluster.n_points > 9:
         st.warning(
@@ -1051,10 +1244,12 @@ def run_streamlit(args: argparse.Namespace) -> None:
                 key=f"sub_{key}_{cluster.cluster_id}",
                 use_container_width=True,
             ):
-                _save_decision(
+                removed = _save_decision(
                     cluster, DECISION_MERGE, decisions, history,
                     output_path, merged_subtype=key,
                 )
+                if removed:
+                    st.session_state["last_subsumed_removed"] = removed
                 st.session_state.pop("pending_merge", None)
                 st.rerun()
 
@@ -1070,14 +1265,31 @@ def _save_decision(
     output_path: Path,
     kept_row_ids: list[int] | None = None,
     merged_subtype: str | None = None,
-) -> None:
-    """Record a decision, update history, persist atomically."""
+) -> list[str]:
+    """Record a decision, remove any subsumed prior decisions, persist.
+
+    When the new decision's member set is a proper superset of one or
+    more prior decisions (typical under threshold widening), the prior
+    decisions are removed from both ``decisions`` and ``history`` so
+    the CSV never contains overlapping point-id governance. Returns
+    the list of removed cluster_ids so the caller can surface a
+    notification to the user.
+    """
+    subsumed = find_subsumed_decisions(cluster, decisions)
+    removed: list[str] = []
+    for cid, _ in subsumed:
+        if cid in decisions:
+            decisions.pop(cid, None)
+            if cid in history:
+                history.remove(cid)
+            removed.append(cid)
     decisions[cluster.cluster_id] = format_decision(
         cluster, decision, kept_row_ids=kept_row_ids,
         merged_subtype=merged_subtype,
     )
     history.append(cluster.cluster_id)
     save_decisions(decisions, output_path)
+    return removed
 
 
 def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
