@@ -697,6 +697,26 @@ def apply_decisions(
             f"pairs detected: {len(overlaps)}."
         )
 
+    # Guard: every decision's point_ids_in must refer to rows that
+    # exist in the current GT. If the GT was edited between when the
+    # decisions were captured and when --apply is run, stale row_ids
+    # would silently cause the merge branch to produce phantom rows
+    # (template lookup empty, but a merged Point is still appended)
+    # and the drop path to be a no-op. Fail loudly instead.
+    existing_row_ids = set(int(i) for i in gt["_gt_row_id"].unique())
+    for cid, d in decisions.items():
+        in_ids = _parse_id_list(d.get("point_ids_in", ""))
+        missing = [i for i in in_ids if i not in existing_row_ids]
+        if missing:
+            raise ValueError(
+                f"Decision {cid!r} references row_ids {missing} that "
+                f"no longer exist in the GT. The GT file may have "
+                f"been edited since the decisions were captured. "
+                f"Either regenerate the decisions against the current "
+                f"GT, or edit the decisions CSV to remove/correct "
+                f"the stale entries."
+            )
+
     clean = gt.copy()
     clean["_merged"] = False
     clean["_reviewed_subtype"] = None
@@ -830,11 +850,18 @@ def find_subsumed_decisions(
 ) -> list[tuple[str, set[int]]]:
     """Return the list of decisions subsumed by this cluster's members.
 
-    A decision is *subsumed* when its ``point_ids_in`` is a proper
-    subset of the cluster's member set — typical when a wider
-    threshold pulls in additional points around an earlier, tighter
-    decision. Callers use this list to warn the user before they
-    make a new decision that will replace the prior ones.
+    A decision is *subsumed* when its ``point_ids_in`` is a subset
+    (proper or equal) of the cluster's member set — EXCEPT the
+    cluster's own existing decision, which is always replaced
+    in-place rather than counted as subsumed.
+
+    "Proper subset" is the typical threshold-widening case: an earlier
+    tight-threshold decision {A,B} is subsumed by a wider cluster
+    {A,B,C}. The equal-set case arises only from manually-edited CSVs
+    where two decisions share the same member set but different
+    cluster_ids (cluster_ids are deterministic so this can't happen
+    in normal flow); we still subsume it so ``apply_decisions`` never
+    sees overlapping decisions governing the same points.
 
     Returns a list of ``(cluster_id, point_ids_set)`` sorted by
     cluster_id for stable display.
@@ -843,7 +870,7 @@ def find_subsumed_decisions(
     out: list[tuple[str, set[int]]] = []
     for cid, d in decisions.items():
         d_set = set(_parse_id_list(d.get("point_ids_in", "")))
-        if d_set and d_set < cluster_set:
+        if d_set and d_set <= cluster_set:
             out.append((cid, d_set))
     out.sort(key=lambda t: t[0])
     return out
@@ -981,10 +1008,21 @@ def run_streamlit(args: argparse.Namespace) -> None:
             cid for cid in sorted(decisions) if cid
         ]
     history: list[str] = st.session_state["history"]
+    # Reconcile history with the current decisions dict in case the
+    # CSV was externally edited between reruns (otherwise Back would
+    # try to pop cluster_ids that no longer exist in decisions).
+    history[:] = [h for h in history if h in decisions]
     # Skipped clusters are session-state only — never persisted to the
     # CSV, so they reappear on next launch. This is the correct
     # semantic for "defer until I've checked the adjacent map sheet".
     skipped: set[str] = st.session_state.setdefault("skipped", set())
+    # Parallel store for restoring subsumed decisions when Back is
+    # pressed on a superset decision. Keyed by the *superset* cluster
+    # id → dict of {subsumed_cid: decision_dict}. Populated in
+    # ``_save_decision`` and consumed by the Back handler.
+    subsumed_map: dict[str, dict[str, dict]] = st.session_state.setdefault(
+        "subsumed_map", {},
+    )
 
     # Surface a notification if the most recent save removed subsumed
     # decisions (threshold-widening workflow). Shown once then cleared.
@@ -993,7 +1031,16 @@ def run_streamlit(args: argparse.Namespace) -> None:
         st.success(
             f"✅ Replaced {len(last_removed)} subsumed decision(s) "
             f"covered by your most recent decision: "
-            f"{', '.join(f'`{c}`' for c in last_removed)}"
+            f"{', '.join(f'`{c}`' for c in last_removed)}. Press "
+            f"**b: Back** to undo this save — the subsumed decisions "
+            f"will be restored."
+        )
+    # Surface a notification when Back restored subsumed decisions.
+    last_restored = st.session_state.pop("last_subsumed_restored", None)
+    if last_restored:
+        st.info(
+            f"↩️ Restored {len(last_restored)} previously-subsumed "
+            f"decision(s): {', '.join(f'`{c}`' for c in last_restored)}"
         )
 
     # Build content-based index of decided clusters. At the current
@@ -1159,7 +1206,8 @@ def run_streamlit(args: argparse.Namespace) -> None:
             cluster, DECISION_KEEP_ALL, decisions, history, output_path,
         )
         if removed:
-            st.session_state["last_subsumed_removed"] = removed
+            subsumed_map[cluster.cluster_id] = removed
+            st.session_state["last_subsumed_removed"] = list(removed.keys())
         st.rerun()
     if col_main[1].button("m: Merge",
                           key=f"merge_{cluster.cluster_id}",
@@ -1173,7 +1221,8 @@ def run_streamlit(args: argparse.Namespace) -> None:
             cluster, DECISION_UNCERTAIN, decisions, history, output_path,
         )
         if removed:
-            st.session_state["last_subsumed_removed"] = removed
+            subsumed_map[cluster.cluster_id] = removed
+            st.session_state["last_subsumed_removed"] = list(removed.keys())
         st.rerun()
     if col_main[3].button("n: Skip",
                           key=f"skip_{cluster.cluster_id}",
@@ -1195,13 +1244,25 @@ def run_streamlit(args: argparse.Namespace) -> None:
         pending_merge == cluster.cluster_id or bool(history)
     )
     if back_enabled and col_main[4].button(
-        back_label, key="back_btn", use_container_width=True,
+        back_label, key=f"back_{cluster.cluster_id}",
+        use_container_width=True,
     ):
         if pending_merge == cluster.cluster_id:
             st.session_state.pop("pending_merge", None)
         else:
             last = history.pop()
             decisions.pop(last, None)
+            # Restore any decisions this save had subsumed so threshold-
+            # widening undo is fully reversible.
+            restored = subsumed_map.pop(last, {})
+            for cid, d in restored.items():
+                decisions[cid] = d
+                if cid not in history:
+                    history.append(cid)
+            if restored:
+                st.session_state["last_subsumed_restored"] = list(
+                    restored.keys()
+                )
             save_decisions(decisions, output_path)
         st.rerun()
 
@@ -1219,7 +1280,10 @@ def run_streamlit(args: argparse.Namespace) -> None:
                 output_path, kept_row_ids=[cluster.point_ids[i]],
             )
             if removed:
-                st.session_state["last_subsumed_removed"] = removed
+                subsumed_map[cluster.cluster_id] = removed
+                st.session_state["last_subsumed_removed"] = list(
+                    removed.keys()
+                )
             st.rerun()
     if cluster.n_points > 9:
         st.warning(
@@ -1249,7 +1313,10 @@ def run_streamlit(args: argparse.Namespace) -> None:
                     output_path, merged_subtype=key,
                 )
                 if removed:
-                    st.session_state["last_subsumed_removed"] = removed
+                    subsumed_map[cluster.cluster_id] = removed
+                    st.session_state["last_subsumed_removed"] = list(
+                        removed.keys()
+                    )
                 st.session_state.pop("pending_merge", None)
                 st.rerun()
 
@@ -1265,28 +1332,39 @@ def _save_decision(
     output_path: Path,
     kept_row_ids: list[int] | None = None,
     merged_subtype: str | None = None,
-) -> list[str]:
+) -> dict[str, dict]:
     """Record a decision, remove any subsumed prior decisions, persist.
 
-    When the new decision's member set is a proper superset of one or
-    more prior decisions (typical under threshold widening), the prior
+    When the new decision's member set is a superset of one or more
+    prior decisions (typical under threshold widening), the prior
     decisions are removed from both ``decisions`` and ``history`` so
-    the CSV never contains overlapping point-id governance. Returns
-    the list of removed cluster_ids so the caller can surface a
-    notification to the user.
+    the CSV never contains overlapping point-id governance.
+
+    Returns a dict ``{cluster_id: original_decision_dict, ...}`` of
+    the removed decisions. Callers stash this under a session-state
+    key so the Back button can restore the subsumed entries if the
+    user undoes the superset decision (otherwise the prior review
+    work is silently lost).
+
+    ``history`` is kept deduplicated: re-deciding on the same cluster
+    moves its cluster_id to the end of ``history`` rather than
+    appending a duplicate. Without this guard, Back would need to be
+    pressed twice to undo a single decision.
     """
     subsumed = find_subsumed_decisions(cluster, decisions)
-    removed: list[str] = []
+    removed: dict[str, dict] = {}
     for cid, _ in subsumed:
         if cid in decisions:
+            removed[cid] = dict(decisions[cid])
             decisions.pop(cid, None)
             if cid in history:
                 history.remove(cid)
-            removed.append(cid)
     decisions[cluster.cluster_id] = format_decision(
         cluster, decision, kept_row_ids=kept_row_ids,
         merged_subtype=merged_subtype,
     )
+    if cluster.cluster_id in history:
+        history.remove(cluster.cluster_id)
     history.append(cluster.cluster_id)
     save_decisions(decisions, output_path)
     return removed

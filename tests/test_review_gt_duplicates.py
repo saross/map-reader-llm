@@ -498,3 +498,161 @@ def test_apply_decisions_raises_on_overlapping_decisions() -> None:
     d2["point_ids_in"] = "0;2"  # shares point 0 with d1
     with pytest.raises(ValueError, match="Overlapping decisions"):
         apply_decisions(gt, {"c1": d1, "c2": d2})
+
+
+@pytest.mark.tier1
+def test_apply_decisions_raises_on_stale_in_ids() -> None:
+    """apply_decisions refuses to run if a decision references row_ids
+    that no longer exist in the GT."""
+    gt = _sample_gt()  # has rows 0, 1, 2
+    d = {
+        "cluster_id": "c_stale", "map_id": "M1", "n_points": "2",
+        "point_ids_in": "999;1000",  # neither exists in _sample_gt
+        "pairwise_distances_m": "10.0", "decision": DECISION_KEEP_ALL,
+        "point_ids_kept": "999;1000",
+        "merged_subtype": "", "merged_centroid_x": "",
+        "merged_centroid_y": "", "timestamp": "2026-01-01T00:00:00+00:00",
+    }
+    with pytest.raises(ValueError, match="no longer exist"):
+        apply_decisions(gt, {"c_stale": d})
+
+
+# =========================================================================
+# Subsumption-save and multi-threshold round-trip
+# =========================================================================
+
+
+def _make_wide_gt() -> gpd.GeoDataFrame:
+    """Three collinear points at 0, 10, 40 — threshold 15 → {0,1};
+    threshold 35 → {0,1,2} via transitive closure."""
+    return _make_gt([
+        {"source_map": "M1", "FeatureType": "Mound",
+         "MapSymbol": "Hairy brown circle",
+         "geometry": Point(0.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound",
+         "MapSymbol": "Hairy brown circle",
+         "geometry": Point(10.0, 0.0)},
+        {"source_map": "M1", "FeatureType": "Mound",
+         "MapSymbol": "Hairy brown circle",
+         "geometry": Point(40.0, 0.0)},
+    ])
+
+
+@pytest.mark.tier1
+def test_save_decision_returns_subsumed_as_dict(tmp_path: Path) -> None:
+    """_save_decision returns the removed decisions as a cid→dict map
+    so the UI can stash them for Back-button restoration."""
+    from scripts.review_gt_duplicates import _save_decision
+
+    gt = _make_wide_gt()
+    tight = build_clusters(gt, threshold_m=15.0)[0]
+    wide = build_clusters(gt, threshold_m=35.0)[0]
+    # Both have the same auto-generated cluster_id (both min 0).
+    # Manually distinguish them so subsumption actually triggers.
+    tight.cluster_id = f"{tight.cluster_id}_tight"
+    wide.cluster_id = f"{wide.cluster_id}_wide"
+
+    csv_path = tmp_path / "decisions.csv"
+    decisions: dict[str, dict] = {}
+    history: list[str] = []
+
+    # Tight pass: save, nothing subsumed.
+    removed_tight = _save_decision(
+        tight, DECISION_MERGE, decisions, history, csv_path,
+        merged_subtype="burial_mound",
+    )
+    assert removed_tight == {}
+    assert tight.cluster_id in decisions
+    assert history == [tight.cluster_id]
+
+    # Wide pass: saves and subsumes the tight decision.
+    removed_wide = _save_decision(
+        wide, DECISION_MERGE, decisions, history, csv_path,
+        merged_subtype="burial_mound",
+    )
+    assert set(removed_wide.keys()) == {tight.cluster_id}
+    assert removed_wide[tight.cluster_id]["decision"] == DECISION_MERGE
+    assert tight.cluster_id not in decisions
+    assert tight.cluster_id not in history
+    assert wide.cluster_id in decisions
+    assert history == [wide.cluster_id]
+
+
+@pytest.mark.tier1
+def test_save_decision_dedupes_history_on_repeat(tmp_path: Path) -> None:
+    """Re-deciding on the same cluster doesn't accumulate duplicate
+    history entries — Back should be a single-press undo."""
+    from scripts.review_gt_duplicates import _save_decision
+
+    gt = _sample_gt()
+    cluster = build_clusters(gt, threshold_m=50.0)[0]
+    csv_path = tmp_path / "decisions.csv"
+    decisions: dict[str, dict] = {}
+    history: list[str] = []
+
+    _save_decision(cluster, DECISION_KEEP_ALL, decisions, history, csv_path)
+    _save_decision(cluster, DECISION_UNCERTAIN, decisions, history, csv_path)
+    _save_decision(
+        cluster, DECISION_MERGE, decisions, history, csv_path,
+        merged_subtype="burial_mound",
+    )
+    # After three successive decisions on the same cluster, history
+    # should contain its cid exactly once.
+    assert history.count(cluster.cluster_id) == 1
+    assert decisions[cluster.cluster_id]["decision"] == DECISION_MERGE
+
+
+@pytest.mark.tier1
+def test_multi_threshold_round_trip(tmp_path: Path) -> None:
+    """Tight-then-wide workflow: save at tight, reload, verify
+    exact-match auto-skip + superset detection on the wider pass."""
+    from scripts.review_gt_duplicates import _save_decision
+
+    gt = _make_wide_gt()
+    csv_path = tmp_path / "decisions.csv"
+    decisions: dict[str, dict] = {}
+    history: list[str] = []
+
+    # Tight pass at threshold 15: one cluster {0,1}, save merge.
+    tight_clusters = build_clusters(gt, threshold_m=15.0)
+    assert len(tight_clusters) == 1 and tight_clusters[0].n_points == 2
+    _save_decision(
+        tight_clusters[0], DECISION_MERGE, decisions, history, csv_path,
+        merged_subtype="burial_mound",
+    )
+    # Simulate a fresh launch by reloading decisions from the CSV.
+    loaded = load_decisions(csv_path)
+    assert len(loaded) == 1
+
+    # Wider pass at threshold 35: one cluster {0,1,2}.
+    wide_clusters = build_clusters(gt, threshold_m=35.0)
+    assert len(wide_clusters) == 1 and wide_clusters[0].n_points == 3
+    wide_cluster = wide_clusters[0]
+
+    # Exact-match index contains the tight set, not the wide set.
+    idx = decisions_index(loaded)
+    assert frozenset({0, 1}) in idx
+    assert frozenset({0, 1, 2}) not in idx
+
+    # find_subsumed on the wide cluster identifies the tight decision.
+    subsumed = find_subsumed_decisions(wide_cluster, loaded)
+    assert len(subsumed) == 1
+    _, subsumed_pts = subsumed[0]
+    assert subsumed_pts == {0, 1}
+
+
+@pytest.mark.tier1
+def test_find_subsumed_equal_set_different_cluster_id() -> None:
+    """Two decisions with equal member sets but different cluster_ids
+    (manually-edited CSV scenario) are caught by find_subsumed, so
+    a re-decide replaces the stale entry rather than producing an
+    overlap in --apply."""
+    gt = _sample_gt()
+    cluster = build_clusters(gt, threshold_m=50.0)[0]
+    d_stale = format_decision(cluster, DECISION_KEEP_ALL)
+    d_stale["cluster_id"] = "stale_cid"  # simulate renamed CSV entry
+    decisions = {"stale_cid": d_stale}
+    # find_subsumed on the current cluster should see stale_cid.
+    subsumed = find_subsumed_decisions(cluster, decisions)
+    assert len(subsumed) == 1
+    assert subsumed[0][0] == "stale_cid"
