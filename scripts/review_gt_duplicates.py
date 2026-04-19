@@ -294,7 +294,18 @@ def render_cluster_image(
     import rasterio
     from rasterio.windows import Window
 
-    raster_path = _resolve_raster(rasters_dir, cluster.map_id)
+    # Prefer the raster whose extent covers the cluster centroid with
+    # the most margin — this automatically picks the neighbouring sheet
+    # when the cluster sits near the edge of its declared source_map,
+    # avoiding the boundless-read black fill that makes edge clusters
+    # hard to review. Fall back to the source_map raster if no other
+    # coverage exists (cluster is at a truly-unique spot).
+    cx_centroid, cy_centroid = cluster.centroid
+    raster_path = _best_raster_for_point(
+        rasters_dir, cx_centroid, cy_centroid,
+    )
+    if raster_path is None:
+        raster_path = _resolve_raster(rasters_dir, cluster.map_id)
     if raster_path is None:
         return _placeholder_image(cluster, size=display_px)
 
@@ -359,6 +370,105 @@ def _resolve_raster(rasters_dir: Path, map_id: str) -> Path | None:
         return direct
     found = list(rasters_dir.rglob(f"{map_id}.tif"))
     return found[0] if found else None
+
+
+# Cache of (raster_path, bounds) for a given rasters_dir. First call per
+# dir reads metadata from every TIF; subsequent calls are O(1).
+_RASTER_BOUNDS_CACHE: dict[str, list[tuple[Path, tuple[float, ...]]]] = {}
+
+
+def _collect_raster_bounds(
+    rasters_dir: Path,
+) -> list[tuple[Path, tuple[float, float, float, float]]]:
+    """Gather (path, (left, bottom, right, top)) for every TIF in dir.
+
+    Cached on the resolved path string so repeat calls within a
+    session are effectively free. The rasterio read is ~1 ms per file
+    on SSD so even 55-sheet scans take <100 ms uncached.
+    """
+    import rasterio
+
+    key = str(rasters_dir.resolve())
+    if key in _RASTER_BOUNDS_CACHE:
+        return _RASTER_BOUNDS_CACHE[key]
+    out: list[tuple[Path, tuple[float, float, float, float]]] = []
+    for p in sorted(rasters_dir.glob("*.tif")):
+        try:
+            with rasterio.open(p) as src:
+                b = src.bounds
+                out.append((p, (float(b.left), float(b.bottom),
+                                float(b.right), float(b.top))))
+        except Exception:  # noqa: BLE001 — skip unreadable rasters
+            continue
+    _RASTER_BOUNDS_CACHE[key] = out
+    return out
+
+
+def _best_raster_for_point(
+    rasters_dir: Path,
+    x: float,
+    y: float,
+    sample_px: int = 40,
+) -> Path | None:
+    """Return the raster whose pixels at (x, y) contain the most real content.
+
+    Filtering by the rectangular bounds is not enough: georeferenced
+    1:25k map sheets are trapezoids inside rectangular rasters, and
+    the pixels outside the trapezoid (still within the rectangular
+    extent) are pre-filled with black. A cluster that sits inside the
+    rectangular bounds of sheet X may still fall outside X's actual
+    mapped area.
+
+    Algorithm:
+    1. Filter rasters whose rectangular bounds cover (x, y).
+    2. For each candidate, read a small ``sample_px`` × ``sample_px``
+       window centred on (x, y) and measure the non-black fraction.
+    3. Pick the raster with the most real content. Ties broken by
+       largest min-distance to the rectangular edge (deepest inside
+       the sheet).
+
+    Returns None if no raster covers the point at all, so callers can
+    fall back to the cluster's declared ``source_map``.
+    """
+    import rasterio
+    from rasterio.windows import Window
+
+    bounds_list = _collect_raster_bounds(rasters_dir)
+    best: tuple[Path, float, float] | None = None  # (path, real_frac, min_edge)
+    for path, (left, bottom, right, top) in bounds_list:
+        if not (left <= x <= right and bottom <= y <= top):
+            continue
+        try:
+            with rasterio.open(path) as src:
+                row_f, col_f = src.index(x, y)
+                row = int(round(float(row_f)))
+                col = int(round(float(col_f)))
+                window = Window(
+                    col - sample_px // 2,
+                    row - sample_px // 2,
+                    sample_px, sample_px,
+                )
+                arr = src.read(window=window, boundless=True, fill_value=0)
+                if arr.shape[0] == 0:
+                    continue
+                bands = arr[:3] if arr.shape[0] >= 3 else arr[:1]
+                near_black = np.all(bands <= 8, axis=0)
+                real_frac = 1.0 - float(near_black.mean())
+        except Exception:  # noqa: BLE001 — skip unreadable
+            continue
+        min_edge = min(x - left, right - x, y - bottom, top - y)
+        candidate = (path, real_frac, min_edge)
+        if best is None:
+            best = candidate
+            continue
+        # Prefer higher real-content fraction. When ties are close
+        # (within 1 %), fall back to larger min-edge so the cluster
+        # sits deepest inside the chosen sheet.
+        if real_frac - best[1] > 0.01:
+            best = candidate
+        elif abs(real_frac - best[1]) <= 0.01 and min_edge > best[2]:
+            best = candidate
+    return best[0] if best else None
 
 
 def _estimate_black_fraction(img: "PILImage") -> float:
@@ -803,11 +913,26 @@ def run_streamlit(args: argparse.Namespace) -> None:
         img = render_cluster_image(cluster, rasters_dir, context_m)
     st.image(img, width="stretch")
 
-    # Edge-of-raster heuristic: ``rasterio.read(..., boundless=True,
-    # fill_value=0)`` pads out-of-raster pixels with black. If a large
-    # fraction of the crop is black, the cluster is near the raster
-    # edge and the user probably wants to check an adjacent map sheet
-    # before deciding.
+    # Tell the user which raster the crop actually came from. When the
+    # best-coverage raster differs from the cluster's declared
+    # source_map, an auto-switch has happened and flagging it is
+    # important for review transparency.
+    cx_centroid, cy_centroid = cluster.centroid
+    actual_raster = _best_raster_for_point(
+        rasters_dir, cx_centroid, cy_centroid,
+    )
+    if actual_raster is not None:
+        actual_map = actual_raster.stem
+        if actual_map != cluster.map_id:
+            st.caption(
+                f"Rendered from **{actual_map}** (auto-selected for "
+                f"best context around the cluster; cluster's declared "
+                f"source_map is {cluster.map_id})."
+            )
+
+    # Edge-of-raster heuristic: even after preferring the best-coverage
+    # raster, some clusters sit at the corner/edge of the full raster
+    # set and still end up with significant no-data black fill.
     black_frac = _estimate_black_fraction(img)
     if black_frac > 0.25:
         st.warning(
