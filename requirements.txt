@@ -43,3 +43,8 @@ pytest
 
 # Notebooks
 jupyter
+
+# Manual-review UI apps (scripts/review_candidates.py,
+# scripts/review_gt_duplicates.py). Optional for headless pipelines —
+# the detection/verification/evaluation scripts never import streamlit.
+streamlit
