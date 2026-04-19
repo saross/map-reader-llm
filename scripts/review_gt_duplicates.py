@@ -930,22 +930,57 @@ def _inject_keyboard_shortcuts(n_points: int, merge_pending: bool) -> None:
         if (doc.__gtReviewKeyHandler) {
             doc.removeEventListener('keydown', doc.__gtReviewKeyHandler);
         }
+
+        // Click a Streamlit-rendered button. Streamlit's React tree
+        // doesn't always process a plain .click() as a user-initiated
+        // event, so we dispatch a full MouseEvent sequence (pointerdown,
+        // mousedown, mouseup, click) which matches a trusted click more
+        // closely. Also blurs any currently-focused element first so
+        // Streamlit's state machine sees a fresh interaction.
+        const simulateClick = function(btn) {
+            if (!btn) return;
+            btn.scrollIntoView({block: 'nearest', behavior: 'instant'});
+            const active = doc.activeElement;
+            if (active && active.blur) active.blur();
+            const opts = {bubbles: true, cancelable: true, view: window};
+            btn.dispatchEvent(new MouseEvent('mousedown', opts));
+            btn.dispatchEvent(new MouseEvent('mouseup', opts));
+            btn.dispatchEvent(new MouseEvent('click', opts));
+        };
+
         const handler = function(e) {
             if (e.ctrlKey || e.altKey || e.metaKey) return;
             const active = doc.activeElement;
             if (active && (active.tagName === 'INPUT' ||
-                           active.tagName === 'TEXTAREA')) return;
+                           active.tagName === 'TEXTAREA' ||
+                           active.isContentEditable)) return;
             const key = (e.key || '').toLowerCase();
             if (!key) return;
             const buttons = doc.querySelectorAll('button');
+            const matches = [];
             for (const btn of buttons) {
                 const text = (btn.textContent || '').trim().toLowerCase();
-                if (text.startsWith(key + ':')) {
-                    btn.click();
-                    e.preventDefault();
-                    return;
-                }
+                if (text.startsWith(key + ':')) matches.push(btn);
             }
+            if (matches.length === 0) {
+                console.debug('[gt-review] key', key,
+                              '— no matching button');
+                return;
+            }
+            if (matches.length > 1) {
+                console.debug('[gt-review] key', key,
+                              '— multiple matches, clicking last (most '
+                              + 'recently rendered):',
+                              matches.map(b => b.textContent.trim()));
+            }
+            // When multiple buttons share a prefix, prefer the LAST one
+            // in document order — Streamlit renders new widget groups
+            // after old ones, so the bottom-most match is almost always
+            // the one currently visible to the user.
+            const btn = matches[matches.length - 1];
+            simulateClick(btn);
+            e.preventDefault();
+            e.stopPropagation();
         };
         doc.addEventListener('keydown', handler);
         doc.__gtReviewKeyHandler = handler;
