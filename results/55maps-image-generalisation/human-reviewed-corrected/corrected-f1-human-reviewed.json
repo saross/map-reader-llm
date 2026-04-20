@@ -1,0 +1,67 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-20T07:13:19.416828+00:00",
+  "provenance": {
+    "review_csv": "/home/shawn/Code/map-reader-llm/results/55maps-image-generalisation/human-review.csv",
+    "measured_json": "/home/shawn/Code/map-reader-llm/outputs/55maps-image-generalisation/evaluation/evaluation.json",
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "buffer_metres": 50,
+  "validity_note": "Corrected metrics are valid ONLY at 50 m buffer because the review required the symbol centre to fall inside the 50 m tolerance circle. Reviewers did not record symbol positions within the circle, so tighter-buffer corrections are not derivable. See docs/notes/reflections/working-notes.md Obs 263 for the underlying methodology discussion.",
+  "reviewer_bias_note": "Reviewer decision policy is asymmetric \u2014 ambiguous cases are marked not-mound by default (Obs 263 follow-up). Corrected F1 should be read as a conservative estimate; the D-S aggregate-posterior F1 (0.795) is the complementary weighted-average estimate. The honest interval spans both.",
+  "measured": {
+    "f1": 0.771,
+    "precision": 0.7796,
+    "recall": 0.7625,
+    "tp": 3636.834,
+    "fp": 1028.1660000000002,
+    "fn": 1132.7843606557378,
+    "n_detections": 4665,
+    "n_ref": 4769.618360655738,
+    "f1_ci": [
+      0.7604,
+      0.7817
+    ],
+    "precision_ci": [
+      0.7658,
+      0.7924
+    ],
+    "recall_ci": [
+      0.7491,
+      0.7759
+    ],
+    "ci_note": "Original pipeline bootstrap CIs; capture matching and detection variability."
+  },
+  "human_review": {
+    "n_reviewed": 1028,
+    "phantom_tp": 472,
+    "confirmed_fp": 556,
+    "phantom_tp_fraction": 0.4591439688715953
+  },
+  "corrected": {
+    "f1": 0.8295129277046317,
+    "precision": 0.8807789924973204,
+    "recall": 0.7838865245973337,
+    "tp": 4108.834,
+    "fp": 556.1660000000002,
+    "fn": 1132.7843606557378,
+    "n_ref_extended": 5241.618360655738,
+    "f1_ci": [
+      0.8257198103460217,
+      0.8332816191820837
+    ],
+    "precision_ci": [
+      0.8739193997856377,
+      0.8876385852090032
+    ],
+    "recall_ci": [
+      0.7825590509257278,
+      0.7851978882076548
+    ],
+    "ci_note": "Bootstrap CIs over human-review labels only; capture review-sampling variability. NOT commensurable with the measured CIs above \u2014 they quantify different uncertainty sources."
+  },
+  "dawid_skene_comparison": {
+    "note": "The previous Dawid-Skene aggregate posterior estimated ~186 phantom TPs out of 1028 (18.1%), yielding corrected F1 of 0.795. The human-reviewed estimate of 472 phantom TPs (45.9%) is substantially higher \u2014 consistent with Obs 263's observation that crop review catches more than aggregate posterior methods."
+  }
+}

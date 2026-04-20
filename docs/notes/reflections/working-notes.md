@@ -11776,3 +11776,664 @@ buffers where the 26-point jitter noise is proportionally larger.
   text HIGH, text MIN, image HIGH runs against the cleaned GT)
 
 ---
+
+## Observation 262: Benchmark-on-burial-mound symbol superimposed on a settlement mound — a previously-unseen feature-symbol hybrid (2026-04-20)
+
+During the human-review pass of VLM-only candidates from the 55-map image
+generalisation run (item #7 in `planning/55maps-image-generalisation-followups.md`),
+reviewing candidate `candidate_00920` revealed a landscape feature and
+cartographic convention not previously seen in this corpus: the **Soviet
+benchmark-on-burial-mound symbol placed on top of a settlement mound (tell)**.
+
+### The symbol convention
+
+The Soviet 1:50,000 series uses a specific combined symbol for trigonometric
+or geodetic benchmarks placed on visually prominent, stable landscape
+features — typically burial mounds, because tumuli are conspicuous, stable
+over surveying intervals, and distributed widely across the Bulgarian
+landscape. The combined symbol denotes both the mound and the benchmark in a
+single glyph.
+
+### What is unusual at candidate_00920
+
+Here the combined benchmark-on-burial-mound symbol sits **on top of a
+settlement mound (tell)**, not a standalone tumulus. Three interpretations,
+in rough order of Shawn's prior-probability assessment:
+
+1. **Most likely**: a small later tumulus was raised on top of the older tell,
+   and the Soviet surveyor placed a benchmark on that tumulus. The
+   cartographic symbol is therefore correctly applied to the upper feature,
+   but the tell beneath is a distinct, earlier landscape element. This is a
+   multi-period superposition — the kind of reuse of prominent landscape
+   features that is well-attested in the Balkans (Iron Age burials on
+   Chalcolithic tells, etc.).
+2. A lower-probability alternative: the surveyor used the combined symbol
+   loosely to mark a benchmark placed directly on the tell's summit, with no
+   intervening tumulus.
+3. Genuinely a hybrid landscape feature reflecting continuous multi-period
+   reuse, where the distinction between "tumulus on tell" and "tell with
+   benchmark" collapses.
+
+### Discrimination
+
+Interpretation (1) vs (2) cannot be resolved from the 1:50,000 map alone —
+the symbol is identical in both cases. Discrimination requires either:
+
+- **Ground-truthing in the field** (measure the tell summit for a secondary
+  raised feature), or
+- **High-resolution satellite imagery** (modern orthophotos, where a later
+  tumulus would appear as a distinct low raised circular feature atop the
+  tell).
+
+### Why this matters
+
+1. **Review-caught edge case, not algorithm-detectable.** The pipeline
+   produced a candidate here that the student annotators rejected (hence its
+   status as a VLM-only "false positive"). The human review reclassified it
+   as a real feature, but the *nature* of the feature — tell with possible
+   later tumulus — is not something either the VLM or the matching pipeline
+   could ever infer from the symbol alone. This reinforces the methodology
+   point that some discovery can only happen through close human inspection.
+2. **Superposition as a research direction.** Multi-period reuse of
+   prominent landscape features is a standing question in Bulgarian
+   archaeology. If the human-review pass flags more instances of this
+   pattern across the 1,028 VLM-only candidates, the geographical
+   distribution might itself be a secondary finding independent of the
+   detection F1 story.
+3. **Symbol-convention note for the paper.** The Soviet combined
+   benchmark-on-burial-mound symbol is worth documenting explicitly in the
+   methodology (symbol inventory / cartographic conventions) — and this edge
+   case illustrates that a single symbol can denote a superposed landscape
+   in a way that complicates a 1:1 symbol-to-feature mapping.
+
+### Classification decision for this review
+
+Recorded as **settlement mound** in the human-review CSV. That is the correct
+call from the student-annotator perspective (the target detection class was
+burial mounds as marked by the tumulus symbol; here the dominant underlying
+feature is a tell, which the student annotators correctly did not label as a
+burial mound). The possible superimposed later tumulus — the feature the
+benchmark actually sits on — is a second-order archaeological observation
+that doesn't change the F1 accounting.
+
+### Findable later
+
+Tagged here for retrieval when:
+
+- Writing the methodology section's discussion of Soviet topographic symbol
+  conventions.
+- Writing the results section's discussion of human review recovering
+  detections that aggregate methods (Dawid-Skene) can estimate only at the
+  aggregate level.
+- If a second instance of this superposition appears in the review and
+  warrants a dedicated section in the paper on landscape-reuse patterns.
+
+Search terms: benchmark-on-burial-mound, tell superposition, settlement mound
+superposition, candidate_00920, multi-period reuse, Soviet topo symbol
+convention.
+
+---
+
+## Observation 263: Crop-based human verification has an ~10–15% irreducible ambiguity floor — less accurate than full-map gold-standard digitisation (2026-04-20)
+
+Noted during the ongoing human review of 1,028 VLM-only candidates from the
+55-map image generalisation run (planning item #7). Shawn's qualitative
+breakdown of what he encountered while classifying crops:
+
+| Category | Share | Description |
+|---|---|---|
+| Unambiguously clear | ~70% | Symbol at or very near centre, or crop is clearly empty / clearly shows a non-mound feature |
+| Probably clear | ~15% | Mild offset or mild clutter; a confident call is possible but not effortless |
+| Genuinely ambiguous | ~10–15% | Reviewer is making a fuzzy-boundary call — how far off-centre is too far? do the five mounds scattered around the centre count, or is this a near-miss? |
+
+### Why this matters methodologically
+
+Crop-based review has two structural sources of ambiguity that full-map
+manual digitisation does not:
+
+1. **Spatial ambiguity**. The pipeline's centroid is at the crop centre. A
+   symbol ~15% offset from centre is inside the 50 m evaluation buffer at the
+   pixel scale of these rasters (see heuristic in the earlier review guidance:
+   50 m ≈ 15–25 px at ~2–3 m/px), but the reviewer's intuitive "is this close
+   enough?" decision is not calibrated against the buffer. Decisions drift on
+   a fuzzy boundary.
+2. **Disambiguation among multiple symbols**. When a crop contains several
+   candidates in view (tight mound clusters are common in Thracian burial
+   landscapes), the reviewer cannot tell which one the pipeline was pointing
+   at — only that *a* mound is near centre. Accepting the detection is
+   technically correct (a mound exists) but doesn't confirm it was *this*
+   symbol the VLM found.
+
+Full-map manual digitisation avoids both because the reviewer sees the
+context — which symbols have already been catalogued (and match existing GT),
+which have not — and the question becomes "is this a mound symbol?" without
+the spatial-matching overlay that the crop workflow imposes.
+
+### Implications
+
+- **Human review has its own accuracy floor**. ~10–15% of per-item decisions
+  on the ambiguous band carry reviewer-level noise. The human-reviewed
+  correction to F1 is not a ground-truth correction; it's a
+  humans-with-better-context correction, with its own uncertainty band.
+- **Reviewer self-calibration is active in the ambiguous band**:
+  candidate_06479 (captured 2026-04-20) is a direct example — the
+  reviewer articulated their confidence as a probability ("I'm about 70%
+  confident so I'll say 'yes'"). This explicit self-calibration is the
+  right epistemic behaviour for difficult cases but suggests a future
+  improvement: a **continuous-confidence review scheme** (rather than
+  binary yes/no) that records the reviewer's subjective probability per
+  item. Would give a quantifiable ambiguity-band distribution and enable
+  confidence-weighted F1 calculations.
+- **Reviewer applies an asymmetric decision policy ("if in doubt,
+  reject")**: candidate_02400 is the complementary case to 06479 —
+  reviewer saw a plausible settlement-mound-like feature in a busy
+  context but rejected it for lack of confidence. This means the
+  corrected F1 estimate is a **lower bound**, not a point estimate —
+  genuine VLM-only mounds in the ambiguous band are systematically
+  under-counted. For the paper, the corrected F1 should be reported as
+  "at least X" rather than "equal to X", with the ambiguous band
+  acknowledged as a source of conservative bias.
+- **Dawid-Skene aggregate estimate may be competitive**. D-S's posterior
+  probability for the VLM-only pool (~186 of 1,028 real) is an aggregate
+  estimate with known identifiability limits (2-annotator ceiling). Per-item
+  human review was expected to be strictly more informative — but if ~10–15%
+  of per-item calls are noisy, the comparative advantage narrows. The two
+  methods may agree in the unambiguous band and diverge only in the
+  ambiguous band, where both are uncertain for the same reason.
+- **Paper-worthy discussion point**. When reporting the
+  human-corrected F1, it should be framed as a reviewer-consistent estimate
+  with a ~10–15% per-item noise envelope, not as a "ground truth" correction.
+  This connects to the broader theme emerging across Obs 260 (student GT has
+  ~25 m positional jitter), Obs 261 (duplicates cluster at ~50 m), and now
+  Obs 263: every layer of annotation carries its own noise, and the pipeline
+  is being evaluated against noisy references at multiple levels.
+
+### Open question for analysis
+
+How does the verifier's probability output sort the same candidates? Three
+hypotheses, each informative:
+
+1. **Verifier confident-confident** (binary probabilities clustered near 0
+   and 1) on the cases Shawn found clear, intermediate (0.3–0.7) on the
+   ambiguous band → the verifier agrees with human judgement about *what is
+   ambiguous*, which validates both methods but means neither can resolve the
+   ambiguous band alone.
+2. **Verifier confident-everywhere** → the verifier is over-confident; its
+   probabilities on ambiguous cases will be miscalibrated against expert
+   review.
+3. **Verifier diffuse-everywhere** → the verifier doesn't discriminate and
+   the probabilities are uninformative.
+
+A follow-up analysis once the human-review CSV is complete: cross-tab each
+candidate's verifier probability against Shawn's reviewed label, stratified
+by reviewer confidence (if the Streamlit app captures a confidence field)
+or by proxy (candidates near decision thresholds). Would strongly inform the
+discussion.
+
+### Compare against the existing full-map gold standard
+
+The project already has a **full-map gold-standard digitisation** for a
+4-map calibration subset — `outputs/h11/gold-standard-v2/` and the
+`inputs/vectors/references/student-mounds-reviewed-*` files. The spatial
+precision of that pass is better than the student GT by construction (Obs
+260: student GT has ~25 m jitter vs expert-corrected gold standard). This
+gold-standard approach is the methodology the present observation argues is
+more accurate than crop-based review. Worth considering whether a subset of
+the 55-map corpus (or at least the maps generating the most VLM-only
+candidates) could benefit from the same full-map treatment, if time permits
+before publication.
+
+### Findable later
+
+Search terms: crop-based review ambiguity, human review noise floor,
+verifier probability calibration, gold-standard digitisation,
+reviewer-consistent F1, fuzzy boundary classification, candidate_00920
+(adjacent), Obs 260 Obs 261 Obs 263 noise-layer series.
+
+---
+
+## Observation 264: Label-pull persists as a centroid-localisation failure at production scale — not as misclassification (2026-04-20)
+
+Surfaced during the calibrated human review of 55-map image generalisation
+VLM-only candidates (planning item #7, app with tolerance-circle UI added
+the same day). The reviewer encountered "dozens" of instances of a specific
+geometric regression pattern on high-confidence detections. Example figures
+in `docs/paper/figures/review-app-examples/`:
+
+- `review-example-number-label-pulls-centroid-off-mound-candidate_03836-2026-04-20.png`
+  — classic single-symbol case; centroid pulled toward adjacent "5".
+- `review-example-number-pull-missed-two-mounds-candidate_04108-2026-04-20.png`
+  — severe case where the pipeline centred on a "3" label with TWO
+  adjacent mound symbols (one standard, one mound-on-benchmark compound)
+  both missed. 3/5 consensus (not unanimous), suggesting some passes
+  localised on the symbols while others tracked the label.
+- `review-example-label-pull-subthreshold-still-hit-candidate_04275-2026-04-20.png`
+  — sub-threshold case: clear mound inside the circle but visibly
+  off-centre; pull present as a continuous bias, still matches at 50 m
+  but would likely miss at tight buffers. The mechanism behind the
+  Obs 252 image-track buffer elasticity made visible.
+- `review-example-label-pull-cyrillic-text-missed-mound-candidate_04365-2026-04-20.png`
+  — generalisation case: the distractor is NOT a number but Cyrillic
+  text ("0 КМ", a road kilometre marker). The pull mechanism
+  generalises beyond numbers to any salient cartographic text.
+
+### Severity gradient (for paper figure panel)
+
+The captured examples span a clean severity series:
+
+1. **Absent** (negative control, 04245): salient label present nearby,
+   pull did NOT occur despite severe smudging of the target. Shows the
+   bias is statistical, not deterministic.
+2. **Sub-threshold** (04275): pull present, detection still inside
+   50 m tolerance.
+3. **At-threshold** (03836): pull strong enough to miss at 50 m,
+   single nearby label.
+4. **Severe** (04108): pull strong enough to miss two adjacent
+   symbols; label-dominant localisation.
+
+Plus the text-salience generalisation (04365). Five examples form a
+complete figure for the paper's error-taxonomy discussion.
+
+### Centroid-bias attractor categories (expanding)
+
+The text-label pull is the dominant and best-characterised pattern, but
+the review surfaced two other mechanistically distinct attractor
+categories:
+
+1. **Text-label pull** (primary finding; examples 03836, 04108, 04275,
+   04365, 04436 and negative control 04245). Mechanism: text salience
+   in the crop. Generalises across numeric, alphabetic/Cyrillic, and
+   compound symbols. See severity gradient above.
+
+2. **Feature-clutter pull** (candidate_04592). Dense cartographic
+   context (road + stream + contour lines + mound) with the centroid
+   landing on empty ground between features. Attractor = centre-of-mass
+   of nearby salient features, not text specifically. Still a hit
+   (sub-threshold).
+
+3. **Contour-line pull** (candidates 04661 and 04809; user reports
+   2-3 instances). Brown contour lines inside the tolerance circle
+   with the real mound symbol visible OUTSIDE the circle. Attractor
+   = the contour geometry itself, with or without other features
+   present. Clean at 5/5 consensus (04661). Notably, 04809's mound is
+   clearly a bright sunburst symbol a short distance outside the
+   circle — strong evidence that this isn't a detection-failure but
+   a localisation-failure: the model knows a mound is nearby but
+   reports the centroid over the lines rather than over the symbol.
+
+All three categories share the common phenomenological signature
+(reported centroid ≠ true symbol centre) but have different
+attractors. They likely share a common mechanism (VLM attention is
+weighted by visual saliency in the image crop, not anchored on the
+target symbol specifically) — which is why a narrow prompt fix
+("ignore numbers") won't help. The general fix would be to constrain
+the centroid report to the **detected symbol's visual centre only**,
+independent of any other salient features in the surrounding crop.
+
+### Paper error-taxonomy structure (draft)
+
+```text
+Centroid-bias failures (Obs 264 family)
+├── Text-label pull
+│   ├── Numeric labels (03836, 04108)
+│   ├── Non-numeric text (04365)
+│   ├── Colour-mismatched text (06870) — rules out colour-matching hypothesis
+│   └── Across symbol classes
+│       ├── Burial mound (03836, 04108, 04275, 04365)
+│       ├── Benchmark-on-mound (04436)
+│       └── Trig-on-mound (05937)
+├── Feature-clutter pull (04592)
+├── Water-feature pull (05103 sub-threshold, 07401 full)
+└── Contour-line pull (04661, 04809)
+
+Plus:
+    - Sub-threshold gradient (04275) — matches at 50 m
+    - Negative control (04245) — attractor absent
+```
+
+### The pattern
+
+A burial-mound symbol sits adjacent to an elevation number ("5", "3", etc.
+— the label convention described throughout prompt engineering
+documentation). The pipeline detects the mound with unanimous or
+near-unanimous consensus (p = 1.000, votes 5/5 or 4/5). But the reported
+centroid is **pulled toward the numeric label**, landing between the
+symbol and the number rather than on the symbol's visual centre. Under the
+50 m buffer evaluation, the symbol's true centroid is outside the pipeline's
+50 m tolerance zone → the detection fails to match the (correctly digitised)
+GT mound and registers as an unmatched candidate.
+
+### Relationship to prior observations
+
+This thread has a long history:
+
+- **Obs 6 (Label Confusion / "Number Decoy")**: early observation that V2.4
+  prompts had the model *boxing the number itself* as a mound.
+- **Obs 8 (Anti-Number Paradox)**: explicit "no numbers" rules in V2.6
+  backfired via salience priming.
+- **Obs 9 (Visual Few-Shot Breakthrough)**: V3 visual negatives reduced FP-
+  numbers on the challenging tile to zero.
+- **Obs 24 (Publication Statistical Strategy)**: already anticipated
+  "drift towards labels" as the paper's error-taxonomy discussion topic.
+- **Obs 252 (Buffer Elasticity)**: image track F1 changes 8.6-21.5%
+  between 20 m and 50 m buffers vs text's 1.2-4.5%. Centroid-pull toward
+  labels is a plausible major contributor to that elasticity — a symbol
+  whose reported centroid is 30-50 m off its true centre matches at the
+  permissive buffer but misses at the tight buffer, producing exactly the
+  observed elasticity gap.
+
+### What is new
+
+The prior observations all describe **classification errors** — the model
+producing FP detections *on numbers themselves*. Today's evidence shows
+the mode has shifted. At the current production pipeline (high-confidence
+proposer + verifier + 5-pass consensus):
+
+- Classification is correct (the model correctly identifies that a mound
+  is present, not the number).
+- Confidence is maximal (p = 1.000, frequently 5/5 consensus).
+- **But spatial localisation is biased**: the centroid regresses toward
+  the adjacent label.
+
+This is arguably a *more* concerning failure mode than the earlier
+classification error, because high-confidence mis-localisation is harder
+to filter with a confidence threshold. It affects only the spatial-
+precision half of the F1 accounting, but that's precisely where the image
+track underperforms the text track.
+
+### Scale and severity
+
+- Reviewer observed "dozens" of instances across the 55-map corpus during
+  the calibrated review.
+- Concentrated in the p = 1.000 tier, which means this failure is present
+  in the portion of detections the pipeline is most certain about.
+- Appears in both 4/5 and 5/5 consensus cases — unanimous pass agreement
+  does not rule it out; all five passes experience the same pull.
+
+### Paper-discussion implications
+
+1. The image-track spatial-elasticity finding from Obs 252 has a proposed
+   mechanism beyond "images need more room": centroid-pull toward labels
+   is a specific, diagnosable bias that explains the elasticity direction
+   (image worse than text) because image prompts work with the raster
+   directly and see the label as a nearby salient object; text prompts
+   work with pre-extracted symbol coordinates and don't have the label
+   adjacency as a distractor at the centroid-report stage.
+2. Prompt-engineering opportunity: the current verbose-text instruction
+   ("Map text, labels, and abbreviations near a candidate do not confirm
+   or deny the presence of a mound") addresses the classification concern
+   but does not address centroid bias. The generalisation to non-numeric
+   text (candidate_04365, Cyrillic "0 КМ" pull; 06870 colour-mismatched
+   letter) means a narrow "ignore numbers" fix would be insufficient —
+   the prompt needs to address any salient text, not just digits, and
+   regardless of colour. A future prompt revision could add: "Report the
+   centroid of the mound **symbol** only; do not interpolate between the
+   symbol and any adjacent label — whether numeric, Cyrillic text,
+   abbreviations, or other cartographic annotations." Not for this paper
+   (too late to re-run), but worth flagging as a future-work candidate.
+
+   **Stronger future direction — decoupling detection from localisation**:
+   candidate_06937 is the clearest evidence yet that the pipeline's
+   **detection** and **localisation** sub-tasks dissociate. The model
+   correctly inferred that a mound exists in the crop (despite heavy
+   distortion of the symbol), but reported its centroid on an adjacent
+   number rather than on the symbol itself. The current single-output
+   formulation (one point + confidence per detection) forces the model
+   to combine these two judgements into one centroid, and the label-
+   salience bias leaks into the joint output. A decoupled architecture
+   — separate prompts for "is there a mound here?" (binary/confidence)
+   and "where is its centroid in pixel coordinates?" (geometric
+   grounding) — would let each sub-task be optimised independently.
+   This is a substantial methodological proposal for future work, not
+   just a prompt tweak.
+3. Error taxonomy for the paper (Obs 24 context): add a dedicated
+   "label-pull spatial bias" category alongside the classical
+   "label confusion / hallucination" category. They share a mechanism
+   (numeric label salience) but have different signatures and different
+   F1-accounting implications.
+
+### Findable later
+
+Search terms: label-pull, centroid bias, elevation-number adjacency,
+spatial localisation failure, high-confidence mis-localisation,
+candidate_03836, Obs 6 thread, Obs 252 buffer elasticity mechanism,
+image track spatial precision deficit.
+
+---
+
+## Observation 265: Contour-ring / closed-summit features are a persistent "typical confound" FP class at production scale (2026-04-20)
+
+Also surfaced during the 2026-04-20 calibrated human review. Example
+figure: `docs/paper/figures/review-app-examples/review-example-typical-confound-candidate_03857-2026-04-20.png`.
+
+### The pattern
+
+Small closed contours or ring-shaped cartographic features (ringed summit
+contours, small enclosures, circular topographic markers) trigger
+high-confidence mound detections. The feature has the approximate visual
+signature the pipeline is searching for — circular / concentric / bounded —
+but lacks the specific ringed-mound convention (hollow circle with
+outward tick marks per current prompt definition).
+
+### Relationship to prior observations
+
+- **Obs 7 ("Blob" Decoy)**: black blob intersected by contour flagged
+  as a mound; fixed by "Geometric Regularity" constraint in V2.5.
+- **Obs 25 (Geometric Trap in v3.3)**: attempting to tighten geometric
+  constraints paradoxically hurt detection.
+- **Obs 26+ (various)**: noise/embankment/scarp confounds listed among
+  "Unrolled Mound" pattern failures.
+
+The contour-ring class specifically has not had a dedicated observation,
+though it's adjacent to the Obs 7 blob decoy family.
+
+### Evidence from today's review
+
+Initial capture was candidate_03857 (K-35-063-3 Glavan, p = 1.000, 5/5
+consensus) — small ring / closed-contour feature. User described as a
+"typical confound". Follow-up captures reveal the confound class is
+**heterogeneous**, not a single visual pattern:
+
+| Sub-category | Example | Visual cue |
+|---|---|---|
+| Small ring / closed-contour feature | 03857 | Concentric ring with outward lines |
+| Contour-line intersection / bent pattern | 05661 | Two contours crossing to form a mound-like vertex |
+| Shapeless smudge / printing artefact | 05590 | Amorphous blob with no ringed structure |
+| Number + slope/escarpment line (composite) | 06274 | Numeric label adjacent to hachured contour; combination triggers detection even though neither alone would |
+| Road junction / infrastructure | 06555 | Radiating orange lines at a road intersection mimic the sunburst mound-symbol signature |
+| Cross / landmark symbol | 07737 | Compact cross-shaped symbol (church / cemetery / landmark) with radiating lines shares the abstract "centred-with-rays" structure of the mound signature |
+| Letter classified as mound | 07913 | Cyrillic letter from a place-name label classified directly as mound (regression of the Obs 6 "Number Decoy" finding onto Cyrillic letters; label-as-target, distinct from label-pulls-centroid in Obs 264) |
+| Right shape, wrong colour | 08080 | Sunburst-shaped symbol in non-mound colour (dark/blue rather than orange-brown); pipeline's colour-insensitivity lets this trigger |
+| Dark / built-structure (settlement-mound class) | 08224 | Heavy black marks (buildings?) classified as `settlement_mound`; the subtype-assignment is consistent with the visual signature but the semantic class is wrong |
+
+(See Obs 266 below for the specific sub-pattern on subtype-classification boundary failures that emerged from continued review.)
+
+---
+
+## Observation 266: VLM subtype classification is substantially less reliable than mound detection — systematic subtype-boundary failures (2026-04-20)
+
+Continuing the calibrated human review surfaced a distinct pattern not captured by Obs 264 (centroid bias) or Obs 265 (visual confounds): the VLM's **subtype classifications** (`burial_mound` / `benchmark_mound` / `triangulation_mound` / `settlement_mound`) are systematically unreliable in ways that don't reduce to either failure mode. Detection (is there *a* mound here?) is robust; subtype assignment is approximate.
+
+### The pattern — four distinct subtype-boundary failures
+
+| Example | VLM said | Actually is | Direction of error |
+|---|---|---|---|
+| 01919 | `burial_mound` | settlement mound (tell) | Real compound downgraded to simpler class |
+| 00510 | `burial_mound` | settlement mound (blurred tell) | Same as 01919 — repeats the downgrade pattern, now with blur confound |
+| 05758 | `triangulation_mound` | settlement mound (tell) | Lateral subtype error — settlement misclassified sideways to another non-burial class |
+| 05409 | `triangulation_mound` | plain triangulation point (no mound) | Plain surveying marker upgraded to compound-on-mound |
+| 05461 | `benchmark_mound` | plain benchmark (no mound) | Plain surveying marker upgraded to compound-on-mound |
+| 08224 | `settlement_mound` | built-environment feature (no mound) | Built features classified as tell |
+| 03014 | `settlement_mound` | town/village built-up area | Built features classified as tell |
+
+### Three distinct sub-patterns
+
+1. **Compound-boundary over-assignment** (05409, 05461): plain triangulation points and plain benchmarks classified as their compound-on-mound variants (`triangulation_mound`, `benchmark_mound`). The VLM appears to treat the presence of the surveying-marker symbol as sufficient evidence for the compound class, rather than requiring both the marker AND an underlying mound.
+
+2. **Settlement-class over-assignment** (08224, 03014): built-environment features (buildings, town layouts) classified as `settlement_mound` (tell). The VLM's `settlement_mound` class seems to function as a catch-all for built-structure features rather than as a reliable tell-detector. Real tells have distinctive cartographic signatures (oval outlines with specific hatching) that differ from generic building clusters.
+
+3. **Settlement-class under-assignment** (01919): real tell classified as the simpler `burial_mound`. The VLM either doesn't recognise the tell signature or collapses it to the more common burial-mound class.
+
+### Implications
+
+- **Detection robust, subtype approximate**: the F1 at the "is this a mound?" binary level is honest; subtype-stratified F1 would be materially lower.
+- **Subtype classifications in the review CSV are the **reviewer's** judgements, not the VLM's** — so the human-corrected F1 is the right thing to report for any subtype-specific analysis. The VLM's subtype output is advisory at best.
+- **Prompt-engineering remediation** has a clear path for sub-patterns 1 and 2:
+  - For (1): add visual negatives showing plain surveying markers (triangle alone, star alone) to the compound-on-mound prompts with an explicit "no mound beneath" negative class.
+  - For (2): add visual negatives showing built-environment features alongside true tells to the `settlement_mound` prompt, with attention to the cartographic-convention distinctions (tell hatching vs building blocks).
+  - For (3): show more true-tell positive examples, especially at different scales and with different hatching variants.
+- **Paper implication**: if the paper reports subtype-specific accuracy, this observation is the honest characterisation. If it reports binary detection F1 only, this is a noteworthy **limitation-and-future-work** item — detection-at-scale works, fine-grained classification would benefit from dedicated subtype prompts.
+
+### Relationship to prior observations
+
+- **Obs 264** (centroid bias): orthogonal. Subtype errors occur on candidates whose centroid is correctly placed.
+- **Obs 265** (visual confounds): adjacent but distinct. Some Obs 265 confounds (e.g. built-environment → `settlement_mound`) ARE subtype errors; but Obs 265 also covers cases where detection itself is wrong (no mound of any class). Obs 266 specifically covers cases where *some* mound-or-marker is present but the subtype boundary is crossed.
+
+### Findable later
+
+Search terms: subtype classification accuracy, subtype-boundary failure, plain surveying marker vs compound-on-mound, built-environment vs tell, triangulation point not mound, benchmark not mound, settlement_mound over-assignment, Obs 266 subtype-precision ceiling.
+
+---
+
+Each triggers the pipeline via a different "mound-like" visual cue —
+the VLM/verifier is not responding to one specific confound but to a
+broad equivalence class of cartographic accidents that share *some*
+property of the mound symbol (circularity, or radial-line-like
+structure, or compact blob shape). Implication: the confound rate is
+probably not addressable by a single visual-negative example in the
+prompt; it would need a diverse set of negative examples spanning the
+sub-categories.
+
+### What this is not
+
+- NOT the label-pull bias from Obs 264. Here the centroid correctly
+  localises on the confounding feature; the feature itself is wrong.
+- NOT the pareidolia-on-numbers failure from Obs 4. No numeric or
+  textual salience is implicated.
+- NOT the "unrolled mound" embankment/scarp pattern. Contour rings are
+  typically small, circular, and standalone.
+
+### Paper implication
+
+Contributes to the FP-taxonomy section anticipated by Obs 24. A clean
+visual example of the class is now archived for the paper figure
+series. Quantifying the share of VLM-only FPs in this category is a
+sensible follow-up once the review pass completes — the human-review
+CSV will be tallied by symbol_type and the "not-mound" rows inspected
+for visual pattern frequencies.
+
+### Follow-up
+
+When the full human-review CSV is available:
+
+1. Tally not-mound classifications by visual category (requires a
+   second pass or a coding-scheme extension in the review app).
+2. Cross-tabulate verifier probability against reviewer category — do
+   contour-ring confounds receive intermediate or high verifier
+   probabilities? If intermediate, the verifier is partially
+   discriminating; if high, it's a true blind spot for the current
+   verifier prompt too.
+
+### Findable later
+
+Search terms: contour-ring confound, closed-contour summit, ringed
+topographic feature, typical confound, FP taxonomy, candidate_03857,
+Obs 7 geometric regularity thread.
+
+---
+
+## Observation 267: Human-reviewed corrected F1 = 0.830 at 50 m — 2.5× more phantom TPs than Dawid-Skene estimated (2026-04-20)
+
+Completed the 1,028-candidate human review of the 55-map image generalisation
+VLM-only set (planning item #7, tolerance-circle UI). Result recomputes the
+corrected F1/P/R at the 50 m buffer using per-item reviewer labels in place
+of the Dawid-Skene aggregate posterior.
+
+Outputs: `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.{json,md}`.
+
+### Headline
+
+| Metric | Measured | Measured 95% CI | **Corrected (human-reviewed)** | Corrected 95% CI (review-only) |
+|--------|---------:|:---------------:|------------------------------:|:------------------------------:|
+| F1        | 0.7710 | [0.7604, 0.7817] | **0.8295** | [0.8257, 0.8333] |
+| Precision | 0.7796 | [0.7658, 0.7924] | **0.8808** | [0.8739, 0.8876] |
+| Recall    | 0.7625 | [0.7491, 0.7759] | **0.7839** | [0.7826, 0.7852] |
+
+Delta from measured: F1 +0.0585, P +0.1012, R +0.0214.
+
+### Three-way correction-method comparison
+
+| Method | Phantom TPs | Corrected F1 |
+|---|---:|---:|
+| Measured (no correction) | 0 | 0.7710 |
+| Dawid-Skene aggregate posterior | ~186 (18.1%) | 0.7950 |
+| **Human review (per-item)** | **472 (45.9%)** | **0.8295** |
+
+### What this means
+
+1. **The D-S aggregate posterior substantially under-estimated the phantom-TP
+   rate.** Per-item human review found 2.5× more real mounds in the VLM-only
+   set than D-S's identifiability-limited aggregate estimate. This confirms
+   the prediction in Obs 263 that crop review catches more than aggregate
+   methods — the D-S 2-annotator identifiability ceiling meant it could only
+   estimate the rate, not discriminate individuals.
+
+2. **Precision gains dominate recall gains.** Reassigning 472 candidates from
+   FP to TP boosts precision by +0.10 but recall by only +0.02, because the
+   phantom TPs also extend the ground-truth denominator (newly-discovered
+   real mounds that the student annotators missed).
+
+3. **The corrected F1 is a lower bound**, not a point estimate. The
+   reviewer's decision policy is asymmetric (Obs 263 follow-up,
+   candidates 06479 vs 02400): ambiguous cases default to not-mound. The
+   honest reading is "F1 ≥ 0.830 at 50 m", with D-S at 0.795 as the
+   complementary weighted-average lower-ambient estimate. The bracket
+   **[0.795, 0.830+]** captures both correction methods' answers.
+
+4. **Corrected CIs are NOT commensurable with measured CIs.** The measured
+   95% CI bootstraps pipeline-matching variability. The corrected 95% CI
+   bootstraps human-review-label variability. They quantify different
+   uncertainty sources; do not combine by intersection or union without a
+   joint bootstrap.
+
+### 50 m-only validity
+
+This correction is **valid only at the 50 m buffer**. Reviewers judged each
+candidate against the 50 m tolerance circle and did not record symbol
+positions within the circle. Corrected F1/P/R at 20 m, 30 m, 40 m cannot be
+derived from this output — answering that requires either (a) a full-map
+gold-standard digitisation pass (the next-generation review-app work in
+`planning/candidate-review-app.md` backlog) or (b) re-reviewing the set with
+a tighter tolerance circle.
+
+### Paper-implication summary
+
+- **Headline figure**: corrected F1 at 50 m ≈ 0.83 (95% CI half-width ~0.004
+  on review-sampling variability), up from measured 0.77.
+- **Honest framing**: "F1 at 50 m ≥ 0.830 under conservative human review;
+  D-S aggregate estimate 0.795; the gap is the reviewer-ambiguity band from
+  Obs 263." Avoids over-claiming a point estimate.
+- **Tighter-buffer corrected metrics** remain unresolved; a future review
+  round with a graded tolerance (e.g. reviewers asked to place the
+  symbol-centre pin rather than binary in/out) would unlock them.
+
+### Relationship to prior observations
+
+- **Obs 252** (buffer elasticity, image track 8.6–21.5%) now has a
+  quantified upper bound: at the most-permissive 50 m buffer, corrected F1
+  is 0.83 — so the image track's generalisation ceiling is substantially
+  above the measured 0.77 under pragmatic human review.
+- **Obs 263** (crop-review ambiguity band) predicted exactly this gap
+  between human-review and D-S estimates; now quantified as ~0.035 F1.
+- **Obs 264–266** (failure-mode taxonomies) remain the paper's precision-
+  discussion material: they explain *why* 556 of the 1,028 VLM-only
+  candidates are true FPs (label-pull, centroid-bias attractors, visual
+  confounds, subtype-boundary errors).
+
+### Findable later
+
+Search terms: corrected F1 human-reviewed, phantom TP rate, 472 phantom,
+0.830 corrected, D-S vs human review gap, reviewer-conservative lower bound,
+50 m only correction, Obs 267 headline.
+
+---
