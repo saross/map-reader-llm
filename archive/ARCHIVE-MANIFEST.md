@@ -140,3 +140,21 @@ scope verification during the leaderboard rebuild:
 - **~2.1 GB archived** (dominated by `outputs/pv/` at ~1.9 GB)
 - **~43 items moved** across 5 archive categories
 - Production directories now contain only Era 1/2/3 + 55-map + reference data
+
+## 2026-04-20 addition: `human-review-sessions/`
+
+**Moved**: `results/55maps-image-generalisation/human-review.csv` →
+`archive/human-review-sessions/human-review-55maps-image-uncalibrated-2026-04-20.csv`
+
+**Reason**: 327 reviews completed using the Streamlit app before the 50 m
+matching-tolerance circle was added (see `scripts/review_candidates.py`
+change the same day). Reviewer was making uncalibrated "close enough?"
+judgements on symbol-to-centre proximity; Obs 263 in
+`docs/notes/reflections/working-notes.md` documents the ~10-15% per-item
+noise this introduced. User restarted the review from scratch with the
+calibrated tolerance-circle UI for defensible accuracy.
+
+The archived CSV is preserved for comparison analysis: cross-tabulating the
+uncalibrated vs calibrated decisions on the same candidate ids will quantify
+how much the tolerance circle shifted the accept/reject boundary, which is
+itself a methodology finding.

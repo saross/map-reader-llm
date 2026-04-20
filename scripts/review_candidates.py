@@ -27,8 +27,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
+import rasterio
 import streamlit as st
+from PIL import Image, ImageDraw
+from rasterio.windows import Window
 from shapely.geometry import Point
 
 # ---------------------------------------------------------------------------
@@ -52,6 +56,17 @@ _TARGET_CRS = "EPSG:32635"
 _DEFAULT_THRESHOLD = 0.15
 _DEFAULT_BUFFER = 50
 
+# Context crop defaults. The render reads a ``context_m``-wide window
+# from the source raster, centred on the candidate centroid, and
+# upscales to ``_DISPLAY_PX`` via LANCZOS so map symbols remain legible
+# at the ~5 m/px native resolution. 300 m × 300 m matches the GT
+# deduplication app convention (see ``scripts/review_gt_duplicates.py``)
+# and puts the 50 m tolerance circle at roughly 1/3 of the display
+# width — a comfortable visual scale for "is this symbol close to
+# centre?" decisions.
+_DEFAULT_CONTEXT_M = 300.0
+_DISPLAY_PX = 600
+
 # Symbol classification options
 SYMBOL_TYPES = {
     "f": ("burial_mound", "Burial mound"),
@@ -67,6 +82,187 @@ _MOUND_TYPES = {
     "burial_mound", "bench_mark_on_mound",
     "trig_point_on_mound", "settlement_mound",
 }
+
+
+# =========================================================================
+# Live-raster context crop rendering
+# =========================================================================
+#
+# The three helpers below (_collect_raster_bounds, _resolve_raster,
+# _best_raster_for_point) are inlined copies of the private helpers
+# in scripts/review_gt_duplicates.py. Extracted to a shared module if
+# a third consumer ever appears; for now, two consumers justifies the
+# duplication over a refactor.
+
+# Cache of (raster_path, bounds) per rasters_dir — avoids rescanning on
+# every Streamlit re-run.
+_RASTER_BOUNDS_CACHE: dict[str, list[tuple[Path, tuple[float, ...]]]] = {}
+
+
+def _collect_raster_bounds(
+    rasters_dir: Path,
+) -> list[tuple[Path, tuple[float, float, float, float]]]:
+    """Gather (path, (left, bottom, right, top)) for every TIF in dir."""
+    key = str(rasters_dir.resolve())
+    if key in _RASTER_BOUNDS_CACHE:
+        return _RASTER_BOUNDS_CACHE[key]
+    out: list[tuple[Path, tuple[float, float, float, float]]] = []
+    for p in sorted(rasters_dir.glob("*.tif")):
+        try:
+            with rasterio.open(p) as src:
+                b = src.bounds
+                out.append((p, (float(b.left), float(b.bottom),
+                                float(b.right), float(b.top))))
+        except Exception:  # noqa: BLE001
+            continue
+    _RASTER_BOUNDS_CACHE[key] = out
+    return out
+
+
+def _best_raster_for_point(
+    rasters_dir: Path, x: float, y: float, sample_px: int = 40,
+) -> Path | None:
+    """Return the raster whose pixels at (x, y) have most real content.
+
+    Trapezoidal sheets inside rectangular rasters leave black-fill
+    outside the mapped area, so bounds filtering alone picks the wrong
+    neighbouring sheet for points near the edge. Sample a small window
+    at (x, y) and prefer the raster with the most non-black pixels.
+    """
+    bounds_list = _collect_raster_bounds(rasters_dir)
+    best: tuple[Path, float, float] | None = None
+    for path, (left, bottom, right, top) in bounds_list:
+        if not (left <= x <= right and bottom <= y <= top):
+            continue
+        try:
+            with rasterio.open(path) as src:
+                row_f, col_f = src.index(x, y)
+                row = int(round(float(row_f)))
+                col = int(round(float(col_f)))
+                window = Window(
+                    col - sample_px // 2, row - sample_px // 2,
+                    sample_px, sample_px,
+                )
+                arr = src.read(
+                    window=window, boundless=True, fill_value=0,
+                )
+                if arr.shape[0] == 0:
+                    continue
+                bands = arr[:3] if arr.shape[0] >= 3 else arr[:1]
+                near_black = np.all(bands <= 8, axis=0)
+                real_frac = 1.0 - float(near_black.mean())
+        except Exception:  # noqa: BLE001
+            continue
+        min_edge = min(x - left, right - x, y - bottom, top - y)
+        candidate = (path, real_frac, min_edge)
+        if best is None:
+            best = candidate
+            continue
+        if real_frac - best[1] > 0.01:
+            best = candidate
+        elif abs(real_frac - best[1]) <= 0.01 and min_edge > best[2]:
+            best = candidate
+    return best[0] if best else None
+
+
+def _placeholder_image(
+    centroid_x: float, centroid_y: float, size: int = _DISPLAY_PX,
+) -> Image.Image:
+    """Grey fallback when no raster covers the candidate centroid."""
+    img = Image.new("RGB", (size, size), (200, 200, 200))
+    draw = ImageDraw.Draw(img)
+    draw.text(
+        (10, 10),
+        f"[raster not found]\ncentroid (x, y):\n"
+        f"{centroid_x:.1f}, {centroid_y:.1f}",
+        fill=(40, 40, 40),
+    )
+    return img
+
+
+@st.cache_data
+def render_candidate_context_crop(
+    centroid_x: float,
+    centroid_y: float,
+    rasters_dir: str,
+    context_m: float = _DEFAULT_CONTEXT_M,
+    buffer_m: int = _DEFAULT_BUFFER,
+    display_px: int = _DISPLAY_PX,
+) -> Image.Image:
+    """Render a ``context_m``-wide crop with magenta tolerance circle.
+
+    Reads the source raster on demand (via ``rasterio`` with
+    ``boundless=True`` so edge-of-sheet candidates still produce a
+    correctly-sized image) and upscales to ``display_px`` via LANCZOS
+    for legible map symbols at the ~5 m/px native resolution.
+
+    The magenta tolerance circle has radius ``buffer_m / context_m *
+    display_px`` display-pixels — a symbol inside is within buffer of
+    the proposer centroid (centre cross); outside is not.
+
+    Streamlit-cached on all arguments so re-renders are free when the
+    reviewer hasn't changed candidate.
+    """
+    rasters_path = Path(rasters_dir)
+    raster_path = _best_raster_for_point(
+        rasters_path, centroid_x, centroid_y,
+    )
+    if raster_path is None:
+        return _placeholder_image(
+            centroid_x, centroid_y, size=display_px,
+        )
+
+    with rasterio.open(raster_path) as src:
+        row_f, col_f = src.index(centroid_x, centroid_y)
+        row_c = int(round(float(row_f)))
+        col_c = int(round(float(col_f)))
+        res_m_per_px = abs(src.transform.a)
+        half_px = max(1, int(round(context_m / 2 / res_m_per_px)))
+        window = Window(
+            col_c - half_px, row_c - half_px,
+            half_px * 2, half_px * 2,
+        )
+        arr = src.read(window=window, boundless=True, fill_value=0)
+        n_bands = arr.shape[0]
+        if n_bands >= 3:
+            img_data = arr[:3].transpose(1, 2, 0)
+        elif n_bands in (1, 2):
+            g = arr[0]
+            img_data = np.stack([g, g, g], axis=-1)
+        else:
+            return _placeholder_image(
+                centroid_x, centroid_y, size=display_px,
+            )
+        raw_img = Image.fromarray(
+            img_data.astype(np.uint8),
+        ).convert("RGB")
+
+    # Upscale to display size so markers and the tolerance circle
+    # remain sharp. LANCZOS preserves edges better than bicubic for
+    # line-art like topographic symbols.
+    img = raw_img.resize(
+        (display_px, display_px), Image.LANCZOS,
+    ).convert("RGBA")
+
+    # Tolerance circle + centre cross, magenta (rarely appears in
+    # Soviet 1:50k topographic sheets, so high contrast with map).
+    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    cx = display_px // 2
+    cy = display_px // 2
+    r_display = int(round(buffer_m / context_m * display_px))
+    draw.ellipse(
+        [(cx - r_display, cy - r_display),
+         (cx + r_display, cy + r_display)],
+        outline=(255, 0, 255, 255),
+        width=3,
+    )
+    cross_half = max(6, display_px // 100)
+    draw.line([(cx - cross_half, cy), (cx + cross_half, cy)],
+              fill=(255, 0, 255, 255), width=2)
+    draw.line([(cx, cy - cross_half), (cx, cy + cross_half)],
+              fill=(255, 0, 255, 255), width=2)
+    return Image.alpha_composite(img, overlay)
 
 
 # =========================================================================
@@ -219,6 +415,12 @@ def load_candidates(
 def load_existing_reviews(csv_path: Path) -> dict[int, dict]:
     """Load previously saved reviews for resume support.
 
+    If the CSV includes a ``buffer_metres`` column (added 2026-04-20),
+    the per-row value is preserved so that a later save does not
+    silently re-tag rows with the current ``--buffer`` argument. Rows
+    without a recorded buffer (from older saves) are left untagged at
+    load time; they will pick up the current buffer on first re-save.
+
     Returns:
         Dict mapping candidate_id → review dict.
     """
@@ -229,13 +431,17 @@ def load_existing_reviews(csv_path: Path) -> dict[int, dict]:
         required = {"candidate_id", "symbol_type", "human_label", "timestamp"}
         if not required.issubset(df.columns):
             return {}
+        has_buffer = "buffer_metres" in df.columns
         reviews = {}
         for _, row in df.iterrows():
-            reviews[int(row["candidate_id"])] = {
+            entry = {
                 "symbol_type": row["symbol_type"],
                 "human_label": row["human_label"],
                 "timestamp": row["timestamp"],
             }
+            if has_buffer and pd.notna(row["buffer_metres"]):
+                entry["buffer_metres"] = int(row["buffer_metres"])
+            reviews[int(row["candidate_id"])] = entry
         return reviews
     except Exception:
         return {}
@@ -245,8 +451,15 @@ def save_reviews(
     reviews: dict[int, dict],
     candidates: list[dict],
     csv_path: Path,
+    buffer_m: int = _DEFAULT_BUFFER,
 ) -> None:
     """Save all reviews to CSV via atomic tmp-then-rename.
+
+    The ``buffer_metres`` column records the matching-tolerance zone
+    the reviewer was judging against. This review set is valid only
+    for computing corrected F1/P/R at that buffer — it does NOT
+    identify *where* inside the circle the real mound is, so corrected
+    metrics at tighter buffers are not derivable from this output.
 
     Atomic write guards against a partial file on user-triggered
     crashes or Streamlit re-runs mid-save. Without this, an
@@ -259,6 +472,10 @@ def save_reviews(
     cand_lookup = {c["candidate_id"]: c for c in candidates}
     for cid, review in sorted(reviews.items()):
         cand = cand_lookup.get(cid, {})
+        # Preserve per-row buffer provenance: if the review was loaded
+        # with a buffer_metres already recorded, keep it. Otherwise tag
+        # with the current session buffer.
+        row_buffer = review.get("buffer_metres", buffer_m)
         rows.append({
             "candidate_id": cid,
             "verifier_probability": cand.get("mound_probability", ""),
@@ -270,6 +487,7 @@ def save_reviews(
             ),
             "x": cand.get("centroid_x", ""),
             "y": cand.get("centroid_y", ""),
+            "buffer_metres": row_buffer,
             "timestamp": review["timestamp"],
         })
     tmp = csv_path.with_suffix(csv_path.suffix + ".tmp")
@@ -302,6 +520,22 @@ def main() -> None:
         "--buffer", type=int, default=_DEFAULT_BUFFER,
     )
     parser.add_argument(
+        "--context-m", type=float, default=_DEFAULT_CONTEXT_M,
+        help=(
+            "Width/height of the context crop in metres. Default 300 m "
+            "gives a ~1/3-of-display-width tolerance circle at 50 m "
+            "buffer, suitable for symbol-proximity decisions."
+        ),
+    )
+    parser.add_argument(
+        "--rasters-dir", type=str, default=None,
+        help=(
+            "Directory containing the source GeoTIFFs to render crops "
+            "from. If omitted, read from the candidate manifest's "
+            "rasters_dir field."
+        ),
+    )
+    parser.add_argument(
         "--output", type=str,
         default="results/55maps-generalisation/human-review.csv",
     )
@@ -317,6 +551,29 @@ def main() -> None:
         return
 
     output_path = Path(args.output)
+
+    # Resolve rasters directory: CLI arg overrides the manifest field.
+    if args.rasters_dir:
+        rasters_dir = Path(args.rasters_dir)
+    else:
+        manifest_path = (
+            Path(args.crops_dir) / "candidate_manifest.json"
+        )
+        try:
+            with open(manifest_path) as f:
+                manifest = json.load(f)
+            rasters_dir = Path(manifest.get(
+                "rasters_dir", "inputs/rasters/Russian1981_32635",
+            ))
+        except Exception:
+            rasters_dir = Path("inputs/rasters/Russian1981_32635")
+    if not rasters_dir.is_dir():
+        st.error(
+            f"Rasters directory not found: {rasters_dir}. "
+            "Pass --rasters-dir or ensure the manifest's rasters_dir is "
+            "a valid path relative to the current working directory."
+        )
+        return
 
     # Load data
     with st.spinner("Loading candidates and running matching..."):
@@ -481,12 +738,30 @@ def main() -> None:
         f"votes: {vote}/5"
     )
 
-    # Crop image — display large
-    crop_path = Path(candidate["crop_file"])
-    if crop_path.exists():
-        st.image(str(crop_path), width=300)
-    else:
-        st.error(f"Crop not found: {crop_path}")
+    # Crop image — tight context crop rendered live from the source
+    # raster, with a magenta tolerance circle at centre. A symbol
+    # inside the circle is within the matching buffer of the proposer
+    # centroid (centre cross); outside is not. Context width is
+    # configurable via --context-m (default 300 m) — smaller values
+    # zoom in; larger values show more of the surrounding landscape.
+    try:
+        overlaid = render_candidate_context_crop(
+            centroid_x=float(candidate["centroid_x"]),
+            centroid_y=float(candidate["centroid_y"]),
+            rasters_dir=str(rasters_dir),
+            context_m=args.context_m,
+            buffer_m=args.buffer,
+        )
+        st.image(overlaid, width=_DISPLAY_PX)
+        st.caption(
+            f"Magenta circle = {args.buffer} m matching tolerance "
+            f"inside a {args.context_m:.0f} m × {args.context_m:.0f} m "
+            f"context crop. Symbol inside = within tolerance; outside "
+            f"= not counted by pipeline. Cross marks the proposer "
+            f"centroid (crop centre)."
+        )
+    except Exception as exc:  # noqa: BLE001
+        st.error(f"Failed to render candidate {cid}: {exc}")
 
     # ---------------------------------------------------------------
     # Classification buttons
@@ -632,6 +907,7 @@ def main() -> None:
             "timestamp": datetime.now(
                 timezone.utc
             ).isoformat(),
+            "buffer_metres": args.buffer,
         }
         # Dedupe history so Undo is always a single-press undo, even
         # when the user re-reviews the same candidate.
@@ -640,7 +916,7 @@ def main() -> None:
         st.session_state.history.append(cid)
 
         # Save incrementally
-        save_reviews(reviews, fp_candidates, output_path)
+        save_reviews(reviews, fp_candidates, output_path, args.buffer)
         st.rerun()
 
     # ---------------------------------------------------------------
@@ -652,7 +928,7 @@ def main() -> None:
             last_cid = st.session_state.history.pop()
             if last_cid in reviews:
                 del reviews[last_cid]
-            save_reviews(reviews, fp_candidates, output_path)
+            save_reviews(reviews, fp_candidates, output_path, args.buffer)
             st.rerun()
 
     # Symbol type breakdown

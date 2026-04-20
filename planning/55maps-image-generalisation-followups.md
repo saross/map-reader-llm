@@ -54,17 +54,11 @@ Key findings:
 - Candidate count weakly predicts F1 (r = +0.16 to +0.30) — denser
   mound maps produce more true-positive matches.
 
-### 3. Commit the outputs
+### 3. Commit the outputs — **RESOLVED 2026-04-18**
 
-- Run artefacts not yet committed: `outputs/55maps-image-generalisation/`
-  + the three `configs/run-configs/55maps_image_generalisation_*.md`
-  and the edits to `prompts/configs/library_plus-hp.json`
-  (already committed at `b84925d2` for the launcher pre-run, but needs
-  a follow-up commit for the outputs).
-- Recommended structure: one commit for the launcher pre-run
-  (already done), one commit for the post-run artefacts.
-- Command: `git add configs/run-configs/55maps_image_generalisation_post_run_report.md
-  outputs/55maps-image-generalisation/` then commit.
+Post-run artefacts committed at `4c147af6` ("data(55maps-image): final
+image-track generalisation run — F1=0.771 @ 50 m"); observations
+committed at `15eb9383` (Obs 256–257). Working tree clean.
 
 ### 4. Write the observation — **RESOLVED 2026-04-18**
 
@@ -102,11 +96,8 @@ microsecond Popen-assignment race — acceptable for publication).
 
 ## Priority order
 
-1. (1) Debug CIs — blocks paper write-up
-2. (3) Commit outputs — makes run artefacts citable
-3. (4) Write observation — captures findings while fresh
-4. (2) Per-map heterogeneity — feeds into paper discussion
-5. (5) Launcher fixes — robustness for future runs, no urgency
+All items resolved except (7) Human verification of VLM-only candidates —
+urgent pre-publication task, in progress.
 
 ## Added 2026-04-18
 
