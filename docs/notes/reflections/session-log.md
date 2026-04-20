@@ -4803,3 +4803,147 @@ Key commits: `b84925d2` (launcher publication), `4c147af6` (image run outputs), 
 - The `_estimate_cost()` helper is calibrated on the image proposer per-tile rate (~$0.0082/call) and reports 5.8× overestimates on text runs. Visible in `launch_manifest.json` and `experiment_intent.md` during dry-run. Does not affect the actual run cost tracking (cost_manifest.json is measured from per-run meta files). Filed as GH #1.
 - The 2026-04-10 text HIGH run's `outputs/55maps-generalisation/verified/verified_detections_paired.geojson` was created this session by retrospectively filtering the original consensus + probabilities at the same (vote_t=4, prob_t=0.15) operating point the text MIN run used. Committed for downstream-tool reproducibility; derivation is deterministic from already-committed artefacts so it could also be regenerated.
 - Claim in YAML/audit that "ONLY differences are thinking_level and run_name" was initially false (omitted workers: 60→250); `/audit` caught it, both files amended to document workers as orchestration-only. The scientific claim (paired permutation test measures thinking-level effect cleanly) is unaffected because workers is not a payload parameter.
+
+---
+
+## Session 72 — 2026-04-20 (map-reader-llm): Human-review completion, corrected F1 at 50 m, verifier calibration, subtype-accuracy plan
+
+Single-day session, no compaction, 6 commits pushed (`ee2f0f4a` →
+`6fc6df2a`). Work organised in three phases: morning infrastructure,
+afternoon human review, evening analysis and planning.
+
+### Morning — infrastructure
+
+- **Planning item #3 resolved** (`55maps-image-generalisation-followups.md`):
+  post-run artefacts were already committed at `4c147af6` / `15eb9383`;
+  plan doc updated to reflect.
+- **Crops recovered**: `outputs/55maps-image-generalisation/crops/crops/`
+  was empty on amd-tower because the `outputs/**/crops/crops/` gitignore
+  rule meant they never synced via git. 7,877 PNGs (~338 MB) rsynced
+  from sapphire. Blocker cleared for the human-review session.
+- **NAS migration plan drafted** via prior-art-scout agent (found DVC +
+  Cloudflare R2 as the recommended modern approach) and Plan agent.
+  Key decisions: NAS-primary with R2 off-site backup (Infrequent Access
+  tier, ~$0.72/mo at 70 GB consolidated), DVC deferred to future
+  project, MANIFEST-in-git as lightweight reproducibility alternative.
+  Stage 0 (read-only verification) ran as background agent; surfaced
+  two blockers (sapphire SSH key-auth broken, h11 canonical copy is on
+  zbook not sapphire) that must be resolved before Stage 1.
+- **Google Drive verified** as source copy of the Soviet 1981 rasters
+  (`2023-MapDigitisation-ML/Maps/Russian1981_4326/`) — five-tier
+  redundancy established for source material.
+
+### Afternoon — human review of 1,028 VLM-only candidates
+
+The headline work of the session. Shawn reviewed all 1,028 candidates
+from the 55-map image generalisation VLM-only set in a single sitting
+(~3 hours), classifying by symbol type.
+
+- **Calibrated tolerance-circle UI built mid-review** — after ~100
+  candidates Shawn raised the spatial-ambiguity problem explicitly
+  ("~15% of cases are genuinely ambiguous — how far off-centre is too
+  far?"). I added a 50 m magenta tolerance circle rendered live from
+  the source raster with a 300 m context crop upscaled via LANCZOS to
+  600 px, plus a `buffer_metres` CSV column for provenance. Shawn
+  then restarted the review from scratch for defensibility; the
+  original 327 uncalibrated reviews were archived at
+  `archive/human-review-sessions/` for the later cross-tab analysis.
+- **70 paper-figure screenshots captured during review**, organised
+  into a taxonomy covering robustness (smudging, scan artefact, blur,
+  colour shift, occlusion, extreme-distortion apex), centroid-bias
+  failures (text-label pull, feature-clutter, contour-line, water-
+  feature — three attractor categories with negative controls),
+  FP confounds (nine sub-categories), subtype-classification errors,
+  and reviewer-discipline boundary cases. Indexed with README.md
+  capture log.
+- **Observations 262–266 added** during the review as the patterns
+  emerged — the failure-mode taxonomies for Obs 264/265/266 were
+  built up screenshot-by-screenshot, gaining sub-categories as
+  successive captures either reinforced or extended the pattern.
+- **Final review counts**: 472 mounds (45.9%), 556 not_mound (54.1%),
+  0 uncertain, all tagged `buffer_metres=50`. Subtype breakdown:
+  burial 338, benchmark_on_mound 92, trig_on_mound 29, settlement 13.
+
+### Evening — analysis, planning, reflection
+
+- **Corrected F1 at 50 m** computed on sapphire: F1 = 0.8295 (up from
+  measured 0.7710), P = 0.8808, R = 0.7839. Bootstrap 95% CIs (over
+  human-review label resampling): F1 [0.826, 0.833]. Output at
+  `results/55maps-image-generalisation/human-reviewed-corrected/`.
+  Obs 267 written to capture the headline finding and the 2.5× gap
+  vs the Dawid-Skene aggregate estimate (~186 posterior-true mounds
+  vs 472 reviewer-confirmed).
+- **Three background agents dispatched in parallel** at session end
+  while Shawn was AFK:
+  1. Uncalibrated-vs-calibrated cross-tab → Obs 268 (21.4% flip rate,
+     one-directional mound→not_mound, revised Obs 263's low-p framing).
+  2. Verifier probability vs human-label cross-tab → Obs 269 (over-
+     confidence, AUC 0.65, low-p-under-confidence hypothesis
+     falsified).
+  3. Classification-accuracy plan for 4-map gold-standard → plan
+     drafted with data-availability step, metric shortlist.
+- **`/review-implementation` pass on the classification plan**
+  surfaced 9 metric decisions; Shawn accepted all default
+  recommendations. Decision record at
+  `planning/gold-standard-classification-metrics-decisions.md`; plan
+  updated to flip status to READY TO EXECUTE.
+
+### Artefacts produced
+
+- Code: `scripts/review_candidates.py` (enhanced),
+  `scripts/compute_corrected_f1_human_reviewed.py`,
+  `scripts/crosstab_uncalibrated_vs_calibrated.py`,
+  `scripts/crosstab_verifier_vs_human.py`.
+- Data: `results/55maps-image-generalisation/human-review.csv` (1,028
+  rows), `human-reviewed-corrected/`, `uncalibrated-vs-calibrated-
+  crosstab/`, `verifier-calibration-crosstab/` (with reliability
+  diagram + ROC + PR curves as PNGs).
+- Archives: `archive/human-review-sessions/human-review-55maps-image-
+  uncalibrated-2026-04-20.csv` (327 rows, preserved for cross-tab).
+- Paper figures: `docs/paper/figures/review-app-examples/` (70 PNGs
+  + README).
+- Observations 262–269 in working-notes.md; Obs 263 revised.
+- Plans: `nas-migration-plan.md` + `gold-standard-classification-
+  accuracy-plan.md` + decision records.
+
+### Session outcomes
+
+- Paper headline number: corrected F1 ≥ 0.830 at 50 m.
+- Paper methodology figure: 21.4% reviewer flip rate under
+  calibrated UI.
+- Paper failure-taxonomy figure source: 70 indexed screenshots.
+- Paper error-taxonomy: Obs 264 (centroid bias, three attractor
+  categories), Obs 265 (visual confounds, nine sub-categories), Obs
+  266 (subtype classification boundary failures), Obs 269 (verifier
+  miscalibration — the architectural complement to the above).
+- Next-action readiness: classification-accuracy analysis plan is
+  READY TO EXECUTE, script not yet written.
+
+### Contextual assumptions
+
+- The 1,028 VLM-only candidate set is relative to the student GT at
+  50 m buffer. Tighter-buffer corrections are NOT derivable from this
+  review — reviewers judged against the 50 m tolerance circle and
+  did not pinpoint symbol positions within the circle. Corrected F1
+  is 50 m-only.
+- The reviewer's conservative-bias asymmetric decision policy
+  ("if in doubt, reject") is empirically confirmed by the one-
+  directional nature of the 70 flips between uncalibrated and
+  calibrated review. This means corrected F1 at 50 m is a *lower
+  bound*, not a point estimate. The D-S aggregate F1 (0.795) is
+  the complementary upper-ambient estimate; the honest interval is
+  [0.795, 0.830+].
+- The verifier's heavy quantisation (only 13 distinct probability
+  values across 1,028 candidates, 370 at p=1.00) means threshold-
+  based filtering has limited headroom. Any paper recommendation
+  about "tune the verifier threshold" should acknowledge that the
+  signal is coarse.
+- Obs 263's low-p-ambiguity prediction was retracted in-session
+  based on the cross-tab evidence. The revised framing is "spatial-
+  tolerance-driven ambiguity across all confidence levels." Future
+  discussion of the ambiguity band should reference the revised
+  version, not the original.
+- The 70 paper-figure screenshots are named by descriptor + candidate
+  ID + date; this naming is stable and can be cited verbatim in the
+  paper. If any are re-captured in future sessions, match the
+  existing naming convention per `README.md` in the figures dir.

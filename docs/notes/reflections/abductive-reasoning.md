@@ -3813,3 +3813,119 @@ decomposition/stratification is consistent with a single-axis
 explanation should I hypothesise that explanation. The decomposition
 is cheap; the premature hypothesis is expensive in re-direction
 time.
+
+---
+
+## Session 72 — 2026-04-20 (map-reader-llm): Three belief revisions from the same error mode — generalising from in-session anecdote
+
+Three hypotheses formed during live work, all falsified at scale. The
+interesting pattern is not the individual falsifications but that all
+three shared the same error mode: generalising from small-sample
+in-session impressions without immediately flagging them as hypotheses
+rather than findings.
+
+### Revision 1: "Verifier is under-confident on faint targets"
+
+**Surprising fact**: During human review I noticed that at p ≤ 0.25,
+the first 4 spot-checked candidates were all reviewer-confirmed as real
+mounds. This contradicted the naive expectation that low verifier
+probability means "probably not a mound."
+
+**Probe**: Framed as a hypothesis for the end-of-session verifier-
+calibration agent. The agent computed P(mound | p ≤ 0.25) over all 230
+candidates in that probability bin.
+
+**Belief revision**: Hypothesis falsified. Actual P(mound | p ≤ 0.25) =
+0.174 (95% CI [0.127, 0.224]), substantially *below* the overall
+prevalence of 0.459. The verifier is discriminating correctly at the
+low end — the 4/4 was sampling bias (I'd been capturing memorable
+examples during review, not a representative sample).
+
+**Meta-pattern**: The "capture what's illustrative" habit during live
+work systematically over-samples tail cases. Any statistical claim
+built on "I noticed that whenever X happens, Y follows" from captured
+examples should default to "possible hypothesis worth scale-checking",
+not "finding". I partially did this (wrote it into Obs 263 as
+tentative), but the Obs 267 draft text went further than the evidence
+supported ("the verifier IS doing discriminative work" at that tier).
+Needed to flag explicitly when promoting hypothesis to finding.
+
+### Revision 2: "Ambiguity band is low-p-concentrated"
+
+**Surprising fact**: Obs 263 (early in session) predicted the reviewer's
+~10-15% ambiguous decisions would concentrate in the low-p tail —
+because that's where the verifier is least certain, so it's where the
+borderline cases should live.
+
+**Probe**: The uncalibrated-vs-calibrated cross-tab tested this
+empirically on the 327 candidates Shawn had reviewed twice (once without
+the tolerance circle, once with). Would the flip rate be higher at low
+p than at high p?
+
+**Belief revision**: Hypothesis **untestable from this data** — the
+327 overlap candidates all had p=1.000 (the uncalibrated session had
+reviewed only top-of-queue). And more interestingly: 21.4% of these
+*highest-confidence* candidates flipped, which is much larger than Obs
+263's 10-15% estimate. The ambiguity band exists across all confidence
+levels, not concentrated at low p. And importantly all 70 flips went
+mound→not_mound, so the tolerance circle didn't catch ambiguous cases
+— it tightened a systematic permissiveness that pervaded the full
+confidence range.
+
+**Meta-pattern**: "Low confidence = borderline = needs tolerance aid"
+was a symmetric hypothesis built on the idea that high-confidence cases
+are unambiguous to both pipeline and reviewer. The data says otherwise
+— the reviewer's ambiguity is driven by spatial-tolerance uncertainty
+(is the symbol close enough to centre?), which is orthogonal to the
+verifier's confidence about symbol-presence. I was conflating two
+different sources of uncertainty (is-there-a-mound vs is-it-close-
+enough) because the pipeline output collapses them into one number.
+
+### Revision 3: "The verifier is doing its job, the proposer is the bottleneck"
+
+**Surprising fact**: I'd been framing the precision ceiling of the
+pipeline in terms of Obs 264/265/266's failure-mode taxonomies (label-
+pull, visual confounds, subtype boundaries). Implicit in this framing
+was that the verifier was correctly identifying these FPs and assigning
+them low probability, but the proposer was generating too many of them
+to filter out.
+
+**Probe**: The verifier-calibration agent computed ECE and AUC on the
+full 1,028-candidate set.
+
+**Belief revision**: Hypothesis falsified. ECE = 0.269 (very poor); AUC
+= 0.65 (barely better than chance). The verifier is *not* doing the
+discrimination I'd been crediting it with. Specifically, at predicted
+p = 1.00 (370 candidates, the single largest bin), empirical P(mound)
+is only 0.55 — the verifier is asserting certainty on items it is
+wrong about roughly half the time.
+
+**Meta-pattern**: Framing the precision ceiling as a "proposer problem"
+shifts the remediation target (improve prompt/few-shot for the
+proposer) away from the actual locus of the failure (the verifier's
+probability is architecturally under-resolved and miscalibrated). If
+I'd gone ahead and drafted "future work: improve proposer prompt" in
+the paper without the scale verification, the recommendation would have
+been pointed at the wrong component.
+
+### Shared root cause and the mitigation
+
+All three revisions share a signature: I formed a hypothesis from 3-10
+illustrative in-session captures, promoted it to finding-level framing
+in the observation text, and scale verification showed the
+generalisation doesn't hold.
+
+The mitigation that actually worked: explicit hypothesis-flagging at
+observation-write time + agent-dispatched scale verification at session
+end. This converts the in-session impression into a testable claim and
+catches the over-generalisation before it makes the paper.
+
+The structural lesson: when writing an observation that says "X is
+true because I've seen it N times in this session", the text should
+default to "provisional; see scale-verification in Obs [Y]" until the
+scale check lands. I did this partially (Obs 263 flagged the ambiguity
+band as "approximately 10-15% pending scale verification") but
+inconsistently (Obs 267 overclaimed the verifier's discrimination).
+Next session: every "the X is doing Y" framing should be accompanied
+by a linked hypothesis-verification observation, written before the
+scale check runs.

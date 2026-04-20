@@ -6892,3 +6892,126 @@ the code?" after three `/audit` cycles produced the cleanest-yet
 catalogue of what was fixed, what was accepted, and what was
 cosmetic. That question format — "give me the inventory" — pulled
 tidier output from me than any individual audit pass did.
+
+---
+
+## Session 72 — 2026-04-20 (map-reader-llm): The human-review day, three hypothesis falsifications, and the paper's error-taxonomy becoming a real thing
+
+### Prompt: "What surprised you about this session?"
+
+Three falsifications landed in sequence, each inverting a hypothesis that
+had felt robust in-session.
+
+First, during the review itself, I noticed at p=0.20 and p=0.25 that all
+the candidates Shawn checked were reviewer-confirmed as real mounds. I
+wrote it into Obs 263 as a tentative "verifier is under-confident on
+low-contrast targets" pattern and pushed it to the bottom of the Obs 269
+prompt as a hypothesis to test at scale. At scale it's dead wrong:
+P(mound | p≤0.25) = 0.174 — the low-p tail is genuinely mostly
+not-mounds, and the 4/4 sample I'd flagged was a small-sample coincidence.
+The immediate data had taken me in exactly the opposite direction from
+what the scale data says.
+
+Second, the uncalibrated-vs-calibrated cross-tab showed a 21.4% flip
+rate between Shawn's pre-tolerance-circle review and his post-tolerance-
+circle re-review. All 70 flips were mound→not_mound. Shawn had suspected
+he was being "too generous" — correct, and by a much larger margin than
+either of us had guessed. Obs 263's "10-15% ambiguity band" was an
+under-estimate.
+
+Third, the verifier's AUC at the binary mound/not-mound level is 0.65.
+Barely better than chance. The in-session impression that the verifier
+was doing meaningful filtering was, in retrospect, generous — I'd been
+crediting it with discrimination it doesn't actually have. The paper's
+Obs 264/265/266 failure-mode taxonomies now have a structural
+complement I didn't anticipate: the verifier can't filter these FPs
+because its probability is saturated at the high end where most
+candidates live.
+
+The through-line is that three independent hypotheses I'd formed during
+fast work all turned out to be wrong, and the correct answers only
+emerged when I handed them to background agents to test at scale. The
+session's real contribution might be the willingness to falsify my own
+in-session intuitions rather than defend them.
+
+### Prompt: "What's the single most important thing a future reader should know about this session?"
+
+The 21.4% flip rate is the headline methodology finding, not the 472/1028
+phantom-TP count. The 472 number yields a clean corrected F1 = 0.830 and
+that's what the paper will cite. But the mechanism — adding a calibrated
+tolerance circle caused one-in-five pre-review decisions to change, all
+in the same direction — is what makes the corrected F1 defensible. It's
+also why the F1 should be reported as "≥ 0.830 under conservative
+review" rather than "= 0.830" — we now know empirically that reviewer
+permissiveness without the circle inflates the phantom-TP count by ~0.008
+F1, so the 0.830 figure has a known conservative bias baked in.
+
+A future reader picking up the paper drafts should read
+`results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md`,
+then `results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.md`,
+then Obs 263/267/268 in order. That sequence reconstructs the
+epistemics: measured → D-S-corrected → human-reviewed corrected → the
+UI-effect that validates the last.
+
+### Prompt: "What would you do differently if you replayed this session?"
+
+Add the tolerance circle before starting the review, not after 327
+candidates of uncalibrated work. I built the calibrated UI only when
+Shawn explicitly asked for it mid-session, after the spatial-offset
+ambiguity had already become obvious enough to name. If I'd been more
+proactive about surfacing the methodological risk at crop-render time,
+the restart would have been unnecessary.
+
+That said, the restart produced the cross-tab data we now have — the
+uncalibrated labels are the baseline against which the 21% flip rate is
+measured. Had we gone straight to calibrated review, we'd have the
+corrected F1 without the UI-effect evidence. The accident was fortunate.
+
+### Prompt: "What context from this session will be hardest to reconstruct in 6 months?"
+
+The 72 paper-figure screenshots are systematically named and indexed in
+the `docs/paper/figures/review-app-examples/README.md` capture log, so
+that part is safe. What's harder to reconstruct is the *sequence* in
+which the failure-mode taxonomies emerged — Obs 264 (label-pull) started
+as a one-off observation on candidate_03836, accumulated evidence across
+~15 screenshots, gained three attractor sub-categories (text, feature-
+clutter, contour-line), gained a sub-threshold gradient (04275), a
+negative control (04245), a cross-symbol-class extension (04365 Cyrillic
+text), and a detection-vs-localisation dissociation (06937). Reading
+the observation today, all of that is stated concisely. The exploratory
+process — what was proposed in which screenshot, what evidence shifted
+the framing, which hypotheses were considered and discarded — is
+collapsed. A future reader will correctly understand the findings but
+will miss how provisional each sub-pattern felt until the next
+screenshot either strengthened or complicated it.
+
+### Prompt: "What question emerged that wasn't pursued?"
+
+The subtype-classification accuracy on the 4-map gold standard is
+planned (`planning/gold-standard-classification-accuracy-plan.md`)
+but not executed. It's the quantitative verification of Obs 266's
+sub-patterns. It should land a 4×4 confusion matrix with the Obs 266
+hierarchical structure baked in, and the hypothesis from the
+consensus-4of5 count (VLM produces 74 trig-on-mounds vs 43 GT trigs,
++72%) is strong enough to be worth putting hard numbers on.
+
+The other open question is the cross-tabulation of human-review labels
+against the D-S posterior — do they disagree on the ~470 candidates
+where D-S gives moderate probability? If D-S and human agree on the
+clear cases and disagree on the ambiguous band, that's paper-quotable
+evidence for the "D-S estimates the aggregate rate; human review
+disambiguates individuals" framing.
+
+**Session**: 2026-04-20, single day, no compaction, direct first-person
+observations throughout. Commits: `ee2f0f4a` through `6fc6df2a`, six
+commits pushed to main.
+**Key moment**: Reading the Agent 2 report and seeing "AUC = 0.6545, ECE
+= 0.269, 4/4 at low p was anecdote" — the three-line evidence that the
+verifier isn't doing the job I'd been giving it credit for. The paper
+has to mention this.
+**Relational note**: Shawn's explicit probabilistic self-disclosure at
+candidate_06479 ("I'm about 70% confident so I'll say 'yes'. Genuinely
+difficult.") was the moment the Obs 263 framing clicked into "reviewer
+as a calibrated probabilistic instrument" rather than "reviewer as a
+binary oracle". The continuous-confidence review-scheme recommendation
+for the next-generation app is downstream of that specific sentence.

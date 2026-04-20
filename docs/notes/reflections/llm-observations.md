@@ -4919,3 +4919,124 @@ script should either be known-good for all supported tracks or
 emit its confidence range alongside the point estimate. The audit
 filed this as GH #1; I'm adding "flag fluent helpers" to the
 behavioural pattern list.
+
+---
+
+## Session 72 Observations (2026-04-20, map-reader-llm)
+
+### The "propose-hypothesis-fast, falsify-with-agent-later" workflow paid off
+
+During the live human review, I surfaced three hypotheses as they emerged
+from evidence:
+
+1. "Verifier is under-confident on faint targets" — based on 4/4 low-p
+   spot-checks being reviewer-confirmed as mounds.
+2. "Ambiguity band is low-p-concentrated" (Obs 263's original framing).
+3. "Corrected F1 should be a lower bound because the reviewer applies
+   conservative asymmetric decisions" — based on candidates 06479 vs
+   02400.
+
+At session-end-with-Shawn-AFK, I dispatched background agents to test
+(1) and (2) at scale. Both falsified — the verifier is *over*-confident
+not under-confident, and the ambiguity band is spatial-tolerance-driven
+not p-driven. (3) was the one that survived quantitative check (the
+cross-tab showed one-directional flipping, confirming the conservative
+bias).
+
+The workflow lesson: hypothesis-forming during fast work is cheap and
+often wrong. Delegating validation to agents when the human is AFK
+converts my in-session uncertainty into quantified findings without
+blocking the live work. Two of three hypotheses being falsified is not
+a failure mode — it's the expected rate when the hypotheses are drawn
+from small-sample in-session impressions. Worth continuing as a
+pattern.
+
+### Three-agent parallel delegation scaled well
+
+At session end I dispatched three agents simultaneously (two analysis,
+one plan) with non-overlapping write-targets. All three completed
+successfully within ~5 minutes wall-clock each, running in parallel on
+sapphire. Total elapsed time including Shawn's AFK: ~15 minutes. Doing
+these serially would have been ~30 minutes + context-switching friction.
+
+The enabling conditions were:
+
+1. Each agent had a self-contained brief with explicit data locations,
+   output paths, and deliverable specs. No inter-agent dependencies.
+2. Output paths chosen to avoid collision (three separate
+   subdirectories, three separate scripts).
+3. Explicit "do not commit; parent will handle" instruction to prevent
+   agents from interfering with each other's git state.
+
+The pattern is reusable for any end-of-session wrap-up with multiple
+independent follow-ups. Note that this only works when Shawn is AFK or
+willing to wait — two-agent parallelism while he's active would produce
+two reports at once, which is harder to attend to.
+
+### `/review-implementation` caught discovery failures I wouldn't have spotted
+
+The skill surfaced five metrics I hadn't considered for the classification
+plan (hierarchical 2-level structure, consensus-threshold sweep, both
+heat-map normalisation directions, F-beta variants, cost-weighted kappa)
+plus four exploitation failures (wrong bootstrap unit, inconsistent
+iteration counts, unspecified kappa variant, ambiguous headline choice).
+Shawn accepted all 9 default recommendations.
+
+If I'd just written the plan as originally drafted and moved on, the
+analysis would have run but the paper story would be weaker by ~2
+substantive findings (the hierarchical decomposition directly mirroring
+Obs 266, and the consensus-threshold sweep as a verifier-calibration
+analog). The skill's structural capability-scan / exploitation-review
+format is a genuinely better protocol than my default "check the plan
+against what I know".
+
+Observation: the skill's value was highest on the "discovery failures"
+axis, where it surfaced metrics I genuinely hadn't considered. The
+"exploitation failures" were things I would probably have caught on a
+second pass anyway. If time is limited, the discovery phase is where
+to invest review attention.
+
+### Shawn's probabilistic self-disclosure as a protocol pattern
+
+During the review, on a genuinely difficult case (candidate_06479), Shawn
+wrote "I think that the verifier is correct... I'm about 70% confident
+so I'll say 'yes'. Genuinely difficult." This pattern — explicit
+probabilistic articulation + binary decision + acknowledgment of
+difficulty — is what the Obs 263 "ambiguity band" construct was trying
+to name.
+
+What's striking is that Shawn formed this self-report *without* the app
+prompting for it. A binary yes/no UI normally collapses that internal
+probability to 0 or 1. The only reason we captured the 70% figure is
+that Shawn typed it in chat, not in the review tool.
+
+The derivative recommendation — a continuous-confidence review scheme
+for the next-generation app — is in `planning/candidate-review-app.md`
+backlog. But the meta-observation for collaboration patterns: when the
+human expresses something in chat that the tool doesn't capture, that's
+often a signal that the tool is collapsing information worth preserving.
+Worth watching for in other workflows.
+
+### I over-credited the verifier for in-session discrimination
+
+Obs 267 (drafted during the review) included the sentence "notable
+evidence that the verifier IS doing discriminative work" based on the
+p=0.75 / p=0.50 / p=0.25 descending-confidence examples I'd captured
+on progressively-more-difficult cases. The framing sounded right at the
+time.
+
+The scale data says: AUC = 0.65. The verifier's discrimination is weak,
+and the in-session descending-confidence pattern was selection bias on
+my part — I captured illustrative examples at each p-tier, but the
+captures weren't representative of the tiers' actual accuracy. This
+is the same error mode as (1) above: small-sample in-session
+impressions generalised incorrectly.
+
+Pattern to watch: when I say something "is doing X" based on 3-5
+anecdotal captures, that's the moment to flag it as a hypothesis for
+scale verification, not as a finding. Obs 269 corrects Obs 267's
+"verifier is doing discriminative work" line. Good that the correction
+is in the same commit series.
+
+**Session**: 2026-04-20, six commits pushed to main, no compaction,
+first-person observations throughout.
