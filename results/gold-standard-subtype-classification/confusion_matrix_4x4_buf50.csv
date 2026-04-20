@@ -1,0 +1,20 @@
+# 4x4 matched-pairs confusion: raw counts
+gt_subtype,burial_mound,benchmark_mound,triangulation_mound,settlement_mound
+burial_mound,294,0,0,0
+benchmark_mound,8,12,27,0
+triangulation_mound,1,0,32,0
+settlement_mound,0,0,0,2
+
+# row-normalised: P(predicted | GT) — recall view
+gt_subtype,burial_mound,benchmark_mound,triangulation_mound,settlement_mound
+burial_mound,1.0,0.0,0.0,0.0
+benchmark_mound,0.1702,0.2553,0.5745,0.0
+triangulation_mound,0.0303,0.0,0.9697,0.0
+settlement_mound,0.0,0.0,0.0,1.0
+
+# column-normalised: P(GT | predicted) — precision view
+gt_subtype,burial_mound,benchmark_mound,triangulation_mound,settlement_mound
+burial_mound,0.9703,0.0,0.0,0.0
+benchmark_mound,0.0264,1.0,0.4576,0.0
+triangulation_mound,0.0033,0.0,0.5424,0.0
+settlement_mound,0.0,0.0,0.0,1.0

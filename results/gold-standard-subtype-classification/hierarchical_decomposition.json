@@ -1,0 +1,59 @@
+{
+  "buffer_m": 50,
+  "level1": {
+    "labels": [
+      "mound_family",
+      "settlement"
+    ],
+    "confusion_orient": "rows=GT, columns=predicted",
+    "confusion": {
+      "mound_family": {
+        "mound_family": 374,
+        "settlement": 0
+      },
+      "settlement": {
+        "mound_family": 0,
+        "settlement": 2
+      }
+    },
+    "accuracy": 1.0,
+    "n_pairs": 376
+  },
+  "level2": {
+    "labels": [
+      "burial_mound",
+      "benchmark_mound",
+      "triangulation_mound"
+    ],
+    "confusion_orient": "rows=GT, columns=predicted",
+    "confusion": {
+      "burial_mound": {
+        "burial_mound": 294,
+        "benchmark_mound": 0,
+        "triangulation_mound": 0
+      },
+      "benchmark_mound": {
+        "burial_mound": 8,
+        "benchmark_mound": 12,
+        "triangulation_mound": 27
+      },
+      "triangulation_mound": {
+        "burial_mound": 1,
+        "benchmark_mound": 0,
+        "triangulation_mound": 32
+      }
+    },
+    "accuracy": 0.9037433155080213,
+    "n_pairs": 374
+  },
+  "flat": {
+    "labels": [
+      "burial_mound",
+      "benchmark_mound",
+      "triangulation_mound",
+      "settlement_mound"
+    ],
+    "accuracy": 0.9042553191489362,
+    "n_pairs": 376
+  }
+}

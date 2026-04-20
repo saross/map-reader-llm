@@ -12645,3 +12645,124 @@ quantisation 13 values, P(mound | low p) 0.174, reliability diagram,
 verifier miscalibration at high end, Obs 269 paper figure.
 
 ---
+
+## Observation 270: Subtype-classification accuracy on the 4-map gold-standard — weighted-F1 = 0.887, driven by a benchmark→triangulation confusion, and settlement class is missed not misclassified (2026-04-20)
+
+Quantitative follow-up to Obs 266. Analysis run per `planning/gold-standard-classification-accuracy-plan.md` on the 569 expert-digitised GT features (burial 456 / benchmark 65 / triangulation 43 / settlement 5) against the proposer-stage `consensus-4of5.geojson` (607 detections). See `results/gold-standard-subtype-classification/`.
+
+### Headline (50 m buffer, 4-of-5 consensus)
+
+| Metric | Value | 95 % bootstrap CI |
+|---|---|---|
+| Weighted-F1 (HEADLINE) | 0.887 | [0.849, 0.922] |
+| Macro-F1 | 0.772 | [0.660, 0.822] |
+| Matched-pair accuracy | 0.904 | — |
+| Cohen's kappa (unweighted) | 0.728 | [0.658, 0.797] |
+| Cohen's kappa (linear hierarchical) | 0.736 | [0.664, 0.804] |
+| Multi-class Matthews (MCC) | 0.744 | [0.681, 0.807] |
+| Level-1 accuracy (matched pairs only) | 1.000 | — |
+| Level-2 accuracy (within mound-family) | 0.904 | — |
+
+### Obs 266 sub-patterns: quantitative verdict
+
+1. **Compound-boundary over-assignment** (sub-pattern 1): **partially confirmed**. 74 predicted triangulation_mound vs 43 GT (+72 %); 67 predicted benchmark vs 65 GT (+3 %). Over-prediction is present for triangulation but NOT benchmark.
+2. **Built-environment → settlement_mound** (sub-pattern 2): **not confirmed on this subset**. Only 2 of 4 predicted settlements are spurious (n too small to generalise).
+3. **Settlement-class under-assignment** (sub-pattern 3): **confirmed but via missed-detection rather than misclassification**. Settlement fate: 2 of 5 correctly classified (fid 6 on K-35-052-4 at 9.5 m; fid 26 on Elenovo at 3.5 m); 3 of 5 have NO detection within 50 m (fids 1, 3, 4 on K-35-052-4). No matched settlement was misclassified — the error lives in unmatched_ref, not in the 4×4 confusion cells.
+
+### A new sub-pattern not anticipated by Obs 266
+
+The **largest off-diagonal confusion cell is benchmark_mound → triangulation_mound** (27 of 47 matched benchmarks, 57 %). When a benchmark-on-mound is correctly located, the VLM calls it a triangulation-on-mound more than half the time. The reverse (triangulation → benchmark) is 0. Benchmark per-class recall is 0.255; triangulation per-class precision is 0.542 (because 27 of its 59 matched trig predictions are actually benchmarks). This is a **within-compound asymmetric confusion**, distinct from the plain-vs-compound axis in Obs 266's original taxonomy.
+
+### Consensus threshold does NOT buy subtype accuracy
+
+Sweep across 3-of-5 / 4-of-5 / 5-of-5: weighted-F1 = 0.891 / 0.887 / 0.888 (flat). Kappa creeps from 0.728 → 0.739 (negligible). This contradicts the analogy to Obs 269's verifier-calibration — vote-share is a signal for **detection** quality but NOT for **subtype** quality. Higher consensus discards uncertain detections proportionally across all subtypes; the benchmark → triangulation confusion is approximately equally present at every threshold.
+
+### Buffer is irrelevant
+
+Weighted-F1 at 20 / 30 / 50 m: 0.888 / 0.887 / 0.887. The subtype-error pattern is not an artefact of loose matching (the risk flagged in plan §9 is inactive).
+
+### Per-map diagnostic
+
+Rakovski carries the largest subtype-error load (accuracy 0.865, weighted-F1 0.835), driven by its disproportionate benchmark count (31 of 65 benchmarks in the corpus). Lesovo (n=9 matched) is perfect but under-powered.
+
+### Implications
+
+- **Paper headline for subtype section**: weighted-F1 = 0.887 [0.849, 0.922] at 50 m / 4-of-5. Report per-class F1 alongside: burial 0.985, benchmark 0.407, triangulation 0.696, settlement 1.000 (2/2).
+- **The subtype output should be presented as advisory**: Level-2 accuracy of 0.904 is misleading without the per-class recall (benchmark 0.255) that reveals the asymmetry.
+- **Prompt-engineering remediation** targets benchmark → triangulation specifically — visual negatives showing the two compound symbols side-by-side with explicit "distinguish these" framing.
+- **The settlement under-assignment** (Obs 266 sub-pattern 3) is a detection problem, not a classification problem. The prompts may need stronger positive examples for tell morphology.
+
+### Relationship to prior observations
+
+- **Obs 266**: this is the quantitative verification. Sub-pattern 3 confirmed (via missed detection). Sub-pattern 1 confirmed for triangulation but not benchmark. Sub-pattern 2 under-powered on this corpus.
+- **Obs 269** (verifier quantisation / over-confidence): the consensus-sweep null finding here is a different flavour — vote-share carries signal for detection correctness but not for subtype correctness.
+- **Obs 270 and Obs 266**: the paper's subtype discussion can cite Obs 270 for the numbers and Obs 266 for the failure taxonomy.
+
+### Reproducibility
+
+Script: `scripts/analyse_subtype_classification.py` (v1.0.0). Git commit at run time: `508f7698`. 10 000 bootstrap iterations, seed 42, matched-pair-level bootstrap stratified by map. Outputs: `results/gold-standard-subtype-classification/`.
+
+### Findable later
+
+Search terms: subtype classification accuracy 0.887, benchmark triangulation confusion 57 percent, settlement under-assignment unmatched, consensus-threshold sweep subtype, Obs 266 quantitative verification, gold-standard 4-map subtype analysis, weighted-F1 paper headline.
+
+---
+
+## Observation 271: Asymmetric within-compound confusion — benchmark_mound → triangulation_mound at 57 %, triangulation_mound → benchmark_mound at 0 % (2026-04-21)
+
+Mechanistic drill-down on the largest off-diagonal cell surfaced by Obs 270's 4×4 matched-pairs confusion matrix. The Level-2 subtype error is dominated by a single asymmetric attractor: a benchmark-on-burial-mound is systematically read as a triangulation-on-burial-mound, but not vice versa. This failure mode is **not predicted by Obs 266's original taxonomy**, which treated "compound-boundary over-assignment" (sub-pattern 1) as a symmetric over-prediction of both compound classes.
+
+### The asymmetry in raw counts
+
+| From (GT)             | → burial | → benchmark | → triangulation | → settlement | Total matched | Self-recall |
+|-----------------------|---------:|------------:|----------------:|-------------:|--------------:|------------:|
+| burial_mound          |      294 |           0 |               0 |            0 |           294 |       1.000 |
+| benchmark_mound       |        8 |          12 |              27 |            0 |            47 |       0.255 |
+| triangulation_mound   |        1 |           0 |              32 |            0 |            33 |       0.970 |
+| settlement_mound      |        0 |           0 |               0 |            2 |             2 |       1.000 |
+
+- Benchmark self-recall: **0.255** (12 / 47). Off-diagonal into triangulation: **0.574** (27 / 47). The incorrect label beats the correct label by more than 2×.
+- Triangulation self-recall: **0.970** (32 / 33). Off-diagonal into benchmark: **0.000** (0 / 33).
+- Triangulation precision collapses to **0.542** because 27 of its 59 matched predictions are in reality benchmarks — an effect invisible in recall alone.
+
+### Distribution by map
+
+| Map                    | benchmark GT (matched) | → triangulation | Benchmark recall |
+|------------------------|-----------------------:|----------------:|-----------------:|
+| K-35-052-4 (Elhovo NW) |                     10 |               5 |            0.400 |
+| K-35-053-3 (Elenovo)   |                     12 |               7 |            0.333 |
+| K-35-062-2 (Rakovski)  |                     25 |              15 |            0.160 |
+| K-35-078-1 (Lesovo)    |                      0 |               0 |                — |
+
+Rakovski contributes 15 of 27 confusions (56 %) and has the weakest benchmark recall (0.160). Rakovski also carries 31 of 65 benchmark GT features corpus-wide (48 %), so its dense benchmark population amplifies the error. The pattern is present on every map that carries benchmarks — not a single-map artefact.
+
+### Mechanism hypotheses
+
+1. **Symbol similarity + triangulation-as-default attractor.** Both symbols are compound marks placed on top of the burial-mound circle — a filled triangle for triangulation, a cross/asterisk for benchmark. At the pixel scale of the 384 px crops, the discriminative mark-shape may sit below the feature resolution the VLM reliably attends to, and the VLM falls back to a "mark on mound → triangulation" prior. **Plausibility: high**; this is the hypothesis to foreground in the paper.
+2. **Prompt-level imbalance.** The current prompt/system-instruction may describe triangulation more canonically than benchmark; or "triangulation" may be over-represented in the VLM's training distribution for Bulgarian topographic symbols. **Plausibility: medium**; testable by inspecting the prompts.
+3. **Vote-share does not stabilise this decision.** The consensus-threshold sweep in Obs 270 shows the benchmark → triangulation cell is approximately constant across 3/5, 4/5, and 5/5. Five independent VLM passes converge on the wrong answer. **This is a confident systematic error, not a vote-noise artefact** — which strengthens Hypothesis 1 and weakens any "add more passes" remediation.
+
+### Remediation targets (future-work candidates)
+
+- **Prompt engineering**: add a "benchmark vs triangulation" disambiguation block — side-by-side visual pair with discriminative-feature annotation, explicit negative-example framing ("if the mark is X, it is a benchmark, not a triangulation").
+- **Crop resolution**: re-run on higher-resolution crops (768 px or native) to test whether mark-shape legibility is the bottleneck.
+- **Class prior correction**: if feasible, counteract the triangulation-as-default attractor via generation parameters or a calibration post-processor.
+
+None of these are scoped for the current paper; they form a natural Phase 2b follow-up.
+
+### Relationship to prior observations
+
+- **Obs 266, sub-pattern 1**: predicted symmetric over-assignment of both compound classes. Obs 271 refines this — only triangulation is over-predicted, and that over-prediction is partly driven by mis-labelled benchmarks rather than genuine phantom triangulations.
+- **Obs 270**: Obs 271 is the mechanistic drill-down. Obs 270 reports the number (27 cells, 57 %); Obs 271 explains the asymmetry and proposes the hypothesis.
+- **Obs 269** (verifier quantisation): the verifier cannot repair this error because the proposer's five passes agree confidently on the wrong answer. An over-confident verifier applied to a systematically-wrong proposer output yields a systematically-wrong high-confidence pipeline output. Architectural complement.
+- **Obs 264** (centroid bias): different failure mode. Centroid bias is a localisation error; benchmark → triangulation is a pure classification error on already-correctly-localised features (matched within ≤50 m).
+
+### Paper implication
+
+The "subtype output is advisory" framing for the paper (Obs 270 implication) needs a specific paragraph on benchmark_mound as the weakest-evidence class. One-line caveat is insufficient — quote the 27/47 cell, the triangulation_mound precision collapse (0.542), and the zero reverse confusion. The remediation targets above belong in the future-work section.
+
+### Findable later
+
+Search terms: benchmark triangulation asymmetry, 27 of 47 confusion, triangulation default attractor, benchmark recall 0.255, Rakovski benchmark density, within-compound Level-2 error, mark-on-mound symbol similarity, prompt engineering benchmark triangulation, Obs 271.
+
+---

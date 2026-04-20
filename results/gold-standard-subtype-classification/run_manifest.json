@@ -1,0 +1,29 @@
+{
+  "git_commit": "508f7698",
+  "version": "1.0.0",
+  "seed": 42,
+  "bootstrap_n": 10000,
+  "buffers": [
+    20,
+    30,
+    50
+  ],
+  "headline_buffer_m": 50,
+  "consensus_thresholds": [
+    3,
+    4,
+    5
+  ],
+  "headline_threshold": 4,
+  "gt_dir": "inputs/vectors/references",
+  "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "detections_headline": "outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson",
+  "n_ground_truth_features": 569,
+  "vocabulary_mapping": {
+    "Burial mound": "burial_mound",
+    "Burial Mound": "burial_mound",
+    "Bench mark on burial mound": "benchmark_mound",
+    "Triangulation point on burial mound": "triangulation_mound",
+    "Settlement mound": "settlement_mound"
+  }
+}

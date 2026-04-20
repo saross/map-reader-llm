@@ -1,0 +1,22 @@
+2026-04-20 13:37:32,844 INFO analyse_subtype_classification: git commit: 508f7698
+2026-04-20 13:37:32,844 INFO analyse_subtype_classification: vocabulary mapping: {'Burial mound': 'burial_mound', 'Burial Mound': 'burial_mound', 'Bench mark on burial mound': 'benchmark_mound', 'Triangulation point on burial mound': 'triangulation_mound', 'Settlement mound': 'settlement_mound'}
+2026-04-20 13:37:32,844 INFO analyse_subtype_classification: GT dir SHA256s:
+2026-04-20 13:37:32,844 INFO analyse_subtype_classification:   8ff028b1d3722ce3  reference_K-35-052-4_32635.geojson
+2026-04-20 13:37:32,844 INFO analyse_subtype_classification:   d00240ab176c750e  reference_K-35-053-3_Elenovo.geojson
+2026-04-20 13:37:32,845 INFO analyse_subtype_classification:   bb9cba32cb283443  reference_K-35-062-2_Rakovski.geojson
+2026-04-20 13:37:32,845 INFO analyse_subtype_classification:   ae7c9f8af786c12f  reference_K-35-078-1_Lesovo.geojson
+2026-04-20 13:37:32,845 INFO analyse_subtype_classification: bounds SHA256: 16ef76c69f01124e  full_evaluation_bounds.geojson
+2026-04-20 13:37:32,873 INFO analyse_subtype_classification: Loaded 569 GT features across 4 files; by subtype: {'settlement_mound': 5, 'burial_mound': 456, 'benchmark_mound': 65, 'triangulation_mound': 43}
+2026-04-20 13:37:32,878 INFO analyse_subtype_classification: GT total features loaded: 569 (expected 569)
+2026-04-20 13:37:32,879 INFO analyse_subtype_classification: === Analysing consensus 3/5 → outputs/h11/gold-standard-v2/consensus/consensus-3of5.geojson (SHA256=2993eecbc9164ea4) ===
+2026-04-20 13:37:32,892 INFO analyse_subtype_classification: Loaded 865 detections from consensus-3of5.geojson; by subtype: {'burial_mound': 669, 'triangulation_mound': 88, 'benchmark_mound': 104, 'settlement_mound': 4}
+2026-04-20 13:37:34,471 INFO analyse_subtype_classification: Running 10000-iteration bootstrap at buffer=50 m ...
+2026-04-20 13:38:09,071 INFO analyse_subtype_classification: === Analysing consensus 4/5 → outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson (SHA256=a5f0d471f418c68f) ===
+2026-04-20 13:38:09,078 INFO lib_consensus: Overriding declared CRS EPSG:4326 → EPSG:32635 for consensus-4of5.geojson (coordinates are already projected, x=413477)
+2026-04-20 13:38:09,078 INFO analyse_subtype_classification: Loaded 607 detections from consensus-4of5.geojson; by subtype: {'burial_mound': 462, 'triangulation_mound': 74, 'benchmark_mound': 67, 'settlement_mound': 4}
+2026-04-20 13:38:10,304 INFO analyse_subtype_classification: Running 10000-iteration bootstrap at buffer=50 m ...
+2026-04-20 13:38:44,577 INFO analyse_subtype_classification: === Analysing consensus 5/5 → outputs/h11/gold-standard-v2/consensus/consensus-5of5.geojson (SHA256=61a3af0a52410f00) ===
+2026-04-20 13:38:44,582 INFO analyse_subtype_classification: Loaded 405 detections from consensus-5of5.geojson; by subtype: {'burial_mound': 310, 'triangulation_mound': 57, 'benchmark_mound': 36, 'settlement_mound': 2}
+2026-04-20 13:38:45,509 INFO analyse_subtype_classification: Running 10000-iteration bootstrap at buffer=50 m ...
+2026-04-20 13:39:18,355 INFO analyse_subtype_classification: Using consensus 4/5 as headline threshold.
+2026-04-20 13:39:18,374 INFO analyse_subtype_classification: All outputs written to results/gold-standard-subtype-classification
