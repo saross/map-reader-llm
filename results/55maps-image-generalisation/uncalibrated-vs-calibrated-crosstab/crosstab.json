@@ -1,0 +1,132 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-20T07:33:47.285914+00:00",
+  "provenance": {
+    "uncalibrated_csv": "/home/shawn/Code/map-reader-llm/archive/human-review-sessions/human-review-55maps-image-uncalibrated-2026-04-20.csv",
+    "calibrated_csv": "/home/shawn/Code/map-reader-llm/results/55maps-image-generalisation/human-review.csv",
+    "measured_json": "/home/shawn/Code/map-reader-llm/outputs/55maps-image-generalisation/evaluation/evaluation.json",
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "counts": {
+    "n_uncalibrated_total": 327,
+    "n_calibrated_total": 1028,
+    "n_overlap": 327,
+    "n_agree": 257,
+    "n_disagree": 70,
+    "both_mound": 186,
+    "both_not_mound": 71,
+    "uncal_mound_to_cal_not_mound": 70,
+    "uncal_not_mound_to_cal_mound": 0
+  },
+  "rates": {
+    "agreement_rate": 0.7859327217125383,
+    "disagreement_rate": 0.21406727828746178,
+    "disagreement_rate_ci_95": [
+      0.1712538226299694,
+      0.2599388379204893
+    ]
+  },
+  "probability_stratification": [
+    {
+      "bin": "[0.90, 1.00]",
+      "n": 327,
+      "n_disagree": 70,
+      "disagreement_rate": 0.21406727828746178,
+      "n_uncal_mound_to_cal_not": 70,
+      "n_uncal_not_to_cal_mound": 0
+    },
+    {
+      "bin": "[0.70, 0.90)",
+      "n": 0,
+      "n_disagree": 0,
+      "disagreement_rate": 0.0,
+      "n_uncal_mound_to_cal_not": 0,
+      "n_uncal_not_to_cal_mound": 0
+    },
+    {
+      "bin": "[0.50, 0.70)",
+      "n": 0,
+      "n_disagree": 0,
+      "disagreement_rate": 0.0,
+      "n_uncal_mound_to_cal_not": 0,
+      "n_uncal_not_to_cal_mound": 0
+    },
+    {
+      "bin": "[0.15, 0.50)",
+      "n": 0,
+      "n_disagree": 0,
+      "disagreement_rate": 0.0,
+      "n_uncal_mound_to_cal_not": 0,
+      "n_uncal_not_to_cal_mound": 0
+    }
+  ],
+  "symbol_type_flow": {
+    "bench_mark_on_mound": {
+      "bench_mark_on_mound": 22,
+      "burial_mound": 0,
+      "not_mound": 4,
+      "settlement_mound": 0,
+      "trig_point_on_mound": 0
+    },
+    "burial_mound": {
+      "bench_mark_on_mound": 0,
+      "burial_mound": 146,
+      "not_mound": 62,
+      "settlement_mound": 0,
+      "trig_point_on_mound": 0
+    },
+    "not_mound": {
+      "bench_mark_on_mound": 0,
+      "burial_mound": 0,
+      "not_mound": 71,
+      "settlement_mound": 0,
+      "trig_point_on_mound": 0
+    },
+    "settlement_mound": {
+      "bench_mark_on_mound": 0,
+      "burial_mound": 0,
+      "not_mound": 2,
+      "settlement_mound": 2,
+      "trig_point_on_mound": 0
+    },
+    "trig_point_on_mound": {
+      "bench_mark_on_mound": 0,
+      "burial_mound": 1,
+      "not_mound": 2,
+      "settlement_mound": 0,
+      "trig_point_on_mound": 15
+    }
+  },
+  "corrected_f1_accounting": {
+    "buffer_metres": 50,
+    "measured": {
+      "tp": 3636.834,
+      "fp": 1028.1660000000002,
+      "fn": 1132.7843606557378,
+      "precision": 0.7796,
+      "recall": 0.7625,
+      "f1": 0.771
+    },
+    "overlap_mounds_under_calibrated": 186,
+    "overlap_mounds_under_uncalibrated": 256,
+    "phantom_tp_full_calibrated": 472,
+    "phantom_tp_mixed_uncal_on_overlap": 542,
+    "corrected_all_calibrated": {
+      "precision": 0.8807789924973204,
+      "recall": 0.7838865245973337,
+      "f1": 0.8295129277046317
+    },
+    "corrected_mixed_uncal_on_overlap": {
+      "precision": 0.8957843515541264,
+      "recall": 0.7867346101055551,
+      "f1": 0.8377255396437426
+    },
+    "delta_all_calibrated_minus_mixed": {
+      "precision": -0.015005359056806,
+      "recall": -0.002848085508221465,
+      "f1": -0.008212611939110936
+    },
+    "interpretation": "Positive delta = calibrated UI produced a higher corrected F1 than the uncalibrated labels would have on the same overlap. This isolates the UI-induced change to the 327 overlapping candidates; the 701 non-overlap rows use calibrated labels in both regimes (only labels available)."
+  }
+}

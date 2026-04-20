@@ -11874,7 +11874,40 @@ convention.
 
 ---
 
-## Observation 263: Crop-based human verification has an ~10–15% irreducible ambiguity floor — less accurate than full-map gold-standard digitisation (2026-04-20)
+## Observation 263: Crop-based human verification is decision-noisy without a calibrated tolerance guide — ~21% of uncalibrated judgements flipped one-directionally when the 50 m tolerance circle was added (2026-04-20; revised post-analysis)
+
+### Revision note (2026-04-20 post-analysis)
+
+Initial framing described a "~10–15% irreducible ambiguity floor" concentrated
+in a low-verifier-confidence band. The empirical cross-tabulation between the
+uncalibrated and calibrated review sessions (n=327 overlap; see
+`results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/`)
+revises this framing in two ways:
+
+1. The ambiguity band is **larger** than the initial 10–15% estimate —
+   21.4% of uncalibrated decisions flipped under the calibrated UI
+   (95% CI [17.1%, 26.0%]), even though the 327 overlap candidates were
+   entirely at p=1.000 (the in-session reviewer was being more generous
+   than he realised).
+2. The band is **NOT concentrated at low verifier confidence** as initially
+   predicted. The uncalibrated session happened to review only the
+   top-of-queue (p=1.000) candidates, so the low-p prediction cannot be
+   tested from the cross-tab — but the 21% flip rate at the STRICTEST
+   confidence bin is a stronger UI effect than the original observation
+   anticipated.
+3. All 70 flips were one-directional: uncalibrated=mound →
+   calibrated=not_mound. Zero went the other way. The tolerance circle
+   uniformly **tightened** reviewer judgement. This empirically confirms
+   the "corrected F1 is a lower bound" framing added later in this
+   observation. Captured as Obs 268.
+
+Updated framing: the ambiguity band is **spatial-tolerance-driven across all
+confidence levels**, not concentrated in low-p candidates. The tolerance
+circle's main methodological contribution is transforming "is this symbol
+close enough?" from an uncalibrated visual judgement into a binary geometric
+check, with a measurable ~21% tightening effect.
+
+### Initial qualitative breakdown (kept for context)
 
 Noted during the ongoing human review of 1,028 VLM-only candidates from the
 55-map image generalisation run (planning item #7). Shawn's qualitative
@@ -11885,6 +11918,11 @@ breakdown of what he encountered while classifying crops:
 | Unambiguously clear | ~70% | Symbol at or very near centre, or crop is clearly empty / clearly shows a non-mound feature |
 | Probably clear | ~15% | Mild offset or mild clutter; a confident call is possible but not effortless |
 | Genuinely ambiguous | ~10–15% | Reviewer is making a fuzzy-boundary call — how far off-centre is too far? do the five mounds scattered around the centre count, or is this a near-miss? |
+
+The qualitative breakdown held up for the ~70% clear-either-way cases. The
+30% borderline band turned out to be empirically wider than the initial
+~15% estimate once the tolerance circle was applied, per the cross-tab
+revision above.
 
 ### Why this matters methodologically
 
@@ -12289,9 +12327,20 @@ Continuing the calibrated human review surfaced a distinct pattern not captured 
 - **Obs 264** (centroid bias): orthogonal. Subtype errors occur on candidates whose centroid is correctly placed.
 - **Obs 265** (visual confounds): adjacent but distinct. Some Obs 265 confounds (e.g. built-environment → `settlement_mound`) ARE subtype errors; but Obs 265 also covers cases where detection itself is wrong (no mound of any class). Obs 266 specifically covers cases where *some* mound-or-marker is present but the subtype boundary is crossed.
 
+### Follow-up plan
+
+Quantitative verification of Obs 266's sub-pattern claims is scoped in
+`planning/gold-standard-classification-accuracy-plan.md` (ready to execute
+2026-04-20). The analysis reports a 4×4 confusion matrix on the 4-map
+gold-standard subset (569 expert-labelled features) with a hierarchical
+2-level decomposition that aligns directly with the sub-patterns above
+(Level-1: mound-family vs settlement = sub-pattern 3; Level-2: plain vs
+compound markers = sub-patterns 1–2). Metric-set decisions are recorded
+in `planning/gold-standard-classification-metrics-decisions.md`.
+
 ### Findable later
 
-Search terms: subtype classification accuracy, subtype-boundary failure, plain surveying marker vs compound-on-mound, built-environment vs tell, triangulation point not mound, benchmark not mound, settlement_mound over-assignment, Obs 266 subtype-precision ceiling.
+Search terms: subtype classification accuracy, subtype-boundary failure, plain surveying marker vs compound-on-mound, built-environment vs tell, triangulation point not mound, benchmark not mound, settlement_mound over-assignment, Obs 266 subtype-precision ceiling, gold-standard-classification-accuracy-plan.
 
 ---
 
@@ -12435,5 +12484,164 @@ a tighter tolerance circle.
 Search terms: corrected F1 human-reviewed, phantom TP rate, 472 phantom,
 0.830 corrected, D-S vs human review gap, reviewer-conservative lower bound,
 50 m only correction, Obs 267 headline.
+
+---
+
+## Observation 268: The calibrated tolerance-circle UI tightened reviewer judgement by ~21%, one-directionally — empirical confirmation of the "corrected F1 is a lower bound" claim (2026-04-20)
+
+Cross-tabulated the 327 candidates reviewed under the original uncalibrated
+UI against their re-review under the calibrated 50 m tolerance-circle UI.
+Outputs: `results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/`.
+
+### Headline numbers
+
+- **Agreement rate**: 78.6% (257/327 identical labels)
+- **Disagreement rate**: 21.4% (70/327), 95% CI [17.1%, 26.0%] over
+  10,000 bootstrap iterations
+- **Direction of disagreement**: 70/70 flips went `uncal=mound →
+  cal=not_mound`. **Zero** flips went the other way.
+- **Symbol-type pattern**: 62 of 208 uncal `burial_mound` classifications
+  (30%) were reclassified `not_mound`; 4 of 26 uncal `bench_mark_on_mound`
+  (15%) also lost. No class was re-classified upward into a mound type.
+
+### Corrected-F1 impact
+
+If the paper used the uncalibrated labels for the 327 overlap subset (and
+calibrated labels for the remaining 701), corrected F1 would be 0.838 vs
+0.830 under fully calibrated labels — an +0.008 inflation. The calibrated
+review is genuinely more conservative (see Obs 267 for the headline).
+
+### Why this matters
+
+1. **Empirically confirms the "conservative bias" / "lower bound" framing**
+   in Obs 263 and Obs 267. The reviewer was systematically more permissive
+   without the calibration aid, and the calibrated result is therefore a
+   defensible lower-bound estimate.
+2. **Revises Obs 263's low-p prediction**. The 327 overlap candidates were
+   all at verifier p=1.000 (uncalibrated session reviewed top-of-queue).
+   21% flipping at the *strictest* confidence bin is a stronger UI effect
+   than Obs 263 originally expected — and it is spatial-tolerance-driven,
+   not verifier-confidence-driven.
+3. **Validates the decision to restart the review from scratch** after
+   adding the tolerance circle. Had the uncalibrated 327 been kept, ~70
+   candidates would have been miscounted as phantom TPs, inflating the
+   corrected F1 by ~0.008. The restart was the right call.
+4. **Supports Obs 263's claim that the next-generation review app should
+   use continuous-confidence / spatial-pinpoint input**. A 21% binary-flip
+   rate on "close enough?" judgements is a large residual that a
+   continuous-confidence UI would expose rather than collapse.
+
+### Caveats
+
+- The 327 rows are all at p=1.000 by sampling accident. Whether the flip
+  rate is higher or lower at lower verifier confidence remains untested by
+  this analysis. (Obs 269 addresses the verifier's actual discrimination.)
+- Sample size of 327 is moderate; the 95% CI [17.1%, 26.0%] is honest
+  about the precision of the point estimate.
+
+### Findable later
+
+Search terms: calibrated tolerance circle effect, one-directional flip,
+21 percent tightening, reviewer conservative bias confirmation, Obs 263
+revision evidence, Obs 268 UI-effect quantification.
+
+---
+
+## Observation 269: The pipeline's verifier is over-confident at the high end of its output range and heavily quantised — AUC=0.65 at the binary "is-this-a-mound?" task (2026-04-20)
+
+Cross-tabulated verifier probability against human-review labels on the
+1,028 VLM-only candidates from the 55-map image generalisation set.
+Outputs: `results/55maps-image-generalisation/verifier-calibration-crosstab/`
+(includes calibration.json/md, reliability-diagram.png, roc-curve.png,
+pr-curve.png).
+
+### Three findings that invert in-session hypotheses
+
+**Finding 1: The verifier is OVER-confident, not under-confident.**
+
+Expected Calibration Error (ECE) = 0.269 — very poor. Every populated bin
+above p=0.30 shows empirical P(mound) well below the mean predicted
+probability, and the gap widens with predicted confidence:
+
+| Bin | Mean predicted p | Empirical P(mound) | Gap |
+|---|---:|---:|---:|
+| (0.70, 0.90] | 0.83 | 0.57 | −0.26 |
+| (0.90, 0.95] | 0.95 | 0.62 | −0.33 |
+| (0.99, 1.00] | 1.00 | 0.55 | −0.45 |
+
+370 candidates received p=1.00 ("certain") but only 55% were real mounds.
+
+**Finding 2: AUC = 0.6545 (95% CI [0.622, 0.687]).**
+
+Barely better than chance. The verifier provides weak discrimination
+overall. The in-session impression that the verifier was doing "honest
+discriminative work" at low p (Obs 267 drafts; the 4/4 low-p hits I flagged
+during review) was anecdotal — at scale the pattern is very different.
+
+**Finding 3: The "verifier under-confident at low p" hypothesis is
+FALSIFIED at scale.**
+
+P(mound | p ≤ 0.25) = 0.174 (95% CI [0.127, 0.224]). Only 17% of the
+low-p tail are real mounds — substantially *below* the overall prevalence
+of 0.459. The 4/4 spot-check during live review was a small-sample
+artefact. At scale, the verifier discriminates correctly at the low end;
+its failure is at the high end.
+
+### Heavy quantisation of the probability output
+
+Only 13 distinct probability values across 1,028 candidates, with 370 at
+exactly p=1.00 and 180 at exactly p=0.95. The (0.95, 0.99] bin is empty.
+This **limits any threshold-triage strategy** — the verifier cannot express
+fine-grained confidence, so thresholds above 0.95 don't meaningfully exist.
+
+### Class-specific calibration
+
+Per-symbol Brier score is dominated by the `not_mound` class (Brier 0.524):
+the verifier confidently mis-scores false positives (mean predicted p=0.625
+for items that are all negatives). Mound-subclass Brier scores are all
+well-resolved (0.06-0.09) because all are positives with mean predicted
+p≈0.85. Settlement_mound n=13 is too small for strong inference.
+
+### Threshold-sweep implication
+
+Raising the threshold from 0.15 to 0.70 improves within-set precision from
+0.459 to 0.569 (+0.11) at the cost of dropping recall from 1.00 to 0.85.
+Within-set F1 peaks at 0.683 around thresholds 0.50-0.70. **The current
+0.15 threshold is permissive, but a tighter threshold would only
+marginally improve selectivity while discarding ~15% of true mounds** —
+because the verifier's distribution is too quantised to give a strong
+sweet spot.
+
+### Paper implications
+
+1. **The failure-mode taxonomies in Obs 264/265/266 have a structural
+   complement**: the verifier isn't filtering the FPs these failure modes
+   produce because its probability is miscalibrated at the high end where
+   most candidates live. The pipeline's precision ceiling is architectural,
+   not just prompt-level.
+2. **The "verifier does discriminative work" framing in Obs 267 needs
+   revision.** It does some work at the low end (low-p → low P(mound)), but
+   the bulk of the detection load is at high p where the verifier is
+   effectively saturated. A finer-grained probability output (logprobs?
+   multi-pass averaging? a different verifier model?) would be more
+   informative than tuning the current threshold.
+3. **A paper figure panel**: reliability-diagram.png plus roc-curve.png
+   directly visualise this finding. The reliability diagram is the most
+   publication-worthy — the gap between predicted confidence and empirical
+   frequency is stark.
+
+### Caveat
+
+The "ground truth" for this analysis is the human-review labels — which
+are themselves conservative (Obs 263, Obs 268). The empirical P(mound)
+values may be slightly under-stated relative to an idealised ground truth,
+but the magnitude of the over-confidence gap (−0.26 to −0.45 across bins)
+is far too large to be explained by reviewer-conservatism alone.
+
+### Findable later
+
+Search terms: verifier over-confidence, ECE 0.269, AUC 0.65, probability
+quantisation 13 values, P(mound | low p) 0.174, reliability diagram,
+verifier miscalibration at high end, Obs 269 paper figure.
 
 ---
