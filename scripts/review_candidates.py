@@ -1,18 +1,37 @@
 #!/usr/bin/env python3
 """Streamlit app for human review of VLM detection candidates.
 
-Presents crop images of measured false positives (candidates accepted
-by the pipeline but unmatched to student ground truth) for human
-classification by symbol type. Provides running corrected precision
-and F1 estimates.
+Presents context crops of detection candidates with five concentric
+tolerance rings (50 / 75 / 100 / 125 / 150 m) so reviewers can flag
+real mounds that are pulled beyond the primary 50 m tolerance by
+attractor labels (numbers, letters, trig symbols). The reviewer picks
+the tightest enclosing ring per mound (or marks the candidate as
+not_mound / mound beyond 150 m).
 
-Usage:
+By default the app presents the FP queue at 50 m as the primary
+re-review target. Enable the sidebar toggle
+"Include confirmed mounds (re-check yesterday's TPs)" to also cycle
+through yesterday's accepted-TP candidates with their prior answers
+pre-populated — useful for correcting errors from a prior review
+session.
+
+Usage (55-map image-generalisation multi-buffer re-review):
+
     streamlit run scripts/review_candidates.py -- \\
-        --crops-dir outputs/55maps-generalisation/crops \\
-        --probabilities outputs/55maps-generalisation/verified/probabilities.json \\
-        --ground-truth inputs/vectors/references/student-mounds-55maps.geojson \\
+        --crops-dir outputs/55maps-image-generalisation/crops \\
+        --probabilities \\
+            outputs/55maps-image-generalisation/verified/probabilities.json \\
+        --ground-truth \\
+            inputs/vectors/references/student-mounds-55maps-reviewed.geojson \\
         --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson \\
-        --output results/55maps-generalisation/human-review.csv
+        --output \\
+            results/55maps-image-generalisation/human-review-multi-buffer.csv \\
+        --prev-review results/55maps-image-generalisation/human-review.csv
+
+Output CSV schema matches the 2026-04-20 single-buffer review, with
+``buffer_metres`` now taking values in ``{50, 75, 100, 125, 150, 200}``
+where ``200`` is the sentinel for "mound visible beyond 150 m". For
+not_mound / uncertain rows the ``buffer_metres`` cell is empty.
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -59,13 +78,39 @@ _DEFAULT_BUFFER = 50
 # Context crop defaults. The render reads a ``context_m``-wide window
 # from the source raster, centred on the candidate centroid, and
 # upscales to ``_DISPLAY_PX`` via LANCZOS so map symbols remain legible
-# at the ~5 m/px native resolution. 300 m × 300 m matches the GT
-# deduplication app convention (see ``scripts/review_gt_duplicates.py``)
-# and puts the 50 m tolerance circle at roughly 1/3 of the display
-# width — a comfortable visual scale for "is this symbol close to
-# centre?" decisions.
-_DEFAULT_CONTEXT_M = 300.0
+# at the ~5 m/px native resolution. 400 m × 400 m accommodates the
+# five-ring multi-buffer display (rings at 50/75/100/125/150 m) with
+# comfortable margin for the outermost ring's label; single-ring legacy
+# reviews can override via ``--context-m 300`` for tighter framing.
+_DEFAULT_CONTEXT_M = 400.0
 _DISPLAY_PX = 600
+
+# Concentric tolerance rings used in multi-buffer review mode. The 50 m
+# ring is the reference tolerance from the 2026-04-20 review; outer
+# rings let reviewers flag mounds pulled beyond 50 m by attractor
+# labels (numbers, letters, trig symbols) without having to re-matched
+# at a wider buffer mechanically.
+_BUFFER_BANDS_DEFAULT: tuple[int, ...] = (50, 75, 100, 125, 150)
+# Three anchor labels — inner reference, mid, outer. 75 and 125 m rings
+# stay unlabelled to reduce visual clutter over map content; they are
+# unambiguously "the ring between" two labelled neighbours.
+_LABEL_BANDS: tuple[int, ...] = (50, 100, 150)
+# Per-ring (stroke_width_px, opacity_0_255). Inner ring boldest and
+# fully opaque (reference); outer rings taper to keep them visually
+# subordinate.
+_BAND_STYLES: dict[int, tuple[int, int]] = {
+    50: (3, 255),
+    75: (2, 230),
+    100: (2, 210),
+    125: (2, 190),
+    150: (2, 170),
+}
+_MAGENTA = (255, 0, 255)
+# Sentinel buffer value in the output CSV for mounds visible beyond the
+# outermost 150 m ring. Kept numeric (not a string) so downstream
+# analysis can filter via ``buffer_metres <= X`` without NaN handling
+# for the mound-beyond-150 subset.
+_BEYOND_150_SENTINEL = 200
 
 # Symbol classification options
 SYMBOL_TYPES = {
@@ -180,25 +225,67 @@ def _placeholder_image(
     return img
 
 
+def _draw_ring_label(
+    draw: "ImageDraw.ImageDraw",
+    text: str,
+    cx: int,
+    ring_top_y: int,
+) -> None:
+    """Draw a labelled magenta-on-dark text box just above a ring's top edge.
+
+    The label sits centred on ``cx`` with its bottom 2 px above
+    ``ring_top_y`` (the ring's 12 o'clock pixel row). A semi-opaque
+    black rectangle behind the text gives legibility over busy map
+    content. Falls back to a fixed-width estimate if the PIL
+    ``textbbox`` API is unavailable.
+    """
+    try:
+        bbox = draw.textbbox((0, 0), text)
+        text_w = bbox[2] - bbox[0]
+        text_h = bbox[3] - bbox[1]
+    except (AttributeError, TypeError):
+        text_w = 6 * len(text)
+        text_h = 11
+    pad = 3
+    box_w = text_w + 2 * pad
+    box_h = text_h + 2 * pad
+    box_left = cx - box_w // 2
+    box_top = ring_top_y - box_h - 2
+    draw.rectangle(
+        [(box_left, box_top), (box_left + box_w, box_top + box_h)],
+        fill=(0, 0, 0, 200),
+    )
+    draw.text(
+        (box_left + pad, box_top + pad),
+        text,
+        fill=(255, 0, 255, 255),
+    )
+
+
 @st.cache_data
 def render_candidate_context_crop(
     centroid_x: float,
     centroid_y: float,
     rasters_dir: str,
     context_m: float = _DEFAULT_CONTEXT_M,
-    buffer_m: int = _DEFAULT_BUFFER,
+    buffer_bands: tuple[int, ...] = _BUFFER_BANDS_DEFAULT,
+    label_bands: tuple[int, ...] = _LABEL_BANDS,
     display_px: int = _DISPLAY_PX,
 ) -> Image.Image:
-    """Render a ``context_m``-wide crop with magenta tolerance circle.
+    """Render a ``context_m``-wide crop with concentric tolerance rings.
 
     Reads the source raster on demand (via ``rasterio`` with
     ``boundless=True`` so edge-of-sheet candidates still produce a
     correctly-sized image) and upscales to ``display_px`` via LANCZOS
     for legible map symbols at the ~5 m/px native resolution.
 
-    The magenta tolerance circle has radius ``buffer_m / context_m *
-    display_px`` display-pixels — a symbol inside is within buffer of
-    the proposer centroid (centre cross); outside is not.
+    Each ring in ``buffer_bands`` is drawn in magenta with a per-band
+    stroke width and alpha (see ``_BAND_STYLES``): inner ring bold and
+    fully opaque, outer rings progressively lighter. Rings in
+    ``label_bands`` carry an anchor label ("<band> m") just above their
+    12 o'clock edge so the reviewer can orient within the concentric
+    stack without miscounting. The centre cross marks the proposer
+    centroid (crop centre).
 
     Streamlit-cached on all arguments so re-renders are free when the
     reviewer hasn't changed candidate.
@@ -244,24 +331,41 @@ def render_candidate_context_crop(
         (display_px, display_px), Image.LANCZOS,
     ).convert("RGBA")
 
-    # Tolerance circle + centre cross, magenta (rarely appears in
-    # Soviet 1:50k topographic sheets, so high contrast with map).
+    # Concentric tolerance rings + centre cross, magenta (rarely
+    # appears in Soviet 1:50k topographic sheets, so high contrast with
+    # map content). Drawn outer-to-inner so the innermost reference
+    # ring sits on top if rings overlap anti-aliased pixels.
     overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
     cx = display_px // 2
     cy = display_px // 2
-    r_display = int(round(buffer_m / context_m * display_px))
-    draw.ellipse(
-        [(cx - r_display, cy - r_display),
-         (cx + r_display, cy + r_display)],
-        outline=(255, 0, 255, 255),
-        width=3,
-    )
+    for band_m in sorted(buffer_bands, reverse=True):
+        r_display = int(round(band_m / context_m * display_px))
+        width, alpha = _BAND_STYLES.get(band_m, (2, 200))
+        colour = (_MAGENTA[0], _MAGENTA[1], _MAGENTA[2], alpha)
+        draw.ellipse(
+            [(cx - r_display, cy - r_display),
+             (cx + r_display, cy + r_display)],
+            outline=colour,
+            width=width,
+        )
+    # Anchor labels — drawn after all rings so they sit on top. The
+    # label box is positioned above each ring's top edge so it does
+    # not obscure the ring stroke itself.
+    for band_m in label_bands:
+        r_display = int(round(band_m / context_m * display_px))
+        ring_top_y = cy - r_display
+        _draw_ring_label(draw, f"{band_m} m", cx, ring_top_y)
+    # Centre cross.
     cross_half = max(6, display_px // 100)
-    draw.line([(cx - cross_half, cy), (cx + cross_half, cy)],
-              fill=(255, 0, 255, 255), width=2)
-    draw.line([(cx, cy - cross_half), (cx, cy + cross_half)],
-              fill=(255, 0, 255, 255), width=2)
+    draw.line(
+        [(cx - cross_half, cy), (cx + cross_half, cy)],
+        fill=(255, 0, 255, 255), width=2,
+    )
+    draw.line(
+        [(cx, cy - cross_half), (cx, cy + cross_half)],
+        fill=(255, 0, 255, 255), width=2,
+    )
     return Image.alpha_composite(img, overlay)
 
 
@@ -278,15 +382,23 @@ def load_candidates(
     bounds_path: str,
     threshold: float,
     buffer_metres: int,
-) -> tuple[list[dict], int, int, int]:
-    """Load and match candidates, returning the FP subset.
+) -> tuple[list[dict], list[dict], int, int, int]:
+    """Load and match candidates, returning both FP and TP subsets.
+
+    The FP subset is the primary review queue. The TP subset is emitted
+    so that the multi-buffer review app can optionally cycle the
+    reviewer through yesterday's accepted-TP calls for re-verification
+    (see ``--include-confirmed-mounds`` / sidebar toggle).
 
     Returns:
-        Tuple of (fp_candidates, n_accepted, n_tp, n_ref) where:
-        - fp_candidates: list of dicts sorted by descending probability
-        - n_accepted: total candidates above threshold
-        - n_tp: number of true positives (matched to GT)
-        - n_ref: total reference mounds in scope (for recall)
+        Tuple of (fp_candidates, tp_candidates, n_accepted, n_tp, n_ref):
+        - fp_candidates: detections unmatched to GT at ``buffer_metres``,
+          sorted by descending probability.
+        - tp_candidates: detections matched to GT at ``buffer_metres``,
+          sorted by descending probability.
+        - n_accepted: total candidates above threshold.
+        - n_tp: number of true positives (matched to GT).
+        - n_ref: total reference mounds in scope (for recall).
     """
     crops_dir_path = Path(crops_dir)
 
@@ -328,7 +440,7 @@ def load_candidates(
             })
 
     if not accepted:
-        return [], 0, 0, 0
+        return [], [], 0, 0, 0
 
     n_accepted = len(accepted)
 
@@ -359,7 +471,7 @@ def load_candidates(
     processed_maps.discard("Unknown")
 
     fp_indices: set[int] = set()
-    tp_count = 0
+    tp_indices: set[int] = set()
     ref_count = 0  # Total scoped reference mounds
 
     for map_name in sorted(processed_maps):
@@ -386,25 +498,26 @@ def load_candidates(
         det_geoms = list(det_scope.geometry)
         ref_geoms = list(ref_scope.geometry)
 
-        _, _, unmatched_det, _ = match_detections_to_references(
+        matched_det, _, unmatched_det, _ = match_detections_to_references(
             det_geoms, ref_geoms, buffer_metres,
         )
 
-        matched_count = len(det_geoms) - len(unmatched_det)
-        tp_count += matched_count
-
+        for d_idx in matched_det:
+            tp_indices.add(det_scope.index[d_idx])
         for d_idx in unmatched_det:
             fp_indices.add(det_scope.index[d_idx])
 
-    # Build FP candidate list sorted by descending probability
-    fp_candidates = [
-        accepted[i] for i in sorted(fp_indices)
-    ]
+    # Build FP and TP candidate lists, each sorted by descending probability.
+    fp_candidates = [accepted[i] for i in sorted(fp_indices)]
     fp_candidates.sort(
         key=lambda c: c["mound_probability"], reverse=True,
     )
+    tp_candidates = [accepted[i] for i in sorted(tp_indices)]
+    tp_candidates.sort(
+        key=lambda c: c["mound_probability"], reverse=True,
+    )
 
-    return fp_candidates, n_accepted, tp_count, ref_count
+    return fp_candidates, tp_candidates, n_accepted, len(tp_indices), ref_count
 
 
 # =========================================================================
@@ -445,6 +558,51 @@ def load_existing_reviews(csv_path: Path) -> dict[int, dict]:
         return reviews
     except Exception:
         return {}
+
+
+@st.cache_data
+def load_previous_mound_labels(csv_path_str: str) -> dict[int, dict]:
+    """Load yesterday's mound classifications for pre-population.
+
+    Used when the confirmed-mounds sidebar toggle is active: the
+    reviewer sees each of yesterday's accepted-TP calls pre-populated
+    with its previous ``symbol_type`` and ``buffer_metres`` so they can
+    one-keystroke-confirm or override without retyping.
+
+    Cached across reruns on the string path so flipping the toggle
+    mid-session does not re-read the CSV from disk repeatedly.
+
+    Returns a dict keyed by ``candidate_id`` for rows whose
+    ``human_label`` was ``'mound'``. Rows labelled ``'not_mound'`` or
+    ``'uncertain'`` are excluded — those go through the normal re-review
+    queue as FPs.
+    """
+    csv_path = Path(csv_path_str)
+    if not csv_path.exists():
+        return {}
+    try:
+        df = pd.read_csv(csv_path)
+    except Exception:
+        return {}
+    required = {"candidate_id", "symbol_type", "human_label"}
+    if not required.issubset(df.columns):
+        return {}
+    df = df[df["human_label"] == "mound"]
+    out: dict[int, dict] = {}
+    for _, row in df.iterrows():
+        entry = {
+            "symbol_type": row["symbol_type"],
+            "human_label": "mound",
+            "timestamp": row.get("timestamp", ""),
+        }
+        # Default the pre-populated buffer to 50 m (yesterday's review
+        # was done at a 50 m tolerance) unless a per-row value exists.
+        if "buffer_metres" in df.columns and pd.notna(row["buffer_metres"]):
+            entry["buffer_metres"] = int(row["buffer_metres"])
+        else:
+            entry["buffer_metres"] = 50
+        out[int(row["candidate_id"])] = entry
+    return out
 
 
 def save_reviews(
@@ -537,7 +695,24 @@ def main() -> None:
     )
     parser.add_argument(
         "--output", type=str,
-        default="results/55maps-generalisation/human-review.csv",
+        default=(
+            "results/55maps-image-generalisation/"
+            "human-review-multi-buffer.csv"
+        ),
+        help=(
+            "Output CSV path. Defaults to the multi-buffer re-review "
+            "file; override for legacy single-buffer review runs."
+        ),
+    )
+    parser.add_argument(
+        "--prev-review", type=str,
+        default="results/55maps-image-generalisation/human-review.csv",
+        help=(
+            "Path to a prior human-review CSV. Used by the "
+            "confirmed-mounds sidebar toggle to pre-populate yesterday's "
+            "mound classifications so the reviewer can one-keystroke "
+            "confirm or override. Set to '' to disable."
+        ),
     )
     try:
         args = parser.parse_args(sys.argv[1:])
@@ -577,22 +752,73 @@ def main() -> None:
 
     # Load data
     with st.spinner("Loading candidates and running matching..."):
-        fp_candidates, n_accepted, n_tp, n_ref = load_candidates(
+        (
+            fp_candidates,
+            tp_candidates,
+            n_accepted,
+            n_tp,
+            n_ref,
+        ) = load_candidates(
             args.crops_dir, args.probabilities,
             args.ground_truth, args.bounds,
             args.threshold, args.buffer,
         )
 
-    if not fp_candidates:
-        st.warning("No FP candidates found.")
+    if not fp_candidates and not tp_candidates:
+        st.warning("No candidates found.")
         return
 
-    n_fp = len(fp_candidates)
+    # --- Sidebar controls ---
+    with st.sidebar:
+        st.markdown("### Review mode")
+        include_confirmed_mounds = st.toggle(
+            "Include confirmed mounds (re-check yesterday's TPs)",
+            value=False,
+            help=(
+                "When ON, yesterday's accepted-TP candidates are cycled "
+                "through with their prior symbol_type and 50 m buffer "
+                "pre-populated. Lets you one-keystroke confirm or "
+                "override, giving you a chance to correct errors from "
+                "yesterday's session."
+            ),
+        )
+        st.markdown("---")
+        st.caption(
+            f"FP queue: {len(fp_candidates)} &nbsp; | &nbsp; "
+            f"Confirmed-TP pool: {len(tp_candidates)}"
+        )
 
-    # Initialise session state
+    # Compose the review queue. FPs always come first; if the toggle is
+    # on, append yesterday's confirmed-mound candidates so re-verification
+    # happens after the FP pass.
+    if include_confirmed_mounds:
+        queue = fp_candidates + tp_candidates
+    else:
+        queue = fp_candidates
+
+    n_fp = len(queue)
+
+    # Initialise session state — reviews dict persists across reruns,
+    # seeded from the on-disk CSV if one exists.
     if "reviews" not in st.session_state:
         st.session_state.reviews = load_existing_reviews(output_path)
+    # Pre-populate with yesterday's mound labels whenever the
+    # confirmed-mounds toggle is on. Idempotent — only inserts for
+    # candidate_ids in the current TP queue that aren't yet reviewed,
+    # so flipping the toggle mid-session is safe.
+    if include_confirmed_mounds and args.prev_review:
+        prev = load_previous_mound_labels(args.prev_review)
+        queue_ids = {c["candidate_id"] for c in tp_candidates}
+        for cid, entry in prev.items():
+            if cid in queue_ids and cid not in st.session_state.reviews:
+                st.session_state.reviews[cid] = dict(entry)
     reviews = st.session_state.reviews
+
+    # Initialise the buffer-band selector. The band resets to 50 m
+    # after every save (see Classification handler below) so a band
+    # chosen for one candidate never silently carries into the next.
+    if "current_band" not in st.session_state:
+        st.session_state.current_band = 50
     # Seed history from previously-saved reviews so Undo can undo
     # prior-session work, not just this-session reviews. (Order is
     # deterministic — sorted by candidate_id — so the undo order is
@@ -610,18 +836,18 @@ def main() -> None:
 
     # Find first unreviewed candidate
     current_idx = 0
-    for i, c in enumerate(fp_candidates):
+    for i, c in enumerate(queue):
         if c["candidate_id"] not in reviews:
             current_idx = i
             break
     else:
-        current_idx = len(fp_candidates)  # All reviewed
+        current_idx = len(queue)  # All reviewed
 
     # ---------------------------------------------------------------
     # Header and progress
     # ---------------------------------------------------------------
     reviewed_count = sum(
-        1 for c in fp_candidates if c["candidate_id"] in reviews
+        1 for c in queue if c["candidate_id"] in reviews
     )
 
     st.title("Candidate Review")
@@ -705,7 +931,7 @@ def main() -> None:
     # ---------------------------------------------------------------
     # Current candidate display
     # ---------------------------------------------------------------
-    if current_idx >= len(fp_candidates):
+    if current_idx >= len(queue):
         st.success(
             f"All {n_fp} candidates reviewed! "
             f"Mounds: {mound_count}, Not mound: {not_mound_count}, "
@@ -716,12 +942,12 @@ def main() -> None:
             csv_data = output_path.read_text()
             st.download_button(
                 "Download CSV", csv_data,
-                file_name="human-review.csv",
+                file_name=output_path.name,
                 mime="text/csv",
             )
         return
 
-    candidate = fp_candidates[current_idx]
+    candidate = queue[current_idx]
     cid = candidate["candidate_id"]
     prob = candidate["mound_probability"]
     tile = candidate["source_tile"]
@@ -738,30 +964,67 @@ def main() -> None:
         f"votes: {vote}/5"
     )
 
-    # Crop image — tight context crop rendered live from the source
-    # raster, with a magenta tolerance circle at centre. A symbol
-    # inside the circle is within the matching buffer of the proposer
-    # centroid (centre cross); outside is not. Context width is
-    # configurable via --context-m (default 300 m) — smaller values
-    # zoom in; larger values show more of the surrounding landscape.
+    # Crop image — context crop rendered live from the source raster,
+    # with five concentric magenta tolerance rings at 50 / 75 / 100 /
+    # 125 / 150 m. Three of them (50, 100, 150) carry labels. The
+    # reviewer picks the tightest ring that encloses a real mound (or
+    # marks the candidate as not_mound / mound beyond 150 m).
     try:
         overlaid = render_candidate_context_crop(
             centroid_x=float(candidate["centroid_x"]),
             centroid_y=float(candidate["centroid_y"]),
             rasters_dir=str(rasters_dir),
             context_m=args.context_m,
-            buffer_m=args.buffer,
         )
         st.image(overlaid, width=_DISPLAY_PX)
         st.caption(
-            f"Magenta circle = {args.buffer} m matching tolerance "
-            f"inside a {args.context_m:.0f} m × {args.context_m:.0f} m "
-            f"context crop. Symbol inside = within tolerance; outside "
-            f"= not counted by pipeline. Cross marks the proposer "
-            f"centroid (crop centre)."
+            f"Concentric rings at 50 / 75 / 100 / 125 / 150 m inside a "
+            f"{args.context_m:.0f} m × {args.context_m:.0f} m context "
+            f"crop. Anchor labels at 50 / 100 / 150 m. A symbol inside "
+            f"a ring is within that tolerance of the proposer centroid "
+            f"(centre cross). Pick the tightest ring that encloses the "
+            f"real mound, or `>150` if visible beyond all rings."
         )
     except Exception as exc:  # noqa: BLE001
         st.error(f"Failed to render candidate {cid}: {exc}")
+
+    # ---------------------------------------------------------------
+    # Buffer-band selector
+    # ---------------------------------------------------------------
+    # The selected band is attached to the next mound classification
+    # and auto-resets to 50 m after every save so it cannot silently
+    # carry across candidates.
+    band_specs: list[tuple[int, str, str]] = [
+        (50, "1", "50 m"),
+        (75, "2", "75 m"),
+        (100, "3", "100 m"),
+        (125, "4", "125 m"),
+        (150, "5", "150 m"),
+        (_BEYOND_150_SENTINEL, "6", ">150"),
+    ]
+    active_band = st.session_state.current_band
+    active_label = next(
+        (lbl for band, _k, lbl in band_specs if band == active_band),
+        f"{active_band}",
+    )
+    st.markdown(
+        f"**Buffer band** &nbsp; | &nbsp; current: **{active_label}** "
+        "&nbsp; | &nbsp; keys `1`-`6` set 50 / 75 / 100 / 125 / 150 / >150. "
+        "The band attaches to the next mound classification, then "
+        "auto-resets to 50 m."
+    )
+    band_cols = st.columns(len(band_specs))
+    for i, (band, key_char, lbl) in enumerate(band_specs):
+        with band_cols[i]:
+            is_active = band == active_band
+            if st.button(
+                f"{key_char}: {lbl}",
+                key=f"band_btn_{key_char}_{cid}",
+                use_container_width=True,
+                type="primary" if is_active else "secondary",
+            ):
+                st.session_state.current_band = band
+                st.rerun()
 
     # ---------------------------------------------------------------
     # Classification buttons
@@ -901,13 +1164,22 @@ def main() -> None:
             "mound" if button_pressed in _MOUND_TYPES
             else button_pressed
         )
+        # Attach the active buffer band only when the classification
+        # is a mound type. For not_mound / uncertain the band has no
+        # meaning; we write None (empty CSV cell) so downstream
+        # analysis does not accidentally read the session's sticky
+        # band as a per-row measurement.
+        if button_pressed in _MOUND_TYPES:
+            row_buffer: int | None = int(st.session_state.current_band)
+        else:
+            row_buffer = None
         reviews[cid] = {
             "symbol_type": button_pressed,
             "human_label": human_label,
             "timestamp": datetime.now(
                 timezone.utc
             ).isoformat(),
-            "buffer_metres": args.buffer,
+            "buffer_metres": row_buffer,
         }
         # Dedupe history so Undo is always a single-press undo, even
         # when the user re-reviews the same candidate.
@@ -915,8 +1187,15 @@ def main() -> None:
             st.session_state.history.remove(cid)
         st.session_state.history.append(cid)
 
+        # Reset band to the 50 m default for the next candidate so a
+        # chosen band never silently carries over.
+        st.session_state.current_band = 50
+
         # Save incrementally
-        save_reviews(reviews, fp_candidates, output_path, args.buffer)
+        save_reviews(
+            reviews, fp_candidates + tp_candidates,
+            output_path, args.buffer,
+        )
         st.rerun()
 
     # ---------------------------------------------------------------
@@ -928,7 +1207,10 @@ def main() -> None:
             last_cid = st.session_state.history.pop()
             if last_cid in reviews:
                 del reviews[last_cid]
-            save_reviews(reviews, fp_candidates, output_path, args.buffer)
+            save_reviews(
+            reviews, fp_candidates + tp_candidates,
+            output_path, args.buffer,
+        )
             st.rerun()
 
     # Symbol type breakdown
