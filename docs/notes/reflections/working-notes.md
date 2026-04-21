@@ -12836,3 +12836,74 @@ Script: `scripts/analyse_buffer_band_lift.py` (ruff-clean). Ran on sapphire; com
 Search terms: attractor-pull scale 125 m, buffer-band lift, within-tile permutation null, Ripley's cross-L candidates mounds, signal fraction shell, practitioner-useful buffer cap, bias-corrected lift, 74 six-labeled incidental, scale-specific clustering decay, Hungarian one-to-one FP structural, corners-plus-5px 286 m radius.
 
 ---
+
+## Observation 273: Dawid-Skene aggregate is structurally inadequate on the VLM-only slice — at any prior (2026-04-21)
+
+Two-stage analysis comparing Dawid-Skene (D-S) aggregate posteriors against combined human-review ground truth on the 1,028-candidate VLM-only slice of the 55-map image-generalisation set. Findings extend and sharpen the Session-72 framing ("aggregate estimates rate, human disambiguates individuals"): D-S fails on **both** halves of that claim, at every reasonable prior. Full artefacts at `results/55maps-image-generalisation/ds-human-crosstab/` (v1) and `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/` (v2).
+
+### Stage 1 — v1 (preregistered prior = 0.05) is catastrophically miscalibrated
+
+With the preregistered 5 % student-FN prior, all 1,028 candidates receive posterior ≈ 0.186 — **degenerate**. Every candidate lands at the same probability; the posterior cannot rank items.
+
+| Metric | D-S v1 | Verifier (Obs 269) | Better   |
+|--------|-------:|-------------------:|----------|
+| ECE    | 0.539  | 0.269              | Verifier |
+| Brier  | 0.490  | 0.323              | Verifier |
+| AUC    | 0.500  | 0.655              | Verifier |
+
+Empirical mound rate (combined human review) = 0.725; D-S predicted rate = 0.186 — under-estimate by ~4×. The "D-S aggregate corrected F1 = 0.795" recorded in `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` is an artefact of this under-estimate, not an independent corroboration of the human-review corrected F1.
+
+### Stage 2 — a data-driven prior does NOT fix it
+
+Feeding the empirical rate (0.7247) in as the student-FN prior produces the opposite pathology: posteriors snap to **1.000** for all items above prior ≈ 0.22. The EM's prior-to-posterior map is non-linear and passes through a degenerate collapse.
+
+| Prior                     | Posterior | ECE       | Brier | AUC  |
+|---------------------------|----------:|----------:|------:|-----:|
+| 0.05 (preregistered v1)   |     0.186 |    0.539  | 0.490 | 0.500 |
+| **0.17 (calibrated)**     |   **0.725** | **0.0001** | 0.200 | 0.500 |
+| 0.7247 (empirical)        |     1.000 |    0.275  | 0.275 | 0.500 |
+
+The "calibrated prior" that yields cohort-rate-matching is **0.17** — about half the empirical rate. This is NOT a plug-in-the-truth recipe; it's a prior chosen specifically to hit a target posterior.
+
+Held-out 80/20 control (seed 42, fit prior on train / apply to test) confirms the collapse pattern — posterior = 1.000 on held-out test fold, ECE = 0.262. **The pattern is not a circularity artefact; it's mechanical.**
+
+### AUC is prior-invariant at 0.50
+
+Across every prior tested, AUC stays at 0.500. D-S **cannot rank items** on this slice regardless of prior. This is a structural consequence of 2-annotator D-S with `fix_student_sens=True` (the identifiability constraint used in the pipeline). Three or more independent annotators, or an explicit Bayesian formulation with a prior on the cohort rate π, would be required to break the degeneracy.
+
+### Architectural narrative
+
+Combined with Obs 269 (verifier over-confidence at high p), the picture is:
+
+1. **Verifier**: over-confident; ECE 0.27; AUC 0.65. Useful signal but miscalibrated.
+2. **D-S aggregate**: structurally broken; ECE 0.00–0.54 depending on prior; AUC 0.50 always. Not a useful signal at any configuration.
+3. **Human review**: works; AUC is ground truth by construction; labour-intensive but necessary.
+
+The "aggregate estimates rate, human disambiguates individuals" framing from the Session-72 handoff was optimistic on the aggregate side. On this slice D-S does **neither**: the rate estimate is wrong (at every informative prior), and the posterior has no discrimination. **Human adjudication is the only working signal on the VLM-only slice.**
+
+### Relationship to prior observations
+
+- **Obs 263** (review-UI flip rate): human review remains the gold standard on this slice, calibrated via the tolerance-circle UI.
+- **Obs 267** (corrected F1 ≥ 0.830): the human-review corrected F1 is the reliable lower-bound; the "D-S corrected F1 = 0.795" should be re-framed as an illustration of D-S's mis-specification, not as an independent corroboration.
+- **Obs 269** (verifier miscalibration): architectural complement. Neither probabilistic method rescues the precision gap; only human adjudication does.
+
+### Paper implication
+
+The paper's narrative on corrected-F1 can now make a cleaner claim:
+
+> "Per-item human adjudication yields corrected F1 ≥ 0.830 (lower bound) on the VLM-only slice. Dawid-Skene aggregate estimation was evaluated at the preregistered 5 % student-FN prior and at a data-driven prior sweep; the aggregate posterior AUC is 0.50 at every prior (prior-invariant, a structural consequence of 2-annotator identifiability), and no prior produces both cohort-rate-matching AND item discrimination. Human adjudication is the only working approach on this slice."
+
+This is a stronger negative result on D-S than originally expected and an indirect validation of the human-review methodology.
+
+### Reproducibility
+
+- Scripts: `scripts/analyse_ds_vs_human_review.py` (v1 cross-tab); `scripts/analyse_dawid_skene_v2.py` (v2 data-driven prior sweep + held-out control).
+- Seed 42 throughout.
+- Compute: ~30 s local.
+- Artefact directories: `results/55maps-image-generalisation/ds-human-crosstab/` (v1), `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/` (v2).
+
+### Findable later
+
+Search terms: D-S structurally inadequate, prior-invariant AUC 0.5, 2-annotator identifiability fix_student_sens, EM degenerate collapse above 0.22, calibrated prior 0.17 non-empirical, human adjudication only working signal, Obs 273, VLM-only slice 0.725 empirical rate, D-S aggregate corrected F1 0.795 artefact.
+
+---
