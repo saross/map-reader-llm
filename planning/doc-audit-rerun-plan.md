@@ -46,6 +46,100 @@ If the new audit produces different numbers, the verifier should
 catch it; if it doesn't, flag immediately — the audit is wrong and
 should not be committed.
 
+## 2026-04-21 supplement — state changes since plan creation
+
+The audit plan was written on 2026-04-19. Between then and 2026-04-21
+the following load-bearing changes landed; the audit must account for
+them:
+
+### New observations (Obs 262–273)
+
+Working-notes `docs/notes/reflections/working-notes.md` has added
+Obs 262 through Obs 273 since this plan was written. Running list
+with their focal artefact:
+
+- **Obs 262–268**: 55-map image human-review findings (review-UI
+  tolerance-circle effect, verifier calibration crosstab, three
+  failure-mode taxonomies at 70 figures, 472 phantom TPs, corrected
+  F1 ≥ 0.830 at 50 m, etc.). Artefacts:
+  `results/55maps-image-generalisation/{uncalibrated-vs-calibrated-crosstab,verifier-calibration-crosstab,human-reviewed-corrected}`.
+- **Obs 269**: Verifier over-confident, ECE 0.269, AUC 0.65.
+  Artefact: `results/55maps-image-generalisation/verifier-calibration-crosstab/`.
+- **Obs 270 / 271**: Subtype-classification accuracy on 4-map GS
+  (weighted-F1 = 0.887 headline; benchmark → triangulation 57 %
+  asymmetric confusion). Artefact:
+  `results/gold-standard-subtype-classification/`.
+- **Obs 272**: Attractor-pull scale ends at ~125 m on VLM-only
+  candidates (shell permutation lift + Ripley's cross-L). Artefact:
+  `results/55maps-image-generalisation/buffer-band-lift/`.
+- **Obs 273**: D-S aggregate is structurally inadequate on the
+  VLM-only slice at any prior (2-annotator identifiability
+  degeneracy). Artefacts: `results/55maps-image-generalisation/ds-human-crosstab/`
+  (v1) and `.../dawid-skene-v2-data-driven-prior/` (v2).
+
+### New analyses and their artefacts
+
+- **Multi-buffer corrected F1** (F1 0.832 → 0.855 across R =
+  50/75/100/125/150): `results/55maps-image-generalisation/corrected-f1-multi-buffer/`.
+- **Buffer-100m diagnostics** (GT clustering + pair-drift):
+  `results/55maps-image-generalisation/buffer-100m-diagnostics/`.
+- **Human re-review**: `results/55maps-image-generalisation/human-review-multi-buffer.csv`
+  (557 rows re-reviewing yesterday's not_mound candidates at five
+  tolerance bands).
+- **Subtype classification**: `results/gold-standard-subtype-classification/`.
+- **Paper-tables consolidation** (new):
+  `results/paper-tables/gold-standard-spatial-tolerance.{md,csv}` and
+  `results/paper-tables/subtype-classification.{md,csv}`.
+
+### v2 verifier quarantine (2026-04-21)
+
+100 files moved to `archive/v2-verifier-contamination/` because the
+v2 verifier prompt was derived by analysing FPs from the 4-map GS
+set (calibration-on-test). Affected:
+
+- `results/leaderboard/cells/gold-standard-v2-greedy-v2-327tile.json`
+  (moved to archive)
+- `results/e47-v1-vs-v2/` (entire directory moved to archive)
+- Seven raw-output subdirectories under `outputs/h11/` (moved)
+
+Audit scope impact: any audit row that would have cited a file now in
+`archive/v2-verifier-contamination/` is EXCLUDED. The audit should
+not treat these as active runs. Policy doc at
+`docs/methodology/v2-verifier-contamination-policy.md`. Paper
+headline F1 = 0.904 was verified to use verifier v1 (run date
+2026-03-25, before v2 existed) — headline is clean.
+
+### CI-metadata registry + sidecars
+
+48 metadata sidecars (41 per-file + 7 directory-level) now exist
+across `outputs/`, `results/`, `results/leaderboard/`; master registry
+at `results/ci-metadata-registry.md`. The audit should treat any
+`<name>.metadata.json` sidecar as the authoritative companion for its
+parent file's bootstrap metadata (iterations, seed, resampling unit,
+generating script, commit, timestamp). CI-metadata gaps = 0 after
+this work.
+
+### Protocol errata additions
+
+- **E54**: Clarification documenting the preregistered 1,000-iteration
+  primary-F1 bootstrap vs the 10,000-iteration post-hoc analyses
+  (corrected F1, subtype classification, review-UI crosstabs).
+  Suggested paper-methods wording included in the errata entry.
+
+### Commit range since 2026-04-19 plan creation
+
+Rough commit range for the audit to review: `8747d726` (the original
+flawed audit that triggered this plan) through `1ce5399e` (2026-04-21
+paper-tables integration). Spans ~40+ commits of analytical work.
+`git log --oneline 8747d726..1ce5399e` is the canonical list.
+
+### Anchor values unchanged
+
+The F1 anchor values in the 2026-04-19 table above are STILL VALID
+for those runs — no re-runs happened. Today's additions are scope
+expansion, not revision of prior. The audit can treat the 2026-04-19
+table as load-bearing.
+
 ## Known errors in the existing audit
 
 - Text MIN run: audit claims cost $165.74 with 90.2% cache hit rate
