@@ -1,0 +1,21 @@
+metric_type,class,buffer_metres,consensus_threshold,n_pairs,value,ci_lower,ci_upper,support,tp,fp,fn,note
+headline,weighted_f1,50,4-of-5,376,0.8873,0.8490,0.9218,,,,,
+headline,macro_f1,50,4-of-5,376,0.7718,0.6601,0.8224,,,,,
+headline,accuracy_flat_4class,50,4-of-5,376,0.9043,,,,,,,
+headline,accuracy_level1,50,4-of-5,376,1.0000,,,,,,,mound-family vs settlement
+headline,accuracy_level2,50,4-of-5,374,0.9037,,,,,,,within mound-family (excl. settlement)
+headline,kappa_unweighted,50,4-of-5,376,0.7281,0.6576,0.7966,,,,,
+headline,kappa_linear_hierarchical,50,4-of-5,376,0.7360,0.6638,0.8042,,,,,same-family err 0.5; across-Level-1 err 1.0
+headline,mcc_multi,50,4-of-5,376,0.7441,0.6809,0.8066,,,,,
+per_class,burial_mound,50,4-of-5,376,0.9849,0.9744,0.9935,294,294,9,0,F1 with CI
+per_class,benchmark_mound,50,4-of-5,376,0.4068,0.2381,0.5574,47,12,0,35,F1 with CI
+per_class,triangulation_mound,50,4-of-5,376,0.6957,0.5778,0.7949,33,32,27,1,F1 with CI
+per_class,settlement_mound,50,4-of-5,376,1.0000,,,2,2,0,0,sparse (n<=5); no CI per plan
+per_class_precision,burial_mound,50,4-of-5,376,0.9703,,,294,294,9,0,precision
+per_class_precision,benchmark_mound,50,4-of-5,376,1.0000,,,47,12,0,35,precision
+per_class_precision,triangulation_mound,50,4-of-5,376,0.5424,,,33,32,27,1,precision
+per_class_precision,settlement_mound,50,4-of-5,376,1.0000,,,2,2,0,0,precision (sparse)
+per_class_recall,burial_mound,50,4-of-5,376,1.0000,,,294,294,9,0,recall
+per_class_recall,benchmark_mound,50,4-of-5,376,0.2553,,,47,12,0,35,recall
+per_class_recall,triangulation_mound,50,4-of-5,376,0.9697,,,33,32,27,1,recall
+per_class_recall,settlement_mound,50,4-of-5,376,1.0000,,,2,2,0,0,recall (sparse)
