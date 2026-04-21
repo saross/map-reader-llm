@@ -1,0 +1,53 @@
+{
+  "parameters": {
+    "threshold": 0.15,
+    "buffer_metres": 50,
+    "student_fn_rate_prior": 0.7247081712062257,
+    "prior_source": "empirical_vlm_only_mound_rate",
+    "consensus": "outputs/55maps-image-generalisation/consensus/consensus-3of5.geojson",
+    "probabilities": "outputs/55maps-image-generalisation/verified/probabilities.json"
+  },
+  "item_counts": {
+    "matched": 3637,
+    "student_only": 1133,
+    "vlm_only": 1028,
+    "total": 5798
+  },
+  "dawid_skene": {
+    "corrected_metrics": {
+      "precision": 1.0,
+      "recall": 0.8046,
+      "f1": 0.8917,
+      "tp_expected": 4665.0,
+      "fp_expected": 0.0,
+      "fn_expected": 1133.0,
+      "total_latent_positives_expected": 5798.0,
+      "expected_reclassified": 1028.0,
+      "hard_threshold_reclassified": 1028,
+      "vlm_only_posterior": 1.0,
+      "total_vlm_only": 1028
+    },
+    "simple_correction": {
+      "precision": 1.0,
+      "recall": 0.2692,
+      "f1": 0.4242,
+      "estimated_true_mounds": 17327,
+      "reclassified_fp_to_tp": 1028,
+      "vlm_sensitivity_from_confirmed": 0.7625
+    },
+    "model_estimates": {
+      "prevalence": 0.9999999357730481,
+      "student_sensitivity": 0.27529182879377434,
+      "student_specificity": 1.0,
+      "vlm_sensitivity": 0.8045877763419903,
+      "vlm_specificity": 0.0,
+      "n_iterations": 11,
+      "converged": true
+    }
+  },
+  "empirical_prior_derivation": {
+    "vlm_only_joined": 1028,
+    "vlm_only_human_mound": 745,
+    "empirical_vlm_only_mound_rate": 0.7247081712062257
+  }
+}

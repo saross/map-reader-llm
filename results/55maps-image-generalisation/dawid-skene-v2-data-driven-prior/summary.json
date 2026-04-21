@@ -1,0 +1,88 @@
+{
+  "student_fn_prior_v2": 0.7247081712062257,
+  "prior_source": "empirical_vlm_only_mound_rate",
+  "empirical_prior_derivation": {
+    "vlm_only_joined": 1028,
+    "vlm_only_human_mound": 745,
+    "empirical_vlm_only_mound_rate": 0.7247081712062257
+  },
+  "n_joined": 1028,
+  "n_unjoined": 1,
+  "n_mound": 745,
+  "prevalence_joined": 0.7247081712062257,
+  "unique_v2_posteriors": [
+    1.0
+  ],
+  "degenerate_v2_posterior": true,
+  "v2_calibration": {
+    "ece": 0.27529146654876757,
+    "brier": 0.275291629347725,
+    "auc": 0.5,
+    "auc_degenerate": true
+  },
+  "v2_coarse_crosstab": {
+    "tp": 745,
+    "fp": 283,
+    "fn": 0,
+    "tn": 0,
+    "threshold": 0.5,
+    "precision": 0.7247081712062257,
+    "recall": 1.0,
+    "f1": 0.8403835307388606
+  },
+  "calibrated_prior_search": {
+    "calibrated_student_fn_prior": 0.17,
+    "calibrated_vlm_only_posterior": 0.7246405432708649,
+    "empirical_rate": 0.7247081712062257,
+    "metrics": {
+      "ece": 6.762793536063683e-05,
+      "brier": 0.19950624236669123,
+      "auc": 0.5,
+      "auc_degenerate": true,
+      "vlm_only_posterior": 0.724641,
+      "crosstab_at_0p5": {
+        "tp": 745,
+        "fp": 283,
+        "fn": 0,
+        "tn": 0,
+        "threshold": 0.5,
+        "precision": 0.7247081712062257,
+        "recall": 1.0,
+        "f1": 0.8403835307388606
+      }
+    }
+  },
+  "v1_reference": {
+    "posterior": 0.186207,
+    "ece": 0.5385006866301707,
+    "brier": 0.4894892272943188,
+    "auc": 0.5,
+    "coarse_crosstab": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 745,
+      "tn": 283,
+      "threshold": 0.5,
+      "precision": NaN,
+      "recall": 0.0,
+      "f1": NaN
+    }
+  },
+  "verifier_reference_obs_269": {
+    "ece": 0.2689,
+    "brier": 0.3226,
+    "auc": 0.6545
+  },
+  "holdout": {
+    "seed": 42,
+    "train_frac": 0.8,
+    "n_train": 822,
+    "n_test": 206,
+    "train_prior": 0.7214111922141119,
+    "test_empirical_rate": 0.7378640776699029,
+    "posterior_under_train_prior": 0.9999996192727805,
+    "gap_posterior_vs_test": 0.26213554160287755,
+    "test_ece": 0.262135541602878,
+    "test_brier": 0.26213572272568036
+  }
+}

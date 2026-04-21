@@ -1,0 +1,71 @@
+{
+  "inputs": {
+    "ds_posteriors": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/item-posteriors-calibrated.csv",
+    "review_yesterday": "results/55maps-image-generalisation/human-review.csv",
+    "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv"
+  },
+  "n_combined": 1029,
+  "n_joined": 1028,
+  "n_unjoined": 1,
+  "n_mound": 745,
+  "n_not_mound": 283,
+  "prevalence": 0.7247081712062257,
+  "n_today_uncertain_counted_as_not_mound": 0,
+  "source_counts": {
+    "yesterday_mound": 472,
+    "today_not_mound": 283,
+    "today_mound": 273,
+    "today_only": 1
+  },
+  "unique_ds_posteriors": [
+    0.724641
+  ],
+  "degenerate_posterior": true,
+  "ece": 6.762793536063683e-05,
+  "brier": 0.19950624236669123,
+  "auc": 0.5,
+  "auc_degenerate": true,
+  "coarse_crosstab": {
+    "tp": 745,
+    "fp": 283,
+    "fn": 0,
+    "tn": 0,
+    "threshold": 0.5
+  },
+  "coarse_metrics": {
+    "precision": 0.7247081712062257,
+    "recall": 1.0,
+    "f1": 0.8403835307388606
+  },
+  "ambiguity_band_isolation": {
+    "ambiguous_band": {
+      "range_lo": 0.3,
+      "range_hi": 0.7,
+      "n": 0,
+      "n_mound": 0,
+      "human_mound_rate": NaN,
+      "wilson_lo": NaN,
+      "wilson_hi": NaN
+    },
+    "confident_band": {
+      "range_lo": 0.1,
+      "range_hi": 0.9,
+      "n": 0,
+      "n_mound": 0,
+      "human_mound_rate": NaN,
+      "wilson_lo": NaN,
+      "wilson_hi": NaN
+    },
+    "middle_band": {
+      "n": 1028,
+      "n_mound": 745,
+      "human_mound_rate": 0.7247081712062257
+    }
+  },
+  "verifier_reference_obs_269": {
+    "ece": 0.2689,
+    "brier": 0.3226,
+    "auc": 0.6545,
+    "source": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.md"
+  }
+}
