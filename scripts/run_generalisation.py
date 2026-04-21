@@ -1455,10 +1455,14 @@ def _prepare_run(
 def _estimate_cost(rcfg: ResolvedRunConfig) -> float | None:
     """Rough cost estimate from manifest tile count and K.
 
-    Based on Phase 3a image matrix empirical ratio of ~$0.0082/tile/pass
-    for plus-hp HIGH + T=0.7 + Flex. Handles both list-form manifests
-    (newer scripts emit a plain JSON array) and dict-form manifests
-    (``{"tiles": [...]}``) for older writers.
+    Distinguishes image vs text runs using the proposer config's
+    ``include_example_images`` field (or presence of ``examples`` list).
+    Falls back to the image rate for backwards compatibility.
+
+    Based on Phase 3a empirical measurements:
+    - Image (plus-hp, HIGH, T=0.7): ~$0.0082 / tile / pass
+    - Text  (detect_brief-text, HIGH, T=0.7): ~$0.00125 / tile / pass
+    - Text  (detect_brief-text, MIN, T=0.7): ~$0.00115 / tile / pass
     Returns ``None`` if the manifest is unreadable.
     """
     try:
@@ -1482,8 +1486,24 @@ def _estimate_cost(rcfg: ResolvedRunConfig) -> float | None:
             return None
     else:
         return None
+
+    # Determine rate from proposer config
+    proposer_cfg_path = rcfg.proposer.get("config")
+    if proposer_cfg_path:
+        try:
+            proposer_cfg = json.loads(Path(proposer_cfg_path).read_text(encoding="utf-8"))
+            # Check include_example_images flag or examples list presence
+            has_images = proposer_cfg.get("include_example_images", True)
+            if not has_images:
+                per_tile_usd = 0.0013  # text-only rate (conservative)
+            else:
+                per_tile_usd = 0.0082  # image rate
+        except (json.JSONDecodeError, FileNotFoundError, OSError):
+            per_tile_usd = 0.0082  # default to image rate
+    else:
+        per_tile_usd = 0.0082  # default to image rate
+
     k = int(rcfg.proposer.get("passes", 1))
-    per_tile_usd = 0.0082  # empirical; text verifier adds ~$5 flat
     return round(tiles * k * per_tile_usd + 5.0, 2)
 
 
