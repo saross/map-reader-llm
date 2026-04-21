@@ -12766,3 +12766,73 @@ The "subtype output is advisory" framing for the paper (Obs 270 implication) nee
 Search terms: benchmark triangulation asymmetry, 27 of 47 confusion, triangulation default attractor, benchmark recall 0.255, Rakovski benchmark density, within-compound Level-2 error, mark-on-mound symbol similarity, prompt engineering benchmark triangulation, Obs 271.
 
 ---
+
+## Observation 272: The attractor-pull effect on VLM detections ends at ~125 m; mounds visible beyond that are indistinguishable from random coincidence (2026-04-21)
+
+Quantitative follow-up to the two-round 55-map image-generalisation human review. Combines yesterday's 472 mound@50 m calls with today's 557-row multi-buffer re-review (274 mound calls distributed across bands {50, 75, 100, 125, 150, >150 m}; 283 confirmed FPs). Compares observed buffer-band rates against a within-tile random-placement null (M=1,000 permutations, seed 42) on the full 55-map corpus. Full analysis at `results/55maps-image-generalisation/buffer-band-lift/`.
+
+The `>150 m` review class ("6" keystroke) corresponds to mounds visible inside a circle that just touches the outer corners of the 400 m × 400 m context crop plus 5 display-pixels — i.e., **effective tolerance 286 m** (200 × √2 + 3.3).
+
+### Headline: shell (scale-specific) lift
+
+Bias-corrected to account for the ~14 % of real mounds that are reviewer-promoted and therefore absent from the student-GT null reference (4,744 of 5,490):
+
+| Shell (m)    | Observed rate | Null (corrected) | Lift      | Signal fraction | p-value    |
+|--------------|--------------:|-----------------:|----------:|----------------:|-----------:|
+| (0, 50]      |     46.1 %    |         0.45 %   |  **102×** |    99 %         | <0.001     |
+| (50, 75]     |     11.8 %    |         0.55 %   |   **21×** |    95 %         | <0.001     |
+| (75, 100]    |      4.6 %    |         0.77 %   |   **5.9×** |   83 %         | <0.001     |
+| (100, 125]   |      1.9 %    |         0.96 %   |   **1.9×** |   48 %         |  0.002     |
+| (125, 150]   |      1.1 %    |         1.08 %   |  **0.99×** |   −1 %         | **0.381**  |
+| (150, 286]   |      7.2 %    |         8.16 %   |  **0.88×** |  −13 %         | **0.433**  |
+
+The attractor-pull effect is statistically significant out to the (100, 125] m shell (p=0.002 with bias correction), then **ends**: mounds visible in the (125, 150] and (150, 286] shells appear at rates indistinguishable from within-tile random placement. The 74 `>150 m` calls and the 11 calls in (125, 150] are essentially coincidental under this null — not pulled to attractors, just incidentally near detections inside mound-populated tiles.
+
+### Cumulative lift (for reference)
+
+| R (m) | Observed | Null (corrected) | Lift        | Signal fraction |
+|-------|---------:|-----------------:|------------:|----------------:|
+| 50    |  46.1 %  |         0.45 %   |    **102×** |         99 %    |
+| 75    |  57.8 %  |         1.01 %   |     **57×** |         98 %    |
+| 100   |  62.4 %  |         1.78 %   |     **35×** |         97 %    |
+| 125   |  64.2 %  |         2.73 %   |     **24×** |         96 %    |
+| 150   |  65.3 %  |         3.81 %   |     **17×** |         94 %    |
+| 286   |  72.5 %  |        11.97 %   |      **6×** |         83 %    |
+
+Cumulative lift looks strong at every R because the bulk of clustering mass lives at r < 100 m and carries forward to every larger R. The shell view is the honest scale-specific decomposition.
+
+### Ripley's cross-L₁₂(r) − r confirmation
+
+Observed cross-L₁₂(r) − r remains above the 95 % null envelope at every r ∈ [10, 320] m, confirming global clustering of detections around student GT. This is NOT inconsistent with the shell result. Ripley's K counts ALL mounds within r (not just nearest), so the strong 0-100 m clustering dominates K(r) at every larger r. The shell-wise pair-correlation is the scale-specific indicator; Ripley's K is a global-clustering confirmation.
+
+### Why 189 "VLM-only FPs" actually have student GT within 50 m
+
+Debug check during the analysis showed that 189 of the 1,029 VLM-only FP candidates (18.4 %) do have a student-GT mound within 50 m — they were flagged as FPs because the Hungarian matcher is one-to-one and a closer detection claimed the GT first. This is structural, not a bug. It does NOT change the observed lift analysis (which uses reviewer-label rates, not Hungarian matches), but it is worth noting in the paper's methods: the "FP" designation in the first-pass pipeline is "not-matched-by-Hungarian", not "no-real-mound-nearby".
+
+### Methodological caveat
+
+The null reference set is student GT only (4,744 mounds). The 746 reviewer-promoted real mounds (472 yesterday + 274 today) are aliased to detection coordinates and cannot be used as null-space references without creating trivial self-matches. Raw lift is therefore a slight overestimate; the bias-corrected column scales the null by 1/0.864 (= real-mound-count / student-GT-count) under the assumption that reviewer-promoted mounds share the same tile-pool distribution as student GT. The correction reduces raw lift by ~14 %. No significance conclusion changes between raw and corrected columns.
+
+### Paper implications
+
+1. **Practitioner-useful attractor-tolerant upper bound is 125 m**, not 150 m or the 286 m corners-plus-5px tolerance. At 125 m the cumulative lift is still 24× and 96 % of observed mounds-within-R are genuine pulls. Beyond 125 m, the marginal rate is indistinguishable from random.
+2. The 74 `>150 m` review calls belong in the paper as a **qualitative** observation — the attractor-rich landscape extends that far, and a pipeline user browsing crops beyond 150 m would see mounds — but NOT as a recall contribution to any headline F1. Including them in a buffer-stratified F1 curve is honest only if accompanied by the "indistinguishable-from-random" annotation for the 125 m+ rows.
+3. The verifier-miscalibration finding (Obs 269) compounds with the attractor-pull mechanism documented here: the detections pulled 50-125 m from mounds by attractor labels are precisely the cases the verifier scores at saturated high confidence, so the verifier cannot filter them. Architectural complement.
+4. Obs 266 sub-pattern 1 ("compound-boundary over-assignment") connects mechanistically: symbol-rich regions (numbers, benchmarks, trig points) pull detection centroids several tens of metres from true burial-mound centroids. The 50-125 m detection-stage pull here is the spatial analogue of the classification-stage asymmetry in Obs 271.
+
+### Reproducibility
+
+Script: `scripts/analyse_buffer_band_lift.py` (ruff-clean). Ran on sapphire; compute ~50 s. Seed 42. Inputs: `human-review.csv` (yesterday), `human-review-multi-buffer.csv` (today), `student-mounds-55maps-reviewed.geojson`, `55maps_evaluation_bounds.geojson`. Outputs under `results/55maps-image-generalisation/buffer-band-lift/` — cumulative.csv, shell.csv, ripley.csv, lift_curve.png, ripley_plot.png, summary.json, report.md.
+
+### Relationship to prior observations
+
+- **Obs 263** (crop-review ambiguity band, revised): flagged the spatial-tolerance effect at 21 % one-way flip rate. Obs 272 quantifies the mechanism at per-band granularity: 11.8 % flip in (50, 75] shell, weaker in outer shells.
+- **Obs 267** (corrected F1 = 0.830 at 50 m): today's 2 mound@50 m corrections (reviewer fixed yesterday's mis-calls) will slightly increase the corrected 50 m F1 when recomputed.
+- **Obs 269** (verifier over-confidence): architectural pairing — verifier cannot rescue pulled detections because it scores them confidently-correct.
+- **Obs 271** (benchmark→trig asymmetric confusion): classification-stage analogue; this is the detection-stage analogue on the same corpus.
+
+### Findable later
+
+Search terms: attractor-pull scale 125 m, buffer-band lift, within-tile permutation null, Ripley's cross-L candidates mounds, signal fraction shell, practitioner-useful buffer cap, bias-corrected lift, 74 six-labeled incidental, scale-specific clustering decay, Hungarian one-to-one FP structural, corners-plus-5px 286 m radius.
+
+---
