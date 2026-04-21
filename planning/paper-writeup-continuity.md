@@ -36,12 +36,15 @@ project state.
    descending to raw results / working-notes observations only when
    an interim doc is insufficient or contested.
 
-### Exemplar (quality template)
+### Exemplar (quality template) — CONFIRMED 2026-04-21
 
 `results/gold-standard-subtype-classification/report.md` — 17
 sections, full citation pattern, methods block, paper implications,
 relationship to prior Obs, reproducibility section. Any other
 interim doc that matches this structural bar is "finished".
+
+User confirmed this nomination on 2026-04-21 end-of-session. Treat
+it as the authoritative template for interim-doc quality from here.
 
 ### Two suggested refinements on the user's strategy
 
@@ -214,6 +217,30 @@ pre-launch-audit / early-analysis docs. Don't delete.
 
 With interim docs at uniform quality, draft a paper outline mapping
 each section to 1-3 interim docs. Proceed to write-up.
+
+## User decisions (2026-04-21 end-of-session)
+
+Explicit user confirmations recorded here so the next session doesn't
+relitigate them:
+
+1. **Exemplar nominated**: gold-standard-subtype-classification
+   report (see above).
+2. **Meta-findings consolidation IS next**: synthesise Obs 262-273
+   into a single paper-Discussion-shaped doc per Step 3 in the plan.
+3. **Parsimonious deep-dives**: trust the interim-doc citations by
+   default. Descend to raw results / working-notes ONLY when (a) an
+   interim doc citation is missing, (b) a causal / mechanism claim
+   needs scrutiny, or (c) a paper-headline number is being drafted
+   for the final manuscript. Do NOT re-verify 82/85 doc-audit PASS
+   claims — they've been verified.
+4. **Fact-check-agent for the paper draft (deferred)**: when the
+   paper is near complete, build a dedicated adversarial fact-check
+   agent that reads ONLY the paper draft + source-of-truth files
+   and pass/fails each numeric claim. Modelled on the
+   documentation-audit verifier pattern already committed
+   (`verification-2026-04-21.md`), but scoped to the paper text
+   rather than the interim audit. NOT a task for the opening of the
+   next session — a later-stage QA step.
 
 ## Critical guardrails for the next session
 
