@@ -1,0 +1,34 @@
+{
+  "inputs": {
+    "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "student_gt": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "review_csv": "results/55maps-image-generalisation/human-review.csv",
+    "n_detections": 4665,
+    "n_student_gt": 4744,
+    "n_reviewer_phantoms": 472,
+    "n_extended_gt": 5216,
+    "n_maps": 55
+  },
+  "diagnostic_1_gt_clustering": {
+    "n_gt_total": 5216,
+    "n_gt_with_0_neighbours_100m": 4341,
+    "n_gt_with_1_neighbour_100m": 766,
+    "n_gt_with_2plus_neighbours_100m": 109,
+    "pct_gt_with_any_neighbour_100m": 0.16775306748466257,
+    "pct_gt_with_any_neighbour_50m": 0.06441717791411043,
+    "max_cluster_size_100m": 5,
+    "mean_neighbours_100m": 0.19210122699386503,
+    "median_neighbours_100m": 0.0
+  },
+  "diagnostic_2_pair_drift": {
+    "total_matched_at_50m": 4108,
+    "total_matched_at_100m": 4179,
+    "matched_at_both_buffers": 4108,
+    "same_gt_at_both": 4104,
+    "different_gt_at_both": 4,
+    "new_matches_at_100m_only": 71,
+    "matches_lost_at_100m": 0,
+    "pct_drift_of_both_matched": 0.0009737098344693282,
+    "pct_drift_of_100m_matches": 0.000957166786312515
+  }
+}
