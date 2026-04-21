@@ -1,196 +1,227 @@
 # Results Documentation Audit — Executive Summary
 
-**Audit Date**: 2026-04-18  
-**Audit Scope**: 59 unarchived runs across all experimental eras  
-**Project Phase**: Preregistered Vision Language Model study (burial mound detection on historical maps)
+**Audit Date**: 2026-04-22
+**Draft status**: awaiting verifier pass (see
+`results/documentation-audit/draft/README.md`)
+**Supersedes**: `results/documentation-audit/audit-summary.md` (dated
+2026-04-18), which contained hallucinated cost figures, a conflation of
+two distinct text-high runs, and a blanket "Obs 255" attribution.
 
 ---
 
-## Overview
+## Headline
 
-The project exhibits a **stark two-era pattern** in documentation rigor:
+The project has a stark two-era documentation pattern:
 
-- **Era 1** (late 2025 — h8–h12, retest): Computationally rigorous research with statistical analyses in results/ directories but minimal formal documentation (no pre-launch audits, post-run reports, or cost accounting). Results are scattered across JSON files with no narrative synthesis except embedded observations in working-notes.
+- **Era 1** (h8–h12, retest phases, 2025-11 through 2026-03): rigorous
+  statistical analyses (bootstrap CIs, paired permutation tests,
+  threshold sweeps) with narrative synthesis concentrated in
+  `docs/notes/reflections/working-notes.md` rather than in per-run
+  post-run reports. No cost manifests, no formal pre-launch audits, no
+  Dawid-Skene (D-S) corrections.
+- **Era 2** (55-map generalisation, 2026-04-10 onwards): return to
+  best-practice deliverables — cost manifest, pre-launch audit, post-
+  run report, multi-buffer F1 with bootstrap CIs, paired permutation
+  tests, and D-S posterior correction. Four runs fit this era; three
+  were produced by the publishable `scripts/run_generalisation.py`
+  launcher and one (the 2026-04-10 text run) is documented
+  retrospectively because it predates the launcher.
 
-- **Era 2** (April 2026 onwards — 55-map generalization): Return to best practices. All three major 55-map runs include pre-launch audits, post-run reports, cost manifests, and comprehensive statistical deliverables (F1/P/R at multiple buffers, 1000-iteration bootstrap CIs, paired permutation tests, Dawid-Skene latent-truth corrections).
+The 2026-04-20/21 human-review day added a large cohort of post-hoc
+analyses on top of the 55-map image run — multi-buffer corrected F1,
+D-S v1/v2 cross-tabs, subtype classification, buffer-band lift,
+verifier calibration, and a CI-metadata registry covering 48 files.
+Those are summarised as "post-matrix analytical work" below.
 
----
+## Four 55-map generalisation runs — anchor values
 
-## Coverage Rates by Deliverable Type
+All values cited here are independently verifiable in the listed source
+files; matching JSON key paths appear in
+`results-audit-2026-04-21.md`.
 
-Aggregated across 59 unarchived runs (major runs + sub-stages):
+| Run | Cost (USD) | F1 @ 50 m measured | F1 @ 50 m D-S posterior | Cache-hit rate | Observation |
+|---|---:|---:|---:|---:|:---|
+| `55maps-image-generalisation` | 364.70 | 0.771 | 0.795 | 91.0 % | Obs 256 / 257 / 262–269 / 272–273 |
+| `55maps-generalisation` (retrospective text HIGH, 2026-04-10) | ~75 (estimate; no cost manifest) | 0.790 | 0.814 | not recorded | referenced by Obs 258 |
+| `55maps-text-min-generalisation` | 60.79 | 0.759 | 0.783 | 0.0 % | Obs 258 / 259 |
+| `55maps-text-high-generalisation` (2026-04-19 re-run) | 69.60 | 0.788 | 0.813 | 0.0 % | Obs 258 / 259 / 260 |
 
-| Deliverable | Era 1 | Era 2 | Overall |
-|---|---|---|---|
-| **F1/Precision/Recall** | 17/44 (39%) ✅ | 4/4 (100%) ✅ | 21/48 (44%) |
-| **Bootstrap CIs** (1000 iter, seed 42) | 5/44 (11%) ◐ | 4/4 (100%) ✅ | 9/48 (19%) |
-| **Paired permutation tests** | 8/44 (18%) ✅ | 4/4 (100%) ✅ | 12/48 (25%) |
-| **Dawid-Skene latent-truth correction** | 0/44 ❌ | 3/4 (75%) ✅ | 3/48 (6%) |
-| **Cost manifest** | 0/44 ❌ | 4/4 (100%) ✅ | 4/48 (8%) |
-| **Pre-launch audit** | 0/44 ❌ | 3/4 (75%) ✅ | 3/48 (6%) |
-| **Post-run report** | 1/44 (2%) ◐ | 4/4 (100%) ✅ | 5/48 (10%) |
-| **Working-notes Observation** | 12/44 (27%) ✅ | 4/4 (100%) ✅ | 16/48 (33%) |
+**Notes**:
 
-**Median documentedness (Era 1)**: 1–2 deliverables per run. **Median (Era 2)**: 7–8 deliverables per run.
+- The D-S posterior F1 at 50 m for the image run is **0.7954** in
+  `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json`
+  under `dawid_skene.corrected_metrics.f1`; this rounds to 0.795.
+  **Caveat from Obs 273** (line 12840): the preregistered student-FN
+  prior of 0.05 is mis-specified on this cohort; the posterior is
+  degenerate (every VLM-only candidate receives the same posterior of
+  0.1862) and the headline 0.795 should be cited with the qualification
+  that human adjudication, not D-S, is the only working per-item
+  signal on the VLM-only slice. The measured F1 of 0.771 is unchanged.
+- The retrospective text run at `outputs/55maps-generalisation/` has
+  no `cost_manifest.json`; the retrospective post-run report at
+  `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md`
+  (lines 115–117) states "**~$75** (v1-only)" as a scaling estimate
+  and flags proposer cost as unrecoverable from the original meta
+  artefacts.
+- The 2026-04-19 text-HIGH re-run (`outputs/55maps-text-high-generalisation/`)
+  is distinct from the retrospective text HIGH run. The prior audit
+  conflated the two.
 
----
+## Deliverable coverage (the eight-column framework, unchanged)
 
-## Worst-Documented Runs (≥3 Missing Deliverables)
+Each 55-map production run is assessed against eight deliverables. The
+table below covers the four runs in the anchor table; the
+run-by-run table in `results-audit-2026-04-21.md` extends this to
+Era 1 runs.
 
-Runs requiring significant backfill effort:
+| Deliverable | image | retrospective text | text-min | text-high |
+|---|:-:|:-:|:-:|:-:|
+| F1 / P / R at 20/30/40/50 m | yes | yes | yes | yes |
+| Bootstrap 95 % CIs (1 000 iter, seed 42) | yes | yes (1 000 iter per retrospective report line 37) | yes | yes |
+| Paired permutation test vs a comparator | yes | no (no planned comparator in original design) | yes (vs text-high) | yes (vs text-min, 4 buffers) |
+| Dawid-Skene latent-truth correction | yes (with Obs 273 caveat) | yes (retrospective) | yes | yes |
+| Cost manifest | yes ($364.70) | no (~$75 estimate) | yes ($60.79) | yes ($69.60) |
+| Pre-launch audit | yes | no (retrospective run) | yes | yes |
+| Post-run report | yes | yes (retrospective) | yes | yes (filed under `configs/run-configs/`) |
+| Working-notes observation | Obs 256+ | Obs 258 | Obs 258/259 | Obs 258/259/260 |
 
-1. **h11 (two-stage design)** — 4–5 missing:
-   - No formal post-run narrative integrating proposer + verifier pipeline results
-   - Two "UNINTENDED-T1.0" runs not flagged or excluded in documentation
-   - Paired (proposer vs verifier) comparison not statistically tested
-   - No cost manifest
+## Era 1 status (h-series, retest)
 
-2. **h8-v2 (library composition)** — 4 missing:
-   - Bootstrap CIs not formally reported (only permutation p-values)
-   - Multi-buffer curve missing (20 m only)
-   - No pre-launch audit or cost manifest
-   - Narrative only in working-notes Obs 238
+The prior audit's era analysis holds up on re-inspection. Key points
+that carry over, restated here without the prior audit's numeric
+errors:
 
-3. **h10 (calibration pool)** — 3 missing:
-   - Multi-buffer curve missing
-   - No pre-launch audit or post-run narrative
-   - Verifier-independence probe is methodologically rich but lacks synthesis
+- **h8-v2 library composition**: bootstrap CIs and paired permutation
+  tests present for the greedy cohort; multi-buffer curve missing;
+  narrative in `results/h8-v2/` + working-notes Obs 238 (line in file
+  captured in the full audit table).
+- **h10 calibration pool**: bootstrap CIs, ICC diagnostics, verifier-
+  independence probe (`results/h10/verifier_independence_probe.md`)
+  present; multi-buffer curve missing; narrative only in working-notes.
+- **h11 two-stage**: fragmented across multiple sub-run directories;
+  proposer-vs-verifier paired test never formally computed; two
+  "UNINTENDED-T1.0" runs exist (`outputs/h11/single-pass-384-UNINTENDED-T1.0/`
+  and `outputs/h11/consensus-384-UNINTENDED-T1.0/`) and have not been
+  formally excluded or archived.
+- **h12-v2 HP:HN ratio**: `results/h12-v2/analysis_summary.md` is a
+  strong single-file narrative including threshold sweeps, three-way
+  permutation tests with Benjamini-Hochberg FDR correction, and
+  operational notes. Cost accounting is informal.
+- **retest (phase 2 + 3)**: `results/retest/retest-production-summary.md`
+  and `results/retest/pairwise-bootstrap-comparisons.json` make this
+  one of the better-documented Era 1 runs.
 
-4. **55maps-generalisation (text, first 55-map run)** — 3–4 missing:
-   - No pre-launch audit (first run, pre-formalized workflow)
-   - Bootstrap CIs not computed (Dawid-Skene applied post-hoc)
-   - Cost manifest missing (launched ad-hoc, budget unknown)
-   - D-S correction applied retrospectively (not pre-registered in run config)
+## Post-matrix analytical work (2026-04-20 onwards)
 
-5. **retest phases (2–3 missing per phase)**:
-   - Cost manifest absent (internal development)
-   - Multi-buffer curves not standard (most phases use 20 m only; phase3a uses 50 m)
-   - No pre-launch audits (iterative design)
+These are analyses that landed after the prior audit and are therefore
+not in it. All are scoped under `results/55maps-image-generalisation/`
+(except subtype-classification, which is on the 4-map gold-standard)
+and all cite to a working-notes Observation in the 262–273 range.
 
----
+- **Review-UI effect cross-tab** (Obs 268, line 12490) —
+  `results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json`
+  — 21 % one-directional reviewer flip rate after the tolerance-circle
+  UI was added.
+- **Verifier calibration cross-tab** (Obs 269, line 12550) —
+  `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json`
+  — expected calibration error (ECE) 0.269, area under the receiver
+  operating characteristic curve (AUC) 0.655, pronounced quantisation
+  at the high end of the output range.
+- **Human-reviewed corrected F1** (Obs 267, line 12394) —
+  `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json`
+  — corrected F1 at 50 m buffer = 0.8295 (rounds to 0.830) under the
+  extended-ground-truth counting rule, 2.5× more phantom TPs than D-S
+  estimated.
+- **Multi-buffer corrected F1** —
+  `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`
+  — F1 at R = 50/75/100/125/150 m = 0.832 / 0.848 / 0.852 / 0.854 /
+  0.855 (rounded from the source JSON's 0.8317 / 0.8477 / 0.8521 /
+  0.8538 / 0.8551).
+- **Buffer-band lift** (Obs 272, line 12770) —
+  `results/55maps-image-generalisation/buffer-band-lift/summary.json`
+  — attractor-pull effect statistically significant through 125 m;
+  shells beyond 125 m are indistinguishable from within-tile random
+  placement.
+- **Buffer-100 m diagnostics** —
+  `results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json`
+  — ground-truth clustering + pair-drift contributions to the 50 m →
+  100 m recall gain.
+- **D-S v1 cross-tab vs human review** (Obs 273, line 12840) —
+  `results/55maps-image-generalisation/ds-human-crosstab/summary.json`
+  — D-S posteriors collapse to a single value (0.1862) on every
+  VLM-only candidate; ECE 0.539, AUC 0.500. Prior-invariant AUC
+  establishes structural inadequacy.
+- **D-S v2 data-driven prior sweep** (Obs 273) —
+  `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json`
+  — confirms the pathology at every informative prior including
+  held-out 80/20 control.
+- **Subtype classification** (Obs 270/271, lines 12649 / 12711) —
+  `results/gold-standard-subtype-classification/macro_weighted_summary.json`
+  — weighted-F1 0.8873 (rounds to 0.887) at 50 m buffer on the 4-map
+  gold-standard set; 57 % benchmark_mound → triangulation_mound
+  asymmetric confusion.
+- **Human re-review multi-buffer CSV** —
+  `results/55maps-image-generalisation/human-review-multi-buffer.csv`
+  (557 rows re-reviewing yesterday's not-mound candidates at five
+  tolerance bands).
+- **Paper-tables consolidation** — `results/paper-tables/` contains 26
+  files including `gold-standard-spatial-tolerance.{md,csv}` and
+  `subtype-classification.{md,csv}` plus cross-hypothesis metrics
+  master tables with CI-metadata sidecars.
 
-## Gold-Standard Examples (≥7 Deliverables)
+## CI-metadata registry + protocol errata E54
 
-Runs meeting or exceeding the publication standard:
+The CI-metadata registry at `results/ci-metadata-registry.md` enumerates
+48 sidecar files (41 per-file `*.metadata.json` + 7 directory-level
+entries) across `outputs/`, `results/`, and `results/leaderboard/`.
+Every bootstrap CI in the project now has an accompanying sidecar that
+records iteration count, seed, resampling unit, library entry point,
+and the commit of the generating script.
 
-1. **55maps-text-min-generalisation** (2026-04-15) ✅ **COMPLETE (8/8)**
-   - All deliverables present and consistent in organization
-   - Pre-launch audit + post-run report + evaluation.json (F1/P/R + CIs)
-   - Paired permutation tests (vs text-high) at multiple buffers
-   - Dawid-Skene latent-truth correction (δF1 +0.024)
-   - Cost manifest: $165.74 total, 90.2% cache-hit efficiency documented
-   - Working-notes Obs 255 referenced
+Protocol errata entry **E54** (committed in `ad023fc3`;
+`docs/methodology/preregistration/protocol-errata.md:1670`) documents
+the split between 1 000-iteration (preregistered) and 10 000-iteration
+(post-hoc) bootstrap analyses, with the explicit list of scripts in
+each category.
 
-2. **55maps-image-generalisation** (2026-04-18) ✅ **COMPLETE (8/8)**
-   - All deliverables present; most detailed post-run report in corpus
-   - Includes operational issue logging (3 launcher-side bugs + recoveries)
-   - Cost manifest: $364.70, detailed per-pass + token breakdown (91% cache hit)
-   - Bootstrap CIs + paired permutation tests included
-   - Dawid-Skene correction documented
-   - Working-notes Obs 255
+## What this means for the paper
 
-3. **55maps-text-high-generalisation** (2026-04-10) ✅ **NEAR-COMPLETE (7/8)**
-   - All deliverables present except minor filing inconsistency (post-run report in configs/ not outputs/)
-   - Pre-launch audit + evaluation.json + cost manifest ($359.53)
-   - Paired permutation tests (vs min) at multiple buffers
-   - Dawid-Skene correction applied
-   - Obs 255
+1. The paper headline of F1 = 0.904 was produced before the v2
+   verifier existed and uses verifier v1 (policy document
+   `docs/methodology/v2-verifier-contamination-policy.md`); the
+   quarantine of 100 contaminated files on 2026-04-21 does not
+   touch the headline.
+2. The image-run D-S posterior of 0.795 should be cited with the
+   Obs 273 caveat; human-review corrected F1 of 0.830 at 50 m is the
+   preferred lower-bound narrative.
+3. The text-high versus text-min paired test at 50 m returns
+   ΔF1 = 0.029163 with p = 0.0 across 10 000 permutations
+   (`results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json`).
+4. Cost accounting is complete across the three publishable-launcher
+   runs; the retrospective text run is flagged as estimate-only. Total
+   production-run API spend for the four 55-map runs is at least
+   $495.09 measured ($364.70 + $60.79 + $69.60) plus ~$75 estimated for
+   the retrospective text run.
 
-4. **h12-v2 (HP:HN ratio)** ✅ **STRONG (6/8)**
-   - Comprehensive analysis_summary.md narrative (best single-hypothesis write-up in Era 1)
-   - Bootstrap CIs at optimal threshold (1000 iterations, seed 42)
-   - Three-way permutation tests with Benjamini-Hochberg FDR correction
-   - Threshold sweeps documented (t=1..5 for each condition)
-   - Working-notes Obs 256
-   - Missing: multi-buffer curve, formal cost accounting
+## Known gaps remaining
 
----
+After the post-matrix work, the notable remaining gaps are:
 
-## Patterns in Documentation Breakdown
+- Era 1 multi-buffer curves for h8, h10, h12-v2 (only 20 m reported).
+- h11 proposer-vs-verifier paired test never computed; two UNINTENDED
+  runs not formally excluded.
+- No formal cost manifest for h-series or retest (pre-launcher era).
 
-### By Time Period
+These are methodological-support gaps, not publication blockers, since
+the paper headline rests on runs that do have full coverage.
 
-- **Pre-December 2025**: Ad-hoc runs (no formal audits or cost tracking)
-- **December 2025 – March 2026**: Statistical rigor increasing; narrative synthesis weak
-- **April 2026 onwards**: Publication-ready workflows with audits, reports, and cost manifests
+## Cross-references
 
-### By Research Axis
-
-- **Library design (h8, h12)**: Results are null; analysis is statistically rigorous but lacks high-level narrative
-- **Two-stage pipelines (h11)**: Fragmentary documentation; proposer-verifier comparison never formally tested
-- **Production runs (55-maps)**: Mature workflows; all deliverables present
-
-### By Deliverable Type
-
-| Deliverable | Status | Key Gap |
-|---|---|---|
-| **F1/P/R** | Strong across both eras | Era 1 mostly single-buffer (20 m); multi-buffer standard by Era 2 |
-| **Bootstrap CIs** | Weak in Era 1 | Inconsistent protocol (ICC vs 1000-iter); Era 2 standardized |
-| **Paired tests** | Moderate | Present for major hypothesis tests but not for all condition pairs |
-| **Dawid-Skene** | Absent in Era 1 | Introduced in Era 2; applied retrospectively to first 55-map run |
-| **Cost manifests** | Absent in Era 1 | Introduced April 2026 with context-caching infrastructure |
-| **Pre-launch audits** | Absent in Era 1 | Formalized with publication-ready workflows (April 2026) |
-| **Post-run reports** | Near-absent in Era 1 | Only retest-production-summary.md is exemplary; Era 2 standard |
-
----
-
-## Recommended Backfill Priority
-
-### Tier 1: High Scientific Impact (Publish-Ready Paper)
-
-These runs are headline claims; gaps block publication. Priority backfill: **bootstrap CIs + multi-buffer curves + paired tests (if comparator exists)**.
-
-1. **h11 two-stage design** → Integrate results into coherent pipeline report; compute paired proposer vs verifier test
-2. **55maps-generalisation (text-high)** → Backfill pre-launch audit; harmonize cost accounting with min/image cohorts
-3. **h10 calibration pool** → Multi-buffer curves; integrate verifier-independence probe into narrative post-run report
-
-### Tier 2: Methodological Precedent (Pre-Publication Support)
-
-These close research axes and inform experimental design. Gaps are gaps but not deal-breakers. Priority: **post-run narratives + threshold sweeps**.
-
-1. **h8-v2 library composition** → Consolidate permutation results into analysis_summary.md; flag library-design axis closure
-2. **h12-v2 HP:HN ratio** → Multi-buffer curves (test whether null holds across buffers); formal cost accounting
-3. **retest phases** → Cost manifest for full phase 2 + 3; per-phase post-run narratives
-
-### Tier 3: Development Runs (Archive or Minimal Backfill)
-
-Low publication impact; results embedded in more mature pipelines. Action: **flag as exploratory or archive**.
-
-1. **h11 "UNINTENDED-T1.0" runs** → Archive or mark as "failed exploratory"
-2. **h10 hard-cases-v2 / example-pools-v2** → Document as hard-example mining (no evaluation required)
-3. **retest h11-single-pass-384-t0** → Document as rerun validation; minimal evaluation needed
-
----
-
-## Historical Lessons (for future runs)
-
-1. **Pre-launch audits prevent post-hoc surprises** (55maps-generalisation vs min/high/image shows the difference)
-2. **Cost tracking is easier when built in from day 1** (Era 2 launchers have native cost accounting; Era 1 runs require retrospective estimation)
-3. **Bootstrap CIs should be computed on every run** (variance in confidence intervals is itself informative; h10 ICC protocol was sophisticated but non-standard)
-4. **Paired permutation tests require a priori design** (h11 proposer vs verifier would need explicit hypothesis; h8-v2 library comparison needs baseline condition)
-5. **Narrative synthesis matters** (h12-v2 analysis_summary.md compensates for missing cost manifest; retest-production-summary.md makes scattered JSON files coherent)
-
----
-
-## Audit Recommendations
-
-1. **Immediately**: Add pre-launch audit to 55maps-generalisation (text-high); flag cost estimate as "unknown—ad-hoc run"
-2. **This week**: Generate h11 post-run report integrating proposer + verifier results; formally exclude or re-evaluate "UNINTENDED-T1.0" runs
-3. **This sprint**: Compute multi-buffer curves (20/30/40/50 m) for h8-v2 and h10; add to results/ as new deliverable
-4. **Documentation standard going forward**:
-   - All experimental runs should have a pre-launch audit (template in configs/run-configs/)
-   - All runs should have evaluation.json with F1/P/R at 20/30/40/50 m buffers + 1000-iter bootstrap CIs (seed 42)
-   - All runs with >1 condition should have paired permutation tests (tile-level, with p-values)
-   - All runs should have a post-run report (narrative + operational summary) in outputs/{run-name}/post_run_report.md
-
----
-
-## Stats at a Glance
-
-- **Total runs audited**: 59 (including 44 Era 1, 4 Era 2 major, 11 validation/misc)
-- **Runs with complete F1+CIs+tests**: 5 (h10, h12-v2, retest, 55maps-text-min, 55maps-image)
-- **Runs with post-run narratives**: 5 (retest-production-summary.md, 55maps-text-min/high/image, h12-v2 analysis_summary.md)
-- **Runs with cost accounting**: 4 (all Era 2: 55maps-text-min/high/image + h12-v2 meta-reported)
-- **Runs with Dawid-Skene**: 3 (55maps-text-min/high/image)
-- **Coverage gain Year-over-Year**: +85% (Era 1 median = 1–2 deliverables; Era 2 = 7–8)
-
+- `docs/methodology/preregistration/protocol-errata.md` — full errata
+  log (E47 primary buffer, E52 H12 re-run, E54 bootstrap iterations).
+- `docs/methodology/v2-verifier-contamination-policy.md` — the
+  2026-04-21 quarantine policy.
+- `docs/notes/reflections/working-notes.md` — Observation log; all
+  post-matrix observations are in the 262–273 range.
+- `planning/doc-audit-rerun-plan.md` — the plan document that drove
+  this re-audit.

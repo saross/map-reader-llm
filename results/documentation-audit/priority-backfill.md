@@ -1,263 +1,192 @@
-# Priority Backfill Plan — Results Documentation
+# Priority Backfill Plan — 2026-04-22 Revision
 
-**Plan Date**: 2026-04-18  
-**Objective**: Close documentation gaps in support of paper submission (target: May 2026)  
-**Constraint**: No re-runs; all backfill uses existing artefacts (results/, outputs/)
+**Revision**: supersedes `results/documentation-audit/priority-backfill.md`
+(dated 2026-04-18). Several Tier 1 items from that plan have since been
+closed by work that landed between 2026-04-19 and 2026-04-21, and the
+CI-metadata registry plus errata E54 close a substantial infrastructure
+gap that was not explicitly tracked in the prior plan.
 
----
-
-## TIER 1: PUBLICATION-BLOCKING (Must Close Before Submission)
-
-### 1. 55maps-generalisation (text-high) — Add Pre-Launch Audit
-
-**Current State**:
-- Post-run report exists (retrospective, added 2026-04-14)
-- Cost manifest missing ("unknown—ad-hoc first run")
-- Pre-launch audit missing
-- Dawid-Skene applied post-hoc (2026-04-14, not pre-registered)
-
-**Backfill Action**:
-1. Create `configs/run-configs/55maps_text_generalisation_pre_launch_audit.md` (retroactively)
-   - Record the decision to proceed without formal audit ("first 55-map run; protocol formalized retrospectively")
-   - Reference preregistration §4.1.1 (buffer 20 m primary, 50 m reported)
-   - Acknowledge Dawid-Skene as post-hoc methodological addition (flag as "non-preregistered but justified")
-
-2. Estimate cost manifest retroactively:
-   - Launcher logs: check outputs/55maps-generalisation/launch_manifest.json for tile count + model
-   - Formula: tiles × passes × cost_per_pass (use rates from 55maps-text-min as proxy: ~$0.02/tile/pass)
-   - Insert "Cost estimate" section in post-run report with uncertainty bounds
-
-**Effort**: 2–3 hours (archival + cost reconstruction)  
-**Owner**: Shawn  
-**Blockers**: None (all data exists; no recomputation needed)
+**Constraint** (unchanged): no re-runs; all backfill uses existing
+artefacts.
 
 ---
 
-### 2. h11 Two-Stage Design — Integrate Pipeline Results
+## Status of prior Tier 1 items
 
-**Current State**:
-- 12 sub-runs across outputs/h11/ with no unified narrative
-- Two "UNINTENDED-T1.0" runs marked but not formally excluded
-- Threshold sweeps in results/h11-384-pv-diagnostic/ (bootstrap CIs present!)
-- No paired (proposer vs verifier) statistical comparison
-- No post-run report tying stages together
-
-**Backfill Action**:
-1. **Exclude "UNINTENDED" runs formally**:
-   - Create a note in results/h11-384-pv-diagnostic/README.md explaining T=1.0 bug and decision to exclude
-   - Mark outputs/h11/{single-pass-384-UNINTENDED-T1.0, consensus-384-UNINTENDED-T1.0} as "failed—see note"
-
-2. **Compute paired proposer vs verifier test**:
-   - Extract proposer detections from outputs/h11/proposer-verifier-384/run_*/
-   - Extract verifier detections from outputs/h11/proposer-verifier-384/verified/
-   - Use tile-level permutation test (matching h12-v2 protocol): tile_f1(prop) vs tile_f1(verif)
-   - Record p-value + effect size in results/h11-384-pv-diagnostic/proposer_vs_verifier.json
-   - Script: scripts/pairwise_permutation_test.py (already exists)
-
-3. **Write post-run narrative**:
-   - outputs/h11/post_run_report.md
-   - Sections: objective (two-stage pipeline exploration), design (5 passes, 384px), stages (proposer F1→verifier F1), key finding (proposer vs verifier comparison: statistically tied / directionality?), implications
-   - Reference working-notes Obs 250–251
-
-**Effort**: 4–6 hours (permutation test computation + narrative)  
-**Owner**: Shawn  
-**Blockers**: Proposer/verifier breakout requires parsing outputs carefully
+| Prior item | Status | Closed by |
+|---|---|---|
+| Add pre-launch audit to the 2026-04-10 text run | Still open (retrospective run; retrospective post-run report exists at `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md` but no retrospective pre-launch audit is yet filed) | — |
+| Text-high cost harmonisation with min / image cohorts | **Closed** | 2026-04-19 re-run at `outputs/55maps-text-high-generalisation/` produced `cost_manifest.json` with `totals.cost_usd` = 69.60 (commit range `4e5c5e5a..`) |
+| h11 paired proposer-vs-verifier test + post-run narrative | Still open (no statistical comparison computed; no unified narrative) | — |
 
 ---
 
-### 3. 55maps-generalisation — Harmonize with Min/High/Image Cohorts
+## Status of prior Tier 2 items
 
-**Current State**:
-- Dawid-Skene results exist (results/dawid-skene/dawid-skene-results.md, shared across all cohorts)
-- Post-run narrative exists but references different decision-point (April 10 vs April 15/18)
-- No bootstrap-CIs (compute? or leave as-is due to retrospective status?)
+| Prior item | Status |
+|---|---|
+| h8-v2 multi-buffer curves (30/40/50 m) | Still open |
+| h10 multi-buffer curves + post-run narrative | Still open |
+| h12-v2 multi-buffer curves + re-run of three-way null across buffers | Still open |
 
-**Backfill Action**:
-1. **Decision point**: Should 55maps-generalisation have 1000-iter bootstrap CIs retroactively computed?
-   - Option A (preferred): "This run predates bootstrap-CI protocol; reported as-is with flag"
-   - Option B: Compute CIs now (requires re-evaluation script run)
-   - **Recommendation**: Option A (document the methodological timeline; don't retrofit)
-
-2. **Update post-run report**:
-   - Add note: "Completed 2026-04-10 before bootstrap-CI protocol formalization. D-S correction applied post-hoc (2026-04-14) using unified annotation model with text-min and text-high cohorts. See results/dawid-skene-results.md."
-   - Clarify buffer choices: primary buffer = 50 m (per preregistration); 20/30/40 reported for completeness
-
-3. **Cross-reference in 55maps-text-min and 55maps-image post-run reports**:
-   - Link to text-high as "Cohort 1" (earliest, higher-latency model; retrospective D-S)
-   - Explain why D-S is shared across cohorts (2-annotator limit requires pooling)
-
-**Effort**: 1–2 hours (documentation only)  
-**Owner**: Shawn  
-**Blockers**: None
+These are confirmatory; none is publication-blocking.
 
 ---
 
-## TIER 2: METHODOLOGICAL SUPPORT (Strengthen Paper Arguments)
+## Status of prior Tier 3 items
 
-### 4. h8-v2 Library Composition — Multi-Buffer Curves
-
-**Current State**:
-- F1 at 20 m present (results/h8-v2/greedy/threshold_sweep.json)
-- No 30/40/50 m curves
-- Permutation tests present (pairwise/)
-- Narrative: Obs 238 (three-way null after BH-FDR)
-
-**Backfill Action**:
-1. **Compute F1/P/R at 30/40/50 m**:
-   - Use scripts/evaluate_detections.py with buffers [30, 40, 50]
-   - Requires greedy consensus GeoJSONs (outputs/h8-v2/greedy/consensus_t*.geojson) + ground truth
-   - Output: results/h8-v2/greedy/buffer_sensitivity.{json,csv}
-
-2. **Test whether null holds across buffers**:
-   - Plot F1 curve across buffers for each condition
-   - Check if interaction exists (library effect size depends on buffer?)
-   - Update Obs 238 / write appendix note if pattern differs by buffer
-
-3. **Minimum viable narrative**:
-   - Create results/h8-v2/buffer_analysis.md summarizing curve shapes + null stability
-
-**Effort**: 2–3 hours (evaluation script + analysis)  
-**Owner**: Shawn  
-**Timeline**: Low priority (h8 closes a research axis; curves are confirmatory, not hypothesis-testing)
+| Prior item | Status |
+|---|---|
+| Archive the `outputs/h11/*UNINTENDED-T1.0` runs | Still open |
+| Mining-run READMEs under h10 / h11 | Still open |
+| Phase 3c diversity study relevance decision | Still open |
 
 ---
 
-### 5. h10 Calibration Pool — Multi-Buffer + Narrative
+## New items surfaced since 2026-04-18
 
-**Current State**:
-- Comprehensive statistical analysis (results/h10/statistical_analysis.json, sweep_results.json, verifier_independence_probe.md)
-- Missing: 30/40/50 m buffer curves
-- Missing: Post-run narrative integrating pool-size effect with verifier calibration
+These are items that the prior audit did not anticipate because the
+work that raised them postdates 2026-04-18:
 
-**Backfill Action**:
-1. **Compute multi-buffer sweeps**:
-   - Similar to h8-v2: evaluate_detections.py at [20, 30, 40, 50]
-   - Results: results/h10/buffer_sensitivity.{json,csv}
+### N1. Dawid-Skene caveat on the image-run posterior
 
-2. **Test pool-size effect across buffers**:
-   - Does larger pool (more examples) help more at tight buffers or loose buffers?
-   - Check ICC stability (should stay high ~0.93 across all buffers)
+**Item**: the paper should cite the image-run D-S corrected F1 of 0.795
+together with the Obs 273 caveat (structural inadequacy on the VLM-only
+slice at any prior).
 
-3. **Write h10 post-run narrative** (outputs/h10/post_run_report.md):
-   - Objective: calibration pool size for verifier (H10 hypothesis)
-   - Design: 4 pool sizes, per-config threshold sweeps
-   - Results: pool-size effect null at 20 m; curves at 30/40/50 m
-   - Verifier independence: ICC=0.93, full pairwise correlation table
-   - Implication: verifier is robust to example-set size; limits over-fitting risk
+**Current state**: Obs 273 (`docs/notes/reflections/working-notes.md:12840`)
+and the D-S v1 and v2 cross-tab artefacts are in place. The
+`dawid-skene-results.json` file still records 0.7954 without a caveat
+pointer. **Action**: add a caveat section to
+`results/55maps-image-generalisation/dawid-skene/dawid-skene-results.md`
+pointing to Obs 273 and the human-review corrected F1 as the preferred
+lower-bound narrative. One paragraph; zero re-computation.
 
-**Effort**: 3–4 hours  
-**Owner**: Shawn  
-**Timeline**: Medium priority (methodological rigor; h10 is cited in paper as "calibration validation")
+**Effort**: 15 minutes.
 
----
+### N2. Paper methods wording for E54
 
-### 6. h12-v2 — Multi-Buffer Curves + Cost Estimate
+**Item**: the paper's methods section needs the suggested E54 wording
+embedded. The errata entry at
+`docs/methodology/preregistration/protocol-errata.md:1695-1697` already
+includes the recommended text: "Confidence intervals on primary F1,
+precision, and recall are derived from 1 000-iteration tile-level
+bootstrap resampling (preregistered Section 3.5, percentile method
+2.5th / 97.5th). Post-hoc analyses — human-reviewed corrected F1
+(single- and multi-buffer), subtype classification, and review-UI
+calibration cross-tabs — use 10 000 iterations to tighten CIs on
+narrow effect sizes; the resampling unit and percentile method are
+unchanged."
 
-**Current State**:
-- Excellent analysis_summary.md (threshold sweeps, FDR correction, directional patterns)
-- Missing: 30/40/50 m curves (only t=1..5 at 20 m reported)
-- Missing: Formal cost manifest (only "~$34.00 meta-reported")
+**Action**: paste into paper methods section when revising.
 
-**Backfill Action**:
-1. **Compute multi-buffer sweeps** (3 conditions × 5 thresholds × 4 buffers = 60 evaluation runs):
-   - Script: scripts/evaluate_detections.py --sweep-thresholds --sweep-buffers
-   - Output: results/h12-v2/{greedy,wbf}/buffer_sensitivity.{json,csv}
+**Effort**: 5 minutes; paper-side only.
 
-2. **Re-test three-way null at each buffer**:
-   - Run 3 pairwise permutation tests (R12, R23, R13) at each buffer
-   - Apply BH-FDR correction pooled across buffers (15 tests total; q=0.05)
-   - Check: does null hold robustly? Or is H12 significant at loose buffers?
+### N3. Retrospective text-run pre-launch audit (still open)
 
-3. **Reconstruct cost manifest**:
-   - Query launcher logs: outputs/h12-v2/*/launch_manifest.json
-   - Aggregate: Σ(cost per tile) × tiles across r1-hn-heavy + r3-hp-heavy (r2 reused from h10)
-   - Estimate: ~$34 (r1 + r3 = ~2×$17); document as "meta-reported + reconstructed"
+**Item**: the 2026-04-10 text run has a retrospective post-run report
+but no retrospective pre-launch audit. For symmetry with the other
+three runs, a retrospective pre-launch audit would record the
+configuration decisions that were made ad-hoc at the time.
 
-**Effort**: 3–4 hours  
-**Owner**: Shawn  
-**Timeline**: Medium priority (h12 is major hypothesis test; multi-buffer check strengthens null claim)
+**Action**: author a short retrospective pre-launch audit at
+`configs/run-configs/55maps_text_generalisation_retrospective_pre_launch_audit.md`
+mirroring the structure of the text-min / text-high / image audits;
+flag all cells as "retrospective reconstruction" where appropriate.
 
----
+**Effort**: 1-2 hours.
 
-## TIER 3: DEVELOPMENT RUNS (Archive or Flag)
+### N4. UNINTENDED h11 runs — formal exclusion
 
-### 7. h11 "UNINTENDED" Runs — Archive Decision
+**Item**: `outputs/h11/consensus-384-UNINTENDED-T1.0/` and
+`outputs/h11/single-pass-384-UNINTENDED-T1.0/` remain in the active
+tree. Under the project's "archive, never delete" policy, these should
+either be archived with an explanation or explicitly flagged in a
+nearby README.
 
-**Action**: 
-- Formally decide: Archive or exclude?
-- If archive: Move outputs/h11/{single-pass-384-UNINTENDED-T1.0, consensus-384-UNINTENDED-T1.0} to outputs/archive/h11/
-- If exclude: Add .gitignore entry + README note
-- **Recommendation**: Archive (preserve reproducibility; flag in README)
+**Recommendation**: move to `archive/unintended-t1.0/` with an
+accompanying README note referencing the decision context.
 
-**Effort**: 0.5 hours
+**Effort**: 30 minutes.
 
----
+### N5. h11 proposer-vs-verifier paired test
 
-### 8. h10 & h11 Exploratory Sub-Runs
+**Item**: 12 sub-runs under `outputs/h11/` share a two-stage design but
+no proposer-vs-verifier paired statistical test has been computed.
 
-**Runs**:
-- h10: hard-cases-v2, example-pools-v2, verifier-crops (hard-example mining; no evaluation needed)
-- h11: gold-standard-v2, n1-outstanding-384 (gold-standard generation; no evaluation needed)
+**Action**: run `scripts/pairwise_permutation_test.py` against the
+`outputs/h11/proposer-verifier-384/` proposer and verified detection
+files; write result to `results/h11-384-pv-diagnostic/proposer_vs_verifier.json`;
+draft a short post-run narrative integrating the twelve sub-runs.
 
-**Action**:
-- Create outputs/{h10,h11}/mining/README.md explaining purpose (hard-example mining for later library enrichment)
-- No evaluation needed; document as "exploratory data collection"
-
-**Effort**: 1 hour
+**Effort**: 4-6 hours.
 
 ---
 
-### 9. retest Phase 3c Diversity Study
+## New items from the 2026-04-20/21 human-review day
 
-**Current State**:
-- Minimal documentation (only outputs/retest/phase3c/)
-- No evaluation.json; no post-run narrative
+These were generated during the work that closed the text-high cost
+gap and produced the corrected-F1 analyses. None is a documentation
+gap per se; they are operational notes for future sessions.
 
-**Action**:
-- **If relevant to paper**: Compute evaluation.json and write post-run narrative
-- **If exploratory only**: Create outputs/retest/phase3c/README.md explaining scope (diversity study, not in main analysis path)
+### O1. Subtype classification verification
 
-**Effort**: 1–2 hours (depends on relevance)
+**Artefact**: `results/gold-standard-subtype-classification/`
+— headline weighted-F1 0.8873 at 50 m buffer (Obs 270).
 
----
+**Status**: all deliverables present — `report.md`, confusion matrices
+at 4×4 and 5×5, per-map confusion, per-class F1, kappa/MCC, consensus
+threshold sweep, buffer sensitivity, bootstrap CIs (10 000 iterations
+per E54), `run_manifest.json`. No backfill needed.
 
-## Implementation Schedule
+### O2. Human-review workflow artefacts
 
-| Priority | Task | Owner | Start | End | Effort (h) | Blocker? |
-|---|---|---|---|---|---|---|
-| **T1** | 55maps-generalisation pre-launch audit | Shawn | 2026-04-18 | 2026-04-19 | 2–3 | NO |
-| **T1** | h11 post-run narrative + proposer vs verifier test | Shawn | 2026-04-19 | 2026-04-21 | 4–6 | NO |
-| **T1** | 55maps-generalisation harmonization | Shawn | 2026-04-22 | 2026-04-22 | 1–2 | NO |
-| **T2** | h8-v2 multi-buffer curves | Shawn | 2026-04-23 | 2026-04-24 | 2–3 | NO |
-| **T2** | h10 multi-buffer + narrative | Shawn | 2026-04-24 | 2026-04-26 | 3–4 | NO |
-| **T2** | h12-v2 multi-buffer + permutation retests | Shawn | 2026-04-26 | 2026-04-28 | 3–4 | NO |
-| **T3** | Archive decisions (UNINTENDED runs) | Shawn | 2026-04-29 | 2026-04-29 | 0.5 | NO |
-| **T3** | Mining runs README + phase3c decision | Shawn | 2026-04-29 | 2026-04-30 | 1–2 | NO |
+**Artefact**: `results/55maps-image-generalisation/human-review-multi-buffer.csv`
+(557 rows; second review day) plus `human-review.csv` (first review
+day). Both files are committed and referenced by the corrected-F1
+and multi-buffer analyses.
 
-**Total Effort**: ~18–25 person-hours  
-**Timeline**: 1–2 weeks (non-blocking to paper submission if Tier 1 completes by 2026-04-22)
+**Status**: both present. If the paper cites the rate of review-UI
+flips (Obs 268), cite the JSON at
+`results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json`.
 
 ---
 
-## Validation Checklist (Post-Backfill)
+## Ongoing standards (post-backfill)
 
-- [ ] All 59 runs have at least F1/P/R at 20 m buffer documented
-- [ ] All hypothesis-testing runs (H8, H10, H11, H12, 55-maps) have paired permutation tests with p-values
-- [ ] All production runs (55-maps) have post-run reports + pre-launch audits + cost manifests
-- [ ] All runs with >10 tiles have bootstrap CIs (1000 iterations, seed 42) or explicit rationale for absence
-- [ ] No runs labeled "UNINTENDED" remain active; flagged or archived
-- [ ] All Dawid-Skene results (55-maps cohorts) are documented with shared methodology notes
-- [ ] Working-notes observations are cross-referenced to runs (forward-referencing: "see results/")
+Unchanged from the prior plan, restated with corrected citations:
+
+For every future run:
+
+1. Pre-launch audit at `configs/run-configs/{run}_pre_launch_audit.md`.
+2. Post-run report at both `outputs/{run}/post_run_report.md` and
+   `configs/run-configs/{run}_post_run_report.md` (publishable-launcher
+   convention).
+3. `cost_manifest.json` with `totals.cost_usd`, `totals.cache_hit_rate`,
+   and per-stage breakdown.
+4. `evaluation/evaluation.json` with F1/P/R at 20/30/40/50 m with
+   bootstrap CIs (1 000 iterations, seed 42, tile-level resampling per
+   protocol E54). The CI-metadata sidecar at
+   `evaluation.metadata.json` is now a hard requirement per the
+   `results/ci-metadata-registry.md` registry.
+5. Paired permutation test for every planned comparator (10 000
+   permutations for narrow-effect analyses; 1 000 for primary).
+6. Dawid-Skene latent-truth correction **plus** Obs 273 caveat
+   discussion when two-annotator identifiability applies.
+7. Working-notes Observation when a finding merits the log.
 
 ---
 
-## Ongoing Standards (Post-Backfill)
+## Schedule (suggested, not committed)
 
-**For all future runs**:
-1. Pre-launch audit (configs/run-configs/{run}_pre_launch_audit.md)
-2. Post-run report (outputs/{run}/post_run_report.md) within 24 hours of completion
-3. Evaluation at all buffers (20/30/40/50 m) with bootstrap CIs (1000 iter, seed 42)
-4. Paired permutation tests for any multi-condition design (p-values + effect size)
-5. Cost manifest (automated by launcher; review for accuracy)
-6. Working-notes observation (if hypothesis-testing run; reference other run's working-notes)
+| Item | Dependency | Effort | Priority |
+|---|---|---|---|
+| N1 D-S caveat paragraph | none | 15 min | High (paper-adjacent) |
+| N2 Paper methods E54 wording | paper revision session | 5 min | High (paper-adjacent) |
+| N3 Retrospective pre-launch audit | none | 1-2 h | Medium |
+| N4 UNINTENDED archive | none | 30 min | Medium (cleanup) |
+| N5 h11 paired test + narrative | N4 | 4-6 h | Medium |
+| T2 prior items (h8 / h10 / h12 multi-buffer curves) | none | 8-11 h | Low (confirmatory) |
 
+**Cumulative estimated effort**: ~15-20 hours once N1, N2 are off the
+pile.
