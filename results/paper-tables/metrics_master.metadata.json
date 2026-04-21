@@ -1,0 +1,30 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved metadata sidecar for metrics_master.json (and metrics_master.csv, which is the CSV export). This is an aggregate file consolidated from per-condition CIs in results/paper-eval/**/consensus-analysis-report.json and results/paper-eval/pv/**/buffer_sensitivity.json. The underlying bootstrap spec is uniform across all rows.",
+  "target_files": [
+    "metrics_master.json",
+    "metrics_master.csv"
+  ],
+  "generated_by_script": "scripts/consolidate_paper_metrics.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20 for archival completeness; the JSON was produced on 2026-03-27 and the CSV re-export on 2026-03-29. The consolidation is deterministic over its source files.",
+  "generation_timestamp_iso": "2026-03-26T20:39:40.447596+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "library_entry_point": "scripts/lib_advanced_metrics.py::bootstrap_ci",
+    "note": "The aggregate inherits the bootstrap specification of its source files; each source file carries metadata_complete=YES in the CI registry."
+  },
+  "aggregation_chain": [
+    "results/paper-eval/flash-*/consensus-analysis-report.json (per-condition, consensus-sweep; n=1000, seed=42)",
+    "results/paper-eval/pv/**/buffer_sensitivity.json (per-condition, PV; n=1000, seed=42)"
+  ],
+  "source_file_sidecars": [
+    "results/paper-eval/.metadata.json (directory-level sidecar covering all evaluate_detections.py outputs under paper-eval/)",
+    "Note: per-cell consensus-analysis-report.json and buffer_sensitivity.json files carry their own explicit metadata blocks (metadata_complete=YES in the registry)."
+  ],
+  "ci_count": "100 rows x up to 3 metric CIs per row (F1, precision, recall) at up to 4 buffers each",
+  "notes": "Main paper results table. Every row's bootstrap specification is (n=1000, seed=42, tile-level). Rows derive from source files that record full metadata; this sidecar exists so that the aggregate is self-describing and does not require the reader to chase the provenance chain when citing."
+}

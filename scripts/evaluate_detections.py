@@ -43,9 +43,11 @@ import csv
 import json
 import logging
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 import geopandas as gpd
 import numpy as np
@@ -81,6 +83,164 @@ DEFAULT_BOUNDS = (
 DEFAULT_BUFFERS = [20]
 DEFAULT_BOOTSTRAP = 1000
 DEFAULT_SEED = 42
+
+
+# ── Metadata helpers ──────────────────────────────────────────────────
+
+# Relative script path used for provenance in the _metadata block. Fixed
+# so that the recorded path is stable across invocations, regardless of
+# the caller's current working directory.
+_SCRIPT_RELATIVE_PATH = "scripts/evaluate_detections.py"
+
+
+def _git_short_hash(repo_root: Path) -> str:
+    """Return the short Git hash of HEAD, or 'unknown' on failure.
+
+    Runs `git rev-parse --short HEAD` in the given repository root. Any
+    failure mode (git not installed, not a repository, non-zero exit
+    code) is mapped to the string ``"unknown"`` so that callers never
+    have to handle exceptions.
+
+    Args:
+        repo_root: Path to the Git repository (typically the project
+            root). The command is executed with this as its working
+            directory.
+
+    Returns:
+        The short commit hash, or ``"unknown"`` if it cannot be
+        determined.
+    """
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=str(repo_root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except (FileNotFoundError, OSError):
+        return "unknown"
+    if proc.returncode != 0:
+        return "unknown"
+    value = proc.stdout.strip()
+    return value or "unknown"
+
+
+def _git_status(repo_root: Path) -> str:
+    """Return 'clean' if the working tree is clean, else 'dirty'.
+
+    Uses ``git status --porcelain``: an empty output indicates a clean
+    tree, any non-empty output indicates uncommitted changes. If git is
+    unavailable or the call fails, returns ``"unknown"`` so reviewers
+    can still interpret the field.
+
+    Args:
+        repo_root: Path to the Git repository to inspect.
+
+    Returns:
+        One of ``"clean"``, ``"dirty"``, or ``"unknown"``.
+    """
+    try:
+        proc = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=str(repo_root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except (FileNotFoundError, OSError):
+        return "unknown"
+    if proc.returncode != 0:
+        return "unknown"
+    return "clean" if proc.stdout.strip() == "" else "dirty"
+
+
+def _serialise_cli_args(args: argparse.Namespace) -> dict[str, Any]:
+    """Convert a parsed argparse Namespace into a JSON-safe dict.
+
+    ``argparse`` may store values such as :class:`pathlib.Path` instances
+    that the :mod:`json` encoder cannot handle natively. This helper
+    walks the namespace once and replaces those values with plain
+    strings (or lists of strings), preserving all keys exactly as the
+    CLI defined them.
+
+    Args:
+        args: The parsed argparse namespace.
+
+    Returns:
+        A dict mapping option names to JSON-serialisable values.
+    """
+    serialised: dict[str, Any] = {}
+    for key, value in vars(args).items():
+        if isinstance(value, Path):
+            serialised[key] = str(value)
+        elif isinstance(value, list):
+            serialised[key] = [
+                str(item) if isinstance(item, Path) else item
+                for item in value
+            ]
+        else:
+            serialised[key] = value
+    return serialised
+
+
+def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
+    """Build the ``_metadata`` block embedded in evaluation outputs.
+
+    The block captures bootstrap parameters (iterations, seed, resampling
+    unit), Git provenance (short HEAD hash, clean/dirty status), the
+    parsed CLI arguments, and the resolved input file paths. Writing
+    this alongside the metrics makes each ``evaluation.json`` file
+    self-documenting — reviewers can reproduce confidence intervals
+    without reading the script source.
+
+    The schema is versioned via ``metadata_version`` so downstream
+    consumers can evolve alongside future changes.
+
+    Args:
+        args: The parsed argparse namespace for this run. Expected
+            attributes include ``bootstrap``, ``seed``, ``ground_truth``,
+            ``bounds``, and at least one of ``detections``,
+            ``detections_dir``, or ``batch``.
+
+    Returns:
+        A dict with the schema described in the module-level task
+        specification. All values are JSON-serialisable.
+    """
+    # Resolve the input-files block from whichever input mode was used.
+    # In batch mode the per-condition detection paths live inside the
+    # YAML file, so we record the YAML path itself here.
+    if getattr(args, "detections", None):
+        detections_value: Any = [str(p) for p in args.detections]
+    elif getattr(args, "detections_dir", None):
+        detections_value = str(args.detections_dir)
+    elif getattr(args, "batch", None):
+        detections_value = str(args.batch)
+    else:
+        detections_value = None
+
+    ground_truth = getattr(args, "ground_truth", None)
+    bounds = getattr(args, "bounds", None)
+
+    metadata: dict[str, Any] = {
+        "metadata_version": "1.0",
+        "script_path": _SCRIPT_RELATIVE_PATH,
+        "script_git_commit": _git_short_hash(PROJECT_ROOT),
+        "script_git_status": _git_status(PROJECT_ROOT),
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "cli_args": _serialise_cli_args(args),
+        "bootstrap": {
+            "n_iterations": int(getattr(args, "bootstrap", DEFAULT_BOOTSTRAP)),
+            "seed": int(getattr(args, "seed", DEFAULT_SEED)),
+            "resampling_unit": "tile_level",
+        },
+        "input_files": {
+            "detections": detections_value,
+            "ground_truth": str(ground_truth) if ground_truth else None,
+            "bounds": str(bounds) if bounds else None,
+        },
+    }
+    return metadata
 
 
 # ── Data loading ──────────────────────────────────────────────────────
@@ -362,6 +522,7 @@ def write_outputs(
     results: dict,
     run_results: list[dict] | None,
     output_dir: Path,
+    metadata: dict[str, Any] | None = None,
 ) -> None:
     """Write evaluation results as JSON, CSV, and Markdown.
 
@@ -369,15 +530,24 @@ def write_outputs(
         results: Averaged or single-run results dict.
         run_results: Optional list of per-run results (for multi-run).
         output_dir: Output directory.
+        metadata: Optional ``_metadata`` block describing how the
+            evaluation was generated (bootstrap config, git provenance,
+            CLI args, input files). When provided, it is written as a
+            top-level ``_metadata`` key in ``evaluation.json`` so the
+            JSON output is self-documenting.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # JSON
-    output = {
+    # JSON — key order preserves backward compatibility: existing
+    # consumers that look up ``version`` / ``summary`` continue to work,
+    # and the new ``_metadata`` block is additive.
+    output: dict[str, Any] = {
         "version": __version__,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "summary": results,
     }
+    if metadata is not None:
+        output["_metadata"] = metadata
     if run_results:
         output["per_run"] = run_results
 
@@ -742,6 +912,7 @@ def _evaluate_condition(
     label: str,
     output_dir: Path | None = None,
     compute_mcc: bool = False,
+    metadata: dict[str, Any] | None = None,
 ) -> dict:
     """Evaluate a single condition (one or more detection files).
 
@@ -757,6 +928,9 @@ def _evaluate_condition(
         label: Human-readable condition label.
         output_dir: Optional output directory for per-condition files.
         compute_mcc: If True, compute tile-level MCC with bootstrap CIs.
+        metadata: Optional provenance metadata (see ``_build_metadata``)
+            written into the resulting ``evaluation.json`` so the output
+            is self-documenting.
 
     Returns:
         Summary dict with metrics.
@@ -801,7 +975,7 @@ def _evaluate_condition(
         per_run = run_results
 
     if output_dir:
-        write_outputs(summary, per_run, output_dir)
+        write_outputs(summary, per_run, output_dir, metadata=metadata)
 
     return summary
 
@@ -843,6 +1017,10 @@ def _run_single_mode(args: argparse.Namespace) -> int:
         else det_files[0].stem
     )
 
+    # Capture run provenance once, so the same metadata block is
+    # attached to every output file produced by this invocation.
+    run_metadata = _build_metadata(args)
+
     summary = _evaluate_condition(
         det_files, gdf_ref, gdf_bounds,
         buffers=args.buffers,
@@ -851,6 +1029,7 @@ def _run_single_mode(args: argparse.Namespace) -> int:
         label=label,
         output_dir=args.output_dir,
         compute_mcc=args.mcc,
+        metadata=run_metadata,
     )
 
     if not args.output_dir:
@@ -877,6 +1056,11 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
 
     defaults, conditions = load_batch_yaml(args.batch)
     metadata = defaults.get("_metadata")
+
+    # Capture run provenance once for the entire batch. Each condition
+    # inherits the same block, then overlays its own bootstrap/seed
+    # values from the YAML below.
+    run_metadata = _build_metadata(args)
 
     # Load ground truth once (shared across conditions)
     gt_path = Path(defaults.get(
@@ -921,6 +1105,23 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
 
         logger.info("  %d detection files", len(det_files))
 
+        # Each condition records the shared run provenance plus its own
+        # bootstrap/seed values from the YAML — these may differ from
+        # the CLI defaults captured in ``run_metadata``.
+        cond_metadata: dict[str, Any] = {
+            **run_metadata,
+            "bootstrap": {
+                "n_iterations": int(n_bootstrap),
+                "seed": int(seed),
+                "resampling_unit": "tile_level",
+            },
+            "input_files": {
+                **run_metadata["input_files"],
+                "detections": str(det_dir),
+                "bounds": str(bounds_path),
+            },
+        }
+
         # Evaluate
         cond_output_dir = args.output_dir / slugify(label)
         summary = _evaluate_condition(
@@ -931,6 +1132,7 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
             label=label,
             output_dir=cond_output_dir,
             compute_mcc=args.mcc,
+            metadata=cond_metadata,
         )
         all_summaries.append(summary)
 

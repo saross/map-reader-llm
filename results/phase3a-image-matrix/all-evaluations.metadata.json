@@ -1,0 +1,23 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved metadata sidecar for all-evaluations.json: an aggregate of per-cell evaluation.json files under results/phase3a-image-matrix/.",
+  "target_file": "all-evaluations.json",
+  "generated_by_script": "scripts/summarise_phase3a_matrix.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20.",
+  "generation_timestamp_iso": "2026-04-16T14:19:20+00:00",
+  "generation_timestamp_note": "Approximate, from file mtime 2026-04-17T00:19 local (UTC+10). No timestamp key in JSON.",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "note": "Inherited from the per-cell evaluate_detections.py outputs being aggregated."
+  },
+  "aggregation_chain": [
+    "results/phase3a-image-matrix/{high,minimal}-t{0.0,0.3,0.7,1.0}/n{3,5,10}/**/evaluation.json",
+    "See directory sidecar: results/phase3a-image-matrix/.metadata.json"
+  ],
+  "cell_count": "96 evaluation.json cells covering 2 instructions x 4 temperatures x multiple N levels",
+  "notes": "Aggregate over the phase3a image matrix."
+}

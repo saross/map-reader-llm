@@ -1,0 +1,24 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for a sibling evaluation.json produced by scripts/evaluate_detections.py. Values resolved from the script's version-controlled defaults.",
+  "target_file": "evaluation.json",
+  "generated_by_script": "scripts/evaluate_detections.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20 for archival completeness. Script defaults (n=1000, seed=42) apply.",
+  "generation_timestamp_iso": "2026-04-18T23:37:10.106989+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "library_entry_point": "scripts/lib_advanced_metrics.py::bootstrap_ci"
+  },
+  "invocation": {
+    "source": "script default, no run.log in this directory",
+    "command_shape": "python scripts/evaluate_detections.py --detections <gold-standard detections> --buffers <extended range> --bootstrap 1000 --seed 42 --ground-truth <student-mounds-55maps.geojson> --bounds <55maps bounds>",
+    "cli_overrides_script_defaults": false,
+    "notes": "The buffer list is extended beyond the standard 20/30/40/50 set. See results/gold-standard-extended-buffer-sweep/extended-buffer-report.md for the buffer list used."
+  },
+  "ci_count_derivation": "3 metrics (F1, precision, recall) x (number of buffers in evaluation.json)",
+  "notes": "Extended buffer sweep over the gold-standard corpus; sibling verified_detections.geojson is present in the same directory."
+}

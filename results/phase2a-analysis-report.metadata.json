@@ -1,0 +1,23 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for phase2a-analysis-report.json produced by scripts/analyse_phase2_results.py. The file records n_bootstrap explicitly but not the seed or the resampling_unit. The seed defaults to 42 and the resampling unit is tile-level (multi-run averaged over K detection passes).",
+  "target_file": "phase2a-analysis-report.json",
+  "generated_by_script": "scripts/analyse_phase2_results.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20. The phase2 analysis scripts' defaults have been stable since February 2026.",
+  "generation_timestamp_iso": "2026-02-06T06:45:59.298055+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level_multi_run",
+    "resampling_unit_note": "Tile-level bootstrap, with metrics averaged across K detection passes per tile before CI computation. See scripts/lib_advanced_metrics.py::bootstrap_ci for the tile-level resampler.",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "library_entry_point": "scripts/lib_advanced_metrics.py::bootstrap_ci",
+    "fdr_q": 0.05
+  },
+  "in_file_values_verified": {
+    "n_bootstrap": 1000,
+    "fdr_q_recorded_in_file": true
+  },
+  "notes": "Phase 2a cross-modality analysis (N=5 conditions, K=10 passes). Uses the same script family as all subsequent phase2*-analysis.json files. The seed is NOT written into the file; script default seed=42 applies."
+}

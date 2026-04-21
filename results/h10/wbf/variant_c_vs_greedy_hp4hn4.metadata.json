@@ -1,0 +1,24 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for variant_c_vs_greedy_hp4hn4.json. The paired_permutation_test block in the file already records n_permutations=10000 and seed=42. The greedy_baseline.{f1,precision,recall}_ci_95 and wbf_variant_c.*_ci_95 blocks are tile-level bootstrap CIs from scripts/compare_wbf_vs_greedy_canonical.py. The sibling results/h10/statistical_analysis.json records parameters.n_bootstrap=1000, parameters.seed=42 for the canonical comparison.",
+  "target_file": "variant_c_vs_greedy_hp4hn4.json",
+  "generated_by_script": "scripts/compare_wbf_vs_greedy_canonical.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20. Sibling statistical_analysis.json has explicit metadata.",
+  "generation_timestamp_iso": "2026-04-14T13:16:41+00:00",
+  "generation_timestamp_note": "Approximate, from file mtime 2026-04-14T23:16 local (UTC+10).",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)"
+  },
+  "permutation_test": {
+    "n_permutations": 10000,
+    "seed": 42,
+    "resampling_unit": "tile_level_paired",
+    "note": "Values explicit in the file's paired_permutation_test block."
+  },
+  "sibling_explicit_metadata_file": "results/h10/statistical_analysis.json (parameters.n_bootstrap=1000, parameters.n_permutations=10000, parameters.seed=42)",
+  "notes": "h10 WBF variant C vs greedy comparison at the hp4hn4 pool-4 + hn-4 configuration. n_tiles=327 recorded in file."
+}

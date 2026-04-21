@@ -1,0 +1,19 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved metadata sidecar for tile_size_comparison.json in paper-tables.",
+  "target_file": "tile_size_comparison.json",
+  "generated_by_script": "scripts/consolidate_paper_metrics.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20. This is a presentation aggregate; the underlying statistical test is the McNemar + permutation procedure in scripts/compare_tile_sizes.py.",
+  "generation_timestamp_iso": "2026-03-28T08:41:01+00:00",
+  "generation_timestamp_note": "Approximate, from file mtime 2026-03-28T18:41 local (UTC+10).",
+  "statistical_methodology": {
+    "primary_test": "McNemar + paired permutation test (n_permutations=10000, seed=42), tile-level (paired symbol match)",
+    "bootstrap_CIs_source": "Point estimates with CIs (where reported) inherit from results/pairwise/tile-size-30m/**/evaluation.json (inferable; tile-level n=1000, seed=42) and from results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json (YES; seed=42)."
+  },
+  "aggregation_chain": [
+    "results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json (YES; primary comparison)",
+    "results/pairwise/tile-size-30m/**/evaluation.json (inferable; per-condition F1/P/R at 30 m)"
+  ],
+  "notes": "Paper-table view of the 30 m tile-size comparison. Primary statistics come from the McNemar + permutation file (explicit metadata)."
+}

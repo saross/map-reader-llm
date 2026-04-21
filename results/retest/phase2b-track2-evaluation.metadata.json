@@ -1,0 +1,21 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for phase2b-track2-evaluation.json produced by scripts/evaluate_retest_all.py.",
+  "target_file": "phase2b-track2-evaluation.json",
+  "generated_by_script": "scripts/evaluate_retest_all.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20.",
+  "generation_timestamp_iso": "2026-03-16T22:53:42+00:00",
+  "generation_timestamp_note": "Approximate, from file mtime 2026-03-17T08:53 local (UTC+10).",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level_multi_run",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)"
+  },
+  "in_script_constants": {
+    "BOOTSTRAP_ITERATIONS": 1000,
+    "RANDOM_SEED": 42
+  },
+  "notes": "Retest re-evaluation of Phase 2b Track 2 (text) conditions."
+}

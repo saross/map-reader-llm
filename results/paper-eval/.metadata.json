@@ -1,0 +1,40 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Directory-level resolved bootstrap-CI metadata sidecar. Covers all per-cell evaluation.json files under results/paper-eval/**/ produced by scripts/evaluate_detections.py. Does NOT cover sibling consensus-analysis-report.json or buffer_sensitivity.json files, which carry their own explicit metadata blocks.",
+  "coverage_pattern": "results/paper-eval/**/evaluation.json",
+  "coverage_file_count_approximate": 156,
+  "coverage_subtrees": {
+    "results/paper-eval/n1/384px/**/evaluation.json": "inferable (evaluate_detections.py defaults)",
+    "results/paper-eval/n1/512px/**/evaluation.json": "inferable",
+    "results/paper-eval/n1/384px-outstanding/**/evaluation.json": "inferable",
+    "results/paper-eval/mcc/384px/**/evaluation.json": "inferable (tile-MCC variants; same bootstrap spec)",
+    "results/paper-eval/mcc/512px/**/evaluation.json": "inferable",
+    "results/paper-eval/mcc/consensus-pv/**/evaluation.json": "inferable",
+    "results/paper-eval/single-pass-t0-{20m,30m,40m,50m}/**/evaluation.json": "inferable",
+    "results/paper-eval/flash-*/consensus-analysis-report.json": "explicit metadata (YES in registry) - NOT covered by this sidecar",
+    "results/paper-eval/pv/**/buffer_sensitivity.json": "explicit metadata (YES in registry) - NOT covered by this sidecar"
+  },
+  "generated_by_script": "scripts/evaluate_detections.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20. Per-cell evaluation.json files were generated primarily on 2026-03-26/27 across subtrees.",
+  "generation_timestamp_iso_range": "2026-03-25T00:00:00+00:00 / 2026-03-31T23:59:59+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "library_entry_point": "scripts/lib_advanced_metrics.py::bootstrap_ci"
+  },
+  "invocation": {
+    "source": "script default, no run.log in cell directories",
+    "command_shape": "python scripts/evaluate_detections.py --detections <per-cell consensus or single-pass detections> --buffers 20 30 40 50 --bootstrap 1000 --seed 42 --ground-truth <gold-standard geojson> --bounds <paper-eval bounds, varying per subtree>",
+    "cli_overrides_script_defaults": false
+  },
+  "per_cell_ci_count_typical": "3 metrics (F1, precision, recall) x 4 buffers = 12 CIs per cell; single-pass-t0-*m subtrees have 3 metrics x 1 buffer per cell",
+  "aggregate_files": [
+    "results/paper-tables/metrics_master.json (see sibling sidecar)",
+    "results/paper-tables/pro_2x2_matrix.json",
+    "results/paper-tables/pipeline_progression.json"
+  ],
+  "notes": "Covers N=1 baselines (n1/), tile-MCC variants (mcc/), and single-pass-T=0 per-buffer cells. The consensus-analysis-report.json and buffer_sensitivity.json siblings are NOT covered here because they carry explicit in-file metadata."
+}

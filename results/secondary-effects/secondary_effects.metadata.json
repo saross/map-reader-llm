@@ -1,0 +1,28 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for secondary_effects.json produced by scripts/analyse_secondary_effects.py (image-modality sibling of the text analyser).",
+  "target_file": "secondary_effects.json",
+  "generated_by_script": "scripts/analyse_secondary_effects.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20.",
+  "generation_timestamp_iso": "2026-04-17T01:12:39+00:00",
+  "generation_timestamp_note": "Approximate, from file mtime 2026-04-17T11:12 local (UTC+10).",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "resampling_unit_note": "Uses bootstrap_tile_classification_ci and bootstrap_interaction_ci from scripts/lib_advanced_metrics.py.",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)"
+  },
+  "sub_analyses_with_CIs": [
+    "pr_decomposition",
+    "run_variability",
+    "tile_mcc",
+    "buffer_sensitivity",
+    "threshold_robustness",
+    "per_map_sheet",
+    "per_subtype_recall",
+    "thinking_temp_interaction"
+  ],
+  "notes": "Image-modality counterpart of results/phase3a-text-matrix/secondary_effects.json. Same bootstrap spec (n=1000, seed=42, tile-level)."
+}

@@ -1,0 +1,31 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for a sibling evaluation.json produced by scripts/evaluate_detections.py. Values are resolved from the script's version-controlled defaults and the resolved_config.yaml in the parent run directory.",
+  "target_file": "evaluation.json",
+  "generated_by_script": "scripts/evaluate_detections.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20 for archival completeness; the evaluation.json itself was produced at an earlier commit (not recorded in-file). The script defaults (n=1000, seed=42) did not change in the intervening period.",
+  "generation_timestamp_iso": "2026-04-18T17:48:23.840769+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "library_entry_point": "scripts/lib_advanced_metrics.py::bootstrap_ci"
+  },
+  "invocation": {
+    "source": "outputs/55maps-text-high-generalisation/resolved_config.yaml (evaluate: block)",
+    "command_shape": "python scripts/evaluate_detections.py --detections outputs/55maps-text-high-generalisation/verified/verified_detections.geojson --buffers 20 30 40 50 --bootstrap 1000 --seed 42 --ground-truth inputs/vectors/references/student-mounds-55maps.geojson --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson --output-dir outputs/55maps-text-high-generalisation/evaluation --label 55maps-text-high-generalisation",
+    "cli_overrides_script_defaults": false,
+    "notes": "No run.log in this run directory, but resolved_config.yaml records evaluate.bootstrap=1000, evaluate.seed=42 matching script defaults."
+  },
+  "input_files": [
+    "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "inputs/vectors/references/student-mounds-55maps.geojson",
+    "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+  ],
+  "buffers_metres": [20, 30, 40, 50],
+  "ci_count": 12,
+  "ci_count_derivation": "3 metrics (F1, precision, recall) x 4 buffers",
+  "notes": "55maps text-high sister track of the trigger file. Same bootstrap defaults apply."
+}

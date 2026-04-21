@@ -1,0 +1,31 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Directory-level resolved bootstrap-CI metadata sidecar. Covers all per-cell evaluation.json files under results/h8-v2/**/ produced by scripts/evaluate_detections.py. Does NOT cover sibling threshold_sweep.json files (explicit metadata per registry) or run_pv.py outputs.",
+  "coverage_pattern": "results/h8-v2/**/evaluation.json",
+  "coverage_file_count": 43,
+  "coverage_subtrees": {
+    "results/h8-v2/greedy/**/t{1,2,3,4,5}/evaluation.json": "inferable (~36 files)",
+    "results/h8-v2/wbf/**/evaluation.json": "inferable (~7 files)"
+  },
+  "generated_by_script": "scripts/evaluate_detections.py",
+  "generated_by_script_version_hash": "e038bfe8c1c2d2c73017d38779beabd7ab954bf1",
+  "registry_commit_note": "Sidecar written at repository HEAD e038bfe8 on 2026-04-20. Generated during the H8-v2 sweep on 2026-04-15.",
+  "generation_timestamp_iso_range": "2026-04-14T23:00:00+00:00 / 2026-04-15T23:59:59+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)",
+    "library_entry_point": "scripts/lib_advanced_metrics.py::bootstrap_ci"
+  },
+  "invocation": {
+    "source": "script default",
+    "command_shape": "python scripts/evaluate_detections.py --detections <h8-v2 cell geojson> --buffers 20 30 40 50 --bootstrap 1000 --seed 42 --ground-truth <gold-standard v2 geojson> --bounds <standard 384 bounds>",
+    "cli_overrides_script_defaults": false
+  },
+  "per_cell_ci_count": "3 metrics (F1, precision, recall) x 4 buffers = 12 CIs per cell",
+  "related_files_not_covered_here": [
+    "results/h8-v2/**/threshold_sweep.json (explicit metadata in-file)"
+  ],
+  "notes": "Hypothesis 8 v2 greedy and WBF cells. The greedy cells are organised by scale (4/8/16/32), plus-hp, canonical, pure-positive-canon at thresholds t1 through t5."
+}

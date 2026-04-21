@@ -1667,4 +1667,42 @@ levels; (c) N = 5 and N = 10 consensus threshold sweeps at each cell.
 
 ---
 
+### E54: Bootstrap iteration count — preregistered 1 000 for primary F1, post-hoc 10 000 for narrow-effect analyses
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-21 |
+| Type | Clarification |
+| Commit | TBD |
+| Impact | None (preregistered methodology unchanged) |
+
+**Description**: The preregistration (Section 3.5) specifies bootstrap resampling at **1 000 iterations** with the percentile method (2.5th / 97.5th) and tile-level resampling. All scripts that evaluate preregistered conditions — `evaluate_detections.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `compare_wbf_vs_greedy.py`, `analyse_secondary_effects_text.py`, and the shared `lib_advanced_metrics.bootstrap_ci` default — use 1 000 iterations, matching the preregistration.
+
+Several **post-hoc** analyses (not specified in the preregistration) use **10 000 iterations** instead. These analyses are characterised by narrow effect sizes where CI precision at 2-3 decimal places is material for narrative clarity:
+
+- `compute_corrected_f1_human_reviewed.py` — human-reviewed corrected F1 lower bound (effect size ~0.06 above measured F1; CI half-width would be ~±0.01-0.02 at 1 000 iter, ~±0.003-0.006 at 10 000)
+- `compute_corrected_f1_multi_buffer.py` — multi-buffer extension of the same analysis (same rationale)
+- `analyse_subtype_classification.py` — per-class subtype F1 with CIs (several per-class F1s sit in a 0.02-0.05 window; tighter CIs improve separability)
+- `crosstab_uncalibrated_vs_calibrated.py` — review-UI disagreement-rate CI (disagreement ~21 %; narrow effect size)
+- `analyse_buffer_band_lift.py` — within-tile permutation test, M = 1 000 matches the preregistered convention for permutation-derived null envelopes (noted here for completeness — this one follows the 1 000 default)
+
+**Rationale for the split**:
+
+1. **The preregistration locks 1 000 for primary evaluation** — any deviation on preregistered conditions would require a deviation-class errata entry, not a clarification. The 1 000-iteration setting remains untouched for those.
+2. **10 000 is selectively applied to post-hoc analyses where CI precision determines narrative clarity** — the preregistration does not constrain methodology for analyses it did not specify.
+3. **Runtime is not a binding constraint for post-hoc analyses**: they run once on a single corpus, not across the hundreds-of-conditions leaderboard matrix. The 10× cost is absorbable for a one-off authoring run.
+
+**Paper methods wording (suggested)**:
+
+> Confidence intervals on primary F1, precision, and recall are derived from 1 000-iteration tile-level bootstrap resampling (preregistered Section 3.5, percentile method 2.5th / 97.5th). Post-hoc analyses — human-reviewed corrected F1 (single- and multi-buffer), subtype classification, and review-UI calibration cross-tabs — use 10 000 iterations to tighten CIs on narrow effect sizes; the resampling unit and percentile method are unchanged.
+
+**Reference artefacts**:
+
+- Preregistration Section 3.5: `docs/methodology/preregistration/decisions-log.md:337`
+- Primary bootstrap defaults: `scripts/evaluate_detections.py` (`DEFAULT_BOOTSTRAP = 1000`); `scripts/lib_advanced_metrics.py::bootstrap_ci` default `n_iterations = 1000`
+- Post-hoc 10 000-iteration scripts: enumerated above
+- CI-metadata registry (per-file iteration count): `results/ci-metadata-registry.md`
+
+---
+
 *End of errata. New entries should be appended above this line.*
