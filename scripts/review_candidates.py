@@ -8,12 +8,13 @@ attractor labels (numbers, letters, trig symbols). The reviewer picks
 the tightest enclosing ring per mound (or marks the candidate as
 not_mound / mound beyond 150 m).
 
-By default the app presents the FP queue at 50 m as the primary
-re-review target. Enable the sidebar toggle
-"Include confirmed mounds (re-check yesterday's TPs)" to also cycle
-through yesterday's accepted-TP candidates with their prior answers
-pre-populated — useful for correcting errors from a prior review
-session.
+By default the app presents only the FP candidates that were NOT
+already resolved as real-mound at 50 m tolerance in a prior review
+session — i.e., the wider-buffer re-review targets. Enable the
+sidebar toggle "Re-verify yesterday's 50 m mounds" to also cycle
+through the candidates already labelled mound@50m, with their prior
+symbol_type pre-populated — useful for correcting classification
+errors from the prior session.
 
 Usage (55-map image-generalisation multi-buffer re-review):
 
@@ -768,33 +769,47 @@ def main() -> None:
         st.warning("No candidates found.")
         return
 
+    # Load yesterday's mound labels once — used both for queue filtering
+    # (default mode) and for pre-population (re-verification mode).
+    prev_labels: dict[int, dict] = {}
+    if args.prev_review:
+        prev_labels = load_previous_mound_labels(args.prev_review)
+    prev_mound_ids: set[int] = set(prev_labels.keys())
+    fp_ids = {c["candidate_id"] for c in fp_candidates}
+    n_already_mound = len(prev_mound_ids & fp_ids)
+
     # --- Sidebar controls ---
     with st.sidebar:
         st.markdown("### Review mode")
         include_confirmed_mounds = st.toggle(
-            "Include confirmed mounds (re-check yesterday's TPs)",
+            "Re-verify yesterday's 50 m mounds",
             value=False,
             help=(
-                "When ON, yesterday's accepted-TP candidates are cycled "
-                "through with their prior symbol_type and 50 m buffer "
-                "pre-populated. Lets you one-keystroke confirm or "
-                "override, giving you a chance to correct errors from "
-                "yesterday's session."
+                "Default (OFF): queue contains only candidates you "
+                "marked not_mound at 50 m yesterday — the wider-buffer "
+                "re-review targets. When ON, the 472 candidates you "
+                "marked as real mounds at 50 m are also included, with "
+                "their prior symbol_type pre-populated, so you can "
+                "confirm or correct yesterday's calls."
             ),
         )
         st.markdown("---")
         st.caption(
-            f"FP queue: {len(fp_candidates)} &nbsp; | &nbsp; "
-            f"Confirmed-TP pool: {len(tp_candidates)}"
+            f"FP pool: {len(fp_candidates)} &nbsp; | &nbsp; "
+            f"Already resolved as mound@50m: {n_already_mound}"
         )
 
-    # Compose the review queue. FPs always come first; if the toggle is
-    # on, append yesterday's confirmed-mound candidates so re-verification
-    # happens after the FP pass.
+    # Compose the review queue. Default: skip the candidates already
+    # resolved as mound@50m yesterday — they are frozen as TP@50m and
+    # do not need wider-buffer re-review. Opt-in via sidebar toggle to
+    # include them for re-verification (pre-populated).
     if include_confirmed_mounds:
-        queue = fp_candidates + tp_candidates
-    else:
         queue = fp_candidates
+    else:
+        queue = [
+            c for c in fp_candidates
+            if c["candidate_id"] not in prev_mound_ids
+        ]
 
     n_fp = len(queue)
 
@@ -803,13 +818,12 @@ def main() -> None:
     if "reviews" not in st.session_state:
         st.session_state.reviews = load_existing_reviews(output_path)
     # Pre-populate with yesterday's mound labels whenever the
-    # confirmed-mounds toggle is on. Idempotent — only inserts for
-    # candidate_ids in the current TP queue that aren't yet reviewed,
+    # re-verification toggle is on. Idempotent — only inserts for
+    # candidate_ids in the current queue that aren't yet reviewed,
     # so flipping the toggle mid-session is safe.
-    if include_confirmed_mounds and args.prev_review:
-        prev = load_previous_mound_labels(args.prev_review)
-        queue_ids = {c["candidate_id"] for c in tp_candidates}
-        for cid, entry in prev.items():
+    if include_confirmed_mounds:
+        queue_ids = {c["candidate_id"] for c in queue}
+        for cid, entry in prev_labels.items():
             if cid in queue_ids and cid not in st.session_state.reviews:
                 st.session_state.reviews[cid] = dict(entry)
     reviews = st.session_state.reviews
