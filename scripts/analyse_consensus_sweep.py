@@ -154,12 +154,21 @@ def consensus_to_gdf(
             crs=TARGET_CRS,
         )
 
-    # Build GeoDataFrame from Point features
+    # Build GeoDataFrame from Point features.
+    #
+    # Since commit 8c8e101f (2026-04-11, "fix(crs): reproject consensus
+    # GeoJSON to EPSG:4326 at write time"), apply_threshold() emits
+    # centroids in EPSG:4326 (RFC 7946 compliant). We therefore
+    # construct the GeoDataFrame in 4326 and reproject to TARGET_CRS
+    # before the spatial join, instead of silently stamping 32635 onto
+    # lat/lon coordinates (which produced all-"unknown" source_tiles).
     points = [shape(f["geometry"]) for f in features]
     props_list = [f.get("properties", {}) for f in features]
     gdf = gpd.GeoDataFrame(
-        props_list, geometry=points, crs=TARGET_CRS
+        props_list, geometry=points, crs="EPSG:4326"
     )
+    if str(gdf.crs) != TARGET_CRS:
+        gdf = gdf.to_crs(TARGET_CRS)
 
     # Assign source_tile via spatial join against tile boundaries.
     # Each consensus centroid falls within exactly one tile (or on a
