@@ -3929,3 +3929,127 @@ inconsistently (Obs 267 overclaimed the verifier's discrimination).
 Next session: every "the X is doing Y" framing should be accompanied
 by a linked hypothesis-verification observation, written before the
 scale check runs.
+
+---
+
+## Session 73 — 2026-04-21 (map-reader-llm): Two surprising findings, one "confirmed in the wrong direction"
+
+Session 73 was execution-heavy rather than discovery-heavy, but
+produced two surprises sharp enough to warrant entries here. Both
+followed the produce-hypothesis → test-with-agent → incorporate-
+result shape that Session 72 documented as "the workflow that paid
+off three times", but with cleaner prior expectations.
+
+### Surprise 1: Data-driven prior degenerately collapsing D-S posterior
+
+**The surprise**: In Obs 273's v1 D-S cross-tab, the posterior was
+degenerate at 0.186 under the preregistered 5 % student-FN prior.
+The natural hypothesis was "the prior is mis-specified; feed in the
+empirical rate and the posterior will rate-match". Empirical mound
+rate on the VLM-only slice is 0.7247.
+
+Expected result: a calibrated posterior near 0.725. Perhaps a modest
+improvement in ECE; potentially some item discrimination restored.
+
+**Probe**: Ran `analyse_dawid_skene_v2.py` with the empirical rate
+as the student-FN prior; also added a prior-sensitivity sweep across
+[0.05, 0.90]; also added an 80/20 held-out control.
+
+**Actual result**: The EM snaps to a degenerate regime above prior
+≈ 0.22 — posterior = 1.000 for every item. The prior-to-posterior
+map is non-linear and passes through a regime collapse. The prior
+that yields a cohort-rate-matching posterior of ~0.725 is 0.17 —
+approximately half the empirical rate, NOT the empirical rate
+itself. Held-out control confirms the pattern is mechanical, not a
+circularity artefact.
+
+**Belief revision**: "Better prior fixes the posterior" was wrong as
+a default hypothesis. With 2 annotators and `fix_student_sens=True`
+(identifiability constraint), the EM has no AUC signal at any prior
+— discrimination is structurally zero. The issue is not
+mis-calibration but structural inadequacy. Obs 273 revised: paper
+narrative moves from "D-S aggregate with default prior under-
+estimates the rate" to "D-S aggregate is structurally unsuitable
+for this slice AT ANY PRIOR".
+
+**Meta-pattern**: My hypothesis ("prior too low → feed in truth →
+model recovers") was reasonable as a default but wrong as
+understanding. The agent's sensitivity sweep caught both the
+collapse and the non-trivial mapping from prior to posterior, neither
+of which I would have noticed without running the sweep. Two tiers
+of verification worked here: the v1 cross-tab caught the mis-
+calibration; the v2 prior sweep + held-out control caught the
+structural inadequacy underneath. A single-run re-test would have
+shown the collapse but not the non-monotonicity. The sweep was
+what made the "no prior works" conclusion defensible.
+
+### Surprise 2: WBF outperforms greedy on gold-standard — against the project-wide pattern
+
+**The surprise**: I reported WBF-v1 max F1 = 0.867 at GS 50 m
+matter-of-factly alongside greedy-v1 (0.826). Shawn pushed back:
+"WBF has consistently underperformed in the past."
+
+The project-wide pattern, per Obs 230 (hp4hn4 tie at p = 0.60),
+Obs 233 (canonical detect_brief-text, ties), Obs 237 (N=30 analysis,
+greedy slightly wins at p = 0.009), is that WBF ties or
+marginally loses to greedy. The GS +0.041 F1 is way outside that
+distribution.
+
+**Probe**: Launched an Explore agent to verify the claim against
+the leaderboard cell directly, sweep the F1 distribution, and cross-
+check against the four relevant working-notes observations on WBF.
+
+**Actual result**: Claim numerically confirmed — the leaderboard
+cell's internal sweep does produce 0.867 at vote_t=3, prob_t=0.15,
+buffer=50 m, with 290 verified detections. F1 distribution: min
+0.434, median 0.797, max 0.867 — the max is not an isolated spike.
+The result is real. But the agent also confirmed the project-wide
+pattern: WBF ties or loses to greedy in every other configuration
+tested (Obs 230 / 233 / 237). The GS 0.867 is a
+configuration-specific regime where WBF's IoU-fusion compounds
+advantages.
+
+**Belief revision**: "WBF is generally better because the GS number
+is better" is wrong. The correct framing: "WBF is generally
+equivalent to or slightly worse than greedy; on one specific corpus
+at one specific configuration, WBF gains 0.041 F1, probably
+because of the GS corpus's distribution properties interacting with
+the IoU fusion." Paper narrative stays with greedy as canonical;
+WBF becomes a sensitivity-check footnote rather than an alternative
+headline.
+
+**Meta-pattern**: Shawn's response ("consistently underperformed")
+retrieved the project-wide pattern from memory faster than I
+retrieved it from the filesystem. I had read the leaderboard cell
+in isolation. A single-file read at face value was confirmed-and-
+wrong: confirmed because the number is real, wrong because the
+framing ("WBF is better") doesn't generalise. The fix required
+cross-referencing against prior observations — which I hadn't done,
+but Shawn automatically did as a reflex. Same structural lesson as
+Session 72's three-revisions-share-an-error-mode pattern: *in-
+session findings need triangulation against project-wide context
+before they become framings*.
+
+### Shared root cause and mitigation
+
+Both surprises were *expectation-violating* results from
+agent-dispatched verification of a hypothesis I had formed on thin
+evidence. The mitigation is the same as Session 72 documented:
+flag the hypothesis explicitly, dispatch an agent to verify against
+scale (or, for non-agent-testable claims, defer to the user's
+cross-project memory), and revise the framing based on what the
+verification actually produces rather than what I had expected it to
+produce.
+
+Session 73's addition to the pattern: **non-trivial parameter
+mappings can falsify a hypothesis IN THE OPPOSITE DIRECTION**. I
+expected "higher prior → higher posterior by roughly the same
+amount"; the actual mapping was "higher prior → degenerate
+collapse, with a specific non-monotonic prior required for rate-
+matching". A linear-extrapolation intuition about the prior's
+effect was misleading here. Worth noting as a new sub-pattern: when
+testing a calibration hypothesis, probe the full parameter range,
+not just the obvious adjustment direction. The sweep that the D-S
+v2 agent ran was exactly this probe, and it caught the collapse
+that a single-point re-test would have confirmed-without-
+contextualising.

@@ -5040,3 +5040,112 @@ is in the same commit series.
 
 **Session**: 2026-04-20, six commits pushed to main, no compaction,
 first-person observations throughout.
+
+---
+
+## Session 73 Observations (2026-04-21, map-reader-llm)
+
+### Parallel background agents as a first-class compute primitive
+
+I ran ten background agents across this session, with up to four in
+flight simultaneously at one point. The work decomposed naturally:
+v2 quarantine (long, file-intensive), CI-metadata sidecar generation
+(long, IO-intensive), `evaluate_detections.py` metadata patch (short,
+focused coding), leaderboard rebuild check (short, read-only audit),
+plus later explore agents for WBF verification and coverage audit,
+plus the overnight primary + verifier for the documentation audit.
+
+What made this work:
+
+- Each agent's scope was ≤500 words of brief with concrete file
+  paths and a clear return format.
+- Deliverables were files on disk, not facts in context — the main
+  thread didn't need the agent's intermediate reasoning.
+- Completion notifications arrived asynchronously; the main
+  conversation could pivot between user questions without waiting.
+- Dependencies were minimal; where they existed (primary doc audit
+  → verifier), I serialised explicitly and noted "I'll auto-launch
+  when primary completes."
+
+What caught me: the `git mv` operations run by one agent were
+auto-staged into the index, so when I later committed a different
+logical unit (Obs 273), the staged renames got pulled in. The commit
+message said "Obs 273" but the file list was 101 files. The fix was
+an amended message. Tool-level lesson: agent-staging state is shared
+with my own staging state, and I should check `git status --short`
+before committing anything that I haven't staged myself in the last
+few turns. Going forward, treating agents as independent workers
+with their own staging area would require a worktree, which is
+heavier than this session needed.
+
+A more subtle observation: the parallel-agent mode changes what the
+primary agent (me) is for. I became an orchestrator and a last-mile
+editor — the interim docs all came from sub-agents, and my job was
+checking consistency, amending commit messages, updating continuity
+files. The substantive writing was done elsewhere. This is a
+different collaboration shape from Session 72, where I was doing
+the hot-path editorial work and agents were specific calculation
+endpoints.
+
+### Shawn's number memory as a faster channel than the filesystem
+
+Three user-correction sequences in this session all landed on the
+same pattern:
+
+1. "I thought the GS F1 was close to 0.9" — I had quoted 0.64, then
+   0.826, before finding 0.904 in `metrics_master.json`.
+2. "WBF has consistently underperformed in the past" — my direct
+   read of the leaderboard cell said 0.867; Shawn's memory of
+   Obs 230 / 233 / 237 said "that's anomalous, check it."
+3. "These are contaminated" — my comparative analysis of v1 vs v2
+   didn't surface the structural issue; Shawn's knowledge of HOW the
+   v2 prompt was derived did.
+
+In all three cases, Shawn's memory retrieved a canonical value or
+structural fact faster than I could retrieve it by filesystem
+traversal. The useful takeaway: when the user asserts a number or a
+structural fact that contradicts what I just read from a file, the
+correct next move is NOT to defend my finding but to treat the user
+as the retrieval source and investigate why my file-read produced a
+different answer. In each case the issue was that I had pulled the
+wrong file (pre-verifier 607 candidates, K=5 extended-buffer when
+paper headline is K=30 matrix, WBF cell read in isolation without
+project-wide context). The file was correct; the *which file* was
+wrong. User correction unblocked me each time.
+
+This has an implication for how I should frame confident numerical
+claims: "I read X from file Y" is strictly more useful than "F1 =
+X" because the former invites "wrong file" as a correction mode.
+Less often I should lead with bare numbers; more often with "from
+file Y at key Z, the value is X".
+
+### Overnight primary + adversarial verifier pattern
+
+The documentation audit re-run demonstrated a reusable pattern: a
+primary agent produces a cited draft; a verifier agent in fresh
+context checks each cited claim. The primary doesn't know what the
+verifier will flag; the verifier doesn't know what the primary was
+trying to achieve. Both have anti-hallucination constraints in their
+prompts. Result: 82 / 85 claims PASS, 2 structural errors caught
+(file-count off-by-2, E47 mis-attribution), 0 silently-wrong uncited
+figures in the verifier's sample.
+
+The pattern is worth applying to any produce-and-check workflow
+where the produce step is prone to fluent-prose hallucination.
+Next target per this session's closing discussion: apply it to the
+paper draft when it's near-complete, with the paper text as primary
+and a source-of-truth fact-check agent as verifier. The prompts are
+already templated in `planning/doc-audit-rerun-plan.md`.
+
+One caveat: the pattern assumes the primary's output has
+sufficient citations. A primary that produces uncited paragraphs
+breaks the verifier's workflow (it can only check what's cited).
+The anti-hallucination constraint on the primary ("every numeric
+claim must cite file + key") is what makes the verifier's job
+tractable. Without it the verifier degenerates into "does this
+sound right?" — which is not a better question than the primary
+was already asking itself.
+
+**Session**: 2026-04-21, ten commits pushed to main, no compaction,
+direct first-person observations throughout. Ten background agents
+orchestrated with zero coordination deadlocks.

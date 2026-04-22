@@ -4947,3 +4947,213 @@ from the 55-map image generalisation VLM-only set in a single sitting
   ID + date; this naming is stable and can be cited verbatim in the
   paper. If any are re-captured in future sessions, match the
   existing naming convention per `README.md` in the figures dir.
+
+---
+
+## Session 73 — 2026-04-21 (map-reader-llm): Analysis freeze reached via multi-buffer F1 + D-S double-negative + v2 quarantine + documentation audit
+
+Single-day session, no compaction, **ten commits pushed** (`edfc27f5`
+→ `0fc26427`). Ten background agents orchestrated across the day,
+with up to four in flight simultaneously. Ended the day at clean
+analysis freeze with paper write-up continuity handed off.
+
+### Morning — subtype-classification F1 execution
+
+- **`scripts/analyse_subtype_classification.py` executed on sapphire**
+  (via background agent per Session 72's "READY TO EXECUTE" plan).
+  Output: `results/gold-standard-subtype-classification/` with 15
+  files. Weighted-F1 = **0.887** [0.849, 0.922] at 50 m / 4-of-5
+  consensus; Level-1 accuracy = 1.000 (mound-family vs settlement on
+  matched pairs); Level-2 accuracy = 0.904. Obs 270 captures headline;
+  Obs 271 captures benchmark → triangulation 57 % asymmetric confusion
+  as a new sub-pattern not in Obs 266's original taxonomy.
+- Audit step caught a `settlement_trace` bug (Hungarian matcher
+  returns pairs in detection-index order, not GT file-order; fids
+  were mis-assigned in the qualitative trace). Fixed; headline metrics
+  unaffected (they came from the raw pair-list, not the fid-labelled
+  rows).
+- Surfaced the "paper detection F1 = 0.904" anchor on the 487-tile
+  matrix (K=30 text-HIGH + PV). The 4-map GS extended-buffer report's
+  0.826 is a K=5 companion on a different corpus; not the headline.
+
+### Midday — buffer-band lift analysis (Obs 272)
+
+- **GT-clustering + Hungarian pair-drift diagnostics on the 55-map
+  set** (`scripts/diagnose_100m_buffer.py`, ran on sapphire): 83.2 %
+  of GT are isolated at 100 m; pair-drift at 100 m is 4 of 4,108
+  = 0.097 %. Hungarian matching is safe to use at 100 m without a
+  greedy-nearest bracket.
+- **Multi-buffer re-review app built** (`scripts/review_candidates.py`
+  extended): five concentric tolerance rings at 50/75/100/125/150 m
+  + sidebar toggle for re-verifying yesterday's mounds + buffer-band
+  selector keyed 1-6 + auto-reset. Default queue excludes candidates
+  already resolved as mound@50 m.
+- **557-candidate re-review** completed by Shawn: 274 mounds found
+  across wider bands (2 at 50, 121 at 75, 47 at 100, 19 at 125, 11 at
+  150, 74 at >150), 283 confirmed FPs.
+- **Buffer-band lift analysis** (`scripts/analyse_buffer_band_lift.py`,
+  sapphire): permutation null + Ripley's cross-L with 1,000
+  within-tile permutations, seed 42. Shell lift is 102× / 21× / 5.9×
+  / 1.9× across (0,50] / (50,75] / (75,100] / (100,125]; p = 0.381
+  at (125,150] and p = 0.433 at (150,286] — **pull effect ends at
+  ~125 m**. Obs 272 captures.
+
+### Afternoon — analyses consolidation
+
+- **Multi-buffer corrected F1** (`scripts/compute_corrected_f1_
+  multi_buffer.py`, sapphire, 10 000 bootstrap iterations, seed 42):
+  F1 curve 0.832 → 0.848 → 0.852 → 0.854 → **0.855** across
+  50 / 75 / 100 / 125 / 150 m. Plateau reached at 125 m consistent
+  with Obs 272's null-crossing. Agent caught a 12-hour → 3-minute
+  performance issue in the bootstrap inner loop (Python vs vectorised
+  `np.bincount`); library patch deferred as post-freeze work.
+- **D-S × human review cross-tab v1**
+  (`scripts/analyse_ds_vs_human_review.py`): posterior degenerate at
+  0.186; AUC = 0.500; ECE = 0.539. Worse calibration than the
+  verifier (Obs 269).
+- **D-S data-driven prior re-run** (`scripts/analyse_dawid_skene_v2.
+  py`): prior sweep + 80/20 held-out control. Feeding the empirical
+  rate (0.7247) produces posterior = 1.000 (degenerate collapse
+  above prior ~0.22). The prior that yields cohort-rate-matching is
+  0.17 — about half the empirical rate. AUC prior-invariant at 0.500
+  regardless. Obs 273 captures: D-S is **structurally inadequate
+  on this slice at any prior**.
+
+### Late afternoon — v2 verifier quarantine
+
+Shawn flagged that the v2 verifier prompt was written by analysing
+GS FPs (calibration-on-test); v2-on-GS evaluations are therefore
+invalid.
+
+- **100 files moved** to `archive/v2-verifier-contamination/` via
+  `git mv` (quarantine agent). Primary mover: agent confirmed via
+  `run.meta.json` that the paper-headline F1 = 0.904 uses verifier v1
+  (instruction hash `2518d529…`, run date 2026-03-25, before v2
+  existed). Headline is clean.
+- MANIFEST + README + `docs/methodology/v2-verifier-contamination-
+  policy.md` + `planning/condition-inventory.json` annotations land.
+  Six `pv-*-v2` entries flagged for manual review — the `-v2` suffix
+  there may denote a second verification pass rather than the v2
+  prompt (agent inspected `run.meta.json` and found v1 instruction
+  files; left in place, flagged).
+- **Leaderboard rebuild check** (background agent): all paper-table
+  aggregates predate the v2 cell creation date (2026-04-14) or are
+  era-scoped to non-v2 conditions. No rebuild required.
+
+### Evening — CI metadata + paper-tables + documentation audit
+
+- **CI metadata infrastructure**: registry at `results/ci-metadata-
+  registry.md`; 48 sidecar `.metadata.json` files (41 per-file + 7
+  directory-level); `evaluate_detections.py` patched to embed
+  `_metadata` in future `evaluation.json` outputs (+205/−3 lines,
+  15 tier1 tests passing); E54 Clarification errata entry
+  documenting the preregistered 1,000-iter primary-F1 bootstrap vs
+  the 10,000-iter post-hoc analyses (corrected F1, subtype, review-
+  UI crosstabs).
+- **Paper-tables consolidation**: `results/paper-tables/gold-
+  standard-spatial-tolerance.{md,csv}` (GS extended-buffer curve
+  5/10/15/25/35/45 m, plateau at 25 m) and `subtype-classification.
+  {md,csv}` (weighted-F1 = 0.887 headline + per-class table + Obs 270
+  / 271 pointers + Suggested paper text block).
+- **Documentation audit re-run**: two-agent workflow per `planning/
+  doc-audit-rerun-plan.md`. Primary produced 4-file draft at
+  `results/documentation-audit/draft/`; verifier in fresh context
+  checked 85 claims (82 PASS, 2 FAIL, 0 DEAD, 0 silently-wrong
+  uncited figures). Both failures one-line fixes (paper-tables file
+  count 28 → 26; E47 mis-attribution as Obs 246). Draft promoted to
+  top-level `results/documentation-audit/`; old flawed audit (commit
+  `8747d726` from 2026-04-19) archived to `archive/flawed-audit-
+  2026-04-19/` with NOTE.md.
+
+### Paper write-up continuity prepared
+
+- `planning/paper-writeup-continuity.md` — single-file handoff for
+  a fresh session. Contains: current state, interim-docs-first
+  strategy (user-confirmed), exemplar nomination (gold-standard-
+  subtype-classification report), canonical numbers table with
+  source citations, six-step fresh-session plan, five guardrails
+  (including the two-E47 disambiguation), and context budget
+  estimates.
+- Meta-findings consolidation doc flagged as Step 3 of the next
+  session: synthesise Obs 262 / 263 / 268 (review-UI calibration) +
+  Obs 264 / 265 / 266 (failure taxonomies) + Obs 269 (verifier
+  miscalibration) + Obs 271 (benchmark → trig asymmetric) + Obs 272
+  (attractor-pull scale) + Obs 273 (D-S inadequacy) into a paper-
+  Discussion-shaped spine. ~2 hours work for the next session.
+- Deferred fact-check agent for the paper draft: modelled on the
+  documentation-audit verifier pattern, to run when the paper is
+  near complete. Not a next-session task.
+
+### Observations added
+
+- **Obs 270** — Subtype-classification weighted-F1 = 0.887 on 4-map
+  GS (headline).
+- **Obs 271** — benchmark → triangulation asymmetric confusion
+  (27 / 47, reverse cell empty; new sub-pattern).
+- **Obs 272** — attractor-pull effect ends at ~125 m on VLM-only
+  candidates (shell lift + Ripley's cross-L).
+- **Obs 273** — D-S aggregate is structurally inadequate on the
+  VLM-only slice at any prior (2-annotator identifiability
+  degeneracy).
+- **Errata E54** — Clarification on the 1 000 vs 10 000 bootstrap
+  iteration split (preregistered primary vs post-hoc analyses).
+
+### Issues
+
+- Git-staging interaction between agent `git mv` operations and
+  my own `git add` commits resulted in the Obs 273 commit pulling
+  in 100 quarantine renames (amended message to reflect both). Not
+  a bug; a coordination consequence. Noted in session-reflection as
+  a "hardest to reconstruct in 6 months" item.
+- Two-E47 identifier collision between `docs/methodology/
+  preregistration/protocol-errata.md` line 1233 and `docs/notes/
+  reflections/working-notes.md` line 6553. Caught by the audit's
+  verifier (in the 82/85-PASS pass); flagged explicitly in the
+  continuity file's guardrails. A future-session trap.
+- Quarantine agent's six `pv-*-v2` flagged entries remain unresolved
+  (may be mis-labelled; `run.meta.json` shows v1 instruction files).
+  Low priority; worth a look before citing any of the v1/v2 inventory.
+
+### Pending work (for the fresh paper-write-up session)
+
+- **Step 1**: Read `planning/paper-writeup-continuity.md` to re-orient.
+- **Step 2**: Interim-doc review pass — score each per-analysis
+  `report.md` against the exemplar's 17-section structure; produce
+  `planning/interim-docs-review.md`.
+- **Step 3**: Write `results/meta-findings-summary.md` at exemplar
+  quality, synthesising Obs 262-273.
+- **Step 4**: Fill identified gaps (era-scoped hypothesis summaries
+  where lacking, 55-map cross-track comparison doc, limitations
+  consolidation).
+- **Step 5**: Mark superseded planning / pre-launch-audit docs as
+  `SUPERSEDED`.
+- **Step 6**: Hand to paper outline phase.
+
+### Contextual assumptions
+
+- **Analysis freeze is real but not absolute**: Shawn anticipates
+  paper-write-up-driven recalculations may arise ("high probability I
+  think"). The freeze is a working stance, not a hard stop. If a
+  recalculation is needed, follow the same commit-pattern discipline
+  as this session: one focused commit, cited outputs, no batching.
+- **No more LLM extraction runs planned**: API spend is frozen. The
+  `evaluate_detections.py` patch is prospective; existing
+  `evaluation.json` files are preserved as-is with sidecars providing
+  the retrospective metadata.
+- **v2 verifier is preserved in archive for future out-of-sample
+  evaluation**: `outputs/55maps-generalisation/verified-v2/` is
+  deliberately kept in place (NOT archived) because the 55-map text-
+  HIGH corpus is disjoint from the 4 GS maps that contaminated v2's
+  prompt-design. An evaluation of v2 against the 55-map student GT
+  is valid future work.
+- **The 6 `pv-*-v2` flagged entries**: if a future session needs to
+  cite v1 vs v2 performance on a 487-tile pipeline, verify the
+  instruction-file hash in each run's `run.meta.json` before citing.
+  Hash `2518d529…` is v1; anything else needs investigation.
+- **The user's "three-turn corrections" on the 4-map GS F1 (0.64 →
+  0.826 → 0.904)**: caught a real mis-attribution (I had been
+  conflating corpora). If a future session quotes numbers from
+  prior-session context, cross-check against `metrics_master.json`
+  for paper-headline anchors (F1 = 0.904 K=30 matrix; F1 = 0.891 K=5
+  matrix companion; F1 = 0.826 K=5 extended-buffer on GS; F1 = 0.887
+  subtype classification conditional on match).

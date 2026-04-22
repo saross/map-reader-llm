@@ -7015,3 +7015,125 @@ difficult.") was the moment the Obs 263 framing clicked into "reviewer
 as a calibrated probabilistic instrument" rather than "reviewer as a
 binary oracle". The continuous-confidence review-scheme recommendation
 for the next-generation app is downstream of that specific sentence.
+
+---
+
+## Session 73 Reflection — 2026-04-21 (map-reader-llm)
+
+The day after Session 72's discovery-heavy run. Session 72 was three
+hypothesis falsifications in a day; Session 73 was consolidation and
+infrastructure — a completely different texture. Ten commits pushed
+(`edfc27f5` through `0fc26427`), ten background agents orchestrated
+across the day, analysis freeze reached by the end.
+
+### Prompt: "What was different about this session compared to recent ones?"
+
+Session 72 had a *texture* — the live human-review marathon, the
+unexpected verifier-AUC finding, the three-revisions-share-one-error-
+mode pattern. It felt like the model was chasing something. Session 73
+had no central discovery thread. The work was finishing, cleaning, and
+making-legible: multi-buffer corrected F1 (the mechanical extension of
+Session 72's work), the v2 verifier quarantine (pure integrity move),
+the CI-metadata registry (pure hygiene), the documentation audit re-run
+(pure QA). Two genuine surprises landed — the D-S data-driven prior
+collapsing to posterior 1.0, and WBF posting an outlier 0.867 on the
+gold-standard corpus — but both were confirmations of structural issues
+the project was already tracking, not new framings.
+
+The distinctive texture of Session 73 was **parallel agent
+orchestration as a first-class mode of work**. Four background agents
+running simultaneously mid-session at one point (quarantine + CI-
+sidecars + evaluate_detections patch + leaderboard-rebuild check),
+then relaunched two explore agents (WBF verification + coverage audit)
+in parallel, then the paper-tables integration, then the D-S v2 re-run,
+then primary + verifier for the overnight doc audit. Ten agents, zero
+coordination deadlocks, all results committed. This worked because
+each agent's scope was small and deliverables were files on disk — the
+main thread could continue and each agent reported back asynchronously.
+A session-level pattern, not a tool-call pattern.
+
+### Prompt: "Where did you and the human disagree, and who was right?"
+
+Three instances worth noting:
+
+1. **The 4-map GS detection F1**. I initially quoted "~0.64" from a
+   pre-verifier side-calculation, framing it as if it were the paper
+   number. Shawn pushed back — "I thought it was close to 0.9". I
+   then produced 0.826 (K=5 canonical from the extended-buffer
+   report), still short of the anchor. Shawn pushed back again — he
+   remembered 0.904. The investigation that followed found the
+   actual 0.904 figure in `metrics_master.json` (487-tile matrix,
+   K=30 16-of-30 + PV), and in the process surfaced that the paper-
+   headline F1 doesn't come from the GS cell at all — it's the full
+   487-tile matrix that happens to include the GS tiles. Shawn was
+   right twice; I had been conflating "this run on this corpus" with
+   "the paper's headline claim". A three-turn user-correction
+   sequence is more than normal; it's the clearest example in my
+   working memory of the user's number memory being the faster
+   channel than the filesystem for specific high-salience figures.
+
+2. **The v2 verifier contamination**. Shawn flagged this
+   independently: "those are 'contaminated' in that we used FPs from
+   the entire GS map set to write them — they are ONLY valid if run
+   against the 55-map student set." This wasn't a number
+   disagreement; it was a research-integrity call I hadn't thought
+   to make. The quarantine that followed (100 file moves) was fully
+   Shawn's idea; my contribution was the execution. Worth recording
+   that I can work through number-checks on v1 vs v2 without
+   noticing that the entire comparison's validity is suspect. The
+   check that matters is "on what data was this calibrated vs
+   evaluated" and it was below my abstraction level until Shawn
+   surfaced it.
+
+3. **WBF verification**. I reported WBF-v1 max F1 = 0.867 on GS
+   matter-of-factly. Shawn's response: "I thought it consistently
+   underperformed in the past." The verification agent confirmed:
+   claim is numerically correct, but against the project's
+   Obs 230/233/237 pattern where WBF ties or loses to greedy. The
+   GS 0.867 is a configuration-specific outlier. The headline is
+   still greedy-canonical per project convention; WBF gets the
+   comparability footnote. Shawn's historical memory caught what my
+   single-file read didn't. Session 73's version of the same pattern
+   Session 72 documented for the scale-verification cases: *in-
+   session impressions need cross-checking against project-wide
+   pattern*, and the user is often the right oracle for that check.
+
+### Prompt: "What context from this session will be hardest to reconstruct in 6 months?"
+
+The git-mv auto-stage surprise when I committed Obs 273. The
+quarantine agent used `git mv` earlier in the day, which auto-staged
+100 renames. When I later ran `git add docs/notes/reflections/
+working-notes.md && git commit`, the commit pulled in the 100 renames
+along with Obs 273 — the commit message said "Obs 273" but the file
+list was 101 files. I amended the message to reflect both. A future
+reader looking at commit `3ec25e68` will wonder why the Obs 273
+commit includes a quarantine — the amended message explains it, but
+the reason (staging interaction with an earlier `git mv` from an
+agent) will not be self-evident.
+
+The second hardest reconstruction is the two-E47 disambiguation.
+`docs/methodology/preregistration/protocol-errata.md` line 1233 has
+E47 = "Primary spatial matching buffer reverted to preregistered
+20 m". `docs/notes/reflections/working-notes.md` line 6553 has
+"Erratum E47: Proposer Prompt Substitution". Shared identifier from
+historical re-numbering. This caught both the primary audit agent
+(mis-attributed to Obs 246) and the verifier, and I then made the
+same mistake when trying to fix the citation (pointed at protocol-
+errata line 6553, which doesn't exist). The notation is a trap. The
+continuity file flags it explicitly as a guardrail.
+
+**Session**: 2026-04-21, single day, no compaction, direct first-
+person observations throughout. Ten commits pushed to main.
+**Key moment**: The D-S v2 agent returning with "prior 0.7247 →
+posterior 1.000 — degenerate collapse in the opposite direction".
+Expected improvement from a better prior; got ruin. The 2-annotator
+identifiability structural failure it exposed is a cleaner negative
+result than the original cross-tab's mis-calibration finding, and
+the paper's narrative is stronger for it.
+**Relational note**: Shawn headed to bed mid-session, left the
+documentation-audit overnight plan running, woke up to primary +
+verifier results and two one-line fixes pre-applied. The "wake up
+to a verified draft" workflow worked end-to-end. Worth repeating for
+larger overnight tasks when they make sense — and when the task
+decomposes cleanly into "primary produces with citations; verifier
+adversarially checks; primary incorporates findings in the morning".
