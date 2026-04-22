@@ -1,0 +1,104 @@
+# Tile-Level MCC — Phase 2b H7 Temperature Sweep
+# ===============================================
+# Batch spec for evaluate_tile_mcc.py --batch.
+#
+# Evaluates tile-level discrimination (MCC, sensitivity, specificity)
+# with 95% bootstrap CIs for the 10 Phase 2b preregistered H7 temperature
+# sweep conditions: 2 tracks (image, text) x 5 temperatures (0.0, 0.3,
+# 0.7, 1.0, 1.3), K=3 runs per condition, 340 tiles per run.
+#
+# Consensus level: 2-of-3 (majority), matching the native K=3 consensus
+# level used elsewhere in the Phase 2b analysis. Bootstrap settings
+# (1000 iterations, seed 42) match the `consensus-pv` batch for
+# within-sweep comparability. Bounds file differs from `consensus-pv`
+# (340-tile full_evaluation_bounds.geojson vs 487-tile 384/... variant),
+# so MCC values are NOT directly cross-comparable to consensus-pv or
+# phase3a-{text,image}-matrix section 3 tables.
+#
+# Created: 2026-04-22
+
+metadata:
+  description: >
+    Tile-level MCC for Phase 2b H7 temperature sweep (10 conditions,
+    2 tracks x 5 temperatures, K=3 consensus at 2-of-3 majority).
+    Bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+    (340 tiles; differs from consensus-pv 487-tile bounds).
+
+defaults:
+  bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  bootstrap: 1000
+  seed: 42
+
+conditions:
+  # ── Track 1: image-using (brief-text-image) ───────────────────
+  - label: "Phase2b Track1-image T=0.0 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track1-image
+    temperature: T0.0
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track1-image T=0.3 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track1-image
+    temperature: T0.3
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track1-image T=0.7 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track1-image
+    temperature: T0.7
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track1-image T=1.0 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track1-image
+    temperature: T1.0
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track1-image T=1.3 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track1-image
+    temperature: T1.3
+    pool_size: 3
+    vote_threshold: 2
+
+  # ── Track 2: text-only (brief-text) ───────────────────────────
+  - label: "Phase2b Track2-text T=0.0 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track2-text
+    temperature: T0.0
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track2-text T=0.3 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track2-text
+    temperature: T0.3
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track2-text T=0.7 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track2-text
+    temperature: T0.7
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track2-text T=1.0 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track2-text
+    temperature: T1.0
+    pool_size: 3
+    vote_threshold: 2
+
+  - label: "Phase2b Track2-text T=1.3 (2-of-3)"
+    type: consensus
+    study_dir: outputs/retest/phase2b/track2-text
+    temperature: T1.3
+    pool_size: 3
+    vote_threshold: 2

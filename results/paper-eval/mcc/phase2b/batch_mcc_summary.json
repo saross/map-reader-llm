@@ -1,0 +1,320 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-22T22:10:27.591285+00:00",
+  "n_conditions": 10,
+  "metadata": {
+    "description": "Tile-level MCC for Phase 2b H7 temperature sweep (10 conditions, 2 tracks x 5 temperatures, K=3 consensus at 2-of-3 majority). Bounds: inputs/vectors/bounds/full_evaluation_bounds.geojson (340 tiles; differs from consensus-pv 487-tile bounds).\n"
+  },
+  "results": [
+    {
+      "label": "Phase2b Track1-image T=1.3 (2-of-3)",
+      "n_detections": 594,
+      "confusion": {
+        "tp": 175,
+        "tn": 65,
+        "fp": 71,
+        "fn": 29
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.3678,
+        "mean": 0.3672,
+        "ci_lower": 0.2619,
+        "ci_upper": 0.4721
+      },
+      "sensitivity": {
+        "point": 0.8578,
+        "mean": 0.8578,
+        "ci_lower": 0.8084,
+        "ci_upper": 0.9043
+      },
+      "specificity": {
+        "point": 0.4779,
+        "mean": 0.4775,
+        "ci_lower": 0.3926,
+        "ci_upper": 0.5645
+      }
+    },
+    {
+      "label": "Phase2b Track1-image T=1.0 (2-of-3)",
+      "n_detections": 624,
+      "confusion": {
+        "tp": 179,
+        "tn": 56,
+        "fp": 80,
+        "fn": 25
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.3326,
+        "mean": 0.3324,
+        "ci_lower": 0.2315,
+        "ci_upper": 0.425
+      },
+      "sensitivity": {
+        "point": 0.8775,
+        "mean": 0.8778,
+        "ci_lower": 0.8341,
+        "ci_upper": 0.9208
+      },
+      "specificity": {
+        "point": 0.4118,
+        "mean": 0.4113,
+        "ci_lower": 0.331,
+        "ci_upper": 0.4928
+      }
+    },
+    {
+      "label": "Phase2b Track1-image T=0.7 (2-of-3)",
+      "n_detections": 665,
+      "confusion": {
+        "tp": 182,
+        "tn": 39,
+        "fp": 97,
+        "fn": 22
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.2284,
+        "mean": 0.2286,
+        "ci_lower": 0.1269,
+        "ci_upper": 0.3315
+      },
+      "sensitivity": {
+        "point": 0.8922,
+        "mean": 0.892,
+        "ci_lower": 0.849,
+        "ci_upper": 0.933
+      },
+      "specificity": {
+        "point": 0.2868,
+        "mean": 0.2873,
+        "ci_lower": 0.2121,
+        "ci_upper": 0.3594
+      }
+    },
+    {
+      "label": "Phase2b Track2-text T=1.3 (2-of-3)",
+      "n_detections": 778,
+      "confusion": {
+        "tp": 188,
+        "tn": 32,
+        "fp": 104,
+        "fn": 16
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.2207,
+        "mean": 0.22,
+        "ci_lower": 0.1123,
+        "ci_upper": 0.3192
+      },
+      "sensitivity": {
+        "point": 0.9216,
+        "mean": 0.9214,
+        "ci_lower": 0.8842,
+        "ci_upper": 0.9539
+      },
+      "specificity": {
+        "point": 0.2353,
+        "mean": 0.2353,
+        "ci_lower": 0.1702,
+        "ci_upper": 0.3015
+      }
+    },
+    {
+      "label": "Phase2b Track2-text T=1.0 (2-of-3)",
+      "n_detections": 791,
+      "confusion": {
+        "tp": 186,
+        "tn": 24,
+        "fp": 112,
+        "fn": 18
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.1314,
+        "mean": 0.1305,
+        "ci_lower": 0.0291,
+        "ci_upper": 0.232
+      },
+      "sensitivity": {
+        "point": 0.9118,
+        "mean": 0.9112,
+        "ci_lower": 0.8719,
+        "ci_upper": 0.9464
+      },
+      "specificity": {
+        "point": 0.1765,
+        "mean": 0.1768,
+        "ci_lower": 0.1136,
+        "ci_upper": 0.2392
+      }
+    },
+    {
+      "label": "Phase2b Track2-text T=0.7 (2-of-3)",
+      "n_detections": 797,
+      "confusion": {
+        "tp": 187,
+        "tn": 22,
+        "fp": 114,
+        "fn": 17
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.1206,
+        "mean": 0.1194,
+        "ci_lower": 0.013,
+        "ci_upper": 0.2186
+      },
+      "sensitivity": {
+        "point": 0.9167,
+        "mean": 0.9164,
+        "ci_lower": 0.8756,
+        "ci_upper": 0.9502
+      },
+      "specificity": {
+        "point": 0.1618,
+        "mean": 0.1615,
+        "ci_lower": 0.1016,
+        "ci_upper": 0.2222
+      }
+    },
+    {
+      "label": "Phase2b Track1-image T=0.3 (2-of-3)",
+      "n_detections": 683,
+      "confusion": {
+        "tp": 182,
+        "tn": 25,
+        "fp": 111,
+        "fn": 22
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.1078,
+        "mean": 0.1084,
+        "ci_lower": -0.006,
+        "ci_upper": 0.2117
+      },
+      "sensitivity": {
+        "point": 0.8922,
+        "mean": 0.8918,
+        "ci_lower": 0.8477,
+        "ci_upper": 0.9337
+      },
+      "specificity": {
+        "point": 0.1838,
+        "mean": 0.1849,
+        "ci_lower": 0.1185,
+        "ci_upper": 0.2483
+      }
+    },
+    {
+      "label": "Phase2b Track1-image T=0.0 (2-of-3)",
+      "n_detections": 716,
+      "confusion": {
+        "tp": 182,
+        "tn": 23,
+        "fp": 113,
+        "fn": 22
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.0886,
+        "mean": 0.0885,
+        "ci_lower": -0.0141,
+        "ci_upper": 0.1961
+      },
+      "sensitivity": {
+        "point": 0.8922,
+        "mean": 0.892,
+        "ci_lower": 0.8454,
+        "ci_upper": 0.9315
+      },
+      "specificity": {
+        "point": 0.1691,
+        "mean": 0.1694,
+        "ci_lower": 0.1103,
+        "ci_upper": 0.232
+      }
+    },
+    {
+      "label": "Phase2b Track2-text T=0.3 (2-of-3)",
+      "n_detections": 774,
+      "confusion": {
+        "tp": 188,
+        "tn": 16,
+        "fp": 120,
+        "fn": 16
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.0658,
+        "mean": 0.0666,
+        "ci_lower": -0.0374,
+        "ci_upper": 0.171
+      },
+      "sensitivity": {
+        "point": 0.9216,
+        "mean": 0.9217,
+        "ci_lower": 0.885,
+        "ci_upper": 0.9541
+      },
+      "specificity": {
+        "point": 0.1176,
+        "mean": 0.1181,
+        "ci_lower": 0.0677,
+        "ci_upper": 0.1739
+      }
+    },
+    {
+      "label": "Phase2b Track2-text T=0.0 (2-of-3)",
+      "n_detections": 813,
+      "confusion": {
+        "tp": 189,
+        "tn": 15,
+        "fp": 121,
+        "fn": 15
+      },
+      "n_tiles": 340,
+      "n_populated": 204,
+      "n_empty": 136,
+      "mcc": {
+        "point": 0.0635,
+        "mean": 0.0634,
+        "ci_lower": -0.0428,
+        "ci_upper": 0.1737
+      },
+      "sensitivity": {
+        "point": 0.9265,
+        "mean": 0.9263,
+        "ci_lower": 0.8894,
+        "ci_upper": 0.9597
+      },
+      "specificity": {
+        "point": 0.1103,
+        "mean": 0.1106,
+        "ci_lower": 0.0629,
+        "ci_upper": 0.1654
+      }
+    }
+  ]
+}
