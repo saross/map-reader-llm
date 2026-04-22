@@ -12907,3 +12907,95 @@ This is a stronger negative result on D-S than originally expected and an indire
 Search terms: D-S structurally inadequate, prior-invariant AUC 0.5, 2-annotator identifiability fix_student_sens, EM degenerate collapse above 0.22, calibrated prior 0.17 non-empirical, human adjudication only working signal, Obs 273, VLM-only slice 0.725 empirical rate, D-S aggregate corrected F1 0.795 artefact.
 
 ---
+
+## Observation 274: Tile-level MCC in the preregistered Phase 2b temperature sweep increases monotonically with T — orthogonal to, not contradicting, the object-level F1 headline (2026-04-23)
+
+Tile-level MCC, sensitivity and specificity were computed for all 10 cells of the preregistered Phase 2b H7 temperature sweep (2 tracks × 5 temperatures × K=3 consensus, 340 tiles on `inputs/vectors/bounds/full_evaluation_bounds.geojson`) to fill a gap surfaced during the Step 2 interim-doc review — Phase 2b had no tile-level discrimination metrics on record. Artefacts at `results/paper-eval/mcc/phase2b/` (`batch_mcc_summary.{json,md,csv}` + 10 per-condition `mcc.json` + `compute.log`).
+
+The result inverts the ordering of the object-level F1 headline (Obs 177, Obs 209): tile-level MCC is near-worst at T=0.0 and near-best at T=1.3, in both image and text tracks, with CIs excluding zero only at T ≥ 1.0 for image and T=1.3 for text.
+
+### Headline MCC ordering (2-of-3 consensus, 1000 bootstrap iters, seed 42)
+
+| Rank | Condition | MCC | 95 % CI |
+|---:|---|---:|---|
+| 1  | track1-image T=1.3 | **0.368** | [0.262, 0.472] |
+| 2  | track1-image T=1.0 | 0.333 | [0.232, 0.425] |
+| 3  | track1-image T=0.7 | 0.228 | [0.127, 0.332] |
+| 4  | track2-text T=1.3 | 0.221 | [0.112, 0.319] |
+| 5  | track2-text T=1.0 | 0.131 | [0.029, 0.232] |
+| 6  | track2-text T=0.7 | 0.121 | [0.013, 0.219] |
+| 7  | track1-image T=0.3 | 0.108 | [−0.006, 0.212] |
+| 8  | track1-image T=0.0 | 0.089 | [−0.014, 0.196] |
+| 9  | track2-text T=0.3 | 0.066 | [−0.037, 0.171] |
+| 10 | track2-text T=0.0 | 0.064 | [−0.043, 0.174] |
+
+Image beats text at every matched T. Ordering is strictly monotonic increasing in T within each track.
+
+### Mechanism — flat sensitivity, climbing specificity
+
+| Track | T | TP | FN | Sens | TN | FP | Spec |
+|---|---|---:|---:|---:|---:|---:|---:|
+| image | 0.0 | 182 | 22 | 0.892 | 23 | 113 | 0.169 |
+| image | 0.3 | 182 | 22 | 0.892 | 25 | 111 | 0.184 |
+| image | 0.7 | 182 | 22 | 0.892 | 39 | 97 | 0.287 |
+| image | 1.0 | 179 | 25 | 0.878 | 56 | 80 | 0.412 |
+| image | 1.3 | 175 | 29 | 0.858 | 65 | 71 | 0.478 |
+| text | 0.0 | 189 | 15 | 0.927 | 15 | 121 | 0.110 |
+| text | 0.3 | 188 | 16 | 0.922 | 16 | 120 | 0.118 |
+| text | 0.7 | 187 | 17 | 0.917 | 22 | 114 | 0.162 |
+| text | 1.0 | 186 | 18 | 0.912 | 24 | 112 | 0.177 |
+| text | 1.3 | 188 | 16 | 0.922 | 32 | 104 | 0.235 |
+
+Sensitivity (tile-level recall on the 204 populated tiles) is essentially flat: image 0.892 → 0.858, text 0.927 → 0.922. Specificity (correct rejection of the 136 empty tiles) climbs monotonically: image 0.169 → 0.478 (31 pp gain), text 0.110 → 0.235 (12 pp gain). The mechanism is the consensus voting filter: at T=0.0 individual runs are deterministic and produce near-identical hallucinations that survive voting, polluting empty tiles with false positives; at T=1.3 runs disagree more and the 2-of-3 consensus rejects most of these hallucinations, correctly identifying empty tiles as empty.
+
+Total detection counts confirm the filter mechanism: track1-image 716 → 594 (−17 %), track2-text 813 → 778 (−4 %). Fewer detections overall at high T, but the filtered-out pool is disproportionately hallucinations in empty tiles.
+
+### Why this does NOT contradict Obs 177 / Obs 209
+
+The object-level F1 headline for this sweep states T=1.0 is suboptimal for F1, with T=0.7 or lower being optimal. That remains true — F1 operates on matched detection-to-GT pairs and does not reward tile-level abstention. F1 counts TP/FP/FN on the populated tiles only; it ignores whether the model correctly abstains from hallucinating in the 136 empty tiles.
+
+Tile-level MCC, by contrast, rewards the 2×2 per-tile binary discrimination — including true negatives. The 31-pp specificity gain at T=1.3 (image) translates to 42 additional empty tiles correctly identified as empty (TN 23 → 65). Object F1 cannot see this signal at all.
+
+The two metrics are answering different questions:
+
+- **F1 question**: "Given the model has found some detections, how well-matched are they to the ground truth?"
+- **MCC question**: "For each tile, does the model correctly classify it as populated or empty?"
+
+Both are legitimate; which to cite depends on the downstream task. Production pipelines optimising object-count accuracy should still use T=0.0 (per Obs 177 / Obs 209). Applications needing spatial-coverage assessment (tile-by-tile adequacy, e.g. field-survey prioritisation) may benefit from T=1.3.
+
+### Empty-tile-dominance check
+
+A natural worry: is the MCC trend driven purely by the 136 empty tiles (a vacuous artefact of label imbalance)? No — within-empty-tile correct-rejection climbs from 16.9 % at T=0.0 to 47.8 % at T=1.3 (image track), and 11.0 % → 23.5 % (text). These are substantial discrimination gains on a meaningful fraction of the evaluation space. The signal is real.
+
+### Methodological note — CRS bug patched before compute
+
+The Phase 2b MCC compute ran today, 2026-04-23, using a just-patched version of `scripts/analyse_consensus_sweep.py::consensus_to_gdf()`. The original had a latent CRS bug: commit `8c8e101f` (2026-04-11) switched consensus GeoJSON emission to EPSG:4326 (RFC 7946), but `consensus_to_gdf` continued to stamp EPSG:32635 on the in-memory GeoDataFrame without reprojection. Under the buggy code path the spatial join to tile bounds returned all-"unknown" source_tiles, and MCC would have returned 0 or NaN.
+
+Contamination scope was investigated on 2026-04-23 and is narrow: the bug only bites code paths that call `consensus_to_gdf` on post-2026-04-11 consensus outputs. All pre-2026-04-11 MCC artefacts (paper-eval/mcc/{384px,512px,consensus-pv,remaining}) are clean. Phase 3a matrices (post-bug by mtime) use `scripts/analyse_secondary_effects_text.py` → `evaluate_detections.py::load_geojson`, which dodges the bug because modern GeoPandas auto-assigns EPSG:4326 to GeoJSON files lacking an explicit CRS, so the stamping branch is never taken. Direct `sjoin` verification on three phase3a consensus files returned plausible match rates (107–110 %, reflecting tile-edge straddling), confirming the phase3a numbers stand. No other active results artefacts require re-run. The bug fix is prophylactic for future consensus-sweep-path compute.
+
+### Relationship to prior observations
+
+- **Obs 177** / **Obs 209**: object-level F1 T-sweep finding. This Obs adds a complementary tile-level metric; it does not invalidate the F1 story but shows temperature carries two different optimality profiles depending on whether the metric credits tile-level abstention.
+- **Obs 269**: verifier miscalibration. Both Obs 269 (verifier over-confidence on detection probability) and this Obs 274 (T-sweep MCC divergence from F1) highlight that the choice of evaluation metric determines the apparent quality story. Neither metric is wrong; both must be reported.
+- **Obs 273**: D-S structural inadequacy. This Obs adds a third axis to the "metric choice matters" theme — D-S posterior AUC is prior-invariant at 0.5 regardless of configuration; tile-level MCC discriminates but only at high T; object-level F1 discriminates at low T. No single number tells the full quality story for this task.
+
+### Paper implication
+
+Report both tile-level MCC and object-level F1 separately; label them clearly as different problem frames; cite the task-dependent temperature recommendation. Suggested Discussion text fragment:
+
+> "We report tile-level MCC in addition to object-level F1 because the two metrics credit different aspects of detection quality. F1 rewards correctly matched detections on populated tiles; tile-level MCC additionally rewards correctly abstaining from detection on empty tiles. Across the preregistered Phase 2b temperature sweep, tile-level MCC increases monotonically with temperature in both modalities (image 0.089 → 0.368, text 0.064 → 0.221 across T=0.0 to T=1.3) while object-level F1 decreases with temperature (per Obs 177 / Obs 209). The mechanism is a per-tile tradeoff: higher sampling temperature produces greater cross-run disagreement, and the 2-of-3 consensus filter aggressively rejects hallucinations in empty tiles. Production pipelines prioritising object-count accuracy should use T=0.0; applications needing per-tile spatial adequacy assessment may prefer T ≥ 1.0."
+
+### Reproducibility
+
+- Script: `scripts/evaluate_tile_mcc.py --batch configs/mcc-eval-phase2b.yaml --output-dir results/paper-eval/mcc/phase2b`.
+- Batch config: `configs/mcc-eval-phase2b.yaml` (new; 10 conditions; bounds = `inputs/vectors/bounds/full_evaluation_bounds.geojson`; bootstrap n=1000 seed=42; 20 m buffer; Hungarian per-map matching).
+- Consensus level: 2-of-3 majority (native K=3 for Phase 2b).
+- Compute: sapphire (per global CLAUDE.md compute-location rule); ~ several minutes wall-clock.
+- Bounds note: Phase 2b uses 340-tile `full_evaluation_bounds.geojson`; other MCC artefacts under `results/paper-eval/mcc/consensus-pv/` use 487-tile `384/full_evaluation_bounds.geojson`. MCC values are NOT directly cross-comparable between Phase 2b and consensus-pv — flagged in the YAML metadata description.
+- Dependencies: shared `lib_advanced_metrics.py::compute_tile_classification` and `analyse_consensus_sweep.py::consensus_to_gdf` (patched this session to construct GDF in EPSG:4326 then `.to_crs(TARGET_CRS)`).
+
+### Findable later
+
+Search terms: Phase 2b tile-level MCC, H7 temperature sweep MCC, monotonic MCC temperature increase, tile-level vs object-level detection metrics, specificity climbs with temperature, consensus voting filter hallucinations, CRS bug analyse_consensus_sweep commit 8c8e101f, EPSG:4326 GeoJSON default auto-detect, MCC reconciles F1, Obs 274, empty-tile correct-rejection 47.8 %, paper-eval/mcc/phase2b/.
+
+---
