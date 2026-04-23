@@ -32,7 +32,10 @@ Inputs:
 
 Outputs:
     - secondary_effects.json — comprehensive results
-    - secondary_effects.md — formatted report for supplemental materials
+    - secondary_effects_autogen.md — auto-generated tables + boilerplate
+                                      (hand-authored `secondary_effects.md`
+                                      is the paper-citation source; do NOT
+                                      overwrite — Session 75 guardrail 6)
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -1117,8 +1120,9 @@ def main() -> int:
         json.dump(all_results, f, indent=2, cls=NumpyEncoder)
     logger.info("JSON: %s", json_path)
 
-    # Markdown
-    md_path = args.output_dir / "secondary_effects.md"
+    # Markdown — Session 76 guardrail: write to _autogen.md sibling so the
+    # hand-authored secondary_effects.md is protected against overwrite.
+    md_path = args.output_dir / "secondary_effects_autogen.md"
     write_markdown(all_results, md_path, conditions)
 
     elapsed = time.monotonic() - start_time
