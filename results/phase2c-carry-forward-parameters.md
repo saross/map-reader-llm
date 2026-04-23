@@ -123,5 +123,5 @@ being tested (negative text elaboration) applies to text-based prompts.
 - Track 1 analysis: `results/phase2c-track1-image-analysis.md`
 - Track 1 per-run metrics: `outputs/phase2c/track1-image/per_run_metrics.csv`
 - Phase 2c Track 1 YAML: `studies/phase2c-h8-library.yaml`
-- Phase 2b carry-forward: `results/phase2b-carry-forward-parameters.md`
+- Phase 2b carry-forward: `results/phase2b-carry-forward-parameters.md` (retest-era, 340-tile K=3; supersedes the archived pre-retest pilot at `archive/outputs-pre-retest-60-tile/phase2b/`)
 - Decision 11 (Scale-16/32 deferral): `docs/methodology/preregistration/protocol-errata.md`
