@@ -261,7 +261,7 @@ numbers are trustworthy.
 
 | Metric | Value |
 |--------|-------|
-| Conditions launched (net) | 6 (scale-8 reused from H10 v2 pool_160_hp4hn4) |
+| Conditions launched (net) | 7 (scale-8 run fresh on the H8 v2 pipeline; the byte-identical H10 v2 pool_160_hp4hn4 run is retained as an independent comparison draw — see §"Sanity check") |
 | Passes per condition | 5 |
 | Tiles per pass | 327 |
 | Total tile-passes acquired | 9,810 (per Obs 238) |
@@ -395,7 +395,7 @@ concrete claims it supports:
 - Obs 237 — tile-level paired permutation methodology (used here)
 - Obs 238 — **this study's primary narrative anchor**
 - Obs 239 — H12 v2 HP:HN ratio null; closes library axis
-- H10 v2 summary: `results/h10/verifier_independence_probe.md` (partial; full analysis_summary pending)
+- H10 v2 summary: `results/h10/analysis_summary.md` (the retracted `verifier_independence_probe.md` was moved to `archive/h10-h12-v1-retracted-probe/results/h10/verifier_independence_probe.md` in Session 75)
 - H12 v2 summary: `results/h12-v2/analysis_summary.md` (exemplar-tier)
 - Protocol errata: `docs/methodology/preregistration/protocol-errata.md` §E51
 

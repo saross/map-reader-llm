@@ -94,8 +94,9 @@ produces hard examples that make the model more conservative.
 | 160 | (4, 0.05) | 0.722 | 0.858 | 0.624 | 232 |
 
 Pool-size lead at consensus is eliminated under PV. Pool_020 edges
-slightly ahead (ΔF1 = −0.005 pool_020 minus pool_160) because the
-verifier has more false positives to filter from pool_020's noisier
+slightly ahead (ΔF1 = +0.005, pool_020 minus pool_160, matching the
+headline table's sign convention) because the verifier has more
+false positives to filter from pool_020's noisier
 consensus output (+0.093 precision gain from pool_020 consensus to
 PV, from 0.672 to 0.765), while pool_160's already-high precision
 (0.843 at consensus) leaves the verifier with little to improve and
