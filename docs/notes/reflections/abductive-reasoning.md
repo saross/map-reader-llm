@@ -4053,3 +4053,145 @@ not just the obvious adjustment direction. The sweep that the D-S
 v2 agent ran was exactly this probe, and it caught the collapse
 that a single-point re-test would have confirmed-without-
 contextualising.
+
+## Session 74 — 2026-04-23 (map-reader-llm): The "CONTAMINATED" verdict that wasn't, and a research finding found through a bug
+
+Two threads involving surprising findings and belief revisions this
+session — one structural (the contamination verdict reversed), one
+substantive (Phase 2b MCC finding).
+
+### Thread 1 — A contamination hypothesis falsified by a one-line GeoPandas fact
+
+**Surprising fact**: a Phase 2b MCC compute today found a CRS bug in
+`scripts/analyse_consensus_sweep.py::consensus_to_gdf` —
+post-2026-04-11 consensus GeoJSON is in EPSG:4326, but the function
+stamped 32635. The compute agent's patch worked, but flagged that
+other consumers of `consensus_to_gdf` (seven scripts, per grep)
+might also have produced broken outputs post-2026-04-11. Phase 3a
+matrices (dated 2026-04-17, post-bug) were the obvious concern.
+
+**Hypothesis formed**: phase3a tile-level MCC numbers (HIGH-T0.7
+MCC = 0.620, etc.) are bug-contaminated and need re-running.
+Evidence: (a) `analyse_secondary_effects_text.py` uses
+`evaluate_detections.py::load_geojson`, which has an analogous
+`crs is None → stamp-32635` branch; (b) phase3a consensus files have
+no CRS key; (c) coordinates are lat/lon (25.76, 42.48). The bug
+mechanism is clear in isolation: no-CRS-marker → stamp 32635 →
+coordinates still lat/lon but labelled UTM → spatial join fails →
+TP=0, FP=0.
+
+**Probe**: dispatched a background Explore agent to quantify the
+contamination scope. The agent ran for ~4 minutes and returned a
+"CONTAMINATED" verdict with a re-run plan (~2-3 minutes of
+`analyse_secondary_effects_text.py` on sapphire).
+
+**Tension in the evidence**: the phase3a numbers are NOT near zero.
+HIGH-T0.7 shows TP=178, TN=217, FP=41, FN=51, summing to 487 (the
+full evaluation tile count). If the bug had hit, the spatial join
+would have returned all-"unknown" source_tiles and either TP+FP=0
+or zero detections joined. The numbers are plausible; the agent's
+verdict says they should be near-zero. Something in the reasoning
+chain is wrong.
+
+**Direct test**: load `consensus_t9.geojson` through `load_geojson`
+and inspect the post-load bounds. Result: coords at (314346,
+4631225) — full UTM range, correctly reprojected. sjoin matched 1152
+/ 1074 detections (match rate > 100 % because boundary-straddling
+detections match multiple tiles). Phase3a is clean.
+
+**Belief revision**: my inference chain missed that modern GeoPandas
+auto-assigns `EPSG:4326` to GeoJSON files with no explicit CRS (the
+GeoJSON spec default). So in `load_geojson`, the `gdf.crs is None`
+branch is dead code for these files; instead the
+`elif gdf.crs != target_crs` branch fires and correctly reprojects.
+The buggy branch exists in the source code but is unreachable along
+this call path. `consensus_to_gdf` bypasses `read_file` entirely and
+manually constructs the GeoDataFrame from raw coordinates — that is
+the only path where the bug actually bites, and today's Phase 2b MCC
+compute was the only consumer that exercised it post-2026-04-11.
+
+**Meta-pattern**: the agent's report traced the code path correctly
+and drew a confident conclusion, but worked at the source-code
+abstraction level without checking whether the buggy branch is
+reachable along the relevant call stack. The verification that
+actually settled the question was at a lower abstraction level: load
+a file, look at the coordinates, count the matches. Session 72's
+cross-checking lesson generalises: *reasoning about code paths is
+not equivalent to observing what the code does when it runs*.
+Shawn's instinct ("let me know if we need to re-run all tile-level
+metrics") pushed for thorough investigation; the thorough
+investigation caught the agent's reasoning gap.
+
+### Thread 2 — A finding that inverts the F1 ordering, found through the bug discovery
+
+**Surprising fact**: Phase 2b tile-level MCC (just computed with the
+patched script) ordering is **monotonically increasing with
+temperature** within each track — opposite to the Obs 116 object-
+level F1 ordering, which is monotonically decreasing with
+temperature. Track 1 image MCC 0.089 (T=0.0) → 0.368 (T=1.3);
+Track 2 text 0.064 → 0.221.
+
+**Hypothesis formed**: this is a real metric-divergence, not a
+computation artefact. Tile-level MCC rewards correct abstention on
+empty tiles (true negatives); object-level F1 ignores that entirely.
+At high T, the consensus filter rejects more hallucinations, driving
+specificity up; at low T, hallucinations survive into empty tiles.
+
+**Probe**: dispatched a verification agent to (a) confirm the
+compute is correct; (b) explain the mechanism with raw TP/TN/FP/FN
+per condition; (c) check for methodological artefacts (empty-tile
+dominance, total-detection-count gradient); (d) reconcile with
+Obs 116 F1 headline.
+
+**Verification**: agent confirmed the compute is sound and the
+mechanism holds — sensitivity is flat (~0.86–0.93 across T);
+specificity climbs from 0.17 → 0.48 (image) and 0.11 → 0.24 (text).
+Empty-tile correct-rejection rises from 16.9 % at T=0.0 to 47.8 % at
+T=1.3 on the 136-empty-tile subset — substantial discrimination
+within the empty set, not a vacuous label-imbalance artefact. Total
+detection counts decrease monotonically with T (716 → 594 image;
+813 → 778 text) — the filtered-out pool is disproportionately
+hallucinations.
+
+**Belief revision**: the F1-headline story "T=0.0 optimal for
+detection" is still right, but it now coexists with an orthogonal
+"T=1.3 optimal for tile-level discrimination" story. The two metrics
+answer different questions and should be reported separately. The
+paper's temperature recommendation becomes task-dependent: object-
+count accuracy favours T=0.0 (per Obs 116); per-tile spatial
+adequacy favours T ≥ 1.0. At high consensus N (N=30 per Obs 177),
+the F1 temperature sensitivity is erased and the MCC-driven choice
+may dominate.
+
+**Meta-pattern**: this finding would not have existed without the
+CRS bug discovery. The bug investigation motivated the Phase 2b MCC
+compute (to verify the patched pipeline works on real data); the
+MCC compute produced the surprising ordering; the verification agent
+confirmed the mechanism. Chain of evidence: bug-found → patch-tested
+→ Phase-2b-filled-gap-surfaced-by-Step-2-scorecard →
+finding-verified-by-paper-shaped-analysis. The Step 2 scorecard's
+"Phase 2b has no tile-level metrics on record" row (added after
+Shawn's question about MCC coverage) was the gap that justified the
+compute. The research finding is an emergent consequence of tidying
+up documentation coverage.
+
+### Shared root cause and mitigation
+
+Both threads are cases where an inference produced from a narrower
+input than the question required needed direct-evidence verification
+against a different abstraction level. The contamination verdict
+operated at the source-code level and needed a runtime-execution
+check; the MCC ordering started as agent-reported numbers and needed
+a per-condition TP/TN/FP/FN breakdown to confirm the mechanism. In
+both cases, the verification cost was much lower than the cost of
+acting on the unchecked claim — the phase3a re-run would have been
+2-3 minutes of sapphire compute wasted, and the MCC finding reported
+without mechanism verification would have been a weaker paper claim.
+
+Session 74's addition to the Session 72/73 pattern: **when the agent
+report has a plausible-but-narrow reasoning chain, probe the gap
+between the abstraction level it operates at and the level the
+question is actually about**. Code-path traces need runtime
+verification; number reports need mechanism verification; structural
+claims about the data need scope re-verification against the actual
+data.

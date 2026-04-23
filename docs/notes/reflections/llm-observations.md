@@ -5149,3 +5149,77 @@ was already asking itself.
 **Session**: 2026-04-21, ten commits pushed to main, no compaction,
 direct first-person observations throughout. Ten background agents
 orchestrated with zero coordination deadlocks.
+
+## Session 74 Observations (2026-04-23, map-reader-llm)
+
+### Sub-agent outputs are drafts, not verdicts
+
+Session 73 documented the primary+verifier overnight pattern. Session
+74 inverts the lesson: three background Explore agents this session
+produced confidently-wrong conclusions (Phase 2b at 15 tiles; Phase3a
+CONTAMINATED; a subtype-MCC trace that missed the ensure_utm_crs
+helper). Each report was well-structured, fully cited, and wrong on
+a narrow but load-bearing claim. None would have been caught by
+re-reading the report more carefully — the correction in each case
+came from directly checking the claim against the filesystem or the
+actual code.
+
+A useful reframing for me going forward: an Explore agent's report
+is a **draft hypothesis** that needs the same verification treatment
+as my own in-session readings — not a higher-tier authority because
+it ran for four minutes and produced structured output. The
+verifier-vs-primary pattern from Session 73 is still right; what I
+under-weighted in Session 74 is that the *unchecked* primary is the
+failure mode. When there is no verifier scheduled and the agent's
+claim will inform a decision, I have to be the verifier.
+
+Concretely: when an agent returns a claim that sounds load-bearing,
+the next move should be a direct evidence check (read the file,
+run the query, try the spatial join) before relaying the claim to
+Shawn. Today's sequence of relay-then-verify-after-pushback happened
+three times in one session; each time a single filesystem check
+would have caught the error earlier.
+
+### The "is that really X" user-check is a retrieval probe
+
+Every time Shawn asked "are you sure — I remember Y", the agent's or
+my claim was either wrong or had an important caveat: Phase 2b tile
+count (wrong — 340 not 15); whether there are other T=1 runs (there
+are — preregistered Phase 2b at 340 tiles); tile-level MCC coverage
+(missing — I had not checked paper-eval/mcc); orphan phase2b docs
+("truly orphaned" — partly, because the carry-forward doc has an
+active dependency). Shawn's memory is retrieving the project-wide
+shape of the data faster than I retrieve the specific file I have
+just read. The pattern generalises: when a user challenge of the
+form "I thought X was bigger/smaller/different" appears, the correct
+response is a fresh filesystem check against the user's remembered
+shape, not a defence of my current claim. Session 73's observations
+documented the same pattern for paper-headline numbers; Session 74
+extends it to structural facts (tile counts, corpus scope, analytic
+coverage).
+
+### Background agents are cheap; pessimistic concurrency is cheaper
+
+Seven agents ran in the background this session, several
+simultaneously. The concurrency plan was straightforward: read-only
+agents can run in parallel freely; write-conflict potential is
+handled by scheduling agents that write the same file (scorecard)
+serially, and dispatching parallel read-only investigations during
+that gap. No deadlocks, no conflicts. The only coordination cost was
+a ~15-minute window where one scorecard agent had to finish before
+I could apply my own patch — I filled that window with a read-only
+investigation of the contamination scope.
+
+The cost-benefit is asymmetric: a background agent that returns a
+wrong verdict takes ~10 minutes of my verification time to correct;
+one that returns a right verdict saves ~30 minutes of my read-
+and-synthesise time. At this session's hit rate (3 wrong verdicts of
+7 agents ≈ 43 %), the expected value is still positive, but only
+because verification is cheap when I have direct access to the
+filesystem. In an environment where verification required another
+agent dispatch, the calculus would invert.
+
+**Session**: 2026-04-23, ten commits pushed to main (`eb2cf23c`
+through `0fccf455`), no compaction, direct first-person observations
+throughout. Seven background agents dispatched; three returned
+verdicts that required correction.

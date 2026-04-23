@@ -5157,3 +5157,179 @@ invalid.
   for paper-headline anchors (F1 = 0.904 K=30 matrix; F1 = 0.891 K=5
   matrix companion; F1 = 0.826 K=5 extended-buffer on GS; F1 = 0.887
   subtype classification conditional on match).
+
+## Session 74 — 2026-04-23 (map-reader-llm): Step 2 + Step 3 of the paper write-up, CRS bugfix, Obs 274 MCC finding, phase2b archive pass
+
+### Objectives (from Session 73 handoff)
+
+- Step 2: Interim-doc review pass → `planning/interim-docs-review.md`.
+- Step 3: Meta-findings consolidation → `results/meta-findings-summary.md`.
+- Steps 4–6 queued.
+
+### Accomplishments
+
+**Step 2 — Interim-doc scorecard (`planning/interim-docs-review.md`,
+1,281 lines, markdownlint-clean)**. 21 reports reviewed against the
+17-section exemplar (`results/gold-standard-subtype-classification/report.md`).
+Final tier breakdown: 0 ✓ / 13 ~ partial / 2 ✗ stub / 4 ✗ missing;
+9 directory groups in §10 "known out-of-scope". Discovered during
+re-inventory passes that the original scope (continuity doc's "Have"
+list) was a strict subset — added 6 rows post-inventory (uncalibrated-
+vs-calibrated-crosstab, phase3a-image-matrix, secondary-effects,
+factor-analysis, retest-production-summary, evaluation-scopes) and
+one row for Phase 2b retest at `outputs/retest/phase2b/` (no
+dedicated analysis_summary.md; narrative embedded in
+`retest-production-summary.md` §Phase 2b).
+
+**Step 3 — Meta-findings synthesis (`results/meta-findings-summary.md`,
+1,158 lines, markdownlint-clean)**. Obs 262–273 synthesised into five
+themes (T1 human-review calibration / T2 failure taxonomies / T3
+verifier miscalibration / T4 subtype asymmetry / T5 attractor-pull +
+D-S inadequacy), each with a "Suggested paper text" block and full
+Trace. All 9 headline canonical numbers spot-checked present. No
+archive citations; E47 disambiguated; UK/AU English throughout.
+
+**CRS bugfix (`scripts/analyse_consensus_sweep.py`)**. Discovered
+during the Phase 2b tile-level MCC compute on sapphire: commit
+8c8e101f (2026-04-11) switched `apply_threshold` consensus emission
+to EPSG:4326, but `consensus_to_gdf` continued to stamp 32635
+without reprojection. Patched to construct the GeoDataFrame in 4326
+then `to_crs(TARGET_CRS)`. Contamination scope verified narrow:
+Phase 2b MCC was the only post-2026-04-11 consumer of the buggy path;
+all other tile-level MCC artefacts either pre-date the bug or use a
+different code path (`evaluate_detections.py::load_geojson`, which
+relies on GeoPandas' default 4326 auto-assignment for CRS-less
+GeoJSON). Three contamination investigation agents confirmed scope.
+
+**Phase 2b tile-level MCC (`results/paper-eval/mcc/phase2b/`)**.
+10 conditions × 3 runs × 340 tiles computed on sapphire with the
+patched pipeline. Batch summary + 10 per-condition `mcc.json` +
+`compute.log`.
+
+**New observation**: Obs 274 in `working-notes.md` — Phase 2b
+tile-level MCC increases monotonically with temperature (opposite
+to Obs 116 F1 finding). Mechanism verified: flat sensitivity +
+climbing specificity; empty-tile correct-rejection climbs
+16.9 % → 47.8 % across T=0.0 → T=1.3 (image track).
+
+**UNINTENDED-T1.0 disposition settled**. Updated README banners in
+both `outputs/h11/{consensus,single-pass}-384-UNINTENDED-T1.0/`
+directories to state the dual role: origin = E43 deviation;
+retention = serendipitous Era 2 / 487-tile-scope T=1.0 coverage for
+the 157 downstream references. Directory names keep the
+`-UNINTENDED-` label as a permanent origin signal.
+
+**Option A pre-retest phase2b archive pass**. Six orphan 60-tile K=10
+pilot docs archived from `results/` to
+`archive/outputs-pre-retest-60-tile/phase2b/`.
+`phase2b-carry-forward-parameters.md` retained with a retention
+banner because `phase2c-carry-forward-parameters.md:126` depends on
+it. **Option B residual** (create retest-era carry-forward doc;
+repoint phase2c citation; archive pre-retest carry-forward) tracked
+in four places to survive Step 4 handoff: banner in the file,
+scorecard §3.15 bullet, scorecard §3.15 level-up notes sub-task,
+scorecard §6 sequencing item 3.
+
+**Machine sync**. amd-tower pushed 10 commits (`eb2cf23c` through
+`0fccf455`); zbook was 28 commits behind origin and is now fully
+synced. Both at HEAD = `0fccf455`, clean working trees, main-only,
+no stray branches.
+
+### Decisions / corrections
+
+- **Step 3 scope confirmed unchanged** (synthesise Obs 262–273 only).
+  Era 1 Phase 2a–3d + retest coverage deferred to Step 4. §10 "known
+  out-of-scope" section transparent about scorecard coverage limits.
+- **Step 4 sequencing**: Shawn prefers comprehensive pass (all 10
+  items) over minimum-viable (4 items). Scorecard §6 order accepted.
+- **UNINTENDED-T1.0**: archive-with-note via README strengthening,
+  not filesystem move. 157 downstream references preserved.
+- **Option A / B split for phase2b orphans**: A done now (safe);
+  B deferred to Step 4 when Phase 2b consolidation happens anyway.
+- **Sub-agent verdict reversals**: Phase 2b tile count (agent said
+  15, actually 340); Phase 3a contamination (agent said yes, actually
+  clean); subtype-MCC contamination (agent flagged, actually uses
+  `ensure_utm_crs` helper which is immune). All three caught by
+  direct filesystem verification triggered by user challenge or my
+  own numerical-plausibility check.
+
+### Observations added (working-notes.md)
+
+- **Obs 274** — Phase 2b tile-level MCC sweep is monotonically
+  increasing in temperature (image 0.089 → 0.368, text 0.064 →
+  0.221), opposite to Obs 116 F1 ordering. Mechanism: flat
+  sensitivity + climbing specificity; empty-tile correct-rejection
+  rises from 16.9 % to 47.8 % at T=1.3 image. Reconciles (does not
+  contradict) Obs 116 / 177 / 209. Cross-referenced to the CRS
+  bugfix provenance (patched before compute).
+
+### Issues
+
+- **Sub-agent verdict reliability**: three of seven background
+  Explore agents returned wrong or mis-calibrated verdicts this
+  session (see Session 74 llm-observations and abductive-reasoning
+  entries for the pattern analysis). Verification cost was
+  manageable because the filesystem was accessible; in environments
+  where verification would require another agent, the calculus would
+  invert.
+- **Scorecard initial scope was narrow**: relied on continuity doc's
+  "Have" list rather than direct `results/` inventory. Re-inventory
+  passes caught the gap before Step 3 but after Step 2's first
+  "complete" marker. A Step 2 that started from a direct
+  directory-walk would have been more robust.
+- **Phase 3a "0 thinking tokens" anomaly** (scorecard row 14 note)
+  remains unresolved — likely a logging/parsing artefact in
+  `secondary_effects.md` §13 HIGH-T0.7. Low priority, pre-publication
+  cleanup.
+- **Factor-analysis data-completeness bug** (scorecard row 19): blank
+  F1 cells on lines 42–43 of `factor-analysis/factor_analysis_results.md`
+  flagged during the re-inventory. Paper-critical; Step 4 level-up
+  dependency.
+
+### Pending work (for Step 4)
+
+Per `planning/interim-docs-review.md` §6 Step 4 sequencing
+(~11–15 hours comprehensive):
+
+1. Synthesise `results/h8-v2/analysis_summary.md` (L, ~90 min).
+2. Synthesise `results/h10/analysis_summary.md` (L, ~90 min).
+3. Synthesise `results/retest/phase2b/analysis_summary.md` (L,
+   ~90 min) **with Option B residual MANDATORY sub-task**: create
+   retest-era carry-forward doc, repoint phase2c citation, archive
+   pre-retest carry-forward.
+4. Consolidate `results/h11/analysis_summary.md` (M, 60–75 min).
+5. Write `results/55maps-image-generalisation/buffer-100m-diagnostics/report.md`
+   (M, 45–60 min).
+6. Write `results/paper-eval/mcc/report.md` (M, 45–60 min).
+7. Level-up `results/factor-analysis/factor_analysis_results.md`
+   (M, ~45–60 min; fix blank Temperature rows 42–43).
+8. Level-up `uncalibrated-vs-calibrated-crosstab/crosstab.md`
+   (S, 25–35 min).
+9. Level-up `results/evaluation-scopes.md` (S, 20–30 min).
+10. Batch-level-up the eight partial per-analysis reports
+    (~3.5–4.5 hours at S/M each).
+
+### Contextual assumptions
+
+- **Scorecard is Step 2's canonical output**; it supersedes any
+  earlier "coverage inventory" implied by the continuity doc. Step 4
+  sequencing should be read from `planning/interim-docs-review.md`
+  §6, not from the continuity doc's "Need" list.
+- **Meta-findings synthesis scope is Obs 262–273 only** (Discussion
+  spine). Results-section material (Era 1 hypothesis closures,
+  55-map cross-track comparison, Limitations consolidation) is
+  Step 4 or Step 6 work, not Step 3 extension material.
+- **CRS patch is prophylactic going forward**; no active artefacts
+  required re-computation. `consensus_to_gdf` is now safe for
+  post-2026-04-11 consensus inputs. A further hardening (use
+  `lib_consensus.ensure_utm_crs` helper for coordinate-magnitude
+  detection) is deferred to Step 4.
+- **Sub-agent outputs should be treated as drafts**: the pattern
+  this session (3 of 7 wrong verdicts) suggests any load-bearing
+  claim from a background agent warrants a direct-evidence check
+  before it informs a decision. See Session 74 llm-observations for
+  the full framing.
+- **Shawn's "are you sure X" question pattern** consistently
+  retrieves project-wide shape-of-data memory faster than my
+  in-session file reads. When this pattern appears, default to a
+  fresh filesystem check rather than defending the current claim.

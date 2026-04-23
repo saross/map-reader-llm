@@ -7137,3 +7137,134 @@ to a verified draft" workflow worked end-to-end. Worth repeating for
 larger overnight tasks when they make sense — and when the task
 decomposes cleanly into "primary produces with citations; verifier
 adversarially checks; primary incorporates findings in the morning".
+
+## Session 74 Reflection — 2026-04-23 (map-reader-llm)
+
+The session opened as Step 2 + Step 3 of the paper write-up plan — a
+planned, scoped piece of analysis-freeze follow-up work — and produced
+the intended outputs (21-row interim-doc scorecard + 1,158-line
+meta-findings synthesis covering Obs 262–273). What wasn't planned was
+the parallel thread that emerged when a "nice to have" MCC sanity
+check surfaced a CRS bug in `analyse_consensus_sweep.py`, which
+required a patch, a contamination-scope investigation across three
+background agents, and ultimately a new working-notes Obs (274)
+documenting a research finding (Phase 2b tile-level MCC inverts the
+F1 ordering) that would not have existed without the bug discovery.
+Ten commits pushed to main; both machines synced after zbook was
+28 commits behind.
+
+### Prompt: "What surprised you about this session?"
+
+Three agent verdicts that looked authoritative and were wrong, and
+the lesson that "the sub-agent ran for four minutes and returned a
+well-formatted report" is not the same as "the sub-agent got it
+right". The three cases escalated in stakes:
+
+1. **Phase 2b tile count**. An Explore agent reported
+   "phase2b/track1-image T1.0: 3 runs × 15 tiles". Shawn pushed back
+   ("I thought we re-ran all important runs on 60 or 340 tiles") and I
+   verified directly — actual is 340 × 3 runs × 5 T × 2 tracks =
+   10,200 tile-runs per track family. The agent had read a partial
+   value from `study_manifest.json` and mis-parsed a smaller
+   pilot-field entry as the production tile count.
+2. **Phase 3a contamination verdict**. A second Explore agent
+   concluded "CONTAMINATED — re-run required" based on a correctly-
+   traced code path (`load_geojson` has a `crs is None` → stamp-32635
+   branch; consensus files have no CRS key). The logic was correct
+   but the agent missed that modern GeoPandas auto-assigns EPSG:4326
+   to GeoJSON files with no explicit CRS (the GeoJSON spec default),
+   so the buggy branch is dead code for those files. Direct `sjoin`
+   test on three consensus files confirmed phase3a is clean. The
+   agent's reasoning chain was internally consistent and produced a
+   confident wrong answer.
+3. **Scorecard coverage**. My own Step 2 scorecard captured the
+   continuity doc's "Have" list but missed ~10 directories that
+   belonged in scope (`phase3a-image-matrix/`, `paper-eval/mcc/`,
+   `secondary-effects/`, `tolerance-sensitivity/`, `phase3d-*.md`,
+   `retest-production-summary.md`, `factor-analysis/`, `evaluation-
+   scopes.md`, `uncalibrated-vs-calibrated-crosstab/`). Shawn's
+   question "are all tile-level metrics present (MCC, etc.)?" was
+   the thread that unravelled the gap. I had framed the scorecard
+   scope around a document's manifest rather than around what is
+   actually in `results/`. The manifest was a convenient starting
+   point that I then treated as authoritative.
+
+Common shape across all three: a confident, well-structured output
+(agent report; my own scorecard) produced from a narrower input than
+the question required. The correction mode in each case was a user
+challenge that triggered direct verification against the filesystem.
+The correction never came from re-reading the original report more
+carefully — it came from checking a claim against the thing it was
+claiming about. "Trust but verify" is meaningful only when the
+verification is against the actual data, not against another
+abstraction layer (another report, another summary).
+
+### Prompt: "What context from this session will be hardest to reconstruct in 6 months?"
+
+Three items that will look arbitrary without the session's
+narrative:
+
+1. **The Option B residual tracked four times**. The commit that
+   archives six orphan pre-retest phase2b files deliberately retains
+   `results/phase2b-carry-forward-parameters.md` because
+   `phase2c-carry-forward-parameters.md:126` depends on it. The
+   remaining work (create retest-era carry-forward doc; repoint
+   phase2c citation; archive the pre-retest carry-forward) is tracked
+   in four places: a retention banner inside the file itself,
+   scorecard §3.15 "Superseded pre-retest artefacts" bullet, scorecard
+   §3.15 "Level-up notes" sub-task labelled "Option B residual
+   (MANDATORY)", and scorecard §6 Step 4 sequencing item 3. The
+   redundancy is deliberate — Shawn's instruction was "ensure that
+   this future work is properly recorded so that it actually happens
+   in Step 4". A future reader looking at the carry-forward doc will
+   see the banner; looking at the scorecard will see the sub-tasks;
+   neither alone would suffice if the other were missed.
+2. **Why only Phase 2b MCC actually hit the CRS bug**. The commit
+   message for the patch (`eb2cf23c`) says "contamination scope
+   verified narrow" — but the reason is easy to lose. The bug lives
+   in `consensus_to_gdf`, which manually constructs a GeoDataFrame
+   from raw coordinates. Other consumers of consensus files go
+   through `load_geojson` in `evaluate_detections.py`, which calls
+   `gpd.read_file` first — and GeoPandas auto-assigns EPSG:4326 to
+   GeoJSON lacking an explicit CRS, so the stamping branch is dead
+   code for files actually produced by `apply_threshold`.
+   `consensus_to_gdf` bypasses `read_file` entirely; it is the only
+   path where the bug bites. That is why today's Phase 2b MCC
+   compute was the single consumer post-2026-04-11 that needed the
+   patch, and why phase3a (which uses `load_geojson`) was clean
+   despite being dated after the bug's introduction. A future session
+   looking at the patch and asking "was there any data loss" will
+   need this reasoning chain.
+3. **The UNINTENDED-T1.0 dual-role framing**. Protocol-errata E43
+   describes the directories as an error; the new READMEs describe
+   them as serendipitous Era 2 T=1.0 coverage retained for the
+   487-tile leaderboard rows. Both framings are correct. The second
+   one is Shawn's invocation of the CLAUDE.md "Unexpected Data as
+   Discovery Opportunities" policy — an error that produced data in
+   an unplanned region of parameter space, preserved and framed
+   honestly rather than quarantined. The directory names keep the
+   `-UNINTENDED-` label as a permanent origin-of-data signal. A
+   future reader seeing only E43 will think "historical error, kept
+   for transparency"; they need to also see the README to understand
+   that the data is actively used for 157 downstream pairwise and
+   paper-eval references that cannot be repointed because Phase 2b
+   tops out at 340 tiles.
+
+**Session**: 2026-04-23, map-reader-llm. Ten commits (`eb2cf23c`
+through `0fccf455`), both machines in sync. Seven background agents
+dispatched (Phase 2b MCC compute; scorecard re-inventory + MCC rows;
+Phase 2b scorecard row + UNINTENDED banners; Phase 3a contamination
+eval; MCC finding verification; subtype-MCC + metadata contamination
+eval; orphan-docs verification). No compaction; direct first-person
+observations throughout.
+**Key moment**: the `sjoin` test on `consensus_t9.geojson` that
+showed post-load coords at (314346, 4631225) instead of (25, 42).
+The Phase3a agent's verdict had been confident for a full report; a
+one-line GeoPandas fact overturned it. The verification cost about
+four tool calls.
+**Relational note**: Shawn's question pattern is consistently "are
+you sure X — I remember Y" rather than "tell me more about X". The
+former forces a check; the latter invites elaboration. The former has
+caught something important at least four times across sessions
+72–74 — a pattern worth naming, because the second form would have
+let each mistake stand.
