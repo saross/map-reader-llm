@@ -402,6 +402,23 @@ list is still valid.
 With interim docs at uniform quality, draft a paper outline mapping
 each section to 1-3 interim docs. Proceed to write-up.
 
+#### Step 6 polish-pass backlog
+
+Items surfaced during Step 4 that are not load-bearing for the current
+item's claim but warrant a polish pass before paper finalisation:
+
+- **50 m TP count discrepancy (buffer-100m-diagnostics vs corrected-F1
+  multi-buffer, noted 2026-04-24 during Session 75 Item 5
+  verification)**:
+  `results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json`
+  reports `total_matched_at_50m = 4,108` (strict one-to-one matching);
+  `results/55maps-image-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`
+  reports TP = 4,110 at 50 m (multi-buffer pipeline). Two-pair
+  discrepancy likely reflects differing match-dedup rules between the
+  two pipelines. Investigate whether a single unified matching function
+  is warranted, or whether the discrepancy is benign and should be
+  explicitly noted in the paper's Methods section.
+
 ## User decisions (2026-04-21 end-of-session)
 
 Explicit user confirmations recorded here so the next session doesn't
