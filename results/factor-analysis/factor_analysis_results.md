@@ -144,19 +144,21 @@ handicap; at N ≥ 5 consensus exploits it.
 | T=0.7 vs T=1.0 (N=10) | Flash MIN text T=0.7 10-of-10 | Flash MIN text T=1.0 9-of-10 | 0.633 | 0.462 | +0.172 | 0.0000 | 0.0000 | *** |
 | T=0.7 vs T=1.0 (N=5) | Flash MIN text T=0.7 5-of-5 | Flash MIN text T=1.0 5-of-5 | 0.640 | 0.471 | +0.168 | 0.0000 | 0.0000 | *** |
 | T=0.7 vs T=1.0 (N=1, 384 px) | FM text T=0.7 run_1 (N=1) | FM text T=1.0 run_1 (N=1) | 0.493 | 0.390 | +0.103 | 0.0034 | 0.0051 | ** |
-| T=0.7 vs T=1.0 (512 px text) | *label absent in source — see Caveats* | *idem* | *n/a* | *n/a* | +0.074 | 0.0055 | 0.0066 | ** |
-| T=0.7 vs T=1.0 (512 px image) | *label absent in source — see Caveats* | *idem* | *n/a* | *n/a* | +0.015 | 0.4763 | 0.4763 | ns |
+| T=0.7 vs T=1.0 (N=1, Phase 2b text) | P2b text T=0.7 run_1 | P2b text T=1.0 run_1 | 0.584 | 0.510 | +0.074 | 0.0055 | 0.0066 | ** |
+| T=0.7 vs T=1.0 (N=1, Phase 2b image) | P2b image T=0.7 run_1 | P2b image T=1.0 run_1 | 0.536 | 0.521 | +0.015 | 0.4763 | 0.4763 | ns |
 
 **Reading**: T=0.7 beats T=1.0 by +0.10 to +0.19 F1 on Flash MIN text
-at all K values (N=1, 5, 10, 30). The 512 px text row also supports
-T=0.7 > T=1.0 (+0.074, p_adj = 0.007). The 512 px image row is the
-non-significant outlier (+0.015, p = 0.48) — consistent with the
-pattern that image-track is less temperature-sensitive than text-track
-at the 512 px pre-production scope. Note the T values tested here
-(T=0.7 vs T=1.0) differ from the Phase 2b retest's full 5-temperature
-sweep (T=0.0 / 0.3 / 0.7 / 1.0 / 1.3) — this factor-analysis addresses
-a narrower question (is T=0.7 better than T=1.0?) but on a wider
-architectural grid (K=1 / 5 / 10 / 30 × text / image × 384 / 512 px).
+at all K values (N=1, 5, 10, 30). The Phase 2b N=1 text row also
+supports T=0.7 > T=1.0 (+0.074, p_adj = 0.007). The Phase 2b N=1 image
+row is the non-significant outlier (+0.015, p = 0.48) — consistent with
+the pattern that image-track is less temperature-sensitive than text-
+track at single-pass. Note the T values tested here (T=0.7 vs T=1.0)
+differ from the Phase 2b retest's full 5-temperature sweep
+(T=0.0 / 0.3 / 0.7 / 1.0 / 1.3) — this factor-analysis addresses a
+narrower question (is T=0.7 better than T=1.0?) but on a wider
+architectural grid (K=1 / 5 / 10 / 30 × text / image, all 384 px per
+E41 production lock-in). The last two Phase 2b rows draw from the
+same Phase 2b retest tree (`outputs/retest/phase2b/track{1-image,2-text}/T{0.7,1.0}/run_1/`) at run_1 single-pass.
 
 ## 6. Modality (8 of 9 significant)
 
@@ -239,17 +241,23 @@ These 512 px Phase 2a–2e contrasts are consistent with the H8 v2
    span different evaluation scopes (e.g. 340-tile pilot vs 487-tile
    production) could not be tested here and are excluded. All 61
    contrasts are within-scope paired tests.
-3. **Two 512 px Temperature rows have incomplete metadata in the
-   source JSON.** The T=0.7 vs T=1.0 512 px text and 512 px image
-   contrasts (§5 rows 5 and 6) report ΔF1 and p-values but have
-   blank `label_a` / `label_b` and zero `f1_a` / `f1_b` in the
-   aggregator JSON (`results/factor-analysis/factor_analysis_results.json`
-   group 12 entries 2 and 3). The ΔF1 and p-values are load-bearing
-   outputs of the permutation test itself — they are valid. The
-   absence of per-condition F1 / labels is an aggregator
-   bookkeeping gap, not a statistical error. A Step 6 polish pass
-   could recover the missing labels from the 512 px Phase 2b-pre-
-   retest source tree if needed for the paper.
+3. **Two Temperature rows were mislabelled "512 px" and had blank
+   metadata until Session 75 (2026-04-24)**. The rows originally
+   labelled "T=0.7 vs T=1.0 (512 px text/image)" were discovered to
+   be (a) schema-mismatched during aggregation (the aggregator
+   `scripts/collect-factor-analysis.py` read `global_a`/`global_b`
+   keys but the source permutation JSONs use
+   `condition_a`/`condition_b`, losing labels + per-condition
+   metrics) and (b) **mislabelled as 512 px when the source is
+   actually Phase 2b retest at 384 px N=1**
+   (`outputs/retest/phase2b/track{1-image,2-text}/T{0.7,1.0}/run_1/`).
+   Both issues were corrected in the same commit that created this
+   level-up: the rows are relabelled "(N=1, Phase 2b text/image)",
+   the labels and F1 values are recovered from the source permutation
+   JSONs' `condition_a`/`condition_b` blocks, and the aggregator
+   script has been patched to handle both schemas defensively. The
+   ΔF1 and p-values were always valid (the permutation test itself
+   is unaffected by the aggregation bug).
 4. **Prompt Engineering null at 512 px does not preclude effects at
    384 px under PV.** The 28 Prompt Engineering contrasts are all at
    the 512 px Phase 2a–2e scope (pre-production). The H8 v2 / H10 v2 /

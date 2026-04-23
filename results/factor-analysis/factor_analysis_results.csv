@@ -49,8 +49,8 @@ prompt_engineering,Example ordering,P2e canonical-last,P2e config-default,0.6314
 prompt_engineering,Example ordering,P2e canonical-last,P2e random,0.6314,0.5706,0.0608,0.0019,0.0532,ns,prompt-engineering-512px
 prompt_engineering,Example ordering,P2e config-default,P2e random,0.6057,0.5706,0.0351,0.0563,0.5488,ns,prompt-engineering-512px
 temperature,"T=0.7 vs T=1.0 (N=1, 384px)",FM text T=0.7 run_1 (N=1),FM text T=1.0 run_1 (N=1),0.493115,0.39005,0.103065,0.0034,0.0051,**,factor-analysis-384px
-temperature,T=0.7 vs T=1.0 (512px text),,,0,0,0.073528,0.0055,0.0066,**,factor-analysis-512px
-temperature,T=0.7 vs T=1.0 (512px image),,,0,0,0.014719,0.4763,0.4763,ns,factor-analysis-512px
+temperature,T=0.7 vs T=1.0 (N=1, Phase 2b text),P2b text T=0.7 run_1,P2b text T=1.0 run_1,0.5837,0.5102,0.073528,0.0055,0.0066,**,factor-analysis-phase2b-retest-n1
+temperature,T=0.7 vs T=1.0 (N=1, Phase 2b image),P2b image T=0.7 run_1,P2b image T=1.0 run_1,0.5356,0.5208,0.014719,0.4763,0.4763,ns,factor-analysis-phase2b-retest-n1
 temperature,T=0.7 vs T=1.0 (N=5),Flash MIN text T=0.7 5-of-5,Flash MIN text T=1.0 5-of-5,0.639706,0.471233,0.168473,0.0,0.0,***,reused-hypothesis-20m
 temperature,T=0.7 vs T=1.0 (N=10),Flash MIN text T=0.7 10-of-10,Flash MIN text T=1.0 9-of-10,0.633166,0.461538,0.171627,0.0,0.0,***,reused-hypothesis-20m
 temperature,T=0.7 vs T=1.0 (N=30),Flash MIN text T=0.7 29-of-30,Flash MIN text T=1.0 22-of-30,0.66114,0.466993,0.194147,0.0,0.0,***,reused-hypothesis-20m

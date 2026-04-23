@@ -74,38 +74,67 @@ def load_new_results() -> list[dict]:
             })
         log.info("Loaded %d results from 384px batch", len(results))
 
-    # 512px temperature results
-    for subdir in ["temp-512px-text", "temp-512px-image"]:
+    # Phase 2b retest N=1 temperature results
+    #
+    # Schema note (2026-04-24): these pairwise_permutation_result.json files
+    # use `condition_a`/`condition_b` as the top-level per-condition blocks,
+    # not `global_a`/`global_b`. The original implementation of this block
+    # only read `global_a`/`global_b`, silently zeroing labels and per-
+    # condition metrics for these two rows (discovered and corrected
+    # Session 75). Prefer `condition_a`/`condition_b`; fall back to
+    # `global_a`/`global_b` for forward compatibility with any future
+    # pairwise output that uses the older key names.
+    #
+    # Scope note: the subdirs are named `temp-512px-*` for historical
+    # reasons but the data underneath resolves to
+    # `outputs/retest/phase2b/track{1-image,2-text}/T*/run_1/`, i.e.
+    # Phase 2b retest at 384 px N=1 (per protocol-errata E41 production
+    # lock-in). The output labels reflect the actual source.
+    for subdir, track_label in [
+        ("temp-512px-text", "Phase 2b text"),
+        ("temp-512px-image", "Phase 2b image"),
+    ]:
         result_path = (
             PROJECT / "results" / "pairwise" / "factor-analysis-20m"
             / subdir / "pairwise_permutation_result.json"
         )
-        if result_path.exists():
-            with open(result_path) as f:
-                data = json.load(f)
-            ga = data.get("global_a", {})
-            gb = data.get("global_b", {})
-            pt = data.get("permutation_test", {})
-            results.append({
-                "family": "temperature",
-                "group": 12,
-                "question": f"T=0.7 vs T=1.0 (512px {subdir.split('-')[-1]})",
-                "label_a": data.get("label_a", ga.get("label", "")),
-                "label_b": data.get("label_b", gb.get("label", "")),
-                "f1_a": ga.get("f1", 0),
-                "f1_b": gb.get("f1", 0),
-                "delta_f1": pt.get("observed_f1_diff", 0),
-                "p_value_raw": pt.get("p_value", 1.0),
-                "precision_a": ga.get("precision"),
-                "precision_b": gb.get("precision"),
-                "recall_a": ga.get("recall"),
-                "recall_b": gb.get("recall"),
-                "n_detections_a": ga.get("n_detections"),
-                "n_detections_b": gb.get("n_detections"),
-                "n_tiles": pt.get("n_tiles"),
-                "source": "factor-analysis-512px",
-            })
-            log.info("Loaded 512px result from %s", subdir)
+        if not result_path.exists():
+            log.warning("Missing factor-analysis pairwise file: %s", result_path)
+            continue
+        with open(result_path) as f:
+            data = json.load(f)
+
+        ca = data.get("condition_a") or data.get("global_a") or {}
+        cb = data.get("condition_b") or data.get("global_b") or {}
+        pt = data.get("permutation_test", {})
+
+        if not ca or not cb:
+            log.warning(
+                "Factor-analysis row %s has empty condition blocks; labels and "
+                "per-condition metrics will be missing in the aggregated output",
+                subdir,
+            )
+
+        results.append({
+            "family": "temperature",
+            "group": 12,
+            "question": f"T=0.7 vs T=1.0 (N=1, {track_label})",
+            "label_a": ca.get("label", ""),
+            "label_b": cb.get("label", ""),
+            "f1_a": ca.get("f1", 0),
+            "f1_b": cb.get("f1", 0),
+            "delta_f1": pt.get("observed_f1_diff", 0),
+            "p_value_raw": pt.get("p_value", 1.0),
+            "precision_a": ca.get("precision"),
+            "precision_b": cb.get("precision"),
+            "recall_a": ca.get("recall"),
+            "recall_b": cb.get("recall"),
+            "n_detections_a": ca.get("n_detections"),
+            "n_detections_b": cb.get("n_detections"),
+            "n_tiles": pt.get("n_tiles"),
+            "source": "factor-analysis-phase2b-retest-n1",
+        })
+        log.info("Loaded factor-analysis row from %s", subdir)
 
     return results
 
