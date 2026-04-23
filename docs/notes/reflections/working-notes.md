@@ -9904,6 +9904,18 @@ composition-vs-size test — suggests that balanced HP:HN (scale-4) beats
 HP-only (plus-hp) at the same total library size of 13, but the effect is
 tiny (−0.028) and non-significant.
 
+> **Editorial note (2026-04-24)**: the "Four of the six directional
+> predictions... fail or reverse" count above is incorrect — the
+> prereg directional predictions at lines 799–806 total six, and the
+> listed classification (C2, S1, S2 wrong; C1, C3, S3 correct) is
+> itself three-and-three. The correct count is **three of six** in the
+> wrong direction. The NULL interpretation is unaffected (all seven
+> contrasts remain non-significant after BH-FDR). Caught during
+> Session 75 verification of the derived `results/h8-v2/analysis_summary.md`;
+> see that file's §Headline and §"Directional predictions mostly fail"
+> for the corrected narrative. Original text retained above per the
+> archive-never-delete policy.
+
 ### Per-tile pairing pattern
 
 Across all 7 contrasts, **257–276 of 327 tiles are ties**. Only 51–70 tiles
