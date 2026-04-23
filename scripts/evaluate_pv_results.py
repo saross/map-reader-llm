@@ -133,15 +133,28 @@ def load_probabilities(
         prob_data = json.load(f)
     probabilities = prob_data.get("results", {})
 
-    # Check if these are iteration-level keys (consensus without consensus.json)
+    # Check if these are iteration-level keys (consensus without consensus.json).
+    # Returning an empty dict here used to silently propagate to downstream
+    # threshold-sweep output as all-zero metrics at every threshold; raising
+    # forces the caller to supply the consensus file (or run run_pv.py verify)
+    # rather than producing a misleading all-zero sweep.
     if probabilities and any("_iter" in k for k in list(probabilities)[:5]):
-        logger.warning(
-            "Probabilities appear to be iteration-level (consensus) "
-            "but no consensus.json found. Use run_pv.py verify to "
-            "generate consensus.json, or pass --consensus. "
-            "Returning empty dict to avoid silent all-zero results.",
+        missing_consensus = (
+            consensus_path
+            if consensus_path is not None
+            else probabilities_path.parent / "consensus.json"
         )
-        return {}
+        logger.error(
+            "Probabilities at %s are iteration-level (consensus) but no "
+            "consensus.json found at %s. Run run_pv.py verify to generate "
+            "consensus.json, or pass --consensus explicitly.",
+            probabilities_path,
+            missing_consensus,
+        )
+        raise ValueError(
+            f"Cannot load consensus probabilities: no consensus.json found "
+            f"at {missing_consensus}"
+        )
 
     return probabilities
 
