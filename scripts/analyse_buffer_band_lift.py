@@ -60,7 +60,9 @@ Outputs at results/55maps-image-generalisation/buffer-band-lift/:
 - summary.json     : headline numbers + input provenance
 - lift_curve.png   : cumulative observed vs null curve
 - ripley_plot.png  : cross-L_12(r) − r with envelope
-- report.md        : narrative interpretation
+- report_autogen.md: auto-generated tables + interpretation
+                     (hand-authored `report.md` is the paper-citation source;
+                     do NOT overwrite it — Session 75 guardrail 6)
 
 The script is pure analysis — no API calls, no external I/O beyond the
 files above. Compute runs in 1–2 min on sapphire.
@@ -561,7 +563,7 @@ def main() -> None:
         print("  matplotlib not available; CSVs written without plots")
 
     # --- Narrative report ---
-    print("[5/5] Writing report.md...")
+    print("[5/5] Writing report_autogen.md...")
     _write_report(summary, cum_df, shell_df, ripley_df)
     print("Done.")
     print(json.dumps(summary, indent=2))
@@ -658,7 +660,7 @@ def _write_report(
         "from tile-conditional randomness."
     )
     lines.append("")
-    with open(OUT_DIR / "report.md", "w", encoding="utf-8") as f:
+    with open(OUT_DIR / "report_autogen.md", "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
 
 
