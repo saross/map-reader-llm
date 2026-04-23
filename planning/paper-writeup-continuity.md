@@ -1,57 +1,76 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-04-24 (end of Session 75 — Step 4 items 1–7 + close-out complete)
+**Last updated**: 2026-04-25 (end of Session 76 — **Step 4 COMPLETE**; items 8–14 done across a single overnight autonomous session)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ⚡ Start here (Session 76+ entry point)
+## ⚡ Start here (Session 77+ entry point)
 
-**You are on: Step 4 item 8** — level-up
-`results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.md`
-(S effort, 25–35 min; scorecard §3.16 + §6 item 8). Theme T1 anchor
-(Obs 268 flip-rate definition). Smaller item after Session 75's
-heavy Step-4 push.
+**You are on: Step 5 (mark superseded) + Step 6 (paper outline)**.
+All 14 Step 4 items are DONE. The per-analysis reports are now at
+uniform paper-citation quality; the two new synthesis docs (item 12
+cross-track, item 13 limitations) exist as direct paper-section sources;
+the Era 1 retest summary (item 11) and the h12-v2 closure (item 14) are
+polished. Ready to hand to a paper outline.
 
-**Tree state at handoff**: commit `8949dc00`, main-only, working
-tree clean. 15 Session-75 commits pushed: `f6d1cdb4` → `8949dc00`.
-Use `git log --oneline ab50b22b..HEAD` for the full log.
+**Previous entry point** (Session 76 opened here): Step 4 item 8,
+`uncalibrated-vs-calibrated-crosstab/crosstab.md`. Closed Session 76
+with items 8–14 complete; see §"Session 76 status" below for the
+per-item commit table.
+
+**Tree state at handoff**: 17 Session-76 commits, `f700acd9` → `b960a3cf`,
+main-only, working tree clean, **NOT yet pushed to origin** (per user
+directive: "I'll review in the morning" — user is to inspect then push).
+Use `git log --oneline 8949dc00..HEAD` for the full log.
 
 **Reading order (in sequence, don't skim)**:
 
 1. This file — the current orientation layer (you are reading it).
 2. `planning/interim-docs-review.md` **§6 Step 4 sequencing** —
-   the canonical Step 4 work-plan. Items 1–7 are now DONE (see
-   §"Session 75 status" below). Next up is **item 8**.
-3. `docs/notes/reflections/session-reflection.md` §"Session 75
-   Reflection" (write at start of new session if not present).
-   For now, the key carry-over lesson is: **main-thread propose +
-   verifier agent check is mandatory**. Session 75 ran this pattern
-   on 7 Step-4 items and a /audit pass, and the verifier caught
-   2–3 errors per item, including load-bearing ones (model name,
-   thinking level, provenance mislabels, schema mismatches). The
-   error rate did not decline over the session — the guardrail is
-   not optional.
-4. `docs/notes/reflections/llm-observations.md` §"Session 75
+   the canonical Step 4 work-plan. **All 14 items DONE**; see
+   §"Session 76 status" below for per-item commit table.
+3. `docs/notes/reflections/session-reflection.md` §"Session 76
+   Reflection" (write at start of new session if not present). Key
+   carry-over lessons from Session 76:
+   - **Script-hardening-before-level-up is now a standard Session 76
+     pattern**. 8 scripts hardened in S76 to route auto-generated
+     Markdown to `_autogen.md` siblings, protecting hand-authored
+     level-ups from dry-run overwrite. Extends the Session 75
+     precedent (`collect-factor-analysis.py` → `_autogen.md`).
+   - **Cross-pipeline context bleed caught in flight** (Session 75
+     Guardrail, Added 2026-04-24 item 2): Session 76 caught a model-
+     attribution error across Targets 4 + 5 (initial "Gemini 2.5 Pro"
+     corrected to "Gemini 3 Flash" by cross-referencing
+     `results/paper-eval/mcc/consensus-pv/batch_mcc_summary.md` row
+     labels). The anomaly-investigation pattern works.
+   - **Item-12 cross-track doc caught a vote_t mismatch**
+     (image = 3, text = 4); re-verified against
+     `outputs/<track>/resolved_config.yaml` and fixed in commit
+     `b960a3cf`. Cross-track claims must cite the `resolved_config.yaml`
+     for pipeline-control parity, not assume it.
+4. `docs/notes/reflections/llm-observations.md` §"Session 76
    Observations" (write at start of new session if not present).
-   Distinctive Session-75 finding: **a single dry-run can overwrite
-   hand-authored narrative docs** — `collect-factor-analysis.py`
-   used to write `factor_analysis_results.md` via auto-generation;
-   the Item-7 level-up replaced that file with a 390-line
-   narrative; running the script regenerated over it. Split path
-   fixed at commit `9f9f98c3` — auto content now goes to
-   `factor_analysis_results_autogen.md`. Check for the same pattern
-   in any other script whose output overlaps with a hand-authored
-   file.
+   Distinctive Session-76 findings:
+   - 8 scripts hardened for Session-75-G6 in a single session
+     (see §"Session 76 status" for the full list).
+   - Agent 2 confabulation: a background dossier-assembly agent
+     returned "Claude 3.5 Sonnet" as the proposer model for the
+     55-map tracks; the correct model is `gemini-3-flash-preview`
+     (verified from `outputs/*/verified/run.meta.json`). Dossier
+     output from sub-agents must be spot-checked for model strings
+     against authoritative meta files.
+   - New synthesis docs (items 12 + 13) have inherent higher
+     confabulation risk than additive level-ups — run full verifier
+     passes on them.
 5. `results/meta-findings-summary.md` — Step 3's output. Still the
    Discussion-spine reference.
 6. `results/gold-standard-subtype-classification/report.md` — still
    the exemplar for per-analysis report structure.
-7. Now begin Step 4 item 8 (level-up the
-   `uncalibrated-vs-calibrated-crosstab/crosstab.md`).
+7. Now begin Step 5 (mark superseded) or Step 6 (paper outline).
 
 **Canonical numbers table for paper claims** — see §"Canonical numbers"
 below. Verified 2026-04-21 by a fresh-context verifier agent; do not
@@ -88,6 +107,92 @@ re-verify.
    `git checkout` any output file changes unless regeneration is
    scoped as the explicit task. See `results/paper-tables/` drift
    logged in §"Step 6 polish-pass backlog" for an active instance.
+
+---
+
+## Session 76 status (2026-04-25) — Step 4 items 8–14 + verifier-fix pass
+
+### Step 4 items completed (DONE 2026-04-25)
+
+| Item | Target | Commit(s) | Notes |
+|------|--------|-----------|-------|
+| 8 | `crosstab.md` level-up | `f700acd9` | Obs 268 anchor, flip-rate definition, paper implications, files manifest. |
+| 9 | `evaluation-scopes.md` level-up | `01db8fe5` | Methods keystone; era-tagging for each paper-headline F1 claim; ad-hoc nesting-check operation documented. |
+| 10 target 1 | `buffer-band-lift/report.md` | `cb940cfb` | Script hardened: `analyse_buffer_band_lift.py` now writes `report_autogen.md`. |
+| 10 target 2 | `verifier-calibration-crosstab/calibration.md` | `55ddda00` | Script hardened: `crosstab_verifier_vs_human.py` → `calibration_autogen.md`. Verifier-fix: Obs 269 under-confidence hypothesis FALSIFIED framing. |
+| 10 target 3 | `human-reviewed-corrected/corrected-f1-human-reviewed.md` | `08d5aef6` | Script hardened: `compute_corrected_f1_human_reviewed.py` → `corrected-f1-human-reviewed_autogen.md`. Headline 0.830 lower-bound framing explicit. |
+| 10 target 4 | `phase3a-text-matrix/secondary_effects.md` | `92cc9fa5` | Script hardened: `analyse_secondary_effects_text.py` → `secondary_effects_autogen.md`. Title corrected "Image → Text Track". |
+| 10 target 5 | `secondary-effects/secondary_effects.md` (image-track) | `c7bfd579` | Script hardened: `analyse_secondary_effects.py` → `secondary_effects_autogen.md`. Metric-anchored headline (SCALE4-T0.7 MCC 0.746 leader; HIGH-T0.7 F1 0.750 leader). |
+| 10 target 6 + Targets 4/5 model fix | `phase3a-image-matrix/consensus-analysis-summary.md` + model corrections for Targets 4/5 | `82254d16` | Script hardened: `summarise_phase3a_matrix.py` → `consensus-analysis-summary_autogen.md`. Retrospective correction: Targets 4/5 initially said "Gemini 2.5 Pro"; correct is "Gemini 3 Flash" per batch_mcc_summary.md "Flash HIGH" row labels. |
+| 10 target 7 | `ds-human-crosstab/report.md` | `50e506c0` | Hand-authored; Obs 273 structural-inadequacy framing front-loaded. |
+| 10 target 8 | `dawid-skene-v2-data-driven-prior/report.md` | `6c3aef23` | Hand-authored; empirical-prior-pathology + calibrated-prior-at-0.17 finding; AUC=0.500 invariance across priors. |
+| 10 target 9 | `corrected-f1-multi-buffer/report.md` | `e60aadb4` | Script hardened: `compute_corrected_f1_multi_buffer.py` → `report_autogen.md`. Three-tier headline framing (0.8317 / 0.8538 / 0.8551 at 50 / 125 / 150 m). |
+| 10 target 10 | `gold-standard-extended-buffer-sweep/extended-buffer-report.md` | `87afb3cc` | Polish of strong existing content; added exec summary + caveats + paper implications on the GT-precision-noise argument. |
+| 11 | `retest-production-summary.md` | `b0b35ecb` | Era 1 multi-phase cross-cutting exec + caveats + paper implications; Obs 155/240/272 back-references. |
+| 12 | `55maps-cross-track-comparison/report.md` (NEW) | `6bcbf6e0` (+ `b960a3cf` verifier fixes) | Image × text-HIGH × text-MIN synthesis doc; 472 / 474 phantom-TP framing made explicit; vote_t = 3 vs 4 difference caught + documented in verifier pass. |
+| 13 | `limitations-consolidation/report.md` (NEW) | `ae460ef1` (+ `b960a3cf` verifier fixes) | 4 first-order + 15 second-order limitations catalogued; all Obs + errata anchors verified. |
+| 14 | `h12-v2/analysis_summary.md` polish | `a3f30552` | Exec summary + cross-hypothesis-closure paper implications + caveats (E52 preregistered-but-post-errata framing). |
+
+### Verifier-fix commits (DONE 2026-04-25)
+
+- `b960a3cf` — Applied verifier-caught P1/P2 corrections to items 12 + 13. Six fixes on item 12 (vote_t = 3 vs 4; 474→472; §4 n_reviewed cell; §3.1 rounding; §6 uncached-token figure; preview-vs-stable model note). Three fixes on item 13 (474→472; Obs 235 attribution; §4.5 heading E50–E54). No numerical tables changed; annotations and scope caveats tightened.
+
+### Script-hardening summary — 8 scripts in Session 76
+
+Extending the Session 75 pattern (`collect-factor-analysis.py` → `factor_analysis_results_autogen.md`):
+
+| Script | New output path (from / to) | Commit |
+|---|---|---|
+| `scripts/analyse_buffer_band_lift.py` | `report.md` → `report_autogen.md` | `cb940cfb` |
+| `scripts/crosstab_verifier_vs_human.py` | `calibration.md` → `calibration_autogen.md` | `55ddda00` |
+| `scripts/compute_corrected_f1_human_reviewed.py` | `corrected-f1-human-reviewed.md` → `corrected-f1-human-reviewed_autogen.md` | `08d5aef6` |
+| `scripts/analyse_secondary_effects_text.py` | `secondary_effects.md` → `secondary_effects_autogen.md` | `92cc9fa5` |
+| `scripts/analyse_secondary_effects.py` | `secondary_effects.md` → `secondary_effects_autogen.md` | `c7bfd579` |
+| `scripts/summarise_phase3a_matrix.py` | `consensus-analysis-summary.md` → `consensus-analysis-summary_autogen.md` | `82254d16` |
+| `scripts/compute_corrected_f1_multi_buffer.py` | `report.md` → `report_autogen.md` | `e60aadb4` |
+
+**Impact**: 8 hand-authored paper-citation docs now protected against accidental dry-run overwrite. Each `_autogen.md` sibling is regenerated by the script on re-run; the hand-authored doc is not touched. Future aggregator scripts should follow the same pattern from the start.
+
+### Distinctive Session-76 findings (load-bearing carry-overs)
+
+1. **Cross-pipeline context bleed is a real failure mode, caught in flight**. The Session-75 guardrail "Added 2026-04-24 item 2" (cross-pipeline context bleed) was exercised successfully in Session 76: Targets 4 + 5 initially cited "Gemini 2.5 Pro" as the proposer model; cross-referencing the MCC batch summary (`results/paper-eval/mcc/consensus-pv/batch_mcc_summary.md` rows "Flash HIGH text 26-of-30" and "Flash HIGH image 6-of-10") caught the error; retrospectively corrected in commit `82254d16`. The pattern: before writing a model-version claim in a level-up, spot-check against a cross-artefact row label.
+2. **Item-12 vote_t = 3 / vote_t = 4 asymmetry**. The verifier-agent pass on the new cross-track comparison doc caught that image uses `vote_t = 3` while text-HIGH and text-MIN use `vote_t = 4`. Cross-track comparability claims must cite the `resolved_config.yaml` for each track, not assume parity.
+3. **Agent 2 dossier confabulation: "Claude 3.5 Sonnet" for Gemini-3-Flash runs**. A background dossier-assembly agent returned the wrong model string; the correct model was verified from `outputs/<track>/verified/run.meta.json`. Dossier outputs from sub-agents must be spot-checked for model strings against authoritative meta files.
+4. **474 vs 472 phantom-TP distinction**. The single-buffer corrected-F1 uses 472 (`corrected-f1-human-reviewed.json`); the multi-buffer artefact uses 474 (adds 2 candidates from today's multi-buffer re-review at the 50 m shell). Both valid; both round to 0.830 at the advertised precision. Do NOT conflate the two counts in cross-doc synthesis.
+5. **Verifier-agent pattern catch-rate — Session 76 evidence**: 6 items dispatched per-doc verifiers (8, 9, T1–T4 of item 10); 2 new-synthesis items dispatched verifiers (12, 13). Verifier-agent caught 0–4 P1/P2 items per doc; the new synthesis docs (items 12, 13) had the highest P1 error rate (4 P1 on item 12, 0 P1 on item 13). New-content-per-doc = higher verifier catch rate; pure-lift level-ups = lower catch rate. Pattern stable.
+
+### Scorecard state after Session 76
+
+`planning/interim-docs-review.md` §6 Step 4 sequencing — **14 of 14 items DONE**. Step 4 is complete.
+
+---
+
+### Added 2026-04-25 (Session 76)
+
+The following three items extend the earlier guardrails and are specific
+to the post-Session-76 landscape.
+
+1. **Script-hardening before level-up is now standard**. For any analysis
+   script that writes a paper-citation Markdown file, the Session 75 / 76
+   pattern is to route the script's output to a `_autogen.md` sibling
+   path, leaving the unsuffixed path free for a hand-authored level-up.
+   8 scripts were hardened in Session 76 on this pattern (see table above).
+   New analysis scripts should adopt the pattern from the start rather
+   than retrofit after a level-up.
+2. **Cross-reference `outputs/<track>/resolved_config.yaml` for
+   pipeline-control parity**. Item 12 caught a `vote_t = 3` vs `vote_t = 4`
+   asymmetry across the three 55-map tracks that was not obvious from
+   the evaluation JSONs or `run.meta.json`. Cross-track comparability
+   claims must cite the per-track `resolved_config.yaml` for pipeline
+   control parameters (consensus vote threshold, PV probability threshold,
+   dedup radius, etc.) — assuming parity is not safe.
+3. **New synthesis docs need full verifier-agent passes**. Additive
+   level-ups of existing docs (where tables are lifted verbatim and new
+   sections add exec summary / methods / caveats / paper implications)
+   have a lower confabulation risk than new synthesis docs (items 12, 13
+   in this session). For new synthesis docs, run the verifier pattern
+   with explicit numeric-cross-check instructions; expect higher P1
+   error rates on these than on pure-lift level-ups.
 
 ---
 
@@ -759,10 +864,37 @@ should aim for fewer concurrent threads.
 
 ## Commit state at handoff
 
-**Session 75 handoff (2026-04-24)**: working tree clean at commit
-`8949dc00`, `main` only (no stray branches), pushed to
-`origin/main`. Session 75 pushed 15 commits: `f6d1cdb4` →
-`8949dc00`. Full log: `git log --oneline ab50b22b..HEAD`.
+**Session 76 handoff (2026-04-25)**: working tree clean at commit
+`b960a3cf`, `main` only (no stray branches), **NOT yet pushed to
+`origin/main`** per user directive ("I'll review in the morning").
+Session 76 added 17 commits: `f700acd9` → `b960a3cf`. Full log:
+`git log --oneline 8949dc00..HEAD`.
+
+Session 76 commit sequence (bottom-up on `git log`):
+
+- `f700acd9` docs(crosstab): level-up — exec summary, Obs 268 anchor, paper implications, files manifest
+- `01db8fe5` docs(evaluation-scopes): level-up — exec summary, paper implications, repro, caveats, manifest
+- `cb940cfb` docs(buffer-band-lift): level-up + harden script against overwrite (Session 75 G6)
+- `55ddda00` docs(verifier-calibration): level-up + harden script (Session 75 G6)
+- `08d5aef6` docs(corrected-f1-human-reviewed): level-up + harden script (Session 75 G6)
+- `92cc9fa5` docs(phase3a-text): secondary_effects level-up + harden script (Session 75 G6)
+- `c7bfd579` docs(phase3a-image): secondary_effects level-up + harden script (Session 75 G6)
+- `82254d16` docs(phase3a-image): consensus-analysis level-up + model correction for Targets 4/5
+- `50e506c0` docs(ds-human-crosstab): level-up — structural inadequacy finding explicit
+- `6c3aef23` docs(dawid-skene-v2): level-up — structural rank failure front-loaded
+- `e60aadb4` docs(corrected-f1-multi-buffer): level-up + harden script (Session 75 G6)
+- `87afb3cc` docs(extended-buffer): level-up — exec summary, caveats, paper implications
+- `b0b35ecb` docs(retest-production-summary): level-up — cross-cutting exec + caveats + paper implications
+- `6bcbf6e0` docs(55maps-cross-track): new synthesis doc — image x text-HIGH x text-MIN comparison
+- `ae460ef1` docs(limitations-consolidation): new paper-citation synthesis of study limitations
+- `a3f30552` docs(h12-v2): polish — exec summary, paper implications, caveats
+- `b960a3cf` fix(items 12-13): apply verifier-caught corrections
+
+### Session 75 handoff (preserved for reference)
+
+Working tree was clean at commit `8949dc00`, `main` only (no stray
+branches), pushed to `origin/main`. Session 75 pushed 15 commits:
+`f6d1cdb4` → `8949dc00`. Full log: `git log --oneline ab50b22b..8949dc00`.
 
 Session 75 commit sequence (bottom-up on `git log`):
 
