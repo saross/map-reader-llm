@@ -4,7 +4,7 @@
 **Level-up**: 2026-04-24 (Session 76).
 **Conditions**: 8.
 **Scope**: 384 px, 487 tiles (Era 2; see `results/evaluation-scopes.md`).
-**Model**: Gemini 2.5 Pro (text-track proposer); verifier Gemini 2.5 Flash (default MINIMAL thinking).
+**Model**: Gemini 3 Flash (text-track proposer); verifier Gemini 3 Flash (default MINIMAL thinking). The text-track MCC row "Flash HIGH text 26-of-30" in `results/paper-eval/mcc/consensus-pv/batch_mcc_summary.md` confirms the Flash attribution.
 
 **Note on doc title**: the script-generated sibling at `secondary_effects_autogen.md` (2026-04-17 run) mis-titled this file as "Phase 3a Image Track" — a copy-paste artefact from the image-track analysis script at `results/secondary-effects/secondary_effects.md`. The script at `scripts/analyse_secondary_effects_text.py` line 773 has been corrected to emit "Phase 3a Text Track"; the mis-titled autogen file is preserved as a historical artefact.
 
@@ -12,7 +12,7 @@
 
 ## 1. Executive summary
 
-The Phase 3a text-track (Gemini 2.5 Pro proposer, K-consensus sweep × temperature) is centred on **HIGH-T0.7** as the paper-citable optimum at the 20 m buffer: F1 = 0.814, tile-level MCC = 0.620 [0.549, 0.691], precision 0.834, recall 0.795, at consensus threshold t = 26 (of K = 30). HIGH thinking **consistently outperforms MINIMAL thinking at every temperature** (ΔF1 range +0.012 to +0.153) but the thinking × temperature *interaction* bootstraps as not significant across F1, precision, and recall, so the HIGH advantage should be reported as a main effect rather than a temperature-selective interaction.
+The Phase 3a text-track (Gemini 3 Flash proposer, K-consensus sweep × temperature) is centred on **HIGH-T0.7** as the paper-citable optimum at the 20 m buffer: F1 = 0.814, tile-level MCC = 0.620 [0.549, 0.691], precision 0.834, recall 0.795, at consensus threshold t = 26 (of K = 30). HIGH thinking **consistently outperforms MINIMAL thinking at every temperature** (ΔF1 range +0.012 to +0.153) but the thinking × temperature *interaction* bootstraps as not significant across F1, precision, and recall, so the HIGH advantage should be reported as a main effect rather than a temperature-selective interaction.
 
 **Headline numbers**:
 
@@ -24,7 +24,7 @@ The Phase 3a text-track (Gemini 2.5 Pro proposer, K-consensus sweep × temperatu
 - Cost-performance: HIGH-T0.7 is Pareto-optimal at $60 / K=30; HIGH-T0.3 is the single-best F1/$ Pareto point at $20 / K=10 (F1 = 0.789).
 - Thinking-token usage anomaly: HIGH-T0.7 and all MINIMAL conditions report **0 mean thinking tokens** in §13 — almost certainly a logging / parsing artefact in the underlying run metadata, not a real property of those runs (see §13 Caveat).
 
-**One-line paper claim**: "The Phase 3a text-track Gemini 2.5 Pro sweep converges on HIGH-T0.7 (K = 30, t = 26) as the operating point with F1 = 0.814 and tile-level MCC = 0.620; HIGH thinking offers a consistent main-effect advantage over MINIMAL (ΔF1 = +0.012 to +0.153) but the thinking × temperature interaction is not statistically significant on this corpus."
+**One-line paper claim**: "The Phase 3a text-track Gemini 3 Flash sweep converges on HIGH-T0.7 (K = 30, t = 26) as the operating point with F1 = 0.814 and tile-level MCC = 0.620; HIGH thinking offers a consistent main-effect advantage over MINIMAL (ΔF1 = +0.012 to +0.153) but the thinking × temperature interaction is not statistically significant on this corpus."
 
 ## 2. Methods
 
@@ -244,7 +244,7 @@ Both FP and FN concentrations are highly clustered (CV > 1.8 in every condition)
 | MIN-T0.7 | 0 | 30 |
 | MIN-T1.0 | 0 | 10 |
 
-**Caveat — logging artefact, not run property**: HIGH-T0.7 shows `0` mean thinking tokens despite the other HIGH-thinking conditions (HIGH-T0.0, HIGH-T0.3, HIGH-T1.0) reporting 1.2 M – 1.9 M tokens on the same API configuration. MIN conditions report 0 across the board. Gemini 2.5 Pro at HIGH thinking emits thinking tokens deterministically (on the order of 10⁵ – 10⁶ per request at our settings); a genuine 0-token run is implausible. The most parsimonious explanation is a parsing artefact: the HIGH-T0.7 runs were the earliest in the matrix (largest K = 30) and may have been logged before the thinking-token extraction was wired in; the MINIMAL-condition zeros may similarly reflect a metadata-retrieval failure rather than a true absence of thinking. **Paper caveat**: do NOT cite token-usage comparisons from this table. If token-usage is needed for a cost / compute section, re-extract from the original API response logs in `outputs/phase3a-text-matrix/*/response_metadata.jsonl` rather than this aggregate.
+**Caveat — logging artefact, not run property**: HIGH-T0.7 shows `0` mean thinking tokens despite the other HIGH-thinking conditions (HIGH-T0.0, HIGH-T0.3, HIGH-T1.0) reporting 1.2 M – 1.9 M tokens on the same API configuration. MIN conditions report 0 across the board. Gemini 3 Flash at HIGH thinking emits thinking tokens (on the order of 10⁵ – 10⁶ per request at our settings, as the other HIGH-thinking conditions in this same table confirm); a genuine 0-token run at HIGH-T0.7 is implausible given the non-zero counts at HIGH-T0.0, HIGH-T0.3, and HIGH-T1.0 on the same model and prompt family. The most parsimonious explanation is a parsing artefact: the HIGH-T0.7 runs were the earliest in the matrix (largest K = 30) and may have been logged before the thinking-token extraction was wired in; the MINIMAL-condition zeros may similarly reflect a metadata-retrieval failure rather than a true absence of thinking. **Paper caveat**: do NOT cite token-usage comparisons from this table. If token-usage is needed for a cost / compute section, re-extract from the original API response logs in `outputs/phase3a-text-matrix/*/response_metadata.jsonl` rather than this aggregate.
 
 ## 16. Caveats / risk register
 
@@ -271,7 +271,7 @@ F1 elasticity from 20 m to 50 m is ≤ 4.5 % across all conditions (§6). The pa
 
 ### 17.4 Suggested paper text (Results — phase3a text-track)
 
-> On the Era 2 evaluation scope (487 tiles, 384 px), the Phase 3a text-track sweep (Gemini 2.5 Pro proposer, K ∈ {3, 10, 30} × T ∈ {0.0, 0.3, 0.7, 1.0} × thinking ∈ {HIGH, MINIMAL}) identifies HIGH-T0.7 at K = 30 as the F1-optimal configuration: F1 = 0.814, tile-level Matthews correlation coefficient = 0.620 (95 % bootstrap CI [0.549, 0.691] over 1,000 iterations, seed 42), precision 0.834, recall 0.795 at consensus threshold t = 26 / 30. HIGH thinking improves F1 over MINIMAL thinking at every temperature (+0.012 at T = 0.0; +0.147 at T = 0.3; +0.153 at T = 0.7; +0.106 at T = 1.0); paired bootstrap tests find no significant thinking × temperature interaction on F1, precision, or recall, so the HIGH advantage is reported as a main effect. F1 elasticity from 20 m to 50 m spatial tolerance is ≤ 4.5 % across all conditions, and the tile-level MCC ranking mirrors the F1 ranking, so the main conclusion is robust to metric and buffer choice within this regime.
+> On the Era 2 evaluation scope (487 tiles, 384 px), the Phase 3a text-track sweep (Gemini 3 Flash proposer, K ∈ {3, 10, 30} × T ∈ {0.0, 0.3, 0.7, 1.0} × thinking ∈ {HIGH, MINIMAL}) identifies HIGH-T0.7 at K = 30 as the F1-optimal configuration: F1 = 0.814, tile-level Matthews correlation coefficient = 0.620 (95 % bootstrap CI [0.549, 0.691] over 1,000 iterations, seed 42), precision 0.834, recall 0.795 at consensus threshold t = 26 / 30. HIGH thinking improves F1 over MINIMAL thinking at every temperature (+0.012 at T = 0.0; +0.147 at T = 0.3; +0.153 at T = 0.7; +0.106 at T = 1.0); paired bootstrap tests find no significant thinking × temperature interaction on F1, precision, or recall, so the HIGH advantage is reported as a main effect. F1 elasticity from 20 m to 50 m spatial tolerance is ≤ 4.5 % across all conditions, and the tile-level MCC ranking mirrors the F1 ranking, so the main conclusion is robust to metric and buffer choice within this regime.
 
 ## 18. Files manifest
 

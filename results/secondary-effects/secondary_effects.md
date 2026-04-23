@@ -4,7 +4,7 @@
 **Level-up**: 2026-04-24 (Session 76).
 **Conditions**: 9.
 **Scope**: 384 px, 487 tiles (Era 2; see `results/evaluation-scopes.md`).
-**Model**: Gemini 2.5 Pro (image-track proposer, image input); verifier Gemini 2.5 Flash (MINIMAL thinking).
+**Model**: Gemini 3 Flash (image-track proposer, image input); verifier Gemini 3 Flash (MINIMAL thinking). The image-track MCC rows "Flash HIGH image 6-of-10" and "Flash HIGH image 3-of-5" in `results/paper-eval/mcc/consensus-pv/batch_mcc_summary.md` confirm the Flash attribution.
 
 **Companion auto-generated file**: `secondary_effects_autogen.md` in this directory holds the analysis script's raw output. This `secondary_effects.md` is the paper-citation source; re-running the script does NOT overwrite it (script hardened 2026-04-24 Session 76; see §19 Reproducibility).
 
@@ -12,7 +12,7 @@
 
 ## 1. Executive summary
 
-The Phase 3a image-track (Gemini 2.5 Pro proposer, K-consensus × temperature, with one SCALE4 variant) has a **rank-disagreement across metrics** that does not appear in the text-track sibling: SCALE4-T0.7 is the tile-level MCC winner (0.746 [0.688, 0.802]) while HIGH-T0.7 is the F1 winner (0.750). The F1 gap between the top three conditions (HIGH-T0.7 / SCALE4-T0.7 / HIGH-T1.0) is 0.015, within the bootstrap noise floor; the MCC gap between SCALE4-T0.7 and the next-best (HIGH-T0.3 at 0.683) is 0.063, beyond the overlap of their confidence intervals. **Under tile-level MCC, SCALE4-T0.7 is the clear paper-citable optimum**; under F1, any of HIGH-T0.7 / SCALE4-T0.7 / HIGH-T1.0 is defensible.
+The Phase 3a image-track (Gemini 3 Flash proposer, K-consensus × temperature, with one SCALE4 variant) has a **rank-disagreement across metrics** that does not appear in the text-track sibling: SCALE4-T0.7 is the tile-level MCC winner (0.746 [0.688, 0.802]) while HIGH-T0.7 is the F1 winner (0.750). The F1 gap between the top three conditions (HIGH-T0.7 / SCALE4-T0.7 / HIGH-T1.0) is 0.015, within the bootstrap noise floor; the MCC gap between SCALE4-T0.7 and the next-best (HIGH-T0.3 at 0.683) is 0.063, beyond the overlap of their confidence intervals. **Under tile-level MCC, SCALE4-T0.7 is the clear paper-citable optimum**; under F1, any of HIGH-T0.7 / SCALE4-T0.7 / HIGH-T1.0 is defensible.
 
 **Headline numbers**:
 
@@ -29,7 +29,7 @@ The Phase 3a image-track (Gemini 2.5 Pro proposer, K-consensus × temperature, w
 ## 2. Methods
 
 - **Evaluation corpus**: 487 tiles at 384 px (Era 2 scope; see `results/evaluation-scopes.md`).
-- **Proposer**: Gemini 2.5 Pro with direct image input (vs text-track's structured-text input).
+- **Proposer**: Gemini 3 Flash with direct image input (vs text-track's structured-text input).
 - **Matching protocol**: Hungarian one-to-one candidate-to-GT matching at the buffer-specific tolerance (20 m default unless §6 explicitly varies buffer).
 - **Empty-tile rule**: tiles with zero GT mounds retained in the denominator for tile-level MCC / sensitivity / specificity.
 - **Consensus sweep**: each condition aggregates K replicate passes; `t` is the consensus threshold (detections survive if `vote_count ≥ t`). The table reports the F1-optimal `t` per condition.
@@ -296,7 +296,7 @@ Image-track F1 elasticity from 20 m to 50 m spans 8.6 % – 21.5 % (§6) vs text
 
 ### 17.4 Suggested paper text (Results — phase3a image-track)
 
-> On the Era 2 evaluation scope (487 tiles, 384 px), the Phase 3a image-track sweep (Gemini 2.5 Pro proposer with direct image input, K = 10 across T ∈ {0.0, 0.3, 0.7, 1.0} × thinking ∈ {HIGH, MINIMAL}, plus a SCALE4 library-variant probe at T = 0.7) shows a rank-disagreement across metrics. At tile-level MCC, SCALE4-T0.7 is the optimum at 0.746 (95 % bootstrap CI [0.688, 0.802]), ahead of HIGH-T0.3 at 0.683 and HIGH-T0.7 at 0.678; the CI gap to the next-best places SCALE4-T0.7 unambiguously as the MCC leader. At F1, the top three conditions (HIGH-T0.7 0.750, SCALE4-T0.7 0.742, HIGH-T1.0 0.735) are within 0.015 F1 — within bootstrap noise. We report SCALE4-T0.7 as the image-track paper-citable optimum because the MCC criterion is rank-decisive where F1 is not. At deterministic temperature (T = 0.0), the image-track shows an apparent HIGH-thinking disadvantage (ΔF1 = −0.141 HIGH vs MINIMAL; K = 3, paired bootstrap not significant) that is absent in the text-track analogue. F1 elasticity from 20 m to 50 m ranges from 8.6 % to 21.5 % across conditions (substantially higher than the text-track's ≤ 4.5 %), indicating lower spatial precision of the image-proposer outputs.
+> On the Era 2 evaluation scope (487 tiles, 384 px), the Phase 3a image-track sweep (Gemini 3 Flash proposer with direct image input, K = 10 across T ∈ {0.0, 0.3, 0.7, 1.0} × thinking ∈ {HIGH, MINIMAL}, plus a SCALE4 library-variant probe at T = 0.7) shows a rank-disagreement across metrics. At tile-level MCC, SCALE4-T0.7 is the optimum at 0.746 (95 % bootstrap CI [0.688, 0.802]), ahead of HIGH-T0.3 at 0.683 and HIGH-T0.7 at 0.678; the CI gap to the next-best places SCALE4-T0.7 unambiguously as the MCC leader. At F1, the top three conditions (HIGH-T0.7 0.750, SCALE4-T0.7 0.742, HIGH-T1.0 0.735) are within 0.015 F1 — within bootstrap noise. We report SCALE4-T0.7 as the image-track paper-citable optimum because the MCC criterion is rank-decisive where F1 is not. At deterministic temperature (T = 0.0), the image-track shows an apparent HIGH-thinking disadvantage (ΔF1 = −0.141 HIGH vs MINIMAL; K = 3, paired bootstrap not significant) that is absent in the text-track analogue. F1 elasticity from 20 m to 50 m ranges from 8.6 % to 21.5 % across conditions (substantially higher than the text-track's ≤ 4.5 %), indicating lower spatial precision of the image-proposer outputs.
 
 ## 18. Files manifest
 

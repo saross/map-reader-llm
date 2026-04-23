@@ -230,7 +230,11 @@ def main() -> None:
         f"*Generated: {datetime.now(tz=timezone.utc).isoformat()}*"
     )
 
-    md_path = results_dir / "consensus-analysis-summary.md"
+    # Session 76 guardrail: hand-authored consensus-analysis-summary.md is
+    # the paper-citation source. Script writes to _autogen.md sibling so the
+    # hand-authored level-up is protected against dry-run overwrites (Session
+    # 75 Guardrail 6).
+    md_path = results_dir / "consensus-analysis-summary_autogen.md"
     with open(md_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
