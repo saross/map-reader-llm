@@ -1,69 +1,258 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-04-23 (end of Session 74 — Steps 1–3 complete)
+**Last updated**: 2026-04-24 (end of Session 75 — Step 4 items 1–7 + close-out complete)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ⚡ Start here (Session 75+ entry point)
+## ⚡ Start here (Session 76+ entry point)
 
-**You are on: Step 4** — fill identified gaps (Era 1 consolidations,
-cross-track doc, Limitations doc, level-up the partial reports, and
-a few small new reports). Est. 11–15 hours comprehensive (user has
-confirmed the comprehensive pass, NOT minimum-viable).
+**You are on: Step 4 item 8** — level-up
+`results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.md`
+(S effort, 25–35 min; scorecard §3.16 + §6 item 8). Theme T1 anchor
+(Obs 268 flip-rate definition). Smaller item after Session 75's
+heavy Step-4 push.
 
-**Tree state at handoff**: commit `c1170229`, main-only, working
-tree clean. amd-tower and zbook in sync. 10 session-74 commits
-pushed: `eb2cf23c` → `c1170229`. Use `git log --oneline 4a866d33..HEAD`
-for the full log.
+**Tree state at handoff**: commit `8949dc00`, main-only, working
+tree clean. 15 Session-75 commits pushed: `f6d1cdb4` → `8949dc00`.
+Use `git log --oneline ab50b22b..HEAD` for the full log.
 
 **Reading order (in sequence, don't skim)**:
 
 1. This file — the current orientation layer (you are reading it).
-2. `planning/interim-docs-review.md` **§6 Step 4 sequencing** — this
-   is the canonical Step 4 work-plan and supersedes the §"Need" list
-   below. Start here for the work-item order.
-3. `docs/notes/reflections/session-reflection.md` §"Session 74
-   Reflection — 2026-04-23" — the agent-verdict-verification lesson.
-   Load-bearing for Step 4 because Step 4 will dispatch multiple
-   background agents for h-series synthesis.
-4. `docs/notes/reflections/llm-observations.md` §"Session 74
-   Observations (2026-04-23, map-reader-llm)" — the "sub-agent
-   outputs are drafts not verdicts" framing and the 3-of-7 wrong-
-   verdict rate context.
-5. `results/meta-findings-summary.md` — Step 3's output. Read this
-   to ground yourself in the Obs 262–273 synthesis before any Step 4
-   item that references failure modes, verifier calibration, or the
-   attractor-pull scale.
+2. `planning/interim-docs-review.md` **§6 Step 4 sequencing** —
+   the canonical Step 4 work-plan. Items 1–7 are now DONE (see
+   §"Session 75 status" below). Next up is **item 8**.
+3. `docs/notes/reflections/session-reflection.md` §"Session 75
+   Reflection" (write at start of new session if not present).
+   For now, the key carry-over lesson is: **main-thread propose +
+   verifier agent check is mandatory**. Session 75 ran this pattern
+   on 7 Step-4 items and a /audit pass, and the verifier caught
+   2–3 errors per item, including load-bearing ones (model name,
+   thinking level, provenance mislabels, schema mismatches). The
+   error rate did not decline over the session — the guardrail is
+   not optional.
+4. `docs/notes/reflections/llm-observations.md` §"Session 75
+   Observations" (write at start of new session if not present).
+   Distinctive Session-75 finding: **a single dry-run can overwrite
+   hand-authored narrative docs** — `collect-factor-analysis.py`
+   used to write `factor_analysis_results.md` via auto-generation;
+   the Item-7 level-up replaced that file with a 390-line
+   narrative; running the script regenerated over it. Split path
+   fixed at commit `9f9f98c3` — auto content now goes to
+   `factor_analysis_results_autogen.md`. Check for the same pattern
+   in any other script whose output overlaps with a hand-authored
+   file.
+5. `results/meta-findings-summary.md` — Step 3's output. Still the
+   Discussion-spine reference.
 6. `results/gold-standard-subtype-classification/report.md` — still
-   the exemplar for per-analysis report structure. Step 4 analysis-
-   summary synthesis tasks should match this 17-section bar (trimmed
-   per applicable-sections matrix in `interim-docs-review.md` §2.3).
-7. Now begin Step 4 item 1 (synthesise `results/h8-v2/analysis_summary.md`).
+   the exemplar for per-analysis report structure.
+7. Now begin Step 4 item 8 (level-up the
+   `uncalibrated-vs-calibrated-crosstab/crosstab.md`).
 
 **Canonical numbers table for paper claims** — see §"Canonical numbers"
 below. Verified 2026-04-21 by a fresh-context verifier agent; do not
 re-verify.
 
-**Five load-bearing guardrails** (details in §"Critical guardrails"):
+**Load-bearing guardrails** (details in §"Critical guardrails" +
+§"Added 2026-04-23" + new §"Added 2026-04-24" below):
 
 1. Sub-agent verdicts are **drafts, not verdicts** — verify any
    load-bearing agent claim against the filesystem before acting.
-2. No citations from `archive/v2-verifier-contamination/` or
-   `archive/flawed-audit-2026-04-19/`.
+2. No citations from `archive/v2-verifier-contamination/`,
+   `archive/flawed-audit-2026-04-19/`, or
+   **`archive/h10-h12-v1-retracted-probe/`** (new Session-75
+   archive; Obs 235 retracted data moved from `outputs/h10/` +
+   `results/h10/` subtrees on 2026-04-24).
 3. UK / Australian English throughout (analyse, behaviour, prioritise,
    synthesise, finalise, recognise).
 4. E47 disambiguation required whenever referenced: `protocol-errata.md:1233`
    (buffer revert) vs `working-notes.md:6553` (proposer prompt
    substitution).
-5. Step 4 item 3 (Phase 2b analysis_summary.md synthesis) has a
-   **MANDATORY Option B residual** sub-task (create retest-era
-   `phase2b-carry-forward-parameters.md`, repoint `phase2c-carry-
-   forward-parameters.md:126`, archive pre-retest carry-forward). See
-   `planning/interim-docs-review.md` §3.15 + §6 item 3 for details.
+5. **Main-thread propose + verifier-agent check is mandatory for
+   every new/level-up analysis doc.** Pattern established in
+   Session 75: the verifier caught errors in 7 of 7 items. Do not
+   skip for token economy.
+6. **Aggregator scripts can overwrite hand-authored narrative at
+   the same path.** Before running any script in `scripts/` that
+   calls `write_outputs`, `write_master_json`, or a similar
+   consolidation function, check whether the destination file is a
+   hand-authored level-up. If yes, either route to an `_autogen.md`
+   sibling path (as done for `collect-factor-analysis.py`) or
+   revert the overwrite after the dry-run.
+7. **Paper-table regeneration is a deliberate act, not a side
+   effect.** Aggregator dry-runs during hardening/debugging must
+   `git checkout` any output file changes unless regeneration is
+   scoped as the explicit task. See `results/paper-tables/` drift
+   logged in §"Step 6 polish-pass backlog" for an active instance.
+
+---
+
+## Session 75 status (2026-04-24) — Step 4 items 1–7 + close-out
+
+### Step 4 items completed (DONE 2026-04-24)
+
+| Item | Target | Commit(s) | Notes |
+|------|--------|-----------|-------|
+| 1 | `results/h8-v2/analysis_summary.md` | `f6d1cdb4` + `ce075d5a` | Library-composition null (7-contrast BH-FDR). Obs 238 editorial note added for the "four of six → three of six" arithmetic error. |
+| 2 | `results/h10/analysis_summary.md` + retracted-probe archive | `52404476` + `4b20b427` | Clean 4-pool-size null (Obs 236). Discovered + physically moved Obs 235 retracted H10/H12 v1 arm to `archive/h10-h12-v1-retracted-probe/` (7,988 tracked files). Scorecard §3.11 marked superseded. |
+| 3 | `results/retest/phase2b/analysis_summary.md` + Option B residual | `e8c46809` | T=0.0 optimal on both tracks (340-tile K=3). Full Option B: new retest-era `phase2b-carry-forward-parameters.md`, phase2c:126 repoint, pre-retest archive. |
+| 4 | `results/h11/analysis_summary.md` | `bb156aab` | Tile-size inverted-U (F1=0.883 at 384 px 6-of-10 text + PV). UNINTENDED-T1.0 (E43 + E44) disposition settled. |
+| 5 | `results/55maps-image-generalisation/buffer-100m-diagnostics/report.md` | `334c6cb4` | 50→100m recall gain is TP admission (71 new, 0 lost, 0.10% drift). |
+| 6 | `results/paper-eval/mcc/report.md` | `9df2f169` | 89-condition MCC family consolidated; Phase 2b MCC inversion (Obs 274) flagged. |
+| 7 | `results/factor-analysis/factor_analysis_results.md` level-up | `a5c4c325` + `043fca18` + `6cf99660` + `9f9f98c3` | 5-family pairwise permutation report (29/61 sig). Option A data-recovery fix for 2 mislabelled "512 px" rows (actually Phase 2b N=1 at 384 px; schema-mismatch `global_a` vs `condition_a`). Script hardened. |
+
+### Close-out commits (DONE 2026-04-24)
+
+- `71033ff6` — Step 6 backlog entry logged (later resolved).
+- `23ddfdf6` — `evaluate_pv_results.py` hardening (D2a raise on missing consensus).
+- `9f7bfe0f` — `consolidate_pv_bootstrap_cis.py` hardening (D2b observability + provenance).
+- `f623652d` — `consolidate_paper_metrics.py` hardening (D2c schema validation + provenance).
+- `783f37c2` — Doc hygiene: h11 model-version line; 50m TP reconciliation notes in two 55-map reports.
+- `8949dc00` — Continuity-doc close-out: S6.1 RESOLVED, new metrics_master drift entry logged.
+
+### Distinctive Session-75 findings (load-bearing carry-overs)
+
+1. **Retracted-data physical isolation**. Session 75 discovered that
+   `results/h10/{sweep_results.json, statistical_analysis.json,
+   verifier_independence_probe.{json,md}, k5_replicate_sweep.json,
+   consensus_dedup_magnitude_diagnostic.json, wbf/*}` + the entire
+   `outputs/h10/{consensus, evaluation, verified, verifier-crops, wbf}/`
+   subtrees were derived from the Obs 235 retracted H10/H12 v1 arm
+   (text-only proposer, `include_example_images: false`,
+   2026-04-11). Those files had sat unflagged in the working tree
+   for seven months. They are now at
+   `archive/h10-h12-v1-retracted-probe/` with an explicit
+   retraction README. Future sessions must NOT cite anything from
+   that archive as evidence of library composition / HP:HN / pool
+   size; the clean cross-hypothesis coverage is in H8 v2 + H12 v2.
+2. **Schema-mismatch + mislabelling in a single bug**. The
+   `collect-factor-analysis.py` aggregator read `global_a`/`global_b`
+   from permutation JSONs that use `condition_a`/`condition_b`,
+   silently zeroing two rows. Those two rows were additionally
+   mislabelled "512 px" when the source data is Phase 2b retest at
+   384 px N=1. Both fixed (recovery at `043fca18`, schema helper +
+   7 other audit items at `9f9f98c3`).
+3. **Verifier-catch rate is steady at 2–3 errors per item**. All 7
+   Step-4 items had at least one verifier-caught error. Model-name
+   confusion (`gemini-3-flash-preview` vs `gemini-3-flash`) was
+   particularly frequent across item 3 and item 6 — watch for
+   cross-pipeline context bleed when the session touches multiple
+   model-family trees.
+4. **A single dry-run can overwrite hand-authored narrative**.
+   `collect-factor-analysis.py`'s `write_outputs` used to target
+   `factor_analysis_results.md` with auto-generated tables; the
+   Item-7 level-up replaced that file with a 390-line narrative;
+   then my dry-run during Commit 1 of the close-out regenerated the
+   tables-only file over the narrative. Guard added (script now
+   writes to `factor_analysis_results_autogen.md`) and the pattern
+   is now documented in the §"Critical guardrails" block above
+   (item 6). Check other aggregator scripts for the same risk.
+5. **Aggregator-script metadata provenance added**. All four
+   aggregators (`collect-factor-analysis.py`,
+   `evaluate_pv_results.py`, `consolidate_pv_bootstrap_cis.py`,
+   `consolidate_paper_metrics.py`) now emit `script_version`,
+   `source_files` / `source_files_processed`, and `input_dir` in
+   their output JSON metadata. Schema drift in any upstream source
+   now fails loudly instead of silently zero-filling.
+
+### Sweep coverage (Session 75 end-of-session parallel agents)
+
+Four Explore agents swept four scopes for latent errors analogous to
+the factor-analysis bug:
+
+- Agent A (`results/factor-analysis/`, `results/phase3a-*/`,
+  `results/paper-eval/`, `results/pairwise/`): only the
+  already-fixed factor-analysis bug; otherwise clean.
+- Agent B (`results/h8-v2/`, `results/h10*`, `results/h11*`,
+  `results/h12-v2/`, `results/retest/`): three Priority-1 narrative
+  consistency issues (h8-v2 line 264, h8-v2 line 398, h10 line 97
+  sign convention) — all fixed in `6cf99660`.
+- Agent C (`results/55maps-*/`, `results/gold-standard-*/`,
+  `results/paper-tables/`): zero Priority-1 findings. Corrected-F1
+  headline 0.830, subtype-weighted-F1 0.887, ECE 0.269, AUC 0.655,
+  attractor-pull p=0.381 all verified clean. Exemplar
+  `gold-standard-subtype-classification/report.md` also clean.
+- Agent D (`scripts/`): confirmed the factor-analysis bug + 3
+  risk patterns in other aggregators — all addressed in the
+  close-out commits (`23ddfdf6`, `9f7bfe0f`, `f623652d`).
+
+**Net result**: all hypothesis-level analysis_summaries, the 55-map
+and gold-standard reports, and all four aggregator scripts are now
+verified clean. Any future session that finds a Priority-1 error
+should raise it as a red flag — Session 75 closed the known error
+surface.
+
+### Step 6 polish-pass backlog state
+
+- S6.1 (4,108 vs 4,110 TP-at-50m): **RESOLVED** 2026-04-24. Not a
+  bug; methodological GT-input difference. Reconciliation notes in
+  both 55-map reports.
+- **New entry**: `results/paper-tables/metrics_master.csv` (104
+  rows) and `metrics_master.json` (100 rows) are out of sync at
+  HEAD. Not fixed in Session 75 per output-regeneration non-goal.
+  Deliberate re-run of `scripts/consolidate_paper_metrics.py`
+  during paper finalisation will bring to parity.
+
+### Scorecard state after Session 75
+
+`planning/interim-docs-review.md` §6 Step 4 sequencing — 7 of 14
+items DONE. Remaining 7 items in order:
+
+- **8** — `uncalibrated-vs-calibrated-crosstab/crosstab.md`
+  level-up (S, 25–35 min). **← Next session entry.**
+- 9 — `results/evaluation-scopes.md` level-up (S, 20–30 min).
+- 10 — Batch-level-up the 8 partial per-analysis reports (~3.5–4.5 h).
+- 11 — `results/retest/retest-production-summary.md` level-up
+  (M, 45–60 min).
+- 12 — 55-map cross-track comparison doc (new, from Need list).
+- 13 — Limitations consolidation doc (new, from Need list).
+- 14 — h12-v2 exec-summary + paper-implications polish (S, 20–30 min).
+
+---
+
+### Added 2026-04-24 (Session 75)
+
+The following five items extend the earlier guardrails and are
+specific to the post-Session-75 landscape.
+
+1. **Retracted-data discipline**. When touching any
+   `results/h10/*` or `outputs/h10/*` path, first check
+   `archive/h10-h12-v1-retracted-probe/README.md` to confirm the
+   retraction scope. The clean sibling trees
+   (`outputs/h10/evaluation-v2/`, `outputs/h10/example-pools-v2/`,
+   `outputs/h10/hard-cases-v2/`) are valid; everything else under
+   `outputs/h10/` was moved to the archive on 2026-04-24.
+2. **Cross-pipeline context bleed is a real failure mode**. When a
+   session touches multiple analysis trees (MCC + F1, or Phase 2b
+   + H8 v2, etc.), cite numbers only from the correct tree. Item 3
+   and item 6 of Session 75 both had errors where a 55-map F1 got
+   pulled into a 384 px MCC row, or a `gemini-3-flash-preview` was
+   cited for a `gemini-3-flash` Phase 2b run. Check the meta.json
+   of the specific run before citing the model name.
+3. **Aggregator outputs have a provenance contract now**. Any
+   aggregator that writes a consolidated JSON/CSV should include
+   `_metadata.script_version`, `_metadata.source_files*`, and
+   where applicable `_metadata.input_dir`. The four scripts
+   hardened in Session 75 all follow this pattern; new aggregators
+   should too. If a downstream consumer reports an ambiguity about
+   which input produced a given row, the answer should be in the
+   metadata block, not in a code-archaeology expedition.
+4. **Verifier-agent pattern is now baseline, not optional**.
+   Establish the pattern for every new/level-up analysis doc:
+   main-thread propose → dispatch fresh-context verifier agent with
+   authoritative source paths → apply flagged corrections → commit.
+   Session 75's 7-of-7 error-catch rate makes this a bright line.
+5. **Step 6 must regenerate the paper tables deliberately**. The
+   committed CSV/JSON drift in `results/paper-tables/` is not a
+   bug to fix in the current commit — it's a planned regeneration
+   step at paper finalisation. Do NOT run
+   `scripts/consolidate_paper_metrics.py` in a dry-run without
+   reverting the output files afterwards, and do NOT commit the
+   regenerated files as a side effect of hardening work.
 
 ---
 
@@ -355,35 +544,35 @@ D-S inadequacy). Each theme has a "Suggested paper text" block with
 full Trace (≥ 1 Obs anchor + ≥ 1 artefact path). All 9 headline
 canonical numbers spot-checked present. Commit `0fccf455`.
 
-### Step 4 — Fill identified gaps (variable — 11–15 hours comprehensive) — ⏸ PENDING
+### Step 4 — Fill identified gaps (variable — 11–15 hours comprehensive) — 🔄 IN PROGRESS (7 of 14 DONE)
 
 **Authoritative plan**: `planning/interim-docs-review.md` §6 Step 4
-sequencing — 10 ordered items with effort estimates. User has
+sequencing — 14 ordered items with effort estimates. User has
 confirmed the comprehensive pass (NOT minimum-viable). Supersedes the
 four original "Need" items above; see the DONE annotations in that
 section for mapping.
 
-Short summary (see scorecard §6 for full detail):
+Items 1–7 were completed in Session 75 — see the Session-75 status
+table at the top of this file for per-item commit references. Short
+summary with status:
 
-1. `results/h8-v2/analysis_summary.md` synthesise (L, ~90 min)
-2. `results/h10/analysis_summary.md` synthesise (L, ~90 min)
-3. `results/retest/phase2b/analysis_summary.md` synthesise (L, ~90 min)
-   **+ MANDATORY Option B residual** (retest-era carry-forward doc,
-   repoint phase2c line 126, archive pre-retest carry-forward)
-4. `results/h11/analysis_summary.md` consolidate (M, 60–75 min)
-5. `buffer-100m-diagnostics/report.md` write (M, 45–60 min)
-6. `results/paper-eval/mcc/report.md` write (M, 45–60 min)
-7. `factor-analysis/factor_analysis_results.md` level-up (M, ~45–60
-   min; includes fixing blank Temperature rows 42–43)
-8. `uncalibrated-vs-calibrated-crosstab/crosstab.md` level-up (S, 25–35 min)
-9. `results/evaluation-scopes.md` level-up (S, 20–30 min)
-10. Batch-level-up the eight partial per-analysis reports (~3.5–4.5 h)
-
-Items 3 and 4 from the original "Need" list (55-map cross-track
-comparison doc; Limitations consolidation) are NOT in scorecard §6's
-top 10 but remain open. Suggested slot: after §6 items 1–6, so the
-Limitations doc can cite the newly-written Era 1 summaries and small
-reports directly.
+1. ✅ `results/h8-v2/analysis_summary.md` synthesise (L, ~90 min) — DONE 2026-04-24
+2. ✅ `results/h10/analysis_summary.md` synthesise (L, ~90 min) — DONE 2026-04-24 (plus Obs 235 retracted-probe archive — a scope discovery)
+3. ✅ `results/retest/phase2b/analysis_summary.md` synthesise (L, ~90 min)
+   **+ Option B residual** (retest-era carry-forward doc, phase2c
+   repoint, pre-retest archive) — DONE 2026-04-24
+4. ✅ `results/h11/analysis_summary.md` consolidate (M, 60–75 min) — DONE 2026-04-24
+5. ✅ `buffer-100m-diagnostics/report.md` write (M, 45–60 min) — DONE 2026-04-24
+6. ✅ `results/paper-eval/mcc/report.md` write (M, 45–60 min) — DONE 2026-04-24
+7. ✅ `factor-analysis/factor_analysis_results.md` level-up (M, ~45–60 min
+   + Option A data-recovery + aggregator hardening + /audit) — DONE 2026-04-24
+8. ⏸ **← NEXT** — `uncalibrated-vs-calibrated-crosstab/crosstab.md` level-up (S, 25–35 min)
+9. ⏸ `results/evaluation-scopes.md` level-up (S, 20–30 min)
+10. ⏸ Batch-level-up the eight partial per-analysis reports (~3.5–4.5 h)
+11. ⏸ `results/retest/retest-production-summary.md` level-up (M, 45–60 min)
+12. ⏸ 55-map cross-track comparison doc (new; from "Need" list)
+13. ⏸ Limitations consolidation doc (new; from "Need" list)
+14. ⏸ h12-v2 exec-summary + paper-implications polish (S, 20–30 min)
 
 ### Step 5 — Mark superseded (~30 min) — ⏸ PENDING
 
@@ -570,10 +759,37 @@ should aim for fewer concurrent threads.
 
 ## Commit state at handoff
 
-**Session 74 handoff (2026-04-23)**: working tree clean at commit
-`c1170229`, `main` only (no stray branches), amd-tower and zbook in
-sync. Session 74 pushed 11 commits: `eb2cf23c` → `c1170229`. Full log:
-`git log --oneline 4a866d33..HEAD`.
+**Session 75 handoff (2026-04-24)**: working tree clean at commit
+`8949dc00`, `main` only (no stray branches), pushed to
+`origin/main`. Session 75 pushed 15 commits: `f6d1cdb4` →
+`8949dc00`. Full log: `git log --oneline ab50b22b..HEAD`.
+
+Session 75 commit sequence (bottom-up on `git log`):
+
+- `f6d1cdb4` docs(h8-v2): synthesise analysis_summary — library-composition null
+- `ce075d5a` docs(obs-238): editorial note — directional-prediction count is 3 of 6
+- `52404476` chore(archive): physically move Obs 235 retracted H10/H12 v1 probe data
+- `4b20b427` docs(h10): synthesise analysis_summary — pool-size null + retracted-probe scope
+- `e8c46809` docs(phase2b): synthesise analysis_summary + retest-era carry-forward
+- `bb156aab` docs(h11): synthesise analysis_summary — tile-size inverted-U + UNINTENDED disposition
+- `334c6cb4` docs(buffer-100m): render diagnostic report — 50→100m recall gain is TP admission
+- `71033ff6` docs(continuity): add Step 6 polish-pass backlog — 50m TP count discrepancy
+- `9df2f169` docs(mcc): consolidated report — tile-level MCC analysis family
+- `a5c4c325` docs(factor-analysis): level-up — exec summary, methods, caveats, paper implications
+- `043fca18` fix(factor-analysis): recover 2 mislabelled Phase 2b N=1 rows + patch aggregator schema
+- `6cf99660` fix(cross-ref): correct 3 Agent-B-flagged issues in h8-v2 + h10 summaries
+- `9f9f98c3` harden(collect-factor-analysis): 8 audit items + protect hand-authored MD
+- `23ddfdf6` harden(evaluate-pv-results): raise on missing consensus.json instead of silent all-zero
+- `9f7bfe0f` harden(consolidate-pv-bootstrap-cis): D2b observability + D3a/b provenance
+- `f623652d` harden(consolidate-paper-metrics): D2c schema validation + D3a-c provenance
+- `783f37c2` docs(hygiene): h11 model-version line + 50m TP reconciliation notes
+- `8949dc00` docs(continuity): resolve S6.1 backlog entry + log new metrics_master drift
+
+### Session 74 handoff (preserved for reference)
+
+Working tree clean at commit `c1170229`, `main` only (no stray
+branches), amd-tower and zbook in sync. Session 74 pushed 11 commits:
+`eb2cf23c` → `c1170229`. Full log: `git log --oneline 4a866d33..c1170229`.
 
 Session 74 commit sequence (bottom-up on `git log`):
 
@@ -586,8 +802,7 @@ Session 74 commit sequence (bottom-up on `git log`):
 - `16ee3ae5` chore(archive): Option A — archive pre-retest phase2b pilot docs
 - `0fccf455` docs(meta-findings): synthesise Obs 262–273 into paper-Discussion spine
 - `c1170229` reflect(session-74): end-of-session reflection for 2026-04-23
-- (this commit, whichever hash it lands on): docs(continuity): Session 74
-  handoff update + Step 4 reading order
+- `ab50b22b` docs(continuity): Session 74 handoff update + Step 4 reading order
 
 ### Session 73 handoff (preserved for reference)
 
