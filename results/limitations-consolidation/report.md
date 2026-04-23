@@ -39,8 +39,8 @@ A further **~15 second-order limitations** covering preregistered protocol devia
 | Aspect | Value |
 |---|---|
 | Category | Data quality / experimental integrity |
-| Source of truth | `archive/h10-h12-v1-retracted-probe/README.md` (added Session 75 2026-04-24) |
-| Obs anchor | Obs 235 (Session 74 / 75) |
+| Source of truth | `archive/h10-h12-v1-retracted-probe/README.md` (physically archived Session 75 2026-04-24 commit `52404476`) |
+| Obs anchor | Obs 235 (2026-04-14; retracted-data physical isolation was Session 75 action, not Obs creation) |
 | Quantified | 7,988 tracked files archived on 2026-04-24; 5 configs × 10 runs affected |
 | Mitigation | Clean v2 replacements at `results/h8-v2/` + `results/h12-v2/` (paper-citation sources) |
 
@@ -55,7 +55,7 @@ A further **~15 second-order limitations** covering preregistered protocol devia
 | Category | Data quality / ground-truth precision |
 | Source of truth | `results/gold-standard-extended-buffer-sweep/extended-buffer-report.md` (position noise); `results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md` (GT incompleteness) |
 | Obs anchors | Obs 260 (GT precision plateau shift), Obs 267 (corrected-F1 headline) |
-| Quantified | ~25 – 35 m position noise (from F1-curve rightward shift); 474 / 1,028 ≈ 45.9 % phantom-TP rate on VLM-only slice at 50 m (the student GT missed ~10 % of all mounds that the VLM plus review found: 474 / (4,744 + 474) ≈ 9.1 %) |
+| Quantified | ~25 – 35 m position noise (from F1-curve rightward shift); **472 / 1,028 = 45.9 %** phantom-TP rate on VLM-only slice at 50 m from the authoritative `corrected-f1-human-reviewed.json` (single-buffer calibrated-UI review). The later multi-buffer re-review promoted 2 additional candidates at 50 m, lifting the multi-buffer artefact's count to 474; the paper-citation number stays at 472 for the single-buffer analysis. Student GT missed ~10 % of all mounds that the VLM + review found: 472 / (4,744 + 472) ≈ 9.0 %. |
 | Mitigation | Multi-buffer corrected F1 + per-candidate human review (image track only); gold-standard extended-buffer comparison anchors the position-noise argument |
 
 **Finding**: the 55-map student ground truth has two quality issues:
@@ -165,7 +165,7 @@ These are preregistered-vs-executed deviations documented as errata. Each is a s
 
 **Paper implication**: all primary F1 claims are at the preregistered 20 m matching buffer. The multi-buffer / corrected-F1 / extended-buffer analyses that use 50 m or 125 m explicitly state the deviation and provide the rationale (attractor-pull cap, corrected-F1 lower-bound framing, or GT-precision-noise argument).
 
-### 4.5 E50 – E53 — H10 / H8 / H12 / Phase 3a-HIGH re-runs under production carry-forward
+### 4.5 E50 – E54 — H10 / H8 / H12 / Phase 3a-HIGH re-runs under production carry-forward (and the bootstrap iteration-count clarification)
 
 | Source | `docs/methodology/preregistration/protocol-errata.md` lines 1340 – 1670 |
 |---|---|

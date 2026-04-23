@@ -8,7 +8,7 @@
 
 ## 1. Executive summary
 
-The three 55-map generalisation tracks share the same evaluation scope (8,541 tiles at 384 px, Era 2 bounds), the same proposer model family (`gemini-3-flash-preview`), the same verifier (`gemini-3-flash` MINIMAL), and the same pipeline infrastructure. They differ in proposer input modality (image vs text) and thinking setting (HIGH vs MINIMAL for the two text tracks).
+The three 55-map generalisation tracks share the same evaluation scope (8,541 tiles at 384 px, Era 2 bounds), the same proposer model family (`gemini-3-flash-preview`), the same verifier (`gemini-3-flash` MINIMAL), and the same pipeline infrastructure — **with one pipeline-control difference**: the image track uses consensus vote threshold `vote_t = 3` whereas text-HIGH and text-MIN use `vote_t = 4` (per `outputs/<track>/resolved_config.yaml`). This is a lower bar for consensus on the image track; a matched-`vote_t` cross-track comparison would require re-processing. See §8 Caveat 8 for impact. They also differ in proposer input modality (image vs text) and thinking setting (HIGH vs MINIMAL for the two text tracks).
 
 **Headline F1 numbers**:
 
@@ -21,7 +21,7 @@ The three 55-map generalisation tracks share the same evaluation scope (8,541 ti
 **Key findings**:
 
 - **Text beats image at raw F1 at every buffer ≤ 50 m**: text-HIGH at 50 m is 0.788 vs image at 0.771 (ΔF1 = +0.017 raw); at 20 m the gap is +0.117. The image-track's raw F1 handicap at tight buffers is substantial.
-- **Image wins after human-review correction at 50 m**: corrected F1 for the image track is **≥ 0.830** at 50 m (per `corrected-f1-multi-buffer/report.md`); neither text track has been human-reviewed so their corrected F1 is unknown. The image-track's per-candidate review rescued 474 phantom-TPs that the student GT missed; the equivalent review on text tracks was not conducted.
+- **Image wins after human-review correction at 50 m**: corrected F1 for the image track is **≥ 0.830** at 50 m (per `corrected-f1-multi-buffer/report.md`); neither text track has been human-reviewed so their corrected F1 is unknown. The image-track's per-candidate review rescued **472 phantom-TPs** that the student GT missed (single-buffer calibrated-UI review; the multi-buffer re-review added 2 more at 50 m, lifting the multi-buffer artefact's count to 474).
 - **Cost per track**: image $364.70, text-HIGH $69.60, text-MIN $60.79 (per `outputs/<track>/cost_manifest.json`; verified 2026-04-24). Image is 5.2× the cost of text-HIGH and 6.0× the cost of text-MIN. The image track's 91 % prompt-caching hit rate (621.3 M cached tokens of 785.7 M total) partly offsets its larger per-call cost.
 - **Only text-HIGH vs text-MIN paired permutation tests exist** at 20 / 30 / 40 / 50 m. At 20 m the gap is not significant (ΔF1 = +0.0047, p = 0.4647); at 30 / 40 / 50 m text-HIGH is significantly better than text-MIN (p = 0.0 on 10,000 permutations, seed 42). **No paired image-vs-text tests** have been run on this corpus; cross-modality claims must rely on raw F1 differences without paired significance.
 - **Track-specific precision-recall trade-offs**: at 50 m, text-HIGH is the most precise (0.848), text-MIN is a close second (0.849), image is the least precise (0.780). Recall is flipped: text-HIGH 0.737, text-MIN 0.687, image 0.763. Image trades precision for recall; text-MIN is the most parsimonious (highest precision, lowest recall).
@@ -30,16 +30,19 @@ The three 55-map generalisation tracks share the same evaluation scope (8,541 ti
 
 ## 2. Run metadata (the three tracks are paired on scope, not on modality)
 
-| Track | Proposer | Verifier | Thinking | K | PV | Tile set | Map count |
-|-------|----------|----------|----------|---|-----|---------|----------:|
-| image | gemini-3-flash-preview | gemini-3-flash | HIGH | 5 | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |
-| text-HIGH | gemini-3-flash-preview | gemini-3-flash | HIGH | 5 | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |
-| text-MIN | gemini-3-flash-preview | gemini-3-flash | MINIMAL | 5 | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |
+| Track | Proposer | Verifier | Thinking | K | vote_t | PV | Tile set | Map count |
+|-------|----------|----------|----------|---|-------:|-----|---------|----------:|
+| image | gemini-3-flash-preview | gemini-3-flash | HIGH | 5 | **3** | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |
+| text-HIGH | gemini-3-flash-preview | gemini-3-flash | HIGH | 5 | **4** | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |
+| text-MIN | gemini-3-flash-preview | gemini-3-flash | MINIMAL | 5 | **4** | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |
+
+Model note: `run.meta.json` `configuration.model` fields carry the `-preview` suffix for both proposer and verifier stages (the inner `full_config_snapshot.model` drops it as `gemini-3-flash`). The realised-run stack is `gemini-3-flash-preview` on both stages; the `-preview` vs stable distinction is noted here for transparency.
 
 All three tracks:
 
 - Use the same 55-map evaluation bounds (`inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`; 8,541 tiles at 384 px).
-- Use the same consensus K = 5, vote threshold vote_t = 4, verifier probability threshold prob_t = 0.15.
+- Use the same consensus K = 5 and verifier probability threshold prob_t = 0.15.
+- **Differ on consensus vote threshold**: image uses `vote_t = 3`; text-HIGH and text-MIN use `vote_t = 4` (per `outputs/<track>/resolved_config.yaml`). See §8 Caveat 8.
 - Use the same Hungarian one-to-one spatial-matching protocol at each buffer tolerance.
 - Use the same student GT (`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`; 4,744 mounds across 55 maps).
 
@@ -56,7 +59,7 @@ The image vs text-HIGH comparison is confounded with modality (image vs text inp
 
 | Track | F1 | Precision | Recall |
 |-------|-------:|----------:|-------:|
-| image | 0.506 | 0.512 | 0.500 |
+| image | 0.5060 | 0.5117 | 0.5004 |
 | **text-HIGH** | **0.623** | 0.670 | 0.582 |
 | text-MIN | 0.618 | 0.691 | 0.559 |
 
@@ -102,7 +105,7 @@ The text-HIGH − image gap narrows as buffer increases (0.117 → 0.068 → 0.0
 
 | Track | Corrected F1 @ 50 m | Multi-buffer corrected F1 | n human-reviewed | Source |
 |-------|--------------------:|:-------------------------:|-----------------:|--------|
-| image | **0.830** [0.826, 0.833] | 0.832 → 0.855 @ 50 → 150 m | 1,028 (calibrated UI, 50 m) + 555 (multi-buffer re-review) | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |
+| image | **0.830** [0.826, 0.833] | 0.832 → 0.855 @ 50 → 150 m | 1,028 candidates (calibrated UI, 50 m single-buffer) + same 1,028 re-reviewed multi-buffer with 74 sentinel additions | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |
 | text-HIGH | — | — | 0 | — |
 | text-MIN | — | — | 0 | — |
 
@@ -143,7 +146,7 @@ All three verified 2026-04-24 from `outputs/<track>/cost_manifest.json`.
 
 Key cost notes:
 
-- Image is 5.2× the cost of text-HIGH despite the 91 % prompt-cache hit rate — the image track's uncached proposer tokens (~ 165 M) still dominate.
+- Image is 5.2× the cost of text-HIGH despite the 91 % prompt-cache hit rate — the ~47 M uncached input tokens (668.7 M input − 621.3 M cached) plus ~95 M thinking tokens dominate.
 - text-HIGH's verifier cost ($12.74) is comparable to image's verifier cost ($11.08). The image-track savings are entirely in the verifier stage (fewer candidates survive the image-proposer stage despite its precision deficit).
 - text-MIN's 88.8 M total tokens reflect the MINIMAL thinking setting eliminating thinking-token output on the proposer side.
 
@@ -168,6 +171,7 @@ The human-review process on the image track produced the 472 / 556 mound / not-m
 5. **PV threshold identical (prob_t = 0.15) across tracks** but not centrally recalibrated per track. A per-track threshold sweep would likely improve each track's standalone F1 by small amounts; see the phase3a-image-matrix / phase3a-text-matrix consensus-analysis summaries for the within-track threshold-robustness picture on the Era 2 scope.
 6. **All three tracks use the same verifier prompt (adversarial v1)**. The paper's verifier-quarantine policy (`docs/methodology/v2-verifier-contamination-policy.md`) applies: v2-verifier results are not cited for any track.
 7. **Attractor-pull scope** (Obs 272): the corrected-F1 ≥ 0.830 headline is at 50 m, inside the 125 m attractor-pull cap. Text-track corrected-F1 (if ever computed) would share the same scope limit.
+8. **Consensus vote-threshold not matched across tracks**: image uses `vote_t = 3` (of K = 5); text-HIGH and text-MIN use `vote_t = 4` (confirmed from `outputs/<track>/resolved_config.yaml`). Image's lower threshold accepts detections with less consensus agreement, favouring recall over precision relative to the text tracks at matched K. A matched-vote-threshold cross-track comparison at `vote_t = 4` would require re-aggregating image detections at the higher threshold; out of scope here. Paper text citing cross-track precision/recall trade-offs should flag this difference.
 
 ## 9. Paper implications
 
@@ -185,7 +189,7 @@ The image track's raw-to-corrected F1 gap (+0.059 from 0.771 to 0.830 at 50 m) i
 
 ### 9.3 Suggested paper text (Results — cross-track)
 
-> On the 55-map generalisation corpus (8,541 Era 2 tiles, `gemini-3-flash-preview` proposer, `gemini-3-flash` verifier, K = 5 consensus at vote_t = 4, prob_t = 0.15 across all three tracks), the raw F1 at a 50 m matching buffer is 0.771 (image), 0.788 (text-HIGH), and 0.759 (text-MIN). text-HIGH is significantly better than text-MIN at buffers ≥ 30 m (paired permutation p = 0.0 at 10,000 permutations, seed 42; 20 m gap not significant at p = 0.4647). No paired image-vs-text tests were performed on this corpus. The image track's corrected F1 after per-candidate human review of the 1,028 VLM-only candidates is ≥ 0.830 [0.826, 0.833] at 50 m (`human-reviewed-corrected/corrected-f1-human-reviewed.md`); text-HIGH and text-MIN were not human-reviewed, so their corrected F1 is not available. The image track's raw-to-corrected F1 gap (+0.059) reflects the 45.9 % phantom-TP rate on the VLM-only slice; a comparable review on the text tracks would likely lift their corrected F1 by a similar amount but has not been conducted. Cost per track: image $364.70 (5.2 × the text-HIGH cost of $69.60 and 6.0 × the text-MIN cost of $60.79).
+> On the 55-map generalisation corpus (8,541 Era 2 tiles, `gemini-3-flash-preview` proposer, `gemini-3-flash` verifier, K = 5 consensus at prob_t = 0.15; vote_t = 3 for the image track and vote_t = 4 for both text tracks), the raw F1 at a 50 m matching buffer is 0.771 (image), 0.788 (text-HIGH), and 0.759 (text-MIN). text-HIGH is significantly better than text-MIN at buffers ≥ 30 m (paired permutation p = 0.0 at 10,000 permutations, seed 42; 20 m gap not significant at p = 0.4647). No paired image-vs-text tests were performed on this corpus. The image track's corrected F1 after per-candidate human review of the 1,028 VLM-only candidates is ≥ 0.830 [0.826, 0.833] at 50 m (`human-reviewed-corrected/corrected-f1-human-reviewed.md`); text-HIGH and text-MIN were not human-reviewed, so their corrected F1 is not available. The image track's raw-to-corrected F1 gap (+0.059) reflects the 45.9 % phantom-TP rate on the VLM-only slice; a comparable review on the text tracks would likely lift their corrected F1 by a similar amount but has not been conducted. Cost per track: image $364.70 (5.2 × the text-HIGH cost of $69.60 and 6.0 × the text-MIN cost of $60.79).
 
 ### 9.4 Follow-up priority ordering
 
