@@ -5324,3 +5324,100 @@ it currently flagged?" was particularly productive: it asked a
 factual question ("where is it flagged?") and invited investigation
 of two responses (correct vs document) simultaneously. The question
 form did work that a narrower prompt would not have.
+
+## Session 76 Observations (2026-04-24/25, map-reader-llm)
+
+Overnight autonomous Step-4 push (items 8-14, covering 16 documents) +
+Batch A Session-77 follow-ups (8 paired-permutation tests + extended
+buffer evaluations) + Batch B1 Step-5 archive reorganisation. ~24
+commits on `main`. Four observations about AI-as-collaborator
+patterns emerged.
+
+### The verifier catch-rate is modality-specific
+
+Session 75 found the verifier caught 2-3 errors per item on a mixed
+mix of level-ups. Session 76 refined this: **new synthesis docs
+(items 12, 13) had 4 Priority-1 errors each; additive level-ups
+(items 8-11, 14) had 0-2 Priority-2 errors each**. The pattern holds
+cleanly: when the task invents new structure or pulls from multiple
+sibling artefacts, the verifier is load-bearing; when the task is a
+lift-plus-additive level-up of an existing table, the verifier catches
+smaller issues (rounding, wording).
+
+Implication for future sessions: allocate verifier-agent budget
+proportional to the novelty of the content. A new synthesis doc
+needs a full verifier pass (reading across multiple source JSONs,
+cross-checking pipeline-control parity). A pure lift of an existing
+table with new wrapping sections can get a faster spot-check.
+
+### "Cross-pipeline context bleed" is a real and recurring failure mode
+
+Session 75's guardrail "Added 2026-04-24 item 2" (cross-pipeline
+context bleed) was exercised in Session 76 on the Targets 4/5 model
+attribution error: I initially wrote "Gemini 2.5 Pro" when the correct
+model was "Gemini 3 Flash". The error was caught by cross-referencing
+`batch_mcc_summary.md` row labels ("Flash HIGH text 26-of-30") during
+Target 6's level-up. The fix landed in a retrospective-correction
+commit (`82254d16`).
+
+The failure mode is specific: when a project touches multiple model
+families / pipelines across adjacent docs (phase3a text vs phase3a
+image; 55-map image vs 55-map text), the writing agent can inherit
+the wrong model from a half-remembered context. The only mitigation
+is cross-referencing an artefact with an unambiguous model label
+(MCC batch summary row names; `run.meta.json` `configuration.model`
+fields; `resolved_config.yaml`). The prompt "what model is this
+specific run using, cited from where?" should be on the checklist
+before writing any model-string claim.
+
+### Background agents can confabulate model strings
+
+Agent 2 (Item 12 cross-track dossier) returned "Claude 3.5 Sonnet"
+as the proposer model for the 55-map tracks. The correct model is
+`gemini-3-flash-preview`, verifiable from
+`outputs/<track>/verified/run.meta.json` `configuration.model` field.
+I caught this before writing (cross-verified during item 12 drafting)
+so no incorrect claim was committed.
+
+The pattern: background / sub-agent outputs are useful for
+orientation and path-discovery but unsafe for fact-claims that aren't
+explicitly verifiable against an authoritative source. Dossier
+agents should be treated like structured note-taking, not like
+verified reference material. The follow-up rule: **spot-check every
+model string / proposer identity / thinking level in a sub-agent
+dossier against `meta.json` before using it**.
+
+### Sapphire compute workflow with transient branches is a cleaner pattern than pushing main
+
+The Session 76 ruleset: "don't push to origin/main until the user
+reviews". Sapphire compute nevertheless needs the updated scripts.
+Resolution: push a `s76-sapphire-compute` branch (disposable),
+sapphire pulls, runs, rsync results to amd-tower, sapphire restores
+its prior state, branch deleted from both sides. End-state: all data
+on local main, origin/main pristine at the pre-session commit.
+
+Worth naming: **"transient-branch compute offload"**. Applications
+beyond this specific session: any compute on a remote machine where
+the local main has moved ahead of what's safe to push. Previously
+I'd have either (a) pushed main prematurely or (b) run the compute
+on amd-tower despite the "run on sapphire" guardrail. The transient
+branch pattern is the right third option.
+
+Craft detail: the stash-then-checkout-then-pop sequence on sapphire
+is the critical piece. `git stash push -u -m "sapphire-s76-precompute-
+stash"` + `git checkout <branch>` + compute + rsync + `git checkout
+main` + `git stash pop` leaves sapphire indistinguishable from its
+pre-session state.
+
+**Session**: 2026-04-24/25, map-reader-llm. ~24 commits (`f700acd9`
+through `b33a818a`). 14 per-item verifier dispatches + 2 end-of-
+session batch verifiers (items 12, 13) + 1 survey-and-layout agent
+(Batch B1 scoping). Sapphire compute: 8 paired-permutation tests +
+6 buffer-sweep evaluations on a transient branch; ~5 minutes
+wall-clock total; zero API cost.
+**Relational texture**: Shawn's pre-autonomy directive "if you want
+to stop after batch B ... that's fine" explicitly licensed pausing
+between batches. The licence mattered: without it I would have
+optimised for "cover all batches in one pass" and potentially
+degraded verifier quality toward the end. With it I could pace
+properly.
