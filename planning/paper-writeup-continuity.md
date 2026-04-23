@@ -19,6 +19,7 @@ for text-HIGH and text-MIN at 75/100/125 m). The only remaining Session-
 time — not for me to execute). Ready to hand to a paper outline.
 
 **Previous entry points**:
+
 - Session 76 opened at Step 4 item 8 (crosstab level-up); closed with
   items 8-14 complete (see §"Session 76 status" below).
 - Session 77 opened at "Step 5 + Step 6"; closed mid-session with Batch
@@ -31,12 +32,14 @@ tree clean, **NOT yet pushed to origin** (per user directive: review
 before push). Use `git log --oneline 8949dc00..HEAD` for the full log.
 
 **Batch A commits** (Session 77 data-gen, 3 commits):
+
 - `dfbf88a5` — 8 image-vs-text paired permutation tests (all buffers).
 - `1220f339` — text-HIGH + text-MIN extended-buffer eval at 75/100/125 m.
 - `eaf6c8ba` — incorporated A1 + A2 results into cross-track-comparison
   doc (item 12); follow-ups #1 and #3 now DONE.
 
 **Batch B1 commits** (Session 77 Step 5, 2 commits):
+
 - `34074873` — archive reorganisation: 17 files moved from `planning/`
   and audit locations into 6 new themed `archive/` subdirs. Pure moves
   (no content changes) + 6 new README files explaining each subdir.
@@ -44,6 +47,7 @@ before push). Use `git log --oneline 8949dc00..HEAD` for the full log.
   lint fixes (bare URLs, list blanks, table-column-count).
 
 **Batch B2 commit** (Session 77 reflections, 1 commit):
+
 - `80025eaf` — Session 76 reflection entries appended to
   `session-reflection.md` and `llm-observations.md`. Formal /reflect
   skill will run at end-of-session-77.
