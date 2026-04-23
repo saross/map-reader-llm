@@ -12912,7 +12912,7 @@ Search terms: D-S structurally inadequate, prior-invariant AUC 0.5, 2-annotator 
 
 Tile-level MCC, sensitivity and specificity were computed for all 10 cells of the preregistered Phase 2b H7 temperature sweep (2 tracks × 5 temperatures × K=3 consensus, 340 tiles on `inputs/vectors/bounds/full_evaluation_bounds.geojson`) to fill a gap surfaced during the Step 2 interim-doc review — Phase 2b had no tile-level discrimination metrics on record. Artefacts at `results/paper-eval/mcc/phase2b/` (`batch_mcc_summary.{json,md,csv}` + 10 per-condition `mcc.json` + `compute.log`).
 
-The result inverts the ordering of the object-level F1 headline (Obs 177, Obs 209): tile-level MCC is near-worst at T=0.0 and near-best at T=1.3, in both image and text tracks, with CIs excluding zero only at T ≥ 1.0 for image and T=1.3 for text.
+The result **inverts** the ordering of the object-level F1 headline (Obs 116: T=0.0 optimal with monotonic F1 degradation as T increases; nuanced by Obs 177 at N=30 consensus and framed in Obs 209): tile-level MCC is near-worst at T=0.0 and near-best at T=1.3, in both image and text tracks, with CIs excluding zero only at T ≥ 1.0 for image and T=1.3 for text.
 
 ### Headline MCC ordering (2-of-3 consensus, 1000 bootstrap iters, seed 42)
 
@@ -12950,9 +12950,9 @@ Sensitivity (tile-level recall on the 204 populated tiles) is essentially flat: 
 
 Total detection counts confirm the filter mechanism: track1-image 716 → 594 (−17 %), track2-text 813 → 778 (−4 %). Fewer detections overall at high T, but the filtered-out pool is disproportionately hallucinations in empty tiles.
 
-### Why this does NOT contradict Obs 177 / Obs 209
+### Why this does NOT contradict Obs 116 / Obs 177 / Obs 209
 
-The object-level F1 headline for this sweep states T=1.0 is suboptimal for F1, with T=0.7 or lower being optimal. That remains true — F1 operates on matched detection-to-GT pairs and does not reward tile-level abstention. F1 counts TP/FP/FN on the populated tiles only; it ignores whether the model correctly abstains from hallucinating in the 136 empty tiles.
+The object-level F1 headline from Obs 116 states **T=0.0 is optimal** for F1, with clean monotonic degradation as temperature increases (Track 1 F1 0.557 → 0.439 across T=0.0 → T=1.3; Track 2 F1 0.660 → 0.526). Obs 177 adds that N=30 consensus erases this temperature sensitivity; Obs 209 frames T=1.0 specifically for the paper. All three findings remain true — F1 operates on matched detection-to-GT pairs and does not reward tile-level abstention. F1 counts TP/FP/FN on the populated tiles only; it ignores whether the model correctly abstains from hallucinating in the 136 empty tiles.
 
 Tile-level MCC, by contrast, rewards the 2×2 per-tile binary discrimination — including true negatives. The 31-pp specificity gain at T=1.3 (image) translates to 42 additional empty tiles correctly identified as empty (TN 23 → 65). Object F1 cannot see this signal at all.
 
@@ -12961,7 +12961,7 @@ The two metrics are answering different questions:
 - **F1 question**: "Given the model has found some detections, how well-matched are they to the ground truth?"
 - **MCC question**: "For each tile, does the model correctly classify it as populated or empty?"
 
-Both are legitimate; which to cite depends on the downstream task. Production pipelines optimising object-count accuracy should still use T=0.0 (per Obs 177 / Obs 209). Applications needing spatial-coverage assessment (tile-by-tile adequacy, e.g. field-survey prioritisation) may benefit from T=1.3.
+Both are legitimate; which to cite depends on the downstream task. Production pipelines optimising object-count accuracy should still use T=0.0 (per Obs 116). Applications needing spatial-coverage assessment (tile-by-tile adequacy, e.g. field-survey prioritisation) may benefit from T=1.3. At very high consensus N (Obs 177: N=30) the temperature sensitivity of F1 is erased and the MCC-driven temperature choice may dominate — but this is a high-N operating regime distinct from the K=3 tested here.
 
 ### Empty-tile-dominance check
 
@@ -12975,7 +12975,7 @@ Contamination scope was investigated on 2026-04-23 and is narrow: the bug only b
 
 ### Relationship to prior observations
 
-- **Obs 177** / **Obs 209**: object-level F1 T-sweep finding. This Obs adds a complementary tile-level metric; it does not invalidate the F1 story but shows temperature carries two different optimality profiles depending on whether the metric credits tile-level abstention.
+- **Obs 116**: the root H7 F1 T-sweep finding — T=0.0 optimal, monotonic F1 degradation with T. **Obs 177**: N=30 consensus erases the F1 temperature sensitivity (a regime boundary). **Obs 209**: paper framing on T=1.0. This Obs 274 adds a complementary tile-level metric at K=3 consensus; it does not invalidate any of these but shows temperature carries two different optimality profiles depending on whether the metric credits tile-level abstention.
 - **Obs 269**: verifier miscalibration. Both Obs 269 (verifier over-confidence on detection probability) and this Obs 274 (T-sweep MCC divergence from F1) highlight that the choice of evaluation metric determines the apparent quality story. Neither metric is wrong; both must be reported.
 - **Obs 273**: D-S structural inadequacy. This Obs adds a third axis to the "metric choice matters" theme — D-S posterior AUC is prior-invariant at 0.5 regardless of configuration; tile-level MCC discriminates but only at high T; object-level F1 discriminates at low T. No single number tells the full quality story for this task.
 
@@ -12983,7 +12983,7 @@ Contamination scope was investigated on 2026-04-23 and is narrow: the bug only b
 
 Report both tile-level MCC and object-level F1 separately; label them clearly as different problem frames; cite the task-dependent temperature recommendation. Suggested Discussion text fragment:
 
-> "We report tile-level MCC in addition to object-level F1 because the two metrics credit different aspects of detection quality. F1 rewards correctly matched detections on populated tiles; tile-level MCC additionally rewards correctly abstaining from detection on empty tiles. Across the preregistered Phase 2b temperature sweep, tile-level MCC increases monotonically with temperature in both modalities (image 0.089 → 0.368, text 0.064 → 0.221 across T=0.0 to T=1.3) while object-level F1 decreases with temperature (per Obs 177 / Obs 209). The mechanism is a per-tile tradeoff: higher sampling temperature produces greater cross-run disagreement, and the 2-of-3 consensus filter aggressively rejects hallucinations in empty tiles. Production pipelines prioritising object-count accuracy should use T=0.0; applications needing per-tile spatial adequacy assessment may prefer T ≥ 1.0."
+> "We report tile-level MCC in addition to object-level F1 because the two metrics credit different aspects of detection quality. F1 rewards correctly matched detections on populated tiles; tile-level MCC additionally rewards correctly abstaining from detection on empty tiles. Across the preregistered Phase 2b temperature sweep (K=3 consensus), tile-level MCC increases monotonically with temperature in both modalities (image 0.089 → 0.368, text 0.064 → 0.221 across T=0.0 to T=1.3) while object-level F1 decreases monotonically with temperature (Obs 116; Track 1 image 0.557 → 0.439, Track 2 text 0.660 → 0.526). The mechanism is a per-tile tradeoff: higher sampling temperature produces greater cross-run disagreement, and the 2-of-3 consensus filter aggressively rejects hallucinations in empty tiles. Production pipelines prioritising object-count accuracy should use T=0.0; applications needing per-tile spatial adequacy assessment may prefer T ≥ 1.0. At very high consensus N (e.g. N=30), the F1 temperature sensitivity is erased (Obs 177), leaving MCC considerations to dominate the temperature choice."
 
 ### Reproducibility
 
