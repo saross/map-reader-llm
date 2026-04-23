@@ -363,7 +363,11 @@ individual phantom mounds rather than only estimating their aggregate rate.
 - Script: `scripts/compute_corrected_f1_human_reviewed.py`
 """
 
-    out_md = out_dir / "corrected-f1-human-reviewed.md"
+    # Session 76 guardrail: hand-authored corrected-f1-human-reviewed.md is
+    # the paper-citation source. Script writes to _autogen.md sibling so the
+    # hand-authored level-up is protected against dry-run overwrites (Session
+    # 75 Guardrail 6).
+    out_md = out_dir / "corrected-f1-human-reviewed_autogen.md"
     with open(out_md, "w") as f:
         f.write(md)
     print(f"Wrote {out_md}")
