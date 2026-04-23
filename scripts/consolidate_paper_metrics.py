@@ -70,16 +70,30 @@ def extract_consensus_metrics(report_path: Path) -> list[dict[str, Any]]:
 
     rows = []
     for entry in data.get("results", []):
+        # Schema validation — f1/precision/recall are load-bearing; silently
+        # zero-filling would propagate into the paper's master table. Upstream
+        # key renames (f1 → f1_score, etc.) would otherwise be invisible.
+        missing = [k for k in ("f1", "precision", "recall") if k not in entry]
+        if missing:
+            logger.warning(
+                "Skipping entry in %s (pool=%s, threshold=%s): missing %s",
+                report_path,
+                entry.get("pool_size"),
+                entry.get("threshold"),
+                ", ".join(missing),
+            )
+            continue
+
         row = {
             "pool_size": entry.get("pool_size"),
             "vote_threshold": entry.get("threshold"),
-            "f1": entry.get("f1", 0),
+            "f1": entry["f1"],
             "f1_ci_lower": entry.get("f1_ci_lo", 0),
             "f1_ci_upper": entry.get("f1_ci_hi", 0),
-            "precision": entry.get("precision", 0),
+            "precision": entry["precision"],
             "p_ci_lower": entry.get("p_ci_lo", 0),
             "p_ci_upper": entry.get("p_ci_hi", 0),
-            "recall": entry.get("recall", 0),
+            "recall": entry["recall"],
             "r_ci_lower": entry.get("r_ci_lo", 0),
             "r_ci_upper": entry.get("r_ci_hi", 0),
             "n_detections": entry.get("n_detections", 0),
@@ -125,6 +139,17 @@ def extract_pv_metrics(sensitivity_path: Path) -> list[dict[str, Any]]:
 
     rows = []
     for buf_entry in data.get("buffers", []):
+        # Schema validation — mirror of extract_consensus_metrics.
+        missing = [k for k in ("f1", "precision", "recall") if k not in buf_entry]
+        if missing:
+            logger.warning(
+                "Skipping PV buffer entry in %s (buffer=%s m): missing %s",
+                sensitivity_path,
+                buf_entry.get("buffer_metres"),
+                ", ".join(missing),
+            )
+            continue
+
         ci = buf_entry.get("ci", {})
         f1_ci = ci.get("f1", {})
         p_ci = ci.get("precision", {})
@@ -132,13 +157,13 @@ def extract_pv_metrics(sensitivity_path: Path) -> list[dict[str, Any]]:
 
         row = {
             "buffer_metres": buf_entry.get("buffer_metres"),
-            "f1": buf_entry.get("f1", 0),
+            "f1": buf_entry["f1"],
             "f1_ci_lower": f1_ci.get("lower", 0),
             "f1_ci_upper": f1_ci.get("upper", 0),
-            "precision": buf_entry.get("precision", 0),
+            "precision": buf_entry["precision"],
             "p_ci_lower": p_ci.get("lower", 0),
             "p_ci_upper": p_ci.get("upper", 0),
-            "recall": buf_entry.get("recall", 0),
+            "recall": buf_entry["recall"],
             "r_ci_lower": r_ci.get("lower", 0),
             "r_ci_upper": r_ci.get("upper", 0),
             "n_detections": data.get("n_accepted", 0),
@@ -150,7 +175,9 @@ def extract_pv_metrics(sensitivity_path: Path) -> list[dict[str, Any]]:
 
 # ── Master table construction ─────────────────────────────────────────
 
-def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
+def build_master_table(
+    input_dir: Path,
+) -> tuple[list[dict[str, Any]], list[str]]:
     """Build the unified master table from all result files.
 
     Scans the input directory for consensus reports and PV buffer
@@ -161,9 +188,11 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
         input_dir: Root directory containing paper-eval results.
 
     Returns:
-        List of row dicts for the master table.
+        Tuple of (master table rows, list of source-file paths that
+        were consumed, relative to input_dir.parent).
     """
     master_rows: list[dict[str, Any]] = []
+    source_files: list[str] = []
 
     # ── Consensus conditions ──────────────────────────────────
     # Directory pattern: {input_dir}/{label}-{buffer}m/
@@ -181,7 +210,10 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
         if dir_name == "pv" or report_path.parent.parent.name == "pv":
             continue
 
-        # Parse: "flash-high-text-20m" → label="flash-high-text", buffer=20
+        # Parse: "flash-high-text-20m" → label="flash-high-text", buffer=20.
+        # The rsplit pattern is strict: `{label}-{N}m`. Any directory that
+        # doesn't match this pattern produces a warning AND is skipped
+        # (previously the else-branch logged but still fell through).
         parts = dir_name.rsplit("-", 1)
         if len(parts) == 2 and parts[1].endswith("m"):
             try:
@@ -189,10 +221,19 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
                 label = parts[0]
                 consensus_groups[label].append((buffer_m, report_path))
             except ValueError:
-                logger.warning("Cannot parse buffer from %s", dir_name)
+                logger.warning(
+                    "Cannot parse buffer integer from %s (expected '%s-<N>m')",
+                    dir_name,
+                    parts[0],
+                )
                 continue
         else:
-            logger.warning("Unexpected directory name: %s", dir_name)
+            logger.warning(
+                "Unexpected directory name %s — does not match "
+                "'{label}-{N}m' pattern; skipping",
+                dir_name,
+            )
+            continue
 
     logger.info(
         "Found %d consensus conditions across %d reports",
@@ -205,6 +246,8 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
             if not rows:
                 logger.warning("No results in %s", report_path)
                 continue
+
+            source_files.append(str(report_path.relative_to(input_dir.parent)))
 
             # Extract best config at each pool size
             pool_sizes = sorted({r["pool_size"] for r in rows})
@@ -241,6 +284,10 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
         for pv_path in pv_files:
             pv_label = pv_path.parent.name
             pv_rows = extract_pv_metrics(pv_path)
+            if pv_rows:
+                source_files.append(
+                    str(pv_path.relative_to(input_dir.parent))
+                )
 
             for row in pv_rows:
                 master_rows.append({
@@ -259,7 +306,7 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
     else:
         logger.info("No PV directory found at %s", pv_dir)
 
-    return master_rows
+    return master_rows, source_files
 
 
 # ── Output writers ────────────────────────────────────────────────────
@@ -267,24 +314,36 @@ def build_master_table(input_dir: Path) -> list[dict[str, Any]]:
 def write_master_json(
     rows: list[dict[str, Any]],
     output_path: Path,
+    input_dir: Path | None = None,
+    source_files: list[str] | None = None,
 ) -> None:
     """Write the master table as structured JSON.
 
     Args:
         rows: Master table rows.
         output_path: Output file path.
+        input_dir: Input directory that was scanned (recorded in metadata
+            for provenance).
+        source_files: List of per-condition source-file paths that were
+            consumed (recorded in metadata for auditability).
     """
+    metadata: dict[str, Any] = {
+        "version": __version__,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "n_rows": len(rows),
+        "description": (
+            "Consolidated paper metrics: F1, Precision, Recall "
+            "with 95% bootstrap CIs at multiple spatial buffer "
+            "distances. All evaluated on full 487-tile bounds."
+        ),
+    }
+    if input_dir is not None:
+        metadata["input_dir"] = str(input_dir)
+    if source_files is not None:
+        metadata["source_files"] = source_files
+
     output = {
-        "_metadata": {
-            "version": __version__,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "n_rows": len(rows),
-            "description": (
-                "Consolidated paper metrics: F1, Precision, Recall "
-                "with 95% bootstrap CIs at multiple spatial buffer "
-                "distances. All evaluated on full 487-tile bounds."
-            ),
-        },
+        "_metadata": metadata,
         "rows": rows,
     }
     with open(output_path, "w", encoding="utf-8") as f:
@@ -478,15 +537,25 @@ def main() -> int:
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
     # Build master table
-    rows = build_master_table(args.input_dir)
+    rows, source_files = build_master_table(args.input_dir)
     if not rows:
         logger.error("No results found in %s", args.input_dir)
         return 1
 
-    logger.info("Consolidated %d rows from %s", len(rows), args.input_dir)
+    logger.info(
+        "Consolidated %d rows from %s (%d source files)",
+        len(rows),
+        args.input_dir,
+        len(source_files),
+    )
 
     # Write outputs
-    write_master_json(rows, args.output_dir / "metrics_master.json")
+    write_master_json(
+        rows,
+        args.output_dir / "metrics_master.json",
+        input_dir=args.input_dir,
+        source_files=source_files,
+    )
     write_master_csv(rows, args.output_dir / "metrics_master.csv")
     write_spatial_tolerance_md(
         rows, args.output_dir / "spatial_tolerance_comparison.md",
