@@ -555,15 +555,21 @@ sparse-class qualitative trace, `Methods` = methods notes block,
   - `/home/shawn/Code/map-reader-llm/results/retest/retest-production-summary.md`
     §Pairwise Comparison Highlights (lines 248–267) — 6 + 5 FDR-
     significant pairwise contrasts, track 1 and track 2 respectively
-- **Superseded pre-retest artefacts** (present but NOT to be cited):
-  `/home/shawn/Code/map-reader-llm/results/phase2b-track1-image-summary.md`,
-  `/home/shawn/Code/map-reader-llm/results/phase2b-track2-text-summary.md`,
-  and `/home/shawn/Code/map-reader-llm/results/phase2b-carry-forward-parameters.md`
-  are pre-retest (60-tile, K=10) docs referencing `outputs/phase2b/`
-  which has been moved to `/home/shawn/Code/map-reader-llm/archive/outputs-pre-retest-60-tile/phase2b/`.
-  They contain F1 values in the 0.44–0.66 range from K=10 × 60 tiles
-  that do NOT appear in the paper; any level-up must archive-flag
-  these or rename them so they cannot be mis-cited.
+- **Superseded pre-retest artefacts** — **Option A partially completed
+  2026-04-23**: six orphan files archived to
+  `/home/shawn/Code/map-reader-llm/archive/outputs-pre-retest-60-tile/phase2b/`
+  (the two summary `.md` + two analysis `.json` + two metadata sidecars,
+  all describing the 60-tile K=10 pilot). `ci-metadata-registry.md`
+  updated to point at the new archive locations. **Option B residual
+  (deferred to this Step 4 level-up)**: `results/phase2b-carry-forward-parameters.md`
+  is NOT archived — it is cited as a source by
+  `results/phase2c-carry-forward-parameters.md:126` as the Phase 2b → Phase
+  2c carry-forward decision, and archiving it would break that active
+  dependency. A retention banner was added 2026-04-23. Step 4 Phase 2b
+  level-up must: (a) create a retest-era carry-forward equivalent (based
+  on the 340-tile K=3 retest data); (b) repoint the Phase 2c citation at
+  the new retest-era doc; (c) then archive the pre-retest carry-forward
+  doc with the other six files.
 - **Present sections (against exemplar)**: data/inputs (~, manifests
   and GT paths present in YAML and per-run metadata); agreement
   measures (~, bootstrap CIs + FDR-corrected pairwise contrasts present
@@ -615,9 +621,13 @@ sparse-class qualitative trace, `Methods` = methods notes block,
   (practitioner-facing "change the Gemini API default T=1.0" message;
   the Phase 2b T=0.0 optimum is *not* the consensus-optimum T=0.7 —
   note the crossover documented in working-notes line 6095+
-  "Five design decisions that cross over"). Also update or archive
-  the three pre-retest `results/phase2b-*.md` files so they cannot be
-  mis-cited.
+  "Five design decisions that cross over"). **Option B residual
+  (MANDATORY sub-task of this level-up)**: create a retest-era
+  `results/phase2b-carry-forward-parameters.md` equivalent; repoint the
+  citation at `results/phase2c-carry-forward-parameters.md:126`; then
+  archive the pre-retest carry-forward doc to
+  `archive/outputs-pre-retest-60-tile/phase2b/` alongside the six
+  files already archived 2026-04-23.
 - **Level-up effort**: **L** (~90 min). All data is in hand; the work
   is pure consolidation, plus the pre-retest archive flagging, plus
   the paper-facing E43 disambiguation block.
@@ -983,8 +993,16 @@ ordering:
    be explicit before drafting. Slot at priority 3 alongside the Era 1
    hypothesis closures because the temperature claim appears in the
    paper's headline findings rather than its Era 1 Results section.
-   Sub-task: archive-flag the three pre-retest `results/phase2b-*.md`
-   files so they cannot be mis-cited.
+   **Option B residual (MANDATORY sub-task)**: (a) create a retest-era
+   `results/phase2b-carry-forward-parameters.md` equivalent (based on
+   the 340-tile K=3 retest data); (b) repoint the citation at
+   `results/phase2c-carry-forward-parameters.md:126` to the new
+   retest-era doc; (c) archive the pre-retest
+   `results/phase2b-carry-forward-parameters.md` to
+   `archive/outputs-pre-retest-60-tile/phase2b/`. This completes the
+   archive pass started 2026-04-23 (six orphan files already archived
+   in that pass; the carry-forward doc was retained because of the
+   Phase 2c dependency — see §3.15 Superseded pre-retest artefacts).
 4. **Consolidate `results/h11/analysis_summary.md`** (M, 60–75 min,
    plus UNINTENDED-T1.0 disposition decision). Fragmentation is the
    bottleneck; a consolidated narrative unlocks the two-stage Results

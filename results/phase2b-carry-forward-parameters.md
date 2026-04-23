@@ -1,9 +1,21 @@
 # Phase 2b Carry-Forward Parameters
 
 **Created**: 2026-02-08
-**Source**: Phase 2b analysis (Track 1: `results/phase2b-track1-image-summary.md`,
-Track 2: `results/phase2b-track2-text-summary.md`)
+**Source**: Phase 2b pre-retest pilot analysis (Track 1: `archive/outputs-pre-retest-60-tile/phase2b/phase2b-track1-image-summary.md`, Track 2: `archive/outputs-pre-retest-60-tile/phase2b/phase2b-track2-text-summary.md`; 60-tile K=10 pilot, archived 2026-04-23)
 **Carries forward to**: Phase 2c (H8 Library Composition)
+
+> **⚠️ Retention note (2026-04-23)**: this document is retained in the active
+> tree because `results/phase2c-carry-forward-parameters.md:126` cites it as
+> the source of the Phase 2b → Phase 2c carry-forward decision. The source
+> summary artefacts it references were archived on 2026-04-23 (see
+> `archive/outputs-pre-retest-60-tile/phase2b/`). Step 4 Phase 2b
+> consolidation work (see `planning/interim-docs-review.md` row 15 + §6
+> Step-4 sequencing) will create a retest-era carry-forward equivalent
+> (based on the 340-tile K=3 retest data at
+> `results/retest/phase2b-track{1,2}-evaluation.json` +
+> `results/retest/retest-production-summary.md` §Phase 2b), repoint the
+> Phase 2c citation, and then archive this pre-retest doc. **Option B
+> residual** tracked in the Step 4 plan.
 
 ## Context
 
