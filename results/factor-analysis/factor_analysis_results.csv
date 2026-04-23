@@ -1,62 +1,62 @@
-family,question,label_a,label_b,f1_a,f1_b,delta_f1,p_value_raw,p_value_adj,significant,source
-architecture,N=1 vs consensus (FH text),FH text run_1 (N=1),FH text 5-of-5 consensus,0.391763,0.778824,-0.38706,0.0,0.0,***,factor-analysis-384px
-architecture,N=1 vs consensus (FH image),FH image run_1 (N=1),FH image 3-of-5 consensus,0.515008,0.726886,-0.211878,0.0,0.0,***,factor-analysis-384px
-architecture,N=1 vs consensus (FM text),FM text run_1 (N=1),FM text 5-of-5 consensus,0.493115,0.639706,-0.146591,0.0,0.0,***,factor-analysis-384px
-architecture,N=1 vs consensus (Pro text),Pro text run_1 (N=1),Pro text 3-of-5 consensus,0.738286,0.840399,-0.102113,0.0,0.0,***,factor-analysis-384px
-architecture,PV vs consensus,Flash HIGH text 16-of-30 + PV,Flash HIGH text 26-of-30,0.890201,0.814118,0.076083,0.0,0.0,***,reused-hypothesis-20m
-architecture,PV vs consensus,Flash HIGH text 9-of-10 + PV,Flash HIGH text 9-of-10,0.856417,0.796767,0.05965,0.0,0.0,***,reused-hypothesis-20m
-architecture,PV vs consensus,Flash HIGH text 4-of-5 + PV,Flash HIGH text 5-of-5,0.864078,0.778824,0.085254,0.0,0.0,***,reused-hypothesis-20m
-architecture,PV verifier thinking,Flash HIGH text 4-of-5 + medium vf,Flash HIGH text 5-of-5,0.859155,0.778824,0.080331,0.0,0.0,***,reused-hypothesis-20m
-architecture,PV vs consensus (image),Flash HIGH image 3-of-5 + PV,Flash HIGH image 3-of-5,0.777778,0.726886,0.050891,0.0004,0.0004,***,reused-hypothesis-20m
-architecture,PV vs consensus (Pro),Pro HIGH text 3-of-5 + PV,Pro HIGH text 3-of-5,0.849105,0.840399,0.008706,0.258,0.258,ns,reused-hypothesis-20m
-architecture,PV on single-pass text,Text baseline + PV,Single-pass text 5-of-5,0.814238,0.544012,0.270226,0.0,0.0,***,reused-hypothesis-20m
-architecture,PV on single-pass image,Image baseline + PV,Single-pass text 5-of-5,0.716702,0.544012,0.17269,0.0,0.0,***,reused-hypothesis-20m
-modality,"Text vs image (N=1, FH)",FH text run_1 (N=1),FH image run_1 (N=1),0.391763,0.515008,-0.123244,0.0001,0.0002,***,factor-analysis-384px
-modality,"Text vs image (N=1, FM)",FM text run_1 (N=1),FM image run_1 (N=1),0.493115,0.559933,-0.066818,0.0158,0.0178,*,factor-analysis-384px
-modality,"Text vs image (N=1, Pro)",Pro text run_1 (N=1),Pro image run_1 (N=1),0.738286,0.589641,0.148644,0.0,0.0,***,factor-analysis-384px
-modality,Text vs image (Pro consensus N=5),Pro text 3-of-5 consensus,Pro image 3-of-5 consensus,0.840399,0.699779,0.14062,0.0,0.0,***,factor-analysis-384px
-modality,Text vs image (baseline + PV),Text baseline + PV,Image baseline + PV,0.814238,0.716702,0.097536,0.0,0.0,***,factor-analysis-384px
-modality,Text vs image,Flash HIGH text 5-of-5,Flash HIGH image 3-of-5,0.778824,0.726886,0.051937,0.0143,0.0178,*,reused-hypothesis-20m
-modality,Text vs image (N=10),Flash HIGH text 9-of-10,Flash HIGH image 6-of-10,0.796767,0.740245,0.056521,0.0054,0.0081,**,reused-hypothesis-20m
-modality,Text vs image (MINIMAL),Flash MIN text 5-of-5,Flash MIN image 4-of-5,0.639706,0.663883,-0.024177,0.3604,0.3604,ns,reused-hypothesis-20m
-modality,Text vs image (PV),Flash HIGH text 4-of-5 + PV,Flash HIGH image 3-of-5 + PV,0.864078,0.777778,0.0863,0.0,0.0,***,reused-hypothesis-20m
-prompt_engineering,Library composition (text),P2c Text canonical,P2c Text plus-hp,0.6045,0.5969,0.0075,0.563,0.8147,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text canonical,P2c Text pure-positive-canon,0.6045,0.6045,-0.0,1.0,1.0,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text canonical,P2c Text scale-4,0.6045,0.6094,-0.005,0.6216,0.8147,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text canonical,P2c Text scale-8,0.6045,0.607,-0.0026,0.8057,0.94,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text plus-hp,P2c Text pure-positive-canon,0.5969,0.6045,-0.0076,0.608,0.8147,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text plus-hp,P2c Text scale-4,0.5969,0.6094,-0.0125,0.0588,0.5488,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text plus-hp,P2c Text scale-8,0.5969,0.607,-0.0101,0.3089,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text pure-positive-canon,P2c Text scale-4,0.6045,0.6094,-0.0049,0.2623,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text pure-positive-canon,P2c Text scale-8,0.6045,0.607,-0.0026,0.4549,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (text),P2c Text scale-4,P2c Text scale-8,0.6094,0.607,0.0024,0.4338,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image canonical,P2c Image plus-hp,0.5814,0.5985,-0.0171,0.3691,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image canonical,P2c Image pure-positive-canon,0.5814,0.5678,0.0136,0.4001,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image canonical,P2c Image scale-4,0.5814,0.5837,-0.0023,0.9158,0.9497,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image canonical,P2c Image scale-8,0.5814,0.5867,-0.0053,0.7611,0.9266,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image plus-hp,P2c Image pure-positive-canon,0.5985,0.5678,0.0306,0.0907,0.6349,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image plus-hp,P2c Image scale-4,0.5985,0.5837,0.0148,0.5115,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image plus-hp,P2c Image scale-8,0.5985,0.5867,0.0118,0.4983,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image pure-positive-canon,P2c Image scale-4,0.5678,0.5837,-0.0159,0.4653,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image pure-positive-canon,P2c Image scale-8,0.5678,0.5867,-0.0189,0.2757,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Library composition (image),P2c Image scale-4,P2c Image scale-8,0.5837,0.5867,-0.003,0.888,0.9497,ns,prompt-engineering-512px
-prompt_engineering,Text treatment (image),P2d Image terse,P2d Image verbose,0.6052,0.6027,0.0025,0.8779,0.9497,ns,prompt-engineering-512px
-prompt_engineering,Text treatment (text),P2d Text terse,P2d Text verbose,0.5984,0.5834,0.015,0.4263,0.7957,ns,prompt-engineering-512px
-prompt_engineering,Example ordering,P2e canonical-first,P2e canonical-last,0.5985,0.6314,-0.0329,0.1366,0.6375,ns,prompt-engineering-512px
-prompt_engineering,Example ordering,P2e canonical-first,P2e config-default,0.5985,0.6057,-0.0073,0.6401,0.8147,ns,prompt-engineering-512px
-prompt_engineering,Example ordering,P2e canonical-first,P2e random,0.5985,0.5706,0.0279,0.1218,0.6375,ns,prompt-engineering-512px
-prompt_engineering,Example ordering,P2e canonical-last,P2e config-default,0.6314,0.6057,0.0257,0.1857,0.7428,ns,prompt-engineering-512px
-prompt_engineering,Example ordering,P2e canonical-last,P2e random,0.6314,0.5706,0.0608,0.0019,0.0532,ns,prompt-engineering-512px
-prompt_engineering,Example ordering,P2e config-default,P2e random,0.6057,0.5706,0.0351,0.0563,0.5488,ns,prompt-engineering-512px
-temperature,"T=0.7 vs T=1.0 (N=1, 384px)",FM text T=0.7 run_1 (N=1),FM text T=1.0 run_1 (N=1),0.493115,0.39005,0.103065,0.0034,0.0051,**,factor-analysis-384px
-temperature,T=0.7 vs T=1.0 (N=1, Phase 2b text),P2b text T=0.7 run_1,P2b text T=1.0 run_1,0.5837,0.5102,0.073528,0.0055,0.0066,**,factor-analysis-phase2b-retest-n1
-temperature,T=0.7 vs T=1.0 (N=1, Phase 2b image),P2b image T=0.7 run_1,P2b image T=1.0 run_1,0.5356,0.5208,0.014719,0.4763,0.4763,ns,factor-analysis-phase2b-retest-n1
-temperature,T=0.7 vs T=1.0 (N=5),Flash MIN text T=0.7 5-of-5,Flash MIN text T=1.0 5-of-5,0.639706,0.471233,0.168473,0.0,0.0,***,reused-hypothesis-20m
-temperature,T=0.7 vs T=1.0 (N=10),Flash MIN text T=0.7 10-of-10,Flash MIN text T=1.0 9-of-10,0.633166,0.461538,0.171627,0.0,0.0,***,reused-hypothesis-20m
-temperature,T=0.7 vs T=1.0 (N=30),Flash MIN text T=0.7 29-of-30,Flash MIN text T=1.0 22-of-30,0.66114,0.466993,0.194147,0.0,0.0,***,reused-hypothesis-20m
-thinking,HIGH vs MINIMAL (N=1 text),FH text run_1 (N=1),FM text run_1 (N=1),0.391763,0.493115,-0.101351,0.0,0.0,***,factor-analysis-384px
-thinking,HIGH vs MINIMAL (N=1 image),FH image run_1 (N=1),FM image run_1 (N=1),0.515008,0.559933,-0.044925,0.0588,0.0588,ns,factor-analysis-384px
-thinking,HIGH vs MINIMAL (text N=5),Flash HIGH text 5-of-5,Flash MIN text 5-of-5,0.778824,0.639706,0.139118,0.0,0.0,***,reused-hypothesis-20m
-thinking,HIGH vs MINIMAL (text N=10),Flash HIGH text 9-of-10,Flash MIN text 10-of-10,0.796767,0.633166,0.163601,0.0,0.0,***,reused-hypothesis-20m
-thinking,HIGH vs MINIMAL (text N=30),Flash HIGH text 26-of-30,Flash MIN text 29-of-30,0.814118,0.66114,0.152978,0.0,0.0,***,reused-hypothesis-20m
-thinking,HIGH vs MINIMAL (image N=5),Flash HIGH image 3-of-5,Flash MIN image 4-of-5,0.726886,0.663883,0.063003,0.0003,0.0004,***,reused-hypothesis-20m
+family,question,label_a,label_b,f1_a,f1_b,delta_f1,p_value_raw,p_value_adj,significant,source,precision_a,precision_b,recall_a,recall_b,n_detections_a,n_detections_b,n_tiles
+architecture,N=1 vs consensus (FH text),FH text run_1 (N=1),FH text 5-of-5 consensus,0.391763,0.778824,-0.38706,0.0,0.0,***,factor-analysis-384px,0.254284,0.79759,0.852874,0.76092,1459,415,487
+architecture,N=1 vs consensus (FH image),FH image run_1 (N=1),FH image 3-of-5 consensus,0.515008,0.726886,-0.211878,0.0,0.0,***,factor-analysis-384px,0.392298,0.675889,0.749425,0.786207,831,506,487
+architecture,N=1 vs consensus (FM text),FM text run_1 (N=1),FM text 5-of-5 consensus,0.493115,0.639706,-0.146591,0.0,0.0,***,factor-analysis-384px,0.344954,0.532925,0.864368,0.8,1090,653,487
+architecture,N=1 vs consensus (Pro text),Pro text run_1 (N=1),Pro text 3-of-5 consensus,0.738286,0.840399,-0.102113,0.0,0.0,***,factor-analysis-384px,0.734091,0.918256,0.742529,0.774713,440,367,487
+architecture,PV vs consensus,Flash HIGH text 16-of-30 + PV,Flash HIGH text 26-of-30,0.890201,0.814118,0.076083,0.0,0.0,***,reused-hypothesis-20m,0.915049,0.833735,0.866667,0.795402,412,415,487
+architecture,PV vs consensus,Flash HIGH text 9-of-10 + PV,Flash HIGH text 9-of-10,0.856417,0.796767,0.05965,0.0,0.0,***,reused-hypothesis-20m,0.957386,0.800464,0.774713,0.793103,352,431,487
+architecture,PV vs consensus,Flash HIGH text 4-of-5 + PV,Flash HIGH text 5-of-5,0.864078,0.778824,0.085254,0.0,0.0,***,reused-hypothesis-20m,0.915167,0.79759,0.818391,0.76092,389,415,487
+architecture,PV verifier thinking,Flash HIGH text 4-of-5 + medium vf,Flash HIGH text 5-of-5,0.859155,0.778824,0.080331,0.0,0.0,***,reused-hypothesis-20m,0.877698,0.79759,0.841379,0.76092,417,415,487
+architecture,PV vs consensus (image),Flash HIGH image 3-of-5 + PV,Flash HIGH image 3-of-5,0.777778,0.726886,0.050891,0.0004,0.0004,***,reused-hypothesis-20m,0.800487,0.675889,0.756322,0.786207,411,506,487
+architecture,PV vs consensus (Pro),Pro HIGH text 3-of-5 + PV,Pro HIGH text 3-of-5,0.849105,0.840399,0.008706,0.258,0.258,ns,reused-hypothesis-20m,0.956772,0.918256,0.763218,0.774713,347,367,487
+architecture,PV on single-pass text,Text baseline + PV,Single-pass text 5-of-5,0.814238,0.544012,0.270226,0.0,0.0,***,reused-hypothesis-20m,0.788793,0.396425,0.841379,0.866667,464,951,487
+architecture,PV on single-pass image,Image baseline + PV,Single-pass text 5-of-5,0.716702,0.544012,0.17269,0.0,0.0,***,reused-hypothesis-20m,0.663405,0.396425,0.77931,0.866667,511,951,487
+modality,"Text vs image (N=1, FH)",FH text run_1 (N=1),FH image run_1 (N=1),0.391763,0.515008,-0.123244,0.0001,0.0002,***,factor-analysis-384px,0.254284,0.392298,0.852874,0.749425,1459,831,487
+modality,"Text vs image (N=1, FM)",FM text run_1 (N=1),FM image run_1 (N=1),0.493115,0.559933,-0.066818,0.0158,0.0178,*,factor-analysis-384px,0.344954,0.440633,0.864368,0.767816,1090,758,487
+modality,"Text vs image (N=1, Pro)",Pro text run_1 (N=1),Pro image run_1 (N=1),0.738286,0.589641,0.148644,0.0,0.0,***,factor-analysis-384px,0.734091,0.520211,0.742529,0.68046,440,569,487
+modality,Text vs image (Pro consensus N=5),Pro text 3-of-5 consensus,Pro image 3-of-5 consensus,0.840399,0.699779,0.14062,0.0,0.0,***,factor-analysis-384px,0.918256,0.673036,0.774713,0.728736,367,471,487
+modality,Text vs image (baseline + PV),Text baseline + PV,Image baseline + PV,0.814238,0.716702,0.097536,0.0,0.0,***,factor-analysis-384px,0.788793,0.663405,0.841379,0.77931,464,511,487
+modality,Text vs image,Flash HIGH text 5-of-5,Flash HIGH image 3-of-5,0.778824,0.726886,0.051937,0.0143,0.0178,*,reused-hypothesis-20m,0.79759,0.675889,0.76092,0.786207,415,506,487
+modality,Text vs image (N=10),Flash HIGH text 9-of-10,Flash HIGH image 6-of-10,0.796767,0.740245,0.056521,0.0054,0.0081,**,reused-hypothesis-20m,0.800464,0.718615,0.793103,0.763218,431,462,487
+modality,Text vs image (MINIMAL),Flash MIN text 5-of-5,Flash MIN image 4-of-5,0.639706,0.663883,-0.024177,0.3604,0.3604,ns,reused-hypothesis-20m,0.532925,0.608031,0.8,0.731034,653,523,487
+modality,Text vs image (PV),Flash HIGH text 4-of-5 + PV,Flash HIGH image 3-of-5 + PV,0.864078,0.777778,0.0863,0.0,0.0,***,reused-hypothesis-20m,0.915167,0.800487,0.818391,0.756322,389,411,487
+prompt_engineering,Library composition (text),P2c Text canonical,P2c Text plus-hp,0.6045,0.5969,0.0075,0.563,0.8147,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text canonical,P2c Text pure-positive-canon,0.6045,0.6045,-0.0,1.0,1.0,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text canonical,P2c Text scale-4,0.6045,0.6094,-0.005,0.6216,0.8147,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text canonical,P2c Text scale-8,0.6045,0.607,-0.0026,0.8057,0.94,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text plus-hp,P2c Text pure-positive-canon,0.5969,0.6045,-0.0076,0.608,0.8147,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text plus-hp,P2c Text scale-4,0.5969,0.6094,-0.0125,0.0588,0.5488,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text plus-hp,P2c Text scale-8,0.5969,0.607,-0.0101,0.3089,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text pure-positive-canon,P2c Text scale-4,0.6045,0.6094,-0.0049,0.2623,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text pure-positive-canon,P2c Text scale-8,0.6045,0.607,-0.0026,0.4549,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (text),P2c Text scale-4,P2c Text scale-8,0.6094,0.607,0.0024,0.4338,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image canonical,P2c Image plus-hp,0.5814,0.5985,-0.0171,0.3691,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image canonical,P2c Image pure-positive-canon,0.5814,0.5678,0.0136,0.4001,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image canonical,P2c Image scale-4,0.5814,0.5837,-0.0023,0.9158,0.9497,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image canonical,P2c Image scale-8,0.5814,0.5867,-0.0053,0.7611,0.9266,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image plus-hp,P2c Image pure-positive-canon,0.5985,0.5678,0.0306,0.0907,0.6349,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image plus-hp,P2c Image scale-4,0.5985,0.5837,0.0148,0.5115,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image plus-hp,P2c Image scale-8,0.5985,0.5867,0.0118,0.4983,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image pure-positive-canon,P2c Image scale-4,0.5678,0.5837,-0.0159,0.4653,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image pure-positive-canon,P2c Image scale-8,0.5678,0.5867,-0.0189,0.2757,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Library composition (image),P2c Image scale-4,P2c Image scale-8,0.5837,0.5867,-0.003,0.888,0.9497,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Text treatment (image),P2d Image terse,P2d Image verbose,0.6052,0.6027,0.0025,0.8779,0.9497,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Text treatment (text),P2d Text terse,P2d Text verbose,0.5984,0.5834,0.015,0.4263,0.7957,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Example ordering,P2e canonical-first,P2e canonical-last,0.5985,0.6314,-0.0329,0.1366,0.6375,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Example ordering,P2e canonical-first,P2e config-default,0.5985,0.6057,-0.0073,0.6401,0.8147,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Example ordering,P2e canonical-first,P2e random,0.5985,0.5706,0.0279,0.1218,0.6375,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Example ordering,P2e canonical-last,P2e config-default,0.6314,0.6057,0.0257,0.1857,0.7428,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Example ordering,P2e canonical-last,P2e random,0.6314,0.5706,0.0608,0.0019,0.0532,ns,prompt-engineering-512px,,,,,,,340
+prompt_engineering,Example ordering,P2e config-default,P2e random,0.6057,0.5706,0.0351,0.0563,0.5488,ns,prompt-engineering-512px,,,,,,,340
+temperature,"T=0.7 vs T=1.0 (N=1, 384px)",FM text T=0.7 run_1 (N=1),FM text T=1.0 run_1 (N=1),0.493115,0.39005,0.103065,0.0034,0.0051,**,factor-analysis-384px,0.344954,0.34386,0.864368,0.450575,1090,570,487
+temperature,"T=0.7 vs T=1.0 (N=1, Phase 2b text)",P2b text T=0.7 run_1,P2b text T=1.0 run_1,0.583732,0.510204,0.073528,0.0055,0.0066,**,factor-analysis-phase2b-retest-n1,0.462121,0.388727,0.792208,0.742115,924,1029,340
+temperature,"T=0.7 vs T=1.0 (N=1, Phase 2b image)",P2b image T=0.7 run_1,P2b image T=1.0 run_1,0.535552,0.520833,0.014719,0.4763,0.4763,ns,factor-analysis-phase2b-retest-n1,0.452107,0.434783,0.656772,0.649351,783,805,340
+temperature,T=0.7 vs T=1.0 (N=5),Flash MIN text T=0.7 5-of-5,Flash MIN text T=1.0 5-of-5,0.639706,0.471233,0.168473,0.0,0.0,***,reused-hypothesis-20m,0.532925,0.583051,0.8,0.395402,653,295,487
+temperature,T=0.7 vs T=1.0 (N=10),Flash MIN text T=0.7 10-of-10,Flash MIN text T=1.0 9-of-10,0.633166,0.461538,0.171627,0.0,0.0,***,reused-hypothesis-20m,0.5625,0.545455,0.724138,0.4,560,319,487
+temperature,T=0.7 vs T=1.0 (N=30),Flash MIN text T=0.7 29-of-30,Flash MIN text T=1.0 22-of-30,0.66114,0.466993,0.194147,0.0,0.0,***,reused-hypothesis-20m,0.601887,0.498695,0.733333,0.43908,530,383,487
+thinking,HIGH vs MINIMAL (N=1 text),FH text run_1 (N=1),FM text run_1 (N=1),0.391763,0.493115,-0.101351,0.0,0.0,***,factor-analysis-384px,0.254284,0.344954,0.852874,0.864368,1459,1090,487
+thinking,HIGH vs MINIMAL (N=1 image),FH image run_1 (N=1),FM image run_1 (N=1),0.515008,0.559933,-0.044925,0.0588,0.0588,ns,factor-analysis-384px,0.392298,0.440633,0.749425,0.767816,831,758,487
+thinking,HIGH vs MINIMAL (text N=5),Flash HIGH text 5-of-5,Flash MIN text 5-of-5,0.778824,0.639706,0.139118,0.0,0.0,***,reused-hypothesis-20m,0.79759,0.532925,0.76092,0.8,415,653,487
+thinking,HIGH vs MINIMAL (text N=10),Flash HIGH text 9-of-10,Flash MIN text 10-of-10,0.796767,0.633166,0.163601,0.0,0.0,***,reused-hypothesis-20m,0.800464,0.5625,0.793103,0.724138,431,560,487
+thinking,HIGH vs MINIMAL (text N=30),Flash HIGH text 26-of-30,Flash MIN text 29-of-30,0.814118,0.66114,0.152978,0.0,0.0,***,reused-hypothesis-20m,0.833735,0.601887,0.795402,0.733333,415,530,487
+thinking,HIGH vs MINIMAL (image N=5),Flash HIGH image 3-of-5,Flash MIN image 4-of-5,0.726886,0.663883,0.063003,0.0003,0.0004,***,reused-hypothesis-20m,0.675889,0.608031,0.786207,0.731034,506,523,487

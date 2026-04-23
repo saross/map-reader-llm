@@ -40,6 +40,26 @@ PROJECT = Path(__file__).parent.parent
 OUTPUT_DIR = PROJECT / "results" / "factor-analysis"
 
 
+def _extract_raw_p(comp: dict) -> float:
+    """Return the raw p-value from a comparison dict, tolerating schema drift.
+
+    Input JSONs from different upstream pairwise-test scripts use different
+    key names: the 384 px factor-analysis manifest and the prompt-engineering
+    batch use ``p_value``; the 20 m pairwise FDR file uses ``p_value_raw``.
+    Prefer ``p_value_raw`` (the post-FDR canonical name we normalise to)
+    and fall back to ``p_value``; raise if neither is present so a schema
+    change fails loudly rather than silently defaulting to 1.0.
+    """
+    if "p_value_raw" in comp:
+        return comp["p_value_raw"]
+    if "p_value" in comp:
+        return comp["p_value"]
+    raise KeyError(
+        f"Neither 'p_value_raw' nor 'p_value' present in comparison: "
+        f"{sorted(comp.keys())}"
+    )
+
+
 def load_new_results() -> list[dict]:
     """Load new factor-analysis comparison results."""
     results = []
@@ -62,7 +82,7 @@ def load_new_results() -> list[dict]:
                 "f1_a": comp["f1_a"],
                 "f1_b": comp["f1_b"],
                 "delta_f1": comp["delta_f1"],
-                "p_value_raw": comp["p_value"],
+                "p_value_raw": _extract_raw_p(comp),
                 "precision_a": comp.get("precision_a"),
                 "precision_b": comp.get("precision_b"),
                 "recall_a": comp.get("recall_a"),
@@ -104,8 +124,19 @@ def load_new_results() -> list[dict]:
         with open(result_path) as f:
             data = json.load(f)
 
-        ca = data.get("condition_a") or data.get("global_a") or {}
-        cb = data.get("condition_b") or data.get("global_b") or {}
+        # Prefer `condition_a`/`condition_b` (the current pairwise script
+        # schema); fall back to `global_a`/`global_b` only when the
+        # preferred key is absent. Using `key in data` guards against the
+        # `or`-chain edge case where a present-but-empty dict would
+        # incorrectly fall through to the legacy key name.
+        ca = (
+            data["condition_a"] if "condition_a" in data
+            else data.get("global_a", {})
+        )
+        cb = (
+            data["condition_b"] if "condition_b" in data
+            else data.get("global_b", {})
+        )
         pt = data.get("permutation_test", {})
 
         if not ca or not cb:
@@ -173,6 +204,14 @@ def load_reused_results() -> list[dict]:
         PROJECT / "results" / "pairwise" / "20m" / "fdr"
         / "pairwise_results_fdr.json"
     )
+    if not fdr_path.exists():
+        log.error(
+            "Required reused-hypothesis FDR file is missing: %s "
+            "(run the 20 m pairwise FDR pipeline before re-running this aggregator)",
+            fdr_path,
+        )
+        return results
+
     with open(fdr_path) as f:
         data = json.load(f)
 
@@ -189,7 +228,7 @@ def load_reused_results() -> list[dict]:
                 "f1_a": comp["f1_a"],
                 "f1_b": comp["f1_b"],
                 "delta_f1": comp["delta_f1"],
-                "p_value_raw": comp["p_value_raw"],
+                "p_value_raw": _extract_raw_p(comp),
                 "precision_a": comp.get("precision_a"),
                 "precision_b": comp.get("precision_b"),
                 "recall_a": comp.get("recall_a"),
@@ -211,6 +250,14 @@ def load_prompt_engineering_results() -> list[dict]:
         PROJECT / "results" / "pairwise" / "prompt-engineering-20m"
         / "prompt_engineering_pairwise.json"
     )
+    if not pe_path.exists():
+        log.error(
+            "Required prompt-engineering pairwise file is missing: %s "
+            "(run the prompt-engineering pairwise pipeline before re-running this aggregator)",
+            pe_path,
+        )
+        return results
+
     with open(pe_path) as f:
         data = json.load(f)
 
@@ -233,7 +280,7 @@ def load_prompt_engineering_results() -> list[dict]:
                 "f1_a": comp["f1_a"],
                 "f1_b": comp["f1_b"],
                 "delta_f1": comp["delta_f1"],
-                "p_value_raw": comp["p_value"],
+                "p_value_raw": _extract_raw_p(comp),
                 "n_tiles": comp.get("n_tiles"),
                 "source": "prompt-engineering-512px",
             })
@@ -256,9 +303,23 @@ def apply_fdr(results: list[dict]) -> list[dict]:
 
     all_corrected = []
     for fam_name, fam_results in sorted(families.items()):
-        p_values = np.array(
-            [r["p_value_raw"] for r in fam_results],
-        )
+        # Defensive: a row missing `p_value_raw` would silently crash BH
+        # correction downstream. Drop any such row with an explicit
+        # warning so the input pipeline surfaces the issue.
+        valid_rows = [r for r in fam_results if r.get("p_value_raw") is not None]
+        n_dropped = len(fam_results) - len(valid_rows)
+        if n_dropped:
+            log.warning(
+                "Family '%s': dropped %d row(s) with missing p_value_raw "
+                "before BH-FDR correction",
+                fam_name,
+                n_dropped,
+            )
+        fam_results = valid_rows
+        if not fam_results:
+            continue
+
+        p_values = np.array([r["p_value_raw"] for r in fam_results])
         # BH correction
         adjusted = false_discovery_control(p_values, method="bh")
 
@@ -294,7 +355,10 @@ def write_outputs(results: list[dict]) -> None:
     with open(OUTPUT_DIR / "factor_analysis_results.json", "w") as f:
         json.dump({"comparisons": results}, f, indent=2)
 
-    # CSV
+    # CSV — deliberate column list for paper-table readers. Kept in
+    # lockstep with the result-dict schema written by the three loaders
+    # above; any new per-condition metric added to the dict should also
+    # be added here so CSV and JSON stay at parity.
     fieldnames = [
         "family",
         "question",
@@ -307,6 +371,13 @@ def write_outputs(results: list[dict]) -> None:
         "p_value_adj",
         "significant",
         "source",
+        "precision_a",
+        "precision_b",
+        "recall_a",
+        "recall_b",
+        "n_detections_a",
+        "n_detections_b",
+        "n_tiles",
     ]
     with open(OUTPUT_DIR / "factor_analysis_results.csv", "w",
               newline="") as f:
@@ -373,8 +444,15 @@ def write_outputs(results: list[dict]) -> None:
             )
         md_lines.append("")
 
-    with open(OUTPUT_DIR / "factor_analysis_results.md", "w") as f:
-        f.write("\n".join(md_lines))
+    # Auto-generated tables-only MD for script-driven consumers. The
+    # hand-authored narrative level-up lives at `factor_analysis_results.md`
+    # (the paper-citation target) and must NOT be overwritten by this
+    # script — it includes an executive summary, methods block, and
+    # per-family interpretation paragraphs that are derived from the
+    # tables but not re-derivable. The auto file below mirrors the
+    # script's view and is safe to regenerate.
+    with open(OUTPUT_DIR / "factor_analysis_results_autogen.md", "w") as f:
+        f.write("\n".join(md_lines) + "\n")
 
     log.info("Outputs written to %s", OUTPUT_DIR)
 
@@ -428,8 +506,8 @@ def main() -> None:
             reverse=True,
         ):
             print(
-                f"  {r['label_a'][:30]:<30} vs "
-                f"{r['label_b'][:30]:<30} "
+                f"  {r['label_a'][:35]:<35} vs "
+                f"{r['label_b'][:35]:<35} "
                 f"ΔF1={r['delta_f1']:>+.3f} "
                 f"p_adj={r['p_value_adj']:.4f} "
                 f"{r['significant']}",
