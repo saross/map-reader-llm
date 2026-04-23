@@ -20,7 +20,10 @@
 #          verifier-calibration-crosstab/)
 # ------------------------------------------------------------------------
 # - calibration.json          Machine-readable numbers + bootstrap CIs
-# - calibration.md            Human-readable report
+# - calibration_autogen.md    Auto-generated tables + interpretation
+#                              (hand-authored `calibration.md` is the
+#                              paper-citation source; do NOT overwrite —
+#                              Session 75 guardrail 6)
 # - reliability-diagram.png   Bin-mean predicted vs empirical P(mound)
 # - roc-curve.png             Receiver Operating Characteristic curve
 # - pr-curve.png              Precision-recall curve
@@ -373,7 +376,7 @@ def plot_pr(y: np.ndarray, p: np.ndarray, out_path: Path) -> None:
 
 
 def render_markdown(report: dict) -> str:
-    """Produce the calibration.md human-readable report."""
+    """Produce the calibration_autogen.md human-readable report."""
     lines: list[str] = []
     lines.append("# Verifier calibration crosstab (55-map image generalisation)")
     lines.append("")
@@ -668,7 +671,7 @@ def main() -> None:
     # Write outputs.
     with (args.out / "calibration.json").open("w") as f:
         json.dump(report, f, indent=2, default=float)
-    with (args.out / "calibration.md").open("w") as f:
+    with (args.out / "calibration_autogen.md").open("w") as f:
         f.write(render_markdown(report))
 
     # Console summary.
