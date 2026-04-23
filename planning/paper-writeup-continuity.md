@@ -409,15 +409,32 @@ item's claim but warrant a polish pass before paper finalisation:
 
 - **50 m TP count discrepancy (buffer-100m-diagnostics vs corrected-F1
   multi-buffer, noted 2026-04-24 during Session 75 Item 5
-  verification)**:
-  `results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json`
-  reports `total_matched_at_50m = 4,108` (strict one-to-one matching);
-  `results/55maps-image-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`
-  reports TP = 4,110 at 50 m (multi-buffer pipeline). Two-pair
-  discrepancy likely reflects differing match-dedup rules between the
-  two pipelines. Investigate whether a single unified matching function
-  is warranted, or whether the discrepancy is benign and should be
-  explicitly noted in the paper's Methods section.
+  verification)** — **RESOLVED 2026-04-24 (Session 75 close-out)**:
+  investigated by an Explore agent as part of the end-of-session
+  clearance pass. Root cause is **not** a matching-algorithm
+  difference; both pipelines use the same Hungarian one-to-one
+  matcher. The 2-pair gap arises from different ground-truth inputs:
+  the diagnostic consumes `human-review.csv` (472 mounds at 50 m
+  from yesterday's single-buffer review) while corrected-F1 consumes
+  `human-review.csv` + `human-review-multi-buffer.csv` (474 at 50 m,
+  adding candidate IDs 5641 and 5777 from today's multi-buffer
+  re-review). Both pipelines are internally correct. Reconciliation
+  notes added to both reports in commit `783f37c2`; paper-citation
+  rule: use 4,110 (corrected-F1) for headline claims; 4,108
+  (diagnostic) is descriptive-only for the 50 → 100 m recall-gain
+  decomposition. No code/data fix needed.
+
+- **metrics_master.csv vs metrics_master.json row-count drift (noted
+  2026-04-24 during the consolidate_paper_metrics.py dry-run)**:
+  committed `results/paper-tables/metrics_master.csv` has 104 rows;
+  `metrics_master.json` has 100 rows. The two output files were
+  generated at different times and are out of sync at HEAD. A
+  deliberate re-run of `scripts/consolidate_paper_metrics.py` during
+  paper finalisation will bring them back to parity (100 rows each).
+  Not urgent — the JSON is the authoritative source; the 4 extra
+  rows in the CSV are stale pro-high-text pool_size=10 entries from
+  an earlier run. Not addressed in the Session-75 close-out because
+  the plan's non-goal explicitly deprioritises output regeneration.
 
 ## User decisions (2026-04-21 end-of-session)
 
