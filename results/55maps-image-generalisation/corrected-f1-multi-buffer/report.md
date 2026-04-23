@@ -68,7 +68,6 @@ is completely indistinguishable.
   detections appear as FP at every R ≤ 150 m, which is the correct
   behaviour under the 150 m practitioner cap.
 
-
 ## Practitioner-useful cap: F1 at R = 125 m
 
 Recommended single-number summary for downstream quotation:
@@ -82,6 +81,28 @@ statistically distinguishable from within-tile random placement.
 (``buffer_metres=200``) are excluded from every extended-GT build in this
 analysis. Their detections contribute FP at every R ≤ 150 m. Rationale in
 the task brief and Obs 272.
+
+## Reconciling with the buffer-100m diagnostic
+
+The sibling `results/55maps-image-generalisation/buffer-100m-diagnostics/report.md`
+reports `total_matched_at_50m = 4,108`, while this pipeline reports
+TP = 4,110 at 50 m. The 2-pair gap is a **methodological difference in
+the ground-truth inputs**, not a bug in either pipeline:
+
+- **This corrected-F1 pipeline** uses both yesterday's single-buffer
+  review (`human-review.csv`, 472 mounds at 50 m) and today's
+  multi-buffer re-review (`human-review-multi-buffer.csv`, 2
+  additional mounds specifically confirmed at the 50 m shell during
+  the staggered re-review — candidate IDs 5641 (map K-35-075-4) and
+  5777 (map K-35-076-1)). Total: 474 phantoms at 50 m.
+- **The diagnostic** uses only yesterday's review (472 phantoms at
+  50 m) with the same Hungarian one-to-one matching.
+
+**This pipeline's 4,110 is the paper-citable count**; it underpins the
+canonical corrected-F1 headline of 0.832 at 50 m. The diagnostic's
+4,108 is descriptive only, citable for the 50 → 100 m recall-gain
+decomposition (71 new matches admitted at 100 m, 0 lost) but not as a
+stand-alone TP headline.
 
 ## Reproducibility
 

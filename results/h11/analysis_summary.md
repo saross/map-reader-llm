@@ -2,6 +2,7 @@
 
 **Study**: H11 — Tile Size Effect on Detection Performance (pilot + production + 256 px diagnostic)
 **Date**: 2026-03-15 (pilot) / 2026-03-22 (production 384 px / 487-tile) / 2026-03-23 (256 px diagnostic) / 2026-03-28 (downstream Obs 203 synthesis)
+**Model**: Gemini 3 Flash (`gemini-3-flash-preview`) — verified against H11 run meta.json files; distinct from the `gemini-3-flash` alias used by Phase 2b retest runs in the same time window
 **Protocol-errata**: E41 (384 px pathway production lock-in), E43 (consensus-384 UNINTENDED-T1.0) + E44 (single-pass-384 UNINTENDED-T1.0) — dual-role disposition settled 2026-04-23, commit `5ae94041`
 **Primary aggregation**: greedy consensus + post-verifier (PV) two-stage pipeline
 **Evaluation**: three-way tile-size comparison on the 487-tile production footprint (435 reference mounds) at 20 m buffer

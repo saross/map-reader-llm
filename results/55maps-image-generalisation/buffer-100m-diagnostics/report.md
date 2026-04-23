@@ -135,6 +135,36 @@ buffer widening starts admitting non-adjacent candidates; the
 pair-drift diagnostic here shows that even at 100 m the admission is
 disciplined (new matches, not re-pairings).
 
+## Reconciling the diagnostic and corrected-F1 counts
+
+This diagnostic reports `total_matched_at_50m = 4,108`, while the
+multi-buffer corrected-F1 pipeline at
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`
+reports TP = 4,110 at 50 m. The 2-pair gap is a **methodological
+difference in the ground-truth inputs the two pipelines consume**, not
+a bug in either:
+
+- **This diagnostic** uses only yesterday's single-buffer review
+  (`results/55maps-image-generalisation/human-review.csv`, 472
+  confirmed mounds at 50 m from a 1,028-candidate single-pass review).
+  Matching is strict one-to-one Hungarian.
+- **Corrected-F1 multi-buffer** uses both `human-review.csv` (472) and
+  today's `human-review-multi-buffer.csv` (2 additional mounds
+  specifically confirmed at the 50 m shell during a staggered
+  re-review for the attractor-pull analysis — candidate IDs 5641
+  (map K-35-075-4) and 5777 (map K-35-076-1)). Matching is the same
+  Hungarian one-to-one, just on 474 reviewer-extended phantoms at
+  50 m instead of 472.
+
+Both pipelines are internally correct relative to their own
+ground-truth inputs. **For paper-headline claims, use the corrected-F1
+count (4,110)** — it reflects the most recent and complete human
+verification dataset, and underpins the canonical corrected-F1
+headline of 0.832 at 50 m. **The diagnostic's 4,108 is descriptive
+only**, citable for decomposition-of-recall-gain contexts (71 new
+matches admitted at 100 m, 0 lost) but not as a stand-alone TP
+headline.
+
 ## Paper implications
 
 1. **The multi-buffer F1 curve is citable as a recall-gain curve.**
