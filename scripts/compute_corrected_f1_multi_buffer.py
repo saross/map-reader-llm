@@ -730,7 +730,9 @@ def run(
 
     csv_path = output_dir / "corrected-f1.csv"
     json_path = output_dir / "summary.json"
-    md_path = output_dir / "report.md"
+    # Session 76 guardrail: hand-authored report.md is the paper-citation
+    # source. Script writes to report_autogen.md sibling (Session 75 G6).
+    md_path = output_dir / "report_autogen.md"
 
     write_csv(results, csv_path)
     print(f"\nWrote {csv_path}")
