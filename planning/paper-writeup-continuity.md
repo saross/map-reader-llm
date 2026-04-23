@@ -1,31 +1,52 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-04-25 (end of Session 76 — **Step 4 COMPLETE**; items 8–14 done across a single overnight autonomous session)
+**Last updated**: 2026-04-24 (mid-Session 77 — **Step 4 + Step 5 COMPLETE**; Batch A Session-77 follow-ups (8 paired permutation tests + 6 extended-buffer evaluations) + Batch B1 mark-superseded archive reorg done)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ⚡ Start here (Session 77+ entry point)
+## ⚡ Start here (Session 78+ entry point)
 
-**You are on: Step 5 (mark superseded) + Step 6 (paper outline)**.
-All 14 Step 4 items are DONE. The per-analysis reports are now at
-uniform paper-citation quality; the two new synthesis docs (item 12
-cross-track, item 13 limitations) exist as direct paper-section sources;
-the Era 1 retest summary (item 11) and the h12-v2 closure (item 14) are
-polished. Ready to hand to a paper outline.
+**You are on: Step 6 (paper outline)**. Step 4 (14 items) and Step 5
+(mark-superseded sweep) are both DONE. Batch A Session-77 follow-ups
+resolved the two data-generation gaps flagged in item 12 §9.4 (image-vs-
+text paired permutation tests at 20/30/40/50 m; extended buffer sweeps
+for text-HIGH and text-MIN at 75/100/125 m). The only remaining Session-
+77 follow-up is text-track human review (~17 reviewer-hours, human
+time — not for me to execute). Ready to hand to a paper outline.
 
-**Previous entry point** (Session 76 opened here): Step 4 item 8,
-`uncalibrated-vs-calibrated-crosstab/crosstab.md`. Closed Session 76
-with items 8–14 complete; see §"Session 76 status" below for the
-per-item commit table.
+**Previous entry points**:
+- Session 76 opened at Step 4 item 8 (crosstab level-up); closed with
+  items 8-14 complete (see §"Session 76 status" below).
+- Session 77 opened at "Step 5 + Step 6"; closed mid-session with Batch
+  A (data-gen follow-ups) + Batch B1 (Step 5 archive reorg) complete.
+  Batch B2 (reflections) added in the same Session 77.
 
-**Tree state at handoff**: 17 Session-76 commits, `f700acd9` → `b960a3cf`,
-main-only, working tree clean, **NOT yet pushed to origin** (per user
-directive: "I'll review in the morning" — user is to inspect then push).
-Use `git log --oneline 8949dc00..HEAD` for the full log.
+**Tree state at handoff**: mid-Session-77. ~24 Session-76 + Session-77
+commits total, from `f700acd9` through `80025eaf`, main-only, working
+tree clean, **NOT yet pushed to origin** (per user directive: review
+before push). Use `git log --oneline 8949dc00..HEAD` for the full log.
+
+**Batch A commits** (Session 77 data-gen, 3 commits):
+- `dfbf88a5` — 8 image-vs-text paired permutation tests (all buffers).
+- `1220f339` — text-HIGH + text-MIN extended-buffer eval at 75/100/125 m.
+- `eaf6c8ba` — incorporated A1 + A2 results into cross-track-comparison
+  doc (item 12); follow-ups #1 and #3 now DONE.
+
+**Batch B1 commits** (Session 77 Step 5, 2 commits):
+- `34074873` — archive reorganisation: 17 files moved from `planning/`
+  and audit locations into 6 new themed `archive/` subdirs. Pure moves
+  (no content changes) + 6 new README files explaining each subdir.
+- `b33a818a` — SUPERSEDED banners added to the 17 moved files + trivial
+  lint fixes (bare URLs, list blanks, table-column-count).
+
+**Batch B2 commit** (Session 77 reflections, 1 commit):
+- `80025eaf` — Session 76 reflection entries appended to
+  `session-reflection.md` and `llm-observations.md`. Formal /reflect
+  skill will run at end-of-session-77.
 
 **Reading order (in sequence, don't skim)**:
 
@@ -864,11 +885,17 @@ should aim for fewer concurrent threads.
 
 ## Commit state at handoff
 
-**Session 76 handoff (2026-04-25)**: working tree clean at commit
-`b960a3cf`, `main` only (no stray branches), **NOT yet pushed to
-`origin/main`** per user directive ("I'll review in the morning").
-Session 76 added 17 commits: `f700acd9` → `b960a3cf`. Full log:
+**Session 77 mid-session handoff (2026-04-24)**: working tree clean at
+commit `80025eaf`, `main` only (no stray branches), **NOT yet pushed to
+`origin/main`**. Session 77 added 6 commits beyond Session 76:
+`dfbf88a5`, `1220f339`, `eaf6c8ba` (Batch A data-gen),
+`34074873`, `b33a818a` (Batch B1 archive reorg), `80025eaf` (Batch B2
+reflections). Combined Session-76+77 log:
 `git log --oneline 8949dc00..HEAD`.
+
+**Session 76 handoff (earlier in this chain)**: was clean at commit
+`b960a3cf` after 17 Session-76-only commits from `f700acd9` → `b960a3cf`.
+See §"Session 76 status" below for the per-item table.
 
 Session 76 commit sequence (bottom-up on `git log`):
 
