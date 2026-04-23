@@ -353,14 +353,29 @@ sparse-class qualitative trace, `Methods` = methods notes block,
 ### 3.11 `results/h10/` (no analysis_summary.md; has `verifier_independence_probe.md`)
 
 - **Type**: Era 1 (calibration-pool retest).
-- **Present artefacts**: `verifier_independence_probe.md` (one sub-
+- **⚠️ Superseded 2026-04-24 (Session 75)**: this scorecard row
+  instructed using `sweep_results.json` + `statistical_analysis.json`
+  + `verifier_independence_probe.md` as the main sources for the h10
+  synthesis. During Session 75 drafting, these files were discovered
+  to be derived from the **Obs 235 retracted v1 probe** (text-only
+  runs, `include_example_images: false`, 2026-04-11) and have been
+  physically moved to
+  `archive/h10-h12-v1-retracted-probe/results/h10/`. They must not be
+  cited for any library-composition or HP:HN-ratio claim. The scorecard
+  row below is preserved for historical reference; the authoritative
+  Session-75 synthesis is at `results/h10/analysis_summary.md`, scoped
+  to the clean primary experiment (4-pool-size sweep at hp4hn4,
+  launched 2026-04-15 under clean E49 conditions). Cross-hypothesis
+  coverage of the HP:HN variants is at `results/h8-v2/analysis_summary.md`
+  + `results/h12-v2/analysis_summary.md`.
+- **Present artefacts** (original listing, pre-archive): `verifier_independence_probe.md` (one sub-
   analysis) + 9 top-level JSONs (`h10_consensus_only_20m.json`,
   `h10_pool_{020,160}_pv_20m.json`, `h10_pv_permutation_020_vs_160.json`,
   `h10_wbf_consensus_20m.json`, `k5_replicate_sweep.json`,
   `statistical_analysis.json`, `sweep_results.json`,
   `consensus_dedup_magnitude_diagnostic.json`) plus a `wbf/` subdir.
-- **Missing**: consolidated `analysis_summary.md`.
-- **Level-up**: write a new `results/h10/analysis_summary.md`
+- **Missing** (original): consolidated `analysis_summary.md`.
+- **Level-up** (original): write a new `results/h10/analysis_summary.md`
   summarising the calibration-pool NULL finding (audit: "bootstrap CIs,
   ICC diagnostics, verifier-independence probe present; multi-buffer
   curve missing; narrative only in working-notes"). Use `sweep_results.json`
@@ -369,6 +384,13 @@ sparse-class qualitative trace, `Methods` = methods notes block,
   sub-section.
 - **Level-up effort**: L (90+ min).
 - **Dependencies**: working-notes narrative; no new analysis needed.
+- **Session 75 resolution (2026-04-24)**: analysis_summary.md is
+  written and committed. Of the original source list, only
+  `h10_pv_permutation_020_vs_160.json` (now at mtime 2026-04-15) is a
+  clean source; `sweep_results.json`, `statistical_analysis.json`, and
+  `verifier_independence_probe.md` are retracted-v1 and are cited in
+  the new summary's §"Preserved-for-archive" section with explicit
+  "do not cite" framing.
 
 ### 3.12 `results/h11-tile-size-results.md` + `results/h11-384-pv-diagnostic/` (fragmented)
 

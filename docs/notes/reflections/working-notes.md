@@ -9740,6 +9740,22 @@ code would have prevented.
    not map-based?" — a one-sentence correction that changed a
    structurally broken test into a valid one.
 
+> **Follow-up (2026-04-24, Session 75)**: the retracted H10/H12 v1
+> probe data has been physically moved to
+> `archive/h10-h12-v1-retracted-probe/` (README in that folder
+> documents the retraction scope, preserved Obs 230 aggregation test,
+> and clean-coverage pointers to H8 v2 + H12 v2). The original
+> working-paths under `outputs/h10/{consensus, evaluation, verified,
+> verifier-crops, wbf}/` and `results/h10/{sweep_results.json,
+> statistical_analysis.json, verifier_independence_probe.{json,md},
+> k5_replicate_sweep.json, consensus_dedup_magnitude_diagnostic.json,
+> wbf/}` are now empty of retracted content; the sibling clean v2
+> runs at `outputs/h10/evaluation-v2/pool_{020,040,080,160}_hp4hn4/`
+> remain in place as the canonical h10 data. Authoritative paper-
+> citation summary: `results/h10/analysis_summary.md` (Session 75,
+> also reflects Obs 235's retraction scope in its §"Scope note" and
+> §"Preserved-for-archive" sections).
+
 ---
 
 ## Observation 236: H10 Pool Size Is a Null — 20-Tile Calibration Matches 160-Tile Under PV (2026-04-15)
