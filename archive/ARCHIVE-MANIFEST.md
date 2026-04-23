@@ -158,3 +158,34 @@ The archived CSV is preserved for comparison analysis: cross-tabulating the
 uncalibrated vs calibrated decisions on the same candidate ids will quantify
 how much the tolerance circle shifted the accept/reject boundary, which is
 itself a methodology finding.
+
+## 2026-04-24 addition: `h10-h12-v1-retracted-probe/`
+
+**Moved from**:
+
+- `outputs/h10/{consensus, evaluation, verified, verifier-crops, wbf}/` (7,977 tracked files)
+- `results/h10/{sweep_results.json, statistical_analysis.json, verifier_independence_probe.{json,md}, k5_replicate_sweep.json, consensus_dedup_magnitude_diagnostic.json}` (6 tracked files)
+- `results/h10/wbf/{sweep_results_pool_160_hp4hn4_variant_c.json, variant_c_vs_greedy_hp4hn4.json, variant_c_vs_greedy_hp4hn4.metadata.json}` (3 tracked files)
+
+**Reason**: The H10/H12 v1 library-composition probe (5 pool_160 HP:HN
+variants at K=10, launched 2026-04-11) was formally retracted by Obs 235
+on 2026-04-14 because the proposer config (`detect_brief-text_pool_160_*`)
+has `include_example_images: false` — the library was never transmitted
+to the API. Obs 235 declared the "library effect" physically impossible.
+The retracted data had remained in the working directories for seven
+months; Session 75's Step-4 h10 synthesis re-discovered the retraction
+context and physically separated the retracted probe data from the
+clean v2 primary-experiment data (which remains in place at
+`outputs/h10/evaluation-v2/pool_{020,040,080,160}_hp4hn4/`).
+
+**Preservation rationale**: `CLAUDE.md` §"Unexpected Data as Discovery
+Opportunities" + archive-never-delete directive. Obs 235 §"PARTIAL
+CORRECTION" retains one valid use of this data (Obs 230 WBF vs greedy
+aggregation-method test at hp4hn4 K=10); see archive README for details.
+
+**Authoritative paper-citation summary**: `results/h10/analysis_summary.md`
+— scoped to the clean primary experiment only. Cross-hypothesis coverage
+of the HP:HN variants is at `results/h8-v2/analysis_summary.md` (Scale-8
+/ 16 / 32) and `results/h12-v2/analysis_summary.md` (R1 / R2 / R3).
+
+**Full retraction context**: `archive/h10-h12-v1-retracted-probe/README.md`.
