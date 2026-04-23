@@ -5333,3 +5333,105 @@ Per `planning/interim-docs-review.md` §6 Step 4 sequencing
   retrieves project-wide shape-of-data memory faster than my
   in-session file reads. When this pattern appears, default to a
   fresh filesystem check rather than defending the current claim.
+
+---
+
+## Session 75 — 2026-04-24 (map-reader-llm): Step 4 items 1–7 + close-out hardening + continuity handoff
+
+**Commits**: 16 on `main`, `f6d1cdb4` → `55c5c82c`, all pushed to
+`origin/main`. Working tree clean at session close.
+
+### Step 4 deliverables (items 1–7 per scorecard §6)
+
+| Item | Target | Effort | Commit(s) |
+|------|--------|--------|-----------|
+| 1 | `results/h8-v2/analysis_summary.md` | L | `f6d1cdb4` + `ce075d5a` |
+| 2 | `results/h10/analysis_summary.md` + retracted-probe archive | L | `52404476` + `4b20b427` |
+| 3 | `results/retest/phase2b/analysis_summary.md` + Option B | L | `e8c46809` |
+| 4 | `results/h11/analysis_summary.md` | M | `bb156aab` |
+| 5 | `buffer-100m-diagnostics/report.md` | M | `334c6cb4` |
+| 6 | `results/paper-eval/mcc/report.md` | M | `9df2f169` |
+| 7 | `factor-analysis/factor_analysis_results.md` level-up | M | `a5c4c325` + `043fca18` + `6cf99660` + `9f9f98c3` |
+
+### Close-out hardening
+
+- `71033ff6` — Step 6 polish-pass backlog entry logged (later resolved).
+- `9f9f98c3` — `collect-factor-analysis.py` (8 /audit items + autogen-MD path split).
+- `23ddfdf6` — `evaluate_pv_results.py` (raise on missing consensus.json).
+- `9f7bfe0f` — `consolidate_pv_bootstrap_cis.py` (debug→warning + metadata provenance).
+- `f623652d` — `consolidate_paper_metrics.py` (schema validation + provenance).
+- `783f37c2` — Doc hygiene (h11 model line + 50m TP reconciliation notes).
+- `8949dc00` — Continuity: S6.1 RESOLVED + metrics_master drift logged.
+- `55c5c82c` — Continuity: Session 75 handoff block for Session 76 entry.
+
+### Parallel-agent close-out sweeps
+
+| Pass | Scope | Findings |
+|------|-------|----------|
+| Agent A | results/factor-analysis, phase3a-*, paper-eval, pairwise/ | Only the already-known factor-analysis bug |
+| Agent B | results/h{8,10,11,12}, retest/ | 3 narrative consistency issues (all fixed in `6cf99660`) |
+| Agent C | results/55maps-*, gold-standard-*, paper-tables/ | Zero Priority-1 findings |
+| Agent D | scripts/ aggregator scripts | 1 confirmed bug (pre-fixed) + 3 risk patterns (all hardened) |
+| /audit | scripts/collect-factor-analysis.py | 4 medium + 4 low items (all in `9f9f98c3`) |
+
+### Key decisions
+
+- **Option A over Option B** for the factor-analysis blanks (source
+  correction instead of README-only documentation). Option A
+  uncovered a schema-mismatch + mislabelling bug that
+  document-only would have missed.
+- **Split auto-MD path** for `collect-factor-analysis.py` after the
+  dry-run overwrote the hand-authored narrative. Auto target is now
+  `factor_analysis_results_autogen.md`; the hand-authored
+  `factor_analysis_results.md` is protected.
+- **No output regeneration in close-out**. Plan's non-goal explicitly
+  deferred deliberate regeneration of `metrics_master.csv/json` and
+  `bootstrap-cis-384px.json` to paper finalisation. Script patches
+  committed with outputs reverted to HEAD.
+- **Agent B's h10 sign-convention flag was wrong**; headline table
+  at line 36 was correct. Main-thread verification fixed the actual
+  bug at narrative line 97 instead.
+
+### Issues encountered
+
+- **Dry-run of `collect-factor-analysis.py` overwrote hand-authored
+  narrative** at `factor_analysis_results.md`. Recovered via git
+  checkout; mitigated by splitting the auto-write path.
+- **`metrics_master.csv` has 4 stale rows vs `metrics_master.json`**
+  (pro-high-text pool_size=10). Pre-existing; logged for Step 6.
+- **Obs 235 retracted-probe data still in the active working tree
+  seven months after retraction prose**. Fixed in `52404476` with
+  physical move to `archive/h10-h12-v1-retracted-probe/`. Obs 275
+  added to working-notes.
+
+### Results summary
+
+- Step 4 progress: 7 of 14 items DONE; 7 remaining (items 8–14).
+- Paper-citation layer complete for h8-v2, h10, Phase 2b retest,
+  h11, buffer-100m, paper-eval/mcc, factor-analysis.
+- Archive state: `archive/h10-h12-v1-retracted-probe/` added (7,988
+  files); ARCHIVE-MANIFEST updated.
+- Script state: 4 aggregator scripts emit provenance metadata and
+  fail loudly on schema mismatch.
+- Documentation state: scorecard §3.11 superseded; Step 6 backlog
+  updated; continuity doc has Session-75 handoff block for
+  Session 76.
+
+### Next session entry
+
+**Step 4 item 8** per scorecard §6: level-up
+`results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.md`
+(S effort, 25–35 min). Theme T1 anchor (Obs 268 flip-rate).
+
+### Contextual assumptions
+
+- The user's Session 73 approval of the comprehensive Step 4 pass
+  (not minimum-viable) held through Session 75, including scope
+  expansions during items 2 (retracted-probe archive) and 7
+  (Option A recovery).
+- Verifier agent + main-thread propose pattern was established in
+  Session 74 and re-validated throughout Session 75. Not optional
+  for future Step 4 items.
+- `planning/paper-writeup-continuity.md` is the single entry point
+  for Session 76. The "⚡ Start here" block and §"Session 75 status"
+  together carry the load-bearing context.

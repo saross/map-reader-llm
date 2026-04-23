@@ -5223,3 +5223,104 @@ agent dispatch, the calculus would invert.
 through `0fccf455`), no compaction, direct first-person observations
 throughout. Seven background agents dispatched; three returned
 verdicts that required correction.
+
+---
+
+## Session 75 Observations (2026-04-24, map-reader-llm)
+
+A 7-item Step-4 push + a /audit pass + a 4-agent parallel close-out
+sweep, 16 commits on `main`. Three observations about
+collaboration-with-AI-as-tool emerged.
+
+### The verifier pattern's error-catch rate is steady, not improving
+
+Across 7 Step-4 items, a fresh-context verifier agent found 2–3
+errors per item, every item:
+
+| Item | Verifier findings |
+|------|-------------------|
+| 1 h8-v2 | Scale-8 provenance error + "four of six" → "three of six" arithmetic |
+| 2 h10 | WBF ΔF1 range arithmetic + multiple wrong artefact paths + retracted-data scope issue |
+| 3 Phase 2b | Wrong model (`-preview` suffix) + wrong thinking level (HIGH vs minimal) + wrong p-value (0.862 vs 0.204 mis-copy) |
+| 4 h11 | Missing §E44 citation (single-pass UNINTENDED companion to §E43) |
+| 5 buffer-100m | PASS (rare) |
+| 6 MCC | 3 cross-pipeline F1 confusions (55-map F1 pulled into 384 px MCC rows) + phase2b T=0.3 MCC + approximation-where-exact-exists |
+| 7 factor-analysis | PASS on main draft; Option A investigation produced a separate 4-item correction set for the schema-mismatch bug |
+
+Seven items, ~15 verifier-caught errors total. The rate did not
+decline with session experience. Two implications: first, the
+pattern is load-bearing — skipping the verifier even for a "simple"
+consolidation item would have shipped a load-bearing error. Second,
+the errors' character varies systematically with task type: rebuild-
+from-scratch items produce provenance/scope errors; consolidation
+items produce cross-pipeline bleed (wrong F1 from a sibling tree).
+Future sessions should flag "this is a cross-pipeline consolidation"
+to the verifier so it weights cross-trace checks higher.
+
+### Parallel-agent sweeps at close-out work when scoped tightly
+
+The end-of-session close-out dispatched four Explore agents in
+parallel, each with a non-overlapping scope:
+
+| Agent | Scope | Findings |
+|-------|-------|----------|
+| A | results/factor-analysis/, phase3a-*, paper-eval/, pairwise/ | Only the already-known factor-analysis bug |
+| B | results/h{8,10,11,12}/, retest/ | 3 Priority-1 narrative consistency issues (real) + benign Priority-2 items |
+| C | results/55maps-*, gold-standard-*, paper-tables/ | Zero Priority-1 findings — every canonical-numbers claim clean |
+| D | scripts/ (aggregator scripts) | Confirmed the factor-analysis bug + 3 risk patterns in sibling aggregators |
+
+Four agents × ~30 seconds to brief; reports returned in ~1–4
+minutes with structured severity-tagged outputs. Net yield: 3 real
+Priority-1 issues + 3 risk patterns + extensive negative-finding
+coverage. The sweep's signal-to-noise was better than any individual
+verifier — agents returning PASS verdicts for most of their scope
+meant the remaining findings were concentrated. Agent C's negative
+finding is itself valuable: a future session can start from those
+trees without a re-audit.
+
+Key craft detail: each brief included an explicit severity rubric
+and a "report format" section requesting structured output. Without
+that structure, the reports would have been narrative prose taking
+longer to triage. With it, each was scannable in ~30 seconds and
+findings queued cleanly to foreground-fix or plan-mode-backlog.
+
+### Dry-runs of aggregator scripts can overwrite hand-authored narrative
+
+During Commit 1 of the close-out, dry-running the patched
+`collect-factor-analysis.py` regenerated
+`factor_analysis_results.md` — which had been the Item-7 hand-
+authored level-up (390 lines of narrative + tables) — and replaced
+it with a 91-line tables-only auto output. Recovery: `git checkout
+HEAD -- <path>` to restore, then change the script's auto-write
+target to `factor_analysis_results_autogen.md` so the hand-authored
+narrative is safe.
+
+The pattern is general. Any aggregator script that writes a
+consolidated output to a path that might later be level-up'd by
+hand has this risk. Three habits reduce it:
+
+1. **Before dry-running any aggregator**, `git status` the expected
+   output paths to see whether they're hand-authored.
+2. **After dry-running**, if output files changed, diff-check for
+   content loss before committing.
+3. **Split the paths**: auto-generated content goes to
+   `*_autogen.*`; hand-authored narrative stays at the plain path.
+   The script should reflect this split so future sessions inherit
+   the safety.
+
+Documented as Guardrail 6 in
+`planning/paper-writeup-continuity.md` §"⚡ Start here".
+
+**Session**: 2026-04-24, map-reader-llm. 16 commits (`f6d1cdb4`
+through `55c5c82c`). 11 agent dispatches (7 per-item verifiers + 4
+parallel close-out sweeps). One agent returned a confident-wrong
+verdict (Agent B's h10 sign-convention flag) that main-thread
+verification overturned — the Session-74 "verify the verifier"
+pattern held.
+**Relational texture**: Shawn's questions were directive and often
+caught omissions I would otherwise miss. The form "can we either
+correct the source or put this known error into a readme — where is
+it currently flagged?" was particularly productive: it asked a
+factual question ("where is it flagged?") and invited investigation
+of two responses (correct vs document) simultaneously. The question
+form did work that a narrower prompt would not have.

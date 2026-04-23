@@ -13027,3 +13027,103 @@ Report both tile-level MCC and object-level F1 separately; label them clearly as
 Search terms: Phase 2b tile-level MCC, H7 temperature sweep MCC, monotonic MCC temperature increase, tile-level vs object-level detection metrics, specificity climbs with temperature, consensus voting filter hallucinations, CRS bug analyse_consensus_sweep commit 8c8e101f, EPSG:4326 GeoJSON default auto-detect, MCC reconciles F1, Obs 274, empty-tile correct-rejection 47.8 %, paper-eval/mcc/phase2b/.
 
 ---
+
+## Observation 275: Retraction-in-prose does not guarantee retraction-in-filesystem — the Obs 235 arm sat in the active working tree for seven months before Session 75 caught it (2026-04-24)
+
+**Context**: Obs 235 (2026-04-14) formally retracted the H10/H12 v1
+library-composition arm after discovering that the proposer config
+(`detect_brief-text_pool_160_*`) had `include_example_images: false`
+and never transmitted the few-shot library to the API. The
+retraction text was explicit: "The library_hash difference between
+pools is bookkeeping only… The 'null result' is tautological because
+the library was not manipulated." The scorecard
+`planning/interim-docs-review.md` §3.11 was then written and
+inherited the filesystem inventory without cross-checking against
+Obs 235; it instructed a future writer to use `sweep_results.json`
+with `statistical_analysis.json` for the main table and
+`verifier_independence_probe.md` as a sub-section — which pointed
+directly at the retracted data.
+
+**Discovery**: During Session 75 Step-4 item 2 (h10 analysis_summary
+synthesis), I followed the scorecard's source list and wrote a draft
+that used the retracted JSONs. The verifier agent did not flag this
+— the agent was scoped to check the numbers against their source
+files, not the epistemic status of the source files. A file-tree
+mtime check revealed that `results/h10/{sweep_results.json,
+statistical_analysis.json, verifier_independence_probe.{json,md},
+k5_replicate_sweep.json, consensus_dedup_magnitude_diagnostic.json}`
+all had mtime 2026-04-14 (the retraction date), and the underlying
+raw detections at `outputs/h10/evaluation/pool_160_hp*/run_*/*.meta.json`
+all had `include_example_images: False` and timestamps 2026-04-11.
+
+### Physical scope of the retraction footprint
+
+- `outputs/h10/consensus/pool_160_hp{2hn6, 4hn4, 6hn2, 8hn8, 16hn16}/`
+  (25 tracked files)
+- `outputs/h10/evaluation/pool_160_hp*/run_{1..10}/`
+  (150 tracked files: 3 files × 5 configs × 10 runs)
+- `outputs/h10/verified/pool_160_hp*/` (10 files)
+- `outputs/h10/verifier-crops/pool_160_hp*/` (**7,771 tracked files**
+  — candidate crops for the verifier stage)
+- `outputs/h10/wbf/pool_160_hp4hn4*/` (21 files across 6 WBF variant
+  directories, all built from the retracted K=10 detections)
+- `results/h10/` — 9 files + a `wbf/` subdir with 3 more
+
+Total: **7,988 tracked files** that had been sitting in the active
+working tree for seven months post-retraction, unflagged.
+
+### Resolution
+
+Session 75 moved all 7,988 files to
+`archive/h10-h12-v1-retracted-probe/` (commit `52404476`) with a
+README documenting the retraction scope, the one partially-preserved
+finding (Obs 230 WBF-vs-greedy aggregation test at hp4hn4, valid as
+an aggregation-method test per Obs 235 §"PARTIAL CORRECTION"), and
+pointers to the clean cross-hypothesis coverage at H8 v2 Scale-8 /
+16 / 32 (hp4hn4 / hp8hn8 / hp16hn16) and H12 v2 R1 / R2 / R3
+(hp2hn6 / hp4hn4 / hp6hn2). `archive/ARCHIVE-MANIFEST.md` now
+includes the new entry. The active `results/h10/analysis_summary.md`
+is scoped to the clean primary experiment (4 pool sizes at hp4hn4)
+only, with a §"Scope note" and §"Preserved-for-archive" block
+flagging the retracted-probe data explicitly.
+
+### Methodological claim
+
+**A retraction in prose does not propagate to the filesystem.** Obs
+235 itself said "not used in any published analysis" — factually
+true at the time. But the files remained in-tree, and a downstream
+document (the scorecard) was written seven months later that treated
+them as valid sources. Without Shawn's "archive-never-delete"
+instinct surfacing as a Session 75 habit, plus the verifier-pattern
+catching anomalies per-item, the retracted data would have sunk
+into the paper's library-composition-null claim. The near-miss is
+the observation: retractions need a filesystem audit at the moment
+of retraction, not lazily at paper-writeup time.
+
+### Specific guardrail
+
+When retracting a run in future, the retraction commit should
+physically move the retracted data to an archive subdirectory (a
+`git mv` preserves the history). The retraction prose alone is
+necessary but not sufficient. The companion observation-level
+evidence is seven months of this latent bug waiting for someone to
+cite the files as valid sources — which both a scorecard writer
+(Session 74) and me (Session 75) did on the first attempt.
+
+### Related observations
+
+- Obs 235 — original retraction
+- Obs 230 — partially-preserved aggregation-method finding
+- Session 75 commits: `52404476` (archive move), `4b20b427` (h10
+  analysis_summary with retracted-probe scope note), `783f37c2` (doc
+  hygiene reconciliation notes elsewhere in the project)
+
+### Findable later
+
+Search terms: retracted-probe archival, Obs 235 filesystem audit,
+seven-month latent contamination, archive/h10-h12-v1-retracted-probe,
+retraction-in-prose vs retraction-in-filesystem, include_example_images false,
+scorecard §3.11 source list, verifier_independence_probe.md retraction,
+Session 75 close-out, paper-writeup-continuity guardrail 6.
+
+---

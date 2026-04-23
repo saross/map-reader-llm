@@ -7268,3 +7268,167 @@ former forces a check; the latter invites elaboration. The former has
 caught something important at least four times across sessions
 72–74 — a pattern worth naming, because the second form would have
 let each mistake stand.
+
+---
+
+## Session 75 Reflection — 2026-04-24 (map-reader-llm)
+
+A long session — 16 commits landed on main — that began as a
+straightforward continuation of Step 4 (level-up the interim-doc
+scorecard), acquired three unplanned threads (physical move of the
+Obs 235 retracted probe; factor-analysis 512 px → Phase 2b N=1
+relabel; a 4-script aggregator-hardening close-out), and ended with
+a continuity-doc update and a reflection. Across 7 Step-4 items and
+a /audit pass, the fresh-context verifier caught 2–3 errors per
+item, at least one of which was load-bearing every time. Items 1–7
+of the scorecard are now DONE; items 8–14 remain for the next
+session, with item 8 (Obs 268 crosstab level-up) pre-scoped as the
+entry point.
+
+### Prompt: "What surprised you about this session?"
+
+Two things. The first surprise was a latent one: the Obs 235
+retraction had been in working-notes for seven months, but the
+retracted-probe data itself — 7,977 tracked files under
+`outputs/h10/{consensus, evaluation, verified, verifier-crops, wbf}/`
+and 9 files under `results/h10/` — had remained in the active tree
+unflagged. The scorecard §3.11 itself pointed at
+`sweep_results.json` and `verifier_independence_probe.md` as
+authoritative sources for the h10 synthesis. If Shawn hadn't
+maintained the "archive never delete" instinct and the verifier
+pattern had caught the scope-level issue on the first pass, the
+paper would have cited retracted data as evidence of a library-
+composition null. Retraction-in-prose does not guarantee
+retraction-in-filesystem. This pattern — a known retraction's
+physical footprint not being cleaned up — is the kind of thing that
+compounds. The move to `archive/h10-h12-v1-retracted-probe/` with a
+README plus an ARCHIVE-MANIFEST entry plus a working-notes follow-up
+is the corrective, but the underlying lesson is that retractions
+need a filesystem audit, not just a prose entry.
+
+The second surprise was that one bug turned out to be two bugs in
+the factor-analysis output. Two rows labelled "T=0.7 vs T=1.0
+(512 px text/image)" had blank labels and zero F1 values — initially
+framed as "data-completeness gap" in the scorecard. Option A
+investigation revealed (a) the aggregator was reading `global_a` and
+`global_b` from permutation JSONs that use `condition_a` and
+`condition_b` — a silent schema mismatch that had zero-filled the
+two rows — AND (b) the "512 px" label was wrong; the source
+`condition_a.source.geojson` resolved to
+`outputs/retest/phase2b/track{1-image,2-text}/T{0.7,1.0}/run_1/` —
+i.e., 384 px Phase 2b retest single-pass, not 512 px. Same bug
+produced two distinct errors (a data-loss error and a
+mislabelling error) at the same rows. Hardening the script, fixing
+the JSON/CSV/MD, and relabelling took one commit; the pattern
+generalises to any aggregator that reads by a hard-coded key name.
+Agent D's sweep flagged three other scripts with the same pattern
+shape (no confirmed data loss, but the failure mode exists) — all
+hardened in close-out.
+
+### Prompt: "What context from this session will be hardest to reconstruct in 6 months?"
+
+Three.
+
+1. **Why a single dry-run can erase a hand-authored narrative**.
+   The `collect-factor-analysis.py` script's `write_outputs` function
+   regenerates `factor_analysis_results.md` as an auto-generated
+   tables-only output. The Item-7 level-up replaced that file's
+   content with a 390-line paper-citation narrative (exec summary +
+   methods + caveats + paper implications) at the same path. Then
+   the Commit 1 dry-run of the hardened script overwrote the
+   narrative back to 91-line tables. Reverting from git, splitting
+   the output path so auto goes to
+   `factor_analysis_results_autogen.md`, and adding a schema-
+   lockstep comment and a guardrail in the continuity doc fixed it.
+   A future reader seeing the split path without this context may
+   not understand why it exists — "why does this script write to a
+   non-obvious name?" The answer is "because the obvious name is a
+   hand-authored paper artefact that would otherwise be destroyed
+   on every re-run".
+2. **Why the sign in h10 analysis_summary line 97 looked wrong**.
+   Agent B flagged the headline table at line 36 (`+0.005 pool_020
+   vs pool_160`) as a sign error. Direct check: the table is
+   consistent with the h8-v2 / h12-v2 convention `ΔF1 = F1_a − F1_b`
+   and with the permutation JSON. Line 97 narrative, however, said
+   "ΔF1 = −0.005 pool_020 minus pool_160" — the arithmetic is wrong
+   if "pool_020 minus pool_160" is taken literally (0.727 − 0.722 =
+   +0.005). The fix was to line 97, not line 36. Agent B was half-
+   right: there was a sign inconsistency, but it was in the
+   narrative, not the table. A future reader seeing only the diff
+   would think "agent caught sign error in headline table" — the
+   actual lesson is "agent was wrong about which location had the
+   bug; main-thread verification caught this". This is exactly the
+   sub-agent-verdict-as-draft pattern that Session 74 named.
+3. **The metrics_master.csv vs metrics_master.json drift is pre-
+   existing, not a Session-75 regression**. The CSV has 4 rows
+   (pro-high-text pool_size=10) that aren't in the JSON. Both
+   committed at HEAD. During the Commit 4 dry-run of
+   `consolidate_paper_metrics.py`, the regenerated CSV had 100 rows
+   (matching JSON) — the 4 extra rows are from an earlier run that
+   was committed alongside a more-recently-regenerated JSON. The
+   close-out commit logged this as a Step 6 polish-pass item;
+   deliberate regeneration during paper finalisation will bring
+   them to parity. A future reader investigating the drift may
+   wonder "who introduced this?" — the answer is "pre-existing,
+   surfaced during hardening dry-run, deferred per the plan's
+   output-regeneration non-goal".
+
+### Prompt: "What was different about this session compared to recent ones?"
+
+Scale and discipline. Session 73 was Steps 1–3 (warm-up, doc review,
+meta-findings synthesis). Session 74 was Steps 1–3 again (mostly
+the scorecard, meta-findings, and a CRS bugfix). Session 75 was 7
+full Step-4 items (five L-effort syntheses, two M-effort reports,
+and a level-up) plus the close-out pass. Each Step-4 item followed the
+same structure: load context → extract headline numbers → draft →
+dispatch verifier → apply corrections → commit. The pattern
+stabilised around item 2 and held through item 7; the close-out
+added a /audit pass and four aggregator-hardening commits on top.
+
+Discipline emerged around three habits:
+
+1. **Checkpoint-commit after each item** rather than batch. 15 of 16
+   Session-75 commits were ≤ 1 item of work, and a third of them
+   (the close-out) were ≤ 1 file of work. This kept the reviewable-
+   unit small and made the verifier-catch rate visible: 2–3 errors
+   per item, every item.
+2. **Verify the verifier**. Agent B flagged 3 Priority-1 issues;
+   one was a sign-convention misread (the bug was elsewhere). Main-
+   thread direct-filesystem check confirmed which 2 were real and
+   the 3rd was a verifier error. This is the Session-74 lesson
+   operationalised — sub-agent outputs are drafts, including
+   verifier outputs, and the verification-of-verifier layer caught
+   1 of 3 agent verdicts this session.
+3. **Plan-mode for the close-out**. The /audit skill found 8
+   hardening items in one script; Agent D surfaced 3 risk patterns
+   in three more; the doc hygiene items added two more. Rather than
+   fold them all into one sprawling commit, the user invoked plan
+   mode and I drafted a 6-commit sequence. The plan file is at
+   `~/.claude/plans/i-d-like-to-clear-snazzy-pie.md`; the plan was
+   approved and all 6 commits landed in the expected sequence.
+
+A distinctive relational note: Shawn's question "can we either
+correct the source JSON or put this known error into a readme in
+the folder? where is it currently flagged?" triggered the Option A
+investigation that uncovered the 512 px → Phase 2b N=1 mislabelling.
+Without that question, my level-up would have committed a caveat
+around the blanks and moved on. The question's form — "can we fix
+this or document it" — invited investigation of which; the default
+bias-to-document would have missed the underlying bug. Noting
+because the form was productive in a way "what about the blanks?"
+would not have been.
+
+**Session**: 2026-04-24, map-reader-llm. 16 commits (`f6d1cdb4`
+through `55c5c82c`), pushed to `origin/main`. 11 Explore / general-
+purpose agent dispatches (7 per-item verifiers, 4 parallel close-out
+sweeps) — none had final-say verdict authority; the verification-of-
+verifier pattern held throughout.
+**Key moment**: Shawn's question "we re-ran these retracted runs" —
+which turned out to be partially true (not an h10-framed re-run but
+coverage via H8 v2 + H12 v2) — triggered the 2-agent background
+sweep that resolved the scope question. The filesystem-audit
+discipline that followed (moving 7,988 files to
+`archive/h10-h12-v1-retracted-probe/`) was a direct consequence.
+**Pattern worth naming**: "retraction-in-prose ≠ retraction-in-
+filesystem". Add to the guardrails list when a future retraction
+happens.

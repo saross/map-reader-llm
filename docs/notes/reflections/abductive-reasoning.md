@@ -4195,3 +4195,110 @@ question is actually about**. Code-path traces need runtime
 verification; number reports need mechanism verification; structural
 claims about the data need scope re-verification against the actual
 data.
+
+---
+
+## Session 75 — 2026-04-24 (map-reader-llm): Two bugs in one row, and a surprising-fact-as-a-question
+
+### Thread 1 — "Two blank rows" was one bug producing two distinct errors
+
+**Surprising fact (noticed during Item 7 factor-analysis level-up)**:
+The scorecard §3.19 flagged two rows in
+`results/factor-analysis/factor_analysis_results.json` as having
+"blank Temperature rows 42–43… data-completeness bug that should be
+fixed or flagged." My initial belief, inherited from the scorecard
+and confirmed by reading the JSON: these are two rows where the
+aggregator failed to populate `label_a` / `label_b` / `f1_a` /
+`f1_b`, but the `delta_f1` and `p_value` fields are populated and
+valid. A caveat in the level-up would document the gap and move on.
+
+**Probe 1 (Shawn-triggered)**: Shawn asked: "can we either correct
+the source JSON or put this known error into a readme in the folder?
+where is it currently flagged?" The question's form invited
+investigation of two responses simultaneously.
+
+**Probe 2 (walking up the source-file chain)**: The aggregator
+`scripts/collect-factor-analysis.py` at lines 77–108 reads
+`pairwise_permutation_result.json` files at
+`results/pairwise/factor-analysis-20m/temp-512px-{text,image}/`,
+extracting `data.get("global_a", {})` and `data.get("global_b",
+{})`. Checking those source JSONs directly: `global_a` and
+`global_b` are empty dicts `{}`; the per-condition data lives under
+`condition_a` and `condition_b` instead. **Schema mismatch
+discovered.** The aggregator's `.get("global_a", {})` silently
+zero-filled two rows. That was bug 1.
+
+**Probe 3 (reading the condition_a.source.geojson path)**: The
+recovered data revealed the `source` field on each condition block:
+`outputs/retest/phase2b/track{1-image,2-text}/T{0.7,1.0}/run_1/
+detections_T*_run01.geojson`. **Those paths are Phase 2b retest
+runs at 384 px single-pass, not 512 px.** The factor-analysis
+output's row labels ("T=0.7 vs T=1.0 (512 px text)" and "(512 px
+image)") are incorrect. The actual data is 384 px N=1 Phase 2b.
+That was bug 2.
+
+**Belief revision**: "Two blank rows are a data-completeness gap"
+→ "Two blank rows are the surface symptom of a schema-mismatch bug
+in the aggregator AND a provenance mislabelling — one root cause
+produces two distinct errors at the same rows." The fix (Option A)
+restored the labels and F1 values, renamed the rows to "(N=1, Phase
+2b text/image)", patched the aggregator to prefer
+`condition_a`/`condition_b` (with `global_a`/`global_b` fallback
+for forward compatibility), and added a caveat explaining the
+history.
+
+### Thread 2 — The question-form as investigation-trigger
+
+Shawn's question — "can we either correct the source JSON or put
+this known error into a readme — where is it currently flagged?" —
+did work that my default-to-document response would not have. Three
+elements:
+
+1. **The "or" invited parallel-track investigation**. The factual
+   question ("where is it flagged?") ran alongside the choice
+   question ("correct or document?"). Answering the factual part
+   required walking up to the source data, which uncovered the
+   bugs.
+2. **The "correct the source JSON" option primed a higher bar**
+   for closing the issue. If only "document in a readme" had been
+   on the table, I would have written a caveat about the blanks.
+   With "correct" as a candidate, I had to evaluate whether
+   correction was feasible, which required knowing what the actual
+   source data was.
+3. **The "where is it currently flagged" forced an inventory**.
+   Listing the three places (MD caveats, scorecard row, JSON
+   itself) revealed that the JSON's labels and f1_a/b fields
+   themselves are a form of flag — empty strings and zeros are
+   telling readers something. That framing made the data-
+   completeness gap feel like a temporary placeholder rather than
+   a permanent feature.
+
+**Generalisable pattern**: when the default response to a flagged
+issue is "document the caveat," a question that invites choice
+between correction and documentation is more productive than a
+question that invites only documentation. The choice forces the
+actor to estimate the correction cost, which requires understanding
+the source better, which is where discoveries happen.
+
+### Shared root cause and mitigation
+
+Both threads share a root cause: **aggregator-produced outputs are
+abstractions over source data, and abstractions leak**. The
+scorecard §3.19 treated the blank rows as the final shape of the
+data. The aggregator treated `global_a` as the key name. Both
+assumptions were correct at some prior time and wrong now. The
+mitigation is not "trust no abstraction" — that would be
+paralysing — but "verify at the abstraction level appropriate to
+the question": scorecard claims need filesystem audits; aggregator
+claims need source-schema audits; narrative claims need numeric
+re-checks. Session 75 did all three across 7 Step-4 items and
+caught errors in each.
+
+The Session-74 lesson ("agent outputs are drafts, not verdicts")
+generalises here: **all abstractions over data are drafts**. The
+scorecard, the aggregator output, the verifier report, the hand-
+authored narrative — each is a view at a particular abstraction
+level, each can be wrong about the level below, each needs
+verification against the level it claims to represent. Session 75's
+verifier-catch rate of 2–3 errors per item is this abstraction-leak
+count in operation.
