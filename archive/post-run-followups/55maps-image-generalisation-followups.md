@@ -1,4 +1,14 @@
-# 55-Map Image Generalisation — Post-Run Follow-ups
+# SUPERSEDED 2026-04-24
+
+**Reason**: Follow-up items resolved and consolidated.
+
+**See**: `results/meta-findings-summary.md` (2026-04-23; folds Obs 262-273 into paper-Discussion shape, covering all post-run follow-up items)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## 55-Map Image Generalisation — Post-Run Follow-ups
 
 **Status**: Open list. Created 2026-04-18 after the run completed at 05:10 UTC.
 **Run artefacts**: `outputs/55maps-image-generalisation/` + `configs/run-configs/55maps_image_generalisation_*.md`

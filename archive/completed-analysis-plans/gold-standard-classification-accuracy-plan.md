@@ -1,4 +1,14 @@
-# Subtype-classification accuracy on the 4-map gold-standard: analysis plan
+# SUPERSEDED 2026-04-24
+
+**Reason**: Analysis executed.
+
+**See**: `results/gold-standard-subtype-classification/report.md` (exemplar-quality report; weighted-F1 = 0.887 paper headline)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Subtype-classification accuracy on the 4-map gold-standard: analysis plan
 
 **Date**: 2026-04-20
 **Author**: Claude (planning agent), reviewed by Shawn

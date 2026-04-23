@@ -1,4 +1,14 @@
-# 55-Map Text HIGH Re-run — Plan
+# SUPERSEDED 2026-04-24
+
+**Reason**: Run executed 2026-04-18.
+
+**See**: `outputs/55maps-text-high-generalisation/post_run_report.md` (and the active cross-track summary `results/55maps-cross-track-comparison/report.md`)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## 55-Map Text HIGH Re-run — Plan
 
 **Created**: 2026-04-18
 **Purpose**: Re-execute the 2026-04-10 text HIGH generalisation run

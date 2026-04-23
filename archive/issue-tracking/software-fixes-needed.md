@@ -1,4 +1,14 @@
-# Software Fixes Needed
+# SUPERSEDED 2026-04-24
+
+**Reason**: Fixes implemented (see commits from 2026-04 onward).
+
+**See**: Git history — no single replacement doc. Key fixes landed in various scripts and the prompt-config pipeline; all DONE-marked items correspond to merged commits.
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Software Fixes Needed
 
 Issues identified during Sessions 2026-04-08/09 that require code
 changes before the 55-map production run.
@@ -13,9 +23,11 @@ corrupts coordinates by a factor of 512/384 = 1.33, producing
 run produced zero TPs.
 
 **Fix options** (in order of preference):
+
 1. Auto-detect tile size from the first tile image in the manifest
 2. Make `--tile-size` mandatory when `--tiles-dir` differs from
    the default `TILES_DIR`
+
 3. Add a validation check comparing tile image dimensions against
    the configured tile size, erroring on mismatch
 
@@ -110,7 +122,6 @@ line 1769)
 **Reference**: 55-map generalisation run, 2026-04-09
 
 ## 6. ~~Flex mode (`--service-tier`) support~~ — DONE (2026-04-09)
-
 
 Added `--service-tier {standard,flex}` to `4_detect_mounds_batch.py`,
 `run_pv.py verify`, and `lib_verifier.py`. Flex gives 50% discount

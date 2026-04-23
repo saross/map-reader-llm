@@ -1,4 +1,14 @@
-# Design: `run_pv.py cleanup` Subcommand
+# SUPERSEDED 2026-04-24
+
+**Reason**: Feature implemented.
+
+**See**: `scripts/run_pv.py` (cleanup subcommand)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Design: `run_pv.py cleanup` Subcommand
 
 ## Problem
 
@@ -135,15 +145,15 @@ for attempt in range(1, max_attempts + 1):
 ### Step 4: Merge back in place
 
 ```python
-# Backup the existing probabilities.json
+## Backup the existing probabilities.json
 backup = verified_dir / f"probabilities.json.pre-cleanup-{timestamp}.backup"
 shutil.copy(verified_dir / "probabilities.json", backup)
 
-# Merge new results
+## Merge new results
 probs["results"].update(new_results)
 probs["total_results"] = len(probs["results"])
 
-# Add audit trail
+## Add audit trail
 probs.setdefault("cleanup_history", []).append({
     "timestamp": iso_now(),
     "candidates_recovered": len(new_results),

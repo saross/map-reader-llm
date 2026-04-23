@@ -1,4 +1,14 @@
-# Plan: Dawid-Skene Latent Truth Model for Corrected Metrics
+# SUPERSEDED 2026-04-24
+
+**Reason**: Analysis executed (D-S v1 + v2 both documented).
+
+**See**: `results/55maps-image-generalisation/ds-human-crosstab/report.md` (v1) and `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/report.md` (v2). Both confirm 2-annotator structural inadequacy (AUC=0.500 regardless of prior; Obs 273).
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Plan: Dawid-Skene Latent Truth Model for Corrected Metrics
 
 ## Motivation
 
@@ -71,11 +81,11 @@ of mostly-empty cells, requiring sparse representation.
 We can initialise D-S with strong priors from known error rates:
 
 ```python
-# Student confusion matrix (from Sobotkova et al. 2023 QA)
+## Student confusion matrix (from Sobotkova et al. 2023 QA)
 student_sensitivity = 0.95  # P(student=1 | true=1) — catches 95%
 student_specificity = 1.00  # P(student=0 | true=0) — no false positives
 
-# VLM confusion matrix (from gold standard evaluation)
+## VLM confusion matrix (from gold standard evaluation)
 vlm_sensitivity = 0.73     # P(vlm=1 | true=1) — recall at 50m
 vlm_specificity = 0.86     # P(vlm=0 | true=0) — 1 - FPR (approximate)
 ```

@@ -1,4 +1,14 @@
-# WBF Investigation — Session Continuity Document
+# SUPERSEDED 2026-04-24
+
+**Reason**: Session closed; findings consolidated into Obs 228-232.
+
+**See**: `docs/notes/reflections/working-notes.md` Observations 228-232 (WBF variant study, consensus-dedup, superseded-pairwise archival)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## WBF Investigation — Session Continuity Document
 
 **Date**: 2026-04-13
 **Session scope**: Obs 228 dedup audit → Decision 26 WBF adoption → Obs 230–232 WBF validation and buffer-sensitivity findings → critical correction on canonical pipeline

@@ -1,4 +1,14 @@
-# Pre-Launch Audit — 55-Map Text MIN Generalisation Run
+# SUPERSEDED 2026-04-24
+
+**Reason**: Run completed 2026-04-18; this configs/ copy is a duplicate.
+
+**See**: `configs/run-configs/55maps_text_min_generalisation_post_run_report.md` (primary) and the outputs/ sibling
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Pre-Launch Audit — 55-Map Text MIN Generalisation Run
 
 **Audit date**: 2026-04-18
 **Auditor**: Claude Code via `/audit-config` skill (+ `/audit` for YAML + MD)
@@ -252,12 +262,12 @@ cost-optimal text recommendation from HIGH to MIN.
 
 ```bash
 cd /home/shawn/Code/map-reader-llm
-# Code audit (YAML + MD)
+## Code audit (YAML + MD)
 claude /audit \
     configs/run-configs/55maps_text_min_generalisation.yaml \
     configs/run-configs/55maps_text_min_generalisation_pre_launch_audit.md
 
-# Pre-launch config audit
+## Pre-launch config audit
 claude /audit-config "Hypothesis: 55-map text MIN thinking \
     generalisation; config: configs/run-configs/\
     55maps_text_min_generalisation.yaml; factor: thinking_level"

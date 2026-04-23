@@ -1,4 +1,14 @@
-# Enable browser automation / DOM inspection for Claude Code
+# SUPERSEDED 2026-04-24
+
+**Reason**: Tool setup completed.
+
+**See**: N/A — one-off infrastructure task; no replacement doc. Setup outcome: Playwright MCP enabled for debugging sessions.
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Enable browser automation / DOM inspection for Claude Code
 
 **Created**: 2026-04-19
 **Purpose**: Install Playwright MCP so a future Claude Code session
@@ -58,7 +68,7 @@ The MCP server list is read at startup. Quit and relaunch.
 
 In a fresh Claude Code session, ask:
 
-> "Navigate to http://localhost:8501, take a screenshot, and
+> "Navigate to <http://localhost:8501,> take a screenshot, and
 > report the title of the page."
 
 (Have the Streamlit app running first — see below.)
@@ -86,7 +96,7 @@ globally, move the `mcpServers` entry to `~/.claude/settings.json`.
 
 ## Workflow for GH issue #7 (after install)
 
-Issue: https://github.com/saross/map-reader-llm/issues/7
+Issue: <https://github.com/saross/map-reader-llm/issues/7>
 (keyboard-shortcut second-stage failure on subsequent clusters)
 
 ### 1. Launch Streamlit locally
@@ -97,14 +107,14 @@ cd /home/shawn/Code/map-reader-llm
     --threshold-m 75
 ```
 
-This gives you a page at `http://localhost:8501` with the review
+This gives you a page at `<http://localhost:8501`> with the review
 UI live. Leave it running.
 
 ### 2. In a fresh Claude Code session, task Claude
 
 Suggested prompt:
 
-> Use Playwright to navigate to http://localhost:8501. Advance to
+> Use Playwright to navigate to <http://localhost:8501.> Advance to
 > the second cluster (by clicking either `k: Keep all` or
 > `m: Merge` on the first, then either pressing the subtype or
 > cancelling as appropriate). On the second cluster, press `m` to
@@ -150,7 +160,7 @@ commit message when closing #7.
 
 ## References
 
-- Playwright MCP: https://github.com/microsoft/playwright-mcp
-- Playwright MCP docs: https://playwright.dev/docs/getting-started-mcp
-- Claude Code MCP integration: https://code.claude.com/docs/en/mcp
-- GitHub issue #7: https://github.com/saross/map-reader-llm/issues/7
+- Playwright MCP: <https://github.com/microsoft/playwright-mcp>
+- Playwright MCP docs: <https://playwright.dev/docs/getting-started-mcp>
+- Claude Code MCP integration: <https://code.claude.com/docs/en/mcp>
+- GitHub issue #7: <https://github.com/saross/map-reader-llm/issues/7>

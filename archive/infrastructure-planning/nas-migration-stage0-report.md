@@ -1,4 +1,14 @@
-# NAS Migration — Stage 0 Completion Report
+# SUPERSEDED 2026-04-24
+
+**Reason**: Stage-0 verification complete (this is the intermediate report).
+
+**See**: `planning/nas-migration-plan.md` (active plan continues in later stages)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## NAS Migration — Stage 0 Completion Report
 
 **Run**: 2026-04-20T13:35+10:00 (AEST)
 **Agent**: Stage 0 background verification (read-only)

@@ -1,4 +1,14 @@
-# Pre-Launch Audit — 55-Map Image Generalisation Run
+# SUPERSEDED 2026-04-24
+
+**Reason**: Run completed 2026-04-18 at 05:10 UTC.
+
+**See**: `outputs/55maps-image-generalisation/post_run_report.md`
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Pre-Launch Audit — 55-Map Image Generalisation Run
 
 **Audit date**: 2026-04-18
 **Auditor**: Claude Code via `/audit-config` skill (+ `/audit` for launcher code)
@@ -180,12 +190,12 @@ text 0.790 at 50 m ≈ −0.025 attenuation).
 
 ```bash
 cd /home/shawn/Code/map-reader-llm
-# code audit
+## code audit
 claude /audit scripts/run_generalisation.py \
               configs/run-configs/55maps_image_generalisation.yaml \
               configs/run-configs/README.md
 
-# pre-launch config audit
+## pre-launch config audit
 claude /audit-config "Hypothesis: 55-map image generalisation; \
                       config: configs/run-configs/55maps_image_generalisation.yaml"
 ```

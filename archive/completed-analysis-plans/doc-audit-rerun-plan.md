@@ -1,4 +1,14 @@
-# Documentation Audit Re-run Plan
+# SUPERSEDED 2026-04-24
+
+**Reason**: Re-audit completed 2026-04-21.
+
+**See**: `results/documentation-audit/audit-summary.md` + `verification-2026-04-21.md` (fresh-context audit; 82/85 claims PASS)
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Documentation Audit Re-run Plan
 
 **Created**: 2026-04-19
 **Purpose**: Produce a corrected replacement for the documentation

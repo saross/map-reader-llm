@@ -1,4 +1,14 @@
-# Pre-Launch Audit — 55-Map Text HIGH Generalisation Re-run
+# SUPERSEDED 2026-04-24
+
+**Reason**: Run completed 2026-04-19; this configs/ copy is a duplicate.
+
+**See**: `configs/run-configs/55maps_text_high_generalisation_post_run_report.md` (primary) and the outputs/ sibling
+
+This document is preserved for audit / historical reference. Its original content follows below.
+
+---
+
+## Pre-Launch Audit — 55-Map Text HIGH Generalisation Re-run
 
 **Audit date**: 2026-04-19
 **Auditor**: Claude Code via `/audit-config` skill (+ `/audit` for YAML + MD)
@@ -305,12 +315,12 @@ before acceptance.
 
 ```bash
 cd /home/shawn/Code/map-reader-llm
-# Code audit (YAML + MD)
+## Code audit (YAML + MD)
 claude /audit \
     configs/run-configs/55maps_text_high_generalisation.yaml \
     configs/run-configs/55maps_text_high_generalisation_pre_launch_audit.md
 
-# Pre-launch config audit (dry-run on sapphire)
+## Pre-launch config audit (dry-run on sapphire)
 claude /audit-config "Hypothesis: 55-map text HIGH thinking \
     generalisation re-run; config: configs/run-configs/\
     55maps_text_high_generalisation.yaml; factor: thinking_level"
