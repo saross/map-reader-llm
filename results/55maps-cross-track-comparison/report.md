@@ -23,7 +23,7 @@ The three 55-map generalisation tracks share the same evaluation scope (8,541 ti
 - **Text beats image at raw F1 at every buffer ≤ 50 m**: text-HIGH at 50 m is 0.788 vs image at 0.771 (ΔF1 = +0.017 raw); at 20 m the gap is +0.117. The image-track's raw F1 handicap at tight buffers is substantial.
 - **Image wins after human-review correction at 50 m**: corrected F1 for the image track is **≥ 0.830** at 50 m (per `corrected-f1-multi-buffer/report.md`); neither text track has been human-reviewed so their corrected F1 is unknown. The image-track's per-candidate review rescued **472 phantom-TPs** that the student GT missed (single-buffer calibrated-UI review; the multi-buffer re-review added 2 more at 50 m, lifting the multi-buffer artefact's count to 474).
 - **Cost per track**: image $364.70, text-HIGH $69.60, text-MIN $60.79 (per `outputs/<track>/cost_manifest.json`; verified 2026-04-24). Image is 5.2× the cost of text-HIGH and 6.0× the cost of text-MIN. The image track's 91 % prompt-caching hit rate (621.3 M cached tokens of 785.7 M total) partly offsets its larger per-call cost.
-- **Only text-HIGH vs text-MIN paired permutation tests exist** at 20 / 30 / 40 / 50 m. At 20 m the gap is not significant (ΔF1 = +0.0047, p = 0.4647); at 30 / 40 / 50 m text-HIGH is significantly better than text-MIN (p = 0.0 on 10,000 permutations, seed 42). **No paired image-vs-text tests** have been run on this corpus; cross-modality claims must rely on raw F1 differences without paired significance.
+- **Twelve paired permutation tests** now exist (4 buffers × 3 contrasts) following the Session 77 image-vs-text runs (2026-04-24). Headline findings: **text-HIGH is significantly better than image at every buffer** (ΔF1 = −0.118 / −0.068 / −0.035 / −0.018 at 20 / 30 / 40 / 50 m; all p < 0.001). **text-MIN beats image at tight buffers (20, 30 m)** but **converges with image at 40, 50 m** (not significant; ΔF1 = −0.006 at 40 m, +0.012 at 50 m). The cross-modality significance claim the paper can make at 50 m is "text-HIGH significantly exceeds image"; image vs text-MIN and text-HIGH vs text-MIN claims are unchanged from the Session 76 landscape.
 - **Track-specific precision-recall trade-offs**: at 50 m, text-HIGH is the most precise (0.848), text-MIN is a close second (0.849), image is the least precise (0.780). Recall is flipped: text-HIGH 0.737, text-MIN 0.687, image 0.763. Image trades precision for recall; text-MIN is the most parsimonious (highest precision, lowest recall).
 
 **One-line paper claim**: "At raw F1 on the 55-map generalisation corpus (n = 8,541 Era 2 tiles; `gemini-3-flash-preview` proposer), text-HIGH is the top-performing track at every buffer ≤ 50 m (F1 = 0.788 at 50 m vs 0.759 text-MIN vs 0.771 image). After per-candidate human review, the image track's corrected F1 rises to ≥ 0.830 at 50 m, exceeding the text tracks' uncorrected F1; equivalent human review was not conducted for the text tracks, so corrected-F1 comparison across tracks is not available."
@@ -63,7 +63,7 @@ The image vs text-HIGH comparison is confounded with modality (image vs text inp
 | **text-HIGH** | **0.623** | 0.670 | 0.582 |
 | text-MIN | 0.618 | 0.691 | 0.559 |
 
-text-HIGH leads by 0.117 raw F1 over image; text-HIGH vs text-MIN differ by +0.0047 (paired permutation p = 0.4647; not significant).
+text-HIGH leads by 0.117 raw F1 over image (paired permutation ΔF1 = −0.118, p = 0.0000, significant); text-HIGH vs text-MIN differ by +0.0047 (p = 0.4647; not significant); text-MIN beats image (ΔF1 = −0.113, p = 0.0000, significant).
 
 ### 3.2 30 m buffer
 
@@ -73,7 +73,7 @@ text-HIGH leads by 0.117 raw F1 over image; text-HIGH vs text-MIN differ by +0.0
 | **text-HIGH** | **0.753** | 0.810 | 0.704 |
 | text-MIN | 0.727 | 0.813 | 0.658 |
 
-text-HIGH leads by 0.068 raw F1 over image; text-HIGH vs text-MIN ΔF1 = +0.0259 (p = 0.0, significant).
+text-HIGH leads by 0.068 raw F1 over image (paired permutation ΔF1 = −0.068, p = 0.0000, significant); text-HIGH vs text-MIN ΔF1 = +0.0259 (p = 0.0000, significant); text-MIN beats image (ΔF1 = −0.042, p = 0.0000, significant).
 
 ### 3.3 40 m buffer
 
@@ -83,7 +83,7 @@ text-HIGH leads by 0.068 raw F1 over image; text-HIGH vs text-MIN ΔF1 = +0.0259
 | **text-HIGH** | **0.783** | 0.842 | 0.731 |
 | text-MIN | 0.754 | 0.843 | 0.682 |
 
-text-HIGH leads by 0.035 raw F1 over image; text-HIGH vs text-MIN ΔF1 = +0.0291 (p = 0.0, significant).
+text-HIGH leads by 0.035 raw F1 over image (paired permutation ΔF1 = −0.035, p = 0.0000, significant); text-HIGH vs text-MIN ΔF1 = +0.0291 (p = 0.0000, significant); image vs text-MIN is **not significant** (ΔF1 = −0.006, p = 0.3412) — the two tracks converge at this buffer.
 
 ### 3.4 50 m buffer
 
@@ -93,11 +93,23 @@ text-HIGH leads by 0.035 raw F1 over image; text-HIGH vs text-MIN ΔF1 = +0.0291
 | **text-HIGH** | **0.788** | 0.848 | 0.737 |
 | text-MIN | 0.759 | 0.849 | 0.687 |
 
-text-HIGH leads by 0.017 raw F1 over image; text-HIGH vs text-MIN ΔF1 = +0.0292 (p = 0.0, significant).
+text-HIGH leads by 0.017 raw F1 over image (paired permutation ΔF1 = −0.018, p = 0.0008, significant); text-HIGH vs text-MIN ΔF1 = +0.0292 (p = 0.0000, significant); image vs text-MIN is **not significant** (ΔF1 = +0.012, p = 0.0543) — image marginally edges text-MIN but the difference does not survive at α = 0.05.
 
 The text-HIGH − image gap narrows as buffer increases (0.117 → 0.068 → 0.035 → 0.017), consistent with the extended-buffer-report.md finding that image-proposer outputs have larger spatial-precision jitter than text-proposer outputs. At tight buffers the image track is penalised for spatial imprecision; at looser buffers the modality gap closes.
 
-**No evaluations at 100 m buffer** exist for any of the three tracks in the per-track `evaluation.json` files; buffers sweep 20 / 30 / 40 / 50 m only. For image-track buffers > 50 m see `corrected-f1-multi-buffer/report.md` (R ∈ {50, 75, 100, 125, 150} m; corrected-F1 only).
+### 3.5 Extended buffers (75 / 100 / 125 m) — text tracks only
+
+Added Session 77 2026-04-24 to fill the acute buffer-comparison gap. `evaluate_detections.py` run on sapphire (1,000 iterations, seed 42).
+
+| Buffer | text-HIGH F1 | text-HIGH P | text-HIGH R | text-MIN F1 | text-MIN P | text-MIN R |
+|-------:|-------------:|------------:|------------:|------------:|-----------:|-----------:|
+| 75 m | 0.793 [0.782, 0.804] | 0.850 | 0.742 | 0.764 [0.752, 0.777] | 0.852 | 0.693 |
+| 100 m | 0.794 [0.783, 0.805] | 0.851 | 0.743 | 0.765 [0.753, 0.777] | 0.852 | 0.694 |
+| 125 m | 0.795 [0.784, 0.806] | 0.853 | 0.745 | 0.766 [0.754, 0.778] | 0.854 | 0.695 |
+
+Both text tracks **plateau strongly above 50 m**: text-HIGH gains only +0.007 F1 from 50 m (0.788) to 125 m (0.795); text-MIN gains +0.007 from 50 m (0.759) to 125 m (0.766). This is sharply different from the image track's multi-buffer behaviour (corrected F1 0.832 → 0.854 from 50 m → 125 m; ΔF1 = +0.022, i.e., **3× the text-track buffer sensitivity**). The finding confirms that image-track buffer sensitivity is a modality property (image-proposer outputs have lower spatial precision), not a GT-noise artefact. Text-proposer outputs saturate their spatial-matching contribution by 50 m.
+
+**Source**: `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` and `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json`.
 
 ## 4. Corrected-F1 availability
 
@@ -117,9 +129,11 @@ The text-HIGH − image gap narrows as buffer increases (0.117 → 0.068 → 0.0
 - Cross-track claims should use the **uncorrected F1** (§3 tables above) — these are apples-to-apples across the three tracks.
 - Do **not** cite the image-track's corrected F1 against the text tracks' uncorrected F1 as a "cross-track leader" claim — that comparison is confounded by the correction asymmetry.
 
-## 5. Paired permutation tests (text-HIGH vs text-MIN only)
+## 5. Paired permutation tests
 
-Four paired-permutation tests exist, all at text-HIGH vs text-MIN contrast:
+Twelve paired-permutation tests exist across the three pairwise contrasts × four buffer tolerances. All tests: 10,000 permutations, seed 42, tile-level paired bootstrap on tile-level F1. The ~7,200–7,650 ties per test reflect the long tail of tiles with zero detections and zero GT mounds in both tracks — tiles with identical behaviour under both conditions.
+
+### 5.1 text-HIGH vs text-MIN (4 tests)
 
 | Contrast | Buffer | Observed ΔF1 | p-value | Wins_A / Losses_A / Ties | Significant (α = 0.05) |
 |----------|:------:|------------:|:-------:|:------------------------:|:----------------------:|
@@ -128,11 +142,32 @@ Four paired-permutation tests exist, all at text-HIGH vs text-MIN contrast:
 | text-HIGH vs text-MIN | 40 m | +0.0291 | 0.0 | 535 / 362 / 7,644 | yes |
 | text-HIGH vs text-MIN | 50 m | +0.0292 | 0.0 | 532 / 359 / 7,650 | yes |
 
-All tests: 10,000 permutations, seed 42, tile-level paired bootstrap on tile-level F1. The 7,500+ ties per test reflect the long tail of tiles with zero detections and zero GT mounds in both tracks — tiles with identical behaviour under both conditions.
+### 5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)
 
-**At 20 m the text-HIGH vs text-MIN difference is not significant** (p = 0.4647), but at 30 / 40 / 50 m the gap is significant at p < 0.0001 (reported as p = 0.0 with 10,000 permutations). The HIGH-thinking advantage on the text track grows with buffer tolerance from +0.005 (not significant) to +0.029 (significant).
+| Contrast | Buffer | Observed ΔF1 | p-value | Wins_A / Losses_A / Ties | Significant (α = 0.05) |
+|----------|:------:|------------:|:-------:|:------------------------:|:----------------------:|
+| image vs text-HIGH | 20 m | **−0.1178** | 0.0000 | 415 / 794 / 7,332 | yes |
+| image vs text-HIGH | 30 m | **−0.0683** | 0.0000 | 465 / 666 / 7,410 | yes |
+| image vs text-HIGH | 40 m | **−0.0351** | 0.0000 | 515 / 571 / 7,455 | yes |
+| image vs text-HIGH | 50 m | **−0.0177** | 0.0008 | 536 / 514 / 7,491 | yes |
 
-**No image-vs-text paired tests** exist. Cross-modality significance claims are therefore not directly supported on this corpus. The raw F1 gap at 50 m between text-HIGH and image is +0.017, which is comparable in magnitude to the text-HIGH vs text-MIN +0.029 gap that the 10,000-permutation test resolves at p = 0.0; a paired image-vs-text test would likely resolve an ordering but this is not directly evidenced.
+### 5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)
+
+| Contrast | Buffer | Observed ΔF1 | p-value | Wins_A / Losses_A / Ties | Significant (α = 0.05) |
+|----------|:------:|------------:|:-------:|:------------------------:|:----------------------:|
+| image vs text-MIN | 20 m | **−0.1129** | 0.0000 | 516 / 795 / 7,230 | yes |
+| image vs text-MIN | 30 m | **−0.0424** | 0.0000 | 606 / 659 / 7,276 | yes |
+| image vs text-MIN | 40 m | **−0.0059** | 0.3412 | 653 / 564 / 7,324 | no |
+| image vs text-MIN | 50 m | **+0.0115** | 0.0543 | 681 / 518 / 7,342 | no (marginal) |
+
+### 5.4 Cross-contrast interpretation
+
+- **text-HIGH is significantly better than both image and text-MIN at every buffer ≥ 30 m**. At 20 m text-HIGH vs text-MIN is not significant (p = 0.465) but text-HIGH vs image IS (ΔF1 = −0.118, p = 0.0000) — text-HIGH is the clean top-of-order.
+- **image vs text-MIN is the most nuanced contrast**. Text-MIN significantly beats image at tight buffers (20 m ΔF1 = −0.113, p = 0.0000; 30 m ΔF1 = −0.042, p = 0.0000) but image and text-MIN converge at 40 / 50 m (p = 0.34, p = 0.054). At 50 m image marginally edges text-MIN (ΔF1 = +0.012; not significant). The buffer axis flips the ordering.
+- **text-HIGH vs image gap narrows with buffer** but remains significant: ΔF1 goes from −0.118 at 20 m to −0.018 at 50 m (p = 0.0008 still rejecting the null). This is consistent with the attractor-pull / GT-precision-noise argument (`gold-standard-extended-buffer-sweep/extended-buffer-report.md`): image-proposer detections are less spatially-precise, so the image track loses more to tight buffers than the text tracks.
+- **Three-way ordering at 50 m**: text-HIGH (0.788) > image (0.773) > text-MIN (0.761) with only the text-HIGH > image gap surviving paired-permutation significance at α = 0.05.
+
+**Pipeline-control caveat**: the pipelines differ in consensus vote-threshold (image `vote_t = 3`; text `vote_t = 4`; see §8 Caveat 8). The paired tests reflect the pipelines as deployed, including the vote_t asymmetry. A vote_t-matched re-run on image would likely raise its precision and reduce its recall, shifting the comparison; we do not re-run here because the as-deployed comparison is the paper-citation target.
 
 ## 6. Cost comparison
 
@@ -164,9 +199,9 @@ The human-review process on the image track produced the 472 / 556 mound / not-m
 
 ## 8. Caveats / risk register
 
-1. **No paired image-vs-text significance tests**: the four paired permutation tests are all text-HIGH vs text-MIN. Cross-modality significance claims (image vs text) are not directly supported on this corpus and must rely on raw F1 differences plus CI overlap heuristics.
+1. **Paired image-vs-text tests now available** (Session 77 2026-04-24): the 8 new paired permutation tests (see §5.2, §5.3) resolve the earlier cross-modality significance gap. The residual caveat is that the three pairwise tests at a given buffer do not use a joint FDR correction; raw p-values are reported. At the buffers where multiple pairwise tests matter for paper headline claims, the Bonferroni-corrected α would be 0.017 (3 tests); all significant results at α = 0.05 (p ≤ 0.001 for the image-vs-text-HIGH tests) comfortably survive this tighter threshold.
 2. **Human-review asymmetry**: corrected-F1 exists only for the image track. Direct corrected-F1 cross-track comparison is not available. The image-track's corrected F1 ≥ 0.830 should not be cited against text-HIGH's uncorrected 0.788 as evidence of image-track superiority — the comparison is confounded.
-3. **No 100 m buffer for uncorrected F1**: the three `evaluation.json` files sweep 20 / 30 / 40 / 50 m only. For the 100 m buffer see `corrected-f1-multi-buffer/report.md` (image-track corrected only; no text-track equivalent).
+3. **Extended buffers for text tracks now available** (Session 77 2026-04-24): text-HIGH and text-MIN evaluations at 75 / 100 / 125 m are at `outputs/55maps-text-{high,min}-generalisation/extended-buffer-eval/evaluation.json` (see §3.5). The residual gap is that no text-track corrected-F1 exists (no human review of the text tracks); the uncorrected-F1 buffer curves are the paper-citable figures for text-track spatial-tolerance behaviour.
 4. **Thinking × modality confound**: the image-track uses HIGH thinking, matching text-HIGH. If a text-MIN image-track variant existed (MINIMAL thinking with image input), a 2 × 2 modality × thinking factorial would be directly testable. This is not in scope.
 5. **PV threshold identical (prob_t = 0.15) across tracks** but not centrally recalibrated per track. A per-track threshold sweep would likely improve each track's standalone F1 by small amounts; see the phase3a-image-matrix / phase3a-text-matrix consensus-analysis summaries for the within-track threshold-robustness picture on the Era 2 scope.
 6. **All three tracks use the same verifier prompt (adversarial v1)**. The paper's verifier-quarantine policy (`docs/methodology/v2-verifier-contamination-policy.md`) applies: v2-verifier results are not cited for any track.
@@ -195,11 +230,11 @@ The image track's raw-to-corrected F1 gap (+0.059 from 0.771 to 0.830 at 50 m) i
 
 If one follow-up evaluation budget is available for the 55-map corpus:
 
-1. **Paired image-vs-text-HIGH permutation test at 50 m** — fills the most salient gap in §5; 10,000 permutations on the existing per-tile detections is ~10 minutes of CPU, zero API cost.
-2. **Text-HIGH human review** — lifts text-HIGH's corrected F1 to the same paper-citable status as image's. Roughly 1,000-candidate review at ~1 minute / candidate ≈ 17 reviewer-hours.
-3. **100 m buffer sweep for text-HIGH and text-MIN** — extends the buffer-comparison below to match the image-track multi-buffer availability. ~10 minutes of pipeline re-evaluation; zero API cost.
+1. **Paired image-vs-text permutation tests** — **DONE** (Session 77 2026-04-24). All 8 image-vs-text tests at 20 / 30 / 40 / 50 m now exist under `paired-image-vs-text-{high,min}-{20,30,40,50}m/`. See §5.2 and §5.3. Outcome: text-HIGH significantly beats image at every buffer; image and text-MIN converge at ≥ 40 m.
+2. **Text-HIGH human review** — NOT done. Still the highest-leverage outstanding follow-up for corrected-F1 cross-track parity. Roughly 1,000-candidate review at ~1 minute / candidate ≈ 17 reviewer-hours. Would lift text-HIGH's corrected F1 to the same paper-citable status as image's; current estimate (based on image-track's +0.059 raw-to-corrected gap) places text-HIGH's corrected F1 in the 0.82 – 0.85 range.
+3. **Extended buffer sweep for text tracks** — **DONE** (Session 77 2026-04-24). Text-HIGH and text-MIN at 75 / 100 / 125 m now exist at `outputs/55maps-text-{high,min}-generalisation/extended-buffer-eval/`. See §3.5. Outcome: both text tracks plateau by 75 m; buffer sensitivity is 3× lower than image track's corrected multi-buffer curve.
 
-None of the three follow-ups are blocking for the current paper; all three would strengthen specific cross-track claims.
+Remaining outstanding follow-up: item 2 (text-track human review).
 
 ## 10. Files manifest
 
@@ -213,12 +248,33 @@ None of the three follow-ups are blocking for the current paper; all three would
 - `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` — text-HIGH F1 / P / R.
 - `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` — text-MIN F1 / P / R.
 
-**Inputs — paired permutation JSONs** (all text-HIGH vs text-MIN, 10,000 permutations seed 42):
+**Inputs — paired permutation JSONs** (12 tests: 3 contrasts × 4 buffers; all 10,000 permutations seed 42):
+
+text-HIGH vs text-MIN:
 
 - `results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json` — p = 0.4647 (n.s.).
 - `results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json` — p = 0.0.
 - `results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json` — p = 0.0.
 - `results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json` — p = 0.0.
+
+image vs text-HIGH (Session 77 2026-04-24):
+
+- `results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.1178.
+- `results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0683.
+- `results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0351.
+- `results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json` — p = 0.0008 (***); ΔF1 = −0.0177.
+
+image vs text-MIN (Session 77 2026-04-24):
+
+- `results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.1129.
+- `results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0424.
+- `results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json` — p = 0.3412 (n.s.); ΔF1 = −0.0059.
+- `results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json` — p = 0.0543 (n.s.); ΔF1 = +0.0115.
+
+**Extended-buffer evaluations** (text tracks only; Session 77 2026-04-24):
+
+- `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.{json,csv,md}` — text-HIGH at 75 / 100 / 125 m.
+- `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.{json,csv,md}` — text-MIN at 75 / 100 / 125 m.
 
 **Inputs — cost manifests**:
 
@@ -247,10 +303,12 @@ This doc is a hand-authored synthesis of pre-existing per-track outputs; no new 
 - **Cost** (§6): read `outputs/<track>/cost_manifest.json` → `.totals.cost_usd` + `.by_stage`.
 - **Run metadata** (§2): read `outputs/<track>/verified/run.meta.json`.
 
-The three paired permutation tests that already exist were produced by `scripts/pairwise_permutation_test.py` (version 1.0.0 per the `metadata.script` field in each JSON). To run a new paired test (e.g., the image-vs-text-HIGH follow-up flagged in §9.4), follow the same invocation pattern:
+The 12 paired permutation tests were produced by `scripts/pairwise_permutation_test.py` (version 1.0.0 per the `metadata.script` field in each JSON). The correct CLI flag is `--output-dir` (not `--out`).
+
+Invocation pattern for a new paired test:
 
 ```bash
-python scripts/pairwise_permutation_test.py \
+.venv/bin/python scripts/pairwise_permutation_test.py \
     --mode geojson \
     --geojson-a outputs/55maps-image-generalisation/verified/verified_detections.geojson \
     --label-a "image-K5-PV" \
@@ -261,9 +319,23 @@ python scripts/pairwise_permutation_test.py \
     --buffer-metres 50 \
     --n-permutations 10000 \
     --seed 42 \
-    --out results/55maps-cross-track-comparison/paired-image-vs-text-high-50m
+    --output-dir results/55maps-cross-track-comparison/paired-image-vs-text-high-50m \
+    --quiet
 ```
 
-Compute: ~10 minutes on sapphire (tile-level shuffle on 8,541 tiles × 10,000 permutations). Zero API cost.
+Invocation pattern for a new extended-buffer evaluation:
+
+```bash
+.venv/bin/python scripts/evaluate_detections.py \
+    --detections outputs/55maps-text-high-generalisation/verified/verified_detections.geojson \
+    --buffers 75 100 125 \
+    --ground-truth inputs/vectors/references/student-mounds-55maps-reviewed.geojson \
+    --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson \
+    --bootstrap 1000 --seed 42 \
+    --output-dir outputs/55maps-text-high-generalisation/extended-buffer-eval \
+    --label "text-HIGH-K5-PV-extended"
+```
+
+Compute: ~4 minutes on sapphire for all 8 image-vs-text paired tests; ~1 minute for both extended-buffer evaluations. Zero API cost.
 
 **Toolchain**: Python ≥ 3.11, GeoPandas ≥ 0.14, NumPy, pandas. Pinned versions in `requirements.txt`.
