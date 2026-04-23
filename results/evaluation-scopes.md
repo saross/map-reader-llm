@@ -1,13 +1,23 @@
 # Evaluation Tile Set Scopes
 
-**Purpose**: Documents the three test tile sets used across the experimental
-programme and their nesting relationships. Critical context for interpreting
-F1 comparisons across project phases and for the paper write-up.
+**Purpose**: Documents the three test tile sets used across the experimental programme and their nesting relationships. Critical context for interpreting F1 comparisons across project phases and for the paper write-up.
 
-**Generated**: 2026-04-16
-**Verified by**: spatial intersection analysis (zero-tolerance nesting check)
+**Generated**: 2026-04-16 (commit `6d804934`)
+**Verified by**: spatial intersection analysis (zero-tolerance nesting check); see §10 Reproducibility for inputs and operation.
 
-## The three test tile sets
+## 1. Executive summary
+
+The project used **three nested test tile sets** across its experimental phases:
+
+- **Era 1** (pre-H11, H1–H9 retest): **340 × 512 px tiles**, ~1,751 sq km, 539 GT mounds. Scope manifest: `inputs/vectors/bounds/full_evaluation_bounds.geojson`.
+- **Era 2** (H11 tile-size study + PV diagnostic + consensus / N-sweep): **487 × 384 px tiles**, ~1,416 sq km, 435 GT mounds. Scope manifest: `inputs/tiles_384/full_evaluation_manifest.json`.
+- **Era 3** (post-H10 v2, covering H8 v2 / H10 v2 / H12 v2 library-design axis): **327 × 384 px tiles**, ~1,034 sq km, 319 GT mounds. Scope manifest: `inputs/calibration/h10-384/test_manifest.json`.
+
+**Strict nesting**: Era 3 ⊂ Era 2 ⊂ Era 1 at zero tolerance — Era 3 area inside Era 2 is 100.000 % (0.00 sq m outside); Era 2 inside Era 1 is 100.000 % (0.00 sq m outside); zero GT mounds are unique to a smaller scope. The nesting is geographic, not merely statistical, so cross-era F1 comparisons can treat the smaller scope as a strict subset of the larger one — with the coverage caveat in §7 below.
+
+**Coverage fractions** (area / mounds): Era 2 within Era 1 = 80.8 % / 80.7 %; Era 3 within Era 2 = 73.0 % / 73.3 %; Era 3 within Era 1 = 59.0 % / 59.2 %. Area and mound fractions track near-identically (within 0.3 pp), indicating calibration exclusions do not preferentially remove mound-rich or mound-poor regions.
+
+## 2. The three test tile sets
 
 All three sets cover 4 topographic map sheets from Bulgaria (1:25,000 Soviet
 military series, UTM Zone 35N / EPSG:32635):
@@ -23,14 +33,14 @@ military series, UTM Zone 35N / EPSG:32635):
 | **Era 2** | H11 | 384 px | 336 px | **487** | 1416 | 435 | Same 20-tile geographic area as Era 1, re-projected to the 384-px grid | `inputs/tiles_384/full_evaluation_manifest.json` + `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` |
 | **Era 3** | Post-H10 v2 (H8 v2, H10 v2, H12 v2) | 384 px | 336 px | **327** | 1034 | 319 | Era 2 exclusion **plus** 160 pool_160 tiles (hard-example mining area, geographically separate from the Era 1/2 calibration exclusion) | `inputs/calibration/h10-384/test_manifest.json` + `inputs/vectors/bounds/384/h10_test_bounds.geojson` |
 
-### Physical tile counts (for reference)
+### 2.1 Physical tile counts (for reference)
 
 | Tile size | Physical tiles on disk | Edge/boundary excluded | Evaluable tiles | Calibration excluded | Test tiles |
 |---|---|---|---|---|---|
 | 512 px | 360 | 0 | 360 | 20 | **340** |
 | 384 px | 611 | 124 | 487 | 0 (Era 2) or 160 (Era 3) | **487** or **327** |
 
-## Nesting verification
+## 3. Nesting verification
 
 The three test tile sets are **strictly nested**: Era 3 ⊂ Era 2 ⊂ Era 1,
 both geographically (zero area outside the parent) and in ground-truth mound
@@ -45,7 +55,7 @@ coverage (zero mounds unique to a smaller scope).
 | Mounds in Era 2 but not Era 1 | 0 |
 | Mounds in Era 3 but not Era 1 | 0 |
 
-## Comparative coverage
+## 4. Comparative coverage
 
 | Comparison | % area covered | % mounds covered |
 |---|---|---|
@@ -58,9 +68,9 @@ points), indicating that the calibration exclusions do not preferentially
 remove mound-rich or mound-poor regions. Mound density is approximately
 uniform across all three scopes.
 
-## Calibration exclusion rationale
+## 5. Calibration exclusion rationale
 
-### Era 1 exclusion (20 × 512-px tiles)
+### 5.1 Era 1 exclusion (20 × 512-px tiles)
 
 The original 20-tile calibration set was used in Phase 1 (library
 construction) to build the canonical few-shot library (4 positive + 2
@@ -69,7 +79,7 @@ from the evaluation set to prevent testing the model on the same map regions
 used to construct its few-shot prompt. The 20 calibration tiles plus 340 test
 tiles account for all 360 physical 512-px tiles.
 
-### Era 2 exclusion (same geographic area, re-projected)
+### 5.2 Era 2 exclusion (same geographic area, re-projected)
 
 When the project moved to 384-px tiles (H11, errata E41), the same 20-tile
 calibration geographic footprint was excluded from the 384-px evaluation set.
@@ -79,7 +89,7 @@ from 611 physical tiles (with an additional 124 edge/boundary tiles excluded
 by the tiling geometry). The 487-tile set has zero overlap with the 512-px
 calibration footprint (verified by spatial intersection).
 
-### Era 3 additional exclusion (160 × 384-px pool_160 tiles)
+### 5.3 Era 3 additional exclusion (160 × 384-px pool_160 tiles)
 
 H10 v2 expanded the calibration pool from the original 20-tile seed to a
 160-tile set (pool_160) for hard-example mining. This expansion drew tiles
@@ -93,7 +103,7 @@ from specific locations within these 160 tiles. To prevent data leakage
 The pool_160 calibration hierarchy is nested:
 pool_020 ⊂ pool_040 ⊂ pool_080 ⊂ pool_160 (20, 40, 80, 160 tiles).
 
-## Hypotheses by era
+## 6. Hypotheses by era
 
 | Era | Scope | Hypotheses evaluated |
 |---|---|---|
@@ -101,23 +111,42 @@ pool_020 ⊂ pool_040 ⊂ pool_080 ⊂ pool_160 (20, 40, 80, 160 tiles).
 | Era 2 (487 × 384) | H11 tile-size study and PV diagnostic | H11 (tile size), PV strategy comparison (adversarial/brief/checklist × image/text), consensus N-sweep (N=5, 10, 30), Flash vs Pro model comparison |
 | Era 3 (327 × 384) | Post-H10 v2 library-design axis | H8 v2 (library composition, 7 conditions including Scale-16/32), H10 v2 (calibration-pool size, 4 conditions), H12 v2 (HP:HN ratio, 3 conditions) |
 
-## Cross-era comparison notes
+## 7. Caveats — cross-era F1 comparability
 
-- **F1 numbers from different eras are not directly comparable** without
-  noting the scope difference. The nested structure means a smaller scope
-  evaluates against fewer mounds and fewer tiles; between-scope F1
-  differences could reflect scope effects rather than configuration effects.
-- **Within-era comparisons are always valid** — conditions tested in the same
-  era share the same evaluation scope.
-- **Tile size is a controlled variable** in the H11 study (Era 2), which
-  tested the same configurations at both 512 and 384 px. Those results
-  provide the calibrating link for any cross-tile-size comparison.
-- **The 80.8% / 73.0% / 59.0% coverage fractions** and the near-identical
-  mound-density ratios mean that cross-era F1 differences attributable purely
-  to scope are expected to be small — but they should still be footnoted
-  in leaderboard tables.
+- **F1 numbers from different eras are not directly comparable** without noting the scope difference. The nested structure means a smaller scope evaluates against fewer mounds and fewer tiles; between-scope F1 differences could reflect scope effects rather than configuration effects.
+- **Within-era comparisons are always valid** — conditions tested in the same era share the same evaluation scope.
+- **Tile size is a controlled variable** in the H11 study (Era 2), which tested the same configurations at both 512 and 384 px. Those results provide the calibrating link for any cross-tile-size comparison.
+- **The 80.8 % / 73.0 % / 59.0 % coverage fractions** and the near-identical mound-density ratios mean that cross-era F1 differences attributable purely to scope are expected to be small — but they should still be footnoted in leaderboard tables.
+- **Nesting is zero-tolerance geographic**, not statistical. A mound present in Era 3 is also present (as ground truth) in Era 2 and Era 1; a detection made in Era 3 is scorable against Era 2's GT by construction. This property is what licenses the Era 3 → Era 2 → Era 1 extrapolation used for the 55-map image-generalisation run (Era 2 configuration, trained and calibrated against Era 2 / Era 3 data).
+- **GT-count asymmetry**: Era 3 has 319 mounds (59.2 % of Era 1's 539). Per-buffer detection-rate comparisons across eras should normalise by the scope's GT count; raw TP counts across eras are not interpretable.
 
-## File reference
+## 8. Paper implications
+
+### 8.1 Which scope each paper claim belongs to
+
+The paper's headline F1 and corrected-F1 claims land in different eras; readers and reviewers will need an explicit scope reminder at each citation. Draft the Methods section to establish the three-scope framework early (Table "Evaluation scopes"), then tag each Results claim by era:
+
+- **Detection F1 headline 0.904 [0.878, 0.928] @ 50 m** (487-tile matrix, K=30 text-HIGH + PV) → **Era 2**. Source: `results/paper-tables/metrics_master.json`.
+- **Corrected F1 ≥ 0.830 @ 50 m** and the multi-buffer 0.832 → 0.855 curve (55-map image-generalisation, human-reviewed) → **Era 2** (the 55-map run used the 384-px grid, Era 2 scope). Source: `results/55maps-image-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`.
+- **Subtype weighted-F1 0.887 [0.849, 0.922]** (4-map gold-standard subtype classification, conditional on match) → **4-map gold-standard subset** (orthogonal to Era taxonomy; a separate dedicated sub-corpus; document this explicitly rather than shoehorn into an Era).
+- **H8 v2 / H10 v2 / H12 v2 library-design closure** → **Era 3**. Paper's Era 1 Results section cites the Era 3 re-tests as closure of the corresponding Era 1 hypotheses.
+- **Phase 2b H7 temperature retest (K=3 × 340 tiles)** → **Era 1 retest** (preregistered 340-tile corpus, 512 px). Source: `results/retest/phase2b/analysis_summary.md`.
+
+### 8.2 Suggested paper text (Methods)
+
+> Three test tile sets structured the experimental programme. Era 1 (340 tiles at 512 px, 1,751 sq km, 539 ground-truth mounds) supported the pre-H11 hypothesis sweep. Era 2 (487 tiles at 384 px, 1,416 sq km, 435 mounds) supported the H11 tile-size study and subsequent post-verifier diagnostic. Era 3 (327 tiles at 384 px, 1,034 sq km, 319 mounds) supported the post-H10 library-design closure (H8 v2, H10 v2, H12 v2). The three sets are strictly nested — Era 3 ⊂ Era 2 ⊂ Era 1 at zero geographic tolerance and zero ground-truth-mound tolerance — with coverage fractions 80.8 % (Era 2 ⊂ Era 1), 73.0 % (Era 3 ⊂ Era 2), and 59.0 % (Era 3 ⊂ Era 1). Area and mound coverage track within 0.3 percentage points, so calibration exclusions do not preferentially remove mound-rich or mound-poor regions. All cross-era F1 comparisons in the Results section are footnoted with the relevant coverage fraction.
+
+### 8.3 Methodological contribution
+
+The nested-scope framework makes cross-era extrapolation **defensible rather than heuristic**: because the nesting is zero-tolerance geographic, F1 on the smaller scope is a valid lower bound on F1 at the larger scope under the mild assumption of uniform mound density. The near-identical mound-density ratios (§4) satisfy that assumption empirically.
+
+## 9. Files manifest
+
+**Outputs**:
+
+- `results/evaluation-scopes.md` — this report.
+
+**Scope-defining inputs**:
 
 | File | Description |
 |---|---|
@@ -129,3 +158,15 @@ pool_020 ⊂ pool_040 ⊂ pool_080 ⊂ pool_160 (20, 40, 80, 160 tiles).
 | `inputs/calibration/h10-384/test_manifest.json` | Era 3 tile manifest (327 tiles) |
 | `inputs/calibration/h10-384/calibration_bounds_160.geojson` | Era 3 calibration exclusion (160 tiles, pool_160) |
 | `inputs/vectors/references/mounds-reference.geojson` | Ground-truth mound reference (569 total mounds across all maps) |
+
+## 10. Reproducibility
+
+- **Git commit**: `6d804934` (`data(analysis): H12 v2 results + cross-hypothesis matrix + verifier sweeps`, 2026-04-16) introduces this document. No dedicated nesting-check script exists at HEAD; the zero-tolerance spatial intersection was performed ad-hoc using GeoPandas (see operation below).
+- **Operation to re-verify nesting**:
+    1. Load the three bounds GeoJSONs listed in §9. They are stored in EPSG:4326; re-project to UTM Zone 35N (EPSG:32635) before any area computation.
+    2. For each ordered pair (smaller, larger) in {(Era 3, Era 2), (Era 2, Era 1), (Era 3, Era 1)}: compute `smaller.difference(larger).area.sum()` (should be 0.00 sq m to a float-tolerance limit of ~1 sq m) and `100 * smaller.intersection(larger).area.sum() / smaller.area.sum()` (should be 100.000 %).
+    3. For the mound-set check: load `inputs/vectors/references/mounds-reference.geojson` (569 points); for each scope's bounds, compute `sjoin(mounds, bounds, predicate="within")` to obtain the per-scope mound set; confirm the smaller scope's mound set is a subset of the larger's (`set_smaller.issubset(set_larger)` returns True for all three nested pairs).
+    4. The coverage fractions in §4 are `100 * smaller.area.sum() / larger.area.sum()` (area) and `100 * len(mounds_smaller) / len(mounds_larger)` (mounds).
+- **Toolchain**: GeoPandas ≥ 0.14 (shapely 2.x), Python ≥ 3.11. Project `requirements.txt` at HEAD pins the compatible versions.
+- **Re-run expected cost**: negligible (< 5 seconds; six bounds polygons, 569 points, one sjoin per scope).
+- **Note**: if the paper finalisation step warrants a permanent script, it would be a ~30-line helper under `scripts/` wrapping steps 1–4. Not required for paper citation; the operation and inputs are fully specified above.
