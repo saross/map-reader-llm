@@ -28,6 +28,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+__version__ = "1.1.0"
+
 # ---------------------------------------------------------------------------
 # Defaults
 # ---------------------------------------------------------------------------
@@ -75,7 +77,12 @@ def load_sweep(path: Path) -> dict[str, Any] | None:
         return None
 
     if isinstance(data, list):
-        logger.debug("Skipping old-format (list) file: %s", path)
+        logger.warning(
+            "Skipping old-format (bare JSON list) file: %s — re-run "
+            "evaluate_pv_results.py sweep to regenerate with the new "
+            "dict schema that includes optimal-threshold bootstrap CIs",
+            path,
+        )
         return None
 
     if not isinstance(data, dict):
@@ -139,21 +146,26 @@ def consolidate(results_dir: Path) -> dict[str, Any]:
 
     results: dict[str, Any] = {}
     skipped = 0
+    sources_processed: list[str] = []
+    sources_skipped: list[str] = []
 
     for path in sweep_paths:
         condition = path.parent.name
         sweep = load_sweep(path)
         if sweep is None:
             skipped += 1
+            sources_skipped.append(str(path.relative_to(results_dir.parent)))
             continue
 
         entry = extract_condition(sweep)
         if entry is None:
             logger.warning("No 'optimal' block in %s — skipping", path)
             skipped += 1
+            sources_skipped.append(str(path.relative_to(results_dir.parent)))
             continue
 
         results[condition] = entry
+        sources_processed.append(str(path.relative_to(results_dir.parent)))
 
     logger.info(
         "Consolidated %d conditions (%d skipped)",
@@ -163,9 +175,12 @@ def consolidate(results_dir: Path) -> dict[str, Any]:
 
     metadata = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
+        "script_version": __version__,
         "n_conditions": len(results),
         "n_skipped": skipped,
         "source_glob": source_glob,
+        "source_files_processed": sources_processed,
+        "source_files_skipped": sources_skipped,
     }
 
     return {"_metadata": metadata, "results": results}
