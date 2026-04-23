@@ -134,6 +134,12 @@ per-analysis JSON is primary.
 | D-S VLM-only posterior (v1, fixed prior 0.05) | 0.1862 (degenerate single value) | `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json` + Obs 273 |
 | D-S AUC (any prior, VLM-only slice) | **0.500** (prior-invariant) | `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json` + Obs 273 |
 | Empirical mound rate on VLM-only slice | 0.7247 (745 / 1,028) | `results/55maps-image-generalisation/ds-human-crosstab/summary.json` |
+| 55-map text-HIGH raw F1 @ 50 m | 0.788 [0.777, 0.800] | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` |
+| 55-map text-MIN raw F1 @ 50 m | 0.759 [0.747, 0.772] | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` |
+| Paired text-HIGH vs image @ 50 m | ΔF1 = −0.018, p = 0.0008 (significant) | `results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json` |
+| Paired text-MIN vs image @ 50 m | ΔF1 = +0.012, p = 0.0543 (n.s. — marginal image advantage) | `results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json` |
+| Text-HIGH buffer plateau (50 → 125 m) | +0.007 F1 (0.788 → 0.795) | `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` |
+| Text-MIN buffer plateau (50 → 125 m) | +0.007 F1 (0.759 → 0.766) | `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json` |
 | 55-map paper-headline F1 | **0.904** [0.878, 0.928] @ 50 m (487-tile matrix, text-HIGH + PV) | `results/paper-tables/metrics_master.json` (separate from the 55-map slice — see §8) |
 
 ## 3. Theme T1 — Human-review calibration and the corrected-F1 lower bound
@@ -230,6 +236,38 @@ AUC = 0.500.
   denominator means recall ceilings are tighter than the measured
   recall would suggest. The +0.021 recall delta reflects this, not a
   genuine recall loss.
+- **Image-track only**: the corrected-F1 ≥ 0.830 is specific to the
+  image track. Text-HIGH and text-MIN tracks were not subjected to
+  per-candidate human review (see
+  `results/55maps-cross-track-comparison/report.md` §4), so their
+  corrected F1 is not available. Equivalent review would likely lift
+  their corrected F1 similarly — text-HIGH's raw F1 of 0.788 at 50 m
+  plus an image-style +0.059 raw-to-corrected gap would place
+  text-HIGH's corrected F1 in the 0.82–0.85 range — but this is an
+  extrapolation, not a measurement.
+- **Student-GT position noise quantified at ~25–35 m**: the
+  extended-buffer F1 curve on the 4-map curator-annotated
+  gold-standard (`gold-standard-extended-buffer-sweep/
+  extended-buffer-report.md`) plateaus at 25 m (F1 = 0.822); the
+  55-map student-GT F1 curve has not plateaued by 50 m (F1 = 0.788
+  at 50 m). The ~25–35 m rightward shift is the empirical signature
+  of student-annotator position jitter on the 55-map GT — 4–5 px
+  (≈ 20–25 m at the 384-px tile scale) of centroid noise. This is
+  additive to the 45.9 % phantom-TP rate from per-candidate review;
+  both push the raw 0.771 figure below the corrected ≥ 0.830.
+- **Cross-modality paired significance** (Session 77 2026-04-24):
+  the paired permutation tests across the three tracks
+  (`results/55maps-cross-track-comparison/paired-image-vs-text-*`;
+  10,000 permutations, seed 42) establish that **text-HIGH
+  significantly outperforms image at every buffer 20–50 m** (ΔF1 =
+  −0.118 → −0.018; all p ≤ 0.001); **text-MIN beats image at tight
+  buffers but converges with image at R ≥ 40 m** (p = 0.34 at 40 m;
+  p = 0.054 at 50 m). Text-track extended-buffer evaluations show
+  both text tracks plateau by 75 m (gain only +0.007 F1 from 50 →
+  125 m; cf. image's corrected +0.022). Image-track buffer
+  sensitivity is therefore a modality property (spatial imprecision
+  of image-proposer outputs), not a GT-noise artefact; text tracks
+  do not have the same buffer-dependency.
 
 ### 3.5 Suggested paper text
 
@@ -503,6 +541,15 @@ carry the filtering load the pipeline design assigns to it.
   `docs/methodology/v2-verifier-contamination-policy.md`) because its
   prompt was calibrated on gold-standard false positives — that run is
   not cited.
+- **Cross-track verifier scope**: the text-HIGH and text-MIN tracks
+  use the same `verify_adversarial v1` prompt as the image track.
+  Verifier-calibration metrics (ECE, AUC, Brier) are NOT re-computed
+  for the text tracks because per-candidate human review did not
+  extend to them (see T1 §3.4). The T3 conclusions about verifier
+  quantisation, over-confidence at the high end, and the modest
+  discriminative AUC therefore generalise cleanly to the text tracks
+  by inference (same verifier prompt, same verifier-stage quantisation)
+  but are empirically anchored on the image-track review.
 
 ### 5.5 Suggested paper text
 
@@ -800,7 +847,18 @@ working per-item signal on this slice.
   structural consequence of 2-annotator D-S with the identifiability
   constraint on a single-response-pattern slice. It does not imply
   D-S is ineffective in general; it is ineffective on this slice with
-  this configuration.
+  this configuration. **Prior-invariance empirically confirmed**
+  (Session 76 level-up of
+  `dawid-skene-v2-data-driven-prior/report.md`): across a grid of
+  ~100 student-FN prior values in [0.01, 0.99]
+  (see `dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv`)
+  the VLM-only slice AUC remains 0.5000 for every value tested. The
+  calibrated prior 0.17 recovers the aggregate rate (posterior 0.7246
+  ≈ empirical 0.7247; ECE = 0.0001) but preserves the rank
+  degeneracy. The 80 / 20 held-out sensitivity check (test-fold ECE
+  = 0.262) confirms the aggregate-calibration result is not purely
+  a circularity artefact, but it also confirms no prior choice
+  restores per-item ranking on the 2-annotator structure.
 
 ### 7.5 Suggested paper text
 
