@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-04-24 (mid-Session 77 — **Step 4 + Step 5 COMPLETE**; Batch A Session-77 follow-ups (8 paired permutation tests + 6 extended-buffer evaluations) + Batch B1 mark-superseded archive reorg done)
+**Last updated**: 2026-04-24 (end of Session 77 autonomous block — **Step 4 + Step 5 COMPLETE**; Session 77 Batches A / B1 / B2 / C all done; Step 6 paper outline remains for the next session)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -51,6 +51,22 @@ before push). Use `git log --oneline 8949dc00..HEAD` for the full log.
 - `80025eaf` — Session 76 reflection entries appended to
   `session-reflection.md` and `llm-observations.md`. Formal /reflect
   skill will run at end-of-session-77.
+
+**Continuity-doc update + lint** (2 commits):
+
+- `1ad0f8a1` — continuity doc: Session 78+ entry point = Step 6.
+- `34322433` — MD032 lint fix on continuity doc (blanks around lists).
+
+**Batch C commit** (Session 77 meta-findings refresh, 1 commit):
+
+- `ad93c806` — Session 76 / 77 findings folded into
+  `results/meta-findings-summary.md` as light additions: T1 §3.4
+  (cross-track + position-noise + cross-modality-paired bullets); T3
+  §5.4 (cross-track verifier scope); T5 §7.4 (D-S prior-invariance
+  empirical confirmation); §2.3 canonical numbers table extended
+  with 6 new rows (text-track F1, paired tests, buffer plateaus).
+  Existing Themes T1-T5 structure intact; no change to suggested
+  paper texts.
 
 **Reading order (in sequence, don't skim)**:
 
