@@ -794,6 +794,87 @@ item's claim but warrant a polish pass before paper finalisation:
   on sapphire; estimated ~11 hours serial or ~1.5 hours at 8x
   parallel. Would close the F1-without-MCC gap project-wide.
 
+## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
+
+Paste these into the next session; all are approved and scoped.
+
+### Q1 — GS text-HIGH Era 2 companion artefact (cheap, ~10 min sapphire)
+
+Context: the existing `gold-standard-extended-buffer-sweep/verified_detections.geojson` (250 features, Era 3 scope) was intentionally bounds-filtered to the 327-tile allowlist to match the canonical leaderboard cell `gold-standard-v2-greedy-v1-327tile.json`. This is documented in `extended-buffer-report.md` §3. It is **not a bug** — it is a scope choice for tile-level comparability with h8-v2 / h10 v2 / h12 v2 (all Era 3 by data-hygiene). See forensic audit trail in Session 77 log (search for "forensic" / "250-feature anomaly").
+
+Task:
+
+1. **Materialise** full-scope PV GeoJSON for GS v2 text-HIGH (371 features; no bounds filter):
+
+    ```bash
+    python scripts/materialise_pv_geojson.py \
+        --consensus outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson \
+        --probabilities outputs/h11/gold-standard-v2/verified-v1/probabilities.json \
+        --vote-t 4 --prob-t 0.15 \
+        --output outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson
+    ```
+
+    Note: consensus-4of5 has 607 features; probabilities.json indexes map to those 607 (597 parsed, 10 failed). materialise_pv_geojson.py's "threshold-1 consensus" docstring is misleading for this run — use consensus-4of5 with `--vote-t 4` and it produces the correct 371 features. Confirmed by forensic audit 2026-04-24.
+
+2. **Evaluate** at Era 2 bounds with MCC + 1000-iter CIs:
+
+    ```bash
+    python scripts/evaluate_detections.py \
+        --detections outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson \
+        --ground-truth inputs/vectors/references/mounds-reference.geojson \
+        --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson \
+        --buffers 5 10 15 20 25 30 35 40 45 50 --bootstrap 1000 --seed 42 --mcc \
+        --output-dir results/gold-standard-extended-buffer-sweep-era2 \
+        --label "gold-standard-text-high-era2"
+    ```
+
+    Expected headline: F1 ≈ 0.722 at 20 m, F1 ≈ 0.736 at 50 m (from forensic audit's preview evaluation). These are LOWER than the existing Era 3 numbers (F1 = 0.815 at 20 m, 0.826 at 50 m) because pool_160 contributes 116 additional GT mounds and 121 detections that were excluded under Era 3.
+
+3. **Scope-pair narrative**: add a note to the existing Era 3 `gold-standard-extended-buffer-sweep/extended-buffer-report.md` §3 explaining that (a) the existing artefact is Era 3 scope to match the canonical leaderboard cell, (b) the new Era 2 companion is at `results/gold-standard-extended-buffer-sweep-era2/` with F1 = 0.736 at 50 m, (c) the 121/116 delta explains the scope gap. Update the 4 downstream citation sites to be scope-qualified:
+
+    - `meta-findings-summary.md` T1 §3.4 (Batch C "Student-GT position noise" bullet).
+    - `55maps-cross-track-comparison/report.md` §6 (where it cites 0.8225 as the GS plateau).
+    - `limitations-consolidation/report.md` §2.3 (student-GT position noise caveat).
+    - `evaluation-scopes.md` §8.1 (paper-claim era tagging).
+
+    The cross-corpus curve-shift narrative (GS plateaus fast vs 55-map doesn't) survives intact — the magnitude just tightens (Era 3 gap was +0.193 at 20 m; Era 2 gap is +0.099 at 20 m). Still real, methodologically cleaner when reported at matched scope.
+
+### Q2 — Uniform-scope leaderboard (cheap, ~10 min sapphire + 5 min doc)
+
+Re-run the gold-standard-v2 leaderboard cell at Era 2 (487 tiles) so the paper's leaderboard is uniformly Era 2 rather than mixed-scope. The phase3a matrix cells are already Era 2 (487 tiles, 405 / 415 features); only the gold-standard cell is still at 327 tiles. Producing an Era 2 gold-standard cell aligns the leaderboard across all paper-citable conditions.
+
+Task:
+
+1. Run `scripts/score_leaderboard_cells.py` with Era 2 bounds (`full_evaluation_bounds.geojson`) and the same vote_t = 4 / prob_t = 0.15 thresholds.
+2. Save the new cell as `results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`, preserving the existing 327-tile cell.
+3. Update the primary `leaderboard-20m-annotated.md` to use the 487-tile cell at tier 1. Note: F1 at 20 m will drop from 0.890 (327-tile) to ~0.72 (487-tile); the condition's leaderboard rank may shift. The top-of-leaderboard text-HIGH 16-of-30 + PV condition at 0.890 is a different cell (phase3a-matrix, already 487-tile) and is NOT affected.
+4. Add a "scope unification 2026-04-25" note to `leaderboard-20m-annotated.md` explaining the re-scoping and preservation of the 327-tile sibling.
+
+Non-blocking for the Q1 task; can be done in the same session.
+
+### Q3 — text-HIGH manual review downstream compute (on-demand, ~30 min)
+
+When the user completes the text-HIGH multi-buffer review (Streamlit app launched via `scripts/launch_55maps_text_high_review.sh`; output at `results/55maps-text-high-generalisation/human-review-multi-buffer.csv`), run the parallel analyses that the image track has:
+
+1. `compute_corrected_f1_multi_buffer.py` — with `--review-today results/55maps-text-high-generalisation/human-review-multi-buffer.csv --review-yesterday ""` (no yesterday file for text-HIGH). Output to `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`.
+2. Replicate Obs 269 verifier-calibration-crosstab on text-HIGH (same `scripts/crosstab_verifier_vs_human.py` pattern). Expected result similar to image track since same verifier v1 prompt; confirm.
+3. Update `55maps-cross-track-comparison/report.md` §4 to add text-HIGH corrected F1 (closes the "only image is human-reviewed" scope caveat flagged in that doc).
+4. Update `limitations-consolidation/report.md` §2.3 (same closure).
+
+Not blocking — depends on user's review being complete.
+
+### Q4 — Step 6 paper outline (the main deliverable)
+
+With the metric suite now uniformly populated (MCC everywhere there's F1, after Q1 / Q2 land; ~30 paper-citable cells covered in Option A), all per-analysis reports at exemplar-equivalent quality, and the new Era 2 scope pair, the project is ready to hand to a paper outline. Session 78 entry: **Step 6 paper outline** mapping each paper section (Methods / Results / Discussion / Limitations) to 1 – 3 interim docs.
+
+### Context that should survive into Session 78
+
+- **Audit-fallout finding (Session 77)**: my "F1 = 0.904 is Pro image HIGH T=0.7" chat error was caught by three verifier agents before it propagated into any committed doc. The guardrail pattern works. Load-bearing lessons captured in memory (`feedback_feature_count_crosscheck.md`, `feedback_384px_scope_preference.md`, `feedback_mcc_with_f1.md`).
+- **The 59-map disjointness finding (commit `267134b2`)**: 4-map GS + 55-map generalisation are disjoint sheet-sets, 59 sheets total. Documented in `evaluation-scopes.md` §11.
+- **Three new memories saved this session** (all in `~/.claude/projects/-home-shawn-Code-map-reader-llm/memory/`): MCC-with-F1, 384-px-scope-preference, feature-count-crosscheck.
+- **Open investigation item (lower priority)**: are there other pre-Session-77 artefacts that used `score_leaderboard_cells.py`'s `tile_allowlist` silent-filter? The GS extended-buffer-sweep was intentional, but the pattern could have been applied elsewhere too. An audit across `results/leaderboard/cells/*.json` for cells with dimension mismatches vs their source detection GeoJSONs would catch this. Not urgent; can run before paper finalisation.
+- **Script-hygiene item**: `scripts/score_leaderboard_cells.py` silently applies its `--bounds` as a hard filter via `tile_allowlist`. The docstring doesn't obviously warn that candidates outside bounds get dropped from the materialised detection set. A 2-line docstring addition and/or a scope-manifest output field would prevent repeat confusion.
+
 ## User decisions (2026-04-21 end-of-session)
 
 Explicit user confirmations recorded here so the next session doesn't
