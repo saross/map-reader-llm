@@ -1,0 +1,19 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: image-adversarial-text-opt-20m.geojson
+INFO:   5m: F1=0.179 [0.140, 0.219], P=0.184 [0.144, 0.225], R=0.175 [0.137, 0.214]
+INFO:   10m: F1=0.473 [0.423, 0.524], P=0.486 [0.435, 0.537], R=0.462 [0.409, 0.515]
+INFO:   15m: F1=0.683 [0.639, 0.728], P=0.700 [0.655, 0.746], R=0.667 [0.617, 0.718]
+INFO:   20m: F1=0.787 [0.747, 0.824], P=0.807 [0.766, 0.845], R=0.768 [0.722, 0.813]
+INFO:   25m: F1=0.827 [0.792, 0.860], P=0.848 [0.811, 0.882], R=0.807 [0.764, 0.848]
+INFO:   30m: F1=0.857 [0.826, 0.887], P=0.879 [0.844, 0.911], R=0.837 [0.797, 0.876]
+INFO:   35m: F1=0.872 [0.841, 0.899], P=0.894 [0.859, 0.925], R=0.851 [0.812, 0.888]
+INFO:   40m: F1=0.876 [0.846, 0.904], P=0.899 [0.864, 0.930], R=0.855 [0.817, 0.893]
+INFO:   45m: F1=0.879 [0.850, 0.905], P=0.901 [0.868, 0.931], R=0.857 [0.820, 0.895]
+INFO:   50m: F1=0.881 [0.853, 0.907], P=0.903 [0.871, 0.933], R=0.860 [0.822, 0.897]
+INFO:   MCC=0.836 [0.788, 0.882], Sens=0.847, Spec=0.977
+INFO: JSON written: results/verifier-calibration-matrix/image-adversarial-text/evaluation.json
+INFO: CSV written: results/verifier-calibration-matrix/image-adversarial-text/evaluation.csv
+INFO: Markdown written: results/verifier-calibration-matrix/image-adversarial-text/evaluation.md

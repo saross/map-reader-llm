@@ -1,0 +1,19 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: /home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: text-checklist-opt-20m.geojson
+INFO:   5m: F1=0.306 [0.260, 0.353], P=0.318 [0.270, 0.368], R=0.294 [0.250, 0.341]
+INFO:   10m: F1=0.705 [0.661, 0.748], P=0.734 [0.689, 0.778], R=0.678 [0.629, 0.726]
+INFO:   15m: F1=0.834 [0.796, 0.869], P=0.868 [0.830, 0.902], R=0.802 [0.756, 0.846]
+INFO:   20m: F1=0.879 [0.849, 0.907], P=0.915 [0.886, 0.942], R=0.846 [0.805, 0.886]
+INFO:   25m: F1=0.894 [0.866, 0.919], P=0.930 [0.903, 0.955], R=0.860 [0.821, 0.898]
+INFO:   30m: F1=0.906 [0.879, 0.929], P=0.943 [0.918, 0.965], R=0.871 [0.833, 0.908]
+INFO:   35m: F1=0.906 [0.879, 0.929], P=0.943 [0.918, 0.965], R=0.871 [0.833, 0.908]
+INFO:   40m: F1=0.906 [0.879, 0.929], P=0.943 [0.918, 0.965], R=0.871 [0.833, 0.908]
+INFO:   45m: F1=0.906 [0.879, 0.929], P=0.943 [0.918, 0.965], R=0.871 [0.833, 0.908]
+INFO:   50m: F1=0.906 [0.879, 0.929], P=0.943 [0.918, 0.965], R=0.871 [0.833, 0.908]
+INFO:   MCC=0.781 [0.728, 0.832], Sens=0.799, Spec=0.965
+INFO: JSON written: /home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-checklist/evaluation.json
+INFO: CSV written: /home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-checklist/evaluation.csv
+INFO: Markdown written: /home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-checklist/evaluation.md

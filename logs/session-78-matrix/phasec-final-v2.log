@@ -1,0 +1,31 @@
+[2026-04-24T22:35:36+0000] === Phase C final v2 start ===
+[2026-04-24T22:35:36+0000] --- Materialisation (12 cells) ---
+[2026-04-24T22:35:36+0000]   materialise image-adversarial (vt=3 pt=0.15): OK
+[2026-04-24T22:35:36+0000]   materialise image-brief (vt=3 pt=0.15): OK
+[2026-04-24T22:35:36+0000]   materialise image-brief-text (vt=3 pt=0.15): OK
+[2026-04-24T22:35:36+0000]   materialise image-checklist (vt=3 pt=0.15): OK
+[2026-04-24T22:35:36+0000]   materialise image-checklist-text (vt=3 pt=0.15): OK
+[2026-04-24T22:35:36+0000]   materialise image-comparative (vt=3 pt=0.25): OK
+[2026-04-24T22:35:36+0000]   materialise text-adversarial (vt=4 pt=0.2): OK
+[2026-04-24T22:35:36+0000]   materialise text-brief (vt=4 pt=0.15): OK
+[2026-04-24T22:35:37+0000]   materialise text-brief-text (vt=4 pt=0.15): OK
+[2026-04-24T22:35:37+0000]   materialise text-checklist (vt=4 pt=0.15): OK
+[2026-04-24T22:35:37+0000]   materialise text-checklist-text (vt=4 pt=0.15): OK
+[2026-04-24T22:35:37+0000]   materialise text-comparative (vt=4 pt=0.25): OK
+[2026-04-24T22:35:37+0000] Materialisation summary: 12/12 ok
+[2026-04-24T22:35:37+0000] Sanity sample image-adversarial first coord: (398439.67, 4704240.32)
+[2026-04-24T22:35:37+0000] --- Evaluations (12 cells, 10k bootstrap, 4 parallel) ---
+[2026-04-24T22:42:37+0000]   eval image-adversarial: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-image-adversarial.log)
+[2026-04-24T22:42:41+0000]   eval image-brief: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-image-brief.log)
+[2026-04-24T22:42:43+0000]   eval image-brief-text: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-image-brief-text.log)
+[2026-04-24T22:42:43+0000]   eval image-checklist: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-image-checklist.log)
+[2026-04-24T22:49:37+0000]   eval image-checklist-text: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-image-checklist-text.log)
+[2026-04-24T22:49:41+0000]   eval image-comparative: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-image-comparative.log)
+[2026-04-24T22:49:46+0000]   eval text-adversarial: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-text-adversarial.log)
+[2026-04-24T22:49:48+0000]   eval text-brief: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-text-brief.log)
+[2026-04-24T22:56:41+0000]   eval text-checklist: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-text-checklist.log)
+[2026-04-24T22:56:45+0000]   eval text-brief-text: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-text-brief-text.log)
+[2026-04-24T22:56:52+0000]   eval text-checklist-text: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-text-checklist-text.log)
+[2026-04-24T22:56:52+0000]   eval text-comparative: OK (log /home/shawn/Code/map-reader-llm/logs/session-78-matrix/eval-final-v2-text-comparative.log)
+[2026-04-24T22:56:52+0000] Evaluations summary: 12/12 ok in 21.3 min
+[2026-04-24T22:56:52+0000] === Phase C final v2 done ===

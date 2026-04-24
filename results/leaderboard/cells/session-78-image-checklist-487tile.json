@@ -1,0 +1,2081 @@
+{
+  "label": "session-78-image-checklist",
+  "track": "image",
+  "aggregation": "greedy",
+  "verifier": "session-78-checklist",
+  "bounds_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "n_bounds_tiles": 487,
+  "n_candidates_loaded": 2016,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 2016,
+      "p": 0.19,
+      "r": 0.8805,
+      "f1": 0.3125
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 2016,
+      "p": 0.2039,
+      "r": 0.9448,
+      "f1": 0.3354
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 2016,
+      "p": 0.2073,
+      "r": 0.9609,
+      "f1": 0.3411
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 2016,
+      "p": 0.2098,
+      "r": 0.9724,
+      "f1": 0.3452
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 1733,
+      "p": 0.221,
+      "r": 0.8805,
+      "f1": 0.3533
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 1733,
+      "p": 0.2366,
+      "r": 0.9425,
+      "f1": 0.3782
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 1733,
+      "p": 0.2406,
+      "r": 0.9586,
+      "f1": 0.3847
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 1733,
+      "p": 0.2435,
+      "r": 0.9701,
+      "f1": 0.3893
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 1256,
+      "p": 0.3033,
+      "r": 0.8759,
+      "f1": 0.4506
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 1256,
+      "p": 0.3256,
+      "r": 0.9402,
+      "f1": 0.4837
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 1256,
+      "p": 0.3312,
+      "r": 0.9563,
+      "f1": 0.492
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 1256,
+      "p": 0.336,
+      "r": 0.9701,
+      "f1": 0.4991
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 913,
+      "p": 0.4173,
+      "r": 0.8759,
+      "f1": 0.5653
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 913,
+      "p": 0.4469,
+      "r": 0.9379,
+      "f1": 0.6053
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 913,
+      "p": 0.4545,
+      "r": 0.954,
+      "f1": 0.6157
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 913,
+      "p": 0.46,
+      "r": 0.9655,
+      "f1": 0.6231
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 913,
+      "p": 0.4173,
+      "r": 0.8759,
+      "f1": 0.5653
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 913,
+      "p": 0.4469,
+      "r": 0.9379,
+      "f1": 0.6053
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 913,
+      "p": 0.4545,
+      "r": 0.954,
+      "f1": 0.6157
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 913,
+      "p": 0.46,
+      "r": 0.9655,
+      "f1": 0.6231
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 913,
+      "p": 0.4173,
+      "r": 0.8759,
+      "f1": 0.5653
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 913,
+      "p": 0.4469,
+      "r": 0.9379,
+      "f1": 0.6053
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 913,
+      "p": 0.4545,
+      "r": 0.954,
+      "f1": 0.6157
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 913,
+      "p": 0.46,
+      "r": 0.9655,
+      "f1": 0.6231
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 913,
+      "p": 0.4173,
+      "r": 0.8759,
+      "f1": 0.5653
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 913,
+      "p": 0.4469,
+      "r": 0.9379,
+      "f1": 0.6053
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 913,
+      "p": 0.4545,
+      "r": 0.954,
+      "f1": 0.6157
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 913,
+      "p": 0.46,
+      "r": 0.9655,
+      "f1": 0.6231
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 913,
+      "p": 0.4173,
+      "r": 0.8759,
+      "f1": 0.5653
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 913,
+      "p": 0.4469,
+      "r": 0.9379,
+      "f1": 0.6053
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 913,
+      "p": 0.4545,
+      "r": 0.954,
+      "f1": 0.6157
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 913,
+      "p": 0.46,
+      "r": 0.9655,
+      "f1": 0.6231
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 913,
+      "p": 0.4173,
+      "r": 0.8759,
+      "f1": 0.5653
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 913,
+      "p": 0.4469,
+      "r": 0.9379,
+      "f1": 0.6053
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 913,
+      "p": 0.4545,
+      "r": 0.954,
+      "f1": 0.6157
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 913,
+      "p": 0.46,
+      "r": 0.9655,
+      "f1": 0.6231
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 912,
+      "p": 0.4178,
+      "r": 0.8759,
+      "f1": 0.5657
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 912,
+      "p": 0.4474,
+      "r": 0.9379,
+      "f1": 0.6058
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 912,
+      "p": 0.455,
+      "r": 0.954,
+      "f1": 0.6162
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 912,
+      "p": 0.4605,
+      "r": 0.9655,
+      "f1": 0.6236
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 741,
+      "p": 0.4912,
+      "r": 0.8368,
+      "f1": 0.619
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 741,
+      "p": 0.5425,
+      "r": 0.9241,
+      "f1": 0.6837
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 741,
+      "p": 0.5533,
+      "r": 0.9425,
+      "f1": 0.6973
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 741,
+      "p": 0.5587,
+      "r": 0.9517,
+      "f1": 0.7041
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 695,
+      "p": 0.5237,
+      "r": 0.8368,
+      "f1": 0.6442
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 695,
+      "p": 0.5784,
+      "r": 0.9241,
+      "f1": 0.7115
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 695,
+      "p": 0.5899,
+      "r": 0.9425,
+      "f1": 0.7257
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 695,
+      "p": 0.5942,
+      "r": 0.9494,
+      "f1": 0.731
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 638,
+      "p": 0.5674,
+      "r": 0.8322,
+      "f1": 0.6747
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 638,
+      "p": 0.627,
+      "r": 0.9195,
+      "f1": 0.7456
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 638,
+      "p": 0.6395,
+      "r": 0.9379,
+      "f1": 0.7605
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 638,
+      "p": 0.6442,
+      "r": 0.9448,
+      "f1": 0.7661
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 559,
+      "p": 0.6476,
+      "r": 0.8322,
+      "f1": 0.7284
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 559,
+      "p": 0.7156,
+      "r": 0.9195,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 559,
+      "p": 0.7299,
+      "r": 0.9379,
+      "f1": 0.8209
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 559,
+      "p": 0.7352,
+      "r": 0.9448,
+      "f1": 0.827
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 506,
+      "p": 0.6779,
+      "r": 0.7885,
+      "f1": 0.729
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 506,
+      "p": 0.7451,
+      "r": 0.8667,
+      "f1": 0.8013
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 506,
+      "p": 0.7628,
+      "r": 0.8874,
+      "f1": 0.8204
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 506,
+      "p": 0.7708,
+      "r": 0.8966,
+      "f1": 0.8289
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.7014,
+      "r": 0.7885,
+      "f1": 0.7424
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.771,
+      "r": 0.8667,
+      "f1": 0.816
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7894,
+      "r": 0.8874,
+      "f1": 0.8355
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7975,
+      "r": 0.8966,
+      "f1": 0.8442
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 473,
+      "p": 0.7209,
+      "r": 0.7839,
+      "f1": 0.7511
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 473,
+      "p": 0.7928,
+      "r": 0.8621,
+      "f1": 0.826
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 473,
+      "p": 0.8118,
+      "r": 0.8828,
+      "f1": 0.8458
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 473,
+      "p": 0.8203,
+      "r": 0.892,
+      "f1": 0.8546
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 388,
+      "p": 0.7655,
+      "r": 0.6828,
+      "f1": 0.7217
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 388,
+      "p": 0.8273,
+      "r": 0.7379,
+      "f1": 0.7801
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 388,
+      "p": 0.8428,
+      "r": 0.7517,
+      "f1": 0.7947
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 388,
+      "p": 0.8428,
+      "r": 0.7517,
+      "f1": 0.7947
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 383,
+      "p": 0.7755,
+      "r": 0.6828,
+      "f1": 0.7262
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 383,
+      "p": 0.8381,
+      "r": 0.7379,
+      "f1": 0.7848
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 383,
+      "p": 0.8538,
+      "r": 0.7517,
+      "f1": 0.7995
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 383,
+      "p": 0.8538,
+      "r": 0.7517,
+      "f1": 0.7995
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 378,
+      "p": 0.7831,
+      "r": 0.6805,
+      "f1": 0.7282
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 378,
+      "p": 0.8466,
+      "r": 0.7356,
+      "f1": 0.7872
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 378,
+      "p": 0.8624,
+      "r": 0.7494,
+      "f1": 0.802
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 378,
+      "p": 0.8624,
+      "r": 0.7494,
+      "f1": 0.802
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 357,
+      "p": 0.8291,
+      "r": 0.6805,
+      "f1": 0.7475
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 357,
+      "p": 0.8964,
+      "r": 0.7356,
+      "f1": 0.8081
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 357,
+      "p": 0.9132,
+      "r": 0.7494,
+      "f1": 0.8232
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 282,
+      "p": 0.8369,
+      "r": 0.5425,
+      "f1": 0.6583
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 282,
+      "p": 0.883,
+      "r": 0.5724,
+      "f1": 0.6946
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 282,
+      "p": 0.9007,
+      "r": 0.5839,
+      "f1": 0.7085
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 282,
+      "p": 0.9043,
+      "r": 0.5862,
+      "f1": 0.7113
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 281,
+      "p": 0.8399,
+      "r": 0.5425,
+      "f1": 0.6592
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 281,
+      "p": 0.8861,
+      "r": 0.5724,
+      "f1": 0.6955
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 281,
+      "p": 0.9039,
+      "r": 0.5839,
+      "f1": 0.7095
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 281,
+      "p": 0.9075,
+      "r": 0.5862,
+      "f1": 0.7123
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 279,
+      "p": 0.8459,
+      "r": 0.5425,
+      "f1": 0.6611
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 279,
+      "p": 0.8925,
+      "r": 0.5724,
+      "f1": 0.6975
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 279,
+      "p": 0.9104,
+      "r": 0.5839,
+      "f1": 0.7115
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 279,
+      "p": 0.914,
+      "r": 0.5862,
+      "f1": 0.7143
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 437,
+      "p": 0.7803,
+      "r": 0.7839,
+      "f1": 0.7821
+    },
+    "30": {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 437,
+      "p": 0.8581,
+      "r": 0.8621,
+      "f1": 0.8601
+    },
+    "40": {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 437,
+      "p": 0.8787,
+      "r": 0.8828,
+      "f1": 0.8807
+    },
+    "50": {
+      "label": "session-78-image-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 437,
+      "p": 0.8879,
+      "r": 0.892,
+      "f1": 0.8899
+    }
+  }
+}

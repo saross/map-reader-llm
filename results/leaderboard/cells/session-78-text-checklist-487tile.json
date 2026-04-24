@@ -1,0 +1,2081 @@
+{
+  "label": "session-78-text-checklist",
+  "track": "text",
+  "aggregation": "greedy",
+  "verifier": "session-78-checklist",
+  "bounds_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "n_bounds_tiles": 487,
+  "n_candidates_loaded": 3736,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 3736,
+      "p": 0.1097,
+      "r": 0.9425,
+      "f1": 0.1966
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 3736,
+      "p": 0.113,
+      "r": 0.9701,
+      "f1": 0.2023
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 3736,
+      "p": 0.1138,
+      "r": 0.977,
+      "f1": 0.2038
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 3736,
+      "p": 0.114,
+      "r": 0.9793,
+      "f1": 0.2043
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 3151,
+      "p": 0.1301,
+      "r": 0.9425,
+      "f1": 0.2287
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 3151,
+      "p": 0.1339,
+      "r": 0.9701,
+      "f1": 0.2354
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 3151,
+      "p": 0.1349,
+      "r": 0.977,
+      "f1": 0.237
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 3151,
+      "p": 0.1352,
+      "r": 0.9793,
+      "f1": 0.2376
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 1497,
+      "p": 0.2739,
+      "r": 0.9425,
+      "f1": 0.4244
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 1497,
+      "p": 0.2819,
+      "r": 0.9701,
+      "f1": 0.4369
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 1497,
+      "p": 0.2839,
+      "r": 0.977,
+      "f1": 0.44
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 1497,
+      "p": 0.2846,
+      "r": 0.9793,
+      "f1": 0.441
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 736,
+      "p": 0.5543,
+      "r": 0.9379,
+      "f1": 0.6968
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 736,
+      "p": 0.5707,
+      "r": 0.9655,
+      "f1": 0.7173
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 736,
+      "p": 0.5747,
+      "r": 0.9724,
+      "f1": 0.7225
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 736,
+      "p": 0.5761,
+      "r": 0.9747,
+      "f1": 0.7242
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 736,
+      "p": 0.5543,
+      "r": 0.9379,
+      "f1": 0.6968
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 736,
+      "p": 0.5707,
+      "r": 0.9655,
+      "f1": 0.7173
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 736,
+      "p": 0.5747,
+      "r": 0.9724,
+      "f1": 0.7225
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 736,
+      "p": 0.5761,
+      "r": 0.9747,
+      "f1": 0.7242
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 734,
+      "p": 0.5559,
+      "r": 0.9379,
+      "f1": 0.698
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 734,
+      "p": 0.5722,
+      "r": 0.9655,
+      "f1": 0.7186
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 734,
+      "p": 0.5763,
+      "r": 0.9724,
+      "f1": 0.7237
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 734,
+      "p": 0.5777,
+      "r": 0.9747,
+      "f1": 0.7254
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 734,
+      "p": 0.5559,
+      "r": 0.9379,
+      "f1": 0.698
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 734,
+      "p": 0.5722,
+      "r": 0.9655,
+      "f1": 0.7186
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 734,
+      "p": 0.5763,
+      "r": 0.9724,
+      "f1": 0.7237
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 734,
+      "p": 0.5777,
+      "r": 0.9747,
+      "f1": 0.7254
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 734,
+      "p": 0.5559,
+      "r": 0.9379,
+      "f1": 0.698
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 734,
+      "p": 0.5722,
+      "r": 0.9655,
+      "f1": 0.7186
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 734,
+      "p": 0.5763,
+      "r": 0.9724,
+      "f1": 0.7237
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 734,
+      "p": 0.5777,
+      "r": 0.9747,
+      "f1": 0.7254
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 734,
+      "p": 0.5559,
+      "r": 0.9379,
+      "f1": 0.698
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 734,
+      "p": 0.5722,
+      "r": 0.9655,
+      "f1": 0.7186
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 734,
+      "p": 0.5763,
+      "r": 0.9724,
+      "f1": 0.7237
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 734,
+      "p": 0.5777,
+      "r": 0.9747,
+      "f1": 0.7254
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 734,
+      "p": 0.5559,
+      "r": 0.9379,
+      "f1": 0.698
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 734,
+      "p": 0.5722,
+      "r": 0.9655,
+      "f1": 0.7186
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 734,
+      "p": 0.5763,
+      "r": 0.9724,
+      "f1": 0.7237
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 734,
+      "p": 0.5777,
+      "r": 0.9747,
+      "f1": 0.7254
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 1376,
+      "p": 0.2878,
+      "r": 0.9103,
+      "f1": 0.4373
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 1376,
+      "p": 0.2987,
+      "r": 0.9448,
+      "f1": 0.4539
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 1376,
+      "p": 0.3009,
+      "r": 0.9517,
+      "f1": 0.4572
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 1376,
+      "p": 0.3016,
+      "r": 0.954,
+      "f1": 0.4583
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 1269,
+      "p": 0.3121,
+      "r": 0.9103,
+      "f1": 0.4648
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 1269,
+      "p": 0.3239,
+      "r": 0.9448,
+      "f1": 0.4824
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 1269,
+      "p": 0.3262,
+      "r": 0.9517,
+      "f1": 0.4859
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 1269,
+      "p": 0.327,
+      "r": 0.954,
+      "f1": 0.4871
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 803,
+      "p": 0.4932,
+      "r": 0.9103,
+      "f1": 0.6397
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 803,
+      "p": 0.5118,
+      "r": 0.9448,
+      "f1": 0.664
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 803,
+      "p": 0.5156,
+      "r": 0.9517,
+      "f1": 0.6688
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 803,
+      "p": 0.5168,
+      "r": 0.954,
+      "f1": 0.6704
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 518,
+      "p": 0.7625,
+      "r": 0.908,
+      "f1": 0.829
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 518,
+      "p": 0.7915,
+      "r": 0.9425,
+      "f1": 0.8604
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 518,
+      "p": 0.7973,
+      "r": 0.9494,
+      "f1": 0.8667
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 518,
+      "p": 0.7992,
+      "r": 0.9517,
+      "f1": 0.8688
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 518,
+      "p": 0.7625,
+      "r": 0.908,
+      "f1": 0.829
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 518,
+      "p": 0.7915,
+      "r": 0.9425,
+      "f1": 0.8604
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 518,
+      "p": 0.7973,
+      "r": 0.9494,
+      "f1": 0.8667
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 518,
+      "p": 0.7992,
+      "r": 0.9517,
+      "f1": 0.8688
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 517,
+      "p": 0.764,
+      "r": 0.908,
+      "f1": 0.8298
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 517,
+      "p": 0.793,
+      "r": 0.9425,
+      "f1": 0.8613
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 517,
+      "p": 0.7988,
+      "r": 0.9494,
+      "f1": 0.8676
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 517,
+      "p": 0.8008,
+      "r": 0.9517,
+      "f1": 0.8697
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 517,
+      "p": 0.764,
+      "r": 0.908,
+      "f1": 0.8298
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 517,
+      "p": 0.793,
+      "r": 0.9425,
+      "f1": 0.8613
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 517,
+      "p": 0.7988,
+      "r": 0.9494,
+      "f1": 0.8676
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 517,
+      "p": 0.8008,
+      "r": 0.9517,
+      "f1": 0.8697
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 517,
+      "p": 0.764,
+      "r": 0.908,
+      "f1": 0.8298
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 517,
+      "p": 0.793,
+      "r": 0.9425,
+      "f1": 0.8613
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 517,
+      "p": 0.7988,
+      "r": 0.9494,
+      "f1": 0.8676
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 517,
+      "p": 0.8008,
+      "r": 0.9517,
+      "f1": 0.8697
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 517,
+      "p": 0.764,
+      "r": 0.908,
+      "f1": 0.8298
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 517,
+      "p": 0.793,
+      "r": 0.9425,
+      "f1": 0.8613
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 517,
+      "p": 0.7988,
+      "r": 0.9494,
+      "f1": 0.8676
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 517,
+      "p": 0.8008,
+      "r": 0.9517,
+      "f1": 0.8697
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 517,
+      "p": 0.764,
+      "r": 0.908,
+      "f1": 0.8298
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 517,
+      "p": 0.793,
+      "r": 0.9425,
+      "f1": 0.8613
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 517,
+      "p": 0.7988,
+      "r": 0.9494,
+      "f1": 0.8676
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 517,
+      "p": 0.8008,
+      "r": 0.9517,
+      "f1": 0.8697
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 855,
+      "p": 0.4538,
+      "r": 0.892,
+      "f1": 0.6016
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 855,
+      "p": 0.469,
+      "r": 0.9218,
+      "f1": 0.6217
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 855,
+      "p": 0.4713,
+      "r": 0.9264,
+      "f1": 0.6248
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 855,
+      "p": 0.4725,
+      "r": 0.9287,
+      "f1": 0.6264
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 804,
+      "p": 0.4826,
+      "r": 0.892,
+      "f1": 0.6263
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 804,
+      "p": 0.4988,
+      "r": 0.9218,
+      "f1": 0.6473
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 804,
+      "p": 0.5012,
+      "r": 0.9264,
+      "f1": 0.6505
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 804,
+      "p": 0.5025,
+      "r": 0.9287,
+      "f1": 0.6521
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 627,
+      "p": 0.6188,
+      "r": 0.892,
+      "f1": 0.7307
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 627,
+      "p": 0.6396,
+      "r": 0.9218,
+      "f1": 0.7552
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 627,
+      "p": 0.6427,
+      "r": 0.9264,
+      "f1": 0.7589
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 627,
+      "p": 0.6443,
+      "r": 0.9287,
+      "f1": 0.7608
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 462,
+      "p": 0.8377,
+      "r": 0.8897,
+      "f1": 0.8629
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 462,
+      "p": 0.8658,
+      "r": 0.9195,
+      "f1": 0.8919
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 462,
+      "p": 0.8701,
+      "r": 0.9241,
+      "f1": 0.8963
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 462,
+      "p": 0.8723,
+      "r": 0.9264,
+      "f1": 0.8986
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 584,
+      "p": 0.6301,
+      "r": 0.846,
+      "f1": 0.7223
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 584,
+      "p": 0.649,
+      "r": 0.8713,
+      "f1": 0.7439
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 584,
+      "p": 0.649,
+      "r": 0.8713,
+      "f1": 0.7439
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 584,
+      "p": 0.649,
+      "r": 0.8713,
+      "f1": 0.7439
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 560,
+      "p": 0.6571,
+      "r": 0.846,
+      "f1": 0.7397
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 560,
+      "p": 0.6768,
+      "r": 0.8713,
+      "f1": 0.7618
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 560,
+      "p": 0.6768,
+      "r": 0.8713,
+      "f1": 0.7618
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 560,
+      "p": 0.6768,
+      "r": 0.8713,
+      "f1": 0.7618
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 490,
+      "p": 0.751,
+      "r": 0.846,
+      "f1": 0.7957
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 490,
+      "p": 0.7735,
+      "r": 0.8713,
+      "f1": 0.8195
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 490,
+      "p": 0.7735,
+      "r": 0.8713,
+      "f1": 0.8195
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 490,
+      "p": 0.7735,
+      "r": 0.8713,
+      "f1": 0.8195
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 415,
+      "p": 0.8,
+      "r": 0.7632,
+      "f1": 0.7812
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 415,
+      "p": 0.8096,
+      "r": 0.7724,
+      "f1": 0.7906
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 415,
+      "p": 0.8096,
+      "r": 0.7724,
+      "f1": 0.7906
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 415,
+      "p": 0.8096,
+      "r": 0.7724,
+      "f1": 0.7906
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 410,
+      "p": 0.8098,
+      "r": 0.7632,
+      "f1": 0.7858
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 410,
+      "p": 0.8195,
+      "r": 0.7724,
+      "f1": 0.7953
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 410,
+      "p": 0.8195,
+      "r": 0.7724,
+      "f1": 0.7953
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 410,
+      "p": 0.8195,
+      "r": 0.7724,
+      "f1": 0.7953
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 390,
+      "p": 0.8513,
+      "r": 0.7632,
+      "f1": 0.8048
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 390,
+      "p": 0.8615,
+      "r": 0.7724,
+      "f1": 0.8145
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 390,
+      "p": 0.8615,
+      "r": 0.7724,
+      "f1": 0.8145
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 390,
+      "p": 0.8615,
+      "r": 0.7724,
+      "f1": 0.8145
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 347,
+      "p": 0.9568,
+      "r": 0.7632,
+      "f1": 0.8491
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    },
+    {
+      "label": "session-78-text-checklist",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 347,
+      "p": 0.9683,
+      "r": 0.7724,
+      "f1": 0.8593
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.9154,
+      "r": 0.846,
+      "f1": 0.8793
+    },
+    "30": {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    "40": {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    },
+    "50": {
+      "label": "session-78-text-checklist",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.9428,
+      "r": 0.8713,
+      "f1": 0.9056
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-24T22:56:52.310117+00:00",
+  "summary": {
+    "label": "session-78-text-checklist-text-opt-final-v2",
+    "n_detections": 411,
+    "buffers": [
+      {
+        "buffer_metres": 5,
+        "f1": 0.3002,
+        "f1_ci_lower": 0.2543,
+        "f1_ci_upper": 0.3475,
+        "precision": 0.309,
+        "p_ci_lower": 0.2606,
+        "p_ci_upper": 0.3588,
+        "recall": 0.292,
+        "r_ci_lower": 0.2473,
+        "r_ci_upper": 0.3396
+      },
+      {
+        "buffer_metres": 10,
+        "f1": 0.6903,
+        "f1_ci_lower": 0.6455,
+        "f1_ci_upper": 0.7336,
+        "precision": 0.7105,
+        "p_ci_lower": 0.6632,
+        "p_ci_upper": 0.7565,
+        "recall": 0.6713,
+        "r_ci_lower": 0.6227,
+        "r_ci_upper": 0.72
+      },
+      {
+        "buffer_metres": 15,
+        "f1": 0.818,
+        "f1_ci_lower": 0.7788,
+        "f1_ci_upper": 0.8535,
+        "precision": 0.8418,
+        "p_ci_lower": 0.7995,
+        "p_ci_upper": 0.8789,
+        "recall": 0.7954,
+        "r_ci_lower": 0.7495,
+        "r_ci_upper": 0.8398
+      },
+      {
+        "buffer_metres": 20,
+        "f1": 0.8629,
+        "f1_ci_lower": 0.8317,
+        "f1_ci_upper": 0.892,
+        "precision": 0.8881,
+        "p_ci_lower": 0.8525,
+        "p_ci_upper": 0.9195,
+        "recall": 0.8391,
+        "r_ci_lower": 0.7982,
+        "r_ci_upper": 0.8791
+      },
+      {
+        "buffer_metres": 25,
+        "f1": 0.8771,
+        "f1_ci_lower": 0.8477,
+        "f1_ci_upper": 0.9037,
+        "precision": 0.9027,
+        "p_ci_lower": 0.8683,
+        "p_ci_upper": 0.9326,
+        "recall": 0.8529,
+        "r_ci_lower": 0.8138,
+        "r_ci_upper": 0.8911
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.8889,
+        "f1_ci_lower": 0.861,
+        "f1_ci_upper": 0.9143,
+        "precision": 0.9148,
+        "p_ci_lower": 0.882,
+        "p_ci_upper": 0.9429,
+        "recall": 0.8644,
+        "r_ci_lower": 0.8251,
+        "r_ci_upper": 0.9019
+      },
+      {
+        "buffer_metres": 35,
+        "f1": 0.8889,
+        "f1_ci_lower": 0.861,
+        "f1_ci_upper": 0.9143,
+        "precision": 0.9148,
+        "p_ci_lower": 0.882,
+        "p_ci_upper": 0.9429,
+        "recall": 0.8644,
+        "r_ci_lower": 0.8251,
+        "r_ci_upper": 0.9019
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.8889,
+        "f1_ci_lower": 0.861,
+        "f1_ci_upper": 0.9143,
+        "precision": 0.9148,
+        "p_ci_lower": 0.882,
+        "p_ci_upper": 0.9429,
+        "recall": 0.8644,
+        "r_ci_lower": 0.8251,
+        "r_ci_upper": 0.9019
+      },
+      {
+        "buffer_metres": 45,
+        "f1": 0.8889,
+        "f1_ci_lower": 0.861,
+        "f1_ci_upper": 0.9143,
+        "precision": 0.9148,
+        "p_ci_lower": 0.882,
+        "p_ci_upper": 0.9429,
+        "recall": 0.8644,
+        "r_ci_lower": 0.8251,
+        "r_ci_upper": 0.9019
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.8889,
+        "f1_ci_lower": 0.861,
+        "f1_ci_upper": 0.9143,
+        "precision": 0.9148,
+        "p_ci_lower": 0.882,
+        "p_ci_upper": 0.9429,
+        "recall": 0.8644,
+        "r_ci_lower": 0.8251,
+        "r_ci_upper": 0.9019
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 184,
+        "tn": 240,
+        "fp": 18,
+        "fn": 45
+      },
+      "mcc": {
+        "mean": 0.7431,
+        "ci_lower": 0.6841,
+        "ci_upper": 0.7996
+      },
+      "sensitivity": {
+        "mean": 0.8033,
+        "ci_lower": 0.7511,
+        "ci_upper": 0.8538
+      },
+      "specificity": {
+        "mean": 0.9302,
+        "ci_lower": 0.8977,
+        "ci_upper": 0.9595
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "6b57364c",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-24T22:49:46.733752+00:00",
+    "cli_args": {
+      "detections": [
+        "/home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-checklist-text-opt-20m.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50
+      ],
+      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "/home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-checklist-text",
+      "label": "session-78-text-checklist-text-opt-final-v2",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "/home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-checklist-text-opt-20m.geojson"
+      ],
+      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    }
+  }
+}

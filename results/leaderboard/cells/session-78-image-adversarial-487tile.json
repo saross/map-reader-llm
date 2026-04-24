@@ -1,0 +1,2081 @@
+{
+  "label": "session-78-image-adversarial",
+  "track": "image",
+  "aggregation": "greedy",
+  "verifier": "session-78-adversarial",
+  "bounds_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "n_bounds_tiles": 487,
+  "n_candidates_loaded": 2017,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 2017,
+      "p": 0.1899,
+      "r": 0.8805,
+      "f1": 0.3124
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 2017,
+      "p": 0.2038,
+      "r": 0.9448,
+      "f1": 0.3352
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 2017,
+      "p": 0.2072,
+      "r": 0.9609,
+      "f1": 0.3409
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 2017,
+      "p": 0.2097,
+      "r": 0.9724,
+      "f1": 0.345
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 1410,
+      "p": 0.2716,
+      "r": 0.8805,
+      "f1": 0.4152
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 1410,
+      "p": 0.2908,
+      "r": 0.9425,
+      "f1": 0.4444
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 1410,
+      "p": 0.2957,
+      "r": 0.9586,
+      "f1": 0.452
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 1410,
+      "p": 0.2993,
+      "r": 0.9701,
+      "f1": 0.4575
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 1289,
+      "p": 0.2971,
+      "r": 0.8805,
+      "f1": 0.4443
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 1289,
+      "p": 0.3181,
+      "r": 0.9425,
+      "f1": 0.4756
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 1289,
+      "p": 0.3235,
+      "r": 0.9586,
+      "f1": 0.4838
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 1289,
+      "p": 0.3274,
+      "r": 0.9701,
+      "f1": 0.4896
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 907,
+      "p": 0.4201,
+      "r": 0.8759,
+      "f1": 0.5678
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 907,
+      "p": 0.4509,
+      "r": 0.9402,
+      "f1": 0.6095
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 907,
+      "p": 0.4587,
+      "r": 0.9563,
+      "f1": 0.62
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 907,
+      "p": 0.4631,
+      "r": 0.9655,
+      "f1": 0.6259
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 907,
+      "p": 0.4201,
+      "r": 0.8759,
+      "f1": 0.5678
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 907,
+      "p": 0.4509,
+      "r": 0.9402,
+      "f1": 0.6095
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 907,
+      "p": 0.4587,
+      "r": 0.9563,
+      "f1": 0.62
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 907,
+      "p": 0.4631,
+      "r": 0.9655,
+      "f1": 0.6259
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 857,
+      "p": 0.4364,
+      "r": 0.8598,
+      "f1": 0.5789
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 857,
+      "p": 0.4691,
+      "r": 0.9241,
+      "f1": 0.6223
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 857,
+      "p": 0.4784,
+      "r": 0.9425,
+      "f1": 0.6347
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 857,
+      "p": 0.4831,
+      "r": 0.9517,
+      "f1": 0.6409
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 857,
+      "p": 0.4364,
+      "r": 0.8598,
+      "f1": 0.5789
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 857,
+      "p": 0.4691,
+      "r": 0.9241,
+      "f1": 0.6223
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 857,
+      "p": 0.4784,
+      "r": 0.9425,
+      "f1": 0.6347
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 857,
+      "p": 0.4831,
+      "r": 0.9517,
+      "f1": 0.6409
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 850,
+      "p": 0.4376,
+      "r": 0.8552,
+      "f1": 0.579
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 850,
+      "p": 0.4718,
+      "r": 0.9218,
+      "f1": 0.6241
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 850,
+      "p": 0.4812,
+      "r": 0.9402,
+      "f1": 0.6366
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 850,
+      "p": 0.4859,
+      "r": 0.9494,
+      "f1": 0.6428
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 813,
+      "p": 0.4391,
+      "r": 0.8207,
+      "f1": 0.5721
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 813,
+      "p": 0.476,
+      "r": 0.8897,
+      "f1": 0.6202
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 813,
+      "p": 0.4859,
+      "r": 0.908,
+      "f1": 0.633
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 813,
+      "p": 0.4908,
+      "r": 0.9172,
+      "f1": 0.6394
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 812,
+      "p": 0.4384,
+      "r": 0.8184,
+      "f1": 0.571
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 812,
+      "p": 0.4754,
+      "r": 0.8874,
+      "f1": 0.6191
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 812,
+      "p": 0.4852,
+      "r": 0.9057,
+      "f1": 0.6319
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 812,
+      "p": 0.4901,
+      "r": 0.9149,
+      "f1": 0.6383
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 741,
+      "p": 0.4912,
+      "r": 0.8368,
+      "f1": 0.619
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 741,
+      "p": 0.5425,
+      "r": 0.9241,
+      "f1": 0.6837
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 741,
+      "p": 0.5533,
+      "r": 0.9425,
+      "f1": 0.6973
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 741,
+      "p": 0.5587,
+      "r": 0.9517,
+      "f1": 0.7041
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 651,
+      "p": 0.5591,
+      "r": 0.8368,
+      "f1": 0.6703
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 651,
+      "p": 0.6175,
+      "r": 0.9241,
+      "f1": 0.7403
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 651,
+      "p": 0.6298,
+      "r": 0.9425,
+      "f1": 0.7551
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 651,
+      "p": 0.6344,
+      "r": 0.9494,
+      "f1": 0.7606
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 637,
+      "p": 0.5714,
+      "r": 0.8368,
+      "f1": 0.6791
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 637,
+      "p": 0.6311,
+      "r": 0.9241,
+      "f1": 0.75
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 637,
+      "p": 0.6436,
+      "r": 0.9425,
+      "f1": 0.7649
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 637,
+      "p": 0.6484,
+      "r": 0.9494,
+      "f1": 0.7705
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 550,
+      "p": 0.6582,
+      "r": 0.8322,
+      "f1": 0.735
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 550,
+      "p": 0.7273,
+      "r": 0.9195,
+      "f1": 0.8122
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 550,
+      "p": 0.7418,
+      "r": 0.9379,
+      "f1": 0.8284
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 550,
+      "p": 0.7473,
+      "r": 0.9448,
+      "f1": 0.8345
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 550,
+      "p": 0.6582,
+      "r": 0.8322,
+      "f1": 0.735
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 550,
+      "p": 0.7273,
+      "r": 0.9195,
+      "f1": 0.8122
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 550,
+      "p": 0.7418,
+      "r": 0.9379,
+      "f1": 0.8284
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 550,
+      "p": 0.7473,
+      "r": 0.9448,
+      "f1": 0.8345
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 530,
+      "p": 0.6698,
+      "r": 0.8161,
+      "f1": 0.7358
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 530,
+      "p": 0.7396,
+      "r": 0.9011,
+      "f1": 0.8124
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 530,
+      "p": 0.7547,
+      "r": 0.9195,
+      "f1": 0.829
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 530,
+      "p": 0.7604,
+      "r": 0.9264,
+      "f1": 0.8352
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 530,
+      "p": 0.6698,
+      "r": 0.8161,
+      "f1": 0.7358
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 530,
+      "p": 0.7396,
+      "r": 0.9011,
+      "f1": 0.8124
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 530,
+      "p": 0.7547,
+      "r": 0.9195,
+      "f1": 0.829
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 530,
+      "p": 0.7604,
+      "r": 0.9264,
+      "f1": 0.8352
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 526,
+      "p": 0.6711,
+      "r": 0.8115,
+      "f1": 0.7347
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 526,
+      "p": 0.7414,
+      "r": 0.8966,
+      "f1": 0.8117
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 526,
+      "p": 0.7567,
+      "r": 0.9149,
+      "f1": 0.8283
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 526,
+      "p": 0.7605,
+      "r": 0.9195,
+      "f1": 0.8325
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 501,
+      "p": 0.6766,
+      "r": 0.7793,
+      "f1": 0.7244
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 501,
+      "p": 0.7465,
+      "r": 0.8598,
+      "f1": 0.7991
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 501,
+      "p": 0.7605,
+      "r": 0.8759,
+      "f1": 0.8141
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 501,
+      "p": 0.7625,
+      "r": 0.8782,
+      "f1": 0.8162
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 501,
+      "p": 0.6766,
+      "r": 0.7793,
+      "f1": 0.7244
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 501,
+      "p": 0.7465,
+      "r": 0.8598,
+      "f1": 0.7991
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 501,
+      "p": 0.7605,
+      "r": 0.8759,
+      "f1": 0.8141
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 501,
+      "p": 0.7625,
+      "r": 0.8782,
+      "f1": 0.8162
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 506,
+      "p": 0.6779,
+      "r": 0.7885,
+      "f1": 0.729
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 506,
+      "p": 0.7451,
+      "r": 0.8667,
+      "f1": 0.8013
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 506,
+      "p": 0.7628,
+      "r": 0.8874,
+      "f1": 0.8204
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 506,
+      "p": 0.7708,
+      "r": 0.8966,
+      "f1": 0.8289
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 478,
+      "p": 0.7176,
+      "r": 0.7885,
+      "f1": 0.7514
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 478,
+      "p": 0.7887,
+      "r": 0.8667,
+      "f1": 0.8258
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 478,
+      "p": 0.8075,
+      "r": 0.8874,
+      "f1": 0.8456
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 478,
+      "p": 0.8159,
+      "r": 0.8966,
+      "f1": 0.8543
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 473,
+      "p": 0.7252,
+      "r": 0.7885,
+      "f1": 0.7555
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 473,
+      "p": 0.797,
+      "r": 0.8667,
+      "f1": 0.8304
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 473,
+      "p": 0.8161,
+      "r": 0.8874,
+      "f1": 0.8502
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 473,
+      "p": 0.8245,
+      "r": 0.8966,
+      "f1": 0.859
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 430,
+      "p": 0.793,
+      "r": 0.7839,
+      "f1": 0.7884
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 430,
+      "p": 0.8721,
+      "r": 0.8621,
+      "f1": 0.8671
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 430,
+      "p": 0.893,
+      "r": 0.8828,
+      "f1": 0.8879
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 430,
+      "p": 0.9023,
+      "r": 0.892,
+      "f1": 0.8971
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 430,
+      "p": 0.793,
+      "r": 0.7839,
+      "f1": 0.7884
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 430,
+      "p": 0.8721,
+      "r": 0.8621,
+      "f1": 0.8671
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 430,
+      "p": 0.893,
+      "r": 0.8828,
+      "f1": 0.8879
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 430,
+      "p": 0.9023,
+      "r": 0.892,
+      "f1": 0.8971
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 419,
+      "p": 0.7995,
+      "r": 0.7701,
+      "f1": 0.7845
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 419,
+      "p": 0.8807,
+      "r": 0.8483,
+      "f1": 0.8642
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 419,
+      "p": 0.9021,
+      "r": 0.869,
+      "f1": 0.8852
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 419,
+      "p": 0.9117,
+      "r": 0.8782,
+      "f1": 0.8946
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 419,
+      "p": 0.7995,
+      "r": 0.7701,
+      "f1": 0.7845
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 419,
+      "p": 0.8807,
+      "r": 0.8483,
+      "f1": 0.8642
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 419,
+      "p": 0.9021,
+      "r": 0.869,
+      "f1": 0.8852
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 419,
+      "p": 0.9117,
+      "r": 0.8782,
+      "f1": 0.8946
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 416,
+      "p": 0.8005,
+      "r": 0.7655,
+      "f1": 0.7826
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 416,
+      "p": 0.8822,
+      "r": 0.8437,
+      "f1": 0.8625
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 416,
+      "p": 0.9038,
+      "r": 0.8644,
+      "f1": 0.8837
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 416,
+      "p": 0.9111,
+      "r": 0.8713,
+      "f1": 0.8907
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 396,
+      "p": 0.8081,
+      "r": 0.7356,
+      "f1": 0.7702
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 396,
+      "p": 0.8914,
+      "r": 0.8115,
+      "f1": 0.8496
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 396,
+      "p": 0.9116,
+      "r": 0.8299,
+      "f1": 0.8688
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 396,
+      "p": 0.9167,
+      "r": 0.8345,
+      "f1": 0.8736
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 396,
+      "p": 0.8081,
+      "r": 0.7356,
+      "f1": 0.7702
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 396,
+      "p": 0.8914,
+      "r": 0.8115,
+      "f1": 0.8496
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 396,
+      "p": 0.9116,
+      "r": 0.8299,
+      "f1": 0.8688
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 396,
+      "p": 0.9167,
+      "r": 0.8345,
+      "f1": 0.8736
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 388,
+      "p": 0.7655,
+      "r": 0.6828,
+      "f1": 0.7217
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 388,
+      "p": 0.8273,
+      "r": 0.7379,
+      "f1": 0.7801
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 388,
+      "p": 0.8428,
+      "r": 0.7517,
+      "f1": 0.7947
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 388,
+      "p": 0.8428,
+      "r": 0.7517,
+      "f1": 0.7947
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 375,
+      "p": 0.792,
+      "r": 0.6828,
+      "f1": 0.7333
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 375,
+      "p": 0.856,
+      "r": 0.7379,
+      "f1": 0.7926
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 375,
+      "p": 0.872,
+      "r": 0.7517,
+      "f1": 0.8074
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 375,
+      "p": 0.872,
+      "r": 0.7517,
+      "f1": 0.8074
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 371,
+      "p": 0.8005,
+      "r": 0.6828,
+      "f1": 0.737
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 371,
+      "p": 0.8652,
+      "r": 0.7379,
+      "f1": 0.7965
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 371,
+      "p": 0.8814,
+      "r": 0.7517,
+      "f1": 0.8114
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 371,
+      "p": 0.8814,
+      "r": 0.7517,
+      "f1": 0.8114
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 350,
+      "p": 0.8457,
+      "r": 0.6805,
+      "f1": 0.7541
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 350,
+      "p": 0.9143,
+      "r": 0.7356,
+      "f1": 0.8153
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 350,
+      "p": 0.9314,
+      "r": 0.7494,
+      "f1": 0.8306
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 350,
+      "p": 0.9343,
+      "r": 0.7517,
+      "f1": 0.8331
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 350,
+      "p": 0.8457,
+      "r": 0.6805,
+      "f1": 0.7541
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 350,
+      "p": 0.9143,
+      "r": 0.7356,
+      "f1": 0.8153
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 350,
+      "p": 0.9314,
+      "r": 0.7494,
+      "f1": 0.8306
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 350,
+      "p": 0.9343,
+      "r": 0.7517,
+      "f1": 0.8331
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 340,
+      "p": 0.8529,
+      "r": 0.6667,
+      "f1": 0.7484
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 340,
+      "p": 0.9235,
+      "r": 0.7218,
+      "f1": 0.8103
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 340,
+      "p": 0.9412,
+      "r": 0.7356,
+      "f1": 0.8258
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 340,
+      "p": 0.9441,
+      "r": 0.7379,
+      "f1": 0.8284
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 340,
+      "p": 0.8529,
+      "r": 0.6667,
+      "f1": 0.7484
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 340,
+      "p": 0.9235,
+      "r": 0.7218,
+      "f1": 0.8103
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 340,
+      "p": 0.9412,
+      "r": 0.7356,
+      "f1": 0.8258
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 340,
+      "p": 0.9441,
+      "r": 0.7379,
+      "f1": 0.8284
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 339,
+      "p": 0.8525,
+      "r": 0.6644,
+      "f1": 0.7468
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 339,
+      "p": 0.9233,
+      "r": 0.7195,
+      "f1": 0.8088
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 339,
+      "p": 0.941,
+      "r": 0.7333,
+      "f1": 0.8243
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 339,
+      "p": 0.944,
+      "r": 0.7356,
+      "f1": 0.8269
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 321,
+      "p": 0.8598,
+      "r": 0.6345,
+      "f1": 0.7302
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 321,
+      "p": 0.9346,
+      "r": 0.6897,
+      "f1": 0.7937
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 321,
+      "p": 0.9502,
+      "r": 0.7011,
+      "f1": 0.8069
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 321,
+      "p": 0.9502,
+      "r": 0.7011,
+      "f1": 0.8069
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 321,
+      "p": 0.8598,
+      "r": 0.6345,
+      "f1": 0.7302
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 321,
+      "p": 0.9346,
+      "r": 0.6897,
+      "f1": 0.7937
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 321,
+      "p": 0.9502,
+      "r": 0.7011,
+      "f1": 0.8069
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 321,
+      "p": 0.9502,
+      "r": 0.7011,
+      "f1": 0.8069
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 282,
+      "p": 0.8369,
+      "r": 0.5425,
+      "f1": 0.6583
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 282,
+      "p": 0.883,
+      "r": 0.5724,
+      "f1": 0.6946
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 282,
+      "p": 0.9007,
+      "r": 0.5839,
+      "f1": 0.7085
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 282,
+      "p": 0.9043,
+      "r": 0.5862,
+      "f1": 0.7113
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 277,
+      "p": 0.852,
+      "r": 0.5425,
+      "f1": 0.6629
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 277,
+      "p": 0.8989,
+      "r": 0.5724,
+      "f1": 0.6994
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 277,
+      "p": 0.917,
+      "r": 0.5839,
+      "f1": 0.7135
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 277,
+      "p": 0.9206,
+      "r": 0.5862,
+      "f1": 0.7163
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 273,
+      "p": 0.8645,
+      "r": 0.5425,
+      "f1": 0.6667
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 273,
+      "p": 0.9121,
+      "r": 0.5724,
+      "f1": 0.7034
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 273,
+      "p": 0.9304,
+      "r": 0.5839,
+      "f1": 0.7175
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 273,
+      "p": 0.9341,
+      "r": 0.5862,
+      "f1": 0.7203
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 269,
+      "p": 0.8773,
+      "r": 0.5425,
+      "f1": 0.6705
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 269,
+      "p": 0.9257,
+      "r": 0.5724,
+      "f1": 0.7074
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 269,
+      "p": 0.9442,
+      "r": 0.5839,
+      "f1": 0.7216
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 269,
+      "p": 0.948,
+      "r": 0.5862,
+      "f1": 0.7244
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 269,
+      "p": 0.8773,
+      "r": 0.5425,
+      "f1": 0.6705
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 269,
+      "p": 0.9257,
+      "r": 0.5724,
+      "f1": 0.7074
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 269,
+      "p": 0.9442,
+      "r": 0.5839,
+      "f1": 0.7216
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 269,
+      "p": 0.948,
+      "r": 0.5862,
+      "f1": 0.7244
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 263,
+      "p": 0.8859,
+      "r": 0.5356,
+      "f1": 0.6676
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 263,
+      "p": 0.9354,
+      "r": 0.5655,
+      "f1": 0.7049
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 263,
+      "p": 0.9544,
+      "r": 0.577,
+      "f1": 0.7192
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 263,
+      "p": 0.9582,
+      "r": 0.5793,
+      "f1": 0.7221
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 263,
+      "p": 0.8859,
+      "r": 0.5356,
+      "f1": 0.6676
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 263,
+      "p": 0.9354,
+      "r": 0.5655,
+      "f1": 0.7049
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 263,
+      "p": 0.9544,
+      "r": 0.577,
+      "f1": 0.7192
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 263,
+      "p": 0.9582,
+      "r": 0.5793,
+      "f1": 0.7221
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 262,
+      "p": 0.8855,
+      "r": 0.5333,
+      "f1": 0.6657
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 262,
+      "p": 0.9351,
+      "r": 0.5632,
+      "f1": 0.703
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 262,
+      "p": 0.9542,
+      "r": 0.5747,
+      "f1": 0.7174
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 262,
+      "p": 0.958,
+      "r": 0.577,
+      "f1": 0.7202
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 252,
+      "p": 0.8889,
+      "r": 0.5149,
+      "f1": 0.6521
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 252,
+      "p": 0.9405,
+      "r": 0.5448,
+      "f1": 0.69
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 252,
+      "p": 0.9603,
+      "r": 0.5563,
+      "f1": 0.7045
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 252,
+      "p": 0.9643,
+      "r": 0.5586,
+      "f1": 0.7074
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 252,
+      "p": 0.8889,
+      "r": 0.5149,
+      "f1": 0.6521
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 252,
+      "p": 0.9405,
+      "r": 0.5448,
+      "f1": 0.69
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 252,
+      "p": 0.9603,
+      "r": 0.5563,
+      "f1": 0.7045
+    },
+    {
+      "label": "session-78-image-adversarial",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 252,
+      "p": 0.9643,
+      "r": 0.5586,
+      "f1": 0.7074
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 430,
+      "p": 0.793,
+      "r": 0.7839,
+      "f1": 0.7884
+    },
+    "30": {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 430,
+      "p": 0.8721,
+      "r": 0.8621,
+      "f1": 0.8671
+    },
+    "40": {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 430,
+      "p": 0.893,
+      "r": 0.8828,
+      "f1": 0.8879
+    },
+    "50": {
+      "label": "session-78-image-adversarial",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 430,
+      "p": 0.9023,
+      "r": 0.892,
+      "f1": 0.8971
+    }
+  }
+}

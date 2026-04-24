@@ -1,0 +1,2081 @@
+{
+  "label": "session-78-text-comparative",
+  "track": "text",
+  "aggregation": "greedy",
+  "verifier": "session-78-comparative",
+  "bounds_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "n_bounds_tiles": 487,
+  "n_candidates_loaded": 3736,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 3736,
+      "p": 0.1097,
+      "r": 0.9425,
+      "f1": 0.1966
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 3736,
+      "p": 0.113,
+      "r": 0.9701,
+      "f1": 0.2023
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 3736,
+      "p": 0.1138,
+      "r": 0.977,
+      "f1": 0.2038
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 3736,
+      "p": 0.114,
+      "r": 0.9793,
+      "f1": 0.2043
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 1994,
+      "p": 0.2056,
+      "r": 0.9425,
+      "f1": 0.3376
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 1994,
+      "p": 0.2116,
+      "r": 0.9701,
+      "f1": 0.3475
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 1994,
+      "p": 0.2131,
+      "r": 0.977,
+      "f1": 0.3499
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 1994,
+      "p": 0.2136,
+      "r": 0.9793,
+      "f1": 0.3508
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 1542,
+      "p": 0.2659,
+      "r": 0.9425,
+      "f1": 0.4148
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 1542,
+      "p": 0.2737,
+      "r": 0.9701,
+      "f1": 0.4269
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 1542,
+      "p": 0.2756,
+      "r": 0.977,
+      "f1": 0.4299
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 1542,
+      "p": 0.2763,
+      "r": 0.9793,
+      "f1": 0.431
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 736,
+      "p": 0.5557,
+      "r": 0.9402,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 736,
+      "p": 0.572,
+      "r": 0.9678,
+      "f1": 0.719
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 736,
+      "p": 0.5761,
+      "r": 0.9747,
+      "f1": 0.7242
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 736,
+      "p": 0.5774,
+      "r": 0.977,
+      "f1": 0.7259
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 736,
+      "p": 0.5557,
+      "r": 0.9402,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 736,
+      "p": 0.572,
+      "r": 0.9678,
+      "f1": 0.719
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 736,
+      "p": 0.5761,
+      "r": 0.9747,
+      "f1": 0.7242
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 736,
+      "p": 0.5774,
+      "r": 0.977,
+      "f1": 0.7259
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 710,
+      "p": 0.5761,
+      "r": 0.9402,
+      "f1": 0.7144
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 710,
+      "p": 0.593,
+      "r": 0.9678,
+      "f1": 0.7354
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 710,
+      "p": 0.5972,
+      "r": 0.9747,
+      "f1": 0.7406
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 710,
+      "p": 0.5986,
+      "r": 0.977,
+      "f1": 0.7424
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 710,
+      "p": 0.5761,
+      "r": 0.9402,
+      "f1": 0.7144
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 710,
+      "p": 0.593,
+      "r": 0.9678,
+      "f1": 0.7354
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 710,
+      "p": 0.5972,
+      "r": 0.9747,
+      "f1": 0.7406
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 710,
+      "p": 0.5986,
+      "r": 0.977,
+      "f1": 0.7424
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 708,
+      "p": 0.5777,
+      "r": 0.9402,
+      "f1": 0.7157
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 708,
+      "p": 0.5946,
+      "r": 0.9678,
+      "f1": 0.7367
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 708,
+      "p": 0.5989,
+      "r": 0.9747,
+      "f1": 0.7419
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 708,
+      "p": 0.6003,
+      "r": 0.977,
+      "f1": 0.7437
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 707,
+      "p": 0.5785,
+      "r": 0.9402,
+      "f1": 0.7163
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 707,
+      "p": 0.5955,
+      "r": 0.9678,
+      "f1": 0.7373
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 707,
+      "p": 0.5997,
+      "r": 0.9747,
+      "f1": 0.7426
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 707,
+      "p": 0.6011,
+      "r": 0.977,
+      "f1": 0.7443
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 707,
+      "p": 0.5785,
+      "r": 0.9402,
+      "f1": 0.7163
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 707,
+      "p": 0.5955,
+      "r": 0.9678,
+      "f1": 0.7373
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 707,
+      "p": 0.5997,
+      "r": 0.9747,
+      "f1": 0.7426
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 707,
+      "p": 0.6011,
+      "r": 0.977,
+      "f1": 0.7443
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 1376,
+      "p": 0.2878,
+      "r": 0.9103,
+      "f1": 0.4373
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 1376,
+      "p": 0.2987,
+      "r": 0.9448,
+      "f1": 0.4539
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 1376,
+      "p": 0.3009,
+      "r": 0.9517,
+      "f1": 0.4572
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 1376,
+      "p": 0.3016,
+      "r": 0.954,
+      "f1": 0.4583
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 967,
+      "p": 0.4095,
+      "r": 0.9103,
+      "f1": 0.5649
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 967,
+      "p": 0.425,
+      "r": 0.9448,
+      "f1": 0.5863
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 967,
+      "p": 0.4281,
+      "r": 0.9517,
+      "f1": 0.5906
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 967,
+      "p": 0.4292,
+      "r": 0.954,
+      "f1": 0.592
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 821,
+      "p": 0.4823,
+      "r": 0.9103,
+      "f1": 0.6306
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 821,
+      "p": 0.5006,
+      "r": 0.9448,
+      "f1": 0.6545
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 821,
+      "p": 0.5043,
+      "r": 0.9517,
+      "f1": 0.6592
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 821,
+      "p": 0.5055,
+      "r": 0.954,
+      "f1": 0.6608
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 523,
+      "p": 0.7572,
+      "r": 0.9103,
+      "f1": 0.8267
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 523,
+      "p": 0.7859,
+      "r": 0.9448,
+      "f1": 0.858
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 523,
+      "p": 0.7916,
+      "r": 0.9517,
+      "f1": 0.8643
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 523,
+      "p": 0.7935,
+      "r": 0.954,
+      "f1": 0.8664
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 523,
+      "p": 0.7572,
+      "r": 0.9103,
+      "f1": 0.8267
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 523,
+      "p": 0.7859,
+      "r": 0.9448,
+      "f1": 0.858
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 523,
+      "p": 0.7916,
+      "r": 0.9517,
+      "f1": 0.8643
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 523,
+      "p": 0.7935,
+      "r": 0.954,
+      "f1": 0.8664
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 508,
+      "p": 0.7795,
+      "r": 0.9103,
+      "f1": 0.8399
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 508,
+      "p": 0.8091,
+      "r": 0.9448,
+      "f1": 0.8717
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 508,
+      "p": 0.815,
+      "r": 0.9517,
+      "f1": 0.878
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 508,
+      "p": 0.8169,
+      "r": 0.954,
+      "f1": 0.8802
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 508,
+      "p": 0.7795,
+      "r": 0.9103,
+      "f1": 0.8399
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 508,
+      "p": 0.8091,
+      "r": 0.9448,
+      "f1": 0.8717
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 508,
+      "p": 0.815,
+      "r": 0.9517,
+      "f1": 0.878
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 508,
+      "p": 0.8169,
+      "r": 0.954,
+      "f1": 0.8802
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 508,
+      "p": 0.7795,
+      "r": 0.9103,
+      "f1": 0.8399
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 508,
+      "p": 0.8091,
+      "r": 0.9448,
+      "f1": 0.8717
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 508,
+      "p": 0.815,
+      "r": 0.9517,
+      "f1": 0.878
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 508,
+      "p": 0.8169,
+      "r": 0.954,
+      "f1": 0.8802
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 508,
+      "p": 0.7795,
+      "r": 0.9103,
+      "f1": 0.8399
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 508,
+      "p": 0.8091,
+      "r": 0.9448,
+      "f1": 0.8717
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 508,
+      "p": 0.815,
+      "r": 0.9517,
+      "f1": 0.878
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 508,
+      "p": 0.8169,
+      "r": 0.954,
+      "f1": 0.8802
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 508,
+      "p": 0.7795,
+      "r": 0.9103,
+      "f1": 0.8399
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 508,
+      "p": 0.8091,
+      "r": 0.9448,
+      "f1": 0.8717
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 508,
+      "p": 0.815,
+      "r": 0.9517,
+      "f1": 0.878
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 508,
+      "p": 0.8169,
+      "r": 0.954,
+      "f1": 0.8802
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 855,
+      "p": 0.4538,
+      "r": 0.892,
+      "f1": 0.6016
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 855,
+      "p": 0.469,
+      "r": 0.9218,
+      "f1": 0.6217
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 855,
+      "p": 0.4713,
+      "r": 0.9264,
+      "f1": 0.6248
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 855,
+      "p": 0.4725,
+      "r": 0.9287,
+      "f1": 0.6264
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 680,
+      "p": 0.5706,
+      "r": 0.892,
+      "f1": 0.696
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 680,
+      "p": 0.5897,
+      "r": 0.9218,
+      "f1": 0.7193
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 680,
+      "p": 0.5926,
+      "r": 0.9264,
+      "f1": 0.7229
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 680,
+      "p": 0.5941,
+      "r": 0.9287,
+      "f1": 0.7247
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 617,
+      "p": 0.6288,
+      "r": 0.892,
+      "f1": 0.7376
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 617,
+      "p": 0.6499,
+      "r": 0.9218,
+      "f1": 0.7624
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 617,
+      "p": 0.6532,
+      "r": 0.9264,
+      "f1": 0.7662
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 617,
+      "p": 0.6548,
+      "r": 0.9287,
+      "f1": 0.7681
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 464,
+      "p": 0.8362,
+      "r": 0.892,
+      "f1": 0.8632
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 464,
+      "p": 0.8642,
+      "r": 0.9218,
+      "f1": 0.8921
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 464,
+      "p": 0.8685,
+      "r": 0.9264,
+      "f1": 0.8966
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 464,
+      "p": 0.8707,
+      "r": 0.9287,
+      "f1": 0.8988
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 464,
+      "p": 0.8362,
+      "r": 0.892,
+      "f1": 0.8632
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 464,
+      "p": 0.8642,
+      "r": 0.9218,
+      "f1": 0.8921
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 464,
+      "p": 0.8685,
+      "r": 0.9264,
+      "f1": 0.8966
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 464,
+      "p": 0.8707,
+      "r": 0.9287,
+      "f1": 0.8988
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 456,
+      "p": 0.8509,
+      "r": 0.892,
+      "f1": 0.8709
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 456,
+      "p": 0.8794,
+      "r": 0.9218,
+      "f1": 0.9001
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 456,
+      "p": 0.8838,
+      "r": 0.9264,
+      "f1": 0.9046
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 456,
+      "p": 0.886,
+      "r": 0.9287,
+      "f1": 0.9068
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 456,
+      "p": 0.8509,
+      "r": 0.892,
+      "f1": 0.8709
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 456,
+      "p": 0.8794,
+      "r": 0.9218,
+      "f1": 0.9001
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 456,
+      "p": 0.8838,
+      "r": 0.9264,
+      "f1": 0.9046
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 456,
+      "p": 0.886,
+      "r": 0.9287,
+      "f1": 0.9068
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 456,
+      "p": 0.8509,
+      "r": 0.892,
+      "f1": 0.8709
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 456,
+      "p": 0.8794,
+      "r": 0.9218,
+      "f1": 0.9001
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 456,
+      "p": 0.8838,
+      "r": 0.9264,
+      "f1": 0.9046
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 456,
+      "p": 0.886,
+      "r": 0.9287,
+      "f1": 0.9068
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 456,
+      "p": 0.8509,
+      "r": 0.892,
+      "f1": 0.8709
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 456,
+      "p": 0.8794,
+      "r": 0.9218,
+      "f1": 0.9001
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 456,
+      "p": 0.8838,
+      "r": 0.9264,
+      "f1": 0.9046
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 456,
+      "p": 0.886,
+      "r": 0.9287,
+      "f1": 0.9068
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 456,
+      "p": 0.8509,
+      "r": 0.892,
+      "f1": 0.8709
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 456,
+      "p": 0.8794,
+      "r": 0.9218,
+      "f1": 0.9001
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 456,
+      "p": 0.8838,
+      "r": 0.9264,
+      "f1": 0.9046
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 456,
+      "p": 0.886,
+      "r": 0.9287,
+      "f1": 0.9068
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 584,
+      "p": 0.6301,
+      "r": 0.846,
+      "f1": 0.7223
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 584,
+      "p": 0.649,
+      "r": 0.8713,
+      "f1": 0.7439
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 584,
+      "p": 0.649,
+      "r": 0.8713,
+      "f1": 0.7439
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 584,
+      "p": 0.649,
+      "r": 0.8713,
+      "f1": 0.7439
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 506,
+      "p": 0.7273,
+      "r": 0.846,
+      "f1": 0.7821
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 506,
+      "p": 0.749,
+      "r": 0.8713,
+      "f1": 0.8055
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 506,
+      "p": 0.749,
+      "r": 0.8713,
+      "f1": 0.8055
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 506,
+      "p": 0.749,
+      "r": 0.8713,
+      "f1": 0.8055
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 474,
+      "p": 0.7764,
+      "r": 0.846,
+      "f1": 0.8097
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 474,
+      "p": 0.7996,
+      "r": 0.8713,
+      "f1": 0.8339
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 474,
+      "p": 0.7996,
+      "r": 0.8713,
+      "f1": 0.8339
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 474,
+      "p": 0.7996,
+      "r": 0.8713,
+      "f1": 0.8339
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 403,
+      "p": 0.9132,
+      "r": 0.846,
+      "f1": 0.8783
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 403,
+      "p": 0.9404,
+      "r": 0.8713,
+      "f1": 0.9045
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 403,
+      "p": 0.9404,
+      "r": 0.8713,
+      "f1": 0.9045
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 403,
+      "p": 0.9404,
+      "r": 0.8713,
+      "f1": 0.9045
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 403,
+      "p": 0.9132,
+      "r": 0.846,
+      "f1": 0.8783
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 403,
+      "p": 0.9404,
+      "r": 0.8713,
+      "f1": 0.9045
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 403,
+      "p": 0.9404,
+      "r": 0.8713,
+      "f1": 0.9045
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 403,
+      "p": 0.9404,
+      "r": 0.8713,
+      "f1": 0.9045
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 397,
+      "p": 0.927,
+      "r": 0.846,
+      "f1": 0.8846
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 397,
+      "p": 0.927,
+      "r": 0.846,
+      "f1": 0.8846
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 397,
+      "p": 0.927,
+      "r": 0.846,
+      "f1": 0.8846
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 397,
+      "p": 0.927,
+      "r": 0.846,
+      "f1": 0.8846
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 397,
+      "p": 0.927,
+      "r": 0.846,
+      "f1": 0.8846
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 415,
+      "p": 0.8,
+      "r": 0.7632,
+      "f1": 0.7812
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 415,
+      "p": 0.8096,
+      "r": 0.7724,
+      "f1": 0.7906
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 415,
+      "p": 0.8096,
+      "r": 0.7724,
+      "f1": 0.7906
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 415,
+      "p": 0.8096,
+      "r": 0.7724,
+      "f1": 0.7906
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.8579,
+      "r": 0.7632,
+      "f1": 0.8078
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.8682,
+      "r": 0.7724,
+      "f1": 0.8175
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8682,
+      "r": 0.7724,
+      "f1": 0.8175
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8682,
+      "r": 0.7724,
+      "f1": 0.8175
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 372,
+      "p": 0.8925,
+      "r": 0.7632,
+      "f1": 0.8228
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 372,
+      "p": 0.9032,
+      "r": 0.7724,
+      "f1": 0.8327
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 372,
+      "p": 0.9032,
+      "r": 0.7724,
+      "f1": 0.8327
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 372,
+      "p": 0.9032,
+      "r": 0.7724,
+      "f1": 0.8327
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 348,
+      "p": 0.954,
+      "r": 0.7632,
+      "f1": 0.848
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 348,
+      "p": 0.9655,
+      "r": 0.7724,
+      "f1": 0.8582
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 348,
+      "p": 0.9655,
+      "r": 0.7724,
+      "f1": 0.8582
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 348,
+      "p": 0.9655,
+      "r": 0.7724,
+      "f1": 0.8582
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 348,
+      "p": 0.954,
+      "r": 0.7632,
+      "f1": 0.848
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 348,
+      "p": 0.9655,
+      "r": 0.7724,
+      "f1": 0.8582
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 348,
+      "p": 0.9655,
+      "r": 0.7724,
+      "f1": 0.8582
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 348,
+      "p": 0.9655,
+      "r": 0.7724,
+      "f1": 0.8582
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 344,
+      "p": 0.9651,
+      "r": 0.7632,
+      "f1": 0.8524
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 344,
+      "p": 0.9651,
+      "r": 0.7632,
+      "f1": 0.8524
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 344,
+      "p": 0.9651,
+      "r": 0.7632,
+      "f1": 0.8524
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 344,
+      "p": 0.9651,
+      "r": 0.7632,
+      "f1": 0.8524
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 344,
+      "p": 0.9651,
+      "r": 0.7632,
+      "f1": 0.8524
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    },
+    {
+      "label": "session-78-text-comparative",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 344,
+      "p": 0.9767,
+      "r": 0.7724,
+      "f1": 0.8626
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 397,
+      "p": 0.927,
+      "r": 0.846,
+      "f1": 0.8846
+    },
+    "30": {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    "40": {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    },
+    "50": {
+      "label": "session-78-text-comparative",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 397,
+      "p": 0.9547,
+      "r": 0.8713,
+      "f1": 0.9111
+    }
+  }
+}

@@ -1,0 +1,558 @@
+2026-04-24 22:20:44,444 - INFO - Cleanup: 167 candidates missing from outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json
+2026-04-24 22:20:44,445 - INFO - Backup: probabilities.json.pre-cleanup-20260424T222044.backup
+2026-04-24 22:20:44,448 - INFO - Attempt 1/2: 167 candidates remaining
+2026-04-24 22:20:45,128 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-04-24 22:20:45,598 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=CiRtb2RlbHMvdmVvLTMuMS1mYXN0LWdlbmVyYXRlLXByZXZpZXc%3D "HTTP/1.1 200 OK"
+2026-04-24 22:20:45,599 - INFO - Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+2026-04-24 22:20:45,602 - INFO - Resuming: 1850 candidates already verified
+2026-04-24 22:20:45,602 - INFO - Skipping 1850 already-verified candidates, 167 remaining
+2026-04-24 22:20:45,602 - INFO - Starting real-time verification: 167 candidates × 1 iterations, 20 workers
+2026-04-24 22:20:45,604 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,605 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,606 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,607 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,608 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,609 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,610 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,610 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,612 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,613 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,614 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,614 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,615 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,618 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,618 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,620 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,620 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,622 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,624 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:45,625 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:47,290 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:47,291 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:47,291 - WARNING - cand_0078_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:47,291 - WARNING - cand_0277_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:47,412 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:47,413 - WARNING - cand_0295_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:47,903 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:47,904 - WARNING - cand_0203_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:48,027 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:48,027 - WARNING - cand_0201_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:48,567 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:48,568 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:48,703 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:48,704 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:49,292 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:49,293 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:49,413 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:49,904 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:50,027 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:50,421 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:50,421 - WARNING - cand_0277_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:20:51,425 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:51,426 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:51,427 - WARNING - cand_0201_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:20:51,427 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:52,407 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:52,408 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:52,652 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:52,653 - WARNING - cand_0311_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:53,437 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:53,438 - WARNING - cand_0323_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:54,050 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:54,051 - WARNING - cand_0035_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:20:54,422 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:54,654 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:55,427 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:55,438 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:55,750 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:55,751 - WARNING - cand_0277_iter1: API call failed after 3 attempts: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-04-24 22:20:55,751 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:56,051 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:56,463 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:56,464 - WARNING - cand_0323_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:20:57,074 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:57,075 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:57,309 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:57,310 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:57,423 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:57,426 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:57,902 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:57,903 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:58,023 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:58,024 - INFO - Progress: 10/167 (verified: 9, failed: 1)
+2026-04-24 22:20:58,025 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:58,262 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:58,263 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:58,376 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:58,379 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:58,619 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:58,620 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:58,854 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:20:58,856 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:20:59,098 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:20:59,099 - WARNING - cand_0388_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:00,079 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:00,080 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:00,081 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:00,082 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:00,193 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:00,194 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:00,314 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:00,315 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:00,464 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:01,099 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:01,718 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:01,719 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:01,842 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:01,843 - INFO - Progress: 20/167 (verified: 19, failed: 1)
+2026-04-24 22:21:01,843 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:01,964 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:01,966 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:02,708 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:02,709 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:04,159 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:04,160 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:04,160 - WARNING - cand_0454_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:04,161 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:05,726 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:05,726 - WARNING - cand_0483_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:06,161 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:06,204 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:06,205 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:06,206 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:06,206 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:07,031 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:07,032 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:07,270 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:07,271 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:07,533 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:07,533 - WARNING - cand_0494_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:07,727 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:07,895 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:07,895 - WARNING - cand_0495_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:08,150 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:08,151 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:08,413 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:08,414 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:09,146 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:09,147 - INFO - Progress: 30/167 (verified: 29, failed: 1)
+2026-04-24 22:21:09,148 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:09,534 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:09,896 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:10,093 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:10,094 - WARNING - cand_0569_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:10,241 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:10,242 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:10,493 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:10,493 - WARNING - cand_0494_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:21:10,610 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:10,611 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:11,836 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:11,837 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:11,957 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:11,958 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:12,072 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:12,075 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:12,094 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:12,184 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:12,185 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:12,315 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:12,316 - WARNING - cand_0574_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:13,429 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:13,430 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:13,664 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:13,666 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:13,939 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:13,939 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:13,940 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:13,941 - INFO - Progress: 40/167 (verified: 39, failed: 1)
+2026-04-24 22:21:13,941 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:14,316 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:14,494 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:14,548 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:14,548 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:15,289 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:15,290 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:15,291 - WARNING - cand_0574_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:21:15,291 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:15,554 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:15,555 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:15,556 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:15,556 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:17,046 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:17,048 - WARNING - cand_0699_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:17,159 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:17,160 - WARNING - cand_0715_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:17,275 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:17,276 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:17,943 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:17,943 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:18,063 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:18,064 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:19,029 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:19,029 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:19,030 - WARNING - cand_0745_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:19,031 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:19,050 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:19,160 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:19,170 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:19,171 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:19,291 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:19,806 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:19,807 - WARNING - cand_0748_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:20,430 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:20,431 - INFO - Progress: 50/167 (verified: 49, failed: 1)
+2026-04-24 22:21:20,431 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:21,031 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:21,807 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:22,238 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:22,241 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:22,483 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:22,483 - WARNING - cand_0494_iter1: API call failed after 3 attempts: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-04-24 22:21:22,483 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:22,611 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:22,612 - WARNING - cand_0748_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:21:24,110 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:24,110 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:24,602 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:24,603 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:25,458 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:25,459 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:25,684 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:25,685 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:25,798 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:25,798 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:26,402 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:26,402 - WARNING - cand_0805_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:26,612 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:27,835 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:27,836 - WARNING - cand_0748_iter1: API call failed after 3 attempts: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-04-24 22:21:27,836 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:27,969 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:27,970 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:28,360 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:28,361 - INFO - Progress: 60/167 (verified: 57, failed: 3)
+2026-04-24 22:21:28,361 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:28,402 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:28,966 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:28,967 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:30,425 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:30,426 - WARNING - cand_0838_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:30,663 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:30,664 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:30,788 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:30,789 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:30,902 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:30,903 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:31,502 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:31,504 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:32,256 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:32,259 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:32,389 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:32,389 - WARNING - cand_0837_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:32,426 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:32,851 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:32,853 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:33,329 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:33,329 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:33,330 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:33,330 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:33,333 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:33,335 - INFO - Progress: 70/167 (verified: 67, failed: 3)
+2026-04-24 22:21:33,335 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:33,561 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:33,561 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:34,390 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:35,044 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:35,045 - WARNING - cand_0892_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:35,162 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:35,162 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:35,164 - WARNING - cand_0897_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:35,164 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:35,275 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:35,276 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:35,498 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:35,499 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:36,123 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:36,124 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:36,378 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:36,379 - WARNING - cand_0913_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:37,045 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:37,164 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:38,231 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:38,231 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:38,232 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:38,232 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:38,380 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:38,866 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:38,867 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:39,476 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:39,478 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:39,588 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:39,589 - INFO - Progress: 80/167 (verified: 77, failed: 3)
+2026-04-24 22:21:39,589 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:40,677 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:40,677 - WARNING - cand_0977_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:40,941 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:40,942 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:41,058 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:41,059 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:41,180 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:41,181 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:41,297 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:41,300 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:41,783 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:41,786 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:42,235 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:42,236 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:42,354 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:42,355 - WARNING - cand_1055_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:42,596 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:42,597 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:42,678 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:43,040 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:43,041 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:44,141 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:44,142 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:44,355 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:44,563 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:44,564 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:44,564 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:44,565 - WARNING - cand_1152_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:44,565 - INFO - Progress: 90/167 (verified: 87, failed: 3)
+2026-04-24 22:21:44,566 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:44,567 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:44,689 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:44,690 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:45,437 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:45,438 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:45,688 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:45,688 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:45,689 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:45,691 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:45,864 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:45,865 - WARNING - cand_1199_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:46,566 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:47,688 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:47,689 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:47,827 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:47,828 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:47,828 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:47,829 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:47,865 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:48,853 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:48,854 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:49,105 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:49,105 - WARNING - cand_1299_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:51,106 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:51,828 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:51,829 - INFO - Progress: 100/167 (verified: 97, failed: 3)
+2026-04-24 22:21:51,829 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:51,943 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:51,943 - WARNING - cand_1299_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:21:52,064 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:52,064 - WARNING - cand_1159_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:52,665 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:52,666 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:53,635 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:53,635 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:53,637 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:53,637 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:53,784 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:53,789 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:54,065 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:54,886 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:54,886 - WARNING - cand_1221_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:55,004 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:55,004 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:55,131 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:55,134 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:55,873 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:55,874 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:55,874 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:55,875 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:55,944 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:56,474 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:56,475 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:56,853 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:56,856 - INFO - Progress: 110/167 (verified: 107, failed: 3)
+2026-04-24 22:21:56,856 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:56,886 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:57,340 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:57,342 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:57,602 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:57,603 - WARNING - cand_1448_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:57,758 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:57,759 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:57,759 - WARNING - cand_1221_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:21:57,760 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:58,149 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:58,149 - WARNING - cand_1454_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:58,391 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:58,393 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:58,617 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:58,617 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:59,196 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:59,197 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:59,448 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:59,449 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:59,576 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:21:59,577 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:21:59,578 - WARNING - cand_1468_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:21:59,578 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:21:59,603 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:00,141 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:00,143 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:00,149 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:00,418 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:00,419 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:00,649 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:00,652 - INFO - Progress: 120/167 (verified: 117, failed: 3)
+2026-04-24 22:22:00,652 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:00,922 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:00,922 - WARNING - cand_1474_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:01,578 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:01,760 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:01,780 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:01,781 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:02,922 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:02,998 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:02,998 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:03,139 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:03,141 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:03,757 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:03,758 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:04,654 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:04,655 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:05,027 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:05,028 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:06,245 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:06,246 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:06,359 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:06,360 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:06,772 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:06,773 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:08,574 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:08,576 - INFO - Progress: 130/167 (verified: 127, failed: 3)
+2026-04-24 22:22:08,576 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:08,704 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:08,705 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:08,821 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:08,822 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:10,036 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:10,037 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:10,166 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:10,167 - WARNING - cand_1661_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:11,005 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:11,006 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:11,639 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:11,639 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:11,752 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:11,753 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:12,136 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:12,139 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:12,168 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:12,501 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:12,502 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:14,165 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:14,165 - WARNING - cand_1789_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:14,301 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:14,302 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:14,937 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:14,939 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:14,940 - INFO - Progress: 140/167 (verified: 137, failed: 3)
+2026-04-24 22:22:14,940 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:14,942 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:15,172 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:15,173 - WARNING - cand_1749_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:16,165 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:16,343 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:16,343 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:16,344 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:16,346 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:16,721 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:16,722 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:16,723 - WARNING - cand_1840_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:16,723 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:16,849 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:16,850 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:17,173 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:17,816 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:17,817 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:18,315 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:18,316 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:18,585 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:18,723 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:19,348 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:19,475 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:19,476 - INFO - Progress: 150/167 (verified: 147, failed: 3)
+2026-04-24 22:22:20,998 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:21,857 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:21,858 - WARNING - cand_1843_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:22,219 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:22,219 - WARNING - cand_2015_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:22,637 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:22,790 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:22,791 - WARNING - cand_2007_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:23,161 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:23,813 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:23,858 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:24,220 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:24,737 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:24,791 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:25,356 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:25,358 - WARNING - cand_1843_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:22:25,642 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:26,160 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:26,798 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:27,976 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:28,739 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:28,740 - INFO - Progress: 160/167 (verified: 157, failed: 3)
+2026-04-24 22:22:29,358 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:29,666 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:29,781 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:30,270 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:31,382 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:31,384 - WARNING - cand_1843_iter1: JSON parse failed after 3 attempts: Extra data: line 12 column 1 (char 561)
+2026-04-24 22:22:33,486 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:36,583 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:37,116 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:37,117 - INFO - Progress: 167/167 (verified: 163, failed: 4)
+2026-04-24 22:22:37,118 - INFO - Verification complete: 163/167 candidates succeeded
+2026-04-24 22:22:37,125 - INFO - Probabilities written: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json
+2026-04-24 22:22:37,127 - INFO - Metadata written: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json
+2026-04-24 22:22:37,128 - INFO - Score summary: mean=0.484, above threshold (0.5): 931/2013 (46.2%)
+2026-04-24 22:22:37,131 - INFO - Attempt 2/2: 4 candidates remaining
+2026-04-24 22:22:37,378 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-04-24 22:22:37,848 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=CiRtb2RlbHMvdmVvLTMuMS1mYXN0LWdlbmVyYXRlLXByZXZpZXc%3D "HTTP/1.1 200 OK"
+2026-04-24 22:22:37,849 - INFO - Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+2026-04-24 22:22:37,852 - INFO - Resuming: 2013 candidates already verified
+2026-04-24 22:22:37,853 - INFO - Skipping 2013 already-verified candidates, 4 remaining
+2026-04-24 22:22:37,853 - INFO - Starting real-time verification: 4 candidates × 1 iterations, 20 workers
+2026-04-24 22:22:37,854 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:37,855 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:37,856 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:37,856 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:38,868 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:38,871 - WARNING - cand_0277_iter1 attempt 1: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 2s
+2026-04-24 22:22:40,784 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:40,785 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:40,871 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:41,790 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-24 22:22:41,792 - WARNING - cand_0277_iter1 attempt 2: API error (503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}), retrying in 4s
+2026-04-24 22:22:45,811 - INFO - AFC is enabled with max remote calls: 10.
+2026-04-24 22:22:48,755 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:59,131 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-04-24 22:22:59,133 - INFO - Progress: 4/4 (verified: 4, failed: 0)
+2026-04-24 22:22:59,133 - INFO - Verification complete: 4/4 candidates succeeded
+2026-04-24 22:22:59,141 - INFO - Probabilities written: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json
+2026-04-24 22:22:59,143 - INFO - Metadata written: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json
+2026-04-24 22:22:59,144 - INFO - Score summary: mean=0.483, above threshold (0.5): 931/2017 (46.2%)
+2026-04-24 22:22:59,171 - INFO - ==================================================
+2026-04-24 22:22:59,171 - INFO - Cleanup Report
+2026-04-24 22:22:59,171 - INFO - ==================================================
+2026-04-24 22:22:59,171 - INFO - Initial missing: 167
+2026-04-24 22:22:59,171 - INFO - Recovered:       167
+2026-04-24 22:22:59,171 - INFO - Still missing:   0
+2026-04-24 22:22:59,171 - INFO - Attempts used:   2
+2026-04-24 22:22:59,171 - INFO - Backup:          probabilities.json.pre-cleanup-20260424T222044.backup

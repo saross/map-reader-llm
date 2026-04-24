@@ -1,0 +1,2081 @@
+{
+  "label": "session-78-image-brief-text",
+  "track": "image",
+  "aggregation": "greedy",
+  "verifier": "session-78-brief-text",
+  "bounds_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "n_bounds_tiles": 487,
+  "n_candidates_loaded": 1890,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 1890,
+      "p": 0.1889,
+      "r": 0.8207,
+      "f1": 0.3071
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 1890,
+      "p": 0.2058,
+      "r": 0.8943,
+      "f1": 0.3346
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 1890,
+      "p": 0.2106,
+      "r": 0.9149,
+      "f1": 0.3424
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 1890,
+      "p": 0.2132,
+      "r": 0.9264,
+      "f1": 0.3467
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 1318,
+      "p": 0.2648,
+      "r": 0.8023,
+      "f1": 0.3982
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 1318,
+      "p": 0.2891,
+      "r": 0.8759,
+      "f1": 0.4347
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 1318,
+      "p": 0.2974,
+      "r": 0.9011,
+      "f1": 0.4472
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 1318,
+      "p": 0.2997,
+      "r": 0.908,
+      "f1": 0.4507
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 922,
+      "p": 0.3731,
+      "r": 0.7908,
+      "f1": 0.507
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 922,
+      "p": 0.4078,
+      "r": 0.8644,
+      "f1": 0.5542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 922,
+      "p": 0.4187,
+      "r": 0.8874,
+      "f1": 0.5689
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 922,
+      "p": 0.4219,
+      "r": 0.8943,
+      "f1": 0.5733
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 816,
+      "p": 0.4154,
+      "r": 0.7793,
+      "f1": 0.542
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 816,
+      "p": 0.4522,
+      "r": 0.8483,
+      "f1": 0.5899
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 816,
+      "p": 0.4645,
+      "r": 0.8713,
+      "f1": 0.6059
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 816,
+      "p": 0.4681,
+      "r": 0.8782,
+      "f1": 0.6107
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 687,
+      "p": 0.4891,
+      "r": 0.7724,
+      "f1": 0.5989
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 687,
+      "p": 0.5473,
+      "r": 0.8644,
+      "f1": 0.6702
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 687,
+      "p": 0.5575,
+      "r": 0.8805,
+      "f1": 0.6827
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 687,
+      "p": 0.5648,
+      "r": 0.892,
+      "f1": 0.6916
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 594,
+      "p": 0.5556,
+      "r": 0.7586,
+      "f1": 0.6414
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 594,
+      "p": 0.6212,
+      "r": 0.8483,
+      "f1": 0.7172
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 594,
+      "p": 0.6347,
+      "r": 0.8667,
+      "f1": 0.7328
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 594,
+      "p": 0.6414,
+      "r": 0.8759,
+      "f1": 0.7405
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 521,
+      "p": 0.6238,
+      "r": 0.7471,
+      "f1": 0.6799
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 521,
+      "p": 0.6987,
+      "r": 0.8368,
+      "f1": 0.7615
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 521,
+      "p": 0.7159,
+      "r": 0.8575,
+      "f1": 0.7803
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 521,
+      "p": 0.7217,
+      "r": 0.8644,
+      "f1": 0.7866
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 489,
+      "p": 0.6564,
+      "r": 0.7379,
+      "f1": 0.6948
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 489,
+      "p": 0.7342,
+      "r": 0.8253,
+      "f1": 0.7771
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 489,
+      "p": 0.7505,
+      "r": 0.8437,
+      "f1": 0.7944
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 489,
+      "p": 0.7566,
+      "r": 0.8506,
+      "f1": 0.8009
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 471,
+      "p": 0.6688,
+      "r": 0.7241,
+      "f1": 0.6954
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 471,
+      "p": 0.741,
+      "r": 0.8023,
+      "f1": 0.7704
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 471,
+      "p": 0.758,
+      "r": 0.8207,
+      "f1": 0.7881
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 471,
+      "p": 0.7665,
+      "r": 0.8299,
+      "f1": 0.7969
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 434,
+      "p": 0.712,
+      "r": 0.7103,
+      "f1": 0.7112
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 434,
+      "p": 0.788,
+      "r": 0.7862,
+      "f1": 0.7871
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 434,
+      "p": 0.8065,
+      "r": 0.8046,
+      "f1": 0.8055
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 434,
+      "p": 0.818,
+      "r": 0.8161,
+      "f1": 0.817
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 402,
+      "p": 0.7587,
+      "r": 0.7011,
+      "f1": 0.7288
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 402,
+      "p": 0.8408,
+      "r": 0.777,
+      "f1": 0.8076
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 402,
+      "p": 0.8607,
+      "r": 0.7954,
+      "f1": 0.8268
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 402,
+      "p": 0.8706,
+      "r": 0.8046,
+      "f1": 0.8363
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 360,
+      "p": 0.7583,
+      "r": 0.6276,
+      "f1": 0.6868
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 360,
+      "p": 0.825,
+      "r": 0.6828,
+      "f1": 0.7472
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 360,
+      "p": 0.8444,
+      "r": 0.6989,
+      "f1": 0.7648
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 360,
+      "p": 0.8444,
+      "r": 0.6989,
+      "f1": 0.7648
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 345,
+      "p": 0.7797,
+      "r": 0.6184,
+      "f1": 0.6897
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 345,
+      "p": 0.8464,
+      "r": 0.6713,
+      "f1": 0.7487
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 345,
+      "p": 0.8667,
+      "r": 0.6874,
+      "f1": 0.7667
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 345,
+      "p": 0.8696,
+      "r": 0.6897,
+      "f1": 0.7692
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 329,
+      "p": 0.8085,
+      "r": 0.6115,
+      "f1": 0.6963
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 329,
+      "p": 0.8784,
+      "r": 0.6644,
+      "f1": 0.7565
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 329,
+      "p": 0.8997,
+      "r": 0.6805,
+      "f1": 0.7749
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 329,
+      "p": 0.8997,
+      "r": 0.6805,
+      "f1": 0.7749
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 318,
+      "p": 0.827,
+      "r": 0.6046,
+      "f1": 0.6985
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 318,
+      "p": 0.8962,
+      "r": 0.6552,
+      "f1": 0.757
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 318,
+      "p": 0.9182,
+      "r": 0.6713,
+      "f1": 0.7756
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 261,
+      "p": 0.8238,
+      "r": 0.4943,
+      "f1": 0.6178
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 261,
+      "p": 0.8736,
+      "r": 0.5241,
+      "f1": 0.6552
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 261,
+      "p": 0.8966,
+      "r": 0.5379,
+      "f1": 0.6724
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 261,
+      "p": 0.9004,
+      "r": 0.5402,
+      "f1": 0.6753
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 253,
+      "p": 0.8419,
+      "r": 0.4897,
+      "f1": 0.6192
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 253,
+      "p": 0.8893,
+      "r": 0.5172,
+      "f1": 0.6541
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 253,
+      "p": 0.913,
+      "r": 0.531,
+      "f1": 0.6715
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 253,
+      "p": 0.917,
+      "r": 0.5333,
+      "f1": 0.6744
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 247,
+      "p": 0.8583,
+      "r": 0.4874,
+      "f1": 0.6217
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 247,
+      "p": 0.9069,
+      "r": 0.5149,
+      "f1": 0.6569
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 247,
+      "p": 0.9312,
+      "r": 0.5287,
+      "f1": 0.6745
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 247,
+      "p": 0.9352,
+      "r": 0.531,
+      "f1": 0.6774
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 240,
+      "p": 0.8708,
+      "r": 0.4805,
+      "f1": 0.6193
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 240,
+      "p": 0.9167,
+      "r": 0.5057,
+      "f1": 0.6519
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 240,
+      "p": 0.9417,
+      "r": 0.5195,
+      "f1": 0.6696
+    },
+    {
+      "label": "session-78-image-brief-text",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 240,
+      "p": 0.9458,
+      "r": 0.5218,
+      "f1": 0.6726
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 387,
+      "p": 0.7804,
+      "r": 0.6943,
+      "f1": 0.7348
+    },
+    "30": {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 387,
+      "p": 0.863,
+      "r": 0.7678,
+      "f1": 0.8127
+    },
+    "40": {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 387,
+      "p": 0.8837,
+      "r": 0.7862,
+      "f1": 0.8321
+    },
+    "50": {
+      "label": "session-78-image-brief-text",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 387,
+      "p": 0.8915,
+      "r": 0.7931,
+      "f1": 0.8394
+    }
+  }
+}
