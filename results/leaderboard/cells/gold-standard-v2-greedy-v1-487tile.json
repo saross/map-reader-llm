@@ -1,0 +1,2081 @@
+{
+  "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+  "track": "text",
+  "aggregation": "greedy",
+  "verifier": "flash-adversarial-v1",
+  "bounds_file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "n_bounds_tiles": 487,
+  "n_candidates_loaded": 597,
+  "allowed_passes": null,
+  "parameters": {
+    "vote_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "prob_thresholds": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "buffers": [
+      20,
+      30,
+      40,
+      50
+    ]
+  },
+  "sweep": [
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 597,
+      "p": 0.598,
+      "r": 0.8207,
+      "f1": 0.6919
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 597,
+      "p": 0.6114,
+      "r": 0.8391,
+      "f1": 0.7074
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 597,
+      "p": 0.6131,
+      "r": 0.8414,
+      "f1": 0.7093
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 597,
+      "p": 0.6147,
+      "r": 0.8437,
+      "f1": 0.7112
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 500,
+      "p": 0.712,
+      "r": 0.8184,
+      "f1": 0.7615
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 500,
+      "p": 0.728,
+      "r": 0.8368,
+      "f1": 0.7786
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 500,
+      "p": 0.73,
+      "r": 0.8391,
+      "f1": 0.7807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 500,
+      "p": 0.732,
+      "r": 0.8414,
+      "f1": 0.7829
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 435,
+      "p": 0.8069,
+      "r": 0.8069,
+      "f1": 0.8069
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 435,
+      "p": 0.8253,
+      "r": 0.8253,
+      "f1": 0.8253
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 435,
+      "p": 0.8276,
+      "r": 0.8276,
+      "f1": 0.8276
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 435,
+      "p": 0.8299,
+      "r": 0.8299,
+      "f1": 0.8299
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 371,
+      "p": 0.9272,
+      "r": 0.7908,
+      "f1": 0.8536
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 371,
+      "p": 0.9488,
+      "r": 0.8092,
+      "f1": 0.8734
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 369,
+      "p": 0.9268,
+      "r": 0.7862,
+      "f1": 0.8507
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 369,
+      "p": 0.9485,
+      "r": 0.8046,
+      "f1": 0.8706
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 345,
+      "p": 0.9362,
+      "r": 0.7425,
+      "f1": 0.8282
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 345,
+      "p": 0.9594,
+      "r": 0.7609,
+      "f1": 0.8487
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 597,
+      "p": 0.598,
+      "r": 0.8207,
+      "f1": 0.6919
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 597,
+      "p": 0.6114,
+      "r": 0.8391,
+      "f1": 0.7074
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 597,
+      "p": 0.6131,
+      "r": 0.8414,
+      "f1": 0.7093
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 597,
+      "p": 0.6147,
+      "r": 0.8437,
+      "f1": 0.7112
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 500,
+      "p": 0.712,
+      "r": 0.8184,
+      "f1": 0.7615
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 500,
+      "p": 0.728,
+      "r": 0.8368,
+      "f1": 0.7786
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 500,
+      "p": 0.73,
+      "r": 0.8391,
+      "f1": 0.7807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 500,
+      "p": 0.732,
+      "r": 0.8414,
+      "f1": 0.7829
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 435,
+      "p": 0.8069,
+      "r": 0.8069,
+      "f1": 0.8069
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 435,
+      "p": 0.8253,
+      "r": 0.8253,
+      "f1": 0.8253
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 435,
+      "p": 0.8276,
+      "r": 0.8276,
+      "f1": 0.8276
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 435,
+      "p": 0.8299,
+      "r": 0.8299,
+      "f1": 0.8299
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 371,
+      "p": 0.9272,
+      "r": 0.7908,
+      "f1": 0.8536
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 371,
+      "p": 0.9488,
+      "r": 0.8092,
+      "f1": 0.8734
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 369,
+      "p": 0.9268,
+      "r": 0.7862,
+      "f1": 0.8507
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 369,
+      "p": 0.9485,
+      "r": 0.8046,
+      "f1": 0.8706
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 345,
+      "p": 0.9362,
+      "r": 0.7425,
+      "f1": 0.8282
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 345,
+      "p": 0.9594,
+      "r": 0.7609,
+      "f1": 0.8487
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 2,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 597,
+      "p": 0.598,
+      "r": 0.8207,
+      "f1": 0.6919
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 597,
+      "p": 0.6114,
+      "r": 0.8391,
+      "f1": 0.7074
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 597,
+      "p": 0.6131,
+      "r": 0.8414,
+      "f1": 0.7093
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 597,
+      "p": 0.6147,
+      "r": 0.8437,
+      "f1": 0.7112
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 500,
+      "p": 0.712,
+      "r": 0.8184,
+      "f1": 0.7615
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 500,
+      "p": 0.728,
+      "r": 0.8368,
+      "f1": 0.7786
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 500,
+      "p": 0.73,
+      "r": 0.8391,
+      "f1": 0.7807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 500,
+      "p": 0.732,
+      "r": 0.8414,
+      "f1": 0.7829
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 435,
+      "p": 0.8069,
+      "r": 0.8069,
+      "f1": 0.8069
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 435,
+      "p": 0.8253,
+      "r": 0.8253,
+      "f1": 0.8253
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 435,
+      "p": 0.8276,
+      "r": 0.8276,
+      "f1": 0.8276
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 435,
+      "p": 0.8299,
+      "r": 0.8299,
+      "f1": 0.8299
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 371,
+      "p": 0.9272,
+      "r": 0.7908,
+      "f1": 0.8536
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 371,
+      "p": 0.9488,
+      "r": 0.8092,
+      "f1": 0.8734
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 369,
+      "p": 0.9268,
+      "r": 0.7862,
+      "f1": 0.8507
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 369,
+      "p": 0.9485,
+      "r": 0.8046,
+      "f1": 0.8706
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 345,
+      "p": 0.9362,
+      "r": 0.7425,
+      "f1": 0.8282
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 345,
+      "p": 0.9594,
+      "r": 0.7609,
+      "f1": 0.8487
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 3,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 597,
+      "p": 0.598,
+      "r": 0.8207,
+      "f1": 0.6919
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 597,
+      "p": 0.6114,
+      "r": 0.8391,
+      "f1": 0.7074
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 597,
+      "p": 0.6131,
+      "r": 0.8414,
+      "f1": 0.7093
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 597,
+      "p": 0.6147,
+      "r": 0.8437,
+      "f1": 0.7112
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 500,
+      "p": 0.712,
+      "r": 0.8184,
+      "f1": 0.7615
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 500,
+      "p": 0.728,
+      "r": 0.8368,
+      "f1": 0.7786
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 500,
+      "p": 0.73,
+      "r": 0.8391,
+      "f1": 0.7807
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 500,
+      "p": 0.732,
+      "r": 0.8414,
+      "f1": 0.7829
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 435,
+      "p": 0.8069,
+      "r": 0.8069,
+      "f1": 0.8069
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 435,
+      "p": 0.8253,
+      "r": 0.8253,
+      "f1": 0.8253
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 435,
+      "p": 0.8276,
+      "r": 0.8276,
+      "f1": 0.8276
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 435,
+      "p": 0.8299,
+      "r": 0.8299,
+      "f1": 0.8299
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 371,
+      "p": 0.9272,
+      "r": 0.7908,
+      "f1": 0.8536
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 371,
+      "p": 0.9488,
+      "r": 0.8092,
+      "f1": 0.8734
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 369,
+      "p": 0.9268,
+      "r": 0.7862,
+      "f1": 0.8507
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 369,
+      "p": 0.9458,
+      "r": 0.8023,
+      "f1": 0.8682
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 369,
+      "p": 0.9485,
+      "r": 0.8046,
+      "f1": 0.8706
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 349,
+      "p": 0.9341,
+      "r": 0.7494,
+      "f1": 0.8316
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 349,
+      "p": 0.9542,
+      "r": 0.7655,
+      "f1": 0.8495
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 349,
+      "p": 0.957,
+      "r": 0.7678,
+      "f1": 0.852
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 345,
+      "p": 0.9362,
+      "r": 0.7425,
+      "f1": 0.8282
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 345,
+      "p": 0.9565,
+      "r": 0.7586,
+      "f1": 0.8462
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 345,
+      "p": 0.9594,
+      "r": 0.7609,
+      "f1": 0.8487
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 331,
+      "p": 0.9426,
+      "r": 0.7172,
+      "f1": 0.8146
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 331,
+      "p": 0.9637,
+      "r": 0.7333,
+      "f1": 0.8329
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 4,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 331,
+      "p": 0.9668,
+      "r": 0.7356,
+      "f1": 0.8355
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 20,
+      "n": 399,
+      "p": 0.7845,
+      "r": 0.7195,
+      "f1": 0.7506
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 30,
+      "n": 399,
+      "p": 0.802,
+      "r": 0.7356,
+      "f1": 0.7674
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 40,
+      "n": 399,
+      "p": 0.802,
+      "r": 0.7356,
+      "f1": 0.7674
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.0,
+      "buffer_m": 50,
+      "n": 399,
+      "p": 0.802,
+      "r": 0.7356,
+      "f1": 0.7674
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 20,
+      "n": 364,
+      "p": 0.8599,
+      "r": 0.7195,
+      "f1": 0.7835
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 30,
+      "n": 364,
+      "p": 0.8791,
+      "r": 0.7356,
+      "f1": 0.801
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 40,
+      "n": 364,
+      "p": 0.8791,
+      "r": 0.7356,
+      "f1": 0.801
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.05,
+      "buffer_m": 50,
+      "n": 364,
+      "p": 0.8791,
+      "r": 0.7356,
+      "f1": 0.801
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 20,
+      "n": 344,
+      "p": 0.8953,
+      "r": 0.708,
+      "f1": 0.7908
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 30,
+      "n": 344,
+      "p": 0.9157,
+      "r": 0.7241,
+      "f1": 0.8087
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 40,
+      "n": 344,
+      "p": 0.9157,
+      "r": 0.7241,
+      "f1": 0.8087
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "buffer_m": 50,
+      "n": 344,
+      "p": 0.9157,
+      "r": 0.7241,
+      "f1": 0.8087
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 316,
+      "p": 0.9525,
+      "r": 0.692,
+      "f1": 0.8016
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 316,
+      "p": 0.9715,
+      "r": 0.7057,
+      "f1": 0.8176
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 316,
+      "p": 0.9715,
+      "r": 0.7057,
+      "f1": 0.8176
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 316,
+      "p": 0.9715,
+      "r": 0.7057,
+      "f1": 0.8176
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 20,
+      "n": 314,
+      "p": 0.9522,
+      "r": 0.6874,
+      "f1": 0.7984
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 30,
+      "n": 314,
+      "p": 0.9713,
+      "r": 0.7011,
+      "f1": 0.8144
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 40,
+      "n": 314,
+      "p": 0.9713,
+      "r": 0.7011,
+      "f1": 0.8144
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.2,
+      "buffer_m": 50,
+      "n": 314,
+      "p": 0.9713,
+      "r": 0.7011,
+      "f1": 0.8144
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 20,
+      "n": 299,
+      "p": 0.9498,
+      "r": 0.6529,
+      "f1": 0.7738
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 30,
+      "n": 299,
+      "p": 0.9699,
+      "r": 0.6667,
+      "f1": 0.7902
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 40,
+      "n": 299,
+      "p": 0.9699,
+      "r": 0.6667,
+      "f1": 0.7902
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.25,
+      "buffer_m": 50,
+      "n": 299,
+      "p": 0.9699,
+      "r": 0.6667,
+      "f1": 0.7902
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 20,
+      "n": 299,
+      "p": 0.9498,
+      "r": 0.6529,
+      "f1": 0.7738
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 30,
+      "n": 299,
+      "p": 0.9699,
+      "r": 0.6667,
+      "f1": 0.7902
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 40,
+      "n": 299,
+      "p": 0.9699,
+      "r": 0.6667,
+      "f1": 0.7902
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.3,
+      "buffer_m": 50,
+      "n": 299,
+      "p": 0.9699,
+      "r": 0.6667,
+      "f1": 0.7902
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 20,
+      "n": 295,
+      "p": 0.9525,
+      "r": 0.646,
+      "f1": 0.7699
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 30,
+      "n": 295,
+      "p": 0.9729,
+      "r": 0.6598,
+      "f1": 0.7863
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 40,
+      "n": 295,
+      "p": 0.9729,
+      "r": 0.6598,
+      "f1": 0.7863
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.4,
+      "buffer_m": 50,
+      "n": 295,
+      "p": 0.9729,
+      "r": 0.6598,
+      "f1": 0.7863
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 20,
+      "n": 284,
+      "p": 0.9577,
+      "r": 0.6253,
+      "f1": 0.7566
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 30,
+      "n": 284,
+      "p": 0.9789,
+      "r": 0.6391,
+      "f1": 0.7733
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 40,
+      "n": 284,
+      "p": 0.9789,
+      "r": 0.6391,
+      "f1": 0.7733
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.5,
+      "buffer_m": 50,
+      "n": 284,
+      "p": 0.9789,
+      "r": 0.6391,
+      "f1": 0.7733
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 20,
+      "n": 284,
+      "p": 0.9577,
+      "r": 0.6253,
+      "f1": 0.7566
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 30,
+      "n": 284,
+      "p": 0.9789,
+      "r": 0.6391,
+      "f1": 0.7733
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 40,
+      "n": 284,
+      "p": 0.9789,
+      "r": 0.6391,
+      "f1": 0.7733
+    },
+    {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 5,
+      "prob_t": 0.6,
+      "buffer_m": 50,
+      "n": 284,
+      "p": 0.9789,
+      "r": 0.6391,
+      "f1": 0.7733
+    }
+  ],
+  "optima_per_buffer": {
+    "20": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 20,
+      "n": 371,
+      "p": 0.9272,
+      "r": 0.7908,
+      "f1": 0.8536
+    },
+    "30": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 30,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    "40": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 40,
+      "n": 371,
+      "p": 0.9461,
+      "r": 0.8069,
+      "f1": 0.871
+    },
+    "50": {
+      "label": "gold-standard-v2-detect_brief-text--adv-v1 (canonical greedy, Era 2 487-tile)",
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "buffer_m": 50,
+      "n": 371,
+      "p": 0.9488,
+      "r": 0.8092,
+      "f1": 0.8734
+    }
+  }
+}
