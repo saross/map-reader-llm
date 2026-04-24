@@ -10,6 +10,19 @@ MCC, sensitivity, and specificity are tile-level metrics (does this
 Two conditions (#13, #17) have MCC from the nearest evaluated threshold,
 marked with ~.
 
+**Scope unification note (2026-04-24)**: this document uses phase3a
+condition labels (e.g. "FH text 16/30 + PV (min vf)") and is not a mirror
+of `results/leaderboard/era2/leaderboard_tiers_20m.md`, which uses the
+h11-series cell naming. The Session 78 gold-standard-v2 scope-unified cell
+at Era 2 (487-tile) scope reports F1=0.854 at 20 m
+(`results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`).
+It would sit in Tier 2 here on F1 but is not inserted as a distinct row
+because the tier discussion focuses on phase3a matrix conditions with
+matched pairwise permutation statistics. The Era 3 (327-tile) scope-pair
+sibling (`gold-standard-v2-greedy-v1-327tile.json`) is intentionally
+preserved for comparability with the Era 3 h8-v2 / h10-v2 / h12-v2
+library-design artefacts.
+
 ## Tier 1 (F1: 0.890)
 
 | # | Condition | F1 | P | R | MCC | MCC CI | Sens | Spec |

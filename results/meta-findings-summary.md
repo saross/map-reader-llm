@@ -248,9 +248,20 @@ AUC = 0.500.
 - **Student-GT position noise quantified at ~25–35 m**: the
   extended-buffer F1 curve on the 4-map curator-annotated
   gold-standard (`gold-standard-extended-buffer-sweep/
-  extended-buffer-report.md`) plateaus at 25 m (F1 = 0.822); the
-  55-map student-GT F1 curve has not plateaued by 50 m (F1 = 0.788
-  at 50 m). **The two corpora are disjoint** (4 GS sheets vs 55
+  extended-buffer-report.md`) plateaus at 25 m
+  (F1 = 0.822 — Era 3, 327 tiles; scope-matched to h8/h10/h12 v2
+  sibling artefacts). A scope-paired Era 2 companion on the same
+  pipeline (487 tiles, 371 detections) gives
+  F1 = 0.873 [0.844, 0.901] at 50 m and
+  F1 = 0.854 [0.821, 0.883] at 20 m
+  (`results/gold-standard-extended-buffer-sweep-era2/
+  evaluation.json`); the Era 3 and Era 2 bootstrap CIs overlap at
+  20 m, so the scope-label difference is within sampling variance,
+  not a systematic shift (see `results/evaluation-scopes.md` §5.3
+  for the hierarchical stratified random sampling that constructs
+  Era 3 from Era 2). The 55-map student-GT F1 curve has not
+  plateaued by 50 m (F1 = 0.788 at 50 m).
+  **The two corpora are disjoint** (4 GS sheets vs 55
   generalisation sheets; zero map-sheet intersection; 59 total
   project sheets), so the curve-shift comparison is across
   independent sheet populations — it cannot be a shared-sheet

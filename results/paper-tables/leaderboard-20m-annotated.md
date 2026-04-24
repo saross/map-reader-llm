@@ -17,6 +17,17 @@ statistically indistinguishable.
   mound? These are buffer-independent.
 - **95% CIs** from 1,000-iteration stratified bootstrap (seed 42).
 
+### Scope unification (2026-04-24)
+
+Until the Session 78 scope unification, the gold-standard-v2 condition was
+reported at Era 3 (327-tile) scope while all other leaderboard cells were
+at Era 2 (487-tile). The Era 2 gold-standard-v2 companion now exists at
+`results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`; this
+document is updated accordingly. The 327-tile sibling is intentionally
+preserved at `results/leaderboard/cells/gold-standard-v2-greedy-v1-327tile.json`
+for comparability with the Era 3 h8-v2 / h10-v2 / h12-v2 library-design
+artefacts.
+
 ## Abbreviations
 
 | Abbreviation | Meaning |
@@ -83,6 +94,17 @@ from the large proposer pool.
 - **Flash + pipeline matches Pro** — #2 (Flash, F1=0.864) is
   indistinguishable from #5 (Pro, F1=0.849) despite Pro costing ~10×
   more per API call.
+- **Scope-unified gold-standard-v2 sits in this tier on F1.** The
+  Session 78 Era 2 (487-tile) gold-standard-v2 cell
+  (`results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`)
+  scores F1=0.854 at 20 m (P=0.927, R=0.791, n=371, text-HIGH
+  detect_brief with adversarial verifier v1, 4-of-5 consensus). It is
+  not listed as a distinct row above because the tier discussion focuses
+  on phase3a matrix conditions with matched pairwise permutation
+  statistics. The Era 3 (327-tile) scope-pair sibling
+  (`gold-standard-v2-greedy-v1-327tile.json`, F1=0.816 at 20 m) is
+  intentionally preserved for comparability with the Era 3 h8-v2 /
+  h10-v2 / h12-v2 library-design artefacts.
 
 ---
 

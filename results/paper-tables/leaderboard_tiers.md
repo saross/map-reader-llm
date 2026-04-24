@@ -3,6 +3,19 @@
 Conditions within the same tier are statistically indistinguishable
 (all pairwise adjusted p-values ≥ 0.05).
 
+**Scope unification note (2026-04-24)**: this document uses phase3a
+condition labels and is not a mirror of
+`results/leaderboard/era2/leaderboard_tiers_30m.md`, which uses the
+h11-series cell naming. The Session 78 gold-standard-v2 scope-unified
+cell at Era 2 (487-tile) scope reports F1=0.871 at 30 m
+(`results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`).
+It would sit in Tier 2 here on F1 but is not inserted as a distinct row
+because the tier discussion focuses on phase3a matrix conditions with
+matched pairwise permutation statistics. The Era 3 (327-tile) scope-pair
+sibling (`gold-standard-v2-greedy-v1-327tile.json`) is intentionally
+preserved for comparability with the Era 3 h8-v2 / h10-v2 / h12-v2
+library-design artefacts.
+
 ## Tier 1 (F1: 0.885–0.904)
 
 | Condition | F1 |
@@ -72,4 +85,3 @@ Conditions within the same tier are statistically indistinguishable
 |-----------|------|
 | FM text T=1.0 22/30 | 0.477 |
 | FM text T=1.0 9/10 | 0.469 |
-
