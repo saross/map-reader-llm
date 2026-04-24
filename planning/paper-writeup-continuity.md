@@ -816,6 +816,40 @@ item's claim but warrant a polish pass before paper finalisation:
   artefacts of the `tile_allowlist` silent-filter pattern. Not
   urgent; can run before paper finalisation.
 
+- **Unevaluated-consensus-geojsons audit: systematic N-subpool gap
+  in tier-builder** (added 2026-04-24 (Session 78)). A systematic
+  agent audit of all 1,006 non-archived consensus GeoJSONs on disk
+  found that **938 (93%) have never been evaluated against ground
+  truth**. Of these, **85 sit in `consensus-n*/` subdirectories** —
+  a clean systematic gap caused by
+  `scripts/build_tiered_leaderboard.py` globbing only `consensus/`,
+  `greedy/`, and `voting/` directories and explicitly skipping
+  `consensus-n{5,10}/` subpool variants. This means all N=5 subsets
+  of every N=10 pool, and all N=10 subsets of every N=30 pool, were
+  never scored — despite existing on disk alongside matching
+  `verified-v1-n*/probabilities.json` siblings that would let them
+  be evaluated immediately with no API cost. The remaining **853
+  unevaluated GeoJSONs** are mostly exploratory runs under
+  `h8-v2/greedy/`, `retest/`, `55maps-*`, and other non-canonical
+  paths; most are unlikely to be paper-relevant, but any
+  paper-citation drawn from them would first require an explicit
+  evaluation. One concrete gap was filled in Session 78: Flash HIGH
+  image N=5 @ T=0.7 consensus_t3 (506 features) was evaluated
+  directly (F1=0.727 @ 20 m, MCC=0.664); artefacts committed to
+  `results/verifier-calibration-audit/flash-high-image-N5-consensus-t3/`.
+  **Recommended fix**: (a) extend the tier-builder glob in
+  `scripts/build_tiered_leaderboard.py` to include `consensus-n*/`
+  subdirectories so future N-subpool variants are auto-scored; and
+  (b) run a one-shot batch evaluation of the 85 systematic-gap
+  GeoJSONs against `mounds-reference.geojson` +
+  `full_evaluation_bounds.geojson` using `evaluate_detections.py`
+  (~a few minutes of CPU for all 85, no API cost). Audit evidence
+  and per-file listings live with the Session 78 agent-audit output;
+  a future reader can re-derive them via a recursive glob of
+  `outputs/**/consensus*/consensus*.geojson` cross-referenced
+  against `results/leaderboard/cells/`. Not urgent; before paper
+  finalisation.
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
