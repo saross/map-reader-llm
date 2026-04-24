@@ -13211,3 +13211,137 @@ construction chain, Q1 Session 78 entry-point.
   filter on the materialised detection set; emit a
   `scope_filter_applied` field in the output JSON so downstream
   consumers can detect the filter without reading the source.
+
+## Observation 277: Verifier-prompt variation cannot rescue image-track miscalibration — the canonical `verify_adversarial-text` has the best ECE on both pools across seven variants tested (2026-04-24; Session 78 matrix)
+
+### The finding
+
+Session 78 ran a 7-variant × 2-pool verifier calibration matrix on the
+487-tile Era 2 scope, candidates drawn from `flash-high-image-n5 @
+T=0.7` (2,017 candidates, 1-of-5 raw pool) and `flash-high-text-n5 @
+T=0.7` (3,736 candidates, 1-of-5 raw pool). Ground-truth labels by
+20 m spatial matching against `mounds-reference.geojson`. Seven
+verifier prompt variants:
+
+1. `verify_adversarial-text` (canonical; text-only)
+2. `verify_adversarial` (with-images; 6-example library)
+3. `verify_brief` (with-images)
+4. `verify_brief-text` (text-only)
+5. `verify_checklist` (with-images)
+6. `verify_checklist-text` (text-only)
+7. `verify_comparative` (with-images; new config authored this session)
+
+### Calibration metrics
+
+| Pool | Variant | AUC | Brier | **ECE** |
+|---|---|:---:|:---:|:---:|
+| image | **adversarial-text (canon)** | **0.863** | **0.190** | **0.188** |
+| image | checklist | 0.861 | 0.237 | 0.263 |
+| image | brief | 0.858 | 0.249 | 0.266 |
+| image | adversarial | 0.856 | 0.209 | 0.217 |
+| image | comparative | 0.855 | 0.236 | 0.251 |
+| image | checklist-text | 0.853 | 0.247 | 0.267 |
+| image | brief-text | 0.846 | 0.232 | 0.223 |
+| text | **adversarial-text (canon)** | 0.959 | **0.059** | **0.067** |
+| text | adversarial | **0.968** | 0.060 | 0.080 |
+| text | brief | 0.964 | 0.087 | 0.111 |
+| text | checklist | 0.964 | 0.083 | 0.122 |
+| text | comparative | 0.964 | 0.076 | 0.103 |
+| text | checklist-text | 0.948 | 0.106 | 0.139 |
+| text | brief-text | 0.939 | 0.088 | 0.095 |
+
+Canonical `adversarial-text` has the **lowest ECE on both pools**
+(image 0.188; text 0.067). On image it also has the highest AUC
+(0.863); on text `adversarial` with images edges it slightly on AUC
+(0.968 vs 0.959). None of the six novel prompt variants materially
+improves image-track calibration: all image-pool variants remain in
+the miscalibrated regime (ECE 0.19–0.27).
+
+### Interpretation
+
+This is the key falsification test for Obs 269's two candidate
+explanations of the image-track verifier miscalibration:
+
+1. **Prompt-specific** — the adversarial wording produces
+   over-confident responses at the high end of the probability
+   range on image candidates specifically.
+2. **Input-distribution-specific** — the image proposer's consensus
+   output distributes differently from the text proposer's, and
+   *any* verifier prompt operating on that distribution will
+   saturate near p = 1.0.
+
+The matrix falsifies (1): six alternative prompts (ranging from
+terse brief through structured checklist through the new positively-
+framed comparative) all show similar or *worse* calibration than
+canonical adversarial-text on the image pool. Prompt engineering
+cannot rescue the image-track miscalibration.
+
+(2) is therefore the supported explanation: image-track
+miscalibration is a property of the candidate-pool distribution
+the proposer emits, not the verifier prompt. Fixing it requires a
+different proposer (or model family), not a different verifier.
+
+### Why this matters
+
+- **Validates the canonical choice.** `verify_adversarial-text` is
+  the production verifier. This experiment confirms it is
+  Pareto-dominant across six alternatives on image (best AUC + best
+  ECE) and has the best ECE on text. No prompt upgrade is
+  available.
+- **Limits the improvement ceiling for image-track + verifier
+  pipelines.** Obs 269's image-track miscalibration (55-map ECE =
+  0.269) is a floor, not a starting point to be optimised away with
+  prompt work.
+- **Tightens the Obs 269 causal claim** for the paper: we can now
+  report this as "miscalibration is candidate-distribution-
+  dependent, not prompt-dependent" with a 7-variant × 2-pool
+  experimental test rather than only the 1-variant × 2-track
+  observational contrast from Session 78 Q3.
+- **Secondary F1 ordering finding.** On text, four alternative
+  variants (comparative, adversarial with images, checklist,
+  brief — all with-images) achieve higher F1 at optimum than
+  canonical (0.88 vs 0.86), but with worse calibration. Any F1
+  gain comes from the 6-example few-shot image library, not from
+  prompt wording. Significance of the deltas awaits pairwise
+  permutation testing (Step 6 polish backlog; commit `8e8d85d5`).
+
+### Caveats
+
+- Image-pool ECE (0.19) is **lower than Obs 269's 55-map ECE
+  (0.269)**. This is a corpus difference (4-map gold-standard
+  curator GT vs 55-map student GT), not a prompt-engineering win.
+  Any paper statement about image-track miscalibration should cite
+  both Era 2 gold-standard and 55-map values where relevant.
+- Per-cell coverage after tile recovery is 2016/2017 in three image
+  cells (adversarial-text, brief-text, checklist — each missing one
+  different candidate) and 2017/2017 in the other four image cells;
+  text pool is 3736/3736 in every cell. **Union coverage across the
+  7 variants is 100% on both pools** (every candidate verified by
+  at least one prompt), so cross-variant comparability is intact.
+  The ~0.05% per-cell loss in the affected image cells is too small
+  to move calibration metrics.
+
+### Findable later
+
+Search terms: verifier calibration matrix, Session 78 matrix,
+adversarial-text Pareto, image-track miscalibration invariant under
+prompt, Obs 269 input-distribution hypothesis falsification, ECE
+0.188 image canonical, 7-variant verifier comparison, 2-pool
+calibration crosstab, flash-high-image-n5 T=0.7 1-of-5 pool,
+flash-high-text-n5 T=0.7 1-of-5 pool, verify_comparative new config,
+6-example few-shot image library, verifier prompt engineering
+ceiling.
+
+### Related observations and artefacts
+
+- **Obs 269** (image-track verifier miscalibration, 55-map): the
+  motivating observation. This matrix falsifies the
+  prompt-dependence hypothesis for it.
+- **Session 78 Q3** (cross-track calibration divergence; commit
+  `1b7143c5`): the first contrast between image-track and text-HIGH
+  calibration on the same verifier prompt, which motivated this
+  prompt-invariance test.
+- Artefacts: `results/verifier-calibration-matrix/<pool>-<variant>/calibration.json`
+  (14 cells); `planning/session-78-matrix-calibration-summary.md`;
+  `scripts/compute_session78_calibration_matrix.py`.
+- Commits: matrix data `6d1cad27`; calibration crosstab `88d6b55b`.
