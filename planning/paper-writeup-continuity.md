@@ -794,6 +794,28 @@ item's claim but warrant a polish pass before paper finalisation:
   on sapphire; estimated ~11 hours serial or ~1.5 hours at 8x
   parallel. Would close the F1-without-MCC gap project-wide.
 
+- **Script-hygiene audit: silent tile_allowlist / missing-CRS
+  pathologies** (added 2026-04-24, mid-Session 78). Obs 276 surfaced
+  that `scripts/score_leaderboard_cells.py` applies `--bounds` as a
+  silent `tile_allowlist` hard filter on detections, without warning
+  or scope-manifest output. The same session also caught that
+  `scripts/materialise_pv_geojson.py` was emitting GeoJSONs without a
+  CRS header — geopandas defaults these to EPSG:4326 (RFC 7946)
+  while the content is actually UTM 32635, causing downstream
+  reprojection to garbage (F1=0, MCC survives because tile-level MCC
+  keys off the `source_tile` string, not geometry). Fix committed in
+  `e1ef2190` (CRS header) + `b514ecb6` (defensive hardening).
+  Broader concern: ALL proposer consensus GeoJSONs at
+  `outputs/h11/*/consensus/consensus-*.geojson` exhibit the same
+  silent-4326 pathology. A repo-wide sweep
+  (`grep -rn "to_crs\|set_crs\|read_file" scripts/`) would catch all
+  consumers that need `set_crs` (when `crs is None`) rather than
+  `to_crs`. Also: a parallel audit of `results/leaderboard/cells/`
+  for dimension mismatches between a cell's `n_detections` and its
+  source detection GeoJSON's feature count would catch any OTHER
+  artefacts of the `tile_allowlist` silent-filter pattern. Not
+  urgent; can run before paper finalisation.
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
@@ -828,16 +850,18 @@ Task:
         --label "gold-standard-text-high-era2"
     ```
 
-    Expected headline: F1 ≈ 0.722 at 20 m, F1 ≈ 0.736 at 50 m (from forensic audit's preview evaluation). These are LOWER than the existing Era 3 numbers (F1 = 0.815 at 20 m, 0.826 at 50 m) because pool_160 contributes 116 additional GT mounds and 121 detections that were excluded under Era 3.
+    ~~Expected headline: F1 ≈ 0.722 at 20 m, F1 ≈ 0.736 at 50 m (from forensic audit's preview evaluation). These are LOWER than the existing Era 3 numbers (F1 = 0.815 at 20 m, 0.826 at 50 m) because pool_160 contributes 116 additional GT mounds and 121 detections that were excluded under Era 3.~~
 
-3. **Scope-pair narrative**: add a note to the existing Era 3 `gold-standard-extended-buffer-sweep/extended-buffer-report.md` §3 explaining that (a) the existing artefact is Era 3 scope to match the canonical leaderboard cell, (b) the new Era 2 companion is at `results/gold-standard-extended-buffer-sweep-era2/` with F1 = 0.736 at 50 m, (c) the 121/116 delta explains the scope gap. Update the 4 downstream citation sites to be scope-qualified:
+    **Retracted 2026-04-24 (Session 78 Q1 actual result)**: Era 2 GS text-HIGH gives F1 = 0.854 [0.821, 0.883] at 20 m, F1 = 0.873 [0.844, 0.901] at 50 m, MCC = 0.778 [0.726, 0.828]. See `results/gold-standard-extended-buffer-sweep-era2/evaluation.json`. Independent cross-check via `score_leaderboard_cells.py` on the same 487-tile scope gives F1 = 0.8536 at 20 m / 0.8734 at 50 m (vote≥1 prob≥0.15, n = 371) — two scripts agree. The pre-run "forensic audit" 0.722/0.736 estimate was a hand-calculation, not a logged run; it assumed a specific decomposition of what adding pool_160 detections would do to precision/recall that the actual computation does not bear out. The Era 3 CI [0.7833, 0.8586] and Era 2 CI [0.821, 0.883] overlap at 20 m, so the difference between point estimates is within sampling variance on different tile subsets (the Era 3 327-tile pool is a hierarchical stratified random subset of the 487-tile universe per `scripts/select_calibration_tiles.py:73-77`; no difficulty bias).
+
+3. **Scope-pair narrative**: add a note to the existing Era 3 `gold-standard-extended-buffer-sweep/extended-buffer-report.md` §3 explaining that (a) the existing artefact is Era 3 scope to match h8-v2/h10-v2/h12-v2 sibling comparability, (b) the new Era 2 companion is at `results/gold-standard-extended-buffer-sweep-era2/` with F1 = 0.873 at 50 m, (c) CIs overlap with Era 3 → difference is within sampling variance on different random tile subsets. Update the 4 downstream citation sites to be scope-qualified (labels only; do NOT re-interpret the narrative):
 
     - `meta-findings-summary.md` T1 §3.4 (Batch C "Student-GT position noise" bullet).
     - `55maps-cross-track-comparison/report.md` §6 (where it cites 0.8225 as the GS plateau).
     - `limitations-consolidation/report.md` §2.3 (student-GT position noise caveat).
     - `evaluation-scopes.md` §8.1 (paper-claim era tagging).
 
-    The cross-corpus curve-shift narrative (GS plateaus fast vs 55-map doesn't) survives intact — the magnitude just tightens (Era 3 gap was +0.193 at 20 m; Era 2 gap is +0.099 at 20 m). Still real, methodologically cleaner when reported at matched scope.
+    ~~The cross-corpus curve-shift narrative (GS plateaus fast vs 55-map doesn't) survives intact — the magnitude just tightens (Era 3 gap was +0.193 at 20 m; Era 2 gap is +0.099 at 20 m). Still real, methodologically cleaner when reported at matched scope.~~ Cross-corpus gap direction is unchanged but do not re-characterise the magnitude — scope labels change, analysis does not.
 
 ### Q2 — Uniform-scope leaderboard (cheap, ~10 min sapphire + 5 min doc)
 
@@ -847,7 +871,7 @@ Task:
 
 1. Run `scripts/score_leaderboard_cells.py` with Era 2 bounds (`full_evaluation_bounds.geojson`) and the same vote_t = 4 / prob_t = 0.15 thresholds.
 2. Save the new cell as `results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`, preserving the existing 327-tile cell.
-3. Update the primary `leaderboard-20m-annotated.md` to use the 487-tile cell at tier 1. Note: F1 at 20 m will drop from 0.890 (327-tile) to ~0.72 (487-tile); the condition's leaderboard rank may shift. The top-of-leaderboard text-HIGH 16-of-30 + PV condition at 0.890 is a different cell (phase3a-matrix, already 487-tile) and is NOT affected.
+3. Update the primary `leaderboard-20m-annotated.md` to use the 487-tile cell at tier 1. ~~F1 at 20 m will drop from 0.890 (327-tile) to ~0.72 (487-tile); the condition's leaderboard rank may shift.~~ **Updated 2026-04-24 (actual Session 78 Q2 result)**: F1 at 20 m changes from 0.890 (327-tile, vote≥4 prob≥0.15) to **0.8536** (487-tile, vote≥1 prob≥0.15, n = 371); at vote≥4 prob≥0.15 the 487-tile cell gives the same 0.8536 (all consensus-4of5 candidates have vote_count ≥ 4). Leaderboard rank impact to be assessed during the doc update. The top-of-leaderboard text-HIGH 16-of-30 + PV condition at 0.890 is a different cell (phase3a-matrix, already 487-tile) and is NOT affected.
 4. Add a "scope unification 2026-04-25" note to `leaderboard-20m-annotated.md` explaining the re-scoping and preservation of the 327-tile sibling.
 
 Non-blocking for the Q1 task; can be done in the same session.
