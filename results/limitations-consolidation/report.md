@@ -55,15 +55,17 @@ A further **~15 second-order limitations** covering preregistered protocol devia
 | Category | Data quality / ground-truth precision |
 | Source of truth | `results/gold-standard-extended-buffer-sweep/extended-buffer-report.md` (position noise); `results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md` (GT incompleteness) |
 | Obs anchors | Obs 260 (GT precision plateau shift), Obs 267 (corrected-F1 headline) |
-| Quantified | ~25 – 35 m position noise (from F1-curve rightward shift); **472 / 1,028 = 45.9 %** phantom-TP rate on VLM-only slice at 50 m from the authoritative `corrected-f1-human-reviewed.json` (single-buffer calibrated-UI review). The later multi-buffer re-review promoted 2 additional candidates at 50 m, lifting the multi-buffer artefact's count to 474; the paper-citation number stays at 472 for the single-buffer analysis. Student GT missed ~10 % of all mounds that the VLM + review found: 472 / (4,744 + 472) ≈ 9.0 %. |
-| Mitigation | Multi-buffer corrected F1 + per-candidate human review (image track only); gold-standard extended-buffer comparison anchors the position-noise argument |
+| Quantified | ~25 – 35 m position noise (from F1-curve rightward shift); **472 / 1,028 = 45.9 %** phantom-TP rate on VLM-only slice at 50 m from the authoritative `corrected-f1-human-reviewed.json` (single-buffer calibrated-UI review). The later multi-buffer re-review promoted 2 additional candidates at 50 m, lifting the multi-buffer artefact's count to 474; the paper-citation number stays at 472 for the single-buffer analysis. Student GT missed ~10 % of all mounds that the VLM + review found: 472 / (4,744 + 472) ≈ 9.0 %. **Text-HIGH human review completed 2026-04-24 (Session 78)**: 630 candidates reviewed, 352 / 278 mound / not-mound split (prevalence 55.9 %); corrected F1 at 50 m = **0.8260 [0.8159, 0.8357]** (multi-buffer artefact at `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`). |
+| Mitigation | Multi-buffer corrected F1 + per-candidate human review (image and text-HIGH tracks; text-MIN remains unreviewed); gold-standard extended-buffer comparison anchors the position-noise argument |
 
 **Finding**: the 55-map student ground truth has two quality issues:
 
 1. **Position noise**: individual mound-centroid positions on the 55-map student GT are less precise than on the 4-map gold-standard (curator-annotated) GT. The extended-buffer-report empirically quantifies the shift at ~25 – 35 m — at 20 m matching buffer the 55-map F1 is dragged down by ~0.19, at 50 m by ~0.04. The GS-anchor F1 plateau cited from `gold-standard-extended-buffer-sweep/extended-buffer-report.md` is **F1 = 0.822 (Era 3, 327 tiles)** — intentionally bounds-filtered to match the h8/h10/h12 v2 sibling artefacts. An **Era 2 companion** on the same text-HIGH pipeline (487 tiles, 371 detections) gives **F1 = 0.873 [0.844, 0.901] at 50 m** (`results/gold-standard-extended-buffer-sweep-era2/evaluation.json`); the Era 3 and Era 2 bootstrap CIs overlap at 20 m, so the scope-label difference is within sampling variance and the position-noise argument is unchanged (see `results/evaluation-scopes.md` §5.3 for the hierarchical stratified random sampling that constructs Era 3 from Era 2).
 2. **Incompleteness**: 472 (yesterday) + 2 (today) = 474 candidates the VLM flagged at 50 m are confirmed mounds missed by student GT. The student-FN rate on the VLM-only slice is substantial (~72 % empirical; see `dawid-skene-v2-data-driven-prior/report.md` §3).
 
-**Paper implication**: the paper's raw F1 at 20 m on the 55-map corpus (0.506 image, 0.623 text-HIGH, 0.618 text-MIN) **understates** detection quality. The corrected-F1 headline **F1 ≥ 0.830** at 50 m is the conservative lower bound after human review on the image track. The paper's Results section should open with the uncorrected comparison, note the two GT-quality issues as known scope limits, and cite the corrected F1 and extended-buffer analysis as the empirical mitigations.
+**Paper implication**: the paper's raw F1 at 20 m on the 55-map corpus (0.506 image, 0.623 text-HIGH, 0.618 text-MIN) **understates** detection quality. The corrected-F1 values after human review — **image 0.832 [0.822, 0.841]** and **text-HIGH 0.826 [0.816, 0.836]** at 50 m — are conservative lower bounds under calibrated-UI reviewer policy. The two tracks converge to F1 ≈ 0.83 (ΔF1 = +0.006, overlapping CIs), a **cross-track consistency finding** that strengthens the generalisation claim: the uncorrected gap between modalities reflects student-GT incompleteness rather than modality-intrinsic detection-quality differences. The paper's Results section should open with the uncorrected comparison, note the two GT-quality issues as known scope limits, and cite both tracks' corrected F1 plus the extended-buffer analysis as the empirical mitigations.
+
+**Resolution note (2026-04-24)**: the prior caveat that "corrected F1 is image-track only" is partially closed — text-HIGH review completed Session 78; only text-MIN remains uncorrected. Limitations-text should reflect the partial resolution.
 
 ### 2.4 Dawid-Skene 2-annotator AUC degeneracy (Obs 273)
 
@@ -199,16 +201,18 @@ These are preregistered-vs-executed deviations documented as errata. Each is a s
 
 **Paper implication**: limit cross-modality claims to descriptive F1 comparisons until the follow-up paired test is run.
 
-### 5.2 Text-HIGH and text-MIN corrected-F1 not available
+### 5.2 Text-MIN corrected-F1 not available (text-HIGH resolved 2026-04-24)
 
 | Source | `results/55maps-cross-track-comparison/report.md` §4 |
 |---|---|
-| Quantified | 0 candidates reviewed for text-HIGH; 0 for text-MIN; 1,028 reviewed for image |
-| Mitigation | Paper cites image-track corrected-F1 as the 55-map headline; text tracks use uncorrected F1 |
+| Quantified | 1,028 candidates reviewed for image; **630 reviewed for text-HIGH (Session 78 2026-04-24)**; 0 for text-MIN |
+| Mitigation | Paper cites image and text-HIGH corrected-F1 as convergent 55-map headlines (both ≈ 0.83 at 50 m); text-MIN uses uncorrected F1 |
 
-**Finding**: per-candidate human review was conducted only for the image track (1,028 candidates). text-HIGH and text-MIN have no corrected F1 — their raw F1 is the paper-citable figure.
+**Resolution (2026-04-24, Session 78)**: text-HIGH human review completed; corrected F1 at 50 m = 0.8260 [0.8159, 0.8357] (`results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`). This limitation is **partially resolved** — only text-MIN remains uncorrected.
 
-**Paper implication**: cross-track comparisons must use uncorrected F1 to be apples-to-apples; do not cite the image-track corrected F1 (0.830) against the text tracks' uncorrected F1 (0.759 / 0.788) as a "cross-track leader" claim.
+**Finding (residual)**: per-candidate human review is now available for two of the three tracks (image: 1,028 candidates; text-HIGH: 630 candidates). text-MIN has no corrected F1 — its raw F1 (0.759 at 50 m) is the paper-citable figure.
+
+**Paper implication**: cross-track claims involving image vs text-HIGH can now cite **convergent corrected F1** at 50 m (image 0.832, text-HIGH 0.826; ΔF1 = +0.006 with overlapping CIs) — a cross-modality consistency finding. Any comparison involving text-MIN must still use uncorrected F1 to be apples-to-apples; do not cite image or text-HIGH corrected F1 against text-MIN uncorrected 0.759 as a "cross-track leader" claim.
 
 ### 5.3 Phase 3a matrix coverage gaps
 
