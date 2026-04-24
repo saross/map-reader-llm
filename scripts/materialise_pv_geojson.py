@@ -57,6 +57,13 @@ import re
 import sys
 from pathlib import Path
 
+try:  # pyproj is optional at import time so the strict-indexing CLI path
+    # remains usable without it; we only require the package when the
+    # lat/lon auto-detect heuristic actually fires (see ``materialise``).
+    from pyproj import Transformer
+except ImportError:  # pragma: no cover - exercised only when pyproj absent
+    Transformer = None  # type: ignore[assignment]
+
 DEFAULT_CRS = "EPSG:32635"
 CANDIDATE_KEY_RE = re.compile(r"^candidate_(\d+)$")
 
@@ -137,6 +144,36 @@ def materialise(
             f"the file's declaration or omit it to accept the default."
         )
 
+    # Lat/lon auto-detect + reproject heuristic (Session 78 discovery).
+    #
+    # The proposer consensus pipeline emits GeoJSONs without a CRS member
+    # but coordinates are written as raw lat/lon (e.g. [25.76, 42.48] for
+    # the Bulgarian corpus). Earlier versions of this script silently
+    # stamped the target CRS (UTM 35N) onto those lat/lon coordinates,
+    # producing files that downstream evaluation interpreted as UTM —
+    # leading to F1=0 across every buffer. Detect this case and reproject
+    # the geometries from EPSG:4326 to the target CRS before writing.
+    needs_reproject = False
+    if declared_crs is None and features:
+        x0, y0 = features[0]["geometry"]["coordinates"][:2]
+        if abs(x0) <= 180 and abs(y0) <= 90:
+            needs_reproject = True
+            print(
+                f"Warning: undeclared CRS + coords look like lat/lon; "
+                f"reprojecting from EPSG:4326 to {crs}",
+                file=sys.stderr,
+            )
+    transformer = None
+    if needs_reproject:
+        if Transformer is None:
+            raise RuntimeError(
+                "pyproj is required to reproject lat/lon consensus "
+                "coordinates to the target CRS but is not installed."
+            )
+        transformer = Transformer.from_crs(
+            "EPSG:4326", crs, always_xy=True,
+        )
+
     with open(probabilities_json, encoding="utf-8") as f:
         probs = json.load(f)
     results = probs.get("results", {})
@@ -182,9 +219,22 @@ def materialise(
             tiles = new_props.get("source_tiles") or []
             if tiles:
                 new_props["source_tile"] = tiles[0]
+        # Reproject geometry if the lat/lon auto-detect heuristic fired.
+        # Only Point geometries are supported here because the consensus
+        # pipeline only emits points; extend if richer geometries appear.
+        geom = feat["geometry"]
+        if transformer is not None:
+            if geom.get("type") != "Point":
+                raise ValueError(
+                    f"Auto-reproject only supports Point geometries; "
+                    f"got {geom.get('type')!r} at index {idx}."
+                )
+            x_in, y_in = geom["coordinates"][:2]
+            x_out, y_out = transformer.transform(x_in, y_in)
+            geom = {"type": "Point", "coordinates": [x_out, y_out]}
         kept.append({
             "type": "Feature",
-            "geometry": feat["geometry"],
+            "geometry": geom,
             "properties": new_props,
         })
 
