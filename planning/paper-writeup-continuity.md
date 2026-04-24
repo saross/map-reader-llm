@@ -894,6 +894,48 @@ item's claim but warrant a polish pass before paper finalisation:
   `planning/leaderboard-construction-plan.md` to formalise
   architecture as a leaderboard-stratification dimension.
 
+- **Run pairwise permutation tests across verifier calibration
+  matrix** (added 2026-04-24 Session 78). The Session 78 verifier
+  calibration matrix (commit landing shortly) compared 7 verifier
+  variants (6 alternative prompts plus canonical `adversarial-text`)
+  on 2 candidate pools (flash-high-image-n5 @ T = 0.7 and
+  flash-high-text-n5 @ T = 0.7) at 487-tile Era 2 scope, reporting
+  F1 / P / R / MCC at the optimum (vote_t, prob_t) along with
+  calibration metrics (AUC / Brier / ECE). The matrix shows F1
+  differences between variants that are often within bootstrap CIs
+  (e.g. all 6 image variants cluster in F1 = 0.77 – 0.79 with
+  overlapping CIs). To draw defensible conclusions about
+  verifier-variant effects, we need **paired permutation tests**
+  that account for shared candidate space and test whether ΔF1
+  between variants is significant. Current state: each cell has
+  `results/verifier-calibration-matrix/<pool>-<variant>/evaluation.json`
+  (10k-bootstrap CIs) and
+  `results/leaderboard/cells/session-78-<pool>-<variant>-487tile.json`
+  (sweep data). The existing `scripts/pairwise_permutation.py` (or
+  equivalent in the repo) is the tool — it already handled the
+  Session 76 / 77 cross-track × buffer pairwise tests.
+  **Recommended scope**: (1) within-track pairwise: 7 variants ×
+  (7 − 1) / 2 = 21 pairs per track × 2 tracks = 42 tests at 20 m
+  buffer, with False Discovery Rate (FDR) controlled at q = 0.05
+  via Benjamini–Hochberg; (2) across-pool canonical vs alternatives:
+  6 alternative variants vs canonical × 2 pools = 12 tests (subset
+  of the above 42, just the canonical-paired ones); (3) extend to
+  30 / 40 / 50 m buffers if the 20 m result is ambiguous.
+  **Recommended fix / execution**: a wrapper script that (a) reads
+  the 14 materialised GeoJSONs at
+  `results/verifier-calibration-matrix/<pool>-<variant>-opt-20m.geojson`,
+  (b) runs `pairwise_permutation.py` on each pair at each buffer
+  (10k permutations, seed 42), and (c) emits a tiers +
+  pairwise-test markdown (similar to the Era 2 leaderboard tier
+  file) at
+  `results/verifier-calibration-matrix/pairwise-permutations-20m.md`.
+  **Estimated effort**: ~30 min local CPU for 42 tests × 4 buffers
+  = ~170 tests; trivial API cost (none). **Why not tonight**:
+  matrix artefacts are still being finalised (rsync + commit
+  pending); best to run this once the matrix is stable and
+  committed so the permutation tests reference stable input
+  GeoJSONs.
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
