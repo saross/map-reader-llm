@@ -13127,3 +13127,87 @@ scorecard §3.11 source list, verifier_independence_probe.md retraction,
 Session 75 close-out, paper-writeup-continuity guardrail 6.
 
 ---
+
+## Observation 276: The `score_leaderboard_cells.py --bounds` arg silently becomes a hard tile-allowlist filter on the materialised detection GeoJSON (2026-04-24; Session 77 forensic)
+
+### The mechanism
+
+When `scripts/score_leaderboard_cells.py` is invoked with `--bounds
+<path.geojson>`, the bounds argument is used twice:
+
+1. **For scoring** (expected, visible in CLI help): F1 / P / R
+   metrics are computed within the bounds polygon.
+2. **As a tile-allowlist on the materialised detection GeoJSON**
+   (silent, not visible in CLI help or docstring): candidates whose
+   source tile is outside the bounds are dropped from the
+   downstream-written GeoJSON before the prob_t threshold is
+   applied. This is an artefact of the `tile_allowlist` parameter
+   used internally by the script.
+
+### Evidence
+
+The `gold-standard-extended-buffer-sweep` construction chain was
+(per commit `8747d726` 2026-04-19, verified 2026-04-24):
+
+- `outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson`:
+  607 features (vote_t = 4 already applied).
+- `outputs/h11/gold-standard-v2/verified-v1/probabilities.json`:
+  597 verified results (10 parse failures dropped).
+- Materialise without bounds (re-run 2026-04-24): 371 features in
+  189 tiles, 57 of which are pool_160 tiles.
+- Materialise with `--bounds h10_test_bounds.geojson` (Era 3, 327
+  tiles): **250 features in 132 tiles, zero in pool_160** — the
+  121 pool_160 detections were silently dropped.
+- The 250-feature file committed to
+  `results/gold-standard-extended-buffer-sweep/verified_detections.geojson`
+  is this bounds-filtered version.
+
+### Interpretation
+
+Not a bug in `score_leaderboard_cells.py` per se — the filter is
+a methodologically sensible default (if you want metrics within a
+bounds, you probably don't want detections outside it carried
+into downstream artefacts). The hazard is that the filter is
+**silent**: no warning in CLI output, no note in the output JSON,
+no indication in the materialised GeoJSON that scope-filtering
+occurred. A downstream consumer (or a future session) reading
+`verified_detections.geojson` would have no way to tell that 121
+detections were excluded.
+
+### Why this matters
+
+The `gold-standard-extended-buffer-sweep` Era 3 F1 of 0.826 is
+correct for Era 3 scope. But the same 250-feature file evaluated
+at Era 2 bounds (487 tiles) gives an artefactual F1 of ~0.686
+(rather than the true Era 2 F1 of ~0.736 from the unfiltered
+371-feature file) because the 116 additional GT mounds in the
+pool_160 tiles have no matching detections in the file to pair
+with. Session 77 Session-78 queue Q1 addresses this by
+re-materialising at full scope and committing an Era 2 companion
+artefact.
+
+### Findable later
+
+Search terms: tile_allowlist silent filter, score_leaderboard_cells
+bounds, materialise_pv_geojson without bounds, 250-feature artefact,
+371-feature full-scope, verified_detections scope-filter, Era 3
+bounds-filter, pool_160 detection count, scope-pair narrative,
+Session 77 forensic audit, gold-standard-extended-buffer-sweep
+construction chain, Q1 Session 78 entry-point.
+
+### Related observations and guardrails
+
+- Obs 274 (Phase 2b MCC) illustrates the related theme: tile-
+  level metrics have scope dependencies that need explicit
+  documentation; metric values are scope-conditional.
+- Session 77 memory `feedback_feature_count_crosscheck.md` is the
+  preventive habit: before re-evaluating against a documented cell,
+  verify the detection-file feature count matches the cell's
+  `evaluation.json[summary.n_detections]`. Would have caught this
+  and the 3 sibling wrong-detection-source errors in Session 77
+  Cells 2/3/4 in ~10 seconds each.
+- Session 78 Q1 + script-hygiene item: add a 2-line docstring to
+  `score_leaderboard_cells.py` warning that `--bounds` is a hard
+  filter on the materialised detection set; emit a
+  `scope_filter_applied` field in the output JSON so downstream
+  consumers can detect the filter without reading the source.

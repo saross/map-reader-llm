@@ -5435,3 +5435,100 @@ Per `planning/interim-docs-review.md` §6 Step 4 sequencing
 - `planning/paper-writeup-continuity.md` is the single entry point
   for Session 76. The "⚡ Start here" block and §"Session 75 status"
   together carry the load-bearing context.
+
+## 2026-04-24 — Session 77 (map-reader-llm)
+
+Autonomous-then-collaborative session covering: Batch A sapphire
+compute (Session 77 data-gen follow-ups), Batch B1 mark-superseded
+archive reorganisation (17 files + 6 new themed subdirs), Batch B2
+reflections (Session 76 entries), Batch C meta-findings refresh,
+corpus-disjointness documentation (5 docs), audit fallout from a
+chat confabulation (3 verifier agents + blast-radius audit),
+four-cell correction pass after MCC backfill surfaced wrong
+detection-source paths, 250-feature scope-filter forensic
+investigation, Streamlit wrapper for text-HIGH review, and Session
+78 handover. 33 commits pushed to `origin/main`
+(`8f213c67..a0f629e9`).
+
+### What was produced
+
+- Batch A (data-gen, 3 commits `dfbf88a5..eaf6c8ba`): 8 paired
+  permutation tests (image vs text-HIGH + image vs text-MIN at
+  20/30/40/50 m), extended-buffer evaluations for text-HIGH and
+  text-MIN at 75/100/125 m, and the cross-track-comparison doc
+  updated to incorporate both.
+- Batch B1 (archive reorg, 2 commits `34074873` + `b33a818a`): 17
+  superseded planning / pre-launch-audit files moved to 6 new
+  themed `archive/` subdirs (completed-analysis-plans,
+  session-continuity, post-run-followups, infrastructure-planning,
+  issue-tracking, superseded-audits), each with a README. All 17
+  files got SUPERSEDED banners identifying the replacement doc.
+- Batch B2 (reflections, `80025eaf`): Session 76 entries appended
+  to session-reflection.md and llm-observations.md.
+- Batch C (meta-findings refresh, `ad93c806`): T1 §3.4 (cross-
+  modality paired significance + student-GT position noise +
+  corrected-F1 track availability), T3 §5.4 (cross-track verifier
+  scope), T5 §7.4 (D-S prior-invariance confirmation), and 6 new
+  canonical-numbers rows.
+- Corpus disjointness documentation (`267134b2`): new §11 in
+  evaluation-scopes.md documenting the 55-map generalisation scope
+  as disjoint from the 4-map gold-standard Era 1/2/3 scopes; 4
+  cross-reference notes in downstream docs.
+- Audit-fallout artefacts: three fact-check verifier agents
+  disproved my modality attribution claim; a blast-radius audit
+  confirmed zero propagation into committed docs. No code changes
+  needed.
+- Option A MCC backfill (`743e59a8`): 16 cells across
+  h8-v2 / h10 / h12-v2 / phase3a-text-matrix / phase3a-image-
+  matrix; parallel 8-way on sapphire; 14 clean, 3 flagged as
+  suspect with anomaly notes in the commit message.
+- Correction pass (in the same `743e59a8` commit): Cells 2/3/4
+  corrected with verified detection sources producing the expected
+  F1 values (0.750 image, 0.814 text — matches documented cells).
+  Cell 1 handover-queued (see Q1 in continuity doc §"Session 78
+  entry-point queue").
+- Streamlit wrapper (`06cb6247`): `scripts/launch_55maps_text_high_review.sh`
+  with `--prev-review ""` to disable the image-track pre-population
+  default for a fresh text-HIGH multi-buffer review.
+- Session 78 handover (`a0f629e9`): Q1–Q4 entry-point queue with
+  exact commands; carry-over context for three memory saves, the
+  audit-fallout lesson, the disjointness finding, and the script-
+  hygiene + investigation follow-ups.
+
+### Observations + decisions recorded
+
+- Verifier-agent pattern scoped up from committed-artefacts-only
+  to also catching chat-turn errors (my modality misattribution).
+  Worth retaining in Session 78+.
+- 250-feature gold-standard-extended-buffer-sweep
+  verified_detections is bounds-filtered intentionally (to Era 3
+  / 327 tiles) to match the canonical leaderboard cell. Not a
+  bug; a scope choice superseded by the user's later "prefer
+  487-tile Era 2" preference. Session 78 Q1 produces the Era 2
+  companion artefact; existing Era 3 artefact preserved.
+- Three new memories saved (precondition habits): MCC-with-F1,
+  384px-Era-2 scope preference, feature-count cross-check before
+  evaluator re-runs.
+- Text-HIGH human review is a user-facing task (~10–12
+  reviewer-hours); downstream compute support queued for when
+  the review CSV lands (Session 78 Q3).
+
+### Contextual assumptions
+
+- Sapphire remained reachable throughout the session; all compute
+  used the transient-branch pattern (`s77-sapphire-compute`,
+  pushed to origin for sapphire to pull, deleted after rsync).
+  Origin/main was only pushed at the very end once the user
+  explicitly requested it.
+- Context budget reached ~80 % by end-of-session but stayed under
+  the user's 85 % ceiling. The user's mid-session directive "you're
+  only at 60 %, please continue" (earlier in Session 77 chat)
+  calibrated my context estimates — I had been over-reporting usage
+  by ~20 pp; the corrected self-estimate was informed by explicit
+  user calibration.
+- The text-HIGH review will be performed by the user, not by me.
+  The image-track review (Session 73 era) was performed by the
+  user; the text-HIGH review replicates that workflow on a new
+  track. Shawn's willingness to review both tracks (rather than
+  just "which was supposed to be reviewed") is the positive-
+  externality outcome of the chat confabulation.

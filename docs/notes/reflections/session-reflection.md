@@ -7582,3 +7582,116 @@ files are load-bearing for cross-track parity claims. Added to the
 guardrails list (continuity-doc 2026-04-25 item 2).
 **Pattern worth naming**: "transient-branch compute offload" —
 dispatchable sapphire workflow that keeps origin/main pristine.
+
+## Session 77 Reflection — 2026-04-24 (map-reader-llm)
+
+The session opened as a data-gen follow-up pass (paired permutation
+tests + extended-buffer evaluations on sapphire), widened into a
+Step-5 archive reorganisation, then took an unplanned turn when the
+user asked me to confirm which 55-map run had been manually
+corrected. I answered "image, and here's why image was the paper's
+star performer" — a confabulated rationalisation including a wrong
+attribution of the F1 = 0.904 headline to a nonexistent "Pro image
+HIGH T=0.7" condition. The user pushed back firmly: "text has always
+outperformed image". I dispatched three parallel fact-check agents;
+all three returned unanimous: the user was right, I was wrong on
+model (Flash, not Pro), modality (text, not image), and config
+(16-of-30 text consensus + PV, not HIGH-T=0.7). The correct
+headline is `flash-high-text-16-of-30--flash-min-vf`.
+
+The second half of the session investigated four suspect
+evaluation outputs from the earlier compute batches, culminating in
+a forensic agent uncovering that the 250-feature
+`gold-standard-extended-buffer-sweep/verified_detections.geojson`
+was intentionally bounds-filtered to Era 3 (327 tiles) to match the
+canonical leaderboard cell — not a bug but a scope choice the user
+predicted correctly ("was it to match the 327 tile set so we could
+do MCC?"). The session closed with four Q-items queued for Session 78
+and 33 commits pushed to origin.
+
+### Prompt: Where did I and the human disagree, and who was right?
+
+On the modality attribution. The user's recollection was firm
+("text has always outperformed image"); my claim — made fluently
+and specifically ("Pro image HIGH T=0.7") — was wrong in three
+dimensions at once. What's humbling is that the canonical-numbers
+table in `planning/paper-writeup-continuity.md` (§"Canonical
+numbers") literally reads *"Detection F1 headline (487-tile matrix,
+K=30 text-HIGH + PV) | 0.904"* — I had that reference in my working
+context and still generated a counter-factual paraphrase. The
+verifier-agent dispatch I used as the resolution mechanism worked
+exactly as designed: three independent agents on three scopes (GS
+4-map, 55-map student, leaderboard) returned the same verdict in
+under 2 minutes each. The blast-radius audit that followed found
+zero instances of the error in committed files — it had lived
+only in my chat turn, never propagating. The guardrail pattern
+(sub-agent verdicts are drafts; verify against authoritative
+artefacts) held; the reasoning-discipline lesson is that I should
+have applied it before typing, not after.
+
+### Prompt: What surprised you about this session?
+
+The 250-feature anomaly turning out to be the user's insight, not
+my forensic agent's. The diagnostic agent I first dispatched
+correctly identified the four wrong-detection-source errors
+(Cells 2/3/4 fixes landed cleanly) but mis-framed the Cell 1 "GS
+text-HIGH Era 2 artefact" as a bug — specifically as a
+"bounds-filtering artefact during PV construction". I ran with that
+framing. The user then asked "isn't 250 features low?" and
+followed up with "I *think* what we did was bound the 487-tile set
+to match the 327 tile set so that we could do MCC — is that
+plausible?". That second question unlocked the correct
+interpretation: the scope filter was intentional, documented in
+`extended-buffer-report.md` §3, and served tile-level comparability
+with the canonical leaderboard cell (filename literally contains
+"327tile"). The forensic agent verified the construction path
+(consensus-4of5 → materialise → tile_allowlist) and confirmed: no
+bug, a scope choice superseded by the user's later
+"prefer 487-tile Era 2" directive. I had framed this as a pipeline
+correction; the user framed it as an analytical-scope decision
+that pre-dated the preference change. The user's framing was
+better and more accurate.
+
+### Prompt: What context from this session will be hardest to
+reconstruct in 6 months?
+
+The chain of evidence for why `verified_detections.geojson` has
+exactly 250 features — and why that number IS and IS NOT a bug
+depending on scope framing. The construction path involves
+`consensus-4of5.geojson` (607 features, pre-verifier),
+`probabilities.json` (597 verified results, 10 parse failures),
+`materialise_pv_geojson.py` without bounds (371 features post-PV),
+then `score_leaderboard_cells.py --bounds h10_test_bounds.geojson`
+(tile_allowlist filter, 250 features Era 3). That construction
+path is **not re-derivable from any single script's docstring or
+a single commit message** — it requires reading the script source
+for both tools and cross-referencing the leaderboard-cell filename
+convention ("327tile" baked into the path). The Session 78
+continuity entry captures the pipeline explicitly; I suspect the
+context will need to be re-read each time it surfaces. The
+feature-count cross-check memory I saved (before every evaluator
+re-run on a documented cell, verify detection-file feature count
+matches `evaluation.json[summary.n_detections]`) is the cheapest
+durable guardrail.
+
+**Session**: 2026-04-24, map-reader-llm. 33 commits pushed to
+`origin/main` (from `8f213c67` to `a0f629e9`; session spans Batch A
+data-gen, Batch B1 archive reorganisation, Batch B2 reflections
+(Session 76 entries), Batch C meta-findings refresh, text-HIGH
+review wrapper, Option A MCC backfill, 4-cell scope corrections,
+and the Session 78 handover).
+**Relational texture**: the user's question-form continues to do
+work my declarative prompts would miss. "Isn't 250 features low?
+How many should we expect based on other runs? I sense something
+is off here" — that sequence forced me to justify the number rather
+than rationalise past it. A narrower prompt ("investigate the 250
+features") would have reinforced my bug framing; the open-ended
+question opened the scope-choice interpretation.
+**Pattern worth naming**: "confabulation-with-reference" — I
+generated a false fact-claim WHILE the correct reference was
+already in my context. The guardrail isn't just "check before
+writing"; it's "when making a specific fact-claim about a
+pipeline-config label (model, thinking, temperature, consensus),
+cross-check against the canonical-numbers table OR the
+resolved_config.yaml OR the batch_mcc_summary row label — every
+single time, without exception".

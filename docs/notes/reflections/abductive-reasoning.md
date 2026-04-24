@@ -4302,3 +4302,39 @@ level, each can be wrong about the level below, each needs
 verification against the level it claims to represent. Session 75's
 verifier-catch rate of 2–3 errors per item is this abstraction-leak
 count in operation.
+
+## 2026-04-24 (Session 77, map-reader-llm): Two belief-revision sequences
+
+Session 77 produced two clean "surprising observation → hypothesis → test → belief revision" chains, both methodologically instructive.
+
+### Sequence A — The modality misattribution
+
+**The surprise** (user-initiated): Shawn asked me to confirm which 55-map run he had manually corrected. I answered "image, and here's why: the paper's headline detection F1 = 0.904 on the 487-tile matrix is image-track (Pro image HIGH T=0.7); image was the paper's star performer for controlled in-scope evaluation." User pushback: "This is not correct, text has always outperformed image in our tests. This is a major misunderstanding either on your side or mine, we must resolve it."
+
+**Hypothesis generation**: two competing explanations. (H1) My recollection was right, user's was wrong. (H2) My recollection was wrong, user's was right.
+
+**Test design**: three parallel verifier agents, one per corpus (GS 4-map / 55-map student / leaderboard). Each with access to authoritative sources (`metrics_master.json`, `leaderboard-20m-annotated.md`, per-track `evaluation.json` files). Each instructed to report verbatim citations rather than paraphrases.
+
+**Observation**: all three agents returned the same verdict within ~2 min each. The F1 = 0.904 cell is `flash-high-text-16-of-30--flash-min-vf` — Flash (not Pro), text (not image), 16-of-30 consensus + PV (not HIGH T=0.7). Text dominates the leaderboard top 9; image first appears at rank 10.
+
+**Belief revision**: H2 confirmed. My specific phrase "Pro image HIGH T=0.7" was a confabulation generated fluently despite the correct reference sitting in the same continuity doc I had been citing for two sessions. A blast-radius audit (fourth agent) found zero instances of the error in committed files — it lived only in the chat turn.
+
+**What was abductive about this?** Not much on my side; the verification was retrieval-heavy, not insight-heavy. The abductive move was the user's: he recognised a single false paraphrase and extrapolated to "major misunderstanding either on your side or mine, we must resolve it" — treating the one-off discrepancy as a diagnostic for a broader possible error. That framing committed me to the verification-agent dispatch rather than a quick "let me check" that could have under-scoped the check. The test — three agents on three corpora — was designed to distinguish "I mis-spoke once" from "I've been citing wrong facts systematically". The audit outcome (zero committed errors) resolved the ambiguity in favour of "mis-spoke once, caught in time".
+
+The methodological value of the user's framing is the anti-reassurance move: he treated a single wrong sentence as potentially symptomatic, not as noise. A narrower "check if 0.904 is really image" would have returned the correct answer without the blast-radius closure that made the fix cheap.
+
+### Sequence B — The 250-feature scope-filter
+
+**The surprise** (my initial interpretation): a forensic investigation of a suspected Session 77 compute bug revealed that `verified_detections.geojson` (250 features, gold-standard text-HIGH) had exactly zero detections in the 160 pool_160 tiles (the difference between Era 2 487-tile scope and Era 3 327-tile scope). My initial hypothesis was (H-bug) a bounds-filtering artefact during pipeline construction — i.e., the file had been silently scope-filtered and my Era 2 evaluation was therefore artefactual. The forensic agent ran this hypothesis and returned "confirmed, the file is bounds-filtered".
+
+**User's counter-hypothesis**: Shawn said "I *think* what we did was bound the 487-tile set to match the 327 tile set so that we could do MCC — is that plausible?" That is: (H-intentional) the scope filter was a deliberate analytical choice, not a construction bug.
+
+**Test**: check the leaderboard cell's filename convention and the extended-buffer-report's §3 scope documentation. The cell is literally named `gold-standard-v2-greedy-v1-327tile.json` — scope in the filename. The report §3 says: *"The canonical leaderboard evaluator uses h10_test_bounds.geojson (327 tiles) for these same runs, so that file was used here to maintain scoring comparability."*
+
+**Belief revision**: H-bug was superficially correct (the file IS bounds-filtered) but the framing was wrong (that framing called it an artefact); H-intentional was the correct deeper interpretation. The 327-tile scope matches h8-v2 / h10 v2 / h12 v2 analyses (all Era 3 by data-hygiene) — tile-level comparability with the cross-hypothesis closure chain was the reason. The filename and the report §3 both documented the choice; I had read neither before running the forensic agent.
+
+**What was abductive about this?** The user recognised the scope-filter pattern because he had lived the analytical history. I only saw the data artefact. The abductive move — "this looks like a bug, but why would someone do it on purpose?" — required context about the analytical chain (the h-series ablations are Era 3, and making the GS extended-buffer-sweep Era 3 too enables cross-analysis) that was not derivable from the files themselves. The user generated the hypothesis; the test was cheap (two-line grep for the filename and §3 of the report); confirmation landed in one round-trip.
+
+**The generalisable lesson**: when an artefact looks like a bug but doesn't obviously harm anything, the next question is "why might this be intentional?" The first verifier agent of the pair (diagnostic) had framed its remit narrowly as "did something go wrong?" and returned a coherent bug-framing. The second verifier agent (forensic, dispatched after the user's counter-hypothesis) framed the remit as "what actually happened, intentional or not?" and returned the scope-choice framing. Same artefact, same data, different framing — the second framing was the correct one because it asked about intent, not just cause.
+
+Both Sequence A and Sequence B share a structure: the user's framing outperformed mine at the level of what-question-to-ask. Mechanism: the user has the analytical history that makes "scope-choice" a live hypothesis; I saw only the data and jumped to "artefact". Remedy: when surfacing a finding that could be interpreted as a bug, explicitly ask the question "if this is intentional, who made the choice and why?" before committing to the bug interpretation. That question is trivially cheap and would have avoided one agent round-trip this session.

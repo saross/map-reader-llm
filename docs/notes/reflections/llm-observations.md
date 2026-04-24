@@ -5421,3 +5421,110 @@ between batches. The licence mattered: without it I would have
 optimised for "cover all batches in one pass" and potentially
 degraded verifier quality toward the end. With it I could pace
 properly.
+
+## Session 77 Observations (2026-04-24, map-reader-llm)
+
+Two-batch workflow (Batch A data-gen + Batch B1 archive reorg +
+Batch B2 reflections + Batch C meta-findings refresh, all running
+in one pass; then a turn where I confabulated a paper-headline
+attribution and recovered via verifier agents; then a 4-cell
+correction pass + 250-feature scope-filter forensic
+investigation). 33 commits pushed to `origin/main`. Three
+AI-collaboration-patterns observations:
+
+### The verifier pattern held for a chat-turn error it hadn't been designed for
+
+Session 75's guardrail "main-thread propose + verifier-agent check
+is mandatory for every new/level-up analysis doc" was originally
+scoped to **committed** artefacts. Session 77 exercised it on an
+**uncommitted chat message**: I answered a factual question with a
+confabulated paraphrase; user pushed back; I dispatched three
+parallel verifier agents; all returned the same verdict within
+~2 min. The blast-radius audit (a fourth agent) confirmed the
+error hadn't propagated into any committed doc. Four agents,
+~8 min wall-clock, zero remaining exposure.
+
+The pattern generalises: verifier agents are useful for
+discriminating between "this is a persistent error in the
+artefacts" vs "this is a stray error in the conversation" at a
+cost cheap enough to deploy on low-probability-of-contamination
+cases. The 4-agent dispatch here was ~2,000 tokens of agent
+output and resolved the question in under ten minutes; the
+alternative (me introspecting on whether I had contaminated any
+docs) would have been more expensive AND less reliable.
+
+Key craft detail: each verifier agent was scoped to a single
+corpus and given authoritative-source paths. No agent had to
+decide what to check — the prompt told it. Each returned verbatim
+citations rather than paraphrases (explicitly requested). Running
+them in parallel rather than series meant the total latency was
+the longest single agent (~2 min), not the sum.
+
+### Forensic agents need a second-order question to catch intentional-looking artefacts
+
+The first diagnostic agent I dispatched on the 4 suspect
+evaluation cells returned a clean analysis: Cell 1 (250-feature
+GS text-HIGH file evaluated at Era 2) was "a
+bounds-filtering artefact during PV construction". I acted on
+that framing. The user's counter-hypothesis ("was this
+intentional to enable MCC comparability with h8/h10/h12 v2?")
+required a second forensic agent with a different framing: not
+"is this a bug?" but "what actually happened, intentional or
+not?". The second agent confirmed: the scope filter was
+intentional, documented in the report §3 and the leaderboard-cell
+filename. No bug, a scope-choice superseded by the user's
+later preference-change.
+
+**Generalisable rule**: when the first verifier or forensic
+agent returns a "this is a bug" framing, ask the second question
+"why might this be intentional?" *before* committing to the bug
+narrative. Dispatching a second agent with the intentional-or-not
+framing costs ~1 min and catches the case where the artefact is a
+deliberate analytical choice you lack context to recognise. The
+cheapest version of this is the user asking "is this plausible?"
+— which is what happened here — but the habit should be
+internalisable.
+
+### Confabulation-with-reference is a specific failure mode
+
+My chat error was not "I didn't know the answer" — the correct
+reference was in a continuity doc I had been actively citing for
+two sessions. It was "I generated a fluent false paraphrase while
+the true reference sat in the same context window". Standard
+prompts ("double-check your work", "cite sources before claiming")
+would not have caught this because the generation itself felt
+authoritative; the output was coherent prose with specific
+parameter values, just with wrong parameter values.
+
+The preventive rule I saved to memory
+(`feedback_feature_count_crosscheck.md`) is narrower and more
+mechanical: *before* typing a specific fact-claim about a
+pipeline-config label (model, thinking-level, temperature,
+consensus-threshold), explicitly grep or read the canonical
+reference. Not "remember to check" — "perform the check as the
+step just before typing". The habit corresponds to a precondition,
+not a verification-after-the-fact.
+
+Three new memories saved this session codify preventive patterns
+rather than post-hoc corrections: MCC-with-F1, 384px-Era-2
+scope preference, feature-count cross-check. Each is a habit to
+apply *before* action rather than a mistake to learn from. The
+reflection entries from prior sessions lean post-hoc; the S77
+memories lean preventive. Pattern worth naming: "make the memory
+a precondition, not a post-condition".
+
+**Session**: 2026-04-24, map-reader-llm. 33 commits pushed
+`8f213c67..a0f629e9`. Agent dispatches: 3 fact-check verifiers
+(modality attribution) + 1 blast-radius audit + 1 diagnostic
+(4 suspect cells) + 1 forensic (250-feature scope) + 2 Step 5
+/ corpus-scope helpers earlier in the session = 8 agents total.
+All read-only except the Batch B1 reorganisation agent and the
+corpus-scope-notes commit agent. Verdict-stability was 100 % on
+fact-check agents (three independent verifiers, same answer);
+the diagnostic / forensic pair required the user's counter-
+hypothesis to unlock the correct framing on the one case where
+the first agent landed a wrong-level interpretation.
+**Relational texture**: the user's question-form continues to
+matter. "Isn't 250 features low? How many should we expect based
+on other runs? I sense something is off here" was load-bearing —
+it forced me to justify the number rather than explain past it.
