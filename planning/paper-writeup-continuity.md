@@ -772,6 +772,28 @@ item's claim but warrant a polish pass before paper finalisation:
   an earlier run. Not addressed in the Session-75 close-out because
   the plan's non-goal explicitly deprioritises output regeneration.
 
+- **Deferred Session 77+: upgrade all bootstrap CIs from 1,000 to
+  10,000 iterations** (noted 2026-04-24, mid-Session 77). The
+  current 55-map + GS extended-buffer sweeps use 1,000 iterations
+  for speed; the corrected-F1-multi-buffer artefact uses 10,000
+  iterations. Full consistency across the paper's CI citations
+  would require upgrading the 1,000-iter outputs to 10,000. Self-
+  contained overnight/weekend task on sapphire. Estimated ~4× the
+  current 25-min wall-clock = ~1.5 hours for the current scope;
+  if combined with the "full MCC backfill" below, larger.
+
+- **Deferred Session 77+: run MCC + 1,000-iter CIs on all 338
+  F1-having analysis cells** (noted 2026-04-24, mid-Session 77;
+  audit report at `/tmp/claude-1000/.../tasks/aea2ba1808115eb03.output`
+  while that session's context persists, otherwise re-audit). The
+  current "Option A" run covers the ~30 paper-citable cells; the
+  remaining ~300 are supplementary matrix cells across
+  phase3a-text-matrix (155 of 158), phase3a-image-matrix (91 of 96),
+  h8-v2 (36 of 43), h12-v2 (21 of 24), retest/phase3a-consensus (14
+  of 17), and h10 (1 of 5). Self-contained overnight/weekend task
+  on sapphire; estimated ~11 hours serial or ~1.5 hours at 8x
+  parallel. Would close the F1-without-MCC gap project-wide.
+
 ## User decisions (2026-04-21 end-of-session)
 
 Explicit user confirmations recorded here so the next session doesn't
