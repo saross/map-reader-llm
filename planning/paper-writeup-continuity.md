@@ -936,6 +936,103 @@ item's claim but warrant a polish pass before paper finalisation:
   committed so the permutation tests reference stable input
   GeoJSONs.
 
+- **Re-run canonical `verify_adversarial-text` on session-78-matrix
+  shared-crops** (added 2026-04-24 Session 78). The Session 78
+  verifier calibration matrix (commits `6d1cad27`, `88d6b55b`, Obs 277
+  in commit `303d4f21`) compared 7 verifier prompts × 2 candidate
+  pools. The canonical `verify_adversarial-text` baseline used
+  existing
+  `outputs/h11/pv-diag-384/flash-high-<pool>-n5/<pool>-t0.7/verified-v1-n5/probabilities.json`
+  files from prior sessions — NOT the session-78-matrix shared-crops
+  that the 6 alternative variants ran against. **Risk**: crop-for-crop
+  parity is not guaranteed. If the canonical's crops differ from the
+  shared-crops in any way (cropping geometry, PNG encoding, file
+  ordering), the canonical's probabilities are not strictly comparable
+  to the 6 alternatives at the candidate level. **Fix**: re-run
+  `verify_adversarial-text` on the session-78-matrix shared-crops
+  explicitly (same `shared-crops/candidate_manifest.json` that the 6
+  alternatives used). Application Programming Interface (API) spend
+  ~$8 at flex tier (2,017 image + 3,736 text candidates × Flash
+  minimal thinking text-only pricing). **Importance**: matters if the
+  prompt-invariance claim (Obs 277) is paper-load-bearing. At present
+  the claim is robust because all 6 alternatives degrade image-track
+  calibration regardless of crop set; canonical parity would tighten
+  this further. **Estimated effort**: ~30 min wall-clock + $8 API.
+  Requires explicit user approval per API Call Review Gate.
+
+- **Investigate `cand_01563` parser bug in verifier response
+  handling** (added 2026-04-24 Session 78). During Session 78 tile
+  recovery (agent `a24ab205daa5b0cd5`), candidate `cand_01563` in the
+  image-checklist cell failed deterministically with `'list' object
+  has no attribute 'get'` on every retry (3 attempts × 2 cleanup
+  rounds = 6 attempts, all same error). This is a **real code bug**
+  in the verifier response-handling pipeline (likely
+  `scripts/run_pv.py` or `scripts/lib_*.py`), triggered when the
+  Gemini API returns a particular JSON shape the parser doesn't
+  expect — specifically, the top-level parsed object is a `list`
+  rather than the expected `dict`, and a downstream `.get()` call
+  fails. **Scope of impact**: 1 candidate out of 5,753 in Session 78
+  (~0.017%). Calibration metrics are unaffected, but the bug is
+  latent and will recur on any candidate that elicits the same API
+  response shape. **Fix direction**: add a type-check on the parsed
+  JavaScript Object Notation (JSON) in `run_pv.py`'s response-handling
+  path; if it's a list, either unwrap the first element or log a
+  `parse_failure` with the raw response for later triage. Paired with
+  a unit test that exercises the list-shape branch. **Estimated
+  effort**: ~1 hour (identify the parser code, add type guard + test,
+  verify against cand_01563's stored response).
+
+- **Scope-version the `results/verifier-calibration-matrix/`
+  directory** (added 2026-04-24 Session 78). Current directory layout
+  is flat: `results/verifier-calibration-matrix/<pool>-<variant>/` and
+  `<pool>-<variant>-opt-20m.geojson` files directly under the top
+  directory. All 14 Session 78 cells share this flat root.
+  **Problem**: any future verifier calibration matrix (different
+  proposer pool, different scope, different buffer) will collide on
+  the same flat paths. **Fix**: rename the directory to
+  `results/verifier-calibration-matrix/session-78-flash-high-n5-t0.7-487tile/`
+  (or similar scope-encoding subdir name) and move all Session 78
+  artefacts under it. Update Obs 277 and any other doc that cites the
+  flat paths. **Importance**: housekeeping — prevents path collisions
+  in future sessions running similar matrices. Should be done before
+  Session 79 if another calibration matrix is planned. **Estimated
+  effort**: ~20 min (`git mv` + update any internal path references in
+  committed JSON files; no compute).
+
+- **Clean up exact-duplicate files in
+  `archive/pre-session-78-pull-2026-04-24/` on sapphire** (added
+  2026-04-24 Session 78). During Session 78 matrix launch (commit
+  `9ebe7346`), sapphire's working tree had 10 untracked files
+  (Session-78 outputs generated on sapphire and not yet registered
+  with git on that machine) that blocked `git pull`. These were
+  archived to `archive/pre-session-78-pull-2026-04-24/` on sapphire to
+  allow the pull to succeed. Every archived file is an **exact
+  duplicate** of a file already committed to `origin/main` in its
+  canonical location (Session 78 commits `aa36b638`, `4cc95e80`,
+  `651b8ab4`). Zero data loss; zero recovery value. **Fix**: once
+  verified safe, remove the archive dir on sapphire:
+  `ssh sapphire 'rm -rf ~/Code/map-reader-llm/archive/pre-session-78-pull-2026-04-24/'`.
+  Verification step: hash-compare every archived file against the
+  canonical path before removal
+  (`sha256sum <archived> <canonical>`); only remove if all hashes
+  match. **Importance**: ~1 MB of disk + avoids confusion about what
+  the archive represents. Low urgency. **Estimated effort**: ~10 min
+  (hash-compare script + `rm -rf`).
+
+- **Configure GitHub identity on sapphire** (added 2026-04-24
+  Session 78). During Session 78 Phase E commit step, `git commit` on
+  sapphire failed with "Author identity unknown" because sapphire has
+  no `user.email` / `user.name` / GitHub auth configured. Matrix
+  artefacts had to be `rsync`'d back to amd-tower and committed from
+  there. **Fix**: configure sapphire with `git config --global
+  user.email` / `user.name` matching Shawn's GitHub identity, plus
+  Secure Shell (SSH) key for `origin` push/pull access.
+  **Importance**: future long-running sapphire computes could commit
+  and push directly, eliminating the rsync-back step and reducing
+  handover friction between machines. Useful for any future
+  overnight-pipeline work. **Estimated effort**: ~10 min (user
+  action — configure git + add SSH key to GitHub account). One-off.
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
