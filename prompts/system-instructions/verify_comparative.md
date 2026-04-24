@@ -28,7 +28,7 @@ area.
 
 ## Your task
 
-Compare the candidate (the last image) against the four confirmed mound
+Compare the candidate (the last image) against the six confirmed mound
 examples. For each diagnostic feature, state whether the candidate matches:
 
 1. **Ray comparison**: Does the candidate have outward-radiating rays like the
