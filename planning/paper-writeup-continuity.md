@@ -850,6 +850,50 @@ item's claim but warrant a polish pass before paper finalisation:
   against `results/leaderboard/cells/`. Not urgent; before paper
   finalisation.
 
+- **Build per-architecture leaderboards** (added 2026-04-24
+  (Session 78); scheduled for 2026-04-25). The current leaderboard
+  at `results/paper-tables/leaderboard-20m-annotated.md` and
+  `results/leaderboard/era2/leaderboard_tiers_{20,30,50}m.{md,json}`
+  **mixes all architectures into one ranked table** — consensus-only
+  entries sit alongside Proposer + Verifier (PV) entries with no
+  separation. This caused the Session 78 Q2 comparability bug where
+  GS-v2 at PV-F1 = 0.854 was inserted into a consensus-only tier
+  list (commit `7ab7d7fa`); that bug would not have occurred with
+  per-architecture tables. **Six distinct architectures** exist in
+  the project with completed evaluations but no dedicated tier
+  tables: (1) N = 1 single-pass (raw); (2) consensus-only (greedy
+  voting); (3) PV (Proposer + Verifier, greedy) — the canonical
+  paper-headline pipeline; (4) consensus + Weighted Box Fusion
+  (WBF); (5) consensus + Dawid–Skene (probabilistic); (6)
+  single-pass + PV. The tier JSON schema **already has a `category`
+  field** (currently populated as `"consensus"` for all Era 2
+  entries). Re-purposing it to distinguish `consensus` / `pv` /
+  `single-pass` / `wbf` / `ds` would be the cleanest structural fix
+  — the machinery is there, just unused. The existing planning doc
+  `planning/leaderboard-construction-plan.md` treats architecture as
+  a **metadata field**, not a **leaderboard-stratification
+  dimension**; that design decision produced the current
+  mixed-architecture tables and should be revisited. **Recommended
+  minimal set** for the paper: (1) consensus-only tier table (20 /
+  30 / 40 / 50 m) — extractable from current mixed JSON, near-zero
+  compute; (2) PV tier table (20 / 30 / 40 / 50 m) — 30 cells
+  already scored, some materialised at
+  `results/leaderboard/era2/pv-materialised/`, image PV anchor being
+  established in Session 78 (commit pending); (3) single-pass
+  baseline tier table — 28 raw N = 1 conditions would need uniform
+  scoring (~1 – 2 hours local CPU); (4) [optional] cross-architecture
+  comparison matrix at 20 m — F1 of same model / track across all
+  six architectures, high-level story, ~30 min post-hoc.
+  **Estimated effort**: 1 – 3 hours total for the three core tables;
+  entirely local compute (no API spend). **Recommended fix**: (a)
+  extend `scripts/build_tiered_leaderboard.py` to stratify by the
+  existing `category` field, emitting one tier table per
+  architecture; (b) re-run it to generate per-architecture tables;
+  (c) update `leaderboard-20m-annotated.md` to cite both combined
+  and per-architecture tables; (d) revisit
+  `planning/leaderboard-construction-plan.md` to formalise
+  architecture as a leaderboard-stratification dimension.
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
