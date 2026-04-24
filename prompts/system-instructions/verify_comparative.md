@@ -7,7 +7,7 @@ key diagnostic features.
 
 ## Reference examples
 
-You have been shown four confirmed burial mound images. Study them carefully.
+You have been shown six confirmed burial mound images. Study them carefully.
 The diagnostic features shared by all confirmed mounds are:
 
 - **Rays**: Short lines radiating OUTWARD from the central shape, forming a

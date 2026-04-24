@@ -1,0 +1,26 @@
+{
+    "version": "verify_comparative",
+    "description": "Two-Stage Verifier (Stage 2). Comparative verification — match candidate to 6 confirmed mound examples feature-by-feature.",
+    "hypothesis": "H2",
+    "model": "gemini-3-flash",
+    "instruction_file": "verify_comparative.md",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "_config_notes": {
+        "source": "Session 78 verifier calibration matrix. Comparative variant using the canonical 6-example library.",
+        "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
+    },
+    "examples": [
+        {"path": "neutral-naming/example_01.png", "label": "Positive: Burial Mound (Kurgan)", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_02.png", "label": "Positive: Settlement Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_03.png", "label": "Positive: Triangulation Point ON Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_04.png", "label": "Positive: Benchmark ON Mound", "category": "canonical_positive"},
+        {"path": "neutral-naming/example_09.png", "label": "Negative: Triangulation Point ALONE", "category": "canonical_negative"},
+        {"path": "neutral-naming/example_10.png", "label": "Negative: Benchmark ALONE", "category": "canonical_negative"}
+    ],
+    "crop_label": "Now classify the candidate symbol at the centre of this crop:",
+    "_library_note": "6-example library matching Phase 3d run_h2_pilot.py VERIFIER_EXAMPLES."
+}
