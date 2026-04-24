@@ -100,8 +100,18 @@ def materialise(
             "properties": new_props,
         })
 
+    # Explicit CRS header: the proposer consensus GeoJSONs contain UTM
+    # zone 35N coordinates (EPSG:32635) but do not declare a CRS in the
+    # file header. Per RFC 7946 the default CRS is WGS84 (EPSG:4326), so
+    # geopandas assigns 4326 on load and downstream reprojection
+    # silently produces garbage geometries. Declaring the CRS here
+    # propagates the correct projection into every downstream loader.
     out_fc = {
         "type": "FeatureCollection",
+        "crs": {
+            "type": "name",
+            "properties": {"name": "urn:ogc:def:crs:EPSG::32635"},
+        },
         "features": kept,
     }
     output.parent.mkdir(parents=True, exist_ok=True)
