@@ -113,6 +113,22 @@ Both text tracks **plateau strongly above 50 m**: text-HIGH gains only +0.007 F1
 
 **Source**: `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` and `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json`.
 
+### 3.6 Tile-level MCC (buffer-independent)
+
+Tile-level classification metrics complement mound-level F1: they answer "does each 384 px tile contain *any* mound?" rather than "is each mound matched?". MCC is buffer-independent because it does not depend on centroid-to-centroid matching (pre-registration §4.2). 1,000-iter bootstrap CIs, seed 42.
+
+| Track | MCC | MCC 95% CI | Sensitivity | Specificity | TP / TN / FP / FN |
+|-------|:---:|:---:|:---:|:---:|:---:|
+| image | **0.691** | [0.675, 0.706] | 0.707 | 0.948 | 2,390 / 4,891 / 270 / 990 |
+| text-HIGH | 0.647 | [0.630, 0.663] | 0.643 | 0.953 | 2,172 / 4,920 / 241 / 1,208 |
+| text-MIN | 0.625 | [0.610, 0.641] | 0.613 | 0.955 | 2,072 / 4,927 / 234 / 1,308 |
+
+**Tile-level MCC ordering inverts the mound-level F1 ordering.** Image leads on tile-level MCC (0.691) while text-HIGH leads on mound-level corrected F1 (0.826). Image's tile-level sensitivity (0.707) is notably higher than the text tracks' (0.643 / 0.613) — image catches a higher fraction of mound-bearing tiles, then localises within them imprecisely (the source of its tight-buffer F1 penalty). Text tracks achieve marginally higher tile-level specificity (≈0.95 vs 0.95) but sacrifice sensitivity. The cross-metric tension is the same pattern flagged in the leaderboard-20m-annotated Tier 5 analysis (row #15 "Image baseline + PV" has the highest tile-level MCC of any condition, 0.877, alongside low mound-level F1=0.717 at 20 m).
+
+**Paper-framing implication**: a track-selection recommendation based on mound-level F1 alone would pick text-HIGH; a recommendation based on tile-level coverage (e.g. "flag every mound-bearing tile for human inspection") would pick image. Both are defensible and serve different downstream use cases.
+
+**Source**: `outputs/55maps-{image,text-high,text-min}-generalisation/full-buffer-eval/evaluation.json` → `summary.tile_classification`.
+
 ## 4. Corrected-F1 availability
 
 **Both the image and text-HIGH tracks have now been human-reviewed** (text-HIGH human review completed 2026-04-24, Session 78; corrected-F1 artefact at `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`). Only text-MIN remains unreviewed.
