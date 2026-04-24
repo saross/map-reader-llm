@@ -65,6 +65,8 @@ The `gold-standard-v2` tree is the most recent clean run at this exact config an
 
 ## 6. Comparison to 55-map text-HIGH curve
 
+**Corpus disjointness**: the 4 gold-standard maps and the 55 generalisation maps are **disjoint sheet-sets** (zero map-sheet intersection; confirmed 2026-04-24 via `inputs/vectors/bounds/384/*.geojson` + `inputs/vectors/references/*.geojson` audit). Total project coverage is 59 sheets (4 GS + 55 generalisation). The curve-shift comparison below therefore compares pipeline F1 on two independent sheet populations; it cannot be confounded by shared-sheet contamination between the curator-GT and student-GT references. See `results/evaluation-scopes.md` §11.
+
 User-supplied 55-map text-HIGH F1 values at 20 / 30 / 40 / 50 m: 0.623 / 0.753 / 0.783 / 0.788.
 
 | Buffer | Gold-std 4 maps (569 mounds, curator GT) | 55-map student GT | Gap |

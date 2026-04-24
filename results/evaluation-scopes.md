@@ -170,3 +170,25 @@ The nested-scope framework makes cross-era extrapolation **defensible rather tha
 - **Toolchain**: GeoPandas ≥ 0.14 (shapely 2.x), Python ≥ 3.11. Project `requirements.txt` at HEAD pins the compatible versions.
 - **Re-run expected cost**: negligible (< 5 seconds; six bounds polygons, 569 points, one sjoin per scope).
 - **Note**: if the paper finalisation step warrants a permanent script, it would be a ~30-line helper under `scripts/` wrapping steps 1–4. Not required for paper citation; the operation and inputs are fully specified above.
+
+## 11. 55-map generalisation scope (disjoint from Era 1/2/3)
+
+The 55-map generalisation corpus is a **separate evaluation scope**, disjoint from the 4-map gold-standard corpus that underlies Era 1 / Era 2 / Era 3 documented in §§2–7 above.
+
+| Property | Value |
+|----------|-------|
+| Map sheets | **55** (e.g., K-35-042-3, K-35-050-4, …, K-35-077-4) |
+| Intersection with 4-map GS set | **0** (disjoint) |
+| Total project map-sheet coverage | **59** (55 generalisation + 4 gold-standard) |
+| Tile grid | 384 px, Era-2 style evaluation bounds |
+| Evaluable tiles | **8,541** |
+| Ground truth | Student-digitised (not curator-annotated); **4,744 mounds** |
+| GT reference file | `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` |
+| Bounds file | `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` |
+| Area covered | ~31,818 sq km |
+
+**Disjoint by design**: the 55-map corpus was selected to exclude the 4 gold-standard sheets so that any generalisation claim is against sheets the pipeline was never calibrated on. Per-candidate human review was performed only on the image track's VLM-only candidates (1,028 reviewed); the text-HIGH and text-MIN tracks were not human-reviewed, so their corrected F1 is not available.
+
+**Ground-truth quality note**: the 55-map student-GT has position noise empirically quantified at ~25–35 m (4–5 px at 384-px tile scale) — see `results/gold-standard-extended-buffer-sweep/extended-buffer-report.md` §6 for the curve-shift argument. The 4-map curator-GT has materially smaller position noise, visible as the F1-curve plateau at 25 m on the 4-map set vs > 50 m on the 55-map set.
+
+**Paper-citation implication**: any cross-corpus F1 comparison (e.g., "55-map text-HIGH 0.788 at 50 m vs 4-map text-HIGH 0.826 at 50 m") is across **disjoint** sheet sets — so the comparison tests generalisation from calibration sheets (GS) to held-out sheets (55-map), not within-sheet variation.

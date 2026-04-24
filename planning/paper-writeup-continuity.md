@@ -632,6 +632,7 @@ Paper will cite these. All verified 2026-04-21:
 
 | Claim | Value | Source |
 |---|---|---|
+| Total project map-sheet coverage | **59 sheets** = 4 gold-standard (K-35-052-4, K-35-053-3, K-35-062-2, K-35-078-1) + 55 generalisation (disjoint; 0 intersection) | `results/evaluation-scopes.md` §11; `inputs/vectors/bounds/384/*.geojson` audit 2026-04-24 |
 | Detection F1 headline (487-tile matrix, K=30 text-HIGH + PV) | **0.904** [0.878, 0.928] @ 50 m | `results/paper-tables/metrics_master.json` |
 | Detection F1 K=5 companion (487-tile matrix) | 0.891 [0.863, 0.916] @ 50 m | same |
 | Corrected F1 lower bound (55-map, human-reviewed) | ≥ **0.830** @ 50 m | `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json` |

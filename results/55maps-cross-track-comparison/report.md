@@ -30,6 +30,8 @@ The three 55-map generalisation tracks share the same evaluation scope (8,541 ti
 
 ## 2. Run metadata (the three tracks are paired on scope, not on modality)
 
+**Corpus scope**: the 55-map set is **disjoint** from the 4-map gold-standard Era-3 set used for hypothesis-testing analyses (zero map-sheet intersection; 59 sheets total project-wide). See `results/evaluation-scopes.md` §11 for the full scope definition.
+
 | Track | Proposer | Verifier | Thinking | K | vote_t | PV | Tile set | Map count |
 |-------|----------|----------|----------|---|-------:|-----|---------|----------:|
 | image | gemini-3-flash-preview | gemini-3-flash | HIGH | 5 | **3** | adversarial v1 | 8,541 @ 384 px Era 2 | 55 |

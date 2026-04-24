@@ -250,7 +250,11 @@ AUC = 0.500.
   gold-standard (`gold-standard-extended-buffer-sweep/
   extended-buffer-report.md`) plateaus at 25 m (F1 = 0.822); the
   55-map student-GT F1 curve has not plateaued by 50 m (F1 = 0.788
-  at 50 m). The ~25–35 m rightward shift is the empirical signature
+  at 50 m). **The two corpora are disjoint** (4 GS sheets vs 55
+  generalisation sheets; zero map-sheet intersection; 59 total
+  project sheets), so the curve-shift comparison is across
+  independent sheet populations — it cannot be a shared-sheet
+  contamination artefact. The ~25–35 m rightward shift is the empirical signature
   of student-annotator position jitter on the 55-map GT — 4–5 px
   (≈ 20–25 m at the 384-px tile scale) of centroid noise. This is
   additive to the 45.9 % phantom-TP rate from per-candidate review;
