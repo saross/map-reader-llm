@@ -1,0 +1,124 @@
+{
+  "run_id": "4187e42f-2dac-46fd-a0db-64259cfcc5c1",
+  "timestamp": {
+    "start": "2026-04-25T05:35:03.904743+00:00",
+    "end": "2026-04-25T05:42:49.186189+00:00",
+    "duration_seconds": 465.281446
+  },
+  "environment": {
+    "git_commit": "08b7bdad3f47dd844fd99730da170f0f857356b9",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_brief",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "verify_brief.md",
+    "system_instruction_hash": "ded339c98c8fd91849d38fd81cceb4bd13a267d8982db208fcc13ee294b935ba",
+    "system_instruction_text": "# Two-Stage Detection: Verifier\n\nClassify whether the candidate symbol at the centre of this crop is a burial mound.\n\n## Diagnostic Criteria\n\nMound symbols have **rays (hachures) radiating OUTWARD** from a central shape (\"sunburst\" pattern). This indicates elevated terrain.\n\n**Key tests:**\n\n1. Are there rays radiating from a central point? No rays \u2192 not a mound.\n2. Do rays point OUTWARD (mound) or are there marks pointing INWARD (not a mound)? Inward marks may appear in orange-brown, the same colour family as mound symbols.\n3. Check central shape: circle/oval (plain mound), triangle (triangulation on mound), square (benchmark on mound).\n4. Check colour: orange-brown (plain mound) or black (survey marker on mound).\n5. Is the shape round or ovoid in mound-like colours but without outward-radiating rays? Dark marks within the shape rather than extending outward \u2192 not a mound.\n6. Does nearby Cyrillic text (e.g., \"\u043c\u043e\u0433\u0438\u043b\u0430\", \"\u043a\u0443\u0440\u0433.\") appear to confirm the candidate? Text does not confirm or deny \u2014 the ray pattern is the sole criterion.\n\nIf reference examples are provided, compare the candidate against them. Each reference image is centred on the feature being labelled.\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"reasoning\": \"Brief description of visual features observed.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: Clear sunburst pattern with outward-radiating rays\n- **0.6-0.8**: Likely mound, some ambiguity or occlusion\n- **0.3-0.5**: Uncertain, could be mound or similar feature\n- **0.0-0.2**: Not a mound (no rays, wrong direction, noise, isolated marker)\n",
+    "library_hash": "9c649d290c359e85fe98f1608ba8eb604edf2c28a361ba8461ac0c47022a08f3",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 6,
+    "full_config_snapshot": {
+      "version": "verify_brief",
+      "description": "Two-Stage Verifier (Stage 2). Standard diagnostic verification using brief text.",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_brief.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "_config_notes": {
+        "source": "Phase 3d pilot (Session 43). Standard verifier achieved F1=0.706 (Track 1) / 0.768 (Track 2) at T=0.0.",
+        "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
+      },
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive: Burial Mound (Kurgan)",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive: Settlement Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive: Triangulation Point ON Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive: Benchmark ON Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative: Triangulation Point ALONE",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative: Benchmark ALONE",
+          "category": "canonical_negative"
+        }
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:",
+      "_library_note": "6-example library matching Phase 3d run_h2_pilot.py VERIFIER_EXAMPLES."
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 3736
+    },
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 30205560,
+    "total_output_tokens": 259970,
+    "total_cached_tokens": 157469,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 30465530,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 30205560,
+        "output_tokens": 259970,
+        "total_tokens": 30465530,
+        "request_count": 3736
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 15.10278,
+    "output_cost_usd": 0.77991,
+    "total_cost_usd": 15.88269,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  }
+}
