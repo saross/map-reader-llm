@@ -1,0 +1,183 @@
+[2026-04-25T05:24:40Z] ==================================================================
+[2026-04-25T05:24:40Z] Session 78 Verifier Calibration Matrix — RE-RUN (Phase A only)
+[2026-04-25T05:24:40Z] ==================================================================
+[2026-04-25T05:24:40Z] Repo commit: 710af7f95a1fca664b9307ca8296ecdcd6c38ac0
+[2026-04-25T05:24:40Z] Python:      /home/shawn/Code/map-reader-llm/.venv/bin/python
+[2026-04-25T05:24:40Z] Workers:     35
+[2026-04-25T05:24:40Z] Tier:        flex
+[2026-04-25T05:24:40Z] Variants:    verify_adversarial verify_adversarial-text verify_brief verify_brief-text verify_checklist verify_checklist-text verify_comparative
+[2026-04-25T05:24:40Z] 
+[2026-04-25T05:24:40Z] Pre-flight input checks passed.
+[2026-04-25T05:24:40Z] 
+[2026-04-25T05:24:40Z] ### PHASE A — VERIFIER API RUNS (RE-RUN) ###
+[2026-04-25T05:24:40Z] ----------------------------------------------------------------
+[2026-04-25T05:24:40Z] Phase A — image pool — launching 7 variants concurrently
+[2026-04-25T05:24:40Z] ----------------------------------------------------------------
+[2026-04-25T05:24:40Z]   launching: image / verify_adversarial -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial
+[2026-04-25T05:24:40Z]   launching: image / verify_adversarial-text -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text
+[2026-04-25T05:24:40Z]   launching: image / verify_brief -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief
+[2026-04-25T05:24:40Z]   launching: image / verify_brief-text -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text
+[2026-04-25T05:24:40Z]   launching: image / verify_checklist -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist
+[2026-04-25T05:24:40Z]   launching: image / verify_checklist-text -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text
+[2026-04-25T05:24:40Z]   launching: image / verify_comparative -> outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative
+[2026-04-25T05:24:40Z]   all 7 variants launched; waiting on pool...
+[2026-04-25T05:29:01Z]   [OK] image-adversarial (pid=2799387) completed
+[2026-04-25T05:29:01Z]   image-adversarial: 6 entries, 0 failed
+[2026-04-25T05:29:02Z]   cost: image-adversarial = $0.0000 | cumulative total = $0.0000
+[main e71fb8e4] data(s78-rerun): Phase A — adversarial on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12234 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json
+To github.com:saross/map-reader-llm.git
+   710af7f9..e71fb8e4  main -> main
+[2026-04-25T05:29:06Z]   image-adversarial: committed + pushed
+[2026-04-25T05:34:38Z]   [OK] image-adversarial-text (pid=2799390) completed
+[2026-04-25T05:34:38Z]   image-adversarial-text: 6 entries, 0 failed
+[2026-04-25T05:34:38Z]   cost: image-adversarial-text = $0.0000 | cumulative total = $0.0000
+[main 35b380a6] data(s78-rerun): Phase A — adversarial-text on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12057 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json
+To github.com:saross/map-reader-llm.git
+   e71fb8e4..35b380a6  main -> main
+[2026-04-25T05:34:42Z]   image-adversarial-text: committed + pushed
+[2026-04-25T05:34:42Z]   [OK] image-brief (pid=2799393) completed
+[2026-04-25T05:34:42Z]   image-brief: 6 entries, 0 failed
+[2026-04-25T05:34:42Z]   cost: image-brief = $0.0000 | cumulative total = $0.0000
+[main 6e82c20c] data(s78-rerun): Phase A — brief on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12235 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json
+To github.com:saross/map-reader-llm.git
+   35b380a6..6e82c20c  main -> main
+[2026-04-25T05:34:46Z]   image-brief: committed + pushed
+[2026-04-25T05:34:46Z]   [OK] image-brief-text (pid=2799396) completed
+[2026-04-25T05:34:46Z]   image-brief-text: 6 entries, 0 failed
+[2026-04-25T05:34:46Z]   cost: image-brief-text = $0.0000 | cumulative total = $0.0000
+[main e85c6290] data(s78-rerun): Phase A — brief-text on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12098 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json
+To github.com:saross/map-reader-llm.git
+   6e82c20c..e85c6290  main -> main
+[2026-04-25T05:34:50Z]   image-brief-text: committed + pushed
+[2026-04-25T05:34:50Z]   [OK] image-checklist (pid=2799399) completed
+[2026-04-25T05:34:50Z]   image-checklist: 6 entries, 0 failed
+[2026-04-25T05:34:50Z]   cost: image-checklist = $0.0000 | cumulative total = $0.0000
+[main 400e6fbc] data(s78-rerun): Phase A — checklist on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12229 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json
+To github.com:saross/map-reader-llm.git
+   e85c6290..400e6fbc  main -> main
+[2026-04-25T05:34:54Z]   image-checklist: committed + pushed
+[2026-04-25T05:34:54Z]   [OK] image-checklist-text (pid=2799402) completed
+[2026-04-25T05:34:54Z]   image-checklist-text: 6 entries, 0 failed
+[2026-04-25T05:34:54Z]   cost: image-checklist-text = $0.0000 | cumulative total = $0.0000
+[main f36e7bef] data(s78-rerun): Phase A — checklist-text on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12098 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json
+To github.com:saross/map-reader-llm.git
+   400e6fbc..f36e7bef  main -> main
+[2026-04-25T05:34:58Z]   image-checklist-text: committed + pushed
+[2026-04-25T05:34:58Z]   [OK] image-comparative (pid=2799405) completed
+[2026-04-25T05:34:58Z]   image-comparative: 6 entries, 0 failed
+[2026-04-25T05:34:58Z]   cost: image-comparative = $0.0000 | cumulative total = $0.0000
+[main d8da5944] data(s78-rerun): Phase A — comparative on image pool (6 candidates scored, 0 failed)
+ 2 files changed, 12235 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json
+To github.com:saross/map-reader-llm.git
+   f36e7bef..d8da5944  main -> main
+[2026-04-25T05:35:01Z]   image-comparative: committed + pushed
+[2026-04-25T05:35:01Z] Phase A image pool done in 621s | cumulative total = $0.0000
+[2026-04-25T05:35:01Z] 
+[2026-04-25T05:35:01Z] ----------------------------------------------------------------
+[2026-04-25T05:35:02Z] Phase A — text pool — launching 7 variants concurrently
+[2026-04-25T05:35:02Z] ----------------------------------------------------------------
+[2026-04-25T05:35:02Z]   launching: text / verify_adversarial -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial
+[2026-04-25T05:35:02Z]   launching: text / verify_adversarial-text -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text
+[2026-04-25T05:35:02Z]   launching: text / verify_brief -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief
+[2026-04-25T05:35:02Z]   launching: text / verify_brief-text -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text
+[2026-04-25T05:35:02Z]   launching: text / verify_checklist -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist
+[2026-04-25T05:35:02Z]   launching: text / verify_checklist-text -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text
+[2026-04-25T05:35:02Z]   launching: text / verify_comparative -> outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative
+[2026-04-25T05:35:02Z]   all 7 variants launched; waiting on pool...
+[2026-04-25T05:42:50Z]   [OK] text-adversarial (pid=2821496) completed
+[2026-04-25T05:42:50Z]   text-adversarial: 6 entries, 0 failed
+[2026-04-25T05:42:50Z]   cost: text-adversarial = $0.0000 | cumulative total = $0.0000
+[main 50e556b7] data(s78-rerun): Phase A — adversarial on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22548 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json
+To github.com:saross/map-reader-llm.git
+   08b7bdad..50e556b7  main -> main
+[2026-04-25T05:42:54Z]   text-adversarial: committed + pushed
+[2026-04-25T05:52:08Z]   [OK] text-adversarial-text (pid=2821499) completed
+[2026-04-25T05:52:09Z]   text-adversarial-text: 6 entries, 0 failed
+[2026-04-25T05:52:09Z]   cost: text-adversarial-text = $0.0000 | cumulative total = $0.0000
+[main 96a6ac23] data(s78-rerun): Phase A — adversarial-text on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22281 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json
+To github.com:saross/map-reader-llm.git
+   50e556b7..96a6ac23  main -> main
+[2026-04-25T05:52:13Z]   text-adversarial-text: committed + pushed
+[2026-04-25T05:52:13Z]   [OK] text-brief (pid=2821502) completed
+[2026-04-25T05:52:13Z]   text-brief: 6 entries, 0 failed
+[2026-04-25T05:52:13Z]   cost: text-brief = $0.0000 | cumulative total = $0.0000
+[main ddc6525e] data(s78-rerun): Phase A — brief on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22549 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json
+To github.com:saross/map-reader-llm.git
+   96a6ac23..ddc6525e  main -> main
+[2026-04-25T05:52:17Z]   text-brief: committed + pushed
+[2026-04-25T05:52:17Z]   [OK] text-brief-text (pid=2821505) completed
+[2026-04-25T05:52:17Z]   text-brief-text: 6 entries, 0 failed
+[2026-04-25T05:52:17Z]   cost: text-brief-text = $0.0000 | cumulative total = $0.0000
+[main bd0a4d09] data(s78-rerun): Phase A — brief-text on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22364 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json
+To github.com:saross/map-reader-llm.git
+   ddc6525e..bd0a4d09  main -> main
+[2026-04-25T05:52:21Z]   text-brief-text: committed + pushed
+[2026-04-25T05:52:21Z]   [OK] text-checklist (pid=2821508) completed
+[2026-04-25T05:52:21Z]   text-checklist: 6 entries, 0 failed
+[2026-04-25T05:52:21Z]   cost: text-checklist = $0.0000 | cumulative total = $0.0000
+[main d9ef23e8] data(s78-rerun): Phase A — checklist on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22548 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json
+To github.com:saross/map-reader-llm.git
+   bd0a4d09..d9ef23e8  main -> main
+[2026-04-25T05:52:25Z]   text-checklist: committed + pushed
+[2026-04-25T05:52:25Z]   [OK] text-checklist-text (pid=2821511) completed
+[2026-04-25T05:52:25Z]   text-checklist-text: 6 entries, 0 failed
+[2026-04-25T05:52:25Z]   cost: text-checklist-text = $0.0000 | cumulative total = $0.0000
+[main 5cee158b] data(s78-rerun): Phase A — checklist-text on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22400 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json
+To github.com:saross/map-reader-llm.git
+   d9ef23e8..5cee158b  main -> main
+[2026-04-25T05:52:29Z]   text-checklist-text: committed + pushed
+[2026-04-25T05:52:29Z]   [OK] text-comparative (pid=2821514) completed
+[2026-04-25T05:52:30Z]   text-comparative: 6 entries, 0 failed
+[2026-04-25T05:52:30Z]   cost: text-comparative = $0.0000 | cumulative total = $0.0000
+[main ac0b9f96] data(s78-rerun): Phase A — comparative on text pool (6 candidates scored, 0 failed)
+ 2 files changed, 22549 insertions(+)
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/probabilities.json
+ create mode 100644 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json
+To github.com:saross/map-reader-llm.git
+   5cee158b..ac0b9f96  main -> main
+[2026-04-25T05:52:34Z]   text-comparative: committed + pushed
+[2026-04-25T05:52:34Z] Phase A text pool done in 1052s | cumulative total = $0.0000
+[2026-04-25T05:52:34Z] 
+[2026-04-25T05:52:34Z] 
+[2026-04-25T05:52:34Z] ==================================================================
+[2026-04-25T05:52:34Z] Session 78 Phase A re-run complete.
+[2026-04-25T05:52:34Z] Cumulative cost (sum of run.meta.json total_cost_usd): $0.0000
+[2026-04-25T05:52:34Z] ==================================================================
