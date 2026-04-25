@@ -99,3 +99,6 @@ Still occassional confabulations.
 
   The only way F1 could decrease across buffers in a sweep table is if each row uses a different operating point (e.g., each buffer gets its own optimal vote_t × prob_t). In this case the sweep picked the same (vote_t=3, prob_t=0.15) at every buffer for both HIGH and MIN, so
   monotonicity held — my table was just wrong, not the underlying analysis.
+
+  Observation 23:
+  Severe confabulation problem after 4.7 dropped. Repeated, serious misrepresentations. Diagnosed as context contamination, spurred a 'prune the context surface to mitigate confabulation' pass with CC in a fresh session. Testing now. 
