@@ -454,6 +454,60 @@ def compute_per_tile_tp_fp_fn(
     return pd.DataFrame(rows)
 
 
+def compute_per_tile_classification(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> pd.DataFrame:
+    """Pre-compute per-tile binary classification (TP, TN, FP, FN) for MCC.
+
+    Each tile is classified as one of {TP, TN, FP, FN} based on whether it
+    contains any reference mounds and whether the model produced any
+    detections in that tile. Returns a per-tile DataFrame with one-hot
+    encoded columns ``tp``, ``tn``, ``fp``, ``fn`` (each 0 or 1, exactly
+    one is 1 per row), suitable for use in paired permutation tests of
+    Matthews Correlation Coefficient (MCC).
+
+    Classification matrix (matches calculate_tile_classification):
+        - TP: tile has refs AND has detections
+        - TN: tile has neither refs nor detections
+        - FP: tile has detections but no refs
+        - FN: tile has refs but no detections
+
+    Args:
+        gdf_det: GeoDataFrame of detections (must have ``source_tile``
+            column).
+        gdf_ref: GeoDataFrame of ground-truth references.
+        gdf_bounds: GeoDataFrame of tile boundaries (must have
+            ``tile_name`` column).
+
+    Returns:
+        DataFrame with columns [tile_name, tp, tn, fp, fn]. Exactly one
+        of {tp, tn, fp, fn} is 1 per row; the other three are 0.
+
+    Notes:
+        Sums over all rows reproduce the aggregate (TP, TN, FP, FN)
+        returned by ``calculate_tile_classification()``. The per-tile
+        representation is required for tile-swap permutation tests of
+        MCC, where each tile's classification (one of the 4 cells) is
+        independently swapped between two conditions.
+    """
+    classification_result = calculate_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds,
+    )
+    rows = []
+    for detail in classification_result.get("tile_details", []):
+        cls = detail["classification"]
+        rows.append({
+            "tile_name": detail["tile_name"],
+            "tp": 1 if cls == "TP" else 0,
+            "tn": 1 if cls == "TN" else 0,
+            "fp": 1 if cls == "FP" else 0,
+            "fn": 1 if cls == "FN" else 0,
+        })
+    return pd.DataFrame(rows)
+
+
 def aggregate_tile_metrics(
     tile_metrics: pd.DataFrame,
     sample_tiles: np.ndarray,

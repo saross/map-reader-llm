@@ -79,6 +79,7 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402
+    compute_per_tile_classification,
     compute_per_tile_tp_fp_fn,
 )
 
@@ -194,6 +195,16 @@ def load_geojson_detections(
     If absent, the script will attempt to assign tiles via spatial join
     with the evaluation bounds.
 
+    Single-pass+PV repair: when the file has a ``verified`` column and
+    contains coordinates that look projected (UTM-magnitude — values
+    in the hundreds of thousands rather than degrees), filter to
+    ``verified=True`` and override the CRS to EPSG:32635 instead of
+    transforming. This repairs the
+    ``outputs/h11/proposer-verifier-384/verified-*.geojson`` files
+    which lack a CRS declaration but carry already-projected
+    coordinates. See ``build_tiered_leaderboard._evaluate_single_threshold``
+    for the matching logic on the F1 evaluation path.
+
     Args:
         geojson_path: Path to detection GeoJSON file.
 
@@ -201,7 +212,27 @@ def load_geojson_detections(
         GeoDataFrame with source_tile and geometry columns.
     """
     gdf = gpd.read_file(geojson_path)
-    if gdf.crs is None:
+
+    # Single-pass+PV repair: detect via the ``verified`` column and
+    # UTM-magnitude coordinates (any X coord > 1e5 with EPSG:4326
+    # default is the signature of a UTM-mislabelled file).
+    repair_pv = (
+        not gdf.empty
+        and "verified" in gdf.columns
+        and gdf.crs is not None
+        and gdf.crs.to_epsg() == 4326
+        and gdf.geometry.iloc[0].centroid.x > 1e5
+    )
+    if repair_pv:
+        gdf = gdf.set_crs(_TARGET_CRS, allow_override=True)
+        gdf = gdf[gdf["verified"] == True].copy()  # noqa: E712
+        gdf["geometry"] = gdf.geometry.centroid
+        logger.info(
+            "PV repair: %d verified detections retained from %s "
+            "(CRS overridden to EPSG:32635, polygons → centroids)",
+            len(gdf), geojson_path.name,
+        )
+    elif gdf.crs is None:
         gdf = gdf.set_crs(_TARGET_CRS)
     elif gdf.crs.to_epsg() != 32635:
         gdf = gdf.to_crs(_TARGET_CRS)
@@ -448,6 +479,205 @@ def run_permutation_test(
         },
         "permutation_test": {
             "observed_f1_diff": round(observed_diff, 6),
+            "p_value": round(p_value, 4),
+            "n_permutations": n_permutations,
+            "n_tiles": n_tiles,
+            "wins_a": wins,
+            "losses_a": losses,
+            "ties": ties,
+            "null_distribution": {
+                "mean": round(float(np.mean(null_diffs)), 6),
+                "std": round(float(np.std(null_diffs)), 6),
+                "percentile_2.5": round(
+                    float(np.percentile(null_diffs, 2.5)), 6,
+                ),
+                "percentile_97.5": round(
+                    float(np.percentile(null_diffs, 97.5)), 6,
+                ),
+            },
+        },
+        "per_tile": per_tile_details,
+    }
+
+
+# -----------------------------------------------
+# MCC tile-classification permutation test
+# -----------------------------------------------
+
+def _compute_mcc(tp: int, tn: int, fp: int, fn: int) -> float:
+    """Compute Matthews Correlation Coefficient from a 2x2 confusion table.
+
+    Returns 0.0 when the denominator is zero (any row/column sum is
+    zero — the standard convention used by ``sklearn.metrics``).
+
+    Args:
+        tp: True positive count.
+        tn: True negative count.
+        fp: False positive count.
+        fn: False negative count.
+
+    Returns:
+        MCC in [-1.0, 1.0], or 0.0 when undefined (zero denominator).
+    """
+    numerator = (tp * tn) - (fp * fn)
+    denom_parts = (tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)
+    if denom_parts <= 0:
+        return 0.0
+    return float(numerator / np.sqrt(denom_parts))
+
+
+def run_permutation_test_mcc(
+    gdf_a: gpd.GeoDataFrame,
+    gdf_b: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    n_permutations: int = 10_000,
+    seed: int = 42,
+) -> dict:
+    """Tile-classification paired permutation test for MCC.
+
+    Per-tile classification is one of {TP, TN, FP, FN} (binary
+    presence-of-detection vs presence-of-reference). For each tile, the
+    classification 4-tuple is independently swapped between conditions
+    A and B with probability 0.5; the global MCC is recomputed each
+    iteration to build a null distribution of ΔMCC.
+
+    Important — buffer-independence: tile classification depends on
+    ``gdf_det['source_tile']`` and ``gdf_ref.intersects(tile_geom)``
+    only — there is no spatial buffer in the matching. MCC is
+    therefore buffer-invariant in this codebase. The function does
+    not take a buffer argument; callers should produce a single tier
+    table per stratum (the same MCC tiering, repeated across the 5
+    F1-buffer files for symmetry with F1).
+
+    Args:
+        gdf_a: Detection GeoDataFrame for condition A (must have
+            ``source_tile``).
+        gdf_b: Detection GeoDataFrame for condition B (must have
+            ``source_tile``).
+        gdf_ref: Ground-truth reference GeoDataFrame.
+        gdf_bounds: Evaluation tile boundaries (must have
+            ``tile_name``).
+        n_permutations: Number of permutation iterations.
+        seed: Random seed for reproducibility.
+
+    Returns:
+        Dict with observed MCC for each condition, ΔMCC, two-sided
+        p-value, win/loss/tie counts, and null distribution
+        statistics. Schema matches ``run_permutation_test`` (the F1
+        sibling) but with ``observed_mcc_diff`` in place of
+        ``observed_f1_diff``.
+    """
+    # Pre-compute per-tile (TP, TN, FP, FN) one-hot encoding for both
+    # conditions. Each tile contributes exactly one 1 to one of the
+    # four columns and 0 to the others.
+    pt_a = compute_per_tile_classification(gdf_a, gdf_ref, gdf_bounds)
+    pt_b = compute_per_tile_classification(gdf_b, gdf_ref, gdf_bounds)
+
+    tiles = gdf_bounds["tile_name"].unique()
+    n_tiles = len(tiles)
+
+    # Aligned arrays per tile (4 columns × n_tiles)
+    pt_a_idx = pt_a.set_index("tile_name") if not pt_a.empty else pt_a
+    pt_b_idx = pt_b.set_index("tile_name") if not pt_b.empty else pt_b
+
+    tp_a_arr = np.zeros(n_tiles, dtype=int)
+    tn_a_arr = np.zeros(n_tiles, dtype=int)
+    fp_a_arr = np.zeros(n_tiles, dtype=int)
+    fn_a_arr = np.zeros(n_tiles, dtype=int)
+    tp_b_arr = np.zeros(n_tiles, dtype=int)
+    tn_b_arr = np.zeros(n_tiles, dtype=int)
+    fp_b_arr = np.zeros(n_tiles, dtype=int)
+    fn_b_arr = np.zeros(n_tiles, dtype=int)
+
+    wins = losses = ties = 0
+    per_tile_details: list[dict] = []
+    for i, tile in enumerate(tiles):
+        if not pt_a_idx.empty and tile in pt_a_idx.index:
+            row = pt_a_idx.loc[tile]
+            tp_a_arr[i] = int(row["tp"])
+            tn_a_arr[i] = int(row["tn"])
+            fp_a_arr[i] = int(row["fp"])
+            fn_a_arr[i] = int(row["fn"])
+        if not pt_b_idx.empty and tile in pt_b_idx.index:
+            row = pt_b_idx.loc[tile]
+            tp_b_arr[i] = int(row["tp"])
+            tn_b_arr[i] = int(row["tn"])
+            fp_b_arr[i] = int(row["fp"])
+            fn_b_arr[i] = int(row["fn"])
+
+        # Per-tile win/loss using directional informedness
+        # (TP=1, TN=1 = correct; FP=1, FN=1 = wrong).
+        a_correct = bool(tp_a_arr[i] or tn_a_arr[i])
+        b_correct = bool(tp_b_arr[i] or tn_b_arr[i])
+        if a_correct and not b_correct:
+            wins += 1
+        elif b_correct and not a_correct:
+            losses += 1
+        else:
+            ties += 1
+        per_tile_details.append({
+            "tile_name": tile,
+            "class_a": (
+                "TP" if tp_a_arr[i] else "TN" if tn_a_arr[i]
+                else "FP" if fp_a_arr[i] else "FN"
+            ),
+            "class_b": (
+                "TP" if tp_b_arr[i] else "TN" if tn_b_arr[i]
+                else "FP" if fp_b_arr[i] else "FN"
+            ),
+        })
+
+    # Observed aggregate confusion + MCC
+    tp_a, tn_a = int(tp_a_arr.sum()), int(tn_a_arr.sum())
+    fp_a, fn_a = int(fp_a_arr.sum()), int(fn_a_arr.sum())
+    tp_b, tn_b = int(tp_b_arr.sum()), int(tn_b_arr.sum())
+    fp_b, fn_b = int(fp_b_arr.sum()), int(fn_b_arr.sum())
+    mcc_a = _compute_mcc(tp_a, tn_a, fp_a, fn_a)
+    mcc_b = _compute_mcc(tp_b, tn_b, fp_b, fn_b)
+    observed_diff = mcc_a - mcc_b
+
+    # Tile-swap permutation null. For each iteration, independently
+    # swap each tile's full (TP, TN, FP, FN) 4-tuple between A and B
+    # with probability 0.5, then recompute aggregate MCC.
+    rng = np.random.default_rng(seed)
+    null_diffs = np.empty(n_permutations)
+    for i in range(n_permutations):
+        swap = rng.random(n_tiles) < 0.5
+        perm_tp_a = np.where(swap, tp_b_arr, tp_a_arr)
+        perm_tn_a = np.where(swap, tn_b_arr, tn_a_arr)
+        perm_fp_a = np.where(swap, fp_b_arr, fp_a_arr)
+        perm_fn_a = np.where(swap, fn_b_arr, fn_a_arr)
+        perm_tp_b = np.where(swap, tp_a_arr, tp_b_arr)
+        perm_tn_b = np.where(swap, tn_a_arr, tn_b_arr)
+        perm_fp_b = np.where(swap, fp_a_arr, fp_b_arr)
+        perm_fn_b = np.where(swap, fn_a_arr, fn_b_arr)
+
+        perm_mcc_a = _compute_mcc(
+            int(perm_tp_a.sum()), int(perm_tn_a.sum()),
+            int(perm_fp_a.sum()), int(perm_fn_a.sum()),
+        )
+        perm_mcc_b = _compute_mcc(
+            int(perm_tp_b.sum()), int(perm_tn_b.sum()),
+            int(perm_fp_b.sum()), int(perm_fn_b.sum()),
+        )
+        null_diffs[i] = perm_mcc_a - perm_mcc_b
+
+    p_value = float(np.mean(np.abs(null_diffs) >= np.abs(observed_diff)))
+
+    return {
+        "global_a": {
+            "mcc": round(mcc_a, 6),
+            "n_detections": len(gdf_a),
+            "tp": tp_a, "tn": tn_a, "fp": fp_a, "fn": fn_a,
+        },
+        "global_b": {
+            "mcc": round(mcc_b, 6),
+            "n_detections": len(gdf_b),
+            "tp": tp_b, "tn": tn_b, "fp": fp_b, "fn": fn_b,
+        },
+        "permutation_test": {
+            "observed_mcc_diff": round(observed_diff, 6),
             "p_value": round(p_value, 4),
             "n_permutations": n_permutations,
             "n_tiles": n_tiles,

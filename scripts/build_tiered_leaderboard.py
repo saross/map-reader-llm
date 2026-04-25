@@ -117,8 +117,15 @@ from evaluate_detections import (  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
     load_geojson_detections,
     run_permutation_test,
+    run_permutation_test_mcc,
 )
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
+
+# Metric labels — single source of truth used for cache paths,
+# command-line flags, and human-readable output.
+METRIC_F1 = "f1"
+METRIC_MCC = "mcc"
+SUPPORTED_METRICS = (METRIC_F1, METRIC_MCC)
 
 
 # ---------------------------------------------------------------------------
@@ -154,6 +161,42 @@ class SelectedCondition:
     k: int
     evaluations: dict  # buffer_metres -> evaluation result dict
     condition_id: str = ""
+    # Tile-level MCC (buffer-invariant in this codebase). Populated
+    # from the evaluation result's ``tile_classification.mcc.mean``
+    # field by ``select_best_thresholds()`` when MCC was computed.
+    tile_mcc: float = 0.0
+
+
+def get_condition_score(
+    cond: "SelectedCondition",
+    buffer_metres: int,
+    metric: str = METRIC_F1,
+) -> float:
+    """Return the per-condition score under the requested metric.
+
+    Used everywhere ranking, sorting, or tier construction needs a
+    single numeric score per condition. F1 is buffer-specific; MCC is
+    buffer-invariant in this codebase (tile classification depends on
+    presence-of-detection per tile, not buffer-distance matching) but
+    is still keyed by buffer for symmetry with F1 ordering.
+
+    Args:
+        cond: Selected condition (post-threshold-selection).
+        buffer_metres: Buffer at which to look up F1. Ignored for MCC
+            (which is buffer-invariant) but accepted for API symmetry.
+        metric: ``"f1"`` (default) or ``"mcc"``.
+
+    Returns:
+        The score (F1 in [0, 1] or MCC in [-1, 1]). Returns 0.0 when
+        the metric cannot be computed (no detections, undefined MCC,
+        missing buffer evaluation).
+    """
+    if metric == METRIC_F1:
+        return cond.evaluations.get(buffer_metres, {}).get("f1", 0.0)
+    if metric == METRIC_MCC:
+        # MCC is stored at the condition level, not per-buffer.
+        return float(cond.tile_mcc or 0.0)
+    raise ValueError(f"Unsupported metric: {metric!r}")
 
 
 # ---------------------------------------------------------------------------
@@ -695,21 +738,31 @@ def select_best_thresholds(
     all_evaluations: dict[str, dict[int, dict]],
     primary_buffer: int,
     top_n: int | None = None,
+    metric: str = METRIC_F1,
 ) -> list[SelectedCondition]:
-    """Select the best consensus threshold per condition by F1.
+    """Select the best consensus threshold per condition.
 
-    For each condition, finds the threshold that maximises F1 at the
-    primary buffer. Optionally filters to the top-N conditions by F1
-    at any buffer (union criterion).
+    For each condition, finds the threshold that maximises **F1 at
+    the primary buffer**. The metric parameter does not change
+    threshold selection — even MCC tier tables choose thresholds by
+    F1 at the primary buffer, so the same condition row appears in
+    F1 and MCC tables with the same vote_t. This keeps cross-metric
+    comparisons aligned at the same operational point. The metric
+    only changes the score used for the **final tier ordering**.
 
     Args:
         conditions: Original condition specs.
         all_evaluations: Nested dict from ``evaluate_all_conditions()``.
-        primary_buffer: Buffer for threshold selection.
-        top_n: If set, include only conditions in the top-N at any buffer.
+        primary_buffer: Buffer for threshold selection (always F1).
+        top_n: If set, include only conditions in the top-N at any
+            buffer (by F1, regardless of metric).
+        metric: ``"f1"`` (default) or ``"mcc"``. When ``"mcc"`` the
+            sort order at the end uses MCC; threshold selection still
+            uses F1.
 
     Returns:
-        List of SelectedCondition, sorted by F1 descending at primary buffer.
+        List of SelectedCondition, sorted by chosen metric descending
+        at primary buffer.
     """
     selected: list[SelectedCondition] = []
 
@@ -719,7 +772,8 @@ def select_best_thresholds(
             logger.warning("No evaluations for %s — skipping", cond.label)
             continue
 
-        # Find threshold with best F1 at primary buffer
+        # Find threshold with best F1 at primary buffer (metric-
+        # independent — see docstring for rationale).
         best_t = None
         best_f1 = -1.0
         for threshold, result in evals.items():
@@ -743,6 +797,14 @@ def select_best_thresholds(
             b["buffer_metres"]: b for b in best_eval.get("buffers", [])
         }
 
+        # Extract tile-level MCC if available (populated when
+        # _evaluate_single_threshold ran with compute_mcc=True).
+        tile_mcc = float(
+            best_eval.get("tile_classification", {})
+            .get("mcc", {})
+            .get("mean", 0.0)
+        )
+
         # Find the GeoJSON path for the best threshold
         try:
             t_idx = cond.thresholds.index(best_t)
@@ -764,16 +826,21 @@ def select_best_thresholds(
             k=cond.k,
             evaluations=buf_dict,
             condition_id=cond.condition_id,
+            tile_mcc=tile_mcc,
         ))
 
-    # Sort by F1 descending at primary buffer
+    # Sort by chosen metric descending at primary buffer
     selected.sort(
-        key=lambda c: c.evaluations.get(primary_buffer, {}).get("f1", 0),
+        key=lambda c: get_condition_score(c, primary_buffer, metric),
         reverse=True,
     )
 
-    # Top-N filtering (union across all buffers)
-    if top_n is not None and len(selected) > top_n:
+    # Top-N filtering (union across all buffers).
+    # ``top_n=0`` (or ``None``) disables the filter — include every
+    # condition. The 12-stratum redesign (Stage 2, 2026-04-25) sets
+    # ``--top-n 0`` for comprehensive paper-table coverage; the
+    # default of 20 was kept for backward compatibility.
+    if top_n is not None and top_n > 0 and len(selected) > top_n:
         # Collect sets of top-N labels at each buffer
         all_buffers = set()
         for c in selected:
@@ -795,6 +862,11 @@ def select_best_thresholds(
             "Top-%d filter: %d → %d conditions (union across %d buffers)",
             top_n, before, len(selected), len(all_buffers),
         )
+    elif top_n is None or top_n == 0:
+        logger.info(
+            "Top-N filter disabled (top_n=%s); including all %d conditions",
+            top_n, len(selected),
+        )
 
     logger.info(
         "Selected %d conditions (best F1=%.3f at %dm)",
@@ -811,10 +883,23 @@ def select_best_thresholds(
 # ---------------------------------------------------------------------------
 
 
-def _cache_path_pairwise(cache_dir: Path, label_a: str, label_b: str) -> Path:
-    """Build canonical cache path for a pairwise test (alphabetical order)."""
+def _cache_path_pairwise(
+    cache_dir: Path,
+    label_a: str,
+    label_b: str,
+    metric: str = METRIC_F1,
+) -> Path:
+    """Build canonical cache path for a pairwise test (alphabetical order).
+
+    The metric is folded into the directory name so F1 and MCC caches
+    do not collide. The historical layout (``pairwise/<a>_vs_<b>.json``)
+    is kept for ``metric=f1`` to preserve compatibility with the prior
+    per-architecture tier tables.
+    """
     a, b = sorted([slugify(label_a), slugify(label_b)])
-    return cache_dir / "pairwise" / f"{a}_vs_{b}.json"
+    if metric == METRIC_F1:
+        return cache_dir / "pairwise" / f"{a}_vs_{b}.json"
+    return cache_dir / f"pairwise_{metric}" / f"{a}_vs_{b}.json"
 
 
 def run_all_pairwise_tests(
@@ -826,24 +911,36 @@ def run_all_pairwise_tests(
     seed: int,
     cache_dir: Path,
     force: bool = False,
+    metric: str = METRIC_F1,
 ) -> list[dict]:
     """Run C(N,2) pairwise permutation tests between all conditions.
 
     Caches GeoDataFrames in memory to avoid reloading. Each pairwise
-    result is cached to disk.
+    result is cached to disk under a metric-specific subdirectory so
+    F1 and MCC caches do not collide.
 
     Args:
         conditions: Selected conditions for the leaderboard.
         ref_path: Ground truth path.
         bounds_path: Bounds path.
-        buffer_metres: Buffer for F1 computation.
+        buffer_metres: Buffer for F1 computation. Ignored for MCC
+            (which is buffer-invariant in this codebase) but kept for
+            API symmetry.
         n_permutations: Number of permutations.
         seed: Random seed.
         cache_dir: Cache directory.
         force: Force recomputation.
+        metric: ``"f1"`` (default) or ``"mcc"``. Selects between
+            ``run_permutation_test`` (micro-average F1, buffer-aware)
+            and ``run_permutation_test_mcc`` (per-tile classification,
+            buffer-invariant).
 
     Returns:
-        List of pairwise result dicts.
+        List of pairwise result dicts. Each dict carries ``label_a``,
+        ``label_b``, the per-condition score (``f1_a``/``f1_b`` for
+        F1, ``mcc_a``/``mcc_b`` for MCC), the observed difference
+        (``delta_f1`` or ``delta_mcc``), and the p-value plus tile
+        count.
     """
     gdf_ref = load_geojson(ref_path)
     gdf_bounds = load_geojson(bounds_path)
@@ -873,12 +970,14 @@ def run_all_pairwise_tests(
     cached = 0
 
     logger.info(
-        "Pairwise tests: %d pairs at %dm (%d permutations)",
-        n_pairs, buffer_metres, n_permutations,
+        "Pairwise tests (%s): %d pairs at %dm (%d permutations)",
+        metric, n_pairs, buffer_metres, n_permutations,
     )
 
     for i, (cond_a, cond_b) in enumerate(pairs, 1):
-        cp = _cache_path_pairwise(cache_dir, cond_a.label, cond_b.label)
+        cp = _cache_path_pairwise(
+            cache_dir, cond_a.label, cond_b.label, metric=metric,
+        )
 
         if not force and cp.is_file():
             with open(cp, encoding="utf-8") as f:
@@ -893,6 +992,34 @@ def run_all_pairwise_tests(
         gdf_a = _load_gdf(cond_a)
         gdf_b = _load_gdf(cond_b)
 
+        if metric == METRIC_MCC:
+            perm_result = run_permutation_test_mcc(
+                gdf_a, gdf_b, gdf_ref, gdf_bounds,
+                n_permutations=n_permutations,
+                seed=seed,
+            )
+            result = {
+                "label_a": cond_a.label,
+                "label_b": cond_b.label,
+                "metric": metric,
+                "mcc_a": perm_result["global_a"]["mcc"],
+                "mcc_b": perm_result["global_b"]["mcc"],
+                "delta_mcc": perm_result["permutation_test"][
+                    "observed_mcc_diff"
+                ],
+                "p_value": perm_result["permutation_test"]["p_value"],
+                "n_permutations": perm_result["permutation_test"][
+                    "n_permutations"
+                ],
+                "n_tiles": perm_result["permutation_test"]["n_tiles"],
+            }
+            cp.parent.mkdir(parents=True, exist_ok=True)
+            with open(cp, "w", encoding="utf-8") as f:
+                json.dump(result, f, indent=2)
+            results.append(result)
+            continue
+
+        # Default path: F1 micro-average permutation test.
         perm_result = run_permutation_test(
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
             buffer_metres=buffer_metres,
@@ -904,6 +1031,7 @@ def run_all_pairwise_tests(
         result = {
             "label_a": cond_a.label,
             "label_b": cond_b.label,
+            "metric": METRIC_F1,
             "f1_a": perm_result["global_a"]["f1"],
             "f1_b": perm_result["global_b"]["f1"],
             "delta_f1": perm_result["permutation_test"]["observed_f1_diff"],
@@ -932,18 +1060,25 @@ def apply_fdr_and_tier(
     pairwise_results: list[dict],
     conditions: list[SelectedCondition],
     fdr_q: float = DEFAULT_FDR_Q,
+    metric: str = METRIC_F1,
 ) -> tuple[list[dict], list[list[SelectedCondition]]]:
     """Apply BH-FDR correction and group conditions into tiers.
 
-    Uses a greedy clique-based algorithm: conditions sorted by F1
-    descending. Each condition is added to the current tier if it is
-    statistically indistinguishable from ALL existing members.
-    Otherwise, a new tier starts.
+    Uses a greedy clique-based algorithm: conditions are processed in
+    the order received (already sorted by chosen metric descending).
+    Each condition is added to the current tier if it is statistically
+    indistinguishable from ALL existing members; otherwise a new tier
+    starts.
 
     Args:
         pairwise_results: All C(N,2) pairwise test results.
-        conditions: Selected conditions sorted by F1 descending.
+        conditions: Selected conditions sorted by chosen metric
+            descending.
         fdr_q: FDR threshold for significance.
+        metric: ``"f1"`` (default) or ``"mcc"`` — used for logging
+            only; the actual algorithm is metric-agnostic since the
+            sort order and significance flags are pre-computed
+            upstream.
 
     Returns:
         Tuple of ``(annotated_results, tiers)`` where tiers is a list
@@ -1018,18 +1153,37 @@ def write_leaderboard_markdown(
 ) -> None:
     """Write Markdown leaderboard table grouped by tier.
 
+    The header label and the score column adapt to the metric in
+    ``metadata["metric"]`` (``"f1"`` or ``"mcc"``); F1 and CI columns
+    are always shown for context.
+
     Args:
         tiers: List of tiers (each a list of SelectedConditions).
         buffer_metres: Buffer distance for displayed metrics.
         output_path: Output .md file path.
-        metadata: Leaderboard metadata.
+        metadata: Leaderboard metadata. Must include ``metric``.
     """
+    metric = metadata.get("metric", METRIC_F1)
+    fdr_q = metadata.get("fdr_q", DEFAULT_FDR_Q)
+    metric_label = metric.upper()
+
     lines: list[str] = []
-    lines.append(f"# Leaderboard — {buffer_metres}m buffer")
+    lines.append(
+        f"# Leaderboard ({metric_label} tiers) — {buffer_metres}m buffer"
+    )
     lines.append("")
     lines.append(
         f"**Generated**: {datetime.now(tz=timezone.utc).isoformat()}"
     )
+    lines.append(f"**Tiering metric**: {metric_label}")
+    lines.append(f"**FDR q**: {fdr_q:g}")
+    if metric == METRIC_MCC:
+        lines.append(
+            "**Note**: MCC is buffer-invariant in this codebase "
+            "(tile-level binary classification). Threshold selection "
+            "still maximises F1 at the primary buffer for cross-metric "
+            "alignment; the per-buffer F1 column reflects that."
+        )
     if metadata.get("name"):
         lines.append(f"**Scope**: {metadata['name']}")
     lines.append(
@@ -1040,24 +1194,34 @@ def write_leaderboard_markdown(
 
     rank = 0
     for tier_idx, tier in enumerate(tiers, 1):
-        f1_vals = [
-            c.evaluations.get(buffer_metres, {}).get("f1", 0) for c in tier
+        score_vals = [
+            get_condition_score(c, buffer_metres, metric) for c in tier
         ]
-        f1_min = min(f1_vals) if f1_vals else 0
-        f1_max = max(f1_vals) if f1_vals else 0
+        s_min = min(score_vals) if score_vals else 0
+        s_max = max(score_vals) if score_vals else 0
 
         lines.append(
-            f"## Tier {tier_idx} (F1: {f1_min:.3f}–{f1_max:.3f})"
+            f"## Tier {tier_idx} ({metric_label}: {s_min:.3f}–{s_max:.3f})"
         )
         lines.append("")
-        lines.append(
-            "| # | Condition | Arch | Era | Track | K | t | "
-            "F1 | 95% CI | P | R |"
-        )
-        lines.append(
-            "|--:|-----------|:----:|:---:|:-----:|--:|--:|"
-            "---:|:------:|---:|---:|"
-        )
+        if metric == METRIC_MCC:
+            lines.append(
+                "| # | Condition | Arch | Era | Track | K | t | "
+                "MCC | F1@buf | F1 95% CI | P | R |"
+            )
+            lines.append(
+                "|--:|-----------|:----:|:---:|:-----:|--:|--:|"
+                "---:|---:|:------:|---:|---:|"
+            )
+        else:
+            lines.append(
+                "| # | Condition | Arch | Era | Track | K | t | "
+                "F1 | 95% CI | P | R | MCC |"
+            )
+            lines.append(
+                "|--:|-----------|:----:|:---:|:-----:|--:|--:|"
+                "---:|:------:|---:|---:|---:|"
+            )
 
         for cond in tier:
             rank += 1
@@ -1069,20 +1233,31 @@ def write_leaderboard_markdown(
             r = e.get("recall", 0)
 
             # Architecture: PV (proposer-verifier) vs greedy (consensus) vs
-            # single-pass.
+            # single-pass+PV vs single-pass.
             if cond.category == "pv":
                 arch = "PV"
+            elif cond.category == "single-pass+PV":
+                arch = "1-pass+PV"
             elif cond.category == "consensus":
                 arch = "greedy"
             else:
                 arch = "1-pass"
 
-            lines.append(
-                f"| {rank} | {cond.label} | {arch} | {cond.era} | "
-                f"{cond.track} | {cond.k} | {cond.best_threshold} | "
-                f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
-                f"{p:.3f} | {r:.3f} |"
-            )
+            if metric == METRIC_MCC:
+                lines.append(
+                    f"| {rank} | {cond.label} | {arch} | {cond.era} | "
+                    f"{cond.track} | {cond.k} | {cond.best_threshold} | "
+                    f"{cond.tile_mcc:.3f} | "
+                    f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
+                    f"{p:.3f} | {r:.3f} |"
+                )
+            else:
+                lines.append(
+                    f"| {rank} | {cond.label} | {arch} | {cond.era} | "
+                    f"{cond.track} | {cond.k} | {cond.best_threshold} | "
+                    f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
+                    f"{p:.3f} | {r:.3f} | {cond.tile_mcc:.3f} |"
+                )
 
         lines.append("")
 
@@ -1178,32 +1353,37 @@ def write_all_evaluations_json(
 def print_tier_summary(
     tiers: list[list[SelectedCondition]],
     primary_buffer: int,
+    metric: str = METRIC_F1,
 ) -> None:
     """Print a human-readable tier summary to the console.
 
     Args:
         tiers: Tier assignments.
-        primary_buffer: Buffer for displayed F1.
+        primary_buffer: Buffer for displayed score.
+        metric: ``"f1"`` or ``"mcc"``.
     """
+    label = metric.upper()
     print(f"\n{'=' * 72}")
-    print(f"LEADERBOARD TIERS ({primary_buffer}m buffer)")
+    print(f"LEADERBOARD TIERS ({label}, {primary_buffer}m buffer)")
     print(f"{'=' * 72}")
 
     rank = 0
     for tier_idx, tier in enumerate(tiers, 1):
-        f1_vals = [
-            c.evaluations.get(primary_buffer, {}).get("f1", 0)
-            for c in tier
+        score_vals = [
+            get_condition_score(c, primary_buffer, metric) for c in tier
         ]
         print(
             f"\nTier {tier_idx} "
-            f"(F1: {min(f1_vals):.3f}–{max(f1_vals):.3f}, "
+            f"({label}: {min(score_vals):.3f}–{max(score_vals):.3f}, "
             f"{len(tier)} conditions)"
         )
         for cond in tier:
             rank += 1
-            f1 = cond.evaluations.get(primary_buffer, {}).get("f1", 0)
-            print(f"  {rank:>3}. {cond.label:<40} F1={f1:.3f}  t={cond.best_threshold}")
+            score = get_condition_score(cond, primary_buffer, metric)
+            print(
+                f"  {rank:>3}. {cond.label:<40} {label}={score:.3f}  "
+                f"t={cond.best_threshold}"
+            )
 
     print(f"\n{'=' * 72}")
     print(
@@ -1296,7 +1476,22 @@ def build_cli() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--top-n", type=int, default=DEFAULT_TOP_N,
-        help=f"Inclusion: top-N at any buffer (default: {DEFAULT_TOP_N})",
+        help=(
+            f"Inclusion: top-N at any buffer (default: {DEFAULT_TOP_N}). "
+            "Pass 0 (or any non-positive value) to disable filtering and "
+            "include all conditions in the tier table."
+        ),
+    )
+    parser.add_argument(
+        "--metric", choices=list(SUPPORTED_METRICS), default=METRIC_F1,
+        help=(
+            f"Test statistic for tiering (default: {METRIC_F1!r}). "
+            f"{METRIC_F1!r} uses micro-average F1 with the buffer-aware "
+            f"tile-swap permutation test. {METRIC_MCC!r} uses tile-level "
+            "Matthews Correlation Coefficient with a per-tile (TP, TN, "
+            "FP, FN) classification swap. Threshold selection always "
+            "uses F1 at the primary buffer for cross-metric alignment."
+        ),
     )
 
     # Execution
@@ -1401,6 +1596,7 @@ def main() -> int:
         "fdr_q": args.fdr_q,
         "n_permutations": args.n_permutations,
         "top_n": args.top_n,
+        "metric": args.metric,
         "bootstrap": args.bootstrap,
         "seed": args.seed,
         "bounds": str(args.bounds),
@@ -1450,6 +1646,7 @@ def main() -> int:
         conditions, all_evaluations,
         primary_buffer=args.primary_buffer,
         top_n=args.top_n,
+        metric=args.metric,
     )
 
     if not selected:
@@ -1468,6 +1665,7 @@ def main() -> int:
             seed=args.seed,
             cache_dir=cache_dir,
             force=args.force,
+            metric=args.metric,
         )
         logger.info("Stage 4 complete in %.1fs", time.monotonic() - start)
     elif args.skip_pairwise and len(selected) > 1:
@@ -1477,7 +1675,9 @@ def main() -> int:
         expected_pairs = len(selected) * (len(selected) - 1) // 2
         missing_pairs = 0
         for a, b in itertools.combinations(selected, 2):
-            cp = _cache_path_pairwise(cache_dir, a.label, b.label)
+            cp = _cache_path_pairwise(
+                cache_dir, a.label, b.label, metric=args.metric,
+            )
             if cp.is_file():
                 with open(cp, encoding="utf-8") as f:
                     pairwise_results.append(json.load(f))
@@ -1499,29 +1699,42 @@ def main() -> int:
     # Stage 5: FDR + tiering
     pairwise_annotated, tiers = apply_fdr_and_tier(
         pairwise_results, selected, fdr_q=args.fdr_q,
+        metric=args.metric,
     )
 
-    # Stage 6: Output
+    # Stage 6: Output. The metric goes into the filename so F1 and MCC
+    # tier tables co-exist in the same output directory without
+    # collision. The historical layout (no metric infix) is preserved
+    # for ``metric=f1`` to keep prior consumers working.
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    for buf_m in args.buffers:
-        write_leaderboard_markdown(
-            tiers, buf_m,
-            args.output_dir / f"leaderboard_tiers_{buf_m}m.md",
-            metadata,
-        )
-
-    write_leaderboard_json(
-        tiers, all_evaluations, pairwise_annotated,
-        metadata,
-        args.output_dir / f"leaderboard_tiers_{args.primary_buffer}m.json",
+    metric_infix = "" if args.metric == METRIC_F1 else f"_{args.metric}"
+    fdr_infix = "" if args.fdr_q == DEFAULT_FDR_Q else (
+        f"_q{int(round(args.fdr_q * 100)):02d}"
     )
+
+    for buf_m in args.buffers:
+        out_md = (
+            args.output_dir
+            / f"leaderboard_tiers{metric_infix}{fdr_infix}_{buf_m}m.md"
+        )
+        write_leaderboard_markdown(tiers, buf_m, out_md, metadata)
+
+    out_json = (
+        args.output_dir
+        / f"leaderboard_tiers{metric_infix}{fdr_infix}_"
+        f"{args.primary_buffer}m.json"
+    )
+    write_leaderboard_json(
+        tiers, all_evaluations, pairwise_annotated, metadata, out_json,
+    )
+    # The full evaluation sweep is metric-independent — keep one file.
     write_all_evaluations_json(
         all_evaluations,
         args.output_dir / "leaderboard_all_evaluations.json",
     )
 
-    print_tier_summary(tiers, args.primary_buffer)
+    print_tier_summary(tiers, args.primary_buffer, metric=args.metric)
 
     return 0
 
