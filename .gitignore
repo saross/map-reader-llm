@@ -65,6 +65,12 @@ outputs/**/shared-crops/crops/
 # (e.g. results/leaderboard/era1/.cache/, plus per-architecture trees
 # such as results/leaderboard/per-architecture/era1/consensus/.cache/).
 results/leaderboard/**/.cache/
+
+# Archived leaderboard caches (preserved for provenance via the
+# "archive, never delete" policy but still regenerable from source —
+# untracked to keep the repo size small. The archive/ROOT-README.md
+# remains tracked).
+archive/leaderboard-caches/
 # Rasters and tiles (large input data)
 inputs/tiles_384_55maps/
 inputs/rasters/Russian1981_32635/

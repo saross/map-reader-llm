@@ -1,0 +1,41 @@
+2026-04-25 14:40:52,290 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
+2026-04-25 14:40:52,292 - INFO - __main__ - Resolved 14 conditions from inventory (era=3, track=None)
+2026-04-25 14:40:52,292 - INFO - __main__ - Resolved 14 conditions
+2026-04-25 14:40:52,292 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-25 14:40:52,299 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 14 conditions
+2026-04-25 14:40:52,299 - INFO - __main__ - Selected 14 conditions (best F1=0.733 at 20m)
+2026-04-25 14:40:52,299 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-04-25 14:40:52,302 - INFO - __main__ - FDR: 1/91 pairs significant at q=0.01 → 2 tiers
+2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_20m.md
+2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_30m.md
+2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_40m.md
+2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_50m.md
+2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_100m.md
+2026-04-25 14:40:52,305 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_20m.json
+2026-04-25 14:40:52,309 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era3/consensus/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (MCC, 20m buffer)
+========================================================================
+
+Tier 1 (MCC: 0.640–0.772, 13 conditions)
+    1. h8v2-scale-4                             MCC=0.772  t=4
+    2. h8v2-scale-8                             MCC=0.739  t=3
+    3. h12v2-r3-hp-heavy                        MCC=0.733  t=3
+    4. h8v2-plus-hp                             MCC=0.732  t=4
+    5. h8v2-scale-16                            MCC=0.726  t=3
+    6. h12v2-r1-hn-heavy                        MCC=0.725  t=3
+    7. h8v2-scale-32                            MCC=0.718  t=4
+    8. h10v2-pool_160_hp4hn4                    MCC=0.718  t=4
+    9. h12v2-r2-balanced                        MCC=0.718  t=4
+   10. h10v2-pool_080_hp4hn4                    MCC=0.691  t=3
+   11. h10v2-pool_020_hp4hn4                    MCC=0.686  t=3
+   12. h8v2-canonical                           MCC=0.680  t=4
+   13. h10v2-pool_040_hp4hn4                    MCC=0.640  t=3
+
+Tier 2 (MCC: 0.599–0.599, 1 conditions)
+   14. h8v2-pure-positive-canon                 MCC=0.599  t=3
+
+========================================================================
+Total: 14 conditions in 2 tiers
+========================================================================

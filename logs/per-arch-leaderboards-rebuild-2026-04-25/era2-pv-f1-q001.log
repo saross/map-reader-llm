@@ -1,0 +1,73 @@
+2026-04-25 14:35:49,730 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
+2026-04-25 14:35:49,731 - INFO - __main__ - Resolved 44 conditions from inventory (era=2, track=None)
+2026-04-25 14:35:49,731 - INFO - __main__ - Resolved 44 conditions
+2026-04-25 14:35:49,731 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-25 14:35:49,736 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 44 conditions
+2026-04-25 14:35:49,736 - INFO - __main__ - Selected 44 conditions (best F1=0.890 at 20m)
+2026-04-25 14:35:49,736 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-04-25 14:35:49,756 - INFO - __main__ - FDR: 493/946 pairs significant at q=0.01 → 3 tiers
+2026-04-25 14:35:49,756 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_q01_20m.md
+2026-04-25 14:35:49,757 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_q01_30m.md
+2026-04-25 14:35:49,757 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_q01_40m.md
+2026-04-25 14:35:49,757 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_q01_50m.md
+2026-04-25 14:35:49,757 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_q01_100m.md
+2026-04-25 14:35:49,767 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_q01_20m.json
+2026-04-25 14:35:49,770 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/pv/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (F1, 20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.868–0.890, 15 conditions)
+    1. pv-flash-high-text-16of30                F1=0.890  t=1
+    2. pv-high-text-t0.3-n5                     F1=0.886  t=1
+    3. session-78-text-comparative              F1=0.885  t=1
+    4. session-78-text-adversarial              F1=0.883  t=1
+    5. pv-high-text-t1.0-n10                    F1=0.880  t=1
+    6. session-78-text-checklist                F1=0.878  t=1
+    7. pv-min-text-t0.3-n5                      F1=0.878  t=1
+    8. pv-min-text-t1.0-n10                     F1=0.877  t=1
+    9. session-78-text-brief                    F1=0.876  t=1
+   10. pv-high-text-t0.7-n10                    F1=0.874  t=1
+   11. pv-min-text-t0.7-n5                      F1=0.873  t=1
+   12. pv-min-text-t0.7-n10                     F1=0.873  t=1
+   13. pv-high-text-t0.3-n10                    F1=0.872  t=1
+   14. pv-min-text-t1.0-n5                      F1=0.871  t=1
+   15. pv-min-text-t0.3-n10                     F1=0.868  t=1
+
+Tier 2 (F1: 0.823–0.863, 7 conditions)
+   16. pv-high-text-t0.7-n5                     F1=0.863  t=1
+   17. pv-min-text-t0.0-n3                      F1=0.862  t=1
+   18. pv-high-text-t1.0-n5                     F1=0.861  t=1
+   19. session-78-text-checklist-text           F1=0.860  t=1
+   20. session-78-text-adversarial-text         F1=0.858  t=1
+   21. session-78-text-brief-text               F1=0.846  t=1
+   22. pv-high-text-t0.0-n3                     F1=0.823  t=1
+
+Tier 3 (F1: 0.734–0.788, 22 conditions)
+   23. pv-min-image-t0.7-n10                    F1=0.788  t=1
+   24. pv-high-image-t0.7-n5                    F1=0.787  t=1
+   25. session-78-image-adversarial             F1=0.787  t=1
+   26. session-78-image-comparative             F1=0.786  t=1
+   27. session-78-image-brief                   F1=0.784  t=1
+   28. session-78-image-checklist               F1=0.783  t=1
+   29. pv-min-image-t0.3-n10                    F1=0.782  t=1
+   30. session-78-image-checklist-text          F1=0.780  t=1
+   31. pv-min-image-t0.3-n5                     F1=0.777  t=1
+   32. pv-high-image-t0.7-n10                   F1=0.776  t=1
+   33. pv-min-image-t0.7-n5                     F1=0.773  t=1
+   34. session-78-image-adversarial-text        F1=0.772  t=1
+   35. pv-high-image-t0.3-n10                   F1=0.769  t=1
+   36. pv-scale4-optimal-n10                    F1=0.768  t=1
+   37. session-78-image-brief-text              F1=0.768  t=1
+   38. pv-n1-image-t0-n3                        F1=0.767  t=1
+   39. pv-high-image-t1.0-n10                   F1=0.763  t=1
+   40. pv-scale4-optimal-n5                     F1=0.763  t=1
+   41. pv-high-image-t0.3-n5                    F1=0.746  t=1
+   42. pv-min-image-t1.0-n10                    F1=0.741  t=1
+   43. pv-min-image-t1.0-n5                     F1=0.738  t=1
+   44. pv-high-image-t1.0-n5                    F1=0.734  t=1
+
+========================================================================
+Total: 44 conditions in 3 tiers
+========================================================================
