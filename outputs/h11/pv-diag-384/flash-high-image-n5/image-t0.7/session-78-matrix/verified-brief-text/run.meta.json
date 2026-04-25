@@ -1,0 +1,101 @@
+{
+  "run_id": "275bd20c-bcb4-4f18-8cf5-0771f8a9cecb",
+  "timestamp": {
+    "start": "2026-04-25T05:24:42.315153+00:00",
+    "end": "2026-04-25T05:33:34.887742+00:00",
+    "duration_seconds": 532.572589
+  },
+  "environment": {
+    "git_commit": "e71fb8e406d3f4c6e7feeff21a9067fa4d00ae3b",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_brief-text",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "verify_brief.md",
+    "system_instruction_hash": "ded339c98c8fd91849d38fd81cceb4bd13a267d8982db208fcc13ee294b935ba",
+    "system_instruction_text": "# Two-Stage Detection: Verifier\n\nClassify whether the candidate symbol at the centre of this crop is a burial mound.\n\n## Diagnostic Criteria\n\nMound symbols have **rays (hachures) radiating OUTWARD** from a central shape (\"sunburst\" pattern). This indicates elevated terrain.\n\n**Key tests:**\n\n1. Are there rays radiating from a central point? No rays \u2192 not a mound.\n2. Do rays point OUTWARD (mound) or are there marks pointing INWARD (not a mound)? Inward marks may appear in orange-brown, the same colour family as mound symbols.\n3. Check central shape: circle/oval (plain mound), triangle (triangulation on mound), square (benchmark on mound).\n4. Check colour: orange-brown (plain mound) or black (survey marker on mound).\n5. Is the shape round or ovoid in mound-like colours but without outward-radiating rays? Dark marks within the shape rather than extending outward \u2192 not a mound.\n6. Does nearby Cyrillic text (e.g., \"\u043c\u043e\u0433\u0438\u043b\u0430\", \"\u043a\u0443\u0440\u0433.\") appear to confirm the candidate? Text does not confirm or deny \u2014 the ray pattern is the sole criterion.\n\nIf reference examples are provided, compare the candidate against them. Each reference image is centred on the feature being labelled.\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"reasoning\": \"Brief description of visual features observed.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: Clear sunburst pattern with outward-radiating rays\n- **0.6-0.8**: Likely mound, some ambiguity or occlusion\n- **0.3-0.5**: Uncertain, could be mound or similar feature\n- **0.0-0.2**: Not a mound (no rays, wrong direction, noise, isolated marker)\n",
+    "library_hash": "no_examples",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 0,
+    "full_config_snapshot": {
+      "version": "verify_brief-text",
+      "description": "Two-Stage Verifier (Stage 2). Standard diagnostic, text-only (no example images). Matches Phase 3d Track 2.",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_brief.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "_config_notes": {
+        "source": "Phase 3d Track 2 (Session 43). Standard text-only verifier achieved F1=0.768 at T=0.0, threshold 0.2.",
+        "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "track": "Track 2 \u2014 text-only. Text example labels sent (no images), matching Phase 3d run_h2_pilot.py build_verifier_request(include_examples=False)."
+      },
+      "examples": [],
+      "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 1998,
+      "error": 470
+    },
+    "safety_blocks": 0,
+    "parse_failures": 470,
+    "empty_responses": 470,
+    "completed_items": [],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 3130866,
+    "total_output_tokens": 136673,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 3267539,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 3130866,
+        "output_tokens": 136673,
+        "total_tokens": 3267539,
+        "request_count": 2468
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 1.565433,
+    "output_cost_usd": 0.410019,
+    "total_cost_usd": 1.975452,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  }
+}
