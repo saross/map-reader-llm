@@ -1,0 +1,101 @@
+{
+  "run_id": "fb39d388-510a-4c15-be79-c672e550b495",
+  "timestamp": {
+    "start": "2026-04-25T05:35:03.965786+00:00",
+    "end": "2026-04-25T05:51:14.303006+00:00",
+    "duration_seconds": 970.33722
+  },
+  "environment": {
+    "git_commit": "50e556b76c472ac30adc200a569d4fe43e2a14d3",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_checklist-text",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "verify_checklist.md",
+    "system_instruction_hash": "81c3485dc1cae237d85785291411cab5526cfb634fb9086259fe454f7f164074",
+    "system_instruction_text": "# Two-Stage Detection: Feature Checklist Verifier\n\nA detection system has identified the symbol at the centre of this crop as a\npossible burial mound. Evaluate it by checking each diagnostic feature\nindependently, then make an overall judgement.\n\n## Feature Checklist\n\nScore each feature before making your final judgement:\n\n### 1. Outward-radiating rays\n\nDoes the symbol have short lines (rays) radiating **outward** from a central\npoint? This is the single most important diagnostic feature. Rays must point\nAWAY from the centre, not toward it.\n\n- **Present**: Clear rays radiating outward \u2014 strong mound indicator\n- **Ambiguous**: Some marks near the centre, but direction unclear\n- **Absent**: No outward-radiating lines visible \u2014 likely NOT a mound\n\n### 2. Central shape and colour (orange-brown symbols)\n\nIf the symbol is orange-brown: does it have a central circle or oval shape?\n\n- **Yes**: Orange-brown circle/oval with outward rays \u2014 classic burial mound\n  or settlement mound pattern\n- **No circle but has rays**: Unusual but still possibly a mound\n- **Orange-brown marks but no circle and no rays**: NOT a mound \u2014 likely a\n  contour feature, boundary mark, or other terrain indicator\n\n### 3. Central shape and colour (black symbols)\n\nIf the symbol is black: does it have a central triangle or a central square?\n\n- **Black triangle with outward rays**: Triangulation point ON a mound\n- **Black square with outward rays**: Benchmark ON a mound\n- **Black triangle WITHOUT outward rays**: Triangulation point alone \u2014 NOT a mound\n- **Black square WITHOUT outward rays**: Benchmark alone \u2014 NOT a mound\n\n### 4. Size\n\nIs the symbol size consistent with mound map symbols (roughly 10-20 pixels in\ndiameter for the central shape, with rays extending slightly beyond)?\n\n- **Consistent**: Appropriate size for a mound symbol\n- **Too large**: May be a settlement or other large feature\n- **Too small**: May be a dot, noise, or spot height marker\n\n### 5. Confusable symbol check\n\nCould this symbol be one of the following non-mound features?\n\n- A solid black triangle with no outward rays (triangulation point alone)\n- A solid black square with no outward rays (benchmark alone)\n- Lines pointing inward toward a central point (contour feature, not mound)\n- A small dot with a nearby number (spot height marker)\n- Part of a text label or elevation number\n- Marks along a linear boundary (vegetation or land-use boundary)\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"checklist\": {\n        \"outward_rays\": \"present | ambiguous | absent\",\n        \"central_shape\": \"Description of what you observe\",\n        \"colour\": \"orange-brown | black | other\",\n        \"size\": \"consistent | too_large | too_small\",\n        \"confusable_match\": \"none | Description of which confusable it resembles\"\n    },\n    \"reasoning\": \"Overall assessment based on checklist results.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: Rays present + correct shape + correct colour + correct size +\n  no confusable match\n- **0.6-0.8**: Most features present but one is ambiguous\n- **0.3-0.5**: Mixed evidence \u2014 some features present, some absent or ambiguous\n- **0.0-0.2**: Key features absent (especially rays) or strong confusable match\n",
+    "library_hash": "no_examples",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 0,
+    "full_config_snapshot": {
+      "version": "verify_checklist-text",
+      "description": "Two-Stage Verifier (Stage 2). Structured feature checklist, text-only (no example images). Matches Phase 3d Track 2.",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_checklist.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "_config_notes": {
+        "source": "Phase 3d Track 2 (Session 43). Checklist text-only verifier achieved F1=0.782 at T=0.0, threshold 0.2.",
+        "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "track": "Track 2 \u2014 text-only. Text example labels sent (no images), matching Phase 3d run_h2_pilot.py build_verifier_request(include_examples=False)."
+      },
+      "examples": [],
+      "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 3717,
+      "error": 834
+    },
+    "safety_blocks": 0,
+    "parse_failures": 836,
+    "empty_responses": 834,
+    "completed_items": [],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 7188678,
+    "total_output_tokens": 581855,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 7770533,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 7188678,
+        "output_tokens": 581855,
+        "total_tokens": 7770533,
+        "request_count": 4551
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 3.594339,
+    "output_cost_usd": 1.745565,
+    "total_cost_usd": 5.339904,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  }
+}
