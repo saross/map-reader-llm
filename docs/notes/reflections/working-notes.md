@@ -13257,6 +13257,22 @@ Canonical `adversarial-text` has the **lowest ECE on both pools**
 improves image-track calibration: all image-pool variants remain in
 the miscalibrated regime (ECE 0.19–0.27).
 
+**Re-derived 2026-04-25**: the original Phase A data (commits
+`6d1cad27` and `88d6b55b`) was lost in a confabulation cascade. The
+matrix has been re-run on shared-crops with crop-set parity now
+applying to the canonical `adversarial-text` cell as well as the six
+alternatives. Prior canonical numbers (image AUC=0.863, ECE=0.188;
+text AUC=0.959, ECE=0.067) shifted to **image AUC=0.857, ECE=0.179;
+text AUC=0.956, ECE=0.071** — within the original bootstrap CIs.
+Maximum |ΔAUC| across all 14 cells = 0.009; maximum |ΔECE| = 0.009;
+maximum |ΔF1| = 0.035 (in `text-brief-text`, where the original Phase A
+ran on a partial 3530-candidate pool while the re-run uses the full
+3709). The **qualitative finding stands unchanged**: canonical
+`adversarial-text` retains the lowest ECE on both pools; no novel
+variant rescues image-track miscalibration. See
+`docs/methodology/data-reproduction-2026-04-25.md` for the full
+provenance note and per-cell drift table.
+
 ### Interpretation
 
 This is the key falsification test for Obs 269's two candidate
