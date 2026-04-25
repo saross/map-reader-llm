@@ -9,40 +9,40 @@
   "n_not_mound": 3306,
   "prevalence": 0.11509635974304068,
   "auc": {
-    "point": 0.9636608562303915,
-    "ci_lower": 0.9590414040120729,
-    "ci_upper": 0.9680417476191863
+    "point": 0.9625251480746774,
+    "ci_lower": 0.957552439594296,
+    "ci_upper": 0.9672472844947111
   },
   "brier": {
-    "point": 0.07584381691648821,
-    "ci_lower": 0.06776092411670236,
-    "ci_upper": 0.08418731597965737
+    "point": 0.07603854389721627,
+    "ci_lower": 0.06796292826552461,
+    "ci_upper": 0.0844326652837259
   },
   "ece": {
-    "point": 0.10250267665952892,
-    "ci_lower": 0.09429871520342613,
-    "ci_upper": 0.1107738891862955
+    "point": 0.102703426124197,
+    "ci_lower": 0.09453961456102783,
+    "ci_upper": 0.11090738758029978
   },
   "p_mound_low_tail": {
     "threshold": 0.25,
     "mean": 0.00033046926635822867,
     "ci_lower": 0.0,
-    "ci_upper": 0.0010033528735799379
+    "ci_upper": 0.0010036801605888257
   },
   "calibration_bins": [
     {
       "lo": 0.0,
       "hi": 0.1,
-      "count": 2194,
-      "mean_predicted": 0.010300820419325434,
-      "empirical_p_mound": 0.0
+      "count": 2184,
+      "mean_predicted": 0.010187728937728938,
+      "empirical_p_mound": 0.0004578754578754579
     },
     {
       "lo": 0.1,
       "hi": 0.2,
-      "count": 806,
+      "count": 816,
       "mean_predicted": 0.09999999999999999,
-      "empirical_p_mound": 0.0012406947890818859
+      "empirical_p_mound": 0.0
     },
     {
       "lo": 0.2,
@@ -76,7 +76,7 @@
       "lo": 0.6000000000000001,
       "hi": 0.7000000000000001,
       "count": 1,
-      "mean_predicted": 0.65,
+      "mean_predicted": 0.7,
       "empirical_p_mound": 0.0
     },
     {
@@ -89,16 +89,16 @@
     {
       "lo": 0.8,
       "hi": 0.9,
-      "count": 4,
+      "count": 3,
       "mean_predicted": 0.85,
       "empirical_p_mound": 0.0
     },
     {
       "lo": 0.9,
       "hi": 1.0,
-      "count": 701,
-      "mean_predicted": 0.9970042796005706,
-      "empirical_p_mound": 0.6119828815977175
+      "count": 702,
+      "mean_predicted": 0.9968660968660968,
+      "empirical_p_mound": 0.6111111111111112
     }
   ],
   "bootstrap": {

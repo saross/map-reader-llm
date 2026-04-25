@@ -1,104 +1,104 @@
 {
   "pool": "image",
   "variant": "adversarial-text",
-  "prob_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json",
+  "prob_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json",
   "buffer_metres": 20.0,
   "scope_tiles": 487,
-  "n_total": 2016,
-  "n_mound": 434,
-  "n_not_mound": 1582,
-  "prevalence": 0.2152777777777778,
+  "n_total": 1991,
+  "n_mound": 429,
+  "n_not_mound": 1562,
+  "prevalence": 0.2154696132596685,
   "auc": {
-    "point": 0.8633408973066818,
-    "ci_lower": 0.8476951075171258,
-    "ci_upper": 0.8786543482556253
+    "point": 0.8574216010195523,
+    "ci_lower": 0.8408204735409371,
+    "ci_upper": 0.8732264110885544
   },
   "brier": {
-    "point": 0.19043526785714288,
-    "ci_lower": 0.1745149429563492,
-    "ci_upper": 0.20640631200396828
+    "point": 0.19030261175288798,
+    "ci_lower": 0.17420495354093418,
+    "ci_upper": 0.20654256654947262
   },
   "ece": {
-    "point": 0.18777281746031743,
-    "ci_lower": 0.1714025297619047,
-    "ci_upper": 0.205680183531746
+    "point": 0.1791310899045705,
+    "ci_lower": 0.16308324962330484,
+    "ci_upper": 0.1978905072827725
   },
   "p_mound_low_tail": {
     "threshold": 0.25,
-    "mean": 0.0340080971659919,
-    "ci_lower": 0.02417328440786121,
-    "ci_upper": 0.04457088955186901
+    "mean": 0.040584415584415584,
+    "ci_lower": 0.03006313046920791,
+    "ci_upper": 0.052023584185267285
   },
   "calibration_bins": [
     {
       "lo": 0.0,
       "hi": 0.1,
-      "count": 845,
-      "mean_predicted": 0.017633136094674557,
-      "empirical_p_mound": 0.005917159763313609
+      "count": 848,
+      "mean_predicted": 0.026120283018867922,
+      "empirical_p_mound": 0.00589622641509434
     },
     {
       "lo": 0.1,
       "hi": 0.2,
-      "count": 308,
-      "mean_predicted": 0.1021103896103896,
-      "empirical_p_mound": 0.032467532467532464
+      "count": 293,
+      "mean_predicted": 0.10341296928327644,
+      "empirical_p_mound": 0.06825938566552901
     },
     {
       "lo": 0.2,
       "hi": 0.30000000000000004,
-      "count": 89,
-      "mean_predicted": 0.2078651685393258,
-      "empirical_p_mound": 0.34831460674157305
+      "count": 97,
+      "mean_predicted": 0.20618556701030927,
+      "empirical_p_mound": 0.27835051546391754
     },
     {
       "lo": 0.30000000000000004,
       "hi": 0.4,
-      "count": 0,
-      "mean_predicted": null,
-      "empirical_p_mound": null
+      "count": 2,
+      "mean_predicted": 0.35,
+      "empirical_p_mound": 0.5
     },
     {
       "lo": 0.4,
       "hi": 0.5,
-      "count": 36,
-      "mean_predicted": 0.4000000000000001,
-      "empirical_p_mound": 0.4166666666666667
+      "count": 40,
+      "mean_predicted": 0.4,
+      "empirical_p_mound": 0.425
     },
     {
       "lo": 0.5,
       "hi": 0.6000000000000001,
-      "count": 0,
-      "mean_predicted": null,
-      "empirical_p_mound": null
+      "count": 1,
+      "mean_predicted": 0.5,
+      "empirical_p_mound": 0.0
     },
     {
       "lo": 0.6000000000000001,
       "hi": 0.7000000000000001,
-      "count": 14,
-      "mean_predicted": 0.675,
+      "count": 10,
+      "mean_predicted": 0.68,
       "empirical_p_mound": 0.5
     },
     {
       "lo": 0.7000000000000001,
       "hi": 0.8,
-      "count": 16,
+      "count": 29,
       "mean_predicted": 0.75,
-      "empirical_p_mound": 0.25
+      "empirical_p_mound": 0.4482758620689655
     },
     {
       "lo": 0.8,
       "hi": 0.9,
-      "count": 80,
-      "mean_predicted": 0.8487499999999997,
-      "empirical_p_mound": 0.5375
+      "count": 82,
+      "mean_predicted": 0.8481707317073167,
+      "empirical_p_mound": 0.4634146341463415
     },
     {
       "lo": 0.9,
       "hi": 1.0,
-      "count": 628,
-      "mean_predicted": 0.9836783439490446,
-      "empirical_p_mound": 0.5079617834394905
+      "count": 589,
+      "mean_predicted": 0.9869269949066213,
+      "empirical_p_mound": 0.5144312393887945
     }
   ],
   "bootstrap": {

@@ -262,9 +262,13 @@ def bootstrap_metrics(
 
 
 def resolve_prob_path(pool_dir: Path, variant: str) -> Path:
-    """Return path to probabilities.json for a given variant on a pool."""
-    if variant == CANONICAL_VARIANT:
-        return pool_dir / "verified-v1-n5" / "probabilities.json"
+    """Return path to probabilities.json for a given variant on a pool.
+
+    After the 2026-04-25 re-run, canonical (adversarial-text) lives in
+    session-78-matrix alongside the novel variants — all share the same
+    shared-crops candidate set. The legacy verified-v1-n5 path is
+    no longer canonical for this matrix.
+    """
     return (
         pool_dir
         / "session-78-matrix"
