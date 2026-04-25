@@ -13273,6 +13273,32 @@ variant rescues image-track miscalibration. See
 `docs/methodology/data-reproduction-2026-04-25.md` for the full
 provenance note and per-cell drift table.
 
+**Tier-flip caveat for the text track (added 2026-04-25 after re-run)**:
+the crop-parity re-run also revealed that the four with-image variants
+(`adversarial`, `comparative`, `checklist`, `brief`) are statistically
+distinguishable from canonical on text-track F1@20m (canonical 0.863
+vs alternatives 0.876–0.886; canonical now sits in tier 2 of the per-
+architecture leaderboard while the four with-image alternatives are in
+tier 1). The Pareto-dominance claim therefore needs nuance for the
+text track: canonical wins on **calibration metrics** (ECE, Brier) but
+loses on **F1@20m** to four with-image alternatives by 0.013–0.023.
+Pareto-dominance still holds for the image track on AUC, ECE, and
+Brier (with all 7 variants statistically indistinguishable on F1, all
+in image tier 3 at F1≈0.78–0.79). Headline framing for the paper:
+"canonical wins calibration on both tracks; on text, with-image
+variants win F1 with no calibration improvement". See
+`results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.md`
+for the full tier breakdown.
+
+**Underestimate caveat for *-text variants (added 2026-04-25)**: the
+original Phase A had elevated API failure rates on the four text-only
+verifier variants, so their published F1 numbers were biased low by
+0.022–0.035 (not just `text-brief-text`). The re-run captured the full
+candidate pools (1998–3715 vs original 1850–3530); recovered candidates
+included additional true positives. This means F1 ratings for those
+four cells in any pre-2026-04-25 figure or table should be treated as
+under-estimates relative to the now-canonical re-run values.
+
 ### Interpretation
 
 This is the key falsification test for Obs 269's two candidate

@@ -199,12 +199,18 @@ run_phase_a_pool() {
 
         if [[ -e "$probs" ]]; then
             # Count entries + failures for the commit message.
+            # The probabilities.json schema is {version, mode, iterations,
+            # total_results, results: {candidate_id: {...}}, verifier_config}.
+            # Earlier (now-fixed) bugs counted top-level keys (always 6) or
+            # iterated the top-level dict; correct counts come from
+            # total_results + iterating the "results" sub-dict.
             local n_probs n_fail
-            n_probs=$("$PYTHON" -c "import json; print(len(json.loads(open('$probs').read())))" 2>/dev/null || echo "?")
+            n_probs=$("$PYTHON" -c "import json; d = json.loads(open('$probs').read()); print(d.get('total_results', '?'))" 2>/dev/null || echo "?")
             n_fail=$("$PYTHON" -c "
 import json
 d = json.loads(open('$probs').read())
-print(sum(1 for k, v in d.items() if v is None or (isinstance(v, dict) and v.get('error'))))
+results = d.get('results', {})
+print(sum(1 for k, v in results.items() if v is None or (isinstance(v, dict) and v.get('error'))))
 " 2>/dev/null || echo "?")
 
             log "  ${pool_name}-${s}: ${n_probs} entries, ${n_fail} failed"
