@@ -1,0 +1,791 @@
+2026-04-25 03:27:24,007 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git dcd36515
+2026-04-25 03:27:24,009 - INFO - __main__ - Resolved 21 conditions from inventory (era=1, track=None)
+2026-04-25 03:27:24,010 - INFO - __main__ - Resolved 21 conditions
+
+Dry run: 21 conditions
+Label                                         Era Track    K Thresholds
+--------------------------------------------------------------------------------
+h4-canonical-first                              1 image    1 t=1
+h4-canonical-last                               1 image    1 t=1
+h4-config-default                               1 image    1 t=1
+h4-random                                       1 image    1 t=1
+h5-track1-image-terse                           1 image    1 t=1
+h5-track1-image-verbose                         1 image    1 t=1
+h5-track2-text-terse                            1 text     1 t=1
+h5-track2-text-verbose                          1 text     1 t=1
+h8-track1-image-canonical                       1 image    1 t=1
+h8-track1-image-exploratory-pure-positive-2hp   1 image    1 t=1
+h8-track1-image-exploratory-pure-positive-4hp   1 image    1 t=1
+h8-track1-image-exploratory-pure-positive-canon   1 image    1 t=1
+h8-track1-image-plus-hp                         1 image    1 t=1
+h8-track1-image-pure-positive-canon             1 image    1 t=1
+h8-track1-image-scale-4                         1 image    1 t=1
+h8-track1-image-scale-8                         1 image    1 t=1
+h8-track2-text-canonical                        1 text     1 t=1
+h8-track2-text-plus-hp                          1 text     1 t=1
+h8-track2-text-pure-positive-canon              1 text     1 t=1
+h8-track2-text-scale-4                          1 text     1 t=1
+h8-track2-text-scale-8                          1 text     1 t=1
+2026-04-25 03:27:24,398 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git dcd36515
+2026-04-25 03:27:24,400 - INFO - __main__ - Resolved 21 conditions from inventory (era=1, track=None)
+2026-04-25 03:27:24,400 - INFO - __main__ - Resolved 21 conditions
+2026-04-25 03:27:24,400 - INFO - __main__ - Evaluation: 0 cached, 21 to compute (8 workers)
+2026-04-25 03:27:28,980 - INFO - evaluate_detections -   20m: F1=0.583 [0.525, 0.636], P=0.489 [0.424, 0.546], R=0.724 [0.666, 0.782]
+2026-04-25 03:27:29,007 - INFO - evaluate_detections -   20m: F1=0.631 [0.587, 0.672], P=0.532 [0.486, 0.576], R=0.776 [0.721, 0.825]
+2026-04-25 03:27:29,008 - INFO - evaluate_detections -   20m: F1=0.605 [0.563, 0.645], P=0.514 [0.466, 0.557], R=0.737 [0.689, 0.784]
+2026-04-25 03:27:29,075 - INFO - evaluate_detections -   20m: F1=0.603 [0.554, 0.647], P=0.520 [0.468, 0.567], R=0.716 [0.662, 0.768]
+2026-04-25 03:27:29,084 - INFO - evaluate_detections -   20m: F1=0.598 [0.547, 0.645], P=0.508 [0.457, 0.556], R=0.727 [0.668, 0.785]
+2026-04-25 03:27:29,099 - INFO - evaluate_detections -   20m: F1=0.598 [0.537, 0.651], P=0.485 [0.420, 0.546], R=0.781 [0.726, 0.831]
+2026-04-25 03:27:29,119 - INFO - evaluate_detections -   20m: F1=0.606 [0.561, 0.654], P=0.520 [0.476, 0.568], R=0.725 [0.670, 0.779]
+2026-04-25 03:27:29,130 - INFO - evaluate_detections -   20m: F1=0.571 [0.519, 0.618], P=0.473 [0.418, 0.522], R=0.720 [0.668, 0.767]
+2026-04-25 03:27:33,552 - INFO - evaluate_detections -   30m: F1=0.630 [0.573, 0.680], P=0.528 [0.463, 0.589], R=0.781 [0.730, 0.833]
+2026-04-25 03:27:33,583 - INFO - evaluate_detections -   30m: F1=0.686 [0.640, 0.725], P=0.578 [0.528, 0.624], R=0.842 [0.794, 0.882]
+2026-04-25 03:27:33,613 - INFO - evaluate_detections -   30m: F1=0.668 [0.623, 0.711], P=0.577 [0.525, 0.623], R=0.794 [0.743, 0.844]
+2026-04-25 03:27:33,644 - INFO - evaluate_detections -   30m: F1=0.649 [0.607, 0.691], P=0.551 [0.502, 0.596], R=0.790 [0.745, 0.838]
+2026-04-25 03:27:33,681 - INFO - evaluate_detections -   30m: F1=0.664 [0.617, 0.706], P=0.564 [0.515, 0.609], R=0.807 [0.755, 0.857]
+2026-04-25 03:27:33,727 - INFO - evaluate_detections -   30m: F1=0.671 [0.630, 0.709], P=0.576 [0.529, 0.619], R=0.803 [0.756, 0.848]
+2026-04-25 03:27:33,778 - INFO - evaluate_detections -   30m: F1=0.644 [0.595, 0.688], P=0.533 [0.477, 0.584], R=0.813 [0.766, 0.856]
+2026-04-25 03:27:33,788 - INFO - evaluate_detections -   30m: F1=0.627 [0.566, 0.680], P=0.508 [0.443, 0.571], R=0.818 [0.768, 0.865]
+2026-04-25 03:27:38,085 - INFO - evaluate_detections -   40m: F1=0.710 [0.669, 0.746], P=0.613 [0.563, 0.656], R=0.844 [0.801, 0.884]
+2026-04-25 03:27:38,137 - INFO - evaluate_detections -   40m: F1=0.655 [0.600, 0.704], P=0.549 [0.483, 0.608], R=0.813 [0.764, 0.862]
+2026-04-25 03:27:38,167 - INFO - evaluate_detections -   40m: F1=0.718 [0.676, 0.753], P=0.605 [0.554, 0.650], R=0.881 [0.841, 0.916]
+2026-04-25 03:27:38,268 - INFO - evaluate_detections -   40m: F1=0.695 [0.654, 0.729], P=0.590 [0.542, 0.632], R=0.846 [0.804, 0.885]
+2026-04-25 03:27:38,273 - INFO - evaluate_detections -   40m: F1=0.715 [0.674, 0.749], P=0.607 [0.557, 0.649], R=0.868 [0.828, 0.908]
+2026-04-25 03:27:38,330 - INFO - evaluate_detections -   40m: F1=0.713 [0.674, 0.747], P=0.612 [0.565, 0.653], R=0.853 [0.811, 0.893]
+2026-04-25 03:27:38,435 - INFO - evaluate_detections -   40m: F1=0.644 [0.585, 0.698], P=0.522 [0.456, 0.585], R=0.840 [0.796, 0.882]
+2026-04-25 03:27:38,457 - INFO - evaluate_detections -   40m: F1=0.674 [0.626, 0.714], P=0.558 [0.499, 0.609], R=0.850 [0.810, 0.887]
+2026-04-25 03:27:42,585 - INFO - evaluate_detections -   50m: F1=0.726 [0.686, 0.761], P=0.627 [0.575, 0.671], R=0.863 [0.823, 0.900]
+2026-04-25 03:27:42,708 - INFO - evaluate_detections -   50m: F1=0.667 [0.613, 0.715], P=0.559 [0.493, 0.618], R=0.827 [0.786, 0.871]
+2026-04-25 03:27:42,874 - INFO - evaluate_detections -   50m: F1=0.730 [0.687, 0.765], P=0.620 [0.569, 0.664], R=0.887 [0.848, 0.922]
+2026-04-25 03:27:42,883 - INFO - evaluate_detections -   50m: F1=0.734 [0.695, 0.769], P=0.630 [0.582, 0.672], R=0.879 [0.839, 0.916]
+2026-04-25 03:27:42,896 - INFO - evaluate_detections -   50m: F1=0.724 [0.681, 0.757], P=0.610 [0.559, 0.654], R=0.889 [0.852, 0.920]
+2026-04-25 03:27:42,971 - INFO - evaluate_detections -   50m: F1=0.716 [0.675, 0.750], P=0.608 [0.557, 0.653], R=0.872 [0.833, 0.909]
+2026-04-25 03:27:43,022 - INFO - evaluate_detections -   50m: F1=0.697 [0.649, 0.738], P=0.577 [0.518, 0.631], R=0.879 [0.845, 0.913]
+2026-04-25 03:27:43,023 - INFO - evaluate_detections -   50m: F1=0.654 [0.599, 0.708], P=0.530 [0.464, 0.594], R=0.853 [0.812, 0.893]
+2026-04-25 03:27:47,098 - INFO - evaluate_detections -   100m: F1=0.742 [0.701, 0.775], P=0.640 [0.588, 0.687], R=0.881 [0.848, 0.913]
+2026-04-25 03:27:47,204 - INFO - evaluate_detections -   100m: F1=0.681 [0.628, 0.727], P=0.570 [0.503, 0.628], R=0.844 [0.802, 0.884]
+2026-04-25 03:27:47,437 - INFO - evaluate_detections -   100m: F1=0.753 [0.715, 0.785], P=0.646 [0.598, 0.688], R=0.902 [0.861, 0.937]
+2026-04-25 03:27:47,439 - INFO - evaluate_detections -   100m: F1=0.739 [0.698, 0.773], P=0.628 [0.578, 0.673], R=0.898 [0.864, 0.929]
+2026-04-25 03:27:47,575 - INFO - evaluate_detections -   100m: F1=0.713 [0.663, 0.752], P=0.591 [0.530, 0.644], R=0.900 [0.866, 0.929]
+2026-04-25 03:27:47,600 - INFO - evaluate_detections -   100m: F1=0.664 [0.606, 0.716], P=0.538 [0.470, 0.602], R=0.866 [0.826, 0.903]
+2026-04-25 03:27:47,651 - INFO - evaluate_detections -   100m: F1=0.730 [0.688, 0.762], P=0.615 [0.565, 0.659], R=0.896 [0.860, 0.927]
+2026-04-25 03:27:47,662 - INFO - evaluate_detections -   MCC=0.281 [0.208, 0.347], Sens=1.000, Spec=0.125
+2026-04-25 03:27:47,664 - INFO - __main__ - [1/21] h5-track1-image-verbose t=1 done
+2026-04-25 03:27:47,722 - INFO - evaluate_detections -   100m: F1=0.738 [0.697, 0.772], P=0.626 [0.575, 0.672], R=0.898 [0.864, 0.928]
+2026-04-25 03:27:47,766 - INFO - evaluate_detections -   MCC=0.067 [0.060, 0.124], Sens=1.000, Spec=0.007
+2026-04-25 03:27:47,767 - INFO - __main__ - [2/21] h5-track2-text-verbose t=1 done
+2026-04-25 03:27:47,996 - INFO - evaluate_detections -   MCC=0.213 [0.147, 0.274], Sens=1.000, Spec=0.074
+2026-04-25 03:27:47,997 - INFO - __main__ - [3/21] h4-config-default t=1 done
+2026-04-25 03:27:48,010 - INFO - evaluate_detections -   MCC=0.094 [0.063, 0.153], Sens=1.000, Spec=0.015
+2026-04-25 03:27:48,012 - INFO - __main__ - [4/21] h4-canonical-first t=1 done
+2026-04-25 03:27:48,133 - INFO - evaluate_detections -   MCC=0.067 [0.061, 0.130], Sens=1.000, Spec=0.007
+2026-04-25 03:27:48,134 - INFO - __main__ - [5/21] h4-random t=1 done
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:27:48,170 - INFO - __main__ - [6/21] h5-track2-text-terse t=1 done
+2026-04-25 03:27:48,214 - INFO - evaluate_detections -   MCC=0.213 [0.145, 0.278], Sens=1.000, Spec=0.074
+2026-04-25 03:27:48,216 - INFO - __main__ - [7/21] h4-canonical-last t=1 done
+2026-04-25 03:27:48,293 - INFO - evaluate_detections -   MCC=0.224 [0.154, 0.290], Sens=1.000, Spec=0.081
+2026-04-25 03:27:48,294 - INFO - __main__ - [8/21] h5-track1-image-terse t=1 done
+2026-04-25 03:27:52,129 - INFO - evaluate_detections -   20m: F1=0.581 [0.534, 0.625], P=0.508 [0.458, 0.554], R=0.679 [0.625, 0.735]
+2026-04-25 03:27:52,364 - INFO - evaluate_detections -   20m: F1=0.571 [0.519, 0.617], P=0.473 [0.417, 0.524], R=0.722 [0.667, 0.775]
+2026-04-25 03:27:52,532 - INFO - evaluate_detections -   20m: F1=0.570 [0.522, 0.612], P=0.496 [0.447, 0.537], R=0.670 [0.618, 0.722]
+2026-04-25 03:27:52,624 - INFO - evaluate_detections -   20m: F1=0.598 [0.550, 0.646], P=0.508 [0.460, 0.557], R=0.727 [0.670, 0.782]
+2026-04-25 03:27:52,705 - INFO - evaluate_detections -   20m: F1=0.598 [0.547, 0.645], P=0.508 [0.457, 0.556], R=0.727 [0.668, 0.785]
+2026-04-25 03:27:52,804 - INFO - evaluate_detections -   20m: F1=0.568 [0.520, 0.611], P=0.492 [0.441, 0.536], R=0.672 [0.621, 0.726]
+2026-04-25 03:27:52,812 - INFO - evaluate_detections -   20m: F1=0.584 [0.533, 0.630], P=0.486 [0.428, 0.540], R=0.731 [0.676, 0.779]
+2026-04-25 03:27:53,038 - INFO - evaluate_detections -   20m: F1=0.587 [0.541, 0.632], P=0.499 [0.453, 0.545], R=0.712 [0.661, 0.766]
+2026-04-25 03:27:56,681 - INFO - evaluate_detections -   30m: F1=0.653 [0.609, 0.693], P=0.571 [0.519, 0.616], R=0.763 [0.714, 0.807]
+2026-04-25 03:27:56,940 - INFO - evaluate_detections -   30m: F1=0.631 [0.579, 0.676], P=0.522 [0.461, 0.575], R=0.798 [0.748, 0.844]
+2026-04-25 03:27:57,052 - INFO - evaluate_detections -   30m: F1=0.649 [0.601, 0.689], P=0.565 [0.510, 0.608], R=0.763 [0.710, 0.814]
+2026-04-25 03:27:57,209 - INFO - evaluate_detections -   30m: F1=0.656 [0.612, 0.699], P=0.558 [0.510, 0.604], R=0.798 [0.752, 0.847]
+2026-04-25 03:27:57,256 - INFO - evaluate_detections -   30m: F1=0.664 [0.617, 0.706], P=0.564 [0.515, 0.609], R=0.807 [0.755, 0.857]
+2026-04-25 03:27:57,391 - INFO - evaluate_detections -   30m: F1=0.637 [0.585, 0.683], P=0.530 [0.467, 0.587], R=0.798 [0.752, 0.844]
+2026-04-25 03:27:57,519 - INFO - evaluate_detections -   30m: F1=0.646 [0.599, 0.687], P=0.560 [0.505, 0.606], R=0.764 [0.712, 0.816]
+2026-04-25 03:27:57,628 - INFO - evaluate_detections -   30m: F1=0.655 [0.613, 0.695], P=0.557 [0.508, 0.602], R=0.796 [0.753, 0.839]
+2026-04-25 03:28:01,137 - INFO - evaluate_detections -   40m: F1=0.680 [0.635, 0.719], P=0.594 [0.541, 0.639], R=0.794 [0.746, 0.840]
+2026-04-25 03:28:01,517 - INFO - evaluate_detections -   40m: F1=0.665 [0.613, 0.710], P=0.550 [0.491, 0.604], R=0.840 [0.792, 0.884]
+2026-04-25 03:28:01,568 - INFO - evaluate_detections -   40m: F1=0.680 [0.638, 0.718], P=0.592 [0.539, 0.635], R=0.800 [0.757, 0.844]
+2026-04-25 03:28:01,803 - INFO - evaluate_detections -   40m: F1=0.699 [0.654, 0.738], P=0.594 [0.546, 0.637], R=0.850 [0.805, 0.891]
+2026-04-25 03:28:01,883 - INFO - evaluate_detections -   40m: F1=0.715 [0.674, 0.749], P=0.607 [0.557, 0.649], R=0.868 [0.828, 0.908]
+2026-04-25 03:28:02,017 - INFO - evaluate_detections -   40m: F1=0.670 [0.616, 0.718], P=0.557 [0.495, 0.617], R=0.839 [0.795, 0.881]
+2026-04-25 03:28:02,173 - INFO - evaluate_detections -   40m: F1=0.688 [0.646, 0.722], P=0.584 [0.535, 0.629], R=0.835 [0.797, 0.874]
+2026-04-25 03:28:02,224 - INFO - evaluate_detections -   40m: F1=0.676 [0.631, 0.714], P=0.586 [0.530, 0.631], R=0.800 [0.757, 0.844]
+2026-04-25 03:28:05,596 - INFO - evaluate_detections -   50m: F1=0.689 [0.645, 0.727], P=0.603 [0.549, 0.648], R=0.805 [0.758, 0.849]
+2026-04-25 03:28:06,085 - INFO - evaluate_detections -   50m: F1=0.699 [0.656, 0.737], P=0.609 [0.554, 0.653], R=0.822 [0.779, 0.865]
+2026-04-25 03:28:06,114 - INFO - evaluate_detections -   50m: F1=0.678 [0.627, 0.723], P=0.561 [0.503, 0.616], R=0.857 [0.812, 0.896]
+2026-04-25 03:28:06,404 - INFO - evaluate_detections -   50m: F1=0.724 [0.680, 0.760], P=0.615 [0.565, 0.659], R=0.879 [0.840, 0.918]
+2026-04-25 03:28:06,478 - INFO - evaluate_detections -   50m: F1=0.730 [0.687, 0.765], P=0.620 [0.569, 0.664], R=0.887 [0.848, 0.922]
+2026-04-25 03:28:06,714 - INFO - evaluate_detections -   50m: F1=0.704 [0.663, 0.741], P=0.599 [0.548, 0.643], R=0.855 [0.819, 0.893]
+2026-04-25 03:28:06,722 - INFO - evaluate_detections -   50m: F1=0.690 [0.636, 0.738], P=0.575 [0.507, 0.635], R=0.865 [0.827, 0.903]
+2026-04-25 03:28:06,945 - INFO - evaluate_detections -   50m: F1=0.695 [0.649, 0.734], P=0.602 [0.545, 0.648], R=0.822 [0.779, 0.865]
+2026-04-25 03:28:10,052 - INFO - evaluate_detections -   100m: F1=0.708 [0.664, 0.746], P=0.619 [0.564, 0.663], R=0.827 [0.781, 0.869]
+2026-04-25 03:28:10,588 - INFO - evaluate_detections -   100m: F1=0.718 [0.674, 0.754], P=0.625 [0.571, 0.670], R=0.844 [0.803, 0.885]
+2026-04-25 03:28:10,623 - INFO - evaluate_detections -   MCC=0.094 [0.062, 0.152], Sens=1.000, Spec=0.015
+2026-04-25 03:28:10,624 - INFO - __main__ - [9/21] h8-track1-image-canonical t=1 done
+2026-04-25 03:28:10,750 - INFO - evaluate_detections -   100m: F1=0.696 [0.643, 0.739], P=0.576 [0.517, 0.631], R=0.879 [0.836, 0.917]
+2026-04-25 03:28:11,012 - INFO - evaluate_detections -   100m: F1=0.740 [0.700, 0.774], P=0.629 [0.580, 0.671], R=0.900 [0.864, 0.933]
+2026-04-25 03:28:11,045 - INFO - evaluate_detections -   100m: F1=0.739 [0.698, 0.773], P=0.628 [0.578, 0.673], R=0.898 [0.864, 0.929]
+2026-04-25 03:28:11,153 - INFO - evaluate_detections -   MCC=0.094 [0.062, 0.153], Sens=1.000, Spec=0.015
+2026-04-25 03:28:11,154 - INFO - __main__ - [10/21] h8-track1-image-exploratory-pure-positive-canon t=1 done
+2026-04-25 03:28:11,276 - INFO - evaluate_detections -   100m: F1=0.727 [0.686, 0.761], P=0.618 [0.566, 0.664], R=0.883 [0.848, 0.916]
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:28:11,340 - INFO - __main__ - [11/21] h8-track1-image-exploratory-pure-positive-2hp t=1 done
+2026-04-25 03:28:11,433 - INFO - evaluate_detections -   100m: F1=0.705 [0.650, 0.753], P=0.587 [0.517, 0.648], R=0.883 [0.845, 0.916]
+2026-04-25 03:28:11,580 - INFO - evaluate_detections -   MCC=0.164 [0.092, 0.225], Sens=1.000, Spec=0.044
+2026-04-25 03:28:11,581 - INFO - __main__ - [12/21] h8-track1-image-exploratory-pure-positive-4hp t=1 done
+2026-04-25 03:28:11,609 - INFO - evaluate_detections -   MCC=0.094 [0.063, 0.153], Sens=1.000, Spec=0.015
+2026-04-25 03:28:11,610 - INFO - __main__ - [13/21] h8-track1-image-plus-hp t=1 done
+2026-04-25 03:28:11,651 - INFO - evaluate_detections -   100m: F1=0.714 [0.668, 0.750], P=0.618 [0.559, 0.666], R=0.844 [0.803, 0.885]
+2026-04-25 03:28:11,836 - INFO - evaluate_detections -   MCC=0.150 [0.086, 0.208], Sens=1.000, Spec=0.037
+2026-04-25 03:28:11,837 - INFO - __main__ - [14/21] h8-track1-image-scale-8 t=1 done
+2026-04-25 03:28:12,002 - INFO - evaluate_detections -   MCC=0.134 [0.067, 0.191], Sens=1.000, Spec=0.029
+2026-04-25 03:28:12,003 - INFO - __main__ - [15/21] h8-track1-image-scale-4 t=1 done
+2026-04-25 03:28:12,208 - INFO - evaluate_detections -   MCC=0.094 [0.062, 0.153], Sens=1.000, Spec=0.015
+2026-04-25 03:28:12,208 - INFO - __main__ - [16/21] h8-track1-image-pure-positive-canon t=1 done
+2026-04-25 03:28:15,058 - INFO - evaluate_detections -   20m: F1=0.604 [0.546, 0.655], P=0.484 [0.420, 0.542], R=0.805 [0.758, 0.851]
+2026-04-25 03:28:15,576 - INFO - evaluate_detections -   20m: F1=0.597 [0.540, 0.648], P=0.480 [0.419, 0.534], R=0.788 [0.735, 0.841]
+2026-04-25 03:28:15,739 - INFO - evaluate_detections -   20m: F1=0.604 [0.547, 0.653], P=0.486 [0.424, 0.541], R=0.800 [0.744, 0.848]
+2026-04-25 03:28:15,965 - INFO - evaluate_detections -   20m: F1=0.609 [0.553, 0.659], P=0.491 [0.429, 0.547], R=0.803 [0.750, 0.850]
+2026-04-25 03:28:16,004 - INFO - evaluate_detections -   20m: F1=0.607 [0.549, 0.656], P=0.489 [0.426, 0.545], R=0.800 [0.746, 0.847]
+2026-04-25 03:28:19,363 - INFO - evaluate_detections -   30m: F1=0.636 [0.578, 0.688], P=0.509 [0.443, 0.569], R=0.848 [0.804, 0.891]
+2026-04-25 03:28:19,920 - INFO - evaluate_detections -   30m: F1=0.638 [0.582, 0.686], P=0.513 [0.450, 0.571], R=0.842 [0.799, 0.881]
+2026-04-25 03:28:20,071 - INFO - evaluate_detections -   30m: F1=0.641 [0.587, 0.690], P=0.515 [0.452, 0.576], R=0.848 [0.806, 0.888]
+2026-04-25 03:28:20,329 - INFO - evaluate_detections -   30m: F1=0.645 [0.590, 0.694], P=0.520 [0.455, 0.579], R=0.850 [0.809, 0.890]
+2026-04-25 03:28:20,341 - INFO - evaluate_detections -   30m: F1=0.640 [0.586, 0.689], P=0.516 [0.451, 0.575], R=0.844 [0.800, 0.886]
+2026-04-25 03:28:23,665 - INFO - evaluate_detections -   40m: F1=0.646 [0.587, 0.698], P=0.517 [0.451, 0.577], R=0.861 [0.820, 0.899]
+2026-04-25 03:28:24,310 - INFO - evaluate_detections -   40m: F1=0.649 [0.595, 0.698], P=0.522 [0.460, 0.581], R=0.857 [0.818, 0.895]
+2026-04-25 03:28:24,421 - INFO - evaluate_detections -   40m: F1=0.651 [0.596, 0.701], P=0.523 [0.460, 0.584], R=0.861 [0.821, 0.899]
+2026-04-25 03:28:24,684 - INFO - evaluate_detections -   40m: F1=0.652 [0.596, 0.701], P=0.526 [0.461, 0.585], R=0.859 [0.819, 0.898]
+2026-04-25 03:28:24,716 - INFO - evaluate_detections -   40m: F1=0.649 [0.594, 0.698], P=0.523 [0.458, 0.583], R=0.855 [0.815, 0.895]
+2026-04-25 03:28:27,987 - INFO - evaluate_detections -   50m: F1=0.650 [0.590, 0.700], P=0.521 [0.454, 0.579], R=0.866 [0.825, 0.904]
+2026-04-25 03:28:28,676 - INFO - evaluate_detections -   50m: F1=0.654 [0.600, 0.702], P=0.527 [0.464, 0.585], R=0.865 [0.826, 0.901]
+2026-04-25 03:28:28,776 - INFO - evaluate_detections -   50m: F1=0.655 [0.599, 0.705], P=0.526 [0.463, 0.587], R=0.866 [0.827, 0.903]
+2026-04-25 03:28:29,004 - INFO - evaluate_detections -   50m: F1=0.658 [0.601, 0.706], P=0.530 [0.465, 0.589], R=0.866 [0.827, 0.903]
+2026-04-25 03:28:29,061 - INFO - evaluate_detections -   50m: F1=0.654 [0.599, 0.703], P=0.527 [0.464, 0.587], R=0.863 [0.822, 0.901]
+2026-04-25 03:28:32,335 - INFO - evaluate_detections -   100m: F1=0.655 [0.595, 0.705], P=0.524 [0.457, 0.581], R=0.872 [0.833, 0.908]
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:28:32,872 - INFO - __main__ - [17/21] h8-track2-text-canonical t=1 done
+2026-04-25 03:28:33,039 - INFO - evaluate_detections -   100m: F1=0.659 [0.602, 0.707], P=0.530 [0.468, 0.588], R=0.870 [0.832, 0.906]
+2026-04-25 03:28:33,105 - INFO - evaluate_detections -   100m: F1=0.659 [0.604, 0.708], P=0.530 [0.467, 0.591], R=0.872 [0.833, 0.908]
+2026-04-25 03:28:33,337 - INFO - evaluate_detections -   100m: F1=0.662 [0.606, 0.711], P=0.533 [0.468, 0.593], R=0.872 [0.833, 0.908]
+2026-04-25 03:28:33,403 - INFO - evaluate_detections -   100m: F1=0.662 [0.607, 0.711], P=0.533 [0.470, 0.593], R=0.872 [0.834, 0.907]
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:28:33,567 - INFO - __main__ - [18/21] h8-track2-text-plus-hp t=1 done
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:28:33,629 - INFO - __main__ - [19/21] h8-track2-text-pure-positive-canon t=1 done
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:28:33,854 - INFO - __main__ - [20/21] h8-track2-text-scale-8 t=1 done
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/logging/__init__.py", line 1150, in emit
+    msg = self.format(record)
+  File "/usr/lib/python3.13/logging/__init__.py", line 998, in format
+    return fmt.format(record)
+           ~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 711, in format
+    record.message = record.getMessage()
+                     ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/logging/__init__.py", line 400, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: must be real number, not NoneType
+Call stack:
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1494, in <module>
+    sys.exit(main())
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 1377, in main
+    all_evaluations = evaluate_all_conditions(
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 609, in evaluate_all_conditions
+    fut = executor.submit(
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 804, in submit
+    self._start_executor_manager_thread()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 743, in _start_executor_manager_thread
+    self._launch_processes()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 770, in _launch_processes
+    self._spawn_process()
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 780, in _spawn_process
+    p.start()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.13/multiprocessing/context.py", line 282, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.13/multiprocessing/popen_fork.py", line 74, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/home/shawn/Code/map-reader-llm/scripts/build_tiered_leaderboard.py", line 515, in _evaluate_single_threshold
+    return evaluate_single_run(
+  File "/home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py", line 417, in evaluate_single_run
+    logger.info(
+Message: '  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f'
+Arguments: (None, None, None, 1.0, 0.0)
+2026-04-25 03:28:33,919 - INFO - __main__ - [21/21] h8-track2-text-scale-4 t=1 done
+2026-04-25 03:28:33,928 - INFO - __main__ - Stage 2 complete in 69.5s
+2026-04-25 03:28:33,929 - INFO - __main__ - Top-20 filter: 21 → 21 conditions (union across 5 buffers)
+2026-04-25 03:28:33,929 - INFO - __main__ - Selected 21 conditions (best F1=0.631 at 20m)
+2026-04-25 03:28:33,954 - INFO - __main__ - Pairwise tests: 210 pairs at 20m (10000 permutations)
+2026-04-25 03:28:33,954 - INFO - __main__ - [1/210] h4-canonical-last vs h8-track2-text-scale-4...
+2026-04-25 03:28:33,963 - INFO - pairwise_permutation_test - GeoJSON: 785 detections from detections_canonical-last_run01.geojson
+2026-04-25 03:28:33,971 - INFO - pairwise_permutation_test - GeoJSON: 882 detections from detections_scale-4_run01.geojson
+2026-04-25 03:28:35,427 - INFO - __main__ - [2/210] h4-canonical-last vs h8-track2-text-scale-8...
+2026-04-25 03:28:35,435 - INFO - pairwise_permutation_test - GeoJSON: 881 detections from detections_scale-8_run01.geojson
+2026-04-25 03:28:36,890 - INFO - __main__ - [3/210] h4-canonical-last vs h4-config-default...
+2026-04-25 03:28:36,897 - INFO - pairwise_permutation_test - GeoJSON: 752 detections from detections_config-default_run01.geojson
+2026-04-25 03:28:38,318 - INFO - __main__ - [4/210] h4-canonical-last vs h5-track1-image-terse...
+2026-04-25 03:28:38,326 - INFO - pairwise_permutation_test - GeoJSON: 773 detections from detections_terse_run01.geojson
+2026-04-25 03:28:39,759 - INFO - __main__ - [5/210] h4-canonical-last vs h8-track2-text-canonical...
+2026-04-25 03:28:39,767 - INFO - pairwise_permutation_test - GeoJSON: 897 detections from detections_canonical_run01.geojson
+2026-04-25 03:28:41,208 - INFO - __main__ - [6/210] h4-canonical-last vs h8-track2-text-pure-positive-canon...
+2026-04-25 03:28:41,217 - INFO - pairwise_permutation_test - GeoJSON: 887 detections from detections_pure-positive-canon_run01.geojson
+2026-04-25 03:28:42,661 - INFO - __main__ - [7/210] h4-canonical-last vs h5-track1-image-verbose...
+2026-04-25 03:28:42,668 - INFO - pairwise_permutation_test - GeoJSON: 742 detections from detections_verbose_run01.geojson
+2026-04-25 03:28:44,088 - INFO - __main__ - [8/210] h4-canonical-last vs h4-canonical-first...
+2026-04-25 03:28:44,096 - INFO - pairwise_permutation_test - GeoJSON: 771 detections from detections_canonical-first_run01.geojson
+2026-04-25 03:28:45,522 - INFO - __main__ - [9/210] h4-canonical-last vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:28:45,530 - INFO - pairwise_permutation_test - GeoJSON: 771 detections from detections_pure-positive-4hp_run01.geojson
+2026-04-25 03:28:46,984 - INFO - __main__ - [10/210] h4-canonical-last vs h8-track1-image-plus-hp...
+2026-04-25 03:28:46,992 - INFO - pairwise_permutation_test - GeoJSON: 771 detections from detections_plus-hp_run01.geojson
+2026-04-25 03:28:48,417 - INFO - __main__ - [11/210] h4-canonical-last vs h5-track2-text-terse...
+2026-04-25 03:28:48,425 - INFO - pairwise_permutation_test - GeoJSON: 868 detections from detections_terse_run01.geojson
+2026-04-25 03:28:49,882 - INFO - __main__ - [12/210] h4-canonical-last vs h8-track2-text-plus-hp...
+2026-04-25 03:28:49,891 - INFO - pairwise_permutation_test - GeoJSON: 885 detections from detections_plus-hp_run01.geojson
+2026-04-25 03:28:51,343 - INFO - __main__ - [13/210] h4-canonical-last vs h8-track1-image-scale-8...
+2026-04-25 03:28:51,351 - INFO - pairwise_permutation_test - GeoJSON: 770 detections from detections_scale-8_run01.geojson
+2026-04-25 03:28:52,763 - INFO - __main__ - [14/210] h4-canonical-last vs h8-track1-image-scale-4...
+2026-04-25 03:28:52,771 - INFO - pairwise_permutation_test - GeoJSON: 811 detections from detections_scale-4_run01.geojson
+2026-04-25 03:28:54,198 - INFO - __main__ - [15/210] h4-canonical-last vs h5-track2-text-verbose...
+2026-04-25 03:28:54,206 - INFO - pairwise_permutation_test - GeoJSON: 798 detections from detections_verbose_run01.geojson
+2026-04-25 03:28:55,619 - INFO - __main__ - [16/210] h4-canonical-last vs h8-track1-image-canonical...
+2026-04-25 03:28:55,626 - INFO - pairwise_permutation_test - GeoJSON: 720 detections from detections_canonical_run01.geojson
+2026-04-25 03:28:57,016 - INFO - __main__ - [17/210] h4-canonical-last vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:28:57,024 - INFO - pairwise_permutation_test - GeoJSON: 823 detections from detections_pure-positive-2hp_run01.geojson
+2026-04-25 03:28:58,481 - INFO - __main__ - [18/210] h4-canonical-last vs h4-random...
+2026-04-25 03:28:58,489 - INFO - pairwise_permutation_test - GeoJSON: 821 detections from detections_random_run01.geojson
+2026-04-25 03:28:59,930 - INFO - __main__ - [19/210] h4-canonical-last vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:28:59,937 - INFO - pairwise_permutation_test - GeoJSON: 728 detections from detections_pure-positive-canon_run01.geojson
+2026-04-25 03:29:01,351 - INFO - __main__ - [20/210] h4-canonical-last vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:29:01,359 - INFO - pairwise_permutation_test - GeoJSON: 736 detections from detections_pure-positive-canon_run01.geojson
+2026-04-25 03:29:02,754 - INFO - __main__ - [21/210] h8-track2-text-scale-4 vs h8-track2-text-scale-8...
+2026-04-25 03:29:04,205 - INFO - __main__ - [22/210] h8-track2-text-scale-4 vs h4-config-default...
+2026-04-25 03:29:05,635 - INFO - __main__ - [23/210] h8-track2-text-scale-4 vs h5-track1-image-terse...
+2026-04-25 03:29:07,077 - INFO - __main__ - [24/210] h8-track2-text-scale-4 vs h8-track2-text-canonical...
+2026-04-25 03:29:08,540 - INFO - __main__ - [25/210] h8-track2-text-scale-4 vs h8-track2-text-pure-positive-canon...
+2026-04-25 03:29:10,002 - INFO - __main__ - [26/210] h8-track2-text-scale-4 vs h5-track1-image-verbose...
+2026-04-25 03:29:11,422 - INFO - __main__ - [27/210] h8-track2-text-scale-4 vs h4-canonical-first...
+2026-04-25 03:29:12,859 - INFO - __main__ - [28/210] h8-track2-text-scale-4 vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:29:14,313 - INFO - __main__ - [29/210] h8-track2-text-scale-4 vs h8-track1-image-plus-hp...
+2026-04-25 03:29:15,752 - INFO - __main__ - [30/210] h8-track2-text-scale-4 vs h5-track2-text-terse...
+2026-04-25 03:29:17,181 - INFO - __main__ - [31/210] h8-track2-text-scale-4 vs h8-track2-text-plus-hp...
+2026-04-25 03:29:18,630 - INFO - __main__ - [32/210] h8-track2-text-scale-4 vs h8-track1-image-scale-8...
+2026-04-25 03:29:20,066 - INFO - __main__ - [33/210] h8-track2-text-scale-4 vs h8-track1-image-scale-4...
+2026-04-25 03:29:21,500 - INFO - __main__ - [34/210] h8-track2-text-scale-4 vs h5-track2-text-verbose...
+2026-04-25 03:29:22,913 - INFO - __main__ - [35/210] h8-track2-text-scale-4 vs h8-track1-image-canonical...
+2026-04-25 03:29:24,293 - INFO - __main__ - [36/210] h8-track2-text-scale-4 vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:29:25,751 - INFO - __main__ - [37/210] h8-track2-text-scale-4 vs h4-random...
+2026-04-25 03:29:27,195 - INFO - __main__ - [38/210] h8-track2-text-scale-4 vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:29:28,591 - INFO - __main__ - [39/210] h8-track2-text-scale-4 vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:29:30,002 - INFO - __main__ - [40/210] h8-track2-text-scale-8 vs h4-config-default...
+2026-04-25 03:29:31,444 - INFO - __main__ - [41/210] h8-track2-text-scale-8 vs h5-track1-image-terse...
+2026-04-25 03:29:32,879 - INFO - __main__ - [42/210] h8-track2-text-scale-8 vs h8-track2-text-canonical...
+2026-04-25 03:29:34,337 - INFO - __main__ - [43/210] h8-track2-text-scale-8 vs h8-track2-text-pure-positive-canon...
+2026-04-25 03:29:35,799 - INFO - __main__ - [44/210] h8-track2-text-scale-8 vs h5-track1-image-verbose...
+2026-04-25 03:29:37,241 - INFO - __main__ - [45/210] h8-track2-text-scale-8 vs h4-canonical-first...
+2026-04-25 03:29:38,695 - INFO - __main__ - [46/210] h8-track2-text-scale-8 vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:29:40,150 - INFO - __main__ - [47/210] h8-track2-text-scale-8 vs h8-track1-image-plus-hp...
+2026-04-25 03:29:41,599 - INFO - __main__ - [48/210] h8-track2-text-scale-8 vs h5-track2-text-terse...
+2026-04-25 03:29:43,044 - INFO - __main__ - [49/210] h8-track2-text-scale-8 vs h8-track2-text-plus-hp...
+2026-04-25 03:29:44,489 - INFO - __main__ - [50/210] h8-track2-text-scale-8 vs h8-track1-image-scale-8...
+2026-04-25 03:29:45,920 - INFO - __main__ - [51/210] h8-track2-text-scale-8 vs h8-track1-image-scale-4...
+2026-04-25 03:29:47,352 - INFO - __main__ - [52/210] h8-track2-text-scale-8 vs h5-track2-text-verbose...
+2026-04-25 03:29:48,770 - INFO - __main__ - [53/210] h8-track2-text-scale-8 vs h8-track1-image-canonical...
+2026-04-25 03:29:50,158 - INFO - __main__ - [54/210] h8-track2-text-scale-8 vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:29:51,600 - INFO - __main__ - [55/210] h8-track2-text-scale-8 vs h4-random...
+2026-04-25 03:29:53,035 - INFO - __main__ - [56/210] h8-track2-text-scale-8 vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:29:54,430 - INFO - __main__ - [57/210] h8-track2-text-scale-8 vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:29:55,833 - INFO - __main__ - [58/210] h4-config-default vs h5-track1-image-terse...
+2026-04-25 03:29:57,237 - INFO - __main__ - [59/210] h4-config-default vs h8-track2-text-canonical...
+2026-04-25 03:29:58,667 - INFO - __main__ - [60/210] h4-config-default vs h8-track2-text-pure-positive-canon...
+2026-04-25 03:30:00,091 - INFO - __main__ - [61/210] h4-config-default vs h5-track1-image-verbose...
+2026-04-25 03:30:01,499 - INFO - __main__ - [62/210] h4-config-default vs h4-canonical-first...
+2026-04-25 03:30:02,909 - INFO - __main__ - [63/210] h4-config-default vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:30:04,340 - INFO - __main__ - [64/210] h4-config-default vs h8-track1-image-plus-hp...
+2026-04-25 03:30:05,757 - INFO - __main__ - [65/210] h4-config-default vs h5-track2-text-terse...
+2026-04-25 03:30:07,181 - INFO - __main__ - [66/210] h4-config-default vs h8-track2-text-plus-hp...
+2026-04-25 03:30:08,606 - INFO - __main__ - [67/210] h4-config-default vs h8-track1-image-scale-8...
+2026-04-25 03:30:10,037 - INFO - __main__ - [68/210] h4-config-default vs h8-track1-image-scale-4...
+2026-04-25 03:30:11,458 - INFO - __main__ - [69/210] h4-config-default vs h5-track2-text-verbose...
+2026-04-25 03:30:12,857 - INFO - __main__ - [70/210] h4-config-default vs h8-track1-image-canonical...
+2026-04-25 03:30:14,222 - INFO - __main__ - [71/210] h4-config-default vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:30:15,654 - INFO - __main__ - [72/210] h4-config-default vs h4-random...
+2026-04-25 03:30:17,086 - INFO - __main__ - [73/210] h4-config-default vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:30:18,461 - INFO - __main__ - [74/210] h4-config-default vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:30:19,844 - INFO - __main__ - [75/210] h5-track1-image-terse vs h8-track2-text-canonical...
+2026-04-25 03:30:21,280 - INFO - __main__ - [76/210] h5-track1-image-terse vs h8-track2-text-pure-positive-canon...
+2026-04-25 03:30:22,728 - INFO - __main__ - [77/210] h5-track1-image-terse vs h5-track1-image-verbose...
+2026-04-25 03:30:24,132 - INFO - __main__ - [78/210] h5-track1-image-terse vs h4-canonical-first...
+2026-04-25 03:30:25,542 - INFO - __main__ - [79/210] h5-track1-image-terse vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:30:26,969 - INFO - __main__ - [80/210] h5-track1-image-terse vs h8-track1-image-plus-hp...
+2026-04-25 03:30:28,393 - INFO - __main__ - [81/210] h5-track1-image-terse vs h5-track2-text-terse...
+2026-04-25 03:30:29,832 - INFO - __main__ - [82/210] h5-track1-image-terse vs h8-track2-text-plus-hp...
+2026-04-25 03:30:31,286 - INFO - __main__ - [83/210] h5-track1-image-terse vs h8-track1-image-scale-8...
+2026-04-25 03:30:32,697 - INFO - __main__ - [84/210] h5-track1-image-terse vs h8-track1-image-scale-4...
+2026-04-25 03:30:34,115 - INFO - __main__ - [85/210] h5-track1-image-terse vs h5-track2-text-verbose...
+2026-04-25 03:30:35,521 - INFO - __main__ - [86/210] h5-track1-image-terse vs h8-track1-image-canonical...
+2026-04-25 03:30:36,899 - INFO - __main__ - [87/210] h5-track1-image-terse vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:30:38,342 - INFO - __main__ - [88/210] h5-track1-image-terse vs h4-random...
+2026-04-25 03:30:39,773 - INFO - __main__ - [89/210] h5-track1-image-terse vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:30:41,139 - INFO - __main__ - [90/210] h5-track1-image-terse vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:30:42,502 - INFO - __main__ - [91/210] h8-track2-text-canonical vs h8-track2-text-pure-positive-canon...
+2026-04-25 03:30:43,942 - INFO - __main__ - [92/210] h8-track2-text-canonical vs h5-track1-image-verbose...
+2026-04-25 03:30:45,358 - INFO - __main__ - [93/210] h8-track2-text-canonical vs h4-canonical-first...
+2026-04-25 03:30:46,785 - INFO - __main__ - [94/210] h8-track2-text-canonical vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:30:48,229 - INFO - __main__ - [95/210] h8-track2-text-canonical vs h8-track1-image-plus-hp...
+2026-04-25 03:30:49,659 - INFO - __main__ - [96/210] h8-track2-text-canonical vs h5-track2-text-terse...
+2026-04-25 03:30:51,097 - INFO - __main__ - [97/210] h8-track2-text-canonical vs h8-track2-text-plus-hp...
+2026-04-25 03:30:52,556 - INFO - __main__ - [98/210] h8-track2-text-canonical vs h8-track1-image-scale-8...
+2026-04-25 03:30:53,991 - INFO - __main__ - [99/210] h8-track2-text-canonical vs h8-track1-image-scale-4...
+2026-04-25 03:30:55,431 - INFO - __main__ - [100/210] h8-track2-text-canonical vs h5-track2-text-verbose...
+2026-04-25 03:30:56,845 - INFO - __main__ - [101/210] h8-track2-text-canonical vs h8-track1-image-canonical...
+2026-04-25 03:30:58,246 - INFO - __main__ - [102/210] h8-track2-text-canonical vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:30:59,715 - INFO - __main__ - [103/210] h8-track2-text-canonical vs h4-random...
+2026-04-25 03:31:01,161 - INFO - __main__ - [104/210] h8-track2-text-canonical vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:31:02,566 - INFO - __main__ - [105/210] h8-track2-text-canonical vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:31:03,967 - INFO - __main__ - [106/210] h8-track2-text-pure-positive-canon vs h5-track1-image-verbose...
+2026-04-25 03:31:05,386 - INFO - __main__ - [107/210] h8-track2-text-pure-positive-canon vs h4-canonical-first...
+2026-04-25 03:31:06,824 - INFO - __main__ - [108/210] h8-track2-text-pure-positive-canon vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:31:08,280 - INFO - __main__ - [109/210] h8-track2-text-pure-positive-canon vs h8-track1-image-plus-hp...
+2026-04-25 03:31:09,735 - INFO - __main__ - [110/210] h8-track2-text-pure-positive-canon vs h5-track2-text-terse...
+2026-04-25 03:31:11,183 - INFO - __main__ - [111/210] h8-track2-text-pure-positive-canon vs h8-track2-text-plus-hp...
+2026-04-25 03:31:12,648 - INFO - __main__ - [112/210] h8-track2-text-pure-positive-canon vs h8-track1-image-scale-8...
+2026-04-25 03:31:14,095 - INFO - __main__ - [113/210] h8-track2-text-pure-positive-canon vs h8-track1-image-scale-4...
+2026-04-25 03:31:15,527 - INFO - __main__ - [114/210] h8-track2-text-pure-positive-canon vs h5-track2-text-verbose...
+2026-04-25 03:31:16,949 - INFO - __main__ - [115/210] h8-track2-text-pure-positive-canon vs h8-track1-image-canonical...
+2026-04-25 03:31:18,334 - INFO - __main__ - [116/210] h8-track2-text-pure-positive-canon vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:31:19,796 - INFO - __main__ - [117/210] h8-track2-text-pure-positive-canon vs h4-random...
+2026-04-25 03:31:21,238 - INFO - __main__ - [118/210] h8-track2-text-pure-positive-canon vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:31:22,652 - INFO - __main__ - [119/210] h8-track2-text-pure-positive-canon vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:31:24,056 - INFO - __main__ - [120/210] h5-track1-image-verbose vs h4-canonical-first...
+2026-04-25 03:31:25,458 - INFO - __main__ - [121/210] h5-track1-image-verbose vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:31:26,883 - INFO - __main__ - [122/210] h5-track1-image-verbose vs h8-track1-image-plus-hp...
+2026-04-25 03:31:28,293 - INFO - __main__ - [123/210] h5-track1-image-verbose vs h5-track2-text-terse...
+2026-04-25 03:31:29,711 - INFO - __main__ - [124/210] h5-track1-image-verbose vs h8-track2-text-plus-hp...
+2026-04-25 03:31:31,148 - INFO - __main__ - [125/210] h5-track1-image-verbose vs h8-track1-image-scale-8...
+2026-04-25 03:31:32,553 - INFO - __main__ - [126/210] h5-track1-image-verbose vs h8-track1-image-scale-4...
+2026-04-25 03:31:33,973 - INFO - __main__ - [127/210] h5-track1-image-verbose vs h5-track2-text-verbose...
+2026-04-25 03:31:35,369 - INFO - __main__ - [128/210] h5-track1-image-verbose vs h8-track1-image-canonical...
+2026-04-25 03:31:36,731 - INFO - __main__ - [129/210] h5-track1-image-verbose vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:31:38,157 - INFO - __main__ - [130/210] h5-track1-image-verbose vs h4-random...
+2026-04-25 03:31:39,569 - INFO - __main__ - [131/210] h5-track1-image-verbose vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:31:40,935 - INFO - __main__ - [132/210] h5-track1-image-verbose vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:31:42,308 - INFO - __main__ - [133/210] h4-canonical-first vs h8-track1-image-exploratory-pure-positive-4hp...
+2026-04-25 03:31:43,744 - INFO - __main__ - [134/210] h4-canonical-first vs h8-track1-image-plus-hp...
+2026-04-25 03:31:45,155 - INFO - __main__ - [135/210] h4-canonical-first vs h5-track2-text-terse...
+2026-04-25 03:31:46,570 - INFO - __main__ - [136/210] h4-canonical-first vs h8-track2-text-plus-hp...
+2026-04-25 03:31:48,002 - INFO - __main__ - [137/210] h4-canonical-first vs h8-track1-image-scale-8...
+2026-04-25 03:31:49,415 - INFO - __main__ - [138/210] h4-canonical-first vs h8-track1-image-scale-4...
+2026-04-25 03:31:50,831 - INFO - __main__ - [139/210] h4-canonical-first vs h5-track2-text-verbose...
+2026-04-25 03:31:52,238 - INFO - __main__ - [140/210] h4-canonical-first vs h8-track1-image-canonical...
+2026-04-25 03:31:53,613 - INFO - __main__ - [141/210] h4-canonical-first vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:31:55,061 - INFO - __main__ - [142/210] h4-canonical-first vs h4-random...
+2026-04-25 03:31:56,500 - INFO - __main__ - [143/210] h4-canonical-first vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:31:57,891 - INFO - __main__ - [144/210] h4-canonical-first vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:31:59,290 - INFO - __main__ - [145/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-plus-hp...
+2026-04-25 03:32:00,718 - INFO - __main__ - [146/210] h8-track1-image-exploratory-pure-positive-4hp vs h5-track2-text-terse...
+2026-04-25 03:32:02,149 - INFO - __main__ - [147/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track2-text-plus-hp...
+2026-04-25 03:32:03,601 - INFO - __main__ - [148/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-scale-8...
+2026-04-25 03:32:05,043 - INFO - __main__ - [149/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-scale-4...
+2026-04-25 03:32:06,469 - INFO - __main__ - [150/210] h8-track1-image-exploratory-pure-positive-4hp vs h5-track2-text-verbose...
+2026-04-25 03:32:07,878 - INFO - __main__ - [151/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-canonical...
+2026-04-25 03:32:09,255 - INFO - __main__ - [152/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:32:10,709 - INFO - __main__ - [153/210] h8-track1-image-exploratory-pure-positive-4hp vs h4-random...
+2026-04-25 03:32:12,154 - INFO - __main__ - [154/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:32:13,558 - INFO - __main__ - [155/210] h8-track1-image-exploratory-pure-positive-4hp vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:32:14,947 - INFO - __main__ - [156/210] h8-track1-image-plus-hp vs h5-track2-text-terse...
+2026-04-25 03:32:16,359 - INFO - __main__ - [157/210] h8-track1-image-plus-hp vs h8-track2-text-plus-hp...
+2026-04-25 03:32:17,793 - INFO - __main__ - [158/210] h8-track1-image-plus-hp vs h8-track1-image-scale-8...
+2026-04-25 03:32:19,227 - INFO - __main__ - [159/210] h8-track1-image-plus-hp vs h8-track1-image-scale-4...
+2026-04-25 03:32:20,658 - INFO - __main__ - [160/210] h8-track1-image-plus-hp vs h5-track2-text-verbose...
+2026-04-25 03:32:22,053 - INFO - __main__ - [161/210] h8-track1-image-plus-hp vs h8-track1-image-canonical...
+2026-04-25 03:32:23,428 - INFO - __main__ - [162/210] h8-track1-image-plus-hp vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:32:24,864 - INFO - __main__ - [163/210] h8-track1-image-plus-hp vs h4-random...
+2026-04-25 03:32:26,301 - INFO - __main__ - [164/210] h8-track1-image-plus-hp vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:32:27,685 - INFO - __main__ - [165/210] h8-track1-image-plus-hp vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:32:29,080 - INFO - __main__ - [166/210] h5-track2-text-terse vs h8-track2-text-plus-hp...
+2026-04-25 03:32:30,520 - INFO - __main__ - [167/210] h5-track2-text-terse vs h8-track1-image-scale-8...
+2026-04-25 03:32:31,954 - INFO - __main__ - [168/210] h5-track2-text-terse vs h8-track1-image-scale-4...
+2026-04-25 03:32:33,373 - INFO - __main__ - [169/210] h5-track2-text-terse vs h5-track2-text-verbose...
+2026-04-25 03:32:34,780 - INFO - __main__ - [170/210] h5-track2-text-terse vs h8-track1-image-canonical...
+2026-04-25 03:32:36,159 - INFO - __main__ - [171/210] h5-track2-text-terse vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:32:37,623 - INFO - __main__ - [172/210] h5-track2-text-terse vs h4-random...
+2026-04-25 03:32:39,051 - INFO - __main__ - [173/210] h5-track2-text-terse vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:32:40,450 - INFO - __main__ - [174/210] h5-track2-text-terse vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:32:41,840 - INFO - __main__ - [175/210] h8-track2-text-plus-hp vs h8-track1-image-scale-8...
+2026-04-25 03:32:43,282 - INFO - __main__ - [176/210] h8-track2-text-plus-hp vs h8-track1-image-scale-4...
+2026-04-25 03:32:44,716 - INFO - __main__ - [177/210] h8-track2-text-plus-hp vs h5-track2-text-verbose...
+2026-04-25 03:32:46,135 - INFO - __main__ - [178/210] h8-track2-text-plus-hp vs h8-track1-image-canonical...
+2026-04-25 03:32:47,544 - INFO - __main__ - [179/210] h8-track2-text-plus-hp vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:32:49,004 - INFO - __main__ - [180/210] h8-track2-text-plus-hp vs h4-random...
+2026-04-25 03:32:50,443 - INFO - __main__ - [181/210] h8-track2-text-plus-hp vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:32:51,860 - INFO - __main__ - [182/210] h8-track2-text-plus-hp vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:32:53,268 - INFO - __main__ - [183/210] h8-track1-image-scale-8 vs h8-track1-image-scale-4...
+2026-04-25 03:32:54,681 - INFO - __main__ - [184/210] h8-track1-image-scale-8 vs h5-track2-text-verbose...
+2026-04-25 03:32:56,086 - INFO - __main__ - [185/210] h8-track1-image-scale-8 vs h8-track1-image-canonical...
+2026-04-25 03:32:57,461 - INFO - __main__ - [186/210] h8-track1-image-scale-8 vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:32:58,889 - INFO - __main__ - [187/210] h8-track1-image-scale-8 vs h4-random...
+2026-04-25 03:33:00,315 - INFO - __main__ - [188/210] h8-track1-image-scale-8 vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:33:01,701 - INFO - __main__ - [189/210] h8-track1-image-scale-8 vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:03,080 - INFO - __main__ - [190/210] h8-track1-image-scale-4 vs h5-track2-text-verbose...
+2026-04-25 03:33:04,459 - INFO - __main__ - [191/210] h8-track1-image-scale-4 vs h8-track1-image-canonical...
+2026-04-25 03:33:05,833 - INFO - __main__ - [192/210] h8-track1-image-scale-4 vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:33:07,277 - INFO - __main__ - [193/210] h8-track1-image-scale-4 vs h4-random...
+2026-04-25 03:33:08,720 - INFO - __main__ - [194/210] h8-track1-image-scale-4 vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:33:10,097 - INFO - __main__ - [195/210] h8-track1-image-scale-4 vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:11,478 - INFO - __main__ - [196/210] h5-track2-text-verbose vs h8-track1-image-canonical...
+2026-04-25 03:33:12,827 - INFO - __main__ - [197/210] h5-track2-text-verbose vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:33:14,248 - INFO - __main__ - [198/210] h5-track2-text-verbose vs h4-random...
+2026-04-25 03:33:15,657 - INFO - __main__ - [199/210] h5-track2-text-verbose vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:33:17,031 - INFO - __main__ - [200/210] h5-track2-text-verbose vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:18,395 - INFO - __main__ - [201/210] h8-track1-image-canonical vs h8-track1-image-exploratory-pure-positive-2hp...
+2026-04-25 03:33:19,791 - INFO - __main__ - [202/210] h8-track1-image-canonical vs h4-random...
+2026-04-25 03:33:21,186 - INFO - __main__ - [203/210] h8-track1-image-canonical vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:33:22,549 - INFO - __main__ - [204/210] h8-track1-image-canonical vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:23,896 - INFO - __main__ - [205/210] h8-track1-image-exploratory-pure-positive-2hp vs h4-random...
+2026-04-25 03:33:25,347 - INFO - __main__ - [206/210] h8-track1-image-exploratory-pure-positive-2hp vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:33:26,746 - INFO - __main__ - [207/210] h8-track1-image-exploratory-pure-positive-2hp vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:28,154 - INFO - __main__ - [208/210] h4-random vs h8-track1-image-exploratory-pure-positive-canon...
+2026-04-25 03:33:29,541 - INFO - __main__ - [209/210] h4-random vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:30,935 - INFO - __main__ - [210/210] h8-track1-image-exploratory-pure-positive-canon vs h8-track1-image-pure-positive-canon...
+2026-04-25 03:33:32,289 - INFO - __main__ - Pairwise: 0 cached, 210 computed
+2026-04-25 03:33:32,291 - INFO - __main__ - Stage 4 complete in 298.4s
+2026-04-25 03:33:32,292 - INFO - __main__ - FDR: 0/210 pairs significant at q=0.05 → 1 tiers
+2026-04-25 03:33:32,292 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_20m.md
+2026-04-25 03:33:32,293 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_30m.md
+2026-04-25 03:33:32,293 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_40m.md
+2026-04-25 03:33:32,293 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_50m.md
+2026-04-25 03:33:32,293 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_100m.md
+2026-04-25 03:33:32,298 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_20m.json
+2026-04-25 03:33:32,299 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.568–0.631, 21 conditions)
+    1. h4-canonical-last                        F1=0.631  t=1
+    2. h8-track2-text-scale-4                   F1=0.609  t=1
+    3. h8-track2-text-scale-8                   F1=0.607  t=1
+    4. h4-config-default                        F1=0.606  t=1
+    5. h5-track1-image-terse                    F1=0.605  t=1
+    6. h8-track2-text-canonical                 F1=0.605  t=1
+    7. h8-track2-text-pure-positive-canon       F1=0.605  t=1
+    8. h5-track1-image-verbose                  F1=0.603  t=1
+    9. h4-canonical-first                       F1=0.599  t=1
+   10. h8-track1-image-exploratory-pure-positive-4hp F1=0.599  t=1
+   11. h8-track1-image-plus-hp                  F1=0.599  t=1
+   12. h5-track2-text-terse                     F1=0.598  t=1
+   13. h8-track2-text-plus-hp                   F1=0.597  t=1
+   14. h8-track1-image-scale-8                  F1=0.587  t=1
+   15. h8-track1-image-scale-4                  F1=0.584  t=1
+   16. h5-track2-text-verbose                   F1=0.583  t=1
+   17. h8-track1-image-canonical                F1=0.581  t=1
+   18. h8-track1-image-exploratory-pure-positive-2hp F1=0.571  t=1
+   19. h4-random                                F1=0.571  t=1
+   20. h8-track1-image-exploratory-pure-positive-canon F1=0.570  t=1
+   21. h8-track1-image-pure-positive-canon      F1=0.568  t=1
+
+========================================================================
+Total: 21 conditions in 1 tiers
+========================================================================

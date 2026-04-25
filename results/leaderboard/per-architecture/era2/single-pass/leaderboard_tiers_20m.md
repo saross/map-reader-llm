@@ -1,0 +1,23 @@
+# Leaderboard — 20m buffer
+
+**Generated**: 2026-04-25T03:54:09.837714+00:00
+**Conditions**: 4 in 3 tier(s)
+
+## Tier 1 (F1: 0.763–0.763)
+
+| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R |
+|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|
+| 1 | h11-pvd-pro-medium-text-baseline | 1-pass | 2 | text | 1 | 1 | 0.763 | [0.713, 0.806] | 0.767 | 0.759 |
+
+## Tier 2 (F1: 0.600–0.606)
+
+| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R |
+|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|
+| 2 | h11-pvd-pro-medium-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.606 | [0.556, 0.651] | 0.557 | 0.664 |
+| 3 | h11-pvd-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.600 | [0.555, 0.637] | 0.474 | 0.814 |
+
+## Tier 3 (F1: 0.520–0.520)
+
+| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R |
+|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|
+| 4 | h11-pvd-text-baseline | 1-pass | 2 | text | 1 | 1 | 0.520 | [0.462, 0.576] | 0.368 | 0.885 |

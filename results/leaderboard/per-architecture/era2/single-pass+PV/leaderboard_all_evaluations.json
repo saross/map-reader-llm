@@ -1,0 +1,736 @@
+{
+  "script": "build_tiered_leaderboard.py",
+  "version": "1.0.0",
+  "timestamp": "2026-04-25T03:55:01.634504+00:00",
+  "n_conditions": 8,
+  "evaluations": {
+    "pv-adversarial-image": {
+      "1": {
+        "label": "pv-adversarial-image",
+        "n_detections": 572,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 116,
+            "tn": 135,
+            "fp": 123,
+            "fn": 113
+          },
+          "mcc": {
+            "mean": 0.0308,
+            "ci_lower": -0.0606,
+            "ci_upper": 0.1212
+          },
+          "sensitivity": {
+            "mean": 0.5075,
+            "ci_lower": 0.4403,
+            "ci_upper": 0.5764
+          },
+          "specificity": {
+            "mean": 0.5233,
+            "ci_lower": 0.4669,
+            "ci_upper": 0.5864
+          }
+        }
+      }
+    },
+    "pv-adversarial-text": {
+      "1": {
+        "label": "pv-adversarial-text",
+        "n_detections": 572,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 116,
+            "tn": 135,
+            "fp": 123,
+            "fn": 113
+          },
+          "mcc": {
+            "mean": 0.0308,
+            "ci_lower": -0.0606,
+            "ci_upper": 0.1212
+          },
+          "sensitivity": {
+            "mean": 0.5075,
+            "ci_lower": 0.4403,
+            "ci_upper": 0.5764
+          },
+          "specificity": {
+            "mean": 0.5233,
+            "ci_lower": 0.4669,
+            "ci_upper": 0.5864
+          }
+        }
+      }
+    },
+    "pv-brief-image": {
+      "1": {
+        "label": "pv-brief-image",
+        "n_detections": 572,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 116,
+            "tn": 135,
+            "fp": 123,
+            "fn": 113
+          },
+          "mcc": {
+            "mean": 0.0308,
+            "ci_lower": -0.0606,
+            "ci_upper": 0.1212
+          },
+          "sensitivity": {
+            "mean": 0.5075,
+            "ci_lower": 0.4403,
+            "ci_upper": 0.5764
+          },
+          "specificity": {
+            "mean": 0.5233,
+            "ci_lower": 0.4669,
+            "ci_upper": 0.5864
+          }
+        }
+      }
+    },
+    "pv-brief-text": {
+      "1": {
+        "label": "pv-brief-text",
+        "n_detections": 572,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 116,
+            "tn": 135,
+            "fp": 123,
+            "fn": 113
+          },
+          "mcc": {
+            "mean": 0.0308,
+            "ci_lower": -0.0606,
+            "ci_upper": 0.1212
+          },
+          "sensitivity": {
+            "mean": 0.5075,
+            "ci_lower": 0.4403,
+            "ci_upper": 0.5764
+          },
+          "specificity": {
+            "mean": 0.5233,
+            "ci_lower": 0.4669,
+            "ci_upper": 0.5864
+          }
+        }
+      }
+    },
+    "pv-cascade-adversarial-checklist": {
+      "1": {
+        "label": "pv-cascade-adversarial-checklist",
+        "n_detections": 271,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 102,
+            "tn": 237,
+            "fp": 21,
+            "fn": 127
+          },
+          "mcc": {
+            "mean": 0.4184,
+            "ci_lower": 0.34,
+            "ci_upper": 0.4909
+          },
+          "sensitivity": {
+            "mean": 0.4463,
+            "ci_lower": 0.3807,
+            "ci_upper": 0.5111
+          },
+          "specificity": {
+            "mean": 0.9184,
+            "ci_lower": 0.8849,
+            "ci_upper": 0.9491
+          }
+        }
+      }
+    },
+    "pv-cascade-checklist-adversarial": {
+      "1": {
+        "label": "pv-cascade-checklist-adversarial",
+        "n_detections": 326,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 109,
+            "tn": 226,
+            "fp": 32,
+            "fn": 120
+          },
+          "mcc": {
+            "mean": 0.3876,
+            "ci_lower": 0.3049,
+            "ci_upper": 0.4633
+          },
+          "sensitivity": {
+            "mean": 0.4767,
+            "ci_lower": 0.4123,
+            "ci_upper": 0.5426
+          },
+          "specificity": {
+            "mean": 0.8757,
+            "ci_lower": 0.8333,
+            "ci_upper": 0.9136
+          }
+        }
+      }
+    },
+    "pv-checklist-image": {
+      "1": {
+        "label": "pv-checklist-image",
+        "n_detections": 572,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 116,
+            "tn": 135,
+            "fp": 123,
+            "fn": 113
+          },
+          "mcc": {
+            "mean": 0.0308,
+            "ci_lower": -0.0606,
+            "ci_upper": 0.1212
+          },
+          "sensitivity": {
+            "mean": 0.5075,
+            "ci_lower": 0.4403,
+            "ci_upper": 0.5764
+          },
+          "specificity": {
+            "mean": 0.5233,
+            "ci_lower": 0.4669,
+            "ci_upper": 0.5864
+          }
+        }
+      }
+    },
+    "pv-checklist-text": {
+      "1": {
+        "label": "pv-checklist-text",
+        "n_detections": 572,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0,
+            "f1_ci_lower": 0.0,
+            "f1_ci_upper": 0.0,
+            "precision": 0.0,
+            "p_ci_lower": 0.0,
+            "p_ci_upper": 0.0,
+            "recall": 0.0,
+            "r_ci_lower": 0.0,
+            "r_ci_upper": 0.0
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 116,
+            "tn": 135,
+            "fp": 123,
+            "fn": 113
+          },
+          "mcc": {
+            "mean": 0.0308,
+            "ci_lower": -0.0606,
+            "ci_upper": 0.1212
+          },
+          "sensitivity": {
+            "mean": 0.5075,
+            "ci_lower": 0.4403,
+            "ci_upper": 0.5764
+          },
+          "specificity": {
+            "mean": 0.5233,
+            "ci_lower": 0.4669,
+            "ci_upper": 0.5864
+          }
+        }
+      }
+    }
+  }
+}

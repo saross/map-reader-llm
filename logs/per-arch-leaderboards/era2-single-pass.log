@@ -1,0 +1,88 @@
+2026-04-25 03:53:34,761 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git dcd36515
+2026-04-25 03:53:34,762 - WARNING - __main__ - Single-pass h11-n1-pro-image-medium-t07: detection geojson not found at /home/shawn/Code/map-reader-llm/outputs/h11/n1-outstanding-384/pro-image-medium-t07
+2026-04-25 03:53:34,762 - WARNING - __main__ - Single-pass h11-n1-pro-text-medium-t07: detection geojson not found at /home/shawn/Code/map-reader-llm/outputs/h11/n1-outstanding-384/pro-text-medium-t07
+2026-04-25 03:53:34,762 - INFO - __main__ - Resolved 4 conditions from inventory (era=2, track=None)
+2026-04-25 03:53:34,762 - INFO - __main__ - Resolved 4 conditions
+
+Dry run: 4 conditions
+Label                                         Era Track    K Thresholds
+--------------------------------------------------------------------------------
+h11-pvd-image-baseline                          2 image    1 t=1
+h11-pvd-pro-medium-image-baseline               2 image    1 t=1
+h11-pvd-pro-medium-text-baseline                2 text     1 t=1
+h11-pvd-text-baseline                           2 text     1 t=1
+2026-04-25 03:53:35,142 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git dcd36515
+2026-04-25 03:53:35,143 - WARNING - __main__ - Single-pass h11-n1-pro-image-medium-t07: detection geojson not found at /home/shawn/Code/map-reader-llm/outputs/h11/n1-outstanding-384/pro-image-medium-t07
+2026-04-25 03:53:35,144 - WARNING - __main__ - Single-pass h11-n1-pro-text-medium-t07: detection geojson not found at /home/shawn/Code/map-reader-llm/outputs/h11/n1-outstanding-384/pro-text-medium-t07
+2026-04-25 03:53:35,144 - INFO - __main__ - Resolved 4 conditions from inventory (era=2, track=None)
+2026-04-25 03:53:35,144 - INFO - __main__ - Resolved 4 conditions
+2026-04-25 03:53:35,144 - INFO - __main__ - Evaluation: 0 cached, 4 to compute (8 workers)
+2026-04-25 03:53:40,142 - INFO - evaluate_detections -   20m: F1=0.763 [0.713, 0.806], P=0.767 [0.716, 0.816], R=0.759 [0.693, 0.820]
+2026-04-25 03:53:40,240 - INFO - evaluate_detections -   20m: F1=0.606 [0.556, 0.651], P=0.557 [0.507, 0.603], R=0.664 [0.606, 0.721]
+2026-04-25 03:53:40,342 - INFO - evaluate_detections -   20m: F1=0.599 [0.555, 0.637], P=0.475 [0.426, 0.515], R=0.814 [0.771, 0.853]
+2026-04-25 03:53:40,662 - INFO - evaluate_detections -   20m: F1=0.520 [0.462, 0.576], P=0.368 [0.312, 0.426], R=0.885 [0.850, 0.917]
+2026-04-25 03:53:45,097 - INFO - evaluate_detections -   30m: F1=0.784 [0.736, 0.827], P=0.788 [0.738, 0.832], R=0.779 [0.714, 0.840]
+2026-04-25 03:53:45,287 - INFO - evaluate_detections -   30m: F1=0.734 [0.692, 0.772], P=0.674 [0.628, 0.718], R=0.805 [0.747, 0.859]
+2026-04-25 03:53:45,478 - INFO - evaluate_detections -   30m: F1=0.655 [0.612, 0.689], P=0.519 [0.468, 0.558], R=0.890 [0.857, 0.920]
+2026-04-25 03:53:46,129 - INFO - evaluate_detections -   30m: F1=0.530 [0.471, 0.587], P=0.375 [0.319, 0.435], R=0.903 [0.872, 0.933]
+2026-04-25 03:53:50,046 - INFO - evaluate_detections -   40m: F1=0.795 [0.754, 0.835], P=0.800 [0.753, 0.842], R=0.791 [0.728, 0.849]
+2026-04-25 03:53:50,337 - INFO - evaluate_detections -   40m: F1=0.763 [0.724, 0.800], P=0.701 [0.656, 0.743], R=0.837 [0.784, 0.890]
+2026-04-25 03:53:50,618 - INFO - evaluate_detections -   40m: F1=0.674 [0.629, 0.708], P=0.534 [0.484, 0.574], R=0.915 [0.890, 0.939]
+2026-04-25 03:53:51,576 - INFO - evaluate_detections -   40m: F1=0.536 [0.475, 0.594], P=0.379 [0.321, 0.438], R=0.913 [0.882, 0.941]
+2026-04-25 03:53:54,994 - INFO - evaluate_detections -   50m: F1=0.802 [0.761, 0.841], P=0.807 [0.762, 0.847], R=0.798 [0.735, 0.857]
+2026-04-25 03:53:55,365 - INFO - evaluate_detections -   50m: F1=0.778 [0.740, 0.812], P=0.715 [0.670, 0.756], R=0.853 [0.799, 0.902]
+2026-04-25 03:53:55,793 - INFO - evaluate_detections -   50m: F1=0.681 [0.636, 0.715], P=0.539 [0.487, 0.579], R=0.924 [0.900, 0.946]
+2026-04-25 03:53:57,061 - INFO - evaluate_detections -   50m: F1=0.536 [0.475, 0.594], P=0.379 [0.321, 0.438], R=0.913 [0.882, 0.941]
+2026-04-25 03:53:59,946 - INFO - evaluate_detections -   100m: F1=0.807 [0.766, 0.845], P=0.812 [0.766, 0.851], R=0.802 [0.740, 0.861]
+2026-04-25 03:54:00,371 - INFO - evaluate_detections -   100m: F1=0.795 [0.756, 0.829], P=0.730 [0.686, 0.772], R=0.871 [0.815, 0.918]
+2026-04-25 03:54:00,662 - INFO - evaluate_detections -   MCC=0.752 [0.693, 0.807], Sens=0.782, Spec=0.953
+2026-04-25 03:54:00,664 - INFO - __main__ - [1/4] h11-pvd-pro-medium-text-baseline t=1 done
+2026-04-25 03:54:00,942 - INFO - evaluate_detections -   100m: F1=0.689 [0.644, 0.722], P=0.546 [0.493, 0.587], R=0.936 [0.913, 0.957]
+2026-04-25 03:54:01,094 - INFO - evaluate_detections -   MCC=0.734 [0.675, 0.795], Sens=0.882, Spec=0.853
+2026-04-25 03:54:01,095 - INFO - __main__ - [2/4] h11-pvd-pro-medium-image-baseline t=1 done
+2026-04-25 03:54:01,672 - INFO - evaluate_detections -   MCC=0.312 [0.259, 0.363], Sens=0.996, Spec=0.198
+2026-04-25 03:54:01,673 - INFO - __main__ - [3/4] h11-pvd-image-baseline t=1 done
+2026-04-25 03:54:02,432 - INFO - evaluate_detections -   100m: F1=0.538 [0.478, 0.597], P=0.381 [0.323, 0.440], R=0.917 [0.886, 0.944]
+2026-04-25 03:54:03,152 - INFO - evaluate_detections -   MCC=-0.004 [-0.075, 0.074], Sens=0.996, Spec=0.004
+2026-04-25 03:54:03,154 - INFO - __main__ - [4/4] h11-pvd-text-baseline t=1 done
+2026-04-25 03:54:03,161 - INFO - __main__ - Stage 2 complete in 28.0s
+2026-04-25 03:54:03,161 - INFO - __main__ - Selected 4 conditions (best F1=0.763 at 20m)
+2026-04-25 03:54:03,186 - INFO - __main__ - Pairwise tests: 6 pairs at 20m (10000 permutations)
+2026-04-25 03:54:03,186 - INFO - __main__ - [1/6] h11-pvd-pro-medium-text-baseline vs h11-pvd-pro-medium-image-baseline...
+2026-04-25 03:54:03,191 - INFO - pairwise_permutation_test - GeoJSON: 430 detections from detections_text-t0.0_run01.geojson
+2026-04-25 03:54:03,196 - INFO - pairwise_permutation_test - GeoJSON: 519 detections from detections_image-t0.0_run01.geojson
+2026-04-25 03:54:04,138 - INFO - __main__ - [2/6] h11-pvd-pro-medium-text-baseline vs h11-pvd-image-baseline...
+2026-04-25 03:54:04,145 - INFO - pairwise_permutation_test - GeoJSON: 746 detections from detections_image-t0.0_run01.geojson
+2026-04-25 03:54:05,190 - INFO - __main__ - [3/6] h11-pvd-pro-medium-text-baseline vs h11-pvd-text-baseline...
+2026-04-25 03:54:05,199 - INFO - pairwise_permutation_test - GeoJSON: 1047 detections from detections_text-t0.0_run01.geojson
+2026-04-25 03:54:06,308 - INFO - __main__ - [4/6] h11-pvd-pro-medium-image-baseline vs h11-pvd-image-baseline...
+2026-04-25 03:54:07,405 - INFO - __main__ - [5/6] h11-pvd-pro-medium-image-baseline vs h11-pvd-text-baseline...
+2026-04-25 03:54:08,568 - INFO - __main__ - [6/6] h11-pvd-image-baseline vs h11-pvd-text-baseline...
+2026-04-25 03:54:09,837 - INFO - __main__ - Pairwise: 0 cached, 6 computed
+2026-04-25 03:54:09,837 - INFO - __main__ - Stage 4 complete in 6.7s
+2026-04-25 03:54:09,837 - INFO - __main__ - FDR: 5/6 pairs significant at q=0.05 → 3 tiers
+2026-04-25 03:54:09,837 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_20m.md
+2026-04-25 03:54:09,837 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_30m.md
+2026-04-25 03:54:09,837 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_40m.md
+2026-04-25 03:54:09,838 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_50m.md
+2026-04-25 03:54:09,838 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_100m.md
+2026-04-25 03:54:09,840 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_20m.json
+2026-04-25 03:54:09,840 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.763–0.763, 1 conditions)
+    1. h11-pvd-pro-medium-text-baseline         F1=0.763  t=1
+
+Tier 2 (F1: 0.600–0.606, 2 conditions)
+    2. h11-pvd-pro-medium-image-baseline        F1=0.606  t=1
+    3. h11-pvd-image-baseline                   F1=0.600  t=1
+
+Tier 3 (F1: 0.520–0.520, 1 conditions)
+    4. h11-pvd-text-baseline                    F1=0.520  t=1
+
+========================================================================
+Total: 4 conditions in 3 tiers
+========================================================================

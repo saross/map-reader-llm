@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/home/shawn/Code/map-reader-llm/scripts/score_leaderboard_cells.py", line 332, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/shawn/Code/map-reader-llm/scripts/score_leaderboard_cells.py", line 301, in main
+    result = score_config(
+        manifest=args.manifest,
+    ...<10 lines>...
+        verifier=args.verifier,
+    )
+  File "/home/shawn/Code/map-reader-llm/scripts/score_leaderboard_cells.py", line 228, in score_config
+    cands = load_candidates_with_probs(manifest, probs, tile_allowlist=tile_allowlist)
+  File "/home/shawn/Code/map-reader-llm/scripts/score_leaderboard_cells.py", line 75, in load_candidates_with_probs
+    manifest = json.loads(manifest_path.read_text())
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/pathlib/_local.py", line 548, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/pathlib/_local.py", line 539, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json'

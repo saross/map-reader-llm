@@ -61,8 +61,10 @@ outputs/**/crops/*/crops/
 # The candidate_manifest.json sibling is small metadata and remains tracked.
 outputs/**/shared-crops/crops/
 # Per-cell leaderboard caches (evaluations + pairwise; regenerable from
-# tracked condition-inventory + source detections)
-results/leaderboard/*/.cache/
+# tracked condition-inventory + source detections). Match at any depth
+# (e.g. results/leaderboard/era1/.cache/, plus per-architecture trees
+# such as results/leaderboard/per-architecture/era1/consensus/.cache/).
+results/leaderboard/**/.cache/
 # Rasters and tiles (large input data)
 inputs/tiles_384_55maps/
 inputs/rasters/Russian1981_32635/

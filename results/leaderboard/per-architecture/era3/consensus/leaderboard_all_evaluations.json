@@ -1,0 +1,6266 @@
+{
+  "script": "build_tiered_leaderboard.py",
+  "version": "1.0.0",
+  "timestamp": "2026-04-25T04:04:32.697984+00:00",
+  "n_conditions": 14,
+  "evaluations": {
+    "h10v2-pool_020_hp4hn4": {
+      "4": {
+        "label": "h10v2-pool_020_hp4hn4",
+        "n_detections": 255,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6934,
+            "f1_ci_lower": 0.6382,
+            "f1_ci_upper": 0.7482,
+            "precision": 0.7804,
+            "p_ci_lower": 0.7276,
+            "p_ci_upper": 0.8374,
+            "recall": 0.6238,
+            "r_ci_lower": 0.554,
+            "r_ci_upper": 0.6915
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7422,
+            "f1_ci_lower": 0.6906,
+            "f1_ci_upper": 0.7929,
+            "precision": 0.8353,
+            "p_ci_lower": 0.7876,
+            "p_ci_upper": 0.8815,
+            "recall": 0.6677,
+            "r_ci_lower": 0.6,
+            "r_ci_upper": 0.7327
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7491,
+            "f1_ci_lower": 0.7019,
+            "f1_ci_upper": 0.7981,
+            "precision": 0.8431,
+            "p_ci_lower": 0.7974,
+            "p_ci_upper": 0.8894,
+            "recall": 0.674,
+            "r_ci_lower": 0.608,
+            "r_ci_upper": 0.7402
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7596,
+            "f1_ci_lower": 0.7104,
+            "f1_ci_upper": 0.8058,
+            "precision": 0.8549,
+            "p_ci_lower": 0.8072,
+            "p_ci_upper": 0.8997,
+            "recall": 0.6834,
+            "r_ci_lower": 0.619,
+            "r_ci_upper": 0.7457
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7631,
+            "f1_ci_lower": 0.7151,
+            "f1_ci_upper": 0.8101,
+            "precision": 0.8588,
+            "p_ci_lower": 0.812,
+            "p_ci_upper": 0.9032,
+            "recall": 0.6865,
+            "r_ci_lower": 0.622,
+            "r_ci_upper": 0.7508
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 121,
+            "tn": 158,
+            "fp": 14,
+            "fn": 34
+          },
+          "mcc": {
+            "mean": 0.7113,
+            "ci_lower": 0.639,
+            "ci_upper": 0.7855
+          },
+          "sensitivity": {
+            "mean": 0.7816,
+            "ci_lower": 0.7142,
+            "ci_upper": 0.8431
+          },
+          "specificity": {
+            "mean": 0.9198,
+            "ci_lower": 0.8798,
+            "ci_upper": 0.9558
+          }
+        }
+      },
+      "5": {
+        "label": "h10v2-pool_020_hp4hn4",
+        "n_detections": 159,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5816,
+            "f1_ci_lower": 0.5182,
+            "f1_ci_upper": 0.6421,
+            "precision": 0.8742,
+            "p_ci_lower": 0.8214,
+            "p_ci_upper": 0.9262,
+            "recall": 0.4357,
+            "r_ci_lower": 0.3715,
+            "r_ci_upper": 0.5031
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6109,
+            "f1_ci_lower": 0.5477,
+            "f1_ci_upper": 0.6707,
+            "precision": 0.9182,
+            "p_ci_lower": 0.8741,
+            "p_ci_upper": 0.96,
+            "recall": 0.4577,
+            "r_ci_lower": 0.3938,
+            "r_ci_upper": 0.5256
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6109,
+            "f1_ci_lower": 0.5477,
+            "f1_ci_upper": 0.6707,
+            "precision": 0.9182,
+            "p_ci_lower": 0.8741,
+            "p_ci_upper": 0.96,
+            "recall": 0.4577,
+            "r_ci_lower": 0.3938,
+            "r_ci_upper": 0.5256
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6192,
+            "f1_ci_lower": 0.5545,
+            "f1_ci_upper": 0.6806,
+            "precision": 0.9308,
+            "p_ci_lower": 0.8889,
+            "p_ci_upper": 0.9686,
+            "recall": 0.4639,
+            "r_ci_lower": 0.398,
+            "r_ci_upper": 0.5331
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6192,
+            "f1_ci_lower": 0.5545,
+            "f1_ci_upper": 0.6806,
+            "precision": 0.9308,
+            "p_ci_lower": 0.8889,
+            "p_ci_upper": 0.9686,
+            "recall": 0.4639,
+            "r_ci_lower": 0.398,
+            "r_ci_upper": 0.5331
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 94,
+            "tn": 168,
+            "fp": 4,
+            "fn": 61
+          },
+          "mcc": {
+            "mean": 0.6364,
+            "ci_lower": 0.5611,
+            "ci_upper": 0.7032
+          },
+          "sensitivity": {
+            "mean": 0.6072,
+            "ci_lower": 0.526,
+            "ci_upper": 0.6815
+          },
+          "specificity": {
+            "mean": 0.9771,
+            "ci_lower": 0.9518,
+            "ci_upper": 0.9945
+          }
+        }
+      },
+      "3": {
+        "label": "h10v2-pool_020_hp4hn4",
+        "n_detections": 344,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6968,
+            "f1_ci_lower": 0.6445,
+            "f1_ci_upper": 0.747,
+            "precision": 0.6715,
+            "p_ci_lower": 0.6158,
+            "p_ci_upper": 0.7268,
+            "recall": 0.7241,
+            "r_ci_lower": 0.661,
+            "r_ci_upper": 0.785
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7572,
+            "f1_ci_lower": 0.709,
+            "f1_ci_upper": 0.8069,
+            "precision": 0.7297,
+            "p_ci_lower": 0.6744,
+            "p_ci_upper": 0.7846,
+            "recall": 0.7868,
+            "r_ci_lower": 0.7276,
+            "r_ci_upper": 0.8474
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7813,
+            "f1_ci_lower": 0.7378,
+            "f1_ci_upper": 0.8264,
+            "precision": 0.7529,
+            "p_ci_lower": 0.7003,
+            "p_ci_upper": 0.8062,
+            "recall": 0.8119,
+            "r_ci_lower": 0.76,
+            "r_ci_upper": 0.8649
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7964,
+            "f1_ci_lower": 0.7557,
+            "f1_ci_upper": 0.839,
+            "precision": 0.7674,
+            "p_ci_lower": 0.7152,
+            "p_ci_upper": 0.8185,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7772,
+            "r_ci_upper": 0.8762
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8115,
+            "f1_ci_lower": 0.77,
+            "f1_ci_upper": 0.8511,
+            "precision": 0.782,
+            "p_ci_lower": 0.7285,
+            "p_ci_upper": 0.8329,
+            "recall": 0.8433,
+            "r_ci_lower": 0.7933,
+            "r_ci_upper": 0.8899
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 134,
+            "tn": 141,
+            "fp": 31,
+            "fn": 21
+          },
+          "mcc": {
+            "mean": 0.6857,
+            "ci_lower": 0.6056,
+            "ci_upper": 0.7636
+          },
+          "sensitivity": {
+            "mean": 0.8657,
+            "ci_lower": 0.8104,
+            "ci_upper": 0.9167
+          },
+          "specificity": {
+            "mean": 0.8209,
+            "ci_lower": 0.7655,
+            "ci_upper": 0.8765
+          }
+        }
+      },
+      "2": {
+        "label": "h10v2-pool_020_hp4hn4",
+        "n_detections": 538,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5834,
+            "f1_ci_lower": 0.5367,
+            "f1_ci_upper": 0.6327,
+            "precision": 0.4647,
+            "p_ci_lower": 0.4157,
+            "p_ci_upper": 0.5185,
+            "recall": 0.7837,
+            "r_ci_lower": 0.7297,
+            "r_ci_upper": 0.8369
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6348,
+            "f1_ci_lower": 0.5877,
+            "f1_ci_upper": 0.6833,
+            "precision": 0.5056,
+            "p_ci_lower": 0.4544,
+            "p_ci_upper": 0.5583,
+            "recall": 0.8527,
+            "r_ci_lower": 0.8062,
+            "r_ci_upper": 0.9013
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6558,
+            "f1_ci_lower": 0.6095,
+            "f1_ci_upper": 0.6997,
+            "precision": 0.5223,
+            "p_ci_lower": 0.4693,
+            "p_ci_upper": 0.5711,
+            "recall": 0.8809,
+            "r_ci_lower": 0.8403,
+            "r_ci_upper": 0.9209
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6674,
+            "f1_ci_lower": 0.6223,
+            "f1_ci_upper": 0.7074,
+            "precision": 0.5316,
+            "p_ci_lower": 0.477,
+            "p_ci_upper": 0.5787,
+            "recall": 0.8966,
+            "r_ci_lower": 0.8587,
+            "r_ci_upper": 0.9336
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6908,
+            "f1_ci_lower": 0.6451,
+            "f1_ci_upper": 0.7307,
+            "precision": 0.5502,
+            "p_ci_lower": 0.4971,
+            "p_ci_upper": 0.5985,
+            "recall": 0.9279,
+            "r_ci_lower": 0.8947,
+            "r_ci_upper": 0.9579
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 141,
+            "tn": 106,
+            "fp": 66,
+            "fn": 14
+          },
+          "mcc": {
+            "mean": 0.5473,
+            "ci_lower": 0.4585,
+            "ci_upper": 0.632
+          },
+          "sensitivity": {
+            "mean": 0.9107,
+            "ci_lower": 0.8636,
+            "ci_upper": 0.9509
+          },
+          "specificity": {
+            "mean": 0.6176,
+            "ci_lower": 0.5417,
+            "ci_upper": 0.6915
+          }
+        }
+      },
+      "1": {
+        "label": "h10v2-pool_020_hp4hn4",
+        "n_detections": 1763,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2565,
+            "f1_ci_lower": 0.2187,
+            "f1_ci_upper": 0.2992,
+            "precision": 0.1514,
+            "p_ci_lower": 0.1259,
+            "p_ci_upper": 0.1815,
+            "recall": 0.837,
+            "r_ci_lower": 0.7917,
+            "r_ci_upper": 0.8819
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2776,
+            "f1_ci_lower": 0.2391,
+            "f1_ci_upper": 0.3212,
+            "precision": 0.1639,
+            "p_ci_lower": 0.1379,
+            "p_ci_upper": 0.1948,
+            "recall": 0.906,
+            "r_ci_lower": 0.8732,
+            "r_ci_upper": 0.9423
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.2872,
+            "f1_ci_lower": 0.2465,
+            "f1_ci_upper": 0.331,
+            "precision": 0.1696,
+            "p_ci_lower": 0.1422,
+            "p_ci_upper": 0.201,
+            "recall": 0.9373,
+            "r_ci_lower": 0.9104,
+            "r_ci_upper": 0.9654
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.292,
+            "f1_ci_lower": 0.2499,
+            "f1_ci_upper": 0.3365,
+            "precision": 0.1724,
+            "p_ci_lower": 0.144,
+            "p_ci_upper": 0.2043,
+            "recall": 0.953,
+            "r_ci_lower": 0.9261,
+            "r_ci_upper": 0.9766
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.2949,
+            "f1_ci_lower": 0.253,
+            "f1_ci_upper": 0.3389,
+            "precision": 0.1741,
+            "p_ci_lower": 0.1458,
+            "p_ci_upper": 0.206,
+            "recall": 0.9624,
+            "r_ci_lower": 0.9371,
+            "r_ci_upper": 0.9846
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 149,
+            "tn": 32,
+            "fp": 140,
+            "fn": 6
+          },
+          "mcc": {
+            "mean": 0.2278,
+            "ci_lower": 0.1359,
+            "ci_upper": 0.3167
+          },
+          "sensitivity": {
+            "mean": 0.9615,
+            "ci_lower": 0.9304,
+            "ci_upper": 0.9877
+          },
+          "specificity": {
+            "mean": 0.1846,
+            "ci_lower": 0.1294,
+            "ci_upper": 0.2468
+          }
+        }
+      }
+    },
+    "h10v2-pool_040_hp4hn4": {
+      "3": {
+        "label": "h10v2-pool_040_hp4hn4",
+        "n_detections": 344,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6938,
+            "f1_ci_lower": 0.6405,
+            "f1_ci_upper": 0.7423,
+            "precision": 0.6686,
+            "p_ci_lower": 0.6142,
+            "p_ci_upper": 0.7216,
+            "recall": 0.721,
+            "r_ci_lower": 0.6554,
+            "r_ci_upper": 0.7819
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7692,
+            "f1_ci_lower": 0.7226,
+            "f1_ci_upper": 0.8105,
+            "precision": 0.7413,
+            "p_ci_lower": 0.6907,
+            "p_ci_upper": 0.7857,
+            "recall": 0.7994,
+            "r_ci_lower": 0.7437,
+            "r_ci_upper": 0.8558
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7813,
+            "f1_ci_lower": 0.7375,
+            "f1_ci_upper": 0.8225,
+            "precision": 0.7529,
+            "p_ci_lower": 0.7042,
+            "p_ci_upper": 0.7959,
+            "recall": 0.8119,
+            "r_ci_lower": 0.7572,
+            "r_ci_upper": 0.8681
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7934,
+            "f1_ci_lower": 0.7539,
+            "f1_ci_upper": 0.8304,
+            "precision": 0.7645,
+            "p_ci_lower": 0.7143,
+            "p_ci_upper": 0.8063,
+            "recall": 0.8245,
+            "r_ci_lower": 0.7747,
+            "r_ci_upper": 0.8746
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7994,
+            "f1_ci_lower": 0.7617,
+            "f1_ci_upper": 0.8359,
+            "precision": 0.7703,
+            "p_ci_lower": 0.7232,
+            "p_ci_upper": 0.812,
+            "recall": 0.8307,
+            "r_ci_lower": 0.785,
+            "r_ci_upper": 0.8782
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 133,
+            "tn": 134,
+            "fp": 38,
+            "fn": 22
+          },
+          "mcc": {
+            "mean": 0.6399,
+            "ci_lower": 0.5544,
+            "ci_upper": 0.7183
+          },
+          "sensitivity": {
+            "mean": 0.8593,
+            "ci_lower": 0.8012,
+            "ci_upper": 0.9097
+          },
+          "specificity": {
+            "mean": 0.7808,
+            "ci_lower": 0.7188,
+            "ci_upper": 0.8382
+          }
+        }
+      },
+      "2": {
+        "label": "h10v2-pool_040_hp4hn4",
+        "n_detections": 514,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5834,
+            "f1_ci_lower": 0.5326,
+            "f1_ci_upper": 0.6325,
+            "precision": 0.4728,
+            "p_ci_lower": 0.4217,
+            "p_ci_upper": 0.5242,
+            "recall": 0.7618,
+            "r_ci_lower": 0.6984,
+            "r_ci_upper": 0.8218
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6483,
+            "f1_ci_lower": 0.6022,
+            "f1_ci_upper": 0.6955,
+            "precision": 0.5253,
+            "p_ci_lower": 0.476,
+            "p_ci_upper": 0.5741,
+            "recall": 0.8464,
+            "r_ci_lower": 0.793,
+            "r_ci_upper": 0.8965
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6675,
+            "f1_ci_lower": 0.6232,
+            "f1_ci_upper": 0.7129,
+            "precision": 0.5409,
+            "p_ci_lower": 0.4907,
+            "p_ci_upper": 0.5901,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8247,
+            "r_ci_upper": 0.9189
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6843,
+            "f1_ci_lower": 0.6412,
+            "f1_ci_upper": 0.7252,
+            "precision": 0.5545,
+            "p_ci_lower": 0.5066,
+            "p_ci_upper": 0.6031,
+            "recall": 0.8934,
+            "r_ci_lower": 0.8516,
+            "r_ci_upper": 0.9322
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7035,
+            "f1_ci_lower": 0.6602,
+            "f1_ci_upper": 0.7429,
+            "precision": 0.57,
+            "p_ci_lower": 0.5192,
+            "p_ci_upper": 0.6186,
+            "recall": 0.9185,
+            "r_ci_lower": 0.8846,
+            "r_ci_upper": 0.9518
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 140,
+            "tn": 105,
+            "fp": 67,
+            "fn": 15
+          },
+          "mcc": {
+            "mean": 0.5357,
+            "ci_lower": 0.453,
+            "ci_upper": 0.6192
+          },
+          "sensitivity": {
+            "mean": 0.9046,
+            "ci_lower": 0.8552,
+            "ci_upper": 0.9456
+          },
+          "specificity": {
+            "mean": 0.6125,
+            "ci_lower": 0.5414,
+            "ci_upper": 0.6839
+          }
+        }
+      },
+      "1": {
+        "label": "h10v2-pool_040_hp4hn4",
+        "n_detections": 1793,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2453,
+            "f1_ci_lower": 0.2052,
+            "f1_ci_upper": 0.2862,
+            "precision": 0.1445,
+            "p_ci_lower": 0.1186,
+            "p_ci_upper": 0.1732,
+            "recall": 0.8119,
+            "r_ci_lower": 0.7614,
+            "r_ci_upper": 0.8636
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2756,
+            "f1_ci_lower": 0.2341,
+            "f1_ci_upper": 0.32,
+            "precision": 0.1623,
+            "p_ci_lower": 0.1342,
+            "p_ci_upper": 0.194,
+            "recall": 0.9122,
+            "r_ci_lower": 0.875,
+            "r_ci_upper": 0.9478
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.2841,
+            "f1_ci_lower": 0.24,
+            "f1_ci_upper": 0.3304,
+            "precision": 0.1673,
+            "p_ci_lower": 0.1376,
+            "p_ci_upper": 0.2001,
+            "recall": 0.9404,
+            "r_ci_lower": 0.9126,
+            "r_ci_upper": 0.9687
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.2879,
+            "f1_ci_lower": 0.2427,
+            "f1_ci_upper": 0.333,
+            "precision": 0.1695,
+            "p_ci_lower": 0.1388,
+            "p_ci_upper": 0.2015,
+            "recall": 0.953,
+            "r_ci_lower": 0.9267,
+            "r_ci_upper": 0.9784
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.2936,
+            "f1_ci_lower": 0.2477,
+            "f1_ci_upper": 0.339,
+            "precision": 0.1729,
+            "p_ci_lower": 0.1419,
+            "p_ci_upper": 0.2051,
+            "recall": 0.9718,
+            "r_ci_lower": 0.9507,
+            "r_ci_upper": 0.9909
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 149,
+            "tn": 36,
+            "fp": 136,
+            "fn": 6
+          },
+          "mcc": {
+            "mean": 0.2556,
+            "ci_lower": 0.1684,
+            "ci_upper": 0.3412
+          },
+          "sensitivity": {
+            "mean": 0.9619,
+            "ci_lower": 0.9265,
+            "ci_upper": 0.9875
+          },
+          "specificity": {
+            "mean": 0.2096,
+            "ci_lower": 0.1483,
+            "ci_upper": 0.2697
+          }
+        }
+      },
+      "5": {
+        "label": "h10v2-pool_040_hp4hn4",
+        "n_detections": 168,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5914,
+            "f1_ci_lower": 0.5207,
+            "f1_ci_upper": 0.659,
+            "precision": 0.8571,
+            "p_ci_lower": 0.8013,
+            "p_ci_upper": 0.9103,
+            "recall": 0.4514,
+            "r_ci_lower": 0.3814,
+            "r_ci_upper": 0.5227
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6407,
+            "f1_ci_lower": 0.5708,
+            "f1_ci_upper": 0.7052,
+            "precision": 0.9286,
+            "p_ci_lower": 0.8895,
+            "p_ci_upper": 0.9636,
+            "recall": 0.489,
+            "r_ci_lower": 0.4174,
+            "r_ci_upper": 0.566
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6448,
+            "f1_ci_lower": 0.5776,
+            "f1_ci_upper": 0.7092,
+            "precision": 0.9345,
+            "p_ci_lower": 0.8972,
+            "p_ci_upper": 0.9674,
+            "recall": 0.4922,
+            "r_ci_lower": 0.4213,
+            "r_ci_upper": 0.5675
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6448,
+            "f1_ci_lower": 0.5776,
+            "f1_ci_upper": 0.7092,
+            "precision": 0.9345,
+            "p_ci_lower": 0.8972,
+            "p_ci_upper": 0.9674,
+            "recall": 0.4922,
+            "r_ci_lower": 0.4213,
+            "r_ci_upper": 0.5675
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6448,
+            "f1_ci_lower": 0.5776,
+            "f1_ci_upper": 0.7092,
+            "precision": 0.9345,
+            "p_ci_lower": 0.8972,
+            "p_ci_upper": 0.9674,
+            "recall": 0.4922,
+            "r_ci_lower": 0.4213,
+            "r_ci_upper": 0.5675
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 98,
+            "tn": 170,
+            "fp": 2,
+            "fn": 57
+          },
+          "mcc": {
+            "mean": 0.673,
+            "ci_lower": 0.6025,
+            "ci_upper": 0.7349
+          },
+          "sensitivity": {
+            "mean": 0.6324,
+            "ci_lower": 0.5517,
+            "ci_upper": 0.7021
+          },
+          "specificity": {
+            "mean": 0.9888,
+            "ci_lower": 0.9699,
+            "ci_upper": 1.0
+          }
+        }
+      },
+      "4": {
+        "label": "h10v2-pool_040_hp4hn4",
+        "n_detections": 242,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6809,
+            "f1_ci_lower": 0.6214,
+            "f1_ci_upper": 0.7334,
+            "precision": 0.7893,
+            "p_ci_lower": 0.734,
+            "p_ci_upper": 0.839,
+            "recall": 0.5987,
+            "r_ci_lower": 0.531,
+            "r_ci_upper": 0.6656
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.738,
+            "f1_ci_lower": 0.6838,
+            "f1_ci_upper": 0.7877,
+            "precision": 0.8554,
+            "p_ci_lower": 0.8101,
+            "p_ci_upper": 0.8967,
+            "recall": 0.6489,
+            "r_ci_lower": 0.584,
+            "r_ci_upper": 0.7165
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7522,
+            "f1_ci_lower": 0.7038,
+            "f1_ci_upper": 0.7979,
+            "precision": 0.8719,
+            "p_ci_lower": 0.83,
+            "p_ci_upper": 0.9107,
+            "recall": 0.6614,
+            "r_ci_lower": 0.5993,
+            "r_ci_upper": 0.7256
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7522,
+            "f1_ci_lower": 0.7038,
+            "f1_ci_upper": 0.7979,
+            "precision": 0.8719,
+            "p_ci_lower": 0.83,
+            "p_ci_upper": 0.9107,
+            "recall": 0.6614,
+            "r_ci_lower": 0.5993,
+            "r_ci_upper": 0.7256
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7558,
+            "f1_ci_lower": 0.708,
+            "f1_ci_upper": 0.8013,
+            "precision": 0.876,
+            "p_ci_lower": 0.835,
+            "p_ci_upper": 0.9144,
+            "recall": 0.6646,
+            "r_ci_lower": 0.6026,
+            "r_ci_upper": 0.7282
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 117,
+            "tn": 160,
+            "fp": 12,
+            "fn": 38
+          },
+          "mcc": {
+            "mean": 0.7018,
+            "ci_lower": 0.6283,
+            "ci_upper": 0.7724
+          },
+          "sensitivity": {
+            "mean": 0.7558,
+            "ci_lower": 0.6849,
+            "ci_upper": 0.8219
+          },
+          "specificity": {
+            "mean": 0.9312,
+            "ci_lower": 0.8926,
+            "ci_upper": 0.9671
+          }
+        }
+      }
+    },
+    "h10v2-pool_080_hp4hn4": {
+      "4": {
+        "label": "h10v2-pool_080_hp4hn4",
+        "n_detections": 234,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6618,
+            "f1_ci_lower": 0.6075,
+            "f1_ci_upper": 0.7186,
+            "precision": 0.7821,
+            "p_ci_lower": 0.7284,
+            "p_ci_upper": 0.8333,
+            "recall": 0.5737,
+            "r_ci_lower": 0.5113,
+            "r_ci_upper": 0.6416
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7125,
+            "f1_ci_lower": 0.6579,
+            "f1_ci_upper": 0.769,
+            "precision": 0.8419,
+            "p_ci_lower": 0.7871,
+            "p_ci_upper": 0.8897,
+            "recall": 0.6176,
+            "r_ci_lower": 0.553,
+            "r_ci_upper": 0.6886
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7269,
+            "f1_ci_lower": 0.675,
+            "f1_ci_upper": 0.7811,
+            "precision": 0.859,
+            "p_ci_lower": 0.808,
+            "p_ci_upper": 0.9021,
+            "recall": 0.6301,
+            "r_ci_lower": 0.5666,
+            "r_ci_upper": 0.7038
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7342,
+            "f1_ci_lower": 0.6815,
+            "f1_ci_upper": 0.7868,
+            "precision": 0.8675,
+            "p_ci_lower": 0.8186,
+            "p_ci_upper": 0.9107,
+            "recall": 0.6364,
+            "r_ci_lower": 0.5729,
+            "r_ci_upper": 0.7093
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.745,
+            "f1_ci_lower": 0.6942,
+            "f1_ci_upper": 0.797,
+            "precision": 0.8803,
+            "p_ci_lower": 0.8341,
+            "p_ci_upper": 0.9197,
+            "recall": 0.6458,
+            "r_ci_lower": 0.582,
+            "r_ci_upper": 0.717
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 118,
+            "tn": 158,
+            "fp": 14,
+            "fn": 37
+          },
+          "mcc": {
+            "mean": 0.6927,
+            "ci_lower": 0.6173,
+            "ci_upper": 0.7666
+          },
+          "sensitivity": {
+            "mean": 0.7627,
+            "ci_lower": 0.6978,
+            "ci_upper": 0.8269
+          },
+          "specificity": {
+            "mean": 0.9182,
+            "ci_lower": 0.875,
+            "ci_upper": 0.9573
+          }
+        }
+      },
+      "3": {
+        "label": "h10v2-pool_080_hp4hn4",
+        "n_detections": 341,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6879,
+            "f1_ci_lower": 0.6316,
+            "f1_ci_upper": 0.7393,
+            "precision": 0.6657,
+            "p_ci_lower": 0.6,
+            "p_ci_upper": 0.7227,
+            "recall": 0.7116,
+            "r_ci_lower": 0.6523,
+            "r_ci_upper": 0.7754
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7576,
+            "f1_ci_lower": 0.7069,
+            "f1_ci_upper": 0.8054,
+            "precision": 0.7331,
+            "p_ci_lower": 0.6658,
+            "p_ci_upper": 0.7929,
+            "recall": 0.7837,
+            "r_ci_lower": 0.7296,
+            "r_ci_upper": 0.8412
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7788,
+            "f1_ci_lower": 0.7302,
+            "f1_ci_upper": 0.8232,
+            "precision": 0.7537,
+            "p_ci_lower": 0.6884,
+            "p_ci_upper": 0.8088,
+            "recall": 0.8056,
+            "r_ci_lower": 0.7524,
+            "r_ci_upper": 0.8607
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7939,
+            "f1_ci_lower": 0.7467,
+            "f1_ci_upper": 0.8393,
+            "precision": 0.7683,
+            "p_ci_lower": 0.7055,
+            "p_ci_upper": 0.8232,
+            "recall": 0.8213,
+            "r_ci_lower": 0.7705,
+            "r_ci_upper": 0.8777
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8091,
+            "f1_ci_lower": 0.765,
+            "f1_ci_upper": 0.8508,
+            "precision": 0.783,
+            "p_ci_lower": 0.7195,
+            "p_ci_upper": 0.837,
+            "recall": 0.837,
+            "r_ci_lower": 0.7902,
+            "r_ci_upper": 0.8869
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 135,
+            "tn": 141,
+            "fp": 31,
+            "fn": 20
+          },
+          "mcc": {
+            "mean": 0.6909,
+            "ci_lower": 0.6125,
+            "ci_upper": 0.7664
+          },
+          "sensitivity": {
+            "mean": 0.8724,
+            "ci_lower": 0.8171,
+            "ci_upper": 0.92
+          },
+          "specificity": {
+            "mean": 0.8193,
+            "ci_lower": 0.7598,
+            "ci_upper": 0.875
+          }
+        }
+      },
+      "2": {
+        "label": "h10v2-pool_080_hp4hn4",
+        "n_detections": 541,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5767,
+            "f1_ci_lower": 0.5211,
+            "f1_ci_upper": 0.6289,
+            "precision": 0.4584,
+            "p_ci_lower": 0.4007,
+            "p_ci_upper": 0.5173,
+            "recall": 0.7774,
+            "r_ci_lower": 0.723,
+            "r_ci_upper": 0.8301
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6349,
+            "f1_ci_lower": 0.5806,
+            "f1_ci_upper": 0.6883,
+            "precision": 0.5046,
+            "p_ci_lower": 0.4436,
+            "p_ci_upper": 0.5644,
+            "recall": 0.8558,
+            "r_ci_lower": 0.8092,
+            "r_ci_upper": 0.9073
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6628,
+            "f1_ci_lower": 0.6106,
+            "f1_ci_upper": 0.7129,
+            "precision": 0.5268,
+            "p_ci_lower": 0.4644,
+            "p_ci_upper": 0.5872,
+            "recall": 0.8934,
+            "r_ci_lower": 0.859,
+            "r_ci_upper": 0.9317
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6744,
+            "f1_ci_lower": 0.6229,
+            "f1_ci_upper": 0.7219,
+            "precision": 0.536,
+            "p_ci_lower": 0.4738,
+            "p_ci_upper": 0.5947,
+            "recall": 0.9091,
+            "r_ci_lower": 0.8777,
+            "r_ci_upper": 0.9453
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6953,
+            "f1_ci_lower": 0.6423,
+            "f1_ci_upper": 0.7442,
+            "precision": 0.5527,
+            "p_ci_lower": 0.4889,
+            "p_ci_upper": 0.6109,
+            "recall": 0.9373,
+            "r_ci_lower": 0.907,
+            "r_ci_upper": 0.9675
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 140,
+            "tn": 106,
+            "fp": 66,
+            "fn": 15
+          },
+          "mcc": {
+            "mean": 0.5394,
+            "ci_lower": 0.4552,
+            "ci_upper": 0.6225
+          },
+          "sensitivity": {
+            "mean": 0.9047,
+            "ci_lower": 0.8562,
+            "ci_upper": 0.9459
+          },
+          "specificity": {
+            "mean": 0.6167,
+            "ci_lower": 0.5454,
+            "ci_upper": 0.6919
+          }
+        }
+      },
+      "5": {
+        "label": "h10v2-pool_080_hp4hn4",
+        "n_detections": 156,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5853,
+            "f1_ci_lower": 0.5223,
+            "f1_ci_upper": 0.6497,
+            "precision": 0.891,
+            "p_ci_lower": 0.8437,
+            "p_ci_upper": 0.9346,
+            "recall": 0.4357,
+            "r_ci_lower": 0.3709,
+            "r_ci_upper": 0.5083
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6232,
+            "f1_ci_lower": 0.5593,
+            "f1_ci_upper": 0.6913,
+            "precision": 0.9487,
+            "p_ci_lower": 0.9116,
+            "p_ci_upper": 0.9811,
+            "recall": 0.4639,
+            "r_ci_lower": 0.3973,
+            "r_ci_upper": 0.5385
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6316,
+            "f1_ci_lower": 0.5677,
+            "f1_ci_upper": 0.696,
+            "precision": 0.9615,
+            "p_ci_lower": 0.9304,
+            "p_ci_upper": 0.9881,
+            "recall": 0.4702,
+            "r_ci_lower": 0.4033,
+            "r_ci_upper": 0.5425
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6316,
+            "f1_ci_lower": 0.5677,
+            "f1_ci_upper": 0.696,
+            "precision": 0.9615,
+            "p_ci_lower": 0.9304,
+            "p_ci_upper": 0.9881,
+            "recall": 0.4702,
+            "r_ci_lower": 0.4033,
+            "r_ci_upper": 0.5425
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6316,
+            "f1_ci_lower": 0.5677,
+            "f1_ci_upper": 0.696,
+            "precision": 0.9615,
+            "p_ci_lower": 0.9304,
+            "p_ci_upper": 0.9881,
+            "recall": 0.4702,
+            "r_ci_lower": 0.4033,
+            "r_ci_upper": 0.5425
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 95,
+            "tn": 169,
+            "fp": 3,
+            "fn": 60
+          },
+          "mcc": {
+            "mean": 0.6499,
+            "ci_lower": 0.5775,
+            "ci_upper": 0.7158
+          },
+          "sensitivity": {
+            "mean": 0.6145,
+            "ci_lower": 0.5357,
+            "ci_upper": 0.6853
+          },
+          "specificity": {
+            "mean": 0.9825,
+            "ci_lower": 0.9618,
+            "ci_upper": 1.0
+          }
+        }
+      },
+      "1": {
+        "label": "h10v2-pool_080_hp4hn4",
+        "n_detections": 2080,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2209,
+            "f1_ci_lower": 0.1849,
+            "f1_ci_upper": 0.2594,
+            "precision": 0.1274,
+            "p_ci_lower": 0.104,
+            "p_ci_upper": 0.1533,
+            "recall": 0.8307,
+            "r_ci_lower": 0.7834,
+            "r_ci_upper": 0.8785
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2426,
+            "f1_ci_lower": 0.2027,
+            "f1_ci_upper": 0.2837,
+            "precision": 0.1399,
+            "p_ci_lower": 0.114,
+            "p_ci_upper": 0.1678,
+            "recall": 0.9122,
+            "r_ci_lower": 0.8762,
+            "r_ci_upper": 0.9502
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.2526,
+            "f1_ci_lower": 0.2118,
+            "f1_ci_upper": 0.2955,
+            "precision": 0.1457,
+            "p_ci_lower": 0.119,
+            "p_ci_upper": 0.175,
+            "recall": 0.9498,
+            "r_ci_lower": 0.926,
+            "r_ci_upper": 0.9758
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.2584,
+            "f1_ci_lower": 0.2158,
+            "f1_ci_upper": 0.3031,
+            "precision": 0.149,
+            "p_ci_lower": 0.1213,
+            "p_ci_upper": 0.1792,
+            "recall": 0.9718,
+            "r_ci_lower": 0.9519,
+            "r_ci_upper": 0.9897
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.2609,
+            "f1_ci_lower": 0.2183,
+            "f1_ci_upper": 0.3052,
+            "precision": 0.1505,
+            "p_ci_lower": 0.1228,
+            "p_ci_upper": 0.1805,
+            "recall": 0.9812,
+            "r_ci_lower": 0.9622,
+            "r_ci_upper": 0.9967
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 148,
+            "tn": 35,
+            "fp": 137,
+            "fn": 7
+          },
+          "mcc": {
+            "mean": 0.2372,
+            "ci_lower": 0.149,
+            "ci_upper": 0.3212
+          },
+          "sensitivity": {
+            "mean": 0.9553,
+            "ci_lower": 0.9187,
+            "ci_upper": 0.9858
+          },
+          "specificity": {
+            "mean": 0.2039,
+            "ci_lower": 0.1465,
+            "ci_upper": 0.2671
+          }
+        }
+      }
+    },
+    "h10v2-pool_160_hp4hn4": {
+      "1": {
+        "label": "h10v2-pool_160_hp4hn4",
+        "n_detections": 1454,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.3136,
+            "f1_ci_lower": 0.269,
+            "f1_ci_upper": 0.3577,
+            "precision": 0.1912,
+            "p_ci_lower": 0.1585,
+            "p_ci_upper": 0.2235,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8295,
+            "r_ci_upper": 0.9113
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3373,
+            "f1_ci_lower": 0.2897,
+            "f1_ci_upper": 0.3837,
+            "precision": 0.2056,
+            "p_ci_lower": 0.1721,
+            "p_ci_upper": 0.241,
+            "recall": 0.9373,
+            "r_ci_lower": 0.9094,
+            "r_ci_upper": 0.9622
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3452,
+            "f1_ci_lower": 0.2986,
+            "f1_ci_upper": 0.3922,
+            "precision": 0.2105,
+            "p_ci_lower": 0.1773,
+            "p_ci_upper": 0.2463,
+            "recall": 0.9592,
+            "r_ci_lower": 0.9377,
+            "r_ci_upper": 0.9806
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3474,
+            "f1_ci_lower": 0.3008,
+            "f1_ci_upper": 0.3947,
+            "precision": 0.2118,
+            "p_ci_lower": 0.1781,
+            "p_ci_upper": 0.2479,
+            "recall": 0.9655,
+            "r_ci_lower": 0.9446,
+            "r_ci_upper": 0.985
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3531,
+            "f1_ci_lower": 0.3056,
+            "f1_ci_upper": 0.4012,
+            "precision": 0.2153,
+            "p_ci_lower": 0.1813,
+            "p_ci_upper": 0.2516,
+            "recall": 0.9812,
+            "r_ci_lower": 0.9633,
+            "r_ci_upper": 0.9967
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 147,
+            "tn": 48,
+            "fp": 124,
+            "fn": 8
+          },
+          "mcc": {
+            "mean": 0.3016,
+            "ci_lower": 0.2119,
+            "ci_upper": 0.3889
+          },
+          "sensitivity": {
+            "mean": 0.9488,
+            "ci_lower": 0.9108,
+            "ci_upper": 0.9799
+          },
+          "specificity": {
+            "mean": 0.2788,
+            "ci_lower": 0.2134,
+            "ci_upper": 0.3494
+          }
+        }
+      },
+      "4": {
+        "label": "h10v2-pool_160_hp4hn4",
+        "n_detections": 236,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7171,
+            "f1_ci_lower": 0.6609,
+            "f1_ci_upper": 0.7683,
+            "precision": 0.8432,
+            "p_ci_lower": 0.7954,
+            "p_ci_upper": 0.888,
+            "recall": 0.6238,
+            "r_ci_lower": 0.561,
+            "r_ci_upper": 0.6901
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7604,
+            "f1_ci_lower": 0.7108,
+            "f1_ci_upper": 0.8067,
+            "precision": 0.8941,
+            "p_ci_lower": 0.8517,
+            "p_ci_upper": 0.9305,
+            "recall": 0.6614,
+            "r_ci_lower": 0.5976,
+            "r_ci_upper": 0.7216
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7856,
+            "f1_ci_lower": 0.7379,
+            "f1_ci_upper": 0.8299,
+            "precision": 0.9237,
+            "p_ci_lower": 0.8837,
+            "p_ci_upper": 0.9565,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6214,
+            "r_ci_upper": 0.7473
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7856,
+            "f1_ci_lower": 0.7379,
+            "f1_ci_upper": 0.8299,
+            "precision": 0.9237,
+            "p_ci_lower": 0.8837,
+            "p_ci_upper": 0.9565,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6214,
+            "r_ci_upper": 0.7473
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7928,
+            "f1_ci_lower": 0.7461,
+            "f1_ci_upper": 0.8349,
+            "precision": 0.9322,
+            "p_ci_lower": 0.8945,
+            "p_ci_upper": 0.9634,
+            "recall": 0.6897,
+            "r_ci_lower": 0.6289,
+            "r_ci_upper": 0.7535
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 115,
+            "tn": 164,
+            "fp": 8,
+            "fn": 40
+          },
+          "mcc": {
+            "mean": 0.7178,
+            "ci_lower": 0.6468,
+            "ci_upper": 0.7908
+          },
+          "sensitivity": {
+            "mean": 0.7428,
+            "ci_lower": 0.6758,
+            "ci_upper": 0.8141
+          },
+          "specificity": {
+            "mean": 0.9538,
+            "ci_lower": 0.9197,
+            "ci_upper": 0.983
+          }
+        }
+      },
+      "3": {
+        "label": "h10v2-pool_160_hp4hn4",
+        "n_detections": 313,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6994,
+            "f1_ci_lower": 0.6432,
+            "f1_ci_upper": 0.7526,
+            "precision": 0.7061,
+            "p_ci_lower": 0.6501,
+            "p_ci_upper": 0.7577,
+            "recall": 0.6928,
+            "r_ci_lower": 0.6294,
+            "r_ci_upper": 0.7575
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7658,
+            "f1_ci_lower": 0.7226,
+            "f1_ci_upper": 0.8088,
+            "precision": 0.7732,
+            "p_ci_lower": 0.7242,
+            "p_ci_upper": 0.8204,
+            "recall": 0.7586,
+            "r_ci_lower": 0.7047,
+            "r_ci_upper": 0.814
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8101,
+            "f1_ci_lower": 0.7662,
+            "f1_ci_upper": 0.85,
+            "precision": 0.8179,
+            "p_ci_lower": 0.7736,
+            "p_ci_upper": 0.8638,
+            "recall": 0.8025,
+            "r_ci_lower": 0.7482,
+            "r_ci_upper": 0.8561
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8165,
+            "f1_ci_lower": 0.7749,
+            "f1_ci_upper": 0.8554,
+            "precision": 0.8243,
+            "p_ci_lower": 0.78,
+            "p_ci_upper": 0.87,
+            "recall": 0.8088,
+            "r_ci_lower": 0.7573,
+            "r_ci_upper": 0.8616
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8354,
+            "f1_ci_lower": 0.7947,
+            "f1_ci_upper": 0.8728,
+            "precision": 0.8435,
+            "p_ci_lower": 0.7982,
+            "p_ci_upper": 0.8858,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7764,
+            "r_ci_upper": 0.8804
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 131,
+            "tn": 150,
+            "fp": 22,
+            "fn": 24
+          },
+          "mcc": {
+            "mean": 0.7204,
+            "ci_lower": 0.6464,
+            "ci_upper": 0.793
+          },
+          "sensitivity": {
+            "mean": 0.8462,
+            "ci_lower": 0.7902,
+            "ci_upper": 0.8993
+          },
+          "specificity": {
+            "mean": 0.8737,
+            "ci_lower": 0.8217,
+            "ci_upper": 0.9217
+          }
+        }
+      },
+      "2": {
+        "label": "h10v2-pool_160_hp4hn4",
+        "n_detections": 474,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6255,
+            "f1_ci_lower": 0.5773,
+            "f1_ci_upper": 0.6745,
+            "precision": 0.5232,
+            "p_ci_lower": 0.4731,
+            "p_ci_upper": 0.5727,
+            "recall": 0.7774,
+            "r_ci_lower": 0.7193,
+            "r_ci_upper": 0.8379
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6784,
+            "f1_ci_lower": 0.6338,
+            "f1_ci_upper": 0.7198,
+            "precision": 0.5675,
+            "p_ci_lower": 0.5199,
+            "p_ci_upper": 0.6158,
+            "recall": 0.8433,
+            "r_ci_lower": 0.7938,
+            "r_ci_upper": 0.8901
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7137,
+            "f1_ci_lower": 0.6734,
+            "f1_ci_upper": 0.7531,
+            "precision": 0.597,
+            "p_ci_lower": 0.5484,
+            "p_ci_upper": 0.6465,
+            "recall": 0.8871,
+            "r_ci_lower": 0.8464,
+            "r_ci_upper": 0.9288
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7213,
+            "f1_ci_lower": 0.6814,
+            "f1_ci_upper": 0.7604,
+            "precision": 0.6034,
+            "p_ci_lower": 0.5538,
+            "p_ci_upper": 0.6525,
+            "recall": 0.8966,
+            "r_ci_lower": 0.863,
+            "r_ci_upper": 0.9325
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7465,
+            "f1_ci_lower": 0.7077,
+            "f1_ci_upper": 0.7845,
+            "precision": 0.6245,
+            "p_ci_lower": 0.5754,
+            "p_ci_upper": 0.6734,
+            "recall": 0.9279,
+            "r_ci_lower": 0.8981,
+            "r_ci_upper": 0.9585
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 139,
+            "tn": 115,
+            "fp": 57,
+            "fn": 16
+          },
+          "mcc": {
+            "mean": 0.5775,
+            "ci_lower": 0.4872,
+            "ci_upper": 0.6608
+          },
+          "sensitivity": {
+            "mean": 0.897,
+            "ci_lower": 0.8466,
+            "ci_upper": 0.943
+          },
+          "specificity": {
+            "mean": 0.6698,
+            "ci_lower": 0.5956,
+            "ci_upper": 0.7399
+          }
+        }
+      },
+      "5": {
+        "label": "h10v2-pool_160_hp4hn4",
+        "n_detections": 163,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6058,
+            "f1_ci_lower": 0.5459,
+            "f1_ci_upper": 0.6645,
+            "precision": 0.8957,
+            "p_ci_lower": 0.8446,
+            "p_ci_upper": 0.9398,
+            "recall": 0.4577,
+            "r_ci_lower": 0.3972,
+            "r_ci_upper": 0.5234
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6432,
+            "f1_ci_lower": 0.582,
+            "f1_ci_upper": 0.6998,
+            "precision": 0.9509,
+            "p_ci_lower": 0.9156,
+            "p_ci_upper": 0.9819,
+            "recall": 0.4859,
+            "r_ci_lower": 0.4225,
+            "r_ci_upper": 0.5541
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6473,
+            "f1_ci_lower": 0.5874,
+            "f1_ci_upper": 0.7039,
+            "precision": 0.9571,
+            "p_ci_lower": 0.9222,
+            "p_ci_upper": 0.9861,
+            "recall": 0.489,
+            "r_ci_lower": 0.4258,
+            "r_ci_upper": 0.5552
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6473,
+            "f1_ci_lower": 0.5874,
+            "f1_ci_upper": 0.7039,
+            "precision": 0.9571,
+            "p_ci_lower": 0.9222,
+            "p_ci_upper": 0.9861,
+            "recall": 0.489,
+            "r_ci_lower": 0.4258,
+            "r_ci_upper": 0.5552
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6473,
+            "f1_ci_lower": 0.5874,
+            "f1_ci_upper": 0.7039,
+            "precision": 0.9571,
+            "p_ci_lower": 0.9222,
+            "p_ci_upper": 0.9861,
+            "recall": 0.489,
+            "r_ci_lower": 0.4258,
+            "r_ci_upper": 0.5552
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 93,
+            "tn": 168,
+            "fp": 4,
+            "fn": 62
+          },
+          "mcc": {
+            "mean": 0.6313,
+            "ci_lower": 0.5595,
+            "ci_upper": 0.6989
+          },
+          "sensitivity": {
+            "mean": 0.6005,
+            "ci_lower": 0.5274,
+            "ci_upper": 0.6809
+          },
+          "specificity": {
+            "mean": 0.9773,
+            "ci_lower": 0.9538,
+            "ci_upper": 0.9947
+          }
+        }
+      }
+    },
+    "h12v2-r1-hn-heavy": {
+      "2": {
+        "label": "h12v2-r1-hn-heavy",
+        "n_detections": 500,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6252,
+            "f1_ci_lower": 0.5726,
+            "f1_ci_upper": 0.6717,
+            "precision": 0.512,
+            "p_ci_lower": 0.4557,
+            "p_ci_upper": 0.5648,
+            "recall": 0.8025,
+            "r_ci_lower": 0.7515,
+            "r_ci_upper": 0.8517
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6813,
+            "f1_ci_lower": 0.6348,
+            "f1_ci_upper": 0.7249,
+            "precision": 0.558,
+            "p_ci_lower": 0.505,
+            "p_ci_upper": 0.61,
+            "recall": 0.8746,
+            "r_ci_lower": 0.8333,
+            "r_ci_upper": 0.9193
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.696,
+            "f1_ci_lower": 0.6495,
+            "f1_ci_upper": 0.7387,
+            "precision": 0.57,
+            "p_ci_lower": 0.5158,
+            "p_ci_upper": 0.6219,
+            "recall": 0.8934,
+            "r_ci_lower": 0.852,
+            "r_ci_upper": 0.9353
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7033,
+            "f1_ci_lower": 0.656,
+            "f1_ci_upper": 0.7475,
+            "precision": 0.576,
+            "p_ci_lower": 0.5207,
+            "p_ci_upper": 0.6278,
+            "recall": 0.9028,
+            "r_ci_lower": 0.8655,
+            "r_ci_upper": 0.9414
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7204,
+            "f1_ci_lower": 0.6746,
+            "f1_ci_upper": 0.7624,
+            "precision": 0.59,
+            "p_ci_lower": 0.5352,
+            "p_ci_upper": 0.6404,
+            "recall": 0.9248,
+            "r_ci_lower": 0.8925,
+            "r_ci_upper": 0.9573
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 139,
+            "tn": 115,
+            "fp": 57,
+            "fn": 16
+          },
+          "mcc": {
+            "mean": 0.5772,
+            "ci_lower": 0.4853,
+            "ci_upper": 0.6574
+          },
+          "sensitivity": {
+            "mean": 0.8982,
+            "ci_lower": 0.8462,
+            "ci_upper": 0.942
+          },
+          "specificity": {
+            "mean": 0.668,
+            "ci_lower": 0.5965,
+            "ci_upper": 0.7394
+          }
+        }
+      },
+      "1": {
+        "label": "h12v2-r1-hn-heavy",
+        "n_detections": 1652,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.276,
+            "f1_ci_lower": 0.2334,
+            "f1_ci_upper": 0.322,
+            "precision": 0.1646,
+            "p_ci_lower": 0.1356,
+            "p_ci_upper": 0.1972,
+            "recall": 0.8527,
+            "r_ci_lower": 0.8092,
+            "r_ci_upper": 0.893
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2953,
+            "f1_ci_lower": 0.2503,
+            "f1_ci_upper": 0.3434,
+            "precision": 0.1762,
+            "p_ci_lower": 0.145,
+            "p_ci_upper": 0.211,
+            "recall": 0.9122,
+            "r_ci_lower": 0.8779,
+            "r_ci_upper": 0.9461
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3034,
+            "f1_ci_lower": 0.2576,
+            "f1_ci_upper": 0.3528,
+            "precision": 0.181,
+            "p_ci_lower": 0.1492,
+            "p_ci_upper": 0.2169,
+            "recall": 0.9373,
+            "r_ci_lower": 0.9085,
+            "r_ci_upper": 0.9652
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3064,
+            "f1_ci_lower": 0.2597,
+            "f1_ci_upper": 0.3566,
+            "precision": 0.1828,
+            "p_ci_lower": 0.1502,
+            "p_ci_upper": 0.2191,
+            "recall": 0.9467,
+            "r_ci_lower": 0.9215,
+            "r_ci_upper": 0.9721
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3125,
+            "f1_ci_lower": 0.2649,
+            "f1_ci_upper": 0.3619,
+            "precision": 0.1864,
+            "p_ci_lower": 0.1536,
+            "p_ci_upper": 0.2225,
+            "recall": 0.9655,
+            "r_ci_lower": 0.9408,
+            "r_ci_upper": 0.9871
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 146,
+            "tn": 42,
+            "fp": 130,
+            "fn": 9
+          },
+          "mcc": {
+            "mean": 0.2569,
+            "ci_lower": 0.1614,
+            "ci_upper": 0.3444
+          },
+          "sensitivity": {
+            "mean": 0.943,
+            "ci_lower": 0.9045,
+            "ci_upper": 0.9752
+          },
+          "specificity": {
+            "mean": 0.2435,
+            "ci_lower": 0.1779,
+            "ci_upper": 0.3121
+          }
+        }
+      },
+      "3": {
+        "label": "h12v2-r1-hn-heavy",
+        "n_detections": 327,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7307,
+            "f1_ci_lower": 0.682,
+            "f1_ci_upper": 0.7761,
+            "precision": 0.7217,
+            "p_ci_lower": 0.6656,
+            "p_ci_upper": 0.7731,
+            "recall": 0.7398,
+            "r_ci_lower": 0.6814,
+            "r_ci_upper": 0.7943
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.805,
+            "f1_ci_lower": 0.7646,
+            "f1_ci_upper": 0.8452,
+            "precision": 0.7951,
+            "p_ci_lower": 0.7492,
+            "p_ci_upper": 0.8374,
+            "recall": 0.815,
+            "r_ci_lower": 0.7657,
+            "r_ci_upper": 0.8687
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8235,
+            "f1_ci_lower": 0.7849,
+            "f1_ci_upper": 0.8612,
+            "precision": 0.8135,
+            "p_ci_lower": 0.7679,
+            "p_ci_upper": 0.8533,
+            "recall": 0.8339,
+            "r_ci_lower": 0.787,
+            "r_ci_upper": 0.8851
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8328,
+            "f1_ci_lower": 0.7994,
+            "f1_ci_upper": 0.8656,
+            "precision": 0.8226,
+            "p_ci_lower": 0.7781,
+            "p_ci_upper": 0.8588,
+            "recall": 0.8433,
+            "r_ci_lower": 0.8024,
+            "r_ci_upper": 0.8893
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8421,
+            "f1_ci_lower": 0.8084,
+            "f1_ci_upper": 0.8737,
+            "precision": 0.8318,
+            "p_ci_lower": 0.7847,
+            "p_ci_upper": 0.869,
+            "recall": 0.8527,
+            "r_ci_lower": 0.8106,
+            "r_ci_upper": 0.8966
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 134,
+            "tn": 148,
+            "fp": 24,
+            "fn": 21
+          },
+          "mcc": {
+            "mean": 0.7246,
+            "ci_lower": 0.6509,
+            "ci_upper": 0.7977
+          },
+          "sensitivity": {
+            "mean": 0.8665,
+            "ci_lower": 0.8121,
+            "ci_upper": 0.9162
+          },
+          "specificity": {
+            "mean": 0.8587,
+            "ci_lower": 0.8011,
+            "ci_upper": 0.9081
+          }
+        }
+      },
+      "4": {
+        "label": "h12v2-r1-hn-heavy",
+        "n_detections": 240,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7084,
+            "f1_ci_lower": 0.643,
+            "f1_ci_upper": 0.7609,
+            "precision": 0.825,
+            "p_ci_lower": 0.7673,
+            "p_ci_upper": 0.8759,
+            "recall": 0.6207,
+            "r_ci_lower": 0.5479,
+            "r_ci_upper": 0.6875
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7692,
+            "f1_ci_lower": 0.714,
+            "f1_ci_upper": 0.8159,
+            "precision": 0.8958,
+            "p_ci_lower": 0.8528,
+            "p_ci_upper": 0.9315,
+            "recall": 0.674,
+            "r_ci_lower": 0.6014,
+            "r_ci_upper": 0.7407
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.78,
+            "f1_ci_lower": 0.728,
+            "f1_ci_upper": 0.8246,
+            "precision": 0.9083,
+            "p_ci_lower": 0.869,
+            "p_ci_upper": 0.9417,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6151,
+            "r_ci_upper": 0.7475
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.78,
+            "f1_ci_lower": 0.728,
+            "f1_ci_upper": 0.8246,
+            "precision": 0.9083,
+            "p_ci_lower": 0.869,
+            "p_ci_upper": 0.9417,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6151,
+            "r_ci_upper": 0.7475
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.78,
+            "f1_ci_lower": 0.728,
+            "f1_ci_upper": 0.8246,
+            "precision": 0.9083,
+            "p_ci_lower": 0.869,
+            "p_ci_upper": 0.9417,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6151,
+            "r_ci_upper": 0.7475
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 115,
+            "tn": 161,
+            "fp": 11,
+            "fn": 40
+          },
+          "mcc": {
+            "mean": 0.6973,
+            "ci_lower": 0.6229,
+            "ci_upper": 0.7697
+          },
+          "sensitivity": {
+            "mean": 0.7444,
+            "ci_lower": 0.6763,
+            "ci_upper": 0.8144
+          },
+          "specificity": {
+            "mean": 0.9358,
+            "ci_lower": 0.8956,
+            "ci_upper": 0.968
+          }
+        }
+      },
+      "5": {
+        "label": "h12v2-r1-hn-heavy",
+        "n_detections": 169,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6025,
+            "f1_ci_lower": 0.5338,
+            "f1_ci_upper": 0.6594,
+            "precision": 0.8698,
+            "p_ci_lower": 0.8118,
+            "p_ci_upper": 0.9208,
+            "recall": 0.4608,
+            "r_ci_lower": 0.3906,
+            "r_ci_upper": 0.5247
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6557,
+            "f1_ci_lower": 0.5882,
+            "f1_ci_upper": 0.7121,
+            "precision": 0.9467,
+            "p_ci_lower": 0.9091,
+            "p_ci_upper": 0.9772,
+            "recall": 0.5016,
+            "r_ci_lower": 0.4286,
+            "r_ci_upper": 0.5663
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6598,
+            "f1_ci_lower": 0.5924,
+            "f1_ci_upper": 0.7167,
+            "precision": 0.9527,
+            "p_ci_lower": 0.9167,
+            "p_ci_upper": 0.9809,
+            "recall": 0.5047,
+            "r_ci_lower": 0.4332,
+            "r_ci_upper": 0.5732
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6598,
+            "f1_ci_lower": 0.5924,
+            "f1_ci_upper": 0.7167,
+            "precision": 0.9527,
+            "p_ci_lower": 0.9167,
+            "p_ci_upper": 0.9809,
+            "recall": 0.5047,
+            "r_ci_lower": 0.4332,
+            "r_ci_upper": 0.5732
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6639,
+            "f1_ci_lower": 0.5975,
+            "f1_ci_upper": 0.7187,
+            "precision": 0.9586,
+            "p_ci_lower": 0.9267,
+            "p_ci_upper": 0.9842,
+            "recall": 0.5078,
+            "r_ci_lower": 0.4396,
+            "r_ci_upper": 0.575
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 92,
+            "tn": 169,
+            "fp": 3,
+            "fn": 63
+          },
+          "mcc": {
+            "mean": 0.6344,
+            "ci_lower": 0.5652,
+            "ci_upper": 0.7042
+          },
+          "sensitivity": {
+            "mean": 0.5948,
+            "ci_lower": 0.5191,
+            "ci_upper": 0.6735
+          },
+          "specificity": {
+            "mean": 0.9827,
+            "ci_lower": 0.9622,
+            "ci_upper": 1.0
+          }
+        }
+      }
+    },
+    "h12v2-r2-balanced": {
+      "3": {
+        "label": "h12v2-r2-balanced",
+        "n_detections": 313,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6994,
+            "f1_ci_lower": 0.6432,
+            "f1_ci_upper": 0.7526,
+            "precision": 0.7061,
+            "p_ci_lower": 0.6501,
+            "p_ci_upper": 0.7577,
+            "recall": 0.6928,
+            "r_ci_lower": 0.6294,
+            "r_ci_upper": 0.7575
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7658,
+            "f1_ci_lower": 0.7226,
+            "f1_ci_upper": 0.8088,
+            "precision": 0.7732,
+            "p_ci_lower": 0.7242,
+            "p_ci_upper": 0.8204,
+            "recall": 0.7586,
+            "r_ci_lower": 0.7047,
+            "r_ci_upper": 0.814
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8101,
+            "f1_ci_lower": 0.7662,
+            "f1_ci_upper": 0.85,
+            "precision": 0.8179,
+            "p_ci_lower": 0.7736,
+            "p_ci_upper": 0.8638,
+            "recall": 0.8025,
+            "r_ci_lower": 0.7482,
+            "r_ci_upper": 0.8561
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8165,
+            "f1_ci_lower": 0.7749,
+            "f1_ci_upper": 0.8554,
+            "precision": 0.8243,
+            "p_ci_lower": 0.78,
+            "p_ci_upper": 0.87,
+            "recall": 0.8088,
+            "r_ci_lower": 0.7573,
+            "r_ci_upper": 0.8616
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8354,
+            "f1_ci_lower": 0.7947,
+            "f1_ci_upper": 0.8728,
+            "precision": 0.8435,
+            "p_ci_lower": 0.7982,
+            "p_ci_upper": 0.8858,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7764,
+            "r_ci_upper": 0.8804
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 131,
+            "tn": 150,
+            "fp": 22,
+            "fn": 24
+          },
+          "mcc": {
+            "mean": 0.7204,
+            "ci_lower": 0.6464,
+            "ci_upper": 0.793
+          },
+          "sensitivity": {
+            "mean": 0.8462,
+            "ci_lower": 0.7902,
+            "ci_upper": 0.8993
+          },
+          "specificity": {
+            "mean": 0.8737,
+            "ci_lower": 0.8217,
+            "ci_upper": 0.9217
+          }
+        }
+      },
+      "2": {
+        "label": "h12v2-r2-balanced",
+        "n_detections": 474,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6255,
+            "f1_ci_lower": 0.5773,
+            "f1_ci_upper": 0.6745,
+            "precision": 0.5232,
+            "p_ci_lower": 0.4731,
+            "p_ci_upper": 0.5727,
+            "recall": 0.7774,
+            "r_ci_lower": 0.7193,
+            "r_ci_upper": 0.8379
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6784,
+            "f1_ci_lower": 0.6338,
+            "f1_ci_upper": 0.7198,
+            "precision": 0.5675,
+            "p_ci_lower": 0.5199,
+            "p_ci_upper": 0.6158,
+            "recall": 0.8433,
+            "r_ci_lower": 0.7938,
+            "r_ci_upper": 0.8901
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7137,
+            "f1_ci_lower": 0.6734,
+            "f1_ci_upper": 0.7531,
+            "precision": 0.597,
+            "p_ci_lower": 0.5484,
+            "p_ci_upper": 0.6465,
+            "recall": 0.8871,
+            "r_ci_lower": 0.8464,
+            "r_ci_upper": 0.9288
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7213,
+            "f1_ci_lower": 0.6814,
+            "f1_ci_upper": 0.7604,
+            "precision": 0.6034,
+            "p_ci_lower": 0.5538,
+            "p_ci_upper": 0.6525,
+            "recall": 0.8966,
+            "r_ci_lower": 0.863,
+            "r_ci_upper": 0.9325
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7465,
+            "f1_ci_lower": 0.7077,
+            "f1_ci_upper": 0.7845,
+            "precision": 0.6245,
+            "p_ci_lower": 0.5754,
+            "p_ci_upper": 0.6734,
+            "recall": 0.9279,
+            "r_ci_lower": 0.8981,
+            "r_ci_upper": 0.9585
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 139,
+            "tn": 115,
+            "fp": 57,
+            "fn": 16
+          },
+          "mcc": {
+            "mean": 0.5775,
+            "ci_lower": 0.4872,
+            "ci_upper": 0.6608
+          },
+          "sensitivity": {
+            "mean": 0.897,
+            "ci_lower": 0.8466,
+            "ci_upper": 0.943
+          },
+          "specificity": {
+            "mean": 0.6698,
+            "ci_lower": 0.5956,
+            "ci_upper": 0.7399
+          }
+        }
+      },
+      "1": {
+        "label": "h12v2-r2-balanced",
+        "n_detections": 1454,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.3136,
+            "f1_ci_lower": 0.269,
+            "f1_ci_upper": 0.3577,
+            "precision": 0.1912,
+            "p_ci_lower": 0.1585,
+            "p_ci_upper": 0.2235,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8295,
+            "r_ci_upper": 0.9113
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3373,
+            "f1_ci_lower": 0.2897,
+            "f1_ci_upper": 0.3837,
+            "precision": 0.2056,
+            "p_ci_lower": 0.1721,
+            "p_ci_upper": 0.241,
+            "recall": 0.9373,
+            "r_ci_lower": 0.9094,
+            "r_ci_upper": 0.9622
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3452,
+            "f1_ci_lower": 0.2986,
+            "f1_ci_upper": 0.3922,
+            "precision": 0.2105,
+            "p_ci_lower": 0.1773,
+            "p_ci_upper": 0.2463,
+            "recall": 0.9592,
+            "r_ci_lower": 0.9377,
+            "r_ci_upper": 0.9806
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3474,
+            "f1_ci_lower": 0.3008,
+            "f1_ci_upper": 0.3947,
+            "precision": 0.2118,
+            "p_ci_lower": 0.1781,
+            "p_ci_upper": 0.2479,
+            "recall": 0.9655,
+            "r_ci_lower": 0.9446,
+            "r_ci_upper": 0.985
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3531,
+            "f1_ci_lower": 0.3056,
+            "f1_ci_upper": 0.4012,
+            "precision": 0.2153,
+            "p_ci_lower": 0.1813,
+            "p_ci_upper": 0.2516,
+            "recall": 0.9812,
+            "r_ci_lower": 0.9633,
+            "r_ci_upper": 0.9967
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 147,
+            "tn": 48,
+            "fp": 124,
+            "fn": 8
+          },
+          "mcc": {
+            "mean": 0.3016,
+            "ci_lower": 0.2119,
+            "ci_upper": 0.3889
+          },
+          "sensitivity": {
+            "mean": 0.9488,
+            "ci_lower": 0.9108,
+            "ci_upper": 0.9799
+          },
+          "specificity": {
+            "mean": 0.2788,
+            "ci_lower": 0.2134,
+            "ci_upper": 0.3494
+          }
+        }
+      },
+      "4": {
+        "label": "h12v2-r2-balanced",
+        "n_detections": 236,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7171,
+            "f1_ci_lower": 0.6609,
+            "f1_ci_upper": 0.7683,
+            "precision": 0.8432,
+            "p_ci_lower": 0.7954,
+            "p_ci_upper": 0.888,
+            "recall": 0.6238,
+            "r_ci_lower": 0.561,
+            "r_ci_upper": 0.6901
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7604,
+            "f1_ci_lower": 0.7108,
+            "f1_ci_upper": 0.8067,
+            "precision": 0.8941,
+            "p_ci_lower": 0.8517,
+            "p_ci_upper": 0.9305,
+            "recall": 0.6614,
+            "r_ci_lower": 0.5976,
+            "r_ci_upper": 0.7216
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7856,
+            "f1_ci_lower": 0.7379,
+            "f1_ci_upper": 0.8299,
+            "precision": 0.9237,
+            "p_ci_lower": 0.8837,
+            "p_ci_upper": 0.9565,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6214,
+            "r_ci_upper": 0.7473
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7856,
+            "f1_ci_lower": 0.7379,
+            "f1_ci_upper": 0.8299,
+            "precision": 0.9237,
+            "p_ci_lower": 0.8837,
+            "p_ci_upper": 0.9565,
+            "recall": 0.6834,
+            "r_ci_lower": 0.6214,
+            "r_ci_upper": 0.7473
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7928,
+            "f1_ci_lower": 0.7461,
+            "f1_ci_upper": 0.8349,
+            "precision": 0.9322,
+            "p_ci_lower": 0.8945,
+            "p_ci_upper": 0.9634,
+            "recall": 0.6897,
+            "r_ci_lower": 0.6289,
+            "r_ci_upper": 0.7535
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 115,
+            "tn": 164,
+            "fp": 8,
+            "fn": 40
+          },
+          "mcc": {
+            "mean": 0.7178,
+            "ci_lower": 0.6468,
+            "ci_upper": 0.7908
+          },
+          "sensitivity": {
+            "mean": 0.7428,
+            "ci_lower": 0.6758,
+            "ci_upper": 0.8141
+          },
+          "specificity": {
+            "mean": 0.9538,
+            "ci_lower": 0.9197,
+            "ci_upper": 0.983
+          }
+        }
+      },
+      "5": {
+        "label": "h12v2-r2-balanced",
+        "n_detections": 163,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6058,
+            "f1_ci_lower": 0.5459,
+            "f1_ci_upper": 0.6645,
+            "precision": 0.8957,
+            "p_ci_lower": 0.8446,
+            "p_ci_upper": 0.9398,
+            "recall": 0.4577,
+            "r_ci_lower": 0.3972,
+            "r_ci_upper": 0.5234
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6432,
+            "f1_ci_lower": 0.582,
+            "f1_ci_upper": 0.6998,
+            "precision": 0.9509,
+            "p_ci_lower": 0.9156,
+            "p_ci_upper": 0.9819,
+            "recall": 0.4859,
+            "r_ci_lower": 0.4225,
+            "r_ci_upper": 0.5541
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6473,
+            "f1_ci_lower": 0.5874,
+            "f1_ci_upper": 0.7039,
+            "precision": 0.9571,
+            "p_ci_lower": 0.9222,
+            "p_ci_upper": 0.9861,
+            "recall": 0.489,
+            "r_ci_lower": 0.4258,
+            "r_ci_upper": 0.5552
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6473,
+            "f1_ci_lower": 0.5874,
+            "f1_ci_upper": 0.7039,
+            "precision": 0.9571,
+            "p_ci_lower": 0.9222,
+            "p_ci_upper": 0.9861,
+            "recall": 0.489,
+            "r_ci_lower": 0.4258,
+            "r_ci_upper": 0.5552
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6473,
+            "f1_ci_lower": 0.5874,
+            "f1_ci_upper": 0.7039,
+            "precision": 0.9571,
+            "p_ci_lower": 0.9222,
+            "p_ci_upper": 0.9861,
+            "recall": 0.489,
+            "r_ci_lower": 0.4258,
+            "r_ci_upper": 0.5552
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 93,
+            "tn": 168,
+            "fp": 4,
+            "fn": 62
+          },
+          "mcc": {
+            "mean": 0.6313,
+            "ci_lower": 0.5595,
+            "ci_upper": 0.6989
+          },
+          "sensitivity": {
+            "mean": 0.6005,
+            "ci_lower": 0.5274,
+            "ci_upper": 0.6809
+          },
+          "specificity": {
+            "mean": 0.9773,
+            "ci_lower": 0.9538,
+            "ci_upper": 0.9947
+          }
+        }
+      }
+    },
+    "h12v2-r3-hp-heavy": {
+      "2": {
+        "label": "h12v2-r3-hp-heavy",
+        "n_detections": 479,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6115,
+            "f1_ci_lower": 0.5633,
+            "f1_ci_upper": 0.6582,
+            "precision": 0.5094,
+            "p_ci_lower": 0.4614,
+            "p_ci_upper": 0.5601,
+            "recall": 0.7649,
+            "r_ci_lower": 0.7118,
+            "r_ci_upper": 0.8182
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6867,
+            "f1_ci_lower": 0.6473,
+            "f1_ci_upper": 0.7289,
+            "precision": 0.572,
+            "p_ci_lower": 0.5241,
+            "p_ci_upper": 0.6225,
+            "recall": 0.8589,
+            "r_ci_lower": 0.8204,
+            "r_ci_upper": 0.9015
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7068,
+            "f1_ci_lower": 0.6659,
+            "f1_ci_upper": 0.7497,
+            "precision": 0.5887,
+            "p_ci_lower": 0.5398,
+            "p_ci_upper": 0.6408,
+            "recall": 0.884,
+            "r_ci_lower": 0.8466,
+            "r_ci_upper": 0.9224
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7168,
+            "f1_ci_lower": 0.6763,
+            "f1_ci_upper": 0.7577,
+            "precision": 0.5971,
+            "p_ci_lower": 0.5469,
+            "p_ci_upper": 0.6483,
+            "recall": 0.8966,
+            "r_ci_lower": 0.8632,
+            "r_ci_upper": 0.9329
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7318,
+            "f1_ci_lower": 0.6926,
+            "f1_ci_upper": 0.7714,
+            "precision": 0.6096,
+            "p_ci_lower": 0.5612,
+            "p_ci_upper": 0.6603,
+            "recall": 0.9154,
+            "r_ci_lower": 0.8845,
+            "r_ci_upper": 0.9474
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 139,
+            "tn": 115,
+            "fp": 57,
+            "fn": 16
+          },
+          "mcc": {
+            "mean": 0.5785,
+            "ci_lower": 0.4905,
+            "ci_upper": 0.6597
+          },
+          "sensitivity": {
+            "mean": 0.8979,
+            "ci_lower": 0.8428,
+            "ci_upper": 0.943
+          },
+          "specificity": {
+            "mean": 0.6697,
+            "ci_lower": 0.5944,
+            "ci_upper": 0.7412
+          }
+        }
+      },
+      "1": {
+        "label": "h12v2-r3-hp-heavy",
+        "n_detections": 1518,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2863,
+            "f1_ci_lower": 0.2444,
+            "f1_ci_upper": 0.331,
+            "precision": 0.1733,
+            "p_ci_lower": 0.144,
+            "p_ci_upper": 0.2064,
+            "recall": 0.8245,
+            "r_ci_lower": 0.7755,
+            "r_ci_upper": 0.8746
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3179,
+            "f1_ci_lower": 0.2741,
+            "f1_ci_upper": 0.365,
+            "precision": 0.1924,
+            "p_ci_lower": 0.1617,
+            "p_ci_upper": 0.2278,
+            "recall": 0.9154,
+            "r_ci_lower": 0.881,
+            "r_ci_upper": 0.949
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3244,
+            "f1_ci_lower": 0.2804,
+            "f1_ci_upper": 0.3731,
+            "precision": 0.1963,
+            "p_ci_lower": 0.1652,
+            "p_ci_upper": 0.2332,
+            "recall": 0.9342,
+            "r_ci_lower": 0.905,
+            "r_ci_upper": 0.9617
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3277,
+            "f1_ci_lower": 0.2834,
+            "f1_ci_upper": 0.3763,
+            "precision": 0.1983,
+            "p_ci_lower": 0.1668,
+            "p_ci_upper": 0.2347,
+            "recall": 0.9436,
+            "r_ci_lower": 0.9157,
+            "r_ci_upper": 0.9696
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3364,
+            "f1_ci_lower": 0.2913,
+            "f1_ci_upper": 0.385,
+            "precision": 0.2036,
+            "p_ci_lower": 0.1716,
+            "p_ci_upper": 0.2406,
+            "recall": 0.9687,
+            "r_ci_lower": 0.9462,
+            "r_ci_upper": 0.9883
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 146,
+            "tn": 48,
+            "fp": 124,
+            "fn": 9
+          },
+          "mcc": {
+            "mean": 0.2918,
+            "ci_lower": 0.1985,
+            "ci_upper": 0.3782
+          },
+          "sensitivity": {
+            "mean": 0.9419,
+            "ci_lower": 0.9028,
+            "ci_upper": 0.9749
+          },
+          "specificity": {
+            "mean": 0.2804,
+            "ci_lower": 0.2139,
+            "ci_upper": 0.3466
+          }
+        }
+      },
+      "3": {
+        "label": "h12v2-r3-hp-heavy",
+        "n_detections": 326,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7008,
+            "f1_ci_lower": 0.6492,
+            "f1_ci_upper": 0.7532,
+            "precision": 0.6933,
+            "p_ci_lower": 0.6403,
+            "p_ci_upper": 0.744,
+            "recall": 0.7085,
+            "r_ci_lower": 0.6476,
+            "r_ci_upper": 0.7688
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7876,
+            "f1_ci_lower": 0.7463,
+            "f1_ci_upper": 0.8282,
+            "precision": 0.7791,
+            "p_ci_lower": 0.7336,
+            "p_ci_upper": 0.8239,
+            "recall": 0.7962,
+            "r_ci_lower": 0.7438,
+            "r_ci_upper": 0.8485
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8093,
+            "f1_ci_lower": 0.7711,
+            "f1_ci_upper": 0.8492,
+            "precision": 0.8006,
+            "p_ci_lower": 0.7548,
+            "p_ci_upper": 0.8483,
+            "recall": 0.8182,
+            "r_ci_lower": 0.7665,
+            "r_ci_upper": 0.8715
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8186,
+            "f1_ci_lower": 0.7793,
+            "f1_ci_upper": 0.8571,
+            "precision": 0.8098,
+            "p_ci_lower": 0.7643,
+            "p_ci_upper": 0.8554,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7774,
+            "r_ci_upper": 0.8785
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8341,
+            "f1_ci_lower": 0.7976,
+            "f1_ci_upper": 0.8709,
+            "precision": 0.8252,
+            "p_ci_lower": 0.7808,
+            "p_ci_upper": 0.8675,
+            "recall": 0.8433,
+            "r_ci_lower": 0.7955,
+            "r_ci_upper": 0.8926
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 133,
+            "tn": 150,
+            "fp": 22,
+            "fn": 22
+          },
+          "mcc": {
+            "mean": 0.7326,
+            "ci_lower": 0.6595,
+            "ci_upper": 0.8086
+          },
+          "sensitivity": {
+            "mean": 0.8595,
+            "ci_lower": 0.8028,
+            "ci_upper": 0.9108
+          },
+          "specificity": {
+            "mean": 0.8731,
+            "ci_lower": 0.8218,
+            "ci_upper": 0.92
+          }
+        }
+      },
+      "4": {
+        "label": "h12v2-r3-hp-heavy",
+        "n_detections": 254,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6876,
+            "f1_ci_lower": 0.6368,
+            "f1_ci_upper": 0.74,
+            "precision": 0.7756,
+            "p_ci_lower": 0.7237,
+            "p_ci_upper": 0.8264,
+            "recall": 0.6176,
+            "r_ci_lower": 0.5565,
+            "r_ci_upper": 0.6839
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7504,
+            "f1_ci_lower": 0.7057,
+            "f1_ci_upper": 0.7949,
+            "precision": 0.8465,
+            "p_ci_lower": 0.803,
+            "p_ci_upper": 0.8885,
+            "recall": 0.674,
+            "r_ci_lower": 0.6171,
+            "r_ci_upper": 0.7331
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7679,
+            "f1_ci_lower": 0.7224,
+            "f1_ci_upper": 0.814,
+            "precision": 0.8661,
+            "p_ci_lower": 0.8269,
+            "p_ci_upper": 0.9056,
+            "recall": 0.6897,
+            "r_ci_lower": 0.6314,
+            "r_ci_upper": 0.7516
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7784,
+            "f1_ci_lower": 0.7315,
+            "f1_ci_upper": 0.824,
+            "precision": 0.878,
+            "p_ci_lower": 0.8386,
+            "p_ci_upper": 0.9161,
+            "recall": 0.6991,
+            "r_ci_lower": 0.6407,
+            "r_ci_upper": 0.7598
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7923,
+            "f1_ci_lower": 0.7509,
+            "f1_ci_upper": 0.8346,
+            "precision": 0.8937,
+            "p_ci_lower": 0.8565,
+            "p_ci_upper": 0.9293,
+            "recall": 0.7116,
+            "r_ci_lower": 0.6559,
+            "r_ci_upper": 0.771
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 120,
+            "tn": 160,
+            "fp": 12,
+            "fn": 35
+          },
+          "mcc": {
+            "mean": 0.7193,
+            "ci_lower": 0.6425,
+            "ci_upper": 0.7914
+          },
+          "sensitivity": {
+            "mean": 0.776,
+            "ci_lower": 0.7073,
+            "ci_upper": 0.8377
+          },
+          "specificity": {
+            "mean": 0.9311,
+            "ci_lower": 0.8896,
+            "ci_upper": 0.9682
+          }
+        }
+      },
+      "5": {
+        "label": "h12v2-r3-hp-heavy",
+        "n_detections": 169,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6025,
+            "f1_ci_lower": 0.5413,
+            "f1_ci_upper": 0.6654,
+            "precision": 0.8698,
+            "p_ci_lower": 0.8191,
+            "p_ci_upper": 0.9192,
+            "recall": 0.4608,
+            "r_ci_lower": 0.3965,
+            "r_ci_upper": 0.531
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6475,
+            "f1_ci_lower": 0.5889,
+            "f1_ci_upper": 0.7048,
+            "precision": 0.9349,
+            "p_ci_lower": 0.8984,
+            "p_ci_upper": 0.9697,
+            "recall": 0.4953,
+            "r_ci_lower": 0.4321,
+            "r_ci_upper": 0.5646
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6557,
+            "f1_ci_lower": 0.5996,
+            "f1_ci_upper": 0.715,
+            "precision": 0.9467,
+            "p_ci_lower": 0.9121,
+            "p_ci_upper": 0.9785,
+            "recall": 0.5016,
+            "r_ci_lower": 0.4384,
+            "r_ci_upper": 0.5729
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6598,
+            "f1_ci_lower": 0.6034,
+            "f1_ci_upper": 0.7192,
+            "precision": 0.9527,
+            "p_ci_lower": 0.921,
+            "p_ci_upper": 0.9822,
+            "recall": 0.5047,
+            "r_ci_lower": 0.4413,
+            "r_ci_upper": 0.5776
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6598,
+            "f1_ci_lower": 0.6034,
+            "f1_ci_upper": 0.7192,
+            "precision": 0.9527,
+            "p_ci_lower": 0.921,
+            "p_ci_upper": 0.9822,
+            "recall": 0.5047,
+            "r_ci_lower": 0.4413,
+            "r_ci_upper": 0.5776
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 94,
+            "tn": 168,
+            "fp": 4,
+            "fn": 61
+          },
+          "mcc": {
+            "mean": 0.6367,
+            "ci_lower": 0.5665,
+            "ci_upper": 0.7057
+          },
+          "sensitivity": {
+            "mean": 0.6071,
+            "ci_lower": 0.5329,
+            "ci_upper": 0.6829
+          },
+          "specificity": {
+            "mean": 0.9773,
+            "ci_lower": 0.9545,
+            "ci_upper": 0.9946
+          }
+        }
+      }
+    },
+    "h8v2-canonical": {
+      "2": {
+        "label": "h8v2-canonical",
+        "n_detections": 532,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5805,
+            "f1_ci_lower": 0.5267,
+            "f1_ci_upper": 0.6295,
+            "precision": 0.4643,
+            "p_ci_lower": 0.4069,
+            "p_ci_upper": 0.5177,
+            "recall": 0.7743,
+            "r_ci_lower": 0.7201,
+            "r_ci_upper": 0.8255
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6322,
+            "f1_ci_lower": 0.58,
+            "f1_ci_upper": 0.6814,
+            "precision": 0.5056,
+            "p_ci_lower": 0.448,
+            "p_ci_upper": 0.5612,
+            "recall": 0.8433,
+            "r_ci_lower": 0.7958,
+            "r_ci_upper": 0.8871
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6533,
+            "f1_ci_lower": 0.598,
+            "f1_ci_upper": 0.7006,
+            "precision": 0.5226,
+            "p_ci_lower": 0.4617,
+            "p_ci_upper": 0.5763,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8281,
+            "r_ci_upper": 0.9132
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6698,
+            "f1_ci_lower": 0.6175,
+            "f1_ci_upper": 0.7131,
+            "precision": 0.5357,
+            "p_ci_lower": 0.4763,
+            "p_ci_upper": 0.5881,
+            "recall": 0.8934,
+            "r_ci_lower": 0.8584,
+            "r_ci_upper": 0.9281
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6957,
+            "f1_ci_lower": 0.6456,
+            "f1_ci_upper": 0.7405,
+            "precision": 0.5564,
+            "p_ci_lower": 0.4946,
+            "p_ci_upper": 0.6098,
+            "recall": 0.9279,
+            "r_ci_lower": 0.8956,
+            "r_ci_upper": 0.9561
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 140,
+            "tn": 98,
+            "fp": 74,
+            "fn": 15
+          },
+          "mcc": {
+            "mean": 0.4978,
+            "ci_lower": 0.4133,
+            "ci_upper": 0.5831
+          },
+          "sensitivity": {
+            "mean": 0.9036,
+            "ci_lower": 0.8551,
+            "ci_upper": 0.9455
+          },
+          "specificity": {
+            "mean": 0.5705,
+            "ci_lower": 0.4972,
+            "ci_upper": 0.6464
+          }
+        }
+      },
+      "3": {
+        "label": "h8v2-canonical",
+        "n_detections": 346,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7008,
+            "f1_ci_lower": 0.6445,
+            "f1_ci_upper": 0.7556,
+            "precision": 0.6734,
+            "p_ci_lower": 0.6077,
+            "p_ci_upper": 0.7384,
+            "recall": 0.7304,
+            "r_ci_lower": 0.6677,
+            "r_ci_upper": 0.7882
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7639,
+            "f1_ci_lower": 0.7138,
+            "f1_ci_upper": 0.8094,
+            "precision": 0.7341,
+            "p_ci_lower": 0.6684,
+            "p_ci_upper": 0.795,
+            "recall": 0.7962,
+            "r_ci_lower": 0.745,
+            "r_ci_upper": 0.8495
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.794,
+            "f1_ci_lower": 0.7445,
+            "f1_ci_upper": 0.8345,
+            "precision": 0.763,
+            "p_ci_lower": 0.6955,
+            "p_ci_upper": 0.8242,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7778,
+            "r_ci_upper": 0.8771
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8,
+            "f1_ci_lower": 0.7535,
+            "f1_ci_upper": 0.8422,
+            "precision": 0.7688,
+            "p_ci_lower": 0.7011,
+            "p_ci_upper": 0.8299,
+            "recall": 0.8339,
+            "r_ci_lower": 0.7853,
+            "r_ci_upper": 0.882
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.806,
+            "f1_ci_lower": 0.7605,
+            "f1_ci_upper": 0.8473,
+            "precision": 0.7746,
+            "p_ci_lower": 0.7083,
+            "p_ci_upper": 0.8344,
+            "recall": 0.8401,
+            "r_ci_lower": 0.7927,
+            "r_ci_upper": 0.8863
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 133,
+            "tn": 133,
+            "fp": 39,
+            "fn": 22
+          },
+          "mcc": {
+            "mean": 0.6335,
+            "ci_lower": 0.5503,
+            "ci_upper": 0.7113
+          },
+          "sensitivity": {
+            "mean": 0.8596,
+            "ci_lower": 0.8012,
+            "ci_upper": 0.9103
+          },
+          "specificity": {
+            "mean": 0.7738,
+            "ci_lower": 0.7118,
+            "ci_upper": 0.8333
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-canonical",
+        "n_detections": 1604,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2746,
+            "f1_ci_lower": 0.2335,
+            "f1_ci_upper": 0.3192,
+            "precision": 0.1646,
+            "p_ci_lower": 0.136,
+            "p_ci_upper": 0.197,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7756,
+            "r_ci_upper": 0.8733
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3006,
+            "f1_ci_lower": 0.2553,
+            "f1_ci_upper": 0.3475,
+            "precision": 0.1802,
+            "p_ci_lower": 0.1486,
+            "p_ci_upper": 0.2148,
+            "recall": 0.906,
+            "r_ci_lower": 0.8716,
+            "r_ci_upper": 0.9387
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3099,
+            "f1_ci_lower": 0.2623,
+            "f1_ci_upper": 0.3587,
+            "precision": 0.1858,
+            "p_ci_lower": 0.153,
+            "p_ci_upper": 0.2215,
+            "recall": 0.9342,
+            "r_ci_lower": 0.9049,
+            "r_ci_upper": 0.9636
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3162,
+            "f1_ci_lower": 0.2685,
+            "f1_ci_upper": 0.3648,
+            "precision": 0.1895,
+            "p_ci_lower": 0.1563,
+            "p_ci_upper": 0.2253,
+            "recall": 0.953,
+            "r_ci_lower": 0.9283,
+            "r_ci_upper": 0.9769
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3245,
+            "f1_ci_lower": 0.2757,
+            "f1_ci_upper": 0.3738,
+            "precision": 0.1945,
+            "p_ci_lower": 0.1606,
+            "p_ci_upper": 0.2308,
+            "recall": 0.9781,
+            "r_ci_lower": 0.9588,
+            "r_ci_upper": 0.9939
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 145,
+            "tn": 36,
+            "fp": 136,
+            "fn": 10
+          },
+          "mcc": {
+            "mean": 0.2098,
+            "ci_lower": 0.112,
+            "ci_upper": 0.3028
+          },
+          "sensitivity": {
+            "mean": 0.936,
+            "ci_lower": 0.8947,
+            "ci_upper": 0.9695
+          },
+          "specificity": {
+            "mean": 0.2104,
+            "ci_lower": 0.1524,
+            "ci_upper": 0.2722
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-canonical",
+        "n_detections": 258,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7071,
+            "f1_ci_lower": 0.648,
+            "f1_ci_upper": 0.7664,
+            "precision": 0.7907,
+            "p_ci_lower": 0.7249,
+            "p_ci_upper": 0.851,
+            "recall": 0.6395,
+            "r_ci_lower": 0.5742,
+            "r_ci_upper": 0.7126
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7591,
+            "f1_ci_lower": 0.7023,
+            "f1_ci_upper": 0.8146,
+            "precision": 0.8488,
+            "p_ci_lower": 0.7863,
+            "p_ci_upper": 0.9048,
+            "recall": 0.6865,
+            "r_ci_lower": 0.6212,
+            "r_ci_upper": 0.757
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7764,
+            "f1_ci_lower": 0.7246,
+            "f1_ci_upper": 0.8271,
+            "precision": 0.8682,
+            "p_ci_lower": 0.8026,
+            "p_ci_upper": 0.9203,
+            "recall": 0.7022,
+            "r_ci_lower": 0.6391,
+            "r_ci_upper": 0.7724
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7799,
+            "f1_ci_lower": 0.7273,
+            "f1_ci_upper": 0.8307,
+            "precision": 0.8721,
+            "p_ci_lower": 0.8062,
+            "p_ci_upper": 0.9234,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6416,
+            "r_ci_upper": 0.7774
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7799,
+            "f1_ci_lower": 0.7273,
+            "f1_ci_upper": 0.8307,
+            "precision": 0.8721,
+            "p_ci_lower": 0.8062,
+            "p_ci_upper": 0.9234,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6416,
+            "r_ci_upper": 0.7774
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 118,
+            "tn": 156,
+            "fp": 16,
+            "fn": 37
+          },
+          "mcc": {
+            "mean": 0.6805,
+            "ci_lower": 0.599,
+            "ci_upper": 0.7614
+          },
+          "sensitivity": {
+            "mean": 0.7636,
+            "ci_lower": 0.6951,
+            "ci_upper": 0.8276
+          },
+          "specificity": {
+            "mean": 0.907,
+            "ci_lower": 0.8588,
+            "ci_upper": 0.9479
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-canonical",
+        "n_detections": 176,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6101,
+            "f1_ci_lower": 0.5479,
+            "f1_ci_upper": 0.6716,
+            "precision": 0.858,
+            "p_ci_lower": 0.796,
+            "p_ci_upper": 0.9133,
+            "recall": 0.4734,
+            "r_ci_lower": 0.4089,
+            "r_ci_upper": 0.544
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6505,
+            "f1_ci_lower": 0.5926,
+            "f1_ci_upper": 0.7113,
+            "precision": 0.9148,
+            "p_ci_lower": 0.8667,
+            "p_ci_upper": 0.956,
+            "recall": 0.5047,
+            "r_ci_lower": 0.4431,
+            "r_ci_upper": 0.5757
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6626,
+            "f1_ci_lower": 0.6087,
+            "f1_ci_upper": 0.7205,
+            "precision": 0.9318,
+            "p_ci_lower": 0.8857,
+            "p_ci_upper": 0.9701,
+            "recall": 0.5141,
+            "r_ci_lower": 0.4533,
+            "r_ci_upper": 0.5828
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6626,
+            "f1_ci_lower": 0.6087,
+            "f1_ci_upper": 0.7205,
+            "precision": 0.9318,
+            "p_ci_lower": 0.8857,
+            "p_ci_upper": 0.9701,
+            "recall": 0.5141,
+            "r_ci_lower": 0.4533,
+            "r_ci_upper": 0.5828
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6626,
+            "f1_ci_lower": 0.6087,
+            "f1_ci_upper": 0.7205,
+            "precision": 0.9318,
+            "p_ci_lower": 0.8857,
+            "p_ci_upper": 0.9701,
+            "recall": 0.5141,
+            "r_ci_lower": 0.4533,
+            "r_ci_upper": 0.5828
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 97,
+            "tn": 164,
+            "fp": 8,
+            "fn": 58
+          },
+          "mcc": {
+            "mean": 0.6208,
+            "ci_lower": 0.5424,
+            "ci_upper": 0.6995
+          },
+          "sensitivity": {
+            "mean": 0.6276,
+            "ci_lower": 0.5511,
+            "ci_upper": 0.7078
+          },
+          "specificity": {
+            "mean": 0.9535,
+            "ci_lower": 0.9184,
+            "ci_upper": 0.983
+          }
+        }
+      }
+    },
+    "h8v2-plus-hp": {
+      "3": {
+        "label": "h8v2-plus-hp",
+        "n_detections": 347,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6907,
+            "f1_ci_lower": 0.6378,
+            "f1_ci_upper": 0.7423,
+            "precision": 0.6628,
+            "p_ci_lower": 0.6013,
+            "p_ci_upper": 0.7183,
+            "recall": 0.721,
+            "r_ci_lower": 0.6608,
+            "r_ci_upper": 0.781
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7718,
+            "f1_ci_lower": 0.727,
+            "f1_ci_upper": 0.8135,
+            "precision": 0.7406,
+            "p_ci_lower": 0.684,
+            "p_ci_upper": 0.7922,
+            "recall": 0.8056,
+            "r_ci_lower": 0.7582,
+            "r_ci_upper": 0.8537
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7868,
+            "f1_ci_lower": 0.7434,
+            "f1_ci_upper": 0.8263,
+            "precision": 0.755,
+            "p_ci_lower": 0.6989,
+            "p_ci_upper": 0.8047,
+            "recall": 0.8213,
+            "r_ci_lower": 0.7768,
+            "r_ci_upper": 0.8673
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7958,
+            "f1_ci_lower": 0.7535,
+            "f1_ci_upper": 0.8324,
+            "precision": 0.7637,
+            "p_ci_lower": 0.7101,
+            "p_ci_upper": 0.8136,
+            "recall": 0.8307,
+            "r_ci_lower": 0.788,
+            "r_ci_upper": 0.8741
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8078,
+            "f1_ci_lower": 0.7673,
+            "f1_ci_upper": 0.845,
+            "precision": 0.7752,
+            "p_ci_lower": 0.7198,
+            "p_ci_upper": 0.8254,
+            "recall": 0.8433,
+            "r_ci_lower": 0.7994,
+            "r_ci_upper": 0.8875
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 131,
+            "tn": 134,
+            "fp": 38,
+            "fn": 24
+          },
+          "mcc": {
+            "mean": 0.6255,
+            "ci_lower": 0.543,
+            "ci_upper": 0.7092
+          },
+          "sensitivity": {
+            "mean": 0.8457,
+            "ci_lower": 0.7876,
+            "ci_upper": 0.9007
+          },
+          "specificity": {
+            "mean": 0.7803,
+            "ci_lower": 0.7135,
+            "ci_upper": 0.8383
+          }
+        }
+      },
+      "2": {
+        "label": "h8v2-plus-hp",
+        "n_detections": 522,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5922,
+            "f1_ci_lower": 0.5395,
+            "f1_ci_upper": 0.6432,
+            "precision": 0.477,
+            "p_ci_lower": 0.4235,
+            "p_ci_upper": 0.531,
+            "recall": 0.7806,
+            "r_ci_lower": 0.7244,
+            "r_ci_upper": 0.8413
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6611,
+            "f1_ci_lower": 0.6148,
+            "f1_ci_upper": 0.7062,
+            "precision": 0.5326,
+            "p_ci_lower": 0.4799,
+            "p_ci_upper": 0.5856,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8317,
+            "r_ci_upper": 0.9131
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6849,
+            "f1_ci_lower": 0.6402,
+            "f1_ci_upper": 0.7269,
+            "precision": 0.5517,
+            "p_ci_lower": 0.5,
+            "p_ci_upper": 0.6029,
+            "recall": 0.9028,
+            "r_ci_lower": 0.8672,
+            "r_ci_upper": 0.9395
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6944,
+            "f1_ci_lower": 0.651,
+            "f1_ci_upper": 0.7358,
+            "precision": 0.5594,
+            "p_ci_lower": 0.5073,
+            "p_ci_upper": 0.6103,
+            "recall": 0.9154,
+            "r_ci_lower": 0.8829,
+            "r_ci_upper": 0.9489
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7134,
+            "f1_ci_lower": 0.6711,
+            "f1_ci_upper": 0.7542,
+            "precision": 0.5747,
+            "p_ci_lower": 0.5217,
+            "p_ci_upper": 0.6266,
+            "recall": 0.9404,
+            "r_ci_lower": 0.9104,
+            "r_ci_upper": 0.9694
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 141,
+            "tn": 104,
+            "fp": 68,
+            "fn": 14
+          },
+          "mcc": {
+            "mean": 0.5371,
+            "ci_lower": 0.4499,
+            "ci_upper": 0.6216
+          },
+          "sensitivity": {
+            "mean": 0.9105,
+            "ci_lower": 0.8621,
+            "ci_upper": 0.9518
+          },
+          "specificity": {
+            "mean": 0.6061,
+            "ci_lower": 0.5355,
+            "ci_upper": 0.6762
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-plus-hp",
+        "n_detections": 1499,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2849,
+            "f1_ci_lower": 0.245,
+            "f1_ci_upper": 0.3292,
+            "precision": 0.1728,
+            "p_ci_lower": 0.1445,
+            "p_ci_upper": 0.2054,
+            "recall": 0.8119,
+            "r_ci_lower": 0.7614,
+            "r_ci_upper": 0.8657
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3234,
+            "f1_ci_lower": 0.279,
+            "f1_ci_upper": 0.3679,
+            "precision": 0.1961,
+            "p_ci_lower": 0.1648,
+            "p_ci_upper": 0.2291,
+            "recall": 0.9216,
+            "r_ci_lower": 0.89,
+            "r_ci_upper": 0.9517
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3322,
+            "f1_ci_lower": 0.2865,
+            "f1_ci_upper": 0.3765,
+            "precision": 0.2015,
+            "p_ci_lower": 0.169,
+            "p_ci_upper": 0.2342,
+            "recall": 0.9467,
+            "r_ci_lower": 0.9201,
+            "r_ci_upper": 0.9731
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3366,
+            "f1_ci_lower": 0.2902,
+            "f1_ci_upper": 0.3822,
+            "precision": 0.2041,
+            "p_ci_lower": 0.1709,
+            "p_ci_upper": 0.2382,
+            "recall": 0.9592,
+            "r_ci_lower": 0.9357,
+            "r_ci_upper": 0.9818
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.341,
+            "f1_ci_lower": 0.2949,
+            "f1_ci_upper": 0.3877,
+            "precision": 0.2068,
+            "p_ci_lower": 0.1738,
+            "p_ci_upper": 0.2419,
+            "recall": 0.9718,
+            "r_ci_lower": 0.9503,
+            "r_ci_upper": 0.9911
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 144,
+            "tn": 37,
+            "fp": 135,
+            "fn": 11
+          },
+          "mcc": {
+            "mean": 0.2036,
+            "ci_lower": 0.1049,
+            "ci_upper": 0.304
+          },
+          "sensitivity": {
+            "mean": 0.9295,
+            "ci_lower": 0.8857,
+            "ci_upper": 0.9662
+          },
+          "specificity": {
+            "mean": 0.2149,
+            "ci_lower": 0.1584,
+            "ci_upper": 0.2797
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-plus-hp",
+        "n_detections": 254,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7051,
+            "f1_ci_lower": 0.6481,
+            "f1_ci_upper": 0.758,
+            "precision": 0.7953,
+            "p_ci_lower": 0.7406,
+            "p_ci_upper": 0.8445,
+            "recall": 0.6332,
+            "r_ci_lower": 0.5685,
+            "r_ci_upper": 0.7038
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7749,
+            "f1_ci_lower": 0.7283,
+            "f1_ci_upper": 0.8217,
+            "precision": 0.874,
+            "p_ci_lower": 0.8319,
+            "p_ci_upper": 0.912,
+            "recall": 0.6959,
+            "r_ci_lower": 0.6341,
+            "r_ci_upper": 0.7603
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7853,
+            "f1_ci_lower": 0.7404,
+            "f1_ci_upper": 0.8283,
+            "precision": 0.8858,
+            "p_ci_lower": 0.8437,
+            "p_ci_upper": 0.9231,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6438,
+            "r_ci_upper": 0.7702
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7888,
+            "f1_ci_lower": 0.7445,
+            "f1_ci_upper": 0.8311,
+            "precision": 0.8898,
+            "p_ci_lower": 0.8506,
+            "p_ci_upper": 0.9259,
+            "recall": 0.7085,
+            "r_ci_lower": 0.6452,
+            "r_ci_upper": 0.7727
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7958,
+            "f1_ci_lower": 0.7528,
+            "f1_ci_upper": 0.8381,
+            "precision": 0.8976,
+            "p_ci_lower": 0.8589,
+            "p_ci_upper": 0.9317,
+            "recall": 0.7147,
+            "r_ci_lower": 0.6532,
+            "r_ci_upper": 0.7773
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 120,
+            "tn": 162,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc": {
+            "mean": 0.7319,
+            "ci_lower": 0.6592,
+            "ci_upper": 0.8023
+          },
+          "sensitivity": {
+            "mean": 0.7753,
+            "ci_lower": 0.7115,
+            "ci_upper": 0.8424
+          },
+          "specificity": {
+            "mean": 0.9423,
+            "ci_lower": 0.9074,
+            "ci_upper": 0.9749
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-plus-hp",
+        "n_detections": 162,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5988,
+            "f1_ci_lower": 0.5386,
+            "f1_ci_upper": 0.6587,
+            "precision": 0.8889,
+            "p_ci_lower": 0.8383,
+            "p_ci_upper": 0.9333,
+            "recall": 0.4514,
+            "r_ci_lower": 0.3926,
+            "r_ci_upper": 0.5148
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6403,
+            "f1_ci_lower": 0.5802,
+            "f1_ci_upper": 0.6971,
+            "precision": 0.9506,
+            "p_ci_lower": 0.9138,
+            "p_ci_upper": 0.9818,
+            "recall": 0.4828,
+            "r_ci_lower": 0.4198,
+            "r_ci_upper": 0.549
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6403,
+            "f1_ci_lower": 0.5802,
+            "f1_ci_upper": 0.6971,
+            "precision": 0.9506,
+            "p_ci_lower": 0.9138,
+            "p_ci_upper": 0.9818,
+            "recall": 0.4828,
+            "r_ci_lower": 0.4198,
+            "r_ci_upper": 0.549
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6445,
+            "f1_ci_lower": 0.5871,
+            "f1_ci_upper": 0.7005,
+            "precision": 0.9568,
+            "p_ci_lower": 0.9231,
+            "p_ci_upper": 0.9869,
+            "recall": 0.4859,
+            "r_ci_lower": 0.4234,
+            "r_ci_upper": 0.5523
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6445,
+            "f1_ci_lower": 0.5871,
+            "f1_ci_upper": 0.7005,
+            "precision": 0.9568,
+            "p_ci_lower": 0.9231,
+            "p_ci_upper": 0.9869,
+            "recall": 0.4859,
+            "r_ci_lower": 0.4234,
+            "r_ci_upper": 0.5523
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 97,
+            "tn": 170,
+            "fp": 2,
+            "fn": 58
+          },
+          "mcc": {
+            "mean": 0.6689,
+            "ci_lower": 0.6015,
+            "ci_upper": 0.7361
+          },
+          "sensitivity": {
+            "mean": 0.6271,
+            "ci_lower": 0.5473,
+            "ci_upper": 0.704
+          },
+          "specificity": {
+            "mean": 0.9889,
+            "ci_lower": 0.9704,
+            "ci_upper": 1.0
+          }
+        }
+      }
+    },
+    "h8v2-pure-positive-canon": {
+      "2": {
+        "label": "h8v2-pure-positive-canon",
+        "n_detections": 573,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5785,
+            "f1_ci_lower": 0.5232,
+            "f1_ci_upper": 0.6265,
+            "precision": 0.4503,
+            "p_ci_lower": 0.3945,
+            "p_ci_upper": 0.5051,
+            "recall": 0.8088,
+            "r_ci_lower": 0.7584,
+            "r_ci_upper": 0.8571
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6143,
+            "f1_ci_lower": 0.5629,
+            "f1_ci_upper": 0.6631,
+            "precision": 0.4782,
+            "p_ci_lower": 0.4246,
+            "p_ci_upper": 0.5323,
+            "recall": 0.8589,
+            "r_ci_lower": 0.8152,
+            "r_ci_upper": 0.9003
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6368,
+            "f1_ci_lower": 0.587,
+            "f1_ci_upper": 0.6835,
+            "precision": 0.4956,
+            "p_ci_lower": 0.4415,
+            "p_ci_upper": 0.5482,
+            "recall": 0.8903,
+            "r_ci_lower": 0.8525,
+            "r_ci_upper": 0.9256
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6435,
+            "f1_ci_lower": 0.5935,
+            "f1_ci_upper": 0.6871,
+            "precision": 0.5009,
+            "p_ci_lower": 0.4459,
+            "p_ci_upper": 0.5536,
+            "recall": 0.8997,
+            "r_ci_lower": 0.8682,
+            "r_ci_upper": 0.931
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6659,
+            "f1_ci_lower": 0.6123,
+            "f1_ci_upper": 0.7122,
+            "precision": 0.5183,
+            "p_ci_lower": 0.46,
+            "p_ci_upper": 0.5742,
+            "recall": 0.931,
+            "r_ci_lower": 0.9029,
+            "r_ci_upper": 0.9586
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 142,
+            "tn": 85,
+            "fp": 87,
+            "fn": 13
+          },
+          "mcc": {
+            "mean": 0.4488,
+            "ci_lower": 0.3609,
+            "ci_upper": 0.5293
+          },
+          "sensitivity": {
+            "mean": 0.9173,
+            "ci_lower": 0.8687,
+            "ci_upper": 0.9557
+          },
+          "specificity": {
+            "mean": 0.4943,
+            "ci_lower": 0.4237,
+            "ci_upper": 0.5699
+          }
+        }
+      },
+      "3": {
+        "label": "h8v2-pure-positive-canon",
+        "n_detections": 370,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7054,
+            "f1_ci_lower": 0.6462,
+            "f1_ci_upper": 0.7579,
+            "precision": 0.6568,
+            "p_ci_lower": 0.5906,
+            "p_ci_upper": 0.7134,
+            "recall": 0.7618,
+            "r_ci_lower": 0.7003,
+            "r_ci_upper": 0.8235
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7547,
+            "f1_ci_lower": 0.7011,
+            "f1_ci_upper": 0.8005,
+            "precision": 0.7027,
+            "p_ci_lower": 0.64,
+            "p_ci_upper": 0.7571,
+            "recall": 0.815,
+            "r_ci_lower": 0.7638,
+            "r_ci_upper": 0.8693
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7837,
+            "f1_ci_lower": 0.7384,
+            "f1_ci_upper": 0.8243,
+            "precision": 0.7297,
+            "p_ci_lower": 0.6694,
+            "p_ci_upper": 0.7811,
+            "recall": 0.8464,
+            "r_ci_lower": 0.7989,
+            "r_ci_upper": 0.8938
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7866,
+            "f1_ci_lower": 0.7403,
+            "f1_ci_upper": 0.8268,
+            "precision": 0.7324,
+            "p_ci_lower": 0.6713,
+            "p_ci_upper": 0.7843,
+            "recall": 0.8495,
+            "r_ci_lower": 0.8047,
+            "r_ci_upper": 0.8974
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7983,
+            "f1_ci_lower": 0.7535,
+            "f1_ci_upper": 0.8369,
+            "precision": 0.7432,
+            "p_ci_lower": 0.6831,
+            "p_ci_upper": 0.7969,
+            "recall": 0.8621,
+            "r_ci_lower": 0.8176,
+            "r_ci_upper": 0.9085
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 136,
+            "tn": 123,
+            "fp": 49,
+            "fn": 19
+          },
+          "mcc": {
+            "mean": 0.5985,
+            "ci_lower": 0.515,
+            "ci_upper": 0.6834
+          },
+          "sensitivity": {
+            "mean": 0.8781,
+            "ci_lower": 0.8255,
+            "ci_upper": 0.9262
+          },
+          "specificity": {
+            "mean": 0.7159,
+            "ci_lower": 0.6494,
+            "ci_upper": 0.7853
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-pure-positive-canon",
+        "n_detections": 1915,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2417,
+            "f1_ci_lower": 0.2008,
+            "f1_ci_upper": 0.2838,
+            "precision": 0.141,
+            "p_ci_lower": 0.1143,
+            "p_ci_upper": 0.1695,
+            "recall": 0.8464,
+            "r_ci_lower": 0.8029,
+            "r_ci_upper": 0.8886
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2578,
+            "f1_ci_lower": 0.2158,
+            "f1_ci_upper": 0.3015,
+            "precision": 0.1504,
+            "p_ci_lower": 0.1228,
+            "p_ci_upper": 0.1801,
+            "recall": 0.9028,
+            "r_ci_lower": 0.8688,
+            "r_ci_upper": 0.935
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.265,
+            "f1_ci_lower": 0.2237,
+            "f1_ci_upper": 0.3095,
+            "precision": 0.1546,
+            "p_ci_lower": 0.1272,
+            "p_ci_upper": 0.1852,
+            "recall": 0.9279,
+            "r_ci_lower": 0.8991,
+            "r_ci_upper": 0.9572
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.2668,
+            "f1_ci_lower": 0.2255,
+            "f1_ci_upper": 0.3107,
+            "precision": 0.1556,
+            "p_ci_lower": 0.1284,
+            "p_ci_upper": 0.1856,
+            "recall": 0.9342,
+            "r_ci_lower": 0.9112,
+            "r_ci_upper": 0.9593
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.2748,
+            "f1_ci_lower": 0.231,
+            "f1_ci_upper": 0.3203,
+            "precision": 0.1603,
+            "p_ci_lower": 0.1315,
+            "p_ci_upper": 0.1919,
+            "recall": 0.9624,
+            "r_ci_lower": 0.9426,
+            "r_ci_upper": 0.9804
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 147,
+            "tn": 18,
+            "fp": 154,
+            "fn": 8
+          },
+          "mcc": {
+            "mean": 0.0993,
+            "ci_lower": -0.014,
+            "ci_upper": 0.1951
+          },
+          "sensitivity": {
+            "mean": 0.9491,
+            "ci_lower": 0.9091,
+            "ci_upper": 0.9811
+          },
+          "specificity": {
+            "mean": 0.1046,
+            "ci_lower": 0.0625,
+            "ci_upper": 0.1491
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-pure-positive-canon",
+        "n_detections": 188,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6233,
+            "f1_ci_lower": 0.5657,
+            "f1_ci_upper": 0.6858,
+            "precision": 0.8404,
+            "p_ci_lower": 0.783,
+            "p_ci_upper": 0.8934,
+            "recall": 0.4953,
+            "r_ci_lower": 0.4324,
+            "r_ci_upper": 0.5662
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6548,
+            "f1_ci_lower": 0.5966,
+            "f1_ci_upper": 0.7127,
+            "precision": 0.883,
+            "p_ci_lower": 0.828,
+            "p_ci_upper": 0.9312,
+            "recall": 0.5204,
+            "r_ci_lower": 0.4568,
+            "r_ci_upper": 0.5885
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6667,
+            "f1_ci_lower": 0.6094,
+            "f1_ci_upper": 0.7239,
+            "precision": 0.8989,
+            "p_ci_lower": 0.8461,
+            "p_ci_upper": 0.943,
+            "recall": 0.5298,
+            "r_ci_lower": 0.4645,
+            "r_ci_upper": 0.597
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6667,
+            "f1_ci_lower": 0.6094,
+            "f1_ci_upper": 0.7239,
+            "precision": 0.8989,
+            "p_ci_lower": 0.8461,
+            "p_ci_upper": 0.943,
+            "recall": 0.5298,
+            "r_ci_lower": 0.4645,
+            "r_ci_upper": 0.597
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6667,
+            "f1_ci_lower": 0.6094,
+            "f1_ci_upper": 0.7239,
+            "precision": 0.8989,
+            "p_ci_lower": 0.8461,
+            "p_ci_upper": 0.943,
+            "recall": 0.5298,
+            "r_ci_lower": 0.4645,
+            "r_ci_upper": 0.597
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 97,
+            "tn": 161,
+            "fp": 11,
+            "fn": 58
+          },
+          "mcc": {
+            "mean": 0.5999,
+            "ci_lower": 0.5216,
+            "ci_upper": 0.6751
+          },
+          "sensitivity": {
+            "mean": 0.6297,
+            "ci_lower": 0.5542,
+            "ci_upper": 0.7044
+          },
+          "specificity": {
+            "mean": 0.9362,
+            "ci_lower": 0.9006,
+            "ci_upper": 0.9718
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-pure-positive-canon",
+        "n_detections": 275,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.697,
+            "f1_ci_lower": 0.6426,
+            "f1_ci_upper": 0.7469,
+            "precision": 0.7527,
+            "p_ci_lower": 0.6858,
+            "p_ci_upper": 0.8095,
+            "recall": 0.6489,
+            "r_ci_lower": 0.5895,
+            "r_ci_upper": 0.7148
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7407,
+            "f1_ci_lower": 0.6903,
+            "f1_ci_upper": 0.7871,
+            "precision": 0.8,
+            "p_ci_lower": 0.7393,
+            "p_ci_upper": 0.8517,
+            "recall": 0.6897,
+            "r_ci_lower": 0.6321,
+            "r_ci_upper": 0.7509
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7576,
+            "f1_ci_lower": 0.7096,
+            "f1_ci_upper": 0.8019,
+            "precision": 0.8182,
+            "p_ci_lower": 0.7611,
+            "p_ci_upper": 0.8681,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6477,
+            "r_ci_upper": 0.7653
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7576,
+            "f1_ci_lower": 0.7096,
+            "f1_ci_upper": 0.8019,
+            "precision": 0.8182,
+            "p_ci_lower": 0.7611,
+            "p_ci_upper": 0.8681,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6477,
+            "r_ci_upper": 0.7653
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7643,
+            "f1_ci_lower": 0.7164,
+            "f1_ci_upper": 0.8075,
+            "precision": 0.8255,
+            "p_ci_lower": 0.7689,
+            "p_ci_upper": 0.8742,
+            "recall": 0.7116,
+            "r_ci_lower": 0.654,
+            "r_ci_upper": 0.7713
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 124,
+            "tn": 146,
+            "fp": 26,
+            "fn": 31
+          },
+          "mcc": {
+            "mean": 0.6519,
+            "ci_lower": 0.574,
+            "ci_upper": 0.7352
+          },
+          "sensitivity": {
+            "mean": 0.802,
+            "ci_lower": 0.7376,
+            "ci_upper": 0.8616
+          },
+          "specificity": {
+            "mean": 0.8487,
+            "ci_lower": 0.7929,
+            "ci_upper": 0.9
+          }
+        }
+      }
+    },
+    "h8v2-scale-16": {
+      "3": {
+        "label": "h8v2-scale-16",
+        "n_detections": 333,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7117,
+            "f1_ci_lower": 0.6578,
+            "f1_ci_upper": 0.7629,
+            "precision": 0.6967,
+            "p_ci_lower": 0.6384,
+            "p_ci_upper": 0.7521,
+            "recall": 0.7273,
+            "r_ci_lower": 0.6657,
+            "r_ci_upper": 0.7903
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7638,
+            "f1_ci_lower": 0.7155,
+            "f1_ci_upper": 0.8098,
+            "precision": 0.7477,
+            "p_ci_lower": 0.6937,
+            "p_ci_upper": 0.7988,
+            "recall": 0.7806,
+            "r_ci_lower": 0.7231,
+            "r_ci_upper": 0.8387
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7945,
+            "f1_ci_lower": 0.7503,
+            "f1_ci_upper": 0.8344,
+            "precision": 0.7778,
+            "p_ci_lower": 0.7281,
+            "p_ci_upper": 0.8245,
+            "recall": 0.8119,
+            "r_ci_lower": 0.7605,
+            "r_ci_upper": 0.8674
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8067,
+            "f1_ci_lower": 0.763,
+            "f1_ci_upper": 0.8464,
+            "precision": 0.7898,
+            "p_ci_lower": 0.7386,
+            "p_ci_upper": 0.8372,
+            "recall": 0.8245,
+            "r_ci_lower": 0.7727,
+            "r_ci_upper": 0.8776
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.819,
+            "f1_ci_lower": 0.7719,
+            "f1_ci_upper": 0.8567,
+            "precision": 0.8018,
+            "p_ci_lower": 0.7491,
+            "p_ci_upper": 0.8464,
+            "recall": 0.837,
+            "r_ci_lower": 0.7869,
+            "r_ci_upper": 0.8868
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 134,
+            "tn": 148,
+            "fp": 24,
+            "fn": 21
+          },
+          "mcc": {
+            "mean": 0.7261,
+            "ci_lower": 0.6521,
+            "ci_upper": 0.7982
+          },
+          "sensitivity": {
+            "mean": 0.8656,
+            "ci_lower": 0.8129,
+            "ci_upper": 0.9139
+          },
+          "specificity": {
+            "mean": 0.861,
+            "ci_lower": 0.8079,
+            "ci_upper": 0.9081
+          }
+        }
+      },
+      "2": {
+        "label": "h8v2-scale-16",
+        "n_detections": 480,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6333,
+            "f1_ci_lower": 0.5868,
+            "f1_ci_upper": 0.6792,
+            "precision": 0.5271,
+            "p_ci_lower": 0.4785,
+            "p_ci_upper": 0.5769,
+            "recall": 0.7931,
+            "r_ci_lower": 0.7424,
+            "r_ci_upper": 0.8454
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6758,
+            "f1_ci_lower": 0.6294,
+            "f1_ci_upper": 0.7176,
+            "precision": 0.5625,
+            "p_ci_lower": 0.5118,
+            "p_ci_upper": 0.6101,
+            "recall": 0.8464,
+            "r_ci_lower": 0.7975,
+            "r_ci_upper": 0.8926
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6959,
+            "f1_ci_lower": 0.6561,
+            "f1_ci_upper": 0.7366,
+            "precision": 0.5792,
+            "p_ci_lower": 0.5306,
+            "p_ci_upper": 0.6277,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8312,
+            "r_ci_upper": 0.9133
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7084,
+            "f1_ci_lower": 0.6683,
+            "f1_ci_upper": 0.7487,
+            "precision": 0.5896,
+            "p_ci_lower": 0.5409,
+            "p_ci_upper": 0.6392,
+            "recall": 0.8871,
+            "r_ci_lower": 0.8473,
+            "r_ci_upper": 0.9251
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7259,
+            "f1_ci_lower": 0.6846,
+            "f1_ci_upper": 0.7648,
+            "precision": 0.6042,
+            "p_ci_lower": 0.5564,
+            "p_ci_upper": 0.6513,
+            "recall": 0.9091,
+            "r_ci_lower": 0.8735,
+            "r_ci_upper": 0.9454
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 138,
+            "tn": 113,
+            "fp": 59,
+            "fn": 17
+          },
+          "mcc": {
+            "mean": 0.5597,
+            "ci_lower": 0.478,
+            "ci_upper": 0.6411
+          },
+          "sensitivity": {
+            "mean": 0.8917,
+            "ci_lower": 0.8437,
+            "ci_upper": 0.9371
+          },
+          "specificity": {
+            "mean": 0.6567,
+            "ci_lower": 0.5843,
+            "ci_upper": 0.7252
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-scale-16",
+        "n_detections": 1659,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2811,
+            "f1_ci_lower": 0.2418,
+            "f1_ci_upper": 0.3245,
+            "precision": 0.1676,
+            "p_ci_lower": 0.1404,
+            "p_ci_upper": 0.1985,
+            "recall": 0.8715,
+            "r_ci_lower": 0.8308,
+            "r_ci_upper": 0.9117
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2973,
+            "f1_ci_lower": 0.2552,
+            "f1_ci_upper": 0.3412,
+            "precision": 0.1772,
+            "p_ci_lower": 0.1477,
+            "p_ci_upper": 0.209,
+            "recall": 0.9216,
+            "r_ci_lower": 0.8912,
+            "r_ci_upper": 0.9518
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3003,
+            "f1_ci_lower": 0.2577,
+            "f1_ci_upper": 0.3444,
+            "precision": 0.179,
+            "p_ci_lower": 0.1498,
+            "p_ci_upper": 0.2112,
+            "recall": 0.931,
+            "r_ci_lower": 0.9005,
+            "r_ci_upper": 0.9585
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3064,
+            "f1_ci_lower": 0.2627,
+            "f1_ci_upper": 0.3516,
+            "precision": 0.1826,
+            "p_ci_lower": 0.1524,
+            "p_ci_upper": 0.2149,
+            "recall": 0.9498,
+            "r_ci_lower": 0.9231,
+            "r_ci_upper": 0.9732
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3114,
+            "f1_ci_lower": 0.2677,
+            "f1_ci_upper": 0.3571,
+            "precision": 0.1857,
+            "p_ci_lower": 0.1552,
+            "p_ci_upper": 0.2192,
+            "recall": 0.9655,
+            "r_ci_lower": 0.9421,
+            "r_ci_upper": 0.9864
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 147,
+            "tn": 39,
+            "fp": 133,
+            "fn": 8
+          },
+          "mcc": {
+            "mean": 0.2517,
+            "ci_lower": 0.1628,
+            "ci_upper": 0.3406
+          },
+          "sensitivity": {
+            "mean": 0.9491,
+            "ci_lower": 0.9108,
+            "ci_upper": 0.981
+          },
+          "specificity": {
+            "mean": 0.2281,
+            "ci_lower": 0.1656,
+            "ci_upper": 0.2952
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-scale-16",
+        "n_detections": 238,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.693,
+            "f1_ci_lower": 0.6335,
+            "f1_ci_upper": 0.7486,
+            "precision": 0.8109,
+            "p_ci_lower": 0.7583,
+            "p_ci_upper": 0.8652,
+            "recall": 0.605,
+            "r_ci_lower": 0.5331,
+            "r_ci_upper": 0.6794
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7325,
+            "f1_ci_lower": 0.6746,
+            "f1_ci_upper": 0.7858,
+            "precision": 0.8571,
+            "p_ci_lower": 0.8088,
+            "p_ci_upper": 0.9049,
+            "recall": 0.6395,
+            "r_ci_lower": 0.5691,
+            "r_ci_upper": 0.7083
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.754,
+            "f1_ci_lower": 0.7013,
+            "f1_ci_upper": 0.8042,
+            "precision": 0.8824,
+            "p_ci_lower": 0.839,
+            "p_ci_upper": 0.9219,
+            "recall": 0.6583,
+            "r_ci_lower": 0.5877,
+            "r_ci_upper": 0.7269
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7648,
+            "f1_ci_lower": 0.714,
+            "f1_ci_upper": 0.8157,
+            "precision": 0.895,
+            "p_ci_lower": 0.8513,
+            "p_ci_upper": 0.9323,
+            "recall": 0.6677,
+            "r_ci_lower": 0.5994,
+            "r_ci_upper": 0.7386
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.772,
+            "f1_ci_lower": 0.7201,
+            "f1_ci_upper": 0.8205,
+            "precision": 0.9034,
+            "p_ci_lower": 0.8596,
+            "p_ci_upper": 0.9399,
+            "recall": 0.674,
+            "r_ci_lower": 0.6075,
+            "r_ci_upper": 0.7442
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 118,
+            "tn": 162,
+            "fp": 10,
+            "fn": 37
+          },
+          "mcc": {
+            "mean": 0.7203,
+            "ci_lower": 0.649,
+            "ci_upper": 0.7925
+          },
+          "sensitivity": {
+            "mean": 0.7623,
+            "ci_lower": 0.6962,
+            "ci_upper": 0.8312
+          },
+          "specificity": {
+            "mean": 0.9421,
+            "ci_lower": 0.9055,
+            "ci_upper": 0.9716
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-scale-16",
+        "n_detections": 153,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5932,
+            "f1_ci_lower": 0.5225,
+            "f1_ci_upper": 0.6651,
+            "precision": 0.915,
+            "p_ci_lower": 0.8639,
+            "p_ci_upper": 0.96,
+            "recall": 0.4389,
+            "r_ci_lower": 0.369,
+            "r_ci_upper": 0.5167
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6144,
+            "f1_ci_lower": 0.5458,
+            "f1_ci_upper": 0.6815,
+            "precision": 0.9477,
+            "p_ci_lower": 0.9038,
+            "p_ci_upper": 0.9843,
+            "recall": 0.4545,
+            "r_ci_lower": 0.3859,
+            "r_ci_upper": 0.5288
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6229,
+            "f1_ci_lower": 0.555,
+            "f1_ci_upper": 0.6883,
+            "precision": 0.9608,
+            "p_ci_lower": 0.92,
+            "p_ci_upper": 0.9919,
+            "recall": 0.4608,
+            "r_ci_lower": 0.3931,
+            "r_ci_upper": 0.5354
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6229,
+            "f1_ci_lower": 0.555,
+            "f1_ci_upper": 0.6883,
+            "precision": 0.9608,
+            "p_ci_lower": 0.92,
+            "p_ci_upper": 0.9919,
+            "recall": 0.4608,
+            "r_ci_lower": 0.3931,
+            "r_ci_upper": 0.5354
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6229,
+            "f1_ci_lower": 0.555,
+            "f1_ci_upper": 0.6883,
+            "precision": 0.9608,
+            "p_ci_lower": 0.92,
+            "p_ci_upper": 0.9919,
+            "recall": 0.4608,
+            "r_ci_lower": 0.3931,
+            "r_ci_upper": 0.5354
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 87,
+            "tn": 171,
+            "fp": 1,
+            "fn": 68
+          },
+          "mcc": {
+            "mean": 0.6253,
+            "ci_lower": 0.5601,
+            "ci_upper": 0.6886
+          },
+          "sensitivity": {
+            "mean": 0.5612,
+            "ci_lower": 0.4839,
+            "ci_upper": 0.6379
+          },
+          "specificity": {
+            "mean": 0.9944,
+            "ci_lower": 0.9821,
+            "ci_upper": 1.0
+          }
+        }
+      }
+    },
+    "h8v2-scale-32": {
+      "3": {
+        "label": "h8v2-scale-32",
+        "n_detections": 334,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6922,
+            "f1_ci_lower": 0.6405,
+            "f1_ci_upper": 0.7414,
+            "precision": 0.6766,
+            "p_ci_lower": 0.6195,
+            "p_ci_upper": 0.7316,
+            "recall": 0.7085,
+            "r_ci_lower": 0.6433,
+            "r_ci_upper": 0.7685
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7534,
+            "f1_ci_lower": 0.7081,
+            "f1_ci_upper": 0.7967,
+            "precision": 0.7365,
+            "p_ci_lower": 0.6815,
+            "p_ci_upper": 0.7895,
+            "recall": 0.7712,
+            "r_ci_lower": 0.7138,
+            "r_ci_upper": 0.8282
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.781,
+            "f1_ci_lower": 0.735,
+            "f1_ci_upper": 0.8216,
+            "precision": 0.7635,
+            "p_ci_lower": 0.7085,
+            "p_ci_upper": 0.8159,
+            "recall": 0.7994,
+            "r_ci_lower": 0.7423,
+            "r_ci_upper": 0.8554
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7933,
+            "f1_ci_lower": 0.7523,
+            "f1_ci_upper": 0.832,
+            "precision": 0.7754,
+            "p_ci_lower": 0.7222,
+            "p_ci_upper": 0.8252,
+            "recall": 0.8119,
+            "r_ci_lower": 0.7602,
+            "r_ci_upper": 0.8649
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7994,
+            "f1_ci_lower": 0.7585,
+            "f1_ci_upper": 0.8393,
+            "precision": 0.7814,
+            "p_ci_lower": 0.7269,
+            "p_ci_upper": 0.8328,
+            "recall": 0.8182,
+            "r_ci_lower": 0.7666,
+            "r_ci_upper": 0.8707
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 135,
+            "tn": 144,
+            "fp": 28,
+            "fn": 20
+          },
+          "mcc": {
+            "mean": 0.7089,
+            "ci_lower": 0.6287,
+            "ci_upper": 0.7873
+          },
+          "sensitivity": {
+            "mean": 0.8717,
+            "ci_lower": 0.8176,
+            "ci_upper": 0.92
+          },
+          "specificity": {
+            "mean": 0.838,
+            "ci_lower": 0.7778,
+            "ci_upper": 0.8976
+          }
+        }
+      },
+      "2": {
+        "label": "h8v2-scale-32",
+        "n_detections": 503,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5839,
+            "f1_ci_lower": 0.5319,
+            "f1_ci_upper": 0.632,
+            "precision": 0.4771,
+            "p_ci_lower": 0.4247,
+            "p_ci_upper": 0.5272,
+            "recall": 0.7524,
+            "r_ci_lower": 0.6941,
+            "r_ci_upper": 0.8075
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6423,
+            "f1_ci_lower": 0.593,
+            "f1_ci_upper": 0.6843,
+            "precision": 0.5249,
+            "p_ci_lower": 0.4717,
+            "p_ci_upper": 0.5727,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7778,
+            "r_ci_upper": 0.8731
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.674,
+            "f1_ci_lower": 0.6274,
+            "f1_ci_upper": 0.7151,
+            "precision": 0.5507,
+            "p_ci_lower": 0.4981,
+            "p_ci_upper": 0.5996,
+            "recall": 0.8683,
+            "r_ci_lower": 0.822,
+            "r_ci_upper": 0.9119
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6934,
+            "f1_ci_lower": 0.6493,
+            "f1_ci_upper": 0.7313,
+            "precision": 0.5666,
+            "p_ci_lower": 0.5135,
+            "p_ci_upper": 0.6146,
+            "recall": 0.8934,
+            "r_ci_lower": 0.8579,
+            "r_ci_upper": 0.9306
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7007,
+            "f1_ci_lower": 0.6565,
+            "f1_ci_upper": 0.7385,
+            "precision": 0.5726,
+            "p_ci_lower": 0.5187,
+            "p_ci_upper": 0.6212,
+            "recall": 0.9028,
+            "r_ci_lower": 0.8686,
+            "r_ci_upper": 0.9393
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 142,
+            "tn": 117,
+            "fp": 55,
+            "fn": 13
+          },
+          "mcc": {
+            "mean": 0.6109,
+            "ci_lower": 0.5274,
+            "ci_upper": 0.6957
+          },
+          "sensitivity": {
+            "mean": 0.9177,
+            "ci_lower": 0.8725,
+            "ci_upper": 0.9575
+          },
+          "specificity": {
+            "mean": 0.6809,
+            "ci_lower": 0.6025,
+            "ci_upper": 0.7558
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-scale-32",
+        "n_detections": 1734,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2611,
+            "f1_ci_lower": 0.2221,
+            "f1_ci_upper": 0.3004,
+            "precision": 0.1546,
+            "p_ci_lower": 0.1282,
+            "p_ci_upper": 0.1826,
+            "recall": 0.8401,
+            "r_ci_lower": 0.793,
+            "r_ci_upper": 0.8842
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.2815,
+            "f1_ci_lower": 0.2407,
+            "f1_ci_upper": 0.3245,
+            "precision": 0.1667,
+            "p_ci_lower": 0.1392,
+            "p_ci_upper": 0.1967,
+            "recall": 0.906,
+            "r_ci_lower": 0.8716,
+            "r_ci_upper": 0.9383
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.2932,
+            "f1_ci_lower": 0.2538,
+            "f1_ci_upper": 0.3361,
+            "precision": 0.1736,
+            "p_ci_lower": 0.1464,
+            "p_ci_upper": 0.2043,
+            "recall": 0.9436,
+            "r_ci_lower": 0.9175,
+            "r_ci_upper": 0.9689
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.2981,
+            "f1_ci_lower": 0.2574,
+            "f1_ci_upper": 0.3415,
+            "precision": 0.1765,
+            "p_ci_lower": 0.1486,
+            "p_ci_upper": 0.2077,
+            "recall": 0.9592,
+            "r_ci_lower": 0.9352,
+            "r_ci_upper": 0.9805
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.301,
+            "f1_ci_lower": 0.2603,
+            "f1_ci_upper": 0.3435,
+            "precision": 0.1782,
+            "p_ci_lower": 0.1504,
+            "p_ci_upper": 0.2089,
+            "recall": 0.9687,
+            "r_ci_lower": 0.9456,
+            "r_ci_upper": 0.9881
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 148,
+            "tn": 42,
+            "fp": 130,
+            "fn": 7
+          },
+          "mcc": {
+            "mean": 0.2787,
+            "ci_lower": 0.1861,
+            "ci_upper": 0.3588
+          },
+          "sensitivity": {
+            "mean": 0.9553,
+            "ci_lower": 0.9187,
+            "ci_upper": 0.9858
+          },
+          "specificity": {
+            "mean": 0.244,
+            "ci_lower": 0.1818,
+            "ci_upper": 0.3114
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-scale-32",
+        "n_detections": 242,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.713,
+            "f1_ci_lower": 0.6601,
+            "f1_ci_upper": 0.7626,
+            "precision": 0.8264,
+            "p_ci_lower": 0.7754,
+            "p_ci_upper": 0.8734,
+            "recall": 0.627,
+            "r_ci_lower": 0.5618,
+            "r_ci_upper": 0.6909
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7344,
+            "f1_ci_lower": 0.6851,
+            "f1_ci_upper": 0.7808,
+            "precision": 0.8512,
+            "p_ci_lower": 0.8044,
+            "p_ci_upper": 0.8941,
+            "recall": 0.6458,
+            "r_ci_lower": 0.5845,
+            "r_ci_upper": 0.7096
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7522,
+            "f1_ci_lower": 0.702,
+            "f1_ci_upper": 0.7992,
+            "precision": 0.8719,
+            "p_ci_lower": 0.8279,
+            "p_ci_upper": 0.9125,
+            "recall": 0.6614,
+            "r_ci_lower": 0.598,
+            "r_ci_upper": 0.7259
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7594,
+            "f1_ci_lower": 0.7117,
+            "f1_ci_upper": 0.8044,
+            "precision": 0.8802,
+            "p_ci_lower": 0.8377,
+            "p_ci_upper": 0.9192,
+            "recall": 0.6677,
+            "r_ci_lower": 0.6046,
+            "r_ci_upper": 0.7305
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7629,
+            "f1_ci_lower": 0.7143,
+            "f1_ci_upper": 0.8083,
+            "precision": 0.8843,
+            "p_ci_lower": 0.8411,
+            "p_ci_upper": 0.9227,
+            "recall": 0.6708,
+            "r_ci_lower": 0.6076,
+            "r_ci_upper": 0.7338
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 115,
+            "tn": 164,
+            "fp": 8,
+            "fn": 40
+          },
+          "mcc": {
+            "mean": 0.7181,
+            "ci_lower": 0.6447,
+            "ci_upper": 0.7841
+          },
+          "sensitivity": {
+            "mean": 0.743,
+            "ci_lower": 0.6717,
+            "ci_upper": 0.8063
+          },
+          "specificity": {
+            "mean": 0.9539,
+            "ci_lower": 0.9197,
+            "ci_upper": 0.9831
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-scale-32",
+        "n_detections": 158,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5954,
+            "f1_ci_lower": 0.5319,
+            "f1_ci_upper": 0.6642,
+            "precision": 0.8987,
+            "p_ci_lower": 0.8417,
+            "p_ci_upper": 0.9474,
+            "recall": 0.4451,
+            "r_ci_lower": 0.3801,
+            "r_ci_upper": 0.5218
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.608,
+            "f1_ci_lower": 0.5447,
+            "f1_ci_upper": 0.6737,
+            "precision": 0.9177,
+            "p_ci_lower": 0.8721,
+            "p_ci_upper": 0.9583,
+            "recall": 0.4545,
+            "r_ci_lower": 0.3896,
+            "r_ci_upper": 0.5293
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6164,
+            "f1_ci_lower": 0.5551,
+            "f1_ci_upper": 0.6814,
+            "precision": 0.9304,
+            "p_ci_lower": 0.8858,
+            "p_ci_upper": 0.9677,
+            "recall": 0.4608,
+            "r_ci_lower": 0.397,
+            "r_ci_upper": 0.5338
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6205,
+            "f1_ci_lower": 0.5602,
+            "f1_ci_upper": 0.6849,
+            "precision": 0.9367,
+            "p_ci_lower": 0.8947,
+            "p_ci_upper": 0.9737,
+            "recall": 0.4639,
+            "r_ci_lower": 0.4006,
+            "r_ci_upper": 0.5365
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6247,
+            "f1_ci_lower": 0.5659,
+            "f1_ci_upper": 0.689,
+            "precision": 0.943,
+            "p_ci_lower": 0.9023,
+            "p_ci_upper": 0.9762,
+            "recall": 0.4671,
+            "r_ci_lower": 0.4045,
+            "r_ci_upper": 0.5394
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 89,
+            "tn": 168,
+            "fp": 4,
+            "fn": 66
+          },
+          "mcc": {
+            "mean": 0.6109,
+            "ci_lower": 0.5364,
+            "ci_upper": 0.6774
+          },
+          "sensitivity": {
+            "mean": 0.5753,
+            "ci_lower": 0.4968,
+            "ci_upper": 0.6489
+          },
+          "specificity": {
+            "mean": 0.9772,
+            "ci_lower": 0.9494,
+            "ci_upper": 0.9944
+          }
+        }
+      }
+    },
+    "h8v2-scale-4": {
+      "3": {
+        "label": "h8v2-scale-4",
+        "n_detections": 330,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7088,
+            "f1_ci_lower": 0.6589,
+            "f1_ci_upper": 0.7563,
+            "precision": 0.697,
+            "p_ci_lower": 0.6401,
+            "p_ci_upper": 0.7479,
+            "recall": 0.721,
+            "r_ci_lower": 0.6599,
+            "r_ci_upper": 0.7778
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7889,
+            "f1_ci_lower": 0.7468,
+            "f1_ci_upper": 0.8293,
+            "precision": 0.7758,
+            "p_ci_lower": 0.7284,
+            "p_ci_upper": 0.8208,
+            "recall": 0.8025,
+            "r_ci_lower": 0.7492,
+            "r_ci_upper": 0.8509
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8105,
+            "f1_ci_lower": 0.7729,
+            "f1_ci_upper": 0.8463,
+            "precision": 0.797,
+            "p_ci_lower": 0.753,
+            "p_ci_upper": 0.8418,
+            "recall": 0.8245,
+            "r_ci_lower": 0.7735,
+            "r_ci_upper": 0.8708
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8197,
+            "f1_ci_lower": 0.7833,
+            "f1_ci_upper": 0.858,
+            "precision": 0.8061,
+            "p_ci_lower": 0.7636,
+            "p_ci_upper": 0.8501,
+            "recall": 0.8339,
+            "r_ci_lower": 0.7826,
+            "r_ci_upper": 0.881
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.832,
+            "f1_ci_lower": 0.7963,
+            "f1_ci_upper": 0.8665,
+            "precision": 0.8182,
+            "p_ci_lower": 0.7756,
+            "p_ci_upper": 0.8628,
+            "recall": 0.8464,
+            "r_ci_lower": 0.7978,
+            "r_ci_upper": 0.8908
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 133,
+            "tn": 143,
+            "fp": 29,
+            "fn": 22
+          },
+          "mcc": {
+            "mean": 0.6902,
+            "ci_lower": 0.6065,
+            "ci_upper": 0.7661
+          },
+          "sensitivity": {
+            "mean": 0.8589,
+            "ci_lower": 0.8013,
+            "ci_upper": 0.9131
+          },
+          "specificity": {
+            "mean": 0.8321,
+            "ci_lower": 0.7709,
+            "ci_upper": 0.8889
+          }
+        }
+      },
+      "2": {
+        "label": "h8v2-scale-4",
+        "n_detections": 462,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6351,
+            "f1_ci_lower": 0.5851,
+            "f1_ci_upper": 0.6834,
+            "precision": 0.5368,
+            "p_ci_lower": 0.4831,
+            "p_ci_upper": 0.5912,
+            "recall": 0.7774,
+            "r_ci_lower": 0.7212,
+            "r_ci_upper": 0.8285
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7017,
+            "f1_ci_lower": 0.658,
+            "f1_ci_upper": 0.744,
+            "precision": 0.5931,
+            "p_ci_lower": 0.5446,
+            "p_ci_upper": 0.6454,
+            "recall": 0.8589,
+            "r_ci_lower": 0.8131,
+            "r_ci_upper": 0.9038
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7196,
+            "f1_ci_lower": 0.6779,
+            "f1_ci_upper": 0.7582,
+            "precision": 0.6082,
+            "p_ci_lower": 0.558,
+            "p_ci_upper": 0.6596,
+            "recall": 0.8809,
+            "r_ci_lower": 0.8419,
+            "r_ci_upper": 0.9176
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7298,
+            "f1_ci_lower": 0.6888,
+            "f1_ci_upper": 0.7687,
+            "precision": 0.6169,
+            "p_ci_lower": 0.5656,
+            "p_ci_upper": 0.6687,
+            "recall": 0.8934,
+            "r_ci_lower": 0.8576,
+            "r_ci_upper": 0.93
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7554,
+            "f1_ci_lower": 0.7145,
+            "f1_ci_upper": 0.7933,
+            "precision": 0.6385,
+            "p_ci_lower": 0.5864,
+            "p_ci_upper": 0.69,
+            "recall": 0.9248,
+            "r_ci_lower": 0.8936,
+            "r_ci_upper": 0.9556
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 139,
+            "tn": 109,
+            "fp": 63,
+            "fn": 16
+          },
+          "mcc": {
+            "mean": 0.5483,
+            "ci_lower": 0.4623,
+            "ci_upper": 0.6337
+          },
+          "sensitivity": {
+            "mean": 0.8984,
+            "ci_lower": 0.8472,
+            "ci_upper": 0.9419
+          },
+          "specificity": {
+            "mean": 0.6351,
+            "ci_lower": 0.559,
+            "ci_upper": 0.7047
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-scale-4",
+        "n_detections": 1551,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.2824,
+            "f1_ci_lower": 0.2399,
+            "f1_ci_upper": 0.3312,
+            "precision": 0.1702,
+            "p_ci_lower": 0.1408,
+            "p_ci_upper": 0.206,
+            "recall": 0.8276,
+            "r_ci_lower": 0.7754,
+            "r_ci_upper": 0.8742
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3144,
+            "f1_ci_lower": 0.2701,
+            "f1_ci_upper": 0.3665,
+            "precision": 0.1896,
+            "p_ci_lower": 0.1589,
+            "p_ci_upper": 0.2279,
+            "recall": 0.9216,
+            "r_ci_lower": 0.8875,
+            "r_ci_upper": 0.9545
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3219,
+            "f1_ci_lower": 0.2785,
+            "f1_ci_upper": 0.3745,
+            "precision": 0.1941,
+            "p_ci_lower": 0.1633,
+            "p_ci_upper": 0.2332,
+            "recall": 0.9436,
+            "r_ci_lower": 0.9187,
+            "r_ci_upper": 0.968
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.3251,
+            "f1_ci_lower": 0.2808,
+            "f1_ci_upper": 0.3787,
+            "precision": 0.196,
+            "p_ci_lower": 0.1652,
+            "p_ci_upper": 0.2364,
+            "recall": 0.953,
+            "r_ci_lower": 0.9294,
+            "r_ci_upper": 0.9759
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3326,
+            "f1_ci_lower": 0.2868,
+            "f1_ci_upper": 0.386,
+            "precision": 0.2005,
+            "p_ci_lower": 0.1681,
+            "p_ci_upper": 0.2406,
+            "recall": 0.9749,
+            "r_ci_lower": 0.9553,
+            "r_ci_upper": 0.9932
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 147,
+            "tn": 51,
+            "fp": 121,
+            "fn": 8
+          },
+          "mcc": {
+            "mean": 0.3192,
+            "ci_lower": 0.2295,
+            "ci_upper": 0.3988
+          },
+          "sensitivity": {
+            "mean": 0.9488,
+            "ci_lower": 0.9136,
+            "ci_upper": 0.9805
+          },
+          "specificity": {
+            "mean": 0.2973,
+            "ci_lower": 0.2294,
+            "ci_upper": 0.3672
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-scale-4",
+        "n_detections": 257,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7326,
+            "f1_ci_lower": 0.6801,
+            "f1_ci_upper": 0.7772,
+            "precision": 0.821,
+            "p_ci_lower": 0.7692,
+            "p_ci_upper": 0.8669,
+            "recall": 0.6614,
+            "r_ci_lower": 0.5983,
+            "r_ci_upper": 0.7195
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7986,
+            "f1_ci_lower": 0.7509,
+            "f1_ci_upper": 0.8418,
+            "precision": 0.8949,
+            "p_ci_lower": 0.8507,
+            "p_ci_upper": 0.9336,
+            "recall": 0.721,
+            "r_ci_lower": 0.6609,
+            "r_ci_upper": 0.7821
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8125,
+            "f1_ci_lower": 0.7705,
+            "f1_ci_upper": 0.8524,
+            "precision": 0.9105,
+            "p_ci_lower": 0.8683,
+            "p_ci_upper": 0.9438,
+            "recall": 0.7335,
+            "r_ci_lower": 0.6762,
+            "r_ci_upper": 0.7925
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.816,
+            "f1_ci_lower": 0.7734,
+            "f1_ci_upper": 0.8557,
+            "precision": 0.9144,
+            "p_ci_lower": 0.8745,
+            "p_ci_upper": 0.9472,
+            "recall": 0.7367,
+            "r_ci_lower": 0.6795,
+            "r_ci_upper": 0.7959
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.8229,
+            "f1_ci_lower": 0.7816,
+            "f1_ci_upper": 0.8632,
+            "precision": 0.9222,
+            "p_ci_lower": 0.8828,
+            "p_ci_upper": 0.9532,
+            "recall": 0.7429,
+            "r_ci_lower": 0.6862,
+            "r_ci_upper": 0.8022
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 126,
+            "tn": 163,
+            "fp": 9,
+            "fn": 29
+          },
+          "mcc": {
+            "mean": 0.7719,
+            "ci_lower": 0.701,
+            "ci_upper": 0.8366
+          },
+          "sensitivity": {
+            "mean": 0.8135,
+            "ci_lower": 0.753,
+            "ci_upper": 0.8727
+          },
+          "specificity": {
+            "mean": 0.9478,
+            "ci_lower": 0.9112,
+            "ci_upper": 0.977
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-scale-4",
+        "n_detections": 175,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6316,
+            "f1_ci_lower": 0.5693,
+            "f1_ci_upper": 0.689,
+            "precision": 0.8914,
+            "p_ci_lower": 0.8363,
+            "p_ci_upper": 0.9364,
+            "recall": 0.489,
+            "r_ci_lower": 0.4232,
+            "r_ci_upper": 0.5534
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6721,
+            "f1_ci_lower": 0.6122,
+            "f1_ci_upper": 0.7244,
+            "precision": 0.9486,
+            "p_ci_lower": 0.9086,
+            "p_ci_upper": 0.9787,
+            "recall": 0.5204,
+            "r_ci_lower": 0.4549,
+            "r_ci_upper": 0.5836
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6802,
+            "f1_ci_lower": 0.6215,
+            "f1_ci_upper": 0.735,
+            "precision": 0.96,
+            "p_ci_lower": 0.9279,
+            "p_ci_upper": 0.9855,
+            "recall": 0.5266,
+            "r_ci_lower": 0.4611,
+            "r_ci_upper": 0.5916
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6842,
+            "f1_ci_lower": 0.6269,
+            "f1_ci_upper": 0.7383,
+            "precision": 0.9657,
+            "p_ci_lower": 0.9362,
+            "p_ci_upper": 0.9888,
+            "recall": 0.5298,
+            "r_ci_lower": 0.4654,
+            "r_ci_upper": 0.5953
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6842,
+            "f1_ci_lower": 0.6269,
+            "f1_ci_upper": 0.7383,
+            "precision": 0.9657,
+            "p_ci_lower": 0.9362,
+            "p_ci_upper": 0.9888,
+            "recall": 0.5298,
+            "r_ci_lower": 0.4654,
+            "r_ci_upper": 0.5953
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 97,
+            "tn": 169,
+            "fp": 3,
+            "fn": 58
+          },
+          "mcc": {
+            "mean": 0.6594,
+            "ci_lower": 0.5898,
+            "ci_upper": 0.7333
+          },
+          "sensitivity": {
+            "mean": 0.6263,
+            "ci_lower": 0.5442,
+            "ci_upper": 0.7056
+          },
+          "specificity": {
+            "mean": 0.9826,
+            "ci_lower": 0.9598,
+            "ci_upper": 1.0
+          }
+        }
+      }
+    },
+    "h8v2-scale-8": {
+      "3": {
+        "label": "h8v2-scale-8",
+        "n_detections": 317,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.7296,
+            "f1_ci_lower": 0.6763,
+            "f1_ci_upper": 0.7761,
+            "precision": 0.7319,
+            "p_ci_lower": 0.6803,
+            "p_ci_upper": 0.7797,
+            "recall": 0.7273,
+            "r_ci_lower": 0.6623,
+            "r_ci_upper": 0.7874
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7925,
+            "f1_ci_lower": 0.7515,
+            "f1_ci_upper": 0.8313,
+            "precision": 0.795,
+            "p_ci_lower": 0.7484,
+            "p_ci_upper": 0.839,
+            "recall": 0.79,
+            "r_ci_lower": 0.7379,
+            "r_ci_upper": 0.8478
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.8082,
+            "f1_ci_lower": 0.7695,
+            "f1_ci_upper": 0.8466,
+            "precision": 0.8107,
+            "p_ci_lower": 0.7651,
+            "p_ci_upper": 0.8537,
+            "recall": 0.8056,
+            "r_ci_lower": 0.7516,
+            "r_ci_upper": 0.8609
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.8145,
+            "f1_ci_lower": 0.7768,
+            "f1_ci_upper": 0.8499,
+            "precision": 0.817,
+            "p_ci_lower": 0.7737,
+            "p_ci_upper": 0.8584,
+            "recall": 0.8119,
+            "r_ci_lower": 0.7578,
+            "r_ci_upper": 0.8673
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.827,
+            "f1_ci_lower": 0.7888,
+            "f1_ci_upper": 0.8628,
+            "precision": 0.8297,
+            "p_ci_lower": 0.7875,
+            "p_ci_upper": 0.8694,
+            "recall": 0.8245,
+            "r_ci_lower": 0.7699,
+            "r_ci_upper": 0.8801
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 133,
+            "tn": 151,
+            "fp": 21,
+            "fn": 22
+          },
+          "mcc": {
+            "mean": 0.7388,
+            "ci_lower": 0.6639,
+            "ci_upper": 0.8092
+          },
+          "sensitivity": {
+            "mean": 0.8602,
+            "ci_lower": 0.8069,
+            "ci_upper": 0.9136
+          },
+          "specificity": {
+            "mean": 0.8784,
+            "ci_lower": 0.8249,
+            "ci_upper": 0.9239
+          }
+        }
+      },
+      "2": {
+        "label": "h8v2-scale-8",
+        "n_detections": 487,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.6253,
+            "f1_ci_lower": 0.573,
+            "f1_ci_upper": 0.6707,
+            "precision": 0.5175,
+            "p_ci_lower": 0.4637,
+            "p_ci_upper": 0.567,
+            "recall": 0.79,
+            "r_ci_lower": 0.7311,
+            "r_ci_upper": 0.847
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6873,
+            "f1_ci_lower": 0.643,
+            "f1_ci_upper": 0.7292,
+            "precision": 0.5688,
+            "p_ci_lower": 0.5206,
+            "p_ci_upper": 0.6176,
+            "recall": 0.8683,
+            "r_ci_lower": 0.8231,
+            "r_ci_upper": 0.9133
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6998,
+            "f1_ci_lower": 0.6565,
+            "f1_ci_upper": 0.7415,
+            "precision": 0.5791,
+            "p_ci_lower": 0.5284,
+            "p_ci_upper": 0.6291,
+            "recall": 0.884,
+            "r_ci_lower": 0.8426,
+            "r_ci_upper": 0.9286
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7097,
+            "f1_ci_lower": 0.6675,
+            "f1_ci_upper": 0.7478,
+            "precision": 0.5873,
+            "p_ci_lower": 0.538,
+            "p_ci_upper": 0.6362,
+            "recall": 0.8966,
+            "r_ci_lower": 0.8586,
+            "r_ci_upper": 0.9351
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.737,
+            "f1_ci_lower": 0.696,
+            "f1_ci_upper": 0.7756,
+            "precision": 0.6099,
+            "p_ci_lower": 0.5586,
+            "p_ci_upper": 0.6579,
+            "recall": 0.931,
+            "r_ci_lower": 0.9,
+            "r_ci_upper": 0.9595
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 140,
+            "tn": 123,
+            "fp": 49,
+            "fn": 15
+          },
+          "mcc": {
+            "mean": 0.6262,
+            "ci_lower": 0.5456,
+            "ci_upper": 0.6982
+          },
+          "sensitivity": {
+            "mean": 0.9039,
+            "ci_lower": 0.8553,
+            "ci_upper": 0.9463
+          },
+          "specificity": {
+            "mean": 0.7154,
+            "ci_lower": 0.6404,
+            "ci_upper": 0.7778
+          }
+        }
+      },
+      "1": {
+        "label": "h8v2-scale-8",
+        "n_detections": 1419,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.3142,
+            "f1_ci_lower": 0.2707,
+            "f1_ci_upper": 0.3613,
+            "precision": 0.1924,
+            "p_ci_lower": 0.1616,
+            "p_ci_upper": 0.2277,
+            "recall": 0.8558,
+            "r_ci_lower": 0.8094,
+            "r_ci_upper": 0.8994
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.3395,
+            "f1_ci_lower": 0.2942,
+            "f1_ci_upper": 0.3884,
+            "precision": 0.2079,
+            "p_ci_lower": 0.1757,
+            "p_ci_upper": 0.2451,
+            "recall": 0.9248,
+            "r_ci_lower": 0.8899,
+            "r_ci_upper": 0.9572
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.3452,
+            "f1_ci_lower": 0.3007,
+            "f1_ci_upper": 0.395,
+            "precision": 0.2114,
+            "p_ci_lower": 0.1789,
+            "p_ci_upper": 0.2485,
+            "recall": 0.9404,
+            "r_ci_lower": 0.9088,
+            "r_ci_upper": 0.9681
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.351,
+            "f1_ci_lower": 0.3037,
+            "f1_ci_upper": 0.3986,
+            "precision": 0.2149,
+            "p_ci_lower": 0.1803,
+            "p_ci_upper": 0.2521,
+            "recall": 0.9561,
+            "r_ci_lower": 0.9311,
+            "r_ci_upper": 0.9788
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.3567,
+            "f1_ci_lower": 0.3114,
+            "f1_ci_upper": 0.4053,
+            "precision": 0.2185,
+            "p_ci_lower": 0.1856,
+            "p_ci_upper": 0.2556,
+            "recall": 0.9718,
+            "r_ci_lower": 0.9481,
+            "r_ci_upper": 0.9909
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 148,
+            "tn": 45,
+            "fp": 127,
+            "fn": 7
+          },
+          "mcc": {
+            "mean": 0.2952,
+            "ci_lower": 0.206,
+            "ci_upper": 0.3825
+          },
+          "sensitivity": {
+            "mean": 0.9546,
+            "ci_lower": 0.9205,
+            "ci_upper": 0.987
+          },
+          "specificity": {
+            "mean": 0.262,
+            "ci_lower": 0.2,
+            "ci_upper": 0.3285
+          }
+        }
+      },
+      "5": {
+        "label": "h8v2-scale-8",
+        "n_detections": 157,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.5756,
+            "f1_ci_lower": 0.5053,
+            "f1_ci_upper": 0.6437,
+            "precision": 0.8726,
+            "p_ci_lower": 0.808,
+            "p_ci_upper": 0.9257,
+            "recall": 0.4295,
+            "r_ci_lower": 0.3626,
+            "r_ci_upper": 0.5016
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.6218,
+            "f1_ci_lower": 0.5619,
+            "f1_ci_upper": 0.687,
+            "precision": 0.9427,
+            "p_ci_lower": 0.9016,
+            "p_ci_upper": 0.9779,
+            "recall": 0.4639,
+            "r_ci_lower": 0.4006,
+            "r_ci_upper": 0.5385
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.6261,
+            "f1_ci_lower": 0.5649,
+            "f1_ci_upper": 0.6911,
+            "precision": 0.949,
+            "p_ci_lower": 0.9073,
+            "p_ci_upper": 0.9828,
+            "recall": 0.4671,
+            "r_ci_lower": 0.4048,
+            "r_ci_upper": 0.5436
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.6303,
+            "f1_ci_lower": 0.5687,
+            "f1_ci_upper": 0.6949,
+            "precision": 0.9554,
+            "p_ci_lower": 0.9148,
+            "p_ci_upper": 0.9872,
+            "recall": 0.4702,
+            "r_ci_lower": 0.4059,
+            "r_ci_upper": 0.5458
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.6303,
+            "f1_ci_lower": 0.5687,
+            "f1_ci_upper": 0.6949,
+            "precision": 0.9554,
+            "p_ci_lower": 0.9148,
+            "p_ci_upper": 0.9872,
+            "recall": 0.4702,
+            "r_ci_lower": 0.4059,
+            "r_ci_upper": 0.5458
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 95,
+            "tn": 170,
+            "fp": 2,
+            "fn": 60
+          },
+          "mcc": {
+            "mean": 0.6582,
+            "ci_lower": 0.5933,
+            "ci_upper": 0.7255
+          },
+          "sensitivity": {
+            "mean": 0.6145,
+            "ci_lower": 0.5374,
+            "ci_upper": 0.6905
+          },
+          "specificity": {
+            "mean": 0.9883,
+            "ci_lower": 0.9706,
+            "ci_upper": 1.0
+          }
+        }
+      },
+      "4": {
+        "label": "h8v2-scale-8",
+        "n_detections": 250,
+        "buffers": [
+          {
+            "buffer_metres": 20,
+            "f1": 0.71,
+            "f1_ci_lower": 0.6484,
+            "f1_ci_upper": 0.7646,
+            "precision": 0.808,
+            "p_ci_lower": 0.7511,
+            "p_ci_upper": 0.856,
+            "recall": 0.6332,
+            "r_ci_lower": 0.5621,
+            "r_ci_upper": 0.7053
+          },
+          {
+            "buffer_metres": 30,
+            "f1": 0.7803,
+            "f1_ci_lower": 0.7296,
+            "f1_ci_upper": 0.8284,
+            "precision": 0.888,
+            "p_ci_lower": 0.8476,
+            "p_ci_upper": 0.9258,
+            "recall": 0.6959,
+            "r_ci_lower": 0.6294,
+            "r_ci_upper": 0.7639
+          },
+          {
+            "buffer_metres": 40,
+            "f1": 0.7873,
+            "f1_ci_lower": 0.7372,
+            "f1_ci_upper": 0.8347,
+            "precision": 0.896,
+            "p_ci_lower": 0.8566,
+            "p_ci_upper": 0.9323,
+            "recall": 0.7022,
+            "r_ci_lower": 0.6335,
+            "r_ci_upper": 0.7712
+          },
+          {
+            "buffer_metres": 50,
+            "f1": 0.7909,
+            "f1_ci_lower": 0.7389,
+            "f1_ci_upper": 0.8369,
+            "precision": 0.9,
+            "p_ci_lower": 0.8608,
+            "p_ci_upper": 0.9356,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6353,
+            "r_ci_upper": 0.7735
+          },
+          {
+            "buffer_metres": 100,
+            "f1": 0.7909,
+            "f1_ci_lower": 0.7389,
+            "f1_ci_upper": 0.8369,
+            "precision": 0.9,
+            "p_ci_lower": 0.8608,
+            "p_ci_upper": 0.9356,
+            "recall": 0.7053,
+            "r_ci_lower": 0.6353,
+            "r_ci_upper": 0.7735
+          }
+        ],
+        "tile_classification": {
+          "confusion": {
+            "tp": 121,
+            "tn": 164,
+            "fp": 8,
+            "fn": 34
+          },
+          "mcc": {
+            "mean": 0.751,
+            "ci_lower": 0.678,
+            "ci_upper": 0.8195
+          },
+          "sensitivity": {
+            "mean": 0.7828,
+            "ci_lower": 0.7161,
+            "ci_upper": 0.8485
+          },
+          "specificity": {
+            "mean": 0.9529,
+            "ci_lower": 0.9193,
+            "ci_upper": 0.982
+          }
+        }
+      }
+    }
+  }
+}

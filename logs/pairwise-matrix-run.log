@@ -1,0 +1,436 @@
+REPO_ROOT = /home/shawn/Code/map-reader-llm
+OUT_ROOT  = /home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix-pairwise
+Loading reference + bounds...
+  reference points: 569
+  bounds tiles    : 487
+Total pairwise tasks: 168
+Running with max_workers=8...
+2026-04-25 02:52:15,956 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:15,956 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:15,957 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:15,962 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:15,962 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:15,963 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:15,963 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:15,963 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:15,963 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:15,964 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:15,965 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:15,975 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:15,975 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:15,976 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:15,977 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:15,978 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:16,856 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:16,864 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:16,873 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:16,880 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:16,921 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:16,928 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:17,549 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:17,561 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:17,580 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:17,593 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:17,617 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:17,631 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:17,655 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:17,669 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:17,680 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:17,694 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:17,757 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:17,764 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:17,769 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:17,776 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:17,871 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:17,879 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:18,650 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:18,657 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:18,669 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:18,676 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:18,827 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:18,834 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:19,138 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:19,151 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:19,182 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:19,195 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:19,276 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:19,290 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:19,325 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:19,339 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:19,369 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:19,383 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:19,560 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:19,567 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:19,580 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:19,587 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:19,778 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:19,786 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:20,462 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:20,469 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:20,489 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:20,496 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:20,522 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:20,528 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:20,611 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:20,619 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:20,733 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:20,741 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:20,762 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:20,775 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:20,938 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:20,952 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:21,072 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:21,086 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:21,355 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:21,362 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:21,386 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:21,394 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:21,427 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:21,434 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:21,582 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:21,589 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:21,706 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:21,713 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:22,259 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:22,267 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:22,294 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:22,301 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:22,342 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:22,349 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:22,368 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:22,381 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:22,545 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:22,553 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:22,626 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:22,640 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:22,652 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:22,659 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:22,758 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:22,772 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:23,162 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:23,169 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:23,199 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:23,206 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:23,246 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:23,252 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:23,505 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:23,513 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:23,585 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:23,593 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:23,777 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:23,785 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:23,966 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:23,979 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:24,050 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:24,057 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:24,113 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:24,120 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:24,141 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:24,148 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:24,309 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:24,323 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:24,468 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:24,475 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:24,538 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:24,545 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:24,737 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:24,745 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:24,940 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:24,946 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:25,016 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:25,023 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:25,051 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:25,058 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:25,422 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:25,430 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:25,487 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:25,494 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:25,547 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:25,560 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:25,693 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:25,701 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:25,831 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:25,838 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:25,935 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:25,942 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:25,956 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:25,963 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:26,013 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:26,027 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:26,389 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:26,397 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:26,437 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:26,444 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:26,642 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:26,650 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:26,748 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:26,755 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:26,839 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:26,846 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:26,883 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:26,890 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:27,108 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:27,121 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:27,354 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:27,362 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:27,426 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:27,433 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:27,582 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:27,589 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:27,645 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:27,651 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:27,724 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:27,732 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:27,737 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:27,739 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:27,792 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:27,799 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:28,321 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:28,328 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:28,349 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:28,356 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:28,511 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:28,514 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:28,518 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:28,521 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:28,639 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:28,646 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:28,668 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:28,674 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:28,676 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:28,689 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:29,262 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:29,269 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:29,269 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:29,276 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:29,334 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:29,347 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:29,512 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:29,519 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:29,537 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:29,544 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:29,599 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:29,612 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:29,659 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:29,672 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:30,138 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:30,145 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:30,196 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:30,203 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:30,278 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:30,291 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:30,379 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:30,386 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:30,409 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:30,416 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:30,939 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:30,953 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:31,014 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:31,020 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:31,120 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:31,127 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:31,150 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:31,162 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:31,242 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:31,248 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:31,288 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:31,295 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:31,332 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:31,346 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:31,888 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:31,895 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:31,916 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:31,930 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:32,049 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:32,057 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:32,116 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:32,122 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:32,169 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:32,176 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:32,573 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:32,587 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:32,677 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:32,689 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:32,754 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:32,760 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:32,955 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:32,968 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:32,998 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:33,005 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:33,013 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:33,020 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:33,046 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:33,052 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:33,557 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:33,570 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:33,633 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:33,640 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:33,886 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:33,892 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:33,929 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:33,935 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:33,936 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:33,942 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:34,190 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:34,203 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:34,213 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:34,226 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:34,510 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:34,517 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:34,591 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:34,604 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:34,814 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:34,817 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:34,821 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:34,823 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:34,862 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:34,869 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:35,216 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:35,229 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:35,396 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:35,403 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:35,689 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:35,696 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:35,699 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:35,705 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:35,757 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:35,766 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:35,770 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:35,773 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:35,793 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:35,800 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:35,990 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:35,997 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:36,267 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:36,274 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:36,555 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:36,561 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:36,572 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:36,579 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:36,692 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:36,699 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:36,719 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:36,726 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:36,849 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:36,862 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:36,914 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:36,921 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:37,141 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:37,147 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:37,303 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:37,316 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:37,415 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:37,422 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:37,461 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:37,467 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:37,623 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:37,633 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:37,658 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:37,665 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:37,838 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:37,846 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:38,027 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:38,034 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:38,306 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:38,314 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:38,355 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:38,362 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:38,487 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:38,500 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:38,580 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:38,587 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:38,604 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:38,611 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:39,570 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:40,017 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:40,450 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:40,879 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:41,300 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:41,732 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:42,163 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:42,600 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:43,022 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:43,436 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:43,866 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:44,284 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:44,706 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:45,132 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:45,561 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:45,996 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:46,434 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:46,874 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:47,309 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:47,752 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:48,195 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:48,647 - INFO - GeoJSON: 430 detections from image-adversarial-opt-20m.geojson
+2026-04-25 02:52:49,093 - INFO - GeoJSON: 414 detections from image-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:49,527 - INFO - GeoJSON: 439 detections from image-brief-opt-20m.geojson
+2026-04-25 02:52:49,950 - INFO - GeoJSON: 413 detections from image-brief-text-opt-20m.geojson
+2026-04-25 02:52:50,365 - INFO - GeoJSON: 437 detections from image-checklist-opt-20m.geojson
+2026-04-25 02:52:50,788 - INFO - GeoJSON: 432 detections from image-checklist-text-opt-20m.geojson
+2026-04-25 02:52:51,215 - INFO - GeoJSON: 433 detections from image-comparative-opt-20m.geojson
+2026-04-25 02:52:51,665 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:52,093 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:52,519 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:52,947 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:53,367 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:53,795 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:54,224 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:54,657 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:55,087 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:55,501 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:55,917 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:56,319 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:56,727 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:52:57,139 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:52:57,554 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:52:57,976 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:52:58,401 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:52:58,829 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:52:59,249 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:52:59,676 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:53:00,106 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+2026-04-25 02:53:00,539 - INFO - GeoJSON: 397 detections from text-adversarial-opt-20m.geojson
+2026-04-25 02:53:00,965 - INFO - GeoJSON: 392 detections from text-adversarial-text-opt-20m.geojson
+2026-04-25 02:53:01,372 - INFO - GeoJSON: 404 detections from text-brief-opt-20m.geojson
+2026-04-25 02:53:01,785 - INFO - GeoJSON: 389 detections from text-brief-text-opt-20m.geojson
+2026-04-25 02:53:02,189 - INFO - GeoJSON: 402 detections from text-checklist-opt-20m.geojson
+2026-04-25 02:53:02,597 - INFO - GeoJSON: 411 detections from text-checklist-text-opt-20m.geojson
+2026-04-25 02:53:03,007 - INFO - GeoJSON: 397 detections from text-comparative-opt-20m.geojson
+  [10/168] elapsed 1.8s | last: image @20m adversarial-text vs checklist-text p=0.4032
+  [20/168] elapsed 3.6s | last: image @20m checklist vs comparative p=0.3239
+  [30/168] elapsed 5.1s | last: image @30m adversarial vs comparative p=0.4276
+  [40/168] elapsed 6.6s | last: image @30m checklist-text vs comparative p=0.4112
+  [50/168] elapsed 8.0s | last: image @40m adversarial vs checklist-text p=0.0974
+  [60/168] elapsed 9.1s | last: image @40m checklist vs checklist-text p=1.0000
+  [70/168] elapsed 10.5s | last: image @50m adversarial-text vs brief p=0.1725
+  [80/168] elapsed 11.8s | last: image @50m brief vs checklist p=1.0000
+  [90/168] elapsed 13.3s | last: text @20m adversarial-text vs brief p=0.0561
+  [100/168] elapsed 14.5s | last: text @20m brief-text vs checklist-text p=0.0651
+  [110/168] elapsed 16.0s | last: text @30m adversarial vs brief p=0.2669
+  [120/168] elapsed 17.1s | last: text @30m brief-text vs checklist p=0.0001
+  [130/168] elapsed 18.9s | last: text @40m adversarial vs checklist-text p=0.0014
+  [140/168] elapsed 20.1s | last: text @40m adversarial-text vs comparative p=0.0000
+  [150/168] elapsed 21.5s | last: text @50m adversarial vs brief-text p=0.0002
+  [160/168] elapsed 22.7s | last: text @50m brief vs checklist-text p=0.0153
+  [168/168] elapsed 23.6s | last: text @50m checklist vs checklist-text p=0.0016
+All pairwise tests done in 23.6s
+Building per-(track, buffer) tier tables...
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_20m.json (1 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_20m.md
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_30m.json (1 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_30m.md
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_40m.json (2 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_40m.md
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_50m.json (2 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/image/permutation_tiers_50m.md
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_20m.json (2 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_20m.md
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_30m.json (2 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_30m.md
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_40m.json (2 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_40m.md
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_50m.json (2 tiers)
+  wrote results/verifier-calibration-matrix-pairwise/text/permutation_tiers_50m.md
+
+All per-(track, buffer) artefacts written.
