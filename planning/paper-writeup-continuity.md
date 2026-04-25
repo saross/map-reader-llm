@@ -1033,6 +1033,125 @@ item's claim but warrant a polish pass before paper finalisation:
   overnight-pipeline work. **Estimated effort**: ~10 min (user
   action — configure git + add SSH key to GitHub account). One-off.
 
+## Session 79 entry-point queue (drafted end-of-Session-78 2026-04-25)
+
+**You are on**: Step 6 (paper outline). Session 78 diverged into a
+verifier calibration matrix; that is now complete with a strong
+paper-ready finding. Backlog has grown; decide whether to run
+prerequisites before the outline.
+
+### Read first (in order)
+
+1. This message.
+2. `docs/notes/reflections/working-notes.md:13215` — **Obs 277**
+   (Session 78 headline: verifier-prompt variation cannot rescue
+   image-track miscalibration; canonical `verify_adversarial-text`
+   is Pareto-dominant across 7 prompts).
+3. `docs/notes/reflections/working-notes.md:12595` — **Obs 269**
+   (motivating image-track miscalibration finding; Obs 277
+   falsifies the prompt-specificity hypothesis).
+4. This file — §"Step 6 polish-pass backlog" starts at line 741.
+5. `planning/session-78-verifier-calibration-matrix-summary.md`
+   (F1/P/R/MCC for 14 cells at 20 m optimum).
+6. `planning/session-78-matrix-calibration-summary.md`
+   (AUC/Brier/ECE for 14 cells).
+
+### Session 78 headline findings
+
+- **Architecture dominates prompt.** Obs 277 (commit `303d4f21`)
+  shows all 6 alternative prompt variants fail to rescue image-track
+  calibration; canonical wins ECE on both pools. Combined with
+  Session 78 Q3 cross-track calibration contrast (commit `1b7143c5`),
+  the input-distribution hypothesis is supported from two
+  independent tests.
+- **Canonical `verify_adversarial-text` is validated as the
+  production choice.** Pareto-dominant on image (best AUC 0.863,
+  best ECE 0.188). Best ECE on text (0.067), slightly edged on AUC
+  by `verify_adversarial` with images (0.968 vs 0.959).
+- **F1 on text: four alternatives beat canonical by 0.01–0.02**
+  (comparative, adversarial, checklist, brief — all with-images).
+  Calibration worsens in exchange. Significance-test before
+  paper-citing (Step 6 backlog item: pairwise permutation tests).
+
+### Commits since Session 77 close
+
+17 commits, all on origin/main, from `6b57364c` (script fix)
+through `cf192345` (5-item backlog expansion). Run
+`git log --oneline 6b57364c^..cf192345` for the full list.
+
+### Matrix artefacts — paths next-session needs
+
+- Leaderboard cells: `results/leaderboard/cells/session-78-<pool>-<variant>-487tile.json` (14 files)
+- Deep evaluations: `results/verifier-calibration-matrix/<pool>-<variant>/evaluation.json`
+  (F1/P/R/MCC + 10 000-iter bootstrap CIs, 14 files)
+- Calibration crosstabs: `results/verifier-calibration-matrix/<pool>-<variant>/calibration.json`
+  (AUC/Brier/ECE, 14 files)
+- Materialised PV geojsons at 20 m optimum:
+  `results/verifier-calibration-matrix/<pool>-<variant>-opt-20m.geojson`
+  (14 files; UTM coords after the Session 78 CRS fix in commit
+  `6b57364c`)
+- Overnight pipeline script: `scripts/session-78-matrix-overnight.sh`
+- Calibration computation script: `scripts/compute_session78_calibration_matrix.py`
+
+### Step 6 backlog state (9 items)
+
+Carry-over items plus 6 added in Session 78:
+
+1. Script-hygiene audit: silent `tile_allowlist` filter + CRS-header
+   pathologies (Obs 276).
+2. Audit unevaluated consensus geojsons (93 % of 1 006 files).
+3. Build per-architecture leaderboards (was scheduled for
+   2026-04-25; may now inform paper outline directly).
+4. Run pairwise permutation tests across verifier calibration matrix.
+5. Re-run canonical `verify_adversarial-text` on session-78-matrix
+   shared-crops (API spend ≈ $8 at flex tier).
+6. Investigate `cand_01563` parser bug in verifier response handling.
+7. Scope-version the `results/verifier-calibration-matrix/` directory.
+8. Clean up exact-duplicate files in
+   `archive/pre-session-78-pull-2026-04-24/` on sapphire.
+9. Configure GitHub identity on sapphire.
+
+Details at §"Step 6 polish-pass backlog" (line 741).
+
+### Session 79 entry-point options
+
+| Option | Rationale | Cost | Blocks paper? |
+|--------|-----------|------|:---:|
+| **A. Paper outline (Step 6)** | Main deliverable; Session 78 findings are ready for it | — | — |
+| B. Pairwise permutation tests (backlog #4) | Sharpens Obs 277 "significant differences" claims before paper cites them | 30 min local | Weakly |
+| C. Per-architecture leaderboards (backlog #3) | Fixes the Proposer-Verifier-versus-consensus-only comparability bug; was scheduled for 2026-04-25 | 1–3 hrs local | Weakly |
+| D. Re-run canonical on session-78 shared-crops (backlog #5) | Tightens Obs 277 prompt-invariance claim from crop-set parity angle | ~$8 API + 30 min | No |
+
+**Recommended**: **B → C → A.** Pairwise permutations and
+per-architecture leaderboards are both cheap, both sharpen
+paper-ready claims, and neither requires API spend. Then paper
+outline with all supporting evidence verified.
+
+### Things to NOT do without checking
+
+- Don't trust agent outputs without adversarial verification —
+  Session 78 caught two confabulations (a "missing manifests" agent
+  miscounted and wrongly claimed no consensus backing; an earlier
+  agent confabulated verifier-variant identifiers that don't exist).
+- Don't re-run the LLM extraction pipeline without user approval.
+- The canonical `verify_adversarial-text` run on the session-78-matrix
+  shared-crops has NOT been done (backlog #5). Cite Obs 277
+  carefully if prompt-invariance crop-parity matters.
+
+### Guardrails carried over
+
+- UK/Australian English (Oxford comma always).
+- **Anti-confabulation rule** (new in `~/.claude/CLAUDE.md`): re-read
+  source files before citing specifics; memory and scratchpad are
+  pointers, not authorities. Apply especially to agent outputs.
+- API Call Review Gate — get approval before any batch.
+- Sapphire for heavy compute. **Note**: sapphire still has no git
+  identity configured (backlog item 9); commits must return via
+  amd-tower rsync until that is fixed.
+- `/phase-gate` skill before scaling to a new experimental phase.
+
+---
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
