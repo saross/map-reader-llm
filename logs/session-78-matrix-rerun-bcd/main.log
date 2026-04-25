@@ -1,0 +1,83 @@
+[2026-04-25T05:53:28Z] ==================================================================
+[2026-04-25T05:53:28Z] Session 78 verifier-calibration matrix RE-RUN — Phases B/C/D
+[2026-04-25T05:53:28Z] ==================================================================
+[2026-04-25T05:53:28Z] Repo commit: 7d15507baab6c33a4c8d6d9d6934371a3eb5cd19
+[2026-04-25T05:53:28Z] Python:      /home/shawn/Code/map-reader-llm/.venv/bin/python
+[2026-04-25T05:53:28Z] Variants:    verify_adversarial verify_adversarial-text verify_brief verify_brief-text verify_checklist verify_checklist-text verify_comparative
+[2026-04-25T05:53:28Z] 
+[2026-04-25T05:53:28Z] Pre-flight: all 14 probabilities.json files present.
+[2026-04-25T05:53:28Z] 
+[2026-04-25T05:53:28Z] ### PHASE B — LEADERBOARD CELL SWEEPS ###
+[2026-04-25T05:53:28Z]   sweeping: image-adversarial -> results/leaderboard/cells/session-78-image-adversarial-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: image-adversarial-text -> results/leaderboard/cells/session-78-image-adversarial-text-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: image-brief -> results/leaderboard/cells/session-78-image-brief-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: image-brief-text -> results/leaderboard/cells/session-78-image-brief-text-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: image-checklist -> results/leaderboard/cells/session-78-image-checklist-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: image-checklist-text -> results/leaderboard/cells/session-78-image-checklist-text-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: image-comparative -> results/leaderboard/cells/session-78-image-comparative-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-adversarial -> results/leaderboard/cells/session-78-text-adversarial-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-adversarial-text -> results/leaderboard/cells/session-78-text-adversarial-text-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-brief -> results/leaderboard/cells/session-78-text-brief-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-brief-text -> results/leaderboard/cells/session-78-text-brief-text-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-checklist -> results/leaderboard/cells/session-78-text-checklist-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-checklist-text -> results/leaderboard/cells/session-78-text-checklist-text-487tile.json
+[2026-04-25T05:53:28Z]   sweeping: text-comparative -> results/leaderboard/cells/session-78-text-comparative-487tile.json
+[2026-04-25T05:53:28Z]   waiting on all Phase B sweeps...
+[2026-04-25T05:55:43Z] Phase B done in 135s
+[2026-04-25T05:55:43Z] Phase B summary: 14 ok / 0 failed
+[main 57012592] data(s78-rerun): Phase B — 14 cell sweep tables regenerated
+ 14 files changed, 8049 insertions(+), 8049 deletions(-)
+To github.com:saross/map-reader-llm.git
+   7d15507b..57012592  main -> main
+[2026-04-25T05:55:47Z] Phase B: committed + pushed
+[2026-04-25T05:55:47Z] 
+[2026-04-25T05:55:47Z] ### PHASE C — DEEP EVALUATIONS @ 20 M OPTIMUM ###
+[2026-04-25T05:55:47Z]   evaluating: image-adversarial @ vote_t=3 prob_t=0.15
+[2026-04-25T05:55:47Z]   evaluating: image-adversarial-text @ vote_t=3 prob_t=0.15
+[2026-04-25T05:55:47Z]   evaluating: image-brief @ vote_t=3 prob_t=0.15
+[2026-04-25T05:55:47Z]   evaluating: image-brief-text @ vote_t=3 prob_t=0.15
+[2026-04-25T06:03:51Z]   [OK] eval image-adversarial
+[2026-04-25T06:03:52Z]   evaluating: image-checklist @ vote_t=3 prob_t=0.15
+[2026-04-25T06:03:52Z]   [OK] eval image-brief-text
+[2026-04-25T06:03:57Z]   evaluating: image-checklist-text @ vote_t=3 prob_t=0.15
+[2026-04-25T06:04:02Z]   [OK] eval image-brief
+[2026-04-25T06:04:03Z]   [OK] eval image-adversarial-text
+[2026-04-25T06:04:07Z]   evaluating: image-comparative @ vote_t=3 prob_t=0.25
+[2026-04-25T06:04:07Z]   evaluating: text-adversarial @ vote_t=4 prob_t=0.15
+[2026-04-25T06:11:04Z]   [OK] eval image-checklist-text
+[2026-04-25T06:11:07Z]   evaluating: text-adversarial-text @ vote_t=4 prob_t=0.15
+[2026-04-25T06:11:08Z]   [OK] eval image-checklist
+[2026-04-25T06:11:12Z]   evaluating: text-brief @ vote_t=4 prob_t=0.15
+[2026-04-25T06:11:16Z]   [OK] eval text-adversarial
+[2026-04-25T06:11:17Z]   evaluating: text-brief-text @ vote_t=4 prob_t=0.15
+[2026-04-25T06:11:20Z]   [OK] eval image-comparative
+[2026-04-25T06:11:22Z]   evaluating: text-checklist @ vote_t=4 prob_t=0.15
+[2026-04-25T06:18:15Z]   [OK] eval text-adversarial-text
+[2026-04-25T06:18:17Z]   evaluating: text-checklist-text @ vote_t=4 prob_t=0.15
+[2026-04-25T06:18:34Z]   [OK] eval text-checklist
+[2026-04-25T06:18:35Z]   [OK] eval text-brief
+[2026-04-25T06:18:37Z]   evaluating: text-comparative @ vote_t=4 prob_t=0.25
+[2026-04-25T06:18:41Z]   [OK] eval text-brief-text
+[2026-04-25T06:25:19Z]   [OK] eval text-checklist-text
+[2026-04-25T06:25:40Z]   [OK] eval text-comparative
+[2026-04-25T06:25:40Z] Phase C done in 1793s
+[2026-04-25T06:25:40Z] Phase C summary: 14 ok / 0 failed
+[main fc778415] data(s78-rerun): Phase C — 14 materialised geojsons + deep evaluations
+ 56 files changed, 1491 insertions(+), 1491 deletions(-)
+To github.com:saross/map-reader-llm.git
+   57012592..fc778415  main -> main
+[2026-04-25T06:25:43Z] Phase C: committed + pushed
+[2026-04-25T06:25:43Z] 
+[2026-04-25T06:25:43Z] ### PHASE D — CALIBRATION MATRIX ###
+Patched compute_session78_calibration_matrix.py:resolve_prob_path
+[2026-04-25T06:28:24Z] Phase D script exit: 0
+[2026-04-25T06:28:24Z] Phase D done in 161s
+[main c0eb61f9] data(s78-rerun): Phase D — calibration matrix refreshed (canonical at shared-crops)
+ 16 files changed, 419 insertions(+), 415 deletions(-)
+To github.com:saross/map-reader-llm.git
+   fc778415..c0eb61f9  main -> main
+[2026-04-25T06:28:27Z] Phase D: committed + pushed
+[2026-04-25T06:28:27Z] 
+[2026-04-25T06:28:27Z] ==================================================================
+[2026-04-25T06:28:27Z] Session 78 Phases B/C/D re-run complete.
+[2026-04-25T06:28:27Z] ==================================================================

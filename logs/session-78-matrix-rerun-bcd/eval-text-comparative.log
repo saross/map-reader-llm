@@ -1,0 +1,21 @@
+Warning: undeclared CRS + coords look like lat/lon; reprojecting from EPSG:4326 to EPSG:32635
+Wrote 397 features to results/verifier-calibration-matrix/text-comparative-opt-20m.geojson (vote_t=4, prob_t=0.25, crs=EPSG:32635)
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: text-comparative-opt-20m.geojson
+INFO:   5m: F1=0.308 [0.262, 0.355], P=0.322 [0.274, 0.373], R=0.294 [0.250, 0.341]
+INFO:   10m: F1=0.709 [0.665, 0.752], P=0.743 [0.699, 0.787], R=0.678 [0.629, 0.726]
+INFO:   15m: F1=0.839 [0.801, 0.873], P=0.879 [0.843, 0.912], R=0.802 [0.756, 0.846]
+INFO:   20m: F1=0.885 [0.855, 0.912], P=0.927 [0.900, 0.952], R=0.846 [0.805, 0.886]
+INFO:   25m: F1=0.899 [0.872, 0.924], P=0.942 [0.917, 0.964], R=0.860 [0.821, 0.898]
+INFO:   30m: F1=0.911 [0.886, 0.934], P=0.955 [0.932, 0.975], R=0.871 [0.833, 0.908]
+INFO:   35m: F1=0.911 [0.886, 0.934], P=0.955 [0.932, 0.975], R=0.871 [0.833, 0.908]
+INFO:   40m: F1=0.911 [0.886, 0.934], P=0.955 [0.932, 0.975], R=0.871 [0.833, 0.908]
+INFO:   45m: F1=0.911 [0.886, 0.934], P=0.955 [0.932, 0.975], R=0.871 [0.833, 0.908]
+INFO:   50m: F1=0.911 [0.886, 0.934], P=0.955 [0.932, 0.975], R=0.871 [0.833, 0.908]
+INFO:   MCC=0.795 [0.744, 0.844], Sens=0.799, Spec=0.977
+INFO: JSON written: results/verifier-calibration-matrix/text-comparative/evaluation.json
+INFO: CSV written: results/verifier-calibration-matrix/text-comparative/evaluation.csv
+INFO: Markdown written: results/verifier-calibration-matrix/text-comparative/evaluation.md
