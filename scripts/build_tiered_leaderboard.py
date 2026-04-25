@@ -262,7 +262,8 @@ def resolve_conditions_from_inventory(
     era: int | None = None,
     track: str | None = None,
     hypothesis: str | None = None,
-    status_filter: str = "READY",
+    architecture: str | None = None,
+    status_filter: str | list[str] = "READY",
 ) -> list[ConditionSpec]:
     """Build condition list from condition-inventory.json with filters.
 
@@ -271,7 +272,10 @@ def resolve_conditions_from_inventory(
         era: Filter to this era. ``None`` = all.
         track: Filter to track. ``None`` = all.
         hypothesis: Filter to hypothesis prefix. ``None`` = all.
-        status_filter: Only include conditions with this status.
+        architecture: Filter to architecture label ({"single-pass",
+            "consensus", "single-pass+PV", "pv"}). ``None`` = all.
+        status_filter: Only include conditions with this status. Accepts
+            a single string or a list of strings (OR-joined).
 
     Returns:
         List of ConditionSpec instances, sorted by label.
@@ -279,22 +283,50 @@ def resolve_conditions_from_inventory(
     with open(inventory_path, encoding="utf-8") as f:
         inventory = json.load(f)
 
+    # Normalise status_filter to a set for fast lookups
+    if isinstance(status_filter, str):
+        status_set = {status_filter} if status_filter else set()
+    else:
+        status_set = set(status_filter) if status_filter else set()
+
     specs: list[ConditionSpec] = []
     for cond in inventory:
-        if status_filter and cond.get("status") != status_filter:
+        if status_set and cond.get("status") not in status_set:
             continue
         if era is not None and cond.get("era") != era:
             continue
         if track is not None and cond.get("track") != track:
+            continue
+        if architecture is not None and cond.get("architecture") != architecture:
             continue
         if hypothesis and not cond.get("hypothesis", "").startswith(hypothesis):
             continue
 
         cond_path = PROJECT_ROOT / cond["path"]
         k = cond.get("K", 1)
-        architecture = cond.get("architecture", "")
+        cond_architecture = cond.get("architecture", "")
 
-        if architecture == "pv":
+        # Build a shared metadata block so downstream writers have full
+        # provenance to display in tier tables (proposer config, verifier
+        # prompt, thresholds, etc.).
+        shared_metadata = {
+            "hypothesis": cond.get("hypothesis", ""),
+            "architecture_label": cond_architecture,
+            "model": cond.get("model"),
+            "config_version": cond.get("config_version"),
+            "thinking": cond.get("thinking"),
+            "temperature": cond.get("T"),
+            "N": cond.get("N"),
+            "vote_t": cond.get("vote_t"),
+            "prob_t": cond.get("prob_t"),
+            "instruction_file": cond.get("instruction_file"),
+            "verifier_prompt": cond.get("verifier_prompt"),
+            "source_path": cond.get("path"),
+            "status": cond.get("status"),
+            "notes": cond.get("notes"),
+        }
+
+        if cond_architecture == "pv":
             # Proposer-verifier: a pre-materialised single-threshold GeoJSON
             # exists at the path. K/N are carried as metadata but the
             # pipeline treats this condition as a single fixed threshold.
@@ -309,18 +341,34 @@ def resolve_conditions_from_inventory(
                     category="pv",
                     k=k,
                     condition_id=cond["id"],
-                    metadata={
-                        "hypothesis": cond.get("hypothesis", ""),
-                        "vote_t": cond.get("vote_t"),
-                        "prob_t": cond.get("prob_t"),
-                        "thinking": cond.get("thinking"),
-                        "temperature": cond.get("T"),
-                        "N": cond.get("N"),
-                    },
+                    metadata=shared_metadata,
                 ))
             else:
                 logger.warning(
                     "PV condition %s: materialised geojson not found at %s",
+                    cond["id"], gj,
+                )
+        elif cond_architecture == "single-pass+PV":
+            # Single-pass + verifier: the `path` points directly at a
+            # materialised verified GeoJSON (one pre-thresholded file per
+            # condition). K=1 (no proposer replication) but the verifier
+            # has already filtered the output.
+            gj = cond_path if cond_path.suffix == ".geojson" else cond_path / "detections.geojson"
+            if gj.is_file():
+                specs.append(ConditionSpec(
+                    label=cond["id"],
+                    geojson_paths=[gj],
+                    thresholds=[1],
+                    era=cond.get("era", 0),
+                    track=cond.get("track", "unknown"),
+                    category="single-pass+PV",
+                    k=k,
+                    condition_id=cond["id"],
+                    metadata=shared_metadata,
+                ))
+            else:
+                logger.warning(
+                    "single-pass+PV condition %s: geojson not found at %s",
                     cond["id"], gj,
                 )
         elif k <= 1:
@@ -336,8 +384,13 @@ def resolve_conditions_from_inventory(
                     category="single-pass",
                     k=k,
                     condition_id=cond["id"],
-                    metadata={"hypothesis": cond.get("hypothesis", "")},
+                    metadata=shared_metadata,
                 ))
+            else:
+                logger.warning(
+                    "Single-pass %s: detection geojson not found at %s",
+                    cond["id"], cond_path,
+                )
         else:
             # Consensus: discover threshold GeoJSONs
             threshold_files = discover_consensus_geojsons(cond_path)
@@ -352,7 +405,7 @@ def resolve_conditions_from_inventory(
                     category="consensus",
                     k=k,
                     condition_id=cond["id"],
-                    metadata={"hypothesis": cond.get("hypothesis", "")},
+                    metadata=shared_metadata,
                 ))
             else:
                 logger.warning(
@@ -449,6 +502,42 @@ def _evaluate_single_threshold(
     gdf_ref = load_geojson(ref_path)
     gdf_bounds = load_geojson(bounds_path)
 
+    # ---------------------------------------------------------------
+    # Single-pass+PV repair (Stage 0 fix, 2026-04-25)
+    # ---------------------------------------------------------------
+    # The ``outputs/h11/proposer-verifier-384/verified-*.geojson``
+    # files have three pathologies that the generic loader does not
+    # handle:
+    #   1. They contain BOTH ``verified=True`` and ``verified=False``
+    #      candidate features. Only verified=True features are kept
+    #      detections; verified=False entries must be filtered out.
+    #   2. Their geometries are tile-bounding **polygons** rather than
+    #      point centroids; matchers cast to centroid implicitly, but
+    #      explicitly converting here avoids per-buffer warnings.
+    #   3. They lack a CRS declaration in the GeoJSON header but the
+    #      coordinates are already projected (EPSG:32635, values like
+    #      ``417490, 4702431``). geopandas defaults the CRS to
+    #      EPSG:4326 on read; ``load_geojson()``'s subsequent
+    #      ``.to_crs(EPSG:32635)`` then projects "lon=417490,
+    #      lat=4702431" to infinity → silent F1=0.
+    #
+    # Detection: if the GeoDataFrame carries a ``verified`` column and
+    # ``load_geojson()`` has produced any invalid geometries (the
+    # signature of the infinity coordinate transformation), we repair
+    # by re-reading the raw file, overriding the CRS to EPSG:32635,
+    # filtering ``verified=True``, and converting polygon footprints
+    # to centroids.
+    # ---------------------------------------------------------------
+    if (
+        not gdf_det.empty
+        and "verified" in gdf_det.columns
+        and not gdf_det.geometry.is_valid.all()
+    ):
+        gdf_raw = gpd.read_file(geojson_path)
+        gdf_raw = gdf_raw.set_crs("EPSG:32635", allow_override=True)
+        gdf_det = gdf_raw[gdf_raw["verified"] == True].copy()  # noqa: E712
+        gdf_det["geometry"] = gdf_det.geometry.centroid
+
     # Assign source_tile if missing (consensus GeoJSONs have source_tiles
     # but not source_tile). Matches evaluate_detections.py lines 770-782.
     if "source_tile" not in gdf_det.columns and not gdf_det.empty:
@@ -465,6 +554,7 @@ def _evaluate_single_threshold(
         n_bootstrap=n_bootstrap,
         seed=seed,
         label=label,
+        compute_mcc=True,  # Tile-level MCC at the matching buffer (default 20m)
     )
 
 
@@ -1154,7 +1244,20 @@ def build_cli() -> argparse.ArgumentParser:
     # Inventory filters
     parser.add_argument("--era", type=int, choices=[1, 2, 3])
     parser.add_argument("--track", choices=["text", "image"])
+    parser.add_argument(
+        "--architecture",
+        choices=["single-pass", "consensus", "single-pass+PV", "pv"],
+        help="Filter inventory to one architecture",
+    )
     parser.add_argument("--hypothesis", type=str)
+    parser.add_argument(
+        "--status", nargs="+", default=["READY"],
+        help=(
+            "Inventory status values to include "
+            "(default: READY). Common additions: PV_READY, "
+            "SINGLE_PASS_ONLY."
+        ),
+    )
 
     # Evaluation
     parser.add_argument(
@@ -1258,6 +1361,8 @@ def main() -> int:
             era=args.era,
             track=args.track,
             hypothesis=args.hypothesis,
+            architecture=args.architecture,
+            status_filter=args.status,
         )
         config = {}
 
