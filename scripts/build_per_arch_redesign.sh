@@ -122,3 +122,48 @@ for stratum in "${STRATA[@]}"; do
 done
 
 echo "=== Stage 2 complete ==="
+
+# Stage 3: tier-stability tables for each populated stratum + metric.
+# Cheap (no permutation tests) — runs sequentially in <1 min total.
+echo
+echo "=== Stage 3: tier-stability tables ==="
+for metric in f1 mcc; do
+    .venv/bin/python scripts/build_tier_stability.py \
+        --metric "$metric" --all \
+        > "$LOG_DIR/tier-stability-$metric.log" 2>&1
+    rc=$?
+    if [ $rc -eq 0 ]; then
+        echo "  OK: tier-stability $metric"
+    else
+        echo "  FAILED: tier-stability $metric (rc=$rc)"
+    fi
+done
+
+# Stage 4: cross-architecture flat (4a) + paired (4b) + MC flags (4c).
+echo
+echo "=== Stage 4: cross-architecture tables + MC flags ==="
+.venv/bin/python scripts/build_cross_architecture_tables.py \
+    --metric both --stage all \
+    > "$LOG_DIR/stage4.log" 2>&1
+rc=$?
+if [ $rc -eq 0 ]; then
+    echo "  OK: Stage 4 (4a+4b+4c)"
+else
+    echo "  FAILED: Stage 4 (rc=$rc)"
+fi
+
+# Stage 5: per-stratum READMEs + top-level README + headlines.
+echo
+echo "=== Stage 5: documentation ==="
+.venv/bin/python scripts/build_per_arch_documentation.py --what all \
+    > "$LOG_DIR/stage5-docs.log" 2>&1
+rc=$?
+if [ $rc -eq 0 ]; then
+    echo "  OK: Stage 5 docs"
+else
+    echo "  FAILED: Stage 5 docs (rc=$rc)"
+fi
+
+echo
+echo "=== Pipeline complete ==="
+date

@@ -205,22 +205,43 @@ def build_flat_table(
 
 # --- Stage 4b -------------------------------------------------------
 
+def _normalise_thinking(value: str | None) -> str | None:
+    """Normalise the thinking budget across inventory dialects.
+
+    The consensus subset uses ``minimal`` / ``high``; the PV subset
+    uses ``min`` / ``HIGH`` / ``h8-legacy``. We canonicalise to
+    {minimal, high, h8-legacy} (and lowercase) so the cross-arch
+    pairing aligns.
+    """
+    if value is None:
+        return None
+    v = value.strip().lower()
+    if v in {"min", "minimal"}:
+        return "minimal"
+    if v == "high":
+        return "high"
+    if v == "h8-legacy":
+        return "h8-legacy"
+    return v
+
+
 def _proposer_signature(cond_inv: dict) -> tuple:
     """Build a tuple identifying the proposer config of a condition.
 
     Two conditions sharing this tuple are considered "the same proposer
     output" — different architecture columns (e.g., consensus vs pv)
-    using the same proposer pipeline.
+    using the same proposer pipeline. Architecture-specific fields
+    (vote_t, prob_t, instruction_file/config_version which differ
+    between the proposer and PV branches) are deliberately excluded;
+    track + model + thinking + T + N/K is sufficient to identify a
+    proposer batch.
     """
     return (
         cond_inv.get("model"),
-        cond_inv.get("config_version"),
-        cond_inv.get("instruction_file"),
-        cond_inv.get("thinking"),
+        cond_inv.get("track"),
+        _normalise_thinking(cond_inv.get("thinking")),
         cond_inv.get("T"),
         cond_inv.get("N") or cond_inv.get("K"),
-        cond_inv.get("track"),
-        cond_inv.get("vote_t"),
     )
 
 
