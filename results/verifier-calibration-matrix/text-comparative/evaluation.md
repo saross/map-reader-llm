@@ -1,6 +1,6 @@
-# Evaluation: session-78-text-comparative-opt-final-v2
+# Evaluation: session-78-text-comparative-opt
 
-**Generated**: 2026-04-24T22:56:52.726034+00:00  
+**Generated**: 2026-04-25T06:25:40.169803+00:00  
 **Detections**: 397  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |

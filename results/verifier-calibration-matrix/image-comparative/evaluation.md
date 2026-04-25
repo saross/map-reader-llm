@@ -1,6 +1,6 @@
-# Evaluation: session-78-image-comparative-opt-final-v2
+# Evaluation: session-78-image-comparative-opt
 
-**Generated**: 2026-04-24T22:49:41.592862+00:00  
+**Generated**: 2026-04-25T06:11:19.980004+00:00  
 **Detections**: 433  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |

@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-24T22:56:52.725564+00:00",
+  "timestamp": "2026-04-25T06:25:40.169365+00:00",
   "summary": {
-    "label": "session-78-text-comparative-opt-final-v2",
+    "label": "session-78-text-comparative-opt",
     "n_detections": 397,
     "buffers": [
       {
@@ -153,12 +153,12 @@
   "_metadata": {
     "metadata_version": "1.0",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "6b57364c",
+    "script_git_commit": "57012592",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-24T22:49:48.629016+00:00",
+    "generated_at_utc": "2026-04-25T06:18:38.267767+00:00",
     "cli_args": {
       "detections": [
-        "/home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-comparative-opt-20m.geojson"
+        "results/verifier-calibration-matrix/text-comparative-opt-20m.geojson"
       ],
       "detections_dir": null,
       "batch": null,
@@ -175,12 +175,12 @@
         45,
         50
       ],
-      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
-      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "/home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-comparative",
-      "label": "session-78-text-comparative-opt-final-v2",
+      "output_dir": "results/verifier-calibration-matrix/text-comparative",
+      "label": "session-78-text-comparative-opt",
       "mcc": true
     },
     "bootstrap": {
@@ -190,10 +190,10 @@
     },
     "input_files": {
       "detections": [
-        "/home/shawn/Code/map-reader-llm/results/verifier-calibration-matrix/text-comparative-opt-20m.geojson"
+        "results/verifier-calibration-matrix/text-comparative-opt-20m.geojson"
       ],
-      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
-      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
     }
   }
 }
