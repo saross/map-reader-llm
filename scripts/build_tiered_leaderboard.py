@@ -650,6 +650,7 @@ def evaluate_all_conditions(
             if all_cached:
                 # Load from cache
                 merged = {"label": cond.label, "n_detections": 0, "buffers": []}
+                tile_classification: dict | None = None
                 for b in buffers:
                     cp = _cache_path_eval(cache_dir, cond.label, threshold, b)
                     with open(cp, encoding="utf-8") as f:
@@ -657,7 +658,21 @@ def evaluate_all_conditions(
                     # Recover n_detections from cache (stored per-buffer)
                     if "n_detections" in buf_data:
                         merged["n_detections"] = buf_data.pop("n_detections")
+                    # Lift tile_classification (MCC, sensitivity,
+                    # specificity) — all per-buffer files carry the
+                    # same copy; first one wins.
+                    if (
+                        tile_classification is None
+                        and "__tile_classification__" in buf_data
+                    ):
+                        tile_classification = buf_data.pop(
+                            "__tile_classification__",
+                        )
+                    else:
+                        buf_data.pop("__tile_classification__", None)
                     merged["buffers"].append(buf_data)
+                if tile_classification is not None:
+                    merged["tile_classification"] = tile_classification
                 all_results[cond.label][threshold] = merged
                 cached_count += 1
             else:
@@ -716,14 +731,27 @@ def evaluate_all_conditions(
 def _write_eval_cache(
     cache_dir: Path, label: str, threshold: int, result: dict,
 ) -> None:
-    """Write per-buffer cache files for an evaluation result."""
+    """Write per-buffer cache files for an evaluation result.
+
+    Tile-level MCC (in ``result["tile_classification"]``) is replicated
+    into each per-buffer cache file under ``__tile_classification__``
+    so it survives the cache round-trip. The aggregator
+    (``evaluate_all_conditions``) lifts it back into the merged
+    threshold-level dict on cache load.
+    """
     n_det = result.get("n_detections", 0)
+    tile_class = result.get("tile_classification")
     for buf_result in result.get("buffers", []):
         buf_m = buf_result["buffer_metres"]
         cp = _cache_path_eval(cache_dir, label, threshold, buf_m)
         cp.parent.mkdir(parents=True, exist_ok=True)
         # Include n_detections in each cache file for reconstruction
         cached = {**buf_result, "n_detections": n_det}
+        # Replicate tile_classification (MCC, sensitivity, specificity)
+        # at every buffer file. The aggregator only needs to read one
+        # buffer's copy on load.
+        if tile_class is not None:
+            cached["__tile_classification__"] = tile_class
         with open(cp, "w", encoding="utf-8") as f:
             json.dump(cached, f, indent=2)
 
@@ -902,6 +930,105 @@ def _cache_path_pairwise(
     return cache_dir / f"pairwise_{metric}" / f"{a}_vs_{b}.json"
 
 
+def _pairwise_worker(
+    label_a: str,
+    label_b: str,
+    geojson_a: str,
+    geojson_b: str,
+    ref_path: str,
+    bounds_path: str,
+    buffer_metres: int,
+    n_permutations: int,
+    seed: int,
+    metric: str,
+    cache_dir: str,
+) -> dict:
+    """Top-level worker for ProcessPoolExecutor-parallel pairwise tests.
+
+    Defined at module scope so it pickles cleanly. Loads its own
+    geojsons (no in-memory sharing between processes); the disk cache
+    handles cross-pair geometric overlap. For each pair, computes the
+    permutation test (F1 or MCC), writes the cache file, and returns
+    the result dict. Idempotent — if the cache file already exists
+    and is non-empty, the cached result is returned without
+    recomputation.
+    """
+    import geopandas as _gpd
+
+    cp = Path(cache_dir) / "pairwise"
+    if metric != METRIC_F1:
+        cp = Path(cache_dir) / f"pairwise_{metric}"
+    a_slug, b_slug = sorted([slugify(label_a), slugify(label_b)])
+    cache_file = cp / f"{a_slug}_vs_{b_slug}.json"
+    if cache_file.is_file():
+        with open(cache_file, encoding="utf-8") as f:
+            return json.load(f)
+
+    gdf_ref = load_geojson(Path(ref_path))
+    gdf_bounds = load_geojson(Path(bounds_path))
+
+    def _load(label: str, gj: str) -> "_gpd.GeoDataFrame":
+        gdf = load_geojson_detections(Path(gj))
+        if "source_tile" not in gdf.columns and not gdf.empty:
+            joined = _gpd.sjoin(
+                gdf, gdf_bounds[["tile_name", "geometry"]],
+                how="left", predicate="intersects",
+            )
+            joined = joined[~joined.index.duplicated(keep="first")]
+            gdf["source_tile"] = joined["tile_name"]
+        return gdf
+
+    gdf_a = _load(label_a, geojson_a)
+    gdf_b = _load(label_b, geojson_b)
+
+    if metric == METRIC_MCC:
+        perm_result = run_permutation_test_mcc(
+            gdf_a, gdf_b, gdf_ref, gdf_bounds,
+            n_permutations=n_permutations, seed=seed,
+        )
+        result = {
+            "label_a": label_a,
+            "label_b": label_b,
+            "metric": metric,
+            "mcc_a": perm_result["global_a"]["mcc"],
+            "mcc_b": perm_result["global_b"]["mcc"],
+            "delta_mcc": perm_result["permutation_test"][
+                "observed_mcc_diff"
+            ],
+            "p_value": perm_result["permutation_test"]["p_value"],
+            "n_permutations": perm_result["permutation_test"][
+                "n_permutations"
+            ],
+            "n_tiles": perm_result["permutation_test"]["n_tiles"],
+        }
+    else:
+        perm_result = run_permutation_test(
+            gdf_a, gdf_b, gdf_ref, gdf_bounds,
+            buffer_metres=buffer_metres,
+            n_permutations=n_permutations, seed=seed,
+        )
+        result = {
+            "label_a": label_a,
+            "label_b": label_b,
+            "metric": METRIC_F1,
+            "f1_a": perm_result["global_a"]["f1"],
+            "f1_b": perm_result["global_b"]["f1"],
+            "delta_f1": perm_result["permutation_test"][
+                "observed_f1_diff"
+            ],
+            "p_value": perm_result["permutation_test"]["p_value"],
+            "n_permutations": perm_result["permutation_test"][
+                "n_permutations"
+            ],
+            "n_tiles": perm_result["permutation_test"]["n_tiles"],
+        }
+
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(cache_file, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2)
+    return result
+
+
 def run_all_pairwise_tests(
     conditions: list[SelectedCondition],
     ref_path: Path,
@@ -912,40 +1039,42 @@ def run_all_pairwise_tests(
     cache_dir: Path,
     force: bool = False,
     metric: str = METRIC_F1,
+    workers: int = 1,
 ) -> list[dict]:
     """Run C(N,2) pairwise permutation tests between all conditions.
 
-    Caches GeoDataFrames in memory to avoid reloading. Each pairwise
-    result is cached to disk under a metric-specific subdirectory so
-    F1 and MCC caches do not collide.
+    Each pairwise result is cached to disk under a metric-specific
+    subdirectory so F1 and MCC caches do not collide. When
+    ``workers > 1`` the pairs run in parallel via
+    ``ProcessPoolExecutor``; each worker loads its own geojsons
+    (cross-process geojson sharing is not implemented — disk cache
+    elimnates the redundant work for already-tested pairs).
 
     Args:
         conditions: Selected conditions for the leaderboard.
         ref_path: Ground truth path.
         bounds_path: Bounds path.
         buffer_metres: Buffer for F1 computation. Ignored for MCC
-            (which is buffer-invariant in this codebase) but kept for
-            API symmetry.
+            (buffer-invariant) but kept for API symmetry.
         n_permutations: Number of permutations.
         seed: Random seed.
         cache_dir: Cache directory.
-        force: Force recomputation.
-        metric: ``"f1"`` (default) or ``"mcc"``. Selects between
-            ``run_permutation_test`` (micro-average F1, buffer-aware)
-            and ``run_permutation_test_mcc`` (per-tile classification,
-            buffer-invariant).
+        force: Force recomputation. (When True, removes cached pair
+            files before dispatch; the workers always check cache
+            first as an idempotency safeguard.)
+        metric: ``"f1"`` (default) or ``"mcc"``.
+        workers: Number of parallel worker processes (default 1 =
+            sequential). Recommended: ``min(8, os.cpu_count())`` for
+            I/O-bound permutation work.
 
     Returns:
-        List of pairwise result dicts. Each dict carries ``label_a``,
-        ``label_b``, the per-condition score (``f1_a``/``f1_b`` for
-        F1, ``mcc_a``/``mcc_b`` for MCC), the observed difference
-        (``delta_f1`` or ``delta_mcc``), and the p-value plus tile
-        count.
+        List of pairwise result dicts.
     """
     gdf_ref = load_geojson(ref_path)
     gdf_bounds = load_geojson(bounds_path)
 
-    # GeoDataFrame cache (in-memory)
+    # GeoDataFrame cache (in-memory). Used only in the sequential
+    # path; the parallel path loads independently per worker.
     gdf_cache: dict = {}
 
     def _load_gdf(cond: SelectedCondition):
@@ -970,10 +1099,65 @@ def run_all_pairwise_tests(
     cached = 0
 
     logger.info(
-        "Pairwise tests (%s): %d pairs at %dm (%d permutations)",
-        metric, n_pairs, buffer_metres, n_permutations,
+        "Pairwise tests (%s): %d pairs at %dm (%d permutations, "
+        "%d workers)",
+        metric, n_pairs, buffer_metres, n_permutations, workers,
     )
 
+    if workers > 1:
+        # Parallel dispatch via ProcessPoolExecutor. Each worker
+        # loads its geojsons independently; the disk pairwise cache
+        # provides cross-pair idempotency.
+        # First, drop missing pairs into a worker queue. Cached
+        # pairs are read directly from disk and added to results.
+        to_compute: list[tuple[SelectedCondition, SelectedCondition]] = []
+        for (cond_a, cond_b) in pairs:
+            cp = _cache_path_pairwise(
+                cache_dir, cond_a.label, cond_b.label, metric=metric,
+            )
+            if not force and cp.is_file():
+                with open(cp, encoding="utf-8") as f:
+                    results.append(json.load(f))
+                cached += 1
+            else:
+                to_compute.append((cond_a, cond_b))
+
+        if to_compute:
+            with ProcessPoolExecutor(max_workers=workers) as executor:
+                fut_map = {}
+                for cond_a, cond_b in to_compute:
+                    fut = executor.submit(
+                        _pairwise_worker,
+                        cond_a.label, cond_b.label,
+                        str(cond_a.geojson_path),
+                        str(cond_b.geojson_path),
+                        str(ref_path), str(bounds_path),
+                        buffer_metres, n_permutations, seed, metric,
+                        str(cache_dir),
+                    )
+                    fut_map[fut] = (cond_a.label, cond_b.label)
+                done = 0
+                for fut in as_completed(fut_map):
+                    a, b = fut_map[fut]
+                    done += 1
+                    try:
+                        results.append(fut.result())
+                        if done % 50 == 0 or done == len(to_compute):
+                            logger.info(
+                                "[%d/%d] pairwise done", done, len(to_compute),
+                            )
+                    except Exception as exc:
+                        logger.error(
+                            "[%d/%d] pairwise %s vs %s FAILED: %s",
+                            done, len(to_compute), a, b, exc,
+                        )
+        logger.info(
+            "Pairwise: %d cached, %d computed",
+            cached, len(results) - cached,
+        )
+        return results
+
+    # Sequential path (workers <= 1)
     for i, (cond_a, cond_b) in enumerate(pairs, 1):
         cp = _cache_path_pairwise(
             cache_dir, cond_a.label, cond_b.label, metric=metric,
@@ -1296,6 +1480,9 @@ def write_leaderboard_json(
                     "best_threshold": c.best_threshold,
                     "geojson": str(c.geojson_path),
                     "evaluations": c.evaluations,
+                    # Tile-level MCC (buffer-invariant); 0.0 when MCC
+                    # was not computed for this evaluation pass.
+                    "tile_mcc": float(c.tile_mcc),
                 }
                 for c in tier
             ],
@@ -1627,6 +1814,7 @@ def main() -> int:
             for t in cond.thresholds:
                 merged = {"label": cond.label, "n_detections": 0, "buffers": []}
                 all_cached = True
+                tile_classification: dict | None = None
                 for b in args.buffers:
                     cp = _cache_path_eval(cache_dir, cond.label, t, b)
                     if cp.is_file():
@@ -1634,10 +1822,21 @@ def main() -> int:
                             buf_data = json.load(f)
                         if "n_detections" in buf_data:
                             merged["n_detections"] = buf_data.pop("n_detections")
+                        if (
+                            tile_classification is None
+                            and "__tile_classification__" in buf_data
+                        ):
+                            tile_classification = buf_data.pop(
+                                "__tile_classification__",
+                            )
+                        else:
+                            buf_data.pop("__tile_classification__", None)
                         merged["buffers"].append(buf_data)
                     else:
                         all_cached = False
                         break
+                if tile_classification is not None:
+                    merged["tile_classification"] = tile_classification
                 if all_cached and merged["buffers"]:
                     all_evaluations[cond.label][t] = merged
 
@@ -1666,6 +1865,7 @@ def main() -> int:
             cache_dir=cache_dir,
             force=args.force,
             metric=args.metric,
+            workers=args.workers,
         )
         logger.info("Stage 4 complete in %.1fs", time.monotonic() - start)
     elif args.skip_pairwise and len(selected) > 1:

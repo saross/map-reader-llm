@@ -257,3 +257,107 @@ For EVERY condition with K > 1, we need **all consensus thresholds** from
 - Scale-4 library decision: Obs 241
 - Library-design null: Obs 240
 - Greedy vs WBF: Obs 241
+
+## Update 2026-04-25 — 12-stratum per-architecture redesign (Session 79)
+
+**Status**: redesign of the per-architecture leaderboard tree under
+`results/leaderboard/per-architecture/`. The original Session 79
+build (commit `03bf71c8`) is preserved in git history but the live
+tree has been regenerated with the additions below.
+
+### Methodology additions (relative to the 2026-04-16 plan)
+
+**1. Parallel F1 + MCC tier tables.** Each populated stratum
+produces tier tables under both metrics. Threshold selection still
+uses F1 at the primary buffer (20 m) for cross-metric alignment.
+The MCC permutation test uses a per-tile (TP, TN, FP, FN)
+classification swap; the resulting null distribution was validated
+symmetric and zero-centred before launch (see
+`docs/methodology/mcc-permutation-validation-2026-04-25.md`).
+
+**2. q=0.01 sensitivity pass.** Each F1 / MCC tier table at q=0.05
+has a parallel q=0.01 sensitivity sibling. Larger tier-1 sets at
+q=0.05 benefit from a stricter q=0.01 directional inspection; the
+two passes share evaluation + pairwise caches so the sensitivity
+cost is near-zero.
+
+**3. Tier stability with Spearman rho.** Per-stratum
+`tier_stability_<metric>.md` reports the Spearman rank correlation
+between tier@20m and tier@30/40/50/100m. MCC is buffer-invariant by
+construction (rho = 1.0 always); F1's tier ordering can shift with
+buffer.
+
+**4. Cross-architecture flat tables (Stage 4a).** For each (Era,
+buffer, metric) triple, a flat 4-row table picks the best tier-1
+representative of each architecture column within that Era. 30
+files (3 Eras x 5 buffers x 2 metrics).
+
+**5. Cross-architecture paired comparisons (Stage 4b).** Within
+each Era, proposer-config tuples (model, config_version,
+instruction_file, thinking, T, N, track, vote_t) appearing in 2+
+architecture columns are tested pairwise on the shared tiles. This
+directly answers the question \"does adding the verifier help on
+this proposer config?\" — the obvious paper question. BH-FDR
+within Era at q=0.05.
+
+**6. Monte-Carlo precision flagging (Stage 4c).** Pairwise tests
+where the observed null-difference count is <= 5 (i.e.,
+p <= 5/N) are catalogued in `mc-precision-flags.md`. Tests at
+p == 0/N have only the conclusion \"p < 1/N\".
+
+**7. --top-n 0 ("include all conditions").** The original build
+filtered to top-20 at any buffer; the redesign uses --top-n 0 for
+comprehensive paper-table coverage.
+
+**8. Single-pass+PV F1=0 evaluator fix.** The
+`outputs/h11/proposer-verifier-384/verified-*.geojson` files have
+three pathologies (verified=False rows, polygon footprints, missing
+CRS metadata with UTM-magnitude coords labelled EPSG:4326) that the
+generic loader did not handle. Fix: detect via the `verified`
+column + invalid-geometry signature, then re-read with CRS override,
+filter verified=True, polygon -> centroid. All 8 PV_READY single-
+pass+PV cells now produce non-zero F1 (was 0.000 in the original
+build). See `results/leaderboard/per-architecture/era2/single-pass+PV/`
+for the now-interpretable tier tables.
+
+### Output tree (new)
+
+```text
+results/leaderboard/per-architecture/
+├── README.md                                      (top-level)
+├── headlines.md                                   (top-3 per stratum)
+├── mc-precision-flags.md                          (Stage 4c)
+├── cross-architecture-era<N>_<buf>m_<metric>.md   (Stage 4a, 30 files)
+├── cross-architecture-paired-era<N>_<metric>.md   (Stage 4b, 6 files)
+├── era<N>/<arch>/                                 (12 strata)
+│   ├── README.md                                  (per-stratum summary)
+│   ├── leaderboard_tiers_<buf>m.{md,json}         (F1 tier, q=0.05)
+│   ├── leaderboard_tiers_q01_<buf>m.{md,json}     (F1 tier, q=0.01)
+│   ├── leaderboard_tiers_mcc_<buf>m.{md,json}     (MCC tier, q=0.05)
+│   ├── leaderboard_tiers_mcc_q01_<buf>m.{md,json} (MCC tier, q=0.01)
+│   ├── leaderboard_all_evaluations.json           (sweep)
+│   ├── tier_stability.md                          (F1 buffer rho)
+│   └── tier_stability_mcc.md                      (MCC buffer rho)
+└── archive/                                       (prior caches)
+```
+
+### Within-stratum FDR caveat
+
+BH-FDR is applied within stratum: each (Era, Architecture, Buffer,
+Metric) family is corrected independently. Cross-stratum claims
+(e.g. \"Era 1 best vs Era 2 best\") have inflated family-wise error
+rate and are descriptive only; paper-citation should use within-
+stratum claims primarily.
+
+### Driver script
+
+`scripts/build_per_arch_redesign.sh` runs the 7 populated strata x
+4 passes (F1@q05, F1@q01, MCC@q05, MCC@q01) sequentially, with
+each pass using 8 internal worker processes for parallel pairwise
+testing. Stage 3, 4, 5 scripts:
+
+| Script | Purpose |
+|---|---|
+| `scripts/build_tier_stability.py` | Spearman rho across buffers |
+| `scripts/build_cross_architecture_tables.py` | Stage 4a + 4b + 4c |
+| `scripts/build_per_arch_documentation.py` | Stage 5 READMEs + headlines |
