@@ -1,0 +1,124 @@
+{
+  "run_id": "6468e849-0d05-4b4c-a922-1e308834dd2e",
+  "timestamp": {
+    "start": "2026-04-25T05:24:42.563255+00:00",
+    "end": "2026-04-25T05:29:20.116947+00:00",
+    "duration_seconds": 277.553692
+  },
+  "environment": {
+    "git_commit": "e71fb8e406d3f4c6e7feeff21a9067fa4d00ae3b",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_comparative",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "verify_comparative.md",
+    "system_instruction_hash": "08e16d7b23aeca2a4e59571897315e0d485df1f57f901dc686c6eb418462e367",
+    "system_instruction_text": "# Two-Stage Detection: Comparative Verifier\n\nA first-stage verifier has already assessed this candidate as a possible burial\nmound. Your task is to **compare it feature-by-feature** against confirmed\nburial mound examples shown below. Only confirm it as a mound if it shares the\nkey diagnostic features.\n\n## Reference examples\n\nYou have been shown six confirmed burial mound images. Study them carefully.\nThe diagnostic features shared by all confirmed mounds are:\n\n- **Rays**: Short lines radiating OUTWARD from the central shape, forming a\n  \"sunburst\" or \"gear\" pattern\n- **Central shape**: A small circle or oval (orange-brown), or a triangle or\n  square (black) when a survey marker sits on the mound\n- **Colour**: Typically orange-brown for the mound symbol itself; black for\n  overlaid survey markers\n- **Gestalt**: The overall visual impression \u2014 a compact, radially symmetric\n  symbol distinct from surrounding map clutter\n\n## Important warning\n\nThe presence of nearby text such as \"\u043a\u0443\u0440\u0433.\" (abbreviation for kurgan/mound)\ndoes NOT confirm a mound. Only the **visual symbol pattern** matters. Text\nlabels can appear near non-mound features or refer to features outside the crop\narea.\n\n## Your task\n\nCompare the candidate (the last image) against the six confirmed mound\nexamples. For each diagnostic feature, state whether the candidate matches:\n\n1. **Ray comparison**: Does the candidate have outward-radiating rays like the\n   confirmed examples? Are the rays similar in length, density, and direction?\n2. **Shape comparison**: Does the central shape match \u2014 small circle/oval, or\n   triangle/square with marker?\n3. **Colour comparison**: Is the colour consistent with confirmed mound symbols?\n4. **Gestalt match**: Does the overall visual impression match a confirmed mound,\n   or does it resemble something else (contour lines, text, boundary marks)?\n\n## Output format\n\nReturn JSON:\n\n```json\n{\n    \"ray_comparison\": \"Description of how the candidate's rays compare to confirmed examples.\",\n    \"shape_comparison\": \"Description of how the central shape compares.\",\n    \"colour_comparison\": \"Description of how the colour compares.\",\n    \"gestalt_match\": \"Overall visual similarity assessment.\",\n    \"reasoning\": \"Synthesis of the four comparisons into a final judgement.\",\n    \"mound_probability\": 0.0\n}\n```\n\n## Scoring guide\n\n- **0.9\u20131.0**: Strong match on all four features \u2014 looks like the confirmed examples\n- **0.6\u20130.8**: Matches most features but one is weak or ambiguous\n- **0.3\u20130.5**: Mixed \u2014 some features match, others clearly differ\n- **0.0\u20130.2**: Poor match \u2014 candidate lacks key diagnostic features of confirmed mounds\n",
+    "library_hash": "9c649d290c359e85fe98f1608ba8eb604edf2c28a361ba8461ac0c47022a08f3",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 6,
+    "full_config_snapshot": {
+      "version": "verify_comparative",
+      "description": "Two-Stage Verifier (Stage 2). Comparative verification \u2014 match candidate to 6 confirmed mound examples feature-by-feature.",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_comparative.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "_config_notes": {
+        "source": "Session 78 verifier calibration matrix. Comparative variant using the canonical 6-example library.",
+        "temperature": "0.0 based on Phase 3d: all verifier strategies used T=0.0.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "usage": "Used in proposer-verifier pipeline Stage 2. Feed proposer GeoJSON directly."
+      },
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive: Burial Mound (Kurgan)",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive: Settlement Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive: Triangulation Point ON Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive: Benchmark ON Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative: Triangulation Point ALONE",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative: Benchmark ALONE",
+          "category": "canonical_negative"
+        }
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:",
+      "_library_note": "6-example library matching Phase 3d run_h2_pilot.py VERIFIER_EXAMPLES."
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 2017
+    },
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 16728998,
+    "total_output_tokens": 466072,
+    "total_cached_tokens": 8078,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 17195070,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 16728998,
+        "output_tokens": 466072,
+        "total_tokens": 17195070,
+        "request_count": 2017
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 8.364499,
+    "output_cost_usd": 1.398216,
+    "total_cost_usd": 9.762715,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  }
+}
