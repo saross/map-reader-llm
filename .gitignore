@@ -56,6 +56,10 @@ outputs/**/batch_working/
 # Match both nested structures: crops/crops/ and crops/*/crops/
 outputs/**/crops/crops/
 outputs/**/crops/*/crops/
+# Session 78 verifier-calibration matrix shared-crops PNGs (regenerable
+# from consensus_t1.geojson + tracked rasters via extract_candidates.py).
+# The candidate_manifest.json sibling is small metadata and remains tracked.
+outputs/**/shared-crops/crops/
 # Per-cell leaderboard caches (evaluations + pairwise; regenerable from
 # tracked condition-inventory + source detections)
 results/leaderboard/*/.cache/
