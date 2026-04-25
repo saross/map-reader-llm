@@ -5528,3 +5528,41 @@ the first agent landed a wrong-level interpretation.
 matter. "Isn't 250 features low? How many should we expect based
 on other runs? I sense something is off here" was load-bearing —
 it forced me to justify the number rather than explain past it.
+
+## Session 78 Observations (2026-04-24/25, map-reader-llm)
+
+Continuous overnight-plus-morning session. Matrix orchestration across sapphire + amd-tower, with 5-6 background agents running simultaneously at peak. 17 commits pushed to `origin/main` (`6b57364c..484538a6`). Three collaboration-pattern observations, each drawn from specific agent dispatches this session.
+
+### Agent confabulation rate at scale: ~2 of ~10 agents produced materially false claims
+
+I dispatched ten background agents across Session 78 (rough count — prep+pilot, matrix orchestrator, calibration crosstab, various verifier-audits, Phase C recovery, the Obs 277 adversarial verifier, and several backlog-editing agents). Two produced materially false claims that the user's anti-confabulation discipline caught before I acted on them:
+
+1. The "missing manifests audit" agent claimed probabilities.json files had **6 entries** across Session 78's target pools, when the actual counts were 2,016 and 3,736. The agent counted top-level JSON keys (`version`, `mode`, `verifier_config`, `iterations`, `total_results`, `results` = 6) instead of entries in the `results` dict. Same agent also claimed "NO consensus geojson backing" for the target pools; direct filesystem check found the consensus files fully populated. Had I believed either claim, the matrix launch would have been blocked on a phantom gap.
+
+2. The earlier "verifier flavours enumerate" agent claimed image-based variants of `verify_adversarial`, `verify_brief`, `verify_checklist` existed (e.g. `verify_adversarial-image`). No such config files are present in `prompts/configs/`. The agent confabulated a naming convention that maps onto the `-text` suffix pattern used elsewhere. Had I believed it, I would have instructed the matrix to run non-existent configs and spent compute on a design that can't be realised.
+
+Base rate estimate: ~20% of agents this session produced at least one non-trivial confabulation in a load-bearing factual claim. The user flagged both cases within minutes of seeing the agent output ("are you sure those numbers are right?" / "I thought canonical is text-only"); my spot-checks against the filesystem resolved each in under a minute. The pattern: agents trained on structured reasoning patterns generate plausible-looking enumerations of files, counts, and identifiers that don't exist in this specific filesystem state. The cheap counter-measure is the user's anti-confabulation rule now in `~/.claude/CLAUDE.md`: "re-read the source file before citing a specific identifier"; apply it to agent output verbatim.
+
+### Agent orchestration across machines has state-synchronisation hazards that don't appear in single-machine workflows
+
+Session 78 had two compute hosts (amd-tower = here, sapphire = GPU/CPU-heavy). Different agents wrote to different machines; some agents read files another agent was still writing to. Three near-misses and two bugs I avoided accidentally:
+
+- **Near-miss**: The Phase C recovery agent ran in parallel with the tile-recovery agent. If the Phase C agent had re-materialised geojsons from probabilities.json files *before* the tile-recovery agent finished adding recovered candidates, the materialisation would have missed ~240 recovered candidates in the 5 cells with gaps. I wrote an explicit `while pgrep -f "run_pv.py cleanup"; do sleep 30; done` wait-loop into the final pipeline script. Without the coordination, the matrix would have silently under-reported coverage.
+
+- **Near-miss**: git push/pull ordering. Sapphire had an uncommitted local edit to `materialise_pv_geojson.py` that matched (byte-for-byte equivalent) the fix I was pushing from amd-tower. A naive `git stash && git pull` would have worked; a naive `git pull` without stash blocked. I caught the edit before deciding. Pattern: when two agents working on the same logical problem in parallel converge on the same fix, the git machinery doesn't know they agree.
+
+- **Bug avoided**: rsync from sapphire without `--exclude=logs` would have copied 12 MB of debug output into the amd-tower commit. I caught it on review.
+
+- **Bug landed and caught**: the overnight shell script's Phase E (git commit on sapphire) failed because sapphire has no `user.email` configured. I'd assumed sapphire would commit and push directly. It couldn't, so artefacts landed on sapphire's disk and had to rsync back. Lesson: before writing any overnight pipeline that commits, confirm git identity at the target machine. Added to Step 6 backlog as item 9.
+
+Generalisable principle: **state synchronisation between machines is an agent-load-bearing task that needs an explicit coordination primitive** (a wait-loop, a lock file, a "green light" signal). Don't assume the default shell behaviour (`nohup && &`) handles this — it doesn't; it just backgrounds, it doesn't synchronise.
+
+### The "expensive-but-necessary confirmation" pattern: observational contrasts motivate experimental tests even when the experimental result is preordained
+
+Session 78 Q3 (earlier, commit `1b7143c5`) observed the canonical verifier has wildly different calibration on image vs text-HIGH tracks (ECE 0.269 image vs 0.081 text — same verifier, same prompt). That contrast strongly implied the miscalibration was input-distribution-dependent, not prompt-dependent. The 7-variant × 2-pool matrix (overnight + morning, $36 flex, ~6 hours of compute) then confirmed exactly that hypothesis.
+
+Question worth asking: was the matrix necessary given the cross-track contrast already implied the answer? Defensible answer: **yes**, but for specifically *experimental* reasons, not informational ones. The cross-track contrast is an observational comparison where prompt and candidate-pool co-vary (you can't tell which is doing the work). The matrix is an experimental intervention where prompt varies across a fixed candidate pool; it falsifies the prompt-specificity alternative directly. For a paper claim, you need the experimental result; the observational contrast is motivation, not proof.
+
+This is a pattern worth naming: **observational → experimental confirmation loops** where the experiment is expensive but the result is preordained. The right question to ask before launching is not "will this change my belief?" (the informational test) but "does the claim I want to make require this evidence structure?" (the falsification test). Session 78 committed to the matrix under the falsification framing; Obs 277 is now citable because the matrix ran, even though my prior belief before the matrix was already ~90% pointed at input-distribution.
+
+Craft note: the matrix cost $36 and ~6 hours. If I had framed it as "will this change my mind?" I would have correctly judged the expected information gain as low and skipped it. Framing it as "does the paper claim need this evidence?" reversed the decision. Both framings are valid; they answer different questions. For publication-class work, the falsification framing is usually the right one.

@@ -4338,3 +4338,43 @@ The methodological value of the user's framing is the anti-reassurance move: he 
 **The generalisable lesson**: when an artefact looks like a bug but doesn't obviously harm anything, the next question is "why might this be intentional?" The first verifier agent of the pair (diagnostic) had framed its remit narrowly as "did something go wrong?" and returned a coherent bug-framing. The second verifier agent (forensic, dispatched after the user's counter-hypothesis) framed the remit as "what actually happened, intentional or not?" and returned the scope-choice framing. Same artefact, same data, different framing — the second framing was the correct one because it asked about intent, not just cause.
 
 Both Sequence A and Sequence B share a structure: the user's framing outperformed mine at the level of what-question-to-ask. Mechanism: the user has the analytical history that makes "scope-choice" a live hypothesis; I saw only the data and jumped to "artefact". Remedy: when surfacing a finding that could be interpreted as a bug, explicitly ask the question "if this is intentional, who made the choice and why?" before committing to the bug interpretation. That question is trivially cheap and would have avoided one agent round-trip this session.
+
+## 2026-04-24/25 (Session 78, map-reader-llm): One hypothesis experimentally falsified, one defensive-fix belief revised
+
+Session 78's long overnight-plus-morning arc produced two cleanly abductive sequences: one scientific (falsifying the prompt-specificity hypothesis for image-track miscalibration) and one methodological (revising my belief about what the earlier CRS defensive fix actually protected against).
+
+### Sequence A — Prompt-specificity hypothesis falsified
+
+**The starting surprise** (from the prior session): the canonical `verify_adversarial-text` verifier has wildly different calibration on image-track candidates (ECE = 0.269 on 55-map) vs text-HIGH candidates (ECE = 0.081 on 55-map), despite the prompt and thinking level being identical. The observation was clean (same verifier, same API, same project infrastructure, different candidate pools → very different calibration) and invited two mechanistic explanations:
+
+- **H-prompt**: the adversarial prompt wording produces over-confident responses at the high end of the probability range on image candidates specifically (some interaction between "find reasons it is NOT a mound" framing and the image-pool's confusable negatives).
+- **H-distribution**: the image proposer's consensus output distributes differently from the text proposer's (more mass near the verifier's high-confidence prior), and *any* verifier prompt operating on that distribution will saturate near p = 1.0.
+
+**The experiment**: 7 verifier prompt variants × 2 candidate pools at the 487-tile Era 2 scope. Variants span adversarial (canonical) / brief / checklist (4 diagnostic features) / comparative (new — positive feature-match framing) × with-6-examples vs no-examples. If H-prompt is right, at least one alternative should show substantively improved calibration on the image pool. If H-distribution is right, all variants should show similar or worse calibration on image, because the saturation is a property of the input distribution the proposer emits.
+
+**The observation**: every one of 6 novel prompt variants on the image pool shows ECE in 0.19–0.27 (worse than canonical adversarial-text at ECE = 0.188). Canonical is Pareto-dominant on image (best AUC 0.863 and best ECE 0.188). On text, all 7 variants are well-calibrated (ECE 0.07–0.14, AUC 0.94–0.97), with canonical again having the best ECE.
+
+**Belief revision**: H-prompt falsified. H-distribution is the supported explanation for Obs 269's image-track miscalibration. No prompt engineering available to this project can rescue it; the fix would need to be at the proposer or model-family level.
+
+**What was abductive about this?** The question-selection move was the key one. The cross-track contrast from Session 78 Q3 already pointed at H-distribution through an observational comparison (prompt held fixed, pool varied). I could have stopped there. The user's question — "what if we test alternative verifiers on the same pools?" — reframed the informational question ("what do I now believe?") as a falsification question ("does the paper claim require experimental evidence?"). The matrix was overkill from an informational standpoint — my belief pre-matrix was already ~90 % in favour of H-distribution. The matrix was essential from a publication standpoint — the cross-track contrast cannot falsify H-prompt directly; only an experimental intervention can.
+
+**The generalisable craft rule**: observational → experimental confirmation loops are a real pattern where the right question before launching is not "will this change my belief?" but "does the claim I want to make require this evidence structure?" The falsification framing reverses the informational framing's expected-information-gain calculation; both are valid, they answer different questions.
+
+### Sequence B — The defensive fix's robustness belief was wrong
+
+**The surprise**: Session 78's Phase C produced F1 = 0.000 across all 12 cells, with tile-level MCC healthy. I had seen exactly this symptom in Session 77 Q1 the day before, diagnosed it correctly (missing CRS header → geopandas defaults to EPSG:4326 → evaluate_detections reprojects UTM-as-if-lat/lon to garbage → F1 = 0), and written a defensive fix that emits an explicit EPSG:32635 CRS header (commit `e1ef2190` + follow-up hardening in `b514ecb6`). That fix was in place before Session 78's matrix launched. Its test (the Q1 re-run) passed cleanly. Why did the same symptom come back?
+
+**Hypotheses**:
+- **H-fix-broken**: the fix regressed somehow in a subsequent commit.
+- **H-fix-incomplete**: the fix covered the symptom I'd seen but not an adjacent one.
+- **H-data-inconsistent**: the project's consensus GeoJSONs have inconsistent CRS conventions; different producers emit different formats; my fix assumed a specific input shape that isn't uniform across producers.
+
+**Test**: read the actual materialised geojson (confirmed: crs declared as 32635, coordinates in the 25–42 range — lat/lon magnitudes). Read the input consensus geojson (confirmed: no declared CRS, coordinates in the 25–42 range — lat/lon). Read yesterday's Q1 input (`gold-standard-v2/consensus/consensus-4of5.geojson`: no declared CRS, coordinates in the 413 000–4 694 000 range — UTM). Same-directory sibling GeoJSONs, neither declaring CRS, in different coordinate systems.
+
+**Belief revision**: H-data-inconsistent is confirmed. The project has inconsistent CRS conventions in its consensus outputs. Different pipelines emitted different canonical formats at different times; downstream consumers went through producer-paired tools and the mismatch never surfaced. My fix stamped the target CRS (EPSG:32635) on whatever input arrived — right for UTM-coord inputs (yesterday's Q1), wrong for lat/lon inputs (today's matrix). Same symptom, opposite direction.
+
+**The new fix** (commit `6b57364c`) auto-detects coordinate magnitude and reprojects from EPSG:4326 when coordinates look like lat/lon (|x| ≤ 180 ∧ |y| ≤ 90). This fix covers both cases.
+
+**What was abductive about this?** The key move was not assuming the fix covered all adjacent cases. My initial framing when seeing F1 = 0 again was "the fix regressed" (H-fix-broken) — a single-point failure hypothesis. The alternative "the fix was correct for the case I tested and wrong for a case I didn't know to test" (H-fix-incomplete) required entertaining the possibility that my mental model of the bug was narrower than the bug's actual scope. The project's heterogeneous CRS conventions across consensus producers were the invariant I had missed — not hard to discover, but not what my fix was looking for.
+
+**The generalisable craft rule**: when a defensive fix produces a reoccurrence of the exact symptom it was designed to prevent, the prior on "the fix regressed" is much smaller than the prior on "the fix covered the specific case I tested, not the underlying invariant". Cost of reading one extra diagnostic: 30 seconds. Cost of assuming regression: a wasted hour of `git bisect` on a fix that's actually fine but incomplete. For future sessions: when a fix is published, the retrospective question is not "does this fix the bug I saw?" but "what is the minimal invariant this fix assumes, and what happens when that invariant is violated?"

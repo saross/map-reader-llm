@@ -5532,3 +5532,85 @@ investigation, Streamlit wrapper for text-HIGH review, and Session
   track. Shawn's willingness to review both tracks (rather than
   just "which was supposed to be reviewed") is the positive-
   externality outcome of the chat confabulation.
+
+## Session 78 — 2026-04-24/25 (map-reader-llm): verifier calibration matrix (7 prompts × 2 pools), CRS-bug recurrence + fix, Obs 277 paper-ready finding, Session 79 handoff
+
+**Commits**: 17 on `main`, `6b57364c` → `484538a6`, all pushed to
+`origin/main`. Working tree clean at session close.
+
+### Work arc
+
+Continuous overnight-plus-morning session. Started as "fill Step 6 backlog items" but pivoted to a verifier calibration matrix when the user asked whether non-adversarial verifiers might rescue the image-track miscalibration documented in Obs 269. The matrix became the session: ~$36 API spend (flex tier), ~6 hours of compute, 17 commits, and one paper-ready observation (Obs 277).
+
+### Phase-by-phase
+
+| Phase | Artefact | Duration | Commit(s) |
+|------|----------|---------|-----------|
+| Preparation | `verify_comparative.json` config; lat/lon → UTM reprojection; session-78-matrix shared-crops (2,017 image, 3,736 text) | 15 min | `ca42f557`, `b89dd2f3` |
+| Overnight pipeline script | `scripts/session-78-matrix-overnight.sh` | 5 min drafting | `9ebe7346` |
+| Phase A (matrix API) | 12 verifier runs × flex tier; 6 novel variants × 2 pools | ~1 hr wall-clock | (artefacts only) |
+| Phase B (sweep cells) | 12 × `score_leaderboard_cells.py` | ~10 min | (cell JSONs) |
+| Phase C original | 12 × `evaluate_detections.py` at 10k bootstrap + MCC | failed with F1=0 | (caught at inspection) |
+| CRS bug diagnosis + fix | `materialise_pv_geojson.py` auto-detect + reproject | 15 min | `6b57364c` |
+| Tile recovery | 738 of 740 transient-503 gaps closed via `run_pv.py cleanup` | 17 min | (via agent a24ab205daa5b0cd5) |
+| Phase C re-run (`/tmp/phasec_final_v2.py`) | 12 re-materialisations + re-evaluations | ~25 min | (artefacts only) |
+| Canonical baseline add | Canonical `verify_adversarial-text` scored + evaluated on both pools for comparison | ~5 min | (within 6d1cad27) |
+| Matrix data commit | Cell JSONs + evaluation.jsons + materialised geojsons + shell script | — | `6d1cad27` |
+| Calibration crosstab | AUC/Brier/ECE for 14 cells + summary markdown | ~10 min | `88d6b55b` |
+| Obs 277 draft + adversarial verification | Working-notes observation draft with 14-cell table + verifier agent round-trip | ~30 min | `303d4f21` |
+| Step 6 backlog expansion | 5 new to-do items added | — | `cf192345` |
+| Session 79 entry-point queue | Handoff message at top of continuity doc | — | `484538a6` |
+
+### Other commits in the session's 17-commit block (Session 77 carryover into Session 78 early, pre-matrix)
+
+| Commit | Type | Purpose |
+|--------|------|---------|
+| `e1ef2190`, `b514ecb6` | fix/refactor | First CRS fix (emit EPSG:32635 header; later found insufficient — see Phase C) |
+| `aa36b638` | data | GS text-HIGH Era 2 companion + 487-tile leaderboard cell |
+| `7ab7d7fa` | docs | Scope-pair narrative edits + leaderboard unification |
+| `7b8e5ed7` | docs | Retract 0.722/0.736 forensic-audit prediction; log Obs 276 script-hygiene |
+| `4cc95e80` | data | 55-map text-HIGH corrected-F1 + verifier calibration crosstab |
+| `1b7143c5` | docs | Session 78 Q3 cross-track comparison edits |
+| `27c56057` | docs | Fold tile-level MCC into 55-map cross-track report |
+| `651b8ab4` | data | Image-track PV anchor on Era 2 (4 image conditions scored) |
+| `46f7a652`, `e917ff91`, `8e8d85d5` | docs | Three Step 6 backlog additions (unevaluated geojsons, per-arch leaderboards, pairwise permutations) |
+
+### Headline result
+
+Obs 277 (working-notes.md:13215): canonical `verify_adversarial-text` is Pareto-dominant on both candidate pools across 7 prompt variants. Best ECE on both pools (image 0.188, text 0.067); best AUC on image (0.863). No novel prompt variant materially improves image-track calibration — all stay in the miscalibrated regime (ECE 0.19–0.27). Text track is well-calibrated across all variants. Falsifies the prompt-specificity hypothesis for Obs 269's image-track miscalibration; confirms the input-distribution hypothesis.
+
+Secondary observation awaiting pairwise-permutation significance testing (Step 6 backlog item 4): on text, four with-images variants (comparative, adversarial, checklist, brief) achieve higher F1 at optimum than canonical by 0.014–0.021 F1, but calibration worsens in exchange. Statistical significance of the F1 deltas not yet established.
+
+### Matrix artefacts
+
+- Cell JSONs: `results/leaderboard/cells/session-78-<pool>-<variant>-487tile.json` (14 files)
+- Deep evaluations: `results/verifier-calibration-matrix/<pool>-<variant>/evaluation.json` (F1/P/R/MCC + 10k-bootstrap CIs, 14 files)
+- Calibration crosstabs: `results/verifier-calibration-matrix/<pool>-<variant>/calibration.json` (AUC/Brier/ECE, 14 files)
+- Materialised PV geojsons: `results/verifier-calibration-matrix/<pool>-<variant>-opt-20m.geojson` (14 files; UTM coords after the CRS fix)
+- Two summary docs: `planning/session-78-verifier-calibration-matrix-summary.md` + `planning/session-78-matrix-calibration-summary.md`
+
+### Step 6 backlog net additions this session
+
+6 new items logged (net), bringing the backlog to 9:
+
+1. Unevaluated-consensus-geojsons audit (`46f7a652`)
+2. Build per-architecture leaderboards (`e917ff91`)
+3. Run pairwise permutation tests across the verifier matrix (`8e8d85d5`)
+4. Re-run canonical on session-78 shared-crops for crop-parity (`cf192345`)
+5. Investigate `cand_01563` parser bug (`cf192345`)
+6. Scope-version the `results/verifier-calibration-matrix/` directory (`cf192345`)
+7. Clean up exact-duplicate files in `archive/pre-session-78-pull-2026-04-24/` on sapphire (`cf192345`)
+8. Configure GitHub identity on sapphire (`cf192345`)
+
+### Key decisions
+
+- **Flex tier for the matrix API spend** (~$36, default in run_pv.py `--service-tier flex`). 50 % cost discount; trade-off is ~14 % transient 503 rate at overnight launch. `run_pv.py cleanup` recovered 738 of 740 gaps in a follow-up pass.
+- **7 prompts × 2 pools** rather than image-only (which would have been cheaper but wouldn't falsify prompt-specificity with the same strength). Defensible under the falsification framing, not under the informational framing.
+- **Re-materialise with fixed `materialise_pv_geojson.py`** rather than just rewriting the CRS header in-place on the 12 overnight-produced geojsons. Ensures any tile-recovered candidates are picked up, and the resulting UTM coords match project convention.
+- **Adversarially verify Obs 277 before commit** after the user flagged context-contamination concerns. The verification agent caught one correction (the "2 of 5,753 unverified" claim was imprecise — actual is 100% union coverage with per-cell gaps); applied and committed.
+
+### Contextual assumptions
+
+- The canonical `verify_adversarial-text` probabilities used for comparison come from `outputs/h11/pv-diag-384/flash-high-<pool>-n5/<pool>-t0.7/verified-v1-n5/probabilities.json` — produced in prior sessions on a different crop set than the session-78-matrix shared-crops. Crop-for-crop parity is therefore not strictly established; logged as Step 6 backlog item 5 for a follow-up re-run.
+- Two candidates (cand_00744 in image-brief-text, cand_01563 in image-checklist) are persistently un-verifiable: one persistent 503, one deterministic parser bug in `run_pv.py` response handling. Union coverage across the 7 variants is 100% — every candidate was verified by at least one prompt — so cross-variant comparability is intact.
+- Sapphire has no git identity configured, so Phase E commits from the overnight script failed; all artefacts rsync'd back to amd-tower before commit. Backlog item 9 logged.
