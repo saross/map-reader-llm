@@ -1,0 +1,31 @@
+{
+  "stratum_dir": "/home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era1/single-pass",
+  "metric": "mcc",
+  "primary_buffer": 20,
+  "buffers": [
+    20,
+    30,
+    40,
+    50,
+    100
+  ],
+  "spearman": {
+    "30_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 2.5575173597054366e-147
+    },
+    "40_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 2.5575173597054366e-147
+    },
+    "50_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 2.5575173597054366e-147
+    },
+    "100_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 2.5575173597054366e-147
+    }
+  },
+  "n_conditions": 21
+}

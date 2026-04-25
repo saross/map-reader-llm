@@ -1,0 +1,31 @@
+{
+  "stratum_dir": "/home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/consensus",
+  "metric": "mcc",
+  "primary_buffer": 20,
+  "buffers": [
+    20,
+    30,
+    40,
+    50,
+    100
+  ],
+  "spearman": {
+    "30_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 8.376948343984933e-209
+    },
+    "40_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 8.376948343984933e-209
+    },
+    "50_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 8.376948343984933e-209
+    },
+    "100_vs_20": {
+      "rho": 0.9999999999999998,
+      "p_value": 8.376948343984933e-209
+    }
+  },
+  "n_conditions": 29
+}
