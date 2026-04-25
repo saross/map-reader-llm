@@ -1,0 +1,123 @@
+{
+  "run_id": "652f1c7d-fbc0-427e-85c1-20a6548b74c2",
+  "timestamp": {
+    "start": "2026-04-25T05:35:03.906046+00:00",
+    "end": "2026-04-25T05:42:50.242482+00:00",
+    "duration_seconds": 466.336436
+  },
+  "environment": {
+    "git_commit": "08b7bdad3f47dd844fd99730da170f0f857356b9",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_adversarial",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "verify_adversarial.md",
+    "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+    "system_instruction_text": "# Two-Stage Detection: Adversarial Verifier\n\nA detection system has identified the symbol at the centre of this crop as a\npossible burial mound. Your task is to **find reasons it is NOT a burial mound**.\n\nAssume the detection system made an error. Argue for the strongest non-mound\ninterpretation of this symbol. Only confirm it as a burial mound if you cannot\nfind a plausible alternative explanation.\n\n## What burial mounds look like\n\nBurial mound symbols have **short lines (rays) radiating OUTWARD** from a\ncentral shape, forming a \"sunburst\" or \"gear\" pattern. The rays point away\nfrom the centre, indicating elevated terrain. The central shape is typically\na small circle or oval in orange-brown, or a triangle or square in black\n(when a survey marker sits on a mound).\n\n## Common false alarms \u2014 argue for these first\n\nBefore confirming a mound, check whether the symbol could instead be:\n\n- **A triangulation point without a mound**: A solid black triangle, possibly\n  with a central dot \u2014 but with NO outward-radiating rays around it. These\n  are extremely common on Soviet maps and frequently confused with mounds.\n- **A benchmark without a mound**: A solid black square, possibly with a\n  central dot \u2014 but with NO outward-radiating rays around it.\n- **A contour feature**: Lines that approach or converge on a point, but the\n  lines point INWARD (downhill flow) rather than radiating OUTWARD. These\n  can appear in the same orange-brown colour family as mound symbols.\n- **A vegetation or land-use boundary**: Small marks along a boundary line\n  that may resemble rays but are actually boundary indicators.\n- **Text or numbering artefact**: Partial Cyrillic characters or elevation\n  numbers that coincidentally resemble radiating lines.\n- **A spot height marker**: A small dot with a nearby number \u2014 no rays.\n\n## Decision process\n\n1. Identify the strongest non-mound interpretation of the symbol.\n2. Describe the specific visual evidence supporting that interpretation.\n3. Only if NO non-mound interpretation is plausible, confirm as a mound.\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"best_alternative\": \"The strongest non-mound interpretation of this symbol.\",\n    \"alternative_evidence\": \"Specific visual features supporting the non-mound interpretation.\",\n    \"reasoning\": \"Why you accept or reject the non-mound interpretation.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: No plausible alternative \u2014 clear sunburst with outward rays\n- **0.6-0.8**: The non-mound interpretation is weak but not impossible\n- **0.3-0.5**: Genuinely ambiguous \u2014 mound and non-mound are equally plausible\n- **0.0-0.2**: Strong non-mound interpretation \u2014 symbol is most likely something else\n",
+    "library_hash": "9c649d290c359e85fe98f1608ba8eb604edf2c28a361ba8461ac0c47022a08f3",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 6,
+    "full_config_snapshot": {
+      "version": "verify_adversarial",
+      "description": "Two-Stage Verifier (Stage 2). Adversarial verification: argue for strongest non-mound interpretation before confirming.",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_adversarial.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "_config_notes": {
+        "source": "Phase 3d pilot (Session 43). Track 2 adversarial verifier achieved project-best F1=0.796 at T=0.0, threshold 0.2.",
+        "temperature": "0.0 based on Phase 3d: T=0.5 and T=1.0 did not improve over T=0.0 baseline.",
+        "thinking_level": "Fixed at minimal based on calibration pilot (2026-01-15).",
+        "usage": "Used in proposer-verifier pipeline Stage 2. Feed candidate crops from extract_candidates.py."
+      },
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive: Burial Mound (Kurgan)",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive: Settlement Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive: Triangulation Point ON Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive: Benchmark ON Mound",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative: Triangulation Point ALONE",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative: Benchmark ALONE",
+          "category": "canonical_negative"
+        }
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "success": 3736
+    },
+    "safety_blocks": 0,
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 31046160,
+    "total_output_tokens": 557276,
+    "total_cached_tokens": 161571,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 31603436,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 31046160,
+        "output_tokens": 557276,
+        "total_tokens": 31603436,
+        "request_count": 3736
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 15.52308,
+    "output_cost_usd": 1.671828,
+    "total_cost_usd": 17.194908,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  }
+}
