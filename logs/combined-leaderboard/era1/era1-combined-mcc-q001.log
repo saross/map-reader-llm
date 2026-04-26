@@ -1,0 +1,122 @@
+2026-04-26 02:52:22,440 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 6b18b772
+2026-04-26 02:52:22,449 - INFO - __main__ - Resolved 93 conditions from inventory (era=1, track=None)
+2026-04-26 02:52:22,449 - INFO - __main__ - Resolved 93 conditions
+2026-04-26 02:52:22,449 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-26 02:52:22,464 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 93 conditions
+2026-04-26 02:52:22,464 - INFO - __main__ - Selected 93 conditions (best F1=0.632 at 20m)
+2026-04-26 02:52:22,464 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-04-26 02:52:22,561 - INFO - __main__ - FDR: 2694/4278 pairs significant at q=0.01 → 5 tiers
+2026-04-26 02:52:22,561 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era1/leaderboard_tiers_mcc_q01_20m.md
+2026-04-26 02:52:22,592 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era1/leaderboard_tiers_mcc_q01_20m.json
+2026-04-26 02:52:22,608 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era1/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (MCC, 20m buffer)
+========================================================================
+
+Tier 1 (MCC: 0.605–0.714, 25 conditions)
+    1. h9-track1-image-h9-B-v4                  MCC=0.714  t=3
+    2. h9-track1-image-h9-A-p5                  MCC=0.694  t=3
+    3. h9-track1-image-h9-A-p3                  MCC=0.691  t=3
+    4. h9-track1-image-h9-D-t1                  MCC=0.685  t=4
+    5. h9-track1-image-h9-A-p4                  MCC=0.685  t=3
+    6. h9-track1-image-h9-C-img2                MCC=0.678  t=3
+    7. h9-track1-image-h9-C-img3                MCC=0.672  t=3
+    8. h9-track1-image-h9-C-img1                MCC=0.670  t=3
+    9. h9-track1-image-h9-D-t3                  MCC=0.669  t=3
+   10. h9-track1-image-h9-B-v1                  MCC=0.661  t=3
+   11. h9-track1-image-h9-A-p1                  MCC=0.661  t=3
+   12. h9-track1-image-h9-C-img5                MCC=0.657  t=3
+   13. h9-track1-image-h9-B-v5                  MCC=0.657  t=3
+   14. h9-track1-image-h9-E-p2                  MCC=0.654  t=3
+   15. h9-track1-image-h9-E-p3                  MCC=0.654  t=3
+   16. h9-track1-image-h9-A-p2                  MCC=0.645  t=3
+   17. h9-track1-image-h9-E-p1                  MCC=0.643  t=3
+   18. h9-track1-image-h9-E-p4                  MCC=0.642  t=3
+   19. h3-high-track2-text-T1.0                 MCC=0.641  t=23
+   20. h9-track1-image-h9-B-v3                  MCC=0.638  t=3
+   21. h9-track1-image-h9-D-t2                  MCC=0.638  t=3
+   22. h9-track1-image-h9-D-t5                  MCC=0.632  t=3
+   23. h9-track1-image-h9-D-t4                  MCC=0.631  t=3
+   24. h9-track1-image-h9-B-v2                  MCC=0.630  t=3
+   25. h9-track1-image-h9-E-p5                  MCC=0.605  t=3
+
+Tier 2 (MCC: 0.487–0.580, 8 conditions)
+   26. h9-track1-image-h9-C-img4                MCC=0.580  t=3
+   27. h3-high-track2-text-T0.3                 MCC=0.576  t=23
+   28. h3-high-track2-text-T0.7                 MCC=0.571  t=22
+   29. h3-rep-high                              MCC=0.545  t=21
+   30. h9-track2-text-h9-A-p1                   MCC=0.501  t=4
+   31. h9-track2-text-h9-B-v3                   MCC=0.499  t=4
+   32. h9-track2-text-h9-A-p4                   MCC=0.495  t=4
+   33. h9-track2-text-h9-A-p2                   MCC=0.487  t=4
+
+Tier 3 (MCC: 0.353–0.476, 21 conditions)
+   34. h9-track2-text-h9-D-t1                   MCC=0.476  t=4
+   35. h3-track1-image-T1.0                     MCC=0.475  t=19
+   36. h9-track2-text-h9-E-p1                   MCC=0.475  t=5
+   37. h9-track2-text-h9-D-t2                   MCC=0.473  t=4
+   38. h9-track2-text-h9-E-p3                   MCC=0.469  t=4
+   39. h9-track2-text-h9-D-t3                   MCC=0.444  t=4
+   40. h3-track1-image-T0.7                     MCC=0.443  t=18
+   41. h9-track2-text-h9-A-p5                   MCC=0.440  t=4
+   42. h9-track2-text-h9-D-t5                   MCC=0.440  t=4
+   43. h9-track2-text-h9-B-v2                   MCC=0.437  t=4
+   44. h9-track2-text-h9-B-v5                   MCC=0.435  t=4
+   45. h9-track2-text-h9-D-t4                   MCC=0.431  t=4
+   46. h9-track2-text-h9-E-p2                   MCC=0.426  t=4
+   47. h9-track2-text-h9-E-p5                   MCC=0.423  t=4
+   48. h9-track2-text-h9-A-p3                   MCC=0.410  t=4
+   49. h9-track2-text-h9-E-p4                   MCC=0.404  t=4
+   50. h9-track2-text-h9-B-v1                   MCC=0.403  t=4
+   51. h1-verbose-text-image                    MCC=0.395  t=2
+   52. h7-track2-text-T1.3                      MCC=0.379  t=3
+   53. h7-track1-image-T1.3                     MCC=0.367  t=2
+   54. h9-track2-text-h9-B-v4                   MCC=0.353  t=4
+
+Tier 4 (MCC: 0.203–0.332, 18 conditions)
+   55. h7-track1-image-T1.0                     MCC=0.332  t=2
+   56. h3-track2-text-T1.0                      MCC=0.331  t=22
+   57. h3-rep-minimal                           MCC=0.312  t=25
+   58. h1-brief-text-image                      MCC=0.302  t=2
+   59. h7-track2-text-T1.0                      MCC=0.284  t=3
+   60. h7-track2-text-T0.7                      MCC=0.283  t=3
+   61. h5-track1-image-verbose                  MCC=0.281  t=1
+   62. h3-track1-image-T0.3                     MCC=0.271  t=22
+   63. h7-track1-image-T0.3                     MCC=0.270  t=3
+   64. h3-track2-text-T0.7                      MCC=0.267  t=24
+   65. h1-brief-text                            MCC=0.258  t=3
+   66. h1-image-only                            MCC=0.251  t=2
+   67. h7-track1-image-T0.7                     MCC=0.229  t=2
+   68. h5-track1-image-terse                    MCC=0.223  t=1
+   69. h7-track2-text-T0.3                      MCC=0.214  t=3
+   70. h4-config-default                        MCC=0.214  t=1
+   71. h4-canonical-last                        MCC=0.212  t=1
+   72. h1-verbose-text                          MCC=0.203  t=2
+
+Tier 5 (MCC: 0.000–0.180, 21 conditions)
+   73. h3-track2-text-T0.3                      MCC=0.180  t=23
+   74. h8-track1-image-exploratory-pure-positive-4hp MCC=0.162  t=1
+   75. h8-track1-image-scale-8                  MCC=0.147  t=1
+   76. h8-track1-image-scale-4                  MCC=0.133  t=1
+   77. h7-track1-image-T0.0                     MCC=0.118  t=3
+   78. h4-canonical-first                       MCC=0.098  t=1
+   79. h8-track1-image-plus-hp                  MCC=0.098  t=1
+   80. h8-track1-image-canonical                MCC=0.098  t=1
+   81. h8-track1-image-exploratory-pure-positive-canon MCC=0.097  t=1
+   82. h8-track1-image-pure-positive-canon      MCC=0.097  t=1
+   83. h11-bridge-brief-text-t0                 MCC=0.095  t=10
+   84. h7-track2-text-T0.0                      MCC=0.088  t=3
+   85. h4-random                                MCC=0.084  t=1
+   86. h5-track2-text-verbose                   MCC=0.081  t=1
+   87. h5-track2-text-terse                     MCC=0.000  t=1
+   88. h8-track1-image-exploratory-pure-positive-2hp MCC=0.000  t=1
+   89. h8-track2-text-canonical                 MCC=0.000  t=1
+   90. h8-track2-text-plus-hp                   MCC=0.000  t=1
+   91. h8-track2-text-pure-positive-canon       MCC=0.000  t=1
+   92. h8-track2-text-scale-4                   MCC=0.000  t=1
+   93. h8-track2-text-scale-8                   MCC=0.000  t=1
+
+========================================================================
+Total: 93 conditions in 5 tiers
+========================================================================

@@ -1,0 +1,122 @@
+2026-04-26 02:32:04,489 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 6b18b772
+2026-04-26 02:32:04,499 - INFO - __main__ - Resolved 93 conditions from inventory (era=1, track=None)
+2026-04-26 02:32:04,499 - INFO - __main__ - Resolved 93 conditions
+2026-04-26 02:32:04,499 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-26 02:32:04,515 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 93 conditions
+2026-04-26 02:32:04,515 - INFO - __main__ - Selected 93 conditions (best F1=0.775 at 20m)
+2026-04-26 02:32:04,515 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-04-26 02:32:04,634 - INFO - __main__ - FDR: 1650/4278 pairs significant at q=0.01 → 5 tiers
+2026-04-26 02:32:04,634 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era1/leaderboard_tiers_q01_20m.md
+2026-04-26 02:32:04,661 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era1/leaderboard_tiers_q01_20m.json
+2026-04-26 02:32:04,676 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era1/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (F1, 20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.739–0.775, 5 conditions)
+    1. h3-high-track2-text-T1.0                 F1=0.775  t=23
+    2. h3-high-track2-text-T0.3                 F1=0.774  t=23
+    3. h3-high-track2-text-T0.7                 F1=0.773  t=22
+    4. h3-rep-high                              F1=0.770  t=21
+    5. h9-track2-text-h9-D-t4                   F1=0.739  t=4
+
+Tier 2 (F1: 0.675–0.735, 23 conditions)
+    6. h9-track2-text-h9-D-t1                   F1=0.735  t=4
+    7. h9-track2-text-h9-A-p4                   F1=0.731  t=4
+    8. h9-track2-text-h9-A-p1                   F1=0.726  t=4
+    9. h9-track2-text-h9-A-p2                   F1=0.723  t=4
+   10. h9-track2-text-h9-E-p1                   F1=0.717  t=5
+   11. h9-track2-text-h9-D-t2                   F1=0.712  t=4
+   12. h9-track2-text-h9-A-p5                   F1=0.712  t=4
+   13. h9-track2-text-h9-D-t3                   F1=0.711  t=4
+   14. h9-track2-text-h9-D-t5                   F1=0.710  t=4
+   15. h9-track2-text-h9-A-p3                   F1=0.710  t=4
+   16. h3-rep-minimal                           F1=0.703  t=25
+   17. h9-track2-text-h9-B-v1                   F1=0.698  t=4
+   18. h3-track2-text-T0.3                      F1=0.692  t=23
+   19. h3-track2-text-T0.7                      F1=0.692  t=24
+   20. h3-track1-image-T0.7                     F1=0.691  t=18
+   21. h9-track1-image-h9-C-img5                F1=0.689  t=3
+   22. h7-track2-text-T0.7                      F1=0.687  t=3
+   23. h3-track2-text-T1.0                      F1=0.686  t=22
+   24. h7-track2-text-T0.3                      F1=0.683  t=3
+   25. h9-track1-image-h9-A-p1                  F1=0.682  t=3
+   26. h9-track1-image-h9-A-p5                  F1=0.679  t=3
+   27. h3-track1-image-T1.0                     F1=0.679  t=19
+   28. h9-track1-image-h9-E-p2                  F1=0.675  t=3
+
+Tier 3 (F1: 0.624–0.673, 38 conditions)
+   29. h9-track2-text-h9-B-v2                   F1=0.673  t=4
+   30. h9-track1-image-h9-D-t2                  F1=0.673  t=3
+   31. h9-track1-image-h9-C-img4                F1=0.672  t=3
+   32. h9-track1-image-h9-D-t5                  F1=0.669  t=3
+   33. h9-track1-image-h9-D-t1                  F1=0.668  t=4
+   34. h9-track2-text-h9-B-v5                   F1=0.667  t=4
+   35. h3-track1-image-T0.3                     F1=0.666  t=22
+   36. h9-track1-image-h9-A-p4                  F1=0.665  t=3
+   37. h9-track1-image-h9-A-p2                  F1=0.664  t=3
+   38. h9-track1-image-h9-B-v1                  F1=0.664  t=3
+   39. h9-track1-image-h9-C-img3                F1=0.664  t=3
+   40. h9-track1-image-h9-D-t3                  F1=0.663  t=3
+   41. h9-track1-image-h9-C-img2                F1=0.663  t=3
+   42. h9-track2-text-h9-E-p2                   F1=0.661  t=4
+   43. h9-track2-text-h9-B-v4                   F1=0.658  t=4
+   44. h9-track2-text-h9-E-p4                   F1=0.658  t=4
+   45. h9-track1-image-h9-D-t4                  F1=0.657  t=3
+   46. h9-track1-image-h9-E-p5                  F1=0.656  t=3
+   47. h9-track1-image-h9-B-v2                  F1=0.655  t=3
+   48. h9-track1-image-h9-E-p1                  F1=0.652  t=3
+   49. h9-track2-text-h9-E-p5                   F1=0.650  t=4
+   50. h9-track1-image-h9-B-v5                  F1=0.649  t=3
+   51. h1-brief-text                            F1=0.644  t=3
+   52. h9-track1-image-h9-A-p3                  F1=0.644  t=3
+   53. h7-track2-text-T0.0                      F1=0.643  t=3
+   54. h7-track2-text-T1.0                      F1=0.643  t=3
+   55. h9-track1-image-h9-E-p4                  F1=0.642  t=3
+   56. h9-track1-image-h9-C-img1                F1=0.641  t=3
+   57. h7-track2-text-T1.3                      F1=0.640  t=3
+   58. h9-track1-image-h9-B-v3                  F1=0.640  t=3
+   59. h7-track1-image-T1.0                     F1=0.640  t=2
+   60. h9-track2-text-h9-B-v3                   F1=0.635  t=4
+   61. h7-track1-image-T0.3                     F1=0.634  t=3
+   62. h9-track1-image-h9-B-v4                  F1=0.632  t=3
+   63. h4-canonical-last                        F1=0.631  t=1
+   64. h9-track1-image-h9-E-p3                  F1=0.628  t=3
+   65. h1-verbose-text-image                    F1=0.627  t=2
+   66. h1-brief-text-image                      F1=0.624  t=2
+
+Tier 4 (F1: 0.568–0.620, 26 conditions)
+   67. h7-track1-image-T0.7                     F1=0.620  t=2
+   68. h7-track1-image-T0.0                     F1=0.613  t=3
+   69. h9-track2-text-h9-E-p3                   F1=0.612  t=4
+   70. h8-track2-text-scale-4                   F1=0.609  t=1
+   71. h8-track2-text-scale-8                   F1=0.607  t=1
+   72. h4-config-default                        F1=0.606  t=1
+   73. h7-track1-image-T1.3                     F1=0.606  t=2
+   74. h5-track1-image-terse                    F1=0.605  t=1
+   75. h8-track2-text-canonical                 F1=0.605  t=1
+   76. h8-track2-text-pure-positive-canon       F1=0.605  t=1
+   77. h5-track1-image-verbose                  F1=0.603  t=1
+   78. h4-canonical-first                       F1=0.599  t=1
+   79. h8-track1-image-exploratory-pure-positive-4hp F1=0.599  t=1
+   80. h8-track1-image-plus-hp                  F1=0.599  t=1
+   81. h5-track2-text-terse                     F1=0.598  t=1
+   82. h8-track2-text-plus-hp                   F1=0.597  t=1
+   83. h1-verbose-text                          F1=0.596  t=2
+   84. h8-track1-image-scale-8                  F1=0.587  t=1
+   85. h8-track1-image-scale-4                  F1=0.584  t=1
+   86. h5-track2-text-verbose                   F1=0.583  t=1
+   87. h8-track1-image-canonical                F1=0.581  t=1
+   88. h1-image-only                            F1=0.575  t=2
+   89. h8-track1-image-exploratory-pure-positive-2hp F1=0.571  t=1
+   90. h4-random                                F1=0.571  t=1
+   91. h8-track1-image-exploratory-pure-positive-canon F1=0.570  t=1
+   92. h8-track1-image-pure-positive-canon      F1=0.568  t=1
+
+Tier 5 (F1: 0.515–0.515, 1 conditions)
+   93. h11-bridge-brief-text-t0                 F1=0.515  t=10
+
+========================================================================
+Total: 93 conditions in 5 tiers
+========================================================================

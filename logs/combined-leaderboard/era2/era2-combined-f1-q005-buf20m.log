@@ -1,0 +1,130 @@
+2026-04-26 01:58:37,392 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 60778f8a
+2026-04-26 01:58:37,401 - INFO - __main__ - Resolved 87 conditions from inventory (era=2, track=None)
+2026-04-26 01:58:37,401 - INFO - __main__ - Resolved 87 conditions
+2026-04-26 01:58:37,401 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-26 01:58:37,420 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 87 conditions
+2026-04-26 01:58:37,420 - INFO - __main__ - Selected 87 conditions (best F1=0.890 at 20m)
+2026-04-26 01:58:37,467 - INFO - __main__ - Pairwise tests (f1): 3741 pairs at 20m (10000 permutations, 8 workers)
+2026-04-26 01:58:37,711 - INFO - __main__ - Pairwise: 3741 cached, 0 computed
+2026-04-26 01:58:37,711 - INFO - __main__ - Stage 4 complete in 0.3s
+2026-04-26 01:58:37,718 - INFO - __main__ - FDR: 2899/3741 pairs significant at q=0.05 → 11 tiers
+2026-04-26 01:58:37,719 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_20m.md
+2026-04-26 01:58:37,774 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_20m.json
+2026-04-26 01:58:37,790 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (F1, 20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.877–0.890, 8 conditions)
+    1. pv-flash-high-text-16of30                F1=0.890  t=1
+    2. pv-high-text-t0.3-n5                     F1=0.886  t=1
+    3. session-78-text-comparative              F1=0.885  t=1
+    4. session-78-text-adversarial              F1=0.883  t=1
+    5. pv-high-text-t1.0-n10                    F1=0.880  t=1
+    6. session-78-text-checklist                F1=0.878  t=1
+    7. pv-min-text-t0.3-n5                      F1=0.878  t=1
+    8. pv-min-text-t1.0-n10                     F1=0.877  t=1
+
+Tier 2 (F1: 0.861–0.876, 10 conditions)
+    9. session-78-text-brief                    F1=0.876  t=1
+   10. pv-high-text-t0.7-n10                    F1=0.874  t=1
+   11. pv-min-text-t0.7-n5                      F1=0.873  t=1
+   12. pv-min-text-t0.7-n10                     F1=0.873  t=1
+   13. pv-high-text-t0.3-n10                    F1=0.872  t=1
+   14. pv-min-text-t1.0-n5                      F1=0.871  t=1
+   15. pv-min-text-t0.3-n10                     F1=0.868  t=1
+   16. pv-high-text-t0.7-n5                     F1=0.863  t=1
+   17. pv-min-text-t0.0-n3                      F1=0.862  t=1
+   18. pv-high-text-t1.0-n5                     F1=0.861  t=1
+
+Tier 3 (F1: 0.823–0.860, 5 conditions)
+   19. session-78-text-checklist-text           F1=0.860  t=1
+   20. session-78-text-adversarial-text         F1=0.858  t=1
+   21. session-78-text-brief-text               F1=0.846  t=1
+   22. h11-pvd-pro-high-text-n5                 F1=0.836  t=6
+   23. pv-high-text-t0.0-n3                     F1=0.823  t=1
+
+Tier 4 (F1: 0.773–0.814, 14 conditions)
+   24. h11-pvd-flash-high-text-n5               F1=0.814  t=26
+   25. p3a-high-text-t0.3                       F1=0.789  t=10
+   26. p3a-high-text-t0.3-n5                    F1=0.789  t=10
+   27. pv-min-image-t0.7-n10                    F1=0.788  t=1
+   28. pv-high-image-t0.7-n5                    F1=0.787  t=1
+   29. session-78-image-adversarial             F1=0.787  t=1
+   30. session-78-image-comparative             F1=0.786  t=1
+   31. session-78-image-brief                   F1=0.784  t=1
+   32. session-78-image-checklist               F1=0.783  t=1
+   33. pv-min-image-t0.3-n10                    F1=0.782  t=1
+   34. session-78-image-checklist-text          F1=0.780  t=1
+   35. pv-min-image-t0.3-n5                     F1=0.777  t=1
+   36. pv-high-image-t0.7-n10                   F1=0.776  t=1
+   37. pv-min-image-t0.7-n5                     F1=0.773  t=1
+
+Tier 5 (F1: 0.750–0.773, 11 conditions)
+   38. p3a-high-text-t1.0                       F1=0.773  t=9
+   39. p3a-high-text-t1.0-n5                    F1=0.773  t=9
+   40. session-78-image-adversarial-text        F1=0.772  t=1
+   41. pv-high-image-t0.3-n10                   F1=0.769  t=1
+   42. pv-scale4-optimal-n10                    F1=0.768  t=1
+   43. session-78-image-brief-text              F1=0.768  t=1
+   44. pv-n1-image-t0-n3                        F1=0.767  t=1
+   45. pv-high-image-t1.0-n10                   F1=0.763  t=1
+   46. h11-pvd-pro-medium-text-baseline         F1=0.763  t=1
+   47. pv-scale4-optimal-n5                     F1=0.763  t=1
+   48. h11-pvd-flash-high-image-n5              F1=0.750  t=7
+
+Tier 6 (F1: 0.700–0.746, 9 conditions)
+   49. pv-high-image-t0.3-n5                    F1=0.746  t=1
+   50. scale4-optimal-487                       F1=0.742  t=6
+   51. pv-min-image-t1.0-n10                    F1=0.741  t=1
+   52. pv-min-image-t1.0-n5                     F1=0.738  t=1
+   53. p3a-high-image-t1.0                      F1=0.735  t=6
+   54. pv-high-image-t1.0-n5                    F1=0.734  t=1
+   55. p3a-high-image-t0.3                      F1=0.731  t=9
+   56. h11-e47-propose-brief                    F1=0.714  t=5
+   57. h11-pvd-pro-high-image-n5                F1=0.700  t=3
+
+Tier 7 (F1: 0.642–0.680, 9 conditions)
+   58. h11-pvd-image-n5                         F1=0.680  t=8
+   59. h11-n1-image-t03                         F1=0.677  t=3
+   60. p3a-minimal-text-t1.0                    F1=0.667  t=9
+   61. p3a-minimal-text-t1.0-n5                 F1=0.667  t=9
+   62. h11-pvd-flash-minimal-text-n30-t07       F1=0.661  t=29
+   63. p3a-min-image-t0.3                       F1=0.660  t=10
+   64. p3a-min-image-t1.0                       F1=0.646  t=8
+   65. p3a-minimal-text-t0.3                    F1=0.642  t=10
+   66. p3a-minimal-text-t0.3-n5                 F1=0.642  t=10
+
+Tier 8 (F1: 0.605–0.629, 4 conditions)
+   67. h11-n1-image-t0                          F1=0.629  t=2
+   68. h11-pvd-text-n10                         F1=0.619  t=10
+   69. h11-pvd-pro-medium-image-baseline        F1=0.606  t=1
+   70. p3a-high-text-t0.0                       F1=0.605  t=3
+
+Tier 9 (F1: 0.531–0.600, 6 conditions)
+   71. h11-pvd-image-baseline                   F1=0.600  t=1
+   72. p3a-minimal-text-t0.0                    F1=0.593  t=3
+   73. h11-n1-brief-text-t03                    F1=0.591  t=3
+   74. h11-n1-pro-text-high-t0                  F1=0.567  t=3
+   75. h11-n1-pro-image-high-t0                 F1=0.552  t=3
+   76. pv-checklist-image                       F1=0.531  t=1
+
+Tier 10 (F1: 0.488–0.521, 8 conditions)
+   77. pv-checklist-text                        F1=0.521  t=1
+   78. pv-brief-image                           F1=0.520  t=1
+   79. h11-pvd-text-baseline                    F1=0.520  t=1
+   80. pv-brief-text                            F1=0.514  t=1
+   81. pv-cascade-adversarial-checklist         F1=0.504  t=1
+   82. pv-cascade-checklist-adversarial         F1=0.495  t=1
+   83. pv-adversarial-image                     F1=0.494  t=1
+   84. p3a-high-image-t0.0                      F1=0.488  t=1
+
+Tier 11 (F1: 0.416–0.471, 3 conditions)
+   85. pv-adversarial-text                      F1=0.471  t=1
+   86. h11-n1-pro-image-medium-t07              F1=0.452  t=1
+   87. h11-n1-pro-text-medium-t07               F1=0.416  t=1
+
+========================================================================
+Total: 87 conditions in 11 tiers
+========================================================================

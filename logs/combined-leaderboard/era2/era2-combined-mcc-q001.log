@@ -1,0 +1,122 @@
+2026-04-26 02:25:55,619 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 60778f8a
+2026-04-26 02:25:55,624 - INFO - __main__ - Resolved 87 conditions from inventory (era=2, track=None)
+2026-04-26 02:25:55,624 - INFO - __main__ - Resolved 87 conditions
+2026-04-26 02:25:55,624 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-26 02:25:55,632 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 87 conditions
+2026-04-26 02:25:55,632 - INFO - __main__ - Selected 87 conditions (best F1=0.777 at 20m)
+2026-04-26 02:25:55,632 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-04-26 02:25:55,718 - INFO - __main__ - FDR: 2278/3741 pairs significant at q=0.01 → 8 tiers
+2026-04-26 02:25:55,718 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_mcc_q01_20m.md
+2026-04-26 02:25:55,741 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_mcc_q01_20m.json
+2026-04-26 02:25:55,749 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (MCC, 20m buffer)
+========================================================================
+
+Tier 1 (MCC: 0.793–0.841, 22 conditions)
+    1. pv-min-image-t0.3-n5                     MCC=0.841  t=1
+    2. pv-n1-image-t0-n3                        MCC=0.839  t=1
+    3. pv-min-image-t0.7-n5                     MCC=0.838  t=1
+    4. pv-min-image-t0.3-n10                    MCC=0.837  t=1
+    5. pv-high-image-t0.7-n5                    MCC=0.836  t=1
+    6. pv-scale4-optimal-n5                     MCC=0.835  t=1
+    7. session-78-image-adversarial             MCC=0.831  t=1
+    8. session-78-image-comparative             MCC=0.830  t=1
+    9. session-78-image-brief                   MCC=0.829  t=1
+   10. pv-high-image-t1.0-n5                    MCC=0.822  t=1
+   11. pv-min-image-t0.7-n10                    MCC=0.821  t=1
+   12. session-78-image-brief-text              MCC=0.819  t=1
+   13. session-78-image-checklist-text          MCC=0.817  t=1
+   14. session-78-image-checklist               MCC=0.816  t=1
+   15. pv-scale4-optimal-n10                    MCC=0.815  t=1
+   16. pv-high-image-t0.3-n10                   MCC=0.815  t=1
+   17. pv-min-image-t1.0-n10                    MCC=0.810  t=1
+   18. pv-high-image-t0.3-n5                    MCC=0.804  t=1
+   19. pv-min-image-t1.0-n5                     MCC=0.802  t=1
+   20. pv-high-image-t1.0-n10                   MCC=0.800  t=1
+   21. pv-high-image-t0.7-n10                   MCC=0.796  t=1
+   22. session-78-text-comparative              MCC=0.793  t=1
+
+Tier 2 (MCC: 0.755–0.793, 22 conditions)
+   23. session-78-image-adversarial-text        MCC=0.793  t=1
+   24. session-78-text-adversarial              MCC=0.793  t=1
+   25. pv-high-text-t1.0-n10                    MCC=0.790  t=1
+   26. pv-flash-high-text-16of30                MCC=0.789  t=1
+   27. pv-high-text-t0.3-n10                    MCC=0.787  t=1
+   28. pv-min-text-t0.7-n5                      MCC=0.786  t=1
+   29. pv-min-text-t0.0-n3                      MCC=0.783  t=1
+   30. pv-min-text-t1.0-n10                     MCC=0.780  t=1
+   31. pv-min-text-t1.0-n5                      MCC=0.778  t=1
+   32. pv-min-text-t0.7-n10                     MCC=0.776  t=1
+   33. pv-high-text-t0.3-n5                     MCC=0.776  t=1
+   34. pv-high-text-t0.0-n3                     MCC=0.774  t=1
+   35. session-78-text-checklist                MCC=0.774  t=1
+   36. pv-min-text-t0.3-n10                     MCC=0.772  t=1
+   37. pv-min-text-t0.3-n5                      MCC=0.772  t=1
+   38. pv-high-text-t0.7-n5                     MCC=0.767  t=1
+   39. session-78-text-brief                    MCC=0.765  t=1
+   40. pv-high-text-t0.7-n10                    MCC=0.763  t=1
+   41. h11-pvd-pro-high-image-n5                MCC=0.761  t=3
+   42. session-78-text-brief-text               MCC=0.758  t=1
+   43. pv-high-text-t1.0-n5                     MCC=0.756  t=1
+   44. session-78-text-checklist-text           MCC=0.755  t=1
+
+Tier 3 (MCC: 0.676–0.752, 7 conditions)
+   45. session-78-text-adversarial-text         MCC=0.752  t=1
+   46. h11-pvd-pro-medium-text-baseline         MCC=0.752  t=1
+   47. scale4-optimal-487                       MCC=0.745  t=6
+   48. h11-pvd-pro-medium-image-baseline        MCC=0.734  t=1
+   49. h11-pvd-pro-high-text-n5                 MCC=0.727  t=6
+   50. p3a-high-image-t0.3                      MCC=0.682  t=9
+   51. h11-pvd-flash-high-image-n5              MCC=0.676  t=7
+
+Tier 4 (MCC: 0.565–0.644, 8 conditions)
+   52. p3a-high-image-t1.0                      MCC=0.644  t=6
+   53. h11-pvd-flash-high-text-n5               MCC=0.620  t=26
+   54. h11-n1-pro-image-medium-t07              MCC=0.597  t=1
+   55. p3a-high-text-t0.3                       MCC=0.587  t=10
+   56. p3a-high-text-t0.3-n5                    MCC=0.587  t=10
+   57. p3a-high-text-t1.0                       MCC=0.575  t=9
+   58. p3a-high-text-t1.0-n5                    MCC=0.575  t=9
+   59. h11-n1-pro-image-high-t0                 MCC=0.565  t=3
+
+Tier 5 (MCC: 0.388–0.503, 14 conditions)
+   60. h11-e47-propose-brief                    MCC=0.503  t=5
+   61. p3a-high-image-t0.0                      MCC=0.484  t=1
+   62. p3a-high-text-t0.0                       MCC=0.451  t=3
+   63. p3a-min-image-t1.0                       MCC=0.441  t=8
+   64. pv-cascade-adversarial-checklist         MCC=0.432  t=1
+   65. pv-adversarial-text                      MCC=0.431  t=1
+   66. pv-adversarial-image                     MCC=0.416  t=1
+   67. p3a-minimal-text-t1.0                    MCC=0.415  t=9
+   68. p3a-minimal-text-t1.0-n5                 MCC=0.415  t=9
+   69. pv-cascade-checklist-adversarial         MCC=0.412  t=1
+   70. h11-pvd-image-n5                         MCC=0.404  t=8
+   71. pv-brief-text                            MCC=0.396  t=1
+   72. h11-n1-pro-text-high-t0                  MCC=0.395  t=3
+   73. pv-checklist-image                       MCC=0.388  t=1
+
+Tier 6 (MCC: 0.309–0.380, 10 conditions)
+   74. h11-pvd-flash-minimal-text-n30-t07       MCC=0.380  t=29
+   75. h11-n1-image-t03                         MCC=0.348  t=3
+   76. pv-brief-image                           MCC=0.340  t=1
+   77. p3a-min-image-t0.3                       MCC=0.339  t=10
+   78. h11-pvd-text-n10                         MCC=0.316  t=10
+   79. pv-checklist-text                        MCC=0.315  t=1
+   80. p3a-minimal-text-t0.3                    MCC=0.311  t=10
+   81. p3a-minimal-text-t0.3-n5                 MCC=0.311  t=10
+   82. h11-pvd-image-baseline                   MCC=0.311  t=1
+   83. h11-n1-pro-text-medium-t07               MCC=0.309  t=1
+
+Tier 7 (MCC: 0.170–0.223, 3 conditions)
+   84. p3a-minimal-text-t0.0                    MCC=0.223  t=3
+   85. h11-n1-image-t0                          MCC=0.214  t=2
+   86. h11-n1-brief-text-t03                    MCC=0.170  t=3
+
+Tier 8 (MCC: -0.001–-0.001, 1 conditions)
+   87. h11-pvd-text-baseline                    MCC=-0.001  t=1
+
+========================================================================
+Total: 87 conditions in 8 tiers
+========================================================================
