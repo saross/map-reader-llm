@@ -1,0 +1,23 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for leaderboard_all_evaluations.json (combined / cross-architecture, Era 2).",
+  "target_file": "leaderboard_all_evaluations.json",
+  "generated_by_script": "scripts/build_combined_leaderboard.sh",
+  "generation_timestamp_iso": "2026-04-26T02:25:55+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)"
+  },
+  "permutation_test": {
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "in_file_content": {
+    "script": "build_tiered_leaderboard.py",
+    "version": "1.0.0",
+    "n_conditions": 87
+  },
+  "notes": "Era 2 combined / cross-architecture leaderboard. Pools all 87 conditions across 4 architectures (single-pass=6, consensus=29, single-pass+PV=8, pv=44) into a single greedy-clique BH-FDR-tiered ranking, separately at each (buffer, metric, q-level) combination. Within-architecture pairwise tests reused from per-architecture caches at results/leaderboard/per-architecture/era2/<arch>/.cache/; only cross-architecture pairs (2,346 per buffer) computed fresh. See results/leaderboard/combined/README.md for methodology."
+}
