@@ -916,18 +916,69 @@ def _cache_path_pairwise(
     label_a: str,
     label_b: str,
     metric: str = METRIC_F1,
+    buffer_metres: int | None = None,
 ) -> Path:
-    """Build canonical cache path for a pairwise test (alphabetical order).
+    """Build canonical write path for a pairwise test (alphabetical order).
 
     The metric is folded into the directory name so F1 and MCC caches
-    do not collide. The historical layout (``pairwise/<a>_vs_<b>.json``)
-    is kept for ``metric=f1`` to preserve compatibility with the prior
+    do not collide. F1 caches additionally namespace by buffer
+    (``pairwise_f1_<buffer>m/<a>_vs_<b>.json``) because the F1
+    permutation test is buffer-dependent — re-running at 30 / 40 / 50 /
+    100 m must not silently reuse 20 m results. MCC caches keep the
+    historical metric-only layout (``pairwise_mcc/...``) because the
+    tile-level MCC permutation test is buffer-independent.
+
+    ``buffer_metres`` is required for ``metric=f1``; it is ignored for
+    other metrics.
+
+    See :func:`_cache_path_pairwise_read` for the read-side fallback to
+    the legacy ``pairwise/<a>_vs_<b>.json`` layout used by the original
     per-architecture tier tables.
     """
     a, b = sorted([slugify(label_a), slugify(label_b)])
     if metric == METRIC_F1:
-        return cache_dir / "pairwise" / f"{a}_vs_{b}.json"
+        if buffer_metres is None:
+            raise ValueError(
+                "buffer_metres is required for F1 pairwise cache paths "
+                "(F1 permutation tests are buffer-dependent)",
+            )
+        return (
+            cache_dir
+            / f"pairwise_f1_{buffer_metres}m"
+            / f"{a}_vs_{b}.json"
+        )
     return cache_dir / f"pairwise_{metric}" / f"{a}_vs_{b}.json"
+
+
+def _cache_path_pairwise_read(
+    cache_dir: Path,
+    label_a: str,
+    label_b: str,
+    metric: str = METRIC_F1,
+    buffer_metres: int | None = None,
+) -> Path:
+    """Resolve the cache file to read for a pairwise test.
+
+    Returns the canonical write path (see
+    :func:`_cache_path_pairwise`) if it exists. For ``metric=f1`` at
+    ``buffer_metres=20`` only, falls back to the legacy
+    ``pairwise/<a>_vs_<b>.json`` path so the existing 20 m cache from
+    the original 12-stratum build is honoured without recomputation.
+    For all other (metric, buffer) combinations, returns the canonical
+    path even if it does not yet exist (caller checks ``is_file()``).
+    """
+    canonical = _cache_path_pairwise(
+        cache_dir, label_a, label_b,
+        metric=metric, buffer_metres=buffer_metres,
+    )
+    if canonical.is_file():
+        return canonical
+    if metric == METRIC_F1 and buffer_metres == 20:
+        a, b = sorted([slugify(label_a), slugify(label_b)])
+        legacy = cache_dir / "pairwise" / f"{a}_vs_{b}.json"
+        if legacy.is_file():
+            return legacy
+    return canonical
 
 
 def _pairwise_worker(
@@ -955,14 +1006,21 @@ def _pairwise_worker(
     """
     import geopandas as _gpd
 
-    cp = Path(cache_dir) / "pairwise"
-    if metric != METRIC_F1:
-        cp = Path(cache_dir) / f"pairwise_{metric}"
-    a_slug, b_slug = sorted([slugify(label_a), slugify(label_b)])
-    cache_file = cp / f"{a_slug}_vs_{b_slug}.json"
-    if cache_file.is_file():
-        with open(cache_file, encoding="utf-8") as f:
+    cache_root = Path(cache_dir)
+    # Canonical write path (buffer-aware for F1; metric-only for MCC).
+    write_path = _cache_path_pairwise(
+        cache_root, label_a, label_b,
+        metric=metric, buffer_metres=buffer_metres,
+    )
+    # Read path may fall back to the legacy 20 m F1 layout.
+    read_path = _cache_path_pairwise_read(
+        cache_root, label_a, label_b,
+        metric=metric, buffer_metres=buffer_metres,
+    )
+    if read_path.is_file():
+        with open(read_path, encoding="utf-8") as f:
             return json.load(f)
+    cache_file = write_path
 
     gdf_ref = load_geojson(Path(ref_path))
     gdf_bounds = load_geojson(Path(bounds_path))
@@ -1112,8 +1170,9 @@ def run_all_pairwise_tests(
         # pairs are read directly from disk and added to results.
         to_compute: list[tuple[SelectedCondition, SelectedCondition]] = []
         for (cond_a, cond_b) in pairs:
-            cp = _cache_path_pairwise(
-                cache_dir, cond_a.label, cond_b.label, metric=metric,
+            cp = _cache_path_pairwise_read(
+                cache_dir, cond_a.label, cond_b.label,
+                metric=metric, buffer_metres=buffer_metres,
             )
             if not force and cp.is_file():
                 with open(cp, encoding="utf-8") as f:
@@ -1159,12 +1218,20 @@ def run_all_pairwise_tests(
 
     # Sequential path (workers <= 1)
     for i, (cond_a, cond_b) in enumerate(pairs, 1):
+        # Resolve read path (may fall back to legacy 20 m F1 layout) and
+        # canonical write path separately so newly computed results land
+        # in the buffer-aware location.
+        read_cp = _cache_path_pairwise_read(
+            cache_dir, cond_a.label, cond_b.label,
+            metric=metric, buffer_metres=buffer_metres,
+        )
         cp = _cache_path_pairwise(
-            cache_dir, cond_a.label, cond_b.label, metric=metric,
+            cache_dir, cond_a.label, cond_b.label,
+            metric=metric, buffer_metres=buffer_metres,
         )
 
-        if not force and cp.is_file():
-            with open(cp, encoding="utf-8") as f:
+        if not force and read_cp.is_file():
+            with open(read_cp, encoding="utf-8") as f:
                 result = json.load(f)
             results.append(result)
             cached += 1
@@ -1641,7 +1708,24 @@ def build_cli() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--primary-buffer", type=int, default=20,
-        help="Buffer for threshold selection + pairwise (default: 20)",
+        help=(
+            "Buffer used for pairwise permutation tests, tier "
+            "construction, and tier-table outputs (default: 20). Per-cell "
+            "thresholds are by default selected at the same buffer; pass "
+            "--threshold-buffer to decouple them (Option A: fix "
+            "thresholds at one buffer, re-tier at another)."
+        ),
+    )
+    parser.add_argument(
+        "--threshold-buffer", type=int, default=None,
+        help=(
+            "Buffer used for per-cell threshold selection. Defaults to "
+            "--primary-buffer (the historical behaviour where threshold "
+            "selection and tier construction share a buffer). When set "
+            "explicitly (typically to 20 for the per-architecture "
+            "re-tiering work), thresholds are fixed at this buffer while "
+            "pairwise tests + tiering proceed at --primary-buffer."
+        ),
     )
     parser.add_argument(
         "--bootstrap", type=int, default=DEFAULT_BOOTSTRAP,
@@ -1719,6 +1803,12 @@ def main() -> int:
         Exit code: 0 = success, 1 = partial failure, 2 = fatal.
     """
     args = build_cli().parse_args()
+    # Default --threshold-buffer to --primary-buffer (preserves the
+    # historical behaviour where threshold selection and tier
+    # construction share a buffer). When explicitly supplied, the two
+    # decouple — see Patch B in the per-architecture re-tiering plan.
+    if args.threshold_buffer is None:
+        args.threshold_buffer = args.primary_buffer
     setup_logging()
 
     logger.info(
@@ -1779,6 +1869,7 @@ def main() -> int:
     metadata = {
         "name": config.get("metadata", {}).get("name", ""),
         "primary_buffer": args.primary_buffer,
+        "threshold_buffer": args.threshold_buffer,
         "buffers": args.buffers,
         "fdr_q": args.fdr_q,
         "n_permutations": args.n_permutations,
@@ -1840,10 +1931,19 @@ def main() -> int:
                 if all_cached and merged["buffers"]:
                     all_evaluations[cond.label][t] = merged
 
-    # Stage 3: Select thresholds
+    # Stage 3: Select thresholds at --threshold-buffer (defaults to
+    # --primary-buffer). Decoupling the two enables Option A re-tiering:
+    # fix per-cell thresholds at one buffer (e.g. 20 m) and re-run
+    # pairwise + tiering at another (e.g. 30 / 40 / 50 / 100 m).
+    if args.threshold_buffer != args.primary_buffer:
+        logger.info(
+            "Threshold selection at %dm; pairwise + tiering at %dm "
+            "(Option A semantics)",
+            args.threshold_buffer, args.primary_buffer,
+        )
     selected = select_best_thresholds(
         conditions, all_evaluations,
-        primary_buffer=args.primary_buffer,
+        primary_buffer=args.threshold_buffer,
         top_n=args.top_n,
         metric=args.metric,
     )
@@ -1875,8 +1975,10 @@ def main() -> int:
         expected_pairs = len(selected) * (len(selected) - 1) // 2
         missing_pairs = 0
         for a, b in itertools.combinations(selected, 2):
-            cp = _cache_path_pairwise(
-                cache_dir, a.label, b.label, metric=args.metric,
+            cp = _cache_path_pairwise_read(
+                cache_dir, a.label, b.label,
+                metric=args.metric,
+                buffer_metres=args.primary_buffer,
             )
             if cp.is_file():
                 with open(cp, encoding="utf-8") as f:
