@@ -1,0 +1,34 @@
+{
+  "stratum_dir": "/home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2",
+  "metric": "mcc",
+  "primary_buffer": 20,
+  "buffers": [
+    20,
+    30,
+    40,
+    50,
+    100
+  ],
+  "methodology_note": "MCC tiers are buffer-independent by methodology \u2014 the tile-level MCC permutation test does not take a buffer argument. Spearman rho across buffers is 1.0 by construction; this is correct, not degenerate.",
+  "fallback_from_primary_count": 0,
+  "n_other_buffers": 4,
+  "spearman": {
+    "30_vs_20": {
+      "rho": 1.0,
+      "p_value": 0.0
+    },
+    "40_vs_20": {
+      "rho": 1.0,
+      "p_value": 0.0
+    },
+    "50_vs_20": {
+      "rho": 1.0,
+      "p_value": 0.0
+    },
+    "100_vs_20": {
+      "rho": 1.0,
+      "p_value": 0.0
+    }
+  },
+  "n_conditions": 87
+}

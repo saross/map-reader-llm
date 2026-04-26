@@ -1,0 +1,34 @@
+{
+  "stratum_dir": "/home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2",
+  "metric": "f1",
+  "primary_buffer": 20,
+  "buffers": [
+    20,
+    30,
+    40,
+    50,
+    100
+  ],
+  "methodology_note": "F1 tiers constructed independently at each buffer using per-cell thresholds fixed at the primary buffer (20 m) via --threshold-buffer (Option A). Spearman rho values are substantive.",
+  "fallback_from_primary_count": 0,
+  "n_other_buffers": 4,
+  "spearman": {
+    "30_vs_20": {
+      "rho": 0.9938829023765908,
+      "p_value": 4.017644818001347e-83
+    },
+    "40_vs_20": {
+      "rho": 0.994983553433884,
+      "p_value": 8.960786515823546e-87
+    },
+    "50_vs_20": {
+      "rho": 0.9942992593783995,
+      "p_value": 2.0255696877443026e-84
+    },
+    "100_vs_20": {
+      "rho": 0.9943629402357261,
+      "p_value": 1.2582504471397104e-84
+    }
+  },
+  "n_conditions": 87
+}
