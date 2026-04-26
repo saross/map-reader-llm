@@ -1,9 +1,9 @@
 # Leaderboard (F1 tiers) — 50m buffer
 
-**Generated**: 2026-04-26T00:14:53.584942+00:00
+**Generated**: 2026-04-26T07:18:22.387929+00:00
 **Tiering metric**: F1
 **FDR q**: 0.05
-**Conditions**: 21 in 8 tier(s)
+**Conditions**: 21 in 6 tier(s)
 
 ## Tier 1 (F1: 0.724–0.724)
 
@@ -41,24 +41,14 @@
 | 10 | h8-track1-image-exploratory-pure-positive-4hp | 1-pass | 1 | image | 1 | 1 | 0.724 | [0.680, 0.760] | 0.615 | 0.879 | 0.162 |
 | 11 | h8-track1-image-plus-hp | 1-pass | 1 | image | 1 | 1 | 0.730 | [0.687, 0.765] | 0.620 | 0.887 | 0.098 |
 
-## Tier 6 (F1: 0.654–0.654)
+## Tier 6 (F1: 0.654–0.704)
 
 | # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
 | 12 | h5-track2-text-terse | 1-pass | 1 | text | 1 | 1 | 0.654 | [0.599, 0.708] | 0.530 | 0.853 | 0.000 |
 | 13 | h8-track2-text-plus-hp | 1-pass | 1 | text | 1 | 1 | 0.654 | [0.600, 0.702] | 0.527 | 0.865 | 0.000 |
-
-## Tier 7 (F1: 0.690–0.704)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
 | 14 | h8-track1-image-scale-8 | 1-pass | 1 | image | 1 | 1 | 0.704 | [0.663, 0.741] | 0.599 | 0.855 | 0.147 |
 | 15 | h8-track1-image-scale-4 | 1-pass | 1 | image | 1 | 1 | 0.690 | [0.636, 0.738] | 0.575 | 0.865 | 0.133 |
-
-## Tier 8 (F1: 0.667–0.699)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
 | 16 | h5-track2-text-verbose | 1-pass | 1 | text | 1 | 1 | 0.667 | [0.614, 0.715] | 0.559 | 0.828 | 0.081 |
 | 17 | h8-track1-image-canonical | 1-pass | 1 | image | 1 | 1 | 0.689 | [0.645, 0.727] | 0.603 | 0.805 | 0.098 |
 | 18 | h8-track1-image-exploratory-pure-positive-2hp | 1-pass | 1 | image | 1 | 1 | 0.678 | [0.627, 0.723] | 0.561 | 0.857 | 0.000 |

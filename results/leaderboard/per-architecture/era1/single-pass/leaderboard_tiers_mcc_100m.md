@@ -1,6 +1,6 @@
 # Leaderboard (MCC tiers) — 100m buffer
 
-**Generated**: 2026-04-25T13:29:49.190806+00:00
+**Generated**: 2026-04-26T07:18:22.391792+00:00
 **Tiering metric**: MCC
 **FDR q**: 0.05
 **Note**: MCC is buffer-invariant in this codebase (tile-level binary classification). Threshold selection still maximises F1 at the primary buffer for cross-metric alignment; the per-buffer F1 column reflects that.

@@ -1,6 +1,6 @@
 # Leaderboard (F1 tiers) — 50m buffer
 
-**Generated**: 2026-04-26T00:14:54.012346+00:00
+**Generated**: 2026-04-26T07:18:22.399318+00:00
 **Tiering metric**: F1
 **FDR q**: 0.01
 **Conditions**: 21 in 6 tier(s)
@@ -25,18 +25,18 @@
 | 4 | h4-config-default | 1-pass | 1 | image | 1 | 1 | 0.734 | [0.695, 0.769] | 0.630 | 0.879 | 0.214 |
 | 5 | h5-track1-image-terse | 1-pass | 1 | image | 1 | 1 | 0.717 | [0.675, 0.750] | 0.608 | 0.872 | 0.223 |
 
-## Tier 4 (F1: 0.650–0.655)
+## Tier 4 (F1: 0.650–0.726)
 
 | # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
 | 6 | h8-track2-text-canonical | 1-pass | 1 | text | 1 | 1 | 0.650 | [0.590, 0.700] | 0.521 | 0.866 | 0.000 |
 | 7 | h8-track2-text-pure-positive-canon | 1-pass | 1 | text | 1 | 1 | 0.655 | [0.599, 0.705] | 0.526 | 0.866 | 0.000 |
+| 8 | h5-track1-image-verbose | 1-pass | 1 | image | 1 | 1 | 0.726 | [0.686, 0.761] | 0.627 | 0.863 | 0.281 |
 
 ## Tier 5 (F1: 0.724–0.730)
 
 | # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 8 | h5-track1-image-verbose | 1-pass | 1 | image | 1 | 1 | 0.726 | [0.686, 0.761] | 0.627 | 0.863 | 0.281 |
 | 9 | h4-canonical-first | 1-pass | 1 | image | 1 | 1 | 0.730 | [0.687, 0.765] | 0.620 | 0.887 | 0.098 |
 | 10 | h8-track1-image-exploratory-pure-positive-4hp | 1-pass | 1 | image | 1 | 1 | 0.724 | [0.680, 0.760] | 0.615 | 0.879 | 0.162 |
 | 11 | h8-track1-image-plus-hp | 1-pass | 1 | image | 1 | 1 | 0.730 | [0.687, 0.765] | 0.620 | 0.887 | 0.098 |
