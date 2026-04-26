@@ -13387,3 +13387,94 @@ ceiling.
   (14 cells); `planning/session-78-matrix-calibration-summary.md`;
   `scripts/compute_session78_calibration_matrix.py`.
 - Commits: matrix data `6d1cad27`; calibration crosstab `88d6b55b`.
+
+## Observation 278: PV-architecture benefit was characterised on the 384-px Era 2 scope only; the 384-px proposer profile (higher recall than 512-px) is structurally favourable for verifier filtering — paper-framing caveat (2026-04-26)
+
+### The finding
+
+The cross-architecture paired analysis (19 of 20 paired proposer
+configurations show PV helps significantly under BH-FDR q=0.05; never
+significantly hurts; Stage 4b of the per-architecture rebuild, commit
+range `03bf71c8..a80a9de9`) was conducted exclusively on the **Era 2
+production scope** (487-tile, 384-px). Era 1 (340-tile, 512-px) and
+Era 3 (327-tile, 384-px subset) contain no PV-architecture cells in
+the inventory; the same paired question is therefore not directly
+answerable on those scopes without additional verifier API runs
+(estimated ~$30–60 for Era 1, ~$5–10 for Era 3 at flex Flash).
+
+### Why a methodological footnote is needed
+
+The 384-px consensus proposer profile is **structurally favourable for
+verifier filtering**: at 384 px tile size, the consensus-only proposer
+produces a higher-recall candidate set than the 512-px equivalent,
+giving the verifier more material to improve on. H11 documented that
+384 px is the proposer-F1-optimal tile size on image (inverted-U with
+peak at 384 px). The verifier's marginal benefit therefore depends on
+the proposer's recall headroom, which itself depends on tile size —
+extrapolating "PV helps" beyond the 384-px regime is plausible but not
+directly evidenced by the cross-architecture paired analysis.
+
+### Suggested paper framing
+
+A one-sentence methodological footnote when the cross-architecture
+paired headline is introduced:
+
+> *PV benefit was evaluated on the 384-px Era 2 scope (487 tiles).
+> Tile-size effects on the proposer (H11) show 384 px is the
+> F1-optimal tile size on image, with higher recall than 512 px;
+> verifier benefit at other tile sizes was not directly tested but is
+> bounded by the proposer-side tile-size sensitivity reported in
+> §H11.*
+
+Retain the "Era 2 production scope" qualifier in the cross-architecture
+paired headline; do not drop it to the Methods section.
+
+### Why no new API runs are warranted
+
+Era 1 PV (~$30–60) and Era 3 PV (~$5–10) would be defensive additions
+that mostly reproduce the Era 2 finding at scope variants. The 19/20
+effect size in Era 2 is overwhelming evidence on its own (direction
+consistent across all configurations, magnitude 0.04–0.27 ΔF1, never
+significantly hurts under BH-FDR). Cross-tile-size verifier
+characterisation can be deferred to follow-up work or addressed via
+the H11 bounding caveat above. The project is materially over-budget
+on API spend; the cost-benefit does not justify the runs.
+
+The only reason to revisit is if a co-author or reviewer specifically
+pushes for it — at which point Era 3 (~$5–10) is the cheap defensive
+add.
+
+### Implications for paper structure
+
+1. **Cross-architecture paired headline phrasing**: "On the Era 2
+   production scope, PV helps on 19 of 20 paired proposer
+   configurations and never significantly hurts" — keep the scope
+   qualifier in-line, not buried.
+2. **H11 cross-reference in Discussion**: note that the PV benefit
+   relies on proposer-side recall headroom, which H11 demonstrates
+   is maximised at 384 px tile size.
+3. **No new API runs**: deferred per cost-benefit; Era 3 PV available
+   as a cheap defensive add if reviewer challenge arises.
+
+### Findable later
+
+Search terms: PV evaluation scope, 384-px PV, tile-size verifier
+interaction, Era 1 PV gap, Era 3 PV gap, H11 cross-reference,
+proposer recall headroom, verifier filtering benefit, cross-
+architecture paired Era 2 only, methodological footnote PV scope,
+recall-headroom argument.
+
+### Related observations and artefacts
+
+- **H11** (tile-size effect on proposer F1; image inverted-U with peak
+  at 384 px; higher recall than 512 px): bounding context for
+  cross-tile-size verifier-benefit interpretation.
+- **Cross-architecture paired analysis**:
+  `results/leaderboard/per-architecture/cross-architecture-paired-era2_{f1,mcc}.md`
+- **Per-architecture rebuild**: commit range `03bf71c8..a80a9de9`
+  (12-stratum F1+MCC tier tree); Era 2 PV stratum specifically at
+  `results/leaderboard/per-architecture/era2/pv/`.
+- **Inventory coverage gap**: `planning/condition-inventory-with-s78.json`
+  shows Era 1 single-pass+PV = 0, Era 1 pv = 0, Era 3 single-pass+PV
+  = 0, Era 3 pv = 0 — the structural reason no paired test exists
+  outside Era 2.
