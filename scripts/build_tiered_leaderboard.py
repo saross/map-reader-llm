@@ -49,10 +49,22 @@ Inputs:
     - Evaluation bounds (``inputs/vectors/bounds/*.geojson``)
 
 Outputs:
-    - ``leaderboard_tiers_{buffer}m.md`` — Markdown table grouped by tier
-    - ``leaderboard_tiers_{buffer}m.json`` — Machine-readable with provenance
+    - ``leaderboard_tiers_{primary_buffer}m.md`` — Markdown table grouped by tier
+      (one MD per invocation, named for ``--primary-buffer``)
+    - ``leaderboard_tiers_{primary_buffer}m.json`` — Machine-readable with provenance
     - ``leaderboard_all_evaluations.json`` — Full threshold × buffer sweep
-    - ``leaderboard_tiers_{buffer}m.json`` includes BH-FDR correction details
+    - ``leaderboard_tiers_{primary_buffer}m.json`` includes BH-FDR correction details
+
+Note: prior to commit fixing Task #13, this script wrote one MD per
+buffer in ``--buffers`` per invocation (all rendered from the
+primary-buffer ``tiers``). That caused per-buffer F1 re-tiering
+drivers — which loop over primary buffers but pass the full
+``--buffers`` list each time — to overwrite each other's MD outputs.
+The MD writer now emits one MD per invocation, named for
+``--primary-buffer``. To produce MD at additional buffers, either
+re-render from the per-buffer JSONs (see
+``scripts/regenerate_per_arch_md_from_json.py``) or invoke this
+script again with a different ``--primary-buffer``.
 
 Exit Codes:
     0 - Success
@@ -2015,12 +2027,20 @@ def main() -> int:
         f"_q{int(round(args.fdr_q * 100)):02d}"
     )
 
-    for buf_m in args.buffers:
-        out_md = (
-            args.output_dir
-            / f"leaderboard_tiers{metric_infix}{fdr_infix}_{buf_m}m.md"
-        )
-        write_leaderboard_markdown(tiers, buf_m, out_md, metadata)
+    # Render Markdown only at the primary buffer. Earlier versions
+    # rendered MD at every buffer in ``args.buffers`` using the same
+    # primary-buffer-specific ``tiers`` data, which caused per-buffer
+    # F1 re-tiering drivers (running once per primary buffer with the
+    # full ``--buffers`` list) to overwrite each other's MD outputs.
+    # The JSON below is also primary-buffer-only by the same logic.
+    out_md = (
+        args.output_dir
+        / f"leaderboard_tiers{metric_infix}{fdr_infix}_"
+        f"{args.primary_buffer}m.md"
+    )
+    write_leaderboard_markdown(
+        tiers, args.primary_buffer, out_md, metadata,
+    )
 
     out_json = (
         args.output_dir
