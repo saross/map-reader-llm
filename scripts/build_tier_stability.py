@@ -55,12 +55,18 @@ POPULATED_STRATA = [
 def _load_tier_json(stratum_dir: Path, metric: str, buf: int) -> dict | None:
     """Load the tier JSON for one (stratum, metric, buffer) triple.
 
-    The 12-stratum redesign writes a tier JSON only at the primary
-    buffer (20 m); the markdown tier files at the other buffers
-    inherit the same tier assignments from the primary build (see
-    methodology note in the docstring of this module). For
-    buffer != 20 m we therefore fall back to the 20 m JSON and treat
-    its tier assignments as the assignment at every buffer.
+    Per-buffer F1 re-tiering (2026-04-26) writes a tier JSON for F1 at
+    every buffer; the script reads ``leaderboard_tiers_{buf}m.json``
+    for F1 and falls back to the 20 m primary JSON only if the
+    per-buffer file is absent (e.g. for strata that haven't been
+    re-run yet).
+
+    MCC tier construction is buffer-independent (the tile-level MCC
+    permutation test does not take a buffer argument), so MCC writes
+    only one JSON per stratum at the primary buffer
+    (``leaderboard_tiers_mcc_20m.json``). For MCC at non-primary
+    buffers the script always falls back to the 20 m JSON; this is
+    correct by methodology, not a degenerate output.
 
     Returns None if even the primary-buffer JSON is missing.
     """
