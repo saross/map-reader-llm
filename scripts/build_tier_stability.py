@@ -202,21 +202,58 @@ def build_stability_table(
     metric_label = metric.upper()
     score_col = "F1@20m" if metric == "f1" else "MCC@20m"
 
-    # Detect the all-fallback case (every non-primary buffer fell
-    # back to the primary JSON), which is the standard outcome for
-    # the current build (tier assignments are buffer-invariant by
-    # construction).
+    # Track the legacy "fallback to primary JSON" state for the JSON
+    # sidecar. With Option A re-tiering (2026-04-26) the F1 stability
+    # tables are built from genuinely independent per-buffer JSONs;
+    # MCC tables continue to fall back by methodology. The count is no
+    # longer surfaced in the markdown but is preserved in the JSON for
+    # downstream auditing.
     fallback_count = sum(
         1 for buf, p in payloads.items()
         if buf != DEFAULT_PRIMARY and p.get("__fallback_from_primary__")
     )
     n_other = len([b for b in BUFFERS if b != DEFAULT_PRIMARY])
 
+    # Methodology text branches by metric. F1 tiers are constructed
+    # independently at each buffer (Option A re-tiering, 2026-04-26):
+    # per-cell thresholds are fixed at the primary buffer (20 m) via
+    # --threshold-buffer, and pairwise tests + tier construction run
+    # at each of 20 / 30 / 40 / 50 / 100 m. Spearman rho is therefore
+    # substantive. MCC tiers are identical across buffers by methodology
+    # — the tile-level MCC permutation test does not take a buffer
+    # argument — so rho = 1.0 is correct, not degenerate.
+    if metric == "mcc":
+        methodology_paragraph = (
+            "**MCC tiers are buffer-independent by methodology.** The "
+            "MCC permutation test (`run_permutation_test_mcc`) operates "
+            "on tile-level binary classifications which do not depend "
+            "on the buffer used for spatial matching during F1 "
+            "evaluation. The greedy-clique tiering also sorts by a "
+            "single buffer-independent MCC value per condition. "
+            "Therefore the tier assignments at 20 / 30 / 40 / 50 / "
+            "100 m are identical, and Spearman rho across buffers is "
+            "1.0 by construction. This is not a degenerate output; it "
+            "correctly reflects that MCC at the tile level summarises "
+            "the entire confusion matrix without buffer-dependent "
+            "matching geometry."
+        )
+    else:
+        methodology_paragraph = (
+            "**F1 tiers are constructed independently at each buffer.** "
+            "Per-cell thresholds are fixed at the primary buffer "
+            f"({DEFAULT_PRIMARY} m) via the `--threshold-buffer` flag of "
+            "`build_tiered_leaderboard.py`; pairwise permutation tests "
+            "and greedy-clique tier construction then run at each of "
+            f"{BUFFERS} m using those fixed thresholds (Option A "
+            "semantics). Spearman rho values reported below are "
+            "therefore substantive — they surface buffer-dependent "
+            "tier reorganisations rather than a tautology."
+        )
+
     lines = [
         f"# Tier stability ({metric_label}) — "
         f"{stratum_dir.parent.name} {stratum_dir.name}",
         "",
-        "**Generated**: Session 79 redesign (2026-04-25)",
         f"**Metric**: {metric_label}",
         f"**Stratum**: {stratum_dir.parent.name} / {stratum_dir.name}",
         f"**Conditions**: {len(all_conditions)}",
@@ -232,21 +269,7 @@ def build_stability_table(
         "change); lower values surface buffer-dependent tier "
         "reorganisations.",
         "",
-        "**Important caveat**: in the current 12-stratum redesign "
-        "build, tiers are constructed once per stratum at the primary "
-        "buffer (20 m); the per-buffer markdown tier tables share the "
-        "same tier assignments and only differ in the per-row F1 "
-        "(or MCC) values displayed. Spearman rho across buffers is "
-        f"therefore 1.0 by construction (mathematically degenerate). "
-        f"The `tier@<buf>m` columns and Spearman rows are present "
-        "for downstream cross-stratum comparison but contain no "
-        "buffer-stability information beyond the trivial. Per-buffer "
-        "tier construction would 5x the pairwise computation cost "
-        "and is deferred.",
-        "",
-        f"**Fallback marker**: {fallback_count}/{n_other} non-primary "
-        "buffer files fell back to the primary-buffer JSON (the "
-        "expected behaviour with the current build).",
+        methodology_paragraph,
         "",
         "Note: ties (all conditions in one tier) make Spearman's rho "
         "undefined; the rho column reports `nan` in that case.",
@@ -303,12 +326,33 @@ def build_stability_table(
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     LOGGER.info("Wrote tier-stability table: %s", output_path)
 
-    # JSON sidecar for downstream consumers
+    # JSON sidecar for downstream consumers. ``methodology_note`` is
+    # the metric-specific short form of the markdown methodology
+    # paragraph; ``fallback_count`` records the legacy
+    # primary-JSON-fallback state (always 0 for F1 post-Option-A, equal
+    # to the non-primary buffer count for MCC by methodology).
+    if metric == "mcc":
+        methodology_note = (
+            "MCC tiers are buffer-independent by methodology — the "
+            "tile-level MCC permutation test does not take a buffer "
+            "argument. Spearman rho across buffers is 1.0 by "
+            "construction; this is correct, not degenerate."
+        )
+    else:
+        methodology_note = (
+            "F1 tiers constructed independently at each buffer using "
+            f"per-cell thresholds fixed at the primary buffer "
+            f"({DEFAULT_PRIMARY} m) via --threshold-buffer (Option A). "
+            "Spearman rho values are substantive."
+        )
     summary = {
         "stratum_dir": str(stratum_dir),
         "metric": metric,
         "primary_buffer": DEFAULT_PRIMARY,
         "buffers": BUFFERS,
+        "methodology_note": methodology_note,
+        "fallback_from_primary_count": fallback_count,
+        "n_other_buffers": n_other,
         "spearman": {
             f"{buf}_vs_20": {"rho": rho, "p_value": p}
             for buf, (rho, p) in spearman.items()
