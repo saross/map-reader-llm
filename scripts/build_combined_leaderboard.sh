@@ -118,8 +118,17 @@ echo "  cache seeded: $(find "$CACHE_DIR" -name '*.json' | wc -l) files"
 
 # ---------------------------------------------------------------------------
 # Stage B: F1 runs, one per primary buffer, q=0.05 then q=0.01.
-# Each invocation passes only its own primary buffer to --buffers so the
-# per-buffer .md files do not overwrite each other.
+#
+# Each invocation passes --buffers "20 <primary>" — 20 m is needed for
+# threshold selection (--threshold-buffer 20, Option A); the primary is
+# needed for tier construction + display. The script writes one .md per
+# buffer in --buffers, so up to 2 .md files are written: a stale 20m.md
+# (showing primary-buffer tiering with 20m metric values) and a correct
+# <primary>m.md. We immediately archive the correct file under the final
+# combined name before the next pass overwrites it.
+#
+# The primary=20 case is special: --buffers 20 --primary-buffer 20 writes
+# only the 20m.md file, which IS the correct primary=20 tiering.
 # ---------------------------------------------------------------------------
 run_f1_pass() {
     local buffer="$1"
@@ -129,13 +138,22 @@ run_f1_pass() {
     local tag="era${ERA}-combined-f1-q$(echo "$fdr_q" | tr -d '.')-buf${buffer}m"
     local log_file="${LOG_DIR}/${tag}.log"
 
+    # Buffer set: just the primary if primary=20 (no separate threshold
+    # buffer needed), else "20 <primary>" so threshold selection has data.
+    local buffers_arg
+    if [[ "$buffer" == "20" ]]; then
+        buffers_arg=("--buffers" "20")
+    else
+        buffers_arg=("--buffers" "20" "$buffer")
+    fi
+
     echo "[$(date -u +%H:%M:%S)] $tag"
     "$PYTHON" "$SCRIPT" \
         --inventory "$INVENTORY" \
         --era "$ERA" \
         --bounds "$BOUNDS" \
         "${STATUS_ARGS[@]}" \
-        --buffers "$buffer" \
+        "${buffers_arg[@]}" \
         --primary-buffer "$buffer" \
         --threshold-buffer 20 \
         --metric f1 \
@@ -150,12 +168,30 @@ run_f1_pass() {
         --output-dir "$OUT_DIR" \
         > "$log_file" 2>&1
     local rc=$?
-    if [[ $rc -eq 0 ]]; then
-        echo "    OK"
-    else
+    if [[ $rc -ne 0 ]]; then
         echo "    FAILED (rc=$rc, see $log_file)"
         return $rc
     fi
+
+    # Preserve the correct .md (matching primary buffer) under the final
+    # combined name. The 20m.md from a non-20m primary run is stale and
+    # gets discarded on the next 20m primary run anyway.
+    local q_suffix=""
+    if [[ "$fdr_q" == "0.01" ]]; then
+        q_suffix="_q01"
+    fi
+    local src_md="${OUT_DIR}/leaderboard_tiers${q_suffix}_${buffer}m.md"
+    local src_json="${OUT_DIR}/leaderboard_tiers${q_suffix}_${buffer}m.json"
+    local dst_md="${OUT_DIR}/leaderboard_tiers_f1${q_suffix}_${buffer}m.md"
+    local dst_json="${OUT_DIR}/leaderboard_tiers_f1${q_suffix}_${buffer}m.json"
+    if [[ -f "$src_md" ]]; then
+        cp -f "$src_md" "$dst_md"
+    fi
+    if [[ -f "$src_json" ]]; then
+        cp -f "$src_json" "$dst_json"
+    fi
+
+    echo "    OK -> $(basename "$dst_md")"
 }
 
 for B in "${BUFFER_LIST[@]}" ; do
@@ -208,23 +244,22 @@ run_mcc_pass "0.05"
 run_mcc_pass "0.01" --skip-pairwise
 
 # ---------------------------------------------------------------------------
-# Stage D: rename outputs from script-native to combined naming.
-#   leaderboard_tiers_<B>m.{md,json}        -> leaderboard_tiers_f1_<B>m.{md,json}
-#   leaderboard_tiers_q01_<B>m.{md,json}    -> leaderboard_tiers_f1_q01_<B>m.{md,json}
-#   leaderboard_tiers_mcc_20m.{md,json}     -> leaderboard_tiers_mcc.{md,json}
-#   leaderboard_tiers_mcc_q01_20m.{md,json} -> leaderboard_tiers_mcc_q01.{md,json}
+# Stage D: clean up script-native filenames and finalise MCC names.
+#
+# F1: each pass already preserved its primary-buffer .md and .json under
+# the combined name (leaderboard_tiers_f1_<B>m.{md,json}). The native-named
+# files (leaderboard_tiers_<B>m.{md,json}) left behind are stale (they
+# reflect the LAST primary's tiering rendered at each buffer) and must be
+# removed to avoid confusion.
+#
+# MCC: the script's native filename is leaderboard_tiers_mcc_20m.{md,json}.
+# Rename to the buffer-independent leaderboard_tiers_mcc.{md,json}.
 # ---------------------------------------------------------------------------
-echo "[$(date -u +%H:%M:%S)] Renaming outputs to combined convention"
+echo "[$(date -u +%H:%M:%S)] Cleaning up native-named files and finalising MCC"
 for B in "${BUFFER_LIST[@]}" ; do
     for ext in md json ; do
-        if [[ -f "${OUT_DIR}/leaderboard_tiers_${B}m.${ext}" ]]; then
-            mv -f "${OUT_DIR}/leaderboard_tiers_${B}m.${ext}" \
-                  "${OUT_DIR}/leaderboard_tiers_f1_${B}m.${ext}"
-        fi
-        if [[ -f "${OUT_DIR}/leaderboard_tiers_q01_${B}m.${ext}" ]]; then
-            mv -f "${OUT_DIR}/leaderboard_tiers_q01_${B}m.${ext}" \
-                  "${OUT_DIR}/leaderboard_tiers_f1_q01_${B}m.${ext}"
-        fi
+        rm -f "${OUT_DIR}/leaderboard_tiers_${B}m.${ext}" \
+              "${OUT_DIR}/leaderboard_tiers_q01_${B}m.${ext}"
     done
 done
 for ext in md json ; do
