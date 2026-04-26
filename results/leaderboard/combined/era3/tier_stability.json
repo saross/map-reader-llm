@@ -1,0 +1,34 @@
+{
+  "stratum_dir": "/home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era3/consensus",
+  "metric": "f1",
+  "primary_buffer": 20,
+  "buffers": [
+    20,
+    30,
+    40,
+    50,
+    100
+  ],
+  "methodology_note": "F1 tiers constructed independently at each buffer using per-cell thresholds fixed at the primary buffer (20 m) via --threshold-buffer (Option A). Spearman rho values are substantive.",
+  "fallback_from_primary_count": 0,
+  "n_other_buffers": 4,
+  "spearman": {
+    "30_vs_20": {
+      "rho": NaN,
+      "p_value": 1.0
+    },
+    "40_vs_20": {
+      "rho": 1.0,
+      "p_value": 1.0
+    },
+    "50_vs_20": {
+      "rho": NaN,
+      "p_value": 1.0
+    },
+    "100_vs_20": {
+      "rho": NaN,
+      "p_value": 1.0
+    }
+  },
+  "n_conditions": 14
+}

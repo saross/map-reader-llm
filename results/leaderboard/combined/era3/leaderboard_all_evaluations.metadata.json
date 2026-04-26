@@ -1,0 +1,23 @@
+{
+  "metadata_version": "1.0",
+  "schema_description": "Resolved bootstrap-CI metadata sidecar for leaderboard_all_evaluations.json (combined / cross-architecture, Era 3).",
+  "target_file": "leaderboard_all_evaluations.json",
+  "generated_by_script": "scripts/build_tiered_leaderboard.py",
+  "generation_timestamp_iso": "2026-04-26T00:00:00+00:00",
+  "bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "resampling_unit": "tile_level",
+    "methodology": "percentile bootstrap, 95% CI (2.5/97.5 quantiles)"
+  },
+  "permutation_test": {
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "in_file_content": {
+    "script": "build_tiered_leaderboard.py",
+    "version": "1.0.0",
+    "n_conditions": 14
+  },
+  "notes": "Era 3 combined / cross-architecture leaderboard. Era 3 contains a single architecture (consensus, N=14), so the combined view is identical to the within-architecture consensus view at results/leaderboard/per-architecture/era3/consensus/. Files copied verbatim from that source on 2026-04-26."
+}
