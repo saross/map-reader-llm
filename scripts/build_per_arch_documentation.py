@@ -143,9 +143,22 @@ def _f1_tier_stability_summary() -> str:
     worst_str = ", ".join(
         f"`{label}` (median rho = {rho:+.3f})" for label, rho in worst_two
     )
+    n_usable = len(rho_records)
+    n_attempted = 7 * 4  # 7 populated strata x 4 non-primary buffers
+    n_undefined = n_attempted - n_usable
+    undef_note = (
+        ""
+        if n_undefined == 0
+        else (
+            f" ({n_undefined} of {n_attempted} buffer comparisons "
+            "returned undefined rho — one or both rank vectors had all "
+            "ties; see the per-stratum tables.)"
+        )
+    )
     lines = [
-        "**Headline F1 tier-stability summary** (across the 7 "
-        "populated strata x 4 non-primary buffers, 28 (rho, p) pairs):",
+        f"**Headline F1 tier-stability summary** (across the 7 "
+        f"populated strata x 4 non-primary buffers; {n_usable}/{n_attempted} "
+        f"buffer comparisons yielded a defined Spearman rho):",
         "",
         f"- Median Spearman rho: **{median_rho:+.3f}**",
         f"- Range: {min_record['rho']:+.3f} "
@@ -153,7 +166,8 @@ def _f1_tier_stability_summary() -> str:
         f"to {max_record['rho']:+.3f} "
         f"(`{max_record['stratum']}` vs {max_record['buffer_vs_20m']})",
         f"- Strata with the largest cross-buffer F1 tier "
-        f"reorganisation (lowest per-stratum median rho): {worst_str}.",
+        f"reorganisation (lowest per-stratum median rho): "
+        f"{worst_str}.{undef_note}",
     ]
     return "\n".join(lines)
 
