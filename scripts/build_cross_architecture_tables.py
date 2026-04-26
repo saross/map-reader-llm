@@ -40,7 +40,6 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-import numpy as np
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -162,7 +161,7 @@ def build_flat_table(
     lines = [
         f"# {title}",
         "",
-        f"**Generated**: Session 79 redesign (2026-04-25)",
+        "**Generated**: Session 79 redesign (2026-04-25)",
         f"**Era**: {era}",
         f"**Buffer**: {buf} m",
         f"**Metric**: {metric_label}",
@@ -436,11 +435,11 @@ def build_paired_table(era: int, metric: str, output_dir: Path) -> Path:
     lines = [
         f"# Cross-architecture paired comparison — Era {era}, {metric_label}",
         "",
-        f"**Generated**: Session 79 redesign (2026-04-25)",
+        "**Generated**: Session 79 redesign (2026-04-25)",
         f"**Era**: {era}",
         f"**Metric**: {metric_label}",
         f"**Permutations**: {N_PERMUTATIONS:,}, seed={SEED}",
-        f"**FDR**: BH at q=0.05 within Era",
+        "**FDR**: BH at q=0.05 within Era",
         "",
         "Pairs of architectures sharing the same proposer config tuple "
         "(model, config_version, instruction_file, thinking, T, "
@@ -494,45 +493,77 @@ def find_mc_precision_flags(output_dir: Path) -> Path:
     A test is flagged when the observed null-difference count <= 5
     (i.e., p <= 5/10000 = 0.0005). For p_value == 0/N the only
     valid conclusion is "p < 1/N"; flagged separately.
+
+    Coverage:
+    - F1: walks all 5 buffer tier JSONs per stratum (20 / 30 / 40 /
+      50 / 100 m) since the F1 permutation test is buffer-dependent
+      and per-buffer F1 re-tiering (2026-04-26) produces independent
+      pairwise sets at each buffer.
+    - MCC: only the 20 m JSON (the tile-level MCC permutation test is
+      buffer-independent — pairwise sets at other buffers are
+      identical by methodology).
     """
     flagged: list[dict] = []
+    seen_keys: set[tuple] = set()
+    f1_buffers = (20, 30, 40, 50, 100)
     for era in (1, 2, 3):
         for arch in ARCHITECTURES:
             for metric in ("f1", "mcc"):
-                payload = _load_tier_json(era, arch, metric, 20)
-                if payload is None:
-                    continue
-                n_perm = payload.get("metadata", {}).get(
-                    "n_permutations", N_PERMUTATIONS,
-                )
-                for r in payload.get("pairwise_tests", []):
-                    p = r.get("p_value", 1.0)
-                    # Reconstruct null-difference count from p_value
-                    # (since we don't store it directly).
-                    null_count = int(round(p * n_perm))
-                    if null_count <= 5:
-                        flagged.append({
-                            "era": era,
-                            "arch": arch,
-                            "metric": metric,
-                            "label_a": r.get("label_a"),
-                            "label_b": r.get("label_b"),
-                            "p_value": p,
-                            "n_permutations": n_perm,
-                            "approx_null_count": null_count,
-                            "is_zero_count": (null_count == 0),
-                        })
-    metric_label = "F1+MCC"
+                buffers_for_metric = f1_buffers if metric == "f1" else (20,)
+                for buf in buffers_for_metric:
+                    payload = _load_tier_json(era, arch, metric, buf)
+                    if payload is None:
+                        continue
+                    n_perm = payload.get("metadata", {}).get(
+                        "n_permutations", N_PERMUTATIONS,
+                    )
+                    for r in payload.get("pairwise_tests", []):
+                        p = r.get("p_value", 1.0)
+                        # Reconstruct null-difference count from
+                        # p_value (since we don't store it directly).
+                        null_count = int(round(p * n_perm))
+                        if null_count <= 5:
+                            label_a = r.get("label_a")
+                            label_b = r.get("label_b")
+                            # De-dupe across buffer files for MCC
+                            # (defensive — MCC only walks buf=20 above
+                            # but a future change could add buffers;
+                            # the tile-level permutation result is
+                            # identical across buffers).
+                            key = (era, arch, metric, buf, label_a, label_b)
+                            if key in seen_keys:
+                                continue
+                            seen_keys.add(key)
+                            flagged.append({
+                                "era": era,
+                                "arch": arch,
+                                "metric": metric,
+                                "buffer_metres": buf,
+                                "label_a": label_a,
+                                "label_b": label_b,
+                                "p_value": p,
+                                "n_permutations": n_perm,
+                                "approx_null_count": null_count,
+                                "is_zero_count": (null_count == 0),
+                            })
     lines = [
-        f"# Monte-Carlo precision flags",
+        "# Monte-Carlo precision flags",
         "",
-        "**Generated**: Session 79 redesign (2026-04-25)",
+        "**Generated**: per-buffer F1 re-tiering refresh (2026-04-26)",
         "",
         "Pairwise tests where the observed null-difference count is "
         "<= 5 (i.e., p <= 5/N). These p-values are precision-limited "
         "by the permutation count; the true p might be much smaller "
         "but cannot be distinguished from N=10K. For tests where the "
         "observed count is 0/N, the only valid conclusion is `p < 1/N`.",
+        "",
+        "**Coverage**: F1 pairwise tests are walked at all 5 buffers "
+        "(20 / 30 / 40 / 50 / 100 m) per stratum since the F1 "
+        "permutation test is buffer-dependent. MCC pairwise tests are "
+        "walked at the primary buffer (20 m) only — the tile-level "
+        "MCC permutation test is buffer-independent, so MCC pairwise "
+        "results at non-primary buffers are identical by methodology "
+        "and would only inflate counts.",
         "",
         f"Total flagged tests: {len(flagged)}",
         f"Of which p == 0/N (cannot bound below 1/N): "
@@ -546,14 +577,15 @@ def find_mc_precision_flags(output_dir: Path) -> Path:
         "",
         "## Flagged pairs",
         "",
-        "| Era | Arch | Metric | Label A | Label B | p | "
+        "| Era | Arch | Metric | Buffer | Label A | Label B | p | "
         "approx null count | zero count? |",
-        "|---:|:---|:---|:---|:---|---:|---:|:---:|",
+        "|---:|:---|:---|---:|:---|:---|---:|---:|:---:|",
     ]
     for r in flagged:
         zero_marker = "Y" if r["is_zero_count"] else ""
         lines.append(
             f"| {r['era']} | {r['arch']} | {r['metric']} | "
+            f"{r['buffer_metres']} m | "
             f"`{r['label_a']}` | `{r['label_b']}` | {r['p_value']:.4f} | "
             f"{r['approx_null_count']} | {zero_marker} |"
         )
