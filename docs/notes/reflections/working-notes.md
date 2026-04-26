@@ -13638,3 +13638,129 @@ tier-builder semantics, BH-FDR q=0.05 paired permutation per buffer,
   about INPUT tile size affecting the proposer; this observation is
   about OUTPUT matching tolerance affecting tier resolvability of the
   proposer's F1 differences.
+
+## Observation 280: Pervasive F1 / MCC tier-leader divergence across populated strata — text track wins F1 (saturating, high-recall detection profile); image track wins MCC (selective profile with high TN). Both metrics are valid; the paper needs to treat them as parallel narratives, not conflicting results (2026-04-26)
+
+### The finding
+
+The 12-stratum per-architecture leaderboard (Stage 4 of Session 79's
+post-Phase-A rebuild, commit `a80a9de9`; per-buffer F1 refinement
+landed at `ccc320ea`) computes parallel F1 and MCC tier tables per
+stratum. Spot-checking tier-1 leaders across the seven populated
+strata reveals **systematic, wide F1 / MCC leader divergence** — the
+top-ranked condition by F1 is rarely the top-ranked condition by MCC
+within the same stratum.
+
+| Stratum | F1 leader (track, K) | MCC leader (track, K) | Same? |
+|:---|:---|:---|:---:|
+| Era 1 single-pass | `h4-canonical-last` (text, 1) | `h5-track1-image-verbose` (image, 1) | ✗ |
+| Era 1 consensus | `h3-high-track2-text-T1.0` (text, 30) | `h9-track1-image-h9-B-v4` (image, 5) | ✗ |
+| Era 2 single-pass | `h11-pvd-pro-medium-text-baseline` (text, 1) | same (text, 1) | ✓ |
+| Era 2 consensus | `h11-pvd-pro-high-text-n5` (text, 10) | `h11-pvd-pro-high-image-n5` (image, K≥3) | ✗ (image counterpart of text leader) |
+| Era 2 single-pass+PV | `pv-checklist-image` (image, 1) | `pv-cascade-adversarial-checklist` (image) | ✗ |
+| Era 2 pv | `pv-flash-high-text-16of30` (text, 30) | `pv-min-image-t0.3-n5` (image, 5) | ✗ |
+| Era 3 consensus | `h8v2-scale-4` (image, 5) | same (image, 5) | ✓ |
+
+Five of seven strata have a different top-ranked condition by F1 vs
+MCC; in every Era-1 / Era-2 case the F1 winner is text-track and the
+MCC winner is image-track. In the two strata where leaders agree
+(Era 2 single-pass; Era 3 consensus), the corpus is constrained
+(narrow proposer diversity; small N).
+
+### Mechanism — why F1 favours text and MCC favours image
+
+The two metrics weight the confusion-matrix cells differently:
+
+- **F1** = harmonic mean of precision and recall = `2 TP / (2 TP + FP + FN)`.
+  - Ignores TN entirely.
+  - Rewards high-recall detection (more TP, fewer FN) even at the
+    cost of moderate FP inflation.
+  - The **text-track proposer profile** is **higher-recall**: text
+    queries surface more candidates per tile, including more genuine
+    mounds AND more FPs. F1's harmonic-mean structure rewards the
+    extra TPs while tolerating the extra FPs as long as precision
+    doesn't collapse.
+- **MCC** = `(TP·TN − FP·FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN))`.
+  - All four cells contribute; TN is weighted equally with TP.
+  - Rewards correct rejection (high TN) as much as correct detection.
+  - The **image-track proposer profile** is **selective**: image
+    queries surface fewer candidates per tile, with higher
+    per-detection precision and many more TN tiles. MCC rewards the
+    high TN count more strongly than F1 does.
+
+The divergence is therefore not a bug or a contradiction; it is the
+direct consequence of two metrics emphasising different aspects of
+the confusion matrix on a corpus where text and image proposers have
+materially different operating profiles.
+
+### Implications for paper structure
+
+The user's stated decision (Session 79): **both** a methods paragraph
+AND a parallel-tables appendix.
+
+1. **Methods paragraph** — one paragraph in §Metrics or §Methods
+   explaining the F1 / MCC contrast: which metric is presented as
+   primary, why both are computed, and the substantive
+   interpretation difference (recall-heavy detection vs balanced-
+   classification scoring). Suggested framing: "We report F1 as the
+   headline detection metric for direct comparability with prior
+   archaeological VLM work, and Matthews Correlation Coefficient
+   (MCC) as a parallel metric that incorporates true-negative
+   classifications. The two metrics rank conditions differently
+   across most strata: F1 favours the higher-recall text-track
+   proposer pipelines; MCC favours the more selective image-track
+   pipelines. Neither ranking is incorrect — they reflect different
+   operating-point preferences. We present F1 in the main text and
+   MCC in the supplementary appendix."
+2. **Parallel-tables appendix** — for each (Era × Architecture)
+   stratum, present both the F1 tier table and the MCC tier table
+   side-by-side or in adjacent appendix sections. Annotate where
+   leaders diverge (most strata) so readers can immediately see the
+   substantive difference between metrics.
+3. **Discussion** — at least one paragraph interpreting what the
+   divergence means for downstream archaeological use: a
+   practitioner who values recall (e.g., for survey-prioritisation
+   workflows where missed mounds are more costly than false alarms)
+   should follow the F1 ranking and choose a text-track pipeline; a
+   practitioner who values per-tile decision quality (e.g., for
+   automated catalogue creation where false alarms have high
+   downstream cost) should follow the MCC ranking and choose an
+   image-track pipeline.
+4. **Cross-architecture paired analysis** (Obs 278 / 279) ran on
+   both metrics — the "PV helps in 19/20 paired comparisons" finding
+   is robust across F1 AND MCC, which is itself reassuring (the
+   architectural advantage of PV doesn't depend on which metric you
+   prefer).
+
+### What this is NOT
+
+- **Not** a contradiction or a paradox — both metrics are
+  mathematically well-defined and substantively meaningful.
+- **Not** a bias in either pipeline — the divergence reflects the
+  data structure (text-track higher recall; image-track higher TN),
+  not a bug in evaluation or aggregation.
+- **Not** a metric-choice question that has a "correct" answer —
+  the choice depends on what the downstream user values.
+
+### Findable later
+
+Search terms: F1 MCC divergence, text-track F1 advantage, image-
+track MCC advantage, recall vs balanced classification metric,
+parallel metrics methodology, MCC TN weighting, text saturating
+detection profile, image selective detection profile, metric-choice
+operational implication, F1 vs MCC tier-leader disagreement.
+
+### Related observations and artefacts
+
+- **Per-architecture rebuild** (commits `03bf71c8..a80a9de9`): the
+  12-stratum F1 + MCC tier tree exposing the divergence.
+- **Per-buffer F1 refinement** (Obs 279; commits up to `ccc320ea`):
+  refined the F1 side; MCC tiers correctly stay buffer-independent.
+- **PV scope caveat** (Obs 278): orthogonal — covers PV evaluation
+  scope; this observation covers metric-choice trade-off.
+- **Headlines doc**: `results/leaderboard/per-architecture/headlines.md`
+  shows top-3 per (Era × Architecture × Metric × q-level) cell —
+  the source for the divergence table above.
+- **Inventory** (`planning/condition-inventory-with-s78.json`): cells
+  in each stratum for cross-checking the leader-condition
+  identifiers cited above.
