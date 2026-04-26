@@ -1,0 +1,47 @@
+2026-04-26 00:12:45,173 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git b4b67486
+2026-04-26 00:12:45,175 - INFO - __main__ - Resolved 21 conditions from inventory (era=1, track=None)
+2026-04-26 00:12:45,175 - INFO - __main__ - Resolved 21 conditions
+2026-04-26 00:12:45,175 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-04-26 00:12:45,177 - INFO - __main__ - Threshold selection at 20m; pairwise + tiering at 30m (Option A semantics)
+2026-04-26 00:12:45,177 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 21 conditions
+2026-04-26 00:12:45,177 - INFO - __main__ - Selected 21 conditions (best F1=0.631 at 20m)
+2026-04-26 00:12:45,177 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-04-26 00:12:45,183 - INFO - __main__ - FDR: 0/210 pairs significant at q=0.01 → 1 tiers
+2026-04-26 00:12:45,183 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_q01_20m.md
+2026-04-26 00:12:45,183 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_q01_30m.md
+2026-04-26 00:12:45,183 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_q01_40m.md
+2026-04-26 00:12:45,183 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_q01_50m.md
+2026-04-26 00:12:45,183 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_q01_100m.md
+2026-04-26 00:12:45,188 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_q01_30m.json
+2026-04-26 00:12:45,189 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era1/single-pass/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (F1, 30m buffer)
+========================================================================
+
+Tier 1 (F1: 0.627–0.686, 21 conditions)
+    1. h4-canonical-last                        F1=0.686  t=1
+    2. h8-track2-text-scale-4                   F1=0.640  t=1
+    3. h8-track2-text-scale-8                   F1=0.645  t=1
+    4. h4-config-default                        F1=0.671  t=1
+    5. h5-track1-image-terse                    F1=0.649  t=1
+    6. h8-track2-text-canonical                 F1=0.636  t=1
+    7. h8-track2-text-pure-positive-canon       F1=0.641  t=1
+    8. h5-track1-image-verbose                  F1=0.668  t=1
+    9. h4-canonical-first                       F1=0.664  t=1
+   10. h8-track1-image-exploratory-pure-positive-4hp F1=0.656  t=1
+   11. h8-track1-image-plus-hp                  F1=0.664  t=1
+   12. h5-track2-text-terse                     F1=0.627  t=1
+   13. h8-track2-text-plus-hp                   F1=0.638  t=1
+   14. h8-track1-image-scale-8                  F1=0.655  t=1
+   15. h8-track1-image-scale-4                  F1=0.637  t=1
+   16. h5-track2-text-verbose                   F1=0.630  t=1
+   17. h8-track1-image-canonical                F1=0.653  t=1
+   18. h8-track1-image-exploratory-pure-positive-2hp F1=0.631  t=1
+   19. h4-random                                F1=0.644  t=1
+   20. h8-track1-image-exploratory-pure-positive-canon F1=0.649  t=1
+   21. h8-track1-image-pure-positive-canon      F1=0.646  t=1
+
+========================================================================
+Total: 21 conditions in 1 tiers
+========================================================================
