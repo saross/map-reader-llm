@@ -9,22 +9,25 @@
     50,
     100
   ],
+  "methodology_note": "F1 tiers constructed independently at each buffer using per-cell thresholds fixed at the primary buffer (20 m) via --threshold-buffer (Option A). Spearman rho values are substantive.",
+  "fallback_from_primary_count": 0,
+  "n_other_buffers": 4,
   "spearman": {
     "30_vs_20": {
-      "rho": 1.0,
-      "p_value": 0.0
+      "rho": 0.9684581042399306,
+      "p_value": 7.959015963184847e-18
     },
     "40_vs_20": {
-      "rho": 1.0,
-      "p_value": 0.0
+      "rho": 0.9666095472878464,
+      "p_value": 1.6983850980596088e-17
     },
     "50_vs_20": {
-      "rho": 1.0,
-      "p_value": 0.0
+      "rho": 0.9695657666165086,
+      "p_value": 4.944290592521174e-18
     },
     "100_vs_20": {
-      "rho": 1.0,
-      "p_value": 0.0
+      "rho": 0.9763439551246066,
+      "p_value": 1.71500876816004e-19
     }
   },
   "n_conditions": 29

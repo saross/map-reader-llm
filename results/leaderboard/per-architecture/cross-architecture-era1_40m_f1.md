@@ -9,8 +9,8 @@ Each row shows the best Tier-1 representative of one architecture within Era. Th
 
 | Architecture | Best condition | F1 | F1 95% CI (at 40 m) | Tier (within stratum) | K | t | Track |
 |:---|:---|---:|:---:|---:|---:|---:|:---|
-| single-pass | _empty stratum_ | — | — | — | — | — | — |
-| consensus | _empty stratum_ | — | — | — | — | — | — |
+| single-pass | `h4-canonical-last` | 0.718 | [0.676, 0.753] | 1 | 1 | 1 | image |
+| consensus | `h3-high-track2-text-T0.7` | 0.812 | [0.769, 0.847] | 1 | 30 | 22 | text |
 | single-pass+PV | _empty stratum_ | — | — | — | — | — | — |
 | pv | _empty stratum_ | — | — | — | — | — | — |
 
