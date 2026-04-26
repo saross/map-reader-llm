@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 single-pass+PV
 
-**Generated**: 2026-04-25 (Session 79 redesign)
+**Generated**: 2026-04-26 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: single-pass+PV — One detection pass + one verifier pass. The detection GeoJSON is post-thresholded by the verifier's binary cut.
 **Conditions**: 8

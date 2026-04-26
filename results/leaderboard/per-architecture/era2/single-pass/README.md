@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 single-pass
 
-**Generated**: 2026-04-25 (Session 79 redesign)
+**Generated**: 2026-04-26 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: single-pass — One stochastic detection pass per tile (K=1). No consensus, no verifier.
 **Conditions**: 6

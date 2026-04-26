@@ -1,6 +1,6 @@
 # Per-architecture x per-era tier leaderboards
 
-**Generated**: 2026-04-25 (Session 79 redesign)
+**Generated**: 2026-04-26 (Session 79 redesign)
 **Scope**: 12-stratum matrix (3 eras x 4 architectures)
 
 ## Overview
@@ -26,7 +26,9 @@ Each populated stratum runs the following pipeline (driver: `scripts/build_per_a
 3. **Select thresholds**: per condition, choose the consensus threshold maximising F1 at the 20 m primary buffer (metric-independent: F1 at 20 m is the operational point even when MCC is the tier-building metric).
 4. **Pairwise permutation tests**: all C(N, 2) pairs with 10,000 permutations, seed=42, paired tile-swap (F1 path) or per-tile (TP, TN, FP, FN) classification swap (MCC path). MCC null distribution validated symmetric and zero-centred in `docs/methodology/mcc-permutation-validation-2026-04-25.md`.
 5. **BH-FDR correction**: Benjamini-Hochberg adjusted p-values at q=0.05 (base) and q=0.01 (sensitivity).
-6. **Greedy-clique tiering**: conditions sorted by score descending; each appended to the current tier if indistinguishable (BH-adjusted p >= q) from all current members; otherwise a new tier starts. Tier inheritance from the primary buffer (20 m) propagates across the 5 buffer files.
+6. **Greedy-clique tiering**: conditions sorted by score descending; each appended to the current tier if indistinguishable (BH-adjusted p >= q) from all current members; otherwise a new tier starts.
+
+**F1 tier construction is per-buffer (Option A, 2026-04-26).** Per-cell thresholds are fixed at the primary buffer (20 m) via the `--threshold-buffer` flag of `build_tiered_leaderboard.py`; pairwise permutation tests and tier construction then run independently at each of 20 / 30 / 40 / 50 / 100 m. The F1 tier tables at the non-primary buffers therefore reflect genuine buffer-dependent reorganisation, not propagated 20 m results. MCC tier construction remains a single pass per stratum because the tile-level MCC permutation test is buffer-independent.
 
 See `planning/leaderboard-construction-plan.md` for the full methodology rationale.
 
@@ -42,9 +44,15 @@ F1 and MCC weight detections differently. F1 counts mound-level matching (TP wit
 
 ### Tier stability across buffers
 
-Each stratum has a `tier_stability_<metric>.md` showing Spearman rank correlation between tier@20m and tier@30/40/50/100m. High rho (close to 1.0) indicates that buffer choice does not change the tier ordering; low rho indicates buffer-dependent ranking changes worth flagging.
+F1 tiers are constructed independently at each buffer (20 / 30 / 40 / 50 / 100 m) using per-cell thresholds optimised at the primary buffer (20 m) via the `--threshold-buffer` flag (Option A semantics). Each stratum's `tier_stability.md` reports the Spearman rank correlation between tier@20m and tier@30/40/50/100m; rho values are substantive — they surface buffer-dependent tier reorganisations rather than a tautology.
 
-MCC tables show identical tier orderings across buffers (MCC is buffer-invariant by construction in this codebase).
+MCC tiers are identical across buffers by methodology — the tile-level MCC permutation test does not take a buffer argument, and the greedy-clique tiering sorts by a single buffer-independent MCC value per condition. Therefore each stratum's `tier_stability_mcc.md` reports rho = 1.0 across all non-primary buffers; this is correct, not degenerate.
+
+**Headline F1 tier-stability summary** (across the 7 populated strata x 4 non-primary buffers; 22/28 buffer comparisons yielded a defined Spearman rho):
+
+- Median Spearman rho: **+0.956**
+- Range: +0.909 (`era2/single-pass` vs 30_vs_20) to +1.000 (`era1/single-pass` vs 30_vs_20)
+- Strata with the largest cross-buffer F1 tier reorganisation (lowest per-stratum median rho): `era2/single-pass` (median rho = +0.909), `era1/consensus` (median rho = +0.944). (6 of 28 buffer comparisons returned undefined rho — one or both rank vectors had all ties; see the per-stratum tables.)
 
 ### q=0.01 sensitivity pass
 

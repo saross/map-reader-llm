@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 consensus
 
-**Generated**: 2026-04-25 (Session 79 redesign)
+**Generated**: 2026-04-26 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: consensus — K stochastic passes + greedy-voting consensus at threshold vote_t. No verifier.
 **Conditions**: 29

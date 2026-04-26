@@ -1,6 +1,6 @@
 # Headlines — top-3 per stratum
 
-**Generated**: 2026-04-25 (Session 79 redesign)
+**Generated**: 2026-04-26 (Session 79 redesign)
 
 Top-3 conditions in Tier 1 of each populated (era, architecture) stratum at q=0.05, separately for F1 and MCC. Buffer = 20 m for F1 (primary); MCC is buffer-invariant.
 

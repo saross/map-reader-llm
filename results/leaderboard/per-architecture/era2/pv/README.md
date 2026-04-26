@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 pv
 
-**Generated**: 2026-04-25 (Session 79 redesign)
+**Generated**: 2026-04-26 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: pv — K passes + greedy consensus + verifier pass, materialised at the 20 m-optimal (vote_t, prob_t) pair per cell.
 **Conditions**: 44
