@@ -112,6 +112,7 @@ Within each Era, proposer-config tuples (model, config_version, instruction_file
 
 ## See also
 
+- **Combined / cross-architecture tier tables**: `../combined/` — same per-buffer F1 + MCC + q=0.05/0.01 sensitivity machinery, but pooled across all architectures within each Era so a single Era-wide tier table identifies the overall best conditions regardless of architecture. Complements (does not replace) the within-architecture stratified tables in this directory.
 - `planning/leaderboard-construction-plan.md` -- methodology rationale and the 2026-04-25 redesign addendum
 - `docs/methodology/mcc-permutation-validation-2026-04-25.md` -- proof that the MCC null distribution is valid
 - `docs/methodology/data-reproduction-2026-04-25.md` -- Session 78 shared-crops re-derivation provenance (prerequisite for the Era 2 PV stratum)
