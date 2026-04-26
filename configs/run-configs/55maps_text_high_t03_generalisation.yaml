@@ -1,0 +1,124 @@
+# 55-Map Text Generalisation Run — HIGH thinking, T=0.3 (post-leaderboard re-run)
+# ==============================================================================
+#
+# Re-run of the 55-map text-HIGH generalisation at proposer temperature
+# T=0.3 instead of T=0.7. This run targets the Era 2 PV cell
+# `pv-high-text-t0.3-n5` (Tier 1 of the per-architecture leaderboard at
+# 20 m, F1 = 0.886; Tier 1 at 50 m, F1 = 0.908). Identified by the
+# Session 79 per-architecture × per-buffer leaderboard rebuild as a
+# higher-F1 alternative to the T=0.7 cell originally chosen for the
+# 2026-04-18 text-HIGH 55-map run (F1 = 0.788 raw / 0.826 corrected at
+# 50 m).
+#
+# Source Era 2 cell on disk:
+#
+#   - Sweep table: `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/
+#     verified-v1-n5/sweep_2d.json`
+#   - Materialised geojson: `results/leaderboard/era2/pv-materialised/
+#     pv-high-text-t0.3-n5.geojson`
+#   - Inventory entry: `planning/condition-inventory.json` id=
+#     `pv-high-text-t0.3-n5`
+#
+# Sole intended difference from `55maps_text_high_generalisation.yaml`
+# (the 2026-04-18 published run, $69.60 cost):
+#
+#   - proposer.temperature: 0.7 → 0.3   (the factor under test)
+#
+# All other parameters are held identical to the 2026-04-18 run by
+# design (project rule: only the target parameter may change between
+# experimental conditions; audit configs against originals before
+# running). Specifically held identical:
+#
+#   - proposer.config: prompts/configs/detect_brief-text.json
+#   - proposer.thinking_level: high
+#   - proposer.passes (K): 5
+#   - proposer.workers: 250 (Tier 3 max)
+#   - consensus.vote_threshold: 4 (4-of-5)
+#   - consensus.dedup_radius_m: 20.0
+#   - extract.padding: 75
+#   - verify.config: prompts/configs/verify_adversarial-text.json
+#   - verify.workers: 20
+#   - evaluate.prob_threshold: 0.15
+#   - evaluate.buffers: [20, 30, 40, 50]
+#   - evaluate.bootstrap: 1000
+#   - evaluate.seed: 42
+#   - evaluate.ground_truth: inputs/vectors/references/student-mounds-55maps.geojson
+#   - evaluate.bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+#   - service_tier: flex
+#
+# Expected F1 on 55-map (with proper Era 2 → 55-map corpus-shift
+# adjustment, per 2026-04-26 candidate analysis):
+#
+#   - Era 2 F1 @ 50 m: 0.908 (from per-architecture leaderboard,
+#     `results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_50m.md`)
+#   - Corpus-shift estimate (text-HIGH anchor): −0.099
+#   - Estimated 55-map raw F1 @ 50 m: ~0.809
+#   - Manual-correction delta (text-HIGH anchor): +0.038
+#   - Estimated 55-map corrected F1 @ 50 m: ~0.847 ± 0.018
+#
+# Budget: ~$70 at Flex tier (text MIN measured $60.79; text HIGH
+# measured $69.60; T=0.3 vs T=0.7 affects sampler outputs but not
+# token counts, so cost is essentially identical to the T=0.7 run).
+#
+# Provenance: configured Session 79 (2026-04-26) after the
+# per-architecture × per-buffer leaderboard rebuild
+# (commits `03bf71c8..ccc320ea`) and cross-architecture combined
+# leaderboard (commit `e511e2e2`) confirmed the candidate's tier-1
+# membership at 20 m + 50 m + 100 m buffers in both per-arch and
+# combined views.
+
+run_name: 55maps-text-high-t0.3-generalisation
+output_root: outputs
+service_tier: flex
+
+# ---------------------------------------------------------------------------
+# Stage 1: proposer — matches 55maps_text_high_generalisation.yaml EXCEPT temperature
+# ---------------------------------------------------------------------------
+proposer:
+  config: prompts/configs/detect_brief-text.json
+  manifest: inputs/tiles_384_55maps/full_evaluation_manifest.json
+  tiles_dir: inputs/tiles_384_55maps
+  tile_size: 384
+  temperature: 0.3           # ← ONLY DIFFERENCE from text-HIGH T=0.7 run
+  thinking_level: high
+  passes: 5
+  mode: realtime
+  workers: 250               # Tier 3 max; ~1.7× faster than 60
+  max_retries: 15
+  use_cache: true
+
+# ---------------------------------------------------------------------------
+# Stage 2: consensus — matches 55maps_text_high_generalisation.yaml
+# ---------------------------------------------------------------------------
+consensus:
+  vote_threshold: 4         # 4-of-5, matching the 2026-04-18 text-HIGH run
+                            # and the Era 2 cell's recorded vote_t=4
+                            # (per inventory entry pv-high-text-t0.3-n5)
+  dedup_radius_m: 20.0
+
+# ---------------------------------------------------------------------------
+# Stage 3: extract — matches 55maps_text_high_generalisation.yaml
+# ---------------------------------------------------------------------------
+extract:
+  padding: 75
+  rasters_dir: inputs/rasters/Russian1981_32635
+  tiles_dir: inputs/tiles_384_55maps
+
+# ---------------------------------------------------------------------------
+# Stage 4: verifier — text-only adversarial v1 (canonical; matches Era 2 cell)
+# ---------------------------------------------------------------------------
+verify:
+  config: prompts/configs/verify_adversarial-text.json
+  mode: realtime
+  workers: 20
+
+# ---------------------------------------------------------------------------
+# Stage 5: evaluation — matches 55maps_text_high_generalisation.yaml
+# ---------------------------------------------------------------------------
+evaluate:
+  prob_threshold: 0.15      # v1 @ 0.15, matching Era 2 cell optimum
+  buffers: [20, 30, 40, 50]
+  bootstrap: 1000
+  seed: 42
+  ground_truth: inputs/vectors/references/student-mounds-55maps.geojson
+  bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
