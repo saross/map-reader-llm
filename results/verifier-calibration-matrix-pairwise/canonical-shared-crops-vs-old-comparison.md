@@ -1,6 +1,49 @@
 # Canonical `adversarial-text` — shared-crops refresh vs. pre-existing comparison
 
-## Executive summary
+> **UPDATE 2026-04-25/26 (Session 79 — superseded by full Phase A re-run)**
+>
+> The blocking premise of this document — "the planned shared-crops canonical
+> refresh could not be executed" — **is no longer true**. After this document
+> was written, the user approved a full Session 78 verifier-calibration
+> matrix Phase A re-run (~$56-80 at flex Flash; 14 verifier-API runs covering
+> all 7 prompt variants × 2 candidate pools at the regenerated shared-crops
+> manifest). The re-run completed successfully on 2026-04-25 (final commit
+> `b10aa7e1`); the canonical `verify_adversarial-text` probabilities now
+> exist at the same shared-crops candidate set as the six alternative
+> variants, restoring crop-parity for the entire 14-cell matrix.
+>
+> **Updated canonical metrics post-re-run** (per Obs 277 addendum in
+> `docs/notes/reflections/working-notes.md`):
+>
+> | Pool | Metric | Pre-re-run (verified-v1-n5) | Post-re-run (shared-crops) | Δ |
+> |:-----|:-------|----------------------------:|---------------------------:|----:|
+> | image | AUC | 0.863 | 0.857 | -0.006 |
+> | image | ECE | 0.188 | 0.179 | -0.009 |
+> | text | AUC | 0.959 | 0.956 | -0.003 |
+> | text | ECE | 0.067 | 0.071 | +0.004 |
+>
+> All shifts are within the original 95% bootstrap CIs. Maximum |ΔF1| across
+> all 14 cells = 0.035 (in `text-brief-text`, where original Phase A had a
+> partial 3530-candidate pool while the re-run uses the full 3709 — see
+> Obs 277's underestimate caveat).
+>
+> **Tier-flip caveat for the text track** (added 2026-04-25 after re-run):
+> with crop-parity, canonical `adversarial-text` on text moves from tier 1
+> to tier 2 of the per-architecture leaderboard (F1 = 0.863 vs four
+> with-image variants at F1 = 0.876–0.886). The Pareto-dominance claim now
+> needs nuance for the text track: canonical wins on **calibration metrics**
+> (ECE, Brier) but loses on **F1 @ 20 m** to four with-image alternatives by
+> 0.013–0.023. Pareto-dominance still holds for the image track on AUC,
+> ECE, and Brier (all 7 image variants are statistically indistinguishable
+> on F1, all in image tier 3 at F1 ≈ 0.78–0.79). See `working-notes.md`
+> Obs 277 + 280 for full framing.
+>
+> The pairwise tier tables in this directory (`image/`, `text/`) were
+> regenerated against shared-crops canonical in commit `fffecb7d`. The
+> historical timeline below documents the original data-loss event for
+> reproducibility transparency.
+
+## Executive summary (HISTORICAL — superseded; see UPDATE block above)
 
 **The planned shared-crops canonical refresh could not be executed.** The
 new canonical probabilities file (`verified-adversarial-text/probabilities.json`

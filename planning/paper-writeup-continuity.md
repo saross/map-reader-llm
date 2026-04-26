@@ -1058,20 +1058,33 @@ prerequisites before the outline.
 
 ### Session 78 headline findings
 
-- **Architecture dominates prompt.** Obs 277 (commit `303d4f21`)
+- **Architecture dominates prompt.** Obs 277 (commit `303d4f21`;
+  numbers refreshed in Session 79 Phase A re-run, commit `b10aa7e1`)
   shows all 6 alternative prompt variants fail to rescue image-track
   calibration; canonical wins ECE on both pools. Combined with
   Session 78 Q3 cross-track calibration contrast (commit `1b7143c5`),
   the input-distribution hypothesis is supported from two
   independent tests.
 - **Canonical `verify_adversarial-text` is validated as the
-  production choice.** Pareto-dominant on image (best AUC 0.863,
-  best ECE 0.188). Best ECE on text (0.067), slightly edged on AUC
-  by `verify_adversarial` with images (0.968 vs 0.959).
-- **F1 on text: four alternatives beat canonical by 0.01–0.02**
-  (comparative, adversarial, checklist, brief — all with-images).
-  Calibration worsens in exchange. Significance-test before
-  paper-citing (Step 6 backlog item: pairwise permutation tests).
+  production choice for calibration.** Updated post-re-run
+  (2026-04-25, shared-crops parity): Pareto-dominant on **image** for
+  AUC (0.857), ECE (0.179), Brier. On **text**, best ECE (0.071) and
+  best Brier; AUC slightly edged by `adversarial` with images
+  (0.968 vs 0.956). Pre-re-run numbers (verified-v1-n5: image AUC
+  0.863 / ECE 0.188; text AUC 0.959 / ECE 0.067) were close but
+  different crop set — see Obs 277 addendum.
+- **F1 tier-flip on text track at crop parity.** With shared-crops
+  canonical, four with-image variants (`comparative`, `adversarial`,
+  `checklist`, `brief`) statistically outperform canonical on
+  F1 @ 20 m by 0.013–0.023 (BH-FDR q=0.05; pairwise permutation
+  tests, 10 000 iters). Canonical now sits in tier 2 of the per-arch
+  Era 2 PV leaderboard at 20 m. Pareto-dominance still holds on the
+  image track on AUC / ECE / Brier (all 7 image variants
+  statistically indistinguishable on F1, all in image tier 3).
+- **Underestimate caveat for *-text variants** (added 2026-04-25):
+  the original Phase A had elevated API failure rates on the four
+  text-only verifier variants, biasing their F1 numbers low by
+  0.022–0.035 in pre-re-run docs. Re-run captured the full pools.
 
 ### Commits since Session 77 close
 
@@ -1093,20 +1106,34 @@ through `cf192345` (5-item backlog expansion). Run
 - Overnight pipeline script: `scripts/session-78-matrix-overnight.sh`
 - Calibration computation script: `scripts/compute_session78_calibration_matrix.py`
 
-### Step 6 backlog state (9 items)
+### Step 6 backlog state (Session 79 update — most items DONE)
 
-Carry-over items plus 6 added in Session 78:
+Carry-over items plus 6 added in Session 78. **Status updated
+2026-04-25/26 (Session 79)**:
 
 1. Script-hygiene audit: silent `tile_allowlist` filter + CRS-header
-   pathologies (Obs 276).
+   pathologies (Obs 276). **Pending — low priority.**
 2. Audit unevaluated consensus geojsons (93 % of 1 006 files).
-3. Build per-architecture leaderboards (was scheduled for
-   2026-04-25; may now inform paper outline directly).
+   **Pending — low priority; the per-arch rebuild surfaced no
+   downstream consumers needing them.**
+3. Build per-architecture leaderboards. **DONE** (commit range
+   `03bf71c8..a80a9de9` initial 12-stratum build; `ccc320ea`
+   per-buffer F1 refinement). 60+ tier tables across 7 populated
+   strata × 2 metrics × 5 buffers × 2 q-levels.
 4. Run pairwise permutation tests across verifier calibration matrix.
+   **DONE** at crop parity (commit `fffecb7d` after Phase A re-run).
 5. Re-run canonical `verify_adversarial-text` on session-78-matrix
-   shared-crops (API spend ≈ $8 at flex tier).
+   shared-crops. **DONE** — actually re-ran the entire 14-cell
+   matrix Phase A at shared-crops parity in Session 79
+   (~$56-80 flex Flash; commit `b10aa7e1`). The original $8 estimate
+   was canonical-only; the full re-run scope expanded after the
+   2026-04-25 02:40 UTC data-loss event (see
+   `docs/methodology/data-reproduction-2026-04-25.md`).
 6. Investigate `cand_01563` parser bug in verifier response handling.
+   **Pending — low priority; ~0.05% per-cell loss is below
+   calibration metric resolution.**
 7. Scope-version the `results/verifier-calibration-matrix/` directory.
+   **Pending — bookkeeping only.**
 8. Clean up exact-duplicate files in
    `archive/pre-session-78-pull-2026-04-24/` on sapphire.
 9. Configure GitHub identity on sapphire.
