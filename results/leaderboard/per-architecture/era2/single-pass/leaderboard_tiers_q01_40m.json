@@ -1,0 +1,679 @@
+{
+  "script": "build_tiered_leaderboard.py",
+  "version": "1.0.0",
+  "timestamp": "2026-04-26T00:42:16.445428+00:00",
+  "git_commit": "b4b67486",
+  "metadata": {
+    "name": "",
+    "primary_buffer": 40,
+    "threshold_buffer": 20,
+    "buffers": [
+      20,
+      30,
+      40,
+      50,
+      100
+    ],
+    "fdr_q": 0.01,
+    "n_permutations": 10000,
+    "top_n": 0,
+    "metric": "f1",
+    "bootstrap": 1000,
+    "seed": 42,
+    "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_conditions_input": 6
+  },
+  "n_conditions": 6,
+  "n_tiers": 4,
+  "tiers": [
+    {
+      "tier": 1,
+      "conditions": [
+        {
+          "label": "h11-pvd-pro-medium-text-baseline",
+          "era": 2,
+          "track": "text",
+          "category": "single-pass",
+          "k": 1,
+          "best_threshold": 1,
+          "geojson": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+          "evaluations": {
+            "20": {
+              "buffer_metres": 20,
+              "f1": 0.763,
+              "f1_ci_lower": 0.7127,
+              "f1_ci_upper": 0.8061,
+              "precision": 0.7674,
+              "p_ci_lower": 0.7157,
+              "p_ci_upper": 0.8161,
+              "recall": 0.7586,
+              "r_ci_lower": 0.6934,
+              "r_ci_upper": 0.8197
+            },
+            "30": {
+              "buffer_metres": 30,
+              "f1": 0.7838,
+              "f1_ci_lower": 0.7361,
+              "f1_ci_upper": 0.8271,
+              "precision": 0.7884,
+              "p_ci_lower": 0.7384,
+              "p_ci_upper": 0.8319,
+              "recall": 0.7793,
+              "r_ci_lower": 0.7143,
+              "r_ci_upper": 0.8402
+            },
+            "40": {
+              "buffer_metres": 40,
+              "f1": 0.7954,
+              "f1_ci_lower": 0.7544,
+              "f1_ci_upper": 0.8355,
+              "precision": 0.8,
+              "p_ci_lower": 0.7534,
+              "p_ci_upper": 0.8423,
+              "recall": 0.7908,
+              "r_ci_lower": 0.728,
+              "r_ci_upper": 0.8495
+            },
+            "50": {
+              "buffer_metres": 50,
+              "f1": 0.8023,
+              "f1_ci_lower": 0.7609,
+              "f1_ci_upper": 0.8413,
+              "precision": 0.807,
+              "p_ci_lower": 0.7621,
+              "p_ci_upper": 0.8473,
+              "recall": 0.7977,
+              "r_ci_lower": 0.7348,
+              "r_ci_upper": 0.8568
+            },
+            "100": {
+              "buffer_metres": 100,
+              "f1": 0.8069,
+              "f1_ci_lower": 0.7655,
+              "f1_ci_upper": 0.8449,
+              "precision": 0.8116,
+              "p_ci_lower": 0.7665,
+              "p_ci_upper": 0.851,
+              "recall": 0.8023,
+              "r_ci_lower": 0.74,
+              "r_ci_upper": 0.8614
+            }
+          },
+          "tile_mcc": 0.7521
+        },
+        {
+          "label": "h11-pvd-pro-medium-image-baseline",
+          "era": 2,
+          "track": "image",
+          "category": "single-pass",
+          "k": 1,
+          "best_threshold": 1,
+          "geojson": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+          "evaluations": {
+            "20": {
+              "buffer_metres": 20,
+              "f1": 0.6059,
+              "f1_ci_lower": 0.5564,
+              "f1_ci_upper": 0.6507,
+              "precision": 0.5568,
+              "p_ci_lower": 0.5075,
+              "p_ci_upper": 0.6027,
+              "recall": 0.6644,
+              "r_ci_lower": 0.606,
+              "r_ci_upper": 0.721
+            },
+            "30": {
+              "buffer_metres": 30,
+              "f1": 0.7338,
+              "f1_ci_lower": 0.6923,
+              "f1_ci_upper": 0.7724,
+              "precision": 0.6744,
+              "p_ci_lower": 0.6284,
+              "p_ci_upper": 0.7183,
+              "recall": 0.8046,
+              "r_ci_lower": 0.747,
+              "r_ci_upper": 0.8591
+            },
+            "40": {
+              "buffer_metres": 40,
+              "f1": 0.7631,
+              "f1_ci_lower": 0.7238,
+              "f1_ci_upper": 0.8,
+              "precision": 0.7013,
+              "p_ci_lower": 0.6559,
+              "p_ci_upper": 0.7435,
+              "recall": 0.8368,
+              "r_ci_lower": 0.7838,
+              "r_ci_upper": 0.8896
+            },
+            "50": {
+              "buffer_metres": 50,
+              "f1": 0.7778,
+              "f1_ci_lower": 0.7398,
+              "f1_ci_upper": 0.8118,
+              "precision": 0.7148,
+              "p_ci_lower": 0.67,
+              "p_ci_upper": 0.7561,
+              "recall": 0.8529,
+              "r_ci_lower": 0.799,
+              "r_ci_upper": 0.9022
+            },
+            "100": {
+              "buffer_metres": 100,
+              "f1": 0.7945,
+              "f1_ci_lower": 0.7555,
+              "f1_ci_upper": 0.8289,
+              "precision": 0.7303,
+              "p_ci_lower": 0.6864,
+              "p_ci_upper": 0.7721,
+              "recall": 0.8713,
+              "r_ci_lower": 0.8153,
+              "r_ci_upper": 0.9177
+            }
+          },
+          "tile_mcc": 0.7335
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "conditions": [
+        {
+          "label": "h11-pvd-image-baseline",
+          "era": 2,
+          "track": "image",
+          "category": "single-pass",
+          "k": 1,
+          "best_threshold": 1,
+          "geojson": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+          "evaluations": {
+            "20": {
+              "buffer_metres": 20,
+              "f1": 0.5995,
+              "f1_ci_lower": 0.5552,
+              "f1_ci_upper": 0.6368,
+              "precision": 0.4745,
+              "p_ci_lower": 0.4258,
+              "p_ci_upper": 0.5152,
+              "recall": 0.8138,
+              "r_ci_lower": 0.7705,
+              "r_ci_upper": 0.8532
+            },
+            "30": {
+              "buffer_metres": 30,
+              "f1": 0.6554,
+              "f1_ci_lower": 0.6116,
+              "f1_ci_upper": 0.6892,
+              "precision": 0.5188,
+              "p_ci_lower": 0.4685,
+              "p_ci_upper": 0.5583,
+              "recall": 0.8897,
+              "r_ci_lower": 0.8567,
+              "r_ci_upper": 0.9199
+            },
+            "40": {
+              "buffer_metres": 40,
+              "f1": 0.674,
+              "f1_ci_lower": 0.6292,
+              "f1_ci_upper": 0.7075,
+              "precision": 0.5335,
+              "p_ci_lower": 0.4838,
+              "p_ci_upper": 0.5743,
+              "recall": 0.9149,
+              "r_ci_lower": 0.8903,
+              "r_ci_upper": 0.9391
+            },
+            "50": {
+              "buffer_metres": 50,
+              "f1": 0.6808,
+              "f1_ci_lower": 0.6364,
+              "f1_ci_upper": 0.7145,
+              "precision": 0.5389,
+              "p_ci_lower": 0.4875,
+              "p_ci_upper": 0.5793,
+              "recall": 0.9241,
+              "r_ci_lower": 0.8998,
+              "r_ci_upper": 0.9459
+            },
+            "100": {
+              "buffer_metres": 100,
+              "f1": 0.6892,
+              "f1_ci_lower": 0.6445,
+              "f1_ci_upper": 0.722,
+              "precision": 0.5456,
+              "p_ci_lower": 0.4934,
+              "p_ci_upper": 0.5868,
+              "recall": 0.9356,
+              "r_ci_lower": 0.9126,
+              "r_ci_upper": 0.9569
+            }
+          },
+          "tile_mcc": 0.3113
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "conditions": [
+        {
+          "label": "h11-pvd-text-baseline",
+          "era": 2,
+          "track": "text",
+          "category": "single-pass",
+          "k": 1,
+          "best_threshold": 1,
+          "geojson": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+          "evaluations": {
+            "20": {
+              "buffer_metres": 20,
+              "f1": 0.5196,
+              "f1_ci_lower": 0.4619,
+              "f1_ci_upper": 0.5757,
+              "precision": 0.3677,
+              "p_ci_lower": 0.3119,
+              "p_ci_upper": 0.4265,
+              "recall": 0.8851,
+              "r_ci_lower": 0.8496,
+              "r_ci_upper": 0.9167
+            },
+            "30": {
+              "buffer_metres": 30,
+              "f1": 0.5304,
+              "f1_ci_lower": 0.4713,
+              "f1_ci_upper": 0.587,
+              "precision": 0.3754,
+              "p_ci_lower": 0.3191,
+              "p_ci_upper": 0.4345,
+              "recall": 0.9034,
+              "r_ci_lower": 0.8716,
+              "r_ci_upper": 0.9325
+            },
+            "40": {
+              "buffer_metres": 40,
+              "f1": 0.5358,
+              "f1_ci_lower": 0.4754,
+              "f1_ci_upper": 0.5938,
+              "precision": 0.3792,
+              "p_ci_lower": 0.3212,
+              "p_ci_upper": 0.4383,
+              "recall": 0.9126,
+              "r_ci_lower": 0.8817,
+              "r_ci_upper": 0.9405
+            },
+            "50": {
+              "buffer_metres": 50,
+              "f1": 0.5358,
+              "f1_ci_lower": 0.4754,
+              "f1_ci_upper": 0.5938,
+              "precision": 0.3792,
+              "p_ci_lower": 0.3212,
+              "p_ci_upper": 0.4383,
+              "recall": 0.9126,
+              "r_ci_lower": 0.8817,
+              "r_ci_upper": 0.9405
+            },
+            "100": {
+              "buffer_metres": 100,
+              "f1": 0.5385,
+              "f1_ci_lower": 0.4782,
+              "f1_ci_upper": 0.5974,
+              "precision": 0.3811,
+              "p_ci_lower": 0.3229,
+              "p_ci_upper": 0.4396,
+              "recall": 0.9172,
+              "r_ci_lower": 0.8864,
+              "r_ci_upper": 0.9441
+            }
+          },
+          "tile_mcc": -0.0011
+        },
+        {
+          "label": "h11-n1-pro-image-medium-t07",
+          "era": 2,
+          "track": "image",
+          "category": "single-pass",
+          "k": 1,
+          "best_threshold": 1,
+          "geojson": "/home/shawn/Code/map-reader-llm/outputs/h11/n1-outstanding-384/pro-image-medium-t07/run_1/detections_pro-image-medium-t07_run01.geojson",
+          "evaluations": {
+            "20": {
+              "buffer_metres": 20,
+              "f1": 0.452,
+              "f1_ci_lower": 0.4006,
+              "f1_ci_upper": 0.4959,
+              "precision": 0.3305,
+              "p_ci_lower": 0.2813,
+              "p_ci_upper": 0.373,
+              "recall": 0.7149,
+              "r_ci_lower": 0.6676,
+              "r_ci_upper": 0.7631
+            },
+            "30": {
+              "buffer_metres": 30,
+              "f1": 0.5378,
+              "f1_ci_lower": 0.4812,
+              "f1_ci_upper": 0.5813,
+              "precision": 0.3932,
+              "p_ci_lower": 0.3371,
+              "p_ci_upper": 0.4401,
+              "recall": 0.8506,
+              "r_ci_lower": 0.8136,
+              "r_ci_upper": 0.884
+            },
+            "40": {
+              "buffer_metres": 40,
+              "f1": 0.5669,
+              "f1_ci_lower": 0.5091,
+              "f1_ci_upper": 0.6115,
+              "precision": 0.4145,
+              "p_ci_lower": 0.3541,
+              "p_ci_upper": 0.4635,
+              "recall": 0.8966,
+              "r_ci_lower": 0.8648,
+              "r_ci_upper": 0.9253
+            },
+            "50": {
+              "buffer_metres": 50,
+              "f1": 0.5858,
+              "f1_ci_lower": 0.5233,
+              "f1_ci_upper": 0.6311,
+              "precision": 0.4283,
+              "p_ci_lower": 0.3672,
+              "p_ci_upper": 0.4781,
+              "recall": 0.9264,
+              "r_ci_lower": 0.8981,
+              "r_ci_upper": 0.9527
+            },
+            "100": {
+              "buffer_metres": 100,
+              "f1": 0.593,
+              "f1_ci_lower": 0.533,
+              "f1_ci_upper": 0.6392,
+              "precision": 0.4336,
+              "p_ci_lower": 0.3739,
+              "p_ci_upper": 0.4839,
+              "recall": 0.9379,
+              "r_ci_lower": 0.9109,
+              "r_ci_upper": 0.9623
+            }
+          },
+          "tile_mcc": 0.5968
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "conditions": [
+        {
+          "label": "h11-n1-pro-text-medium-t07",
+          "era": 2,
+          "track": "text",
+          "category": "single-pass",
+          "k": 1,
+          "best_threshold": 1,
+          "geojson": "/home/shawn/Code/map-reader-llm/outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson",
+          "evaluations": {
+            "20": {
+              "buffer_metres": 20,
+              "f1": 0.416,
+              "f1_ci_lower": 0.3591,
+              "f1_ci_upper": 0.4676,
+              "precision": 0.2706,
+              "p_ci_lower": 0.2251,
+              "p_ci_upper": 0.3146,
+              "recall": 0.8989,
+              "r_ci_lower": 0.8682,
+              "r_ci_upper": 0.9295
+            },
+            "30": {
+              "buffer_metres": 30,
+              "f1": 0.4277,
+              "f1_ci_lower": 0.3696,
+              "f1_ci_upper": 0.4802,
+              "precision": 0.2782,
+              "p_ci_lower": 0.2305,
+              "p_ci_upper": 0.3235,
+              "recall": 0.9241,
+              "r_ci_lower": 0.8975,
+              "r_ci_upper": 0.9493
+            },
+            "40": {
+              "buffer_metres": 40,
+              "f1": 0.4298,
+              "f1_ci_lower": 0.371,
+              "f1_ci_upper": 0.4837,
+              "precision": 0.2796,
+              "p_ci_lower": 0.2324,
+              "p_ci_upper": 0.3263,
+              "recall": 0.9287,
+              "r_ci_lower": 0.9025,
+              "r_ci_upper": 0.9541
+            },
+            "50": {
+              "buffer_metres": 50,
+              "f1": 0.4298,
+              "f1_ci_lower": 0.371,
+              "f1_ci_upper": 0.4837,
+              "precision": 0.2796,
+              "p_ci_lower": 0.2324,
+              "p_ci_upper": 0.3263,
+              "recall": 0.9287,
+              "r_ci_lower": 0.9025,
+              "r_ci_upper": 0.9541
+            },
+            "100": {
+              "buffer_metres": 100,
+              "f1": 0.4319,
+              "f1_ci_lower": 0.374,
+              "f1_ci_upper": 0.485,
+              "precision": 0.281,
+              "p_ci_lower": 0.234,
+              "p_ci_upper": 0.327,
+              "recall": 0.9333,
+              "r_ci_lower": 0.9079,
+              "r_ci_upper": 0.9569
+            }
+          },
+          "tile_mcc": 0.3095
+        }
+      ]
+    }
+  ],
+  "pairwise_tests": [
+    {
+      "label_a": "h11-pvd-pro-medium-text-baseline",
+      "label_b": "h11-pvd-pro-medium-image-baseline",
+      "metric": "f1",
+      "f1_a": 0.795376,
+      "f1_b": 0.763103,
+      "delta_f1": 0.032273,
+      "p_value": 0.2344,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.251143,
+      "significant": false
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-text-baseline",
+      "label_b": "h11-pvd-image-baseline",
+      "metric": "f1",
+      "f1_a": 0.795376,
+      "f1_b": 0.674005,
+      "delta_f1": 0.121371,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-text-baseline",
+      "label_b": "h11-pvd-text-baseline",
+      "metric": "f1",
+      "f1_a": 0.795376,
+      "f1_b": 0.535762,
+      "delta_f1": 0.259613,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-text-baseline",
+      "label_b": "h11-n1-pro-image-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.795376,
+      "f1_b": 0.56686,
+      "delta_f1": 0.228515,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-text-baseline",
+      "label_b": "h11-n1-pro-text-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.795376,
+      "f1_b": 0.429787,
+      "delta_f1": 0.365588,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-image-baseline",
+      "label_b": "h11-pvd-image-baseline",
+      "metric": "f1",
+      "f1_a": 0.763103,
+      "f1_b": 0.674005,
+      "delta_f1": 0.089098,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-image-baseline",
+      "label_b": "h11-pvd-text-baseline",
+      "metric": "f1",
+      "f1_a": 0.763103,
+      "f1_b": 0.535762,
+      "delta_f1": 0.22734,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-image-baseline",
+      "label_b": "h11-n1-pro-image-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.763103,
+      "f1_b": 0.56686,
+      "delta_f1": 0.196242,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-image-baseline",
+      "label_b": "h11-n1-pro-text-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.763103,
+      "f1_b": 0.429787,
+      "delta_f1": 0.333315,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-image-baseline",
+      "label_b": "h11-pvd-text-baseline",
+      "metric": "f1",
+      "f1_a": 0.674005,
+      "f1_b": 0.535762,
+      "delta_f1": 0.138243,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-image-baseline",
+      "label_b": "h11-n1-pro-image-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.674005,
+      "f1_b": 0.56686,
+      "delta_f1": 0.107145,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-image-baseline",
+      "label_b": "h11-n1-pro-text-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.674005,
+      "f1_b": 0.429787,
+      "delta_f1": 0.244218,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-text-baseline",
+      "label_b": "h11-n1-pro-image-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.535762,
+      "f1_b": 0.56686,
+      "delta_f1": -0.031098,
+      "p_value": 0.2788,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.2788,
+      "significant": false
+    },
+    {
+      "label_a": "h11-pvd-text-baseline",
+      "label_b": "h11-n1-pro-text-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.535762,
+      "f1_b": 0.429787,
+      "delta_f1": 0.105975,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-n1-pro-image-medium-t07",
+      "label_b": "h11-n1-pro-text-medium-t07",
+      "metric": "f1",
+      "f1_a": 0.56686,
+      "f1_b": 0.429787,
+      "delta_f1": 0.137073,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    }
+  ]
+}

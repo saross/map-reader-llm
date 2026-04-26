@@ -1,21 +1,21 @@
 # Leaderboard (F1 tiers) — 100m buffer
 
-**Generated**: 2026-04-25T14:12:17.119996+00:00
+**Generated**: 2026-04-26T00:42:24.126372+00:00
 **Tiering metric**: F1
 **FDR q**: 0.01
 **Conditions**: 6 in 4 tier(s)
 
-## Tier 1 (F1: 0.807–0.807)
+## Tier 1 (F1: 0.794–0.807)
 
 | # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
 | 1 | h11-pvd-pro-medium-text-baseline | 1-pass | 2 | text | 1 | 1 | 0.807 | [0.765, 0.845] | 0.812 | 0.802 | 0.752 |
+| 2 | h11-pvd-pro-medium-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.794 | [0.755, 0.829] | 0.730 | 0.871 | 0.734 |
 
-## Tier 2 (F1: 0.689–0.794)
+## Tier 2 (F1: 0.689–0.689)
 
 | # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 2 | h11-pvd-pro-medium-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.794 | [0.755, 0.829] | 0.730 | 0.871 | 0.734 |
 | 3 | h11-pvd-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.689 | [0.644, 0.722] | 0.546 | 0.936 | 0.311 |
 
 ## Tier 3 (F1: 0.538–0.593)
