@@ -13478,3 +13478,163 @@ recall-headroom argument.
   shows Era 1 single-pass+PV = 0, Era 1 pv = 0, Era 3 single-pass+PV
   = 0, Era 3 pv = 0 — the structural reason no paired test exists
   outside Era 2.
+
+## Observation 279: Per-buffer F1 tier re-tiering reveals broad stability (median Spearman rho +0.956 across populated strata) but uncovers two paper-relevant exceptions invisible under primary-buffer-only tiering — era1/single-pass tier-1 collapses 21→1 between 30 m and 40 m matching tolerance, era3/consensus tiers oscillate non-monotonically across buffers (2026-04-26)
+
+### The finding
+
+The original 12-stratum leaderboard build (commit `a80a9de9`)
+constructed tiers ONCE per stratum at the primary buffer (20 m) and
+PROPAGATED the same tier assignments to other buffers — making
+buffer-stability trivially 1.0 by construction. To uncover real
+buffer-dependent tier reorganisations, Session 79 ran 56 independent
+F1 re-tier passes (7 strata × 4 non-primary buffers × 2 q-levels)
+with operating points fixed at the 20 m optimum (Option A semantics
+via the new `--threshold-buffer` flag). Final commit: `ccc320ea`.
+
+**Methodology infrastructure** (Patches A + B in
+`scripts/build_tiered_leaderboard.py`, commit `8c9a841d`): added a
+`--threshold-buffer` argument distinct from `--primary-buffer`,
+defaulting to `--primary-buffer` when absent — when both supplied
+separately, threshold selection uses `--threshold-buffer` while
+pairwise + tiering use `--primary-buffer`. Patch A folded
+`buffer_metres` into the F1 pairwise cache key to prevent silent
+cross-buffer cache contamination. `/audit` of the patched script
+returned CLEAN (2 medium, 3 low; all documented behaviours, no
+blockers).
+
+### Aggregate stability
+
+Median F1 Spearman rho across 22 defined (stratum × non-primary-
+buffer) pairs = **+0.956** (range +0.909 to +1.000). Six
+(stratum × buffer) cells are mathematically undefined because one or
+both rank vectors are all-tied (no rank order to correlate). For most
+populated strata, tier assignments are buffer-robust: the same
+conditions land in the same tier whether evaluated at 20, 30, 40, 50,
+or 100 m matching tolerance.
+
+**MCC tier_stability is buffer-independent by methodology** —
+`run_permutation_test_mcc` takes no `buffer_metres` argument and
+operates on tile-level binary classifications. All MCC tier_stability
+tables therefore correctly report rho = 1.0 across buffers; this is
+not a degenerate artefact, it reflects the buffer-free structure of
+the test statistic. Methodology paragraph rewritten in commit
+`b8bc7c16` to explain *why* rho = 1.0 is correct rather than a defect.
+
+### Exhibit 1 — Era 1 single-pass: tier-1 collapse 21→1 between 30 m and 40 m
+
+| Buffer | Tier-1 conditions | Total tiers |
+|:------:|:-----------------:|:-----------:|
+| 20 m | **21** | 1 |
+| 30 m | 21 | 1 |
+| 40 m | **1** | 6 |
+| 50 m | 1 | 6 |
+| 100 m | 1 | 8 |
+
+Verified from
+`results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_{20,30,40,50,100}m.json`.
+At 20–30 m matching, all 21 single-pass conditions in Era 1 are
+statistically indistinguishable from each other; at 40 m+, only
+`h4-canonical-last` survives in tier 1.
+
+**Mechanism**: at narrow matching tolerance (20–30 m), bootstrap CIs
+on F1 differences between conditions overlap because precision is
+bounded by the narrow tolerance — many tile-pairs are marginal
+(borderline TP/FP). At wider matching (40 m+), the same conditions'
+F1 values diverge as the matching geometry resolves marginal
+tile-pairs that were ambiguous at 20–30 m. The pairwise permutation
+null tightens accordingly, and BH-FDR-adjusted p-values cross the
+q=0.05 threshold for 20 of the 21 conditions.
+
+This was **completely invisible** under the original "tier at 20 m,
+propagate" methodology. The per-buffer rerun surfaces it as a
+paper-relevant methodological story: the conventional 20 m matching
+tolerance can mask real effect-size resolution at archaeologically
+more realistic buffers (mound-centroid positional uncertainty in
+field surveys is typically 25–50 m).
+
+### Exhibit 2 — Era 3 consensus: non-monotonic tier-1 oscillation
+
+| Buffer | Tier-1 conditions | Total tiers |
+|:------:|:-----------------:|:-----------:|
+| 20 m | 14 | 1 |
+| 30 m | 5 | 2 |
+| 40 m | **14** | 1 |
+| 50 m | 5 | 2 |
+| 100 m | 5 | 3 |
+
+Verified from
+`results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_{20,30,40,50,100}m.json`.
+The H8-v2 / H10-v2 / H12-v2 hypothesis-test set's tier structure is
+**non-monotonic in buffer width**: the 40 m buffer expands tier 1
+back to all 14 conditions after 30 m had collapsed it to 5.
+
+**Mechanism**: candidate-permutation power is determined by the
+per-tile binary outcome distribution. At 40 m on this stratum, the
+buffer-induced re-classification of marginal candidates appears to
+make the per-tile (TP, FP, FN) sequences less informative than at
+30 m or 50 m — the null distribution of ΔF1 widens enough that more
+pairs become non-significant after BH-FDR. This is buffer-dependent
+permutation-power variation, not a fundamental indistinguishability
+shift.
+
+### Implications for paper structure
+
+1. **Era 1 single-pass tier-1 collapse**: worth a paper paragraph in
+   the buffer-sensitivity discussion. The conventional 20 m
+   archaeological matching tolerance is conservative; effect-size
+   resolution improves materially at 40 m+. Suggested framing: "At
+   the conventional 20 m matching tolerance, all 21 Era 1
+   single-pass conditions are statistically indistinguishable
+   (BH-FDR q=0.05). At 40 m matching tolerance — within typical
+   archaeological positional uncertainty for ground-truth mound
+   centroids — only `h4-canonical-last` survives in the top tier;
+   per-condition F1 differences become statistically resolvable."
+2. **Era 3 consensus oscillation**: methodology footnote stating
+   buffer-fragility of the H8-v2 / H10-v2 / H12-v2 ablation set's
+   tier structure. Recommend reporting at multiple buffers when
+   citing tier 1 composition; do not cite a single-buffer tier
+   result without acknowledging the oscillation.
+3. **MCC tier rho = 1.0 is correct**: methods note that the MCC
+   permutation test is buffer-independent so MCC tier assignments
+   are identical across buffers by construction.
+4. **Median rho +0.956**: most strata are buffer-robust at q=0.05;
+   the two exceptions (above) warrant explicit discussion. The other
+   five strata can be reported at the primary 20 m buffer with
+   confidence that other buffers would land the same tier structure.
+
+### Findable later
+
+Search terms: per-buffer tier construction, --threshold-buffer flag,
+per-buffer F1 cache key, Spearman rho 0.956, era1 single-pass tier-1
+collapse 30→40m, era3 consensus non-monotonic oscillation, buffer-
+fragility methodology footnote, MCC buffer-independence, Option A
+tier-builder semantics, BH-FDR q=0.05 paired permutation per buffer,
+20m vs 40m matching tolerance archaeological centroid uncertainty.
+
+### Related observations and artefacts
+
+- **Per-architecture rebuild** (commits `03bf71c8..a80a9de9`): the
+  12-stratum F1 + MCC tier tree that this re-tiering refines.
+- **Tier-builder patches** (commit `8c9a841d`): patches A + B for
+  per-buffer F1 cache key + `--threshold-buffer` flag.
+- **Per-buffer F1 outputs** (commits `d6969a74`, `4224df25`,
+  `bffcd563`, `ccc320ea`): Stage 1 results, downstream refresh,
+  README updates, logs.
+- **Tier stability tables**:
+  `results/leaderboard/per-architecture/<era>/<arch>/tier_stability.{md,json}`
+  (F1 with real Spearman rho);
+  `tier_stability_mcc.{md,json}` (methodology-note only,
+  rho = 1.0 by construction).
+- **MC-precision flags**:
+  `results/leaderboard/per-architecture/mc-precision-flags.md`
+  (6,652 flagged tests now, with new "Buffer" column distinguishing
+  per-buffer pairs).
+- **Obs 278** (PV-architecture scope caveat): orthogonal — that
+  observation is about PV stratum coverage; this is about
+  buffer-stability of tier assignments within strata that exist.
+- **H11** (tile-size effect on proposer F1; image inverted-U peak at
+  384 px): different layer of buffer/tile-size interaction. H11 is
+  about INPUT tile size affecting the proposer; this observation is
+  about OUTPUT matching tolerance affecting tier resolvability of the
+  proposer's F1 differences.
