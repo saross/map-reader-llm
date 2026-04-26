@@ -1,0 +1,59 @@
+2026-04-26 08:18:15,899 - WARNING - Output dir already exists (outputs/55maps-text-high-t0.3-generalisation). Use --resume to continue an existing run, or remove the directory to start fresh.
+2026-04-26 08:18:16,337 - INFO - Wrote experiment intent: outputs/55maps-text-high-t0.3-generalisation/experiment_intent.md
+2026-04-26 08:18:16,337 - INFO - --yes supplied: skipping interactive confirmation.
+2026-04-26 08:18:16,338 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles_384_55maps/full_evaluation_manifest.json --tiles-dir inputs/tiles_384_55maps --output-dir outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_1 --temperature 0.3 --thinking-level high --mode realtime --service-tier flex --workers 250 --tile-size 384 --max-retries 15 --use-cache --skip-intent-check
+2026-04-26 09:20:14,779 - INFO - Exit code: 2  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 09:20:14,779 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles_384_55maps/full_evaluation_manifest.json --tiles-dir inputs/tiles_384_55maps --output-dir outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_2 --temperature 0.3 --thinking-level high --mode realtime --service-tier flex --workers 250 --tile-size 384 --max-retries 15 --use-cache --skip-intent-check
+2026-04-26 10:17:57,654 - INFO - Exit code: 2  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 10:17:57,655 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles_384_55maps/full_evaluation_manifest.json --tiles-dir inputs/tiles_384_55maps --output-dir outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_3 --temperature 0.3 --thinking-level high --mode realtime --service-tier flex --workers 250 --tile-size 384 --max-retries 15 --use-cache --skip-intent-check
+2026-04-26 11:23:08,447 - INFO - Exit code: 2  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 11:23:08,447 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles_384_55maps/full_evaluation_manifest.json --tiles-dir inputs/tiles_384_55maps --output-dir outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_4 --temperature 0.3 --thinking-level high --mode realtime --service-tier flex --workers 250 --tile-size 384 --max-retries 15 --use-cache --skip-intent-check
+2026-04-26 12:31:33,559 - INFO - Exit code: 2  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 12:31:33,560 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles_384_55maps/full_evaluation_manifest.json --tiles-dir inputs/tiles_384_55maps --output-dir outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_5 --temperature 0.3 --thinking-level high --mode realtime --service-tier flex --workers 250 --tile-size 384 --max-retries 15 --use-cache --skip-intent-check
+2026-04-26 13:43:44,937 - INFO - Exit code: 2  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 13:43:44,937 - INFO - Proposer stage: 5/5 passes returned exit code 2 (partial tile failure — expected at Flex tier).
+2026-04-26 13:43:44,937 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/merge_passes.py --input-dir outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text --output outputs/55maps-text-high-t0.3-generalisation/consensus/consensus-4of5.geojson --threshold 4
+2026-04-26 13:54:40,634 - INFO - Exit code: 0  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 13:54:40,635 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/run_pv.py extract --proposer outputs/55maps-text-high-t0.3-generalisation/consensus/consensus-4of5.geojson --output-dir outputs/55maps-text-high-t0.3-generalisation/crops --padding 75 --rasters-dir inputs/rasters/Russian1981_32635 --tiles-dir inputs/tiles_384_55maps
+2026-04-26 13:56:05,693 - INFO - Exit code: 0  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 13:56:05,693 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/run_pv.py verify --crops-dir outputs/55maps-text-high-t0.3-generalisation/crops --verifier-config prompts/configs/verify_adversarial-text.json --output-dir outputs/55maps-text-high-t0.3-generalisation/verified --mode realtime --workers 20 --service-tier flex
+2026-04-26 16:19:14,609 - INFO - Exit code: 0  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 16:19:14,679 - INFO - Wrote 4349 verified detections to outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson (vote_t=4, prob_t=0.150)
+2026-04-26 16:19:14,684 - INFO - Running: /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/Code/map-reader-llm/scripts/evaluate_detections.py --detections outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson --buffers 20 30 40 50 --bootstrap 1000 --seed 42 --ground-truth inputs/vectors/references/student-mounds-55maps.geojson --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson --output-dir outputs/55maps-text-high-t0.3-generalisation/evaluation --label 55maps-text-high-t0.3-generalisation
+2026-04-26 16:24:18,178 - INFO - Exit code: 0  (log: outputs/55maps-text-high-t0.3-generalisation/run.log)
+2026-04-26 16:24:18,764 - INFO - Cost manifest: outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json
+2026-04-26 16:24:18,775 - INFO - Run complete: outputs/55maps-text-high-t0.3-generalisation
+
+========================================================================
+# Experiment intent: 55maps-text-high-t0.3-generalisation
+
+Generated: 2026-04-26T08:18:16Z
+Script: `scripts/run_generalisation.py` v1.0.0
+
+## Pipeline
+
+1. **Proposer** (`prompts/configs/detect_brief-text.json`, thinking=high, T=0.3, K=5)
+2. **Consensus** (greedy, 20.0 m radius, vote_t=4)
+3. **Extract** (padding 75 px, rasters: inputs/rasters/Russian1981_32635)
+4. **Verify** (`prompts/configs/verify_adversarial-text.json`, mode=realtime)
+5. **Evaluate** (prob_t=0.15, buffers=[20, 30, 40, 50] m, bootstrap=1000)
+
+## Data
+
+- Tile manifest: `inputs/tiles_384_55maps/full_evaluation_manifest.json`
+- Ground truth: `inputs/vectors/references/student-mounds-55maps.geojson`
+- Evaluation bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
+
+## Expected cost
+
+- ~$355 (Flex tier estimate)
+
+## Outputs
+
+- `launch_manifest.json` — reproducibility metadata
+- `cost_manifest.json` — full cost accounting
+- `consensus/` — voted candidate GeoJSON
+- `verified/` — verifier probabilities + final filtered GeoJSON
+- `evaluation/` — per-buffer F1 / P / R with bootstrap CIs
+
+========================================================================

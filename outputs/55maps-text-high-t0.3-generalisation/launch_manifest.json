@@ -1,0 +1,91 @@
+{
+  "run_name": "55maps-text-high-t0.3-generalisation",
+  "started_at": "2026-04-26T08:18:16Z",
+  "status": "completed",
+  "git": {
+    "commit_sha": "4d926da122f19668435fd1c68196cbdea6899846",
+    "branch": "main",
+    "dirty": false,
+    "untracked_file_count": 2
+  },
+  "hostname": "sapphire",
+  "user": "shawn",
+  "python_version": "3.13.3",
+  "cli_invocation": [
+    "scripts/run_generalisation.py",
+    "all",
+    "--run-config",
+    "configs/run-configs/55maps_text_high_t03_generalisation.yaml",
+    "--run-name",
+    "55maps-text-high-t0.3-generalisation",
+    "--yes"
+  ],
+  "script_version": "1.0.0",
+  "resolved_config": {
+    "proposer": {
+      "config": "prompts/configs/detect_brief-text.json",
+      "manifest": "inputs/tiles_384_55maps/full_evaluation_manifest.json",
+      "tiles_dir": "inputs/tiles_384_55maps",
+      "tile_size": 384,
+      "temperature": 0.3,
+      "thinking_level": "high",
+      "passes": 5,
+      "mode": "realtime",
+      "workers": 250,
+      "max_retries": 15,
+      "use_cache": true,
+      "service_tier": "flex"
+    },
+    "consensus": {
+      "vote_threshold": 4,
+      "dedup_radius_m": 20.0
+    },
+    "extract": {
+      "padding": 75,
+      "rasters_dir": "inputs/rasters/Russian1981_32635",
+      "tiles_dir": "inputs/tiles_384_55maps"
+    },
+    "verify": {
+      "config": "prompts/configs/verify_adversarial-text.json",
+      "mode": "realtime",
+      "workers": 20,
+      "service_tier": "flex"
+    },
+    "evaluate": {
+      "prob_threshold": 0.15,
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "bootstrap": 1000,
+      "seed": 42,
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    },
+    "global_opts": {
+      "output_root": "outputs",
+      "service_tier": "flex"
+    }
+  },
+  "config_file_path": "configs/run-configs/55maps_text_high_t03_generalisation.yaml",
+  "config_file_sha256": "85799431a74152fef1497ba5307f46b5de25f1568a006074dc7dbaa5a5c7d5b9",
+  "pre_launch_audit": {
+    "path": "configs/run-configs/55maps_text_high_t03_generalisation_pre_launch_audit.md",
+    "sha256": "3e8372a47e738accee8bfe45affb1a818f0d7862ecfe03445979b5d85718d154",
+    "copied_to": "outputs/55maps-text-high-t0.3-generalisation/pre_launch_audit.md"
+  },
+  "input_sha256": {
+    "manifest": "1150e8bb502d6824bc4e4307e2de4967595487c50443c3de187e5f662511a019",
+    "ground_truth": "9c2c747ecd2db4cde007abcffe0af74ee9942a94b130b7884df46bd730cd8ec6",
+    "bounds": "dfa1ef6e0004e0f5359a78d33075bb6e84e6e239e18b3653bc7a41ef31381bda",
+    "proposer_config": "a389b24e61b5aa8e66a354054943927ec52baab81e5380d430929350b2cc3863",
+    "verifier_config": "357d8a87d6127e9592740dfd4a23cd3a64d58f605140f9676eece6c06db21a45",
+    "rasters_dir_listing": "37467e43957ac4e98f0cc403a5f2433fcc5da4ee1f79449baafb52b727715e7f"
+  },
+  "seed": 42,
+  "service_tier": "flex",
+  "expected_cost_usd": 355.18,
+  "completed_at": "2026-04-26T16:24:18Z"
+}
