@@ -161,6 +161,7 @@ See `planning/condition-inventory.json` for full machine-readable inventory
 
 For EVERY condition with K > 1, we need **all consensus thresholds** from
 1-of-K through K-of-K. This enables:
+
 - Finding the optimal operating point per condition
 - Understanding the precision/recall trade-off at each consensus level
 - Tuning for application needs (e.g., high-recall survey vs high-precision verification)
@@ -286,6 +287,24 @@ cost is near-zero.
 between tier@20m and tier@30/40/50/100m. MCC is buffer-invariant by
 construction (rho = 1.0 always); F1's tier ordering can shift with
 buffer.
+
+**Per-buffer F1 re-tiering addendum (2026-04-26).** The original
+12-stratum build (Session 79, 2026-04-25) constructed F1 tiers once
+per stratum at the primary buffer (20 m) and propagated them to the
+non-primary buffer markdown tables; the F1 tier_stability tables
+therefore reported rho = 1.0 by construction (mathematically
+degenerate). The Option A patch to `build_tiered_leaderboard.py`
+(commit `8c9a841d`) decouples threshold selection from tier
+construction via a new `--threshold-buffer` flag and fixes the F1
+pairwise cache key to include the buffer (`pairwise_f1_<buf>m/`).
+The driver `scripts/rebuild_per_arch_f1_per_buffer.sh` then rebuilds
+the F1 tier tables at 30 / 40 / 50 / 100 m using thresholds fixed at
+20 m (Option A semantics: same operational point per condition; tier
+relations re-evaluated at each buffer's matching geometry). MCC tier
+construction was not re-run because the tile-level MCC permutation
+test does not take a buffer argument; MCC tier_stability rho = 1.0
+is correct by methodology, not degenerate. See the per-architecture
+README for the cross-stratum F1 tier-stability summary statistics.
 
 **4. Cross-architecture flat tables (Stage 4a).** For each (Era,
 buffer, metric) triple, a flat 4-row table picks the best tier-1

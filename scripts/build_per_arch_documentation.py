@@ -77,6 +77,87 @@ def _safe_load(path: Path) -> dict | None:
         return json.load(fh)
 
 
+def _f1_tier_stability_summary() -> str:
+    """Compute the cross-stratum F1 tier-stability headline summary.
+
+    Walks every populated stratum's ``tier_stability.json`` (the F1
+    sidecar emitted by ``scripts/build_tier_stability.py``) and reports:
+
+    - Median Spearman rho across the 4 non-primary buffers x 7 strata
+      = 28 (rho, p_value) pairs.
+    - The min/max rho and the (stratum, buffer) where each lands.
+    - The strata with the largest cross-buffer F1 tier reorganisation
+      (lowest median rho per stratum), as a paper-relevant headline.
+
+    Returns a multi-line markdown string that replaces the
+    ``<!-- F1_TIER_STABILITY_SUMMARY -->`` placeholder in the
+    top-level README.
+    """
+    rho_records: list[dict] = []
+    per_stratum_medians: list[tuple[str, float]] = []
+    for era_dir in sorted(PER_ARCH_DIR.glob("era*")):
+        if not era_dir.is_dir():
+            continue
+        for arch_dir in sorted(p for p in era_dir.iterdir() if p.is_dir()):
+            sidecar = arch_dir / "tier_stability.json"
+            payload = _safe_load(sidecar)
+            if payload is None:
+                continue
+            spearman = payload.get("spearman", {})
+            stratum_label = f"{era_dir.name}/{arch_dir.name}"
+            stratum_rhos: list[float] = []
+            for buf_key, entry in spearman.items():
+                rho = entry.get("rho")
+                if rho is None:
+                    continue
+                # rho may be float("nan"); skip those for the summary.
+                try:
+                    rho_f = float(rho)
+                except (TypeError, ValueError):
+                    continue
+                if rho_f != rho_f:  # NaN check
+                    continue
+                rho_records.append({
+                    "stratum": stratum_label,
+                    "buffer_vs_20m": buf_key,
+                    "rho": rho_f,
+                })
+                stratum_rhos.append(rho_f)
+            if stratum_rhos:
+                stratum_rhos.sort()
+                median = stratum_rhos[len(stratum_rhos) // 2]
+                per_stratum_medians.append((stratum_label, median))
+    if not rho_records:
+        return (
+            "_F1 tier-stability summary unavailable: no "
+            "tier_stability.json sidecars found. Re-run "
+            "`scripts/build_tier_stability.py --metric f1 --all` after "
+            "the per-buffer F1 reruns complete._"
+        )
+    rhos = sorted(r["rho"] for r in rho_records)
+    median_rho = rhos[len(rhos) // 2]
+    min_record = min(rho_records, key=lambda r: r["rho"])
+    max_record = max(rho_records, key=lambda r: r["rho"])
+    per_stratum_medians.sort(key=lambda t: t[1])
+    worst_two = per_stratum_medians[:2]
+    worst_str = ", ".join(
+        f"`{label}` (median rho = {rho:+.3f})" for label, rho in worst_two
+    )
+    lines = [
+        "**Headline F1 tier-stability summary** (across the 7 "
+        "populated strata x 4 non-primary buffers, 28 (rho, p) pairs):",
+        "",
+        f"- Median Spearman rho: **{median_rho:+.3f}**",
+        f"- Range: {min_record['rho']:+.3f} "
+        f"(`{min_record['stratum']}` vs {min_record['buffer_vs_20m']}) "
+        f"to {max_record['rho']:+.3f} "
+        f"(`{max_record['stratum']}` vs {max_record['buffer_vs_20m']})",
+        f"- Strata with the largest cross-buffer F1 tier "
+        f"reorganisation (lowest per-stratum median rho): {worst_str}.",
+    ]
+    return "\n".join(lines)
+
+
 def _top_n_conditions(payload: dict, metric: str, n: int = 3) -> list[dict]:
     """Return the top-N conditions in tier 1 by score."""
     tiers = payload.get("tiers", [])
@@ -340,9 +421,19 @@ def write_top_level_readme() -> Path:
         "6. **Greedy-clique tiering**: conditions sorted by score "
         "descending; each appended to the current tier if "
         "indistinguishable (BH-adjusted p >= q) from all current "
-        "members; otherwise a new tier starts. Tier inheritance from "
-        "the primary buffer (20 m) propagates across the 5 buffer "
-        "files.",
+        "members; otherwise a new tier starts.",
+        "",
+        "**F1 tier construction is per-buffer (Option A, "
+        "2026-04-26).** Per-cell thresholds are fixed at the primary "
+        "buffer (20 m) via the `--threshold-buffer` flag of "
+        "`build_tiered_leaderboard.py`; pairwise permutation tests "
+        "and tier construction then run independently at each of "
+        "20 / 30 / 40 / 50 / 100 m. The F1 tier tables at the "
+        "non-primary buffers therefore reflect genuine buffer-"
+        "dependent reorganisation, not propagated 20 m results. "
+        "MCC tier construction remains a single pass per stratum "
+        "because the tile-level MCC permutation test is buffer-"
+        "independent.",
         "",
         "See `planning/leaderboard-construction-plan.md` for the full "
         "methodology rationale.",
@@ -375,14 +466,23 @@ def write_top_level_readme() -> Path:
         "",
         "### Tier stability across buffers",
         "",
-        "Each stratum has a `tier_stability_<metric>.md` showing "
-        "Spearman rank correlation between tier@20m and tier@30/40/50/"
-        "100m. High rho (close to 1.0) indicates that buffer choice "
-        "does not change the tier ordering; low rho indicates "
-        "buffer-dependent ranking changes worth flagging.",
+        "F1 tiers are constructed independently at each buffer "
+        "(20 / 30 / 40 / 50 / 100 m) using per-cell thresholds "
+        "optimised at the primary buffer (20 m) via the "
+        "`--threshold-buffer` flag (Option A semantics). Each stratum's "
+        "`tier_stability.md` reports the Spearman rank correlation "
+        "between tier@20m and tier@30/40/50/100m; rho values are "
+        "substantive — they surface buffer-dependent tier "
+        "reorganisations rather than a tautology.",
         "",
-        "MCC tables show identical tier orderings across buffers (MCC "
-        "is buffer-invariant by construction in this codebase).",
+        "MCC tiers are identical across buffers by methodology — the "
+        "tile-level MCC permutation test does not take a buffer "
+        "argument, and the greedy-clique tiering sorts by a single "
+        "buffer-independent MCC value per condition. Therefore each "
+        "stratum's `tier_stability_mcc.md` reports rho = 1.0 across "
+        "all non-primary buffers; this is correct, not degenerate.",
+        "",
+        "<!-- F1_TIER_STABILITY_SUMMARY -->",
         "",
         "### q=0.01 sensitivity pass",
         "",
@@ -505,8 +605,15 @@ def write_top_level_readme() -> Path:
         "",
     ])
 
+    # Substitute the F1 tier-stability headline placeholder.
+    rendered = "\n".join(lines)
+    rendered = rendered.replace(
+        "<!-- F1_TIER_STABILITY_SUMMARY -->",
+        _f1_tier_stability_summary(),
+    )
+
     out_path = PER_ARCH_DIR / "README.md"
-    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    out_path.write_text(rendered + "\n", encoding="utf-8")
     LOGGER.info("Wrote %s", out_path)
     return out_path
 
