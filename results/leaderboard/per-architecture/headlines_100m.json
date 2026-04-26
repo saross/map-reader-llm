@@ -1,0 +1,220 @@
+{
+  "1": {
+    "single-pass": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "h4-canonical-last",
+          "f1": 0.7296
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "h5-track1-image-verbose",
+          "mcc": 0.2806
+        },
+        {
+          "label": "h5-track1-image-terse",
+          "mcc": 0.2228
+        },
+        {
+          "label": "h4-config-default",
+          "mcc": 0.2143
+        }
+      ]
+    },
+    "consensus": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "h3-high-track2-text-T1.0",
+          "f1": 0.8114
+        },
+        {
+          "label": "h3-high-track2-text-T0.3",
+          "f1": 0.8151
+        },
+        {
+          "label": "h3-high-track2-text-T0.7",
+          "f1": 0.8161
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "h9-track1-image-h9-B-v4",
+          "mcc": 0.7138
+        },
+        {
+          "label": "h9-track1-image-h9-A-p5",
+          "mcc": 0.6943
+        },
+        {
+          "label": "h9-track1-image-h9-A-p3",
+          "mcc": 0.6912
+        }
+      ]
+    },
+    "single-pass+PV": {
+      "populated": false
+    },
+    "pv": {
+      "populated": false
+    }
+  },
+  "2": {
+    "single-pass": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "h11-pvd-pro-medium-text-baseline",
+          "f1": 0.8069
+        },
+        {
+          "label": "h11-pvd-pro-medium-image-baseline",
+          "f1": 0.7945
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "h11-pvd-pro-medium-text-baseline",
+          "mcc": 0.7521
+        },
+        {
+          "label": "h11-pvd-pro-medium-image-baseline",
+          "mcc": 0.7335
+        }
+      ]
+    },
+    "consensus": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "h11-pvd-pro-high-text-n5",
+          "f1": 0.8586
+        },
+        {
+          "label": "h11-pvd-flash-high-text-n5",
+          "f1": 0.8259
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "h11-pvd-pro-high-image-n5",
+          "mcc": 0.7615
+        },
+        {
+          "label": "scale4-optimal-487",
+          "mcc": 0.7454
+        },
+        {
+          "label": "h11-pvd-pro-high-text-n5",
+          "mcc": 0.7268
+        }
+      ]
+    },
+    "single-pass+PV": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "pv-checklist-image",
+          "f1": 0.5519
+        },
+        {
+          "label": "pv-checklist-text",
+          "f1": 0.5422
+        },
+        {
+          "label": "pv-brief-image",
+          "f1": 0.5414
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "pv-cascade-adversarial-checklist",
+          "mcc": 0.4316
+        },
+        {
+          "label": "pv-adversarial-text",
+          "mcc": 0.4314
+        },
+        {
+          "label": "pv-adversarial-image",
+          "mcc": 0.4163
+        }
+      ]
+    },
+    "pv": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "pv-flash-high-text-16of30",
+          "f1": 0.9091
+        },
+        {
+          "label": "pv-high-text-t0.3-n5",
+          "f1": 0.9123
+        },
+        {
+          "label": "session-78-text-comparative",
+          "f1": 0.9159
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "pv-min-image-t0.3-n5",
+          "mcc": 0.841
+        },
+        {
+          "label": "pv-n1-image-t0-n3",
+          "mcc": 0.839
+        },
+        {
+          "label": "pv-min-image-t0.7-n5",
+          "mcc": 0.838
+        }
+      ]
+    }
+  },
+  "3": {
+    "single-pass": {
+      "populated": false
+    },
+    "consensus": {
+      "populated": true,
+      "f1_top3": [
+        {
+          "label": "h8v2-scale-4",
+          "f1": 0.8229
+        },
+        {
+          "label": "h12v2-r1-hn-heavy",
+          "f1": 0.8421
+        },
+        {
+          "label": "h8v2-scale-8",
+          "f1": 0.827
+        }
+      ],
+      "mcc_top3": [
+        {
+          "label": "h8v2-scale-4",
+          "mcc": 0.7719
+        },
+        {
+          "label": "h8v2-scale-8",
+          "mcc": 0.7388
+        },
+        {
+          "label": "h12v2-r3-hp-heavy",
+          "mcc": 0.7326
+        }
+      ]
+    },
+    "single-pass+PV": {
+      "populated": false
+    },
+    "pv": {
+      "populated": false
+    }
+  }
+}
