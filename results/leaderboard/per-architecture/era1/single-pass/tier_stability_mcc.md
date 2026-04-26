@@ -1,6 +1,5 @@
 # Tier stability (MCC) — era1 single-pass
 
-**Generated**: Session 79 redesign (2026-04-25)
 **Metric**: MCC
 **Stratum**: era1 / single-pass
 **Conditions**: 21
@@ -9,9 +8,7 @@
 
 For each condition the table records the tier index assigned at each of the 5 buffer tier tables ([20, 30, 40, 50, 100] m). Spearman's rho is computed between the rank vector of tier assignments at 20 m and that at each other buffer. A rho of 1.0 means perfect rank-stability (no condition crosses a tier boundary across that buffer change); lower values surface buffer-dependent tier reorganisations.
 
-**Important caveat**: in the current 12-stratum redesign build, tiers are constructed once per stratum at the primary buffer (20 m); the per-buffer markdown tier tables share the same tier assignments and only differ in the per-row F1 (or MCC) values displayed. Spearman rho across buffers is therefore 1.0 by construction (mathematically degenerate). The `tier@<buf>m` columns and Spearman rows are present for downstream cross-stratum comparison but contain no buffer-stability information beyond the trivial. Per-buffer tier construction would 5x the pairwise computation cost and is deferred.
-
-**Fallback marker**: 4/4 non-primary buffer files fell back to the primary-buffer JSON (the expected behaviour with the current build).
+**MCC tiers are buffer-independent by methodology.** The MCC permutation test (`run_permutation_test_mcc`) operates on tile-level binary classifications which do not depend on the buffer used for spatial matching during F1 evaluation. The greedy-clique tiering also sorts by a single buffer-independent MCC value per condition. Therefore the tier assignments at 20 / 30 / 40 / 50 / 100 m are identical, and Spearman rho across buffers is 1.0 by construction. This is not a degenerate output; it correctly reflects that MCC at the tile level summarises the entire confusion matrix without buffer-dependent matching geometry.
 
 Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho column reports `nan` in that case.
 
@@ -38,15 +35,15 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h4-canonical-first` | 0.098 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-plus-hp` | 0.098 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-canonical` | 0.098 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-pure-positive-canon` | 0.097 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-exploratory-pure-positive-canon` | 0.097 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-pure-positive-canon` | 0.097 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h4-random` | 0.084 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h5-track2-text-verbose` | 0.081 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-exploratory-pure-positive-2hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-pure-positive-canon` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-scale-8` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-canonical` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-plus-hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-scale-4` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-exploratory-pure-positive-2hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-canonical` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h5-track2-text-terse` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-plus-hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 

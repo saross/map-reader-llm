@@ -9,6 +9,9 @@
     50,
     100
   ],
+  "methodology_note": "MCC tiers are buffer-independent by methodology \u2014 the tile-level MCC permutation test does not take a buffer argument. Spearman rho across buffers is 1.0 by construction; this is correct, not degenerate.",
+  "fallback_from_primary_count": 4,
+  "n_other_buffers": 4,
   "spearman": {
     "30_vs_20": {
       "rho": 0.9999999999999999,
