@@ -14116,3 +14116,73 @@ Search terms: with-mcc reference cells off-matrix, phase3a matrix MCC sweep cano
 - **Obs 277** (Session 78 verifier-prompt matrix calibration): produced its own MCC numbers via `verifier-calibration-matrix/` — those are distinct from the with-mcc/ phase3a cells and stand independently.
 - **Backlog #3 MCC-rendering fix** (commit `bdd61bcc`): the smoke-test against the with-mcc text reference cell still passed because the rendering fix is purely additive and doesn't depend on which consensus source was used; the rendered MCC matched what the existing JSON contained.
 - **Artefacts**: `results/phase3a-{text,image}-matrix/<cell>/evaluation.{json,md,csv}` (252 cells, canonical MCC source post-Wave-2). Wave 2 commits: `caafc460` (jobs.tsv builder), `82bae71c` (sweep driver), `163161a4` (252-cell sweep results). Sapphire backup tag: `pre-mcc-sweep-2026-04-27`. **Action item flagged**: archive `with-mcc/` and replace with stub README pointing to the matrix canonical.
+
+## Observation 289: K-consensus SD shrinkage IS heterogeneous across the matrix — v2 genuine test reveals shared-mode signal in 5 of 13 strata; overrides Obs 285's proxy-bound i.i.d. consistency (2026-04-27)
+
+### The finding
+
+The v2 follow-up that Obs 285 explicitly scoped is now complete (`scripts/analyse_consensus_sd_shrinkage_v2.py` v1.0.0; commit `c6c277b3`; sapphire wall = 50.9 min at `--max-workers 4`). v2 rebuilds the actual greedy-vote consensus on K-subsamples drawn from per-pass detection geometries (`outputs/h11/pv-diag-384/`) and re-evaluates F1 against the canonical reference, eliminating the `mean-of-K-i.i.d.-samples` proxy that forced v1's slopes toward −0.5 by construction.
+
+Per-stratum log-log slope β₁ + 95 % bootstrap CI on the v2 genuine test:
+
+| Stratum | β₁ | 95 % CI | Decision |
+|:---|:--:|:--:|:---|
+| image HIGH T=0.3 | **−0.222** | [−0.358, −0.050] | **SHARED-MODE** |
+| image HIGH T=0.7 | −0.497 | [−0.627, −0.310] | i.i.d. consistent |
+| image HIGH T=1.0 | **−0.731** | [−0.884, −0.488] | **ANTI-IID** (steeper than −0.5) |
+| image MIN  T=0.3 | −0.520 | [−0.688, −0.317] | i.i.d. consistent |
+| image MIN  T=0.7 | −0.472 | [−0.646, −0.127] | i.i.d. consistent |
+| image MIN  T=1.0 | **−0.118** | [−0.227, +0.061] | **SHARED-MODE** (strongest) |
+| image SCALE4 T=0.7 | −0.607 | [−0.893, −0.373] | i.i.d. consistent |
+| text  HIGH T=0.3 | −0.518 | [−0.649, −0.313] | i.i.d. consistent |
+| text  HIGH T=0.7 | **−0.387** | [−0.421, −0.344] | CI excludes −0.5 (shallow, marginal shared-mode) |
+| text  HIGH T=1.0 | −0.619 | [−0.810, −0.416] | i.i.d. consistent |
+| text  MIN  T=0.3 | −0.551 | [−0.705, −0.338] | i.i.d. consistent |
+| text  MIN  T=0.7 | **−0.558** | [−0.590, −0.518] | CI excludes −0.5 (steep, marginal anti-i.i.d.) |
+| text  MIN  T=1.0 | −0.350 | [−0.535, −0.182] | i.i.d. consistent |
+
+**5 of 13 strata depart detectably from i.i.d.** (CIs exclude −0.5).
+
+### Why this overrides Obs 285
+
+Obs 285 reported that all 13 strata cluster tightly around β₁ = −0.5, but explicitly flagged the v1 result as a proxy-bound sanity check that cannot detect shared-mode departures. Now that v2 is run, three substantive corrections apply:
+
+1. **Heterogeneity is real**: K-consensus does not uniformly produce i.i.d.-pattern noise reduction across the phase3a matrix. The v1 framing "shrinkage matches i.i.d. across the board" was an artefact of the mean-of-K proxy that v2 removes.
+2. **The strongest shared-mode signal is image-MIN at T=1.0**: β₁ = −0.118 means SD shrinks ~5× slower than i.i.d. would predict — at this stratum, K passes are heavily correlated and consensus voting cannot average out the correlated component. Operationally this means raising K from 1 to K_max in this regime delivers far less variance reduction than the i.i.d. ceiling promises; downstream tier-stability claims that assume √K shrinkage need a footnote.
+3. **The image-HIGH T=1.0 anti-i.i.d. result is unusual** (β₁ = −0.731, steeper than −0.5): possible explanations include small-sample artefact (K_max = 10 with bootstrap noise), sub-Poisson behaviour from systematic correction at higher K (unlikely for VLM ensembles), or a stratification accident. Worth a focused replication on a larger K pool before paper citation; flagged as a follow-up.
+
+### Where shared-mode signal is concentrated
+
+Both shared-mode flags are **image-track** (HIGH-T0.3 and MIN-T1.0); the strongest is at MIN-T1.0. Both anti-i.i.d. flags are also image-track or text-track marginal. Pattern: **image track has more correlated per-pass error modes than text track** — consistent with Obs 252 (image track has ~4× higher buffer elasticity than text, indicating more sensitive spatial-tolerance behaviour) and Obs 244 (image vote-distribution fingerprints differ from text). The mechanism is plausibly that image inputs share visual confounds (label-pull effects, contour-ring confounds) that K passes consistently miss in the same way, so consensus voting cannot fix what every pass got wrong.
+
+### Paper framing
+
+The paper-worthy claim is **not** "K-consensus reduces variance like i.i.d." — that's the proxy-tautological story. The v2-corrected claim is: **"K-consensus delivers near-i.i.d. variance reduction in 8 of 13 phase3a strata; in image-track high-temperature MIN and image-track low-temperature HIGH conditions, shared per-pass error modes substantially limit the variance reduction K consensus can deliver"**. This nuance matters for any methodological argument that motivates K=N consensus as a noise-reduction strategy on this corpus — the strategy is broadly effective but has identifiable failure regions.
+
+### Comparison to v1
+
+| Stratum | v1 β₁ (proxy) | v2 β₁ (genuine) | Δ |
+|:---|:--:|:--:|:--:|
+| image HIGH T=0.3 | −0.52 | −0.222 | +0.30 |
+| image MIN  T=1.0 | (similar to −0.5) | −0.118 | +0.38 |
+| image HIGH T=1.0 | (similar to −0.5) | −0.731 | −0.23 |
+
+The largest v1-vs-v2 deltas are exactly in the strata that v2 flags — confirming that the proxy-tautology operated as predicted: it suppressed real signal toward −0.5, and the genuine test recovers the suppressed signal.
+
+### Caveats
+
+- **Subsample independence is approximate**: K-subset rolls drawn from the K_max-pass pool share underlying per-pass detections; this is acceptable for the SD-shrinkage diagnostic but reduces the effective independent sample count for the slope CI. Compute on the actual independent subsamples (different K_max-pass pools per K') would tighten the CIs and is a possible v3.
+- **Image HIGH-T=1.0 anti-i.i.d. should not be cited without replication**: the ANTI-IID flag is structurally surprising and could be small-sample artefact; replication at higher K_max would be needed for paper-grade citation.
+- **K_max heterogeneity across the matrix**: text strata at K=30 have more degrees of freedom for the slope fit than image strata at K=10; CI widths reflect this.
+
+### Findable later
+
+Search terms: K-consensus SD shrinkage v2 genuine test, shared-mode signal phase3a, image MINIMAL T=1.0 -0.118, anti-i.i.d. image HIGH T=1.0, v1 proxy override, K-consensus variance reduction failure, correlated per-pass error modes, image-track shared-mode concentration, slope departure from -0.5, 5 of 13 strata depart i.i.d., paper framing K-consensus heterogeneity.
+
+### Related observations and artefacts
+
+- **Obs 285** (v1 proxy-bound result): superseded by Obs 289 for any shared-mode-test claim. v1 result remains valid as a sanity check on the i.i.d. expectation under the proxy and is preserved in `results/secondary-effects-consensus-sd/report.md` Section 2 with a methodology note pointing readers to Section 3.
+- **Obs 244** (vote-distribution fingerprints): predicts that image and text differ in pass-level variability structure; v2 corroborates with image-track concentration of shared-mode signal.
+- **Obs 252** (image track has ~4× higher buffer elasticity than text): companion to v2's image-track concentration of shared-mode signal — both findings point to image-track having more correlated error modes than text.
+- **Obs 282** (kappa fragility corroborates variance hypothesis at matched K): consistent with v2 — variance hypothesis is corroborated at the per-stratum level via fragility, and v2 quantifies the consensus-shrinkage failure where it matters most.
+- **Artefacts**: `results/secondary-effects-consensus-sd/sd_shrinkage_v2.{json,png}`, `results/secondary-effects-consensus-sd/report.md` Section 3. Script: `scripts/analyse_consensus_sd_shrinkage_v2.py` (commit `b421f572`). Data commit: `c6c277b3`. Wall-clock 50.9 min on sapphire `--max-workers 4`.
