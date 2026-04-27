@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-17T12:13:16.445599+00:00",
+  "timestamp": "2026-04-27T05:32:14.237090+00:00",
   "summary": {
     "label": "HIGH-t0.3-5of5",
     "n_detections": 498,
@@ -53,6 +53,69 @@
         "r_ci_lower": 0.805,
         "r_ci_upper": 0.8843
       }
-    ]
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 188,
+        "tn": 190,
+        "fp": 68,
+        "fn": 41
+      },
+      "mcc": {
+        "mean": 0.557,
+        "ci_lower": 0.484,
+        "ci_upper": 0.6338
+      },
+      "sensitivity": {
+        "mean": 0.8206,
+        "ci_lower": 0.7699,
+        "ci_upper": 0.8708
+      },
+      "specificity": {
+        "mean": 0.7366,
+        "ci_lower": 0.6784,
+        "ci_upper": 0.7901
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "82bae71c",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-27T05:31:48.588444+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t5.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 1000,
+      "seed": 42,
+      "output_dir": "results/phase3a-text-matrix/high-t0.3/n5/high-t0-3-5of5",
+      "label": "HIGH-t0.3-5of5",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t5.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    }
   }
 }
