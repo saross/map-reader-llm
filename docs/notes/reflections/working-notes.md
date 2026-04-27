@@ -14186,3 +14186,60 @@ Search terms: K-consensus SD shrinkage v2 genuine test, shared-mode signal phase
 - **Obs 252** (image track has ~4× higher buffer elasticity than text): companion to v2's image-track concentration of shared-mode signal — both findings point to image-track having more correlated error modes than text.
 - **Obs 282** (kappa fragility corroborates variance hypothesis at matched K): consistent with v2 — variance hypothesis is corroborated at the per-stratum level via fragility, and v2 quantifies the consensus-shrinkage failure where it matters most.
 - **Artefacts**: `results/secondary-effects-consensus-sd/sd_shrinkage_v2.{json,png}`, `results/secondary-effects-consensus-sd/report.md` Section 3. Script: `scripts/analyse_consensus_sd_shrinkage_v2.py` (commit `b421f572`). Data commit: `c6c277b3`. Wall-clock 50.9 min on sapphire `--max-workers 4`.
+
+## Observation 290: Wave 3 refresh — 0 substantive corrections from Phase C / Wave 2 source updates; 8 of 9 themes verified canonical-aligned (2026-04-27)
+
+### The finding
+
+Wave 3 of Session 80 refreshed the eight stale analyses identified by the Session 80 staleness audit (preceding commit `49096289`), plus the Obs 288 `with-mcc/` housekeeping action item. The triggering events were the Phase C verifier-calibration regeneration (commit `fc7843158b04cbdd`, 2026-04-25), the Wave 2 phase3a MCC re-eval (commit `163161a4`, 2026-04-27), and the Obs 288 forensic on the off-matrix `with-mcc/` reference cells (commit `be5703d2`, 2026-04-27).
+
+**Per-theme outcome**:
+
+| # | Theme | Verdict | Commit |
+|:-:|:---|:---|:---|
+| 1 | Consensus-threshold sweep (HIGH priority) | No-op — all 16 matrix cells' optimal `vote_t` and §7 plateau-widths match canonical Wave-2 sources exactly | (none — narrative already canonical-aligned) |
+| 2 | MCC tile-level rank-order (HIGH priority) | No-op — all 16 matrix cells' MCC values match canonical Wave-2 within ±0.002 | (none — narrative already canonical-aligned) |
+| 3 | Factor analysis re-aggregate (MEDIUM-HIGH) | No-op — re-aggregator output byte-identical to existing `factor_analysis_results.{json,csv,md}`; family counts (11/12 Architecture, 5/6 Thinking, 5/6 Temperature, 8/9 Modality, 0/28 Prompt Engineering) all reproduce | (none — output unchanged) |
+| 4 | Cross-architecture paired (MEDIUM) | No-op — h11-pvd-flash-high-{text,image}-n5 MCC and F1 cell values match canonical Wave-2 within ±0.002; Obs 277 paired tier tables stand | (none — pairwise tables canonical-aligned) |
+| 5 | Output dispersion §4 Variance (MEDIUM) | No-op — §4 numerical content matches `secondary_effects.json` exactly; per Obs 285 v1 the K=1 SDs match §4 to 3 decimals | (none — narrative already canonical-aligned) |
+| 6 | Buffer elasticity at 5m granularity (MEDIUM-LOW) | New artefact — captured 5m-granularity buffer-F1 curves from Phase C verifier-calibration-matrix (14 cells); confirmed all monotonic in F1 vs buffer; image post-PV elasticity 12.5–13.8 % (20→50m), text 2.9–3.1 % | `2a928cf7` (`results/verifier-calibration-matrix/buffer-elasticity-5m.md`) |
+| 7 | Per-map heterogeneity Markdown regen (LOW-MEDIUM) | Documented as superseded — bare-era leaderboards (`results/leaderboard/era{1,2,3}/`) at 2026-04-17 source data predate Phase C and Session-79 redesign; regenerating Markdown from stale source would not refresh; canonical sources are at `per-architecture/` and `combined/` (built 2026-04-26) | `96c6ba75` (stub READMEs in three bare-era dirs) |
+| 8 | Verifier prompt invariance Obs 277 (LOW-MEDIUM) | No-op — re-extracted ECE, AUC, Brier, MCC for all 14 Phase C verifier-calibration cells; canonical `verify_adversarial-text` retains lowest ECE on both pools (image 0.179; text 0.071); Obs 277 Pareto-dominance claim stands | (none — narrative already canonical-aligned) |
+| 9 | `with-mcc/` archive housekeeping (Obs 288 action) | Done — text high-T0.7 K=30 t=26 and image high-T0.7 K=10 t=7 archived to `archive/with-mcc-pre-2026-04-27-off-matrix/{text,image}/`; original locations have stub READMEs pointing to canonical phase3a-{text,image}-matrix sources | `f052a92a` |
+
+**Net effect on paper-load-bearing claims**: zero. All eight refresh themes confirm that the existing narratives in `results/secondary-effects/secondary_effects.md`, `results/phase3a-text-matrix/secondary_effects.md`, `results/factor-analysis/factor_analysis_results.md`, `results/leaderboard/per-architecture/cross-architecture-paired-era2_{f1,mcc}.md`, and Obs 277 are canonical-aligned with the post-Wave-2 / post-Phase-C source data.
+
+### Why all themes were no-ops
+
+Two likely structural reasons:
+
+1. **Wave 2's MCC sweep was internally consistent**: the Wave 2 sweep used the matrix-canonical `outputs/h11/pv-diag-384/...` consensus tree as its detection source (Obs 288 confirms this), and the existing narratives were already evaluating against the same matrix-canonical consensus. Wave 2 produced 252 internally-consistent MCC values that match the prior narrative MCC values within ±0.002 — i.e. Wave 2 confirmed the existing data, it did not replace it.
+2. **Phase C's verifier-calibration regeneration was numerically tiny**: Obs 277's update note (2026-04-25 re-derivation) explicitly stated "max |ΔAUC| 0.009, max |ΔECE| 0.009, max |ΔF1| 0.035; qualitative finding stands". My Wave 3 re-extraction of the Phase C calibration metrics confirms the post-re-derivation values still rank canonical `adversarial-text` as ECE-best on both pools.
+
+The combined message is that the post-Wave-2, post-Phase-C source data **converged on the same answers** as the pre-Wave-2 / pre-Phase-C narrative analyses. This is good news for paper-citation stability — but it means Wave 3 produced no novel scientific findings, only verifications.
+
+### What Wave 3 produced as new artefacts
+
+1. **`results/verifier-calibration-matrix/buffer-elasticity-5m.md`** (commit `2a928cf7`): a 5m-granularity F1 vs buffer table for the 14 Phase C verifier-calibration cells. This complements but does not replace the §6 buffer-elasticity tables in `results/secondary-effects/secondary_effects.md` (phase3a, 10m granularity, consensus stage). Confirms Obs 252's monotonicity assumption holds at finer granularity in the post-PV matrix.
+2. **`archive/with-mcc-pre-2026-04-27-off-matrix/{text,image}/` plus stub READMEs** (commit `f052a92a`): closes the Obs 288 action item; redirects readers from the off-matrix one-offs to the canonical matrix tree.
+3. **`results/leaderboard/era{1,2,3}/README.md`** (commit `96c6ba75`): documents that these bare-era leaderboards are superseded by the per-architecture and combined trees (Session 79 redesign). Useful navigation aid for future readers who might otherwise read the stale 2026-04-17 build as canonical.
+
+### Operational implications
+
+- **No paper-citation changes required**: any narrative document already cites Wave-2-and-Phase-C-aligned numbers. No revisions to `results/secondary-effects/secondary_effects.md`, `results/phase3a-text-matrix/secondary_effects.md`, `results/factor-analysis/factor_analysis_results.md`, `results/leaderboard/per-architecture/cross-architecture-paired-*.md`, or Obs 277 are needed.
+- **Obs 288's action item is closed**: the with-mcc/ off-matrix one-offs are no longer in the active results tree. The matrix-canonical sources are now the only source of phase3a tile-level MCC values that downstream readers will encounter.
+- **The bare-era leaderboards are no longer ambiguous**: each has a stub README directing readers to the post-Session-79 canonical sources. Future agents looking at `results/leaderboard/` will see the deprecation notice immediately.
+
+### Findable later
+
+Search terms: Wave 3 of Session 80, refresh staleness audit, phase3a MCC narrative canonical-aligned, factor analysis re-aggregation byte-identical, with-mcc archive housekeeping closed, bare-era leaderboard superseded, 5m buffer elasticity Phase C verifier-calibration, Obs 277 Pareto-dominance confirmed post-Phase-C, Wave 3 zero substantive corrections.
+
+### Related observations and artefacts
+
+- **Obs 277** (canonical Pareto-dominant verifier-prompt selection): re-confirmed in Theme 8; canonical `adversarial-text` retains lowest ECE on both pools.
+- **Obs 285 v1** (proxy-bound K-consensus SD shrinkage): per-condition K=1 SDs match secondary_effects.md §4 to 3 decimals, confirming Theme 5's no-op verdict.
+- **Obs 286, 287** (Stage A and B verifier-T pilot, T=0.5 production-default recommendation): orthogonal to Wave 3 — these were Wave 1 closures and not part of the Wave 3 refresh themes.
+- **Obs 288** (with-mcc/ off-matrix one-offs): action item closed by Theme 9 (commit `f052a92a`).
+- **Obs 289** (v2 K-consensus SD shrinkage genuine test): orthogonal to Wave 3 — published before Wave 3 began.
+- **Wave 3 commits**: `f052a92a` (Theme 9), `2a928cf7` (Theme 6), `96c6ba75` (Theme 7), `<this commit>` (Obs 290 summary).
+
