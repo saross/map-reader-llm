@@ -121,6 +121,11 @@ outputs/h11/wbf/*/crops/
 # Verifier cleanup backup files (transient, regenerable)
 outputs/**/*.pre-cleanup-*.backup
 
+# Pre-recovery backup files written by the 55-map T=0.3 recovery driver
+# (transient: the pre-recovery state lives in commit 4b4a87b3 / 291715b4
+# and is fully reconstructable via `git show <hash>:<path>`).
+outputs/**/*.pre-recovery-*.backup
+
 # Verifier HTTP request logs (noise, not useful for reproducibility)
 outputs/h10/wbf/**/*.log
 outputs/h11/wbf/**/*.log
