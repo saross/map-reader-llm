@@ -557,6 +557,15 @@ def write_outputs(
     logger.info("JSON written: %s", json_path)
 
     # CSV
+    # MCC is buffer-invariant (computed at the tile level), so when the
+    # ``tile_classification`` block is present we repeat the same MCC,
+    # sensitivity, and specificity values across every buffer row for
+    # tabular convenience. ``has_mcc`` gates both the wider CSV columns
+    # and the wider Markdown header below so legacy outputs without MCC
+    # remain byte-identical.
+    tc = results.get("tile_classification") or {}
+    has_mcc = bool(tc)
+
     csv_path = output_dir / "evaluation.csv"
     fieldnames = [
         "label", "buffer_metres",
@@ -564,11 +573,29 @@ def write_outputs(
         "precision", "p_ci_lower", "p_ci_upper",
         "recall", "r_ci_lower", "r_ci_upper",
     ]
+    if has_mcc:
+        fieldnames.extend([
+            "mcc", "mcc_ci_lower", "mcc_ci_upper",
+            "sensitivity", "specificity",
+        ])
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for buf in results["buffers"]:
             row = {"label": results["label"], **buf}
+            if has_mcc:
+                mcc = tc.get("mcc", {})
+                sens = tc.get("sensitivity", {})
+                spec = tc.get("specificity", {})
+                # MCC is buffer-invariant; repeated per row for tabular
+                # convenience.
+                row.update({
+                    "mcc": mcc.get("mean", 0),
+                    "mcc_ci_lower": mcc.get("ci_lower", 0),
+                    "mcc_ci_upper": mcc.get("ci_upper", 0),
+                    "sensitivity": sens.get("mean", 0),
+                    "specificity": spec.get("mean", 0),
+                })
             writer.writerow({k: row.get(k, "") for k in fieldnames})
     logger.info("CSV written: %s", csv_path)
 
@@ -583,10 +610,24 @@ def write_outputs(
             f"**Detections**: {results.get('n_detections', '—')}  \n\n",
         )
 
-        f.write("| Buffer | F1 | F1 CI | P | P CI | R | R CI |\n")
-        f.write("|---|---|---|---|---|---|---|\n")
-        for buf in results["buffers"]:
+        # When MCC is present we emit four additional columns per row.
+        # The MCC mean and CI come from the buffer-invariant
+        # ``tile_classification`` block; sensitivity and specificity are
+        # likewise repeated across rows.
+        if has_mcc:
+            mcc = tc.get("mcc", {})
+            sens = tc.get("sensitivity", {})
+            spec = tc.get("specificity", {})
             f.write(
+                "| Buffer | F1 | F1 CI | P | P CI | R | R CI "
+                "| MCC | MCC CI | Sens | Spec |\n",
+            )
+            f.write("|" + "---|" * 11 + "\n")
+        else:
+            f.write("| Buffer | F1 | F1 CI | P | P CI | R | R CI |\n")
+            f.write("|---|---|---|---|---|---|---|\n")
+        for buf in results["buffers"]:
+            row_body = (
                 f"| {buf['buffer_metres']}m "
                 f"| {buf['f1']:.3f} "
                 f"| [{buf.get('f1_ci_lower', 0):.3f}, "
@@ -596,8 +637,19 @@ def write_outputs(
                 f"{buf.get('p_ci_upper', 0):.3f}] "
                 f"| {buf['recall']:.3f} "
                 f"| [{buf.get('r_ci_lower', 0):.3f}, "
-                f"{buf.get('r_ci_upper', 0):.3f}] |\n",
+                f"{buf.get('r_ci_upper', 0):.3f}] "
             )
+            if has_mcc:
+                mcc_cells = (
+                    f"| {mcc.get('mean', 0):.3f} "
+                    f"| [{mcc.get('ci_lower', 0):.3f}, "
+                    f"{mcc.get('ci_upper', 0):.3f}] "
+                    f"| {sens.get('mean', 0):.3f} "
+                    f"| {spec.get('mean', 0):.3f} "
+                )
+                f.write(row_body + mcc_cells + "|\n")
+            else:
+                f.write(row_body + "|\n")
         f.write("\n")
     logger.info("Markdown written: %s", md_path)
 
@@ -778,13 +830,26 @@ def write_batch_summary(
                 f.write(f"**Description**: {desc}  \n")
         f.write("\n")
 
-        f.write(
-            "| Rank | Condition | Runs | Buffer "
-            "| F1 | F1 CI | P | P CI | R | R CI |\n",
-        )
-        f.write("|---|---|---|---|---|---|---|---|---|---|\n")
-        for i, row in enumerate(flat_rows, 1):
+        # ``has_mcc`` mirrors the gating used for the CSV above: when any
+        # condition supplied a ``tile_classification`` block, every row
+        # already carries MCC / sensitivity / specificity values (the
+        # row-builder above falls back to defaults for conditions that
+        # did not), so the wider header is safe to emit.
+        if has_mcc:
             f.write(
+                "| Rank | Condition | Runs | Buffer "
+                "| F1 | F1 CI | P | P CI | R | R CI "
+                "| MCC | MCC CI | Sens | Spec |\n",
+            )
+            f.write("|" + "---|" * 14 + "\n")
+        else:
+            f.write(
+                "| Rank | Condition | Runs | Buffer "
+                "| F1 | F1 CI | P | P CI | R | R CI |\n",
+            )
+            f.write("|---|---|---|---|---|---|---|---|---|---|\n")
+        for i, row in enumerate(flat_rows, 1):
+            row_body = (
                 f"| {i} "
                 f"| {row['label']} "
                 f"| {row['n_runs']} "
@@ -795,8 +860,19 @@ def write_batch_summary(
                 f"| [{row['p_ci_lower']:.3f}, {row['p_ci_upper']:.3f}] "
                 f"| {row['recall']:.3f} "
                 f"| [{row['r_ci_lower']:.3f}, "
-                f"{row['r_ci_upper']:.3f}] |\n",
+                f"{row['r_ci_upper']:.3f}] "
             )
+            if has_mcc:
+                mcc_cells = (
+                    f"| {row.get('mcc', 0):.3f} "
+                    f"| [{row.get('mcc_ci_lower', 0):.3f}, "
+                    f"{row.get('mcc_ci_upper', 0):.3f}] "
+                    f"| {row.get('sensitivity', 0):.3f} "
+                    f"| {row.get('specificity', 0):.3f} "
+                )
+                f.write(row_body + mcc_cells + "|\n")
+            else:
+                f.write(row_body + "|\n")
         f.write("\n")
     logger.info("Batch Markdown written: %s", md_path)
 
