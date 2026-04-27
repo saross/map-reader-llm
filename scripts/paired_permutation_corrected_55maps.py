@@ -394,12 +394,24 @@ def run_buffer(
     """
     logger.info("--- R = %d m ---", buffer_r)
 
+    # Filter yesterday's review by buffer_metres <= R. compute_corrected_f1
+    # _multi_buffer.build_phantom_gdf currently includes ALL yesterday's
+    # mounds unconditionally (its docstring claims "include for every R
+    # >= 50" but the code does not gate). The original script only ran at
+    # R in {50, 75, 100, 125, 150}, so the bug never manifested. Below
+    # 50 m the gate matters: at R = 20 m, yesterday's 50 m mounds must
+    # NOT be promoted because they were confirmed for the 50 m shell.
+    # We pre-filter here so the imported helper sees a yesterday CSV
+    # consistent with the active R.
+    review_y_a_at_r = review_y_a[review_y_a["buffer_metres"] <= buffer_r]
+    review_y_b_at_r = review_y_b[review_y_b["buffer_metres"] <= buffer_r]
+
     # Build extended GT for each side
     phantoms_a = build_phantom_gdf(
-        review_y_a, review_t_a, buffer_r, crs=DEFAULT_CRS,
+        review_y_a_at_r, review_t_a, buffer_r, crs=DEFAULT_CRS,
     )
     phantoms_b = build_phantom_gdf(
-        review_y_b, review_t_b, buffer_r, crs=DEFAULT_CRS,
+        review_y_b_at_r, review_t_b, buffer_r, crs=DEFAULT_CRS,
     )
     ext_gt_a = build_extended_gt(gdf_student, phantoms_a)
     ext_gt_b = build_extended_gt(gdf_student, phantoms_b)
