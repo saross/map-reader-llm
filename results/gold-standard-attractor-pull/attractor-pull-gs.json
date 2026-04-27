@@ -1,0 +1,388 @@
+{
+  "method": "geometric-kdtree",
+  "obs_anchor": "Obs 294 (55-map cap = 125 m); GS companion = Obs 295",
+  "shell_edges_m": [
+    25,
+    50,
+    75,
+    100,
+    125,
+    150,
+    286
+  ],
+  "permutations": 1000,
+  "seed": 42,
+  "alpha": 0.05,
+  "n_reference_mounds": 569,
+  "scope": "Era 2, 487-tile gold-standard 4-map evaluation",
+  "runs": [
+    {
+      "key": "text-high-t0.7",
+      "label": "text-HIGH-T0.7 (K=5)",
+      "n_detections": 392,
+      "n_within_286m": 376,
+      "shell": [
+        {
+          "R_inner_m": 0,
+          "R_outer_m": 25,
+          "obs_rate_in_shell": 0.9311,
+          "null_mean_in_shell": 0.002,
+          "null_ci_lo": 0.0,
+          "null_ci_hi": 0.0077,
+          "lift_ratio": 466.75,
+          "signal_fraction": 0.9979,
+          "p_value": 0.001,
+          "significant": true
+        },
+        {
+          "R_inner_m": 25,
+          "R_outer_m": 50,
+          "obs_rate_in_shell": 0.0128,
+          "null_mean_in_shell": 0.006,
+          "null_ci_lo": 0.0,
+          "null_ci_hi": 0.0153,
+          "lift_ratio": 2.14,
+          "signal_fraction": 0.5322,
+          "p_value": 0.0909,
+          "significant": false
+        },
+        {
+          "R_inner_m": 50,
+          "R_outer_m": 75,
+          "obs_rate_in_shell": 0.0051,
+          "null_mean_in_shell": 0.0094,
+          "null_ci_lo": 0.0026,
+          "null_ci_hi": 0.0204,
+          "lift_ratio": 0.54,
+          "signal_fraction": -0.846,
+          "p_value": 0.8841,
+          "significant": false
+        },
+        {
+          "R_inner_m": 75,
+          "R_outer_m": 100,
+          "obs_rate_in_shell": 0.0026,
+          "null_mean_in_shell": 0.0125,
+          "null_ci_lo": 0.0026,
+          "null_ci_hi": 0.023,
+          "lift_ratio": 0.2,
+          "signal_fraction": -3.888,
+          "p_value": 0.992,
+          "significant": false
+        },
+        {
+          "R_inner_m": 100,
+          "R_outer_m": 125,
+          "obs_rate_in_shell": 0.0,
+          "null_mean_in_shell": 0.0157,
+          "null_ci_lo": 0.0051,
+          "null_ci_hi": 0.0281,
+          "lift_ratio": 0.0,
+          "signal_fraction": 0.0,
+          "p_value": 1.0,
+          "significant": false
+        },
+        {
+          "R_inner_m": 125,
+          "R_outer_m": 150,
+          "obs_rate_in_shell": 0.0,
+          "null_mean_in_shell": 0.0184,
+          "null_ci_lo": 0.0077,
+          "null_ci_hi": 0.0306,
+          "lift_ratio": 0.0,
+          "signal_fraction": 0.0,
+          "p_value": 1.0,
+          "significant": false
+        },
+        {
+          "R_inner_m": 150,
+          "R_outer_m": 286,
+          "obs_rate_in_shell": 0.0077,
+          "null_mean_in_shell": 0.1364,
+          "null_ci_lo": 0.1046,
+          "null_ci_hi": 0.1709,
+          "lift_ratio": 0.06,
+          "signal_fraction": -16.8257,
+          "p_value": 1.0,
+          "significant": false
+        }
+      ],
+      "cutoff_m": 25,
+      "last_significant_outer_m": 25,
+      "monotonic": true
+    },
+    {
+      "key": "image-high-t0.7",
+      "label": "image-HIGH-T0.7 (K=5)",
+      "n_detections": 414,
+      "n_within_286m": 406,
+      "shell": [
+        {
+          "R_inner_m": 0,
+          "R_outer_m": 25,
+          "obs_rate_in_shell": 0.8647,
+          "null_mean_in_shell": 0.002,
+          "null_ci_lo": 0.0,
+          "null_ci_hi": 0.0072,
+          "lift_ratio": 436.05,
+          "signal_fraction": 0.9977,
+          "p_value": 0.001,
+          "significant": true
+        },
+        {
+          "R_inner_m": 25,
+          "R_outer_m": 50,
+          "obs_rate_in_shell": 0.0725,
+          "null_mean_in_shell": 0.0057,
+          "null_ci_lo": 0.0,
+          "null_ci_hi": 0.0121,
+          "lift_ratio": 12.76,
+          "signal_fraction": 0.9216,
+          "p_value": 0.001,
+          "significant": true
+        },
+        {
+          "R_inner_m": 50,
+          "R_outer_m": 75,
+          "obs_rate_in_shell": 0.0121,
+          "null_mean_in_shell": 0.0089,
+          "null_ci_lo": 0.0024,
+          "null_ci_hi": 0.0193,
+          "lift_ratio": 1.36,
+          "signal_fraction": 0.2642,
+          "p_value": 0.3247,
+          "significant": false
+        },
+        {
+          "R_inner_m": 75,
+          "R_outer_m": 100,
+          "obs_rate_in_shell": 0.0048,
+          "null_mean_in_shell": 0.0124,
+          "null_ci_lo": 0.0024,
+          "null_ci_hi": 0.0242,
+          "lift_ratio": 0.39,
+          "signal_fraction": -1.567,
+          "p_value": 0.959,
+          "significant": false
+        },
+        {
+          "R_inner_m": 100,
+          "R_outer_m": 125,
+          "obs_rate_in_shell": 0.0048,
+          "null_mean_in_shell": 0.0152,
+          "null_ci_lo": 0.0048,
+          "null_ci_hi": 0.029,
+          "lift_ratio": 0.32,
+          "signal_fraction": -2.1365,
+          "p_value": 0.982,
+          "significant": false
+        },
+        {
+          "R_inner_m": 125,
+          "R_outer_m": 150,
+          "obs_rate_in_shell": 0.0,
+          "null_mean_in_shell": 0.0178,
+          "null_ci_lo": 0.0072,
+          "null_ci_hi": 0.0314,
+          "lift_ratio": 0.0,
+          "signal_fraction": 0.0,
+          "p_value": 1.0,
+          "significant": false
+        },
+        {
+          "R_inner_m": 150,
+          "R_outer_m": 286,
+          "obs_rate_in_shell": 0.0217,
+          "null_mean_in_shell": 0.1332,
+          "null_ci_lo": 0.1014,
+          "null_ci_hi": 0.1667,
+          "lift_ratio": 0.16,
+          "signal_fraction": -5.125,
+          "p_value": 1.0,
+          "significant": false
+        }
+      ],
+      "cutoff_m": 50,
+      "last_significant_outer_m": 50,
+      "monotonic": true
+    },
+    {
+      "key": "scale4-optimal",
+      "label": "SCALE4-optimal (image, K=10)",
+      "n_detections": 411,
+      "n_within_286m": 403,
+      "shell": [
+        {
+          "R_inner_m": 0,
+          "R_outer_m": 25,
+          "obs_rate_in_shell": 0.8394,
+          "null_mean_in_shell": 0.0019,
+          "null_ci_lo": 0.0,
+          "null_ci_hi": 0.0073,
+          "lift_ratio": 448.63,
+          "signal_fraction": 0.9978,
+          "p_value": 0.001,
+          "significant": true
+        },
+        {
+          "R_inner_m": 25,
+          "R_outer_m": 50,
+          "obs_rate_in_shell": 0.0925,
+          "null_mean_in_shell": 0.0058,
+          "null_ci_lo": 0.0,
+          "null_ci_hi": 0.0146,
+          "lift_ratio": 15.83,
+          "signal_fraction": 0.9368,
+          "p_value": 0.001,
+          "significant": true
+        },
+        {
+          "R_inner_m": 50,
+          "R_outer_m": 75,
+          "obs_rate_in_shell": 0.017,
+          "null_mean_in_shell": 0.0089,
+          "null_ci_lo": 0.0024,
+          "null_ci_hi": 0.0195,
+          "lift_ratio": 1.92,
+          "signal_fraction": 0.478,
+          "p_value": 0.0759,
+          "significant": false
+        },
+        {
+          "R_inner_m": 75,
+          "R_outer_m": 100,
+          "obs_rate_in_shell": 0.0024,
+          "null_mean_in_shell": 0.0121,
+          "null_ci_lo": 0.0024,
+          "null_ci_hi": 0.0243,
+          "lift_ratio": 0.2,
+          "signal_fraction": -3.991,
+          "p_value": 0.992,
+          "significant": false
+        },
+        {
+          "R_inner_m": 100,
+          "R_outer_m": 125,
+          "obs_rate_in_shell": 0.0049,
+          "null_mean_in_shell": 0.0153,
+          "null_ci_lo": 0.0049,
+          "null_ci_hi": 0.0292,
+          "lift_ratio": 0.32,
+          "signal_fraction": -2.148,
+          "p_value": 0.993,
+          "significant": false
+        },
+        {
+          "R_inner_m": 125,
+          "R_outer_m": 150,
+          "obs_rate_in_shell": 0.0,
+          "null_mean_in_shell": 0.0181,
+          "null_ci_lo": 0.0073,
+          "null_ci_hi": 0.0316,
+          "lift_ratio": 0.0,
+          "signal_fraction": 0.0,
+          "p_value": 1.0,
+          "significant": false
+        },
+        {
+          "R_inner_m": 150,
+          "R_outer_m": 286,
+          "obs_rate_in_shell": 0.0243,
+          "null_mean_in_shell": 0.133,
+          "null_ci_lo": 0.1022,
+          "null_ci_hi": 0.1655,
+          "lift_ratio": 0.18,
+          "signal_fraction": -4.467,
+          "p_value": 1.0,
+          "significant": false
+        }
+      ],
+      "cutoff_m": 50,
+      "last_significant_outer_m": 50,
+      "monotonic": true
+    }
+  ],
+  "consensus": {
+    "most_permissive_consensus_cutoff_m": 25,
+    "majority_breakpoint_m": 75,
+    "per_shell": [
+      {
+        "R_outer_m": 25,
+        "significant": {
+          "text-high-t0.7": true,
+          "image-high-t0.7": true,
+          "scale4-optimal": true
+        },
+        "n_runs_significant": 3,
+        "all_runs_significant": true,
+        "majority_significant": true
+      },
+      {
+        "R_outer_m": 50,
+        "significant": {
+          "text-high-t0.7": false,
+          "image-high-t0.7": true,
+          "scale4-optimal": true
+        },
+        "n_runs_significant": 2,
+        "all_runs_significant": false,
+        "majority_significant": true
+      },
+      {
+        "R_outer_m": 75,
+        "significant": {
+          "text-high-t0.7": false,
+          "image-high-t0.7": false,
+          "scale4-optimal": false
+        },
+        "n_runs_significant": 0,
+        "all_runs_significant": false,
+        "majority_significant": false
+      },
+      {
+        "R_outer_m": 100,
+        "significant": {
+          "text-high-t0.7": false,
+          "image-high-t0.7": false,
+          "scale4-optimal": false
+        },
+        "n_runs_significant": 0,
+        "all_runs_significant": false,
+        "majority_significant": false
+      },
+      {
+        "R_outer_m": 125,
+        "significant": {
+          "text-high-t0.7": false,
+          "image-high-t0.7": false,
+          "scale4-optimal": false
+        },
+        "n_runs_significant": 0,
+        "all_runs_significant": false,
+        "majority_significant": false
+      },
+      {
+        "R_outer_m": 150,
+        "significant": {
+          "text-high-t0.7": false,
+          "image-high-t0.7": false,
+          "scale4-optimal": false
+        },
+        "n_runs_significant": 0,
+        "all_runs_significant": false,
+        "majority_significant": false
+      },
+      {
+        "R_outer_m": 286,
+        "significant": {
+          "text-high-t0.7": false,
+          "image-high-t0.7": false,
+          "scale4-optimal": false
+        },
+        "n_runs_significant": 0,
+        "all_runs_significant": false,
+        "majority_significant": false
+      }
+    ]
+  }
+}
