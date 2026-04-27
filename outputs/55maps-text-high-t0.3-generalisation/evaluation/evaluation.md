@@ -1,6 +1,6 @@
 # Evaluation: 55maps-text-high-t0.3-generalisation
 
-**Generated**: 2026-04-26T16:24:18.126693+00:00  
+**Generated**: 2026-04-27T00:24:03.551727+00:00  
 **Detections**: 4349  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |

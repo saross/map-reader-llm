@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-26T16:24:18.126405+00:00",
+  "timestamp": "2026-04-27T00:24:03.551372+00:00",
   "summary": {
     "label": "55maps-text-high-t0.3-generalisation",
     "n_detections": 4349,
@@ -53,14 +53,37 @@
         "r_ci_lower": 0.7526,
         "r_ci_upper": 0.7811
       }
-    ]
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 2216,
+        "tn": 4906,
+        "fp": 255,
+        "fn": 1164
+      },
+      "mcc": {
+        "mean": 0.6538,
+        "ci_lower": 0.6386,
+        "ci_upper": 0.6704
+      },
+      "sensitivity": {
+        "mean": 0.6557,
+        "ci_lower": 0.6406,
+        "ci_upper": 0.6723
+      },
+      "specificity": {
+        "mean": 0.9506,
+        "ci_lower": 0.9443,
+        "ci_upper": 0.9564
+      }
+    }
   },
   "_metadata": {
     "metadata_version": "1.0",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "4d926da1",
-    "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-26T16:19:15.294479+00:00",
+    "script_git_commit": "4b4a87b3",
+    "script_git_status": "clean",
+    "generated_at_utc": "2026-04-27T00:18:49.701679+00:00",
     "cli_args": {
       "detections": [
         "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson"
@@ -80,7 +103,7 @@
       "seed": 42,
       "output_dir": "outputs/55maps-text-high-t0.3-generalisation/evaluation",
       "label": "55maps-text-high-t0.3-generalisation",
-      "mcc": false
+      "mcc": true
     },
     "bootstrap": {
       "n_iterations": 1000,
