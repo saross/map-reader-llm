@@ -1179,6 +1179,75 @@ outline with all supporting evidence verified.
 
 ---
 
+## Session 80 entry-point queue (composed end-of-Session 79, 2026-04-27)
+
+Session 79 completed the per-architecture × per-Era × per-buffer × per-metric leaderboard rebuild, the cross-architecture combined leaderboard, the 55-map T=0.3 generalisation re-run, and the post-run recovery + MCC patch. Session 80 opens at **Step 6 (paper outline)**, the original deliverable.
+
+### Read first
+
+1. This file — the orientation layer (you are reading it).
+2. `docs/notes/reflections/working-notes.md` Obs 277–281 — the substantive new findings:
+   - Obs 277: verifier-prompt invariance (canonical Pareto-dominant on calibration); refreshed 2026-04-25 with crop-parity numbers
+   - Obs 278: PV-architecture benefit scoped to 384-px Era 2 (paper-framing caveat)
+   - Obs 279: per-buffer F1 tier-stability — broad stability (median rho 0.956) + two paper-relevant exceptions (era1/single-pass collapse 30→40 m; era3/consensus oscillation)
+   - Obs 280: F1/MCC text-vs-image tier-leader divergence (5 of 7 strata; paper-load-bearing methodology decision)
+   - Obs 281: temperature failure-rate hypothesis NOT supported by T=0.3 vs T=0.7 cross-run; pre-investigation "6% verifier failure" framing was a misreading
+3. `results/leaderboard/per-architecture/README.md` — the 12-stratum per-arch tier tree
+4. `results/leaderboard/combined/README.md` — the cross-architecture combined tier tree (Era 2 Tier 1 = **100 % PV** is the strongest paper headline)
+5. `results/leaderboard/per-architecture/headlines{,_50m,_100m}.md` — top-3 per stratum at primary + parallel buffers
+6. `outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json` + `evaluation/evaluation.json` — the new T=0.3 generalisation run results (post-recovery; F1@50m=0.802, MCC=0.654, $67.82 total)
+
+### Step 6 paper outline — the main deliverable
+
+- Map each paper section (Methods / Results / Discussion / Limitations) to 1–3 interim docs from the now-comprehensive `results/` tree.
+- **F1/MCC framing**: per Shawn's 2026-04-26 decision, both a methods paragraph AND a parallel-tables appendix. Methods paragraph explains the metric trade-off (F1 favours text-track recall; MCC favours image-track selectivity); appendix presents F1 + MCC tier tables side-by-side per stratum.
+- **Era 2 Tier 1 = 100% PV** finding (commit `e511e2e2`) is the strongest single paper headline — should anchor the architecture-comparison section.
+- **Per-buffer tier-stability findings** (Obs 279) — methods footnotes on era1/single-pass 30→40 m collapse and era3/consensus oscillation.
+- **PV scope caveat** (Obs 278) — methodological footnote when introducing the cross-architecture paired analysis ("PV benefit was evaluated on the 384-px Era 2 scope...").
+- **Temperature × failure-rate observation** (Obs 281) — a secondary methods note if the paper discusses run reliability; otherwise omittable.
+- **55-map T=0.3 result** (~$68, F1@50m=0.802 raw vs T=0.7's 0.788) — the post-leaderboard re-run that demonstrates the leaderboard's predictive value at the chosen operating point.
+
+### Pending user action (not for an agent)
+
+- **Manual review of T=0.3 generalisation candidates** for corrected F1. The Streamlit review workflow (`scripts/launch_55maps_text_high_review.sh` pattern) takes the 4,349 verified detections + reviews each VLM-only candidate for promote/reject decisions. Expected corrected F1@50m ≈ 0.840 (raw 0.802 + text-HIGH correction delta +0.038, per pre-launch audit estimate). Output: `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`. Once landed, the analogous Dawid-Skene + paired-permutation analyses (compute_corrected_f1_multi_buffer.py + crosstab_verifier_vs_human.py) close the comparison-with-T=0.7 loop.
+
+### Carry-over backlog (in priority order)
+
+1. **Step 6 paper outline** (Task #5 still pending). The original session goal; deferred while building analytical infrastructure.
+2. **Cost-estimator overstatement bug** (Task #4 housekeeping addition): `launch_manifest.json`'s `expected_cost_usd` is consistently a 5× overstatement (T=0.7 estimate $355 → actual $69.60; T=0.3 estimate $355 → actual $67.79). Worth a one-line patch to `scripts/run_generalisation.py` so future audits don't see false-positive cost flags. Likely cause: estimator assumes max_output_tokens (8192) per call when actual averages ~500.
+3. **`evaluation.md` and `evaluation.csv` MCC rendering gap**: `scripts/evaluate_detections.py` only writes MCC into `evaluation.json` even when `--mcc` is passed. The markdown and CSV emitters omit it. ~30 min CPU patch.
+4. **`4_detect_mounds_batch.py` resume mode breaks meta.json provenance**: the resume invocation overwrites `*.meta.json` with only the resume-batch stats, breaking `cost_manifest.json` aggregation. Recovery agent worked around this via `scripts/merge_recovery_meta.py`; the underlying script needs fixing so future recoveries don't need a workaround.
+5. **`run_generalisation.py aggregate-cost` rewrites launch_manifest.json + experiment_intent.md**: this clobbers the original launch metadata if invoked post-recovery. Recovery agent worked around via `git checkout` restore. Should be patched to APPEND/UPDATE rather than rewrite.
+6. **N<10K MC-precision-flagged tests rerun at N=100K** (low priority; 2,748 tests across the per-arch leaderboard tree). User flagged as low-priority project-wide consistency cleanup. ~3-5 hr CPU at N=100K.
+7. **6% verifier "error" rate at T=0.3 is in-run-recovered, not unrecovered** (Obs 281 corrects this) — but the proposer 18 unrecovered failures + verifier 1 unrecovered are the true post-pipeline residual.
+8. **Sapphire `archive/pre-session-78-pull-2026-04-24/` cleanup** (Step 6 backlog item from earlier sessions, low priority).
+9. **Scope-version `results/verifier-calibration-matrix/` directory** (low priority bookkeeping).
+10. **`cand_01563` parser bug investigation in `run_pv.py`** (low priority; ~0.05% per-cell loss).
+
+### Things to NOT redo
+
+- The T=0.3 55-map run is COMPLETE and recovered. Do not re-launch.
+- The MCC re-eval is COMPLETE (commit `291715b4`). Do not re-launch.
+- The recovery is COMPLETE (commit `548604d9`). Do not re-launch.
+- The per-arch + combined leaderboards are COMPLETE through Session 79. Do not re-launch unless adding new conditions.
+- All 5 deferred citation locations are now SWEPT (commit `16bede22`).
+
+### Guardrails carried over (from earlier sessions)
+
+- **Anti-confabulation**: re-read source files before citing specifics; memory and scratchpad are pointers, not authorities. Apply especially to agent outputs.
+- **Verify git-tracked status before any deletion** (Session 79 lesson — `feedback_verify_git_tracked_before_delete.md`).
+- **All API outputs MUST be committed** (Session 79 lesson — `feedback_commit_api_outputs.md`).
+- **No credential bytes in chat output** including SSH public keys (Session 79 lesson — `feedback_no_credentials_in_chat.md`).
+- API Call Review Gate before any batch.
+- Sapphire for heavy compute; sapphire git push works (configured Session 79).
+- UK / Australian English; Oxford comma.
+
+### Commit state at handoff
+
+Working tree clean on `main`, in sync with `origin/main`. Recent work spans commits `dcd36515..548604d9` (Session 79 + recovery). All artefacts committed; no uncommitted state to carry over besides whatever final commits land in this winding-down phase.
+
+---
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.

@@ -13764,3 +13764,65 @@ operational implication, F1 vs MCC tier-leader disagreement.
 - **Inventory** (`planning/condition-inventory-with-s78.json`): cells
   in each stratum for cross-checking the leader-condition
   identifiers cited above.
+
+## Observation 281: Temperature failure-rate intuition NOT supported by the T=0.3 vs T=0.7 cross-run comparison; pre-investigation framing of "6% verifier failures" was a misreading of in-run-retried transient errors (2026-04-26/27)
+
+### The hypothesis under test
+
+Shawn's standing intuition (from prior Phase 0/1/2 experience): **the further the API call temperature is from the SDK default of T=1.0, the higher the parse / empty-response failure rate** — T=0.0 in particular often shows elevated rates. This observation captures the first cross-run empirical test on the 55-map corpus (HIGH thinking, text track, K=5; 8,541 tiles × 5 passes = 42,705 proposer attempts).
+
+### Empirical data — opposite-direction at proposer; equivalent at verifier
+
+**Proposer** (HIGH thinking, gemini-3-flash-preview, text track, 5 passes × 8,541 tiles):
+
+| Run | Date | T | Unrecovered failures / Total | Rate |
+|:----|:-----|:--:|:---:|:---:|
+| `55maps-text-high-generalisation` | 2026-04-18 | 0.7 | 25 / 42,545 | 0.059% |
+| `55maps-text-high-t0.3-generalisation` | 2026-04-26 | 0.3 | 18 / 42,705 | 0.042% |
+
+T=0.3 had a **slightly lower** failure rate than T=0.7 — opposite to the hypothesis. Plausibly because lower-temperature outputs are more deterministic and less likely to produce malformed JSON.
+
+**Verifier** (MIN thinking, T=0.0 in **both** runs; text-only `verify_adversarial-text` v1):
+
+| Source | Date | Candidates | Truly missing post-pipeline | Rate |
+|:-------|:-----|:----------:|:--------------:|:---:|
+| T=0.7 source pool | 2026-04-18 | 9,131 | 0 | 0.000% |
+| T=0.3 source pool (post-recovery) | 2026-04-26 | 9,909 | 0 (1 missing pre-recovery; recovered) | 0.000% |
+
+Essentially equivalent at the verifier level. Both runs converged on 0 truly-missing candidates after the in-run retry logic and (for T=0.3) one cheap recovery pass.
+
+### Pre-investigation misreading — worth flagging for future audits
+
+In my initial post-run report, I stated the T=0.3 verifier had a **6.35% failure rate** based on `verified/run.meta.json`'s `finish_reason_counts.error: 629` and `parse_failures: 629` and `empty_responses: 629`. **This was wrong.** Investigation by the recovery agent (Task #16, commit `548604d9`) confirmed:
+
+- The 629 entries are **per-API-call transient errors** (likely 503s, rate-limit retries, or empty-content first-attempts) that the in-run retry layer subsequently recovered
+- The actual `probabilities.json` had 9,908 successful entries; comparing to the 9,909-candidate consensus revealed only **1 truly-missing candidate** (`candidate_05396`)
+- One verifier API call recovered that 1 missing candidate at $0.001 cost (vs the $0.90 budget I had estimated for "629 retries")
+- The proposer side similarly had a meta-stats schema that misled my reading: `items_processed: 0` and `items_failed: 0` are broken accounting fields; the `failed_items[]` array is the authoritative count (correctly 18 unrecovered)
+
+**Lesson for future audits**: `verified/run.meta.json`'s `finish_reason_counts.error` ≠ "candidates with no probability". Always cross-check the actual `probabilities.json` candidate-id set against the consensus manifest's candidate-id set to count truly-missing entries.
+
+### Caveats
+
+The T=0.3 vs T=0.7 verifier comparison can't directly test the hypothesis because the verifier T was held constant at T=0.0 in both. Testing the user's "T=0.0 has elevated failures" intuition would require a verifier-temperature sweep on a fixed candidate pool — not done here.
+
+The T=0.3 proposer's longer wall-clock (~2× per pass vs T=0.7 reference) is most plausibly server-side capacity variation between 2026-04-18 and 2026-04-26 (8 days apart) rather than temperature-driven, since the failure-rate comparison was favourable to T=0.3.
+
+### Operational implications
+
+1. **`run_pv.py cleanup` style recovery is genuinely cheap and effective** — recovered 18/18 proposer + 1/1 verifier failures at total cost $0.034 (vs my initial $1.10 estimate, which assumed the 629-error misreading). Plan recovery as a standard post-run step regardless of temperature; don't budget heavily for it.
+2. **Don't over-claim cost from per-API-call error counts** — they include in-run-recovered transients. Always derive cost from `cost_manifest.json` and unrecovered-candidate count from the manifest-vs-probabilities diff.
+3. **Cross-run comparisons should distinguish temperature from server-side date variation** — the proposer wall-clock difference here is almost certainly the latter.
+4. **The user's T=0.0 intuition is not falsified** by this comparison — but it's also not confirmed. Treat it as a working hypothesis until tested against a controlled verifier-T sweep.
+
+### Findable later
+
+Search terms: temperature failure rate hypothesis test, T=0.3 vs T=0.7 cross-run, in-run retry vs unrecovered failures distinction, finish_reason_counts.error misreading, run_pv cleanup recovery effectiveness, probabilities.json vs candidate_manifest.json diff, items_processed schema bug, verifier candidate-recovery cost.
+
+### Related observations and artefacts
+
+- **T=0.7 reference run**: `outputs/55maps-text-high-generalisation/` (2026-04-18; F1@50m=0.7883 raw, $69.60 total)
+- **T=0.3 run + recovery**: `outputs/55maps-text-high-t0.3-generalisation/` (2026-04-26 launch; F1@50m=0.8023 pre-recovery → 0.8024 post-recovery; $67.79 + $0.034 recovery; commits `4b4a87b3` + `548604d9`)
+- **Recovery scripts** (committed in `06f994d0`): `scripts/55maps-t0.3-recovery.sh`, `scripts/merge_recovery_meta.py`, `scripts/55maps-t0.3-extract-new-candidates.py`, `scripts/55maps-t0.3-rebuild-verified-geojson.py`
+- **Per-pass meta files**: `outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_{1..5}/*.meta.json` — see `execution_stats.failed_items[]` for authoritative unrecovered-failure counts
+- **Script bugs surfaced in recovery** (carry-over to next session per continuity doc): `4_detect_mounds_batch.py` resume mode overwrites `meta.json`, breaking `cost_manifest.json` aggregation (worked around via `merge_recovery_meta.py`); `run_generalisation.py aggregate-cost` rewrites `launch_manifest.json` and `experiment_intent.md` from current invocation, breaking original-launch provenance (worked around via `git checkout` restore)
