@@ -7,6 +7,8 @@
 
 ## Per-stratum log-log slope and SD shrinkage
 
+> **v1 methodology note** (added 2026-04-27 alongside v2): the per-K SD values in this section are computed under the **mean-of-K-i.i.d.-passes proxy**, which by construction yields ``SD = sigma / sqrt(K)`` and a log-log slope of -0.5 regardless of any shared-mode signal in the underlying detection geometries. The slopes reported below are therefore best read as a **sanity check on the i.i.d. expectation**, not as an independent test of departure from i.i.d. See Section 3 for the v2 genuine test based on rebuilt greedy-vote consensus.
+
 | Track | Thinking | T | SD@K=1 | SD@K=5 | SD@K=10 | SD@K=N_max | beta_1 [95% CI] | CI-width ratio (K=N_max / K=1) |
 |-------|----------|--:|------:|------:|------:|------:|:--------------:|:-----:|
 | image | HIGH | 0.3 | 0.0089 | 0.0039 | 0.0027 | 0.0027 (K=10) | -0.52 [-0.58, -0.48] | — |
@@ -46,3 +48,55 @@ The Phase 3a evaluation outputs (`{thinking}-t{T}/n{K}/{rolldir}/evaluation.json
 - `report.md` -- this file.
 
 *Generated: 2026-04-27T04:48:11.946090+00:00*
+
+
+---
+
+## 3. Genuine shared-mode test (v2)
+
+**Generated**: 2026-04-27T05:57:30.140089+00:00
+**Script**: ``scripts/analyse_consensus_sd_shrinkage_v2.py``
+**Method**: greedy-vote consensus rebuilt on K-subsamples of per-pass detection GeoJSONs; F1 re-evaluated at 20 m vs ``inputs/vectors/references/mounds-reference.geojson``. Voting rule = ``vote_t = max(1, round(K' * 0.5))``.
+**Subsample budget**: exhaustive ``C(K_max, K')`` if ≤200, otherwise random 200 distinct subsets (seed = 42 + per-stratum offset).
+**Bootstrap CI on beta_1**: 1000 iterations resampling within-K' subsample F1 lists with replacement.
+
+### Why v2 is needed
+
+Section 2 above used a **mean-of-K-i.i.d.-F1s proxy** for the K-consensus F1 estimator. Under any i.i.d. null this proxy yields ``SD = sigma / sqrt(K)`` and a log-log slope of -0.5 **by construction** -- the proxy is therefore mathematically incapable of detecting shared-mode departures from i.i.d. v2 fixes this by rebuilding the actual greedy-vote consensus on K-subsamples drawn from per-pass detection geometries and re-evaluating F1 against the canonical reference. Departures from -0.5 in v2 reflect genuine correlated per-pass error modes (shared 'hard' map sheets, shared confusable features, etc.).
+
+### Per-stratum slopes (v2)
+
+| Stratum | K_max | n@K=1 | n@K=K_max | SD@K=1 | SD@K=K_max | beta_1 [95% CI] | Decision |
+|---------|------:|------:|---------:|------:|-----------:|:----------------:|:---------|
+| image_HIGH_T0.3 | 10 | 10 | 1 | 0.0105 | 0.0000 | -0.22 [-0.36, -0.05] | **shared-mode** |
+| image_HIGH_T0.7 | 10 | 10 | 1 | 0.0197 | 0.0000 | -0.50 [-0.63, -0.31] | i.i.d. consistent |
+| image_HIGH_T1.0 | 10 | 10 | 1 | 0.0246 | 0.0000 | -0.73 [-0.88, -0.49] | **anti-i.i.d.** |
+| image_MINIMAL_T0.3 | 10 | 10 | 1 | 0.0084 | 0.0000 | -0.52 [-0.69, -0.32] | i.i.d. consistent |
+| image_MINIMAL_T0.7 | 10 | 10 | 1 | 0.0133 | 0.0000 | -0.47 [-0.65, -0.13] | i.i.d. consistent |
+| image_MINIMAL_T1.0 | 10 | 10 | 1 | 0.0080 | 0.0000 | -0.12 [-0.23, +0.06] | **shared-mode** |
+| image_SCALE4_T0.7 | 10 | 10 | 1 | 0.0251 | 0.0000 | -0.61 [-0.89, -0.37] | i.i.d. consistent |
+| text_HIGH_T0.3 | 10 | 10 | 1 | 0.0174 | 0.0000 | -0.52 [-0.65, -0.31] | i.i.d. consistent |
+| text_HIGH_T0.7 | 30 | 30 | 1 | 0.0131 | 0.0000 | -0.39 [-0.42, -0.34] | CI excludes -0.5 |
+| text_HIGH_T1.0 | 10 | 10 | 1 | 0.0142 | 0.0000 | -0.62 [-0.81, -0.42] | i.i.d. consistent |
+| text_MINIMAL_T0.3 | 10 | 10 | 1 | 0.0086 | 0.0000 | -0.55 [-0.70, -0.34] | i.i.d. consistent |
+| text_MINIMAL_T0.7 | 30 | 30 | 1 | 0.0116 | 0.0000 | -0.56 [-0.59, -0.52] | CI excludes -0.5 |
+| text_MINIMAL_T1.0 | 10 | 10 | 1 | 0.0073 | 0.0000 | -0.35 [-0.54, -0.18] | i.i.d. consistent |
+
+### Plot
+
+![v2 SD shrinkage](sd_shrinkage_v2.png)
+
+*Solid = HIGH thinking, dashed = MINIMAL thinking, dotted = SCALE4. Black dashed = i.i.d. reference (-0.5).*
+
+### Summary
+
+Across 13 strata, the v2 K-consensus F1 SD shrinks with K' at a mean log-log slope of -0.50 for the text track and -0.45 for the image track, against the i.i.d. theoretical reference of -0.5. Strata with **shared-mode signal** (beta_1 > -0.3): image_HIGH_T0.3, image_MINIMAL_T1.0. These reflect correlated per-pass error modes that limit the consensus shrinkage. Strata with **faster-than-i.i.d. shrinkage** (beta_1 < -0.7): image_HIGH_T1.0. This is unexpected and worth investigating -- a plausible cause is sub-K_max pool stratification (e.g. specific runs being systematically more diverse). Strata with CIs that exclude -0.5 but stay within the (-0.7, -0.3) band: text_HIGH_T0.7, text_MINIMAL_T0.7. These are weak departures and worth flagging but do not warrant the full shared-mode interpretation. Strata not listed above have CIs containing -0.5 and are consistent with the i.i.d. null.
+
+### v2 output files
+
+- ``sd_shrinkage_v2.json`` -- full numeric results including per-subsample F1 lists.
+- ``sd_shrinkage_v2.png`` -- log-log plot.
+- ``report.md`` -- this file (Section 3 added).
+
+*Section 3 added: 2026-04-27T05:57:30.140246+00:00*
+
