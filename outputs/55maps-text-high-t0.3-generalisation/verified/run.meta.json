@@ -2,8 +2,8 @@
   "run_id": "b92052cf-1374-423e-8963-d381825e53be",
   "timestamp": {
     "start": "2026-04-26T13:56:06.921427+00:00",
-    "end": "2026-04-26T16:19:14.491103+00:00",
-    "duration_seconds": 8587.569676
+    "end": "2026-04-27T01:05:41.623088+00:00",
+    "duration_seconds": 8598.818748
   },
   "environment": {
     "git_commit": "4d926da122f19668435fd1c68196cbdea6899846",
@@ -61,7 +61,7 @@
     "retries_timeout": 0,
     "retries_other": 0,
     "finish_reason_counts": {
-      "success": 9908,
+      "success": 9910,
       "error": 629
     },
     "safety_blocks": 0,
@@ -72,31 +72,45 @@
     "retry_details": []
   },
   "usage_stats": {
-    "total_input_tokens": 17755136,
-    "total_output_tokens": 1640140,
+    "total_input_tokens": 17758720,
+    "total_output_tokens": 1640461,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
     "total_thoughts_tokens": 0,
     "total_tool_use_tokens": 0,
-    "total_tokens": 19395276,
+    "total_tokens": 19399181,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 17755136,
-        "output_tokens": 1640140,
-        "total_tokens": 19395276,
-        "request_count": 10537
+        "input_tokens": 17758720,
+        "output_tokens": 1640461,
+        "total_tokens": 19399181,
+        "request_count": 10539
       }
     }
   },
   "results_summary": {},
   "cost_estimate": {
-    "input_cost_usd": 8.877568,
-    "output_cost_usd": 4.92042,
-    "total_cost_usd": 13.797988,
+    "input_cost_usd": 8.87936,
+    "output_cost_usd": 4.921383,
+    "total_cost_usd": 13.800743,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,
       "output_per_1m": 3.0
     }
-  }
+  },
+  "per_item_metadata": [],
+  "recovery_history": [
+    {
+      "timestamp": "2026-04-27T01:06:14.218623+00:00",
+      "initial_failed": 0,
+      "recovered": 0,
+      "still_failing": 0,
+      "still_failing_ids": [],
+      "recovered_ids": [],
+      "recovery_cost_usd": 0.002755,
+      "recovery_duration_seconds": 11.249072,
+      "recovery_run_id": "1861aed1-6271-4279-b437-2c1137d701d6"
+    }
+  ]
 }

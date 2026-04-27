@@ -2,8 +2,8 @@
   "run_id": "b8334afa-3c39-40db-a156-06bf7c8dcdc8",
   "timestamp": {
     "start": "2026-04-26T08:18:18.950602+00:00",
-    "end": "2026-04-26T09:20:13.794480+00:00",
-    "duration_seconds": 3714.843878
+    "end": "2026-04-27T00:39:14.556680+00:00",
+    "duration_seconds": 3773.5505820000003
   },
   "environment": {
     "git_commit": "4d926da122f19668435fd1c68196cbdea6899846",
@@ -125,16 +125,16 @@
     }
   },
   "execution_stats": {
-    "items_processed": 8536,
-    "items_failed": 5,
+    "items_processed": 8541,
+    "items_failed": 0,
     "items_skipped": 0,
-    "retries_total": 2193,
+    "retries_total": 2194,
     "retries_rate_limit": 0,
-    "retries_server_error": 547,
+    "retries_server_error": 548,
     "retries_timeout": 0,
     "retries_other": 1646,
     "finish_reason_counts": {
-      "success": 8539,
+      "success": 8544,
       "error": 1,
       "max_tokens": 1
     },
@@ -8677,35 +8677,14 @@
       "K-35-077-4_x336_y3360.png",
       "K-35-075-3_x1680_y3024.png",
       "K-35-077-4_x3696_y336.png",
-      "K-35-077-1_x2352_y0.png"
+      "K-35-077-1_x2352_y0.png",
+      "K-35-053-2_x1344_y3360.png",
+      "K-35-054-2_Atolov_4326_x672_y672.png",
+      "K-35-074-4_x1008_y672.png",
+      "K-35-076-1_x2352_y3360.png",
+      "K-35-067-3_x2352_y1344.png"
     ],
-    "failed_items": [
-      {
-        "item_id": "K-35-053-2_x1344_y3360.png",
-        "reason": "JSON Parse Error: Extra data: line 56 column 1 (char 764)",
-        "timestamp": "2026-04-26T08:26:51.901697+00:00"
-      },
-      {
-        "item_id": "K-35-054-2_Atolov_4326_x672_y672.png",
-        "reason": "JSON Parse Error: Extra data: line 36 column 1 (char 465)",
-        "timestamp": "2026-04-26T08:29:05.986311+00:00"
-      },
-      {
-        "item_id": "K-35-067-3_x2352_y1344.png",
-        "reason": "JSON Parse Error: Expecting ',' delimiter: line 6 column 7 (char 76)",
-        "timestamp": "2026-04-26T08:52:14.356942+00:00"
-      },
-      {
-        "item_id": "K-35-076-1_x2352_y3360.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-26T09:09:15.314566+00:00"
-      },
-      {
-        "item_id": "K-35-074-4_x1008_y672.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-26T09:15:27.698560+00:00"
-      }
-    ],
+    "failed_items": [],
     "retry_details": [
       {
         "item_id": "K-35-042-3_x2688_y1008.png",
@@ -24057,23 +24036,30 @@
         "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
         "error_type": "other",
         "timestamp": "2026-04-26T09:15:47.552748+00:00"
+      },
+      {
+        "item_id": "K-35-067-3_x2352_y1344.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-04-27T00:38:26.112649+00:00"
       }
     ]
   },
   "usage_stats": {
-    "total_input_tokens": 12827080,
-    "total_output_tokens": 1452639,
+    "total_input_tokens": 12834590,
+    "total_output_tokens": 1454547,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
-    "total_thoughts_tokens": 29713015,
+    "total_thoughts_tokens": 29724969,
     "total_tool_use_tokens": 0,
-    "total_tokens": 43992734,
+    "total_tokens": 44014106,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 12827080,
-        "output_tokens": 1452639,
-        "total_tokens": 43992734,
-        "request_count": 8541
+        "input_tokens": 12834590,
+        "output_tokens": 1454547,
+        "total_tokens": 44014106,
+        "request_count": 8546
       }
     }
   },
@@ -94277,12 +94263,12 @@
       "system_fingerprint": null,
       "tokens": {
         "input_tokens": 1502,
-        "output_tokens": 324,
-        "total_tokens": 4413,
+        "output_tokens": 321,
+        "total_tokens": 2409,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 2587,
+        "thoughts_tokens": 586,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -94292,12 +94278,12 @@
       "modality_breakdown": {
         "prompt": [
           {
-            "modality": "MediaModality.IMAGE",
-            "count": 1089
-          },
-          {
             "modality": "MediaModality.TEXT",
             "count": 413
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 1089
           }
         ]
       },
@@ -94312,15 +94298,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T08:26:01.448836+00:00",
-      "response_timestamp": "2026-04-26T08:26:51.901548+00:00",
-      "latency_ms": 50452,
-      "attempt_number": 2,
+      "request_timestamp": "2026-04-27T00:38:16.519364+00:00",
+      "response_timestamp": "2026-04-27T00:38:22.720784+00:00",
+      "latency_ms": 6201,
+      "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 765
+      "raw_response_length": 760
     },
     {
       "request_id": null,
@@ -117432,12 +117418,12 @@
       "system_fingerprint": null,
       "tokens": {
         "input_tokens": 1502,
-        "output_tokens": 199,
-        "total_tokens": 9564,
+        "output_tokens": 66,
+        "total_tokens": 3048,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 7863,
+        "thoughts_tokens": 1480,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -117467,15 +117453,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T08:27:49.248628+00:00",
-      "response_timestamp": "2026-04-26T08:29:05.986178+00:00",
-      "latency_ms": 76737,
+      "request_timestamp": "2026-04-27T00:38:16.521614+00:00",
+      "response_timestamp": "2026-04-27T00:38:33.333537+00:00",
+      "latency_ms": 16811,
       "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 466
+      "raw_response_length": 159
     },
     {
       "request_id": null,
@@ -341392,12 +341378,12 @@
       "system_fingerprint": null,
       "tokens": {
         "input_tokens": 1502,
-        "output_tokens": 70,
-        "total_tokens": 9432,
+        "output_tokens": 444,
+        "total_tokens": 3871,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 7860,
+        "thoughts_tokens": 1925,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -341407,12 +341393,12 @@
       "modality_breakdown": {
         "prompt": [
           {
-            "modality": "MediaModality.TEXT",
-            "count": 413
-          },
-          {
             "modality": "MediaModality.IMAGE",
             "count": 1089
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 413
           }
         ]
       },
@@ -341427,15 +341413,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T08:50:47.564126+00:00",
-      "response_timestamp": "2026-04-26T08:52:14.356809+00:00",
-      "latency_ms": 86792,
-      "attempt_number": 1,
+      "request_timestamp": "2026-04-27T00:39:00.887603+00:00",
+      "response_timestamp": "2026-04-27T00:39:13.832514+00:00",
+      "latency_ms": 12944,
+      "attempt_number": 2,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 149
+      "raw_response_length": 1054
     },
     {
       "request_id": null,
@@ -471352,27 +471338,38 @@
       "item_id": "K-35-076-1_x2352_y3360.png",
       "provider": "google_gemini",
       "model_requested": "gemini-3-flash-preview",
-      "model_used": "",
-      "model_version": null,
+      "model_used": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
       "system_fingerprint": null,
       "tokens": {
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "total_tokens": 0,
+        "input_tokens": 1502,
+        "output_tokens": 506,
+        "total_tokens": 7052,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 0,
+        "thoughts_tokens": 5044,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
         "accepted_prediction_tokens": 0,
         "rejected_prediction_tokens": 0
       },
-      "modality_breakdown": {},
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 413
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 1089
+          }
+        ]
+      },
       "traffic_type": null,
-      "finish_reason": "error",
-      "raw_finish_reason": "ServerError",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
       "safety_blocked": false,
       "safety_ratings": [],
       "prompt_safety_ratings": [],
@@ -471381,15 +471378,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T09:07:52.899626+00:00",
-      "response_timestamp": "2026-04-26T09:09:15.314491+00:00",
-      "latency_ms": 82414,
-      "attempt_number": 5,
+      "request_timestamp": "2026-04-27T00:38:16.528453+00:00",
+      "response_timestamp": "2026-04-27T00:38:49.151541+00:00",
+      "latency_ms": 32623,
+      "attempt_number": 1,
       "retry_reason": null,
-      "response_empty": true,
-      "parse_success": false,
-      "parse_error": "502 Bad Gateway. {'message': '<!DOCTYPE html>\\n<html lang=en>\\n  <meta charset=utf-8>\\n  <meta name=viewport content=\"initial-scale=1, minimum-scale=1, width=device-width\">\\n  <title>Error 502 (Server Error)!!1</title>\\n  <style>\\n    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\\n  </style>\\n  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\\n  <p><b>502.</b> <ins>That\u2019s an error.</ins>\\n  <p>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.  <ins>That\u2019s all we know.</ins>\\n', 'status': 'Bad Gateway'}",
-      "raw_response_length": 0
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 1203
     },
     {
       "request_id": null,
@@ -493731,12 +493728,12 @@
       "system_fingerprint": null,
       "tokens": {
         "input_tokens": 1502,
-        "output_tokens": 315,
-        "total_tokens": 9679,
+        "output_tokens": 571,
+        "total_tokens": 4992,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 7862,
+        "thoughts_tokens": 2919,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -493756,8 +493753,8 @@
         ]
       },
       "traffic_type": null,
-      "finish_reason": "max_tokens",
-      "raw_finish_reason": "FinishReason.MAX_TOKENS",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
       "safety_blocked": false,
       "safety_ratings": [],
       "prompt_safety_ratings": [],
@@ -493766,15 +493763,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T09:14:48.686980+00:00",
-      "response_timestamp": "2026-04-26T09:15:22.698105+00:00",
-      "latency_ms": 34011,
-      "attempt_number": 15,
+      "request_timestamp": "2026-04-27T00:38:16.525778+00:00",
+      "response_timestamp": "2026-04-27T00:38:41.801476+00:00",
+      "latency_ms": 25275,
+      "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
-      "parse_success": false,
+      "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 747
+      "raw_response_length": 1347
     },
     {
       "request_id": null,
@@ -493833,9 +493830,9 @@
     }
   ],
   "cost_estimate": {
-    "input_cost_usd": 6.41354,
-    "output_cost_usd": 4.357917,
-    "total_cost_usd": 10.771457,
+    "input_cost_usd": 6.417295,
+    "output_cost_usd": 4.363640999999999,
+    "total_cost_usd": 10.780936,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,
@@ -493861,5 +493858,56 @@
     "avg_latency_seconds": 72.05,
     "peak_wait_seconds": 0.01,
     "elapsed_seconds": 3713.7
-  }
+  },
+  "recovery_history": [
+    {
+      "timestamp": "2026-04-27T00:39:21.604254+00:00",
+      "initial_failed": 5,
+      "recovered": 5,
+      "still_failing": 0,
+      "still_failing_ids": [],
+      "recovered_ids": [
+        "K-35-053-2_x1344_y3360.png",
+        "K-35-054-2_Atolov_4326_x672_y672.png",
+        "K-35-067-3_x2352_y1344.png",
+        "K-35-074-4_x1008_y672.png",
+        "K-35-076-1_x2352_y3360.png"
+      ],
+      "recovery_cost_usd": 0.009479,
+      "recovery_duration_seconds": 58.706704,
+      "recovery_run_id": "7b2efe3c-cec2-4db9-b662-619e340a018c"
+    }
+  ],
+  "tpm_governor_recovery": [
+    {
+      "governor_type": "token_bucket",
+      "rpm_limit": 20000,
+      "tpm_limit": 20000000,
+      "target_rpm": 14400,
+      "target_tpm": 14400000,
+      "target_utilisation": 0.72,
+      "current_tpm": 22093,
+      "available_request_capacity": 14400.0,
+      "available_token_capacity": 14400000.0,
+      "cooldown_seconds": 15.0,
+      "tokens_per_request": 1500,
+      "total_tokens": 21372,
+      "total_requests": 6,
+      "total_rate_limits": 0,
+      "total_cooldown_seconds": 0.0,
+      "avg_latency_seconds": 18.77,
+      "peak_wait_seconds": 0.0,
+      "elapsed_seconds": 58.0
+    }
+  ],
+  "results_summary_recovery": [
+    {
+      "total_detections": 30,
+      "class_counts": {
+        "benchmark_mound": 2,
+        "burial_mound": 27,
+        "triangulation_mound": 1
+      }
+    }
+  ]
 }

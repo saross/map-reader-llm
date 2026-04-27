@@ -131,10 +131,12 @@ def main() -> int:
         shutil.copy(args.output, backup)
         print(f"Backup: {backup.name}")
 
-    # Atomic write
+    # Atomic write — match the indent=2 style used by
+    # run_generalisation.py:_build_verified_geojson() so the diff vs
+    # the in-process build is empty in formatting.
     tmp = args.output.with_suffix(".geojson.tmp")
     with open(tmp, "w") as f:
-        json.dump(gj, f)
+        json.dump(gj, f, indent=2)
     tmp.rename(args.output)
 
     print(f"Wrote: {args.output}")

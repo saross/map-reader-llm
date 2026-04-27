@@ -2,8 +2,8 @@
   "run_id": "9e3f7fad-8f03-4918-a3d2-64b565edf052",
   "timestamp": {
     "start": "2026-04-26T09:20:16.327477+00:00",
-    "end": "2026-04-26T10:17:57.176165+00:00",
-    "duration_seconds": 3460.848688
+    "end": "2026-04-27T00:40:06.490804+00:00",
+    "duration_seconds": 3491.120182
   },
   "environment": {
     "git_commit": "4d926da122f19668435fd1c68196cbdea6899846",
@@ -125,8 +125,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 8539,
-    "items_failed": 2,
+    "items_processed": 8541,
+    "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 2125,
     "retries_rate_limit": 0,
@@ -134,7 +134,7 @@
     "retries_timeout": 0,
     "retries_other": 1538,
     "finish_reason_counts": {
-      "success": 8541
+      "success": 8543
     },
     "safety_blocks": 0,
     "parse_failures": 0,
@@ -8678,20 +8678,11 @@
       "K-35-077-3_x3024_y2688.png",
       "K-35-077-4_x672_y672.png",
       "K-35-075-3_x336_y3024.png",
-      "K-35-076-4_x2352_y3024.png"
+      "K-35-076-4_x2352_y3024.png",
+      "K-35-066-3_x1344_y3696.png",
+      "K-35-075-2_x3024_y672.png"
     ],
-    "failed_items": [
-      {
-        "item_id": "K-35-066-3_x1344_y3696.png",
-        "reason": "JSON Parse Error: Extra data: line 22 column 3 (char 897)",
-        "timestamp": "2026-04-26T09:49:20.405924+00:00"
-      },
-      {
-        "item_id": "K-35-075-2_x3024_y672.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 93)",
-        "timestamp": "2026-04-26T10:00:36.118077+00:00"
-      }
-    ],
+    "failed_items": [],
     "retry_details": [
       {
         "item_id": "K-35-042-3_x3360_y1008.png",
@@ -23571,19 +23562,19 @@
     ]
   },
   "usage_stats": {
-    "total_input_tokens": 12828582,
-    "total_output_tokens": 1457967,
+    "total_input_tokens": 12831586,
+    "total_output_tokens": 1458548,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
-    "total_thoughts_tokens": 30580565,
+    "total_thoughts_tokens": 30586741,
     "total_tool_use_tokens": 0,
-    "total_tokens": 44867114,
+    "total_tokens": 44876875,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 12828582,
-        "output_tokens": 1457967,
-        "total_tokens": 44867114,
-        "request_count": 8541
+        "input_tokens": 12831586,
+        "output_tokens": 1458548,
+        "total_tokens": 44876875,
+        "request_count": 8543
       }
     }
   },
@@ -304987,12 +304978,12 @@
       "system_fingerprint": null,
       "tokens": {
         "input_tokens": 1502,
-        "output_tokens": 240,
-        "total_tokens": 9604,
+        "output_tokens": 10,
+        "total_tokens": 1862,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 7862,
+        "thoughts_tokens": 350,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -305002,12 +304993,12 @@
       "modality_breakdown": {
         "prompt": [
           {
-            "modality": "MediaModality.IMAGE",
-            "count": 1089
-          },
-          {
             "modality": "MediaModality.TEXT",
             "count": 413
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 1089
           }
         ]
       },
@@ -305022,15 +305013,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T09:48:11.078544+00:00",
-      "response_timestamp": "2026-04-26T09:49:20.405829+00:00",
-      "latency_ms": 69327,
+      "request_timestamp": "2026-04-27T00:39:36.812127+00:00",
+      "response_timestamp": "2026-04-27T00:39:40.822423+00:00",
+      "latency_ms": 4010,
       "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 900
+      "raw_response_length": 22
     },
     {
       "request_id": null,
@@ -398377,12 +398368,12 @@
       "system_fingerprint": null,
       "tokens": {
         "input_tokens": 1502,
-        "output_tokens": 327,
-        "total_tokens": 2771,
+        "output_tokens": 571,
+        "total_tokens": 7899,
         "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 942,
+        "thoughts_tokens": 5826,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -398392,12 +398383,12 @@
       "modality_breakdown": {
         "prompt": [
           {
-            "modality": "MediaModality.IMAGE",
-            "count": 1089
-          },
-          {
             "modality": "MediaModality.TEXT",
             "count": 413
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 1089
           }
         ]
       },
@@ -398412,15 +398403,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-26T09:59:39.354684+00:00",
-      "response_timestamp": "2026-04-26T10:00:36.117983+00:00",
-      "latency_ms": 56763,
+      "request_timestamp": "2026-04-27T00:39:36.813177+00:00",
+      "response_timestamp": "2026-04-27T00:40:05.772322+00:00",
+      "latency_ms": 28959,
       "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 773
+      "raw_response_length": 1371
     },
     {
       "request_id": null,
@@ -493354,9 +493345,9 @@
     }
   ],
   "cost_estimate": {
-    "input_cost_usd": 6.414291,
-    "output_cost_usd": 4.373901,
-    "total_cost_usd": 10.788192,
+    "input_cost_usd": 6.415793000000001,
+    "output_cost_usd": 4.375644,
+    "total_cost_usd": 10.791437,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,
@@ -493382,5 +493373,54 @@
     "avg_latency_seconds": 69.54,
     "peak_wait_seconds": 0.01,
     "elapsed_seconds": 3460.6
-  }
+  },
+  "recovery_history": [
+    {
+      "timestamp": "2026-04-27T00:45:44.850019+00:00",
+      "initial_failed": 2,
+      "recovered": 2,
+      "still_failing": 0,
+      "still_failing_ids": [],
+      "recovered_ids": [
+        "K-35-066-3_x1344_y3696.png",
+        "K-35-075-2_x3024_y672.png"
+      ],
+      "recovery_cost_usd": 0.003245,
+      "recovery_duration_seconds": 30.271494,
+      "recovery_run_id": "10e3caef-3e50-495c-a5ee-467f014c39e4"
+    }
+  ],
+  "tpm_governor_recovery": [
+    {
+      "governor_type": "token_bucket",
+      "rpm_limit": 20000,
+      "tpm_limit": 20000000,
+      "target_rpm": 14400,
+      "target_tpm": 14400000,
+      "target_utilisation": 0.72,
+      "current_tpm": 0,
+      "available_request_capacity": 14400.0,
+      "available_token_capacity": 14400000.0,
+      "cooldown_seconds": 15.0,
+      "tokens_per_request": 1500,
+      "total_tokens": 9761,
+      "total_requests": 2,
+      "total_rate_limits": 0,
+      "total_cooldown_seconds": 0.0,
+      "avg_latency_seconds": 16.48,
+      "peak_wait_seconds": 0.0,
+      "elapsed_seconds": 29.7
+    }
+  ],
+  "results_summary_recovery": [
+    {
+      "total_detections": 9,
+      "class_counts": {
+        "burial_mound": 4,
+        "benchmark_mound": 2,
+        "triangulation_mound": 2,
+        "settlement_mound": 1
+      }
+    }
+  ]
 }

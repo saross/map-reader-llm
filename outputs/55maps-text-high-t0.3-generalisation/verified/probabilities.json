@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 9908,
+  "total_results": 9910,
   "results": {
     "candidate_00005": {
       "mound_probability": 0.05,
@@ -59452,6 +59452,30 @@
       "reasoning": "There are no orange-brown radiating rays (hachures) pointing outward from a central point. The symbols present are standard cartographic representations for scattered vegetation, scrub, or rocky ground, often found near boundary lines or specific terrain features on Soviet-style maps. The lack of a 'gear' or 'sunburst' structure makes a burial mound interpretation highly unlikely.",
       "best_alternative": "A vegetation or land-use boundary marker (stipple/dot pattern).",
       "alternative_evidence": "The central area contains small, hollow black circles and solid black dots that follow the curvature of the contour lines and a dashed boundary line, rather than forming a sunburst pattern."
+    },
+    "candidate_09909": {
+      "mound_probability": 0.1,
+      "reasoning": "While the symbol is located on a topographic high point (indicated by the contour lines and the elevation 217.9), the cartographic symbol itself lacks the 'sunburst' rays required to classify it as a burial mound. It is a standard survey marker (benchmark) placed on a natural hill.",
+      "best_alternative": "Benchmark or Survey Marker without a mound",
+      "alternative_evidence": "The symbol consists of a solid black square with a central dot, which is the standard representation for a benchmark. There are no orange-brown radiating lines (rays) surrounding the square to indicate a mound structure."
+    },
+    "candidate_05396": {
+      "mound_probability": 0.95,
+      "reasoning": "The symbol exhibits the classic 'sunburst' pattern with short lines radiating outward from a central orange-brown circle, which is the standard Soviet cartographic representation for a burial mound (kurgan). While it is near a contour line, the radiating rays are distinct and point outward, which is inconsistent with standard contour or vegetation markings. No other plausible non-mound interpretation explains the specific gear-like geometry of the symbol.",
+      "best_alternative": "A standalone spot height or contour-related numeric label.",
+      "alternative_evidence": "The symbol is located near a brown contour line and is accompanied by the numeral '3'. The central shape is a hollow orange-brown circle rather than a solid black survey marker."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-04-27T01:05:41.647584+00:00",
+      "initial_missing": 2,
+      "recovered": 2,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 1,
+      "safe_mode_used": false
+    }
+  ]
 }
