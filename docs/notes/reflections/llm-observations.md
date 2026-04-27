@@ -5566,3 +5566,35 @@ Question worth asking: was the matrix necessary given the cross-track contrast a
 This is a pattern worth naming: **observational → experimental confirmation loops** where the experiment is expensive but the result is preordained. The right question to ask before launching is not "will this change my belief?" (the informational test) but "does the claim I want to make require this evidence structure?" (the falsification test). Session 78 committed to the matrix under the falsification framing; Obs 277 is now citable because the matrix ran, even though my prior belief before the matrix was already ~90% pointed at input-distribution.
 
 Craft note: the matrix cost $36 and ~6 hours. If I had framed it as "will this change my mind?" I would have correctly judged the expected information gain as low and skipped it. Framing it as "does the paper claim need this evidence?" reversed the decision. Both framings are valid; they answer different questions. For publication-class work, the falsification framing is usually the right one.
+
+## Session 79 Observations (2026-04-25/27, map-reader-llm)
+
+Continuous from Session 78 close through end-of-day Session 79 wind-down. The session's defining event was an Explore-agent confabulation that cost ~$80 of API data, which then drove the session's discipline arc. Three observations about LLM-collaboration patterns drawn from specific incidents this session.
+
+### Confabulation has a cost-to-detection asymmetry that varies by claim type
+
+In Session 78 I noted that ~20% of background agents produced material confabulations, all caught cheaply by the user's "are you sure?" interventions. Session 79 forced a sharper observation: **the cost-to-detection ratio depends on what KIND of claim the agent makes.** Three categories I observed this session, in increasing order of cost-to-detect:
+
+1. **Claims about RECOMMENDATIONS or ENUMERATIONS** (the Session 78 pattern). Agent suggests configurations, lists files, names variants. The user's domain instinct catches the smell quickly ("that variant doesn't exist"; "that proposer model is wrong"). Cost-to-detect: minutes. Cost-of-undetected: hours of compute on a wrong design, but the design is usually salvageable.
+
+2. **Claims about NUMERICAL STATE** (my Obs 281 misreading). Agent (or I) reports a count or rate from a system meta field. The number "looks right" because it has a plausible context (X candidates failed of Y total → Z% rate). The user can't easily verify; I can verify only by reading a *different* data source than the one I read first. Cost-to-detect: minutes if anyone thinks to cross-check; days if it ships into a paper. Cost-of-undetected: a wrong number in a publication.
+
+3. **Claims about DESTRUCTIVE PREREQUISITES** (the data-loss event). Agent reports "files are git-tracked, safe to delete." This is categorically the worst kind because: (a) the claim sounds boring and verifiable (it sounds like the agent already verified it); (b) the user reasonably defers to the agent's confidence (verifying "is this file in git" is dull check-work); (c) the action taken is irreversible. Cost-to-detect post-hoc: trivial (one `git ls-files` command). Cost-of-undetected: $80 of API data + days of recovery work + an entire feedback-memory-rule and discipline tightening that took half a session to internalise.
+
+The implication: anti-confabulation discipline should escalate in proportion to the irreversibility of the action that depends on the claim. Recommendations → cheap "are you sure?" suffices. Numerical state → require source-data cross-check before publishing. Destructive prerequisites → require independent verification (not the same agent that's making the claim) before approval.
+
+### Agents will tell you what they verified, but not what they didn't
+
+The pre-launch audit-config skill produces structured READY-TO-LAUNCH / BLOCKED verdicts. The 55-map T=0.3 audit produced READY-TO-LAUNCH. The audit's output table showed every check that PASSED. What it didn't show — and what I noticed only when the user explicitly asked "what's the cost-estimator showing?" — was that the launch_manifest's cost-estimator output ($355) was anomalously high vs the empirical $70 anchor. The audit didn't catch it because the audit's checklist didn't include "is the script's own cost estimate consistent with empirical history?". This is a common pattern: agent-driven verification is exhaustive WITHIN its checklist but silent OUTSIDE it. The user's question added a check that the rubric didn't have.
+
+The corrective is a structural addition to audit-style skills: end with an "anything I didn't check that you might want me to" prompt — a literal request for the human to surface things outside the rubric. Cheap to add to the skill template; high marginal value.
+
+### The "fit-with-prior" failure mode is asymmetric to the confabulation literature
+
+Most confabulation discussion frames it as "the model invents facts that aren't true". Session 79 surfaced a milder but more insidious variant I'd call **fit-with-prior amplification**: the model (me, in this case) reads a real number from a real source, MISINTERPRETS it in a way that's locally plausible, and then doesn't probe further because the interpretation FITS A STATED EXPECTATION. The user had said earlier in the session "lower temperatures cause more failures, often a lot at T=0.0". When I read 629 errors in the meta and computed 6.35%, the number FIT that prior. I treated the fit as evidence rather than as a reason to verify more carefully. The misreading wasn't an invention; it was a confirmation-biased interpretation of real data.
+
+The corrective: when a numeric finding fits the user's prior or my expectation, the verification budget should INCREASE, not decrease. The fit makes the finding less surprising, which makes me less likely to probe it, which makes the misreading more likely to ship. Confirmation bias is at its most operative on findings that don't feel like findings — they feel like confirmations. The new feedback memory `feedback_verify_git_tracked_before_delete` plus my proposed addendum to audit-style skills (the "what didn't I check" prompt) are partial structural defences. The deeper rule: **route every numeric claim through a "what would the alternative look like?" probe before publishing.** For event counts in particular: cross-check against the actual stored output (probabilities.json in this case), not just the meta summary.
+
+### Cross-cutting
+
+The three observations share a structure: in each, the failure mode is *underchecking* in a context where the agent (me, or a sub-agent) feels confident. The structural fix in each case is a checklist addition — verify-git-tracking before delete; verify-source-data for numeric counts; verify-against-empirical-anchor for cost estimates. Each addition is cheap. The cost of NOT having them is real but episodic; you only pay when you hit the failure case. Session 79 paid all three failure cases in one session, which is unusual; the discipline tightening it produced is the lasting deliverable.

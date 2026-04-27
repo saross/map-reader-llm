@@ -4380,3 +4380,43 @@ Session 78's long overnight-plus-morning arc produced two cleanly abductive sequ
 **What was abductive about this?** The key move was not assuming the fix covered all adjacent cases. My initial framing when seeing F1 = 0 again was "the fix regressed" (H-fix-broken) — a single-point failure hypothesis. The alternative "the fix was correct for the case I tested and wrong for a case I didn't know to test" (H-fix-incomplete) required entertaining the possibility that my mental model of the bug was narrower than the bug's actual scope. The project's heterogeneous CRS conventions across consensus producers were the invariant I had missed — not hard to discover, but not what my fix was looking for.
 
 **The generalisable craft rule**: when a defensive fix produces a reoccurrence of the exact symptom it was designed to prevent, the prior on "the fix regressed" is much smaller than the prior on "the fix covered the specific case I tested, not the underlying invariant". Cost of reading one extra diagnostic: 30 seconds. Cost of assuming regression: a wasted hour of `git bisect` on a fix that's actually fine but incomplete. For future sessions: when a fix is published, the retrospective question is not "does this fix the bug I saw?" but "what is the minimal invariant this fix assumes, and what happens when that invariant is violated?"
+
+## 2026-04-25/27 (Session 79, map-reader-llm): Two belief-revisions, both about the difference between an apparent measurement and a real one
+
+Session 79 produced two clean abductive sequences. Both involve looking at a number the system reported, drawing a conclusion that "fits", and then being forced to revise after a deeper read of the source data.
+
+### Sequence A — "Verifier had 6.35% failure rate" → 1 truly missing candidate; the 629 were in-run-recovered transients
+
+**The starting observation**: the post-run `verified/run.meta.json` for the T=0.3 55-map generalisation showed `finish_reason_counts.error: 629`, `parse_failures: 629`, `empty_responses: 629` against `success: 9908`. I read this as 629 candidates with no probability score, computed 629 / 9909 = 6.35%, and reported it to the user as "6% verifier failure rate at T=0.3 vs 0% at T=0.7 reference" — using it as supporting evidence for the user's standing intuition that lower temperatures cause more API failures.
+
+**Two hypotheses sat beneath the observation**:
+- **H-true-failure**: the 629 are unrecovered candidates; T=0.3's lower temperature exposes some property of the candidate distribution that the verifier struggles with.
+- **H-transient-recovered**: the 629 are per-call API errors (503s, rate-limit retries, empty-content first-attempts) that the in-run retry layer subsequently recovered; the actual unrecovered count is much smaller.
+
+I didn't entertain H-transient-recovered until the recovery agent investigated. The agent read **both** the meta and the actual `probabilities.json`, counted entries (9,908), compared to the consensus candidate manifest (9,909), and found the diff = 1 candidate truly missing. The 629 were transients.
+
+**Belief revision**: H-true-failure was wrong. The reported "errors" in the meta's `finish_reason_counts` are per-API-call counts, NOT per-candidate-with-no-score counts. The same field name carries two different meanings in two different contexts. T=0.3 and T=0.7 verifier behaviour is essentially equivalent on truly-missing candidates (~0% in both); the temperature-failure-rate hypothesis is not supported by this comparison.
+
+**What was abductive about this?** The key failure mode wasn't the misreading of one field — it was the *fit-with-prior* heuristic. The user had told me earlier in the session "lower temperatures cause more failures, often a lot at T=0.0". When I read 629 errors in the meta, the number *fit that prior*. I treated the fit as evidence rather than as a reason to verify more carefully. The competing explanation (in-run-recovered transients) wasn't entertained because it would have argued *against* a plausible-sounding finding. The check that would have caught it was a single jq query: `jq '.results | length' probabilities.json` — confirms 9,908 entries. ~5 seconds of work; would have flipped my conclusion.
+
+**Generalisable craft rule**: when a numeric finding *fits the user's stated prior or my expectation*, the verification budget should INCREASE, not decrease. The fit makes the finding less surprising, which makes me less likely to probe it, which makes the misreading more likely to ship. Confirmation bias is at its most operative on findings that don't feel like findings — they feel like confirmations. The corrective is structural: route every numeric claim through a "what would the alternative look like?" probe before publishing. For event counts in particular: cross-check the count against the actual stored output (probabilities.json in this case) — same data, different serialisation, instant disagreement detection if there's one.
+
+### Sequence B — "T=0.3 should match T=0.7's selection rationale" → no, the leaderboard at T=0.7 design time only had T=0.7
+
+**The starting observation**: in my 50m-buffer comparison table for the user, I added the parenthetical "(T=0.3 beats T=0.7 at K=5 — always was, no change)" when explaining why pv-high-text-t0.3-n5 ranked higher than pv-high-text-t0.7-n5 in the current per-arch leaderboard. The user pushed back — they recalled choosing T=0.7 for the 55-map run "because it was the highest" at design time.
+
+**Two competing accounts**:
+- **My implicit account**: the per-arch leaderboard has always shown T=0.3 > T=0.7 at K=5 PV; the user's selection of T=0.7 must have been based on something other than F1 ranking.
+- **The user's account**: T=0.7 was the highest available PV configuration at the time; T=0.3 wasn't on the table.
+
+I dispatched an Explore agent to find the leaderboard state at the moment the 55-map text-HIGH run was launched (2026-04-18). The agent read the historical commit, found that the per-architecture leaderboard at that date had ONLY pv-flash-high-text-K=10 and pv-flash-high-text-K=30 entries for text — no K=5 PV at any temperature, and no T=0.3 PV for any K. The K=5 T=0.3 PV cell was generated *later* (Session 78 / Session 79 work). At decision time, T=0.7 was indeed the highest-ranked option that fit the K=5 + 55-map-corpus envelope.
+
+**Belief revision**: my "always was — no change" parenthetical was wrong. The user's selection was rational on the data they had. The current ranking is a *post-hoc* finding from broader matrix coverage, not a vindication-or-criticism of the historical choice.
+
+**What was abductive about this?** Two things, both about temporal blindness in confabulation. First, I treated the *current* leaderboard as if it had always been the leaderboard — the artefacts on disk feel timeless. Second, the user's correction was domain-knowledge specific (they remembered the actual decision moment); I had no equivalent ground truth, so my framing was a reconstruction-from-current-state that read as a historical claim. The Explore agent's investigation of the historical commit was the right level of evidence; my parenthetical was wrong in shape (a historical claim) before it was wrong in substance (the wrong number). 
+
+**Generalisable craft rule**: any phrase that contains a temporal modifier ("always", "since the start", "no change", "from the beginning") should trigger a verification reflex — am I citing a property of the current artefact, or a property of the artefact at the time of the historical decision? They're often different. The cheap check: read the file at the relevant historical commit, not the current one.
+
+### Cross-cutting reflection
+
+Both sequences are instances of the same pattern: the system's reported state (a meta.json field; a current leaderboard) was trusted as a measurement when it was actually an *artefact* of how the system aggregates or refreshes its outputs. The verification corrective is the same in both: read the deeper / earlier source. For the 629-failures sequence, the deeper source was probabilities.json (the actual output); for the T=0.7-selection sequence, the deeper source was the historical commit's leaderboard state. The pattern: when a numeric or structural claim feels obvious, ask "what's the data layer underneath this summary?" and read THAT.

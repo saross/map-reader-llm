@@ -5614,3 +5614,55 @@ Secondary observation awaiting pairwise-permutation significance testing (Step 6
 - The canonical `verify_adversarial-text` probabilities used for comparison come from `outputs/h11/pv-diag-384/flash-high-<pool>-n5/<pool>-t0.7/verified-v1-n5/probabilities.json` — produced in prior sessions on a different crop set than the session-78-matrix shared-crops. Crop-for-crop parity is therefore not strictly established; logged as Step 6 backlog item 5 for a follow-up re-run.
 - Two candidates (cand_00744 in image-brief-text, cand_01563 in image-checklist) are persistently un-verifiable: one persistent 503, one deterministic parser bug in `run_pv.py` response handling. Union coverage across the 7 variants is 100% — every candidate was verified by at least one prompt — so cross-variant comparability is intact.
 - Sapphire has no git identity configured, so Phase E commits from the overnight script failed; all artefacts rsync'd back to amd-tower before commit. Backlog item 9 logged.
+
+## Session 79 — 2026-04-25/27 (map-reader-llm): data-loss recovery, full per-arch + combined leaderboard rebuild, T=0.3 generalisation re-run
+
+**Commits**: ~26 on `main`, `dcd36515` → `d6c0f08a`, all pushed to `origin/main`. Working tree clean at session close.
+
+**API spend**: ~$131.60 total. Matrix Phase A re-run $63.77 (flex Flash) + T=0.3 55-map generalisation $67.79 + T=0.3 recovery $0.034. All within pre-approved gates.
+
+### Work arc
+
+Continuous from Session 78 close through end-of-day Session 79 wind-down. Started as "fill gaps in intermediate report.md docs" per focus slot; immediately pivoted to investigating an Explore-agent-confabulated data deletion that had cost ~$80 of API data, which cascaded into a full reproduction + analytical-infrastructure-build session.
+
+Phases (numbered for cross-reference; each landed before the next started):
+
+1. **Data-loss investigation and reproduction** ($63.77 API, ~80 min on sapphire). Re-ran Session 78 verifier-calibration matrix Phase A: 14 probabilities files at crop-parity. Downstream Phase B/C/D refreshed; Obs 277 numbers updated within-CI; tier-flip caveat added.
+2. **Sapphire ↔ GitHub SSH key configured** mid-session in response to data loss. Sapphire can now `git push` directly (closes a previously-painful sync gap; backlog item from Session 78 closed).
+3. **Per-architecture leaderboard tree** (~$0 API, ~1.8 hr CPU on sapphire). 12 strata (3 Era × 4 Architecture), F1 + MCC parallel tier tables × 5 buffers × q=0.05 + q=0.01. Era 2 single-pass+PV F1=0 evaluator bug fixed; 2 missing-extension files renamed; condition inventory extended to 204 conditions with S78 cells.
+4. **Per-buffer F1 re-tiering** (~$0 API, ~50 min CPU on sapphire). Patched tier-builder with `--threshold-buffer` and per-buffer F1 cache key. 56 reruns; uncovered era1/single-pass tier-1 collapse (21→1 between 30 m and 40 m matching tolerance) and era3/consensus non-monotonic oscillation.
+5. **Cross-architecture combined leaderboards** (~$0 API, ~77 min CPU on sapphire). Pooled all conditions across 4 architectures within each Era; greedy-clique BH-FDR tiering. Headline finding: **Era 2 Tier 1 = 100% PV** (8/8 F1, 20/20 MCC).
+6. **Per-arch MD overwrite bug fix** (~$0 API, ~25 min). Tier-builder script overwrote non-primary-buffer MD files with later passes. Regenerated 140 MD files retroactively (commit `27d1793f`); patched script to prevent recurrence (commit `bea135af`).
+7. **55-map T=0.3 generalisation re-run** ($67.79 API, ~7.8 hr wall-clock on sapphire). Pre-launch audit READY-TO-LAUNCH; user explicitly re-confirmed API spend after launch_manifest cost-estimator output a 5× overstatement ($355 vs empirical $70).
+8. **Post-run recovery + MCC patch** ($0.034 API, ~50 min). Recovery agent recovered 18/18 proposer + 1 truly-missing verifier candidate to zero residual; MCC agent added MCC=0.654 tile-level. Recovery investigation surfaced two upstream script bugs (workarounds applied; underlying fixes logged for next session).
+9. **Extended-buffer evaluation + Session 80 handoff**. T=0.3 F1 at 50/75/100/125/150 m; F1@125m=0.8072 raw (T=0.7 at same buffer = 0.7949; Δ +0.012). Session 80 entry-point queue at top of `paper-writeup-continuity.md` with 10-item carry-over backlog.
+
+### Major artefacts produced
+
+- `results/leaderboard/per-architecture/` — 12-stratum tier tree (3 Era × 4 Architecture); F1+MCC parallel tables × 5 buffers × 2 q-levels; tier-stability with Spearman rho; MC-precision flags (6,652 flagged tests)
+- `results/leaderboard/combined/` — cross-architecture combined tier tables per Era × buffer × metric × q-level
+- `results/leaderboard/per-architecture/headlines{,_50m,_100m}.md` — top-3 per stratum at 20 m primary + parallel buffers
+- `outputs/55maps-text-high-t0.3-generalisation/` — full T=0.3 generalisation run; cost_manifest.json, launch_manifest.json (provenance), evaluation/ + extended-buffer-eval/, verified/, proposer/, consensus/, crops/
+- `docs/notes/reflections/working-notes.md` Obs 277 (refreshed crop-parity numbers + tier-flip + underestimate caveats), 278 (PV scope), 279 (per-buffer tier stability), 280 (F1/MCC tier-leader divergence), 281 (temperature failure-rate hypothesis NOT supported)
+- `planning/paper-writeup-continuity.md` — Session 80 entry-point queue with 10-item carry-over backlog
+- New scripts (committed): `summarise_per_arch_headlines_at_buffer.py`, `regenerate_per_arch_md_from_json.py`, `materialise_session78_geojsons.py`, `enrich_per_arch_markdown.py`, `verify_per_arch_leaderboard.py`, `build_cross_arch_comparison.py`, `summarise_combined_headlines.py`, `merge_recovery_meta.py`, `55maps-t0.3-extract-new-candidates.py`, `55maps-t0.3-rebuild-verified-geojson.py`, `55maps-t0.3-recovery.sh`
+- New feedback memories (in project-memory): `feedback_no_credentials_in_chat`, `feedback_verify_git_tracked_before_delete`, `feedback_commit_api_outputs`
+
+### Headline numerical findings
+
+- T=0.3 raw F1 @ 50 m = **0.8024** [0.791, 0.813] (T=0.7 reference: 0.7883 — Δ +0.014)
+- T=0.3 raw F1 @ 125 m = **0.8072** (T=0.7: 0.7949 — Δ +0.012; flat plateau past 50 m)
+- T=0.3 tile-level MCC = **0.654** [0.639, 0.670]
+- Estimated T=0.3 corrected F1 @ 50 m = **~0.840** (using text-HIGH correction delta +0.038; pre-launch audit estimate was 0.847 ± 0.018)
+- Era 2 PV combined Tier 1: 8/8 PV cells (100% PV); F1 leader `pv-flash-high-text-16of30` at 0.890 @ 20 m
+- Era 1 consensus combined Tier 1: 4/4 consensus cells (no PV cells in inventory); F1 leader `h3-high-track2-text-T1.0` at 0.775 @ 20 m
+- Per-buffer F1 Spearman rho (median across populated strata × non-primary buffers) = +0.956 — combined and per-arch tiers buffer-robust
+- Era 1/single-pass tier-1 collapse: 21 conditions in tier 1 at 20–30 m matching tolerance; only 1 condition (`h4-canonical-last`) survives at 40 m+ — paper-relevant methodological story
+
+### Contextual assumptions
+
+- Opus 4.7 was newly released at session start; the user had observed elevated confabulation rates relative to Opus 4.6. Session discipline (anti-confabulation rules, source-of-truth verification) was a session-long theme.
+- Sapphire git push was configured mid-session (response to data-loss event). Future sapphire runs commit + push directly without rsync-back; this changes the workflow envelope materially.
+- Cost-estimator in `launch_manifest.json` is a consistent 5× overstatement (T=0.7 estimate $355 → actual $69.60; T=0.3 estimate $355 → actual $67.79). Carry-over fix item.
+- The 55-map T=0.3 run is on disk with full reproducibility metadata (launch_manifest with input SHA256s + git commit, cost_manifest with per-stage breakdown, per-pass run.meta.json, evaluation.json + extended-buffer-eval/). Paper-grade provenance is intact.
+- Step 6 paper outline remains the next-session deliverable; all required analytical infrastructure is now in place.
