@@ -13984,3 +13984,47 @@ Search terms: K-consensus SD shrinkage, log-log slope -0.5, i.i.d. shrinkage law
 - **Obs 245** (Levene W = 3.192, p = 0.004): per-condition K = 1 SDs in Obs 285 v1 reproduce this variance heterogeneity. The two analyses are orthogonal — Obs 245 is between-cell variance comparison, Obs 285 is within-cell shrinkage as K rises.
 - **Obs 282** (kappa fragility corroborates variance hypothesis): companion finding from the same Wave 1 deliverable suite; both operationalise the Obs 245 heterogeneity at K-pass level, by different metrics.
 - **Artefacts**: `results/secondary-effects-consensus-sd/sd_shrinkage.json`, `results/secondary-effects-consensus-sd/sd_shrinkage.png`, `results/secondary-effects-consensus-sd/report.md`. Script: `scripts/analyse_consensus_sd_shrinkage.py` (1,000 percentile bootstrap iterations seed = 42 for SD CIs; 1,000 nested-bootstrap iterations for slope CIs).
+
+## Observation 286: Verifier failure rate is temperature-dependent — T=0.0 has 1.65 % deterministic failures vs 0.00 % at T=0.5 and T=1.0; closes the Obs 281 verifier limb (2026-04-27)
+
+### The finding
+
+The Stage A verifier-temperature pilot (`results/verifier-t-pilot/stage-a-report.md`; commit `f27842a5`) re-verified the 4-map gold-standard 4-of-5 consensus candidate set (n = 607) at three verifier temperatures using the canonical `verify_adversarial-text` v1 verifier config. Per-T failure rates, computed via the Obs 281-corrected formula `n_failures = len(consensus) − len(probabilities['results'])` (i.e. **truly missing** verifier results, NOT in-run-recovered transient errors):
+
+| Verifier T | failures / 607 | failure rate | Wilson 95 % CI | source |
+|:--:|:--:|:--:|:--:|:--|
+| 0.0 (existing) | 10 | **1.65 %** | [0.90 %, 3.01 %] | `outputs/h11/gold-standard-v2/verified-v1/` (commit `a01858e5`) |
+| 0.5 (fresh)    | 0  | **0.00 %** | [0.00 %, 0.63 %] | `outputs/verifier-t-pilot/T0.5/` |
+| 1.0 (fresh)    | 0  | **0.00 %** | [0.00 %, 0.63 %] | `outputs/verifier-t-pilot/T1.0/` |
+
+The T = 0.0 95 % CI **does not overlap** either T > 0 CI; the brief's `> 2×` directional rule is strictly inapplicable when min_rate = 0, but the spirit of the rule (real, non-noise difference) is satisfied. The 10 T = 0.0 failures are **deterministic** — re-running at T = 0.0 reproduces the same missing candidates — so this is not a sampling-noise artefact.
+
+### The transient-vs-truly-missing distinction (companion to Obs 281)
+
+`run.meta.json` `execution_stats.finish_reason_counts.error` counts were **154 / 20 / 7** for T = 0.0 / 0.5 / 1.0. These are **transient errors that the runtime saw and retried**, NOT unrecovered failures. At T = 0.5 and T = 1.0 the retry loop recovered all 20 / 7 transient errors (final missing = 0); at T = 0.0 the retry loop saw many more transients (154) and could not recover 10 of them. The mechanism is plausibly that re-issuing a deterministic call against a model-side problematic crop produces the same problematic response — temperature is what unsticks a degenerate parse path. This is the verifier-side analogue of the Obs 281 lesson that `finish_reason_counts.error` overstates true failure when temperature > 0.
+
+### Why this matters
+
+Two implications:
+
+1. **The current production default (verifier T = 0.0) is empirically the worst choice for reliability.** It buys deterministic candidate ordering at the cost of ~1.65 % unrecovered candidates per ~600-candidate cell, ten of which would need to be re-verified by hand or via a separate cleanup pass. Adopting T = 0.5 or T = 1.0 as the production default removes that cleanup obligation entirely on the 4-map corpus, and the pilot's CI-width upper bound of 0.63 % gives a generous reliability headroom.
+2. **Closes the Obs 281 verifier limb.** Obs 281 tested the temperature-failure-rate hypothesis on the *proposer* (T = 0.3 vs T = 0.7) and rejected it; both 55-map runs held the verifier at T = 0.0, leaving the verifier limb untested. Obs 286 closes that limb with a directional finding — verifier failure rate IS temperature-dependent on this corpus, in the direction of T > 0 being more reliable. The proposer and verifier respond differently, which is itself a methodological note worth flagging.
+
+### Adoption gate — Stage B (analysis-only) is required before changing the default
+
+The reliability case for T > 0 is clear, but the production default also has to **not degrade F1 / MCC**. Stage A only tested missingness, not accuracy. Stage B is a re-evaluation of the T = 0.5 and T = 1.0 probabilities against the gold-standard at the canonical threshold sweep + buffer set + MCC, comparing against the T = 0.0 baseline. Stage B is currently in flight (no API spend; pure CPU on sapphire) and will produce `results/verifier-t-pilot/stage-b-report.md`. The recommendation in this Obs is **conditional**: adopt T > 0 if Stage B confirms F1 / MCC are not degraded; stay at T = 0.0 if they are; pursue further calibration if mixed.
+
+### Cost actual + pre-flight surprise
+
+Stage A actual cost was **$1.71** vs $1.68 estimate (+1.6 %; well below the $5 standing budget). Pre-flight surprise: `outputs/h11/gold-standard-v2/crops/` contained only the manifest (PNGs are gitignored on both machines). The K agent re-extracted 607 / 607 crops on sapphire from the source rasters before launching — deterministic and free, but worth knowing for any future re-runs of the gold-standard corpus.
+
+### Findable later
+
+Search terms: verifier temperature failure rate, T = 0.0 deterministic failures, 1.65 % gold-standard verifier failures, Wilson 95 % CI verifier reliability, Obs 281 closure verifier limb, transient vs truly-missing distinction, finish_reason_counts.error, Stage A pilot, production default verifier temperature, T > 0 reliability headroom, gold-standard 4-of-5 consensus 607.
+
+### Related observations and artefacts
+
+- **Obs 281** (temperature-failure-rate hypothesis on proposer, NOT supported): Obs 286 is the verifier-limb companion. Together they show the proposer and verifier respond to temperature differently — T = 0.3 vs T = 0.7 had no detectable effect on proposer reliability, but T = 0.0 vs T > 0 does have a detectable effect on verifier reliability on this corpus.
+- **Obs 269** (verifier U-shape and ECE = 0.269): orthogonal — verifier *calibration* shape is unaffected by reliability temperature shifts; the two diagnostics measure different properties.
+- **Obs 277** (Session 78 7-variant verifier-prompt matrix, canonical Pareto-dominant on calibration): the canonical `verify_adversarial-text` config used for Obs 286 was the dominant choice from that matrix; this Obs adds the temperature dimension at fixed-prompt.
+- **Artefacts**: `results/verifier-t-pilot/stage-a-report.md`, `results/verifier-t-pilot/per-t-stats.json`, `outputs/verifier-t-pilot/{T0.5,T1.0}/`, `outputs/h11/gold-standard-v2/verified-v1/` (T = 0.0 baseline). Script: `scripts/analyse_verifier_t_pilot.py`. Stage B (analysis-only F1 / MCC re-evaluation) follows under separate cover.
