@@ -115,14 +115,14 @@ def render_summary(base_dir: Path) -> str:
         table = render_pair_table(summary, label_a, label_b)
         pair_blocks.append(
             f"## {label_a} vs {label_b}\n\n"
-            f"Detection sets:\n"
+            f"Detection sets:\n\n"
             f"- A ({label_a}): `{summary['condition_a']['detections']}`\n"
             f"- B ({label_b}): `{summary['condition_b']['detections']}`\n\n"
             f"{table}\n\n"
             f"Notes — wins / losses / ties are tile-level "
             f"comparisons (per-tile F1_A vs F1_B); ΔF1 is the aggregate "
             f"micro-average difference; CI is a 10 000-iteration tile-level "
-            f"paired bootstrap.\n"
+            f"paired bootstrap."
         )
         headlines.append(headline_at_50m(summary, label_a, label_b))
         sig_buffers = collect_significant_buffers(summary)
@@ -159,7 +159,7 @@ permutations preserve pairing across the 8 541 evaluation tiles.
 
 {chr(10).join(sig_lines)}
 
-{chr(10).join(pair_blocks)}
+{(chr(10) + chr(10)).join(pair_blocks)}
 
 ## Reproducibility
 

@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "timestamp": "2026-04-27T11:34:24.819727+00:00",
+    "script": "paired_permutation_corrected_55maps.py",
+    "version": "1.0.0",
+    "git_commit": "4ac60d9c68c12fe094a8caf3671951e839c499ba",
+    "buffer_metres": 40,
+    "n_permutations": 10000,
+    "n_bootstrap": 10000,
+    "seed": 42,
+    "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching, tile-swap paired permutation test on micro-average F1"
+  },
+  "condition_a": {
+    "label": "t0.3",
+    "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "/tmp/empty-review-yesterday.csv",
+    "review_today": "results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv",
+    "n_detections": 4350
+  },
+  "condition_b": {
+    "label": "t0.7",
+    "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "/tmp/empty-review-yesterday.csv",
+    "review_today": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+    "n_detections": 4143
+  },
+  "buffer_metres": 40,
+  "n_phantoms_a": 0,
+  "n_phantoms_b": 0,
+  "n_ref_extended_a": 4744,
+  "n_ref_extended_b": 4744,
+  "delta_f1_ci": {
+    "lower": 0.003012,
+    "upper": 0.019161,
+    "n_bootstrap": 10000
+  },
+  "global_a": {
+    "f1": 0.796129,
+    "precision": 0.832184,
+    "recall": 0.763069,
+    "tp": 3620,
+    "fp": 730,
+    "fn": 1124
+  },
+  "global_b": {
+    "f1": 0.785192,
+    "precision": 0.842143,
+    "recall": 0.735455,
+    "tp": 3489,
+    "fp": 654,
+    "fn": 1255
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.010937,
+    "p_value": 0.0087,
+    "n_permutations": 10000,
+    "n_tiles": 8541,
+    "wins_a": 360,
+    "losses_a": 297,
+    "ties": 7884,
+    "null_distribution": {
+      "mean": 7e-05,
+      "std": 0.004238,
+      "percentile_2.5": -0.008164,
+      "percentile_97.5": 0.008298
+    }
+  }
+}
