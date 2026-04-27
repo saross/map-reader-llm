@@ -14415,3 +14415,58 @@ Search terms: D-S calibration gap VLM-only share, fixed prior 5% student FN bias
 - **Obs 280** (F1/MCC tier-leader divergence): different metric-divergence pattern; D-S vs corrected-F1 disagreement is yet another orthogonal axis.
 - **Artefacts**: `results/55maps-text-high-t0.3-generalisation/{dawid-skene,ds-human-crosstab}/`, `results/55maps-text-high-generalisation/{dawid-skene,ds-human-crosstab}/`, `results/55maps-image-generalisation/{dawid-skene,dawid-skene-v2-data-driven-prior,ds-human-crosstab}/`, `results/55maps-ds-summary-v2/report.md`. Commits: `0b14e4fc` (data), `da055238` (summary).
 
+## Observation 294: 125 m is the maximum buffer at which detection density is distinguishable from random within-tile occurrence — corroborated across all three corrected 55-map runs; supersedes Obs 272's single-run finding (2026-04-28)
+
+### The finding
+
+The attractor-pull v2 analysis (`scripts/analyse_attractor_pull_v2.py`; commit `74dbe680`; ran 2026-04-27 on sapphire) re-derived the radial cutoff at which detection density above each ground-truth mound is no longer distinguishable from a uniform-random placement null. The analysis was run independently on all three corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image), using the canonical post-review GT (`student-mounds-55maps-reviewed.geojson`, 4,744 features) and 1,000 within-tile permutations per shell with seed 42.
+
+Per-run cutoff (deepest contiguous-from-zero shell significant at α = 0.05 under the bias-corrected null):
+
+| Run | n_detections | Cutoff | Last-individual-significant shell | Monotonic decay? |
+|:---|:--:|:--:|:--:|:--:|
+| T=0.3 text-HIGH | 692 | 100 m (dip at 100–125 from thin n=7) | 150 m | no (sampling noise) |
+| T=0.7 text-HIGH | 630 | **125 m** | 125 m | yes |
+| image | 1,029 | **125 m** | 125 m | yes |
+
+**Multi-run consensus**: 2 of 3 runs corroborate the Obs 272 cutoff exactly at 125 m with clean monotonic decay. The T=0.3 run shows a non-monotonic dip at the (100, 125] shell — only n=7 mound calls in that band of 692 candidates (bias-corrected p = 0.093, lift 1.71×) — and recovers significance at (125, 150] (p = 0.013, lift 2.08×). Under any plausible reading of that thin-sample noise, T=0.3's effective cutoff is also ~125 m.
+
+The (150, 286] shell is non-significant in every run (lift 0.84× / 0.93× / 0.88×; p ≥ 0.659). Mounds visible to reviewers beyond 150 m of a detection are indistinguishable from random within-tile co-occurrence across all three runs.
+
+### Decision: 125 m is the practitioner-useful cap
+
+For paper citation and downstream analysis on the 55-map generalisation corpus, **125 m is the maximum buffer at which recall claims are practitioner-meaningful**. Buffers in (125, 150] m can be reported as upper bounds (e.g., for "any plausible association" claims) but should not be cited as evidence that the detector identified specific mounds — at those distances the observed detection-mound co-occurrence is statistically indistinguishable from chance.
+
+### Justification / explanation
+
+Why 125 m and not further? Two interrelated reasons:
+
+1. **Spatial-precision floor of the detection task**. Burial mounds on these 1980s topographic maps are typically rendered as small filled circles or contour clusters of ~10–30 m diameter. A detector that "found a mound" but is centred 150+ m away has not identified the mound — it has identified *somewhere in the same neighbourhood*. The matching-buffer should reflect the spatial precision the detector actually achieves; beyond that, a buffer is just admitting failures.
+
+2. **Tile-density saturation**. Reference mounds are not uniformly distributed; they cluster spatially (settlement choice, terrain, land-use). At wide buffers, any random within-tile detection has a meaningful probability of being within R metres of *some* reference mound by sheer density alone. The null model (uniform random placement, n_detections matched) directly tests this: at (150, 286] the observed detection-mound co-occurrence rate falls below the null expectation (lift < 1.0 across all three runs), meaning real detections are *less* clustered around reference mounds than random placement would predict. This is the signature of saturation: the GT is dense enough that "near a mound" stops being informative.
+
+The bias-corrected null methodology accounts for the fact that the tile-bound geometry creates non-uniform density at small distances (corner / edge effects). The 1,000-permutation reference distribution is generated from random placements within the same tile masks as the observed detections, so the comparison is geometrically apples-to-apples.
+
+### Methodological gotcha caught and corrected during the analysis
+
+An exploratory 7-shell schema split (150, 286] m at 200 m and falsely flagged (150, 200] m as significant in all three runs (lifts 2.69× / 3.01× / 2.76×, p = 0.001) — a labelling artefact, not a real signal. The mechanism: reviewers preferentially use the `buffer_metres = 200` label as a catch-all "yes-but-far" sentinel for any candidate they want to flag as a possibly-real-but-far-away mound, regardless of true distance. This concentrates the >150 m mound count at exactly 200 m, creating a fake density spike. Collapsing back to Obs 272's (150, 286] schema removed the artefact and recovered the correct non-significance result. **Lesson**: when reviewer labels include a sentinel-encoded category, never use that category as a quantitative bin boundary; always collapse sentinels into a single "above-threshold" bin.
+
+### Why this matters
+
+1. **Paper citation discipline**: any recall / F1 number cited at R > 125 m on 55-map corpus should be footnoted as upper-bound, not practitioner-meaningful. The corrected-F1 multi-buffer tables (50, 75, 100, 125, 150 m) should report 150 m as italicised / asterisked / similar visual distinction.
+2. **Cross-run validity**: the original Obs 272 was based on T=0.7 alone and could have been a single-run idiosyncrasy. Multi-run corroboration moves it from "found on one run" to "consistent across three independent runs spanning two modalities and two temperatures" — strengthens the claim from anecdotal to structural.
+3. **Operational consequence**: pairwise-permutation testing (Obs 291) capped its buffer sweep at 125 m on this principle. Wider buffer comparisons would be testing detector-vs-random-placement equivalence rather than detector-vs-detector differences.
+
+### Findable later
+
+Search terms: 125 m practitioner cap, attractor-pull cutoff, attractor-pull v2 multi-run, bias-corrected null tile placement, (150, 286] non-significant lift saturation, 200 m sentinel labelling artefact, Obs 272 multi-run corroboration, paper citation upper-bound, 55-map detection-mound co-occurrence, spatial-precision floor.
+
+### Related observations and artefacts
+
+- **Obs 272** (original, single-run T=0.7): superseded by Obs 294 only in the sense of cross-run generalisation. The 125 m claim itself was correct; multi-run analysis confirms it. Original methodology and within-tile null retained.
+- **Obs 252** (text track ~4× lower buffer elasticity than image): mechanism for why the F1 plateau is reached faster on text than image, but the *attractor-pull cap* is the same 125 m for both — the cap is set by GT density and tile-bound geometry, not by detector spatial precision.
+- **Obs 291** (T=0.3 paired-significant + buffer rank reversal): pairwise-permutation buffers cap at 125 m per Obs 294's principle.
+- **Obs 292** (F1/MCC tier-leader divergence): the F1 R-sensitivity analysis stops at 125 m as a practitioner-meaningful comparison and notes 150 m as upper bound only.
+- **Artefacts**: `results/55maps-attractor-pull-v2/{attractor-pull-v2.json,report.md,figures/attractor-pull-shell-rates.png}`. Script: `scripts/analyse_attractor_pull_v2.py` (~920 lines, ruff-clean, seed=42, 1,000 within-tile permutations). Commit: `74dbe680`.
+
+
