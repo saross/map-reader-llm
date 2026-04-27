@@ -34,13 +34,18 @@ Licence: Apache 2.0
 """
 
 import hashlib
+import json
+import logging
 import subprocess
 import threading
 import uuid
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 class LLMProvider(Enum):
@@ -1071,3 +1076,268 @@ def estimate_cost(
             "output_per_1m": rates["output"],
         },
     }
+
+
+# =========================================================================
+# Resume-Mode Meta Merging
+# =========================================================================
+#
+# Resume runs (e.g. proposer recovery against an existing GeoJSON) write
+# a per-pass ``*.meta.json`` containing only the resume-batch statistics.
+# Without merging, this overwrites the original (pre-resume) meta and
+# breaks downstream cost aggregation. The helpers below are extracted
+# verbatim from ``scripts/merge_recovery_meta.py`` so the merge can run
+# inline at write time. The standalone CLI in ``merge_recovery_meta.py``
+# remains for already-corrupted historical runs.
+
+
+def _sum_dicts(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
+    """Element-wise sum two dicts of numeric values; missing keys treated as 0."""
+    out = dict(a)
+    for k, v in b.items():
+        if isinstance(v, dict):
+            out[k] = _sum_dicts(out.get(k, {}), v)
+        else:
+            out[k] = (out.get(k, 0) or 0) + (v or 0)
+    return out
+
+
+def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, Any]:
+    """Merge a recovery meta.json into an original meta.json.
+
+    See ``scripts/merge_recovery_meta.py`` module docstring for
+    field-by-field semantics.
+
+    Args:
+        original: The pre-recovery meta.json contents.
+        recovery: The post-recovery meta.json contents (only the recovery run).
+
+    Returns:
+        Merged meta dict.
+    """
+    merged = dict(original)  # shallow copy at top level
+
+    # ---- timestamp: start from original, end from recovery, durations sum ----
+    o_ts = original.get("timestamp", {})
+    r_ts = recovery.get("timestamp", {})
+    merged["timestamp"] = {
+        "start": o_ts.get("start"),
+        "end": r_ts.get("end") or o_ts.get("end"),
+        "duration_seconds": (
+            (o_ts.get("duration_seconds") or 0.0)
+            + (r_ts.get("duration_seconds") or 0.0)
+        ),
+    }
+
+    # ---- execution_stats ----
+    o_es = original.get("execution_stats", {})
+    r_es = recovery.get("execution_stats", {})
+    o_completed = list(o_es.get("completed_items", []))
+    r_completed = list(r_es.get("completed_items", []))
+    # Combine completed items, dedup by ID (recovery wins on duplicate)
+    seen = set()
+    combined_completed: list[str] = []
+    for item in o_completed + r_completed:
+        if item not in seen:
+            combined_completed.append(item)
+            seen.add(item)
+
+    # The recovery-run's failed_items represents the residual still-failing
+    # tiles. The original's failed_items is now obsolete (most/all recovered).
+    r_failed = list(r_es.get("failed_items", []))
+
+    merged["execution_stats"] = {
+        "items_processed": (
+            (o_es.get("items_processed") or 0)
+            + (r_es.get("items_processed") or 0)
+        ),
+        "items_failed": len(r_failed),
+        "items_skipped": (
+            (o_es.get("items_skipped") or 0)
+            + (r_es.get("items_skipped") or 0)
+        ),
+        "retries_total": (
+            (o_es.get("retries_total") or 0)
+            + (r_es.get("retries_total") or 0)
+        ),
+        "retries_rate_limit": (
+            (o_es.get("retries_rate_limit") or 0)
+            + (r_es.get("retries_rate_limit") or 0)
+        ),
+        "retries_server_error": (
+            (o_es.get("retries_server_error") or 0)
+            + (r_es.get("retries_server_error") or 0)
+        ),
+        "retries_timeout": (
+            (o_es.get("retries_timeout") or 0)
+            + (r_es.get("retries_timeout") or 0)
+        ),
+        "retries_other": (
+            (o_es.get("retries_other") or 0)
+            + (r_es.get("retries_other") or 0)
+        ),
+        "finish_reason_counts": _sum_dicts(
+            o_es.get("finish_reason_counts", {}),
+            r_es.get("finish_reason_counts", {}),
+        ),
+        "safety_blocks": (
+            (o_es.get("safety_blocks") or 0)
+            + (r_es.get("safety_blocks") or 0)
+        ),
+        "parse_failures": (
+            (o_es.get("parse_failures") or 0)
+            + (r_es.get("parse_failures") or 0)
+        ),
+        "empty_responses": (
+            (o_es.get("empty_responses") or 0)
+            + (r_es.get("empty_responses") or 0)
+        ),
+        "completed_items": combined_completed,
+        "failed_items": r_failed,
+        "retry_details": (
+            list(o_es.get("retry_details", []))
+            + list(r_es.get("retry_details", []))
+        ),
+    }
+
+    # ---- usage_stats: sum tokens ----
+    o_us = original.get("usage_stats", {})
+    r_us = recovery.get("usage_stats", {})
+    merged["usage_stats"] = _sum_dicts(o_us, r_us)
+    # _sum_dicts may have inadvertently summed numeric fields inside
+    # by_provider — that's correct behaviour for token counts and request counts.
+
+    # ---- cost_estimate: sum numeric fields, keep pricing_used from original ----
+    o_ce = original.get("cost_estimate", {}) or {}
+    r_ce = recovery.get("cost_estimate", {}) or {}
+    merged["cost_estimate"] = {
+        "input_cost_usd": (
+            (o_ce.get("input_cost_usd") or 0.0)
+            + (r_ce.get("input_cost_usd") or 0.0)
+        ),
+        "output_cost_usd": (
+            (o_ce.get("output_cost_usd") or 0.0)
+            + (r_ce.get("output_cost_usd") or 0.0)
+        ),
+        "total_cost_usd": (
+            (o_ce.get("total_cost_usd") or 0.0)
+            + (r_ce.get("total_cost_usd") or 0.0)
+        ),
+        "pricing_used": o_ce.get("pricing_used") or r_ce.get("pricing_used"),
+    }
+
+    # ---- per_item_metadata: combine, recovery wins on duplicate item_id ----
+    o_pim = original.get("per_item_metadata", []) or []
+    r_pim = recovery.get("per_item_metadata", []) or []
+    # Build dict by item_id; recovery overwrites original
+    combined_pim: dict[str, dict[str, Any]] = {}
+    for item in o_pim:
+        iid = item.get("item_id")
+        if iid:
+            combined_pim[iid] = item
+    for item in r_pim:
+        iid = item.get("item_id")
+        if iid:
+            combined_pim[iid] = item
+    # Preserve original ordering, append new items at the end
+    merged_pim: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    for item in o_pim:
+        iid = item.get("item_id")
+        if iid:
+            merged_pim.append(combined_pim[iid])
+            seen_ids.add(iid)
+    for iid, item in combined_pim.items():
+        if iid not in seen_ids:
+            merged_pim.append(item)
+    merged["per_item_metadata"] = merged_pim
+
+    # ---- recovery_history: track the merge operation ----
+    initial_failed_ids = sorted(
+        fi["item_id"] if isinstance(fi, dict) else fi
+        for fi in o_es.get("failed_items", [])
+    )
+    still_failing_ids = sorted(
+        fi["item_id"] if isinstance(fi, dict) else fi
+        for fi in r_failed
+    )
+    recovered_ids = sorted(set(initial_failed_ids) - set(still_failing_ids))
+
+    history = list(merged.get("recovery_history", []))
+    history.append({
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "initial_failed": len(initial_failed_ids),
+        "recovered": len(recovered_ids),
+        "still_failing": len(still_failing_ids),
+        "still_failing_ids": still_failing_ids,
+        "recovered_ids": recovered_ids,
+        "recovery_cost_usd": r_ce.get("total_cost_usd"),
+        "recovery_duration_seconds": r_ts.get("duration_seconds"),
+        "recovery_run_id": recovery.get("run_id"),
+    })
+    merged["recovery_history"] = history
+
+    # tpm_governor: keep original (recovery's small run governor stats not
+    # meaningful at scale). If recovery has one, append as a list.
+    if "tpm_governor" in recovery:
+        merged.setdefault("tpm_governor_recovery", []).append(
+            recovery["tpm_governor"],
+        )
+
+    # results_summary: keep original (recovery may overwrite or be empty)
+    if recovery.get("results_summary"):
+        # Element-wise merge would be domain-specific; keep originals and
+        # store the recovery summary alongside if non-empty.
+        merged.setdefault("results_summary_recovery", []).append(
+            recovery["results_summary"],
+        )
+
+    return merged
+
+
+def merge_meta_into_existing(
+    meta_path: Path,
+    fresh: dict[str, Any],
+) -> dict[str, Any]:
+    """Return the merge of an on-disc meta with a fresh meta dict.
+
+    If ``meta_path`` exists, read it and return ``merge_meta(existing,
+    fresh)``. Otherwise return ``fresh`` unchanged. Logs a warning when
+    ``execution_stats.completed_items`` overlaps between the two passes —
+    a possible double-count signal.
+
+    Args:
+        meta_path: Path to a per-pass ``*.meta.json`` that may or may
+            not already exist on disc.
+        fresh: The freshly-finalised meta dict from the current resume
+            pass.
+
+    Returns:
+        Either the merged meta dict (when ``meta_path`` existed) or the
+        ``fresh`` dict as supplied.
+    """
+    if not meta_path.exists():
+        return fresh
+
+    with open(meta_path) as f:
+        existing = json.load(f)
+
+    # Defensive double-count guard: if any tile id appears in both
+    # passes' ``completed_items`` lists, the resume manifest may not
+    # have filtered correctly. Log but do not abort — ``merge_meta``
+    # dedupes by id, so totals stay correct.
+    existing_completed = set(
+        existing.get("execution_stats", {}).get("completed_items", []),
+    )
+    fresh_completed = set(
+        fresh.get("execution_stats", {}).get("completed_items", []),
+    )
+    overlap = existing_completed & fresh_completed
+    if overlap:
+        logger.warning(
+            "Resume meta merge: %d items appear in both passes — "
+            "possible double-count. Items: %s...",
+            len(overlap), list(overlap)[:5],
+        )
+
+    return merge_meta(existing, fresh)

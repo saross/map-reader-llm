@@ -60,7 +60,8 @@ from scripts.lib_llm_metadata import (
     extract_gemini_metadata,
     create_error_metadata,
     estimate_cost,
-    LLMProvider
+    LLMProvider,
+    merge_meta_into_existing,
 )
 
 # Import proactive token-bucket rate limiter (replaced reactive
@@ -1232,8 +1233,18 @@ def detect_mounds_versioned(
     if governor:
         meta["tpm_governor"] = governor.get_stats()
 
-    with open(meta_file, "w") as f:
+    # Resume-mode merge: if a meta file already exists from a prior pass,
+    # merge the fresh stats into it rather than overwriting. This keeps
+    # downstream cost aggregation (run_generalisation aggregate-cost)
+    # accurate when resuming a partially-completed run.
+    meta = merge_meta_into_existing(meta_file, meta)
+
+    # Atomic write — write to .tmp then rename so a kill mid-write
+    # cannot leave a truncated meta file.
+    tmp_meta = meta_file.with_suffix(meta_file.suffix + ".tmp")
+    with open(tmp_meta, "w") as f:
         json.dump(meta, f, indent=2)
+    tmp_meta.replace(meta_file)
 
     # Print summary
     print(f"\nFinished. Saved to {output_file}")

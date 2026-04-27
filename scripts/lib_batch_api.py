@@ -61,6 +61,8 @@ from scripts.lib_llm_metadata import (
     LLMMetadataTracker,
     LLMProvider,
     estimate_cost,
+    merge_meta,
+    merge_meta_into_existing,
 )
 
 logger = logging.getLogger(__name__)
@@ -1318,8 +1320,17 @@ def write_batch_outputs(
     }
 
     meta_path = output_file.with_suffix(".meta.json")
-    with open(meta_path, "w") as f:
+
+    # Resume-mode merge: if a meta file already exists from a prior pass,
+    # merge the fresh stats into it rather than overwriting. This keeps
+    # downstream cost aggregation accurate for resumed batch runs.
+    meta = merge_meta_into_existing(meta_path, meta)
+
+    # Atomic write to avoid leaving a truncated meta on kill mid-write.
+    tmp_meta = meta_path.with_suffix(meta_path.suffix + ".tmp")
+    with open(tmp_meta, "w") as f:
         json.dump(meta, f, indent=2)
+    tmp_meta.replace(meta_path)
 
     logger.info(
         "Wrote batch outputs: %s, %s, %s",
@@ -2200,30 +2211,59 @@ def patch_failed_tiles(
         with open(tiles_path, "w") as f:
             json.dump(tiles_data, f, indent=2)
 
-    # ── Update .meta.json failure count ───────────────────────
+    # ── Update .meta.json with patch results ──────────────────
     if all_recovered:
-        exec_stats = meta_data.get("execution_stats", {})
-        items_failed = exec_stats.get("items_failed", 0)
-        items_processed = exec_stats.get("items_processed", 0)
-        exec_stats["items_failed"] = max(
-            0, items_failed - len(all_recovered),
-        )
-        exec_stats["items_processed"] = (
-            items_processed + len(all_recovered)
-        )
-        meta_data["execution_stats"] = exec_stats
-
-        # Update total_detections to include recovered tiles'
-        # detections (the GeoJSON features have already been extended)
-        summary = meta_data.get("results_summary", {})
+        # Build a fresh "recovery" meta that represents only this
+        # patch pass. ``merge_meta`` then sums it into the original on
+        # disc — recording a recovery_history entry, retaining the
+        # original token counts / cost / duration, and keeping the
+        # original ``items_failed`` arithmetic correct (the merged
+        # ``items_failed`` is taken from the recovery's residual list,
+        # which is ``pending``).
+        patch_completed = list(all_recovered)
+        # Pre-existing summary detection count is preserved by
+        # ``merge_meta`` (originals win on results_summary). We still
+        # update the on-disc original's summary so cost/detection
+        # totals continue to match the GeoJSON feature count.
+        summary = dict(meta_data.get("results_summary", {}) or {})
         if "total_detections" in summary:
             summary["total_detections"] = (
                 summary["total_detections"] + total_new_detections
             )
             meta_data["results_summary"] = summary
 
-        with open(meta_path, "w") as f:
-            json.dump(meta_data, f, indent=2)
+        # ``merge_meta`` rebuilds ``completed_items`` as the dedup union
+        # of original and recovery's ``completed_items``. The fresh
+        # recovery dict below only lists the freshly-patched tiles, so
+        # the union correctly equals existing + patched.
+        fresh_meta: dict[str, Any] = {
+            "execution_stats": {
+                "items_processed": len(patch_completed),
+                "items_failed": 0,
+                "completed_items": patch_completed,
+                "failed_items": list(pending),
+            },
+            "timestamp": {
+                "start": datetime.now(timezone.utc).isoformat(),
+                "end": datetime.now(timezone.utc).isoformat(),
+                "duration_seconds": 0.0,
+            },
+            "cost_estimate": {
+                "input_cost_usd": 0.0,
+                "output_cost_usd": 0.0,
+                "total_cost_usd": 0.0,
+            },
+        }
+
+        # Use the already-loaded ``meta_data`` (the on-disc original)
+        # as the merge base — no need to re-read.
+        merged = merge_meta(meta_data, fresh_meta)
+
+        # Atomic write — rename a .tmp sibling to avoid truncation on kill.
+        tmp_meta = meta_path.with_suffix(meta_path.suffix + ".tmp")
+        with open(tmp_meta, "w") as f:
+            json.dump(merged, f, indent=2)
+        tmp_meta.replace(meta_path)
 
     # ── Report ────────────────────────────────────────────────
     if pending:
