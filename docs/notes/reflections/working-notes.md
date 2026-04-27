@@ -13826,3 +13826,161 @@ Search terms: temperature failure rate hypothesis test, T=0.3 vs T=0.7 cross-run
 - **Recovery scripts** (committed in `06f994d0`): `scripts/55maps-t0.3-recovery.sh`, `scripts/merge_recovery_meta.py`, `scripts/55maps-t0.3-extract-new-candidates.py`, `scripts/55maps-t0.3-rebuild-verified-geojson.py`
 - **Per-pass meta files**: `outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_{1..5}/*.meta.json` — see `execution_stats.failed_items[]` for authoritative unrecovered-failure counts
 - **Script bugs surfaced in recovery** (carry-over to next session per continuity doc): `4_detect_mounds_batch.py` resume mode overwrites `meta.json`, breaking `cost_manifest.json` aggregation (worked around via `merge_recovery_meta.py`); `run_generalisation.py aggregate-cost` rewrites `launch_manifest.json` and `experiment_intent.md` from current invocation, breaking original-launch provenance (worked around via `git checkout` restore)
+
+## Observation 282: Inter-pass candidate-match kappa is a diversity metric, not a quality metric — MIN > HIGH at matched K, T inverts the F1/MCC ranking; HIGH+T fragility corroborates the variance hypothesis (2026-04-27)
+
+### The finding
+
+The Phase 3a inter-pass agreement analysis (`scripts/analyse_inter_pass_agreement.py` v1.0.0; `results/inter-pass-agreement/`) computed Cohen's kappa on union-clustered candidate sets at 20 m UTM-32635 across 29 stratum cells (image / text matrices, scale-4, retest, gold-standard-v2). At matched K and temperature, MINIMAL-thinking cells consistently show **higher** candidate-match kappa than HIGH:
+
+| T | HIGH κ_cm | MIN κ_cm | Δ |
+|--:|--:|--:|--:|
+| 0.3 | 0.365 | 0.607 | +0.242 |
+| 0.7 | 0.336 | 0.529 | +0.193 |
+| 1.0 | 0.250 | 0.456 | +0.206 |
+
+(K=10 image matrix; text matrix shows the same pattern, with MIN-T0.7 K=30 κ=0.654 vs HIGH-T0.7 K=30 κ=0.381.) The MIN > HIGH ordering on kappa **inverts** the F1 / MCC ordering established in Obs 247–251: HIGH wins on detection quality after consensus, MIN wins on per-pass cluster-set overlap.
+
+### Why kappa is a diversity metric in this regime
+
+The mechanism is the diversity-dividend signature documented in Obs 141: HIGH thinking generates a richer per-pass candidate pool (HIGH-T0.7 text yields 11,731 union clusters vs MIN-T0.7 text 2,786 — a 4.2× difference), so each pass touches a smaller fraction of the union. Per-pass coverage falls, kappa falls, but consensus voting subsequently extracts a higher-quality detection set from the larger raw pool. Kappa here measures **per-pass coverage of the union** — a quantity that is mechanically lower when the model explores a wider hypothesis space. **It is not measuring detection quality; the inversion is a feature of the metric, not a finding about HIGH thinking.** Direct corroboration of Obs 141's proposed mechanism via an independent reliability statistic on the same matrix.
+
+### Variance hypothesis corroboration via fragility
+
+K=30 retest borderline metrics (B = clusters with vote_count in {t*−1, t*, t*+1}, anchor t* = round(K · 0.7) = 21) corroborate Obs 245's Levene-W = 3.192, p = 0.004 cross-condition variance heterogeneity. Fragility increases monotonically with temperature within each sub-track (image: 0.059 → 0.098 → 0.114 across T = 0.3 / 0.7 / 1.0; text: 0.053 → 0.062 → 0.086) and HIGH > MIN at matched temperature (high-text-T1.0 = 0.152 vs text-T1.0 = 0.086). The K=10 image matrix shows the same operational pattern: MIN-T0.7 fragility 0.355 (most stable, widest threshold-robustness plateau in Obs 246) vs HIGH-T0.7 0.448. **High temperature plus HIGH thinking yields more borderline noise per K-pass**, the operational expression of the variance heterogeneity headline.
+
+### Methods footnotes
+
+The 30 m cluster-radius sensitivity row at GS-v2 raises kappa from 0.146 to 0.185 (+27 % relative) with P_o nearly unchanged (0.602 → 0.608). The increase is the expected effect of merging near-neighbour pass-singletons; the 20 m headline is conservative in the sense of kappa-suppression from positional jitter, not genuine disagreement. Cohen's kappa formally assumes independent raters, but VLM passes share prompt, model, and image preprocessing — read kappa as the standard statistic conditional on this shared substrate, not as inter-rater reliability in the human-coding sense. K=3 cells (T=0.0 image / text) have borderline metrics naturally inflated because the band {t*−1, t*, t*+1} covers most of the available vote-count space; phase3a retest borderline rows use the t* = 21 fallback anchor and should be read in **relative** comparison only.
+
+### Why this matters
+
+The MIN-vs-HIGH kappa inversion is paper-load-bearing because it is the **kind of finding that looks like a contradiction of the headline** without the diversity-dividend lens. Any reviewer running an inter-rater statistic on the per-pass detection sets will recover this inversion and may conclude that MIN is the more reliable detector. The right framing is: kappa indexes per-pass coverage of the union, not detection quality; HIGH wins on quality after consensus precisely because its richer pool gives the voting filter more signal to work with. The fragility result independently corroborates the variance hypothesis on a metric that is not a function of the F1 / MCC outcome.
+
+### Findable later
+
+Search terms: inter-pass kappa Phase 3a, candidate-match kappa, MIN vs HIGH kappa inversion, diversity dividend kappa signature, fragility ratio HIGH thinking, borderline-instability K=30 retest, 30 m cluster-radius sensitivity, marginal-prevalence kappa paradox, P_o vs kappa, tile-presence kappa, GS-v2 4-of-5 consensus, phase3a retest fallback anchor.
+
+### Related observations and artefacts
+
+- **Obs 141** (diversity dividend): the proposed mechanism. Obs 282 quantifies it at the inter-pass-reliability level.
+- **Obs 245** (Levene W = 3.192, p = 0.004 cross-condition variance heterogeneity): operational corroboration via fragility at K=30.
+- **Obs 246** (MIN-T0.7 widest threshold-robustness plateau): consistent with MIN-T0.7 lowest K=10 fragility (0.355) here.
+- **Obs 247–251** (text/image matrices, F1 / MCC ordering): the ordering kappa inverts.
+- **Artefacts**: `results/inter-pass-agreement/agreement.json`, `results/inter-pass-agreement/report.md`, K x K candidate-match heatmaps under `results/inter-pass-agreement/figures/`. Script: `scripts/analyse_inter_pass_agreement.py` v1.0.0 (deterministic, ≈ 9 s on sapphire @ 4 workers).
+
+## Observation 283: The "bimodality bottleneck" is verifier-specific, not system-wide — proposer vote-fraction is right-skewed unimodal while the matched-condition verifier is U-shaped (2026-04-27)
+
+### The finding
+
+The proposer vote-fraction analysis (`results/proposer-vote-fraction/`; deliverable H-a) characterised the K-pass agreement-rate distribution across all 16 Phase 3a matrix conditions on the 487-tile Era 2 corpus. For the matched condition `text-HIGH-T0.7` (n = 11,731 clustered candidates, K = 30) the proposer places only 0.02 of mass at vote_count = K (full agreement) and 0.61 at vote_count = 1 (single-pass singletons); Hartigan's dip = 0.063, p < 0.001. The proposer distribution is approximately right-skewed unimodal, dominated by single-pass detections that consensus subsequently filters. By contrast, the matched verifier substrate (`text-brief` calibration pool, n = 3,736) places **0.80 of probability mass below 0.2 and 0.20 above 0.8 — total extreme mass 1.00**: the U-shaped, heavily quantised distribution documented in Obs 269 and replicated across the matrix in Obs 277.
+
+### Why this matters for the paper
+
+The proposer is **not** a bimodal-confidence emitter. The "obviously yes / obviously no" U-shape that motivated Obs 269's miscalibration analysis is a property of the **verifier**, not the system as a whole. This **strongly supports treating Obs 269 / Obs 277 as a verifier-specific finding**: when the paper discusses calibration failure, the right scope is the verifier's `mound_probability` output, not "the pipeline's confidence distribution". Any future calibration-improvement work should target the verifier specifically; proposer vote-fraction has fundamentally different distributional properties and a different remediation path (the calibration pilot in `planning/detector-confidence-calibration-pilot.md`).
+
+### The schema-absence caveat
+
+The Phase 3a proposer (Gemini-3-Flash) does not emit a numeric `mound_probability`; its required JSON schema is `{box_2d, label, subtype}` and the `confidence: "high"` literal in detection GeoJSONs is hard-coded by the detection pipeline (`scripts/4_detect_mounds_batch.py` ~line 627). A literal "proposer confidence distribution" is therefore vacuous on existing artefacts. The vote-fraction analysis substitutes **behavioural-confidence proxies** — the per-clustered-candidate vote fraction (vote_count / K) at 20 m, plus per-tile-per-pass detection-count distributions — as the closest available analogue to a per-detection probability. Vote fraction is **not** a calibrated confidence score; quantisation is bounded above by K + 1 distinct values, so entropy and dip-test results should be read with K in mind. The follow-up calibration pilot (planning doc, deliverable b) will test whether vote-fraction is monotonically correlated with P(real_mound | detected) on the K=30 ceiling cell before the paper reports it as a calibrated quantity.
+
+### Distributional descriptors across the matrix
+
+The 16-condition descriptor table reveals a coherent secondary pattern: at T = 0.0, both modalities concentrate mass at vote_count = K (image-MIN-T0.0 mass@K/K = 0.98, image-HIGH-T0.0 = 0.90, text-MIN-T0.0 = 0.74, text-HIGH-T0.0 = 0.59) — passes are near-deterministic and almost every cluster is fully agreed. As T rises, mass shifts to vote_count = 1 monotonically; image-HIGH-T1.0 mass@1/K = 0.72, text-HIGH-T0.7 = 0.61. Hartigan's dip is significant (p < 0.001) for 15 of 16 conditions, but in the right-skewed direction (singletons dominate), not the U-shape direction. The single non-significant dip (image-MIN-T0.0, p = 1.000) is the deterministic-decoding outlier where the distribution collapses to a single mode at full agreement.
+
+### Findable later
+
+Search terms: proposer vote-fraction H-a, bimodality bottleneck verdict, verifier-specific bimodality, proposer schema absence, behavioural-confidence proxy, vote-fraction distribution Phase 3a matrix, Hartigan dip test, mass at vote_count K, deliverable H-a, calibration pilot pre-condition, proposer-vs-verifier figure.
+
+### Related observations and artefacts
+
+- **Obs 269** (verifier U-shape, ECE=0.269 on 55-map): the original characterisation of the verifier-side bimodality. Obs 283 confirms this is verifier-specific.
+- **Obs 277** (Session 78 7-variant matrix): replicates the verifier U-shape across prompt variants on the gold-standard 4-map corpus. The proposer-vs-verifier contrast in Obs 283 closes the loop on Obs 277's "input-distribution-specific" interpretation.
+- **Obs 244** (vote-distribution fingerprints): earlier characterisation of vote distributions per condition; Obs 283 extends this with descriptive entropy / dip-test / quantisation framing across the full 16-condition matrix and adds the proposer-vs-verifier comparison.
+- **Planning docs**: `planning/detector-confidence-calibration-pilot.md` (deliverable b — vote-fraction-as-proxy validation pilot, zero-cost on existing K=30 cells); `planning/detector-confidence-flag-scoping.md` (deliverable c — opt-in flag scope; defer recommendation).
+- **Artefacts**: `results/proposer-vote-fraction/report.md`, `results/proposer-vote-fraction/figures/vote_fraction_panels.png`, `results/proposer-vote-fraction/figures/proposer_vs_verifier_bimodality.png`. Script: `scripts/analyse_proposer_confidence.py` (16 / 16 conditions).
+
+## Observation 284: HIGH thinking has NEGATIVE per-token efficiency at T=0.0 image (-0.0347 ΔF1 / 1k thinking tokens); modality divergence — text-track barely positive (+0.0030) at the same condition (2026-04-27)
+
+### The finding
+
+Per-condition token-efficiency analysis (`scripts/analyse_token_efficiency.py` v1.0.0; `results/secondary-effects-token-efficiency/`) computed paired ΔF1 per 1k thinking tokens for each (HIGH, MIN) pair at matched temperature, using `request_count` from `usage_stats.by_provider.google_gemini` as the per-call denominator. On the **image-track** Phase 3a 487-tile matrix, the headline number for HIGH-T0.0 vs MIN-T0.0 is:
+
+| Condition pair | F1_HIGH | F1_MIN | ΔF1 | Δthink/call | **ΔF1 / 1k think** |
+|:--|:-:|:-:|:-:|:-:|:-:|
+| HIGH-T0.0 vs MIN-T0.0 (image) | 0.4883 | 0.6290 | **−0.1407** | 4,056 | **−0.0347** |
+| HIGH-T0.3 vs MIN-T0.3 (image) | 0.7312 | 0.6597 | +0.0715 | 2,387 | +0.0300 |
+| HIGH-T1.0 vs MIN-T1.0 (image) | 0.7350 | 0.6459 | +0.0891 | 1,900 | +0.0469 |
+| SCALE4-T0.7 vs MIN-T0.7 (image) | 0.7422 | 0.6803 | +0.0619 | 1,829 | +0.0338 |
+
+At deterministic image decoding, switching from MINIMAL to HIGH thinking actively **costs** F1 — by a substantial 14 percentage points. The mechanism is plausibly that MIN-T0.0 already saturates recall on this corpus while HIGH-T0.0 over-thinks and hurts precision (Obs 244 documents that HIGH-T0.0 retains 89.5 % unanimous detections vs MIN-T0.0's 97.8 %; HIGH introduces speculative detections even at deterministic decoding). At T = 0.3 and T = 1.0 the sign flips — HIGH buys extra F1, the diversity dividend (Obs 140 / 141) regime — but at substantial token cost (~2,000–2,400 thinking tokens per call for ~0.07–0.09 absolute F1 gain).
+
+### Modality divergence at T=0.0
+
+The same comparison on the **text track** tells a different story:
+
+| Condition pair | F1_HIGH | F1_MIN | ΔF1 | Δthink/call | **ΔF1 / 1k think** |
+|:--|:-:|:-:|:-:|:-:|:-:|
+| HIGH-T0.0 vs MIN-T0.0 (text) | 0.6051 | 0.5932 | +0.0119 | 3,993 | **+0.0030** |
+| HIGH-T0.3 vs MIN-T0.3 (text) | 0.7891 | 0.6424 | +0.1467 | 3,188 | +0.0460 |
+| HIGH-T1.0 vs MIN-T1.0 (text) | 0.7727 | 0.6667 | +0.1060 | 2,487 | +0.0426 |
+
+At T = 0.0, text-track HIGH thinking is barely positive (+0.0030) — essentially flat. ΔF1 is ~0.012, so HIGH is **wasted but not actively damaging** on text-only inputs. The image-track negative number does **not** generalise across modality. At T = 0.3 and T = 1.0, image and text agree (text +0.0460, +0.0426; image +0.0300, +0.0469) — the divergence is specific to the deterministic-decoding regime.
+
+### Why this matters
+
+This is the single most paper-quotable per-token result we have. The headline negative number directly answers the question "was HIGH thinking worth its token spend at T = 0.0 image?" with an empirical "no — it was a strict loss". The text-track result reframes the answer as modality-conditional: HIGH at deterministic decoding is a strict loss with image input, a wasted spend (not a loss) with text-only input. Both are consistent with the underlying mechanism — that HIGH's value comes from output diversity that consensus voting can exploit (Obs 140 / 141), and at T = 0.0 there is no diversity to exploit, so HIGH only adds token cost and (on image) precision-hurting elaboration.
+
+### Logged-zero artefact (footnote)
+
+HIGH-T0.7 and MIN-T0.7 in both tracks were logged-zero artefacts: the Google Async Batch API records an empty `usage_stats` block (input, output, AND thinking all zero) for completed submissions even when the underlying calls used real tokens. We did not impute; we filtered and footnoted. The Phase 3a 487-tile retest meta files at `outputs/retest/phase3a/.../detections_T*_run*.meta.json` are entirely batch-API and therefore not used as a token-data source — the canonical real-time meta files at `outputs/h11/pv-diag-384/...` are the correct source. SCALE4-T0.7 image (the only non-batch HIGH-T0.7 image evidence) yields ΔF1/1k-think = +0.0338, consistent with the diversity dividend from richer prompt scaffolding seen elsewhere.
+
+### Findable later
+
+Search terms: token-efficiency Phase 3a, ΔF1 per 1k thinking tokens, HIGH thinking negative efficiency T=0.0 image, modality divergence T=0.0, image vs text token cost, logged-zero batch API artefact, request_count denominator, paired HIGH-vs-MIN comparison, SCALE4 token efficiency, diversity-dividend at T=0.0 absent, single-line answer HIGH worth it.
+
+### Related observations and artefacts
+
+- **Obs 140** (HIGH consensus dividend): Obs 284 quantifies the cost side of the same mechanism per token, and shows the cost flips negative at T = 0.0 image where the diversity benefit cannot operate.
+- **Obs 141** (diversity dividend mechanism): predicts exactly this pattern — HIGH at T = 0.0 is the worst case because no diversity is generated to be filtered.
+- **Obs 244** (vote-distribution fingerprints): HIGH-T0.0 image 89.5 % unanimous (vs MIN-T0.0 97.8 %) — the speculative-detection signal at deterministic decoding that hurts F1 here.
+- **Obs 259** (text HIGH thinks ~20 % more tokens per call than image HIGH): the per-call token denominator visible in the Δthink/call column above (text HIGH-T0.0 = 3,993 vs image HIGH-T0.0 = 4,056 is anomalous on this 487-tile corpus — but the broader Obs 259 pattern is replicated for T = 0.3 / 1.0).
+- **Artefacts**: `results/secondary-effects-token-efficiency/report.md`. Script: `scripts/analyse_token_efficiency.py` v1.0.0.
+
+## Observation 285: K-consensus F1 SD shrinks with K at the i.i.d. log-log slope (-0.5) across all 13 strata — but the proxy is tautological by construction; v2 follow-up scoped (2026-04-27)
+
+### The finding
+
+The consensus-SD shrinkage analysis (`scripts/analyse_consensus_sd_shrinkage.py`; `results/secondary-effects-consensus-sd/`) computed log-log slopes of K-consensus F1 SD vs K across 13 Phase 3a strata (image-track and text-track HIGH / MIN / SCALE4 cells, K_max ∈ {10, 30}). The empirical mean slope is **β₁ = −0.52 on text** and **−0.52 on image**, against the theoretical i.i.d. reference of −0.5; all 13 strata have CIs containing −0.5 and none departs detectably:
+
+| Track | Cells | β₁ range | β₁ mean |
+|:--|:-:|:--:|:--:|
+| image | 6 (T = {0.3, 0.7, 1.0} × {HIGH, MIN, SCALE4}) | [−0.53, −0.51] | −0.52 |
+| text | 6 (T = {0.3, 0.7, 1.0} × {HIGH, MIN}, plus T=0.7 K=30) | [−0.53, −0.50] | −0.52 |
+
+The ceiling-K paired bootstrap CI-width ratio is **0.16× at K = 30 for HIGH-T0.7 text** and **0.34× at K = 10 for HIGH-T0.7 image** — consistent with the expected ~√K contraction. None of the 13 strata is asterisked (the slower-than-i.i.d. flag triggers at β₁ > −0.3); on its face this is uniform i.i.d.-shrinkage corroboration across the matrix.
+
+### The proxy-tautology caveat — why this is a v1 result
+
+The Phase 3a evaluation outputs (`{thinking}-t{T}/n{K}/{rolldir}/evaluation.json`) store **vote-threshold sweeps** for a single K-pass consensus build per cell — they do **not** store independent K-roll subsamples. To obtain a per-K SD we approximated the K-consensus F1 estimator by the **mean of K single-pass F1 values** drawn (with replacement) from the K_max-pass pool, using the per-condition single-pass F1 lists in `secondary_effects.json[run_variability]`. **This proxy mathematically yields β₁ = −0.5 under any scenario in which the per-pass F1s are drawn from a stable distribution** (because SD of mean of K i.i.d. samples = σ / √K). Slopes departing meaningfully from −0.5 in this analysis would only emerge if the per-pass F1 distribution itself were non-stationary across the K_max-pass pool — a property that is not the intended target of an SD-shrinkage diagnostic. **Treat the v1 result as confirming the i.i.d. expectation, not as an independent test for shared-mode signal.**
+
+### What the v2 follow-up would test
+
+To detect genuine shared-mode signal (β₁ > −0.3), one would need to **rebuild greedy-vote consensus on K-subsamples drawn from the K_max-pass pool** — i.e. for each K-level, sample K passes without replacement, run `lib_consensus.cluster_across_passes` and the canonical 7-of-K (or matched-fraction) consensus rule, evaluate against gold standard, and bootstrap the resulting K-consensus F1 SD. This requires the per-pass GeoJSONs in `outputs/h11/pv-diag-384/` and ~5–10 minutes of compute per stratum on sapphire. The v2 analysis is **scoped but not run** in this session; placeholder for a future Obs entry that reports the v2 slopes when available.
+
+### Orthogonal findings preserved
+
+The per-condition K = 1 SDs themselves remain informative independently of the proxy issue: HIGH conditions show K = 1 SD = 0.012–0.022 for image vs 0.005–0.022 for text, replicating the variance heterogeneity captured under Obs 245's Levene test (W = 3.192, p = 0.004). The image-track Levene heterogeneity finding stands; the present analysis examines within-cell shrinkage as K rises, not between-cell variance comparison. K_max = 3 strata (image-track T = 0.0 cells) have only three single-pass replicates and so support only K = {1, 3} subsamples; no slope is fitted for those strata.
+
+### Decision rationale — write Obs now with v1 caveat rather than wait
+
+The v1 analysis is a useful sanity check (no stratum departs detectably from −0.5 → no shared-mode signal large enough to overcome the proxy's i.i.d. bias) and the caveat is the load-bearing methodological point. Recording it now also stakes out the v2 follow-up as scoped work rather than discovered late. The paper writer can cite Obs 285 v1 as "K-consensus SD shrinkage is consistent with i.i.d. expectation under the mean-of-K proxy; v2 follow-up using subsample-rebuilt greedy consensus is required to test for shared-mode signal".
+
+### Findable later
+
+Search terms: K-consensus SD shrinkage, log-log slope -0.5, i.i.d. shrinkage law, mean-of-K proxy, proxy tautology, β₁ confidence intervals, Phase 3a 13 strata, ceiling-K paired bootstrap, CI-width ratio sqrt(K), v1 caveat consensus SD, v2 subsample-rebuilt greedy consensus follow-up, Levene orthogonal.
+
+### Related observations and artefacts
+
+- **Obs 245** (Levene W = 3.192, p = 0.004): per-condition K = 1 SDs in Obs 285 v1 reproduce this variance heterogeneity. The two analyses are orthogonal — Obs 245 is between-cell variance comparison, Obs 285 is within-cell shrinkage as K rises.
+- **Obs 282** (kappa fragility corroborates variance hypothesis): companion finding from the same Wave 1 deliverable suite; both operationalise the Obs 245 heterogeneity at K-pass level, by different metrics.
+- **Artefacts**: `results/secondary-effects-consensus-sd/sd_shrinkage.json`, `results/secondary-effects-consensus-sd/sd_shrinkage.png`, `results/secondary-effects-consensus-sd/report.md`. Script: `scripts/analyse_consensus_sd_shrinkage.py` (1,000 percentile bootstrap iterations seed = 42 for SD CIs; 1,000 nested-bootstrap iterations for slope CIs).
