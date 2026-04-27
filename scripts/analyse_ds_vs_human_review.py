@@ -614,10 +614,25 @@ def render_report_md(
     unique_posterior_values: list[float],
 ) -> str:
     """Produce the human-readable Markdown report."""
+    # Derive a run label from the D-S posteriors path so the title is
+    # accurate when the script is invoked on text or T=0.3 runs as well
+    # as the original image run.
+    ds_path = str(summary["inputs"].get("ds_posteriors", ""))
+    if "55maps-image" in ds_path:
+        run_label = "55-map image generalisation"
+    elif "55maps-text-high-t0.3" in ds_path:
+        run_label = "55-map text HIGH T=0.3 generalisation"
+    elif "55maps-text-high" in ds_path:
+        run_label = "55-map text HIGH T=0.7 generalisation"
+    elif "55maps-text-min" in ds_path:
+        run_label = "55-map text MIN generalisation"
+    else:
+        run_label = "(run label unknown — see provenance)"
+
     lines: list[str] = []
     lines.append(
         "# Dawid-Skene aggregate posterior vs. human review "
-        "(55-map image generalisation)"
+        f"({run_label})"
     )
     lines.append("")
     lines.append(
@@ -658,12 +673,15 @@ def render_report_md(
     lines.append("## Structural note — D-S 2-annotator identifiability")
     lines.append("")
     if degenerate:
+        # Use the actual joined-row count from the summary so this
+        # paragraph is accurate for non-image runs as well.
+        n_joined = int(summary.get("n_joined", 0))
         lines.append(
             "With only two binary annotators (student vote, VLM vote) "
             "the Dawid-Skene model assigns an **identical posterior** "
             "to every item that shares the same annotator response "
-            "pattern. All 1,028 VLM-only items (student = 0, VLM = 1) "
-            "receive the same posterior value "
+            f"pattern. All {n_joined:,} VLM-only items "
+            "(student = 0, VLM = 1) receive the same posterior value "
             f"({unique_posterior_values[0]:.4f}). Consequently:"
         )
         lines.append("")
@@ -684,16 +702,23 @@ def render_report_md(
             "(posterior < 0.5 for all rows)."
         )
         lines.append("")
+        # Use this run's posterior + prevalence so the diagnostic line
+        # is accurate for every run, not just the original image run.
+        post_val = (
+            unique_posterior_values[0] if unique_posterior_values else 0.0
+        )
+        prev_val = float(summary.get("prevalence", 0.0))
         lines.append(
             "**Framing check.** The expected pattern was ‘aggregate "
             "estimates rate, human disambiguates individuals’. On this "
             "slice, the D-S aggregate is *not* close to the empirical "
-            "rate (0.186 predicted vs. 0.725 observed) — see "
-            "interpretation section 6 for the prior-misspecification "
-            "diagnosis. The identifiability argument still holds — the "
-            "D-S posterior cannot rank individuals by construction — "
-            "but the aggregate itself is badly miscalibrated here, so "
-            "the framing needs qualification rather than confirmation."
+            f"rate ({post_val:.3f} predicted vs. {prev_val:.3f} "
+            "observed) — see interpretation section 6 for the prior-"
+            "misspecification diagnosis. The identifiability argument "
+            "still holds — the D-S posterior cannot rank individuals "
+            "by construction — but the aggregate itself is badly "
+            "miscalibrated here, so the framing needs qualification "
+            "rather than confirmation."
         )
     else:
         lines.append(
@@ -835,32 +860,34 @@ def render_report_md(
 
     lines.append("## 6. Interpretation")
     lines.append("")
-    ece_gap = abs(
-        (unique_posterior_values[0] if unique_posterior_values else 0)
-        - summary["prevalence"]
+    post_val = (
+        unique_posterior_values[0] if unique_posterior_values else 0.0
     )
+    prev_val = float(summary.get("prevalence", 0.0))
+    n_joined = int(summary.get("n_joined", 0))
+    n_mound = int(summary.get("n_mound", 0))
+    ece_gap = abs(post_val - prev_val)
+    ratio = (prev_val / post_val) if post_val > 0 else float("inf")
     lines.append(
         "- **D-S aggregate is badly wrong here — flagged as surprising.** "
         f"The D-S posterior predicts an aggregate mound rate of "
-        f"{unique_posterior_values[0]:.4f} for the VLM-only cohort; the "
-        f"combined human-review label (including today's wider-buffer "
-        f"rescues) finds {summary['prevalence']:.4f}. The absolute gap is "
-        f"{ece_gap:.3f}. Even against yesterday's 50 m-strict labels the "
-        f"empirical rate was 0.459 (472/1028) — still 2.5x the D-S "
-        f"estimate. This is the reverse of the expected framing: rather "
-        f"than ‘aggregate estimates rate well, human disambiguates "
-        f"individuals’, the D-S aggregate is systematically under-"
-        f"counting real mounds at the cohort level."
+        f"{post_val:.4f} for the VLM-only cohort; the combined human-"
+        f"review label finds {prev_val:.4f} ({n_mound:,}/{n_joined:,}). "
+        f"The absolute gap is {ece_gap:.3f}; the empirical rate is "
+        f"{ratio:.2f}× the D-S estimate. This is the reverse of the "
+        "expected framing: rather than ‘aggregate estimates rate well, "
+        "human disambiguates individuals’, the D-S aggregate is "
+        "systematically under-counting real mounds at the cohort level."
     )
     lines.append(
         "- **Prior-driven artefact.** The D-S run used a fixed prior of "
         "5 % student false-negative rate (see "
-        "`dawid-skene-results.json`). The data imply the student FN "
-        "rate on the VLM-only slice is much higher — the VLM "
-        "independently flagged 1,028 locations that students had not "
-        "digitised, and human review confirms nearly three-quarters of "
-        "them are real mounds at some buffer. A D-S fit with an honest, "
-        "data-driven student-FN prior — or with more than two "
+        f"`dawid-skene-results.json`). The data imply the student FN "
+        f"rate on the VLM-only slice is much higher — the VLM "
+        f"independently flagged {n_joined:,}+ locations that students "
+        "had not digitised, and human review confirms a substantial "
+        "fraction are real mounds at some buffer. A D-S fit with an "
+        "honest, data-driven student-FN prior — or with more than two "
         "annotators — would land much closer to the empirical rate."
     )
     lines.append(
@@ -876,9 +903,9 @@ def render_report_md(
     )
     lines.append(
         "- **Buffer-band view.** Because the D-S posterior is "
-        "degenerate, mean posterior is identical across all buffer "
-        "bands (0.1862 at 50, 75, 100, 125, 150, and 200 m). It carries "
-        "no information about buffer-band separation, which is "
+        "degenerate, mean posterior is identical across every "
+        f"buffer band ({post_val:.4f} at all bands). It carries no "
+        "information about buffer-band separation, which is "
         "consistent with Obs 268 — the signal for ‘wider-buffer mounds "
         "are genuinely lower-signal’ lives entirely in the verifier "
         "probability, not in the D-S posterior."
