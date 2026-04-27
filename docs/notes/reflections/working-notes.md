@@ -14028,3 +14028,51 @@ Search terms: verifier temperature failure rate, T = 0.0 deterministic failures,
 - **Obs 269** (verifier U-shape and ECE = 0.269): orthogonal — verifier *calibration* shape is unaffected by reliability temperature shifts; the two diagnostics measure different properties.
 - **Obs 277** (Session 78 7-variant verifier-prompt matrix, canonical Pareto-dominant on calibration): the canonical `verify_adversarial-text` config used for Obs 286 was the dominant choice from that matrix; this Obs adds the temperature dimension at fixed-prompt.
 - **Artefacts**: `results/verifier-t-pilot/stage-a-report.md`, `results/verifier-t-pilot/per-t-stats.json`, `outputs/verifier-t-pilot/{T0.5,T1.0}/`, `outputs/h11/gold-standard-v2/verified-v1/` (T = 0.0 baseline). Script: `scripts/analyse_verifier_t_pilot.py`. Stage B (analysis-only F1 / MCC re-evaluation) follows under separate cover.
+
+## Observation 287: Stage B verifier-T re-evaluation — F1 / MCC NOT degraded by raising verifier T; T=0.5 dominates T=1.0; recommend T=0.5 as production default (2026-04-27)
+
+### The finding
+
+The Stage B re-evaluation (`results/verifier-t-pilot/stage-b-report.md`; commits `b9f73bbf` + `74edfb16`) materialised the T = 0.0 / 0.5 / 1.0 verifier outputs at the canonical `prob_t ∈ {0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50}` sweep with `vote_t = 4` and evaluated each at the canonical `{20, 30, 40, 50, 100} m` buffers + 1,000-iteration tile-level bootstrap on the 487-tile Era 2 bounds. The headline operating-point cell (`vote_t = 4`, `prob_t = 0.15`, `buffer = 20 m`):
+
+| Verifier T | n_candidates | F1 (95 % CI) | MCC (95 % CI) |
+|:--:|:--:|:--:|:--:|
+| 0.0 | 371 | 0.8536 [0.821, 0.882] | 0.7781 [0.726, 0.828] |
+| 0.5 | 377 | **0.8645** [0.832, 0.892] | 0.7707 [0.719, 0.821] |
+| 1.0 | 376 | 0.8434 [0.808, 0.874] | 0.7454 [0.689, 0.799] |
+
+**Decision-rule verdict: F1 / MCC NOT degraded.** No cell across the 40-cell sweep (8 prob_t × 5 buffers) shows a T > 0 95 % CI lying entirely below the T = 0.0 CI. The T = 0.0 re-evaluation reproduces the canonical `gold-standard-v2-greedy-v1-487tile.json` comparator byte-equivalently, confirming pipeline equivalence.
+
+### Subtle directional finding worth flagging
+
+MCC mean is **uniformly lower** at T > 0 vs T = 0.0 across all 8 prob_t cells for both T = 0.5 and T = 1.0 (median ΔMCC = −0.019 for T = 0.5 and −0.013 for T = 1.0). Each individual difference falls within sampling noise (CIs overlap), but the **sign-consistency across all 8 cells** suggests a small real accuracy cost rather than chance — the binomial probability of all-8-same-sign under null is `2 × 0.5⁸ = 0.0078`. F1 results are mixed: T = 0.5 outperforms T = 0.0 at `prob_t ∈ {0.10, 0.15, 0.20}`, underperforms at `{0.05}` and `{≥ 0.25}`.
+
+### T = 1.0 is dominated by T = 0.5
+
+At the headline cell, T = 1.0 has both lower F1 (0.8434 vs 0.8645) and lower MCC (0.7454 vs 0.7707) than T = 0.5, and shows a few more tile-level FPs. T = 0.5 is the Pareto-optimal T > 0 setting on this corpus.
+
+### Recommendation: adopt T = 0.5 as the production verifier default
+
+The reliability gain from Stage A (Obs 286: 1.65 % → 0.00 % unrecovered failures) plus the marginal F1 improvement at the canonical operating point (+0.011 absolute, within CI) plus the negligible MCC cost (−0.007 within CI) plus operational simplification (no straggler-cleanup pass) constitute a clear adoption case. Recommendation only; no config change has been applied.
+
+### Self-evaluation-bias caveat (important methodological footnote)
+
+Two structural biases skew the comparison **in T = 0.0's favour**:
+
+1. **Candidate-set asymmetry**: T = 0.0 has n = 371 at the headline `prob_t = 0.15` vs 376 / 377 at T = 0.5 / 1.0. The 6 absent candidates from T = 0.0 are exactly the cases where Stage A's verifier failed entirely — likely the hardest crops. Despite this skew, T = 0.5 marginally outperforms T = 0.0 on F1, which strengthens (not weakens) the recommendation.
+2. **Gold-standard verification was T = 0.0**: the project's evaluation reference (`mounds-reference.geojson`) was constructed via expert review of T = 0.0 verified output, so its inclusion criterion is biased toward the T = 0.0 verifier's calibration. A T-agnostic gold standard (e.g. expert review on the union of T = 0.0 ∪ T = 0.5 ∪ T = 1.0 verified detections) would tighten the comparison and likely shift MCC numbers in T > 0's favour. Flagged as an open question in the report; out of scope for this pilot.
+
+### Why this matters
+
+Closes the production-default gate that Obs 286 set. With both reliability (Stage A) and accuracy (Stage B) cases for T = 0.5 confirmed, the case for changing the production verifier default from T = 0.0 to T = 0.5 is empirically supported on the 4-map gold-standard corpus. Generalisation-corpus confirmation (e.g. on the 55-map run candidate set) is the natural next test if/when the project chooses to act on the recommendation.
+
+### Findable later
+
+Search terms: Stage B verifier-T pilot, F1 0.8645 T=0.5 headline, MCC sign-consistency T>0, T=0.5 dominates T=1.0, T=0.0 self-evaluation bias, candidate-set asymmetry verifier-T comparison, production-default verifier temperature recommendation, gold-standard self-evaluation bias caveat, vote_t=4 prob_t=0.15 487-tile, Pareto-optimal verifier temperature.
+
+### Related observations and artefacts
+
+- **Obs 286** (Stage A, verifier reliability gate): Obs 287 closes the second half of the production-default gate — Stage A established reliability gain, Stage B establishes accuracy is not lost. The two together are the empirical case for adopting T = 0.5.
+- **Obs 269** (verifier U-shape and ECE = 0.269): the under-calibration at the high end of the verifier's output range may interact with the small directional MCC drop at T > 0 — at higher temperatures the verifier produces a slightly broader probability distribution, which propagates to tile-level classification differently. Worth a focused revisit if the production-default change is enacted.
+- **Obs 277** (Session 78 7-variant verifier-prompt matrix): the canonical `verify_adversarial-text` config used here is the Pareto-dominant verifier-prompt choice from that matrix. Obs 287 layers temperature on top at fixed prompt; a T × prompt-variant interaction sweep would be a natural extension if generalising.
+- **Artefacts**: `results/verifier-t-pilot/stage-b-report.md`, `results/verifier-t-pilot/T{0.0,0.5,1.0}/eval-vote4-prob*/evaluation.{json,md,csv}`, `outputs/verifier-t-pilot/T{0.5,1.0}/materialised/vote4_prob*.geojson`. Driver: `scripts/analyse_verifier_t_pilot.py`. Stage B commits: `b9f73bbf` (materialisations + evaluations), `74edfb16` (report).
