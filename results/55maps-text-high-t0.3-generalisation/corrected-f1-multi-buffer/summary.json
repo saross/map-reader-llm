@@ -1,0 +1,145 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-27T10:21:00.035675+00:00",
+  "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching",
+  "metadata": {
+    "seed": 42,
+    "bootstrap_n": 10000,
+    "git_commit": "8046e09b76c912b501b5dee4d278a4933e93a09c",
+    "input_paths": {
+      "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+      "student_gt": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "review_yesterday": "/tmp/empty-review-yesterday.csv",
+      "review_today": "results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv"
+    }
+  },
+  "exclusions": {
+    "sentinel_buffer_metres": 200,
+    "n_excluded_candidates": 32,
+    "note": "Today's review included 32 candidates labelled 'mound' at buffer_metres=200 \u2014 the '>150 m' sentinel shell. These are visible mounds inside the 286 m corners-plus-5 px circle but outside all review rings. They are EXCLUDED from every extended-GT build here; their detections appear as FP at every R \u2264 150 m, which is the correct behaviour under the 150 m practitioner cap."
+  },
+  "obs_272_reference": "Obs 272 in docs/notes/reflections/working-notes.md shows the attractor-pull effect is statistically significant only through 125 m \u2014 shells at (125, 150] and (150, 286] are indistinguishable from within-tile random placement. The 150 m row should be treated as an optimistic upper bound, not a practitioner-useful recall claim.",
+  "results": [
+    {
+      "R_m": 50,
+      "TP": 3966,
+      "FP": 384,
+      "FN": 1086,
+      "n_ref_student_only": 4744,
+      "n_reviewer_promoted_at_R": 308,
+      "n_ref_extended": 5052,
+      "precision": 0.9117241379310345,
+      "precision_CI": [
+        0.9025292067133966,
+        0.9205330570900953
+      ],
+      "recall": 0.7850356294536817,
+      "recall_CI": [
+        0.7720616221614267,
+        0.7975933406994326
+      ],
+      "F1": 0.843650287172942,
+      "F1_CI": [
+        0.8344214920261159,
+        0.8523666280187276
+      ]
+    },
+    {
+      "R_m": 75,
+      "TP": 3991,
+      "FP": 359,
+      "FN": 1085,
+      "n_ref_student_only": 4744,
+      "n_reviewer_promoted_at_R": 332,
+      "n_ref_extended": 5076,
+      "precision": 0.9174712643678161,
+      "precision_CI": [
+        0.9084456695321591,
+        0.9261261261261261
+      ],
+      "recall": 0.7862490149724193,
+      "recall_CI": [
+        0.7733175278874731,
+        0.79884518159592
+      ],
+      "F1": 0.8468067048589009,
+      "F1_CI": [
+        0.8376615136116852,
+        0.855414173282039
+      ]
+    },
+    {
+      "R_m": 100,
+      "TP": 4005,
+      "FP": 345,
+      "FN": 1085,
+      "n_ref_student_only": 4744,
+      "n_reviewer_promoted_at_R": 346,
+      "n_ref_extended": 5090,
+      "precision": 0.9206896551724137,
+      "precision_CI": [
+        0.9117713118419448,
+        0.9292402172246341
+      ],
+      "recall": 0.7868369351669942,
+      "recall_CI": [
+        0.7739355752177298,
+        0.7993415158307315
+      ],
+      "F1": 0.8485169491525424,
+      "F1_CI": [
+        0.8394126065614705,
+        0.8570545161943836
+      ]
+    },
+    {
+      "R_m": 125,
+      "TP": 4015,
+      "FP": 335,
+      "FN": 1082,
+      "n_ref_student_only": 4744,
+      "n_reviewer_promoted_at_R": 353,
+      "n_ref_extended": 5097,
+      "precision": 0.9229885057471264,
+      "precision_CI": [
+        0.9140625,
+        0.9314417241891041
+      ],
+      "recall": 0.7877182656464587,
+      "recall_CI": [
+        0.7748804494644611,
+        0.8001910680191096
+      ],
+      "F1": 0.8500052926855086,
+      "F1_CI": [
+        0.8409944011468026,
+        0.8585243819476882
+      ]
+    },
+    {
+      "R_m": 150,
+      "TP": 4023,
+      "FP": 327,
+      "FN": 1084,
+      "n_ref_student_only": 4744,
+      "n_reviewer_promoted_at_R": 363,
+      "n_ref_extended": 5107,
+      "precision": 0.9248275862068965,
+      "precision_CI": [
+        0.9160354724747362,
+        0.933125313197599
+      ],
+      "recall": 0.7877423144703348,
+      "recall_CI": [
+        0.7748430198732137,
+        0.8001939911293589
+      ],
+      "F1": 0.8507983504282542,
+      "F1_CI": [
+        0.8417097703817004,
+        0.8593088395098534
+      ]
+    }
+  ]
+}
