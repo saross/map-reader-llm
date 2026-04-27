@@ -14076,3 +14076,43 @@ Search terms: Stage B verifier-T pilot, F1 0.8645 T=0.5 headline, MCC sign-consi
 - **Obs 269** (verifier U-shape and ECE = 0.269): the under-calibration at the high end of the verifier's output range may interact with the small directional MCC drop at T > 0 — at higher temperatures the verifier produces a slightly broader probability distribution, which propagates to tile-level classification differently. Worth a focused revisit if the production-default change is enacted.
 - **Obs 277** (Session 78 7-variant verifier-prompt matrix): the canonical `verify_adversarial-text` config used here is the Pareto-dominant verifier-prompt choice from that matrix. Obs 287 layers temperature on top at fixed prompt; a T × prompt-variant interaction sweep would be a natural extension if generalising.
 - **Artefacts**: `results/verifier-t-pilot/stage-b-report.md`, `results/verifier-t-pilot/T{0.0,0.5,1.0}/eval-vote4-prob*/evaluation.{json,md,csv}`, `outputs/verifier-t-pilot/T{0.5,1.0}/materialised/vote4_prob*.geojson`. Driver: `scripts/analyse_verifier_t_pilot.py`. Stage B commits: `b9f73bbf` (materialisations + evaluations), `74edfb16` (report).
+
+## Observation 288: The pre-existing `with-mcc/` reference cells are off-matrix one-offs, NOT canonical truth — Wave 2 sweep cross-check exposes mismatched consensus sources (2026-04-27)
+
+### The finding
+
+Wave 2 of Session 80 re-evaluated all 252 phase3a matrix conditions with `--mcc` (commit `163161a4`; sweep wall = 15 min 17 s on sapphire `xargs -P 8`; 0 failures). As a sanity step the agent cross-checked the two pre-existing `with-mcc/` reference cells (text and image at `high-t0.7-n30-t26` / `high-t0.7-n5-t7`) against the newly-computed matrix entries at the same nominal stratum coordinates. **They do not match.** Inspection of the `_metadata.cli_args.detections` field shows the references were evaluated against **different consensus source files**:
+
+| Cell | with-mcc reference uses | Matrix sweep uses | with-mcc MCC | Matrix MCC |
+|:---|:---|:---|:--:|:--:|
+| text high-T0.7 K=30 t=26 | `outputs/retest/phase3a-high/track2-text/T0.7/consensus/consensus_t26.geojson` (376 features) | `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t26.geojson` (415 features) | 0.7153 | 0.6198 |
+| image high-T0.7 K=10 t=7 | `outputs/h11/pv-diag-384/image-n5/...` (the MINIMAL track root!) | `outputs/h11/pv-diag-384/flash-high-image-n5/...` | 0.3831 | 0.6765 |
+
+The image case is particularly egregious — the with-mcc reference for a **HIGH-thinking** image cell appears to have been built against the MINIMAL track's consensus pool by mistake. The matrix value (MCC = 0.6765) is dramatically higher than the reference (0.3831), indicating the reference understated this condition's tile-level performance by 0.29 absolute MCC.
+
+### What this means
+
+The `with-mcc/` directory was a hand-rolled one-off — produced by ad-hoc invocations of `evaluate_detections.py` against whatever consensus geojson was nearby at the time, NOT against the canonical matrix consensus sources. It was useful as a smoke-test artefact (and it did serve that purpose in unblocking the backlog #3 MCC-rendering fix), but it should NOT be cited as a canonical MCC value for any condition — there is at minimum source-asymmetry against the matrix tree, and in the image case an outright stratum mis-assignment.
+
+The **matrix sweep is now the canonical truth source** for phase3a tile-level MCC. All 252 cells trace their `detections` source via `_metadata.cli_args.detections` to the matrix-canonical `outputs/h11/pv-diag-384/...` consensus tree, and the matrix sweep is internally consistent (text and image branches reference matched-track consensus pools).
+
+### Operational implications
+
+1. Anywhere in the project that cites a number from `results/phase3a-{text,image}-matrix/with-mcc/` needs to be redirected to the matrix-canonical equivalent. The largest-magnitude correction is the image high-T0.7 K=10 t=7 cell (MCC 0.3831 → 0.6765, +0.29 absolute) — any prior framing that "the image high-T0.7 cell is MCC-poor" was an artefact of the wrong consensus source, not a real finding.
+2. The image-track cell's prior MCC figure may have been used to anchor cross-architecture image-vs-text framing in the secondary-effects analyses; revisit any such citation in `results/secondary-effects/` and `results/phase3a-image-matrix/` reports.
+3. The with-mcc directory should be archived (per project policy: archive, do not delete) and replaced with a stub README pointing readers to the canonical matrix tree.
+
+### Why this slipped through earlier
+
+The with-mcc cells were created during the Session 78 verifier-calibration matrix work as smoke-test outputs to validate the `--mcc` flag end-to-end. At that point the matrix sweep had not been re-run, so there was no canonical alternative to compare against; the with-mcc numbers were used as gap-fillers in narrative documents. Wave 2's full sweep is the first time a canonical, internally-consistent matrix-wide MCC table has existed — and the cross-check revealed the gap.
+
+### Findable later
+
+Search terms: with-mcc reference cells off-matrix, phase3a matrix MCC sweep canonical, off-matrix reference one-off, consensus source mis-assignment, image high-T0.7 K=10 t=7 0.3831 vs 0.6765, source-asymmetry MCC reference, _metadata.cli_args detections trace, MINIMAL track consensus mistake on HIGH cell, matrix sweep internally consistent, with-mcc archived stub.
+
+### Related observations and artefacts
+
+- **Obs 274** (Phase 2b MCC-F1 inversion): the Phase 2b MCC anchors stand independently of Wave 2; this Obs only invalidates the phase3a-matrix `with-mcc/` cells, not the Phase 2b results.
+- **Obs 277** (Session 78 verifier-prompt matrix calibration): produced its own MCC numbers via `verifier-calibration-matrix/` — those are distinct from the with-mcc/ phase3a cells and stand independently.
+- **Backlog #3 MCC-rendering fix** (commit `bdd61bcc`): the smoke-test against the with-mcc text reference cell still passed because the rendering fix is purely additive and doesn't depend on which consensus source was used; the rendered MCC matched what the existing JSON contained.
+- **Artefacts**: `results/phase3a-{text,image}-matrix/<cell>/evaluation.{json,md,csv}` (252 cells, canonical MCC source post-Wave-2). Wave 2 commits: `caafc460` (jobs.tsv builder), `82bae71c` (sweep driver), `163161a4` (252-cell sweep results). Sapphire backup tag: `pre-mcc-sweep-2026-04-27`. **Action item flagged**: archive `with-mcc/` and replace with stub README pointing to the matrix canonical.
