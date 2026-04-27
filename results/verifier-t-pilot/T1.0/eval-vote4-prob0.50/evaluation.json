@@ -1,0 +1,102 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-27T05:40:31.317552+00:00",
+  "summary": {
+    "label": "verifier-t-pilot-T1.0-vote4-prob0.50",
+    "n_detections": 318,
+    "buffers": [
+      {
+        "buffer_metres": 20,
+        "f1": 0.7915,
+        "f1_ci_lower": 0.753,
+        "f1_ci_upper": 0.8271,
+        "precision": 0.9371,
+        "p_ci_lower": 0.9064,
+        "p_ci_upper": 0.9613,
+        "recall": 0.6851,
+        "r_ci_lower": 0.6332,
+        "r_ci_upper": 0.7345
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.8074,
+        "f1_ci_lower": 0.77,
+        "f1_ci_upper": 0.8407,
+        "precision": 0.956,
+        "p_ci_lower": 0.9283,
+        "p_ci_upper": 0.9764,
+        "recall": 0.6989,
+        "r_ci_lower": 0.6472,
+        "r_ci_upper": 0.7459
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.8074,
+        "f1_ci_lower": 0.77,
+        "f1_ci_upper": 0.8407,
+        "precision": 0.956,
+        "p_ci_lower": 0.9283,
+        "p_ci_upper": 0.9764,
+        "recall": 0.6989,
+        "r_ci_lower": 0.6472,
+        "r_ci_upper": 0.7459
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.8101,
+        "f1_ci_lower": 0.7735,
+        "f1_ci_upper": 0.8435,
+        "precision": 0.9591,
+        "p_ci_lower": 0.9336,
+        "p_ci_upper": 0.9794,
+        "recall": 0.7011,
+        "r_ci_lower": 0.6506,
+        "r_ci_upper": 0.7486
+      },
+      {
+        "buffer_metres": 100,
+        "f1": 0.8127,
+        "f1_ci_lower": 0.7765,
+        "f1_ci_upper": 0.8449,
+        "precision": 0.9623,
+        "p_ci_lower": 0.9359,
+        "p_ci_upper": 0.9811,
+        "recall": 0.7034,
+        "r_ci_lower": 0.6532,
+        "r_ci_upper": 0.751
+      }
+    ],
+    "tile_classification": {
+      "confusion": {
+        "tp": 171,
+        "tn": 253,
+        "fp": 5,
+        "fn": 58
+      },
+      "mcc": {
+        "mean": 0.7545,
+        "ci_lower": 0.7015,
+        "ci_upper": 0.8051
+      },
+      "sensitivity": {
+        "mean": 0.7457,
+        "ci_lower": 0.6892,
+        "ci_upper": 0.7992
+      },
+      "specificity": {
+        "mean": 0.9803,
+        "ci_lower": 0.9608,
+        "ci_upper": 0.9961
+      }
+    }
+  },
+  "_metadata": {
+    "t_label": "T1.0",
+    "vote_t": 4,
+    "prob_t": 0.5,
+    "consensus_geojson": "outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson",
+    "probabilities_json": "outputs/verifier-t-pilot/T1.0/probabilities.json",
+    "n_materialised": 318,
+    "stage": "verifier-t-pilot-stage-b"
+  }
+}
