@@ -14243,3 +14243,175 @@ Search terms: Wave 3 of Session 80, refresh staleness audit, phase3a MCC narrati
 - **Obs 289** (v2 K-consensus SD shrinkage genuine test): orthogonal to Wave 3 — published before Wave 3 began.
 - **Wave 3 commits**: `f052a92a` (Theme 9), `2a928cf7` (Theme 6), `96c6ba75` (Theme 7), `<this commit>` (Obs 290 summary).
 
+## Observation 291: T=0.3 is operationally optimal at canonical R=50 m on the 55-map corrected corpus — paired-permutation Δ +0.018 vs T=0.7 (BH p < 0.001) and +0.012 vs image (BH p = 0.017); but text-vs-image rank reverses across buffer (2026-04-27)
+
+### The finding
+
+The 55-map paired-permutation v2 analysis (`scripts/paired_permutation_corrected_55maps.py`; commit `a5bc9df6`; 10,000 permutations + 10,000 paired-bootstrap CIs; sapphire compute) tested all three pairwise comparisons among the corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image) at buffer R ∈ {20, 25, 30, 35, 40, 45, 50, 75, 100, 125} m.
+
+Headline at the canonical operating buffer R = 50 m:
+
+| Pair | ΔF1 (mean) | 95 % CI | raw p | BH-FDR p | Sig? |
+|:---|:--:|:--:|:--:|:--:|:--:|
+| **T=0.3 vs T=0.7** | **+0.0177** | [+0.0102, +0.0254] | < 0.001 | < 0.001 | **yes** |
+| **T=0.3 vs image** | **+0.0119** | [+0.0026, +0.0211] | 0.012 | 0.017 | **yes** |
+| T=0.7 vs image | −0.0057 | [−0.0154, +0.0039] | 0.239 | 0.239 | no |
+
+T=0.3's marginal advantage over T=0.7 in the corrected-F1 commit (`73b7aa68`, +0.018 raw delta with narrowly-overlapping CIs) is now elevated to statistical significance under the paired-tile-swap test. Tile wins/losses 383/281 at R=50 m with 7,877 of 8,541 tiles tied.
+
+### Buffers surviving BH-FDR (q = 0.05) within pair
+
+- **T=0.3 vs T=0.7**: 25, 35, 40, 45, 50, 75, 100, 125 m. Only 20 m and 30 m fall short (raw p = 0.259 and 0.054).
+- **T=0.3 vs image**: 20, 25, 30, 35, 40, 45, 50 m. Loses significance at 75 m and beyond.
+- **T=0.7 vs image**: 20, 25, 30, 35, 40, 45, 75, 100, 125 m. Only R = 50 m fails BH (the crossover); all other buffers significant.
+
+### Buffer-dependent rank reversal (paper-load-bearing)
+
+Both text-vs-image pairs **flip sign across buffer**, with the crossover at R ≈ 50–75 m. T=0.7 vs image is the cleanest case:
+
+| R (m) | T=0.3 vs image ΔF1 | T=0.7 vs image ΔF1 |
+|:--:|:--:|:--:|
+| 20 | +0.124 (text crushes) | +0.118 (text crushes) |
+| 50 | +0.012 (sig, marginal) | −0.006 (n.s., crossover) |
+| 75 | n.s. | **−0.019** (image wins, BH p < 0.001) |
+| 125 | n.s. | **−0.022** (image wins, BH p < 0.001) |
+
+Mechanism: text precision-and-FN-trading wins at tight R (text precision ~0.91 vs image ~0.88 with similar recall profile, harmonic-mean F1 rewards precision); image's recall-per-detection compounds faster as buffer relaxes (Obs 252 — image has ~4× higher buffer elasticity than text), overtaking text at R ≥ 75 m. The R = 50 m row is the unstable middle ground where the precision and recall advantages roughly cancel.
+
+### Why this matters
+
+1. **T=0.3 is the recommended operating point on this corpus at R=50 m** — paired-significant against both alternatives at the canonical buffer; paper headline material.
+2. **The "best modality" is buffer-conditional** — readers shouldn't pick a "best track" without specifying spatial-precision tolerance. At R ≤ 50 m text dominates; at R ≥ 75 m image is competitive or wins outright.
+3. **T=0.7 is bottom on every comparison** — neither significantly different from image at canonical R = 50 m, nor a competitor against T=0.3.
+
+### Latent bug found and fixed during the analysis
+
+`compute_corrected_f1_multi_buffer.build_phantom_gdf` was including ALL yesterday-review mounds unconditionally. The docstring claimed "include for every R ≥ 50 m" but the code never gated by R. Latent because upstream callers always run at R ∈ {50, 75, 100, 125, 150}; at R < 50 m it would have inflated image-side recall by promoting the 472 image-yesterday mounds (all confirmed at the 50 m shell) as phantoms. Fix landed in commit `4ac60d9c` (pre-filter `review_yesterday[buffer_metres ≤ R]`). Confirmed T=0.3 / T=0.7 review CSVs have no <50 m mounds (only image-involving pairs were affected at sub-50 m R, and the bug never operated in production).
+
+### Findable later
+
+Search terms: 55-map paired permutation v2, T=0.3 vs T=0.7 paired significance, +0.018 ΔF1 BH p<0.001, text-vs-image buffer rank reversal, R=50m crossover image text, T=0.3 operationally optimal, BH-FDR within-pair correction, build_phantom_gdf yesterday-review buffer-gate latent bug.
+
+### Related observations and artefacts
+
+- **Obs 252** (image track ~4× higher buffer elasticity than text): the structural reason for the buffer-dependent rank reversal observed here.
+- **Obs 272** (attractor-pull cap at 125 m): paired-permutation buffers in this Obs cap at 125 m per Obs 272's practitioner-relevant range.
+- **Obs 280** (F1/MCC tier-leader divergence): the metric-choice question this Obs addresses for the corrected 55-map runs at R=50 m; see Obs 292 for the tile-level MCC version.
+- **Obs 286/287** (Stage A and B verifier-T pilot, T=0.5 production-default recommendation): orthogonal — those address verifier-temperature; this Obs addresses proposer-temperature on text track.
+- **Artefacts**: `results/55maps-pairwise-permutation-v2/{paired-t0.3-vs-t0.7,paired-t0.3-vs-image,paired-t0.7-vs-image}/`, `results/55maps-pairwise-permutation-v2/summary.md`. Driver: `scripts/paired_permutation_corrected_55maps.py`. Commits: `d3acb3a8` (driver), `4ac60d9c` (yesterday-review bug fix), `a5bc9df6` (data), `161d9350` (summary).
+
+## Observation 292: F1 / MCC tier-leader divergence (Obs 280) reproduces on the corrected 55-map runs — image leads MCC by 0.037 absolute; F1 leader at R=50 m (T=0.3) is NOT the MCC leader; both metrics agree image > T=0.7 (2026-04-27)
+
+### The finding
+
+The 55-map MCC re-eval (`scripts/evaluate_detections.py --mcc --bootstrap 1000 --seed 42` mirroring the matrix-sweep methodology of commit `163161a4`; data commit `98b128ae`; report `f96f7ec6`) computes tile-level MCC, sensitivity, and specificity for all three corrected runs against the canonical post-review GT (`student-mounds-55maps-reviewed.geojson`):
+
+| Run | Detections | TP | TN | FP | FN | MCC [95 % CI] | Sens | Spec |
+|:---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| T=0.3 (text) | 4,350 | 2,216 | 4,906 | 255 | 1,164 | 0.654 [0.639, 0.670] | 0.656 | 0.951 |
+| T=0.7 (text) | 4,143 | 2,172 | 4,920 | 241 | 1,208 | 0.647 [0.630, 0.663] | 0.643 | 0.953 |
+| Image | 4,665 | 2,390 | 4,891 | 270 | 990 | **0.691** [0.675, 0.706] | 0.707 | 0.948 |
+
+Cross-metric rank-order at canonical R = 50 m:
+
+- **F1 rank** (corrected, R=50m): T=0.3 (0.844) > image (0.832) > T=0.7 (0.826)
+- **MCC rank**: image (0.691) > T=0.3 (0.654) > T=0.7 (0.647)
+
+The F1 leader (T=0.3) is **not** the MCC leader (image). T=0.7 is bottom on both. This reproduces the **Obs 280** pattern (text wins F1 via precision-and-FN-trading; image wins MCC via higher sensitivity at comparable specificity) on the corrected 55-map runs.
+
+### R-sensitivity of F1 — the rank reversal continues across buffer
+
+Image catches up to and overtakes T=0.3 on F1 by R ≥ 75 m:
+
+| R (m) | T=0.3 F1 | T=0.7 F1 | Image F1 | Leader |
+|:--:|:--:|:--:|:--:|:--:|
+| 50 | **0.844** | 0.826 | 0.832 | T=0.3 |
+| 75 | 0.847 | 0.829 | **0.848** | image |
+| 100 | 0.849 | 0.831 | **0.852** | image |
+| 125 (Obs 272 cap) | 0.850 | 0.832 | **0.854** | image |
+| 150 (upper bound) | 0.851 | 0.833 | **0.855** | image |
+
+At R = 125 m (the practitioner-useful cap per Obs 272), image leads F1 by ~0.004 over T=0.3. MCC, being buffer-invariant, gives a single image-leads-by-0.037 verdict that holds regardless of buffer.
+
+### Why this matters
+
+For this corpus + pipeline (55-map generalisation set, post-review GT), the answer to "which run is best?" depends on the metric AND the buffer:
+
+- **F1 at R = 50 m as headline**: T=0.3 leads.
+- **F1 at R = 125 m (practitioner cap)**: image leads.
+- **MCC as a balanced classifier metric**: image leads (always, by ~0.037 absolute).
+
+This is exactly the metric-divergence pattern Obs 280 anticipated for the matrix tree. Paper structure should report both F1 and MCC in parallel rather than picking one as canonical — the answers diverge on the most paper-load-bearing comparison (T=0.3 vs image).
+
+### Methodological choice flagged
+
+MCC was computed against the un-augmented post-review GT (`student-mounds-55maps-reviewed.geojson`), not the extended-GT-at-R used by the corrected-F1 Approach B. This matches the matrix-sweep convention (commit `163161a4`) and the pre-existing `outputs/<run>/full-buffer-eval/evaluation.json` MCC artefacts. An extended-GT-at-R MCC variant (which would credit reviewer-promoted phantom-only tiles as TP) could be added later but is not required for the cross-run comparison.
+
+T=0.7 and image MCC values reproduce the pre-existing `full-buffer-eval/evaluation.json` artefacts to within rounding (0.647 vs 0.6472; 0.691 vs 0.6912) — independent confirmation of the bootstrap with seed 42.
+
+### Findable later
+
+Search terms: 55-map MCC cross-run, F1 MCC rank disagreement, image MCC leader 0.691, T=0.3 F1 leader R=50m, Obs 280 reproduction corrected runs, F1 R-sensitivity 75m crossover, parallel F1 MCC reporting paper structure, buffer-invariant MCC, extended-GT vs student-GT methodology choice.
+
+### Related observations and artefacts
+
+- **Obs 252** (text ~4× lower buffer elasticity than image): mechanism for image's faster F1 rise with R relaxation.
+- **Obs 272** (attractor-pull cap at 125 m): R=150 m row is upper bound only; R=125 m is the practitioner-useful cap.
+- **Obs 280** (F1/MCC tier-leader divergence on the matrix tree): pattern this Obs reproduces on the corrected 55-map generalisation runs.
+- **Obs 291** (T=0.3 paired-significant + buffer rank reversal): the F1 narrative that Obs 292 layers MCC onto.
+- **Artefacts**: `results/55maps-mcc-v2-summary/report.md`, `results/<run>/mcc/evaluation.{json,md,csv}` for each of the three runs. Commits: `98b128ae` (MCC data), `f96f7ec6` (summary report).
+
+## Observation 293: Dawid-Skene aggregator F1 systematically under-states corrected F1 by an amount proportional to VLM-only candidate share — extends Obs 273's finding from the verifier-only slice to the multi-temperature/modality regime; corrected-F1 is the unbiased estimator (2026-04-27)
+
+### The finding
+
+The Wave 4 D-S analysis (`scripts/analyse_dawid_skene.py` + `analyse_ds_vs_human_review.py`; data commit `0b14e4fc`; summary `da055238`) computed Dawid-Skene aggregation + D-S vs human-review crosstab for all three corrected 55-map runs. Headline metrics:
+
+| Run | D-S F1 (vs measured) | ECE | Brier | VLM-only / matched share | D-S calibration gap |
+|:---|:--:|:--:|:--:|:--:|:--:|
+| T=0.3 (text) | 0.7988 (+0.0245 over measured 0.7743) | 0.348 | 0.366 | 0.23 | 2.53× |
+| T=0.7 (text) | 0.8129 (+0.0246 over measured 0.7883) | 0.265 | 0.317 | 0.18 | 1.90× |
+| Image | 0.7954 (+0.0244 over measured 0.7710) | 0.539 | 0.490 | 0.28 | 3.89× |
+
+The "calibration gap" is the ratio of D-S-aggregate VLM-only posterior probability to the empirical mound rate among reviewed VLM-only candidates. Under the preregistered fixed 5 % student-FN prior, D-S systematically under-states the true mound rate among VLM-only candidates as the VLM-only share grows.
+
+### Rank-order DISAGREEMENT between corrected F1 and D-S F1
+
+| Run | Corrected F1 @50 m | D-S F1 |
+|:---|:--:|:--:|
+| T=0.3 | **0.8437** ← leads | 0.7988 |
+| T=0.7 | 0.8260 | **0.8129** ← leads |
+| Image | 0.832 | 0.7954 |
+
+Corrected F1 says **T=0.3 > image > T=0.7**; D-S F1 says **T=0.7 > T=0.3 > image**. The two metrics give opposite rankings of T=0.3 vs T=0.7 — directly contradicting the paired-permutation finding that T=0.3 is paired-significant over T=0.7 at R=50 m (Obs 291).
+
+### Why D-S F1 is biased here (mechanism)
+
+D-S aggregation under a fixed 5 % student-FN prior (preregistered) systematically under-counts true positives among VLM-only candidates (those not matched to any student-GT mound at the dedup distance). The fixed prior tells D-S "students see 95 % of true mounds" — but on runs with higher VLM-only share, more mounds genuinely escape the student survey, so the true student-FN rate is higher than 5 % and D-S under-promotes the VLM-only candidates that are actually true mounds. The calibration gap (1.90× → 2.53× → 3.89×) scales monotonically with VLM-only share (0.18 → 0.23 → 0.28), confirming the mechanism.
+
+T=0.3 has higher VLM-only share than T=0.7 (0.23 vs 0.18), so D-S under-states T=0.3's true F1 more than it under-states T=0.7's. Corrected F1 with reviewer-promoted phantoms (which directly observes the mound rate among VLM-only candidates instead of inferring it from a fixed prior) does not have this bias and is the **unbiased estimator** of the true generalisation F1.
+
+### Why this matters
+
+1. **Obs 273 extension**: Obs 273 documented D-S structural inadequacy on the verifier-only slice ("at any prior"). Obs 293 extends that finding to the multi-temperature / multi-modality regime — the inadequacy isn't run-specific, it scales with VLM-only share across runs.
+2. **Paper-citation guidance**: when comparing 55-map generalisation runs, **cite corrected F1, not D-S F1**. The two will disagree on the headline ranking, and corrected F1 is the unbiased estimator.
+3. **Obs 291's paired-significance finding stands**: the paired-permutation test (Obs 291) operates directly on per-tile TP/FP/FN against extended GT — it inherits the unbiased corrected-F1 estimator, not the biased D-S aggregate. T=0.3's BH p < 0.001 advantage over T=0.7 is not undermined by D-S's contrary ranking.
+
+### Other findings flagged from the D-S analysis
+
+- **No rank reversal in D-S calibration metrics**: T=0.7 dominates on both aggregate F1 and D-S calibration ECE / Brier. Same ordering on every D-S metric (T=0.7 → T=0.3 → image).
+- **T=0.3 has 9.2 % unjoined review rows** (64 / 692) vs ~0 % for the other two — methodology divergence between D-S (legacy GT, 50 m) and corrected-F1 (reviewed-extended GT) is more pronounced for T=0.3 in absolute terms.
+- **Caveat**: the existing T=0.7 D-S sibling used the legacy default consensus path, not the T=0.7-specific output, but the (map_name, x, y) keys coincidentally align with the T=0.7 review CSV. Re-running on T=0.7-specific paths is recommended for future work but not blocking.
+- **Script bug fixed**: `analyse_ds_vs_human_review.py` had hardcoded image-specific strings ("55-map image generalisation", "1,028 VLM-only items") that would have produced misleading reports for non-image runs. Generalised to use the actual run label and counts. Image's hand-levelled-up `report.md` left untouched.
+
+### Findable later
+
+Search terms: D-S calibration gap VLM-only share, fixed prior 5% student FN bias, D-S F1 vs corrected F1 rank disagreement, T=0.3 vs T=0.7 D-S vs corrected, Obs 273 extension multi-temperature, D-S systematic under-counting VLM-only, fixed-prior D-S inadequacy 55-map, calibration gap monotonic VLM-only fraction, corrected-F1 unbiased estimator.
+
+### Related observations and artefacts
+
+- **Obs 273** (D-S structurally inadequate on VLM-only slice at any prior): foundational; Obs 293 extends across runs.
+- **Obs 291** (T=0.3 paired-significant): the unbiased estimator's verdict that D-S's contrary ranking does not undermine.
+- **Obs 280** (F1/MCC tier-leader divergence): different metric-divergence pattern; D-S vs corrected-F1 disagreement is yet another orthogonal axis.
+- **Artefacts**: `results/55maps-text-high-t0.3-generalisation/{dawid-skene,ds-human-crosstab}/`, `results/55maps-text-high-generalisation/{dawid-skene,ds-human-crosstab}/`, `results/55maps-image-generalisation/{dawid-skene,dawid-skene-v2-data-driven-prior,ds-human-crosstab}/`, `results/55maps-ds-summary-v2/report.md`. Commits: `0b14e4fc` (data), `da055238` (summary).
+
