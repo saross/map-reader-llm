@@ -50,7 +50,6 @@ import getpass
 import hashlib
 import json
 import logging
-import os
 import platform
 import re
 import shlex
@@ -62,7 +61,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 try:
     import yaml
@@ -105,6 +104,18 @@ REQUIRED_YAML_KEYS: tuple[str, ...] = (
 # not enforce them (CLI / YAML retains full control) but logs a warning
 # if any are missing.
 RECOMMENDED_BUFFERS: tuple[int, ...] = (20, 30, 40, 50)
+
+# Empirical proposer-mode cost rates used by ``_estimate_cost``.
+# - ``image`` mode: calibrated on the Phase 3a image matrix
+#   (~$0.0082/tile/pass + ~$5 flat verifier).
+# - ``text`` mode: calibrated on T=0.3 / T=0.7 55-map text-mode runs
+#   (~$0.0013/tile/pass + ~$13 flat verifier; predicted $68.52 vs
+#   actuals $67.82 and $69.60 → ±2% accuracy).
+# Keyed by the literal returned by ``_detect_proposer_mode``.
+_MODE_RATES: dict[str, dict[str, float]] = {
+    "image": {"per_tile_pass": 0.0082, "verifier_flat": 5.0},
+    "text":  {"per_tile_pass": 0.0013, "verifier_flat": 13.0},
+}
 
 # Proposer exit codes (from 4_detect_mounds_batch.py):
 #   0 = success
@@ -1366,7 +1377,14 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
 
 
 def cmd_aggregate_cost(args: argparse.Namespace) -> int:
-    rcfg = _prepare_run(args, skip_intent_check=True)
+    # Aggregate-cost is a read-only re-aggregation of pre-existing meta
+    # files. Suppress manifest/intent/resolved-config writes so a re-run
+    # never clobbers ``launch_manifest.json`` (resetting ``started_at``,
+    # dropping ``completed_at``, status → "in_progress") or stomps on
+    # human edits to ``experiment_intent.md`` / ``resolved_config.yaml``.
+    rcfg = _prepare_run(
+        args, skip_intent_check=True, write_manifests=False,
+    )
     if args.dry_run:
         _dry_run_banner(rcfg)
         return 0
@@ -1375,9 +1393,24 @@ def cmd_aggregate_cost(args: argparse.Namespace) -> int:
 
 
 def _prepare_run(
-    args: argparse.Namespace, *, skip_intent_check: bool = False,
+    args: argparse.Namespace,
+    *,
+    skip_intent_check: bool = False,
+    write_manifests: bool = True,
 ) -> ResolvedRunConfig:
-    """Shared setup: load config, enforce git-clean check, write manifests."""
+    """Shared setup: load config, enforce git-clean check, write manifests.
+
+    Args:
+        args: Parsed CLI namespace.
+        skip_intent_check: If True, do not prompt the operator to confirm
+            the intent file (subcommands invoked after the initial ``all``
+            launch already passed the gate).
+        write_manifests: If True (default) write
+            ``launch_manifest.json``, ``experiment_intent.md``, and
+            ``resolved_config.yaml``. Set False for read-only operations
+            such as ``aggregate-cost`` so an idempotent re-run does not
+            clobber the original launch state or any human-edited fields.
+    """
     config: dict[str, Any] = {}
     config_path: Path | None = None
     if args.run_config is not None:
@@ -1394,23 +1427,24 @@ def _prepare_run(
         )
     rcfg.output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Snapshot resolved config for the audit trail.
-    # ``yaml.safe_dump`` cannot serialise ``Path`` objects (which CLI
-    # overrides introduce into the merged config), so stringify them
-    # first.
-    snapshot = {
-        "run_name": rcfg.run_name,
-        "output_root": rcfg.global_opts["output_root"],
-        "proposer": _stringify_paths(rcfg.proposer),
-        "consensus": _stringify_paths(rcfg.consensus),
-        "extract": _stringify_paths(rcfg.extract),
-        "verify": _stringify_paths(rcfg.verify),
-        "evaluate": _stringify_paths(rcfg.evaluate),
-    }
-    (rcfg.output_dir / "resolved_config.yaml").write_text(
-        yaml.safe_dump(snapshot, sort_keys=False),
-        encoding="utf-8",
-    )
+    if write_manifests:
+        # Snapshot resolved config for the audit trail.
+        # ``yaml.safe_dump`` cannot serialise ``Path`` objects (which CLI
+        # overrides introduce into the merged config), so stringify them
+        # first.
+        snapshot = {
+            "run_name": rcfg.run_name,
+            "output_root": rcfg.global_opts["output_root"],
+            "proposer": _stringify_paths(rcfg.proposer),
+            "consensus": _stringify_paths(rcfg.consensus),
+            "extract": _stringify_paths(rcfg.extract),
+            "verify": _stringify_paths(rcfg.verify),
+            "evaluate": _stringify_paths(rcfg.evaluate),
+        }
+        (rcfg.output_dir / "resolved_config.yaml").write_text(
+            yaml.safe_dump(snapshot, sort_keys=False),
+            encoding="utf-8",
+        )
 
     # Warn if evaluation buffers drop any of the paper standard.
     missing_buffers = [
@@ -1424,7 +1458,8 @@ def _prepare_run(
             missing_buffers, list(RECOMMENDED_BUFFERS),
         )
 
-    # Git-clean check
+    # Git-clean check (read-only; runs even when manifests are
+    # suppressed so aggregate-cost still benefits from the safety net).
     git = git_status()
     if git["dirty"] and not args.allow_dirty:
         raise SystemExit(
@@ -1433,33 +1468,91 @@ def _prepare_run(
             "publishable runs)."
         )
 
-    # Reproducibility manifest + intent file (always written so dry-run
-    # users can inspect what would happen). Confirmation prompt is only
-    # shown for real (non-dry) runs.
-    expected_cost = _estimate_cost(rcfg)
-    write_launch_manifest(
-        rcfg, sys.argv, config_path, expected_cost_usd=expected_cost,
-    )
-    intent_path = write_experiment_intent(rcfg, expected_cost)
-    if args.dry_run:
-        logger.info(
-            "[dry-run] Intent written to %s; no API calls will be made.",
-            intent_path,
+    if write_manifests:
+        # Reproducibility manifest + intent file (always written so
+        # dry-run users can inspect what would happen). Confirmation
+        # prompt is only shown for real (non-dry) runs.
+        expected_cost = _estimate_cost(rcfg)
+        write_launch_manifest(
+            rcfg, sys.argv, config_path, expected_cost_usd=expected_cost,
         )
-    elif not skip_intent_check:
-        confirm_intent(intent_path, auto_yes=args.yes)
+        intent_path = write_experiment_intent(rcfg, expected_cost)
+        if args.dry_run:
+            logger.info(
+                "[dry-run] Intent written to %s; no API calls will be "
+                "made.", intent_path,
+            )
+        elif not skip_intent_check:
+            confirm_intent(intent_path, auto_yes=args.yes)
 
     return rcfg
 
 
-def _estimate_cost(rcfg: ResolvedRunConfig) -> float | None:
-    """Rough cost estimate from manifest tile count and K.
+def _detect_proposer_mode(
+    rcfg: ResolvedRunConfig,
+) -> Literal["image", "text"]:
+    """Return whether the proposer config drives an image- or text-mode run.
 
-    Based on Phase 3a image matrix empirical ratio of ~$0.0082/tile/pass
-    for plus-hp HIGH + T=0.7 + Flex. Handles both list-form manifests
-    (newer scripts emit a plain JSON array) and dict-form manifests
-    (``{"tiles": [...]}``) for older writers.
-    Returns ``None`` if the manifest is unreadable.
+    A proposer is treated as image-mode when its prompt config either:
+
+    - sets ``include_example_images`` to a truthy value, or
+    - references an instruction file whose name contains ``"-image"``.
+
+    Otherwise the proposer is text-mode.
+
+    On any read or parse error we log a warning and default to
+    ``"image"``. Image-mode rates are higher than text-mode rates, so
+    falling back to image mode preserves the original conservative
+    overestimate behaviour and never under-budgets a run.
+
+    Args:
+        rcfg: Resolved run config carrying the proposer config path.
+
+    Returns:
+        ``"image"`` or ``"text"``.
+    """
+    config_path = Path(rcfg.proposer["config"])
+    try:
+        cfg_text = config_path.read_text(encoding="utf-8")
+        cfg = json.loads(cfg_text)
+    except (FileNotFoundError, OSError, json.JSONDecodeError) as exc:
+        logger.warning(
+            "Could not read proposer config %s for mode detection (%s); "
+            "defaulting to 'image' mode (conservative overestimate).",
+            config_path, exc,
+        )
+        return "image"
+
+    if not isinstance(cfg, dict):
+        logger.warning(
+            "Proposer config %s is not a JSON object; defaulting to "
+            "'image' mode (conservative overestimate).",
+            config_path,
+        )
+        return "image"
+
+    if cfg.get("include_example_images"):
+        return "image"
+
+    instruction_file = cfg.get("instruction_file") or ""
+    if isinstance(instruction_file, str) and "-image" in instruction_file:
+        return "image"
+
+    return "text"
+
+
+def _estimate_cost(rcfg: ResolvedRunConfig) -> float | None:
+    """Mode-aware cost estimate from manifest tile count, K, and proposer mode.
+
+    Looks up empirical per-tile and flat-verifier rates from
+    ``_MODE_RATES`` based on the mode reported by
+    ``_detect_proposer_mode``. The image-mode rates were calibrated on
+    the Phase 3a image matrix (plus-hp HIGH + T=0.7 + Flex); text-mode
+    rates were calibrated on T=0.3 / T=0.7 55-map text runs.
+
+    Handles both list-form manifests (newer scripts emit a plain JSON
+    array) and dict-form manifests (``{"tiles": [...]}``) for older
+    writers. Returns ``None`` if the manifest is unreadable.
     """
     try:
         raw = Path(rcfg.proposer["manifest"]).read_text(encoding="utf-8")
@@ -1482,9 +1575,18 @@ def _estimate_cost(rcfg: ResolvedRunConfig) -> float | None:
             return None
     else:
         return None
+
     k = int(rcfg.proposer.get("passes", 1))
-    per_tile_usd = 0.0082  # empirical; text verifier adds ~$5 flat
-    return round(tiles * k * per_tile_usd + 5.0, 2)
+    mode = _detect_proposer_mode(rcfg)
+    rates = _MODE_RATES[mode]
+    estimate = tiles * k * rates["per_tile_pass"] + rates["verifier_flat"]
+    logger.info(
+        "Cost estimate: mode=%s, tiles=%d, K=%d → ~$%.2f "
+        "(per_tile_pass=$%.4f, verifier_flat=$%.2f).",
+        mode, tiles, k, estimate,
+        rates["per_tile_pass"], rates["verifier_flat"],
+    )
+    return round(estimate, 2)
 
 
 def _stringify_paths(section: dict[str, Any]) -> dict[str, Any]:

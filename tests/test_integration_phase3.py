@@ -558,3 +558,219 @@ class TestPhase3PipelineIntegration:
 
         assert "curves" in result, "Sweep failed on valid input"
         assert len(result["curves"]) > 0, "Sweep produced no curves"
+
+
+# =============================================================================
+# MODE-AWARE COST ESTIMATOR TESTS
+# =============================================================================
+#
+# Regression guard for the bug where ``_estimate_cost`` over-estimated
+# text-mode runs by 5x because the per-tile rate was calibrated only on
+# the Phase 3a image matrix. The fix introduces ``_detect_proposer_mode``
+# and a per-mode rate table (``_MODE_RATES``).
+#
+# Empirical anchors:
+#   - T=0.3 55-map text-mode: actual $67.82
+#   - T=0.7 55-map text-mode: actual $69.60
+#   - Predicted (text rate, 8541 tiles, K=5): 8541 * 5 * 0.0013 + 13.0
+#                                             = $68.52 → both within ~2%.
+#   - Image-mode regression: 8541 * 5 * 0.0082 + 5.0 = $355.18 (exact).
+
+
+def _build_mode_rcfg(
+    proposer_config_path: Path,
+    manifest_path: Path,
+) -> "object":
+    """Construct a minimal ``ResolvedRunConfig`` for cost-estimator tests.
+
+    Only the proposer ``config``, ``manifest``, and ``passes`` fields are
+    consulted by ``_estimate_cost`` / ``_detect_proposer_mode``, so the
+    other stage dicts are populated with stub values to satisfy the
+    dataclass.
+    """
+    from scripts.run_generalisation import ResolvedRunConfig
+
+    return ResolvedRunConfig(
+        run_name="test-mode-aware",
+        output_dir=manifest_path.parent / "output",
+        proposer={
+            "config": str(proposer_config_path),
+            "manifest": str(manifest_path),
+            "passes": 5,
+            "tiles_dir": "tiles",
+            "temperature": 0.3,
+            "thinking_level": "high",
+        },
+        consensus={"vote_threshold": 3},
+        extract={"padding": 50, "rasters_dir": "rasters"},
+        verify={"config": "verifier.json"},
+        evaluate={
+            "prob_threshold": 0.5,
+            "buffers": [20, 30, 40, 50],
+            "ground_truth": "gt.geojson",
+            "bounds": "bounds.geojson",
+        },
+        global_opts={"output_root": "outputs", "service_tier": "flex"},
+    )
+
+
+def _write_manifest_with_n_tiles(path: Path, n_tiles: int) -> None:
+    """Write a list-form proposer manifest containing ``n_tiles`` entries."""
+    tiles = [
+        {"tile_name": f"TestMap_x{i}_y0.png", "map_id": "TestMap"}
+        for i in range(n_tiles)
+    ]
+    path.write_text(json.dumps(tiles), encoding="utf-8")
+
+
+@pytest.fixture
+def text_mode_rcfg(tmp_path: Path):
+    """Return rcfg for a text-mode run with the 55-map manifest size (8541)."""
+    proposer_config = tmp_path / "proposer_text.json"
+    proposer_config.write_text(
+        json.dumps({
+            "include_example_images": False,
+            "instruction_file": "prompts/system-instructions/detect_brief-text.md",
+        }),
+        encoding="utf-8",
+    )
+    manifest = tmp_path / "manifest.json"
+    _write_manifest_with_n_tiles(manifest, 8541)
+    return _build_mode_rcfg(proposer_config, manifest)
+
+
+@pytest.fixture
+def image_mode_rcfg(tmp_path: Path):
+    """Return rcfg for an image-mode run with the 55-map manifest size (8541)."""
+    proposer_config = tmp_path / "proposer_image.json"
+    proposer_config.write_text(
+        json.dumps({
+            "include_example_images": True,
+            "instruction_file": "prompts/system-instructions/detect_brief-image.md",
+        }),
+        encoding="utf-8",
+    )
+    manifest = tmp_path / "manifest.json"
+    _write_manifest_with_n_tiles(manifest, 8541)
+    return _build_mode_rcfg(proposer_config, manifest)
+
+
+@pytest.fixture
+def missing_config_rcfg(tmp_path: Path):
+    """Return rcfg whose proposer config does not exist on disk."""
+    missing_config = tmp_path / "does_not_exist.json"
+    manifest = tmp_path / "manifest.json"
+    _write_manifest_with_n_tiles(manifest, 8541)
+    return _build_mode_rcfg(missing_config, manifest)
+
+
+@pytest.fixture
+def instruction_file_fallback_rcfg(tmp_path: Path):
+    """Return rcfg where include_example_images is absent but the instruction
+    file name flags this as an image-mode run.
+    """
+    proposer_config = tmp_path / "proposer_fallback.json"
+    proposer_config.write_text(
+        json.dumps({
+            # Note: include_example_images deliberately omitted.
+            "instruction_file": (
+                "prompts/system-instructions/detect_brief-image.md"
+            ),
+        }),
+        encoding="utf-8",
+    )
+    manifest = tmp_path / "manifest.json"
+    _write_manifest_with_n_tiles(manifest, 8541)
+    return _build_mode_rcfg(proposer_config, manifest)
+
+
+@pytest.mark.tier1
+class TestEstimateCostModeAware:
+    """Regression tests for the mode-aware cost estimator (Fix 1)."""
+
+    # 55-map manifest tile count and K used across the empirical
+    # validation cases.
+    N_TILES = 8541
+    K = 5
+
+    # Empirical anchors (USD).
+    ACTUAL_T03 = 67.82
+    ACTUAL_T07 = 69.60
+
+    def test_text_mode_within_tolerance_t03(self, text_mode_rcfg) -> None:
+        """Predicted text-mode cost lies within ±10% of the T=0.3 actual."""
+        from scripts.run_generalisation import _estimate_cost
+
+        predicted = _estimate_cost(text_mode_rcfg)
+        assert predicted is not None, "Cost estimator returned None"
+        assert abs(predicted - self.ACTUAL_T03) / self.ACTUAL_T03 < 0.10, (
+            f"Text-mode estimate ${predicted:.2f} diverges >10% from "
+            f"T=0.3 actual ${self.ACTUAL_T03:.2f}."
+        )
+
+    def test_text_mode_within_tolerance_t07(self, text_mode_rcfg) -> None:
+        """Predicted text-mode cost lies within ±10% of the T=0.7 actual."""
+        from scripts.run_generalisation import _estimate_cost
+
+        predicted = _estimate_cost(text_mode_rcfg)
+        assert predicted is not None, "Cost estimator returned None"
+        assert abs(predicted - self.ACTUAL_T07) / self.ACTUAL_T07 < 0.10, (
+            f"Text-mode estimate ${predicted:.2f} diverges >10% from "
+            f"T=0.7 actual ${self.ACTUAL_T07:.2f}."
+        )
+
+    def test_image_mode_exact_regression_guard(
+        self, image_mode_rcfg,
+    ) -> None:
+        """Image-mode estimate matches the original Phase 3a calibration.
+
+        Locks in the original formula 8541 * 5 * 0.0082 + 5.0 = $355.18 so
+        any future drift in image-mode rates is caught here.
+        """
+        from scripts.run_generalisation import _estimate_cost
+
+        predicted = _estimate_cost(image_mode_rcfg)
+        expected = round(self.N_TILES * self.K * 0.0082 + 5.0, 2)
+        assert expected == 355.18, (
+            f"Test arithmetic drifted: expected $355.18, got ${expected}."
+        )
+        assert predicted == expected, (
+            f"Image-mode estimate ${predicted} ≠ expected ${expected}."
+        )
+
+    def test_missing_config_defaults_to_image(
+        self, missing_config_rcfg, caplog,
+    ) -> None:
+        """Unreadable proposer config falls back to (conservative) image rate."""
+        import logging
+
+        from scripts.run_generalisation import _detect_proposer_mode, _estimate_cost
+
+        with caplog.at_level(logging.WARNING):
+            mode = _detect_proposer_mode(missing_config_rcfg)
+        assert mode == "image", (
+            f"Expected fallback to 'image' mode; got '{mode}'."
+        )
+        # Verify the warning was emitted so operators see the fallback.
+        assert any(
+            "defaulting to 'image' mode" in rec.message for rec in caplog.records
+        ), "Expected warning about defaulting to image mode."
+
+        predicted = _estimate_cost(missing_config_rcfg)
+        # Should match the image-mode regression value.
+        assert predicted == round(self.N_TILES * self.K * 0.0082 + 5.0, 2)
+
+    def test_instruction_file_fallback_to_image(
+        self, instruction_file_fallback_rcfg,
+    ) -> None:
+        """Configs lacking include_example_images but referencing a
+        ``-image`` instruction file route to image rates."""
+        from scripts.run_generalisation import _detect_proposer_mode, _estimate_cost
+
+        mode = _detect_proposer_mode(instruction_file_fallback_rcfg)
+        assert mode == "image", (
+            f"Expected 'image' mode via instruction_file fallback; got '{mode}'."
+        )
+
+        predicted = _estimate_cost(instruction_file_fallback_rcfg)
+        assert predicted == round(self.N_TILES * self.K * 0.0082 + 5.0, 2)
