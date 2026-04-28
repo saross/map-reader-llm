@@ -129,3 +129,8 @@ outputs/**/*.pre-recovery-*.backup
 # Verifier HTTP request logs (noise, not useful for reproducibility)
 outputs/h10/wbf/**/*.log
 outputs/h11/wbf/**/*.log
+
+# Integration-test working dirs (e.g., tests/test_run_phase2.py uses
+# outputs/test-phase2b/ as its output_dir). Test runs may leave residual
+# artefacts that aren't paper-relevant and shouldn't surface as dirty.
+outputs/test-*/
