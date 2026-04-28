@@ -1,0 +1,316 @@
+{
+  "version": "1.0",
+  "n_total_classified": 1119,
+  "categories": [
+    "number",
+    "benchmark",
+    "water-feature",
+    "contour-ring",
+    "vegetation",
+    "settlement",
+    "road-or-track",
+    "scale-bar-or-grid",
+    "none",
+    "other"
+  ],
+  "runs": [
+    "T0.3",
+    "T0.7",
+    "image",
+    "text-MIN"
+  ],
+  "counts": {
+    "T0.3": {
+      "number": 53,
+      "benchmark": 17,
+      "water-feature": 31,
+      "contour-ring": 129,
+      "vegetation": 18,
+      "settlement": 40,
+      "road-or-track": 6,
+      "scale-bar-or-grid": 0,
+      "none": 0,
+      "other": 3
+    },
+    "T0.7": {
+      "number": 49,
+      "benchmark": 11,
+      "water-feature": 30,
+      "contour-ring": 121,
+      "vegetation": 18,
+      "settlement": 44,
+      "road-or-track": 1,
+      "scale-bar-or-grid": 1,
+      "none": 0,
+      "other": 3
+    },
+    "image": {
+      "number": 65,
+      "benchmark": 13,
+      "water-feature": 31,
+      "contour-ring": 112,
+      "vegetation": 13,
+      "settlement": 37,
+      "road-or-track": 3,
+      "scale-bar-or-grid": 0,
+      "none": 5,
+      "other": 4
+    },
+    "text-MIN": {
+      "number": 47,
+      "benchmark": 13,
+      "water-feature": 44,
+      "contour-ring": 96,
+      "vegetation": 15,
+      "settlement": 36,
+      "road-or-track": 3,
+      "scale-bar-or-grid": 1,
+      "none": 2,
+      "other": 4
+    }
+  },
+  "percentages": {
+    "T0.3": {
+      "number": 17.85,
+      "benchmark": 5.72,
+      "water-feature": 10.44,
+      "contour-ring": 43.43,
+      "vegetation": 6.06,
+      "settlement": 13.47,
+      "road-or-track": 2.02,
+      "scale-bar-or-grid": 0.0,
+      "none": 0.0,
+      "other": 1.01
+    },
+    "T0.7": {
+      "number": 17.63,
+      "benchmark": 3.96,
+      "water-feature": 10.79,
+      "contour-ring": 43.53,
+      "vegetation": 6.47,
+      "settlement": 15.83,
+      "road-or-track": 0.36,
+      "scale-bar-or-grid": 0.36,
+      "none": 0.0,
+      "other": 1.08
+    },
+    "image": {
+      "number": 22.97,
+      "benchmark": 4.59,
+      "water-feature": 10.95,
+      "contour-ring": 39.58,
+      "vegetation": 4.59,
+      "settlement": 13.07,
+      "road-or-track": 1.06,
+      "scale-bar-or-grid": 0.0,
+      "none": 1.77,
+      "other": 1.41
+    },
+    "text-MIN": {
+      "number": 18.01,
+      "benchmark": 4.98,
+      "water-feature": 16.86,
+      "contour-ring": 36.78,
+      "vegetation": 5.75,
+      "settlement": 13.79,
+      "road-or-track": 1.15,
+      "scale-bar-or-grid": 0.38,
+      "none": 0.77,
+      "other": 1.53
+    }
+  },
+  "weighted_by_confidence": {
+    "T0.3": {
+      "number": 46.849999999999994,
+      "benchmark": 16.049999999999997,
+      "water-feature": 27.49999999999999,
+      "contour-ring": 116.6000000000002,
+      "vegetation": 15.6,
+      "settlement": 35.54999999999998,
+      "road-or-track": 5.300000000000001,
+      "scale-bar-or-grid": 0.0,
+      "none": 0.0,
+      "other": 2.65
+    },
+    "T0.7": {
+      "number": 43.44999999999999,
+      "benchmark": 10.45,
+      "water-feature": 26.749999999999993,
+      "contour-ring": 109.40000000000018,
+      "vegetation": 15.75,
+      "settlement": 38.84999999999997,
+      "road-or-track": 0.9,
+      "scale-bar-or-grid": 0.9,
+      "none": 0.0,
+      "other": 2.7
+    },
+    "image": {
+      "number": 57.400000000000006,
+      "benchmark": 12.2,
+      "water-feature": 27.499999999999993,
+      "contour-ring": 100.35000000000015,
+      "vegetation": 11.25,
+      "settlement": 32.55,
+      "road-or-track": 2.5500000000000003,
+      "scale-bar-or-grid": 0.0,
+      "none": 4.4,
+      "other": 3.65
+    },
+    "text-MIN": {
+      "number": 41.399999999999984,
+      "benchmark": 12.299999999999997,
+      "water-feature": 39.64999999999999,
+      "contour-ring": 86.60000000000007,
+      "vegetation": 13.200000000000001,
+      "settlement": 31.899999999999988,
+      "road-or-track": 2.5500000000000003,
+      "scale-bar-or-grid": 0.9,
+      "none": 1.6,
+      "other": 3.45
+    }
+  },
+  "aggregate_counts": {
+    "number": 214,
+    "benchmark": 54,
+    "water-feature": 136,
+    "contour-ring": 458,
+    "vegetation": 64,
+    "settlement": 157,
+    "road-or-track": 13,
+    "scale-bar-or-grid": 2,
+    "none": 7,
+    "other": 14
+  },
+  "aggregate_percentages": {
+    "number": 19.12,
+    "benchmark": 4.83,
+    "water-feature": 12.15,
+    "contour-ring": 40.93,
+    "vegetation": 5.72,
+    "settlement": 14.03,
+    "road-or-track": 1.16,
+    "scale-bar-or-grid": 0.18,
+    "none": 0.63,
+    "other": 1.25
+  },
+  "chi_square_image_vs_text": {
+    "insufficient_data": false,
+    "chi2": 13.350361611806425,
+    "p_value": 0.14738297845691467,
+    "dof": 9,
+    "n_image": 283,
+    "n_text": 836,
+    "categories_used": [
+      "number",
+      "benchmark",
+      "water-feature",
+      "contour-ring",
+      "vegetation",
+      "settlement",
+      "road-or-track",
+      "scale-bar-or-grid",
+      "none",
+      "other"
+    ],
+    "per_category": [
+      {
+        "category": "number",
+        "image_observed": 65,
+        "text_observed": 149,
+        "image_expected": 54.122,
+        "text_expected": 159.878,
+        "image_residual": 1.479,
+        "text_residual": -0.86
+      },
+      {
+        "category": "benchmark",
+        "image_observed": 13,
+        "text_observed": 41,
+        "image_expected": 13.657,
+        "text_expected": 40.343,
+        "image_residual": -0.178,
+        "text_residual": 0.103
+      },
+      {
+        "category": "water-feature",
+        "image_observed": 31,
+        "text_observed": 105,
+        "image_expected": 34.395,
+        "text_expected": 101.605,
+        "image_residual": -0.579,
+        "text_residual": 0.337
+      },
+      {
+        "category": "contour-ring",
+        "image_observed": 112,
+        "text_observed": 346,
+        "image_expected": 115.83,
+        "text_expected": 342.17,
+        "image_residual": -0.356,
+        "text_residual": 0.207
+      },
+      {
+        "category": "vegetation",
+        "image_observed": 13,
+        "text_observed": 51,
+        "image_expected": 16.186,
+        "text_expected": 47.814,
+        "image_residual": -0.792,
+        "text_residual": 0.461
+      },
+      {
+        "category": "settlement",
+        "image_observed": 37,
+        "text_observed": 120,
+        "image_expected": 39.706,
+        "text_expected": 117.294,
+        "image_residual": -0.429,
+        "text_residual": 0.25
+      },
+      {
+        "category": "road-or-track",
+        "image_observed": 3,
+        "text_observed": 10,
+        "image_expected": 3.288,
+        "text_expected": 9.712,
+        "image_residual": -0.159,
+        "text_residual": 0.092
+      },
+      {
+        "category": "scale-bar-or-grid",
+        "image_observed": 0,
+        "text_observed": 2,
+        "image_expected": 0.506,
+        "text_expected": 1.494,
+        "image_residual": -0.711,
+        "text_residual": 0.414
+      },
+      {
+        "category": "none",
+        "image_observed": 5,
+        "text_observed": 2,
+        "image_expected": 1.77,
+        "text_expected": 5.23,
+        "image_residual": 2.427,
+        "text_residual": -1.412
+      },
+      {
+        "category": "other",
+        "image_observed": 4,
+        "text_observed": 10,
+        "image_expected": 3.541,
+        "text_expected": 10.459,
+        "image_residual": 0.244,
+        "text_residual": -0.142
+      }
+    ],
+    "image_runs": [
+      "image"
+    ],
+    "text_runs": [
+      "T0.3",
+      "T0.7",
+      "text-MIN"
+    ]
+  }
+}
