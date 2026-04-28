@@ -14414,6 +14414,7 @@ Search terms: D-S calibration gap VLM-only share, fixed prior 5% student FN bias
 - **Obs 291** (T=0.3 paired-significant): the unbiased estimator's verdict that D-S's contrary ranking does not undermine.
 - **Obs 280** (F1/MCC tier-leader divergence): different metric-divergence pattern; D-S vs corrected-F1 disagreement is yet another orthogonal axis.
 - **Artefacts**: `results/55maps-text-high-t0.3-generalisation/{dawid-skene,ds-human-crosstab}/`, `results/55maps-text-high-generalisation/{dawid-skene,ds-human-crosstab}/`, `results/55maps-image-generalisation/{dawid-skene,dawid-skene-v2-data-driven-prior,ds-human-crosstab}/`, `results/55maps-ds-summary-v2/report.md`. Commits: `0b14e4fc` (data), `da055238` (summary).
+- **Update 2026-04-28 (4-run extension)**: Obs 299 extends this finding with text-MIN as a fourth datapoint, confirming monotonicity of the calibration gap with VLM-only share AND surfacing two new findings: (a) text-MIN ≈ T=0.7 in calibration despite very different prompt configurations (VLM-only ratio is sufficient to predict D-S gap; prompt strategy does not matter beyond what it implicitly produces in share), (b) image's calibration penalty is now isolated as MODALITY-SPECIFIC — only image deviates from a tight 3-run text-track calibration curve.
 
 ## Observation 294: 125 m is the maximum buffer at which detection density is distinguishable from random within-tile occurrence — corroborated across all three corrected 55-map runs; supersedes Obs 272's single-run finding (2026-04-28)
 
