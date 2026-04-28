@@ -14943,3 +14943,76 @@ Search terms: per-map FP-anchoring right-skew text-track median 0%, 55-map per-m
 - **Obs 296** (failure-of-generalisation reinterpretation, 5–10× per-detection mid-distance pull): qualified by this Obs on text-track — the corpus-level reading hides a heavy right-skew; see also Obs 300 for the structural-vs-sampling implications of the same right-skew.
 - **Obs 300** (sister diagnostic findings — track-asymmetric verdict): direct companion. Obs 300 is "what the data tells us across the cap-difference question"; Obs 301 is "how the per-map data should be reported in the paper". Both Obs draw on the same `results/55maps-per-map-shell-variance/` artefacts but answer distinct questions.
 - **Artefacts**: Script `scripts/analyse_55maps_per_map_shell_variance.py`. Tests `tests/test_analyse_55maps_per_map_shell_variance.py` (14 / 14 pass). Results `results/55maps-per-map-shell-variance/{per_map_shell_rates.json,bootstrap_4map_sample.json,report.md,figures/per_map_rate_distribution.png}`. Commit `0cbae1f6` (data + report).
+
+## Observation 302: Obs 296 Test #2 (FP-class via VLM classification) — contour-rings dominate 55-map FPs at ~41 %; number + benchmark distractor-pull is only ~23 % text / 28 % image; image-vs-text-track distributions are statistically indistinguishable (chi-square p = 0.147) (2026-04-28)
+
+### The finding
+
+The third diagnostic test scoped from Obs 296 has now run. Originally blocked by the review CSV's collapsed `symbol_type` column (Obs 300), Test #2 was completed via a Vision Language Model (VLM) classification pass on rendered 150 m crops asking Gemini 3 Flash to apply Soviet-1980s topographic-symbol categories directly. The result clearly **does not support** Shawn's stated hypothesis (Obs 296) that 55-map FPs concentrate on numbers / benchmarks.
+
+#### Aggregate FP-class distribution across 1,119 FPs (4 corrected 55-map runs)
+
+| Category | n | % |
+|:---|--:|--:|
+| **contour-ring** | **458** | **40.93** |
+| number | 214 | 19.12 |
+| settlement | 157 | 14.03 |
+| water-feature | 136 | 12.15 |
+| vegetation | 64 | 5.72 |
+| benchmark | 54 | 4.83 |
+| other (incl. road-or-track, scale-bar-or-grid, none, other) | 36 | 3.22 |
+
+**Contour-ring is the dominant 55-map FP class.** Closed brown contour loops mimicking the burial-mound symbol's oval / circular form account for ~41 % of all FPs across the four corrected runs — the largest single category by a factor of ~2 over the next.
+
+#### Per-run breakdown
+
+| Run | n_FPs | contour-ring % | number + benchmark % | water-feature % |
+|:---|--:|--:|--:|--:|
+| T=0.3 text-HIGH | 297 | 43.43 | 23.57 | 10.44 |
+| T=0.7 text-HIGH | 278 | 43.53 | 21.58 | 10.79 |
+| image (T=0.7) | 283 | 39.58 | 27.56 | 10.95 |
+| T=MIN text | 261 | 36.78 | 22.99 | 16.86 |
+
+Distractor-pull share (number + benchmark together) sits at 22–28 % per run — well below the 30 % threshold set in advance, and **higher on image-track than text-track**, the opposite direction Shawn's stated hypothesis predicted (manual review impression: 55-map text-track concentrates on numbers / benchmarks).
+
+#### Chi-square — image vs text-track
+
+| Statistic | Value |
+|:---|--:|
+| chi-squared | 13.350 |
+| degrees of freedom | 9 |
+| p-value | 0.1474 |
+| n image | 283 |
+| n text-track aggregate | 836 |
+
+**Image vs text-track distributions are statistically indistinguishable.** The only category with a Pearson residual |r| > 2 is `none` (image residual +2.43, text-track −1.41) — but the absolute count is tiny (7 total across all runs) so the deviation is dominated by sampling noise on a single bin. Every other category sits within |r| ≤ 1.5.
+
+### Why this matters
+
+1. **Shawn's specific framing — "55-map FPs concentrate on numbers / benchmarks while GS would surface spot-heights / water" — is empirically NOT supported on the 55-map side.** Numbers + benchmarks are not the dominant FP class; contour-rings are. The hypothesis-as-stated would have predicted at least ~40–50 % distractor-pull share on the 55-map text-track to match Shawn's manual-review intuition; observed is ~23 %.
+2. **The dominant 55-map FP failure mode is contour-ring confusion, not label distractor-pull.** This refines but does not invalidate Obs 296's failure-of-generalisation reading. The mid-distance pull mechanism (Obs 296: 5–10× higher per-detection rate at (50, 75] m) is real; the **specific symbol class driving it is contour-rings**, not numbers or benchmarks. A dominant 41 % FP rate on closed brown contour loops is consistent with the detector being captured by visually-similar (oval / circular orange-brown) cartographic features that aren't burial mounds — but the captured features are predominantly contour-rings around small hills, not spot-elevation labels.
+3. **Image-vs-text-track asymmetric-failure-mode framing is not visible on this metric.** Obs 300's track-asymmetric verdict was based on per-map shell-rate distributions — which showed image structural and text suggestive. The FP-class distribution measured here shows **no statistical asymmetry** between tracks (p = 0.147). The two findings are not contradictory: per-map *rate* distributions can differ between tracks while per-FP *category* distributions are similar (both can pull from the same broad pool of contour-ring-rich cartographic content, just at different per-map intensities). But it does mean the asymmetric-failure-mode reading from Obs 300 should not be cited as supported by *category-level* differences.
+4. **Paper recasting.** A paper claim "55-map detector falls prey to numbers and benchmarks" should be replaced by "55-map detector falls prey predominantly to closed-contour-ring features, with numbers / benchmarks contributing a secondary ~25 %". The mechanism is still distractor-pull in the broad sense (visually-confusable cartographic features capture detector attention), but the dominant captor is closed-contour topographic features, not labelled spot-elevation symbols. This is paper-load-bearing — the previous framing was based on Shawn's manual-review intuition, which proves to under-weight contour-ring confusion (probably because contour-rings look terrain-like and don't read as "labels" to a human reviewer scanning for distractors).
+
+### Caveats and methodological notes
+
+- **Single-pass, no consensus.** Each FP was classified once by Gemini 3 Flash at temperature 0.0, thinking_level=minimal. Confidence values average ~0.86 across the corpus, so the model is not flagging widespread ambiguity, but per-FP class assignment may still be noisy in dense map regions where multiple categories are plausible near the 150 m crop centre. The confidence-weighted distribution in `category_distribution.json` is a sensitivity check and tracks the unweighted counts within ~10 %.
+- **No GS-side comparator.** This diagnostic measured 55-map only. The GS half of Shawn's hypothesis (spot-heights / water-features dominant) cannot be directly tested here without running the same classifier on GS FPs. A natural follow-up; estimated cost ~$0.05 (GS has ~80 FPs at canonical operating point per Obs 295 / Obs 298).
+- **Number = spot-height confound.** Soviet 1:50,000 maps render spot-heights as numeric elevation labels — the same `number` category that captures the distractor-pull arm of Shawn's 55-map hypothesis. If GS FPs are dominated by `number`, that could reflect spot-height ambiguity (Shawn's hypothesis) or label distractor-pull (the same mechanism in 55-map) — the diagnostic alone cannot tell those apart from category labels. The `rationale` strings in `fp_classifications.json` would need a second-pass review to disambiguate.
+- **Crop-centre ambiguity.** The model is asked to pick the strongest burial-mound-confusable feature near centre, not the closest-to-centre feature. In dense map regions this may differ. Empirically, contour-rings dominating ~41 % of the 55-map FP profile is robust across all four very-different runs (T=0.3, T=0.7, image, T=MIN), so the finding is not an artefact of a single run's specific FP localisation pattern.
+- **Cartographic-naming approach.** Per Shawn's design decision (2026-04-28), the prompt deliberately names Soviet topographic categories — opposite to the detection-prompt convention. For *classification* this is appropriate (categories are conventional); the alternative (visual-feature naming) was rejected on the grounds that it would force the model to invent ad-hoc labels that no two FPs would share.
+- **n is large enough that per-run column percentages are stable.** Per-run sample sizes (261–297) give 95 % CIs of ~±5 % on each percentage; the cross-run consistency of contour-ring being ~37–44 % is well outside that bound, so the headline finding is not sample-size-fragile.
+
+### Findable later
+
+Search terms: Obs 302 FP-class classification result, contour-ring dominant 55-map FP 41 %, number benchmark distractor-pull 23 % text 28 % image, chi-square image vs text-track p 0.147, Shawn hypothesis NOT supported, Obs 296 Test #2 completed via VLM, scripts/55maps-fp-classify.py 1119 FPs, Gemini 3 Flash flex tier classification 150 m crop, paper recasting contour-ring confusion not label distractor-pull, GS-side classifier follow-up estimated 0.05 USD, cartographic-naming approach prompt vocabulary anchor, Soviet 1980s topographic categories closed list, asymmetric-failure-mode framing not visible category level, Pearson residuals all <2 except none bin, confidence weighted ≈ unweighted within 10 %, $0.51 actual vs $1.10 estimate, 654 s wall 1.7 calls/s.
+
+### Related observations and artefacts
+
+- **Obs 296** (failure-of-generalisation reinterpretation, distractor-pull hypothesis): the test target. Core finding (FP-anchoring drives the cross-corpus cap gap) survives — but the specific *symbol class* driving the anchoring is contour-rings on the 55-map side, not numbers / benchmarks as hypothesised. A paper-load-bearing recasting.
+- **Obs 300** (Test #1 + Test #3 verdicts; track-asymmetric reading): companion. Obs 300 found image-track failure-of-generalisation structural and text-track sampling-plausible; this Obs adds the third leg by showing that *category-level* image vs text distributions are not statistically distinguishable (p = 0.147). The two findings refine each other: track asymmetry is in per-map rate distribution, not in per-FP category distribution.
+- **Obs 301** (per-map FP-anchoring right-skew on text-track): orthogonal — Obs 301 is about *which maps* drive the corpus rate, not *which symbol categories* the FPs fall on. Both must be cited when the paper characterises 55-map FP behaviour.
+- **Obs 297** (4-run paired-permutation grid; HIGH thinking earns its tokens): companion at the four-run level. The contour-ring dominance is consistent across all four runs (36.78–43.53 %), supporting Obs 297's reading that the four runs share a similar FP-anchoring mechanism even when their F1 trajectories differ.
+- **Obs 252** (text vs image buffer elasticity): orthogonal — text-vs-image buffer elasticity is a recall-side asymmetry; this Obs measures FP-side category distribution and finds no significant track asymmetry there.
+- **Artefacts**: Script `scripts/55maps-fp-classify.py` (driver). Results `results/55maps-fp-classification/{fp_classifications.json,category_distribution.json,cost_summary.json,report.md,figures/category_distribution.png}`. Commits `5040f5b4` (driver), `e552ad46` (data + report). Cost actual $0.5071 USD (flex tier); wall 10 m 54 s; 1,119 calls; 0 failures.
+
