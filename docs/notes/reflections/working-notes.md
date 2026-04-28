@@ -14191,7 +14191,7 @@ Search terms: K-consensus SD shrinkage v2 genuine test, shared-mode signal phase
 
 ### The finding
 
-Wave 3 of Session 80 refreshed the eight stale analyses identified by the Session 80 staleness audit (preceding commit `49096289`), plus the Obs 288 `with-mcc/` housekeeping action item. The triggering events were the Phase C verifier-calibration regeneration (commit `fc7843158b04cbdd`, 2026-04-25), the Wave 2 phase3a MCC re-eval (commit `163161a4`, 2026-04-27), and the Obs 288 forensic on the off-matrix `with-mcc/` reference cells (commit `be5703d2`, 2026-04-27).
+Wave 3 of Session 80 refreshed the eight stale analyses identified by the Session 80 staleness audit (preceding commit `49096289`), plus the Obs 288 `with-mcc/` housekeeping action item. The triggering events were the Phase C verifier-calibration regeneration (commit `fc7784158b04cbdd`, 2026-04-25), the Wave 2 phase3a MCC re-eval (commit `163161a4`, 2026-04-27), and the Obs 288 forensic on the off-matrix `with-mcc/` reference cells (commit `be5703d2`, 2026-04-27).
 
 **Per-theme outcome**:
 
