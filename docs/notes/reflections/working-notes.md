@@ -14819,3 +14819,79 @@ Search terms: text-MIN D-S calibration, 4-run D-S calibration extension, VLM-onl
 - **Obs 280, 292** (F1 / MCC tier-leader divergence): companion finding — the 4-way D-S vs corrected-F1 rank disagreement is yet another orthogonal axis of metric-divergence on the same four-run set.
 - **Obs 297** (HIGH thinking earns its tokens; text-MIN bottom of corrected-F1 at every buffer ≥ 25 m): text-MIN's bottom-rank consistency across both D-S and corrected F1 noted here is consistent with Obs 297's recall-floor finding — text-MIN's deficit is recall-driven and not bridgeable by D-S reclassification.
 - **Artefacts**: `results/55maps-ds-summary-v2/report.md` (4-run extended), `results/55maps-text-min-generalisation/{dawid-skene,ds-human-crosstab}/`. Commits: `e344db93` (data: D-S aggregation + ds-human-crosstab post-review for text-MIN), `750d2c51` (summary: update D-S cross-run summary with text-MIN).
+
+## Observation 300: Obs 296 diagnostic tests refine the failure-of-generalisation reading — detector precision invariant across corpuses; image-track structural; text-track suggestive (2026-04-28)
+
+### The finding
+
+Two of the three diagnostic tests scoped from Obs 296 have run; the third was blocked by the review CSV's collapsed `symbol_type` column. Together they refine — but do not overturn — Obs 296's failure-of-generalisation reading. The picture is now **track-asymmetric**: image-track failure-of-generalisation is structural; text-track failure-of-generalisation is suggestive but not decisively distinguishable from sampling.
+
+#### Test #1 — TP-only localisation precision (commit `682fca2d`)
+
+Per-condition median TP-to-GT distance at a uniform ≤ 25 m matching scope (`results/55maps-vs-gs-tp-localisation/tp_localisation.json`):
+
+| Condition | n_TP | median (m) | p90 (m) |
+|:---|--:|--:|--:|
+| GS text-HIGH-T0.7 | 365 | 6.36 | 12.86 |
+| 55-map T=0.3 text-HIGH | 30 | 14.43 | 23.22 |
+| 55-map T=0.7 text-HIGH | 20 | 12.83 | 24.14 |
+| 55-map image (T=0.7) | 52 | 18.38 | 24.29 |
+| 55-map text-MIN | 24 | 14.41 | 20.95 |
+
+**Verdict.** Detector spatial precision is approximately constant across corpuses once GT jitter (Obs 260, ~25 m positional jitter on student GT) is accounted for. A perfect detector convolved with 25 m unbiased jitter yields a Rayleigh-like median floor of ~12–13 m on 55-map. Three of four 55-map medians (T=0.3 14.43, T=0.7 12.83, text-MIN 14.41) sit at that floor; image (18.38) sits ~6 m above. The 5-fold cap difference (GS 25 m vs 55-map 100 m most-permissive per Obs 298) is **NOT** driven by detector spatial-precision degradation between corpuses. K-S pairwise (GS vs each 55-map): all four pairs reject the null at Bonferroni α = 0.0125 (p ≤ 2.4e-5).
+
+#### Test #3 — Per-map (50, 75] m rate variance on 55-map (commit `0cbae1f6`)
+
+Per-map mid-distance-pull rate distribution across the 55-map universe (`results/55maps-per-map-shell-variance/per_map_shell_rates.json`):
+
+| Run | corpus rate | per-map mean | median | range |
+|:---|--:|--:|--:|:---|
+| T=0.3 text-HIGH | 4.34 % (30/692) | 4.81 % | 0 % | 0–43 % |
+| T=0.7 text-HIGH | 3.33 % (21/630) | 4.77 % | 0 % | 0–75 % |
+| image (T=0.7) | 15.84 % (163/1029) | 15.68 % | 15.4 % | 0–50 % |
+| text-MIN | 4.10 % (24/585) | 5.06 % | 0 % | 0–50 % |
+
+Text-track per-map distributions are **heavily right-skewed** (median 0 %, mean ~5 %, long tail up to 75 %); the corpus rate is driven by a small number of high-pull maps. Image-track is centred and tighter.
+
+Bootstrap (1,000 iterations, seed 42) of P(random 4-map detection-weighted sample ≤ same-track GS rate) (`results/55maps-per-map-shell-variance/bootstrap_4map_sample.json`):
+
+| Run | yardstick (same-track GS) | P(≤ yardstick) | Verdict |
+|:---|--:|--:|:---|
+| T=0.3 (vs text GS 0.51 %) | 0.51 % | 15.2 % | sampling-plausible |
+| T=0.7 (vs text GS 0.51 %) | 0.51 % | 23.2 % | sampling-plausible |
+| image (vs image GS 1.21 %) | 1.21 % | **0.0 %** | **structural** |
+| text-MIN (vs text GS 0.51 %) | 0.51 % | 17.5 % | sampling-plausible |
+
+**Verdict — track-asymmetric.** On image-track, 0 / 1,000 random 4-map subsets reach the GS image rate; failure-of-generalisation is **strongly supported**. On text-track, ~1 in 5 random 4-map samples reaches the GS text rate; failure-of-generalisation is **suggestive but not decisive**. The right-skew implies the GS-vs-55-map text gap could be unlucky low-tail sampling rather than a genuine post-calibration distractor-pull suppression — the diagnostic alone cannot distinguish these.
+
+#### Test #2 — FP-class diagnostic (blocked)
+
+The planned FP-class diagnostic (does the GS curator-corrected reference suppress benign false-positive symbol classes that the 55-map student-reviewed reference retains?) was blocked because the review CSV's `symbol_type` column collapses to "not_mound" for all FPs, with no sub-class detail. A future VLM-based FP-classification pass (~$1.10 estimated) is a viable substitute test but was not run in this diagnostic round.
+
+### Combined verdict — what this updates about Obs 296
+
+1. **Detector precision component.** Obs 296's claim that the cross-corpus difference is FP-anchoring not detector-precision is **empirically confirmed** by Test #1. The precision floor is constant across corpuses; the 5-fold cap difference comes from the FP-anchoring layer, not from detector localisation degradation.
+2. **Image-track failure-of-generalisation.** Structural; strongly supported. The image corpus rate (15.84 %) is unreachable by any 4-map subset of the 55-map universe under same-track yardstick.
+3. **Text-track failure-of-generalisation.** Suggestive, not decisively structural. The right-skew of per-map text rates means the cross-corpus gap could be either a sampling artefact (the 4 GS maps happened to land on the low-tail of the text-track distractor distribution) or a real post-calibration suppression effect. This diagnostic alone cannot adjudicate.
+
+Obs 296's reading is therefore **clarified, not superseded** — its core finding (FP-anchoring drives the cap gap) is confirmed; its track-symmetric framing of the failure-of-generalisation strength is refined to track-asymmetric.
+
+### Caveats and methodological notes
+
+- **TP-only test n_TP is low** (20–52 on 55-map). Medians are still informative — the cluster around the jitter floor is robust across all four 55-map runs — but formal CIs were not computed on the median statistic.
+- **Per-map bootstrap assumes random GS map selection.** Per Shawn (2026-04-28): GS maps WERE selected at random; the documentation of the selection process is not formal but the claim is on record. If selection was stratified or biased toward low-distractor maps, the text-track sampling-plausible verdict would weaken.
+- **Same-track yardstick is stricter than the headline 1.7 % yardstick.** Test #3 reports both; under the more permissive 1.7 % yardstick (image-track GS rate, used as the headline in Obs 296), text-track P values shift up modestly (T=0.3 19.1 %, T=0.7 29.8 %, text-MIN 22.3 %), but the same-track 0.51 % yardstick is the methodologically-cleaner comparison.
+- **Image's TP median (18.38 m) sits ~6 m above the jitter floor**, consistent with image-track having a slightly looser localisation profile than text-track on the 55-map corpus — a smaller secondary effect on top of the dominant FP-anchoring difference. This does not change the FP-anchoring reading but flags that image's spatial-precision contribution to the cap is non-zero.
+
+### Findable later
+
+Search terms: Obs 296 diagnostic tests, TP-only localisation precision 55-map vs GS, K-S Bonferroni 4 pairs detector precision, 25 m student GT jitter floor 12-13 m median, per-map mid-distance pull rate variance bootstrap, P 4-map sample image structural 0%, P 4-map sample text-track sampling-plausible 15-23%, image vs text track failure-of-generalisation asymmetry, FP-class diagnostic blocked symbol_type collapsed not_mound, FP-anchoring confirmed not detector precision, Obs 296 clarified track-asymmetric, post-calibration precision distractor suppression, Rayleigh jitter floor.
+
+### Related observations and artefacts
+
+- **Obs 296** (GS-vs-55-map cap = failure-of-generalisation, 5–10× per-detection mid-distance pull): the observation this diagnostic round tests. Clarified, not superseded — Test #1 confirms the FP-anchoring reading; Test #3 refines the failure-of-generalisation framing from track-symmetric to track-asymmetric.
+- **Obs 295** (GS 25 m attractor-pull cap): the "fundamental detector precision" reading is retired in favour of "post-calibration precision on the calibration corpus", per the Obs 296 reframing this diagnostic confirms.
+- **Obs 297** (4-run paired-permutation grid; HIGH thinking earns its tokens): companion finding on the same four corrected 55-map runs; provides the FP-anchoring mechanism that Test #1 confirms is the dominant cap-difference driver.
+- **Obs 260** (student GT ~25 m positional jitter): empirical anchor for the Rayleigh-like ~12–13 m median jitter floor used to interpret Test #1's 55-map medians.
+- **Obs 252** (text track ~4× lower buffer elasticity than image): the modality asymmetry seen in Test #3 (image structural, text suggestive) parallels the elasticity asymmetry from Obs 252; the same modality split surfaces in two independent measurements.
+- **Artefacts**: `scripts/analyse_tp_localisation_55maps_vs_gs.py`, `scripts/analyse_55maps_per_map_shell_variance.py`. Results: `results/55maps-vs-gs-tp-localisation/{tp_localisation.json,report.md,figures/tp_distance_histogram.png}`, `results/55maps-per-map-shell-variance/{per_map_shell_rates.json,bootstrap_4map_sample.json,report.md,figures/per_map_rate_distribution.png}`. Commits: `682fca2d` (TP-only localisation diagnostic), `0cbae1f6` (per-map shell-variance diagnostic).
