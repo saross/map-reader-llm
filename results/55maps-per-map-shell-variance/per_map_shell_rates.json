@@ -1,0 +1,1419 @@
+{
+  "method": "geometric KDTree (detection xy \u2192 reviewed-reference)",
+  "shell_inner_m": 50,
+  "shell_outer_m": 75,
+  "reference_path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+  "n_reference_points": 4744,
+  "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+  "map_universe_size": 55,
+  "runs": {
+    "t0.3": {
+      "label": "T=0.3 text-HIGH",
+      "aggregate": {
+        "n_detections": 692,
+        "n_in_shell": 30,
+        "corpus_rate": 0.043353
+      },
+      "per_map_p_le_gs_yardstick": {
+        "n_active_maps": 55,
+        "n_le": 34,
+        "fraction_le": 0.618182
+      },
+      "per_map_p_le_same_track_yardstick": {
+        "track": "text",
+        "yardstick": 0.0051,
+        "n_active_maps": 55,
+        "n_le": 34,
+        "fraction_le": 0.618182
+      },
+      "per_map": [
+        {
+          "map_name": "K-35-042-3",
+          "n_detections": 3,
+          "n_in_shell": 1,
+          "shell_rate": 0.333333
+        },
+        {
+          "map_name": "K-35-050-4",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-051-3",
+          "n_detections": 10,
+          "n_in_shell": 2,
+          "shell_rate": 0.2
+        },
+        {
+          "map_name": "K-35-051-4",
+          "n_detections": 6,
+          "n_in_shell": 1,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-052-2",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-052-3",
+          "n_detections": 14,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-1",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-2",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-4_Boyadzhik",
+          "n_detections": 15,
+          "n_in_shell": 1,
+          "shell_rate": 0.066667
+        },
+        {
+          "map_name": "K-35-054-1_Straldzha_4326",
+          "n_detections": 28,
+          "n_in_shell": 2,
+          "shell_rate": 0.071429
+        },
+        {
+          "map_name": "K-35-054-2_Atolov_4326",
+          "n_detections": 21,
+          "n_in_shell": 2,
+          "shell_rate": 0.095238
+        },
+        {
+          "map_name": "K-35-054-3_Yambol",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-4_Voynika",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-1",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-2",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-3",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-4",
+          "n_detections": 2,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-056-3",
+          "n_detections": 2,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-062-4_Asenovgrad_4326",
+          "n_detections": 16,
+          "n_in_shell": 1,
+          "shell_rate": 0.0625
+        },
+        {
+          "map_name": "K-35-063-1_Granit_4326",
+          "n_detections": 38,
+          "n_in_shell": 1,
+          "shell_rate": 0.026316
+        },
+        {
+          "map_name": "K-35-063-2_Chirpan_4326",
+          "n_detections": 14,
+          "n_in_shell": 1,
+          "shell_rate": 0.071429
+        },
+        {
+          "map_name": "K-35-063-3_Tatarevo_4326",
+          "n_detections": 17,
+          "n_in_shell": 1,
+          "shell_rate": 0.058824
+        },
+        {
+          "map_name": "K-35-063-4_Skobelevo_4326",
+          "n_detections": 17,
+          "n_in_shell": 2,
+          "shell_rate": 0.117647
+        },
+        {
+          "map_name": "K-35-064-1_Sredets_4326",
+          "n_detections": 25,
+          "n_in_shell": 3,
+          "shell_rate": 0.12
+        },
+        {
+          "map_name": "K-35-064-2_Radnevo_4326",
+          "n_detections": 24,
+          "n_in_shell": 1,
+          "shell_rate": 0.041667
+        },
+        {
+          "map_name": "K-35-064-3_Dimitrovgrad_4326",
+          "n_detections": 15,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-064-4_Galabovo_4326",
+          "n_detections": 13,
+          "n_in_shell": 2,
+          "shell_rate": 0.153846
+        },
+        {
+          "map_name": "K-35-065-1_Radetski_4326",
+          "n_detections": 18,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-2_GManastir_4326",
+          "n_detections": 3,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-3_Glavan_4326",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-4",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-1",
+          "n_detections": 18,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-2",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-3",
+          "n_detections": 7,
+          "n_in_shell": 1,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-066-4",
+          "n_detections": 14,
+          "n_in_shell": 1,
+          "shell_rate": 0.071429
+        },
+        {
+          "map_name": "K-35-067-1",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-067-2",
+          "n_detections": 7,
+          "n_in_shell": 3,
+          "shell_rate": 0.428571
+        },
+        {
+          "map_name": "K-35-067-3",
+          "n_detections": 15,
+          "n_in_shell": 1,
+          "shell_rate": 0.066667
+        },
+        {
+          "map_name": "K-35-067-4",
+          "n_detections": 7,
+          "n_in_shell": 1,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-074-1",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-2",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-3",
+          "n_detections": 1,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-4",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-1",
+          "n_detections": 18,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-2",
+          "n_detections": 15,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-3",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-4",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-1",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-2",
+          "n_detections": 49,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-3",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-4",
+          "n_detections": 7,
+          "n_in_shell": 1,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-077-1",
+          "n_detections": 16,
+          "n_in_shell": 1,
+          "shell_rate": 0.0625
+        },
+        {
+          "map_name": "K-35-077-2",
+          "n_detections": 24,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-3",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-4",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        }
+      ]
+    },
+    "t0.7": {
+      "label": "T=0.7 text-HIGH",
+      "aggregate": {
+        "n_detections": 630,
+        "n_in_shell": 21,
+        "corpus_rate": 0.033333
+      },
+      "per_map_p_le_gs_yardstick": {
+        "n_active_maps": 55,
+        "n_le": 40,
+        "fraction_le": 0.727273
+      },
+      "per_map_p_le_same_track_yardstick": {
+        "track": "text",
+        "yardstick": 0.0051,
+        "n_active_maps": 55,
+        "n_le": 40,
+        "fraction_le": 0.727273
+      },
+      "per_map": [
+        {
+          "map_name": "K-35-042-3",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-050-4",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-051-3",
+          "n_detections": 3,
+          "n_in_shell": 1,
+          "shell_rate": 0.333333
+        },
+        {
+          "map_name": "K-35-051-4",
+          "n_detections": 7,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-052-2",
+          "n_detections": 7,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-052-3",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-1",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-2",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-4_Boyadzhik",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-1_Straldzha_4326",
+          "n_detections": 23,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-2_Atolov_4326",
+          "n_detections": 12,
+          "n_in_shell": 3,
+          "shell_rate": 0.25
+        },
+        {
+          "map_name": "K-35-054-3_Yambol",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-4_Voynika",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-1",
+          "n_detections": 9,
+          "n_in_shell": 2,
+          "shell_rate": 0.222222
+        },
+        {
+          "map_name": "K-35-055-2",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-3",
+          "n_detections": 8,
+          "n_in_shell": 1,
+          "shell_rate": 0.125
+        },
+        {
+          "map_name": "K-35-055-4",
+          "n_detections": 3,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-056-3",
+          "n_detections": 2,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-062-4_Asenovgrad_4326",
+          "n_detections": 15,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-063-1_Granit_4326",
+          "n_detections": 37,
+          "n_in_shell": 1,
+          "shell_rate": 0.027027
+        },
+        {
+          "map_name": "K-35-063-2_Chirpan_4326",
+          "n_detections": 11,
+          "n_in_shell": 1,
+          "shell_rate": 0.090909
+        },
+        {
+          "map_name": "K-35-063-3_Tatarevo_4326",
+          "n_detections": 13,
+          "n_in_shell": 1,
+          "shell_rate": 0.076923
+        },
+        {
+          "map_name": "K-35-063-4_Skobelevo_4326",
+          "n_detections": 15,
+          "n_in_shell": 1,
+          "shell_rate": 0.066667
+        },
+        {
+          "map_name": "K-35-064-1_Sredets_4326",
+          "n_detections": 23,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-064-2_Radnevo_4326",
+          "n_detections": 26,
+          "n_in_shell": 1,
+          "shell_rate": 0.038462
+        },
+        {
+          "map_name": "K-35-064-3_Dimitrovgrad_4326",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-064-4_Galabovo_4326",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-1_Radetski_4326",
+          "n_detections": 19,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-2_GManastir_4326",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-3_Glavan_4326",
+          "n_detections": 12,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-4",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-1",
+          "n_detections": 17,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-2",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-3",
+          "n_detections": 8,
+          "n_in_shell": 1,
+          "shell_rate": 0.125
+        },
+        {
+          "map_name": "K-35-066-4",
+          "n_detections": 9,
+          "n_in_shell": 1,
+          "shell_rate": 0.111111
+        },
+        {
+          "map_name": "K-35-067-1",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-067-2",
+          "n_detections": 4,
+          "n_in_shell": 3,
+          "shell_rate": 0.75
+        },
+        {
+          "map_name": "K-35-067-3",
+          "n_detections": 11,
+          "n_in_shell": 2,
+          "shell_rate": 0.181818
+        },
+        {
+          "map_name": "K-35-067-4",
+          "n_detections": 7,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-1",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-2",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-3",
+          "n_detections": 3,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-4",
+          "n_detections": 2,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-1",
+          "n_detections": 16,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-2",
+          "n_detections": 10,
+          "n_in_shell": 1,
+          "shell_rate": 0.1
+        },
+        {
+          "map_name": "K-35-075-3",
+          "n_detections": 21,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-4",
+          "n_detections": 12,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-1",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-2",
+          "n_detections": 48,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-3",
+          "n_detections": 8,
+          "n_in_shell": 1,
+          "shell_rate": 0.125
+        },
+        {
+          "map_name": "K-35-076-4",
+          "n_detections": 7,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-1",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-2",
+          "n_detections": 28,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-3",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-4",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        }
+      ]
+    },
+    "image": {
+      "label": "image (T=0.7)",
+      "aggregate": {
+        "n_detections": 1029,
+        "n_in_shell": 163,
+        "corpus_rate": 0.158406
+      },
+      "per_map_p_le_gs_yardstick": {
+        "n_active_maps": 55,
+        "n_le": 10,
+        "fraction_le": 0.181818
+      },
+      "per_map_p_le_same_track_yardstick": {
+        "track": "image",
+        "yardstick": 0.0121,
+        "n_active_maps": 55,
+        "n_le": 10,
+        "fraction_le": 0.181818
+      },
+      "per_map": [
+        {
+          "map_name": "K-35-042-3",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-050-4",
+          "n_detections": 24,
+          "n_in_shell": 4,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-051-3",
+          "n_detections": 22,
+          "n_in_shell": 8,
+          "shell_rate": 0.363636
+        },
+        {
+          "map_name": "K-35-051-4",
+          "n_detections": 14,
+          "n_in_shell": 5,
+          "shell_rate": 0.357143
+        },
+        {
+          "map_name": "K-35-052-2",
+          "n_detections": 18,
+          "n_in_shell": 3,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-052-3",
+          "n_detections": 22,
+          "n_in_shell": 4,
+          "shell_rate": 0.181818
+        },
+        {
+          "map_name": "K-35-053-1",
+          "n_detections": 14,
+          "n_in_shell": 3,
+          "shell_rate": 0.214286
+        },
+        {
+          "map_name": "K-35-053-2",
+          "n_detections": 19,
+          "n_in_shell": 2,
+          "shell_rate": 0.105263
+        },
+        {
+          "map_name": "K-35-053-4_Boyadzhik",
+          "n_detections": 18,
+          "n_in_shell": 2,
+          "shell_rate": 0.111111
+        },
+        {
+          "map_name": "K-35-054-1_Straldzha_4326",
+          "n_detections": 30,
+          "n_in_shell": 5,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-054-2_Atolov_4326",
+          "n_detections": 27,
+          "n_in_shell": 6,
+          "shell_rate": 0.222222
+        },
+        {
+          "map_name": "K-35-054-3_Yambol",
+          "n_detections": 20,
+          "n_in_shell": 2,
+          "shell_rate": 0.1
+        },
+        {
+          "map_name": "K-35-054-4_Voynika",
+          "n_detections": 15,
+          "n_in_shell": 2,
+          "shell_rate": 0.133333
+        },
+        {
+          "map_name": "K-35-055-1",
+          "n_detections": 23,
+          "n_in_shell": 7,
+          "shell_rate": 0.304348
+        },
+        {
+          "map_name": "K-35-055-2",
+          "n_detections": 13,
+          "n_in_shell": 1,
+          "shell_rate": 0.076923
+        },
+        {
+          "map_name": "K-35-055-3",
+          "n_detections": 14,
+          "n_in_shell": 3,
+          "shell_rate": 0.214286
+        },
+        {
+          "map_name": "K-35-055-4",
+          "n_detections": 16,
+          "n_in_shell": 3,
+          "shell_rate": 0.1875
+        },
+        {
+          "map_name": "K-35-056-3",
+          "n_detections": 6,
+          "n_in_shell": 3,
+          "shell_rate": 0.5
+        },
+        {
+          "map_name": "K-35-062-4_Asenovgrad_4326",
+          "n_detections": 20,
+          "n_in_shell": 3,
+          "shell_rate": 0.15
+        },
+        {
+          "map_name": "K-35-063-1_Granit_4326",
+          "n_detections": 73,
+          "n_in_shell": 13,
+          "shell_rate": 0.178082
+        },
+        {
+          "map_name": "K-35-063-2_Chirpan_4326",
+          "n_detections": 31,
+          "n_in_shell": 8,
+          "shell_rate": 0.258065
+        },
+        {
+          "map_name": "K-35-063-3_Tatarevo_4326",
+          "n_detections": 25,
+          "n_in_shell": 4,
+          "shell_rate": 0.16
+        },
+        {
+          "map_name": "K-35-063-4_Skobelevo_4326",
+          "n_detections": 26,
+          "n_in_shell": 4,
+          "shell_rate": 0.153846
+        },
+        {
+          "map_name": "K-35-064-1_Sredets_4326",
+          "n_detections": 21,
+          "n_in_shell": 1,
+          "shell_rate": 0.047619
+        },
+        {
+          "map_name": "K-35-064-2_Radnevo_4326",
+          "n_detections": 29,
+          "n_in_shell": 1,
+          "shell_rate": 0.034483
+        },
+        {
+          "map_name": "K-35-064-3_Dimitrovgrad_4326",
+          "n_detections": 24,
+          "n_in_shell": 5,
+          "shell_rate": 0.208333
+        },
+        {
+          "map_name": "K-35-064-4_Galabovo_4326",
+          "n_detections": 13,
+          "n_in_shell": 4,
+          "shell_rate": 0.307692
+        },
+        {
+          "map_name": "K-35-065-1_Radetski_4326",
+          "n_detections": 25,
+          "n_in_shell": 2,
+          "shell_rate": 0.08
+        },
+        {
+          "map_name": "K-35-065-2_GManastir_4326",
+          "n_detections": 12,
+          "n_in_shell": 2,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-065-3_Glavan_4326",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-4",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-1",
+          "n_detections": 28,
+          "n_in_shell": 4,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-066-2",
+          "n_detections": 22,
+          "n_in_shell": 6,
+          "shell_rate": 0.272727
+        },
+        {
+          "map_name": "K-35-066-3",
+          "n_detections": 14,
+          "n_in_shell": 6,
+          "shell_rate": 0.428571
+        },
+        {
+          "map_name": "K-35-066-4",
+          "n_detections": 15,
+          "n_in_shell": 4,
+          "shell_rate": 0.266667
+        },
+        {
+          "map_name": "K-35-067-1",
+          "n_detections": 12,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-067-2",
+          "n_detections": 19,
+          "n_in_shell": 6,
+          "shell_rate": 0.315789
+        },
+        {
+          "map_name": "K-35-067-3",
+          "n_detections": 10,
+          "n_in_shell": 3,
+          "shell_rate": 0.3
+        },
+        {
+          "map_name": "K-35-067-4",
+          "n_detections": 15,
+          "n_in_shell": 1,
+          "shell_rate": 0.066667
+        },
+        {
+          "map_name": "K-35-074-1",
+          "n_detections": 10,
+          "n_in_shell": 1,
+          "shell_rate": 0.1
+        },
+        {
+          "map_name": "K-35-074-2",
+          "n_detections": 7,
+          "n_in_shell": 1,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-074-3",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-4",
+          "n_detections": 2,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-1",
+          "n_detections": 21,
+          "n_in_shell": 4,
+          "shell_rate": 0.190476
+        },
+        {
+          "map_name": "K-35-075-2",
+          "n_detections": 25,
+          "n_in_shell": 7,
+          "shell_rate": 0.28
+        },
+        {
+          "map_name": "K-35-075-3",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-4",
+          "n_detections": 9,
+          "n_in_shell": 1,
+          "shell_rate": 0.111111
+        },
+        {
+          "map_name": "K-35-076-1",
+          "n_detections": 13,
+          "n_in_shell": 2,
+          "shell_rate": 0.153846
+        },
+        {
+          "map_name": "K-35-076-2",
+          "n_detections": 59,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-3",
+          "n_detections": 10,
+          "n_in_shell": 4,
+          "shell_rate": 0.4
+        },
+        {
+          "map_name": "K-35-076-4",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-1",
+          "n_detections": 25,
+          "n_in_shell": 1,
+          "shell_rate": 0.04
+        },
+        {
+          "map_name": "K-35-077-2",
+          "n_detections": 27,
+          "n_in_shell": 1,
+          "shell_rate": 0.037037
+        },
+        {
+          "map_name": "K-35-077-3",
+          "n_detections": 17,
+          "n_in_shell": 1,
+          "shell_rate": 0.058824
+        },
+        {
+          "map_name": "K-35-077-4",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        }
+      ]
+    },
+    "text-min": {
+      "label": "text-MIN",
+      "aggregate": {
+        "n_detections": 585,
+        "n_in_shell": 24,
+        "corpus_rate": 0.041026
+      },
+      "per_map_p_le_gs_yardstick": {
+        "n_active_maps": 55,
+        "n_le": 37,
+        "fraction_le": 0.672727
+      },
+      "per_map_p_le_same_track_yardstick": {
+        "track": "text",
+        "yardstick": 0.0051,
+        "n_active_maps": 55,
+        "n_le": 37,
+        "fraction_le": 0.672727
+      },
+      "per_map": [
+        {
+          "map_name": "K-35-042-3",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-050-4",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-051-3",
+          "n_detections": 10,
+          "n_in_shell": 1,
+          "shell_rate": 0.1
+        },
+        {
+          "map_name": "K-35-051-4",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-052-2",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-052-3",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-1",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-053-2",
+          "n_detections": 12,
+          "n_in_shell": 1,
+          "shell_rate": 0.083333
+        },
+        {
+          "map_name": "K-35-053-4_Boyadzhik",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-1_Straldzha_4326",
+          "n_detections": 20,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-2_Atolov_4326",
+          "n_detections": 12,
+          "n_in_shell": 2,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-054-3_Yambol",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-054-4_Voynika",
+          "n_detections": 8,
+          "n_in_shell": 1,
+          "shell_rate": 0.125
+        },
+        {
+          "map_name": "K-35-055-1",
+          "n_detections": 7,
+          "n_in_shell": 3,
+          "shell_rate": 0.428571
+        },
+        {
+          "map_name": "K-35-055-2",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-055-3",
+          "n_detections": 7,
+          "n_in_shell": 1,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-055-4",
+          "n_detections": 2,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-056-3",
+          "n_detections": 1,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-062-4_Asenovgrad_4326",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-063-1_Granit_4326",
+          "n_detections": 29,
+          "n_in_shell": 1,
+          "shell_rate": 0.034483
+        },
+        {
+          "map_name": "K-35-063-2_Chirpan_4326",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-063-3_Tatarevo_4326",
+          "n_detections": 16,
+          "n_in_shell": 1,
+          "shell_rate": 0.0625
+        },
+        {
+          "map_name": "K-35-063-4_Skobelevo_4326",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-064-1_Sredets_4326",
+          "n_detections": 22,
+          "n_in_shell": 1,
+          "shell_rate": 0.045455
+        },
+        {
+          "map_name": "K-35-064-2_Radnevo_4326",
+          "n_detections": 26,
+          "n_in_shell": 1,
+          "shell_rate": 0.038462
+        },
+        {
+          "map_name": "K-35-064-3_Dimitrovgrad_4326",
+          "n_detections": 10,
+          "n_in_shell": 1,
+          "shell_rate": 0.1
+        },
+        {
+          "map_name": "K-35-064-4_Galabovo_4326",
+          "n_detections": 7,
+          "n_in_shell": 1,
+          "shell_rate": 0.142857
+        },
+        {
+          "map_name": "K-35-065-1_Radetski_4326",
+          "n_detections": 23,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-2_GManastir_4326",
+          "n_detections": 6,
+          "n_in_shell": 1,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-065-3_Glavan_4326",
+          "n_detections": 8,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-065-4",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-1",
+          "n_detections": 13,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-2",
+          "n_detections": 17,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-066-3",
+          "n_detections": 12,
+          "n_in_shell": 1,
+          "shell_rate": 0.083333
+        },
+        {
+          "map_name": "K-35-066-4",
+          "n_detections": 12,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-067-1",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-067-2",
+          "n_detections": 6,
+          "n_in_shell": 3,
+          "shell_rate": 0.5
+        },
+        {
+          "map_name": "K-35-067-3",
+          "n_detections": 7,
+          "n_in_shell": 2,
+          "shell_rate": 0.285714
+        },
+        {
+          "map_name": "K-35-067-4",
+          "n_detections": 9,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-1",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-2",
+          "n_detections": 7,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-3",
+          "n_detections": 5,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-074-4",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-1",
+          "n_detections": 10,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-2",
+          "n_detections": 11,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-3",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-075-4",
+          "n_detections": 7,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-1",
+          "n_detections": 6,
+          "n_in_shell": 1,
+          "shell_rate": 0.166667
+        },
+        {
+          "map_name": "K-35-076-2",
+          "n_detections": 39,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-076-3",
+          "n_detections": 9,
+          "n_in_shell": 1,
+          "shell_rate": 0.111111
+        },
+        {
+          "map_name": "K-35-076-4",
+          "n_detections": 4,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-1",
+          "n_detections": 14,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-2",
+          "n_detections": 16,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-3",
+          "n_detections": 15,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        },
+        {
+          "map_name": "K-35-077-4",
+          "n_detections": 6,
+          "n_in_shell": 0,
+          "shell_rate": 0.0
+        }
+      ]
+    }
+  }
+}
