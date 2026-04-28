@@ -1,22 +1,98 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-15T11:43:59.408471+00:00",
+  "timestamp": "2026-04-28T15:23:22.992885+00:00",
   "summary": {
     "label": "pure-positive-canon-wbf",
     "n_detections": 1367,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.2788,
-        "f1_ci_lower": 0.2303,
-        "f1_ci_upper": 0.3254,
-        "precision": 0.1719,
-        "p_ci_lower": 0.1371,
-        "p_ci_upper": 0.2076,
-        "recall": 0.7367,
-        "r_ci_lower": 0.6777,
-        "r_ci_upper": 0.7925
+        "f1": 0.2597,
+        "f1_ci_lower": 0.2163,
+        "f1_ci_upper": 0.305,
+        "precision": 0.1712,
+        "p_ci_lower": 0.138,
+        "p_ci_upper": 0.2074,
+        "recall": 0.5379,
+        "r_ci_lower": 0.4725,
+        "r_ci_upper": 0.6039
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.3008,
+        "f1_ci_lower": 0.2529,
+        "f1_ci_upper": 0.3498,
+        "precision": 0.1982,
+        "p_ci_lower": 0.1609,
+        "p_ci_upper": 0.2389,
+        "recall": 0.623,
+        "r_ci_lower": 0.5521,
+        "r_ci_upper": 0.6919
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.3163,
+        "f1_ci_lower": 0.2671,
+        "f1_ci_upper": 0.3657,
+        "precision": 0.2085,
+        "p_ci_lower": 0.1704,
+        "p_ci_upper": 0.25,
+        "recall": 0.6552,
+        "r_ci_lower": 0.5845,
+        "r_ci_upper": 0.7236
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.3219,
+        "f1_ci_lower": 0.2723,
+        "f1_ci_upper": 0.3718,
+        "precision": 0.2121,
+        "p_ci_lower": 0.1735,
+        "p_ci_upper": 0.2541,
+        "recall": 0.6667,
+        "r_ci_lower": 0.5979,
+        "r_ci_upper": 0.7338
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "5040f5b4",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-28T15:18:39.079330+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/h8-v2/wbf/pure-positive-canon/wbf_candidates.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/h8-v2/wbf/pure-positive-canon",
+      "label": "pure-positive-canon-wbf",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/h8-v2/wbf/pure-positive-canon/wbf_candidates.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    }
   }
 }
