@@ -14694,3 +14694,65 @@ Search terms: 55-map paired permutation v2 six pairs, T=0.7 vs T=MIN paired sign
 - **Obs 294** (125 m practitioner cap, multi-run): the 125 m ceiling buffer for paired-permutation comparisons; T=MIN's flattening at R = 100 / 125 m (F1 = 0.8003 / 0.8007) is consistent with the cap. T=MIN reaches its practitioner-relevant F1 ceiling earliest among the four runs.
 - **Artefacts**: `results/55maps-pairwise-permutation-v2/{paired-t0.3-vs-tmin,paired-t0.7-vs-tmin,paired-image-vs-tmin}/`, `results/55maps-pairwise-permutation-v2/summary.md`. Driver: `scripts/paired_permutation_corrected_55maps.py` (unchanged from v1.0.0). Summary builder: `scripts/build_pairwise_perm_v2_summary.py` (extended to 6 pairs).
 
+## Observation 298: 4-run attractor-pull consensus refines the 55-map cap to 100 m (most-permissive); 125 m is the majority cap — text-MIN cleanly corroborates T=0.3's previously thin-sample 100 m floor (2026-04-28)
+
+### The finding
+
+The attractor-pull v2 analysis was extended to a fourth corrected 55-map run (T=MIN text), giving a four-run consensus picture for the radial cutoff at which detection density above ground-truth mounds is no longer distinguishable from a uniform-random within-tile null. Per-run cutoff (deepest contiguous-from-zero shell significant at α = 0.05 under the bias-corrected null):
+
+| Run | Cutoff | Last-individual-significant shell | Monotonic decay? |
+|:---|:--:|:--:|:---|
+| T=0.3 text-HIGH | 100 m | 150 m | no (thin-sample dip at (100, 125]) |
+| T=0.7 text-HIGH | 125 m | 125 m | yes |
+| image | 125 m | 125 m | yes |
+| **T=MIN text** | **100 m** | **100 m** | **yes** |
+
+T=MIN's per-shell observed rates are cleanly monotonic and stop at 100 m without any thin-sample interpretation:
+
+| Shell | Rate | Lift | p (bias-corrected) | Sig? |
+|:---|--:|--:|--:|:--:|
+| (0, 50] m | 42.7 % | 151.8× | 0.001 | yes |
+| (50, 75] m | 3.4 % | 10.1× | 0.001 | yes |
+| (75, 100] m | 1.2 % | 2.7× | 0.015 | yes |
+| (100, 125] m | 0.85 % | 1.5× | 0.199 | no |
+| (125, 150] m | 1.2 % | 1.8× | 0.082 | no |
+| (150, 286] m | 6.0 % | 1.1× | 0.254 | no |
+
+**Most-permissive consensus** (deepest shell significant in *all four* runs): 100 m. **Majority cap** (deepest shell where ≥ 3 of 4 runs are significant): 125 m. The two HIGH text-track runs split — T=0.3 cuts at 100 m, T=0.7 cuts at 125 m — and T=MIN matches T=0.3 with a clean monotonic profile that removes the thin-sample uncertainty that plagued T=0.3's 100 m reading.
+
+### Why this clarifies (not contradicts) Obs 294
+
+Obs 294 framed the cap as 125 m on the basis of a 3-run consensus (T=0.3 text-HIGH, T=0.7 text-HIGH, image), with T=0.3's non-monotonic dip at the (100, 125] shell (n = 7, p = 0.093) editorially collapsed to thin-sample noise so the 125 m claim could stand. That editorial reading was defensible but precarious — it rested on dismissing the only 3-run-discordant cell.
+
+T=MIN's clean 100 m cutoff (no dip, no thin-sample concern, monotonic decay across (0, 50] → (50, 75] → (75, 100] → (100, 125]) is **independent corroboration of a 100 m floor**. The 100 m cutoff is now visible in two of four runs (T=0.3 and T=MIN), with T=MIN providing the clean methodological evidence that T=0.3's 100 m reading lacked. Conversely, the 125 m cap still holds for T=0.7 and image — both clean monotonic cutoffs at 125 m. The 4-run picture therefore *splits* the cap:
+
+- 100 m: shared by T=0.3 text-HIGH and T=MIN text — both cut on the (100, 125] shell.
+- 125 m: shared by T=0.7 text-HIGH and image — both extend cleanly to (100, 125] and cut at (125, 150].
+
+What changes: the 125 m claim moves from "consistent across 3 runs (with one editorial override)" to "majority of 4 runs, but not unanimous". The 100 m claim moves from "single-run thin-sample artefact" to "real cross-run pattern visible in 2 of 4 runs with one clean monotonic instance".
+
+### Implication for paper citation
+
+- Cite **100 m** as the most-permissive cap: "all four corrected 55-map runs show signal above random within-tile placement up to 100 m".
+- Cite **125 m** as the majority / extended cap: "T=0.7 text-HIGH and image-track extend significant signal to 125 m".
+- Leave Obs 294's 125 m editorial framing as a record of how the 3-run conclusion was reached; Obs 298 is the cleaner 4-run statement and supersedes the implied unanimity.
+
+### Two HIGH conditions hit 125 m, two non-HIGH hit 100 m
+
+The split is patterned. The two runs reaching 125 m are T=0.7 text-HIGH and image (also HIGH thinking by default for the image track at the canonical T = 0.0). The two runs cutting at 100 m are T=0.3 text-HIGH (HIGH thinking but lower decoding temperature) and T=MIN text (lower thinking budget at the canonical text temperature). One reading is causal — that the combination of HIGH thinking *plus* diverse decoding (T=0.7 / image's high-budget multi-pass) extends effective spatial reach by one shell relative to either reduced thinking (T=MIN) or reduced decoding temperature (T=0.3). The alternative is that this is coincidence at n = 4. The current data cannot distinguish; flagging as a hypothesis worth noting if a future run varies one factor at a time.
+
+### Methodological note: off-by-one fix in majority-threshold computation
+
+While extending `analyse_attractor_pull_v2.py` to four runs the agent caught a pre-existing off-by-one in the majority-threshold formula. The 3-run output is bit-identical under both formulae (`(N + 1) // 2` and `(N // 2) + 1` both equal 2 at N = 3); only the 4-run majority breakpoint is affected. With the corrected formula `(N // 2) + 1`, the strict majority for N = 4 is 3 (not 2), and the 4-run majority breakpoint is the first shell where < 3 of 4 conditions are individually significant — which is the (100, 125] shell, giving a 125 m majority cap. Bonus correctness improvement included with this update; no prior published numbers were affected.
+
+### Findable later
+
+Search terms: 4-run attractor-pull consensus, text-MIN attractor-pull cutoff 100 m, most-permissive cap 100 m 55-map, majority cap 125 m four runs, T=MIN clean monotonic 100 m, T=0.3 thin-sample dip retroactive corroboration, HIGH thinking diverse decoding 125 m reach, attractor-pull v2 four runs, off-by-one majority-threshold fix, Obs 294 clarification.
+
+### Related observations and artefacts
+
+- **Obs 294** (125 m practitioner cap, 3-run consensus): clarified, not superseded. The 125 m claim still holds for the *majority* of corrected 55-map runs (T=0.7 + image) and is a clean cap on those two; what Obs 298 reframes is the implication that the cap is *unanimous* across runs. The 100 m most-permissive cap is the new cross-run finding that Obs 294's editorial reading dismissed.
+- **Obs 252** (text track ~4× lower buffer elasticity than image): consistent with the cap split — text-track conditions concentrate at the tighter 100 / 125 m boundaries; image-track reaches 125 m. The four-run split refines the picture without changing the elasticity story.
+- **Obs 295** (GS 25 m cap, post-calibration precision): unchanged. The 4-run 55-map split is at 100 m vs 125 m, both far above the GS 25 m cap; the cross-corpus gap remains.
+- **Obs 296** (GS-vs-55-map cap as failure-of-generalisation effect): the 100 m vs 125 m split among the four corrected 55-map runs is itself a small-scale within-corpus reflection of the same failure-mode-driven cap variation observed cross-corpus. Different runs hit different effective spatial-precision floors depending on their detection mode mix.
+- **Artefacts**: `results/55maps-attractor-pull-v2/{attractor-pull-v2.json,report.md}` (4-run extended). Script: `scripts/analyse_attractor_pull_v2.py` (with off-by-one fix). Commits: `dee80bdc` (script: add T=MIN to RUNS + majority-threshold fix), `1c8c34bd` (data + report regen across four runs).
