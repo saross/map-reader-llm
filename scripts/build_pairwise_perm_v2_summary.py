@@ -31,6 +31,9 @@ PAIR_DIRS = (
     ("paired-t0.3-vs-t0.7", "T=0.3", "T=0.7"),
     ("paired-t0.3-vs-image", "T=0.3", "image"),
     ("paired-t0.7-vs-image", "T=0.7", "image"),
+    ("paired-t0.3-vs-tmin", "T=0.3", "T=MIN"),
+    ("paired-t0.7-vs-tmin", "T=0.7", "T=MIN"),
+    ("paired-image-vs-tmin", "image", "T=MIN"),
 )
 
 
