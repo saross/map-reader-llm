@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-04-24 (end of Session 77 autonomous block — **Step 4 + Step 5 COMPLETE**; Session 77 Batches A / B1 / B2 / C all done; Step 6 paper outline remains for the next session)
+**Last updated**: 2026-04-28 (end of Session 80 — Wave 1–4 secondary analyses, verifier-T pilot, phase3a MCC re-eval, 4-run text-track analysis grid, and 5 backlog code fixes all DONE; **Step 6 paper outline now unblocked**)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -999,7 +999,7 @@ item's claim but warrant a polish pass before paper finalisation:
   effort**: ~20 min (`git mv` + update any internal path references in
   committed JSON files; no compute).
 
-- **Clean up exact-duplicate files in
+- **[x] Clean up exact-duplicate files in
   `archive/pre-session-78-pull-2026-04-24/` on sapphire** (added
   2026-04-24 Session 78). During Session 78 matrix launch (commit
   `9ebe7346`), sapphire's working tree had 10 untracked files
@@ -1017,7 +1017,11 @@ item's claim but warrant a polish pass before paper finalisation:
   (`sha256sum <archived> <canonical>`); only remove if all hashes
   match. **Importance**: ~1 MB of disk + avoids confusion about what
   the archive represents. Low urgency. **Estimated effort**: ~10 min
-  (hash-compare script + `rm -rf`).
+  (hash-compare script + `rm -rf`). **DONE 2026-04-27**: directory was
+  already absent from sapphire when audited (`find` returned
+  `NOT_FOUND`); provenance migration note written at
+  `archive/MIGRATION-pre-session-78-pull-2026-04-24.md`. No git
+  movement was required because the archive was never tracked.
 
 - **Configure GitHub identity on sapphire** (added 2026-04-24
   Session 78). During Session 78 Phase E commit step, `git commit` on
@@ -1136,6 +1140,8 @@ Carry-over items plus 6 added in Session 78. **Status updated
    **Pending — bookkeeping only.**
 8. Clean up exact-duplicate files in
    `archive/pre-session-78-pull-2026-04-24/` on sapphire.
+   **[x] DONE 2026-04-27** — see
+   `archive/MIGRATION-pre-session-78-pull-2026-04-24.md`.
 9. Configure GitHub identity on sapphire.
 
 Details at §"Step 6 polish-pass backlog" (line 741).
@@ -1181,6 +1187,11 @@ outline with all supporting evidence verified.
 
 ## Session 80 entry-point queue (composed end-of-Session 79, 2026-04-27)
 
+> **Status update 2026-04-28 (end of Session 80)**: most queue items DONE.
+> See §"Session 80 closure" immediately below this section for a roll-up
+> summary, and §"Step 6 starting-state" for the paper-outline reading list.
+> Original queue text preserved verbatim below for history.
+
 Session 79 completed the per-architecture × per-Era × per-buffer × per-metric leaderboard rebuild, the cross-architecture combined leaderboard, the 55-map T=0.3 generalisation re-run, and the post-run recovery + MCC patch. Session 80 opens at **Step 6 (paper outline)**, the original deliverable.
 
 ### Read first
@@ -1199,6 +1210,11 @@ Session 79 completed the per-architecture × per-Era × per-buffer × per-metric
 
 ### Step 6 paper outline — the main deliverable
 
+> **Status 2026-04-28**: NOW UNBLOCKED. Wave 1–4 secondary analyses,
+> verifier-T pilot, phase3a MCC re-eval, and 4-run text-track analysis
+> grid all DONE this session. See §"Step 6 starting-state" below for
+> the curated Obs reading list ordered by paper-section relevance.
+
 - Map each paper section (Methods / Results / Discussion / Limitations) to 1–3 interim docs from the now-comprehensive `results/` tree.
 - **F1/MCC framing**: per Shawn's 2026-04-26 decision, both a methods paragraph AND a parallel-tables appendix. Methods paragraph explains the metric trade-off (F1 favours text-track recall; MCC favours image-track selectivity); appendix presents F1 + MCC tier tables side-by-side per stratum.
 - **Era 2 Tier 1 = 100% PV** finding (commit `e511e2e2`) is the strongest single paper headline — should anchor the architecture-comparison section.
@@ -1209,20 +1225,20 @@ Session 79 completed the per-architecture × per-Era × per-buffer × per-metric
 
 ### Pending user action (not for an agent)
 
-- **Manual review of T=0.3 generalisation candidates** for corrected F1. The Streamlit review workflow (`scripts/launch_55maps_text_high_review.sh` pattern) takes the 4,349 verified detections + reviews each VLM-only candidate for promote/reject decisions. Expected corrected F1@50m ≈ 0.840 (raw 0.802 + text-HIGH correction delta +0.038, per pre-launch audit estimate). Output: `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`. Once landed, the analogous Dawid-Skene + paired-permutation analyses (compute_corrected_f1_multi_buffer.py + crosstab_verifier_vs_human.py) close the comparison-with-T=0.7 loop.
+- **Manual review of T=0.3 generalisation candidates** for corrected F1. The Streamlit review workflow (`scripts/launch_55maps_text_high_review.sh` pattern) takes the 4,349 verified detections + reviews each VLM-only candidate for promote/reject decisions. Expected corrected F1@50m ≈ 0.840 (raw 0.802 + text-HIGH correction delta +0.038, per pre-launch audit estimate). Output: `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`. Once landed, the analogous Dawid-Skene + paired-permutation analyses (compute_corrected_f1_multi_buffer.py + crosstab_verifier_vs_human.py) close the comparison-with-T=0.7 loop. **DONE 2026-04-28** (commit `73b7aa68` corrected-F1, `0b14e4fc` D-S aggregation; later folded into 4-run paired-permutation v2 grid via commits `a5bc9df6`, `3453ecc7`, `9a5d4461`). A second manual review for **text-MIN** also completed (commit `30088974` corrected-F1, `e344db93` D-S). All four corrected 55-map runs (T=0.3, T=0.7, image, text-MIN) now have full corrected-F1 + D-S + paired-permutation + MCC + attractor-pull coverage.
 
 ### Carry-over backlog (in priority order)
 
-1. **Step 6 paper outline** (Task #5 still pending). The original session goal; deferred while building analytical infrastructure.
-2. **Cost-estimator overstatement bug** (Task #4 housekeeping addition): `launch_manifest.json`'s `expected_cost_usd` is consistently a 5× overstatement (T=0.7 estimate $355 → actual $69.60; T=0.3 estimate $355 → actual $67.79). Worth a one-line patch to `scripts/run_generalisation.py` so future audits don't see false-positive cost flags. Likely cause: estimator assumes max_output_tokens (8192) per call when actual averages ~500.
-3. **`evaluation.md` and `evaluation.csv` MCC rendering gap**: `scripts/evaluate_detections.py` only writes MCC into `evaluation.json` even when `--mcc` is passed. The markdown and CSV emitters omit it. ~30 min CPU patch.
-4. **`4_detect_mounds_batch.py` resume mode breaks meta.json provenance**: the resume invocation overwrites `*.meta.json` with only the resume-batch stats, breaking `cost_manifest.json` aggregation. Recovery agent worked around this via `scripts/merge_recovery_meta.py`; the underlying script needs fixing so future recoveries don't need a workaround.
-5. **`run_generalisation.py aggregate-cost` rewrites launch_manifest.json + experiment_intent.md**: this clobbers the original launch metadata if invoked post-recovery. Recovery agent worked around via `git checkout` restore. Should be patched to APPEND/UPDATE rather than rewrite.
-6. **N<10K MC-precision-flagged tests rerun at N=100K** (low priority; 2,748 tests across the per-arch leaderboard tree). User flagged as low-priority project-wide consistency cleanup. ~3-5 hr CPU at N=100K.
-7. **6% verifier "error" rate at T=0.3 is in-run-recovered, not unrecovered** (Obs 281 corrects this) — but the proposer 18 unrecovered failures + verifier 1 unrecovered are the true post-pipeline residual.
-8. **Sapphire `archive/pre-session-78-pull-2026-04-24/` cleanup** (Step 6 backlog item from earlier sessions, low priority).
-9. **Scope-version `results/verifier-calibration-matrix/` directory** (low priority bookkeeping).
-10. **`cand_01563` parser bug investigation in `run_pv.py`** (low priority; ~0.05% per-cell loss).
+1. **Step 6 paper outline** (Task #5 still pending). The original session goal; deferred while building analytical infrastructure. **UNBLOCKED 2026-04-28** — see §"Step 6 starting-state" below.
+2. **Cost-estimator overstatement bug** (Task #4 housekeeping addition): `launch_manifest.json`'s `expected_cost_usd` is consistently a 5× overstatement (T=0.7 estimate $355 → actual $69.60; T=0.3 estimate $355 → actual $67.79). Worth a one-line patch to `scripts/run_generalisation.py` so future audits don't see false-positive cost flags. Likely cause: estimator assumes max_output_tokens (8192) per call when actual averages ~500. **DONE 2026-04-28** (commit `c738c60e` — mode-aware cost + idempotent aggregate, combined with #5).
+3. **`evaluation.md` and `evaluation.csv` MCC rendering gap**: `scripts/evaluate_detections.py` only writes MCC into `evaluation.json` even when `--mcc` is passed. The markdown and CSV emitters omit it. ~30 min CPU patch. **DONE 2026-04-28** (commit `bdd61bcc`).
+4. **`4_detect_mounds_batch.py` resume mode breaks meta.json provenance**: the resume invocation overwrites `*.meta.json` with only the resume-batch stats, breaking `cost_manifest.json` aggregation. Recovery agent worked around this via `scripts/merge_recovery_meta.py`; the underlying script needs fixing so future recoveries don't need a workaround. **DONE 2026-04-28** (commit `1ce1a982` — preserve meta.json on resume).
+5. **`run_generalisation.py aggregate-cost` rewrites launch_manifest.json + experiment_intent.md**: this clobbers the original launch metadata if invoked post-recovery. Recovery agent worked around via `git checkout` restore. Should be patched to APPEND/UPDATE rather than rewrite. **DONE 2026-04-28** (commit `c738c60e` — combined with #2; aggregate-cost now idempotent).
+6. **N<10K MC-precision-flagged tests rerun at N=100K** (low priority; 2,748 tests across the per-arch leaderboard tree). User flagged as low-priority project-wide consistency cleanup. ~3-5 hr CPU at N=100K. **PENDING — low priority.**
+7. **6% verifier "error" rate at T=0.3 is in-run-recovered, not unrecovered** (Obs 281 corrects this) — but the proposer 18 unrecovered failures + verifier 1 unrecovered are the true post-pipeline residual. **CLOSED 2026-04-28 via Obs 286 (verifier-T pilot Stage A)**: at T=0.0 verifier failure rate is 1.65% deterministic; at T=0.5/T=1.0 it is 0.00%. Production-default recommendation T=0.5 (Obs 287, Stage B). The pre-investigation framing was a misreading; the genuine signal is verifier-temperature-dependent.
+8. **Sapphire `archive/pre-session-78-pull-2026-04-24/` cleanup** (Step 6 backlog item from earlier sessions, low priority). **DONE 2026-04-27** — directory had already been removed from sapphire's working tree in an earlier session; provenance migration note written at `archive/MIGRATION-pre-session-78-pull-2026-04-24.md`. No git movement needed; archive shadowed already-canonical commits `aa36b638`, `4cc95e80`, `651b8ab4`.
+9. **Scope-version `results/verifier-calibration-matrix/` directory** (low priority bookkeeping). **IN PROGRESS 2026-04-28** (parallel agent during Session 80 close-out).
+10. **`cand_01563` parser bug investigation in `run_pv.py`** (low priority; ~0.05% per-cell loss). **IN PROGRESS 2026-04-28** (parallel agent during Session 80 close-out).
 
 ### Things to NOT redo
 
@@ -1231,6 +1247,11 @@ Session 79 completed the per-architecture × per-Era × per-buffer × per-metric
 - The recovery is COMPLETE (commit `548604d9`). Do not re-launch.
 - The per-arch + combined leaderboards are COMPLETE through Session 79. Do not re-launch unless adding new conditions.
 - All 5 deferred citation locations are now SWEPT (commit `16bede22`).
+- **Added Session 80 (2026-04-28)**: The phase3a 252-cell MCC re-eval is COMPLETE (commit `163161a4`); off-matrix `with-mcc/` cells archived (commit `f052a92a`, Obs 288). Do not re-run.
+- **Added Session 80**: All four 55-map manual reviews are COMPLETE (T=0.3 commit `73b7aa68`; text-MIN commit `30088974`; T=0.7 + image done in earlier sessions). All four corrected-F1 + D-S + paired-permutation + MCC + attractor-pull artefacts exist. Do not re-launch.
+- **Added Session 80**: The verifier-T pilot Stage A + Stage B are COMPLETE (commits `f27842a5`, `b9f73bbf`, `74edfb16`). T=0.5 production-default recommendation is empirically supported but no config has been changed. Do not re-run unless validating on a new corpus.
+- **Added Session 80**: Wave 1 secondary analyses (kappa, token efficiency, vote-fraction, K-consensus SD shrinkage v1 + v2) are COMPLETE. Do not re-run.
+- **Added Session 80**: Wave 3 stale-analysis refresh of the 8 themes (Obs 290) is a verified canonical-aligned no-op. Do not re-audit.
 
 ### Guardrails carried over (from earlier sessions)
 
