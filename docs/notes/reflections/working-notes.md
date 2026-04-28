@@ -14895,3 +14895,51 @@ Search terms: Obs 296 diagnostic tests, TP-only localisation precision 55-map vs
 - **Obs 260** (student GT ~25 m positional jitter): empirical anchor for the Rayleigh-like ~12–13 m median jitter floor used to interpret Test #1's 55-map medians.
 - **Obs 252** (text track ~4× lower buffer elasticity than image): the modality asymmetry seen in Test #3 (image structural, text suggestive) parallels the elasticity asymmetry from Obs 252; the same modality split surfaces in two independent measurements.
 - **Artefacts**: `scripts/analyse_tp_localisation_55maps_vs_gs.py`, `scripts/analyse_55maps_per_map_shell_variance.py`. Results: `results/55maps-vs-gs-tp-localisation/{tp_localisation.json,report.md,figures/tp_distance_histogram.png}`, `results/55maps-per-map-shell-variance/{per_map_shell_rates.json,bootstrap_4map_sample.json,report.md,figures/per_map_rate_distribution.png}`. Commits: `682fca2d` (TP-only localisation diagnostic), `0cbae1f6` (per-map shell-variance diagnostic).
+
+## Observation 301: 55-map per-map FP-anchoring rates are heavily right-skewed (text-track median 0 %; corpus rate driven by 2–3 high-pull maps); corpus-level rates may misrepresent typical detector behaviour (2026-04-28)
+
+### The finding
+
+The per-map (50, 75] m rate variance diagnostic (commit `0cbae1f6`, results `results/55maps-per-map-shell-variance/`) measures the (50, 75] m mid-distance pull rate **per map** across the 55-map universe, instead of the corpus-level rate that headlines Obs 296 and Obs 300. The shape of the per-map distribution is the substantive finding here:
+
+| Run | corpus rate | per-map mean | per-map median | per-map SD | max |
+|:---|--:|--:|--:|--:|--:|
+| T=0.3 text-HIGH | 4.34 % | 4.81 % | **0.00 %** | 8.56 % | 42.86 % |
+| T=0.7 text-HIGH | 3.33 % | 4.77 % | **0.00 %** | 12.05 % | 75.00 % |
+| text-MIN | 4.10 % | 5.06 % | **0.00 %** | 10.27 % | 50.00 % |
+| image (T=0.7) | 15.84 % | 15.68 % | 15.38 % | 12.45 % | 50.00 % |
+
+**Three of four corrected 55-map runs (the text-track) have a per-map median of 0 %.** Most maps see no FPs in the (50, 75] m shell. The corpus-level rates of 3–4 % on text-track are driven by **2–3 high-pull tail maps** with rates 33–75 %.
+
+The image run is the exception: median 15.4 % per map, indicating the FP-anchoring effect is distributed across most maps rather than concentrated in a tail. Confirming this by a different cut: the fraction of maps whose per-map rate sits at or below the same-track GS yardstick (text 0.51 %, image 1.21 %) is 61.8 % / 72.7 % / 67.3 % for the three text runs (T=0.3 / T=0.7 / text-MIN) but only 18.2 % for image. On text-track, most maps are GS-like; on image-track, most maps exceed GS by a substantial margin.
+
+### Why this matters for the paper
+
+1. **Corpus-level rate quotes are misleading on text-track.** A paper claim like "text-track FP-anchoring rate is 4 %" is technically true for the corpus average but **misrepresents typical detector behaviour** — most maps see 0 %. The honest summary is "text-track FP-anchoring is bimodal: most maps have no mid-distance pull, but 2–3 maps show 33–75 %".
+2. **Cross-corpus comparisons on text need shape-aware reporting.** The GS-vs-55-map text-track gap (0.5 % vs 4 %) compares two summary statistics that hide very different distributional shapes. The 4 GS maps could be drawn from the bulk of the 55-map distribution (in which case there's no gap) **or** from the tail-suppressed portion (failure-of-generalisation). Obs 300's track-asymmetric verdict reflects this very ambiguity — the per-map shape is what makes the text-track sampling-versus-structural question genuinely undecidable from this diagnostic alone.
+3. **The few high-pull maps deserve characterisation.** Which maps are they? What feature density makes them prone to distractor pull? This is a paper-relevant follow-up — if the high-pull maps share an identifiable feature (particularly dense numeric labelling, a specific cartographic style variant, dense vegetation hatching), that's a more actionable finding than "the detector is sometimes bad on some maps".
+4. **Methodological recommendation for the paper.** When reporting per-shell rates on 55-map, include per-map median + IQR (or a boxplot) alongside the corpus mean. Do **not** cite a single corpus number without distributional context. The same recommendation applies to any per-map metric whose distribution is plausibly heavy-tailed at this corpus size.
+
+### Image vs text — the modality asymmetry mirrors Obs 252
+
+Image-track per-map distribution is roughly centred (median 15.4 %, mean 15.7 %); text-track is heavily right-skewed (median 0 %, mean ~5 %, long tail). This mirrors the buffer-elasticity asymmetry from Obs 252 (text track ~4× lower buffer elasticity than image): text-track detection behaviour is uniformly tight on most maps, with a few heavy-tail outliers; image-track detection behaviour is uniformly looser across all maps. The finding is consistent across multiple metrics — text is "bimodal good/bad-by-map", image is "uniformly intermediate" — and surfaces the same modality split independently in buffer elasticity (Obs 252), failure-of-generalisation strength (Obs 300), and now per-map FP-anchoring shape.
+
+### Caveats and methodological notes
+
+- **The 4 conditions all use the same map corpus.** Per-map values across runs are correlated (any map that's hard for one detector tends to be hard for others). Cross-run aggregation requires noting this; the 4-condition table here is not 4 independent samples of the per-map distribution.
+- **Per-map n_detections varies; sub-corpus maps with very few detections have high-variance per-map rates.** The bootstrap from Test #3 (Obs 300) accounts for this by using detection-weighted sampling; the per-map summary table here does not. The median-0 % reading is robust to this caveat (a map with zero detections contributes 0 to the median computation by convention via `> 0` filtering — all 55 maps had > 0 detections in all four runs per the source table) but the SD and tail-max values are sensitive to thin-sample maps.
+- **Identifying which specific maps are the high-pull tail and why is out of scope for this Obs** but flagged as a paper follow-up. The per-map JSON at `results/55maps-per-map-shell-variance/per_map_shell_rates.json` carries the map names; a downstream characterisation could be a small follow-up Obs.
+- **The headline 1.7 % yardstick (image-track GS) and same-track yardsticks (text 0.51 %, image 1.21 %) give similar per-map fractions.** For text runs, frac ≤ 1.7 % equals frac ≤ 0.51 % to the maps shown — i.e. no map has a per-map rate strictly between 0.51 % and 1.7 %; the bimodal split is sharp.
+
+### Findable later
+
+Search terms: per-map FP-anchoring right-skew text-track median 0%, 55-map per-map distribution shape, corpus rate misleading text-track 4%, 2-3 high-pull maps drive corpus rate, bimodal per-map text-track distribution, image uniformly intermediate per-map 15.4%, per-map SD 8-12% text-track, max per-map rate 75% T=0.7, per-map fraction below GS yardstick 60-72%, paper methodology recommendation per-map median IQR boxplot, modality asymmetry Obs 252 mirrored per-map shape, high-pull tail map characterisation follow-up, corpus mean misrepresents typical detector behaviour, distributional context 55-map per-shell rates.
+
+### Related observations and artefacts
+
+- **Obs 252** (text track ~4× lower buffer elasticity than image): consistent — modality asymmetry shows up here as bimodal-text vs uniform-image per-map distribution. The same split surfaces in two independent measurements.
+- **Obs 257** (per-map heterogeneity drives per-map F1 SD = 0.093 on 55-map): foundational — establishes that 55-map per-map heterogeneity is high; this Obs extends the heterogeneity finding from F1 to FP-anchoring rate.
+- **Obs 280, Obs 292** (F1 / MCC tier-leader divergence): related — both findings flag that single-metric / single-stat reports on 55-map can mislead. This Obs is the per-map analogue of the same warning for FP-anchoring rate.
+- **Obs 296** (failure-of-generalisation reinterpretation, 5–10× per-detection mid-distance pull): qualified by this Obs on text-track — the corpus-level reading hides a heavy right-skew; see also Obs 300 for the structural-vs-sampling implications of the same right-skew.
+- **Obs 300** (sister diagnostic findings — track-asymmetric verdict): direct companion. Obs 300 is "what the data tells us across the cap-difference question"; Obs 301 is "how the per-map data should be reported in the paper". Both Obs draw on the same `results/55maps-per-map-shell-variance/` artefacts but answer distinct questions.
+- **Artefacts**: Script `scripts/analyse_55maps_per_map_shell_variance.py`. Tests `tests/test_analyse_55maps_per_map_shell_variance.py` (14 / 14 pass). Results `results/55maps-per-map-shell-variance/{per_map_shell_rates.json,bootstrap_4map_sample.json,report.md,figures/per_map_rate_distribution.png}`. Commit `0cbae1f6` (data + report).
