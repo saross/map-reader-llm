@@ -1,0 +1,279 @@
+{
+  "method": "tp-only-localisation-precision",
+  "obs_anchor": "Obs 296 diagnostic test #1; companion to Obs 295 / Obs 298",
+  "tp_cutoff_m": 25.0,
+  "histogram_bin_m": 5.0,
+  "n_gs_reference_mounds": 569,
+  "n_55map_reference_mounds": 4744,
+  "conditions": [
+    {
+      "key": "gs-text-high-t0.7",
+      "label": "GS text-HIGH-T0.7 (K=5)",
+      "corpus": "gs",
+      "n_detections": 392,
+      "n_tp_at_25m": 365,
+      "tp_rate_at_25m": 0.9311,
+      "descriptors": {
+        "n_tp": 365,
+        "mean_m": 7.186,
+        "median_m": 6.36,
+        "std_m": 4.29,
+        "p25_m": 4.016,
+        "p50_m": 6.36,
+        "p75_m": 9.406,
+        "p90_m": 12.856,
+        "p95_m": 15.495,
+        "histogram_5m_bins": [
+          {
+            "bin_lo_m": 0.0,
+            "bin_hi_m": 5.0,
+            "count": 126
+          },
+          {
+            "bin_lo_m": 5.0,
+            "bin_hi_m": 10.0,
+            "count": 163
+          },
+          {
+            "bin_lo_m": 10.0,
+            "bin_hi_m": 15.0,
+            "count": 53
+          },
+          {
+            "bin_lo_m": 15.0,
+            "bin_hi_m": 20.0,
+            "count": 17
+          },
+          {
+            "bin_lo_m": 20.0,
+            "bin_hi_m": 25.0,
+            "count": 6
+          }
+        ]
+      }
+    },
+    {
+      "key": "55map-t0.3",
+      "label": "55-map T=0.3 text-HIGH",
+      "corpus": "55map",
+      "n_detections": 692,
+      "n_tp_at_25m": 30,
+      "tp_rate_at_25m": 0.0434,
+      "descriptors": {
+        "n_tp": 30,
+        "mean_m": 14.888,
+        "median_m": 14.429,
+        "std_m": 7.039,
+        "p25_m": 9.269,
+        "p50_m": 14.429,
+        "p75_m": 21.859,
+        "p90_m": 23.216,
+        "p95_m": 24.046,
+        "histogram_5m_bins": [
+          {
+            "bin_lo_m": 0.0,
+            "bin_hi_m": 5.0,
+            "count": 2
+          },
+          {
+            "bin_lo_m": 5.0,
+            "bin_hi_m": 10.0,
+            "count": 8
+          },
+          {
+            "bin_lo_m": 10.0,
+            "bin_hi_m": 15.0,
+            "count": 5
+          },
+          {
+            "bin_lo_m": 15.0,
+            "bin_hi_m": 20.0,
+            "count": 5
+          },
+          {
+            "bin_lo_m": 20.0,
+            "bin_hi_m": 25.0,
+            "count": 10
+          }
+        ]
+      }
+    },
+    {
+      "key": "55map-t0.7",
+      "label": "55-map T=0.7 text-HIGH",
+      "corpus": "55map",
+      "n_detections": 630,
+      "n_tp_at_25m": 20,
+      "tp_rate_at_25m": 0.0317,
+      "descriptors": {
+        "n_tp": 20,
+        "mean_m": 13.765,
+        "median_m": 12.832,
+        "std_m": 6.638,
+        "p25_m": 8.921,
+        "p50_m": 12.832,
+        "p75_m": 19.363,
+        "p90_m": 24.14,
+        "p95_m": 24.277,
+        "histogram_5m_bins": [
+          {
+            "bin_lo_m": 0.0,
+            "bin_hi_m": 5.0,
+            "count": 1
+          },
+          {
+            "bin_lo_m": 5.0,
+            "bin_hi_m": 10.0,
+            "count": 6
+          },
+          {
+            "bin_lo_m": 10.0,
+            "bin_hi_m": 15.0,
+            "count": 7
+          },
+          {
+            "bin_lo_m": 15.0,
+            "bin_hi_m": 20.0,
+            "count": 1
+          },
+          {
+            "bin_lo_m": 20.0,
+            "bin_hi_m": 25.0,
+            "count": 5
+          }
+        ]
+      }
+    },
+    {
+      "key": "55map-image",
+      "label": "55-map image (T=0.7)",
+      "corpus": "55map",
+      "n_detections": 1029,
+      "n_tp_at_25m": 52,
+      "tp_rate_at_25m": 0.0505,
+      "descriptors": {
+        "n_tp": 52,
+        "mean_m": 17.51,
+        "median_m": 18.379,
+        "std_m": 6.178,
+        "p25_m": 14.27,
+        "p50_m": 18.379,
+        "p75_m": 23.031,
+        "p90_m": 24.286,
+        "p95_m": 24.591,
+        "histogram_5m_bins": [
+          {
+            "bin_lo_m": 0.0,
+            "bin_hi_m": 5.0,
+            "count": 2
+          },
+          {
+            "bin_lo_m": 5.0,
+            "bin_hi_m": 10.0,
+            "count": 7
+          },
+          {
+            "bin_lo_m": 10.0,
+            "bin_hi_m": 15.0,
+            "count": 6
+          },
+          {
+            "bin_lo_m": 15.0,
+            "bin_hi_m": 20.0,
+            "count": 16
+          },
+          {
+            "bin_lo_m": 20.0,
+            "bin_hi_m": 25.0,
+            "count": 21
+          }
+        ]
+      }
+    },
+    {
+      "key": "55map-text-min",
+      "label": "55-map text-MIN",
+      "corpus": "55map",
+      "n_detections": 585,
+      "n_tp_at_25m": 24,
+      "tp_rate_at_25m": 0.041,
+      "descriptors": {
+        "n_tp": 24,
+        "mean_m": 13.333,
+        "median_m": 14.408,
+        "std_m": 6.844,
+        "p25_m": 7.912,
+        "p50_m": 14.408,
+        "p75_m": 19.556,
+        "p90_m": 20.952,
+        "p95_m": 22.053,
+        "histogram_5m_bins": [
+          {
+            "bin_lo_m": 0.0,
+            "bin_hi_m": 5.0,
+            "count": 5
+          },
+          {
+            "bin_lo_m": 5.0,
+            "bin_hi_m": 10.0,
+            "count": 3
+          },
+          {
+            "bin_lo_m": 10.0,
+            "bin_hi_m": 15.0,
+            "count": 5
+          },
+          {
+            "bin_lo_m": 15.0,
+            "bin_hi_m": 20.0,
+            "count": 5
+          },
+          {
+            "bin_lo_m": 20.0,
+            "bin_hi_m": 25.0,
+            "count": 6
+          }
+        ]
+      }
+    }
+  ],
+  "ks_pairwise": [
+    {
+      "pair": "gs-text-high-t0.7 vs 55map-t0.3",
+      "gs_n": 365,
+      "other_n": 30,
+      "ks_statistic": 0.5237,
+      "p_value": 0.0,
+      "significant_alpha_0.05": true,
+      "significant_bonferroni_4pairs": true
+    },
+    {
+      "pair": "gs-text-high-t0.7 vs 55map-t0.7",
+      "gs_n": 365,
+      "other_n": 20,
+      "ks_statistic": 0.5233,
+      "p_value": 2.4e-05,
+      "significant_alpha_0.05": true,
+      "significant_bonferroni_4pairs": true
+    },
+    {
+      "pair": "gs-text-high-t0.7 vs 55map-image",
+      "gs_n": 365,
+      "other_n": 52,
+      "ks_statistic": 0.7173,
+      "p_value": 0.0,
+      "significant_alpha_0.05": true,
+      "significant_bonferroni_4pairs": true
+    },
+    {
+      "pair": "gs-text-high-t0.7 vs 55map-text-min",
+      "gs_n": 365,
+      "other_n": 24,
+      "ks_statistic": 0.5291,
+      "p_value": 2e-06,
+      "significant_alpha_0.05": true,
+      "significant_bonferroni_4pairs": true
+    }
+  ],
+  "methodological_note": "TP-only diagnostic. One-sided test of detector spatial precision; does not separate 'tight detector + bad FP-anchoring' from 'loose detector + good FP-anchoring'. Cleanest single number on detector precision available from existing data per Obs 296 brief."
+}
