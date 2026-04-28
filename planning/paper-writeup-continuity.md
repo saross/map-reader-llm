@@ -1267,6 +1267,96 @@ Session 79 completed the per-architecture × per-Era × per-buffer × per-metric
 
 Working tree clean on `main`, in sync with `origin/main`. Recent work spans commits `dcd36515..548604d9` (Session 79 + recovery). All artefacts committed; no uncommitted state to carry over besides whatever final commits land in this winding-down phase.
 
+> **Session 80 update (2026-04-28)**: ~60 commits since Session 79 close (`31aa8fda` → end of Session 80). Most recent paper-load-bearing commits: `e2ceef58` (F1 tier-ranking tables), `2bceb78c` (Obs 299 D-S calibration convergence), `9a5d4461` (4-run pairwise-permutation v2 summary), `0832acf9` (Obs 296 cap reinterpretation), `e83445d3` (Obs 291–293 cross-run findings), `dcae1596` (Obs 287 verifier-T Stage B verdict). See §"Session 80 closure" for the curated commit roll-up.
+
+---
+
+## Session 80 closure (2026-04-28)
+
+### Roll-up summary
+
+- **Total observations added this session**: 18 (Obs 282–299), plus retrospective forward-pointer updates to Obs 281 and Obs 293.
+- **Total commits since Session 80 start** (after `31aa8fda` handover commit): ~60 commits, all on `main`, in sync with `origin/main`.
+- **Headline deliverables**:
+  - **5 backlog code fixes landed** (cost-estimator mode-aware + idempotent aggregate `c738c60e`; evaluation.md/csv MCC rendering `bdd61bcc`; resume-mode meta.json merge `1ce1a982`).
+  - **Wave 1 secondary analyses** complete (kappa Obs 282; vote-fraction Obs 283; token efficiency Obs 284; K-consensus SD v1 → v2 Obs 285 → Obs 289 with shared-mode signal in 5/13 strata).
+  - **Verifier-T pilot** complete (Stage A Obs 286: T=0.0 has 1.65 % deterministic verifier failures vs 0.00 % at T>0; Stage B Obs 287: F1/MCC NOT degraded; T=0.5 recommended as production default — empirically supported, no config change applied).
+  - **Wave 2 phase3a MCC re-eval** complete (252 conditions canonicalised at `results/phase3a-{text,image}-matrix/<cell>/evaluation.{json,md,csv}`; off-matrix `with-mcc/` cells archived per Obs 288).
+  - **Wave 3 staleness refresh** complete (Obs 290: 8 themes audited; all canonical-aligned no-ops).
+  - **Wave 4: 4-run text-track analysis grid** complete (Obs 297: HIGH thinking earns its tokens at 55-map scope, T=0.7 vs T=MIN paired Δ +0.0296 BH p<0.001 at R=50 m; Obs 298: 4-run attractor-pull cap clarification 100 m most-permissive, 125 m majority; Obs 299: D-S calibration converges across text-track configs, image isolated as modality-specific).
+  - **Cap analyses** (Obs 294: 55-map 125 m practitioner cap; Obs 295: GS 25 m cap, 5× tighter; Obs 296: failure-of-generalisation reinterpretation — cap difference is calibration-vs-native, not GT-precision-driven).
+  - **Manual reviews** for T=0.3 and text-MIN landed; all four corrected 55-map runs (T=0.3, T=0.7, image, text-MIN) now have full corrected-F1 + D-S + MCC + paired-permutation + attractor-pull coverage.
+  - **Infrastructure**: `obs-writer` agent + `/observe` slash command added in `~/personal-assistant/`.
+- **4-run analysis grid completeness** (text track at corrected-F1 R=50 m anchor):
+  - T=0.3 text-HIGH ✓ corrected-F1 ✓ D-S ✓ MCC ✓ attractor-pull ✓
+  - T=0.7 text-HIGH ✓ corrected-F1 ✓ D-S ✓ MCC ✓ attractor-pull ✓
+  - image (T=0.7) ✓ corrected-F1 ✓ D-S ✓ MCC ✓ attractor-pull ✓
+  - text-MIN ✓ corrected-F1 ✓ D-S ✓ MCC ✓ attractor-pull ✓
+  - 6 pairwise permutation tests across all four runs at 10 buffers each (10 K perms; commits `3453ecc7` + `9a5d4461`).
+- **Things still in-flight at close** (parallel agents):
+  - Sapphire `archive/pre-session-78-pull-2026-04-24/` cleanup.
+  - Scope-version `results/verifier-calibration-matrix/`.
+  - `cand_01563` parser bug investigation.
+  - Obs 296 diagnostic tests: TP-only localisation, per-map (50,75]m variance.
+
+### Read first if returning fresh
+
+1. **Obs 297** (`docs/notes/reflections/working-notes.md` line 14606) — the headline 4-run paired-permutation v2 finding: HIGH thinking earns its tokens at 55-map scope. Obs 297 is the load-bearing claim for the paper's HIGH-vs-MIN comparison.
+2. **Obs 296** (`working-notes.md` line 14532) — the cap reinterpretation: GS-vs-55-map cap difference is failure-of-generalisation, not GT-precision-driven.
+3. **Obs 287** (`working-notes.md` line 14032) — verifier-T pilot Stage B verdict: T=0.5 production-default recommendation. Methodological note for the paper's reliability/operational section.
+4. **Obs 280** (`working-notes.md` line 13642) — F1/MCC tier-leader divergence (already in Session 79 queue but still load-bearing for the parallel-tables appendix decision).
+5. **Obs 289** (`working-notes.md` line 14120) — K-consensus SD shrinkage v2: shared-mode signal in 5/13 strata; supersedes Obs 285's i.i.d. proxy result.
+
+---
+
+## Step 6 starting-state (2026-04-28)
+
+**Status**: NOW UNBLOCKED. All Wave 1–4 secondary analyses, the verifier-T pilot, the phase3a MCC re-eval, and the 4-run text-track analysis grid are committed. The 5 carry-over code fixes (#2–#5) are landed. Remaining backlog items are low-priority bookkeeping that does not block paper drafting.
+
+**Recommended next action**: begin the paper-section-to-interim-doc mapping using the curated Obs reading list below.
+
+### Obs reading list — ordered by paper section
+
+#### Methods (verifier choice, temperature, calibration, prompt invariance)
+
+1. **Obs 277** (`working-notes.md` line ~13215) — verifier-prompt invariance: canonical `verify_adversarial-text` Pareto-dominant on calibration metrics across 7 prompts. Methods justification for verifier-prompt selection.
+2. **Obs 286, 287** (`working-notes.md` lines 13988, 14032) — verifier-T pilot Stage A + B. Stage A: T=0.0 has 1.65 % deterministic verifier failures vs 0.00 % at T>0; Stage B: F1/MCC NOT degraded by T>0. Methods note + production-default recommendation T=0.5.
+3. **Obs 281** (`working-notes.md` line 13768) — temperature failure-rate hypothesis NOT supported on the proposer (T=0.3 vs T=0.7); pre-investigation "6 % verifier failure" framing was a misreading of in-run-retried transient errors. Methods footnote on what `finish_reason_counts.error` does and does not measure.
+4. **Obs 269 + Obs 277 + Obs 283** as a cluster — the input-distribution hypothesis: image-track miscalibration is verifier-specific, not system-wide; canonical prompt cannot be rescued by alternatives. Methods justification for the verifier-architecture choice.
+
+#### Results (4-run grid, leaderboard, paired tests, F1 + MCC)
+
+1. **Obs 297** (`working-notes.md` line 14606) — the 4-run paired-permutation v2 grid headline: T=0.7 vs T=MIN paired Δ +0.0296 (BH p<0.001) at R=50 m; HIGH thinking earns its tokens at 55-map scope; T=MIN is bottom of all four corrected runs at every R≥25 m. **Most paper-load-bearing single observation in Session 80.**
+2. **Obs 280** (`working-notes.md` line 13642) — pervasive F1/MCC tier-leader divergence across populated strata. Drives the parallel-tables appendix decision and the Methods paragraph on metric choice.
+3. **Obs 291** (`working-notes.md` line 14246) — T=0.3 operationally optimal at canonical R=50 m on 55-map corrected corpus; paired-permutation Δ +0.018 vs T=0.7 (BH p<0.001) and +0.012 vs image (BH p=0.017); text-vs-image rank reverses across buffer.
+4. **Obs 292** (`working-notes.md` line 14303) — F1/MCC tier-leader divergence reproduces on the corrected 55-map runs. Image leads MCC by 0.037; F1 leader at R=50 m (T=0.3) is NOT the MCC leader.
+5. **Obs 284** (`working-notes.md` line 13902) — HIGH thinking has NEGATIVE per-token efficiency at T=0.0 image (−0.0347 ΔF1 / 1k thinking tokens); modality divergence — text-track barely positive at the same condition. Connects to Obs 297's "HIGH earns its tokens out-of-sample" via the diversity-dividend mechanism.
+6. **Obs 282** (`working-notes.md` line 13830) — inter-pass candidate-match kappa is a diversity metric, not a quality metric. MIN > HIGH at matched K; T inverts the F1/MCC ranking; HIGH+T fragility corroborates the variance hypothesis (Obs 245).
+7. **Obs 278** (`working-notes.md`, Session 79 commit `e511e2e2`) — PV-architecture benefit scoped to 384-px Era 2; Era 2 Tier 1 = 100 % PV is the strongest single paper headline.
+8. **Obs 279** (`working-notes.md`, Session 79) — per-buffer F1 tier-stability: broad stability (median rho 0.956) + two paper-relevant exceptions (era1/single-pass collapse 30→40 m; era3/consensus oscillation).
+
+#### Discussion (mechanisms, generalisation, calibration coupling)
+
+1. **Obs 296** (`working-notes.md` line 14532) — GS-vs-55-map cap difference is a failure-of-generalisation effect, NOT a fundamental detector-precision shift. Per-detection mid-distance pull is 5–10× lower on the calibration corpus, with asymmetric failure modes between corpora. Reinterprets the cap gap as calibration-vs-native, not GT-precision-driven. Discussion-load-bearing for the cross-corpus generalisation argument.
+2. **Obs 298** (`working-notes.md` line 14698) — 4-run attractor-pull consensus refines the 55-map cap to 100 m (most-permissive); 125 m is the majority cap. Text-MIN cleanly corroborates T=0.3's previously thin-sample 100 m floor. Discussion of the practitioner cap.
+3. **Obs 299** (`working-notes.md` line 14761) — D-S calibration gap monotonic across all four corrected 55-map runs; text-MIN ≈ T=0.7 in calibration despite very different prompt configurations; image's penalty isolated as modality-specific. Discussion of D-S calibration coupling.
+4. **Obs 289** (`working-notes.md` line 14120) — K-consensus SD shrinkage IS heterogeneous; v2 reveals shared-mode signal in 5/13 strata. Supersedes Obs 285's proxy-bound i.i.d. result. Discussion of consensus-stability scaling.
+
+#### Limitations (caps, calibration ceiling, off-matrix housekeeping)
+
+1. **Obs 294** (`working-notes.md` line 14419) — 125 m is the maximum buffer at which detection density is distinguishable from random within-tile occurrence on the corrected 55-map runs. Limitations citation for the practitioner-cap floor.
+2. **Obs 295** (`working-notes.md` line 14473) — 25 m is the maximum buffer on the 4-map gold-standard; five-fold tighter than the 55-map cap. Limitations citation for the calibration-vs-native gap.
+3. **Obs 288** (`working-notes.md` line 14080) — pre-existing `with-mcc/` reference cells were off-matrix one-offs, not canonical truth; archived. Limitations footnote on prior tile-level MCC narrative being matrix-canonical-aligned post-Wave-2.
+4. **Obs 290** (`working-notes.md` line 14190) — Wave 3 staleness refresh: 0 substantive corrections from Phase C / Wave 2 source updates; 8 of 9 themes verified canonical-aligned. Methods/limitations note that prior narratives were already canonical-aligned.
+
+### Suggested first writing-pass order
+
+1. Open with **Obs 297** as the headline result + **Obs 280 / Obs 292** for the F1/MCC framing decision.
+2. **Obs 286 + Obs 287** — verifier-T pilot — slot into Methods early so the production-default recommendation is set before Results.
+3. **Obs 296** — generalisation-vs-calibration cap reinterpretation — anchor the Discussion.
+4. **Obs 277 + Obs 281 + Obs 283** — input-distribution-specific calibration claim — slot into Methods footnotes or a focused Methods subsection.
+5. **Obs 278 + Obs 279** — PV-architecture scope + per-buffer tier-stability — slot into the Architecture-Comparison Results section.
+
 ---
 
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
