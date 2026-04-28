@@ -14528,4 +14528,79 @@ Search terms: 25 m gold-standard cap, GS attractor-pull cutoff, geometric KDTree
 - **Obs 294** (55-map cap = 125 m, multi-run consensus): direct companion to this finding. Same methodology, different corpus, different reference precision; corpus-specific cap differs by exactly the GT-jitter amount predicted by Obs 260.
 - **Artefacts**: `results/gold-standard-attractor-pull/{attractor-pull-gs.json,report.md,figures/attractor-pull-gs-shell-rates.png}`. Script: `scripts/analyse_attractor_pull_gs.py` (~770 lines, ruff-clean, seed=42, 1,000 within-tile permutations). Tests: `tests/test_analyse_attractor_pull_gs.py` (10 tests, all pass). Commits: `430693bc` (script + tests), `6cd7c24c` (data + report + figure).
 
+## Observation 296: GS-vs-55-map cap difference is a failure-of-generalisation effect, not a fundamental detector-precision shift; per-detection mid-distance pull is 5–10× lower on the calibration corpus, with asymmetric failure modes between corpuses (2026-04-28)
+
+### The test
+
+A direct cross-corpus comparison of the **per-detection mid-distance pull rate** in matched shell bins. This is a re-reading of the data already produced by `scripts/analyse_attractor_pull_v2.py` (55-map; commit `74dbe680`) and `scripts/analyse_attractor_pull_gs.py` (GS, geometric KDTree; commit `430693bc`), not a new run. Both scripts compute the per-shell observed proportion of detections whose nearest reference mound falls in each shell, both using the same shell schema {0–50 [GS sub-split 0–25, 25–50], 50–75, 75–100, 100–125, 125–150, 150–286} m and a uniform-within-tile null reference.
+
+The retest re-reads the JSON outputs (`results/55maps-attractor-pull-v2/attractor-pull-v2.json`, `results/gold-standard-attractor-pull/attractor-pull-gs.json`) and tabulates per-detection observed rates side-by-side. No re-running was required because the question is "what did the detector actually do at each radius?" — the JSON already answers that. The reinterpretation is in the comparison, not new compute.
+
+### The finding
+
+**Per-detection observed proportions in the (50, 75] m shell**:
+
+| Corpus / condition | (50, 75] m observed rate |
+|:---|:--:|
+| GS text-HIGH-T0.7 | 0.5 % |
+| GS image-HIGH-T0.7 | 1.2 % |
+| GS SCALE4-optimal | 1.7 % |
+| 55-map T=0.3 text-HIGH | **3.5 %** |
+| 55-map T=0.7 text-HIGH | **2.9 %** |
+| 55-map image | **11.8 %** |
+
+The 55-map mid-distance pull rate is **5–10× higher** than the GS rate at the same shell. The difference is even sharper at (75, 100] m and (100, 125] m. This is **not a null-saturation artefact** — the GS null at (50, 75] m is 0.9 %, only ~2× the 55-map null (0.4 %), so the bulk of the cross-corpus lift difference is observed-rate, not denominator.
+
+### User observation (Shawn, 2026-04-28)
+
+The mechanism is most parsimoniously a **failure of generalisation**, not a corpus-content asymmetry. Shawn's direct observation from manually reviewing the 55-map T=0.3 candidates and his earlier review of the GS evaluations:
+
+> **On the 55-map corpus, the detector falls prey to distractors** (numbers, benchmarks, other labelled cartographic symbols) and produces detections that are pulled 50–125 m off the real mound centroid by the visual anchor of the distractor. **On the 4 GS maps, the detector does not show this distractor-pull behaviour to the same degree, but instead has more FPs on spot-heights and water features** — a different set of failure modes entirely. Manual review of FPs on the 55-map set rarely surfaces spot-height or water-feature FPs.
+
+The 4 GS maps were chosen at random (per Shawn, 2026-04-28); there is no selection effect for cleanliness or distractor density. The asymmetric failure-mode profile reflects native detector behaviour applied to two random samples of map content, where the 4-map sample happens to surface a different mode (spot-heights, water) and the 55-map sample happens to surface another mode (numbers, benchmarks).
+
+### Why this matters — reinterpretation of Obs 295
+
+Obs 295's conclusion that "the GS 25 m cap is the detector's fundamental spatial precision; the 55-map 125 m cap is inflated by GT-jitter and density saturation" was **partially right but missed the bigger effect**. The cleaner reading:
+
+- **GS 25 m cap is the detector's *post-calibration* precision on the maps it was iteratively tuned on.** The 4 GS maps were the calibration corpus; library curation and prompt iteration happened against them. Distractor-pull failure modes that surfaced on those specific 4 maps were progressively suppressed via prompt edits.
+- **55-map 125 m cap is closer to *native* unfamiliar-map precision.** The 55-map sample never went through prompt iteration. Distractor-pull and other native failure modes show through.
+- **The dominant cross-corpus difference is not GT-jitter or density** — those contribute ~25 m and a small null-rate inflation respectively. The dominant difference is the **5–10× per-detection mid-distance pull rate**, which is a generalisation gap.
+
+### Implication for the paper
+
+The 25 m GS cap should NOT be cited as "the detector's spatial precision". It should be cited as "the detector's spatial precision on the calibration corpus, after iterative prompt tuning". The 55-map 125 m cap is the more honest characterisation of out-of-sample behaviour. **The gap between them is the calibration-to-generalisation cost**, and quantifying that cost is itself a paper-relevant claim about VLM detector deployment.
+
+A useful reframe: the cap is set by **whichever failure mode dominates that corpus**. On GS the dominant mode is spot-height / water-feature FP (which produces near-mound co-occurrence in fewer cases than number-pull, hence a tighter cap). On 55-map the dominant mode is number/benchmark distractor-pull (which produces 50–125 m mis-localisation, hence the wider cap). Both are real failure modes; the random map sample determines which one drives the per-corpus cap.
+
+### Diagnostic tests proposed
+
+To corroborate the failure-of-generalisation reading and disambiguate from alternative hypotheses, the following are proposed (not yet run):
+
+1. **TP-only localisation precision** (cleanest test of "is the detector spatially looser on 55-map?"). Compute the centroid-to-GT-centroid distance distribution for TPs only on each corpus. If GS TPs cluster within 10 m and 55-map TPs cluster within 30 m, the spatial-precision difference is real even after FPs are removed. If both overlap tightly, the cap difference is purely FP-driven.
+2. **FP-class classification using existing review labels.** The corrected-F1 review CSVs include `symbol_type` per candidate. Tabulate FP anchoring (number / benchmark / spot-height / water-feature / other) per corpus. If 55-map FPs concentrate on numbers/benchmarks and GS FPs concentrate on spot-heights/water, the asymmetric-failure-mode observation is directly confirmed.
+3. **Per-map (50, 75] m rate variance on 55-map.** Compute per-sheet shell rates across all 55 maps. If 4 random 55-map sheets look like the GS profile (low mid-distance pull), the difference is sampling. If all 55 maps exceed any GS condition's rate, something systematic separates the corpuses.
+4. **Distractor-feature-density audit.** Visual or symbol-detector inventory of numbers, benchmarks, spot-heights, contour-rings, and water-features per tile across both corpuses. Tests "failure rate correlates with distractor type density" mechanistically.
+
+Tests 1–3 are cheap (minutes on existing data); test 4 requires a cartographic-symbol inventory. Recommended order: 2 first (directly tests Shawn's observation), then 1 (separates spatial-precision from FP-anchoring), then 3 (sampling check).
+
+### Mechanism puzzle (text track specifically)
+
+Worth flagging: distractor-pull is most extreme on the 55-map *image* track (11.8 % at (50, 75]), but it persists on text-HIGH (2.9–3.5 %) — and even on text-only the model is doing visual reasoning over the tile crop, so a number/benchmark in the crop can still anchor a misplaced bbox. The mechanism is plausibly that text-track output (JSON coordinates) does not constrain visual attention any more than image-track output does — the proposer is still grounding its bbox in visual content, just expressing the result without an example-image scaffold. Why text-track is *less* prone than image-track (~3× lower) is an open question; possibly because the text-mode prompt's verbal description of mound features biases attention away from non-mound symbols more than the image-mode example crops do.
+
+### Findable later
+
+Search terms: failure of generalisation cap, mid-distance pull rate cross-corpus, GS calibration corpus distractor immunity, asymmetric failure modes spot-heights water features numbers benchmarks, calibration-to-generalisation cost, Obs 295 reinterpretation, native vs post-calibration spatial precision, TP-only localisation diagnostic, FP-class classification review CSV symbol_type, per-map shell-rate variance.
+
+### Related observations and artefacts
+
+- **Obs 295** (GS attractor-pull cap = 25 m, geometric KDTree): the data finding stands; this Obs reinterprets it. Obs 295 should be read as "GS 25 m cap with calibration-corpus caveat" rather than "fundamental detector precision".
+- **Obs 294** (55-map 125 m cap, multi-run): also stands, reinterpreted as "native unfamiliar-map cap" rather than "detector precision inflated by GT noise".
+- **Obs 252** (text track ~4× lower buffer elasticity than image): consistent with text-track having *less* native distractor-pull than image-track, which is what we see at (50, 75] (~3.5 % vs 11.8 % on 55-map).
+- **Obs 260** (student GT ~25 m positional jitter): real but a smaller component of the 55-map vs GS gap than originally framed in Obs 295.
+- **Obs 282** (kappa fragility corroborates variance hypothesis at matched K): related — failure-mode heterogeneity may also drive inter-pass disagreement on 55-map vs GS.
+- **Obs 284** (HIGH thinking earns negative efficiency at T=0.0 image): different distractor-related finding; image track has more correlated visual-confound pulls than text track.
+- **Artefacts**: `results/55maps-attractor-pull-v2/attractor-pull-v2.json`, `results/gold-standard-attractor-pull/attractor-pull-gs.json` (the source data this Obs re-reads).
+
+
 
