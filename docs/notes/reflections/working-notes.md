@@ -15016,3 +15016,54 @@ Search terms: Obs 302 FP-class classification result, contour-ring dominant 55-m
 - **Obs 252** (text vs image buffer elasticity): orthogonal — text-vs-image buffer elasticity is a recall-side asymmetry; this Obs measures FP-side category distribution and finds no significant track asymmetry there.
 - **Artefacts**: Script `scripts/55maps-fp-classify.py` (driver). Results `results/55maps-fp-classification/{fp_classifications.json,category_distribution.json,cost_summary.json,report.md,figures/category_distribution.png}`. Commits `5040f5b4` (driver), `e552ad46` (data + report). Cost actual $0.5071 USD (flex tier); wall 10 m 54 s; 1,119 calls; 0 failures.
 
+## Observation 303: Bootstrap-N controls Monte Carlo noise in CI estimation, not CI width — N=10K standardisation buys reproducibility, not narrower intervals (2026-04-28)
+
+### The finding
+
+The overnight bootstrap-CI standardisation sweep (commit chain `4b31aae0..51f438bd`, 11 commits, ~361 cells upgraded from N=1,000 to N=10,000 across phase3a-matrix, 55-map, gold-standard, h8-v2, h10, h12-v2, verifier-calibration-audit, and verifier-t-pilot) was launched on the parent (Claude) prompt's stated assumption that confidence intervals (CIs) would tighten by ~√10 ≈ 3.2× post-upgrade. The implementing agent's spot-check on six representative cells found CI-width ratios of **0.96–1.02** between the N=1,000 and N=10,000 reruns — i.e. essentially identical bounds — and correctly concluded that the parent's tightening assumption was wrong. The agent continued the sweep on the still-valid "methodological reproducibility" rationale.
+
+This is a basic statistical fact worth recording explicitly, because (a) the assumption was made by the parent prompt, (b) the agent's anti-confabulation discipline caught it before it propagated to the paper, and (c) it changes how the paper's bootstrap methodology section should be framed.
+
+### Why bootstrap-N does NOT tighten CIs
+
+Percentile-bootstrap CI **width** reflects the sampling variability of the statistic in the data — i.e. how much the statistic varies across resamples drawn from the observed sample. This variability is a property of the data and the statistic, fixed once the data are observed. Increasing the number of bootstrap iterations does NOT change the underlying variability; it only reduces the **Monte Carlo noise** in the estimate of the CI bounds:
+
+- True CI bounds (the 2.5th and 97.5th percentiles of the resampling distribution): fixed by the data.
+- Estimated CI bounds (from N bootstrap iterations): noisy estimates of those true bounds.
+- More iterations → less Monte Carlo noise around the true bounds → more reproducible CI estimates across reruns.
+- More iterations → does NOT make the CI narrower.
+
+To narrow CIs, you need more original data (larger sample), more efficient estimators, or a different method entirely (e.g. parametric CIs where a parametric assumption is justified).
+
+### What N=10K standardisation actually buys
+
+**Reproducibility.** Two reruns of the same evaluation at N=10,000 will produce CI bounds that agree to ~3× tighter precision than two reruns at N=1,000. This matters when:
+
+- The same cell is re-evaluated across sessions (e.g. refresh-audit Wave 3) and CI numbers in the paper need to be stable across reruns.
+- Multiple agents pull cell numbers from `evaluation.json` for cross-run comparisons (e.g. the 4-run paired-permutation summary in Obs 297).
+- Independent reproducers re-run the analysis and need to confirm published CIs to within publication-precision.
+
+The cost of N=10,000 is ~10× more compute per cell; the matrix sweep wall time was ~6 hours on sapphire `xargs -P 16` (in line with the overnight agent's actual elapsed runtime, which included timed-out fat-cell retries).
+
+### Implication for the paper's methodology section
+
+When the paper discusses bootstrap CI methodology, frame N=10,000 as **"chosen for reproducibility across reruns"**, not "for tight CIs". If a reviewer asks why N=10,000 rather than N=1,000, the honest answer is: *"N=1,000 already produces statistically valid CIs; N=10,000 reduces between-rerun Monte Carlo variance, which matters for cross-cell reproducibility in a multi-cell analysis pipeline."*
+
+**Do NOT claim** that the N=10,000 results have tighter CIs than the N=1,000 predecessors. The CI bounds shifted only by Monte Carlo noise (~1–4 % in the spot-check), not by a factor of √10.
+
+### Caveat
+
+This Obs is about **percentile-bootstrap** CIs as implemented in `evaluate_detections.py`. Different bootstrap variants (BCa, studentised, basic) have somewhat different CI-vs-N behaviour at the margin, but the core point — that more bootstrap iterations reduce Monte Carlo noise rather than tighten CIs — generalises across percentile-family methods.
+
+### Findable later
+
+Search terms: bootstrap N=10000 standardisation, bootstrap N controls Monte Carlo noise not width, percentile bootstrap CI width fixed by data, CI tightening assumption wrong factor sqrt 10, N=1K vs N=10K spot-check ratios 0.96–1.02, six-cell spot-check CI width identical, reproducibility across reruns rationale, paper methodology framing N=10K, do NOT claim tighter CIs N=10K, ~361 cells upgraded overnight sweep, bootstrap-10K runner script run_bootstrap_10k.py, commit chain 4b31aae0..51f438bd 11 commits, sapphire xargs -P 16 ~6 hours wall, percentile vs BCa bootstrap CI behaviour, evaluate_detections.py bootstrap flag, between-rerun Monte Carlo variance.
+
+### Related observations and artefacts
+
+- **Obs 274** (tile-level MCC monotonic in T across Phase 2b): one of many cells where the N=10,000 upgrade matters for cross-rerun reproducibility of headline CI-citing claims.
+- **Obs 297** (4-run paired-permutation grid; HIGH thinking earns its tokens): paper-load-bearing CI-citing claim across the four corrected 55-map runs; benefits directly from N=10,000 reproducibility for the per-buffer Δ CI columns.
+- **Obs 300** (Obs 296 diagnostic tests; track-asymmetric reading): used N=10,000 (after upgrade) for the per-map shell-rate variance bootstrap; reproducibility-across-reruns matters for the 0 % vs 15–23 % verdict distinction.
+- **Obs 302** (FP-class category distribution; contour-ring dominance): cited corpus-level percentages with implicit reproducibility expectations across any future re-run of the FP-classification analysis.
+- **Bootstrap-10K standardisation commit chain**: `4b31aae0` (t-pilot CLI flag) through `51f438bd` (verifier-t-pilot upgrade), comprising 11 commits in total; the user's spec also mentioned a `pre-bootstrap-10k-2026-04-28` rollback tag, but no such tag exists in the repository at the time of writing (`git tag --list` returns empty) — flagged here for completeness.
+- **Artefacts**: Sweep runner `scripts/run_bootstrap_10k.py`. Spot-check evidence: the implementing agent's report (logged in the chat-only agent transcript; specific CI-width ratios 0.96–1.02 quoted in the agent's status message at 15:32 UTC 2026-04-28). ~361 cells now at N=10,000 across phase3a-matrix, 55-map, gold-standard, h8-v2, h10, h12-v2, verifier-calibration-audit, and verifier-t-pilot. Commits `4b31aae0` (t-pilot --bootstrap CLI flag), `a9fe1c1d` (sweep runner), `e1955ddf` (phase3a-matrix data), `580f498b` (55-map data), `76b6592f` (gold-standard data), `afd1f0c8` (h8-v2 data), `17899e8f` (h10 data), `50368cfb` (h12-v2 data), `38688c47` (verifier-calibration-audit data), `51f438bd` (verifier-t-pilot data).
