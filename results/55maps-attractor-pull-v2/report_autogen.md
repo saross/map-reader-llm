@@ -1,6 +1,6 @@
 # Attractor-pull v2 — multi-run shell-wise null analysis
 
-**Anchor**: Obs 272 (`docs/notes/reflections/working-notes.md`, 2026-04-21) established the attractor-pull cutoff at ~125 m using the image-generalisation review only. v2 re-runs the same shell-wise within-tile permutation null on each of the three corrected 55-map runs and synthesises a consensus cutoff.
+**Anchor**: Obs 272 (`docs/notes/reflections/working-notes.md`, 2026-04-21) established the attractor-pull cutoff at ~125 m using the image-generalisation review only. v2 re-runs the same shell-wise within-tile permutation null on each of the 4 corrected 55-map runs and synthesises a consensus cutoff.
 
 ## 1. Method
 
@@ -50,19 +50,32 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 
 **Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)
 
+### text-MIN — n=585, bias_correction=0.9361
+
+|   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
+|------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
+|           0 |          50 |              0.4274 |                     0.0028 |                      151.76 |                           0.9934 |                    0.001 | True          |
+|          50 |          75 |              0.0342 |                     0.0034 |                       10.08 |                           0.9008 |                    0.001 | True          |
+|          75 |         100 |              0.012  |                     0.0045 |                        2.68 |                           0.6262 |                    0.015 | True          |
+|         100 |         125 |              0.0085 |                     0.0056 |                        1.54 |                           0.3486 |                    0.199 | False         |
+|         125 |         150 |              0.012  |                     0.0068 |                        1.76 |                           0.433  |                    0.082 | False         |
+|         150 |         286 |              0.0598 |                     0.0527 |                        1.14 |                           0.1193 |                    0.254 | False         |
+
+**Per-run cutoff**: 100 m (deepest shell outer edge with bias-corrected p < 0.05)
+
 ## 3. Cross-run consensus
 
-|   R_outer_m | t0.3   | t0.7   | image   |   n_runs_significant | all_significant   |
-|------------:|:-------|:-------|:--------|---------------------:|:------------------|
-|          50 | sig    | sig    | sig     |                    3 | yes               |
-|          75 | sig    | sig    | sig     |                    3 | yes               |
-|         100 | sig    | sig    | sig     |                    3 | yes               |
-|         125 | —      | sig    | sig     |                    2 | no                |
-|         150 | sig    | —      | —       |                    1 | no                |
-|         286 | —      | —      | —       |                    0 | no                |
+|   R_outer_m | t0.3   | t0.7   | image   | text-min   |   n_runs_significant | all_significant   |
+|------------:|:-------|:-------|:--------|:-----------|---------------------:|:------------------|
+|          50 | sig    | sig    | sig     | sig        |                    4 | yes               |
+|          75 | sig    | sig    | sig     | sig        |                    4 | yes               |
+|         100 | sig    | sig    | sig     | sig        |                    4 | yes               |
+|         125 | —      | sig    | sig     | —          |                    2 | no                |
+|         150 | sig    | —      | —       | —          |                    1 | no                |
+|         286 | —      | —      | —       | —          |                    0 | no                |
 
-**Most-permissive consensus cutoff**: 100 m (largest shell outer edge significant in all three runs).
-**Majority-loses breakpoint**: 150 m (first shell where < 2/3 runs are significant).
+**Most-permissive consensus cutoff**: 100 m (largest shell outer edge significant in all 4 runs).
+**Majority-loses breakpoint**: 125 m (first shell where < 3/4 runs are significant).
 
 ### Per-run cutoff summary
 
@@ -71,6 +84,7 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 | T=0.3 text-HIGH |            692 |        100 |
 | T=0.7 text-HIGH |            630 |        125 |
 | image (T=0.7)   |           1029 |        125 |
+| text-MIN        |            585 |        100 |
 
 ## 4. Cross-reference to Obs 272
 
