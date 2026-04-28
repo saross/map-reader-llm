@@ -14602,5 +14602,95 @@ Search terms: failure of generalisation cap, mid-distance pull rate cross-corpus
 - **Obs 284** (HIGH thinking earns negative efficiency at T=0.0 image): different distractor-related finding; image track has more correlated visual-confound pulls than text track.
 - **Artefacts**: `results/55maps-attractor-pull-v2/attractor-pull-v2.json`, `results/gold-standard-attractor-pull/attractor-pull-gs.json` (the source data this Obs re-reads).
 
+## Observation 297: HIGH thinking earns its tokens at 55-map scope — T=0.7 vs T=MIN paired Δ +0.0296 (BH p < 0.001) at R = 50 m; T=MIN is bottom of all four corrected 55-map runs at every buffer ≥ 25 m; image-vs-MIN rank-reverses across buffer (2026-04-28)
 
+### The finding
+
+The 55-map paired-permutation v2 analysis was extended to all six pairwise comparisons among the four manually-corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image, T=MIN text). The three new pairs all involve T=MIN; the headline cross-track HIGH-vs-MIN comparison (T=0.7 vs T=MIN) directly addresses whether HIGH thinking earns its tokens out-of-sample on the 55-map generalisation corpus.
+
+Headline at the canonical operating buffer R = 50 m:
+
+| Pair | ΔF1 (mean) | 95 % CI | raw p | BH-FDR p | Sig? |
+|:---|:--:|:--:|:--:|:--:|:--:|
+| **T=0.3 vs T=MIN** | **+0.0473** | [+0.0379, +0.0568] | < 0.001 | < 0.001 | **yes** |
+| **T=0.7 vs T=MIN** | **+0.0296** | [+0.0200, +0.0392] | < 0.001 | < 0.001 | **yes** |
+| **image vs T=MIN** | **+0.0353** | [+0.0245, +0.0464] | < 0.001 | < 0.001 | **yes** |
+
+T=MIN is bottom of every cell at R = 50 m. Wins / losses / ties at R = 50 m: T=0.3 vs T=MIN 602 / 325 / 7,614; T=0.7 vs T=MIN 545 / 355 / 7,641; image vs T=MIN 756 / 446 / 7,339.
+
+### Does HIGH thinking earn its tokens at 55-map scope — yes
+
+The Obs 284 question — "is HIGH thinking worth its token spend?" — was answered in-sample on the 4-map matrix as **modality- and temperature-conditional**: negative efficiency at T = 0.0 image, positive at T = 0.3 / T = 1.0 across both tracks. The 55-map paired-permutation result is the out-of-sample generalisation of that question for the text track at the production temperatures actually shipped:
+
+- T=0.7 HIGH beats T=MIN by +0.0296 F1 at R = 50 m, paired-significant (BH p < 0.001), holding at every buffer R ≥ 25 m.
+- T=0.3 HIGH beats T=MIN by an even larger +0.0473 (also paired-significant at every buffer R ≥ 25 m).
+- The advantage is approximately constant across buffer (T=0.7 vs T=MIN ranges +0.0170 at R = 25 m to +0.0315 at R = 125 m; not buffer-elastic).
+
+The 55-map answer is therefore unambiguous on the text track: **HIGH thinking earns its tokens at production decoding temperatures.** This is the generalisation claim that makes Obs 284's diversity-dividend mechanism load-bearing for the paper.
+
+### Buffers surviving BH-FDR (q = 0.05) within pair
+
+- **T=0.3 vs T=MIN**: 25, 30, 35, 40, 45, 50, 75, 100, 125 m. Only R = 20 m falls short (raw p = 0.090).
+- **T=0.7 vs T=MIN**: 25, 30, 35, 40, 45, 50, 75, 100, 125 m. Only R = 20 m falls short (raw p = 0.448).
+- **image vs T=MIN**: 20, 25, 30, 35, 50, 75, 100, 125 m. Only R = 40 m and R = 45 m fall short — these are the crossover buffers (see below).
+
+### Buffer-dependent rank reversal: image vs T=MIN flips around R = 40–45 m
+
+The image-vs-T=MIN pair shows a clean buffer-dependent rank reversal analogous to but distinct from Obs 291's text-vs-image flip:
+
+| R (m) | image F1 | T=MIN F1 | ΔF1 (image − T=MIN) | Sig? |
+|:--:|:--:|:--:|:--:|:--:|
+| 20 | 0.5070 | 0.6199 | **−0.1129** (T=MIN crushes) | yes |
+| 25 | 0.6196 | 0.6922 | **−0.0725** (T=MIN crushes) | yes |
+| 30 | 0.6872 | 0.7296 | **−0.0424** (T=MIN wins) | yes |
+| 35 | 0.7261 | 0.7486 | **−0.0225** (T=MIN wins) | yes |
+| 40 | 0.7501 | 0.7561 | −0.0059 (n.s., crossover) | no |
+| 45 | 0.7644 | 0.7598 | +0.0046 (n.s., crossover) | no |
+| 50 | 0.8317 | 0.7964 | **+0.0353** (image wins) | yes |
+| 75 | 0.8477 | 0.7991 | **+0.0486** (image wins) | yes |
+| 125 | 0.8538 | 0.8007 | **+0.0531** (image wins) | yes |
+
+T=MIN — text-only with minimal thinking — has a more **precise** localisation profile than image at tight R (20–35 m): tile-level wins go T=MIN's way 795/516 at R = 20 m and 731/580 at R = 25 m. Image has higher buffer elasticity (Obs 252) and overtakes T=MIN once buffer is relaxed past R = 40 m. The crossover sits at R ≈ 40–45 m, not at the R ≈ 50–75 m crossover seen in Obs 291's text-HIGH-vs-image comparison — i.e. T=MIN's spatial-precision edge over image is *narrower* than text-HIGH's, but it exists in the same direction.
+
+Mechanism (proposed): T=MIN's profile is high-precision low-recall (Obs 287-style minimal-thinking pattern) and tile-level performance dominates at tight R where each TP must land within tens of metres of a GT centroid. Image's recall-per-detection compounds faster as buffer relaxes, mirroring its edge over text-HIGH but at a slightly tighter crossover point because T=MIN's tighter localisation pushes the equality buffer leftward.
+
+### Headline-pair pattern for the four corrected runs at R = 50 m (paper-load-bearing ranking)
+
+Combining the three existing pairs (Obs 291) with the three new pairs:
+
+| Run | F1 @ 50 m | Position |
+|:---|:--:|:---|
+| T=0.3 text-HIGH | 0.8437 | top |
+| image | 0.8317 | second |
+| T=0.7 text-HIGH | 0.8260 | third |
+| T=MIN text | 0.7964 | bottom |
+
+Pairwise paired-permutation significance at R = 50 m:
+
+- T=0.3 > T=0.7 (p < 0.001), T=0.3 > image (p = 0.017), T=0.3 > T=MIN (p < 0.001) — **T=0.3 dominates all three alternatives**.
+- image > T=0.7 (p = 0.239, n.s. at canonical R), image > T=MIN (p < 0.001).
+- T=0.7 > T=MIN (p < 0.001).
+
+The full ranking at canonical R = 50 m is therefore **T=0.3 > image ≈ T=0.7 > T=MIN**, with a non-significant gap between image and T=0.7 only. T=MIN is clearly worst among the four manually-corrected runs.
+
+### Why this matters
+
+1. **Diversity-dividend generalises out-of-sample at production temperatures.** Obs 284's diversity-dividend mechanism (HIGH > MIN at T ∈ {0.3, 1.0}) survives the 4-map → 55-map scale-up at T = 0.7. The previously-questioned in-sample result is now load-bearing for the paper.
+2. **T=MIN is dominated, but not by very much at tight R against image.** The buffer-dependent flip means a paper claim "HIGH > MIN" must specify the buffer; at R ≤ 35 m, T=MIN (text minimal) is *better* than image (HIGH).
+3. **Three-track ranking at R = 50 m is now a four-row block instead of three.** T=0.3 still dominates; T=MIN sits below T=0.7 by ~+0.030 ΔF1, paired-significant, sandwiching T=MIN as the operationally-uncompetitive choice at canonical buffer.
+4. **The image-vs-T=MIN crossover at R ≈ 40–45 m is tighter than the image-vs-T=0.7 crossover at R ≈ 50–75 m**, suggesting the spatial-precision rank reflects thinking budget more than modality alone: less-thinking text precedes image at progressively tighter buffers.
+
+### Findable later
+
+Search terms: 55-map paired permutation v2 six pairs, T=0.7 vs T=MIN paired significance, T=MIN bottom of four corrected runs, +0.0296 ΔF1 BH p<0.001, HIGH thinking earns tokens 55-map scope, diversity dividend out-of-sample T=0.7, image vs T=MIN rank reversal, R=40-45m crossover image text-MIN, T=MIN spatial precision edge tight buffer, four-track ranking R=50m T=0.3 image T=0.7 T=MIN, BH-FDR within-pair correction, Obs 284 generalisation, Obs 291 extension to four runs.
+
+### Related observations and artefacts
+
+- **Obs 284** (HIGH thinking efficiency, 4-map matrix): the in-sample finding this Obs generalises to the 55-map corpus at production T = 0.7. Obs 284's diversity-dividend mechanism (positive at T = 0.3 / T = 1.0) is corroborated out-of-sample with this paired-permutation result.
+- **Obs 291** (T=0.3 operationally optimal, three-pair version): direct precursor; this Obs adds the fourth corrected run (T=MIN) and completes the six-pair matrix.
+- **Obs 252** (image track ~4× higher buffer elasticity than text): structural mechanism for both crossovers (text-HIGH-vs-image at R ≈ 50–75 m; text-MIN-vs-image at R ≈ 40–45 m). The crossover buffer tracks thinking budget — less thinking = tighter crossover = T=MIN's precision edge gets squeezed sooner.
+- **Obs 282** (kappa fragility, HIGH/T inverts F1/MCC ranking): consistent with HIGH > MIN at scale on F1; the corrected-F1 confirmation here is on F1 only (MCC analogue not yet run on the 55-map four-run corpus).
+- **Obs 287** (T=0.5 verifier production default, MIN profile): the precision-favouring mechanism that explains T=MIN's edge over image at tight R.
+- **Obs 294** (125 m practitioner cap, multi-run): the 125 m ceiling buffer for paired-permutation comparisons; T=MIN's flattening at R = 100 / 125 m (F1 = 0.8003 / 0.8007) is consistent with the cap. T=MIN reaches its practitioner-relevant F1 ceiling earliest among the four runs.
+- **Artefacts**: `results/55maps-pairwise-permutation-v2/{paired-t0.3-vs-tmin,paired-t0.7-vs-tmin,paired-image-vs-tmin}/`, `results/55maps-pairwise-permutation-v2/summary.md`. Driver: `scripts/paired_permutation_corrected_55maps.py` (unchanged from v1.0.0). Summary builder: `scripts/build_pairwise_perm_v2_summary.py` (extended to 6 pairs).
 
