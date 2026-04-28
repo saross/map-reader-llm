@@ -1,22 +1,98 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-15T14:05:50.573456+00:00",
+  "timestamp": "2026-04-28T15:26:25.581444+00:00",
   "summary": {
-    "label": "consensus_t2",
+    "label": "r2-balanced-greedy-t2",
     "n_detections": 477,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.6231,
-        "f1_ci_lower": 0.5748,
-        "f1_ci_upper": 0.6703,
-        "precision": 0.5199,
-        "p_ci_lower": 0.4698,
-        "p_ci_upper": 0.5697,
-        "recall": 0.7774,
-        "r_ci_lower": 0.7193,
-        "r_ci_upper": 0.8379
+        "f1": 0.5417,
+        "f1_ci_lower": 0.4915,
+        "f1_ci_upper": 0.59,
+        "precision": 0.5178,
+        "p_ci_lower": 0.4706,
+        "p_ci_upper": 0.5658,
+        "recall": 0.5678,
+        "r_ci_lower": 0.5,
+        "r_ci_upper": 0.6355
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.5877,
+        "f1_ci_lower": 0.5384,
+        "f1_ci_upper": 0.6341,
+        "precision": 0.5618,
+        "p_ci_lower": 0.5137,
+        "p_ci_upper": 0.6076,
+        "recall": 0.6161,
+        "r_ci_lower": 0.547,
+        "r_ci_upper": 0.6857
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.6184,
+        "f1_ci_lower": 0.5695,
+        "f1_ci_upper": 0.6645,
+        "precision": 0.5912,
+        "p_ci_lower": 0.5432,
+        "p_ci_upper": 0.6381,
+        "recall": 0.6483,
+        "r_ci_lower": 0.5771,
+        "r_ci_upper": 0.7173
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.625,
+        "f1_ci_lower": 0.5766,
+        "f1_ci_upper": 0.6704,
+        "precision": 0.5975,
+        "p_ci_lower": 0.5491,
+        "p_ci_upper": 0.6445,
+        "recall": 0.6552,
+        "r_ci_lower": 0.5852,
+        "r_ci_upper": 0.7226
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "5040f5b4",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-28T15:22:03.772380+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/h12-v2/greedy/r2-balanced/consensus_t2.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/h12-v2/greedy/r2-balanced/t2",
+      "label": "r2-balanced-greedy-t2",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/h12-v2/greedy/r2-balanced/consensus_t2.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    }
   }
 }

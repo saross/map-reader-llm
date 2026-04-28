@@ -1,22 +1,98 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-15T14:06:56.462618+00:00",
+  "timestamp": "2026-04-28T15:28:34.461739+00:00",
   "summary": {
-    "label": "wbf_candidates",
+    "label": "r2-balanced-wbf",
     "n_detections": 1041,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.3485,
-        "f1_ci_lower": 0.2914,
-        "f1_ci_upper": 0.4084,
-        "precision": 0.2277,
-        "p_ci_lower": 0.1826,
-        "p_ci_upper": 0.2773,
-        "recall": 0.7429,
-        "r_ci_lower": 0.6806,
-        "r_ci_upper": 0.8008
+        "f1": 0.3198,
+        "f1_ci_lower": 0.2704,
+        "f1_ci_upper": 0.3707,
+        "precision": 0.2267,
+        "p_ci_lower": 0.1848,
+        "p_ci_upper": 0.2732,
+        "recall": 0.5425,
+        "r_ci_lower": 0.4755,
+        "r_ci_upper": 0.61
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.3767,
+        "f1_ci_lower": 0.3236,
+        "f1_ci_upper": 0.4316,
+        "precision": 0.2671,
+        "p_ci_lower": 0.2207,
+        "p_ci_upper": 0.3185,
+        "recall": 0.6391,
+        "r_ci_lower": 0.5698,
+        "r_ci_upper": 0.7069
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.3997,
+        "f1_ci_lower": 0.3438,
+        "f1_ci_upper": 0.4565,
+        "precision": 0.2834,
+        "p_ci_lower": 0.2344,
+        "p_ci_upper": 0.3376,
+        "recall": 0.6782,
+        "r_ci_lower": 0.6075,
+        "r_ci_upper": 0.7488
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.4092,
+        "f1_ci_lower": 0.3519,
+        "f1_ci_upper": 0.4673,
+        "precision": 0.2901,
+        "p_ci_lower": 0.2397,
+        "p_ci_upper": 0.3454,
+        "recall": 0.6943,
+        "r_ci_lower": 0.6226,
+        "r_ci_upper": 0.7639
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "5040f5b4",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-28T15:25:13.981093+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/h12-v2/wbf/r2-balanced/wbf_candidates.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/h12-v2/wbf/r2-balanced",
+      "label": "r2-balanced-wbf",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/h12-v2/wbf/r2-balanced/wbf_candidates.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    }
   }
 }
