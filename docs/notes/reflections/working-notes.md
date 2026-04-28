@@ -14757,3 +14757,65 @@ Search terms: 4-run attractor-pull consensus, text-MIN attractor-pull cutoff 100
 - **Obs 295** (GS 25 m cap, post-calibration precision): unchanged. The 4-run 55-map split is at 100 m vs 125 m, both far above the GS 25 m cap; the cross-corpus gap remains.
 - **Obs 296** (GS-vs-55-map cap as failure-of-generalisation effect): the 100 m vs 125 m split among the four corrected 55-map runs is itself a small-scale within-corpus reflection of the same failure-mode-driven cap variation observed cross-corpus. Different runs hit different effective spatial-precision floors depending on their detection mode mix.
 - **Artefacts**: `results/55maps-attractor-pull-v2/{attractor-pull-v2.json,report.md}` (4-run extended). Script: `scripts/analyse_attractor_pull_v2.py` (with off-by-one fix). Commits: `dee80bdc` (script: add T=MIN to RUNS + majority-threshold fix), `1c8c34bd` (data + report regen across four runs).
+
+## Observation 299: D-S calibration gap monotonic across all four corrected 55-map runs; text-MIN ≈ T=0.7 in calibration despite very different prompt configurations; image's penalty isolated as modality-specific (2026-04-28)
+
+### The finding
+
+The Wave 4 D-S analysis was extended to a fourth corrected 55-map run (text-MIN), giving a four-run picture of the calibration gap between the D-S aggregate VLM-only posterior and the empirical mound rate among human-reviewed VLM-only candidates. Headline pattern, sorted by VLM-only / matched ratio:
+
+| Run | VLM-only / matched | D-S calibration gap (emp / D-S) |
+|:---|--:|--:|
+| text-MIN | 0.179 | 1.88× |
+| T=0.7 text-HIGH | 0.179 | 1.90× |
+| T=0.3 text-HIGH | 0.232 | 2.53× |
+| image | 0.283 | 3.89× |
+
+The monotonic scaling of the calibration gap with VLM-only share — first surfaced as a 3-run pattern in Obs 293 — extends cleanly to four runs. Obs 293's mechanism (a fixed 5 % student-FN prior systematically under-counts true positives among VLM-only candidates as the VLM-only share grows) holds across the full text-MIN / T=0.7 / T=0.3 / image span.
+
+### text-MIN ≈ T=0.7 calibration convergence (paper-relevant)
+
+The most striking pattern in the 4-run picture is that text-MIN and T=0.7 sit at nearly identical positions on the calibration curve:
+
+- VLM-only / matched ratio: 0.179 (text-MIN) vs 0.179 (T=0.7) — identical to three decimal places (0.1786 vs 0.1793 to four decimals).
+- Calibration gap: 1.88× (text-MIN) vs 1.90× (T=0.7) — within 1 % of each other.
+- ECE: 0.2591 (text-MIN) vs 0.2652 (T=0.7); Brier: 0.3142 (text-MIN) vs 0.3169 (T=0.7) — calibration metrics nearly clone.
+
+This convergence happens despite the two runs using **very different prompt configurations**: text-MIN minimises prompt content and uses MINIMAL thinking budget, while T=0.7 keeps the full text-HIGH prompt at decoding temperature 0.7 and HIGH thinking. The two runs sit at opposite ends of the prompt-strategy space, and they produce the same calibration footprint.
+
+The implication is that **VLM-only / matched ratio is sufficient to predict the D-S calibration gap; prompt strategy does not add predictive information beyond what it implicitly produces in the VLM-only share**. This is a calibration-domain analogue of the "prompt-engineering converges" finding (Obs 277-style) — different prompt configurations land at the same structural floor when the underlying VLM-only share is matched.
+
+### Image isolation as modality-specific
+
+With four runs in hand, the image-track's calibration penalty is now visibly **modality-specific** rather than a function of VLM-only share:
+
+- Three text-prompt runs (text-MIN, T=0.7, T=0.3) all sit on a tight calibration curve: gaps 1.88× / 1.90× / 2.53× across the VLM-only-ratio range 0.179 → 0.232.
+- Image deviates: 3.89× at VLM-only ratio 0.283 — roughly **double** the text-track gap at any plausible interpolation along the text-track curve.
+
+The image-track's calibration gap is *over and above* what VLM-only share predicts. If the gap were a pure function of share, image's 0.283 ratio would suggest a gap interpolated from the text-track curve at perhaps 2.7–3.0× — instead it is 3.89×. The deviation is ~30–40 % above what share alone predicts, isolating a modality-specific D-S penalty for the image-track that the text-track does not carry. This strengthens **Obs 273**'s structural-inadequacy reading — the image-track's D-S penalty is not just about share, it is about the modality itself.
+
+### 4-way rank disagreement extends Obs 293's mechanism
+
+D-S F1 ranking and corrected-F1-multi-buffer F1 ranking at R=50 m:
+
+- D-S F1: T=0.7 (0.8129) > T=0.3 (0.7988) > image (0.7954) > text-MIN (0.7834)
+- Corrected F1: T=0.3 (0.8437) > image (0.8317) > T=0.7 (0.8260) > text-MIN (0.7964)
+
+Both rankings agree that text-MIN is last; **everything else disagrees**. Obs 293's 3-way rank-disagreement extends cleanly to 4-way. The corrected-F1-multi-buffer estimator (which directly observes the mound rate among VLM-only candidates from human review) remains the unbiased ranking; the D-S aggregate's contrary ranking on T=0.3 vs T=0.7 vs image continues to reflect the VLM-only-share-scaled bias documented in Obs 293, now with a fourth datapoint that confirms the mechanism.
+
+### Methodological note: text-MIN unjoined-row rate isolates the T=0.3 outlier
+
+text-MIN had **0 % unjoined review rows** in the D-S vs human-review crosstab (0/585), versus T=0.3's 9.2 % unjoined rate (64/692). This confirms that the T=0.3 unjoined-row outlier is **specific to T=0.3's single-round-recovery pattern** (where some review-CSV rows did not match D-S item-posteriors at the (map_name, x, y) keys), not a general property of multi-buffer review on text-track runs. text-MIN, T=0.7, and image all join cleanly (0 / 0 / 1 unjoined rows respectively); only T=0.3's recovery pipeline produces the join-coverage anomaly.
+
+### Findable later
+
+Search terms: text-MIN D-S calibration, 4-run D-S calibration extension, VLM-only ratio sufficient predictor calibration gap, text-MIN T=0.7 calibration clone, image modality-specific D-S penalty, prompt-engineering converges calibration, D-S 4-way rank disagreement text-MIN bottom, T=0.3 unjoined rows single-round recovery, Obs 293 4-run extension, image deviation calibration curve.
+
+### Related observations and artefacts
+
+- **Obs 273** (D-S structurally inadequate on VLM-only slice at any prior): foundational; image's modality-specific penalty isolation strengthens the structural-inadequacy reading.
+- **Obs 293** (3-run gap-scales-with-VLM-only-share): extended cleanly to four runs; the mechanism holds; corrected F1 remains the unbiased estimator.
+- **Obs 277** (prompt-engineering converges on Pareto-dominant verifier): related thematic — text-MIN ≈ T=0.7 in calibration is the calibration-domain analogue. Different prompt strategies converge to the same structural floor when share is matched.
+- **Obs 280, 292** (F1 / MCC tier-leader divergence): companion finding — the 4-way D-S vs corrected-F1 rank disagreement is yet another orthogonal axis of metric-divergence on the same four-run set.
+- **Obs 297** (HIGH thinking earns its tokens; text-MIN bottom of corrected-F1 at every buffer ≥ 25 m): text-MIN's bottom-rank consistency across both D-S and corrected F1 noted here is consistent with Obs 297's recall-floor finding — text-MIN's deficit is recall-driven and not bridgeable by D-S reclassification.
+- **Artefacts**: `results/55maps-ds-summary-v2/report.md` (4-run extended), `results/55maps-text-min-generalisation/{dawid-skene,ds-human-crosstab}/`. Commits: `e344db93` (data: D-S aggregation + ds-human-crosstab post-review for text-MIN), `750d2c51` (summary: update D-S cross-run summary with text-MIN).
