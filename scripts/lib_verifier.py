@@ -768,6 +768,55 @@ def verify_candidate_realtime(
     return results, metadata_list
 
 
+def _unwrap_verdict_payload(data: Any) -> dict:
+    """Normalise a parsed verifier JSON payload to a verdict dict.
+
+    Gemini responses are usually a top-level JSON object matching the
+    documented verifier schema (see module docstring). Occasionally —
+    deterministically, for a small fraction of crops — the model wraps
+    the verdict in a single-element list, e.g.
+    ``[{"mound_probability": 0.7, ...}]``. Calling ``.get(...)`` on the
+    list raises ``AttributeError: 'list' object has no attribute 'get'``,
+    which previously fell through to the bare ``except Exception`` retry
+    path in ``_call_verifier_api`` and, because the model deterministically
+    returns the same shape, exhausted retries. This caused ``cand_01563``
+    to be silently dropped during Session 78 verifier-calibration runs
+    (see ``planning/paper-writeup-continuity.md`` — backlog item #10).
+
+    This helper accepts both shapes and rejects anything else:
+
+    - ``dict`` → returned unchanged.
+    - ``list`` of length >= 1 with a ``dict`` first element → first
+      element returned (and a debug log is emitted for telemetry).
+    - Anything else → ``ValueError``, which the caller treats the same
+      as a malformed-JSON failure.
+
+    Args:
+        data: Object returned by ``json.loads()`` on the model's text.
+
+    Returns:
+        A verdict dict suitable for ``.get("mound_probability", ...)``
+        and similar field lookups.
+
+    Raises:
+        ValueError: If ``data`` is neither a dict nor a non-empty list
+            whose first element is a dict.
+    """
+    if isinstance(data, dict):
+        return data
+    if isinstance(data, list) and data and isinstance(data[0], dict):
+        logger.debug(
+            "Verifier response was a list of length %d; unwrapping first "
+            "element as verdict payload",
+            len(data),
+        )
+        return data[0]
+    raise ValueError(
+        f"Verifier response is not a JSON object or non-empty list "
+        f"of objects (got {type(data).__name__})",
+    )
+
+
 def _call_verifier_api(
     client: Any,
     model_name: str,
@@ -845,22 +894,28 @@ def _call_verifier_api(
                 )
                 return None
 
-            # Parse JSON response
+            # Parse JSON response. ``_unwrap_verdict_payload`` tolerates
+            # the rare list-shaped response that triggered the
+            # ``cand_01563`` parser bug (planning backlog item #10) by
+            # unwrapping a single-element list; non-conformant shapes
+            # raise ``ValueError`` and are handled like a JSON parse
+            # failure below.
             txt = txt.replace("```json", "").replace("```", "").strip()
             data = json.loads(txt)
+            verdict = _unwrap_verdict_payload(data)
 
             return {
                 "mound_probability": float(
-                    data.get("mound_probability", 0.0),
+                    verdict.get("mound_probability", 0.0),
                 ),
-                "reasoning": data.get("reasoning", ""),
-                "best_alternative": data.get("best_alternative", ""),
-                "alternative_evidence": data.get(
+                "reasoning": verdict.get("reasoning", ""),
+                "best_alternative": verdict.get("best_alternative", ""),
+                "alternative_evidence": verdict.get(
                     "alternative_evidence", "",
                 ),
             }
 
-        except json.JSONDecodeError as e:
+        except (json.JSONDecodeError, ValueError) as e:
             # Metadata already tracked above; mark parse failure
             response_metadata.parse_success = False
             response_metadata.parse_error = str(e)
@@ -950,14 +1005,19 @@ def parse_verifier_results(
             # Clean up markdown code fences if present
             text = text.replace("```json", "").replace("```", "").strip()
 
+            # Tolerate the rare list-shaped response that triggered
+            # the ``cand_01563`` parser bug (planning backlog item #10)
+            # by unwrapping a single-element list; non-conformant shapes
+            # raise ``ValueError`` and are handled below.
             data = json.loads(text)
+            verdict = _unwrap_verdict_payload(data)
             parsed[key] = {
                 "mound_probability": float(
-                    data.get("mound_probability", 0.0),
+                    verdict.get("mound_probability", 0.0),
                 ),
-                "reasoning": data.get("reasoning", ""),
-                "best_alternative": data.get("best_alternative", ""),
-                "alternative_evidence": data.get(
+                "reasoning": verdict.get("reasoning", ""),
+                "best_alternative": verdict.get("best_alternative", ""),
+                "alternative_evidence": verdict.get(
                     "alternative_evidence", "",
                 ),
             }

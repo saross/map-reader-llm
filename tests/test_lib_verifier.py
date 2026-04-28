@@ -24,6 +24,7 @@ from scripts.lib_verifier import (
     ImageItem,
     TextItem,
     _resolve_crop_path,
+    _unwrap_verdict_payload,
     aggregate_consensus_votes,
     build_candidate_content,
     build_generation_config,
@@ -607,6 +608,81 @@ class TestParseVerifierResults:
         parsed = parse_verifier_results(matched)
         assert parsed["candidate_00001"]["mound_probability"] == 0.0
         assert "PARSE_ERROR" in parsed["candidate_00001"]["reasoning"]
+
+    def test_list_shaped_response_unwraps_first_element(self) -> None:
+        """Regression: list-shaped JSON response is unwrapped (cand_01563).
+
+        Reproduces the parser bug from Session 78 in which the model
+        returned ``[{...}]`` instead of ``{...}`` and the downstream
+        ``.get()`` on the list raised ``AttributeError``, silently
+        dropping the candidate after retries. Backlog item #10 in
+        ``planning/paper-writeup-continuity.md``.
+        """
+        matched = {
+            "candidate_01563": {
+                "response": {
+                    "candidates": [{
+                        "content": {
+                            "parts": [{
+                                "text": json.dumps([{
+                                    "mound_probability": 0.42,
+                                    "reasoning": "Listed wrapper",
+                                    "best_alternative": "tumulus",
+                                    "alternative_evidence": "ring",
+                                }]),
+                            }],
+                        },
+                    }],
+                },
+            },
+        }
+        parsed = parse_verifier_results(matched)
+        result = parsed["candidate_01563"]
+        assert result["mound_probability"] == 0.42
+        assert result["reasoning"] == "Listed wrapper"
+        assert result["best_alternative"] == "tumulus"
+        assert result["alternative_evidence"] == "ring"
+
+
+@pytest.mark.tier1
+class TestUnwrapVerdictPayload:
+    """Tests for ``_unwrap_verdict_payload`` — cand_01563 fix helper."""
+
+    def test_dict_passes_through(self) -> None:
+        """A plain dict is returned unchanged."""
+        data = {"mound_probability": 0.7, "reasoning": "ok"}
+        assert _unwrap_verdict_payload(data) is data
+
+    def test_single_element_list_unwrapped(self) -> None:
+        """A length-1 list with a dict element returns that dict."""
+        verdict = {"mound_probability": 0.7}
+        assert _unwrap_verdict_payload([verdict]) is verdict
+
+    def test_multi_element_list_unwraps_first(self) -> None:
+        """A multi-element list returns the first dict (best-effort)."""
+        first = {"mound_probability": 0.1}
+        second = {"mound_probability": 0.9}
+        assert _unwrap_verdict_payload([first, second]) is first
+
+    def test_empty_list_raises(self) -> None:
+        """An empty list cannot be unwrapped."""
+        with pytest.raises(ValueError):
+            _unwrap_verdict_payload([])
+
+    def test_list_of_non_dicts_raises(self) -> None:
+        """A list whose first element is not a dict cannot be unwrapped."""
+        with pytest.raises(ValueError):
+            _unwrap_verdict_payload(["mound_probability", 0.5])
+
+    def test_scalar_raises(self) -> None:
+        """A scalar value (e.g. bare float) cannot be unwrapped."""
+        with pytest.raises(ValueError):
+            _unwrap_verdict_payload(0.5)
+
+    def test_none_raises(self) -> None:
+        """``None`` cannot be unwrapped."""
+        with pytest.raises(ValueError):
+            _unwrap_verdict_payload(None)
 
 
 # =========================================================================

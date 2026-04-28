@@ -1134,8 +1134,18 @@ Carry-over items plus 6 added in Session 78. **Status updated
    2026-04-25 02:40 UTC data-loss event (see
    `docs/methodology/data-reproduction-2026-04-25.md`).
 6. Investigate `cand_01563` parser bug in verifier response handling.
-   **Pending — low priority; ~0.05% per-cell loss is below
-   calibration metric resolution.**
+   **DONE (Session 80) — root cause was `data.get(...)` called on
+   the parsed JSON when the model occasionally returns a
+   single-element list ``[{...}]`` instead of a top-level object;
+   ``AttributeError: 'list' object has no attribute 'get'`` fell
+   through to the bare ``except Exception`` retry path in
+   ``_call_verifier_api`` and the deterministic shape exhausted all
+   retries. Fix adds an ``_unwrap_verdict_payload`` helper in
+   ``scripts/lib_verifier.py`` that unwraps the first dict from a
+   list-shaped payload and is invoked from both the realtime and
+   batch parsing paths. Regression tests in
+   ``tests/test_lib_verifier.py::TestParseVerifierResults`` and
+   ``::TestUnwrapVerdictPayload``.**
 7. Scope-version the `results/verifier-calibration-matrix/` directory.
    **Pending — bookkeeping only.**
 8. Clean up exact-duplicate files in
@@ -1238,7 +1248,7 @@ Session 79 completed the per-architecture × per-Era × per-buffer × per-metric
 7. **6% verifier "error" rate at T=0.3 is in-run-recovered, not unrecovered** (Obs 281 corrects this) — but the proposer 18 unrecovered failures + verifier 1 unrecovered are the true post-pipeline residual. **CLOSED 2026-04-28 via Obs 286 (verifier-T pilot Stage A)**: at T=0.0 verifier failure rate is 1.65% deterministic; at T=0.5/T=1.0 it is 0.00%. Production-default recommendation T=0.5 (Obs 287, Stage B). The pre-investigation framing was a misreading; the genuine signal is verifier-temperature-dependent.
 8. **Sapphire `archive/pre-session-78-pull-2026-04-24/` cleanup** (Step 6 backlog item from earlier sessions, low priority). **DONE 2026-04-27** — directory had already been removed from sapphire's working tree in an earlier session; provenance migration note written at `archive/MIGRATION-pre-session-78-pull-2026-04-24.md`. No git movement needed; archive shadowed already-canonical commits `aa36b638`, `4cc95e80`, `651b8ab4`.
 9. **Scope-version `results/verifier-calibration-matrix/` directory** (low priority bookkeeping). **IN PROGRESS 2026-04-28** (parallel agent during Session 80 close-out).
-10. **`cand_01563` parser bug investigation in `run_pv.py`** (low priority; ~0.05% per-cell loss). **IN PROGRESS 2026-04-28** (parallel agent during Session 80 close-out).
+10. **`cand_01563` parser bug investigation in `run_pv.py`** — DONE (Session 80). Fix landed in `scripts/lib_verifier.py` (helper `_unwrap_verdict_payload`) with regression tests in `tests/test_lib_verifier.py`. **IN PROGRESS 2026-04-28** (parallel agent during Session 80 close-out).
 
 ### Things to NOT redo
 
