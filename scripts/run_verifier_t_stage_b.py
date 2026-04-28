@@ -236,6 +236,9 @@ def run_one(
 
 def main() -> int:
     """CLI entry point."""
+    # Allow CLI override of the module-level BOOTSTRAP constant. Declared at
+    # the top of ``main`` so the assignment below is unambiguously module-scope.
+    global BOOTSTRAP
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
         "--output-root", type=Path,
@@ -255,7 +258,17 @@ def main() -> int:
         "--prob-thresholds", type=float, nargs="+", default=PROB_THRESHOLDS,
         help=f"Prob_t sweep (default: {PROB_THRESHOLDS}).",
     )
+    p.add_argument(
+        "--bootstrap", type=int, default=BOOTSTRAP,
+        help=(
+            f"Bootstrap iterations for CI computation (default: {BOOTSTRAP}). "
+            f"Pass --bootstrap 10000 to upgrade pre-existing N=1000 cells."
+        ),
+    )
     args = p.parse_args()
+    # Apply CLI override of the module-level BOOTSTRAP constant so the
+    # value flows through to ``run_one`` without further plumbing.
+    BOOTSTRAP = args.bootstrap
 
     # Sanity check inputs.
     for path in [CONSENSUS_GEOJSON, GROUND_TRUTH, BOUNDS]:
