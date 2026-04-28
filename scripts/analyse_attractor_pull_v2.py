@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 Attractor-pull v2 — re-derive the spatial attractor-pull cutoff across
-the three corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH,
-image).
+the four corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH,
+image, text-MIN).
 
 Observation 272 (`docs/notes/reflections/working-notes.md`) established
 that detection centroids cluster around real mound positions out to
 ~125 m, with the 125-150 m shell statistically indistinguishable from a
 within-tile random-placement null (p = 0.381 on the image run's
 multi-buffer review). That analysis used only the image-generalisation
-run. With the manual reviews now corrected and complete on all three
+run. With the manual reviews now corrected and complete on all four
 runs, this v2 script re-runs the same shell-wise permutation null
 analysis on each run, then synthesises a consensus cutoff.
 
@@ -41,8 +41,8 @@ Method (faithful to Obs 272 / `analyse_buffer_band_lift.py`):
   is already too small to support the observed lift, the corrected null
   is also too small.
 
-For each of the three runs the script writes a per-run shell table; the
-top-level JSON aggregates all three. The report.md synthesises per-run
+For each of the four runs the script writes a per-run shell table; the
+top-level JSON aggregates all four. The report.md synthesises per-run
 cutoffs into a consensus statement (most-permissive cutoff supported by
 all runs; per-run disagreements explicitly flagged).
 
@@ -58,6 +58,8 @@ Inputs (resolved relative to repo root):
   - `results/55maps-image-generalisation/human-review-multi-buffer.csv`
     (today's 274 mound calls across {50, 75, 100, 125, 150, 200} m
     bands + 283 confirmed not_mound rows)
+- text-MIN:
+  - `results/55maps-text-min-generalisation/human-review-multi-buffer.csv`
 - Reference set: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
 - Tile bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
 
@@ -69,14 +71,14 @@ Outputs at `results/55maps-attractor-pull-v2/`:
 - `report.md` — synthesised report with per-run shell tables, consensus
   paragraph, and Obs 272 cross-reference.
 - `figures/attractor-pull-shell-rates.png` — per-shell observed rate
-  curves for the three runs overlaid, with bias-corrected null mean
+  curves for the four runs overlaid, with bias-corrected null mean
   shown as the dashed reference.
 
 Usage:
 
     python scripts/analyse_attractor_pull_v2.py
 
-Compute: ~2 min on sapphire (3 runs × 1,000 permutations).
+Compute: ~3 min on sapphire (4 runs × 1,000 permutations).
 """
 
 from __future__ import annotations
@@ -119,7 +121,7 @@ OUT_DIR = REPO_ROOT / "results/55maps-attractor-pull-v2"
 
 @dataclass
 class RunSpec:
-    """Definition of one of the three corrected 55-map runs."""
+    """Definition of one of the four corrected 55-map runs."""
 
     key: str  # short ID for output keys (e.g. ``t0.3``)
     label: str  # display label for tables / report
@@ -162,6 +164,17 @@ RUNS: tuple[RunSpec, ...] = (
             ),
         ),
     ),
+    RunSpec(
+        key="text-min",
+        label="text-MIN",
+        review_csvs=(
+            REPO_ROOT
+            / (
+                "results/55maps-text-min-generalisation/"
+                "human-review-multi-buffer.csv"
+            ),
+        ),
+    ),
 )
 
 
@@ -184,7 +197,7 @@ def load_combined_candidates(spec: RunSpec) -> pd.DataFrame:
     Build the per-run candidate dataframe.
 
     For runs whose ``review_csvs`` is a single multi-buffer CSV (T=0.3,
-    T=0.7), every reviewed row already carries a numeric
+    T=0.7, text-MIN), every reviewed row already carries a numeric
     ``buffer_metres`` (or empty for ``not_mound``); load directly. For
     the image run, combine yesterday's 472 mound@50 m calls with today's
     557-row re-review of yesterday's not_mound rows, dropping
@@ -237,8 +250,8 @@ def load_combined_candidates(spec: RunSpec) -> pd.DataFrame:
 def count_reviewer_promoted(spec: RunSpec) -> int:
     """
     Total reviewer-promoted real mounds across this run's review CSVs.
-    For the image run that's yesterday + today; for the text runs it's
-    the single multi-buffer CSV.
+    For the image run that's yesterday + today; for the single-CSV
+    runs (T=0.3, T=0.7, text-MIN) it's the single multi-buffer CSV.
     """
     total = 0
     for path in spec.review_csvs:
@@ -350,7 +363,7 @@ def analyse_run(
     rng: np.random.Generator,
 ) -> dict:
     """
-    Run the within-tile permutation analysis for one of the three
+    Run the within-tile permutation analysis for one of the four
     runs. Returns a dict suitable for the aggregate JSON output.
     """
     print(f"[run] {spec.label}")
@@ -492,8 +505,11 @@ def consensus_block(per_run: list[dict]) -> dict:
 
     - ``most_permissive``: the largest shell outer edge that is
       significant in *every* run (the cutoff that all runs agree on).
-    - ``majority``: the shell outer edges where at least 2 of 3 runs
-      are significant.
+    - ``majority``: the shell outer edges where a strict majority of
+      runs are significant. With N runs the threshold is
+      ``(N // 2) + 1`` — i.e. ≥ 2 of 3, ≥ 3 of 4, ≥ 3 of 5, etc. The
+      ``+ 1`` prevents the 4-run case from collapsing to "≥ 2 of 4"
+      (a bare half, not a majority).
     - ``per_shell_agreement``: list of dicts, one per shell, with the
       run keys flagged significant or not.
     """
@@ -505,6 +521,8 @@ def consensus_block(per_run: list[dict]) -> dict:
         }
         for r in per_run
     }
+    n_runs = len(sig_by_run)
+    majority_threshold = (n_runs // 2) + 1
 
     per_shell: list[dict] = []
     most_permissive = 0
@@ -517,17 +535,15 @@ def consensus_block(per_run: list[dict]) -> dict:
                 "R_outer_m": int(R),
                 "significant": flags,
                 "n_runs_significant": n_sig,
-                "all_runs_significant": n_sig == len(sig_by_run),
-                "majority_significant": n_sig >= (
-                    len(sig_by_run) + 1
-                ) // 2,
+                "all_runs_significant": n_sig == n_runs,
+                "majority_significant": n_sig >= majority_threshold,
             }
         )
-        if n_sig == len(sig_by_run):
+        if n_sig == n_runs:
             most_permissive = R
         elif (
             majority_breaks_at is None
-            and n_sig < (len(sig_by_run) + 1) // 2
+            and n_sig < majority_threshold
         ):
             majority_breaks_at = R
 
@@ -577,8 +593,8 @@ def write_report(
         " 2026-04-21) established the attractor-pull cutoff at ~125 m"
         " using the image-generalisation review only. v2 re-runs the"
         " same shell-wise within-tile permutation null on each of the"
-        " three corrected 55-map runs and synthesises a consensus"
-        " cutoff."
+        f" {len(per_run)} corrected 55-map runs and synthesises a"
+        " consensus cutoff."
     )
     lines.append("")
     lines.append("## 1. Method")
@@ -659,16 +675,19 @@ def write_report(
     flat_df = pd.DataFrame(flat)
     lines.append(flat_df.to_markdown(index=False))
     lines.append("")
+    n_runs = len(per_run)
+    majority_threshold = (n_runs // 2) + 1
     lines.append(
         f"**Most-permissive consensus cutoff**:"
         f" {consensus['most_permissive_consensus_cutoff_m']} m"
-        " (largest shell outer edge significant in all three runs)."
+        f" (largest shell outer edge significant in all {n_runs} runs)."
     )
     if consensus["majority_breakpoint_m"] is not None:
         lines.append(
             f"**Majority-loses breakpoint**:"
             f" {consensus['majority_breakpoint_m']} m"
-            " (first shell where < 2/3 runs are significant)."
+            f" (first shell where < {majority_threshold}/{n_runs}"
+            " runs are significant)."
         )
     else:
         lines.append(
@@ -776,7 +795,7 @@ def render_figure(
     per_run: list[dict], out_path: Path,
 ) -> None:
     """
-    Per-shell observed-rate curves for the three runs overlaid, with
+    Per-shell observed-rate curves for each run overlaid, with
     each run's bias-corrected null mean as a dashed reference. Log
     y-axis to make the lift across shells legible.
     """
@@ -796,7 +815,12 @@ def render_figure(
         )
         for row in per_run[0]["shell"]
     ]
-    colours = {"t0.3": "C0", "t0.7": "C1", "image": "C3"}
+    colours = {
+        "t0.3": "C0",
+        "t0.7": "C1",
+        "image": "C3",
+        "text-min": "C2",
+    }
 
     for run in per_run:
         obs = [row["obs_rate_in_shell"] for row in run["shell"]]
@@ -838,7 +862,7 @@ def render_figure(
     ax.set_ylabel("P(mound in shell | candidate) [log scale]")
     ax.set_title(
         "Attractor-pull v2: per-shell observed vs within-tile null"
-        " (3 corrected 55-map runs)"
+        f" ({len(per_run)} corrected 55-map runs)"
     )
     ax.grid(True, which="both", alpha=0.3)
     ax.legend(loc="lower left", fontsize=8)
