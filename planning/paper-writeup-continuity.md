@@ -1369,6 +1369,65 @@ Working tree clean on `main`, in sync with `origin/main`. Recent work spans comm
 
 ---
 
+## Daylight follow-up sweep — 165-cell N=10K standardisation (spec for next session)
+
+**Status**: spec'd; ready to launch under user supervision.
+**Why**: Session-80 overnight standardisation upgraded 351/540 `evaluation.json` files to N=10,000 + 24 verifier-t-pilot cells via a different-shape metadata path (effective: 375/540). The remaining **165 cells** were deferred per `feedback_feature_count_crosscheck.md` because per-cell detection paths required manual reconstruction. **The post-overnight Explore audit (2026-04-28) confirmed all 165 ARE recoverable with HIGH confidence** via heterogeneous metadata mechanisms. Completing the sweep is recommended for cross-cell methodological symmetry per Obs 303 (the N=10K rationale is reproducibility, not narrower CIs; mixing N=1K and N=10K cells across the same paper creates an awkward asymmetry).
+
+### Scope (165 cells, 4 groups)
+
+| Group | Cells | Recovery mechanism |
+|---|---:|---|
+| **paper-eval** | 156 | Parent `results/paper-eval/.metadata.json` + `scripts/sapphire-paper-eval.sh` (hardcodes all conditions; line refs 44–84) + creating commit `22592f94` |
+| **pairwise tile-size-30m** | 5 | Parent `results/pairwise/tile-size-30m/.metadata.json` + `configs/tile-size-comparison.yaml` (lines 22–36 have explicit detections paths per condition) |
+| **55maps-cleaned-gt-evaluation** | 3 | Individual `evaluation.metadata.json` sidecar per cell (image / text-high / text-min — full CLI command shape) |
+| **gold-standard-extended-buffer-sweep** | 1 root | `evaluation.metadata.json` + `extended-buffer-report.md` §3-4 (documents non-standard buffer range `[5, 10, 15, 25, 35, 45]` and 4-of-5 consensus + prob_t=0.15) |
+
+The `with-mcc/` cell at `gold-standard-extended-buffer-sweep/with-mcc/` was already upgraded by the overnight sweep (commit `76b6592f`); not in deferred set.
+
+### Pre-flight checklist (~5 minutes)
+
+1. Validate `results/paper-eval/.metadata.json` and `results/pairwise/tile-size-30m/.metadata.json` parse as JSON; bootstrap section matches expected defaults (n=1000, seed=42).
+2. Spot-check 3 paths exist on disk: `outputs/h11/pv-diag-384/image-n5/`, `outputs/retest/phase2b/`, `inputs/vectors/references/mounds-reference.geojson`.
+3. Confirm `scripts/run_bootstrap_10k.py` (added in commit `a9fe1c1d`) can be extended to parse parent `.metadata.json` files (or write a sibling runner that handles the heterogeneous metadata sources).
+4. Dry-run on one cell from each group before the full sweep — confirm CLI is correctly recovered and the output overwrites cleanly.
+5. Fresh backup tag: `pre-bootstrap-10k-followup-2026-MM-DD` against current HEAD.
+
+### Compute estimate
+
+~30–60 min wall on sapphire at `xargs -P 16` (per-cell estimates: paper-eval cells are mostly N=1 single-pass at 384 / 512 px so per-cell ~2-5 s CPU; pairwise 5 cells at buffer 30 m only; 55maps-cleaned-gt 3 cells against the 8541-tile 55-map bounds — these are the slow ones; gold-standard 1 cell). Total CPU work substantially smaller than the overnight sweep's 361 cells; should comfortably complete in a daylight session.
+
+### Workflow
+
+**Plan-first per yesterday's lesson**:
+
+1. Dispatch a Plan agent to design the recovery + sweep + verify workflow:
+   - How to extend `run_bootstrap_10k.py` to handle 4 different metadata source patterns (parent sidecar / per-cell sidecar / config file lookup / report-md inference)
+   - Dry-run sample selection
+   - Verification queries (count expected vs actual at N=10K)
+   - Per-group commit chunks
+2. **Surface plan for user approval** before launch.
+3. Implement agent runs the sweep, verifies, commits + pushes.
+4. Update Obs 303 with a forward-pointer to the completion commit (or write a brief Obs 304 marking the standardisation complete across all 540 cells).
+
+### Expected outcome
+
+All 540 `evaluation.json` cells at N=10,000 bootstrap iterations. Cross-cell methodological symmetry restored. Paper methodology section can cite N=10,000 uniformly without per-cell exceptions.
+
+### Lessons from the overnight run to apply here
+
+1. **Orchestrator final-step robustness** — yesterday's overnight orchestrator stalled at the rebase+push step when sapphire's branch had diverged from origin (FP-class commits landed on origin while the sweep was running). The next implement agent should explicitly handle push failures with retry-on-conflict and structured error logging if auto-rebase can't resolve cleanly. ETA messaging should account for this.
+2. **CI-width expectations** — Obs 303 confirms bootstrap-N controls Monte Carlo noise, not CI width. Verification spot-checks should look for N=10K presence, not for ~√10 CI tightening.
+3. **Plan-first for autonomous overnight work** — even when the implement agent is well-prompted, a Plan agent first surfaces edge cases for user approval before launch.
+
+### Cross-references
+
+- **Obs 303** (`working-notes.md` line ~15019) — why N=10K matters (reproducibility, not narrower CIs). Forward-points to this spec.
+- **Bootstrap-10K commit chain**: `4b31aae0..51f438bd` (11 commits); rollback tag `pre-bootstrap-10k-2026-04-28` → commit `5040f5b4`.
+- **Metadata-investigation Explore audit**: 2026-04-28 finding that all 165 deferred cells are recoverable with HIGH confidence (logged in Session 80 closing chat transcript).
+
+---
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
