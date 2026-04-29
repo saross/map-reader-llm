@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-28T07:39:30.329960+00:00",
+  "timestamp": "2026-04-29T14:59:04.874764+00:00",
   "summary": {
     "label": "512px-image-t07",
     "n_detections": 783,
@@ -8,27 +8,65 @@
       {
         "buffer_metres": 20,
         "f1": 0.4713,
-        "f1_ci_lower": 0.1141,
-        "f1_ci_upper": 0.3552,
+        "f1_ci_lower": 0.1176,
+        "f1_ci_upper": 0.3623,
         "precision": 0.3665,
-        "p_ci_lower": 0.2083,
-        "p_ci_upper": 0.5039,
+        "p_ci_lower": 0.2113,
+        "p_ci_upper": 0.504,
         "recall": 0.6598,
-        "r_ci_lower": 0.0807,
-        "r_ci_upper": 0.2904
+        "r_ci_lower": 0.0805,
+        "r_ci_upper": 0.295
       },
       {
         "buffer_metres": 30,
         "f1": 0.5698,
-        "f1_ci_lower": 0.2073,
-        "f1_ci_upper": 0.5206,
+        "f1_ci_lower": 0.2063,
+        "f1_ci_upper": 0.5263,
         "precision": 0.4432,
-        "p_ci_lower": 0.2833,
-        "p_ci_upper": 0.6079,
+        "p_ci_lower": 0.2826,
+        "p_ci_upper": 0.6204,
         "recall": 0.7977,
         "r_ci_lower": 0.1584,
-        "r_ci_upper": 0.4717
+        "r_ci_upper": 0.4774
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:57:09.555740+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/pairwise/tile-size-30m/512px-image-t07",
+      "label": "512px-image-t07",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    }
   }
 }
