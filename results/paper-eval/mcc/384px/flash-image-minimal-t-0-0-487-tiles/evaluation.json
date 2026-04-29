@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:33:31.049116+00:00",
+  "timestamp": "2026-04-29T14:42:40.816615+00:00",
   "summary": {
     "label": "Flash Image MINIMAL T=0.0 (487 tiles)",
     "n_runs": 3,
@@ -8,31 +8,31 @@
       {
         "buffer_metres": 30,
         "f1": 0.6548,
-        "f1_ci_lower": 0.6098,
-        "f1_ci_upper": 0.6892,
+        "f1_ci_lower": 0.6132,
+        "f1_ci_upper": 0.6902,
         "precision": 0.5183,
-        "p_ci_lower": 0.467,
-        "p_ci_upper": 0.5585,
+        "p_ci_lower": 0.4726,
+        "p_ci_upper": 0.5594,
         "recall": 0.8889,
-        "r_ci_lower": 0.8562,
-        "r_ci_upper": 0.9187
+        "r_ci_lower": 0.8563,
+        "r_ci_upper": 0.9198
       }
     ],
     "tile_classification": {
       "mcc": {
-        "mean": 0.3126,
-        "ci_lower": 0.26,
-        "ci_upper": 0.364
+        "mean": 0.3132,
+        "ci_lower": 0.2614,
+        "ci_upper": 0.3631
       },
       "sensitivity": {
-        "mean": 0.9955,
-        "ci_lower": 0.9855,
+        "mean": 0.9956,
+        "ci_lower": 0.9861,
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.1988,
-        "ci_lower": 0.1515,
-        "ci_upper": 0.251
+        "mean": 0.1992,
+        "ci_lower": 0.1519,
+        "ci_upper": 0.2484
       },
       "confusion": {
         "tp": 228,
@@ -40,6 +40,39 @@
         "fp": 207,
         "fn": 1
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:39:19.315611+00:00",
+    "cli_args": {
+      "detections": null,
+      "detections_dir": "outputs/h11/n1-outstanding-384/image-t0",
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/384px/flash-image-minimal-t-0-0-487-tiles",
+      "label": "Flash Image MINIMAL T=0.0 (487 tiles)",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": "outputs/h11/n1-outstanding-384/image-t0",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
     }
   },
   "per_run": [
@@ -50,14 +83,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6559,
-          "f1_ci_lower": 0.611,
-          "f1_ci_upper": 0.6901,
+          "f1_ci_lower": 0.6141,
+          "f1_ci_upper": 0.6913,
           "precision": 0.5195,
-          "p_ci_lower": 0.4688,
-          "p_ci_upper": 0.5597,
+          "p_ci_lower": 0.4735,
+          "p_ci_upper": 0.5603,
           "recall": 0.8897,
           "r_ci_lower": 0.8571,
-          "r_ci_upper": 0.9195
+          "r_ci_upper": 0.9205
         }
       ],
       "tile_classification": {
@@ -68,19 +101,19 @@
           "fn": 1
         },
         "mcc": {
-          "mean": 0.3113,
-          "ci_lower": 0.2586,
-          "ci_upper": 0.3628
+          "mean": 0.312,
+          "ci_lower": 0.2601,
+          "ci_upper": 0.3619
         },
         "sensitivity": {
-          "mean": 0.9955,
-          "ci_lower": 0.9855,
+          "mean": 0.9956,
+          "ci_lower": 0.9861,
           "ci_upper": 1.0
         },
         "specificity": {
-          "mean": 0.1974,
-          "ci_lower": 0.1494,
-          "ci_upper": 0.249
+          "mean": 0.1979,
+          "ci_lower": 0.1508,
+          "ci_upper": 0.2471
         }
       }
     },
@@ -91,14 +124,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6531,
-          "f1_ci_lower": 0.6083,
-          "f1_ci_upper": 0.6883,
+          "f1_ci_lower": 0.6118,
+          "f1_ci_upper": 0.6887,
           "precision": 0.5167,
-          "p_ci_lower": 0.4655,
-          "p_ci_upper": 0.5575,
+          "p_ci_lower": 0.4715,
+          "p_ci_upper": 0.5581,
           "recall": 0.8874,
-          "r_ci_lower": 0.8547,
-          "r_ci_upper": 0.9173
+          "r_ci_lower": 0.855,
+          "r_ci_upper": 0.9185
         }
       ],
       "tile_classification": {
@@ -109,19 +142,19 @@
           "fn": 1
         },
         "mcc": {
-          "mean": 0.3151,
-          "ci_lower": 0.2628,
-          "ci_upper": 0.3665
+          "mean": 0.3157,
+          "ci_lower": 0.2639,
+          "ci_upper": 0.3654
         },
         "sensitivity": {
-          "mean": 0.9955,
-          "ci_lower": 0.9855,
+          "mean": 0.9956,
+          "ci_lower": 0.9861,
           "ci_upper": 1.0
         },
         "specificity": {
-          "mean": 0.2015,
-          "ci_lower": 0.1556,
-          "ci_upper": 0.2549
+          "mean": 0.2018,
+          "ci_lower": 0.1542,
+          "ci_upper": 0.251
         }
       }
     },
@@ -132,14 +165,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6554,
-          "f1_ci_lower": 0.61,
-          "f1_ci_upper": 0.6892,
+          "f1_ci_lower": 0.6137,
+          "f1_ci_upper": 0.6906,
           "precision": 0.5188,
-          "p_ci_lower": 0.4667,
-          "p_ci_upper": 0.5582,
+          "p_ci_lower": 0.4728,
+          "p_ci_upper": 0.5598,
           "recall": 0.8897,
           "r_ci_lower": 0.8568,
-          "r_ci_upper": 0.9194
+          "r_ci_upper": 0.9205
         }
       ],
       "tile_classification": {
@@ -150,19 +183,19 @@
           "fn": 1
         },
         "mcc": {
-          "mean": 0.3113,
-          "ci_lower": 0.2586,
-          "ci_upper": 0.3628
+          "mean": 0.312,
+          "ci_lower": 0.2601,
+          "ci_upper": 0.3619
         },
         "sensitivity": {
-          "mean": 0.9955,
-          "ci_lower": 0.9855,
+          "mean": 0.9956,
+          "ci_lower": 0.9861,
           "ci_upper": 1.0
         },
         "specificity": {
-          "mean": 0.1974,
-          "ci_lower": 0.1494,
-          "ci_upper": 0.249
+          "mean": 0.1979,
+          "ci_lower": 0.1508,
+          "ci_upper": 0.2471
         }
       }
     }

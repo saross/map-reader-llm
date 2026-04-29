@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:48:31.663981+00:00",
+  "timestamp": "2026-04-29T14:51:49.930751+00:00",
   "summary": {
     "label": "P2c Image scale-4",
     "n_detections": 811,
@@ -8,14 +8,14 @@
       {
         "buffer_metres": 30,
         "f1": 0.637,
-        "f1_ci_lower": 0.5853,
-        "f1_ci_upper": 0.6828,
+        "f1_ci_lower": 0.5852,
+        "f1_ci_upper": 0.6857,
         "precision": 0.5302,
-        "p_ci_lower": 0.4668,
-        "p_ci_upper": 0.5868,
+        "p_ci_lower": 0.469,
+        "p_ci_upper": 0.5893,
         "recall": 0.7978,
-        "r_ci_lower": 0.7521,
-        "r_ci_upper": 0.8439
+        "r_ci_lower": 0.75,
+        "r_ci_upper": 0.8436
       }
     ],
     "tile_classification": {
@@ -26,9 +26,9 @@
         "fn": 0
       },
       "mcc": {
-        "mean": 0.1331,
-        "ci_lower": 0.0665,
-        "ci_upper": 0.1912
+        "mean": 0.1314,
+        "ci_lower": 0.0661,
+        "ci_upper": 0.1951
       },
       "sensitivity": {
         "mean": 1.0,
@@ -36,10 +36,47 @@
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.03,
+        "mean": 0.0296,
         "ci_lower": 0.0069,
-        "ci_upper": 0.0602
+        "ci_upper": 0.062
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:51:08.435277+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/512px/p2c-image-scale-4",
+      "label": "P2c Image scale-4",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     }
   }
 }

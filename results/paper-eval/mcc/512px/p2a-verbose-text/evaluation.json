@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:45:18.799608+00:00",
+  "timestamp": "2026-04-29T14:48:30.247703+00:00",
   "summary": {
     "label": "P2a Verbose text",
     "n_runs": 3,
@@ -8,21 +8,21 @@
       {
         "buffer_metres": 30,
         "f1": 0.5552,
-        "f1_ci_lower": 0.4953,
-        "f1_ci_upper": 0.6099,
+        "f1_ci_lower": 0.4963,
+        "f1_ci_upper": 0.6117,
         "precision": 0.4348,
-        "p_ci_lower": 0.3727,
-        "p_ci_upper": 0.4966,
+        "p_ci_lower": 0.3743,
+        "p_ci_upper": 0.4971,
         "recall": 0.7681,
-        "r_ci_lower": 0.7117,
-        "r_ci_upper": 0.8193
+        "r_ci_lower": 0.7132,
+        "r_ci_upper": 0.8186
       }
     ],
     "tile_classification": {
       "mcc": {
-        "mean": 0.0545,
+        "mean": 0.0541,
         "ci_lower": 0.0403,
-        "ci_upper": 0.0869
+        "ci_upper": 0.0857
       },
       "sensitivity": {
         "mean": 1.0,
@@ -30,9 +30,9 @@
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.0047,
+        "mean": 0.0049,
         "ci_lower": 0.0,
-        "ci_upper": 0.0159
+        "ci_upper": 0.0157
       },
       "confusion": {
         "tp": 204,
@@ -40,6 +40,39 @@
         "fp": 135,
         "fn": 0
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:46:04.498507+00:00",
+    "cli_args": {
+      "detections": null,
+      "detections_dir": "outputs/retest/phase2a/verbose-text",
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/512px/p2a-verbose-text",
+      "label": "P2a Verbose text",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": "outputs/retest/phase2a/verbose-text",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     }
   },
   "per_run": [
@@ -50,14 +83,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.5537,
-          "f1_ci_lower": 0.4947,
-          "f1_ci_upper": 0.6089,
+          "f1_ci_lower": 0.4955,
+          "f1_ci_upper": 0.6088,
           "precision": 0.4372,
-          "p_ci_lower": 0.3754,
-          "p_ci_upper": 0.499,
+          "p_ci_lower": 0.3771,
+          "p_ci_upper": 0.4984,
           "recall": 0.7551,
-          "r_ci_lower": 0.6954,
-          "r_ci_upper": 0.8098
+          "r_ci_lower": 0.6979,
+          "r_ci_upper": 0.8079
         }
       ],
       "tile_classification": {
@@ -68,9 +101,9 @@
           "fn": 0
         },
         "mcc": {
-          "mean": 0.0817,
+          "mean": 0.0811,
           "ci_lower": 0.0604,
-          "ci_upper": 0.1303
+          "ci_upper": 0.1285
         },
         "sensitivity": {
           "mean": 1.0,
@@ -78,9 +111,9 @@
           "ci_upper": 1.0
         },
         "specificity": {
-          "mean": 0.0071,
+          "mean": 0.0073,
           "ci_lower": 0.0,
-          "ci_upper": 0.0238
+          "ci_upper": 0.0236
         }
       }
     },
@@ -91,14 +124,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.5509,
-          "f1_ci_lower": 0.4906,
-          "f1_ci_upper": 0.6043,
+          "f1_ci_lower": 0.492,
+          "f1_ci_upper": 0.6074,
           "precision": 0.4295,
-          "p_ci_lower": 0.3681,
-          "p_ci_upper": 0.4902,
+          "p_ci_lower": 0.3694,
+          "p_ci_upper": 0.4909,
           "recall": 0.7681,
-          "r_ci_lower": 0.7135,
-          "r_ci_upper": 0.8172
+          "r_ci_lower": 0.7146,
+          "r_ci_upper": 0.8174
         }
       ],
       "tile_classification": {
@@ -132,14 +165,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.561,
-          "f1_ci_lower": 0.5007,
-          "f1_ci_upper": 0.6166,
+          "f1_ci_lower": 0.5014,
+          "f1_ci_upper": 0.619,
           "precision": 0.4376,
-          "p_ci_lower": 0.3745,
-          "p_ci_upper": 0.5005,
+          "p_ci_lower": 0.3763,
+          "p_ci_upper": 0.502,
           "recall": 0.7811,
-          "r_ci_lower": 0.7263,
-          "r_ci_upper": 0.831
+          "r_ci_lower": 0.7271,
+          "r_ci_upper": 0.8306
         }
       ],
       "tile_classification": {
@@ -150,9 +183,9 @@
           "fn": 0
         },
         "mcc": {
-          "mean": 0.0817,
+          "mean": 0.0811,
           "ci_lower": 0.0604,
-          "ci_upper": 0.1303
+          "ci_upper": 0.1285
         },
         "sensitivity": {
           "mean": 1.0,
@@ -160,9 +193,9 @@
           "ci_upper": 1.0
         },
         "specificity": {
-          "mean": 0.0071,
+          "mean": 0.0073,
           "ci_lower": 0.0,
-          "ci_upper": 0.0238
+          "ci_upper": 0.0236
         }
       }
     }

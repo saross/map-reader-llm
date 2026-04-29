@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T05:06:49.282297+00:00",
+  "timestamp": "2026-04-29T14:35:41.227478+00:00",
   "summary": {
     "label": "P2a Brief text+image",
     "n_runs": 3,
@@ -9,15 +9,48 @@
         "buffer_metres": 30,
         "f1": 0.6303,
         "f1_ci_lower": 0.5841,
-        "f1_ci_upper": 0.6719,
+        "f1_ci_upper": 0.6736,
         "precision": 0.5304,
-        "p_ci_lower": 0.4801,
-        "p_ci_upper": 0.5787,
+        "p_ci_lower": 0.4797,
+        "p_ci_upper": 0.5789,
         "recall": 0.7767,
-        "r_ci_lower": 0.7293,
-        "r_ci_upper": 0.8233
+        "r_ci_lower": 0.7298,
+        "r_ci_upper": 0.8216
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:32:59.294738+00:00",
+    "cli_args": {
+      "detections": null,
+      "detections_dir": "outputs/retest/phase2a/brief-text-image",
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/n1/512px/p2a-brief-text-image",
+      "label": "P2a Brief text+image",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": "outputs/retest/phase2a/brief-text-image",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    }
   },
   "per_run": [
     {
@@ -27,14 +60,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.637,
-          "f1_ci_lower": 0.5933,
-          "f1_ci_upper": 0.6769,
+          "f1_ci_lower": 0.5915,
+          "f1_ci_upper": 0.6789,
           "precision": 0.5361,
-          "p_ci_lower": 0.484,
-          "p_ci_upper": 0.5827,
+          "p_ci_lower": 0.4848,
+          "p_ci_upper": 0.5843,
           "recall": 0.7848,
-          "r_ci_lower": 0.7418,
-          "r_ci_upper": 0.8275
+          "r_ci_lower": 0.7391,
+          "r_ci_upper": 0.8271
         }
       ]
     },
@@ -45,14 +78,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6297,
-          "f1_ci_lower": 0.5837,
-          "f1_ci_upper": 0.6726,
+          "f1_ci_lower": 0.584,
+          "f1_ci_upper": 0.6733,
           "precision": 0.5327,
-          "p_ci_lower": 0.4862,
-          "p_ci_upper": 0.5815,
+          "p_ci_lower": 0.4832,
+          "p_ci_upper": 0.5801,
           "recall": 0.7699,
-          "r_ci_lower": 0.7201,
-          "r_ci_upper": 0.8199
+          "r_ci_lower": 0.7212,
+          "r_ci_upper": 0.8176
         }
       ]
     },
@@ -63,14 +96,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6243,
-          "f1_ci_lower": 0.5752,
-          "f1_ci_upper": 0.6661,
+          "f1_ci_lower": 0.5769,
+          "f1_ci_upper": 0.6686,
           "precision": 0.5225,
-          "p_ci_lower": 0.47,
-          "p_ci_upper": 0.5718,
+          "p_ci_lower": 0.4712,
+          "p_ci_upper": 0.5722,
           "recall": 0.7755,
-          "r_ci_lower": 0.726,
-          "r_ci_upper": 0.8224
+          "r_ci_lower": 0.729,
+          "r_ci_upper": 0.8202
         }
       ]
     }

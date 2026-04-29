@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:49:12.698409+00:00",
+  "timestamp": "2026-04-29T14:52:41.840317+00:00",
   "summary": {
     "label": "P2e Random",
     "n_detections": 821,
@@ -8,14 +8,14 @@
       {
         "buffer_metres": 30,
         "f1": 0.6441,
-        "f1_ci_lower": 0.5948,
-        "f1_ci_upper": 0.6878,
+        "f1_ci_lower": 0.5959,
+        "f1_ci_upper": 0.6888,
         "precision": 0.5335,
-        "p_ci_lower": 0.477,
-        "p_ci_upper": 0.5842,
+        "p_ci_lower": 0.4791,
+        "p_ci_upper": 0.5858,
         "recall": 0.8126,
         "r_ci_lower": 0.7662,
-        "r_ci_upper": 0.8557
+        "r_ci_upper": 0.8551
       }
     ],
     "tile_classification": {
@@ -26,9 +26,9 @@
         "fn": 0
       },
       "mcc": {
-        "mean": 0.0837,
+        "mean": 0.0816,
         "ci_lower": 0.0608,
-        "ci_upper": 0.1303
+        "ci_upper": 0.1294
       },
       "sensitivity": {
         "mean": 1.0,
@@ -36,10 +36,47 @@
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.0079,
+        "mean": 0.0074,
         "ci_lower": 0.0,
-        "ci_upper": 0.0248
+        "ci_upper": 0.0238
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:51:52.815078+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2e/random/run_1/detections_random_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/512px/p2e-random",
+      "label": "P2e Random",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2e/random/run_1/detections_random_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     }
   }
 }

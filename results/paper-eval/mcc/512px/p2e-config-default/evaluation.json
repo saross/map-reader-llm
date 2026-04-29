@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:48:59.005047+00:00",
+  "timestamp": "2026-04-29T14:52:42.793927+00:00",
   "summary": {
     "label": "P2e Config default",
     "n_detections": 752,
@@ -8,14 +8,14 @@
       {
         "buffer_metres": 30,
         "f1": 0.6708,
-        "f1_ci_lower": 0.6296,
-        "f1_ci_upper": 0.7092,
+        "f1_ci_lower": 0.629,
+        "f1_ci_upper": 0.7091,
         "precision": 0.5758,
-        "p_ci_lower": 0.529,
-        "p_ci_upper": 0.6193,
+        "p_ci_lower": 0.5297,
+        "p_ci_upper": 0.6187,
         "recall": 0.8033,
-        "r_ci_lower": 0.7559,
-        "r_ci_upper": 0.848
+        "r_ci_lower": 0.7587,
+        "r_ci_upper": 0.8466
       }
     ],
     "tile_classification": {
@@ -26,9 +26,9 @@
         "fn": 0
       },
       "mcc": {
-        "mean": 0.2143,
-        "ci_lower": 0.1468,
-        "ci_upper": 0.2742
+        "mean": 0.2117,
+        "ci_lower": 0.1417,
+        "ci_upper": 0.2775
       },
       "sensitivity": {
         "mean": 1.0,
@@ -36,10 +36,47 @@
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.0757,
-        "ci_lower": 0.0359,
-        "ci_upper": 0.1189
+        "mean": 0.0742,
+        "ci_lower": 0.0325,
+        "ci_upper": 0.1212
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:51:50.706801+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2e/config-default/run_1/detections_config-default_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/512px/p2e-config-default",
+      "label": "P2e Config default",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2e/config-default/run_1/detections_config-default_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     }
   }
 }

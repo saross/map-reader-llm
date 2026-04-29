@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:48:27.130720+00:00",
+  "timestamp": "2026-04-29T14:52:00.450976+00:00",
   "summary": {
     "label": "P2c Image pure-positive-canon",
     "n_detections": 736,
@@ -8,14 +8,14 @@
       {
         "buffer_metres": 30,
         "f1": 0.6463,
-        "f1_ci_lower": 0.5986,
-        "f1_ci_upper": 0.6871,
+        "f1_ci_lower": 0.598,
+        "f1_ci_upper": 0.6905,
         "precision": 0.5598,
-        "p_ci_lower": 0.5055,
-        "p_ci_upper": 0.6059,
+        "p_ci_lower": 0.5068,
+        "p_ci_upper": 0.61,
         "recall": 0.7644,
-        "r_ci_lower": 0.7125,
-        "r_ci_upper": 0.8158
+        "r_ci_lower": 0.7115,
+        "r_ci_upper": 0.8151
       }
     ],
     "tile_classification": {
@@ -26,9 +26,9 @@
         "fn": 0
       },
       "mcc": {
-        "mean": 0.097,
-        "ci_lower": 0.0624,
-        "ci_upper": 0.1525
+        "mean": 0.0978,
+        "ci_lower": 0.0619,
+        "ci_upper": 0.1543
       },
       "sensitivity": {
         "mean": 1.0,
@@ -36,10 +36,47 @@
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.0144,
+        "mean": 0.0146,
         "ci_lower": 0.0,
-        "ci_upper": 0.036
+        "ci_upper": 0.0379
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:51:03.472235+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/512px/p2c-image-pure-positive-canon",
+      "label": "P2c Image pure-positive-canon",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     }
   }
 }

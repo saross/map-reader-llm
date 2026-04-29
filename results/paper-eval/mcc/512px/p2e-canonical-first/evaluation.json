@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:49:03.562990+00:00",
+  "timestamp": "2026-04-29T14:52:39.592653+00:00",
   "summary": {
     "label": "P2e Canonical first",
     "n_detections": 771,
@@ -8,14 +8,14 @@
       {
         "buffer_metres": 30,
         "f1": 0.6641,
-        "f1_ci_lower": 0.6174,
-        "f1_ci_upper": 0.706,
+        "f1_ci_lower": 0.6186,
+        "f1_ci_upper": 0.7063,
         "precision": 0.5642,
-        "p_ci_lower": 0.515,
-        "p_ci_upper": 0.609,
+        "p_ci_lower": 0.5146,
+        "p_ci_upper": 0.6121,
         "recall": 0.8071,
-        "r_ci_lower": 0.7554,
-        "r_ci_upper": 0.8574
+        "r_ci_lower": 0.7563,
+        "r_ci_upper": 0.855
       }
     ],
     "tile_classification": {
@@ -27,8 +27,8 @@
       },
       "mcc": {
         "mean": 0.0983,
-        "ci_lower": 0.0626,
-        "ci_upper": 0.1534
+        "ci_lower": 0.0619,
+        "ci_upper": 0.1562
       },
       "sensitivity": {
         "mean": 1.0,
@@ -36,10 +36,47 @@
         "ci_upper": 1.0
       },
       "specificity": {
-        "mean": 0.015,
+        "mean": 0.0148,
         "ci_lower": 0.0,
-        "ci_upper": 0.0376
+        "ci_upper": 0.0382
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:51:51.842968+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/512px/p2e-canonical-first",
+      "label": "P2e Canonical first",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     }
   }
 }

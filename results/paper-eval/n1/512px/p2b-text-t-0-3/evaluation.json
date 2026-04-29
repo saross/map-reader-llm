@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T05:07:38.061421+00:00",
+  "timestamp": "2026-04-29T14:36:43.933658+00:00",
   "summary": {
     "label": "P2b Text T=0.3",
     "n_runs": 3,
@@ -8,16 +8,49 @@
       {
         "buffer_metres": 30,
         "f1": 0.6348,
-        "f1_ci_lower": 0.5798,
-        "f1_ci_upper": 0.6829,
+        "f1_ci_lower": 0.5805,
+        "f1_ci_upper": 0.6854,
         "precision": 0.5138,
-        "p_ci_lower": 0.4509,
-        "p_ci_upper": 0.5705,
+        "p_ci_lower": 0.4517,
+        "p_ci_upper": 0.5749,
         "recall": 0.8306,
-        "r_ci_lower": 0.7873,
-        "r_ci_upper": 0.8728
+        "r_ci_lower": 0.7867,
+        "r_ci_upper": 0.8707
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:34:15.767815+00:00",
+    "cli_args": {
+      "detections": null,
+      "detections_dir": "outputs/retest/phase2b/track2-text/T0.3",
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/n1/512px/p2b-text-t-0-3",
+      "label": "P2b Text T=0.3",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": "outputs/retest/phase2b/track2-text/T0.3",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    }
   },
   "per_run": [
     {
@@ -27,14 +60,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6358,
-          "f1_ci_lower": 0.5813,
-          "f1_ci_upper": 0.6818,
+          "f1_ci_lower": 0.5823,
+          "f1_ci_upper": 0.686,
           "precision": 0.5162,
-          "p_ci_lower": 0.4517,
-          "p_ci_upper": 0.5703,
+          "p_ci_lower": 0.4552,
+          "p_ci_upper": 0.5768,
           "recall": 0.8275,
-          "r_ci_lower": 0.782,
-          "r_ci_upper": 0.8694
+          "r_ci_lower": 0.7834,
+          "r_ci_upper": 0.8676
         }
       ]
     },
@@ -45,14 +78,14 @@
         {
           "buffer_metres": 30,
           "f1": 0.6388,
-          "f1_ci_lower": 0.5825,
-          "f1_ci_upper": 0.6866,
+          "f1_ci_lower": 0.5836,
+          "f1_ci_upper": 0.6895,
           "precision": 0.5166,
-          "p_ci_lower": 0.4549,
-          "p_ci_upper": 0.5733,
+          "p_ci_lower": 0.4538,
+          "p_ci_upper": 0.5782,
           "recall": 0.8367,
           "r_ci_lower": 0.7938,
-          "r_ci_upper": 0.8775
+          "r_ci_upper": 0.8766
         }
       ]
     },
@@ -64,13 +97,13 @@
           "buffer_metres": 30,
           "f1": 0.6299,
           "f1_ci_lower": 0.5755,
-          "f1_ci_upper": 0.6802,
+          "f1_ci_upper": 0.6807,
           "precision": 0.5086,
-          "p_ci_lower": 0.446,
-          "p_ci_upper": 0.5678,
+          "p_ci_lower": 0.4462,
+          "p_ci_upper": 0.5696,
           "recall": 0.8275,
-          "r_ci_lower": 0.786,
-          "r_ci_upper": 0.8715
+          "r_ci_lower": 0.7829,
+          "r_ci_upper": 0.8679
         }
       ]
     }

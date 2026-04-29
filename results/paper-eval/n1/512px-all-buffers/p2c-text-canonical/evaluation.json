@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-28T06:16:29.868744+00:00",
+  "timestamp": "2026-04-29T14:27:15.978165+00:00",
   "summary": {
     "label": "P2c Text canonical",
     "n_detections": 897,
@@ -8,51 +8,91 @@
       {
         "buffer_metres": 20,
         "f1": 0.6045,
-        "f1_ci_lower": 0.5464,
-        "f1_ci_upper": 0.6555,
+        "f1_ci_lower": 0.5487,
+        "f1_ci_upper": 0.6587,
         "precision": 0.4838,
-        "p_ci_lower": 0.4197,
-        "p_ci_upper": 0.5424,
+        "p_ci_lower": 0.4221,
+        "p_ci_upper": 0.5475,
         "recall": 0.8052,
-        "r_ci_lower": 0.7577,
-        "r_ci_upper": 0.8508
+        "r_ci_lower": 0.7576,
+        "r_ci_upper": 0.8498
       },
       {
         "buffer_metres": 30,
         "f1": 0.6365,
-        "f1_ci_lower": 0.5775,
-        "f1_ci_upper": 0.6878,
+        "f1_ci_lower": 0.5792,
+        "f1_ci_upper": 0.6896,
         "precision": 0.5095,
-        "p_ci_lower": 0.4425,
-        "p_ci_upper": 0.5695,
+        "p_ci_lower": 0.4456,
+        "p_ci_upper": 0.5743,
         "recall": 0.8479,
-        "r_ci_lower": 0.8041,
-        "r_ci_upper": 0.8909
+        "r_ci_lower": 0.8055,
+        "r_ci_upper": 0.887
       },
       {
         "buffer_metres": 40,
         "f1": 0.6462,
-        "f1_ci_lower": 0.5873,
-        "f1_ci_upper": 0.6977,
+        "f1_ci_lower": 0.5894,
+        "f1_ci_upper": 0.6988,
         "precision": 0.5173,
-        "p_ci_lower": 0.4508,
-        "p_ci_upper": 0.5769,
+        "p_ci_lower": 0.453,
+        "p_ci_upper": 0.5823,
         "recall": 0.8609,
-        "r_ci_lower": 0.8198,
-        "r_ci_upper": 0.8988
+        "r_ci_lower": 0.8211,
+        "r_ci_upper": 0.8973
       },
       {
         "buffer_metres": 50,
         "f1": 0.6504,
-        "f1_ci_lower": 0.5901,
-        "f1_ci_upper": 0.7002,
+        "f1_ci_lower": 0.5937,
+        "f1_ci_upper": 0.7031,
         "precision": 0.5206,
-        "p_ci_lower": 0.454,
-        "p_ci_upper": 0.5786,
+        "p_ci_lower": 0.4561,
+        "p_ci_upper": 0.5862,
         "recall": 0.8664,
-        "r_ci_lower": 0.8251,
-        "r_ci_upper": 0.9039
+        "r_ci_lower": 0.8263,
+        "r_ci_upper": 0.9028
       }
     ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:24:05.544391+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/n1/512px-all-buffers/p2c-text-canonical",
+      "label": "P2c Text canonical",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    }
   }
 }

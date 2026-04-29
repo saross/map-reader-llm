@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-03-27T12:35:56.818981+00:00",
+  "timestamp": "2026-04-29T14:41:54.360697+00:00",
   "summary": {
     "label": "Pro Text MEDIUM T=0.7",
     "n_detections": 1445,
@@ -8,14 +8,14 @@
       {
         "buffer_metres": 30,
         "f1": 0.4277,
-        "f1_ci_lower": 0.3696,
-        "f1_ci_upper": 0.4802,
+        "f1_ci_lower": 0.3716,
+        "f1_ci_upper": 0.4836,
         "precision": 0.2782,
-        "p_ci_lower": 0.2305,
-        "p_ci_upper": 0.3235,
+        "p_ci_lower": 0.2329,
+        "p_ci_upper": 0.3266,
         "recall": 0.9241,
-        "r_ci_lower": 0.8975,
-        "r_ci_upper": 0.9493
+        "r_ci_lower": 0.8971,
+        "r_ci_upper": 0.9478
       }
     ],
     "tile_classification": {
@@ -26,20 +26,57 @@
         "fn": 4
       },
       "mcc": {
-        "mean": 0.3095,
-        "ci_lower": 0.2467,
-        "ci_upper": 0.3678
+        "mean": 0.31,
+        "ci_lower": 0.2477,
+        "ci_upper": 0.3688
       },
       "sensitivity": {
         "mean": 0.9825,
-        "ci_lower": 0.9628,
-        "ci_upper": 0.9961
+        "ci_lower": 0.9638,
+        "ci_upper": 0.9959
       },
       "specificity": {
-        "mean": 0.2243,
-        "ci_lower": 0.1732,
-        "ci_upper": 0.2788
+        "mean": 0.2249,
+        "ci_lower": 0.1751,
+        "ci_upper": 0.2778
       }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "89a5ad67",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-29T14:40:35.487891+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        30
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/paper-eval/mcc/384px/pro-text-medium-t-0-7",
+      "label": "Pro Text MEDIUM T=0.7",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
     }
   }
 }
