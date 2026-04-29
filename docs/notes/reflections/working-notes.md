@@ -15068,6 +15068,43 @@ Search terms: bootstrap N=10000 standardisation, bootstrap N controls Monte Carl
 - **Bootstrap-10K standardisation commit chain**: `4b31aae0` (t-pilot CLI flag) through `51f438bd` (verifier-t-pilot upgrade), comprising 11 commits in total. Rollback anchor: `pre-bootstrap-10k-2026-04-28` tag → `5040f5b4` (the FP-class driver commit that is the parent of the bootstrap-10K chain after rebase); the tag was pushed from sapphire when the orchestrator ran but had not been fetched onto amd-tower at the time the original Obs 303 entry was drafted.
 - **Artefacts**: Sweep runner `scripts/run_bootstrap_10k.py`. Spot-check evidence: the implementing agent's report (logged in the chat-only agent transcript; specific CI-width ratios 0.96–1.02 quoted in the agent's status message at 15:32 UTC 2026-04-28). ~361 cells now at N=10,000 across phase3a-matrix, 55-map, gold-standard, h8-v2, h10, h12-v2, verifier-calibration-audit, and verifier-t-pilot. Commits `4b31aae0` (t-pilot --bootstrap CLI flag), `a9fe1c1d` (sweep runner), `e1955ddf` (phase3a-matrix data), `580f498b` (55-map data), `76b6592f` (gold-standard data), `afd1f0c8` (h8-v2 data), `17899e8f` (h10 data), `50368cfb` (h12-v2 data), `38688c47` (verifier-calibration-audit data), `51f438bd` (verifier-t-pilot data).
 
+## Observation 304: High-pull tail does NOT share an identifiable cartographic feature — Obs 301 follow-up rejects the strong shared-feature hypothesis (2026-04-29)
+
+### The finding
+
+The Obs 301 paper follow-up — "do high-pull maps share an identifiable cartographic feature?" — has now run as a qualitative inspection of nine high-pull maps and three low-pull controls (see `results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md`). The strong form of the hypothesis is **rejected**. The nine high-pull maps span the full range of cartographic landscape types in the corpus (heavily forested mountainous, open agricultural plain, mixed forest-agricultural mosaic, coastal sheet); no single feature axis (label density, vegetation hatching, contour density, settlement density, terrain type, edition variant) separates them as a class. A single counter-example suffices: control map K-35-074-3 (0 % shell rate in all four runs) is visually indistinguishable from the multi-run high-pull leader K-35-067-2 — same heavily forested mountainous terrain, dense contours, sparse settlement, identical Soviet 1981 edition appearance. If a cartographic-feature signal explained the high-pull behaviour, K-35-074-3 should also be high-pull. It is not.
+
+### Convergent evidence from Obs 302 categorical FP audit
+
+The Obs 302 VLM-based FP categorical breakdown reinforces this verdict. Per-map FP category distributions are similar between the two groups: contour-rings dominate in both (8 of 9 high-pull maps; 3 of 3 controls). Absolute FP counts on controls (n = 8, 14, 19) are within or above the range of high-pull maps (n = 4–20). Control K-35-077-4 has 19 FPs — among the highest in the 12-map sample — yet a 0 % shell rate. What separates high-pull from low-pull is not the *kind* of FPs raised but whether those FPs happen to fall within the (50, 75] m annulus of a reference point.
+
+### Parsimonious explanation: small-denominator arithmetic plus reference-point density
+
+Several of the most extreme per-map rates resolve to a 1–3 detection count when numerator and denominator are inspected. K-35-067-2 at T=0.7 = 3 of 4 (75 %); K-35-056-3 at image = 3 of 6 (50 %); K-35-067-2 at text-MIN = 3 of 6 (50 %); K-35-042-3 at T=0.3 = 1 of 3 (33 %); K-35-051-3 at T=0.7 = 1 of 3 (33 %). Removing or adding a single detection in these cells flips the per-map rate by 20–25 percentage points. The right-skew shape from Obs 301 is real, but specific high-pull map identification is unstable when n_detections is small — consistent with Obs 301's own caveat about thin-sample maps driving the SD and tail-max values.
+
+### What this means for the paper Discussion
+
+The paper should report the per-map distribution shape (median + IQR or boxplot) alongside the corpus rate as Obs 301 already recommended, but should **not** attribute the right-skew to identifiable cartographic features. Suggested framing (full text in `high-pull-feature-characterisation.md` § Paper implications):
+
+> Per-map shell rates are heavily right-skewed on the text track (median 0 %; long tail to 33–75 %), driven by 2–3 high-pull maps. Qualitative inspection of the high-pull tail and matched low-pull controls did not identify a shared cartographic feature explaining the elevated rates. The right-skew is most parsimoniously attributed to small-denominator variance compounded by per-map heterogeneity in reference-point density.
+
+### Caveats
+
+- **Sample size.** 12 maps inspected (9 + 3). A weak feature-correlation hypothesis (feature shared by 5 of 9 high-pull and absent in all controls) may not have been detectable; the strong form is.
+- **Resolution.** Inspection at 2,048 px-wide PNG previews. Fine-grained features (specific contour values, edition number stamps) not legible. The Obs 302 categorical audit on 150 m crops complements this on the "what kind of feature is being mistaken" question and converges on the same negative verdict.
+- **Single inspection per map.** No FP-cluster region zoom; the Obs 302 per-FP categorical audit substitutes for this. Reference-point density per map was not measured here; flagged as a quantitative follow-up if the paper reviewer requests one.
+
+### Findable later
+
+Search terms: high-pull tail cartographic feature characterisation, Obs 301 follow-up rejected, K-35-067-2 K-35-074-3 visually indistinguishable, control similar character to high-pull leader, no shared feature axis 9 maps, contour-ring dominance both groups, small-denominator arithmetic high-pull rates, 3 of 4 detections 75% rate, per-map right-skew not attributable to features, paper Discussion hedge per-map distribution shape, qualitative inspection 2048 px previews, 12-map comparison table, paper implications no cartographic mechanism, reference-point density follow-up.
+
+### Related observations and artefacts
+
+- **Obs 301** (per-map right-skew text-track median 0 %): the observation this Obs follows up. Obs 301 identified the right-skew and flagged the shared-feature question; this Obs answers the question with a qualitative inspection.
+- **Obs 302** (FP-class categorical audit, contour-ring dominance ~41 %): convergent evidence. The category distributions per map (high-pull and control) are similar; the categorical audit and the cartographic-feature inspection both converge on no-shared-feature.
+- **Obs 296 / Obs 300** (failure-of-generalisation; track-asymmetric verdict): related — the per-map shape underlying Obs 300's text-track ambiguity is the right-skew that Obs 301 / Obs 304 characterise.
+- **Artefacts**: New characterisation document `results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md`. Source data `results/55maps-per-map-shell-variance/per_map_shell_rates.json` (Obs 301) and `results/55maps-fp-classification/fp_classifications.json` (Obs 302). Inspection rasters at `inputs/rasters/Russian1981_32635/K-35-*.tif`; previews generated via `gdal_translate -outsize 2048 0 -of PNG -scale` (not committed — trivially reproducible).
+
 ## Session 80 closing roll-up — 2026-04-27/28 (map-reader-llm)
 
 **22 new Obs entries (282–303)** added across this two-day session, organised in five topical clusters. Index for future readers (this section is an index, not substantive content; the substance lives in each Obs body):
