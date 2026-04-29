@@ -65,10 +65,19 @@ whether the report-time guidance to ignore the CIs is sufficient.
 
 ## What's running now
 
-- **Full sweep**: 162 cells via xargs -P 16, ~6/161 OK at 9 min in.
-- ETA based on early cells: 3-4 hours wall (much longer than the
+- **Full sweep**: 162 cells via xargs -P 16, **8/162 OK at 13 min in**
+  (started 14:01 UTC).
+- ETA based on early cells: **3-5 hours wall** (much longer than the
   plan's 30-60 min estimate; the 30-run paper-eval cells and the
   3 × 55maps cells are the bottleneck).
+
+To check live progress on sapphire:
+
+```bash
+ssh sapphire 'grep -cE "OK   |FAIL " /tmp/bootstrap-10k-followup-progress.log'
+ssh sapphire 'tail -10 /tmp/bootstrap-10k-followup-progress.log'
+ssh sapphire 'pgrep -af launch_bootstrap_10k_followup_sweep'
+```
 
 ## What remains
 
