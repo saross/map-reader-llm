@@ -4420,3 +4420,64 @@ I dispatched an Explore agent to find the leaderboard state at the moment the 55
 ### Cross-cutting reflection
 
 Both sequences are instances of the same pattern: the system's reported state (a meta.json field; a current leaderboard) was trusted as a measurement when it was actually an *artefact* of how the system aggregates or refreshes its outputs. The verification corrective is the same in both: read the deeper / earlier source. For the 629-failures sequence, the deeper source was probabilities.json (the actual output); for the T=0.7-selection sequence, the deeper source was the historical commit's leaderboard state. The pattern: when a numeric or structural claim feels obvious, ask "what's the data layer underneath this summary?" and read THAT.
+
+## 2026-04-27/28 (Session 80, map-reader-llm): Three belief-revisions, all triggered by agents catching parent-level errors
+
+Session 80 produced three clean abductive sequences. Distinctive feature vs prior sessions: in each case, **the probe that triggered belief revision was an agent-level discipline check, not a user intervention**. The agent definitions I'd encoded with anti-confabulation rules (re-read source, prefer source over spec, flag deviations) operated below the prompt level — caught my errors even when the prompt didn't specifically tell them to.
+
+### Sequence A — "CIs will tighten by ~√10 with bootstrap N=10K" → CI width is fixed by the data; bootstrap N controls Monte Carlo noise, not width
+
+**The starting observation**: I dispatched the overnight bootstrap-N=10K standardisation with a verification step that told the implementing agent "confirm CIs tightened (should be similar means but tighter intervals than the 1K versions)". The expectation was based on a half-remembered analogy with sample-size scaling: more data → narrower CIs → ~√N. I extended this implicitly to bootstrap iterations.
+
+**Two hypotheses sat beneath the spec**:
+
+- **H-CI-tightens**: bootstrap N is analogous to sample size; more iterations → narrower CIs by ~√N.
+- **H-CI-fixed**: bootstrap N controls only the Monte Carlo noise in CI estimation; CI width reflects the sampling variability of the statistic in the data, which is fixed once the data are observed.
+
+The implementing agent ran the sweep, then performed the verification spot-check on 6 representative cells. CI width ratios (N=10K / N=1K) came back at 0.96–1.02 — essentially identical. The agent correctly identified that my expectation was wrong, switched to the still-valid "methodological rigour / less MC noise per CI estimate" rationale, completed the sweep, and flagged the issue in its return report.
+
+**Belief revision**: H-CI-tightens was wrong. Bootstrap N=10K vs N=1K does NOT narrow CIs; it reduces Monte Carlo noise in the CI estimation. The CI width is a property of the data and the statistic. To narrow CIs: more data, more efficient estimators, or different methods (e.g. parametric assumptions). This became Obs 303.
+
+**What was abductive about this?** The expectation was a confident over-generalisation from a half-remembered statistical fact (sample-size √N scaling). The expectation was specified into the agent prompt; the agent did the spot-check, found the data didn't match the expectation, and reported the mismatch. The agent didn't *argue* with me — it just did the verification and reported what was there. The abductive content: when an expectation has the shape "this should obey √N scaling", check whether the N in question is sample size (where √N is correct) or iteration count (where it isn't). The two have different relationships to CI width.
+
+**Generalisable craft rule**: encode verification steps in agent prompts as "report what's actually there", not "confirm X". The former finds errors in the spec; the latter just confirms the spec. The bootstrap-N agent's contract was effectively the former — and that's why it caught my error rather than rubber-stamping it.
+
+### Sequence B — "55-map FPs concentrate on numbers/benchmarks (per manual review)" → contour-rings dominate at ~41% across all four runs; image and text indistinguishable
+
+**The starting observation**: Shawn articulated, from his own manual review of 55-map FPs, the asymmetric-failure-mode hypothesis: text-track FPs concentrate on labelled cartographic symbols (numbers, benchmarks, spot-heights), while GS FPs concentrate on spot-heights and water features. I encoded this into Obs 296 as the "failure-of-generalisation" framing for the GS-vs-55-map cap difference.
+
+**Two hypotheses sat beneath the manual-review intuition**:
+
+- **H-asymmetric**: 55-map FPs cluster on label-pull (numbers/benchmarks); image vs text differ in failure-mode profile.
+- **H-symmetric**: 55-map FPs cluster on something else (e.g., contour-rings, vegetation, settlement clusters); image vs text indistinguishable.
+
+The FP-class diagnostic ran a $0.51 VLM-based categorical classification across all 1,119 FPs from the four corrected 55-map runs, with a Soviet-1980s topographic vocabulary anchor. Result: contour-rings dominated at ~41 % across all four runs; numbers + benchmarks together were ~25 %; image vs text-track distributions chi² p=0.147 (statistically indistinguishable).
+
+**Belief revision**: H-asymmetric was wrong. The dominant 55-map FP category is contour-rings (closed brown topographic outlines mimicking the burial-mound symbol's oval form), not numbers/benchmarks. The asymmetric-failure-mode framing in Obs 296 was qualified by Obs 302 — and the Obs 302 finding sits as a 4-run-consistent counter-finding to a stated user hypothesis.
+
+**What was abductive about this?** The manual-review intuition was based on a specific kind of evidence — visual sampling of the FP set during human review — that has a known bias: human attention pre-attentively clusters on labels (which are high-contrast and read as words), under-clusters on contour-ring patterns (which are visual texture and easier to dismiss as "background"). The categorical-classification probe (VLM looking at all 1,119 FPs uniformly) doesn't have this bias. The abductive content: when a hypothesis is generated from human visual sampling, the category that the hypothesis IDENTIFIES may not be the category that DOMINATES in the underlying frequency distribution — humans selectively notice some categories over others. The probe that resolves this is uniform categorical classification across the full population, not more sampling.
+
+**Generalisable craft rule**: hypotheses generated from human visual review of a sample should be tested by uniform categorical classification across the population, NOT by more visual review. The bias structure of human attention guarantees the latter will reproduce the original hypothesis; only the former can falsify it.
+
+### Sequence C — "GS 25 m cap = fundamental detector spatial precision" → no, detector precision is constant across corpuses once GT-jitter is accounted for
+
+**The starting observation**: in Obs 295 I'd written that the 25 m attractor-pull cap on the 4-map gold-standard corpus was the "detector's fundamental spatial precision". The 5-fold gap vs the 55-map 100–125 m cap was framed as evidence that the detector localises tightly when its inputs are clean.
+
+**Two hypotheses sat beneath the framing**:
+
+- **H-precision-shift**: detector spatial precision genuinely differs between corpuses (~25 m on GS vs ~100–125 m on 55-map). The cap reflects what the detector can do.
+- **H-precision-constant**: detector spatial precision is approximately constant; the cap difference is driven by FP-anchoring failure modes (hits 25 m on GS because GS has cleaner FPs; hits 100–125 m on 55-map because 55-map has noisier FPs) AND by GT-jitter (Obs 260's ~25 m student-GT positional jitter on the 55-map reference).
+
+The TP-only localisation diagnostic (Obs 296 Test #1) computed the per-condition median TP-to-nearest-GT distance at ≤25 m matching scope. GS: 6.4 m. 55-map T=0.3: 14.4 m. T=0.7: 12.8 m. text-MIN: 14.4 m. image: 18.4 m. The expectation under H-precision-shift was for 55-map medians at ~25–30 m (5× looser than GS); the actual was 12–18 m — at or near the ~12–13 m floor that GT jitter alone produces under H-precision-constant.
+
+**Belief revision**: H-precision-shift was wrong. The 5-fold cap difference does NOT reflect a 5-fold detector-precision shift. Detector spatial precision is approximately constant across corpuses; the cap difference is driven by FP-anchoring (per Obs 296) plus GT-jitter (per Obs 260). Obs 295's "fundamental detector precision" framing was retired; Obs 300 made the post-calibration / native-detector distinction explicit.
+
+**What was abductive about this?** The original Obs 295 framing was the cleanest available reading of the GS-vs-55-map gap with the data on hand at that point — there was no diagnostic test that disambiguated H-precision-shift from H-precision-constant. The probe that resolved it (the TP-only diagnostic) required ≤25 m matching, restricting to TPs only, and accounting for the GT-jitter floor. Each of those design choices was needed for the test to be diagnostic; without any one of them, both hypotheses would predict similar-looking data. The abductive content: when two hypotheses predict similar surface observations, the diagnostic test must isolate the variable that distinguishes them — here, "is the detector's spatial precision genuinely loose or just GT-jitter-bounded?". The TP-only filter at ≤25 m + GT-jitter math is the isolation.
+
+**Generalisable craft rule**: an Obs entry that frames a finding "X = fundamental property of the system" should always be hedged until a diagnostic isolates the variable. The original Obs 295 framing was a *plausible* reading of the data; the post-hoc framing (Obs 296 + Obs 300) is the *isolated* reading. The cost of the hedge in the original Obs would have been one sentence; the cost of the un-hedged framing was a subsequent revision and a methodological note that the original reading should be retired.
+
+### Cross-cutting reflection (Session 80)
+
+All three sequences were resolved by **agent-level discipline operating below the prompt level**. In Sequence A, the agent's verification step ("report what's actually there") caught my √N expectation. In Sequence B, the categorical-classification agent's uniform population coverage caught the manual-review hypothesis. In Sequence C, the diagnostic agent's TP-only matching scope + GT-jitter accounting caught the precision-shift framing. None of these probes was prompted into the agent specifically to catch MY error — they were generic verification disciplines that the agent was told to apply, and they happened to catch the parent's confabulation as a by-product.
+
+This contrasts with Session 79, where the probes that resolved belief revisions were either user interventions ("are you sure the files are tracked?") or my own re-reads of the source. In Session 80, the probes were agent-internal — the same anti-confabulation rules I'd encoded into the obs-writer contract were operating in the cleanup, bootstrap-10K, and FP-class agents too. **The pattern: encoding anti-confabulation rules at the agent-definition level produces parent-level error correction as a side effect.** This is a genuinely useful design principle, and I want to remember it as the load-bearing meta-finding from Session 80.

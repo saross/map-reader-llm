@@ -5598,3 +5598,44 @@ The corrective: when a numeric finding fits the user's prior or my expectation, 
 ### Cross-cutting
 
 The three observations share a structure: in each, the failure mode is *underchecking* in a context where the agent (me, or a sub-agent) feels confident. The structural fix in each case is a checklist addition — verify-git-tracking before delete; verify-source-data for numeric counts; verify-against-empirical-anchor for cost estimates. Each addition is cheap. The cost of NOT having them is real but episodic; you only pay when you hit the failure case. Session 79 paid all three failure cases in one session, which is unusual; the discipline tightening it produced is the lasting deliverable.
+
+## Session 80 Observations (2026-04-27/28, map-reader-llm)
+
+Two-day continuous session producing 22 new Obs entries (282–303), ~60 commits, $2.30 API spend, ~6 hr sapphire compute. The defining collaboration-pattern observation from this session is the inverse of Session 79's: **agent-level discipline catching parent-level confabulations**. Where Session 79 was about agents making errors that the user / I had to catch, Session 80 was about agents catching errors that I (the parent) had introduced — three documented cases, all corrected within the session.
+
+### Anti-confabulation discipline encoded in agent definitions catches parent-level errors
+
+The session externalised an `obs-writer` agent + `/observe` slash command into `~/personal-assistant/`, with a contract that included a hard rule: *before citing a specific number, file path, commit hash, line number, or quoted text in a finding, re-read the source file*. I'd encoded this rule from observed patterns in Session 79; in Session 80 it caught my own errors three times within the same session it was defined:
+
+1. **Phase C commit hash typo.** I'd written `fc7843158b04cbdd` in agent prompts (a single-character typo for the real `fc7784158b04cbdd`). The cleanup #9 agent re-derived the hash via `git log` per the rule, found the mismatch, used the verified hash in its output, AND flagged in its return report that the same typo had propagated into Obs 290. I corrected with a focused fix-commit. The agent definition I'd written ~30 minutes earlier in the session caught me.
+
+2. **The √10 CI-tightening myth.** I told the bootstrap-N=10K implementer to verify CIs would tighten by ~√10 ≈ 3.2× post-upgrade. The agent's spot-check found CI width ratios 0.96–1.02 (essentially identical) and correctly identified that bootstrap-N controls Monte Carlo noise, not CI width. The agent continued the sweep on the still-valid "less MC noise per CI estimate" rationale and flagged the issue. This became Obs 303. My prior was confidently wrong; the agent's discipline was indifferent to my prior and produced the correct answer.
+
+3. **Manual-review hypothesis overturned by VLM categorical classification.** The user's articulated belief from manual review of FPs ("text-track FPs concentrate on numbers/benchmarks; GS on spot-heights/water") was tested by an FP-class VLM diagnostic at $0.51 across 1,119 FPs. Result: contour-rings dominated at ~41% across all four runs; numbers + benchmarks together only ~25%; image vs text indistinguishable (chi² p=0.147). The agent's contract — "report what's actually in the data, not what the spec says" — produced a finding that overturned a manual-review intuition cleanly. The user was the one who'd articulated the hypothesis; the agent was indifferent to the prior; the agent won. (Recorded as Obs 302.)
+
+The pattern this surfaces: **encoding anti-confabulation rules into agent definitions is the same intervention as encoding them into agent prompts at dispatch time, but it scales better.** Once the rule is in the agent definition, it applies to every subsequent invocation — including invocations where the parent (me) has forgotten to remind the agent of the rule. The cleanup #9 agent caught the hash typo even though the agent prompt didn't specifically mention "verify hashes". The bootstrap-N agent caught the √10 myth even though the prompt told it to look for tightening. The rule was operating below the level of the prompt — at the level of the agent's identity. This is a non-obvious efficiency: once-encoded → permanent vs each-prompt → ad-hoc.
+
+### The Plan-first-or-Implement-direct lever varies with autonomy and reversibility
+
+I dispatched the autonomous overnight bootstrap-CI standardisation directly, without a Plan agent first. Shawn caught this — "I should have invoked a plan agent first". The implementer ultimately succeeded, but a Plan stage would have caught (a) the √10 expectation before launch, (b) the over-conservative "165 cells deferred per feature_count_crosscheck" call (a follow-up Explore agent showed all 165 are recoverable with HIGH confidence via heterogeneous metadata mechanisms), and (c) the orchestrator's stall at the rebase+push step that needed manual rescue in the morning.
+
+The general lesson: **Plan-first should be the default for autonomous overnight work, not for routine compute jobs.** The decision rule:
+
+- **Plan-first when**: work runs unsupervised for >2 hours; involves writing new orchestration code; touches many files; or has a non-trivial recovery path if something goes wrong.
+- **Implement-direct when**: work is well-spec'd in a planning doc already; involves re-running an established script with different parameters; user is monitoring; or the recovery path is "git revert and re-try".
+
+The Session 80 case (overnight bootstrap-N=10K standardisation) was at the Plan-first end of the spectrum. I treated it as Implement-direct because the implementing agent was capable. The principle that should have governed: **autonomy + irreversibility + complexity = Plan-first, regardless of agent capability.**
+
+### Recurring-pattern externalisation is high-leverage cross-project
+
+The user noted mid-session that the obs-writing pattern was recurring across his projects (not just map-reader-llm). I externalised it as `~/personal-assistant/agents/obs-writer.md` + `~/personal-assistant/commands/observe.md` (~25 minutes of prompt-engineering work for the agent definition + slash-command file). Within the same session, the externalised contract:
+
+- Was used (via fallback to `general-purpose` because Claude Code's agent registry was loaded at session start) for Obs 300, 301, 303
+- Caught my hash typo (cleanup #9 agent applying the same anti-confabulation rule)
+- Produced consistent format across new Obs entries with no per-invocation prompt-tuning
+
+The investment was ~25 minutes; the within-session payoff was ≥4 cleaner invocations. Cross-project payoff (when used in voice-assistant or other repos via the `personal-assistant/` symlink chain) is unbounded. The lesson: **when you notice a pattern recurring across ≥3 invocations, externalise it as an agent definition immediately; the marginal cost is 20–30 minutes and the marginal benefit compounds**.
+
+### Cross-cutting
+
+Where Session 79 surfaced agents-as-error-sources, Session 80 surfaced agents-as-error-catchers — and the catching mechanism was a discipline I'd encoded into the agent definitions in response to Session 79's lessons. The pattern is recursive: every agent-design discipline that protects sub-agents from THEIR confabulations also protects parent agents from theirs, because the agent's report-back trace exposes the parent's spec assumptions to verification. **The implication for AI-as-tool research is non-obvious**: agent-orchestration quality scales with the quality of the agent-definition contract more than with the quality of any individual prompt. Once a discipline is in the contract, it's permanent and operates below the prompt level. This is the strongest single observation from Session 80.

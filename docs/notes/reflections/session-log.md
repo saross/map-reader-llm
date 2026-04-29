@@ -5666,3 +5666,86 @@ Phases (numbered for cross-reference; each landed before the next started):
 - Cost-estimator in `launch_manifest.json` is a consistent 5× overstatement (T=0.7 estimate $355 → actual $69.60; T=0.3 estimate $355 → actual $67.79). Carry-over fix item.
 - The 55-map T=0.3 run is on disk with full reproducibility metadata (launch_manifest with input SHA256s + git commit, cost_manifest with per-stage breakdown, per-pass run.meta.json, evaluation.json + extended-buffer-eval/). Paper-grade provenance is intact.
 - Step 6 paper outline remains the next-session deliverable; all required analytical infrastructure is now in place.
+
+## Session 80 — 2026-04-27/28 (map-reader-llm): Wave 1–4 secondary analyses, four corrected 55-map runs cross-analysed, agent-design infrastructure externalised, 22 new Obs (282–303)
+
+**Commits**: ~60 on `main`, `468565f9` → `70026553`, all pushed to `origin/main`. Working tree clean at session close.
+
+**API spend**: ~$2.30 total. Stage A verifier-T pilot $1.71 (3 verifier runs at T=0.0/0.5/1.0, reused existing T=0.0 baseline) + Stage B re-eval $0 (analysis-only, no new API) + FP-class diagnostic $0.51 (1,119 candidates × Gemini 3 Flash flex). Well under standing $5 spend cap.
+
+**Sapphire compute**: ~6 hr total. Wave 2 phase3a MCC re-eval (252 cells, 15:17 wall at -j 8); overnight bootstrap-CI standardisation (361 cells, ~6 hr wall at -j 16 including timed-out fat-cell retries); diagnostic batch (TP-only localisation 1.8 s, per-map variance 1.4 s, FP-class ~11 min, attractor-pull 4-run 2 s, GS attractor-pull 1.3 s); v2 K-consensus SD shrinkage 50.9 min.
+
+### Work arc
+
+Two-day continuous session opening with the Step 6 paper-outline entry-point and consistently deferring it for "one more analytical wave". Each wave was justified by a specific deliverable; the cumulative effect was that Step 6 was deferred to next session, but with substantially stronger analytical infrastructure than at the start.
+
+Phases (numbered for cross-reference; each landed before the next started):
+
+1. **Wave 1 — secondary-analysis gap closure + four backlog code fixes** (~2 hr CPU, $0 API). Five secondary-analysis Plan agents + four Implement agents in parallel covering the gaps identified at start-of-session. Backlog code fixes: #2 mode-aware cost estimator (`run_generalisation.py`), #3 MCC rendering in `evaluate_detections.py` .md/.csv (the BLOCKER for Wave 2), #4 resume-mode `*.meta.json` merge (`lib_llm_metadata.py` shared utility), #5 idempotent `aggregate-cost`. Secondary analyses: SD narrowing v1 (Obs 285), Cohen's kappa inter-pass agreement (Obs 282), per-condition token efficiency (Obs 284), proposer vote-fraction-as-confidence proxy (Obs 283). Detector-confidence followup planning docs landed.
+
+2. **Verifier-T pilot Stage A + Stage B** ($1.71 API). Stage A: 4-map gold-standard 4-of-5 consensus candidate set (607 candidates), T=0.0 reused + T=0.5 + T=1.0 fresh. Result: T=0.0 has 1.65 % deterministic verifier failures vs 0.00 % at T>0 (Obs 286). Stage B: re-evaluate T=0.5/T=1.0 against gold-standard at canonical threshold sweep + buffers + MCC. Result: F1/MCC NOT degraded; T=0.5 dominates T=1.0; recommend T=0.5 as production default (Obs 287).
+
+3. **Wave 2 — phase3a MCC re-eval** (~2.5 hr sapphire compute, $0 API). 252 conditions across phase3a-text-matrix (156) + phase3a-image-matrix (96) re-evaluated with `--mcc --bootstrap 1000 --seed 42`. Smoke-test on `with-mcc/high-t0.7-n30-t26` (the canonical reference cell) verified backlog #3 fix renders MCC into .md/.csv. Cross-check of the 2 with-mcc reference cells against the new matrix outputs surfaced **Obs 288**: the with-mcc cells were off-matrix one-offs evaluated against the wrong consensus sources (image high-T0.7 K=10 t=7: corrected MCC 0.3831 → 0.6765 = +0.29 absolute). Archived to `archive/with-mcc-pre-2026-04-27-off-matrix/` per the project's archive-don't-delete policy.
+
+4. **Wave 3 — staleness audit** (~30 min, $0). 8 candidate stale themes audited against post-Wave-2 / post-Phase-C source data. **0 substantive corrections** required: all narratives were already canonical-aligned. New artefact: 5m-granularity buffer-elasticity table from Phase C (commit `2a928cf7`). Recorded as Obs 290.
+
+5. **Wave 4 — text-MIN extension to 4-run analysis grid** (~1.5 hr sapphire). User completed manual review of text-MIN candidates; corrected F1@50m = 0.7964 (lowest of four). Four parallel agents: attractor-pull 4-run, pairwise-permutation 6-pair, MCC for text-MIN, D-S aggregation + crosstab for text-MIN. Headline finding: T=0.7 vs T=MIN paired Δ +0.0296 BH p<0.001 → HIGH thinking earns its tokens out-of-sample on 55-map (Obs 297). Plus Obs 298 (4-run cap clarification: 100 m most-permissive, 125 m majority), Obs 299 (D-S calibration converges across text-track configs; image isolated as modality-specific), Obs 280-pattern reproduces on corrected runs (Obs 292), buffer-rank-reversal text-vs-image (Obs 291). Obs 293 received a brief forward-pointer update.
+
+6. **Cross-corpus diagnostic battery** (~5 min compute total, $0.51 API for FP-class). Three diagnostics from Obs 296: TP-only localisation (Obs 296 #1; commit `682fca2d`), per-map (50,75]m rate variance (Obs 296 #3; commit `0cbae1f6`), FP-class categorical classification (Obs 296 #2; commit `e552ad46`). Plus the GS-side attractor-pull cap via geometric KDTree (Obs 295). Findings: cross-corpus cap difference is FP-anchoring driven, not detector-precision driven (Obs 300); per-map FP-anchoring rates are heavily right-skewed on text-track (median 0 %; Obs 301); contour-rings dominate at ~41 % across all four runs (Obs 302 — overturns the manual-review distractor-pull hypothesis); cap-precision framing in Obs 295 should be retired in favour of "post-calibration precision on calibration corpus" per Obs 296 + Obs 300 confirmation. Three new Obs entries (300, 301, 302) capture the diagnostic results.
+
+7. **Bootstrap-CI standardisation to N=10K** (~6 hr sapphire wall, $0 API). Pre-flight scan of 540 evaluation.json files; 14 already at N=10K, 276 at N=1K with `_metadata.cli_args`, 250 unknown (legacy format). Implementing agent inferred 85 of the 250 (61 h8-v2/h12-v2 cells via path naming + 24 verifier-t-pilot cells via driver script modification with new `--bootstrap` CLI flag), deferred 165 per `feedback_feature_count_crosscheck.md` (paper-eval, pairwise, 55maps-cleaned-gt, gold-standard-extended-buffer-sweep). Final queue: 337 main + 24 t-pilot = 361 cells. Four 55-map MCC fat-cells (8541 tiles) timed out at -j 16 contention; orchestrator retried serially with 3 hr timeout. **Critical agent catch**: spot-check found CI width ratios 0.96–1.02 between N=1K and N=10K — bootstrap-N controls Monte Carlo noise, not CI width. My √10 expectation in the agent prompt was wrong; agent corrected the framing and continued. Recorded as Obs 303. **Orchestrator stalled at the rebase+push step** (sapphire's branch had diverged from origin via the FP-class commits landing during the sweep); needed manual rescue in the morning. Tag `pre-bootstrap-10k-2026-04-28` → `5040f5b4` pushed.
+
+8. **Agent-design infrastructure externalised** (~25 min, $0). User noted obs-writing was a recurring pattern across projects; externalised as `~/personal-assistant/agents/obs-writer.md` (auto-detect format; collision check; commit + push; anti-confabulation rule baked in) + `~/personal-assistant/commands/observe.md` (slash command with three invocation modes). Symlinked into `~/.claude/{agents,commands}/`. First invocation (Obs 300) fell back to `general-purpose` because Claude Code's agent registry was loaded at session start; the contract was followed correctly. Subsequent Obs entries (301, 303) used the same fallback pattern.
+
+9. **Daylight follow-up sweep spec'd** (~10 min). 165-cell completion of bootstrap-N=10K standardisation spec'd in `paper-writeup-continuity.md`. Post-hoc Explore audit confirmed all 165 are recoverable with HIGH confidence via heterogeneous metadata mechanisms (parent `.metadata.json`, source scripts, per-cell sidecars, report.md inference). Spec includes pre-flight checklist, compute estimate (30–60 min wall), Plan-first workflow per yesterday's lesson, and three explicit lessons-to-apply from the overnight run.
+
+10. **Outstanding to-dos audit + Step 6 starting-state finalisation** (~15 min). Explore agent surveyed planning + reflection + backlog docs for outstanding items not in the continuity doc; writer agent landed 9 items in 3 priority bands (3 HIGH, 2 MEDIUM, 4 LOW/optional) into a new "Outstanding to-dos for next session" section.
+
+### Major artefacts produced
+
+- `docs/notes/reflections/working-notes.md` Obs 282–303 (22 new entries; closing roll-up section indexes them by topical cluster)
+- `results/55maps-pairwise-permutation-v2/` — 6-pair paired permutation + tier-ranking summary tables
+- `results/55maps-mcc-v2-summary/report.md` — 4-run MCC cross-run summary (extended from 3-run during Wave 4)
+- `results/55maps-ds-summary-v2/report.md` — 4-run D-S cross-run summary (extended from 3-run during Wave 4)
+- `results/55maps-attractor-pull-v2/` — 4-run attractor-pull v2 with text-MIN added; backup-cap = 100 m most-permissive
+- `results/gold-standard-attractor-pull/` — GS-corpus attractor-pull via geometric KDTree (Obs 295)
+- `results/55maps-vs-gs-tp-localisation/` — TP-only localisation diagnostic (Obs 296 #1 → Obs 300)
+- `results/55maps-per-map-shell-variance/` — per-map (50,75]m rate variance bootstrap (Obs 296 #3 → Obs 300/301)
+- `results/55maps-fp-classification/` — VLM-based FP-class diagnostic (Obs 296 #2 → Obs 302)
+- `results/secondary-effects-token-efficiency/`, `results/secondary-effects-consensus-sd/`, `results/inter-pass-agreement/`, `results/proposer-vote-fraction/` — Wave 1 secondary-analysis outputs
+- `results/verifier-t-pilot/{stage-a-report.md,stage-b-report.md}` — verifier-T production-default recommendation (T=0.5)
+- `results/phase3a-{text,image}-matrix/<cell>/evaluation.{json,md,csv}` — 252 cells with canonical post-Wave-2 MCC
+- `archive/with-mcc-pre-2026-04-27-off-matrix/` — archived off-matrix one-off cells (Obs 288 housekeeping)
+- `archive/MIGRATION-pre-session-78-pull-2026-04-24.md` — sapphire archive cleanup migration record (carry-over backlog item #8)
+- `~/personal-assistant/agents/obs-writer.md` + `~/personal-assistant/commands/observe.md` — cross-project agent + slash command for working-notes Obs production
+- `planning/paper-writeup-continuity.md` — Session 80 closure section + Step 6 starting-state Obs reading list + daylight follow-up sweep spec + outstanding to-dos for next session
+- `planning/detector-confidence-{calibration-pilot,flag-scoping}.md` — scoping docs for the H-a follow-up (calibration pilot zero-cost; flag opt-in deferred)
+- New scripts: `scripts/launch_55maps_text_high_t0.3_review.sh`, `scripts/launch_55maps_text_min_review.sh`, `scripts/analyse_consensus_sd_shrinkage.py` + `_v2.py`, `scripts/analyse_inter_pass_agreement.py`, `scripts/analyse_proposer_vote_fraction.py`, `scripts/analyse_token_efficiency.py`, `scripts/analyse_attractor_pull_v2.py` (+ `_gs.py` sibling), `scripts/analyse_tp_localisation_55maps_vs_gs.py`, `scripts/analyse_55maps_per_map_shell_variance.py`, `scripts/analyse_verifier_t_pilot.py`, `scripts/run_bootstrap_10k.py`, `scripts/55maps-fp-classify.py`, `scripts/paired_permutation_corrected_55maps.py`
+- New tests: `tests/test_evaluate_detections_mcc_rendering.py`, `tests/test_aggregate_cost_idempotency.py`, `tests/test_merge_meta.py`, `tests/test_analyse_attractor_pull_gs.py`, `tests/test_analyse_55maps_per_map_shell_variance.py`
+- New feedback memory: `feedback_commit_push_before_review.md` (commit + push before requesting review)
+- Tag: `pre-bootstrap-10k-2026-04-28` → `5040f5b4`
+
+### Headline numerical findings
+
+- **T=0.3 corrected F1 @ 50 m** = **0.8437** [0.8344, 0.8524] (10K bootstrap; matches pre-launch estimate ~0.840)
+- **T=0.7 vs T=MIN paired Δ F1 @ 50 m** = **+0.0296** [+0.020, +0.039], BH p < 0.001 — HIGH thinking earns its tokens at 55-map scope (Obs 297)
+- **T=0.3 paired-significant over T=0.7** at canonical R=50m: ΔF1 = +0.018, BH p < 0.001 (Obs 291)
+- **Image overtakes T=0.3 on F1 by R=75 m** — buffer-rank-reversal stable across q=0.05 and q=0.01 (Obs 292)
+- **4-run MCC ranking**: image (0.691) > T=0.3 (0.654) > T=0.7 (0.647) > text-MIN (0.625) — Obs 280 F1/MCC tier-leader divergence reproduces (Obs 292)
+- **D-S calibration gap monotonic across all 4 runs**: text-MIN (1.88×) ≈ T=0.7 (1.90×) < T=0.3 (2.53×) < image (3.89×); image isolated as modality-specific (Obs 299)
+- **Verifier T=0.0 has 1.65 % deterministic failures vs 0.00 % at T>0** on 4-map gold-standard 4-of-5 candidate set; T=0.5 production-default recommendation (Obs 286/287)
+- **GS attractor-pull cap = 25 m** (geometric KDTree; Obs 295) vs **55-map cap = 100 m most-permissive / 125 m majority** (Obs 294/298) — 5-fold gap is FP-anchoring driven, not detector-precision driven (Obs 300)
+- **FP-class category distribution**: contour-rings dominate at ~41 % across all four 55-map runs; numbers + benchmarks ~25 %; image vs text indistinguishable (chi² p=0.147) (Obs 302)
+- **Per-map (50,75] m rate**: text-track median 0 % (heavy right-skew); image median 15.4 % (centred) — corpus rate is misleading on text-track (Obs 301)
+- **Bootstrap N=10K vs N=1K**: CI width ratios 0.96–1.02 — bootstrap N controls Monte Carlo noise, not CI width (Obs 303)
+- **Wave 3 staleness audit**: 0 substantive corrections from Phase C / Wave 2 source updates; 8/9 themes canonical-aligned (Obs 290)
+
+### Contextual assumptions
+
+- Continuation from Session 79 close — same anti-confabulation discipline carried forward; the new `feedback_commit_push_before_review.md` rule was added mid-session in response to user's "commit + push before review" directive.
+- The `obs-writer` agent + `/observe` slash command were introduced mid-session and used (via `general-purpose` fallback) for Obs 300, 301, 303 and the brief Obs 293 update. Native invocation (`subagent_type=obs-writer`) failed because Claude Code's agent registry was loaded at session start; will be available natively from next session restart. This affects how next session should reference obs-writer.
+- The overnight bootstrap-N=10K orchestrator stalled at the rebase+push step; manual rescue this morning rebased 11 commits onto `origin/main` (no conflicts; FP-class commits landing during the sweep didn't overlap with bootstrap-CI changes). Future overnight orchestrators should explicitly handle push divergence with retry-on-conflict.
+- 165 cells currently at N=1K bootstrap remain to be upgraded; spec for daylight follow-up sweep is in `paper-writeup-continuity.md` lines 1372+. Recovery confidence is HIGH per the post-hoc Explore audit.
+- The cost-estimator overstatement bug (5× on text-mode) is now fixed (mode-aware via backlog #2; commit `c738c60e`). All future API-spend estimates should use the fixed estimator.
+- Step 6 paper outline remains the next-session deliverable; all required analytical infrastructure is now in place. The Step 6 starting-state Obs reading list in `paper-writeup-continuity.md` is the suggested entry point.
+- Manual-review intuition vs categorical-classification trade-off: the FP-class diagnostic (Obs 302) overturned a hypothesis built from human visual review. Future analyses that depend on "what kind of feature is this" should default to uniform categorical classification across the population, not extension via more visual review.
