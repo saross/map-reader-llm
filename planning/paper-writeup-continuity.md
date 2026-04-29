@@ -1503,6 +1503,24 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 - **Cost**: re-use outputs, < 1 hour.
 - **Unblocks**: deeper sub-band analysis if the Discussion needs it; otherwise the existing TP-only diagnostic (Obs 300) suffices.
 
+#### 10. Fix Niculiță misattribution as "Meylemans et al."
+
+- **Source**: User report 2026-04-29 (turned up while using the project as a teaching example).
+- **File**: `docs/methodology/research/claude-burial-mound-vlm-methodology.md` line 45 (and references section line 298).
+- **Description**: Line 45 currently reads *"Only the Romanian Random Forest study (Meylemans et al.) meets gold-standard validation criteria:"*. Verified 2026-04-29 by Explore agent: the cited DOI `10.3390/s20041192` resolves to **Niculiță, M. (2020). "Geomorphometric Methods for Burial Mound Recognition and Extraction from High-Resolution LiDAR DEMs". *Sensors* 20(4): 1192** (single author, Alexandru Ioan Cuza University, Iași). Methodology matches (Random Forest on LiDAR DEMs, Romanian, externally validated, 93 % detection rate). "Meylemans et al." is a pure misattribution with no apparent basis in the literature. The references section at line 298 also lacks author attribution and should be expanded to the full citation.
+- **Cost**: ~5 min edit.
+- **Unblocks**: research-integrity hygiene before any paper text cites or paraphrases this methodology document.
+- **Approach**: (a) line 45 — replace "Meylemans et al." with "Niculiță, 2020"; (b) line 298 — expand the bullet to the full citation `Niculiță, M. (2020). "Geomorphometric Methods for Burial Mound Recognition and Extraction from High-Resolution LiDAR DEMs". *Sensors* 20(4): 1192. doi:10.3390/s20041192`.
+
+#### 11. Fix Guyot table-row mischaracterisation (method + metric labelling)
+
+- **Source**: User report 2026-04-29 (turned up while using the project as a teaching example).
+- **File**: `docs/methodology/research/claude-optimising-symbol-detection-benchmarks.md` line 68 (in the benchmarks comparison table; header at line 61).
+- **Description**: Line 68 currently reads `| Random Forest + U-Net | Neolithic mounds (LiDAR) | — | 98% | 98% | LiDAR derived | ~2 hours |` against the header `| Method | Application | F1 | Precision | Recall | Training Data | Training Time |`. Verified 2026-04-29 by Explore agent: the cited DOI `10.3390/rs10020225` and the cross-reference at `claude-tile-size-and-overlap.md:63` both confirm the actual study is **Guyot, A., Hubert-Moy, L., & Lorho, T. (2018). *Remote Sensing* 10(2): 225**, and the actual method is **MSTP (Multi-Scale Topographic Position) + Random Forest** — NOT "Random Forest + U-Net". Additionally, the headline metric is **Cohen's kappa = 0.98** (a single integrated metric), not separate 98 % precision and recall — the duplicated 98 % cells appear to be a kappa-decomposed-into-two-columns labelling artefact.
+- **Cost**: ~5 min edit.
+- **Unblocks**: research-integrity hygiene; the benchmarks comparison table is potentially paper-Discussion-cited.
+- **Approach**: (a) replace "Random Forest + U-Net" with "MSTP + Random Forest"; (b) replace `— | 98% | 98%` with `— | — | —` and add a footnote noting the headline metric is Cohen's kappa = 0.98 (or extend the table with a "kappa" column if other rows also report kappa-style metrics).
+
 ### Recommendation: priority sequencing for next session (after paper outline)
 
 1. **Daylight follow-up sweep** (already in spec above) — execute first; unblocks methodological uniformity.
@@ -1510,7 +1528,8 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 3. **Item #2 `with-mcc/` citation audit** + **Item #5 broader MCC citation audit** (~1 hour combined) — paper-citation cleanliness.
 4. **Item #3 high-pull FP map characterisation** (< 1 hour) — actionability of Obs 301.
 5. **Item #4 detector-confidence pilot** (conditional on paper's detector-confidence framing).
-6. Items #6, #7, #8, #9 — defer unless paper drafting surfaces a specific need.
+6. **Items #10 + #11** — citation-correction edits (~10 min combined); can be done any time before paper drafting cites these methodology documents.
+7. Items #6, #7, #8, #9 — defer unless paper drafting surfaces a specific need.
 
 ---
 
