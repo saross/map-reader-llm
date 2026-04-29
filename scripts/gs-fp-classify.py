@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Gold-standard FP-Class Classification Driver (Obs 302 follow-up).
-=================================================================
+Gold-standard FP-Class Classification Driver (Obs 302 follow-up, v2).
+=====================================================================
 
 Description
 -----------
@@ -12,8 +12,34 @@ GS-side comparator that the original Obs 302 diagnostic flagged as
 missing. The 55-map sibling driver
 (``scripts/55maps-fp-classify.py``, commit ``5040f5b4``) tests Shawn's
 hypothesis that 55-map FPs concentrate on numbers / benchmarks
-(distractor-pull); this script closes the loop by tabulating the same
+(distractor-pull); this script closes the loop by tabulating the
 closed-list category distribution on the GS corpus.
+
+Closed-list change (v2, 2026-04-29) — addition of burial-mound classes
+----------------------------------------------------------------------
+The v1 closed list (commit ``ee4f18cb``) was copied verbatim from the
+55-map sibling driver, which targets FP-only classification. When v1
+was repurposed to classify all 371 GS detections — TP-side included,
+per ``planning/gs-fp-classification-plan-2026-04-29.md`` §6.5's
+reliability sanity check — real mounds had no proper category to map
+onto and fell back to visual proxies (``contour-ring`` 60.0 %,
+``number`` 15.2 % on the TP side; the script's own > 10 %
+vocabulary-leakage warning fired). Soviet 1:50,000 topographic legends
+do contain burial-mound symbols (oval brown ring with a dot, sometimes
+with a marker glyph inside) — the v1 omission was a script-design
+issue, not a classifier hallucination.
+
+v2 expands the closed list with four burial-mound categories
+(``burial-mound``, ``benchmark-on-burial-mound``,
+``triangulation-point-on-burial-mound``, ``settlement-mound``) so the
+closed list correctly covers TP+FP scope. The expectation is that the
+v2 TP-side will be dominated by ``burial-mound`` (the ordinary mound
+glyph), validating the model's visual-recognition behaviour, while the
+v2 FP-side at the > 50 m primary threshold should remain dominated by
+the same FP-class profile reported in v1 (numbers / benchmarks /
+contour-rings / etc.). v1 outputs are archived at
+``archive/gs-fp-classification-v1-pre-burial-mound-list/`` with an
+``ARCHIVE-NOTE.md`` explaining the supersession.
 
 Framing — different mechanisms, comparable rigour
 -------------------------------------------------
@@ -29,13 +55,16 @@ geometric filter equivalent in rigour to the 55-map's per-detection
 human review. See ``planning/gs-fp-classification-plan-2026-04-29.md``
 §2 for the full framing.
 
-Methodology — cartographic-naming approach
-------------------------------------------
-This driver reuses the 55-map prompt and closed-list categories
-verbatim — symmetric methodology is required for cross-corpus
-comparability. Categories: number, benchmark, water-feature,
-contour-ring, vegetation, settlement, road-or-track,
-scale-bar-or-grid, none, other.
+Methodology — cartographic-naming approach (v2 closed list)
+-----------------------------------------------------------
+Categories (v2): burial-mound, benchmark-on-burial-mound,
+triangulation-point-on-burial-mound, settlement-mound, number,
+benchmark, water-feature, contour-ring, vegetation, settlement,
+road-or-track, scale-bar-or-grid, none, other. The four
+burial-mound classes are placed first so they appear at the top of
+the report tables and the figure legend; the FP-side comparator
+classes (number through other) keep their v1 ordering for direct
+comparability with the archived v1 tables.
 
 Pipeline
 --------
@@ -170,8 +199,21 @@ RASTERS_DIR = REPO_ROOT / "inputs/rasters"
 
 # 55-map result file used as the cross-corpus comparator in the
 # headline chi-square test (cf. plan §11.1).
+#
+# v2 path resolution (2026-04-29): the 55-map v1 results were moved to
+# ``archive/55maps-fp-classification-v1-pre-burial-mound-list/`` ahead
+# of a parallel 55-map v2 re-run. Until the 55-map v2 directory exists
+# at ``results/55maps-fp-classification/``, the GS v2 script falls back
+# to the archived v1 distribution. The text-track aggregate (sum of
+# T0.3, T0.7, text-MIN runs) is the same comparator structurally
+# regardless of v1/v2 — only the closed list changed; the per-run text
+# vs image partition is unchanged.
 COMPARATOR_55MAP_DISTRIBUTION_PATH: Path = REPO_ROOT / (
     "results/55maps-fp-classification/category_distribution.json"
+)
+COMPARATOR_55MAP_FALLBACK_PATH: Path = REPO_ROOT / (
+    "archive/55maps-fp-classification-v1-pre-burial-mound-list/"
+    "category_distribution.json"
 )
 
 # Run label — the GS pipeline has only one operating point, so we use a
@@ -199,7 +241,21 @@ DISPLAY_PX: int = 768
 
 # Closed category list — matches the prompt below verbatim. The order
 # here drives the order in the report tables and the figure legend.
+#
+# v2 expansion (2026-04-29): the four burial-mound categories were
+# added at the front so the closed list correctly covers the TP-side
+# (real mounds centred under their crops) as well as the FP-side. v1
+# omitted these classes because it inherited the 55-map sibling
+# driver's FP-only closed list verbatim; that omission caused 60 %
+# ``contour-ring`` leakage on the TP-side (see ARCHIVE-NOTE.md in the
+# v1 archive directory). The post-burial-mound order from ``number``
+# through ``other`` is preserved for direct comparability with v1
+# tables.
 CATEGORIES: list[str] = [
+    "burial-mound",
+    "benchmark-on-burial-mound",
+    "triangulation-point-on-burial-mound",
+    "settlement-mound",
     "number",
     "benchmark",
     "water-feature",
@@ -251,25 +307,44 @@ CLASSIFICATION_PROMPT: str = """\
 You are an expert in Soviet 1980s topographic map symbology. Below is a 150x150 \
 metre crop from a Soviet 1980s 1:50,000 topographic map. The centre of this \
 crop was identified by an automated detector as a possible burial mound \
-symbol, but human review rejected it as a false positive.
-
-Identify the cartographic feature most likely responsible for the detector's \
-mistake — i.e., what visually plausible burial-mound-like feature near the \
-centre of the crop could have triggered the detector?
+symbol. Some such detections are real mounds (true positives); others are \
+visually similar non-mound features (false positives). Your job is to name \
+the cartographic feature most likely responsible for the detection — whether \
+that is a genuine burial-mound symbol or a different feature that visually \
+resembles one.
 
 Choose ONE category from this closed list (Soviet 1980s topographic \
-conventions). When in doubt, prefer the more specific category over "other".
+conventions; canonical Soviet 1:50,000 legends include burial-mound \
+glyphs alongside the standard surveying, hydrographic, and \
+infrastructure symbols). When in doubt, prefer the more specific category \
+over "other".
+
+Burial-mound categories (canonical Soviet 1:50,000 mound symbols — the \
+ordinary mound glyph is a small brown oval/ring, sometimes with a dot or \
+height-number; some mounds carry a survey marker on top):
+
+- burial-mound — ordinary burial-mound symbol (brown oval ring or ring-with-\
+dot), no survey marker on top
+- benchmark-on-burial-mound — burial-mound symbol with a benchmark glyph \
+("БМ", small cross, or related survey-mark glyph) co-located on the mound
+- triangulation-point-on-burial-mound — burial-mound symbol with a \
+triangulation marker (triangle "Δ", or filled triangle) on top
+- settlement-mound — large mound or tell associated with archaeological \
+settlement remains; rendered as a larger oval ring or hatched mound
+
+Other (non-mound) cartographic features:
 
 - number — spot-elevation numeric label, often small italic digits, sometimes \
 with a dot below
-- benchmark — bench-mark or triangulation marker (cross, triangle, "БМ" or "Δ")
+- benchmark — bench-mark or triangulation marker (cross, triangle, "БМ" or "Δ") \
+NOT co-located with a burial-mound oval
 - water-feature — blue river, stream, lake, pond, swamp, drainage symbol, or \
 well marker
 - contour-ring — closed contour line(s) forming a ring or oval (brown), often \
-around a small hill or depression
+around a small hill or depression but WITHOUT the discrete mound-symbol glyph
 - vegetation — green-shaded area, tree or shrub symbol, or forest-edge marking
 - settlement — house symbol(s), village or hamlet outline, or other \
-built-feature cluster
+built-feature cluster (NOT the archaeological "settlement-mound" symbol)
 - road-or-track — line symbol for transport (single line, double line, dashed)
 - scale-bar-or-grid — printed scale bar, grid intersection, or coordinate label
 - none — no obvious feature near centre; appears to be blank or empty terrain
@@ -626,7 +701,41 @@ def normalise_category(raw: str) -> str:
     if cleaned in CATEGORIES:
         return cleaned
     # Common typo fixes.
+    #
+    # Burial-mound aliases (v2): the model tends to return slight
+    # word-order or hyphen variants of the four canonical labels. Note
+    # that ``triangulation-point`` (without the burial-mound suffix)
+    # remains aliased to ``benchmark`` per the v1 alias table — this
+    # only fires when the model returns the suffix-free token, which
+    # in v2 should be rare given the prompt's explicit list.
     aliases = {
+        # Burial-mound variants (v2).
+        "burial mound": "burial-mound",
+        "mound": "burial-mound",
+        "tumulus": "burial-mound",
+        "barrow": "burial-mound",
+        "kurgan": "burial-mound",
+        "benchmark on burial mound": "benchmark-on-burial-mound",
+        "benchmark on burial-mound": "benchmark-on-burial-mound",
+        "burial-mound with benchmark": "benchmark-on-burial-mound",
+        "triangulation point on burial mound": (
+            "triangulation-point-on-burial-mound"
+        ),
+        "triangulation point on burial-mound": (
+            "triangulation-point-on-burial-mound"
+        ),
+        "triangulation-point on burial-mound": (
+            "triangulation-point-on-burial-mound"
+        ),
+        "triangulation-on-burial-mound": (
+            "triangulation-point-on-burial-mound"
+        ),
+        "burial-mound with triangulation": (
+            "triangulation-point-on-burial-mound"
+        ),
+        "settlement mound": "settlement-mound",
+        "tell": "settlement-mound",
+        # Pre-existing aliases (v1).
         "numbers": "number",
         "spot-elevation": "number",
         "spot-height": "number",
@@ -933,6 +1042,7 @@ def confidence_weighted_for_records(
 
 def load_55map_text_track_aggregate(
     path: Path = COMPARATOR_55MAP_DISTRIBUTION_PATH,
+    fallback_path: Path = COMPARATOR_55MAP_FALLBACK_PATH,
 ) -> dict[str, int] | None:
     """Reconstruct the 55-map text-track aggregate counts.
 
@@ -943,25 +1053,38 @@ def load_55map_text_track_aggregate(
     cross-corpus chi-square test (plan §11.1, plan §9.1 item 5).
 
     Args:
-        path: Path to the 55-map ``category_distribution.json``.
+        path: Primary path to the 55-map
+            ``category_distribution.json`` (live results dir).
+        fallback_path: Archive path used when the primary path is
+            missing — the 55-map v1 archive holds the same
+            text-track aggregate structurally.
 
     Returns:
         ``dict[category -> count]`` for the text-track aggregate, or
-        ``None`` if the file does not exist or has unexpected shape.
+        ``None`` if neither file exists or both have unexpected shape.
     """
-    if not path.is_file():
-        logger.warning(
-            "55-map comparator file missing: %s", path,
-        )
-        return None
+    chosen_path = path
+    if not chosen_path.is_file():
+        if fallback_path.is_file():
+            logger.info(
+                "55-map comparator missing at %s; using archive "
+                "fallback %s", path, fallback_path,
+            )
+            chosen_path = fallback_path
+        else:
+            logger.warning(
+                "55-map comparator file missing at primary %s and "
+                "archive %s", path, fallback_path,
+            )
+            return None
     try:
-        doc = json.loads(path.read_text(encoding="utf-8"))
+        doc = json.loads(chosen_path.read_text(encoding="utf-8"))
         counts = doc.get("counts", {})
         runs = doc.get("runs", [])
         categories = doc.get("categories", [])
     except (json.JSONDecodeError, OSError) as exc:
         logger.warning(
-            "Could not parse 55-map comparator %s: %s", path, exc,
+            "Could not parse 55-map comparator %s: %s", chosen_path, exc,
         )
         return None
     text_runs = [r for r in runs if r != "image"]
@@ -1332,8 +1455,9 @@ def write_distribution_figure(
     ax.set_xlabel("Bucket")
     ax.set_title(
         "GS FP-class distribution: TP-side + FP-side per threshold "
-        "(Obs 302 follow-up)\n"
-        "Cartographic categories from Gemini 3 Flash classification",
+        "(Obs 302 follow-up, v2)\n"
+        "Cartographic categories from Gemini 3 Flash classification "
+        "(v2 closed list with burial-mound categories)",
         fontsize=10,
     )
     ax.set_ylim(0, 110)
@@ -1407,7 +1531,7 @@ def write_cross_corpus_figure(
         )
     ax.set_ylabel("Percentage of FPs (%)")
     ax.set_title(
-        "Cross-corpus FP-class comparison (Obs 302 follow-up)\n"
+        "Cross-corpus FP-class comparison (Obs 302 follow-up, v2)\n"
         "GS at the primary threshold vs 55-map text-track aggregate",
         fontsize=10,
     )
@@ -1421,8 +1545,25 @@ def write_cross_corpus_figure(
     plt.close(fig)
 
 
-def _format_chi2_block(chi2: dict[str, Any], label_a: str, label_b: str) -> list[str]:
-    """Render a chi-square test result as Markdown lines for the report."""
+def _format_chi2_block(
+    chi2: dict[str, Any],
+    label_a: str,
+    label_b: str,
+    residual_heading_suffix: str = "",
+) -> list[str]:
+    """Render a chi-square test result as Markdown lines for the report.
+
+    Args:
+        chi2: Chi-square result dict from
+            ``chi_square_two_distributions``.
+        label_a: First-row label (e.g. ``"gs"``).
+        label_b: Second-row label (e.g. ``"fifty_five"``).
+        residual_heading_suffix: Optional disambiguator appended to the
+            ``Per-category Pearson residuals`` sub-heading. Used when
+            this helper is invoked twice in the same report (e.g. once
+            at the primary threshold and once at the deepest stratum)
+            to satisfy markdownlint MD024 (no duplicate headings).
+    """
     lines: list[str] = []
     if chi2.get("insufficient_data"):
         lines.append(
@@ -1453,7 +1594,10 @@ def _format_chi2_block(chi2: dict[str, Any], label_a: str, label_b: str) -> list
             "p-value is unreliable when many cells have expected counts < 5)"
         )
     lines.append("")
-    lines.append("### Per-category Pearson residuals")
+    heading = "### Per-category Pearson residuals"
+    if residual_heading_suffix:
+        heading = f"{heading} ({residual_heading_suffix})"
+    lines.append(heading)
     lines.append("")
     lines.append(
         "Pearson residuals (observed - expected) / sqrt(expected) indicate "
@@ -1554,7 +1698,7 @@ def write_report_md(
 
     lines: list[str] = []
     lines.append(
-        "# GS FP-class classification (Obs 302 follow-up)"
+        "# GS FP-class classification (Obs 302 follow-up, v2)"
     )
     lines.append("")
     lines.append(
@@ -1567,14 +1711,51 @@ def write_report_md(
         "55maps-fp-classification/report.md` Caveats - the 55-map driver "
         "tested Shawn's hypothesis (Obs 296) on one corpus but lacked the "
         "GS-side measurement to make a clean cross-corpus claim. This run "
-        "applies the same Soviet-1980s closed-list classifier to all 371 "
+        "applies a Soviet-1980s closed-list classifier to all 371 "
         "detections in the GS verified-v1 full-scope set "
         "(`outputs/h11/gold-standard-v2/verified-v1/"
         "verified_detections_full-scope.geojson`), partitioning into "
         "TP-side (<= 50 m from a curator GT mound) and FP-side (> 50 m) "
         "post-classification. Plan reference: "
         "`planning/gs-fp-classification-plan-2026-04-29.md` "
-        "(commit `edd2ecce`)."
+        "(commit `edd2ecce`). v2 expands the closed list to include four "
+        "burial-mound categories (see the Methodology change section "
+        "below); v1 outputs are archived at "
+        "`archive/gs-fp-classification-v1-pre-burial-mound-list/`."
+    )
+    lines.append("")
+
+    # Methodology change (v2 closed-list expansion).
+    lines.append("## Methodology change vs v1 (closed-list expansion)")
+    lines.append("")
+    lines.append(
+        "v1 (commits `6037b390` + `ee4f18cb`, 2026-04-29) inherited the "
+        "55-map sibling driver's FP-only closed list verbatim: "
+        "`number, benchmark, water-feature, contour-ring, vegetation, "
+        "settlement, road-or-track, scale-bar-or-grid, none, other`. When "
+        "v1 was repurposed to classify all 371 GS detections (TP-side "
+        "included, per plan section 6.5's reliability sanity check), real "
+        "mounds had no proper category to map onto and fell back to "
+        "visual proxies (v1 TP-side: `contour-ring` 60.0 %, `number` "
+        "15.2 %; the script's > 10 % vocabulary-leakage warning fired). "
+        "Soviet 1:50,000 legends do contain burial-mound symbols (oval "
+        "brown ring, sometimes with a marker glyph); the v1 omission was "
+        "a script-design issue, not a classifier hallucination."
+    )
+    lines.append("")
+    lines.append(
+        "v2 adds four burial-mound categories so the closed list "
+        "correctly covers the TP-side: `burial-mound` (ordinary mound "
+        "glyph), `benchmark-on-burial-mound` (mound with a benchmark "
+        "marker on top), `triangulation-point-on-burial-mound` (mound "
+        "with a triangulation marker on top), and `settlement-mound` "
+        "(tell or large mound associated with archaeological settlement "
+        "remains). The non-mound categories from `number` through "
+        "`other` retain their v1 names and ordering for direct "
+        "comparability with the v1 archived tables. v1 outputs are "
+        "preserved at `archive/gs-fp-classification-v1-pre-burial-"
+        "mound-list/` with an `ARCHIVE-NOTE.md` explaining the "
+        "supersession."
     )
     lines.append("")
 
@@ -1618,7 +1799,8 @@ def write_report_md(
     lines.append(
         "4. Classified each crop via Gemini 3 Flash (flex tier, "
         "thinking_level=minimal, temperature=0.0). Closed-list "
-        f"categories (verbatim from the 55-map driver): "
+        f"categories (v2 — burial-mound classes added at the front; "
+        f"see Methodology change above): "
         f"{', '.join(categories)}."
     )
     lines.append(
@@ -1661,21 +1843,36 @@ def write_report_md(
     lines.extend(_format_distribution_table(columns, categories))
     lines.append("")
 
-    # TP-side reliability sanity check.
-    lines.append("## TP-side reliability check (plan section 6.5)")
+    # TP-side reliability sanity check (v2).
+    lines.append("## TP-side reliability check (plan section 6.5, v2)")
     lines.append("")
     lines.append(
-        "A well-calibrated classifier should assign mostly `none` / "
-        "`other` to TP-side detections - the Soviet 1980s topographic "
-        "vocabulary has no \"burial mound\" category, so a real mound "
-        "centred under the crop has nothing in the closed list to map "
-        "onto. A TP bucket dominated by a vocabulary category (e.g. "
-        "`contour-ring` > 10 %) would indicate the classifier is "
-        "hallucinating Soviet-vocabulary categories onto correct "
-        "detections, which would change how the FP-side categories are "
-        "interpreted."
+        "Under the v2 closed list (which includes the four burial-mound "
+        "categories), a well-calibrated classifier should assign mostly "
+        "`burial-mound` (or one of the other three burial-mound classes) "
+        "to TP-side detections - real mounds centred under their crops "
+        "now have a correct category to map onto. v2 reverses the v1 "
+        "expectation: under v1's closed list there was no mound category, "
+        "so the v1 reliability check looked for `none` + `other` "
+        "dominance and flagged any vocabulary category > 10 % as "
+        "leakage. Under v2 the expectation is that the four burial-mound "
+        "categories together dominate the TP-side; non-mound categories "
+        "(number, benchmark, contour-ring, etc.) on the TP-side are now "
+        "the leakage signal of interest."
     )
     lines.append("")
+    burial_tp_categories = {
+        "burial-mound",
+        "benchmark-on-burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
+    }
+    burial_tp_total = sum(
+        tp_counts.get(c, 0) for c in burial_tp_categories
+    )
+    burial_tp_share = (
+        100.0 * burial_tp_total / n_tp if n_tp else 0.0
+    )
     none_tp = tp_counts.get("none", 0)
     other_tp = tp_counts.get("other", 0)
     none_other_share = (
@@ -1685,14 +1882,36 @@ def write_report_md(
         f"- TP-side n: {n_tp}"
     )
     lines.append(
+        f"- `burial-mound` + `benchmark-on-burial-mound` + "
+        f"`triangulation-point-on-burial-mound` + `settlement-mound` "
+        f"share on TP-side: {burial_tp_share:.1f} % "
+        f"({burial_tp_total} / {n_tp})"
+    )
+    lines.append(
         f"- `none` + `other` share on TP-side: "
         f"{none_other_share:.1f} % "
         f"({none_tp} + {other_tp} / {n_tp})"
     )
-    # Vocabulary-category leakage check: any category > 10 % of TP?
+    # Per-category TP-side breakdown (v2 — surface burial-mound classes
+    # explicitly so the user can see which mound symbol the model
+    # selected most often).
+    lines.append("")
+    lines.append("TP-side per-category counts (v2 closed list):")
+    lines.append("")
+    lines.append("| Category | n | share |")
+    lines.append("|---|---:|---:|")
+    for cat in categories:
+        n_cat = tp_counts.get(cat, 0)
+        share_cat = 100.0 * n_cat / n_tp if n_tp else 0.0
+        lines.append(f"| `{cat}` | {n_cat} | {share_cat:.1f} % |")
+    lines.append(f"| **N** | **{n_tp}** | |")
+    lines.append("")
+    # Non-mound vocabulary leakage check (v2): same > 10 % rule but now
+    # the burial-mound categories are the expected dominant class so we
+    # exempt them from the leakage warning.
     leak_categories: list[str] = []
     for cat in categories:
-        if cat in {"none", "other"}:
+        if cat in burial_tp_categories or cat in {"none", "other"}:
             continue
         if n_tp == 0:
             break
@@ -1701,17 +1920,76 @@ def write_report_md(
             leak_categories.append(f"{cat} ({share:.1f} %)")
     if leak_categories:
         lines.append(
-            "- WARNING: vocabulary-category leakage on TP-side > 10 %: "
-            f"{'; '.join(leak_categories)}. The FP-side categorical "
-            "interpretation should be tempered accordingly (plan "
-            "section 13.7)."
+            "- WARNING: non-mound vocabulary leakage on TP-side > 10 %: "
+            f"{'; '.join(leak_categories)}. Some real mounds were "
+            "labelled as a non-mound feature - inspect the per-detection "
+            "rationale strings in `fp_classifications.json` for "
+            "borderline cases (plan section 13.7)."
         )
     else:
         lines.append(
-            "- No vocabulary category exceeds 10 % share on the TP-side; "
-            "the classifier appears well-calibrated against the closed "
-            "list (plan section 13.7 is satisfied)."
+            "- No non-mound category exceeds 10 % share on the TP-side; "
+            "the v2 classifier maps the great majority of real mounds "
+            "onto the burial-mound categories (plan section 13.7 "
+            "satisfied)."
         )
+    lines.append("")
+    # v1 vs v2 TP-side comparison table — the headline reliability
+    # check across the closed-list expansion. v1 numbers are taken
+    # verbatim from the archived
+    # ``archive/gs-fp-classification-v1-pre-burial-mound-list/report.md``
+    # so the comparison is reproducible.
+    lines.append("### v1 vs v2 TP-side comparison")
+    lines.append("")
+    lines.append(
+        "Side-by-side TP-side category share for v1 (no burial-mound "
+        "categories in the closed list) and v2 (this run). v2 is "
+        "expected to consolidate v1's `contour-ring` and `number` "
+        "leakage onto the burial-mound categories; the non-mound "
+        "categories should drop sharply on the TP-side."
+    )
+    lines.append("")
+    # v1 archived TP counts (n=355) — copied from the archived report.md
+    # so the comparison is self-contained. If the v1 archive is moved or
+    # regenerated, update these numbers; they are not loaded
+    # programmatically here because the archive directory is the canonical
+    # source and the v1 report stores percentages at one decimal place.
+    v1_tp_n: int = 355
+    v1_tp_pct: dict[str, float] = {
+        "burial-mound": 0.0,
+        "benchmark-on-burial-mound": 0.0,
+        "triangulation-point-on-burial-mound": 0.0,
+        "settlement-mound": 0.0,
+        "number": 15.2,
+        "benchmark": 8.5,
+        "water-feature": 0.6,
+        "contour-ring": 60.0,
+        "vegetation": 9.0,
+        "settlement": 5.9,
+        "road-or-track": 0.0,
+        "scale-bar-or-grid": 0.0,
+        "none": 0.0,
+        "other": 0.8,
+    }
+    lines.append(
+        "| Category | v1 share (n=355) | v2 share | v2 n |"
+    )
+    lines.append("|---|---:|---:|---:|")
+    for cat in categories:
+        v1_pct = v1_tp_pct.get(cat, 0.0)
+        v2_n = tp_counts.get(cat, 0)
+        v2_pct = 100.0 * v2_n / n_tp if n_tp else 0.0
+        # Mark v2 categories absent from v1 with an em-dash for the v1
+        # column (reads more cleanly than "0.0 %" for new categories).
+        v1_cell = (
+            "—" if cat in burial_tp_categories else f"{v1_pct:.1f} %"
+        )
+        lines.append(
+            f"| `{cat}` | {v1_cell} | {v2_pct:.1f} % | {v2_n} |"
+        )
+    lines.append(
+        f"| **N** | **{v1_tp_n}** | | **{n_tp}** |"
+    )
     lines.append("")
 
     # Distractor-pull (number + benchmark) summary.
@@ -1793,6 +2071,70 @@ def write_report_md(
     )
     lines.append("")
     lines.extend(_format_chi2_block(cross_corpus_chi2, "gs", "fifty_five"))
+
+    # Headline FP-side distribution at the deepest stratum (>125 m) -
+    # the apples-to-apples comparator with the 55-map text-track
+    # aggregate (no detection within 125 m of any curator GT mound, so
+    # the FP set is maximally clean of any TP contamination via
+    # near-mound geometric leakage).
+    deepest_thr = max(thresholds_m)
+    fp_deepest = fp_counts_by_threshold.get(deepest_thr, {})
+    n_fp_deepest = sum(fp_deepest.values())
+    lines.append(
+        f"### Headline FP-side at the deepest stratum (>{deepest_thr} m)"
+    )
+    lines.append("")
+    lines.append(
+        f"The strictest FP filter in the sensitivity sweep "
+        f"(>{deepest_thr} m). No detection within {deepest_thr} m of "
+        "any curator GT mound contaminates the FP bucket - the cleanest "
+        "apples-to-apples comparator with the 55-map text-track "
+        "aggregate (which is itself bounded by per-detection human "
+        "review rather than by geometric distance)."
+    )
+    lines.append("")
+    if fifty_five_text_aggregate is not None and n_fp_deepest > 0:
+        lines.append(
+            f"| Category | GS FP (>{deepest_thr} m) | GS share | "
+            "55-map text-track | 55-map share |"
+        )
+        lines.append("|---|---:|---:|---:|---:|")
+        n_55_total = (
+            sum(fifty_five_text_aggregate.values())
+            if fifty_five_text_aggregate else 1
+        )
+        n_gs_d = n_fp_deepest if n_fp_deepest else 1
+        for cat in categories:
+            gs_n = fp_deepest.get(cat, 0)
+            tt_n = fifty_five_text_aggregate.get(cat, 0)
+            lines.append(
+                f"| `{cat}` | {gs_n} | {100 * gs_n / n_gs_d:.1f} % | "
+                f"{tt_n} | {100 * tt_n / n_55_total:.1f} % |"
+            )
+        lines.append(
+            f"| **N** | **{n_fp_deepest}** | | "
+            f"**{sum(fifty_five_text_aggregate.values())}** | |"
+        )
+        lines.append("")
+        deepest_block = cross_corpus_chi2_by_threshold.get(deepest_thr, {})
+        lines.extend(
+            _format_chi2_block(
+                deepest_block, "gs", "fifty_five",
+                residual_heading_suffix=f">{deepest_thr} m stratum",
+            ),
+        )
+    elif n_fp_deepest == 0:
+        lines.append(
+            f"FP-side at >{deepest_thr} m is empty; no headline can be "
+            "drawn at the deepest stratum."
+        )
+        lines.append("")
+    else:
+        lines.append(
+            "55-map comparator file unavailable - deepest-stratum "
+            "comparison table skipped."
+        )
+        lines.append("")
 
     # Per-threshold chi-square summary so the deepest filter (>125 m,
     # the apples-to-apples comparator alongside the 50 m primary) is
@@ -1880,9 +2222,35 @@ def write_report_md(
         )
         if chosen_p is not None:
             lines.append(
-                f"- Cross-corpus chi-square ({p_label}) p-value: "
-                f"{chosen_p:.4g}"
+                f"- Cross-corpus chi-square ({p_label}) p-value at "
+                f">{primary_threshold_m} m: {chosen_p:.4g}"
             )
+        # Deepest-stratum (>125 m) headline summary - the
+        # apples-to-apples comparator with the 55-map text-track.
+        if n_fp_deepest > 0:
+            sorted_d = sorted(
+                ((c, fp_deepest.get(c, 0)) for c in categories),
+                key=lambda kv: kv[1], reverse=True,
+            )
+            dom_d_cat, dom_d_n = sorted_d[0]
+            dom_d_share = 100.0 * dom_d_n / n_fp_deepest
+            deepest_block = cross_corpus_chi2_by_threshold.get(
+                deepest_thr, {},
+            )
+            mc_d = deepest_block.get("monte_carlo_p_value")
+            asy_d = deepest_block.get("p_value")
+            chosen_d = mc_d if mc_d is not None else asy_d
+            label_d = "Monte Carlo" if mc_d is not None else "asymptotic"
+            lines.append(
+                f"- Dominant GS FP-side category at >{deepest_thr} m: "
+                f"`{dom_d_cat}` "
+                f"({dom_d_n} / {n_fp_deepest} = {dom_d_share:.1f} %)"
+            )
+            if chosen_d is not None:
+                lines.append(
+                    f"- Cross-corpus chi-square ({label_d}) p-value at "
+                    f">{deepest_thr} m: {chosen_d:.4g}"
+                )
         lines.append("")
         # Compose a narrative verdict.
         if chosen_p is not None and chosen_p < 0.05:
@@ -2009,11 +2377,15 @@ def write_report_md(
     lines.append("")
     lines.append(
         "Search terms: GS FP-class classification, Obs 302 follow-up, "
-        "cross-corpus comparator, distance-from-curator-GT primary 50 m, "
+        "v2 closed list, burial-mound categories added, "
+        "benchmark-on-burial-mound, triangulation-point-on-burial-mound, "
+        "settlement-mound, cross-corpus comparator, "
+        "distance-from-curator-GT primary 50 m, deepest stratum 125 m, "
         "sensitivity sweep 25 50 75 100 125 m, Soviet 1980s topographic "
         "categories closed list, Gemini 3 Flash 150 m crop "
-        "classification, TP-side reliability check, water-feature "
-        "spot-height GS failure mode, sub-metre curator GT precision."
+        "classification, TP-side reliability check (v2 — burial-mound "
+        "dominance expected), water-feature spot-height GS failure mode, "
+        "sub-metre curator GT precision, v1 vs v2 TP-side comparison."
     )
 
     # Single trailing newline at EOF (markdownlint MD012 / MD047).

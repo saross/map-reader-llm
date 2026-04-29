@@ -2,6 +2,10 @@
   "version": "1.0",
   "n_total_classified": 371,
   "categories": [
+    "burial-mound",
+    "benchmark-on-burial-mound",
+    "triangulation-point-on-burial-mound",
+    "settlement-mound",
     "number",
     "benchmark",
     "water-feature",
@@ -23,78 +27,102 @@
   ],
   "tp_side_at_primary": {
     "counts": {
-      "number": 54,
-      "benchmark": 30,
-      "water-feature": 2,
-      "contour-ring": 213,
-      "vegetation": 32,
-      "settlement": 21,
+      "burial-mound": 124,
+      "benchmark-on-burial-mound": 0,
+      "triangulation-point-on-burial-mound": 70,
+      "settlement-mound": 8,
+      "number": 24,
+      "benchmark": 0,
+      "water-feature": 8,
+      "contour-ring": 0,
+      "vegetation": 45,
+      "settlement": 7,
       "road-or-track": 0,
-      "scale-bar-or-grid": 0,
+      "scale-bar-or-grid": 1,
       "none": 0,
-      "other": 3
+      "other": 68
     },
     "percentages": {
-      "number": 15.21,
-      "benchmark": 8.45,
-      "water-feature": 0.56,
-      "contour-ring": 60.0,
-      "vegetation": 9.01,
-      "settlement": 5.92,
+      "burial-mound": 34.93,
+      "benchmark-on-burial-mound": 0.0,
+      "triangulation-point-on-burial-mound": 19.72,
+      "settlement-mound": 2.25,
+      "number": 6.76,
+      "benchmark": 0.0,
+      "water-feature": 2.25,
+      "contour-ring": 0.0,
+      "vegetation": 12.68,
+      "settlement": 1.97,
       "road-or-track": 0.0,
-      "scale-bar-or-grid": 0.0,
+      "scale-bar-or-grid": 0.28,
       "none": 0.0,
-      "other": 0.85
+      "other": 19.15
     },
     "weighted_by_confidence": {
-      "number": 48.249999999999964,
-      "benchmark": 28.44999999999999,
-      "water-feature": 1.8,
-      "contour-ring": 191.4500000000006,
-      "vegetation": 28.799999999999986,
-      "settlement": 18.85,
+      "burial-mound": 112.25000000000017,
+      "benchmark-on-burial-mound": 0.0,
+      "triangulation-point-on-burial-mound": 65.50000000000004,
+      "settlement-mound": 6.949999999999999,
+      "number": 21.049999999999997,
+      "benchmark": 0.0,
+      "water-feature": 7.1,
+      "contour-ring": 0.0,
+      "vegetation": 40.399999999999984,
+      "settlement": 6.05,
       "road-or-track": 0.0,
-      "scale-bar-or-grid": 0.0,
+      "scale-bar-or-grid": 0.9,
       "none": 0.0,
-      "other": 2.7
+      "other": 60.34999999999998
     },
     "n": 355
   },
   "fp_side_by_threshold": {
     "25": {
       "counts": {
-        "number": 8,
-        "benchmark": 4,
+        "burial-mound": 5,
+        "benchmark-on-burial-mound": 0,
+        "triangulation-point-on-burial-mound": 4,
+        "settlement-mound": 0,
+        "number": 3,
+        "benchmark": 0,
         "water-feature": 2,
-        "contour-ring": 2,
-        "vegetation": 0,
+        "contour-ring": 0,
+        "vegetation": 1,
         "settlement": 2,
         "road-or-track": 1,
         "scale-bar-or-grid": 0,
         "none": 1,
-        "other": 2
+        "other": 3
       },
       "percentages": {
-        "number": 36.36,
-        "benchmark": 18.18,
+        "burial-mound": 22.73,
+        "benchmark-on-burial-mound": 0.0,
+        "triangulation-point-on-burial-mound": 18.18,
+        "settlement-mound": 0.0,
+        "number": 13.64,
+        "benchmark": 0.0,
         "water-feature": 9.09,
-        "contour-ring": 9.09,
-        "vegetation": 0.0,
+        "contour-ring": 0.0,
+        "vegetation": 4.55,
         "settlement": 9.09,
         "road-or-track": 4.55,
         "scale-bar-or-grid": 0.0,
         "none": 4.55,
-        "other": 9.09
+        "other": 13.64
       },
       "n": 22
     },
     "50": {
       "counts": {
-        "number": 4,
-        "benchmark": 4,
+        "burial-mound": 4,
+        "benchmark-on-burial-mound": 0,
+        "triangulation-point-on-burial-mound": 3,
+        "settlement-mound": 0,
+        "number": 2,
+        "benchmark": 0,
         "water-feature": 2,
-        "contour-ring": 2,
-        "vegetation": 0,
+        "contour-ring": 0,
+        "vegetation": 1,
         "settlement": 2,
         "road-or-track": 1,
         "scale-bar-or-grid": 0,
@@ -102,11 +130,15 @@
         "other": 0
       },
       "percentages": {
-        "number": 25.0,
-        "benchmark": 25.0,
+        "burial-mound": 25.0,
+        "benchmark-on-burial-mound": 0.0,
+        "triangulation-point-on-burial-mound": 18.75,
+        "settlement-mound": 0.0,
+        "number": 12.5,
+        "benchmark": 0.0,
         "water-feature": 12.5,
-        "contour-ring": 12.5,
-        "vegetation": 0.0,
+        "contour-ring": 0.0,
+        "vegetation": 6.25,
         "settlement": 12.5,
         "road-or-track": 6.25,
         "scale-bar-or-grid": 0.0,
@@ -117,11 +149,15 @@
     },
     "75": {
       "counts": {
-        "number": 2,
-        "benchmark": 4,
+        "burial-mound": 3,
+        "benchmark-on-burial-mound": 0,
+        "triangulation-point-on-burial-mound": 3,
+        "settlement-mound": 0,
+        "number": 1,
+        "benchmark": 0,
         "water-feature": 2,
-        "contour-ring": 2,
-        "vegetation": 0,
+        "contour-ring": 0,
+        "vegetation": 1,
         "settlement": 2,
         "road-or-track": 1,
         "scale-bar-or-grid": 0,
@@ -129,11 +165,15 @@
         "other": 0
       },
       "percentages": {
-        "number": 14.29,
-        "benchmark": 28.57,
+        "burial-mound": 21.43,
+        "benchmark-on-burial-mound": 0.0,
+        "triangulation-point-on-burial-mound": 21.43,
+        "settlement-mound": 0.0,
+        "number": 7.14,
+        "benchmark": 0.0,
         "water-feature": 14.29,
-        "contour-ring": 14.29,
-        "vegetation": 0.0,
+        "contour-ring": 0.0,
+        "vegetation": 7.14,
         "settlement": 14.29,
         "road-or-track": 7.14,
         "scale-bar-or-grid": 0.0,
@@ -144,11 +184,15 @@
     },
     "100": {
       "counts": {
-        "number": 2,
-        "benchmark": 4,
+        "burial-mound": 3,
+        "benchmark-on-burial-mound": 0,
+        "triangulation-point-on-burial-mound": 3,
+        "settlement-mound": 0,
+        "number": 1,
+        "benchmark": 0,
         "water-feature": 2,
-        "contour-ring": 2,
-        "vegetation": 0,
+        "contour-ring": 0,
+        "vegetation": 1,
         "settlement": 2,
         "road-or-track": 1,
         "scale-bar-or-grid": 0,
@@ -156,11 +200,15 @@
         "other": 0
       },
       "percentages": {
-        "number": 14.29,
-        "benchmark": 28.57,
+        "burial-mound": 21.43,
+        "benchmark-on-burial-mound": 0.0,
+        "triangulation-point-on-burial-mound": 21.43,
+        "settlement-mound": 0.0,
+        "number": 7.14,
+        "benchmark": 0.0,
         "water-feature": 14.29,
-        "contour-ring": 14.29,
-        "vegetation": 0.0,
+        "contour-ring": 0.0,
+        "vegetation": 7.14,
         "settlement": 14.29,
         "road-or-track": 7.14,
         "scale-bar-or-grid": 0.0,
@@ -171,11 +219,15 @@
     },
     "125": {
       "counts": {
-        "number": 2,
-        "benchmark": 4,
+        "burial-mound": 3,
+        "benchmark-on-burial-mound": 0,
+        "triangulation-point-on-burial-mound": 3,
+        "settlement-mound": 0,
+        "number": 1,
+        "benchmark": 0,
         "water-feature": 2,
-        "contour-ring": 2,
-        "vegetation": 0,
+        "contour-ring": 0,
+        "vegetation": 1,
         "settlement": 2,
         "road-or-track": 1,
         "scale-bar-or-grid": 0,
@@ -183,11 +235,15 @@
         "other": 0
       },
       "percentages": {
-        "number": 14.29,
-        "benchmark": 28.57,
+        "burial-mound": 21.43,
+        "benchmark-on-burial-mound": 0.0,
+        "triangulation-point-on-burial-mound": 21.43,
+        "settlement-mound": 0.0,
+        "number": 7.14,
+        "benchmark": 0.0,
         "water-feature": 14.29,
-        "contour-ring": 14.29,
-        "vegetation": 0.0,
+        "contour-ring": 0.0,
+        "vegetation": 7.14,
         "settlement": 14.29,
         "road-or-track": 7.14,
         "scale-bar-or-grid": 0.0,
@@ -201,12 +257,15 @@
     "insufficient_data": false,
     "label_a": "gs",
     "label_b": "fifty_five",
-    "chi2": 36.11980080407824,
-    "p_value": 3.775206483514817e-05,
-    "dof": 9,
+    "chi2": 57.33717918465559,
+    "p_value": 6.869949798960474e-08,
+    "dof": 12,
     "n_gs": 16,
     "n_fifty_five": 836,
     "categories_used": [
+      "burial-mound",
+      "triangulation-point-on-burial-mound",
+      "settlement-mound",
       "number",
       "benchmark",
       "water-feature",
@@ -218,100 +277,127 @@
       "none",
       "other"
     ],
-    "low_expected_count_fraction": 0.55,
+    "low_expected_count_fraction": 0.5,
     "per_category": [
       {
-        "category": "number",
+        "category": "burial-mound",
         "gs_observed": 4,
-        "fifty_five_observed": 149,
-        "gs_expected": 2.873,
-        "fifty_five_expected": 150.127,
-        "gs_residual": 0.665,
-        "fifty_five_residual": -0.092
+        "fifty_five_observed": 20,
+        "gs_expected": 0.451,
+        "fifty_five_expected": 23.549,
+        "gs_residual": 5.287,
+        "fifty_five_residual": -0.731
+      },
+      {
+        "category": "triangulation-point-on-burial-mound",
+        "gs_observed": 3,
+        "fifty_five_observed": 26,
+        "gs_expected": 0.545,
+        "fifty_five_expected": 28.455,
+        "gs_residual": 3.327,
+        "fifty_five_residual": -0.46
+      },
+      {
+        "category": "settlement-mound",
+        "gs_observed": 0,
+        "fifty_five_observed": 92,
+        "gs_expected": 1.728,
+        "fifty_five_expected": 90.272,
+        "gs_residual": -1.314,
+        "fifty_five_residual": 0.182
+      },
+      {
+        "category": "number",
+        "gs_observed": 2,
+        "fifty_five_observed": 78,
+        "gs_expected": 1.502,
+        "fifty_five_expected": 78.498,
+        "gs_residual": 0.406,
+        "fifty_five_residual": -0.056
       },
       {
         "category": "benchmark",
-        "gs_observed": 4,
-        "fifty_five_observed": 41,
-        "gs_expected": 0.845,
-        "fifty_five_expected": 44.155,
-        "gs_residual": 3.432,
-        "fifty_five_residual": -0.475
+        "gs_observed": 0,
+        "fifty_five_observed": 12,
+        "gs_expected": 0.225,
+        "fifty_five_expected": 11.775,
+        "gs_residual": -0.475,
+        "fifty_five_residual": 0.066
       },
       {
         "category": "water-feature",
         "gs_observed": 2,
-        "fifty_five_observed": 105,
-        "gs_expected": 2.009,
-        "fifty_five_expected": 104.991,
-        "gs_residual": -0.007,
-        "fifty_five_residual": 0.001
+        "fifty_five_observed": 102,
+        "gs_expected": 1.953,
+        "fifty_five_expected": 102.047,
+        "gs_residual": 0.034,
+        "fifty_five_residual": -0.005
       },
       {
         "category": "contour-ring",
-        "gs_observed": 2,
-        "fifty_five_observed": 346,
-        "gs_expected": 6.535,
-        "fifty_five_expected": 341.465,
-        "gs_residual": -1.774,
-        "fifty_five_residual": 0.245
+        "gs_observed": 0,
+        "fifty_five_observed": 288,
+        "gs_expected": 5.408,
+        "fifty_five_expected": 282.592,
+        "gs_residual": -2.326,
+        "fifty_five_residual": 0.322
       },
       {
         "category": "vegetation",
-        "gs_observed": 0,
-        "fifty_five_observed": 51,
-        "gs_expected": 0.958,
-        "fifty_five_expected": 50.042,
-        "gs_residual": -0.979,
-        "fifty_five_residual": 0.135
+        "gs_observed": 1,
+        "fifty_five_observed": 75,
+        "gs_expected": 1.427,
+        "fifty_five_expected": 74.573,
+        "gs_residual": -0.358,
+        "fifty_five_residual": 0.049
       },
       {
         "category": "settlement",
         "gs_observed": 2,
-        "fifty_five_observed": 120,
-        "gs_expected": 2.291,
-        "fifty_five_expected": 119.709,
-        "gs_residual": -0.192,
-        "fifty_five_residual": 0.027
+        "fifty_five_observed": 113,
+        "gs_expected": 2.16,
+        "fifty_five_expected": 112.84,
+        "gs_residual": -0.109,
+        "fifty_five_residual": 0.015
       },
       {
         "category": "road-or-track",
         "gs_observed": 1,
-        "fifty_five_observed": 10,
-        "gs_expected": 0.207,
-        "fifty_five_expected": 10.793,
-        "gs_residual": 1.746,
-        "fifty_five_residual": -0.242
+        "fifty_five_observed": 12,
+        "gs_expected": 0.244,
+        "fifty_five_expected": 12.756,
+        "gs_residual": 1.53,
+        "fifty_five_residual": -0.212
       },
       {
         "category": "scale-bar-or-grid",
         "gs_observed": 0,
-        "fifty_five_observed": 2,
-        "gs_expected": 0.038,
-        "fifty_five_expected": 1.962,
-        "gs_residual": -0.194,
-        "fifty_five_residual": 0.027
+        "fifty_five_observed": 5,
+        "gs_expected": 0.094,
+        "fifty_five_expected": 4.906,
+        "gs_residual": -0.306,
+        "fifty_five_residual": 0.042
       },
       {
         "category": "none",
         "gs_observed": 1,
-        "fifty_five_observed": 2,
-        "gs_expected": 0.056,
-        "fifty_five_expected": 2.944,
-        "gs_residual": 3.976,
-        "fifty_five_residual": -0.55
+        "fifty_five_observed": 5,
+        "gs_expected": 0.113,
+        "fifty_five_expected": 5.887,
+        "gs_residual": 2.643,
+        "fifty_five_residual": -0.366
       },
       {
         "category": "other",
         "gs_observed": 0,
-        "fifty_five_observed": 10,
-        "gs_expected": 0.188,
-        "fifty_five_expected": 9.812,
-        "gs_residual": -0.433,
-        "fifty_five_residual": 0.06
+        "fifty_five_observed": 8,
+        "gs_expected": 0.15,
+        "fifty_five_expected": 7.85,
+        "gs_residual": -0.388,
+        "fifty_five_residual": 0.054
       }
     ],
-    "monte_carlo_p_value": 0.010698930106989302,
+    "monte_carlo_p_value": 0.0011998800119988001,
     "monte_carlo_resamples": 10000
   },
   "cross_corpus_chi_square_by_threshold": {
@@ -319,12 +405,15 @@
       "insufficient_data": false,
       "label_a": "gs",
       "label_b": "fifty_five",
-      "chi2": 41.560779714304,
-      "p_value": 3.953216128399418e-06,
-      "dof": 9,
+      "chi2": 89.19926450461497,
+      "p_value": 7.053921958305597e-14,
+      "dof": 12,
       "n_gs": 22,
       "n_fifty_five": 836,
       "categories_used": [
+        "burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
         "number",
         "benchmark",
         "water-feature",
@@ -336,112 +425,142 @@
         "none",
         "other"
       ],
-      "low_expected_count_fraction": 0.55,
+      "low_expected_count_fraction": 0.5,
       "per_category": [
         {
+          "category": "burial-mound",
+          "gs_observed": 5,
+          "fifty_five_observed": 20,
+          "gs_expected": 0.641,
+          "fifty_five_expected": 24.359,
+          "gs_residual": 5.444,
+          "fifty_five_residual": -0.883
+        },
+        {
+          "category": "triangulation-point-on-burial-mound",
+          "gs_observed": 4,
+          "fifty_five_observed": 26,
+          "gs_expected": 0.769,
+          "fifty_five_expected": 29.231,
+          "gs_residual": 3.684,
+          "fifty_five_residual": -0.598
+        },
+        {
+          "category": "settlement-mound",
+          "gs_observed": 0,
+          "fifty_five_observed": 92,
+          "gs_expected": 2.359,
+          "fifty_five_expected": 89.641,
+          "gs_residual": -1.536,
+          "fifty_five_residual": 0.249
+        },
+        {
           "category": "number",
-          "gs_observed": 8,
-          "fifty_five_observed": 149,
-          "gs_expected": 4.026,
-          "fifty_five_expected": 152.974,
-          "gs_residual": 1.981,
-          "fifty_five_residual": -0.321
+          "gs_observed": 3,
+          "fifty_five_observed": 78,
+          "gs_expected": 2.077,
+          "fifty_five_expected": 78.923,
+          "gs_residual": 0.641,
+          "fifty_five_residual": -0.104
         },
         {
           "category": "benchmark",
-          "gs_observed": 4,
-          "fifty_five_observed": 41,
-          "gs_expected": 1.154,
-          "fifty_five_expected": 43.846,
-          "gs_residual": 2.65,
-          "fifty_five_residual": -0.43
+          "gs_observed": 0,
+          "fifty_five_observed": 12,
+          "gs_expected": 0.308,
+          "fifty_five_expected": 11.692,
+          "gs_residual": -0.555,
+          "fifty_five_residual": 0.09
         },
         {
           "category": "water-feature",
           "gs_observed": 2,
-          "fifty_five_observed": 105,
-          "gs_expected": 2.744,
-          "fifty_five_expected": 104.256,
-          "gs_residual": -0.449,
-          "fifty_five_residual": 0.073
+          "fifty_five_observed": 102,
+          "gs_expected": 2.667,
+          "fifty_five_expected": 101.333,
+          "gs_residual": -0.408,
+          "fifty_five_residual": 0.066
         },
         {
           "category": "contour-ring",
-          "gs_observed": 2,
-          "fifty_five_observed": 346,
-          "gs_expected": 8.923,
-          "fifty_five_expected": 339.077,
-          "gs_residual": -2.318,
-          "fifty_five_residual": 0.376
+          "gs_observed": 0,
+          "fifty_five_observed": 288,
+          "gs_expected": 7.385,
+          "fifty_five_expected": 280.615,
+          "gs_residual": -2.717,
+          "fifty_five_residual": 0.441
         },
         {
           "category": "vegetation",
-          "gs_observed": 0,
-          "fifty_five_observed": 51,
-          "gs_expected": 1.308,
-          "fifty_five_expected": 49.692,
-          "gs_residual": -1.144,
-          "fifty_five_residual": 0.186
+          "gs_observed": 1,
+          "fifty_five_observed": 75,
+          "gs_expected": 1.949,
+          "fifty_five_expected": 74.051,
+          "gs_residual": -0.68,
+          "fifty_five_residual": 0.11
         },
         {
           "category": "settlement",
           "gs_observed": 2,
-          "fifty_five_observed": 120,
-          "gs_expected": 3.128,
-          "fifty_five_expected": 118.872,
-          "gs_residual": -0.638,
-          "fifty_five_residual": 0.103
+          "fifty_five_observed": 113,
+          "gs_expected": 2.949,
+          "fifty_five_expected": 112.051,
+          "gs_residual": -0.552,
+          "fifty_five_residual": 0.09
         },
         {
           "category": "road-or-track",
           "gs_observed": 1,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.282,
-          "fifty_five_expected": 10.718,
-          "gs_residual": 1.352,
-          "fifty_five_residual": -0.219
+          "fifty_five_observed": 12,
+          "gs_expected": 0.333,
+          "fifty_five_expected": 12.667,
+          "gs_residual": 1.155,
+          "fifty_five_residual": -0.187
         },
         {
           "category": "scale-bar-or-grid",
           "gs_observed": 0,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.051,
-          "fifty_five_expected": 1.949,
-          "gs_residual": -0.226,
-          "fifty_five_residual": 0.037
+          "fifty_five_observed": 5,
+          "gs_expected": 0.128,
+          "fifty_five_expected": 4.872,
+          "gs_residual": -0.358,
+          "fifty_five_residual": 0.058
         },
         {
           "category": "none",
           "gs_observed": 1,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.077,
-          "fifty_five_expected": 2.923,
-          "gs_residual": 3.328,
-          "fifty_five_residual": -0.54
+          "fifty_five_observed": 5,
+          "gs_expected": 0.154,
+          "fifty_five_expected": 5.846,
+          "gs_residual": 2.157,
+          "fifty_five_residual": -0.35
         },
         {
           "category": "other",
-          "gs_observed": 2,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.308,
-          "fifty_five_expected": 11.692,
-          "gs_residual": 3.051,
-          "fifty_five_residual": -0.495
+          "gs_observed": 3,
+          "fifty_five_observed": 8,
+          "gs_expected": 0.282,
+          "fifty_five_expected": 10.718,
+          "gs_residual": 5.118,
+          "fifty_five_residual": -0.83
         }
       ],
-      "monte_carlo_p_value": 0.0040995900409959,
+      "monte_carlo_p_value": 9.999000099990002e-05,
       "monte_carlo_resamples": 10000
     },
     "50": {
       "insufficient_data": false,
       "label_a": "gs",
       "label_b": "fifty_five",
-      "chi2": 36.11980080407824,
-      "p_value": 3.775206483514817e-05,
-      "dof": 9,
+      "chi2": 57.33717918465559,
+      "p_value": 6.869949798960474e-08,
+      "dof": 12,
       "n_gs": 16,
       "n_fifty_five": 836,
       "categories_used": [
+        "burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
         "number",
         "benchmark",
         "water-feature",
@@ -453,112 +572,142 @@
         "none",
         "other"
       ],
-      "low_expected_count_fraction": 0.55,
+      "low_expected_count_fraction": 0.5,
       "per_category": [
         {
-          "category": "number",
+          "category": "burial-mound",
           "gs_observed": 4,
-          "fifty_five_observed": 149,
-          "gs_expected": 2.873,
-          "fifty_five_expected": 150.127,
-          "gs_residual": 0.665,
-          "fifty_five_residual": -0.092
+          "fifty_five_observed": 20,
+          "gs_expected": 0.451,
+          "fifty_five_expected": 23.549,
+          "gs_residual": 5.287,
+          "fifty_five_residual": -0.731
+        },
+        {
+          "category": "triangulation-point-on-burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 26,
+          "gs_expected": 0.545,
+          "fifty_five_expected": 28.455,
+          "gs_residual": 3.327,
+          "fifty_five_residual": -0.46
+        },
+        {
+          "category": "settlement-mound",
+          "gs_observed": 0,
+          "fifty_five_observed": 92,
+          "gs_expected": 1.728,
+          "fifty_five_expected": 90.272,
+          "gs_residual": -1.314,
+          "fifty_five_residual": 0.182
+        },
+        {
+          "category": "number",
+          "gs_observed": 2,
+          "fifty_five_observed": 78,
+          "gs_expected": 1.502,
+          "fifty_five_expected": 78.498,
+          "gs_residual": 0.406,
+          "fifty_five_residual": -0.056
         },
         {
           "category": "benchmark",
-          "gs_observed": 4,
-          "fifty_five_observed": 41,
-          "gs_expected": 0.845,
-          "fifty_five_expected": 44.155,
-          "gs_residual": 3.432,
-          "fifty_five_residual": -0.475
+          "gs_observed": 0,
+          "fifty_five_observed": 12,
+          "gs_expected": 0.225,
+          "fifty_five_expected": 11.775,
+          "gs_residual": -0.475,
+          "fifty_five_residual": 0.066
         },
         {
           "category": "water-feature",
           "gs_observed": 2,
-          "fifty_five_observed": 105,
-          "gs_expected": 2.009,
-          "fifty_five_expected": 104.991,
-          "gs_residual": -0.007,
-          "fifty_five_residual": 0.001
+          "fifty_five_observed": 102,
+          "gs_expected": 1.953,
+          "fifty_five_expected": 102.047,
+          "gs_residual": 0.034,
+          "fifty_five_residual": -0.005
         },
         {
           "category": "contour-ring",
-          "gs_observed": 2,
-          "fifty_five_observed": 346,
-          "gs_expected": 6.535,
-          "fifty_five_expected": 341.465,
-          "gs_residual": -1.774,
-          "fifty_five_residual": 0.245
+          "gs_observed": 0,
+          "fifty_five_observed": 288,
+          "gs_expected": 5.408,
+          "fifty_five_expected": 282.592,
+          "gs_residual": -2.326,
+          "fifty_five_residual": 0.322
         },
         {
           "category": "vegetation",
-          "gs_observed": 0,
-          "fifty_five_observed": 51,
-          "gs_expected": 0.958,
-          "fifty_five_expected": 50.042,
-          "gs_residual": -0.979,
-          "fifty_five_residual": 0.135
+          "gs_observed": 1,
+          "fifty_five_observed": 75,
+          "gs_expected": 1.427,
+          "fifty_five_expected": 74.573,
+          "gs_residual": -0.358,
+          "fifty_five_residual": 0.049
         },
         {
           "category": "settlement",
           "gs_observed": 2,
-          "fifty_five_observed": 120,
-          "gs_expected": 2.291,
-          "fifty_five_expected": 119.709,
-          "gs_residual": -0.192,
-          "fifty_five_residual": 0.027
+          "fifty_five_observed": 113,
+          "gs_expected": 2.16,
+          "fifty_five_expected": 112.84,
+          "gs_residual": -0.109,
+          "fifty_five_residual": 0.015
         },
         {
           "category": "road-or-track",
           "gs_observed": 1,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.207,
-          "fifty_five_expected": 10.793,
-          "gs_residual": 1.746,
-          "fifty_five_residual": -0.242
+          "fifty_five_observed": 12,
+          "gs_expected": 0.244,
+          "fifty_five_expected": 12.756,
+          "gs_residual": 1.53,
+          "fifty_five_residual": -0.212
         },
         {
           "category": "scale-bar-or-grid",
           "gs_observed": 0,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.038,
-          "fifty_five_expected": 1.962,
-          "gs_residual": -0.194,
-          "fifty_five_residual": 0.027
+          "fifty_five_observed": 5,
+          "gs_expected": 0.094,
+          "fifty_five_expected": 4.906,
+          "gs_residual": -0.306,
+          "fifty_five_residual": 0.042
         },
         {
           "category": "none",
           "gs_observed": 1,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.056,
-          "fifty_five_expected": 2.944,
-          "gs_residual": 3.976,
-          "fifty_five_residual": -0.55
+          "fifty_five_observed": 5,
+          "gs_expected": 0.113,
+          "fifty_five_expected": 5.887,
+          "gs_residual": 2.643,
+          "fifty_five_residual": -0.366
         },
         {
           "category": "other",
           "gs_observed": 0,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.188,
-          "fifty_five_expected": 9.812,
-          "gs_residual": -0.433,
-          "fifty_five_residual": 0.06
+          "fifty_five_observed": 8,
+          "gs_expected": 0.15,
+          "fifty_five_expected": 7.85,
+          "gs_residual": -0.388,
+          "fifty_five_residual": 0.054
         }
       ],
-      "monte_carlo_p_value": 0.010698930106989302,
+      "monte_carlo_p_value": 0.0011998800119988001,
       "monte_carlo_resamples": 10000
     },
     "75": {
       "insufficient_data": false,
       "label_a": "gs",
       "label_b": "fifty_five",
-      "chi2": 40.579766006273786,
-      "p_value": 5.9641676095252105e-06,
-      "dof": 9,
+      "chi2": 50.23121700851537,
+      "p_value": 1.2723132787461297e-06,
+      "dof": 12,
       "n_gs": 14,
       "n_fifty_five": 836,
       "categories_used": [
+        "burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
         "number",
         "benchmark",
         "water-feature",
@@ -570,112 +719,142 @@
         "none",
         "other"
       ],
-      "low_expected_count_fraction": 0.55,
+      "low_expected_count_fraction": 0.538,
       "per_category": [
         {
+          "category": "burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 20,
+          "gs_expected": 0.379,
+          "fifty_five_expected": 22.621,
+          "gs_residual": 4.259,
+          "fifty_five_residual": -0.551
+        },
+        {
+          "category": "triangulation-point-on-burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 26,
+          "gs_expected": 0.478,
+          "fifty_five_expected": 28.522,
+          "gs_residual": 3.65,
+          "fifty_five_residual": -0.472
+        },
+        {
+          "category": "settlement-mound",
+          "gs_observed": 0,
+          "fifty_five_observed": 92,
+          "gs_expected": 1.515,
+          "fifty_five_expected": 90.485,
+          "gs_residual": -1.231,
+          "fifty_five_residual": 0.159
+        },
+        {
           "category": "number",
-          "gs_observed": 2,
-          "fifty_five_observed": 149,
-          "gs_expected": 2.487,
-          "fifty_five_expected": 148.513,
-          "gs_residual": -0.309,
-          "fifty_five_residual": 0.04
+          "gs_observed": 1,
+          "fifty_five_observed": 78,
+          "gs_expected": 1.301,
+          "fifty_five_expected": 77.699,
+          "gs_residual": -0.264,
+          "fifty_five_residual": 0.034
         },
         {
           "category": "benchmark",
-          "gs_observed": 4,
-          "fifty_five_observed": 41,
-          "gs_expected": 0.741,
-          "fifty_five_expected": 44.259,
-          "gs_residual": 3.785,
-          "fifty_five_residual": -0.49
+          "gs_observed": 0,
+          "fifty_five_observed": 12,
+          "gs_expected": 0.198,
+          "fifty_five_expected": 11.802,
+          "gs_residual": -0.445,
+          "fifty_five_residual": 0.058
         },
         {
           "category": "water-feature",
           "gs_observed": 2,
-          "fifty_five_observed": 105,
-          "gs_expected": 1.762,
-          "fifty_five_expected": 105.238,
-          "gs_residual": 0.179,
-          "fifty_five_residual": -0.023
+          "fifty_five_observed": 102,
+          "gs_expected": 1.713,
+          "fifty_five_expected": 102.287,
+          "gs_residual": 0.219,
+          "fifty_five_residual": -0.028
         },
         {
           "category": "contour-ring",
-          "gs_observed": 2,
-          "fifty_five_observed": 346,
-          "gs_expected": 5.732,
-          "fifty_five_expected": 342.268,
-          "gs_residual": -1.559,
-          "fifty_five_residual": 0.202
+          "gs_observed": 0,
+          "fifty_five_observed": 288,
+          "gs_expected": 4.744,
+          "fifty_five_expected": 283.256,
+          "gs_residual": -2.178,
+          "fifty_five_residual": 0.282
         },
         {
           "category": "vegetation",
-          "gs_observed": 0,
-          "fifty_five_observed": 51,
-          "gs_expected": 0.84,
-          "fifty_five_expected": 50.16,
-          "gs_residual": -0.917,
-          "fifty_five_residual": 0.119
+          "gs_observed": 1,
+          "fifty_five_observed": 75,
+          "gs_expected": 1.252,
+          "fifty_five_expected": 74.748,
+          "gs_residual": -0.225,
+          "fifty_five_residual": 0.029
         },
         {
           "category": "settlement",
           "gs_observed": 2,
-          "fifty_five_observed": 120,
-          "gs_expected": 2.009,
-          "fifty_five_expected": 119.991,
-          "gs_residual": -0.007,
-          "fifty_five_residual": 0.001
+          "fifty_five_observed": 113,
+          "gs_expected": 1.894,
+          "fifty_five_expected": 113.106,
+          "gs_residual": 0.077,
+          "fifty_five_residual": -0.01
         },
         {
           "category": "road-or-track",
           "gs_observed": 1,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.181,
-          "fifty_five_expected": 10.819,
-          "gs_residual": 1.924,
-          "fifty_five_residual": -0.249
+          "fifty_five_observed": 12,
+          "gs_expected": 0.214,
+          "fifty_five_expected": 12.786,
+          "gs_residual": 1.698,
+          "fifty_five_residual": -0.22
         },
         {
           "category": "scale-bar-or-grid",
           "gs_observed": 0,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.033,
-          "fifty_five_expected": 1.967,
-          "gs_residual": -0.181,
-          "fifty_five_residual": 0.023
+          "fifty_five_observed": 5,
+          "gs_expected": 0.082,
+          "fifty_five_expected": 4.918,
+          "gs_residual": -0.287,
+          "fifty_five_residual": 0.037
         },
         {
           "category": "none",
           "gs_observed": 1,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.049,
-          "fifty_five_expected": 2.951,
-          "gs_residual": 4.276,
-          "fifty_five_residual": -0.553
+          "fifty_five_observed": 5,
+          "gs_expected": 0.099,
+          "fifty_five_expected": 5.901,
+          "gs_residual": 2.867,
+          "fifty_five_residual": -0.371
         },
         {
           "category": "other",
           "gs_observed": 0,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.165,
-          "fifty_five_expected": 9.835,
-          "gs_residual": -0.406,
-          "fifty_five_residual": 0.053
+          "fifty_five_observed": 8,
+          "gs_expected": 0.132,
+          "fifty_five_expected": 7.868,
+          "gs_residual": -0.363,
+          "fifty_five_residual": 0.047
         }
       ],
-      "monte_carlo_p_value": 0.008899110088991101,
+      "monte_carlo_p_value": 0.0035996400359964,
       "monte_carlo_resamples": 10000
     },
     "100": {
       "insufficient_data": false,
       "label_a": "gs",
       "label_b": "fifty_five",
-      "chi2": 40.579766006273786,
-      "p_value": 5.9641676095252105e-06,
-      "dof": 9,
+      "chi2": 50.23121700851537,
+      "p_value": 1.2723132787461297e-06,
+      "dof": 12,
       "n_gs": 14,
       "n_fifty_five": 836,
       "categories_used": [
+        "burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
         "number",
         "benchmark",
         "water-feature",
@@ -687,112 +866,142 @@
         "none",
         "other"
       ],
-      "low_expected_count_fraction": 0.55,
+      "low_expected_count_fraction": 0.538,
       "per_category": [
         {
+          "category": "burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 20,
+          "gs_expected": 0.379,
+          "fifty_five_expected": 22.621,
+          "gs_residual": 4.259,
+          "fifty_five_residual": -0.551
+        },
+        {
+          "category": "triangulation-point-on-burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 26,
+          "gs_expected": 0.478,
+          "fifty_five_expected": 28.522,
+          "gs_residual": 3.65,
+          "fifty_five_residual": -0.472
+        },
+        {
+          "category": "settlement-mound",
+          "gs_observed": 0,
+          "fifty_five_observed": 92,
+          "gs_expected": 1.515,
+          "fifty_five_expected": 90.485,
+          "gs_residual": -1.231,
+          "fifty_five_residual": 0.159
+        },
+        {
           "category": "number",
-          "gs_observed": 2,
-          "fifty_five_observed": 149,
-          "gs_expected": 2.487,
-          "fifty_five_expected": 148.513,
-          "gs_residual": -0.309,
-          "fifty_five_residual": 0.04
+          "gs_observed": 1,
+          "fifty_five_observed": 78,
+          "gs_expected": 1.301,
+          "fifty_five_expected": 77.699,
+          "gs_residual": -0.264,
+          "fifty_five_residual": 0.034
         },
         {
           "category": "benchmark",
-          "gs_observed": 4,
-          "fifty_five_observed": 41,
-          "gs_expected": 0.741,
-          "fifty_five_expected": 44.259,
-          "gs_residual": 3.785,
-          "fifty_five_residual": -0.49
+          "gs_observed": 0,
+          "fifty_five_observed": 12,
+          "gs_expected": 0.198,
+          "fifty_five_expected": 11.802,
+          "gs_residual": -0.445,
+          "fifty_five_residual": 0.058
         },
         {
           "category": "water-feature",
           "gs_observed": 2,
-          "fifty_five_observed": 105,
-          "gs_expected": 1.762,
-          "fifty_five_expected": 105.238,
-          "gs_residual": 0.179,
-          "fifty_five_residual": -0.023
+          "fifty_five_observed": 102,
+          "gs_expected": 1.713,
+          "fifty_five_expected": 102.287,
+          "gs_residual": 0.219,
+          "fifty_five_residual": -0.028
         },
         {
           "category": "contour-ring",
-          "gs_observed": 2,
-          "fifty_five_observed": 346,
-          "gs_expected": 5.732,
-          "fifty_five_expected": 342.268,
-          "gs_residual": -1.559,
-          "fifty_five_residual": 0.202
+          "gs_observed": 0,
+          "fifty_five_observed": 288,
+          "gs_expected": 4.744,
+          "fifty_five_expected": 283.256,
+          "gs_residual": -2.178,
+          "fifty_five_residual": 0.282
         },
         {
           "category": "vegetation",
-          "gs_observed": 0,
-          "fifty_five_observed": 51,
-          "gs_expected": 0.84,
-          "fifty_five_expected": 50.16,
-          "gs_residual": -0.917,
-          "fifty_five_residual": 0.119
+          "gs_observed": 1,
+          "fifty_five_observed": 75,
+          "gs_expected": 1.252,
+          "fifty_five_expected": 74.748,
+          "gs_residual": -0.225,
+          "fifty_five_residual": 0.029
         },
         {
           "category": "settlement",
           "gs_observed": 2,
-          "fifty_five_observed": 120,
-          "gs_expected": 2.009,
-          "fifty_five_expected": 119.991,
-          "gs_residual": -0.007,
-          "fifty_five_residual": 0.001
+          "fifty_five_observed": 113,
+          "gs_expected": 1.894,
+          "fifty_five_expected": 113.106,
+          "gs_residual": 0.077,
+          "fifty_five_residual": -0.01
         },
         {
           "category": "road-or-track",
           "gs_observed": 1,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.181,
-          "fifty_five_expected": 10.819,
-          "gs_residual": 1.924,
-          "fifty_five_residual": -0.249
+          "fifty_five_observed": 12,
+          "gs_expected": 0.214,
+          "fifty_five_expected": 12.786,
+          "gs_residual": 1.698,
+          "fifty_five_residual": -0.22
         },
         {
           "category": "scale-bar-or-grid",
           "gs_observed": 0,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.033,
-          "fifty_five_expected": 1.967,
-          "gs_residual": -0.181,
-          "fifty_five_residual": 0.023
+          "fifty_five_observed": 5,
+          "gs_expected": 0.082,
+          "fifty_five_expected": 4.918,
+          "gs_residual": -0.287,
+          "fifty_five_residual": 0.037
         },
         {
           "category": "none",
           "gs_observed": 1,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.049,
-          "fifty_five_expected": 2.951,
-          "gs_residual": 4.276,
-          "fifty_five_residual": -0.553
+          "fifty_five_observed": 5,
+          "gs_expected": 0.099,
+          "fifty_five_expected": 5.901,
+          "gs_residual": 2.867,
+          "fifty_five_residual": -0.371
         },
         {
           "category": "other",
           "gs_observed": 0,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.165,
-          "fifty_five_expected": 9.835,
-          "gs_residual": -0.406,
-          "fifty_five_residual": 0.053
+          "fifty_five_observed": 8,
+          "gs_expected": 0.132,
+          "fifty_five_expected": 7.868,
+          "gs_residual": -0.363,
+          "fifty_five_residual": 0.047
         }
       ],
-      "monte_carlo_p_value": 0.0071992800719928,
+      "monte_carlo_p_value": 0.0035996400359964,
       "monte_carlo_resamples": 10000
     },
     "125": {
       "insufficient_data": false,
       "label_a": "gs",
       "label_b": "fifty_five",
-      "chi2": 40.579766006273786,
-      "p_value": 5.9641676095252105e-06,
-      "dof": 9,
+      "chi2": 50.23121700851537,
+      "p_value": 1.2723132787461297e-06,
+      "dof": 12,
       "n_gs": 14,
       "n_fifty_five": 836,
       "categories_used": [
+        "burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
         "number",
         "benchmark",
         "water-feature",
@@ -804,113 +1013,144 @@
         "none",
         "other"
       ],
-      "low_expected_count_fraction": 0.55,
+      "low_expected_count_fraction": 0.538,
       "per_category": [
         {
+          "category": "burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 20,
+          "gs_expected": 0.379,
+          "fifty_five_expected": 22.621,
+          "gs_residual": 4.259,
+          "fifty_five_residual": -0.551
+        },
+        {
+          "category": "triangulation-point-on-burial-mound",
+          "gs_observed": 3,
+          "fifty_five_observed": 26,
+          "gs_expected": 0.478,
+          "fifty_five_expected": 28.522,
+          "gs_residual": 3.65,
+          "fifty_five_residual": -0.472
+        },
+        {
+          "category": "settlement-mound",
+          "gs_observed": 0,
+          "fifty_five_observed": 92,
+          "gs_expected": 1.515,
+          "fifty_five_expected": 90.485,
+          "gs_residual": -1.231,
+          "fifty_five_residual": 0.159
+        },
+        {
           "category": "number",
-          "gs_observed": 2,
-          "fifty_five_observed": 149,
-          "gs_expected": 2.487,
-          "fifty_five_expected": 148.513,
-          "gs_residual": -0.309,
-          "fifty_five_residual": 0.04
+          "gs_observed": 1,
+          "fifty_five_observed": 78,
+          "gs_expected": 1.301,
+          "fifty_five_expected": 77.699,
+          "gs_residual": -0.264,
+          "fifty_five_residual": 0.034
         },
         {
           "category": "benchmark",
-          "gs_observed": 4,
-          "fifty_five_observed": 41,
-          "gs_expected": 0.741,
-          "fifty_five_expected": 44.259,
-          "gs_residual": 3.785,
-          "fifty_five_residual": -0.49
+          "gs_observed": 0,
+          "fifty_five_observed": 12,
+          "gs_expected": 0.198,
+          "fifty_five_expected": 11.802,
+          "gs_residual": -0.445,
+          "fifty_five_residual": 0.058
         },
         {
           "category": "water-feature",
           "gs_observed": 2,
-          "fifty_five_observed": 105,
-          "gs_expected": 1.762,
-          "fifty_five_expected": 105.238,
-          "gs_residual": 0.179,
-          "fifty_five_residual": -0.023
+          "fifty_five_observed": 102,
+          "gs_expected": 1.713,
+          "fifty_five_expected": 102.287,
+          "gs_residual": 0.219,
+          "fifty_five_residual": -0.028
         },
         {
           "category": "contour-ring",
-          "gs_observed": 2,
-          "fifty_five_observed": 346,
-          "gs_expected": 5.732,
-          "fifty_five_expected": 342.268,
-          "gs_residual": -1.559,
-          "fifty_five_residual": 0.202
+          "gs_observed": 0,
+          "fifty_five_observed": 288,
+          "gs_expected": 4.744,
+          "fifty_five_expected": 283.256,
+          "gs_residual": -2.178,
+          "fifty_five_residual": 0.282
         },
         {
           "category": "vegetation",
-          "gs_observed": 0,
-          "fifty_five_observed": 51,
-          "gs_expected": 0.84,
-          "fifty_five_expected": 50.16,
-          "gs_residual": -0.917,
-          "fifty_five_residual": 0.119
+          "gs_observed": 1,
+          "fifty_five_observed": 75,
+          "gs_expected": 1.252,
+          "fifty_five_expected": 74.748,
+          "gs_residual": -0.225,
+          "fifty_five_residual": 0.029
         },
         {
           "category": "settlement",
           "gs_observed": 2,
-          "fifty_five_observed": 120,
-          "gs_expected": 2.009,
-          "fifty_five_expected": 119.991,
-          "gs_residual": -0.007,
-          "fifty_five_residual": 0.001
+          "fifty_five_observed": 113,
+          "gs_expected": 1.894,
+          "fifty_five_expected": 113.106,
+          "gs_residual": 0.077,
+          "fifty_five_residual": -0.01
         },
         {
           "category": "road-or-track",
           "gs_observed": 1,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.181,
-          "fifty_five_expected": 10.819,
-          "gs_residual": 1.924,
-          "fifty_five_residual": -0.249
+          "fifty_five_observed": 12,
+          "gs_expected": 0.214,
+          "fifty_five_expected": 12.786,
+          "gs_residual": 1.698,
+          "fifty_five_residual": -0.22
         },
         {
           "category": "scale-bar-or-grid",
           "gs_observed": 0,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.033,
-          "fifty_five_expected": 1.967,
-          "gs_residual": -0.181,
-          "fifty_five_residual": 0.023
+          "fifty_five_observed": 5,
+          "gs_expected": 0.082,
+          "fifty_five_expected": 4.918,
+          "gs_residual": -0.287,
+          "fifty_five_residual": 0.037
         },
         {
           "category": "none",
           "gs_observed": 1,
-          "fifty_five_observed": 2,
-          "gs_expected": 0.049,
-          "fifty_five_expected": 2.951,
-          "gs_residual": 4.276,
-          "fifty_five_residual": -0.553
+          "fifty_five_observed": 5,
+          "gs_expected": 0.099,
+          "fifty_five_expected": 5.901,
+          "gs_residual": 2.867,
+          "fifty_five_residual": -0.371
         },
         {
           "category": "other",
           "gs_observed": 0,
-          "fifty_five_observed": 10,
-          "gs_expected": 0.165,
-          "fifty_five_expected": 9.835,
-          "gs_residual": -0.406,
-          "fifty_five_residual": 0.053
+          "fifty_five_observed": 8,
+          "gs_expected": 0.132,
+          "fifty_five_expected": 7.868,
+          "gs_residual": -0.363,
+          "fifty_five_residual": 0.047
         }
       ],
-      "monte_carlo_p_value": 0.0072992700729927005,
+      "monte_carlo_p_value": 0.0027997200279972004,
       "monte_carlo_resamples": 10000
     }
   },
   "comparator_55map_text_track_aggregate": {
-    "number": 149,
-    "benchmark": 41,
-    "water-feature": 105,
-    "contour-ring": 346,
-    "vegetation": 51,
-    "settlement": 120,
-    "road-or-track": 10,
-    "scale-bar-or-grid": 2,
-    "none": 2,
-    "other": 10
+    "number": 78,
+    "benchmark": 12,
+    "water-feature": 102,
+    "contour-ring": 288,
+    "vegetation": 75,
+    "settlement": 113,
+    "road-or-track": 12,
+    "scale-bar-or-grid": 5,
+    "burial-mound": 20,
+    "benchmark-on-burial-mound": 0,
+    "triangulation-point-on-burial-mound": 26,
+    "settlement-mound": 92,
+    "none": 5,
+    "other": 8
   }
 }
