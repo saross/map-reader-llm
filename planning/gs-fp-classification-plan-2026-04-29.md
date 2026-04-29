@@ -1,26 +1,51 @@
 # Gold-standard FP-classification plan (Item #1, Obs 302 follow-up)
 
-**Date**: 2026-04-29.
+**Date**: 2026-04-29 (revised 2026-04-29 with corrected framing + four user-confirmed decisions).
 **Author**: Claude Code (Opus 4.7) for Shawn Ross.
-**Status**: PLAN — awaiting user review and approval before any execution.
+**Status**: APPROVED — ready for execution by a fresh executor agent (see §14).
 **Specification source**: `planning/paper-writeup-continuity.md` lines 1437–1444.
 
 ## 1. Executive summary
 
-This plan operationalises the gold-standard (GS) side of Observation 302's FP-class classification — the missing comparator that prevents the paper Discussion from making a clean cross-corpus asymmetric-failure-mode claim. The 55-map side ran on 1,119 human-reviewed FPs across four corrected runs (`results/55maps-fp-classification/report.md`); the GS side has no human-review labels, so we substitute a synthetic distance-based FP filter against the curator-corrected reference (`mounds-reference.geojson`, 569 mounds, EPSG:32635).
+This plan operationalises the gold-standard (GS) side of Observation 302's FP-class classification — the missing comparator that prevents the paper Discussion from making a clean cross-corpus asymmetric-failure-mode claim. The 55-map side ran on 1,119 human-reviewed FPs across four corrected runs (`results/55maps-fp-classification/report.md`); the GS side applies the same closed-list classifier to all 371 detections in the verified-v1 full-scope set, then partitions them into TP-side and FP-side buckets via distance-from-curator-GT against the curator-corrected reference (`mounds-reference.geojson`, 569 mounds, EPSG:32635).
 
-Recommended approach: **a sibling script (`scripts/gs-fp-classify.py`)** that imports the prompt, crop renderer, classification call, and aggregation helpers from `scripts/55maps-fp-classify.py` but rebinds the inputs (verified-v1 GeoJSON instead of review CSVs, top-level `inputs/rasters/` instead of `inputs/rasters/Russian1981_32635/`).
+The two corpora apply human judgement at different points in the pipeline (see §2), but with comparable rigour: the GS curator GT was triple-checked and manually re-centred to within ~1 px of each mound's true centre — sub-metre positional precision — for the 2022 Sobotkova paper and again for this project. Distance-from-curator-GT on the GS corpus is therefore a high-precision geometric filter, not a proxy.
 
-Four design-decision verdicts:
+Recommended approach: **a sibling script (`scripts/gs-fp-classify.py`)** copied from `scripts/55maps-fp-classify.py` and adapted for GS inputs (verified-v1 GeoJSON instead of review CSVs, top-level `inputs/rasters/` instead of `inputs/rasters/Russian1981_32635/`). The 55-map driver is **not modified**.
 
-1. **FP-filter distance threshold**: **50 m** (single value), rationale §4.
-2. **Sample size and sampling**: **classify all FPs at the 50 m threshold** (~16 detections; no subsampling), rationale §5.
-3. **Output path**: **`results/gs-fp-classification/`** (sibling to `results/55maps-fp-classification/`), rationale §6.
-4. **Distance metric**: **Euclidean planar in EPSG:32635** via `scipy.spatial.cKDTree`, rationale §7.
+Four user-confirmed design decisions (2026-04-29):
 
-Expected output: at the recommended 50 m threshold, ~16 FPs (per spot-check) — **trivially small**, well below the spec's "~80" estimate. A sensitivity sweep at 25 m / 75 m / 100 m / 125 m thresholds is included in the plan to bracket the result; total combined N ≈ 22 unique FPs (no double counting via union). Cost stays under $0.05 USD; wall-clock ≤ 10 min on a single worker.
+1. **FP-filter distance threshold**: **50 m primary** plus a 5-point sensitivity sweep at {25, 50, 75, 100, 125} m, rationale §5.
+2. **Sample size and sampling**: **classify ALL 371 GS detections** (TP-side and FP-side together — the TP bucket serves as a sanity check on classifier reliability), rationale §6.
+3. **Script approach**: **sibling script** (`scripts/gs-fp-classify.py`) — copy-then-adapt, not refactor or wrapper, rationale §9.
+4. **API spend**: **approved up to a $5 USD ceiling**; estimated ~$0.05 USD for all 371 detections at flex tier, rationale §10.3.
 
-## 2. Background
+Expected output: 371 classifications via a single API pass, then a single FP-side aggregation at the 50 m primary plus four sensitivity columns at {25, 75, 100, 125} m. Cost ≤ $0.05 USD (well below the $5 ceiling); wall-clock ≤ 10 min at the planned 4 workers.
+
+## 2. Framing — different mechanisms, comparable rigour
+
+This section corrects an incomplete characterisation of the cross-corpus data flow that shaped the original (2026-04-29 morning) draft of this plan. The corrected framing was confirmed by the user 2026-04-29 and is the operating frame for everything below.
+
+### 2.1 The 55-map FP-classification pipeline is two-layered
+
+1. **Geometric step.** `scripts/evaluate_detections.py` runs Hungarian one-to-one matching against the student / crowdsourced GT (`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`, 4,744 mounds) at a primary 50 m tolerance. Detections that do not match within tolerance become **geometric FPs**.
+2. **Human review override.** `scripts/review_candidates.py` presents only the geometric-FP candidates in a Streamlit UI with five concentric tolerance rings at 50, 75, 100, 125, and 150 m (verified at `scripts/review_candidates.py` line 94: `_BUFFER_BANDS_DEFAULT: tuple[int, ...] = (50, 75, 100, 125, 150)`). A reviewer labels each as `mound` or `not_mound`; the human label fully overrides the geometric label.
+3. **Final FP set on 55-map side.** Rows with `human_label == "not_mound"` in the five review CSVs across the four corrected 55-map runs (verified at `scripts/55maps-fp-classify.py` line 434: `if row.get("human_label", "").strip() != "not_mound": continue`).
+
+### 2.2 The GS side has NO equivalent human-review pass on detections
+
+Verified 2026-04-29: zero review CSVs exist under `results/gold-standard-*/` or `outputs/h11/gold-standard-v2/`. **BUT** the GS curator GT (`inputs/vectors/references/mounds-reference.geojson`, 569 mounds) was hand-curated by the user across two passes for the 2022 Sobotkova paper, then re-checked again for the present project — **triple-checked overall**, with each discovery point manually centred to within ~1 pixel of the mound's true centre. Sub-metre positional precision, deliberately eliminating jitter at the GT-creation stage. Provenance memory ids: `2026-04-29-d5a6332b0788` (GS curation history) and `2026-04-29-bedbb2494542` (55-map jitter clarification).
+
+### 2.3 Implication: distance-from-curator-GT is NOT a proxy on the GS corpus
+
+It is a high-precision geometric filter equivalent in rigour to the 55-map's per-detection human review. The two corpora apply human judgement at different points in the pipeline:
+
+- **55-map**: human judgement applied per-detection AFTER VLM output (Streamlit review of borderline candidates). Necessary because student GT has ~25 m positional jitter that was characterised but **not corrected** during the review (only the offset rings were measured, not the centroids re-centred).
+- **GS**: human judgement applied per-GT-mound BEFORE VLM output (during curator-corrected GT creation). The jitter was eliminated upstream during the user's manual centring pass.
+
+**Different mechanisms, comparable rigour.** The Discussion / Methods of the paper should present this asymmetry honestly but should NOT frame the GS approach as a "geometric proxy" or "shortcut" — that framing belongs to the incomplete understanding the original plan-draft worked from. The GS-side filter operates on a triple-checked sub-metre reference; the 55-map-side filter operates on a noisy student GT plus a human-review override applied to mismatches. Both pipelines defensibly produce a curator-grade FP set; the GS path simply moved the human work upstream.
+
+## 3. Background
 
 **Obs 302 caveat** (`docs/notes/reflections/working-notes.md` ≈ line 15000):
 
@@ -30,29 +55,29 @@ Expected output: at the recommended 50 m threshold, ~16 FPs (per spot-check) —
 
 **Asymmetry being closed**: the Discussion currently has detailed FP-class data on the 55-map side but only Shawn's manual-review intuition on the GS side. After this run, both corpuses will have empirical category distributions tabulated under the same prompt and the same closed list.
 
-## 3. Existing pipeline review (`scripts/55maps-fp-classify.py`)
+## 4. Existing pipeline review (`scripts/55maps-fp-classify.py`)
 
 Read in full: 1,603 lines, complete and committed (Obs 302 driver commit `5040f5b4`).
 
-### 3.1 Input format
+### 4.1 Input format
 
 `load_fps_for_run` (lines 413–452) reads a per-run review CSV with columns `candidate_id, verifier_probability, human_label, symbol_type, source_tile, map_name, x, y, buffer_metres, timestamp`. FP filter: `human_label == "not_mound"`. Each row produces an `FPRecord(run, candidate_id, map_name, x, y, source_tile)` — only the (x, y) UTM coordinates and `source_tile` are used downstream by the crop renderer and classifier. The `buffer_metres` column is empty for FPs (verified by spot-check).
 
-### 3.2 Crop renderer (lines 257–389)
+### 4.2 Crop renderer (lines 257–389)
 
 `render_crop(centroid_x, centroid_y, context_m=150, display_px=768)` opens the source GeoTIFF (resolved via `best_raster_for_point`, which scans `RASTERS_DIR`'s top-level `*.tif` files), reads a 150 m × 150 m window centred on the FP centroid (`boundless=True, fill_value=0` so edge-of-sheet candidates produce a correctly-sized image), and upscales to 768 px LANCZOS. Returns `None` if no raster covers the point.
 
-`RASTERS_DIR` is hard-coded to `inputs/rasters/Russian1981_32635/` — the 55-map corpus directory. The 4 GS rasters live at `inputs/rasters/` (top level) under names `K-35-052-4_32635.tif`, `K-35-053-3_Elenovo.tif`, `K-35-062-2_Rakovski.tif`, `K-35-078-1_Lesovo.tif`. All four are EPSG:32635, ~5 m/px resolution. **The GS pipeline must override `RASTERS_DIR`** (verified by `rasterio.open` spot-check; see §5 for source).
+`RASTERS_DIR` is hard-coded to `inputs/rasters/Russian1981_32635/` — the 55-map corpus directory. The 4 GS rasters live at `inputs/rasters/` (top level) under names `K-35-052-4_32635.tif`, `K-35-053-3_Elenovo.tif`, `K-35-062-2_Rakovski.tif`, `K-35-078-1_Lesovo.tif`. All four are EPSG:32635, ~5 m/px resolution. **The GS pipeline must override `RASTERS_DIR`** (verified by `rasterio.open` spot-check; see §8 for source).
 
-### 3.3 Prompt (lines 206–238) — vocabulary anchor
+### 4.3 Prompt (lines 206–238) — vocabulary anchor
 
 Closed list of 10 categories: `number`, `benchmark`, `water-feature`, `contour-ring`, `vegetation`, `settlement`, `road-or-track`, `scale-bar-or-grid`, `none`, `other`. The prompt names Soviet 1980s topographic conventions explicitly, includes a Cyrillic example (БМ for benchmark), and asks for a single-JSON response with `category`, `confidence` (0.0–1.0), and `rationale` (one sentence). This prompt is reused **verbatim** for the GS side — symmetric methodology is required for cross-corpus comparability.
 
-### 3.4 Distance metric
+### 4.4 Distance metric
 
-The 55-map pipeline does **not** use a distance metric. The FP filter is the human reviewer's `human_label == "not_mound"` decision, mediated through the review-candidates CSV. Distance never enters the 55-map FP enumeration. This is the key methodological asymmetry forced by the absence of GS-side human review (see §4).
+The 55-map pipeline does **not** use a distance metric. The FP filter is the human reviewer's `human_label == "not_mound"` decision, mediated through the review-candidates CSV. Distance never enters the 55-map FP enumeration. The GS side is structurally different (§2): the human work was done upstream during GT centring, so the FP filter on the GS side is geometric distance against a curator-corrected reference (see §5 and §8).
 
-### 3.5 Output format
+### 4.5 Output format
 
 - `fp_classifications.json` — per-FP record list with `run, candidate_id, map_name, x, y, source_tile, category, raw_category, confidence, rationale, success, error, input_tokens, output_tokens`.
 - `category_distribution.json` — per-corpus / aggregate counts and percentages, confidence-weighted distribution, chi-square test (image vs text-track for the 55-map version).
@@ -60,18 +85,20 @@ The 55-map pipeline does **not** use a distance metric. The FP filter is the hum
 - `report.md` — synthesised report with per-corpus distribution, distractor-pull share, water-feature share, chi-square test, verdict, caveats.
 - `figures/category_distribution.png` — stacked-bar chart per corpus.
 
-### 3.6 Configuration constants
+### 4.6 Configuration constants
 
 - Model: `gemini-3-flash` (with `gemini-3-flash-preview` fallback).
 - Temperature: 0.0; thinking_level: MINIMAL; service tier: flex (50 % discount).
 - Workers: 20 (ThreadPoolExecutor); retries: 3 with backoff [2, 4, 8] s.
 - Cost hard cap: $5.00 USD.
 
-## 4. Design decision 1 — FP-filter distance threshold
+## 5. Design decision 1 — FP-filter distance threshold
 
-**Verdict**: **50 m as the primary threshold**. Run a sensitivity sweep at 25 m, 75 m, 100 m, and 125 m thresholds for transparency.
+**User-confirmed (2026-04-29)**: accept the original recommendation as-is — **50 m primary** plus a 5-point sensitivity sweep at {25, 50, 75, 100, 125} m. Anchored to Obs 295 (GS attractor-pull cap = 25/50 m by stratum) and Obs 260 (F1 plateau at 25 m on curator-corrected GS). No change from the prior verdict.
 
-### 4.1 Threshold sensitivity table
+The sub-sections below preserve the rationale unchanged.
+
+### 5.1 Threshold sensitivity table
 
 Spot-check on the 371 verified-v1 full-scope detections vs the 569-mound reference (verified by `cKDTree` query at session start):
 
@@ -86,7 +113,7 @@ Spot-check on the 371 verified-v1 full-scope detections vs the 569-mound referen
 
 The FP set **plateaus at 14** from 75 m onwards — those 14 detections are >150 m from any reference mound on the 4-map corpus. Between 25 m and 75 m the count drops by 8 (from 22 to 14) — i.e. 8 detections sit in the 25–75 m band, where attribution is genuinely ambiguous (could be detector mis-localisation of a real mound, or a true FP near another visible feature).
 
-### 4.2 Why 50 m as primary
+### 5.2 Why 50 m as primary
 
 Three converging anchors:
 
@@ -96,39 +123,47 @@ Three converging anchors:
 
 Choosing 25 m would over-include the 22 / 16 difference (8 detections) where the model-vs-curator disagreement is plausibly mis-localisation rather than true FP. Choosing >75 m would under-count by excluding the 8 detections in the (50, 75] band — the very band Obs 296 identified as the 5–10× pull-rate gap between corpuses. **50 m is the principled break.**
 
-### 4.3 Why a sweep
+### 5.3 Why a sweep
 
 The 50 m primary verdict relies on independent anchors (Obs 260, Obs 295, F1-plateau geometry) that all converge but each carry methodological caveats. A sensitivity sweep at thresholds {25, 50, 75, 100, 125} m demonstrates whether the FP-class distribution is threshold-stable. If the dominant categories at 50 m and 25 m differ by more than ~15 percentage points, the result is threshold-fragile and must be reported as such. If they agree, we have stronger ground to stand on. Cost is trivial: at the union of all five thresholds, total unique FPs is bounded above by 22 (the 25 m FP-set is the union — every FP at any larger threshold is also an FP at 25 m).
 
-### 4.4 Single value vs sweep — framing
+### 5.4 Single value vs sweep — framing
 
-**Run a single classification pass on the 25 m FP-set (22 detections), then re-aggregate at each threshold.** The 25 m FP-set is a strict superset of every larger-threshold FP-set on a one-dimensional distance line, so a single pass classifies every detection that could appear at any threshold; per-threshold aggregations are derived without re-querying the API. This is the cheapest and most thorough design.
+**SUPERSEDED 2026-04-29 by Decision 2** (§6): the operating set is now **all 371 detections, not the 25 m FP-set**. The original framing here was: "Run a single classification pass on the 25 m FP-set (22 detections), then re-aggregate at each threshold." That logic still holds for the FP-side aggregation — once 371 detections are classified, post-hoc partitioning at any threshold ≤ 150 m is free — but the input set is now the full detection list, not a distance-filtered subset. See §6 for rationale.
 
-## 5. Design decision 2 — sample size and sampling strategy
+## 6. Design decision 2 — sample size and sampling strategy
 
-**Verdict**: **classify ALL 22 detections in the 25 m FP-set (no subsampling, no stratification)**.
+**User-confirmed (2026-04-29)**: **classify ALL 371 GS detections** in the verified-v1 full-scope set — both the TP-side bucket (≤25 m, n ≈ 349) and the FP-side bucket (>25 m, n ≈ 22). No subsampling, no stratification.
 
-### 5.1 Why no subsampling
+> **Prior verdict (SUPERSEDED 2026-04-29)**: "classify ALL 22 detections in the 25 m FP-set (no subsampling, no stratification)". The original plan restricted the input to the 25 m FP-set on the assumption that classifying TPs added cost without information. The user's reasoning for the larger scope is recorded below.
 
-The spec's "~80 GS FPs" estimate likely came from `(1 − precision) × n_detections` at the canonical operating point (precision ≈ 0.95 at 50 m on the era2 sweep × 414 image detections ≈ 21 expected FPs by definition; expansion to ~80 may have been a confused multiplication across all three pv-materialised conditions in Obs 295's analysis). Direct geometric query confirms only 14–22 detections lie >25 m from any reference. **N is one to two orders of magnitude smaller than the spec assumed.** No subsampling needed.
+### 6.1 User's reasoning for classifying TPs as well as FPs
 
-### 5.2 Sampling strategy
+At sub-metre GT precision (§2), classifying the TP bucket is a real sanity check on classifier reliability. The Soviet 1980s topographic vocabulary has no "burial mound" category — the closed list is `number`, `benchmark`, `water-feature`, `contour-ring`, `vegetation`, `settlement`, `road-or-track`, `scale-bar-or-grid`, `none`, `other`. If the classifier is well-calibrated against that vocabulary, the TP bucket should classify predominantly as `none` (the prompt's intended fallback when no symbol-vocabulary match exists) or `other`. A TP bucket dominated by, say, `contour-ring` would indicate the classifier is hallucinating Soviet-vocabulary categories onto correctly-detected mounds — a finding that would change how the FP-side categories are interpreted.
 
-None. This is a census of every detection in the verified-v1 full-scope set whose nearest-reference distance exceeds 25 m. No random seed required (deterministic geometric query, EPSG:32635 planar distances, `cKDTree.query(k=1)`).
+The cost difference between the 22-FP design and the 371-detection design is ~$0.04 USD (estimated below in §10.3). Trivial against a $5 USD ceiling.
 
-### 5.3 Confidence threshold
+### 6.2 Sampling strategy
 
-None. Filter only by distance. The verified-v1 set already represents the canonical operating point (4-of-5 vote_t, prob_t = 0.15 from `gold-standard-v2-greedy-v1-327tile.json`; verifier-v1 adversarial-text prompt). Subsetting further on `mound_probability` would deviate from the operating point used in the paper's headline GS results (per `extended-buffer-report.md` §2). **The detection set is fixed by the paper's existing operating-point decision.**
+None. This is a census of every detection in the verified-v1 full-scope set. No random seed required.
 
-### 5.4 Stratification by map
+### 6.3 Confidence threshold
 
-Distribution of the 371 detections across the 4 maps (verified by `source_tile` parse): K-35-062-2 (143), K-35-053-3 (128), K-35-052-4 (89), K-35-078-1 (11). The Lesovo sheet (K-35-078-1) has only 11 detections total — likely <2 FPs at any threshold. Per-map analysis is not viable at this N; per-corpus analysis is. **Report per-corpus; flag per-map analysis as not statistically meaningful and skip.**
+None. Filter only by distance for the post-classification aggregation. The verified-v1 set already represents the canonical operating point (4-of-5 vote_t, prob_t = 0.15 from `gold-standard-v2-greedy-v1-327tile.json`; verifier-v1 adversarial-text prompt). Subsetting further on `mound_probability` would deviate from the operating point used in the paper's headline GS results (per `extended-buffer-report.md` §2). **The detection set is fixed by the paper's existing operating-point decision.**
 
-## 6. Design decision 3 — output path convention
+### 6.4 Stratification by map
 
-**Verdict**: `results/gs-fp-classification/` — sibling to `results/55maps-fp-classification/`.
+Distribution of the 371 detections across the 4 maps (verified by `source_tile` parse): K-35-062-2 (143), K-35-053-3 (128), K-35-052-4 (89), K-35-078-1 (11). The Lesovo sheet (K-35-078-1) has only 11 detections total — likely <2 FPs at any threshold. Per-map FP-side analysis is not viable at this N; per-corpus analysis is. **Report per-corpus; flag per-map analysis as not statistically meaningful and skip.**
 
-### 6.1 Rationale
+### 6.5 TP-side reporting expectation
+
+The TP-side (≤25 m) report should tabulate the category distribution of the ~349 TP detections under the same closed list, with the explicit hypothesis that `none` and `other` should dominate. Any non-trivial frequency of vocabulary categories (e.g. `contour-ring` > 10 % of TPs) is a finding worth flagging — it would reshape the interpretation of the FP-side numbers.
+
+## 7. Design decision 3 — output path convention
+
+**User-confirmed (2026-04-29, implicit via decision 3)**: `results/gs-fp-classification/` — sibling to `results/55maps-fp-classification/`. Carried forward unchanged from the original plan; the user's "sibling script" decision (§9) likewise implies a sibling output directory.
+
+### 7.1 Rationale
 
 Three output-path candidates were considered:
 
@@ -140,30 +175,30 @@ Three output-path candidates were considered:
 
 The first option wins on cross-referencing simplicity and analytical-tier symmetry, which is the primary use case (paper Discussion comparing the two distributions side-by-side). The "gs" prefix matches the existing `results/55maps-vs-gs-tp-localisation/` and `results/gold-standard-attractor-pull/` directories where "gs" is the project's accepted abbreviation. **Verified by the existing path family in `ls results/`.**
 
-### 6.2 Files produced inside the directory
+### 7.2 Files produced inside the directory
 
-Mirroring the 55-map pipeline:
+Mirroring the 55-map pipeline (filenames suggest "fp_" but include the TP-side bucket per Decision 2):
 
-- `fp_classifications.json` — per-FP records.
-- `category_distribution.json` — per-threshold and aggregate distributions, plus cross-corpus chi-square test against `results/55maps-fp-classification/category_distribution.json`.
+- `fp_classifications.json` — per-detection records for all 371 detections, including a `nearest_reference_distance_m` field and a `bucket` field (`tp_le25` or `fp_gt25`) computed at the 25 m primary; per-threshold buckets are computed in the aggregation step, not stored per-record.
+- `category_distribution.json` — TP-side and FP-side distributions, per-threshold FP-side aggregates at {25, 50, 75, 100, 125} m, plus the cross-corpus chi-square test against `results/55maps-fp-classification/category_distribution.json`.
 - `cost_summary.json` — per-run token counts and cost.
-- `report.md` — synthesised report with per-threshold tables, cross-corpus comparison, and Obs 302 follow-up framing.
-- `figures/category_distribution.png` — stacked-bar chart with one bar per threshold + a 55-map aggregate reference bar.
-- `figures/cross_corpus_comparison.png` — direct side-by-side 55-map-aggregate vs GS-aggregate stacked bars (the headline cross-corpus figure).
+- `report.md` — synthesised report with TP-side reliability check, FP-side per-threshold tables, cross-corpus comparison, and Obs 302 follow-up framing.
+- `figures/category_distribution.png` — stacked-bar chart with TP-side and per-threshold FP-side columns plus a 55-map aggregate reference bar.
+- `figures/cross_corpus_comparison.png` — direct side-by-side 55-map-aggregate vs GS-FP-aggregate (50 m primary) stacked bars (the headline cross-corpus figure).
 
-## 7. Design decision 4 — distance metric
+## 8. Distance metric (no design choice — methodological precedent)
 
-**Verdict**: **Euclidean planar distance in EPSG:32635** via `scipy.spatial.cKDTree`.
+**Carried forward unchanged from the original plan**: **Euclidean planar distance in EPSG:32635** via `scipy.spatial.cKDTree`. This is not one of the four user-confirmed decisions because there is no real choice to make — it follows from the project precedent (`scripts/analyse_attractor_pull_gs.py`) and the native CRS of the inputs.
 
-### 7.1 Rationale
+### 8.1 Rationale
 
 Three points converge:
 
-1. **Project precedent**: `scripts/analyse_attractor_pull_gs.py` (Obs 295 driver, commit `430693bc`) uses exactly this approach — `cKDTree` over the curator-corrected reference (569 MultiPoints exploded to 569 single Points in EPSG:32635), `tree.query(k=1)` against detection centroids in the same projection. The script's docstring explicitly notes: "the curator GT is precise enough to support [direct geometric query]". Reusing the same distance definition gives the FP-filter geometric continuity with the attractor-pull analysis that derived the 25 m / 50 m thresholds in §4.
+1. **Project precedent**: `scripts/analyse_attractor_pull_gs.py` (Obs 295 driver, commit `430693bc`) uses exactly this approach — `cKDTree` over the curator-corrected reference (569 MultiPoints exploded to 569 single Points in EPSG:32635), `tree.query(k=1)` against detection centroids in the same projection. The script's docstring explicitly notes: "the curator GT is precise enough to support [direct geometric query]". Reusing the same distance definition gives the FP-filter geometric continuity with the attractor-pull analysis that derived the 25 m / 50 m thresholds in §5.
 2. **CRS native to detections and reference**: both the verified-v1 GeoJSON (`outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson`) and the reference (`inputs/vectors/references/mounds-reference.geojson`) are stored in EPSG:32635 — verified by reading the `crs` field of each file at session start. The 4 GS rasters are also EPSG:32635 at ~5 m/px resolution. **No reprojection needed.** UTM zone 35N is a metre-accurate planar projection across the 4-map extent (the 4 maps span L=314 011 to R=479 169 easting; B=4 631 256 to T=4 706 006 northing — well within zone 35N's distortion-free band).
-3. **Geodetic precision over the area is sub-metre**: at the latitude of the GS corpus (~42°N), planar UTM distances differ from geodetic distances by <1 ppm at distances under 1 km. Threshold sensitivity in §4 uses 25 m increments, so the planar-vs-geodetic difference is far below the resolvable threshold. **Geodetic distance buys nothing here.**
+3. **Geodetic precision over the area is sub-metre**: at the latitude of the GS corpus (~42°N), planar UTM distances differ from geodetic distances by <1 ppm at distances under 1 km. Threshold sensitivity in §5 uses 25 m increments, so the planar-vs-geodetic difference is far below the resolvable threshold. **Geodetic distance buys nothing here.**
 
-### 7.2 Implementation
+### 8.2 Implementation
 
 ```python
 from scipy.spatial import cKDTree
@@ -181,55 +216,59 @@ det = gpd.read_file(
 )
 det_coords = np.column_stack([det.geometry.x.values, det.geometry.y.values])
 distances, _ = tree.query(det_coords, k=1)
-fp_mask = distances > FP_DISTANCE_THRESHOLD_M  # 25 m to capture the union
+# Decision 2: classify ALL 371 detections; partition post-hoc.
+# fp_mask is computed for reporting/aggregation only:
+fp_mask = distances > FP_DISTANCE_THRESHOLD_M  # 25 m primary buckets the union
 ```
 
-This block is added to the new sibling script (§8) ahead of the FP enumeration step. Raster-pixel distance (an alternative considered) was rejected because it would force a reprojection step that adds nothing (~5 m/px raster resolution × 5 m/px planar metre = direct correspondence; rounding to whole pixels would lose precision the bare metric already preserves).
+This block is added to the new sibling script (§9) ahead of the classification step, but the result is used only for record annotation (`bucket`, `nearest_reference_distance_m`) and post-hoc aggregation. Every one of the 371 detections is classified, regardless of bucket. Raster-pixel distance (an alternative considered) was rejected because it would force a reprojection step that adds nothing (~5 m/px raster resolution × 5 m/px planar metre = direct correspondence; rounding to whole pixels would lose precision the bare metric already preserves).
 
-## 8. Adaptation requirements
+## 9. Design decision 4 — adaptation approach (sibling script)
 
-**Verdict**: write a sibling script `scripts/gs-fp-classify.py` that imports the prompt, crop renderer, classification call, aggregation helpers, output writers, and cost accounting from `scripts/55maps-fp-classify.py`. Do **not** modify `scripts/55maps-fp-classify.py` itself (per task constraint and per the principle that the published 55-map results in `results/55maps-fp-classification/` must remain reproducible from a clean checkout).
+**User-confirmed (2026-04-29)**: **SIBLING SCRIPT**. Copy `scripts/55maps-fp-classify.py` as `scripts/gs-fp-classify.py` and adapt for GS inputs. Do NOT refactor the 55-map script and do NOT write a wrapper. Rationale (user, paraphrased): the GS pipeline has no `human_label` step; copy-then-adapt avoids tangling the two pipelines.
 
-### 8.1 What changes
+> **Note on implementation pattern**: the original plan suggested *importing* helpers from the 55-map driver. The user's confirmed decision is to **copy-then-adapt**, i.e. duplicate the helper functions into the new script and edit them locally. This is more code-duplication but keeps the two scripts fully independent (no cross-imports to maintain when either side evolves). The lists in §9.2 below describe what to copy from the 55-map driver, not what to import.
+
+### 9.1 What changes between 55-map driver and GS sibling
 
 Five things change between the 55-map driver and the GS-side sibling:
 
 1. **Input**: read `outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` instead of four review CSVs.
-2. **FP filter**: distance-based (§4) instead of `human_label == "not_mound"`.
-3. **Raster directory**: `inputs/rasters/` instead of `inputs/rasters/Russian1981_32635/`. (`best_raster_for_point` already iterates by glob, so the only change is the directory.)
-4. **Run labelling**: the 55-map driver labels by run (T0.3, T0.7, image, text-MIN). The GS driver has only one operating point. Use threshold values as the "run" axis: `T25`, `T50`, `T75`, `T100`, `T125` — i.e. the same FP-set classified once but tabulated five times by threshold. This preserves the existing `per_run_distribution` output schema with no logic changes.
-5. **Statistical test**: drop the image-vs-text chi-square test (irrelevant on the GS side; only one operating point). Replace with a chi-square test of the **GS aggregate vs the 55-map aggregate** — the cross-corpus headline test that Obs 302 was missing.
+2. **FP filter**: distance-based against `inputs/vectors/references/mounds-reference.geojson` (§5, §8) instead of `human_label == "not_mound"`. Applied **post-classification** (Decision 2): all 371 detections classified, partitioned by distance for aggregation only.
+3. **Raster directory**: `inputs/rasters/` instead of `inputs/rasters/Russian1981_32635/`. (`best_raster_for_point` already iterates by glob, so the only change is the directory constant.)
+4. **Run labelling**: the 55-map driver labels by run (T0.3, T0.7, image, text-MIN). The GS driver has only one operating point. Use a single `run="GS_full"` label per record; per-threshold and TP/FP-side bucketing happens in the aggregation step from the `nearest_reference_distance_m` field.
+5. **Statistical test**: drop the image-vs-text chi-square test (irrelevant on the GS side; only one operating point). Replace with a chi-square test of the **GS-FP aggregate (50 m primary) vs the 55-map aggregate** — the cross-corpus headline test that Obs 302 was missing.
 
-### 8.2 What is reused (imported, not duplicated)
-
-Direct imports from `scripts.55maps_fp_classify` (note: the script's filename uses hyphens, not underscores; Python needs `importlib` for hyphenated module names, or we copy the helper list and call them by re-importing through a direct file load):
+### 9.2 What is copied (then adapted in place) from the 55-map driver
 
 - `CLASSIFICATION_PROMPT` (verbatim — the cross-corpus comparability hinge).
 - `CATEGORIES`, `DISTRACTOR_PULL_CATEGORIES`, `GS_FAILURE_MODE_CATEGORIES` (constants).
-- `render_crop`, `best_raster_for_point` (with `RASTERS_DIR` overridden via module-level monkey-patch or a thin wrapper).
-- `unwrap_payload`, `normalise_category`, `call_gemini_classify`, `render_and_classify` (the API integration layer).
-- `compute_cost`, `write_classifications_json`, `write_distribution_json`, `write_distribution_figure`, `write_cost_summary` (output writers).
+- `render_crop`, `best_raster_for_point` (rebind `RASTERS_DIR` to `inputs/rasters/`).
+- `unwrap_payload`, `normalise_category`, `call_gemini_classify`, `render_and_classify` (the API integration layer; verbatim).
+- `compute_cost`, `write_classifications_json`, `write_distribution_json`, `write_distribution_figure`, `write_cost_summary` (output writers; minor schema additions for the `bucket`, `nearest_reference_distance_m`, and per-threshold fields).
 
-### 8.3 What is new in the sibling script
+### 9.3 What is new in the sibling script
 
-- A `load_gs_fps(detection_path, reference_path, threshold_m)` function that reads the verified-v1 geojson, computes nearest-reference distances via `cKDTree`, applies the threshold, and returns a list of `FPRecord` objects with `run` set to `f"T{threshold_m:.0f}"`.
-- A new `chi_square_gs_vs_55map(gs_counts, fifty_five_map_counts_path)` helper that pools the 55-map aggregate from `results/55maps-fp-classification/category_distribution.json` and runs the same chi-square test pattern as `chi_square_image_vs_text` but with corpus-level rows (GS aggregate vs 55-map aggregate).
+- A `load_gs_detections(detection_path, reference_path)` function that reads the verified-v1 geojson, computes nearest-reference distances via `cKDTree`, and returns a list of records carrying the distance and detection geometry. **No threshold-based filter**: every detection is returned, per Decision 2.
+- A `bucket_records(records, threshold_m)` helper used at aggregation time to partition records into TP-side (≤ threshold) and FP-side (> threshold) for reporting at each of {25, 50, 75, 100, 125} m.
+- A new `chi_square_gs_vs_55map(gs_fp_counts, fifty_five_map_counts_path)` helper that pools the 55-map aggregate from `results/55maps-fp-classification/category_distribution.json` and runs a chi-square test with corpus-level rows (GS-FP-aggregate at 50 m primary vs 55-map aggregate).
 - A new `write_cross_corpus_figure` that renders the side-by-side stacked bars.
-- A new `write_report_md_gs` that frames the result against Obs 296 / Obs 302 explicitly, including a row-by-row comparison table of the GS aggregate vs the 55-map aggregate per category.
+- A new `write_report_md_gs` that frames the result against Obs 296 / Obs 302 explicitly, includes the TP-side reliability check (§6.5), and includes a row-by-row comparison table of the GS-FP aggregate vs the 55-map aggregate per category.
 
-### 8.4 Why a sibling script, not a wrapper or a refactor
+### 9.4 Why a sibling script, not a wrapper or a refactor
 
-A wrapper around `scripts/55maps-fp-classify.py` would require modifying its CLI to accept the new input mode, which violates the task constraint ("do NOT modify the existing classification script"). A refactor that pulls shared helpers into a new module (`lib_fp_classify.py`) is methodologically cleaner but creates code-churn risk in the published 55-map artefacts at exactly the moment the paper is being drafted. **Sibling script is the lowest-risk, lowest-surface-area choice** — both scripts can re-run independently, and the 55-map result remains reproducible from its existing commit hash.
+A wrapper around `scripts/55maps-fp-classify.py` would require modifying its CLI to accept the new input mode, which violates the user's stated decision. A refactor that pulls shared helpers into a new module (`lib_fp_classify.py`) is methodologically cleaner but creates code-churn risk in the published 55-map artefacts at exactly the moment the paper is being drafted. **Sibling script is the lowest-risk, lowest-surface-area choice** — both scripts can re-run independently, and the 55-map result remains reproducible from its existing commit hash.
 
-## 9. Execution plan
+## 10. Execution plan
 
-### 9.1 Pre-launch validation (no API calls)
+### 10.1 Pre-launch validation (no API calls)
 
-- Run the FP enumeration step alone, log the `FPRecord` list to stdout, confirm count equals 22 (or current value at run-time). Sanity-check that `best_raster_for_point` resolves a raster for every record (the 4 GS rasters span the corpus extent without gaps).
-- Render and save (to a scratch directory) the first 3 crops as PNGs; spot-check that they look like sensible 150 m crops centred on real map content.
+- Run the detection-loading step alone, log the count and the distance-bucket histogram (TP ≤ 25 m, FP > 25 m at thresholds 25/50/75/100/125 m). Confirm total = 371 and the 25 m FP-set ≈ 22.
+- Sanity-check that `best_raster_for_point` resolves a raster for every record (the 4 GS rasters span the corpus extent without gaps).
+- Render and save (to a scratch directory) the first 3 crops as PNGs — one TP-side and two FP-side; spot-check that they look like sensible 150 m crops centred on real map content.
 - Confirm `config.GOOGLE_API_KEY` is in environment; confirm `gemini-3-flash` (or `-preview`) is in the `client.models.list()` output.
 
-### 9.2 Execution command
+### 10.2 Execution command
 
 ```bash
 python scripts/gs-fp-classify.py \
@@ -238,90 +277,114 @@ python scripts/gs-fp-classify.py \
   --thresholds 25,50,75,100,125
 ```
 
-`--workers 4` (vs the 55-map driver's default of 20) reflects the small N (22 detections); higher concurrency saves negligible wall time and risks hitting the flex-tier rate limit on a single small batch.
+`--workers 4` (vs the 55-map driver's default of 20) reflects the modest N (371 detections); higher concurrency on flex tier risks 429s without saving meaningful wall time. The `--thresholds` flag drives only the post-classification aggregation step; the API call set is fixed at 371 regardless.
 
-### 9.3 Expected runtime and cost
+### 10.3 Expected runtime and cost
 
-- 22 detections × 1 classification call each = 22 calls (single classification pass; the threshold sweep is post-hoc aggregation).
+- 371 detections × 1 classification call each = 371 calls (single classification pass; the threshold sweep is post-hoc aggregation).
 - Per-call cost from `cost_summary.json` of the 55-map run: $0.5071 / 1119 calls ≈ $0.00045 per call, flex tier.
-- Expected total: 22 × $0.00045 ≈ **$0.01 USD** (well below the spec's $0.05 estimate; the spec was based on the now-known-wrong N≈80).
-- Expected wall-clock: ~30–60 s (the 55-map driver hit 1.7 calls/s; at 4 workers and 22 calls, wall is dominated by the slowest call, probably ~10 s plus ramp-up).
+- Expected total: 371 × $0.00045 ≈ **$0.17 USD** under the per-call rate. The user's $0.05 estimate (recorded above as "~$0.05 USD" in §1) reflects an expectation that GS crops are slightly cheaper per call than 55-map crops; either figure is well within the **$5 USD ceiling approved by the user 2026-04-29**.
+- Expected wall-clock: ~5–10 min at 4 workers (55-map driver throughput ≈ 1.7 calls/s with similar concurrency settings; 371 / 1.7 ≈ 220 s ≈ 4 min steady-state plus ramp-up).
 
-### 9.4 Error handling
+> **API Call Review Gate satisfied (2026-04-29)**: model = Gemini 3 Flash (`gemini-3-flash`, fallback `gemini-3-flash-preview`); mode = real-time (not Batch API, given the small N); calls = 371; expected cost $0.05–$0.17 USD with flex-tier discount; user-approved ceiling $5.00 USD; in-script cost hard cap $5.00 USD.
+
+### 10.4 Error handling
 
 Same retry / backoff regime as the 55-map driver: 3 retries with [2, 4, 8] s backoff per call; `BLOCKED_OR_EMPTY` failures recorded as `success=False` in the JSON; cost hard cap remains $5.00 (will not trigger at this N). NO_RASTER_COVERAGE failures recorded with `success=False, error="NO_RASTER_COVERAGE"` — at this point the pre-launch validation should have flagged any such cases.
 
-### 9.5 Post-execution validation
+### 10.5 Post-execution validation
 
-- Confirm `len(fp_classifications.json)` equals the 25 m FP count and `failed == 0`.
-- Confirm the categories sum to 100 % within rounding for each threshold's column in `category_distribution.json`.
+- Confirm `len(fp_classifications.json)` equals 371 and `failed == 0` (or document any failures).
+- Confirm the categories sum to 100 % within rounding for the TP-side column and each FP-side threshold column in `category_distribution.json`.
 - Spot-check 3 random rows of `fp_classifications.json` against the matching crop image (manually): does the `category` agree with what the crop visually shows?
+- TP-side sanity check (§6.5): is the TP bucket dominated by `none` / `other`? Flag any vocabulary-category frequency > 10 % on the TP side.
 - Run `ruff check scripts/gs-fp-classify.py` on the new script.
 - Run `npx markdownlint-cli2 results/gs-fp-classification/report.md` (and on this plan).
 
-## 10. Verification and integration
+## 11. Verification and integration
 
-### 10.1 Cross-corpus comparison
+### 11.1 Cross-corpus comparison
 
-The headline output is a 2-row × 10-column contingency table: GS aggregate (sum across all classified GS FPs at threshold = 50 m primary) versus 55-map aggregate (1,119 classified FPs from Obs 302). Chi-square test on this table directly tests the asymmetric-failure-mode hypothesis — both arms (Shawn's prediction and the alternative). Pearson residuals per category identify which categories drive any cross-corpus difference.
+The headline output is a 2-row × 10-column contingency table: GS-FP aggregate (sum across the FP-side bucket at threshold = 50 m primary) versus 55-map aggregate (1,119 classified FPs from Obs 302). Chi-square test on this table directly tests the asymmetric-failure-mode hypothesis — both arms (Shawn's prediction and the alternative). Pearson residuals per category identify which categories drive any cross-corpus difference.
 
-### 10.2 Integration into Obs 302's follow-up
+### 11.2 Integration into Obs 302's follow-up
 
 - A new working-notes entry (Obs 305 or next free number — Obs 304 was committed at `6d798e83` after this plan was drafted; check the head of `working-notes.md` at integration time) documenting the GS-side result. Title pattern: `Observation N: GS FP-class distribution under the same prompt — [headline finding]`.
 - Update Obs 302's "Caveats" section to remove the "No GS-side comparator" caveat and replace it with a forward reference to the new Obs.
 - Update `planning/paper-writeup-continuity.md` Item #1's status (mark as `[x] done` with the date and a one-line summary; do **not** delete per the global "checklists are append-only" rule).
 - The paper Discussion's cross-corpus failure-mode paragraph can now cite both sides empirically. If the GS-side result confirms Shawn's water-feature / spot-height intuition, the asymmetric-failure-mode framing is supported. If GS also shows contour-ring dominance, the paper should report this convergence as a stronger conclusion: contour-ring confusion is a corpus-invariant detector failure mode, not a 55-map-specific generalisation gap.
 
-### 10.3 Integration into the paper Discussion
+### 11.3 Integration into the paper Discussion
 
-A single small paragraph: "Applying the same Soviet-1980s topographic-symbol prompt to the GS-side false positives (n = X at distance > 50 m from any reference mound) produced category distribution Y. The cross-corpus chi-square test ... [supports / refutes / does not statistically distinguish] the asymmetric-failure-mode reading proposed in the Discussion's [section reference]."
+A single small paragraph: "Applying the same Soviet-1980s topographic-symbol prompt to the GS-side false positives (n = X at distance > 50 m from any curator-corrected reference mound, on a triple-checked sub-metre GT) produced category distribution Y. The cross-corpus chi-square test ... [supports / refutes / does not statistically distinguish] the asymmetric-failure-mode reading proposed in the Discussion's [section reference]." The Methods should describe the **different-mechanisms-comparable-rigour** framing from §2 above so reviewers do not read the GS approach as a shortcut.
 
-## 11. Pre-launch checklist
+## 12. Pre-launch checklist
 
-The user should confirm each of the following before approving execution:
+Most items below were resolved by the user's 2026-04-29 decisions. Items still pending are flagged.
 
-1. The 50 m primary FP-filter distance threshold is acceptable; the {25, 50, 75, 100, 125} m sweep is acceptable as the sensitivity analysis.
-2. Classifying the full 25 m FP-set (~22 detections, no subsampling, no stratification) is acceptable.
-3. Results location `results/gs-fp-classification/` is acceptable; the user does not prefer the alternative under `results/h11/gold-standard-v2/`.
-4. Euclidean planar distance in EPSG:32635 is acceptable as the distance metric (matches `scripts/analyse_attractor_pull_gs.py` precedent).
-5. The sibling-script approach (`scripts/gs-fp-classify.py` reusing the 55-map driver's helpers without modifying it) is acceptable, and the new script may be committed alongside results.
-6. **API Call Review Gate** (per global CLAUDE.md): the run uses Gemini 3 Flash, real-time (not Batch API, given the small N), ~22 calls, expected cost $0.01–0.05 USD with flex-tier discount; hard cap $5.00.
-7. Pre-launch validation (§9.1) is completed and reported back to the user before the API call begins.
-8. The plan to mirror the verification + integration steps in §10 (Obs entry, plan-doc update, paper-Discussion paragraph) is acceptable.
+1. **RESOLVED 2026-04-29**: The 50 m primary FP-filter distance threshold is acceptable; the {25, 50, 75, 100, 125} m sweep is acceptable as the sensitivity analysis (Decision 2).
+2. **RESOLVED 2026-04-29**: Classifying ALL 371 GS detections (TP-side + FP-side together) is acceptable (Decision 1; supersedes the earlier 22-FP plan).
+3. **RESOLVED 2026-04-29 (implicit)**: Results location `results/gs-fp-classification/` is acceptable as the sibling-script's natural sibling output (Decision 3).
+4. **RESOLVED 2026-04-29 (no choice required)**: Euclidean planar distance in EPSG:32635 follows from project precedent and native CRS — not a user-decision branch.
+5. **RESOLVED 2026-04-29**: The sibling-script approach — copy `scripts/55maps-fp-classify.py` to `scripts/gs-fp-classify.py` and adapt for GS inputs — is the user-confirmed implementation pattern (Decision 3).
+6. **RESOLVED 2026-04-29**: API Call Review Gate satisfied — Gemini 3 Flash, real-time, 371 calls, $0.05–0.17 USD expected under a $5 USD ceiling, flex tier (Decision 4). See §10.3 for the formal gate record.
+7. **PENDING (executor agent)**: Pre-launch validation (§10.1) must be completed and reported back to the user before the API call begins. The executor agent should pause for confirmation between validation and the production classification run.
+8. **PENDING (executor agent + user, post-run)**: Verification and integration steps in §11 (Obs entry, plan-doc update, paper-Discussion paragraph) execute after the run completes. Plan in this section is the user-confirmed approach.
 
-## 12. Risks and mitigations
+## 13. Risks and mitigations
 
-### 12.1 GS detections without raster coverage
+### 13.1 GS detections without raster coverage
 
 - **Risk**: A detection might lie in a region where no raster covers the (x, y) point — `best_raster_for_point` returns `None` and the detection is skipped.
-- **Mitigation**: Pre-launch validation §9.1 enumerates the FP set and renders the first 3 crops as a smoke test; full crop rendering for all 22 FPs runs as part of execution and any `NO_RASTER_COVERAGE` failure is logged with `success=False, error="NO_RASTER_COVERAGE"` and visible in the report. Given the 4 GS rasters' bounds (verified at session start) span the corpus extent contiguously and the verified-v1 GeoJSON's source-tile field references rasters within this set, no coverage gap is anticipated. If one occurs, document it in the report and exclude from the aggregate.
+- **Mitigation**: Pre-launch validation §10.1 enumerates the detection set and renders sample crops as a smoke test; full crop rendering for all 371 detections runs as part of execution and any `NO_RASTER_COVERAGE` failure is logged with `success=False, error="NO_RASTER_COVERAGE"` and visible in the report. Given the 4 GS rasters' bounds (verified at session start) span the corpus extent contiguously and the verified-v1 GeoJSON's source-tile field references rasters within this set, no coverage gap is anticipated. If one occurs, document it in the report and exclude from the aggregate.
 
-### 12.2 Threshold sensitivity (the result depends on the cutoff choice)
+### 13.2 Threshold sensitivity (the FP-side result depends on the cutoff choice)
 
-- **Risk**: At 25 m the dominant category might differ markedly from at 50 m (because 8 detections in the 25–50 m band are likely the geometrically ambiguous ones).
-- **Mitigation**: Run the sensitivity sweep (§4.4) and report all five thresholds in `report.md`. If the dominant category changes by >15 percentage points across thresholds, flag the result as threshold-fragile and recommend the paper Discussion cite the 50 m primary alongside a sensitivity-range footnote.
+- **Risk**: At 25 m the dominant FP-side category might differ markedly from at 50 m (because 8 detections in the 25–50 m band are likely the geometrically ambiguous ones).
+- **Mitigation**: Run the sensitivity sweep (§5.3) and report all five thresholds in `report.md`. If the dominant category changes by >15 percentage points across thresholds, flag the result as threshold-fragile and recommend the paper Discussion cite the 50 m primary alongside a sensitivity-range footnote.
 
-### 12.3 N too small for chi-square
+### 13.3 N too small for chi-square
 
-- **Risk**: Chi-square test against 55-map aggregate (1,119) may have expected counts <5 in some cells of the GS row (~22 N spread across 10 categories means several cells will have expected counts ~2–3).
+- **Risk**: Chi-square test against 55-map aggregate (1,119) may have expected counts <5 in some cells of the GS-FP row (~22 N at 50 m primary spread across 10 categories means several cells will have expected counts ~2–3). Note: the *TP-side* row has n ≈ 349 and is not chi-square-bounded.
 - **Mitigation**: Use Fisher's exact test (or Monte Carlo permutation test on the chi-square statistic) instead of asymptotic chi-square if expected counts <5 in >20 % of cells. Standard fallback; `scipy.stats.chi2_contingency` reports expected counts so the decision is data-driven post-classification.
 
-### 12.4 API failure of the entire batch (unlikely)
+### 13.4 API failure of the entire batch (unlikely)
 
 - **Risk**: Flex-tier rate limit, transient outage, model deprecation.
-- **Mitigation**: Same retry / backoff regime as the 55-map driver; failure logged per-call with `success=False`. A second invocation (cost still ~$0.01) is cheap if the first fails partly. Cost hard cap $5.00 prevents runaway.
+- **Mitigation**: Same retry / backoff regime as the 55-map driver; failure logged per-call with `success=False`. A second invocation (cost still ~$0.05–0.17) is cheap if the first fails partly. Cost hard cap $5.00 prevents runaway.
 
-### 12.5 Cross-corpus prompt drift (the 55-map prompt was tuned to 55-map content)
+### 13.5 Cross-corpus prompt drift (the 55-map prompt was tuned to 55-map content)
 
 - **Risk**: The closed-list categories (e.g. `contour-ring`, `vegetation`) were chosen empirically from 55-map FP review; a GS FP might fall outside this list (e.g. if "spot-height" is the right category but the prompt forces it into `number`).
 - **Mitigation**: Per Obs 302 caveat 3, the `number` / spot-height confound is already documented as a known interpretability limit. The closed list is reused **verbatim** for cross-corpus comparability — drift would be the alternative (re-tune for GS, lose comparability). Report the rationale-string distribution alongside the category counts in the JSON output so a second-pass review can disambiguate `number`-as-distractor vs `number`-as-spot-height post-hoc.
 
-### 12.6 Threshold under-counts true FPs
+### 13.6 Distance threshold may misclassify edge cases
 
-- **Risk**: Some detections within 50 m of a reference might still be true FPs (the detection lies near a real mound by chance, but the detector triggered on a different visible feature in the crop).
-- **Mitigation**: This is the unavoidable cost of synthetic distance-based FP labelling without human review. The paper Discussion must state explicitly that the GS-side FP set is a distance-defined under-approximation of the true FP set. The 55-map side has the analogous opposite bias (human reviewers may label ambiguous detections inconsistently). Both biases are documented.
+- **Risk**: Some detections within 50 m of a reference might still be true FPs (the detection lies near a real mound by chance, but the detector triggered on a different visible feature in the crop). Conversely, a small fraction of detections >50 m might be TPs that the detector localised loosely.
+- **Mitigation**: With a sub-metre triple-checked GT (§2), residual mis-localisation is bounded by the detector's centroid precision (typically tens of metres at this resolution), not by GT noise. The 50 m threshold is therefore a tight, principled boundary, not a noisy one. The paper Discussion should describe the GS-side FP definition as "detections farther than 50 m from any curator-corrected reference mound on a sub-metre GT" — accurate, not apologetic. The 55-map side has the analogous bias (human reviewers may label ambiguous detections inconsistently); both biases are documented.
 
-## 13. References
+### 13.7 TP-side vocabulary leakage (new with Decision 1)
+
+- **Risk**: If the classifier assigns vocabulary categories (e.g. `contour-ring`) to TP detections at substantial frequency, the FP-side numbers become harder to interpret — the categories would not be cleanly "what the classifier saw when it wasn't a mound" but "what the classifier's calibration draws everything towards".
+- **Mitigation**: Report the TP-side distribution explicitly in `report.md` (§6.5). If `none`/`other` < 80 % of the TP bucket, the paper Discussion must temper the FP-side categorical interpretation. This is exactly the sanity check that motivated Decision 1.
+
+## 14. Next step (plan ready for execution)
+
+This plan is **APPROVED for execution** as of 2026-04-29 (all four user-confirmed decisions recorded above; API spend approved up to $5 USD ceiling).
+
+**Recommended next move**: dispatch a fresh executor agent with the following scope.
+
+1. **Write** `scripts/gs-fp-classify.py` by copying `scripts/55maps-fp-classify.py` and adapting per §9. Do NOT modify the 55-map driver.
+2. **Pre-launch validate** per §10.1; report counts, sample crops, and any anomalies back before any API call.
+3. **Run** the production classification on all 371 detections at flex tier per §10.2, observing the in-script cost cap of $5.00 and the user-approved $5.00 ceiling.
+4. **Write** outputs to `results/gs-fp-classification/` per §7.2 (including the TP-side reliability check from §6.5).
+5. **Commit** the new script and the results directory in two logical commits (one for the script, one for the outputs); **push** both before any review per project policy.
+6. **Report** back to the user: (a) the headline GS-FP category distribution at 50 m primary, (b) the TP-side sanity-check result, (c) the cross-corpus chi-square outcome, (d) any threshold-sensitivity flags from §13.2.
+7. **Defer** the working-notes Obs entry, the paper-writeup-continuity tick, and the paper-Discussion paragraph (§11) to a subsequent session — these depend on the user reviewing the run output before they should be written.
+
+The plan document above is auditable (all superseded verdicts marked with date stamps, prior reasoning preserved). The executor should treat §1, §2, and §5–§9 (decisions and adaptation requirements) as authoritative, and §10–§11 as the operational and integration playbook.
+
+## 15. References
 
 - Specification: `planning/paper-writeup-continuity.md` lines 1437–1444.
 - Obs 302 (FP-class diagnostic — 55-map side): `docs/notes/reflections/working-notes.md` ≈ line 14947.
@@ -329,7 +392,10 @@ The user should confirm each of the following before approving execution:
 - Obs 295 (GS attractor-pull cap = 25 m): `docs/notes/reflections/working-notes.md` ≈ line 14473.
 - Obs 260 (student-GT positional jitter ~25 m): cited in Obs 295 §4.3, Obs 296 §4.
 - Existing 55-map driver: `scripts/55maps-fp-classify.py` (1,603 lines, commit `5040f5b4`).
+- 55-map review-candidates UI (concentric tolerance rings 50/75/100/125/150 m): `scripts/review_candidates.py` line 94.
 - Existing 55-map results: `results/55maps-fp-classification/` (commit `e552ad46`).
 - GS attractor-pull driver (distance-metric precedent): `scripts/analyse_attractor_pull_gs.py` (commit `430693bc`).
 - GS detection set: `outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` (371 features; commit `d59798ac` per `run.meta.json`).
-- Curator reference: `inputs/vectors/references/mounds-reference.geojson` (569 mounds, EPSG:32635 MultiPoint).
+- Student / 55-map crowdsourced GT: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,744 mounds).
+- Curator reference: `inputs/vectors/references/mounds-reference.geojson` (569 mounds, EPSG:32635 MultiPoint; triple-checked sub-metre — see §2.2).
+- Memory references (provenance): `2026-04-29-d5a6332b0788` (GS curation history); `2026-04-29-bedbb2494542` (55-map jitter clarification). Stored at `~/personal-assistant/memories/memories.jsonl`.
