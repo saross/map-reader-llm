@@ -1,0 +1,352 @@
+#!/usr/bin/env python3
+"""
+Bootstrap-CI N=10K follow-up sweep verification.
+
+Runs the §7.1–7.5 verification queries from
+``planning/daylight-followup-sweep-plan-2026-04-29.md`` against the 165 cells
+produced by the daylight follow-up sweep.
+
+* §7.1 — N=10K presence query (binding pass/fail)
+* §7.2 — Detection-count cross-check (random 5-cell sample)
+* §7.3 — F1 point-estimate stability (random 5-cell sample, |Δ| < 1e-4)
+* §7.4 — CI-width comparison (informational only, NOT pass/fail)
+* §7.5 — MCC point-estimate stability for the 51 MCC-flag cells (NEW —
+         added per user confirmation 2026-04-29)
+
+Reads the queue at ``/tmp/bootstrap-10k-jobs-followup.csv`` (or the path
+passed via ``--queue``); compares each cell's current ``evaluation.json``
+against the version captured under git tag ``pre-bootstrap-10k-followup-
+2026-04-29`` (or another tag passed via ``--pre-tag``).
+
+Usage:
+    python3 scripts/verify_bootstrap_10k_followup.py
+    python3 scripts/verify_bootstrap_10k_followup.py --sample-n 10
+    python3 scripts/verify_bootstrap_10k_followup.py --pre-tag pre-bootstrap-10k-followup-2026-04-29
+
+Exit codes:
+    0 — all binding checks passed (§7.1 + §7.5)
+    1 — at least one binding check failed
+    2 — invocation error (e.g., queue not found)
+
+Author: Claude Code (Opus 4.7) for Shawn Ross's daylight follow-up sweep,
+2026-04-29.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import random
+import statistics
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_QUEUE = Path("/tmp/bootstrap-10k-jobs-followup.csv")
+DEFAULT_PRE_TAG = "pre-bootstrap-10k-followup-2026-04-29"
+# Tolerance accounts for the fact that older evaluation.json files round F1/MCC to 3 or 4
+# decimal places, so a re-evaluation against the same inputs can produce |Δ|<5e-4 purely from
+# rounding. A real bug shifts F1 by O(1e-2) or larger (cf. the pairwise-bounds dry-run finding,
+# which produced ΔF1=0.07 — well above any rounding tolerance).
+F1_TOLERANCE = 5e-4   # §7.3 binding tolerance
+MCC_TOLERANCE = 5e-4  # §7.5 binding tolerance
+
+
+def load_queue(path: Path) -> list[dict[str, str]]:
+    """Load the queue CSV."""
+    with open(path) as f:
+        return list(csv.DictReader(f))
+
+
+def show_pre_tag(tag: str, repo_path: str) -> dict | None:
+    """Return JSON for ``repo_path`` at ``tag`` or None if missing.
+
+    Args:
+        tag: Git tag to read from.
+        repo_path: Repository-relative path (e.g. ``results/.../evaluation.json``).
+    """
+    try:
+        out = subprocess.check_output(
+            ["git", "show", f"{tag}:{repo_path}"],
+            cwd=str(REPO_ROOT),
+            stderr=subprocess.DEVNULL,
+        )
+        return json.loads(out.decode())
+    except subprocess.CalledProcessError:
+        return None
+
+
+def check_n10k_presence(rows: list[dict[str, str]]) -> tuple[int, int, list[tuple[str, Any]]]:
+    """§7.1: every cell's evaluation.json must show ``cli_args.bootstrap == 10000``.
+
+    Returns:
+        (n_pass, n_fail, list of (path, observed_value) for failures).
+    """
+    fails: list[tuple[str, Any]] = []
+    n_pass = 0
+    for row in rows:
+        ep = REPO_ROOT / row["eval_path"]
+        if not ep.exists():
+            fails.append((row["eval_path"], "MISSING_FILE"))
+            continue
+        try:
+            with open(ep) as f:
+                d = json.load(f)
+        except json.JSONDecodeError as e:
+            fails.append((row["eval_path"], f"JSON_DECODE_ERROR: {e}"))
+            continue
+        cli = (d.get("_metadata") or {}).get("cli_args") or {}
+        bs = cli.get("bootstrap")
+        if bs == 10000:
+            n_pass += 1
+        else:
+            fails.append((row["eval_path"], bs))
+    return n_pass, len(fails), fails
+
+
+def check_detection_counts(
+    rows: list[dict[str, str]], pre_tag: str, sample_n: int
+) -> tuple[int, int, list[str]]:
+    """§7.2: per_run.n_detections (or summary.n_detections) must match pre/post.
+
+    Returns:
+        (n_match, n_mismatch, list of mismatch descriptions).
+    """
+    sampled = random.sample(rows, min(sample_n, len(rows)))
+    mismatches: list[str] = []
+    n_match = 0
+    for row in sampled:
+        ep_rel = row["eval_path"]
+        cur = json.load(open(REPO_ROOT / ep_rel))
+        pre = show_pre_tag(pre_tag, ep_rel)
+        if pre is None:
+            mismatches.append(f"{ep_rel}: pre-tag version missing")
+            continue
+        cur_pr = cur.get("per_run") or []
+        pre_pr = pre.get("per_run") or []
+        if cur_pr or pre_pr:
+            cur_n = sorted([r.get("n_detections") for r in cur_pr])
+            pre_n = sorted([r.get("n_detections") for r in pre_pr])
+            if cur_n == pre_n:
+                n_match += 1
+            else:
+                mismatches.append(f"{ep_rel}: per_run pre={pre_n} cur={cur_n}")
+        else:
+            cur_n = (cur.get("summary") or {}).get("n_detections")
+            pre_n = (pre.get("summary") or {}).get("n_detections")
+            if cur_n == pre_n:
+                n_match += 1
+            else:
+                mismatches.append(f"{ep_rel}: summary.n_detections pre={pre_n} cur={cur_n}")
+    return n_match, len(mismatches), mismatches
+
+
+def check_f1_stability(
+    rows: list[dict[str, str]], pre_tag: str, sample_n: int
+) -> tuple[int, int, list[str]]:
+    """§7.3: F1 point estimates per buffer must shift by < ``F1_TOLERANCE``.
+
+    Returns:
+        (n_pass, n_fail, list of failure descriptions).
+    """
+    sampled = random.sample(rows, min(sample_n, len(rows)))
+    failures: list[str] = []
+    n_pass = 0
+    for row in sampled:
+        ep_rel = row["eval_path"]
+        cur = json.load(open(REPO_ROOT / ep_rel))
+        pre = show_pre_tag(pre_tag, ep_rel)
+        if pre is None:
+            failures.append(f"{ep_rel}: pre-tag version missing")
+            continue
+        cur_b = (cur.get("summary") or {}).get("buffers") or []
+        pre_b = (pre.get("summary") or {}).get("buffers") or []
+        cell_ok = True
+        for cb, pb in zip(cur_b, pre_b):
+            df1 = abs(cb.get("f1", 0) - pb.get("f1", 0))
+            if df1 >= F1_TOLERANCE:
+                failures.append(
+                    f"{ep_rel} @ {cb.get('buffer_metres')}m: "
+                    f"F1 pre={pb.get('f1'):.4f} cur={cb.get('f1'):.4f} "
+                    f"Δ={df1:.5f}"
+                )
+                cell_ok = False
+        if cell_ok:
+            n_pass += 1
+    return n_pass, len(failures), failures
+
+
+def check_ci_widths(
+    rows: list[dict[str, str]], pre_tag: str, sample_n: int
+) -> dict:
+    """§7.4: CI widths should be near-identical (informational only).
+
+    Returns a dict of summary statistics on the ratio cur/pre of widths.
+    """
+    sampled = random.sample(rows, min(sample_n, len(rows)))
+    ratios: list[float] = []
+    for row in sampled:
+        ep_rel = row["eval_path"]
+        cur = json.load(open(REPO_ROOT / ep_rel))
+        pre = show_pre_tag(pre_tag, ep_rel)
+        if pre is None:
+            continue
+        cur_b = (cur.get("summary") or {}).get("buffers") or []
+        pre_b = (pre.get("summary") or {}).get("buffers") or []
+        for cb, pb in zip(cur_b, pre_b):
+            cur_w = cb.get("f1_ci_upper", 0) - cb.get("f1_ci_lower", 0)
+            pre_w = pb.get("f1_ci_upper", 0) - pb.get("f1_ci_lower", 0)
+            if pre_w > 0:
+                ratios.append(cur_w / pre_w)
+    return {
+        "n": len(ratios),
+        "min": min(ratios) if ratios else None,
+        "max": max(ratios) if ratios else None,
+        "median": statistics.median(ratios) if ratios else None,
+        "mean": statistics.fmean(ratios) if ratios else None,
+        "stdev": statistics.pstdev(ratios) if len(ratios) > 1 else None,
+    }
+
+
+def check_mcc_stability(rows: list[dict[str, str]], pre_tag: str) -> tuple[int, int, list[str]]:
+    """§7.5 (NEW): for every MCC-flag cell, ``tile_classification.mcc`` must shift
+    by < ``MCC_TOLERANCE`` (Obs 303 invariant on point estimates).
+
+    Checks ALL MCC-flag cells (51 total) since the cohort is small.
+
+    Returns:
+        (n_pass, n_fail, list of failure descriptions).
+    """
+    mcc_rows = [r for r in rows if r.get("mcc") == "1"]
+    failures: list[str] = []
+    n_pass = 0
+    for row in mcc_rows:
+        ep_rel = row["eval_path"]
+        ep = REPO_ROOT / ep_rel
+        if not ep.exists():
+            failures.append(f"{ep_rel}: MISSING_FILE")
+            continue
+        cur = json.load(open(ep))
+        pre = show_pre_tag(pre_tag, ep_rel)
+        if pre is None:
+            failures.append(f"{ep_rel}: pre-tag version missing")
+            continue
+        cur_tc = (cur.get("summary") or {}).get("tile_classification") or {}
+        pre_tc = (pre.get("summary") or {}).get("tile_classification") or {}
+        cur_mcc = (cur_tc.get("mcc") or {}).get("mean")
+        pre_mcc = (pre_tc.get("mcc") or {}).get("mean")
+        if cur_mcc is None or pre_mcc is None:
+            failures.append(
+                f"{ep_rel}: MCC mean value not found "
+                f"(cur tile_classification keys: {sorted(cur_tc.keys())})"
+            )
+            continue
+        dmcc = abs(cur_mcc - pre_mcc)
+        if dmcc < MCC_TOLERANCE:
+            n_pass += 1
+        else:
+            failures.append(
+                f"{ep_rel}: MCC pre={pre_mcc:.4f} cur={cur_mcc:.4f} "
+                f"Δ={dmcc:.5f}"
+            )
+    return n_pass, len(failures), failures
+
+
+def main() -> int:
+    """CLI entry point."""
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--queue", type=Path, default=DEFAULT_QUEUE,
+        help=f"Queue CSV path (default: {DEFAULT_QUEUE})",
+    )
+    parser.add_argument(
+        "--pre-tag", type=str, default=DEFAULT_PRE_TAG,
+        help=f"Git tag to compare against (default: {DEFAULT_PRE_TAG})",
+    )
+    parser.add_argument(
+        "--sample-n", type=int, default=5,
+        help="Sample size for §7.2-7.4 spot-checks (default: 5)",
+    )
+    parser.add_argument(
+        "--seed", type=int, default=42,
+        help="Random seed for sampling (default: 42)",
+    )
+    args = parser.parse_args()
+
+    if not args.queue.exists():
+        print(f"ERROR: queue {args.queue} not found", file=sys.stderr)
+        return 2
+
+    random.seed(args.seed)
+    rows = load_queue(args.queue)
+    print(f"Loaded {len(rows)} cells from {args.queue}")
+    print(f"Pre-tag: {args.pre_tag}")
+    print()
+
+    # ── §7.1 — binding ───────────────────────────────────────
+    print("§7.1 — N=10K presence (BINDING)")
+    n_pass, n_fail, fails = check_n10k_presence(rows)
+    print(f"  PASS: {n_pass}/{len(rows)} cells at N=10K")
+    print(f"  FAIL: {n_fail}")
+    for path, val in fails[:10]:
+        print(f"    {path}: bootstrap={val}")
+    if n_fail > 10:
+        print(f"    ... and {n_fail - 10} more failures")
+    print()
+
+    # ── §7.2 — sanity sample ────────────────────────────────
+    print(f"§7.2 — Detection-count cross-check (random {args.sample_n} cells)")
+    n_match, n_mismatch, mismatches = check_detection_counts(rows, args.pre_tag, args.sample_n)
+    print(f"  MATCH:    {n_match}/{args.sample_n}")
+    print(f"  MISMATCH: {n_mismatch}")
+    for m in mismatches:
+        print(f"    {m}")
+    print()
+
+    # ── §7.3 — F1 stability (binding for spot-check) ────────
+    print(f"§7.3 — F1 point-estimate stability (random {args.sample_n} cells; tolerance |Δ|<{F1_TOLERANCE})")
+    n_pass_f1, n_fail_f1, f1_fails = check_f1_stability(rows, args.pre_tag, args.sample_n)
+    print(f"  PASS: {n_pass_f1}/{args.sample_n} cells with stable F1")
+    print(f"  FAIL: {n_fail_f1}")
+    for f in f1_fails:
+        print(f"    {f}")
+    print()
+
+    # ── §7.4 — informational ────────────────────────────────
+    print(f"§7.4 — CI-width comparison (random {args.sample_n} cells; INFORMATIONAL)")
+    width_stats = check_ci_widths(rows, args.pre_tag, args.sample_n)
+    print(f"  n={width_stats['n']} buffer-bands; ratio cur_width/pre_width:")
+    print(f"  min={width_stats['min']}, median={width_stats['median']}, "
+          f"max={width_stats['max']}, mean={width_stats['mean']}, stdev={width_stats['stdev']}")
+    print()
+
+    # ── §7.5 — MCC stability (BINDING for MCC cells) ────────
+    print("§7.5 — MCC point-estimate stability for ALL MCC-flag cells (BINDING)")
+    n_pass_mcc, n_fail_mcc, mcc_fails = check_mcc_stability(rows, args.pre_tag)
+    n_mcc = sum(1 for r in rows if r.get("mcc") == "1")
+    print(f"  Total MCC-flag cells: {n_mcc}")
+    print(f"  PASS: {n_pass_mcc}/{n_mcc} cells with stable MCC (|Δ|<{MCC_TOLERANCE})")
+    print(f"  FAIL: {n_fail_mcc}")
+    for f in mcc_fails[:20]:
+        print(f"    {f}")
+    if n_fail_mcc > 20:
+        print(f"    ... and {n_fail_mcc - 20} more failures")
+    print()
+
+    # ── Final verdict ────────────────────────────────────────
+    binding_failed = (n_fail > 0) or (n_fail_mcc > 0) or (n_fail_f1 > 0)
+    if binding_failed:
+        print("VERDICT: FAIL — binding checks did not pass")
+        return 1
+    print("VERDICT: PASS — all binding checks passed (§7.1 + §7.3 sample + §7.5)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
