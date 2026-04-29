@@ -22,14 +22,32 @@ Soviet-1980s-topographic-symbol vocabulary directly.
 Methodology — cartographic-naming approach
 ------------------------------------------
 Per Shawn's design decision (2026-04-28), this prompt deliberately names
-cartographic-vocabulary categories (number, benchmark, water-feature,
-contour-ring, vegetation, settlement, road-or-track, scale-bar-or-grid,
-none, other). The detection prompts elsewhere in this project describe
-visual features without naming conventions; for *classification* we WANT
-the model to apply its cartographic knowledge — categories are
-conventional and the question is "what type of feature is this?". A
-Soviet-1980s vocabulary anchor in the prompt protects against
-generic-vs-Soviet category mismatch.
+cartographic-vocabulary categories. The detection prompts elsewhere in
+this project describe visual features without naming conventions; for
+*classification* we WANT the model to apply its cartographic knowledge
+— categories are conventional and the question is "what type of feature
+is this?". A Soviet-1980s vocabulary anchor in the prompt protects
+against generic-vs-Soviet category mismatch.
+
+v2 (2026-04-29) — burial-mound categories added
+-----------------------------------------------
+The v1 closed list (``number, benchmark, water-feature, contour-ring,
+vegetation, settlement, road-or-track, scale-bar-or-grid, none, other``)
+was scoped for FP-only classification on the 55-map corpus, where every
+input row carries ``human_label == "not_mound"`` (i.e., human-confirmed
+non-mound). v2 appends four burial-mound categories (``burial-mound``,
+``benchmark-on-burial-mound``, ``triangulation-point-on-burial-mound``,
+``settlement-mound``) to mirror the parallel gold-standard (GS) re-run
+of the same date — the GS driver classifies both true positives (TPs)
+and FPs, and needs the burial-mound symbols on its TP side. Cross-corpus
+chi-square comparisons in the paper draw on identical category sets, so
+the 55-map list must mirror it.
+
+Strictly, the 55-map analysis remains FP-only by design. Any FP that
+v2 reclassifies as a burial-mound category indicates a review-pass
+false-FP label (a real mound accidentally clicked "not_mound") and is
+itself a finding — flagged in the v1-vs-v2 comparison section of the
+v2 report. See ``archive/55maps-fp-classification-v1-pre-burial-mound-list/ARCHIVE-NOTE.md``.
 
 Pipeline
 --------
@@ -155,6 +173,15 @@ DISPLAY_PX: int = 768
 
 # Closed category list — matches the prompt below verbatim. The order
 # here drives the order in the report tables and the figure legend.
+#
+# v2 (2026-04-29): four burial-mound categories appended for cross-corpus
+# consistency with the parallel gold-standard (GS) re-run, which needs
+# the burial-mound symbols on its true-positive (TP) side. The 55-map
+# corpus is FP-only by design (input is rows with human_label ==
+# "not_mound"), so burial-mound categories should rarely be chosen here;
+# any FP reclassified as burial-mound v2 indicates a review-pass
+# false-FP label (a real mound accidentally clicked "not_mound") and is
+# itself a finding. See `archive/55maps-fp-classification-v1-pre-burial-mound-list/ARCHIVE-NOTE.md`.
 CATEGORIES: list[str] = [
     "number",
     "benchmark",
@@ -164,6 +191,10 @@ CATEGORIES: list[str] = [
     "settlement",
     "road-or-track",
     "scale-bar-or-grid",
+    "burial-mound",
+    "benchmark-on-burial-mound",
+    "triangulation-point-on-burial-mound",
+    "settlement-mound",
     "none",
     "other",
 ]
@@ -211,23 +242,37 @@ symbol, but human review rejected it as a false positive.
 
 Identify the cartographic feature most likely responsible for the detector's \
 mistake — i.e., what visually plausible burial-mound-like feature near the \
-centre of the crop could have triggered the detector?
+centre of the crop could have triggered the detector? In the rare case that \
+the centre actually does carry a burial-mound symbol (i.e., the human review \
+mislabelled a real mound as "not_mound"), choose the appropriate \
+burial-mound category instead.
 
 Choose ONE category from this closed list (Soviet 1980s topographic \
 conventions). When in doubt, prefer the more specific category over "other".
 
 - number — spot-elevation numeric label, often small italic digits, sometimes \
 with a dot below
-- benchmark — bench-mark or triangulation marker (cross, triangle, "БМ" or "Δ")
+- benchmark — bench-mark or triangulation marker NOT on a burial mound \
+(cross, triangle, "БМ" or "Δ" standing alone on the ground surface)
 - water-feature — blue river, stream, lake, pond, swamp, drainage symbol, or \
 well marker
 - contour-ring — closed contour line(s) forming a ring or oval (brown), often \
-around a small hill or depression
+around a small hill or depression, with NO mound symbol inside
 - vegetation — green-shaded area, tree or shrub symbol, or forest-edge marking
 - settlement — house symbol(s), village or hamlet outline, or other \
-built-feature cluster
+built-feature cluster, NOT a settlement-mound (tell)
 - road-or-track — line symbol for transport (single line, double line, dashed)
 - scale-bar-or-grid — printed scale bar, grid intersection, or coordinate label
+- burial-mound — Soviet 1980s burial-mound symbol: a small brown ring with \
+short outward radial hachures (a "sunburst" / "hairy circle"), no overlaid \
+benchmark or triangulation mark
+- benchmark-on-burial-mound — a burial-mound sunburst with a bench-mark \
+overlay (cross, "БМ"-style mark) at its centre
+- triangulation-point-on-burial-mound — a burial-mound sunburst with a \
+filled-triangle (Δ) triangulation marker at its centre
+- settlement-mound — a tell / settlement-mound symbol: a black hairy/ringed \
+square or rectangle, sometimes with a central dot, larger and more angular \
+than the (round) burial-mound symbol
 - none — no obvious feature near centre; appears to be blank or empty terrain
 - other — clearly a feature is present but doesn't match the categories above
 
@@ -519,6 +564,14 @@ def normalise_category(raw: str) -> str:
     if cleaned in CATEGORIES:
         return cleaned
     # Common typo fixes.
+    #
+    # Note (v2): the standalone aliases ``triangulation`` and
+    # ``triangulation-point`` map to ``benchmark`` (matching v1's
+    # behaviour for survey markers on bare ground), NOT to the new
+    # ``triangulation-point-on-burial-mound`` category — that latter
+    # requires the model to identify a triangulation marker explicitly
+    # superimposed on a burial-mound symbol. The four-token alias keys
+    # for that category are listed lower.
     aliases = {
         "numbers": "number",
         "spot-elevation": "number",
@@ -551,6 +604,32 @@ def normalise_category(raw: str) -> str:
         "scale bar": "scale-bar-or-grid",
         "blank": "none",
         "empty": "none",
+        # v2 burial-mound categories — alias common variants the model
+        # might emit (snake_case from elsewhere in the project, plain
+        # English variants, plurals).
+        "burial mound": "burial-mound",
+        "burial_mound": "burial-mound",
+        "mound": "burial-mound",
+        "tumulus": "burial-mound",
+        "kurgan": "burial-mound",
+        "benchmark on burial mound": "benchmark-on-burial-mound",
+        "benchmark on mound": "benchmark-on-burial-mound",
+        "benchmark_on_mound": "benchmark-on-burial-mound",
+        "benchmark-on-mound": "benchmark-on-burial-mound",
+        "bench-mark-on-burial-mound": "benchmark-on-burial-mound",
+        "bench mark on burial mound": "benchmark-on-burial-mound",
+        "triangulation point on burial mound":
+            "triangulation-point-on-burial-mound",
+        "triangulation on burial mound":
+            "triangulation-point-on-burial-mound",
+        "triangulation-on-mound": "triangulation-point-on-burial-mound",
+        "triangulation_on_mound": "triangulation-point-on-burial-mound",
+        "trig-on-mound": "triangulation-point-on-burial-mound",
+        "trig point on burial mound":
+            "triangulation-point-on-burial-mound",
+        "settlement mound": "settlement-mound",
+        "settlement_mound": "settlement-mound",
+        "tell": "settlement-mound",
     }
     if cleaned in aliases:
         return aliases[cleaned]
@@ -1032,8 +1111,9 @@ def write_distribution_figure(
         for i, cat in enumerate(categories):
             pct_matrix[i, j] = 100.0 * counts[run][cat] / col_total
 
-    # Use a ColorBrewer-friendly qualitative palette big enough for 10 cats.
-    palette = plt.get_cmap("tab10").colors  # 10 distinguishable colours
+    # Use tab20 — 20 distinguishable colours, big enough for v2's
+    # 14-category list (10 cartographic + 4 burial-mound).
+    palette = plt.get_cmap("tab20").colors  # 20 distinguishable colours
     fig, ax = plt.subplots(figsize=(8.5, 5.0), dpi=140)
     bottoms = np.zeros(n_runs, dtype=float)
     for i, cat in enumerate(categories):
@@ -1049,8 +1129,8 @@ def write_distribution_figure(
     ax.set_ylabel("Percentage of FPs (%)")
     ax.set_xlabel("Corpus / run")
     ax.set_title(
-        "55-map FP-class distribution by run (Obs 296 Test #2)\n"
-        "Cartographic categories from Gemini 3 Flash classification",
+        "55-map FP-class distribution by run (Obs 296 Test #2 — v2)\n"
+        "Cartographic + burial-mound categories from Gemini 3 Flash",
         fontsize=10,
     )
     ax.set_ylim(0, 100)
@@ -1061,6 +1141,48 @@ def write_distribution_figure(
     fig.tight_layout()
     fig.savefig(path)
     plt.close(fig)
+
+
+#: v1 categories — frozen here so the v2 driver can show v1-vs-v2
+#: comparisons in the report without re-reading the archived v1 outputs.
+#: The v1 list was 10 categories (no burial-mound entries).
+V1_CATEGORIES: tuple[str, ...] = (
+    "number",
+    "benchmark",
+    "water-feature",
+    "contour-ring",
+    "vegetation",
+    "settlement",
+    "road-or-track",
+    "scale-bar-or-grid",
+    "none",
+    "other",
+)
+
+#: v1 aggregate counts (n = 1,119), copied from the archived v1
+#: ``category_distribution.json`` file. Used for v1-vs-v2 comparison.
+V1_AGGREGATE_COUNTS: dict[str, int] = {
+    "number": 214,
+    "benchmark": 54,
+    "water-feature": 136,
+    "contour-ring": 458,
+    "vegetation": 64,
+    "settlement": 157,
+    "road-or-track": 13,
+    "scale-bar-or-grid": 2,
+    "none": 7,
+    "other": 14,
+}
+
+#: v1 distractor-pull (number + benchmark) shares from the archived v1
+#: report. Used for the v1-vs-v2 comparison row in the verdict.
+V1_DISTRACTOR_SHARE_TEXT_PCT: float = 22.7
+V1_DISTRACTOR_SHARE_IMAGE_PCT: float = 27.6
+V1_CHI2_P_VALUE: float = 0.1474
+V1_VERDICT: str = (
+    "NOT SUPPORTED — text-track distractor-pull share is below 30 %, "
+    "and image-vs-text-track chi-square is non-significant."
+)
 
 
 def write_report_md(
@@ -1076,11 +1198,16 @@ def write_report_md(
     path: Path,
 ) -> None:
     """Write a synthesis report covering the methodology, headline,
-    chi-square test, and methodological caveats.
+    chi-square test, methodology change vs v1, and caveats.
+
+    The v2 report mirrors the v1 structure but adds two new sections:
+    a "Methodology change" block explaining the closed-list expansion
+    and a v1-vs-v2 comparison table focused on whether any FPs
+    reclassify into the new burial-mound categories.
     """
     lines: list[str] = []
     lines.append(
-        "# 55-map FP-class classification — Obs 296 Diagnostic Test #2\n"
+        "# 55-map FP-class classification — Obs 296 Diagnostic Test #2 (v2)\n"
     )
     lines.append(
         f"_Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}_\n"
@@ -1096,6 +1223,33 @@ def write_report_md(
         "Gemini 3 Flash to apply Soviet-1980s topographic-symbol "
         "categories directly.\n"
     )
+
+    # Methodology change — v2-specific.
+    lines.append("## Methodology change (v2 vs v1)\n")
+    lines.append(
+        "v1 (archived at "
+        "`archive/55maps-fp-classification-v1-pre-burial-mound-list/`) "
+        "used a 10-category FP-only closed list: `number, benchmark, "
+        "water-feature, contour-ring, vegetation, settlement, "
+        "road-or-track, scale-bar-or-grid, none, other`. There was no "
+        "`burial-mound` category. The 55-map analysis is FP-only by "
+        "design — every input row carries `human_label == \"not_mound\"`, "
+        "i.e., human-confirmed non-mound — so the v1 list was "
+        "defensible for this corpus alone.\n"
+    )
+    lines.append(
+        "v2 mirrors the parallel gold-standard (GS) re-run of the same "
+        "date by appending four Soviet 1980s burial-mound symbols: "
+        "`burial-mound`, `benchmark-on-burial-mound`, "
+        "`triangulation-point-on-burial-mound`, `settlement-mound`. "
+        "Cross-corpus chi-square comparisons in the paper draw on "
+        "identical category sets, so the 55-map list must mirror the GS "
+        "list. Any 55-map FP that v2 reclassifies as a burial-mound "
+        "category indicates a review-pass false-FP label (a real mound "
+        "accidentally clicked \"not_mound\") and is itself a finding — "
+        "see the v1-vs-v2 comparison section below.\n"
+    )
+
     lines.append("## Method\n")
     lines.append(
         "1. Enumerated FPs from the four corrected 55-map review CSVs "
@@ -1104,8 +1258,8 @@ def write_report_md(
         "(`inputs/rasters/Russian1981_32635/`) using the live-raster "
         "pipeline mirrored from `scripts/review_candidates.py`.\n"
         "3. Classified each crop via Gemini 3 Flash (flex tier, "
-        "thinking_level=minimal, temperature=0.0). Closed-list categories: "
-        f"{', '.join(categories)}.\n"
+        "thinking_level=minimal, temperature=0.0). Closed-list categories "
+        f"(v2, 14 entries): {', '.join(categories)}.\n"
         "4. Tabulated per-corpus distributions; ran a chi-square test "
         "on image vs text-track aggregate distribution.\n"
     )
@@ -1151,6 +1305,100 @@ def write_report_md(
         + " | ".join(f"**{col_totals[r]}**" for r in runs)
         + f" | **{grand_total}** |\n"
     )
+
+    # v1-vs-v2 aggregate comparison.
+    lines.append("## v1-vs-v2 aggregate comparison\n")
+    lines.append(
+        "How did the four added burial-mound categories shift the "
+        "55-map FP profile? Each row shows the v1 aggregate count and "
+        "share alongside the v2 aggregate. Burial-mound categories "
+        "were not in v1 — any v2 mass on those rows reflects FPs that "
+        "v1 had to assign to the closest non-burial-mound category "
+        "(typically `contour-ring` for the round mound symbol or "
+        "`settlement` for the angular tell symbol).\n"
+    )
+    v1_total = sum(V1_AGGREGATE_COUNTS.values())
+    v2_total = grand_total
+    lines.append(
+        "| Category | v1 n | v1 % | v2 n | v2 % | Δ (v2 − v1) pp |"
+    )
+    lines.append("|---|---:|---:|---:|---:|---:|")
+    burial_mound_categories: tuple[str, ...] = (
+        "burial-mound",
+        "benchmark-on-burial-mound",
+        "triangulation-point-on-burial-mound",
+        "settlement-mound",
+    )
+    for cat in categories:
+        v1_n = V1_AGGREGATE_COUNTS.get(cat, 0)
+        v1_pct = (100.0 * v1_n / v1_total) if v1_total > 0 else 0.0
+        v2_n = aggregate[cat]
+        v2_pct = (100.0 * v2_n / v2_total) if v2_total > 0 else 0.0
+        # Mark burial-mound rows for visibility.
+        cat_label = (
+            f"**{cat}**" if cat in burial_mound_categories else cat
+        )
+        if cat in V1_AGGREGATE_COUNTS:
+            v1_n_cell = f"{v1_n}"
+            v1_pct_cell = f"{v1_pct:.1f} %"
+            delta_cell = f"{v2_pct - v1_pct:+.1f}"
+        else:
+            v1_n_cell = "—"
+            v1_pct_cell = "—"
+            delta_cell = f"+{v2_pct:.1f} (new)"
+        lines.append(
+            f"| {cat_label} | {v1_n_cell} | {v1_pct_cell} | "
+            f"{v2_n} | {v2_pct:.1f} % | {delta_cell} |"
+        )
+    lines.append(
+        f"| **N (FPs)** | **{v1_total}** | — | **{v2_total}** | — | — |\n"
+    )
+    burial_mound_v2_total = sum(
+        aggregate[c] for c in burial_mound_categories
+    )
+    burial_mound_v2_pct = (
+        100.0 * burial_mound_v2_total / v2_total if v2_total > 0 else 0.0
+    )
+    lines.append(
+        f"**Total v2 mass on the four burial-mound categories: "
+        f"{burial_mound_v2_total} / {v2_total} FPs "
+        f"({burial_mound_v2_pct:.1f} %).**\n"
+    )
+    if burial_mound_v2_total == 0:
+        lines.append(
+            "Zero burial-mound assignments confirms the FP-only design "
+            "of the 55-map analysis was sound — no FPs in the four "
+            "corrected runs are real mounds that the human reviewer "
+            "missed. The v1 distribution is materially preserved under "
+            "v2, with shifts confined to the non-burial-mound rows "
+            "(re-balancing within the unchanged 10 categories due to "
+            "single-pass classification noise).\n"
+        )
+    elif burial_mound_v2_pct < 1.0:
+        lines.append(
+            "A small number (< 1 %) of FPs were reclassified as "
+            "burial-mound symbols under v2. These are candidate "
+            "review-pass false-FP labels (real mounds accidentally "
+            "clicked \"not_mound\"); they should be inspected manually "
+            "before drawing conclusions, but the headline FP-only "
+            "design of the 55-map analysis is materially sound. See "
+            "`fp_classifications.json` for per-FP records "
+            "(`category` field on rows in burial-mound categories).\n"
+        )
+    else:
+        lines.append(
+            f"**FINDING:** {burial_mound_v2_total} FPs "
+            f"({burial_mound_v2_pct:.1f} %) reclassify as burial-mound "
+            "categories under v2. This exceeds the < 1 % "
+            "calibration-noise threshold and indicates a non-trivial "
+            "rate of review-pass false-FP labels (real mounds "
+            "accidentally clicked \"not_mound\" by the reviewer). "
+            "Per-FP records are in `fp_classifications.json` "
+            "(filter on `category in {burial-mound, "
+            "benchmark-on-burial-mound, "
+            "triangulation-point-on-burial-mound, settlement-mound}`); "
+            "manual review of these crops is the natural follow-up.\n"
+        )
 
     # Distractor-pull (number + benchmark) summary.
     lines.append("## Distractor-pull share (number + benchmark)\n")
@@ -1293,16 +1541,63 @@ def write_report_md(
         )
     lines.append(verdict)
     lines.append("")
+    if p_value is not None:
+        lines.append(
+            f"- Text-track aggregate (number + benchmark) share: "
+            f"{nb_share_text:.1f} %\n"
+            f"- Image-track (number + benchmark) share: "
+            f"{nb_share_image:.1f} %\n"
+            f"- Chi-square p-value (image vs text-track): "
+            f"{p_value:.4g}\n"
+        )
+    else:
+        lines.append("- Chi-square p-value: insufficient data\n")
+
+    # v1 verdict comparison.
+    lines.append("### Comparison with v1 verdict\n")
     lines.append(
-        f"- Text-track aggregate (number + benchmark) share: "
-        f"{nb_share_text:.1f} %\n"
-        f"- Image-track (number + benchmark) share: "
-        f"{nb_share_image:.1f} %\n"
-        f"- Chi-square p-value (image vs text-track): "
-        f"{p_value:.4g}\n"
-        if p_value is not None
-        else "- Chi-square p-value: insufficient data\n"
+        f"v1 verdict: **{V1_VERDICT}**\n\n"
+        f"- v1 text-track distractor-pull share: "
+        f"{V1_DISTRACTOR_SHARE_TEXT_PCT:.1f} % "
+        f"(v2: {nb_share_text:.1f} %)\n"
+        f"- v1 image-track distractor-pull share: "
+        f"{V1_DISTRACTOR_SHARE_IMAGE_PCT:.1f} % "
+        f"(v2: {nb_share_image:.1f} %)\n"
+        f"- v1 chi-square p-value: {V1_CHI2_P_VALUE:.4f}"
+        + (
+            f" (v2: {p_value:.4g})\n"
+            if p_value is not None
+            else " (v2: insufficient data)\n"
+        )
     )
+    if p_value is not None:
+        v1_supported = (
+            V1_DISTRACTOR_SHARE_TEXT_PCT > DISTRACTOR_SHARE_THRESHOLD_PCT
+            and V1_CHI2_P_VALUE < 0.05
+        )
+        v2_supported = (
+            nb_share_text > DISTRACTOR_SHARE_THRESHOLD_PCT
+            and p_value < 0.05
+        )
+        if v1_supported == v2_supported:
+            lines.append(
+                "v1 and v2 verdicts agree on the headline question: "
+                "Shawn's distractor-pull-on-text-track hypothesis is "
+                f"{'supported' if v2_supported else 'not supported'} "
+                "under both closed lists. The closed-list expansion "
+                "did not change the hypothesis-testing outcome.\n"
+            )
+        else:
+            lines.append(
+                "**v1 and v2 verdicts diverge** on the headline "
+                "question. The closed-list expansion materially "
+                "changed the hypothesis-testing outcome — likely "
+                "because vocabulary leakage from FPs that were really "
+                "mound-like signs has shifted between the v1 and v2 "
+                "category sets. Inspect the v1-vs-v2 comparison "
+                "table above to see which categories drove the "
+                "change.\n"
+            )
 
     # Caveats.
     lines.append("## Caveats and methodological notes\n")
@@ -1352,10 +1647,17 @@ def write_report_md(
         "chi-square image vs text-track, water-feature spot-height GS "
         "failure mode, Soviet 1980s topographic categories closed list, "
         "rendered crop in-memory base64, flex tier classification "
-        "single-pass, confidence-weighted distribution sensitivity.\n"
+        "single-pass, confidence-weighted distribution sensitivity, "
+        "55-map FP v2 burial-mound closed list, cross-corpus consistency "
+        "with parallel GS re-run, review-pass false-FP labels.\n"
     )
 
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # Join + collapse any double blank lines that might creep in
+    # (markdownlint MD012). Trailing single newline at EOF is canonical.
+    raw = "\n".join(lines) + "\n"
+    while "\n\n\n" in raw:
+        raw = raw.replace("\n\n\n", "\n\n")
+    path.write_text(raw, encoding="utf-8")
 
 
 # =========================================================================
