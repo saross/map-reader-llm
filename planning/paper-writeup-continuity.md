@@ -1428,6 +1428,92 @@ All 540 `evaluation.json` cells at N=10,000 bootstrap iterations. Cross-cell met
 
 ---
 
+## Outstanding to-dos for next session (audit 2026-04-28)
+
+Identified by an Explore agent surveying planning docs, working-notes (Obs 282–303), recent `report.md` files, repo-cleanup-backlog, and detector-confidence planning docs immediately before Session 80 close-out. Items below are **NOT** already covered in the Session 80 closure / Step 6 starting-state / daylight follow-up sweep sections above. The paper outline itself is the main deliverable for next session and is excluded from this list. Items are ordered by priority within band; user should sequence per their judgement.
+
+### High priority (paper-load-bearing)
+
+#### 1. GS-side FP classification via VLM (closes Obs 302's missing comparator)
+
+- **Source**: Obs 302 caveat + `results/55maps-fp-classification/report.md`.
+- **Description**: Obs 296 Test #2 (FP categorisation) ran on the 4 corrected 55-map runs but lacks a gold-standard (GS) comparator. The hypothesis that the GS corpus has water-feature / spot-height FP modes (your manual-review intuition) cannot be directly tested without running the same Gemini classification on ~80 GS false positives.
+- **Cost**: ~$0.05 USD, < 30 min wall.
+- **Unblocks**: Discussion cross-corpus asymmetry claim with empirical FP-class data on both sides.
+- **Approach**: mirror `scripts/55maps-fp-classify.py` against GS verified-detections; identify FPs (no human review on GS, so use distance-from-curator-GT > some threshold as the FP filter); same prompt + Soviet-topo vocabulary anchor.
+
+#### 2. Audit secondary-effects reports for surviving `with-mcc/` citations
+
+- **Source**: Obs 288 operational implications §1–3.
+- **Description**: Obs 288 found the phase3a `with-mcc/` cells were off-matrix one-offs (worst case: image high-T0.7 K=10 t=7 corrected MCC 0.3831 → 0.6765 at +0.29 absolute). The matrix sweep is now canonical, but earlier narratives may still cite the off-matrix numbers. Audit `results/secondary-effects/`, `results/phase3a-image-matrix/`, and `results/paper-eval/` reports for any surviving citations and redirect to matrix-canonical.
+- **Cost**: audit-only, ~30 min.
+- **Unblocks**: paper citation cleanliness; closes Obs 288 operational follow-up.
+
+#### 3. Characterise high-pull FP maps (per-map distractor tail)
+
+- **Source**: Obs 301 follow-up question.
+- **Description**: Per-map FP-anchoring rates on the 55-map text-track are heavily right-skewed (median 0 %, with 2–3 maps driving the corpus rate). Which specific maps? What shared features? If the high-pull tail shares an identifiable cartographic feature (dense numeric labels, vegetation hatching, a specific stylistic variant), the Discussion gains specificity beyond "the detector is sometimes bad on some maps".
+- **Cost**: < 1 hour ad-hoc diagnostic; reuse `scripts/analyse_55maps_per_map_shell_variance.py` outputs + manual map inspection on the top-3 high-pull maps per run.
+- **Unblocks**: actionability of Obs 301's right-skew finding for paper Discussion.
+
+### Medium priority (strengthening claims)
+
+#### 4. Detector-confidence calibration pilot (vote-fraction-as-proxy validation)
+
+- **Source**: `planning/detector-confidence-calibration-pilot.md` (spec'd in Wave 1; not yet executed).
+- **Description**: H-a (Obs 283) proposed vote-fraction as a behavioural proxy for detector confidence. The pilot (zero API cost; uses an existing K=30 cell on the 4-map gold-standard corpus) tests whether Spearman ρ between `vote_count` and observed P(TP) ≥ 0.7 (proxy sound) vs < 0.5 (proxy unreliable; escalate to flag-scoping per `planning/detector-confidence-flag-scoping.md`).
+- **Cost**: ~1 hour compute; $0 API.
+- **Conditional**: only execute if the paper plans to discuss detector confidence as a graded quantity.
+- **Unblocks**: vote-fraction reportability decision; H-a paper scope.
+
+#### 5. Verify citation metadata in secondary-effects / phase3a-image-matrix reports
+
+- **Source**: Obs 288 operational implications §2–3 (related to but distinct from item #2).
+- **Description**: Spot-check that any prior image-high-T0.7 MCC citations in secondary-effects analyses have been redirected to matrix-canonical cells. Item #2 is about `with-mcc/` citations specifically; this item is about other paper-cited MCC values that may have shifted post-Wave-2.
+- **Cost**: audit-only, ~30 min.
+- **Unblocks**: paper-cited MCC numbers are matrix-canonical-aligned.
+
+### Low priority / optional / deferred
+
+#### 6. Multi-condition vote-fraction calibration extension
+
+- **Source**: `planning/detector-confidence-calibration-pilot.md` line 92.
+- **Description**: A single-condition pilot (item #4) does not guarantee vote-fraction soundness on image conditions or low-T deterministic regimes. A multi-condition extension would characterise K-dependence and condition-family generality.
+- **Cost**: 2–4 hours per condition; varies.
+- **Defer unless**: pilot passes AND the paper wants to scope calibration robustness across conditions.
+
+#### 7. K-consensus SD shrinkage heterogeneity footnote
+
+- **Source**: Obs 289 paper-framing discussion.
+- **Description**: Obs 289 reveals 5/13 strata depart from i.i.d. variance reduction (strongest: image-MIN-T1.0, β₁ = −0.118). If the paper cites K=N consensus as a noise-reduction strategy, a footnote should flag these strata as shared-mode failure regions.
+- **Cost**: 20 min narrative addition; no code.
+- **Unblocks**: paper's K-consensus framing accuracy.
+
+#### 8. Durable metadata mitigation for `evaluate_detections.py` + `build_tiered_leaderboard.py`
+
+- **Source**: `planning/repo-cleanup-backlog.md` and `planning/ci-rerun-todo.md` lines 96–116.
+- **Description**: Add a `_metadata` block embedding to `scripts/evaluate_detections.py` `evaluate_single_condition()` and `build_tiered_leaderboard.py` so that future `evaluation.json` outputs auto-include bootstrap parameters + CLI args. Prevents recurrence of the metadata-recovery work the daylight follow-up sweep needed.
+- **Cost**: 15 min dev + smoke test.
+- **Defer unless**: significant new evaluations are anticipated post-paper.
+
+#### 9. TP-only localisation bias check (Obs 296 diagnostic test follow-up)
+
+- **Source**: Obs 296 diagnostic tests (Test #1 done; this is a refinement).
+- **Description**: A strengthening test for the cap-as-calibration-vs-native claim — demonstrate that FP-anchoring is not caused by TP mis-localisation in the (50, 75] m band. Re-use existing TP-only output + a new filter on the (50, 75] m sub-cohort.
+- **Cost**: re-use outputs, < 1 hour.
+- **Unblocks**: deeper sub-band analysis if the Discussion needs it; otherwise the existing TP-only diagnostic (Obs 300) suffices.
+
+### Recommendation: priority sequencing for next session (after paper outline)
+
+1. **Daylight follow-up sweep** (already in spec above) — execute first; unblocks methodological uniformity.
+2. **Item #1 GS-side FP classification** ($0.05, ~30 min) — completes the asymmetric-failure-mode discussion-block evidence.
+3. **Item #2 `with-mcc/` citation audit** + **Item #5 broader MCC citation audit** (~1 hour combined) — paper-citation cleanliness.
+4. **Item #3 high-pull FP map characterisation** (< 1 hour) — actionability of Obs 301.
+5. **Item #4 detector-confidence pilot** (conditional on paper's detector-confidence framing).
+6. Items #6, #7, #8, #9 — defer unless paper drafting surfaces a specific need.
+
+---
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
