@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "flex_tier_assumed": true,
+  "pricing": {
+    "model": "gemini-3-flash",
+    "input_per_1m_usd": 0.5,
+    "output_per_1m_usd": 3.0,
+    "flex_discount_factor": 0.5
+  },
+  "per_run": {
+    "GS_full": {
+      "n_calls": 371,
+      "input_tokens": 559468,
+      "output_tokens": 19245,
+      "cost_usd": 0.1687
+    }
+  },
+  "totals": {
+    "n_calls": 371,
+    "input_tokens": 559468,
+    "output_tokens": 19245,
+    "cost_usd": 0.1687
+  },
+  "wall_clock_seconds": 291.7,
+  "wall_clock_pretty": "4m 52s"
+}

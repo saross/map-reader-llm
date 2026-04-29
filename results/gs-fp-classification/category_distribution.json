@@ -1,0 +1,916 @@
+{
+  "version": "1.0",
+  "n_total_classified": 371,
+  "categories": [
+    "number",
+    "benchmark",
+    "water-feature",
+    "contour-ring",
+    "vegetation",
+    "settlement",
+    "road-or-track",
+    "scale-bar-or-grid",
+    "none",
+    "other"
+  ],
+  "primary_threshold_m": 50,
+  "thresholds_m": [
+    25,
+    50,
+    75,
+    100,
+    125
+  ],
+  "tp_side_at_primary": {
+    "counts": {
+      "number": 54,
+      "benchmark": 30,
+      "water-feature": 2,
+      "contour-ring": 213,
+      "vegetation": 32,
+      "settlement": 21,
+      "road-or-track": 0,
+      "scale-bar-or-grid": 0,
+      "none": 0,
+      "other": 3
+    },
+    "percentages": {
+      "number": 15.21,
+      "benchmark": 8.45,
+      "water-feature": 0.56,
+      "contour-ring": 60.0,
+      "vegetation": 9.01,
+      "settlement": 5.92,
+      "road-or-track": 0.0,
+      "scale-bar-or-grid": 0.0,
+      "none": 0.0,
+      "other": 0.85
+    },
+    "weighted_by_confidence": {
+      "number": 48.249999999999964,
+      "benchmark": 28.44999999999999,
+      "water-feature": 1.8,
+      "contour-ring": 191.4500000000006,
+      "vegetation": 28.799999999999986,
+      "settlement": 18.85,
+      "road-or-track": 0.0,
+      "scale-bar-or-grid": 0.0,
+      "none": 0.0,
+      "other": 2.7
+    },
+    "n": 355
+  },
+  "fp_side_by_threshold": {
+    "25": {
+      "counts": {
+        "number": 8,
+        "benchmark": 4,
+        "water-feature": 2,
+        "contour-ring": 2,
+        "vegetation": 0,
+        "settlement": 2,
+        "road-or-track": 1,
+        "scale-bar-or-grid": 0,
+        "none": 1,
+        "other": 2
+      },
+      "percentages": {
+        "number": 36.36,
+        "benchmark": 18.18,
+        "water-feature": 9.09,
+        "contour-ring": 9.09,
+        "vegetation": 0.0,
+        "settlement": 9.09,
+        "road-or-track": 4.55,
+        "scale-bar-or-grid": 0.0,
+        "none": 4.55,
+        "other": 9.09
+      },
+      "n": 22
+    },
+    "50": {
+      "counts": {
+        "number": 4,
+        "benchmark": 4,
+        "water-feature": 2,
+        "contour-ring": 2,
+        "vegetation": 0,
+        "settlement": 2,
+        "road-or-track": 1,
+        "scale-bar-or-grid": 0,
+        "none": 1,
+        "other": 0
+      },
+      "percentages": {
+        "number": 25.0,
+        "benchmark": 25.0,
+        "water-feature": 12.5,
+        "contour-ring": 12.5,
+        "vegetation": 0.0,
+        "settlement": 12.5,
+        "road-or-track": 6.25,
+        "scale-bar-or-grid": 0.0,
+        "none": 6.25,
+        "other": 0.0
+      },
+      "n": 16
+    },
+    "75": {
+      "counts": {
+        "number": 2,
+        "benchmark": 4,
+        "water-feature": 2,
+        "contour-ring": 2,
+        "vegetation": 0,
+        "settlement": 2,
+        "road-or-track": 1,
+        "scale-bar-or-grid": 0,
+        "none": 1,
+        "other": 0
+      },
+      "percentages": {
+        "number": 14.29,
+        "benchmark": 28.57,
+        "water-feature": 14.29,
+        "contour-ring": 14.29,
+        "vegetation": 0.0,
+        "settlement": 14.29,
+        "road-or-track": 7.14,
+        "scale-bar-or-grid": 0.0,
+        "none": 7.14,
+        "other": 0.0
+      },
+      "n": 14
+    },
+    "100": {
+      "counts": {
+        "number": 2,
+        "benchmark": 4,
+        "water-feature": 2,
+        "contour-ring": 2,
+        "vegetation": 0,
+        "settlement": 2,
+        "road-or-track": 1,
+        "scale-bar-or-grid": 0,
+        "none": 1,
+        "other": 0
+      },
+      "percentages": {
+        "number": 14.29,
+        "benchmark": 28.57,
+        "water-feature": 14.29,
+        "contour-ring": 14.29,
+        "vegetation": 0.0,
+        "settlement": 14.29,
+        "road-or-track": 7.14,
+        "scale-bar-or-grid": 0.0,
+        "none": 7.14,
+        "other": 0.0
+      },
+      "n": 14
+    },
+    "125": {
+      "counts": {
+        "number": 2,
+        "benchmark": 4,
+        "water-feature": 2,
+        "contour-ring": 2,
+        "vegetation": 0,
+        "settlement": 2,
+        "road-or-track": 1,
+        "scale-bar-or-grid": 0,
+        "none": 1,
+        "other": 0
+      },
+      "percentages": {
+        "number": 14.29,
+        "benchmark": 28.57,
+        "water-feature": 14.29,
+        "contour-ring": 14.29,
+        "vegetation": 0.0,
+        "settlement": 14.29,
+        "road-or-track": 7.14,
+        "scale-bar-or-grid": 0.0,
+        "none": 7.14,
+        "other": 0.0
+      },
+      "n": 14
+    }
+  },
+  "cross_corpus_chi_square_primary": {
+    "insufficient_data": false,
+    "label_a": "gs",
+    "label_b": "fifty_five",
+    "chi2": 36.11980080407824,
+    "p_value": 3.775206483514817e-05,
+    "dof": 9,
+    "n_gs": 16,
+    "n_fifty_five": 836,
+    "categories_used": [
+      "number",
+      "benchmark",
+      "water-feature",
+      "contour-ring",
+      "vegetation",
+      "settlement",
+      "road-or-track",
+      "scale-bar-or-grid",
+      "none",
+      "other"
+    ],
+    "low_expected_count_fraction": 0.55,
+    "per_category": [
+      {
+        "category": "number",
+        "gs_observed": 4,
+        "fifty_five_observed": 149,
+        "gs_expected": 2.873,
+        "fifty_five_expected": 150.127,
+        "gs_residual": 0.665,
+        "fifty_five_residual": -0.092
+      },
+      {
+        "category": "benchmark",
+        "gs_observed": 4,
+        "fifty_five_observed": 41,
+        "gs_expected": 0.845,
+        "fifty_five_expected": 44.155,
+        "gs_residual": 3.432,
+        "fifty_five_residual": -0.475
+      },
+      {
+        "category": "water-feature",
+        "gs_observed": 2,
+        "fifty_five_observed": 105,
+        "gs_expected": 2.009,
+        "fifty_five_expected": 104.991,
+        "gs_residual": -0.007,
+        "fifty_five_residual": 0.001
+      },
+      {
+        "category": "contour-ring",
+        "gs_observed": 2,
+        "fifty_five_observed": 346,
+        "gs_expected": 6.535,
+        "fifty_five_expected": 341.465,
+        "gs_residual": -1.774,
+        "fifty_five_residual": 0.245
+      },
+      {
+        "category": "vegetation",
+        "gs_observed": 0,
+        "fifty_five_observed": 51,
+        "gs_expected": 0.958,
+        "fifty_five_expected": 50.042,
+        "gs_residual": -0.979,
+        "fifty_five_residual": 0.135
+      },
+      {
+        "category": "settlement",
+        "gs_observed": 2,
+        "fifty_five_observed": 120,
+        "gs_expected": 2.291,
+        "fifty_five_expected": 119.709,
+        "gs_residual": -0.192,
+        "fifty_five_residual": 0.027
+      },
+      {
+        "category": "road-or-track",
+        "gs_observed": 1,
+        "fifty_five_observed": 10,
+        "gs_expected": 0.207,
+        "fifty_five_expected": 10.793,
+        "gs_residual": 1.746,
+        "fifty_five_residual": -0.242
+      },
+      {
+        "category": "scale-bar-or-grid",
+        "gs_observed": 0,
+        "fifty_five_observed": 2,
+        "gs_expected": 0.038,
+        "fifty_five_expected": 1.962,
+        "gs_residual": -0.194,
+        "fifty_five_residual": 0.027
+      },
+      {
+        "category": "none",
+        "gs_observed": 1,
+        "fifty_five_observed": 2,
+        "gs_expected": 0.056,
+        "fifty_five_expected": 2.944,
+        "gs_residual": 3.976,
+        "fifty_five_residual": -0.55
+      },
+      {
+        "category": "other",
+        "gs_observed": 0,
+        "fifty_five_observed": 10,
+        "gs_expected": 0.188,
+        "fifty_five_expected": 9.812,
+        "gs_residual": -0.433,
+        "fifty_five_residual": 0.06
+      }
+    ],
+    "monte_carlo_p_value": 0.010698930106989302,
+    "monte_carlo_resamples": 10000
+  },
+  "cross_corpus_chi_square_by_threshold": {
+    "25": {
+      "insufficient_data": false,
+      "label_a": "gs",
+      "label_b": "fifty_five",
+      "chi2": 41.560779714304,
+      "p_value": 3.953216128399418e-06,
+      "dof": 9,
+      "n_gs": 22,
+      "n_fifty_five": 836,
+      "categories_used": [
+        "number",
+        "benchmark",
+        "water-feature",
+        "contour-ring",
+        "vegetation",
+        "settlement",
+        "road-or-track",
+        "scale-bar-or-grid",
+        "none",
+        "other"
+      ],
+      "low_expected_count_fraction": 0.55,
+      "per_category": [
+        {
+          "category": "number",
+          "gs_observed": 8,
+          "fifty_five_observed": 149,
+          "gs_expected": 4.026,
+          "fifty_five_expected": 152.974,
+          "gs_residual": 1.981,
+          "fifty_five_residual": -0.321
+        },
+        {
+          "category": "benchmark",
+          "gs_observed": 4,
+          "fifty_five_observed": 41,
+          "gs_expected": 1.154,
+          "fifty_five_expected": 43.846,
+          "gs_residual": 2.65,
+          "fifty_five_residual": -0.43
+        },
+        {
+          "category": "water-feature",
+          "gs_observed": 2,
+          "fifty_five_observed": 105,
+          "gs_expected": 2.744,
+          "fifty_five_expected": 104.256,
+          "gs_residual": -0.449,
+          "fifty_five_residual": 0.073
+        },
+        {
+          "category": "contour-ring",
+          "gs_observed": 2,
+          "fifty_five_observed": 346,
+          "gs_expected": 8.923,
+          "fifty_five_expected": 339.077,
+          "gs_residual": -2.318,
+          "fifty_five_residual": 0.376
+        },
+        {
+          "category": "vegetation",
+          "gs_observed": 0,
+          "fifty_five_observed": 51,
+          "gs_expected": 1.308,
+          "fifty_five_expected": 49.692,
+          "gs_residual": -1.144,
+          "fifty_five_residual": 0.186
+        },
+        {
+          "category": "settlement",
+          "gs_observed": 2,
+          "fifty_five_observed": 120,
+          "gs_expected": 3.128,
+          "fifty_five_expected": 118.872,
+          "gs_residual": -0.638,
+          "fifty_five_residual": 0.103
+        },
+        {
+          "category": "road-or-track",
+          "gs_observed": 1,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.282,
+          "fifty_five_expected": 10.718,
+          "gs_residual": 1.352,
+          "fifty_five_residual": -0.219
+        },
+        {
+          "category": "scale-bar-or-grid",
+          "gs_observed": 0,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.051,
+          "fifty_five_expected": 1.949,
+          "gs_residual": -0.226,
+          "fifty_five_residual": 0.037
+        },
+        {
+          "category": "none",
+          "gs_observed": 1,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.077,
+          "fifty_five_expected": 2.923,
+          "gs_residual": 3.328,
+          "fifty_five_residual": -0.54
+        },
+        {
+          "category": "other",
+          "gs_observed": 2,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.308,
+          "fifty_five_expected": 11.692,
+          "gs_residual": 3.051,
+          "fifty_five_residual": -0.495
+        }
+      ],
+      "monte_carlo_p_value": 0.0040995900409959,
+      "monte_carlo_resamples": 10000
+    },
+    "50": {
+      "insufficient_data": false,
+      "label_a": "gs",
+      "label_b": "fifty_five",
+      "chi2": 36.11980080407824,
+      "p_value": 3.775206483514817e-05,
+      "dof": 9,
+      "n_gs": 16,
+      "n_fifty_five": 836,
+      "categories_used": [
+        "number",
+        "benchmark",
+        "water-feature",
+        "contour-ring",
+        "vegetation",
+        "settlement",
+        "road-or-track",
+        "scale-bar-or-grid",
+        "none",
+        "other"
+      ],
+      "low_expected_count_fraction": 0.55,
+      "per_category": [
+        {
+          "category": "number",
+          "gs_observed": 4,
+          "fifty_five_observed": 149,
+          "gs_expected": 2.873,
+          "fifty_five_expected": 150.127,
+          "gs_residual": 0.665,
+          "fifty_five_residual": -0.092
+        },
+        {
+          "category": "benchmark",
+          "gs_observed": 4,
+          "fifty_five_observed": 41,
+          "gs_expected": 0.845,
+          "fifty_five_expected": 44.155,
+          "gs_residual": 3.432,
+          "fifty_five_residual": -0.475
+        },
+        {
+          "category": "water-feature",
+          "gs_observed": 2,
+          "fifty_five_observed": 105,
+          "gs_expected": 2.009,
+          "fifty_five_expected": 104.991,
+          "gs_residual": -0.007,
+          "fifty_five_residual": 0.001
+        },
+        {
+          "category": "contour-ring",
+          "gs_observed": 2,
+          "fifty_five_observed": 346,
+          "gs_expected": 6.535,
+          "fifty_five_expected": 341.465,
+          "gs_residual": -1.774,
+          "fifty_five_residual": 0.245
+        },
+        {
+          "category": "vegetation",
+          "gs_observed": 0,
+          "fifty_five_observed": 51,
+          "gs_expected": 0.958,
+          "fifty_five_expected": 50.042,
+          "gs_residual": -0.979,
+          "fifty_five_residual": 0.135
+        },
+        {
+          "category": "settlement",
+          "gs_observed": 2,
+          "fifty_five_observed": 120,
+          "gs_expected": 2.291,
+          "fifty_five_expected": 119.709,
+          "gs_residual": -0.192,
+          "fifty_five_residual": 0.027
+        },
+        {
+          "category": "road-or-track",
+          "gs_observed": 1,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.207,
+          "fifty_five_expected": 10.793,
+          "gs_residual": 1.746,
+          "fifty_five_residual": -0.242
+        },
+        {
+          "category": "scale-bar-or-grid",
+          "gs_observed": 0,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.038,
+          "fifty_five_expected": 1.962,
+          "gs_residual": -0.194,
+          "fifty_five_residual": 0.027
+        },
+        {
+          "category": "none",
+          "gs_observed": 1,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.056,
+          "fifty_five_expected": 2.944,
+          "gs_residual": 3.976,
+          "fifty_five_residual": -0.55
+        },
+        {
+          "category": "other",
+          "gs_observed": 0,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.188,
+          "fifty_five_expected": 9.812,
+          "gs_residual": -0.433,
+          "fifty_five_residual": 0.06
+        }
+      ],
+      "monte_carlo_p_value": 0.010698930106989302,
+      "monte_carlo_resamples": 10000
+    },
+    "75": {
+      "insufficient_data": false,
+      "label_a": "gs",
+      "label_b": "fifty_five",
+      "chi2": 40.579766006273786,
+      "p_value": 5.9641676095252105e-06,
+      "dof": 9,
+      "n_gs": 14,
+      "n_fifty_five": 836,
+      "categories_used": [
+        "number",
+        "benchmark",
+        "water-feature",
+        "contour-ring",
+        "vegetation",
+        "settlement",
+        "road-or-track",
+        "scale-bar-or-grid",
+        "none",
+        "other"
+      ],
+      "low_expected_count_fraction": 0.55,
+      "per_category": [
+        {
+          "category": "number",
+          "gs_observed": 2,
+          "fifty_five_observed": 149,
+          "gs_expected": 2.487,
+          "fifty_five_expected": 148.513,
+          "gs_residual": -0.309,
+          "fifty_five_residual": 0.04
+        },
+        {
+          "category": "benchmark",
+          "gs_observed": 4,
+          "fifty_five_observed": 41,
+          "gs_expected": 0.741,
+          "fifty_five_expected": 44.259,
+          "gs_residual": 3.785,
+          "fifty_five_residual": -0.49
+        },
+        {
+          "category": "water-feature",
+          "gs_observed": 2,
+          "fifty_five_observed": 105,
+          "gs_expected": 1.762,
+          "fifty_five_expected": 105.238,
+          "gs_residual": 0.179,
+          "fifty_five_residual": -0.023
+        },
+        {
+          "category": "contour-ring",
+          "gs_observed": 2,
+          "fifty_five_observed": 346,
+          "gs_expected": 5.732,
+          "fifty_five_expected": 342.268,
+          "gs_residual": -1.559,
+          "fifty_five_residual": 0.202
+        },
+        {
+          "category": "vegetation",
+          "gs_observed": 0,
+          "fifty_five_observed": 51,
+          "gs_expected": 0.84,
+          "fifty_five_expected": 50.16,
+          "gs_residual": -0.917,
+          "fifty_five_residual": 0.119
+        },
+        {
+          "category": "settlement",
+          "gs_observed": 2,
+          "fifty_five_observed": 120,
+          "gs_expected": 2.009,
+          "fifty_five_expected": 119.991,
+          "gs_residual": -0.007,
+          "fifty_five_residual": 0.001
+        },
+        {
+          "category": "road-or-track",
+          "gs_observed": 1,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.181,
+          "fifty_five_expected": 10.819,
+          "gs_residual": 1.924,
+          "fifty_five_residual": -0.249
+        },
+        {
+          "category": "scale-bar-or-grid",
+          "gs_observed": 0,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.033,
+          "fifty_five_expected": 1.967,
+          "gs_residual": -0.181,
+          "fifty_five_residual": 0.023
+        },
+        {
+          "category": "none",
+          "gs_observed": 1,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.049,
+          "fifty_five_expected": 2.951,
+          "gs_residual": 4.276,
+          "fifty_five_residual": -0.553
+        },
+        {
+          "category": "other",
+          "gs_observed": 0,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.165,
+          "fifty_five_expected": 9.835,
+          "gs_residual": -0.406,
+          "fifty_five_residual": 0.053
+        }
+      ],
+      "monte_carlo_p_value": 0.008899110088991101,
+      "monte_carlo_resamples": 10000
+    },
+    "100": {
+      "insufficient_data": false,
+      "label_a": "gs",
+      "label_b": "fifty_five",
+      "chi2": 40.579766006273786,
+      "p_value": 5.9641676095252105e-06,
+      "dof": 9,
+      "n_gs": 14,
+      "n_fifty_five": 836,
+      "categories_used": [
+        "number",
+        "benchmark",
+        "water-feature",
+        "contour-ring",
+        "vegetation",
+        "settlement",
+        "road-or-track",
+        "scale-bar-or-grid",
+        "none",
+        "other"
+      ],
+      "low_expected_count_fraction": 0.55,
+      "per_category": [
+        {
+          "category": "number",
+          "gs_observed": 2,
+          "fifty_five_observed": 149,
+          "gs_expected": 2.487,
+          "fifty_five_expected": 148.513,
+          "gs_residual": -0.309,
+          "fifty_five_residual": 0.04
+        },
+        {
+          "category": "benchmark",
+          "gs_observed": 4,
+          "fifty_five_observed": 41,
+          "gs_expected": 0.741,
+          "fifty_five_expected": 44.259,
+          "gs_residual": 3.785,
+          "fifty_five_residual": -0.49
+        },
+        {
+          "category": "water-feature",
+          "gs_observed": 2,
+          "fifty_five_observed": 105,
+          "gs_expected": 1.762,
+          "fifty_five_expected": 105.238,
+          "gs_residual": 0.179,
+          "fifty_five_residual": -0.023
+        },
+        {
+          "category": "contour-ring",
+          "gs_observed": 2,
+          "fifty_five_observed": 346,
+          "gs_expected": 5.732,
+          "fifty_five_expected": 342.268,
+          "gs_residual": -1.559,
+          "fifty_five_residual": 0.202
+        },
+        {
+          "category": "vegetation",
+          "gs_observed": 0,
+          "fifty_five_observed": 51,
+          "gs_expected": 0.84,
+          "fifty_five_expected": 50.16,
+          "gs_residual": -0.917,
+          "fifty_five_residual": 0.119
+        },
+        {
+          "category": "settlement",
+          "gs_observed": 2,
+          "fifty_five_observed": 120,
+          "gs_expected": 2.009,
+          "fifty_five_expected": 119.991,
+          "gs_residual": -0.007,
+          "fifty_five_residual": 0.001
+        },
+        {
+          "category": "road-or-track",
+          "gs_observed": 1,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.181,
+          "fifty_five_expected": 10.819,
+          "gs_residual": 1.924,
+          "fifty_five_residual": -0.249
+        },
+        {
+          "category": "scale-bar-or-grid",
+          "gs_observed": 0,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.033,
+          "fifty_five_expected": 1.967,
+          "gs_residual": -0.181,
+          "fifty_five_residual": 0.023
+        },
+        {
+          "category": "none",
+          "gs_observed": 1,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.049,
+          "fifty_five_expected": 2.951,
+          "gs_residual": 4.276,
+          "fifty_five_residual": -0.553
+        },
+        {
+          "category": "other",
+          "gs_observed": 0,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.165,
+          "fifty_five_expected": 9.835,
+          "gs_residual": -0.406,
+          "fifty_five_residual": 0.053
+        }
+      ],
+      "monte_carlo_p_value": 0.0071992800719928,
+      "monte_carlo_resamples": 10000
+    },
+    "125": {
+      "insufficient_data": false,
+      "label_a": "gs",
+      "label_b": "fifty_five",
+      "chi2": 40.579766006273786,
+      "p_value": 5.9641676095252105e-06,
+      "dof": 9,
+      "n_gs": 14,
+      "n_fifty_five": 836,
+      "categories_used": [
+        "number",
+        "benchmark",
+        "water-feature",
+        "contour-ring",
+        "vegetation",
+        "settlement",
+        "road-or-track",
+        "scale-bar-or-grid",
+        "none",
+        "other"
+      ],
+      "low_expected_count_fraction": 0.55,
+      "per_category": [
+        {
+          "category": "number",
+          "gs_observed": 2,
+          "fifty_five_observed": 149,
+          "gs_expected": 2.487,
+          "fifty_five_expected": 148.513,
+          "gs_residual": -0.309,
+          "fifty_five_residual": 0.04
+        },
+        {
+          "category": "benchmark",
+          "gs_observed": 4,
+          "fifty_five_observed": 41,
+          "gs_expected": 0.741,
+          "fifty_five_expected": 44.259,
+          "gs_residual": 3.785,
+          "fifty_five_residual": -0.49
+        },
+        {
+          "category": "water-feature",
+          "gs_observed": 2,
+          "fifty_five_observed": 105,
+          "gs_expected": 1.762,
+          "fifty_five_expected": 105.238,
+          "gs_residual": 0.179,
+          "fifty_five_residual": -0.023
+        },
+        {
+          "category": "contour-ring",
+          "gs_observed": 2,
+          "fifty_five_observed": 346,
+          "gs_expected": 5.732,
+          "fifty_five_expected": 342.268,
+          "gs_residual": -1.559,
+          "fifty_five_residual": 0.202
+        },
+        {
+          "category": "vegetation",
+          "gs_observed": 0,
+          "fifty_five_observed": 51,
+          "gs_expected": 0.84,
+          "fifty_five_expected": 50.16,
+          "gs_residual": -0.917,
+          "fifty_five_residual": 0.119
+        },
+        {
+          "category": "settlement",
+          "gs_observed": 2,
+          "fifty_five_observed": 120,
+          "gs_expected": 2.009,
+          "fifty_five_expected": 119.991,
+          "gs_residual": -0.007,
+          "fifty_five_residual": 0.001
+        },
+        {
+          "category": "road-or-track",
+          "gs_observed": 1,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.181,
+          "fifty_five_expected": 10.819,
+          "gs_residual": 1.924,
+          "fifty_five_residual": -0.249
+        },
+        {
+          "category": "scale-bar-or-grid",
+          "gs_observed": 0,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.033,
+          "fifty_five_expected": 1.967,
+          "gs_residual": -0.181,
+          "fifty_five_residual": 0.023
+        },
+        {
+          "category": "none",
+          "gs_observed": 1,
+          "fifty_five_observed": 2,
+          "gs_expected": 0.049,
+          "fifty_five_expected": 2.951,
+          "gs_residual": 4.276,
+          "fifty_five_residual": -0.553
+        },
+        {
+          "category": "other",
+          "gs_observed": 0,
+          "fifty_five_observed": 10,
+          "gs_expected": 0.165,
+          "fifty_five_expected": 9.835,
+          "gs_residual": -0.406,
+          "fifty_five_residual": 0.053
+        }
+      ],
+      "monte_carlo_p_value": 0.0072992700729927005,
+      "monte_carlo_resamples": 10000
+    }
+  },
+  "comparator_55map_text_track_aggregate": {
+    "number": 149,
+    "benchmark": 41,
+    "water-feature": 105,
+    "contour-ring": 346,
+    "vegetation": 51,
+    "settlement": 120,
+    "road-or-track": 10,
+    "scale-bar-or-grid": 2,
+    "none": 2,
+    "other": 10
+  }
+}
