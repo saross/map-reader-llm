@@ -1630,6 +1630,75 @@ Now that the GS classification + v2 work landed, the new sequencing reflects wha
 
 ---
 
+## Session 82 entry-point queue (composed end-of-Session-81-review 2026-04-30)
+
+Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs 312), settlement-mound re-inspection (Obs 313 — three-category result + two-mechanism framework), Cat 2 symbol-ID search (Obs 314 → Obs 315 — closed with negative result), the 4-map raw student-data audit (planning + smoke-test in `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md`, commit `d5dc0e87`), and the FN-rate framing thread (4-map / 55-map estimator convergence at 9-11 %). The full failure-mode taxonomy is now at paper-Discussion-quality level. Next-session pickup is mostly small high-value items.
+
+### Read-first for Session 82
+
+1. **This file's `## Session 81 closure roll-up`** above (current state of the to-do list)
+2. **Obs 312-315** (`docs/notes/reflections/working-notes.md`) — bet-test resolution + failure-mode taxonomy + symbol-ID closure
+3. **`planning/dedupe-raw-gs-student-data-plan-2026-04-30.md`** (commit `d5dc0e87`) — the dedup plan + the §8 open questions on the 4 GS maps' raw student data
+4. **GS student-maps review thread** (this section, immediately below)
+
+### GS student-maps review thread — status + next-session approach
+
+**Where we are**: the **raw pre-curation student data** for the 4 GS maps lives at `inputs/raw-student-review-production-maps/Mapmounds/` (dual-projection shapefiles; ~10,825 features total across the 55-map and 4-map work). Within the 4 GS sheet bounds: **822 student-marked features**.
+
+**Audit findings from Session 81**:
+
+- **Cumulative FN rate across the 4 GS maps: 9.1 %** (cf. Sobotkova 2023's published 5.0 %; per the user's concession, the 5.0 % was likely a calculation issue in the original paper). Per-map: 3.55 % / 3.56 % / 9.09 % / **15.88 % (K-35-062-2 outlier)** — substantial student-digitiser variation, not random sampling bias.
+- **Two student-feature populations** in the 822: **560 "Hairy" (Russian 1:50k mound symbols)** with 97 % match to curator GT; **262 non-Hairy** with 3 % match, spatially disjoint (median 1.2 km from any Hairy point) — different feature class entirely, NOT duplicates.
+- **Dedup smoke-test (50 m radius, Hairy-only)**: 4 / 560 = 0.7 % — minimal duplication, contradicting the user's recall of "lots of duplicates". The `scripts/review_gt_duplicates.py` (commit `dea1155f`) prior dedup methodology is preserved as reference but is unnecessary on this corpus.
+- **The 4-map and 55-map FN-rate estimators converge at 9-11 %** — strong cross-validation. The 55-map analysis (Obs 305): 8.87 % lower-bound, 11.15 % recall-adjusted central; the 4-map re-derivation: 9.1 % cumulative. This is a much cleaner paper-Methods finding than the original "we disagree with Sobotkova" framing.
+- **TM 30-548's published 0.1 % FP rate** for student data is consistent with the Hairy-only subset; the 38.7 % apparent FP rate from earlier audits was an artefact of including non-Hairy features in the FP denominator.
+
+**Five open questions** (from `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md` §8, in priority order):
+
+1. **Non-Hairy provenance** (highest paper-Methods-relevance) — what are the 262 non-Hairy points? Different map series? Earlier protocol? Different symbol class? Quick spatial inspection + user's curator-process records likely answer this in <30 min. Once resolved, paper Methods can carry a single sentence ("the 822-feature student dataset includes ~30 % features outside the Russian 1:50k mound-symbol class, which we exclude from the FP-rate denominator").
+2. **K-35-062-2 outlier at 15.88 % FN** — investigate curator records to understand whether this map was digitised by a less-experienced student, or has structural cartographic differences. Short investigation; per-map heterogeneity is the substantive paper finding so understanding the worst case strengthens the framing.
+3. **Update Obs 305** with the 4-map cross-validation finding — minor wording correction; the existing Obs has the 55-map analysis but doesn't yet incorporate the 4-map convergence. Quick follow-up Obs (or amendment-style addition) once non-Hairy provenance resolved.
+4. **822 vs 848 count discrepancy** — different counting methodology between two audits during Session 81; trivial to reconcile.
+5. **Dedup pass on Hairy data** — value low (only 0.7 % dupes); skip unless other reason emerges from the non-Hairy investigation.
+
+**Recommended Session-82 sequence**:
+
+- (A) **Investigate the 262 non-Hairy points** (~30 min): geographic inspection + cross-reference user's curator-process records. Output: a single Obs entry (or Obs 305 amendment) explaining the non-Hairy population.
+- (B) **K-35-062-2 brief investigation** (~20 min): user's curator records likely have notes on which student digitised which maps; correlate with FN rate.
+- (C) **Update Obs 305** with the cross-validation + non-Hairy framing (~15 min, paper-Methods-ready).
+
+After (A)-(C), the FN-rate thread is closed paper-ready. The remaining items 12-16 from the Session 81 closure-roll-up to-do list (BCa migration done; bet-test app implemented; etc.) are mostly closure work or low-priority bookkeeping.
+
+### Failure-mode catalogue is paper-Discussion-ready (no Session-82 action needed)
+
+Per Obs 313 + 315, the failure-mode catalogue is at mechanism level:
+
+- **Mechanism A — colour-veto failure** (~75 % of v2 reclassifications): square + rounded black features with hachures
+- **Mechanism B — central-glyph anchor** (~25 %): closed contour + benchmark / spot-height / triangulation glyph
+- **Mechanism C — source-domain ambiguity** (small, illustrative): mud-geyser crater (item 285) is the cleanest example
+
+No symbol-identity dependence; the paper writes the catalogue mechanically. **Mechanism A and Mechanism C have specific testable methodological fixes** (colour-as-hard-veto in proposer prompt; benchmark-as-spatial-join post-classification) — usable as future-work bullets.
+
+### Outstanding paper-text decisions (for drafting time, not Session 82)
+
+- **Sobotkova 2023 correction**: explicit (note the 5.0 % vs re-derived 9.1 %) or soft-pedal? My read: explicit, since the convergence with 55-map is a stronger story than disagreement.
+- **K-35-062-2 by name**: name in paper, or anonymise as "one map at 15.88 %"? Specificity vs discretion call.
+- **Recall-anchor**: image-track / R = 150 m for the 11.15 % central, or a more conservative anchor? Currently the most-generous; happy to revisit.
+- **Dedup mention in Methods**: include the "0.7 % dedup rate" as a corpus-quality statistic, or omit?
+- **Hairy / non-Hairy framing**: how prominently to flag in Methods? Single sentence vs supplementary table.
+
+These don't block Session 82; they're paper-drafting-time decisions.
+
+### Things to NOT redo in Session 82
+
+- The bet-test inspection is COMPLETE (0/177); do NOT re-launch the Streamlit app
+- The settlement-mound re-inspection is COMPLETE (87/29/1/0 split); do NOT re-launch
+- The TM 30-548 ≤425 search is COMPLETE with negative result for Cat 2; do NOT re-search via TM 30-548 (a primary Russian-language guide would be a different effort, and is deferred)
+- Obs 312, 313, 314, 315 are committed; do NOT modify (refinements should come as new Obs per project policy)
+- The dedup pass on the 4-map student data is NOT WORTH RUNNING (0.7 % rate); do NOT execute `scripts/review_gt_duplicates.py` on this corpus
+
+---
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
