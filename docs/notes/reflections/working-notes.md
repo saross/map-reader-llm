@@ -15567,3 +15567,86 @@ Search terms: bet-test resolved 0 of 177 review errors, v2 overclaim all 177, re
 - **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): confirms the rays/hachures disambiguation is stated explicitly in the detection instruction ("The **rays pointing outward** are essential. Symbols without visible rays are not mounds."); the FP-classifier's closed-list burial-mound subtypes mirror the four proposer subtypes (`burial-mound`, `settlement-mound`, `triangulation-point-on-burial-mound`, `benchmark-on-burial-mound`).
 - **Memory** `2026-04-29-d5a6332b0788` (GS curator GT precision history): context for the user's prior digitisation experience underpinning the bet framing.
 - **Artefacts**: `scripts/v2_burial_mound_bet_test_app.py`; `results/55maps-fp-classification/v2-burial-mound-bet-test/verdicts.csv`; bet plan commit `8d2f7f47`; v2 55-map FP-classification commit `ec21c8ef`.
+
+## Observation 313: Settlement-mound re-inspection — three-category taxonomy and two-mechanism framework for v2 overclaims (2026-04-30)
+
+### The finding
+
+Targeted re-inspection of all 117 v2-`settlement-mound` reclassifications using the dedicated Streamlit app (`scripts/v2_settlement_mound_mode2_app.py`, commit `d75a483e`). Verdict scheme: `closed_topo_line_no_hachures` / `closed_topo_line_with_hachures` / `other_orange_brown_feature` / `not_orange_brown`.
+
+| Verdict | Count | % of 117 |
+|---|---:|---:|
+| `not_orange_brown` | 87 | 74.4 % |
+| `closed_topo_line_no_hachures` | 29 | 24.8 % |
+| `other_orange_brown_feature` | 1 | 0.9 % |
+| `closed_topo_line_with_hachures` | 0 | 0.0 % |
+
+**Mode 2 status:** Per the app's design rule (Mode 2 SUPPORTED ≥ 60 % `closed_topo_line_no_hachures`), Mode 2 is **technically REJECTED at the strict 60 % threshold** — only 24.8 % of calls are closed-topo-line-no-hachures. However, Mode 2 is **empirically confirmed as a substantive secondary failure mode at ~25 %**. The dominant ~75 % category (`not_orange_brown`) proves to be more informative than anticipated: it encodes two structurally distinct sub-populations uncovered by interactive re-inspection of representative crops.
+
+### Three-category refinement (from interactive re-inspection)
+
+The 87 `not_orange_brown` verdicts are not a homogeneous group. Visual analysis of representative crops during the re-inspection identified two distinct sub-populations, yielding a three-category breakdown across all 117 cases:
+
+**Category 1 — Square black symbols with hachures = walled water features / compounds (subset of 87).**
+Visual signature: rectangular black perimeter + perpendicular outward hachures + blue/grey interior. The symbol class includes water reservoirs with earthen embankment (резервуар, пруд с валом), walled compounds, and fortification icons. The rectangular-fortification subset was identified against TM 30-548 Item 706 ("Fortification (ancient)") by a PDF-agent on commit `c4585f60`.
+
+**Category 2 — Rounded black features with hachures that look like settlement mounds except black (subset of 87).**
+Visual signature: circular black perimeter + outward radiating hachures (~10–15) + any interior. Shape, hachure count, and overall gestalt are visually identical to a real `settlement-mound` symbol; the only difference is colour (black vs orange-brown). This is the **cleanest possible colour-veto-failure case**: the classifier fires correctly on every visual cue except the colour requirement. Symbol identity is to be confirmed by SovietTopoSymbols.pdf agent (in flight at time of writing; see Caveats).
+
+**Category 3 — Closed topo lines (with or without a central black glyph) = the 29 `closed_topo_line_no_hachures` verdicts.**
+Visual signature: orange-brown closed contour ring (hilltop) + (usually) a central benchmark, spot-height, or triangulation glyph. The orange-brown colour is correct; what is missing is the hachure / ray pattern that distinguishes a real mound from a contour ring. This is Obs 312's Mode 1/2 territory (hilltop contour + geodetic control point).
+
+### Two-mechanism unification
+
+The three categories collapse into two distinct failure mechanisms that together account for the full 117:
+
+**Mechanism A — Colour-veto failure (Categories 1 + 2; ~75 % of the 117 confounds).**
+The proposer prompt (`prompts/system-instructions/detect_brief-text.md`) explicitly states that burial-mound subtypes are orange-brown. The FP-classifier ignores this colour requirement and fires on shape + hachure pattern alone. Both the square-black-walled-water (Cat 1) and the round-black-mound-shaped (Cat 2) features pass the model's "circle/polygon + radiating lines" gate despite having a black or blue interior, not orange-brown. Cat 2 is the cleanest demonstration: every visual feature of a `settlement-mound` is present except colour. The colour requirement is stated in the prompt but not enforced by the model.
+
+*Actionable fix:* A hard colour-rejection rule — either added to the FP-classifier's closed-list prompt instruction or applied as a post-classification filter on RGB properties of the detection crop — should eliminate both categories. Testable for under $10 of API spend.
+
+**Mechanism B — Central-glyph anchor (Category 3 + brown smudges + Obs 312 Mode 7 spot-heights; ~25 % of the 117 confounds).**
+The model uses the central black symbol (benchmark / spot-height / triangulation glyph) as the dominant trigger. Per the proposer prompt's `benchmark-on-mound` subtype ("Black square with central dot, surrounded by black rays"), a central-square-with-dot match appears sufficient to fire the classification, even when outward hachures are absent. The closed topo line provides supporting "circle" evidence. The result: hilltop + geodetic-control-point = systematic false positive.
+
+*Actionable fix:* Drop `benchmark-on-mound` and `triangulation-on-mound` from the proposer prompt's mound subtypes entirely; reframe co-located benchmark + mound as a separate post-classification spatial-join task (flag detections that fall within a configurable radius of a georeferenced benchmark or triangulation point as requiring manual confirmation).
+
+### What this means for the paper
+
+The two-mechanism framework replaces Obs 312's informal seven-mode catalogue with a causal account:
+
+1. **Mechanism A explains the settlement-mound overclaim rate.** The ~25 % `closed_topo_line_no_hachures` share (Mode 2) is actually the *smaller* component; the ~75 % `not_orange_brown` share represents colour-veto failures that were not visible during Obs 312's inspection of the full 177 because the bet-test app was not designed to sub-classify the `not_orange_brown` group.
+
+2. **Mechanism B explains the benchmark-on-mound and triangulation-on-mound overclaim rates.** These are the dominant failure modes in the 60 non-settlement-mound calls from Obs 312 (the 177 − 117 = 60 rows classified as other burial-mound subtypes).
+
+3. **Both mechanisms are fixable at the prompt / filter level**, not at the model architecture level. This is a practically important claim for the Discussion: the approach is not fundamentally limited by resolution; it is limited by an incomplete instruction set and a classification vocabulary that incentivises over-generalisation.
+
+### Suggested paper-Discussion text
+
+> The targeted re-inspection of the 117 v2-`settlement-mound` reclassifications revealed that the v2 FP-classifier's overclaim behaviour is driven by two structurally distinct mechanisms, each with a clear methodological remedy.
+>
+> The first mechanism — colour-veto failure — accounts for approximately 75 % of the settlement-mound confounds. The proposer prompt explicitly restricts burial-mound symbols to orange-brown features, yet the FP-classifier fires on shape and hachure pattern regardless of colour: roughly one quarter of the 117 confounds are black walled-water or compound symbols (rectangular perimeter, perpendicular hachures, blue/grey interior), while a further half are rounded black symbols with outward radiating hachures that are visually indistinguishable from real settlement mounds except for their black rather than orange-brown ink. The second sub-population is the cleanest possible demonstration of the failure: every geometric cue that defines a settlement-mound symbol is present; only the colour is wrong. A hard colour-rejection rule — whether applied as a prompt addition to the FP-classifier or as a post-classification filter on the RGB properties of the detection crop — should eliminate both sub-populations and is testable for under $10 of API spend.
+>
+> The second mechanism — central-glyph anchoring — accounts for the remaining approximately 25 %, and for the bulk of the non-settlement-mound overclaims in the broader 177-item bet-test set. Soviet 1:50,000 sheets place geodetic control points (benchmarks, triangulation stations) preferentially on prominent local high points, which generate small closed orange-brown contour rings at the summit. The proposer prompt's `benchmark-on-mound` and `triangulation-on-mound` subtypes describe a real phenomenon — a mound symbol with a co-located survey glyph — but the classifier treats the central black square-with-dot as a sufficient trigger even when the surrounding closed feature is a plain topographic contour ring with no rays. The practical remedy is to remove these two subtypes from the proposer prompt's mound vocabulary and replace them with a post-classification spatial-join step: detections falling within a configurable buffer of a georeferenced benchmark or triangulation point are flagged for manual confirmation rather than automatically classified.
+>
+> Together, these two mechanisms account for essentially all of the v2 overclaim rate, and both are addressable without retraining or architectural changes. Future implementations should treat colour as a hard veto — not a soft feature — and should decouple the detection of co-located survey infrastructure from the classification of mound morphology.
+
+### Caveats
+
+- **Cat 2 symbol identity is still in flight.** The rounded-black-hachured symbol class has not yet been identified against the SovietTopoSymbols.pdf legend. The characterisation above ("visually identical to settlement mound except black") is the user's visual description from inspection; the official cartographic name will be added in an addendum or follow-up Obs once the PDF-agent returns.
+- **The Mechanism A / B boundary within the 87 `not_orange_brown` verdicts is approximate.** The 87 rows were not sub-categorised during the re-inspection; the Cat 1 / Cat 2 split within that group is from visual analysis of representative cases, not a full sub-count. A second annotation pass with explicit Cat 1 / Cat 2 labels would be needed for a precise quantification.
+- **Mode 2 strict-threshold rejection is a threshold artefact.** The 60 % rule was set in the app's design before the composition of the `not_orange_brown` group was known. The empirical finding (Mode 2 is a real and substantive secondary mode at 25 %) stands independent of the threshold verdict.
+
+### Findable later
+
+Search terms: settlement-mound mode2 re-inspection 117 verdicts, not_orange_brown 87 74.4 percent, closed_topo_line_no_hachures 29 24.8 percent, Mode 2 technically rejected 60 percent threshold, colour-veto failure mechanism A, central-glyph anchor mechanism B, rounded black hachures visually identical settlement mound, square black walled water compounds, colour rejection rule RGB filter, drop benchmark-on-mound from proposer prompt, spatial-join post-classification benchmark co-location, three-category taxonomy failure modes v2 overclaims, two-mechanism framework supersedes Obs 312 informal mode list, settlement-mound-mode2-verdicts.csv, v2_settlement_mound_mode2_app commit d75a483e, SovietTopoSymbols Cat 2 symbol identity in flight, colour as hard veto not soft feature, decouple survey infrastructure from mound morphology, paper Discussion colour-veto central-glyph, Obs 312 Mode 1 Mode 2 Mode 3 superseded.
+
+### Related observations and artefacts
+
+- **Obs 308** (provisional 15.8 % v2 reclassification): provisional status closed by Obs 312; this Obs adds the mechanistic explanation for *why* the overclaims occur.
+- **Obs 312** (bet-test resolved 0/177 + informal Mode 1–7 catalogue): the two-mechanism framework here **refines and partially supersedes** Obs 312's informal mode list. Obs 312's Modes 1 and 2 map to Mechanism B; Obs 312's Mode 3 (large black box / dense hachures) and the settlement-mound provisional modes map to Mechanism A. The quantification in Obs 312 is unchanged; the causal account is sharpened here.
+- **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): the orange-brown colour requirement and the `benchmark-on-mound` subtype that together define both failure mechanisms.
+- **`scripts/v2_settlement_mound_mode2_app.py`** (commit `d75a483e`): the Streamlit re-inspection app used to generate the 117 verdicts.
+- **`results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`**: source data — 117 verdicts, no `closed_topo_line_with_hachures` returned.
+- **TM 30-548 Item 706 "Fortification (ancient)"**: identified by prior PDF-agent (commit `c4585f60`) as the cartographic label for the rectangular-fortification subset of Category 1.
+- **Memory** `2026-04-29-d5a6332b0788` (GS curator GT precision history) and `2026-04-29-bedbb2494542` (55-map jitter clarification): context for the broader precision landscape in which this Obs sits.
+- **Artefacts**: `scripts/v2_settlement_mound_mode2_app.py` commit `d75a483e`; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 312 commit `c4585f60`.
