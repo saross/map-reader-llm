@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-28T13:41:14.905913+00:00",
+  "timestamp": "2026-04-30T06:57:26.919920+00:00",
   "summary": {
     "label": "HIGH-t0.0-1of10",
     "n_detections": 802,
@@ -8,52 +8,114 @@
       {
         "buffer_metres": 20,
         "f1": 0.4883,
-        "f1_ci_lower": 0.4393,
-        "f1_ci_upper": 0.5372,
+        "f1_point": 0.4883,
+        "f1_ci_lower": 0.4779,
+        "f1_ci_upper": 0.4985,
+        "f1_ci_method": "BCa",
         "precision": 0.3766,
-        "p_ci_lower": 0.3286,
-        "p_ci_upper": 0.4271,
+        "p_point": 0.3766,
+        "p_ci_lower": 0.3664,
+        "p_ci_upper": 0.3866,
+        "p_ci_method": "BCa",
         "recall": 0.6943,
-        "r_ci_lower": 0.6325,
-        "r_ci_upper": 0.7548
+        "r_point": 0.6943,
+        "r_ci_lower": 0.6808,
+        "r_ci_upper": 0.7076,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 151,
+          "zero_fraction": 0.31006160164271046,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 30,
         "f1": 0.5497,
-        "f1_ci_lower": 0.4988,
-        "f1_ci_upper": 0.5991,
+        "f1_point": 0.5497,
+        "f1_ci_lower": 0.5392,
+        "f1_ci_upper": 0.5601,
+        "f1_ci_method": "BCa",
         "precision": 0.4239,
-        "p_ci_lower": 0.372,
-        "p_ci_upper": 0.4771,
+        "p_point": 0.4239,
+        "p_ci_lower": 0.4134,
+        "p_ci_upper": 0.435,
+        "p_ci_method": "BCa",
         "recall": 0.7816,
-        "r_ci_lower": 0.7208,
-        "r_ci_upper": 0.8408
+        "r_point": 0.7816,
+        "r_ci_lower": 0.7674,
+        "r_ci_upper": 0.7939,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 151,
+          "zero_fraction": 0.31006160164271046,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 40,
         "f1": 0.5804,
-        "f1_ci_lower": 0.5288,
-        "f1_ci_upper": 0.631,
+        "f1_point": 0.5804,
+        "f1_ci_lower": 0.5697,
+        "f1_ci_upper": 0.5916,
+        "f1_ci_method": "BCa",
         "precision": 0.4476,
-        "p_ci_lower": 0.3939,
-        "p_ci_upper": 0.5032,
+        "p_point": 0.4476,
+        "p_ci_lower": 0.4363,
+        "p_ci_upper": 0.4594,
+        "p_ci_method": "BCa",
         "recall": 0.8253,
-        "r_ci_lower": 0.7643,
-        "r_ci_upper": 0.8844
+        "r_point": 0.8253,
+        "r_ci_lower": 0.8112,
+        "r_ci_upper": 0.8377,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 153,
+          "zero_fraction": 0.3141683778234086,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 50,
         "f1": 0.5934,
-        "f1_ci_lower": 0.5425,
-        "f1_ci_upper": 0.6434,
+        "f1_point": 0.5934,
+        "f1_ci_lower": 0.5828,
+        "f1_ci_upper": 0.6037,
+        "f1_ci_method": "BCa",
         "precision": 0.4576,
-        "p_ci_lower": 0.4037,
-        "p_ci_upper": 0.5134,
+        "p_point": 0.4576,
+        "p_ci_lower": 0.4462,
+        "p_ci_upper": 0.4693,
+        "p_ci_method": "BCa",
         "recall": 0.8437,
-        "r_ci_lower": 0.7824,
-        "r_ci_upper": 0.9021
+        "r_point": 0.8437,
+        "r_ci_lower": 0.8292,
+        "r_ci_upper": 0.8563,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 153,
+          "zero_fraction": 0.3141683778234086,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       }
     ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal",
     "tile_classification": {
       "confusion": {
         "tp": 211,
@@ -62,28 +124,34 @@
         "fn": 18
       },
       "mcc": {
-        "mean": 0.4846,
-        "ci_lower": 0.4155,
-        "ci_upper": 0.5522
+        "point": 0.4848,
+        "mean": 0.4847,
+        "ci_lower": 0.4709,
+        "ci_upper": 0.4989,
+        "method": "BCa"
       },
       "sensitivity": {
-        "mean": 0.9213,
-        "ci_lower": 0.8846,
-        "ci_upper": 0.9545
+        "point": 0.9214,
+        "mean": 0.9214,
+        "ci_lower": 0.9132,
+        "ci_upper": 0.9286,
+        "method": "BCa"
       },
       "specificity": {
+        "point": 0.531,
         "mean": 0.5311,
-        "ci_lower": 0.4708,
-        "ci_upper": 0.5918
+        "ci_lower": 0.5194,
+        "ci_upper": 0.5442,
+        "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "5040f5b4",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-28T13:37:32.417036+00:00",
+    "generated_at_utc": "2026-04-30T06:57:14.754454+00:00",
     "cli_args": {
       "detections": [
         "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson"
@@ -108,7 +176,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [
