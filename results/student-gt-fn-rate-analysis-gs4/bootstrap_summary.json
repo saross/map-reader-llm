@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "methodology": "4-GS direct curator-vs-student confusion matrix; Hungarian matching at 50 m headline; bootstrap-by-sheet (10,000 iterations, seed 42).",
+  "headline_radius_m": 50.0,
+  "sweep_radii_m": [
+    50.0,
+    75.0,
+    100.0,
+    150.0
+  ],
+  "bootstrap_n": 10000,
+  "bootstrap_seed": 42,
+  "n_sheets": 4,
+  "headline": {
+    "fn_total": 30,
+    "fp_total": 17,
+    "tp_total": 539,
+    "curator_total": 569,
+    "student_total": 556,
+    "fn_rate": {
+      "point": 0.05272407732864675,
+      "ci_low": 0.029224904701397714,
+      "ci_high": 0.08796296296296297
+    },
+    "fp_rate": {
+      "point": 0.030575539568345324,
+      "ci_low": 0.012919896640826873,
+      "ci_high": 0.052884615384615384
+    },
+    "precision": 0.9694244604316546,
+    "recall": 0.9472759226713533,
+    "f1": 0.9582222222222222
+  },
+  "comparators": {
+    "sobotkova_2023": {
+      "fn_rate": 0.05,
+      "fp_rate": 0.001
+    },
+    "estimate_55map_headline": {
+      "fn_rate": 0.0887
+    },
+    "estimate_55map_recall_adjusted": {
+      "fn_rate": 0.1115
+    }
+  },
+  "input_paths": {
+    "student_gt": "inputs/vectors/references/student-mounds-gs-4maps-reviewed.geojson",
+    "curator_gt": "inputs/vectors/references/mounds-reference.geojson",
+    "bounds": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson"
+  }
+}
