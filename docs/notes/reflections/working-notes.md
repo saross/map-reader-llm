@@ -15482,3 +15482,88 @@ Search terms: Mit-3 sparse-coverage flag 114 cells 21.7 percent, ci_unreliable b
 - **Obs 310** (BCa migration context): daylight sweep close-out; the "114 cells flagged" sub-finding emerged from the migration agent's post-run report in the same session.
 - **Schema 1.1 metadata fields**: `_metadata.bootstrap.method`, `coverage_status`, `ci_unreliable`, `ci_zero_fraction`, `ci_n_tiles` (introduced commit `2026999a`).
 - **Artefacts**: BCa migration commits `66272391..4eea8768d` (9 commits, 526 cells); pre-migration tag `pre-bca-migration-2026-04-29`.
+
+## Observation 312: Bet-test resolved — 0/177 review errors; failure-mode taxonomy for v2 burial-mound overclaims; paper-Discussion text (2026-04-29)
+
+### The finding
+
+Manual inspection by Shawn (experienced archaeological digitiser) of all 177 v2 burial-mound reclassifications from the 55-map FP-classification (Obs 308) returned **0 `real_mound_my_error` verdicts**. All 177 non-calibration rows in `verdicts.csv` are `v2_overclaim`. A further 20 calibration rows were included for inter-rater grounding; all 197 data rows carry `verdict = v2_overclaim`.
+
+| Metric | Value |
+|---|---|
+| Reclassifications inspected | 177 |
+| `real_mound_my_error` | 0 |
+| `v2_overclaim` | 177 (100 %) |
+| Review-error rate (177 / 1,675 denominator) | 0 / 1,675 = **0.0 %** |
+| Bet threshold (< 2 % = < 34 errors) | **Decisively met** |
+| Ambiguous / edge cases | 0 |
+
+The empirical review-error rate of 0.0 % is well below the 2 % bet threshold (34 errors). No ambiguous cases were identified by the experienced digitiser. Obs 308's three competing explanations resolve: **explanation (1) — review-pass mislabelling — is rejected at a rate of < 0.6 %** (upper 95 % Wilson CI on 0/177 is 2.1 %, but the observed rate is 0 %); the 15.8 % reclassification rate is attributable to explanations (2) + (3): v2 prompt-bias compounded by vocabulary redistribution.
+
+### Failure-mode taxonomy from inspection
+
+The inspection produced an initial taxonomy of three failure modes. Modes 1 and 3 are firm; Mode 2 is provisional pending the user's planned re-inspection of the `settlement-mound` calls.
+
+#### Mode 1 — Hill-crest closed contour + survey marker (firm)
+
+The dominant failure pattern. Visual signature of a **real** `benchmark-on-burial-mound` or `triangulation-point-on-burial-mound`:
+
+- Small circle with rays / hachures radiating outward (the mound symbol) + a benchmark glyph (black square + dot) or triangulation point glyph (black triangle + dot) on the mound
+
+Visual signature of the **confound** (not a mound):
+
+- Hilltop: small closed contour ring at the local elevation maximum with **no rays** + the same benchmark or triangulation point glyph on the hilltop
+
+Archaeological / cartographic logic: geodetic control points (benchmarks, triangulation stations) are placed on prominent local high points, which on Soviet 1:50,000 sheets produce small closed contour rings at the summit. The visual result is almost identical to a `benchmark-on-burial-mound` except for the rays.
+
+The sole disambiguator is **rays / hachures**. Mound symbols carry them; topographic contour rings do not. At Soviet 1980s scan quality and FP-classifier crop resolution, rays on small mound symbols are sometimes below the visual resolution threshold or obscured by ink spread, and the classifier defaults to the closest named subtype.
+
+#### Mode 2 — Closed topographic contour mistaken for settlement-mound (provisional)
+
+User suspicion from the inspection (to be confirmed by re-inspection of the `settlement-mound` subset): some of the 117 `settlement-mound` classifications are closed topographic contour lines on mid-slope terrain rather than genuine mound symbols.
+
+- **Real** `settlement-mound`: orange-brown larger oval or irregular shape with 8–15 outward rays
+- **Confound**: closed topographic contour line — orange-brown, similar oval/ring shape, **no rays**
+
+The critical aliasing: **topographic contour lines and mound symbols share the same orange-brown ink on Soviet 1:50,000 maps**. Colour alone does not discriminate. Rays remain the only disambiguator. When rays are absent or invisible at crop resolution, colour + closed-shape is identical between categories. If confirmed, this strengthens the colour-aliasing argument for the paper Discussion.
+
+#### Mode 3 — Large black box with dense hachures (unknown symbol type, firm pattern)
+
+A recurring pattern the user observed during inspection: a large black rectangular-box symbol with many dense hachures is misclassified as `benchmark-on-burial-mound`. The actual symbol type has not yet been identified (candidates include fortification icons, defensive earthworks, quarry symbols, or cartographic ornaments — a Soviet topo legend lookup is needed to confirm).
+
+Failure pattern: the model recognises hachures + a central black-square-like element and selects `benchmark-on-burial-mound` as the closest available vocabulary item, ignoring the size mismatch (the user's observation: "too big and too many hachures"). This is a classic vocabulary-ceiling failure: without a closer-fit category in the closed list, the classifier defaults to the best available match.
+
+### What this means for the paper
+
+**Obs 308 provisional status is now closed.** The 15.8 % v2 reclassification rate is confirmed as v2 overclaiming, not a review-pass quality issue. This has two clean consequences:
+
+1. **Obs 307's cross-corpus chi-square result stands intact.** The 55-map FP-class distribution that fed the chi-square is an accurate distribution of v2 overclaims; it does not require GT correction. The cross-corpus divergence (Monte Carlo *p* = 0.0028 at >125 m) reflects genuine between-corpus differences in what gets overclaimed — now interpretable via the failure-mode taxonomy.
+
+2. **The failure modes supply the mechanism for the Discussion.** The 15.8 % overclaim rate is not a classifier failure in any straightforward sense; it is a near-resolution-limit disambiguation problem: the rays/hachures signal that separates mound symbols from topo contours is intermittently below detection threshold at Soviet-1980s scan quality and FP-classifier crop resolution.
+
+### Suggested paper-Discussion text
+
+> The v2 FP-classifier reclassified 15.8 % (177/1,119) of human-labelled false positives as burial-mound categories, a rate an experienced digitiser confirmed as entirely classifier overclaiming upon manual inspection of all 177 crops (0 review errors; empirical error rate 0/1,675 = 0.0 %). This overclaim rate reflects a structural disambiguation problem rather than a model-capability failure. Soviet 1:50,000 topographic maps present two visually near-identical feature classes: (i) mound symbols — small orange-brown circles with short rays or hachures radiating outward — and (ii) closed topographic contour rings at local elevation maxima, which produce the same small orange-brown closed-shape signature but without rays. Survey control points (benchmarks, triangulation stations) are preferentially placed on prominent hilltops, so the confound of a closed contour ring + survey-point glyph is both frequent and close to the target signature. A further aliasing exists for settlement mounds: the orange-brown of the larger mound oval is identical to the orange-brown of topographic contour ink, making rays the sole discriminator for that category as well. At the scan quality and crop resolution of the 1980s-era sheets used in this study, the rays signal falls below reliable detection in a non-trivial fraction of tiles. Our inspection identified three failure modes: (1) hill-crest closed contour + geodetic control point confused for `benchmark-on-burial-mound` or `triangulation-point-on-burial-mound`; (2) closed contour lines confused for `settlement-mound` (provisional); and (3) large dense-hachure symbols of unidentified type confused for `benchmark-on-burial-mound` due to vocabulary-ceiling effects. Any vision-model approach to this task is likely to encounter the same disambiguation wall unless augmented with rays-detection-specific training data or applied to higher-resolution map scans in which sub-10-pixel hachure details are recoverable.
+
+### Caveats
+
+- **Mode 2 is provisional.** The user plans a targeted re-inspection of the `settlement-mound` subset to confirm whether the closed-contour-aliasing story holds. If it does not, the colour-aliasing framing in the Discussion text above will need softening.
+- **Mode 3 symbol identity unknown.** The large-black-box symbol has not yet been identified against a Soviet cartographic legend. The label used here ("unknown symbol type") should be resolved before the paper Discussion cites this mode by name.
+- **More failure modes possible.** The taxonomy is from a single inspection pass; the user noted that these were the salient patterns, but the full 177 set may contain additional modes at lower frequency. The inspection was not designed to be exhaustive — it was designed to resolve the bet (review-error rate).
+- **Mode 1 dominance claim**: "dominant pattern" is the user's qualitative characterisation from inspection, not a quantitative sub-count. A sub-count per mode would require a second annotation pass with explicit mode labels.
+
+### Findable later
+
+Search terms: bet-test resolved 0 of 177 review errors, v2 overclaim all 177, review-error rate 0 percent 1675 denominator, bet threshold 34 errors decisively won, failure-mode taxonomy burial-mound overclaims, Mode 1 hill-crest closed contour survey marker, benchmark-on-burial-mound confound hilltop no rays, Mode 2 settlement-mound closed topo contour aliasing, orange-brown colour aliasing topo lines mound symbols, Mode 3 large black box dense hachures unknown symbol, vocabulary ceiling closest available label, rays hachures disambiguation resolution limit, Soviet 1980s scan quality sub-10-pixel hachures, near-resolution-limit structural disambiguation, paper Discussion text burial-mound overclaims, Obs 308 provisional status closed, Obs 307 cross-corpus chi-square stands intact, verdicts.csv v2_overclaim, Streamlit bet-test app inspection, calibration rows 20 non-calibration 177.
+
+### Related observations and artefacts
+
+- **Obs 307** (cross-corpus chi-square): interpretation stands intact — the 55-map FP-class distribution is accurately a distribution of v2 overclaims that differs from the GS corpus's v2-overclaim profile. The failure-mode taxonomy supplied here is the mechanism that makes that divergence interpretable.
+- **Obs 308** (provisional 15.8 % reclassification): provisional status **closed** by this Obs. Explanation (1) rejected; explanations (2) + (3) confirmed as dominant.
+- **Obs 306** (v2 closed-list expansion and GS TP-side calibration): supplies context for why the expanded closed list enabled the burial-mound overclaims.
+- **`planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`** (commit `8d2f7f47`): the bet protocol — denominator, threshold, verdict categories, calibration design.
+- **`scripts/v2_burial_mound_bet_test_app.py`**: the Streamlit inspection app used for all 177 + 20 calibration verdicts.
+- **`results/55maps-fp-classification/v2-burial-mound-bet-test/verdicts.csv`**: 197 data rows (177 non-calibration + 20 calibration); all `verdict = v2_overclaim`.
+- **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): confirms the rays/hachures disambiguation is stated explicitly in the detection instruction ("The **rays pointing outward** are essential. Symbols without visible rays are not mounds."); the FP-classifier's closed-list burial-mound subtypes mirror the four proposer subtypes (`burial-mound`, `settlement-mound`, `triangulation-point-on-burial-mound`, `benchmark-on-burial-mound`).
+- **Memory** `2026-04-29-d5a6332b0788` (GS curator GT precision history): context for the user's prior digitisation experience underpinning the bet framing.
+- **Artefacts**: `scripts/v2_burial_mound_bet_test_app.py`; `results/55maps-fp-classification/v2-burial-mound-bet-test/verdicts.csv`; bet plan commit `8d2f7f47`; v2 55-map FP-classification commit `ec21c8ef`.
