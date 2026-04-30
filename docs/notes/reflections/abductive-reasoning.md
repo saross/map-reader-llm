@@ -4481,3 +4481,80 @@ The TP-only localisation diagnostic (Obs 296 Test #1) computed the per-condition
 All three sequences were resolved by **agent-level discipline operating below the prompt level**. In Sequence A, the agent's verification step ("report what's actually there") caught my √N expectation. In Sequence B, the categorical-classification agent's uniform population coverage caught the manual-review hypothesis. In Sequence C, the diagnostic agent's TP-only matching scope + GT-jitter accounting caught the precision-shift framing. None of these probes was prompted into the agent specifically to catch MY error — they were generic verification disciplines that the agent was told to apply, and they happened to catch the parent's confabulation as a by-product.
 
 This contrasts with Session 79, where the probes that resolved belief revisions were either user interventions ("are you sure the files are tracked?") or my own re-reads of the source. In Session 80, the probes were agent-internal — the same anti-confabulation rules I'd encoded into the obs-writer contract were operating in the cleanup, bootstrap-10K, and FP-class agents too. **The pattern: encoding anti-confabulation rules at the agent-definition level produces parent-level error correction as a side effect.** This is a genuinely useful design principle, and I want to remember it as the load-bearing meta-finding from Session 80.
+
+## 2026-04-29/30 (Session 81, map-reader-llm): Four belief-revision sequences, each triggered by a different probe-type
+
+Session 81 produced four clean abductive sequences, distinctive in that each was resolved by a **different category of probe** — empirical smoke-test, user concession, domain-expert intervention, and categorical inspection. Where Session 80's signature was "agents catching parent-level errors", Session 81's signature was the **diversity of probe-types operating concurrently** during a single long collaborative session.
+
+### Sequence A — "Lots of duplicates explain the 38.7 % FP rate" → no, two-population split (Hairy / non-Hairy)
+
+**The starting observation**: an audit of the raw GS student data (`inputs/raw-student-review-production-maps/`) computed an apparent 38.7 % FP rate against curator GT — far higher than Sobotkova 2023's published 0.1 %. Shawn's recall was that participatory-GIS work produced "lots of duplicates" — multiple student dots on the same mound — and that dedup would resolve the inflation.
+
+**Two hypotheses sat beneath the recall**:
+
+- **H-dupes**: the 38 % is mostly multiple student dots on the same mound; a 25-50 m dedup pass will halve the unmatched-feature count.
+- **H-population-split**: the 38 % is a heterogeneous student-data population — some features are real burial-mound claims, others are a different feature class entirely; dedup won't resolve it because the unmatched features aren't dupes of matched ones.
+
+**The probe**: a smoke-test running the prior 55-map dedup script (`scripts/review_gt_duplicates.py`, commit `dea1155f`) at 50 m radius on the Hairy-only subset (560 points). Result: 4 / 560 = 0.7 % dedup candidates — essentially nothing.
+
+**Belief revision**: H-dupes was wrong. The 38 % is a population-split: 560 Hairy (Russian 1:50k mound-symbol claims, 97 % match curator GT) vs 262 non-Hairy (3 % match, spatially disjoint, median 1.2 km from any Hairy point — different feature class entirely). Dedup is unnecessary; the methodological correction is filtering by feature class before computing FP rate.
+
+**What was abductive about this?** The user's recall was domain-grounded ("I saw lots of duplicates during participatory-GIS work") but anchored on a salient observation that wasn't a frequency claim. Humans notice duplicates when they exist in clusters; the smoke-test showed the corpus-wide rate was much smaller than the salient-instance count would suggest. **Generalisable craft rule**: when a user's recall asserts an explanation rate (e.g. "lots of X"), run a 30-second sanity-check on the empirical rate before committing significant analytical effort to that explanation. The cost of the check is trivial; the cost of building on a wrong hypothesis can be hours.
+
+### Sequence B — "Sobotkova 2023's 5.0 % FN rate is correct; we disagree" → no, Sobotkova's 5.0 % is a calculation issue
+
+**The starting observation**: the 55-map FN-rate analysis (Obs 305) found 8.87 % [6.93, 11.35] lower-bound + 11.15 % recall-adjusted central — substantially higher than Sobotkova et al. 2023's published 5.0 % on a 4-map curator-reviewed sample. The 95 % CI on the new estimate excludes 5.0 %.
+
+**Two hypotheses sat beneath the disagreement**:
+
+- **H-disagreement**: the two methodologies (Sobotkova: curator review; this work: VLM phantom-TP) target the same parameter and both are unbiased; the disagreement reflects either methodological asymmetry or sampling bias on the 4-map sub-sample.
+- **H-calculation-error**: Sobotkova's 5.0 % was a calculation error in the original publication; the actual FN rate on those 4 maps is closer to the present 9-11 %.
+
+**The probe**: re-derive the 4-map FN rate from the underlying raw student data + current curator GT. Result: 9.1 % cumulative across the 4 maps (per-map: 3.55 / 3.56 / 9.09 / 15.88 %), with the K-35-062-2 outlier at 15.88 % accounting for a substantial share of the cumulative rate.
+
+**Belief revision (entirely from the user side)**: when shown the recomputed 9.1 %, Shawn's response was "I must have calculated errors incorrectly" — a direct concession that the published 5.0 % was wrong. H-disagreement was rejected; H-calculation-error confirmed. The 4-map and 55-map estimators converge cleanly at 9-11 %; this is now a paper-relevant cross-validation finding rather than a contested disagreement.
+
+**What was abductive about this?** The probe was a re-derivation, not a verification — and the re-derivation forced the user (the original paper's lead author) to confront a discrepancy that could only be resolved by his own concession. The agent-level effort was relatively low; the load-bearing intervention was the user's intellectual honesty about his own prior published work. **Generalisable craft rule**: for cross-validation against prior literature, prefer re-derivation from raw data over methodology-asymmetry framings — re-derivation creates a cleanly resolvable disagreement (one number vs another) rather than an irresolvable one (different methodologies, different parameters).
+
+### Sequence C — "Cat 2 = burial mound rendered black via scanning artefacts" → no, agent context-biasing produced a plausible but unsupported rationalisation
+
+**The starting observation**: the v2 settlement-mound re-inspection identified ~30-50 % of confounds as "rounded black features with hachures, look just like settlement mounds except they are black" (Cat 2). The SovietTopoSymbols.pdf agent searched for the corresponding canonical Soviet symbol and returned **Item 472 "Burial mound"** as primary, with the rationale "burial mounds become black due to scanning artefacts".
+
+**Two hypotheses sat beneath the agent's reasoning**:
+
+- **H-scanning-artefact**: real Soviet burial-mound symbols (canonically orange-brown) sometimes render full-black due to scan / colour-degradation artefacts on the actual maps; Cat 2 is therefore mis-classified-as-mound burial mounds.
+- **H-different-symbol**: Cat 2 is a different Soviet symbol class entirely, NOT a colour-distorted burial mound; the agent's "scanning artefact" mechanism is plausible-sounding but unsupported by the actual rendering on Soviet 1:50k maps.
+
+**The probe**: Shawn's domain expertise as the original GS-corpus curator. "Burial mounds NEVER become full black through scanning — colour artefacts are typically tonal shifts within the orange-brown family, not full-black inversions." Plus a follow-up: TM 30-548 has B&W print sections (cost-saving for 1958 reproduction), so its colour information is partially lost — but the manual is still reliable for SHAPE / IDENTITY / NUMBERING. The agent's "scanning artefact" rationale was an artefact of context-biasing, not a real cartographic mechanism.
+
+**Belief revision**: H-scanning-artefact was wrong. The agent's reasoning was a non-confabulation failure — it didn't invent fictitious data, but rationalised a wrong conclusion by fitting observations to the project's "burial mound detection" research narrative ("must be a discoloured burial mound because the project is about burial mounds"). Cat 2's actual identity remains open; the ≤425 search came up empty (Obs 315). The mechanism-level framing (Mechanism A — colour-veto failure) is preserved without symbol-identity grounding.
+
+**What was abductive about this?** The agent's reasoning was internally consistent but grounded in a false premise about colour-rendering. The user's domain expertise — "I curated those maps; I know what scanning distortion looks like" — was the only probe that could distinguish the hypotheses. **Generalisable craft rule (now in Obs 314)**: for domain-objective tasks (symbol identification, cross-corpus comparison, structural audit), explicitly instruct agents to reason agnostically of the project's research context. "Identify based on visual properties / objective evidence ONLY" should be a standing template clause for any investigation-style agent dispatch.
+
+### Sequence D — "Mode 2 (closed topo line) is the dominant settlement-mound confound" → no, colour-veto-failure (water/walled features) dominates at 75 %
+
+**The starting observation**: Obs 312 hypothesised that Mode 2 (closed topo line confused with settlement-mound) was the dominant confound class for the 117 v2-settlement-mound calls. The Streamlit settlement-mound re-inspection app encoded this as the headline test ("Mode 2 SUPPORTED if ≥ 60 % closed-topo-line-no-hachures").
+
+**Two hypotheses sat beneath the inspection design**:
+
+- **H-Mode-2-dominant**: the bulk of the 117 confounds are closed orange-brown topo contours mistaken for settlement-mound; the rest are residual.
+- **H-Mode-2-secondary**: Mode 2 is one of several distinct mechanisms; another (or combination) dominates.
+
+**The probe**: the user's interactive 117-crop re-inspection in the Streamlit app, with verdict scheme `closed_topo_line_no_hachures` / `closed_topo_line_with_hachures` / `other_orange_brown_feature` / `not_orange_brown`. Result: **87 / 117 (74.4 %) `not_orange_brown`** vs only 29 / 117 (24.8 %) closed_topo_line. The user's photographic walkthrough of representative cases (water reservoirs with embankment, walled compounds, fortification icons, mud-geyser craters, and "rounded black features with hachures") provided the structural taxonomy underlying the 87.
+
+**Belief revision**: H-Mode-2-dominant was wrong. Mode 2 (closed topo line) is a substantive secondary mode at 25 %, but the dominant ~75 % is **non-orange-brown features** — a colour-veto failure mode where the classifier ignores the prompt-stated orange-brown requirement and fires on shape + hachures alone. The mechanism-level taxonomy collapses Modes 1-7 (informally counted in Obs 312) into two named mechanisms (colour-veto failure ~75 %; central-glyph anchor ~25 %) plus a small Mechanism C (source-domain ambiguity, e.g. mud-geyser crater item 285).
+
+**What was abductive about this?** The Mode 2 hypothesis was the *initial* reading of the v2 reclassification rate (Obs 308); the inspection was designed to confirm or refute it. The result refuted the dominance share but confirmed Mode 2 as a real (just secondary) phenomenon. The user's interactive walkthrough was a probe-type that surfaces structural categories the verdict-scheme didn't anticipate (the "rounded black with hachures" Cat 2 was visible to the eye but not in the four pre-defined verdicts). **Generalisable craft rule**: when designing an inspection app for hypothesis-testing, include a free-text textarea for verdicts that don't fit the pre-defined categories — the most structurally-important findings often come from category-mismatch cases, and the textarea is where they surface.
+
+### Cross-cutting reflection (Session 81)
+
+The four sequences were resolved by **four different probe-types**, each appropriate to its case:
+
+- **A (smoke-test)**: empirical computation against domain-expert recall
+- **B (re-derivation)**: forcing a numerical disagreement that requires user concession
+- **C (domain-expert intervention)**: user authority overriding agent rationalisation
+- **D (interactive structural inspection)**: visual analysis surfacing categories the prior taxonomy missed
+
+This is a different texture from Session 80, where all three sequences were resolved by agent-level discipline operating below the prompt level. Session 81 shows the converse pattern: **probe diversity matters; different abductive failure-modes need different probe-types, and matching probe to failure-mode is itself a craft skill**. Encoding "always re-read source" into agent definitions (Session 80 lesson) is high-leverage but doesn't resolve probe-type-mismatch — Sequence C in particular required user-as-domain-expert, and no agent-internal rule could substitute.
+
+A meta-pattern across both Session 80 and Session 81: when a probe-type and a failure-mode are matched, belief revision is fast and clean; when they're mismatched, the wrong hypothesis can persist for some time even under repeated agent dispatches (the Cat 2 = Item 472 mistake was repeated by two agents before the user's domain expertise resolved it). **Future-self should remember: probe-type selection is upstream of agent-orchestration quality**.

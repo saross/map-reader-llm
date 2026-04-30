@@ -5749,3 +5749,67 @@ Phases (numbered for cross-reference; each landed before the next started):
 - The cost-estimator overstatement bug (5× on text-mode) is now fixed (mode-aware via backlog #2; commit `c738c60e`). All future API-spend estimates should use the fixed estimator.
 - Step 6 paper outline remains the next-session deliverable; all required analytical infrastructure is now in place. The Step 6 starting-state Obs reading list in `paper-writeup-continuity.md` is the suggested entry point.
 - Manual-review intuition vs categorical-classification trade-off: the FP-class diagnostic (Obs 302) overturned a hypothesis built from human visual review. Future analyses that depend on "what kind of feature is this" should default to uniform categorical classification across the population, not extension via more visual review.
+
+## Session 81 — 2026-04-29/30 (map-reader-llm): cleanup + bet-test inspection + failure-mode taxonomy + GS student-data audit
+
+### Major activities
+
+1. **Mit-3 + BCa code change**: `scripts/lib_advanced_metrics.py` switched percentile bootstrap → BCa across all six bootstrap functions; added Mit-3 sparse-coverage flag (50 % zero-tile threshold). Schema bumped 1.0 → 1.1; `bootstrap.method = "BCa"`; `point` deterministic-statistic fields on F1/P/R/MCC; `coverage_status` rollup. Commit `2026999a`. 24 new tier-1 tests; all 839 + 43 integration tests passed; ruff clean. Rollback tag `pre-bca-mit3-2026-04-29`.
+2. **Daylight sweep close-out**: 4 per-group commits `b774238b..6b611174` upgrading 162 of 165 cells from N=1K to N=10K; 2 timed-out cells re-run in commit `cbad41fd`. §7 verification: 163 N=10K presence, 4/5 F1-stability pass (one outlier `pro-text-high-t-0-7` traced to N=5 → N=10 input expansion). §7.5 verifier patched to use `mcc.point` (commit `3822645a`).
+3. **Pro-n10 evaluation.json recovery**: 10 consensus levels at N=10K + `--mcc` flag (commit `f1cf5086`). Closes daylight-sweep §12 question 1.
+4. **BCa re-run-all-cells migration**: 526 cells regenerated on sapphire (~10 min wall, 16-way parallel). Scaffolding `66272391` + 8 per-group data commits `014d62488..4eea8768d`. §7.7 point-estimate stability vs pre-BCa: 526/526 (Δ=0). 114/526 (21.7 %) flagged `coverage_status = "sparse_cross_grid"`.
+5. **Citation audits**: ZERO surviving off-matrix `with-mcc/` citations; ZERO MCC-citation divergences from matrix-canonical (6 spot-checked). Niculiță / Guyot misattributions confirmed at lines 45 / 68 of methodology research docs; added to to-do as items #10 + #11 (commit `dd0693c4`).
+6. **FN-rate analysis**: `scripts/analyse_student_gt_fn_rate.py` (760 LOC). Three-tier verdict scheme on 5 review CSVs. Bootstrap-resample by map (10K iter, seed 42). Headline: 8.87 % [6.93, 11.35] lower-bound; 11.15 % recall-adjusted central. Output `results/student-gt-fn-rate-analysis/`; commit `508e498f`.
+7. **Bet-test app + inspection**: Streamlit at `scripts/v2_burial_mound_bet_test_app.py` (867 LOC) + launcher; 197-crop queue (177 reclassifications + 20 calibration). Plan committed `8d2f7f47`. User inspection: **0/177 verdicts as `real_mound_my_error`**; bet won; Obs 308 provisional status closed.
+8. **Settlement-mound re-inspection app + inspection**: `scripts/v2_settlement_mound_mode2_app.py` (786 LOC), commit `d75a483e`. 117-crop queue. Result: 87 / 117 (74.4 %) `not_orange_brown` + 29 (24.8 %) `closed_topo_line_no_hachures` + 1 + 0.
+9. **Failure-mode taxonomy** (Obs 312-315): three-category bet-test result + two-mechanism unification. Mechanism A = colour-veto failure (~75 %); Mechanism B = central-glyph anchor (~25 %); Mechanism C = source-domain ambiguity (mud-geyser crater item 285).
+10. **Symbol-identification thread** (closed with negative result): two SovietTopoSymbols.pdf agents searched for Cat 2; first identified Items 472 + 473 (1:10k, wrong scale); second searched ≤425 (1:50k-relevant) and came up empty. Resolution: paper-Discussion uses mechanism-level framing, not symbol-identity-level. Plus Obs 314's agent context-biasing methodological note.
+11. **GS student-data audit + dedup plan**: 822 features within 4 GS sheets; dedup smoke-test 0.7 % on Hairy-only at 50 m. Major reframing: 560 Hairy (97 % match curator GT) + 262 non-Hairy (3 % match, spatially disjoint median 1.2 km). Plan-doc `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md` (commit `d5dc0e87`). 4-map FN re-derivation: 9.1 % cumulative (per-map 3.55 / 3.56 / 9.09 / 15.88 %); converges with 55-map estimate.
+12. **Continuity-doc updates**: Session 81 closure roll-up (commit `3a8d3cf8`) + Session 82 entry-point queue with GS student-maps review thread (commit `8066599d`). Audit verdict: EXCELLENT COVERAGE.
+
+### Major artefacts produced
+
+- `docs/notes/reflections/working-notes.md` Obs 305-315 (11 new entries; commits `73b21b6b`, `4eb3914d`, `1a56f35b`, `c4432978`, `0d80ebcd`)
+- `scripts/lib_advanced_metrics.py` — BCa + Mit-3 (commit `2026999a`)
+- `scripts/evaluate_detections.py` — schema 1.1; aggregator-runs propagation patch (commit `ad4ba1bf`)
+- `scripts/v2_burial_mound_bet_test_app.py` + launcher — Streamlit re-review (commits `eae884ed`, `9a99ac68`, `d318c50c`, `3107d476`)
+- `scripts/v2_settlement_mound_mode2_app.py` + launcher — Streamlit Mode 2 confirmation (commit `d75a483e`)
+- `scripts/analyse_student_gt_fn_rate.py` — three-tier FN analysis (commit `508e498f`)
+- `scripts/build_bootstrap_10k_queue_followup.py` + `scripts/verify_bootstrap_10k_followup.py` — daylight sweep infrastructure (commits `89a5ad67`, `3822645a`)
+- `results/student-gt-fn-rate-analysis/{report.md, per_map_fn_breakdown.csv, bootstrap_summary.json, figures/}`
+- `results/55maps-fp-classification/v2-burial-mound-bet-test/verdicts.csv` (197 rows, all v2_overclaim)
+- `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv` (117 rows)
+- `results/gs-fp-classification/{report.md, ...}` (v2 with burial-mound categories; commit `9fa6db4e`)
+- `results/55maps-fp-classification/{report.md, ...}` (v2 with burial-mound categories; commit `ec21c8ef`)
+- `results/paper-eval/pro-n10/consensus-t[1-10]/evaluation.{json,csv,md}` — 10 evaluation files at N=10K
+- `archive/gs-fp-classification-v1-pre-burial-mound-list/` (FP-classification v1 archive)
+- `archive/55maps-fp-classification-v1-pre-burial-mound-list/` (55-map v1 archive)
+- 7 new planning + status docs in `planning/` (daylight-followup-sweep-plan, gs-fp-classification-plan, pairwise-bootstrap-ci-fix-plan, daylight-sweep-status, input-expansion-audit, v2-burial-mound-bet-test-app-plan, dedupe-raw-gs-student-data-plan)
+- `planning/paper-writeup-continuity.md` — Session 81 closure roll-up + Session 82 entry-point queue + GS student-maps review thread
+- Tags: `pre-bca-mit3-2026-04-29`, `pre-bca-migration-2026-04-29`, `pre-bootstrap-10k-followup-2026-04-29`
+
+### Headline numerical findings
+
+- **Bet-test result: 0 / 177 verdicts as `real_mound_my_error`** — review-pass error rate empirically zero on v2-burial-mound reclassifications; Obs 312
+- **Settlement-mound re-inspection: 87 / 117 (74.4 %) not-orange-brown** + 29 (24.8 %) closed-topo-line + 1 + 0; dominant ~75 % colour-veto-failure family
+- **Failure-mode taxonomy at mechanism level**: A (colour-veto failure) ~75 %; B (central-glyph anchor) ~25 %; C (source-domain ambiguity) small but real
+- **55-map student-GT FN rate: 8.87 % [6.93, 11.35]** lower-bound; **11.15 %** recall-adjusted central; per-map IQR 4.3-12.8 %, K-35-076-2 outlier at 52.5 %
+- **4-map FN re-derivation: 9.1 % cumulative** (per-map 3.55 / 3.56 / 9.09 / 15.88 %); 4-map and 55-map converge at 9-11 %; Sobotkova 2023's published 5.0 % conceded as calculation issue
+- **Cross-corpus chi-square (v2 closed list)**: >125 m stratum chi² = 50.231, Monte Carlo p = 0.0028; >50 m p = 0.0012; significant divergence; Obs 307
+- **TP-side calibration validation (v2)**: 56.9 % TPs as burial-mound categories (vs v1's 0 %); v1's 60 % `contour-ring` collapses entirely; closed-list-design issue confirmed
+- **Daylight sweep N=10K**: 165/165 cells now at N=10K; closes Obs 303 forward-pointer
+- **BCa migration**: 526 cells regenerated; ZERO point-estimate drift; 114/526 (21.7 %) flagged sparse_cross_grid (Obs 311)
+- **Pairwise CI bug closed**: example `512px-image-t0` @ 30 m: F1 = 0.5132, percentile CI = [0.139, 0.422] → BCa CI = [0.262, 0.324] (point inside)
+- **Raw GS student data**: 822 features; 560 Hairy / 262 non-Hairy; dedup smoke-test 0.7 % at 50 m
+- **Soviet topo legend confirmation**: items 62 + 81-83 (≤425) include all four burial-mound subtypes named in the proposer prompt; proposer vocabulary is canonical, not invented
+
+### Contextual assumptions
+
+- The user (Shawn) was the original curator of the 4 GS maps for Sobotkova 2022, and re-checked them once before this project; curator GT (`mounds-reference.geojson`, 569 mounds) is sub-metre-precise per his manual centring pass. He is the authoritative source on actual on-map rendering colours.
+- TM 30-548 (US Army 1958 Soviet Topographic Map Symbols guide) is reliable for symbol structure / identity / numbering / labels but partial-reliability for colour in B&W-print sections. Trust shape + hachure direction + central glyph + item number + names; cross-check colour against user's domain expertise.
+- The premature-completion pattern in agents that orchestrate parallel background work (4 instances this session) is well-documented in Obs 310 + Session 81 entry in `llm-observations.md`. External orchestration (manual commits or watch-loops via Bash `run_in_background`) is the workaround.
+- The non-Hairy 262 student points are an unresolved population question — Session 82 priority #1.
+- The agent context-biasing pattern (Item 472 misidentification) is a non-confabulation reasoning failure mode; mitigation in future agent prompts via the "identify based on visual properties / objective evidence ONLY" template clause (Obs 314).
+- The bet-test inspection's 0/177 result validates the user's review-pass labels as a clean ground truth; the FN-rate analysis (Obs 305) is therefore unbiased by review-pass mislabelling.
+- Step 6 paper outline still pending — but the failure-mode catalogue is mechanism-level paper-Discussion-ready, and the FN-rate framing is paper-Methods-ready (4-map / 55-map convergence at 9-11 %; Sobotkova correction note).
+- Session 82 has a focused 1-2 hour pickup before returning to Step 6: non-Hairy provenance (~30 min), K-35-062-2 outlier investigation (~20 min), Obs 305 amendment with cross-validation finding (~15 min).
