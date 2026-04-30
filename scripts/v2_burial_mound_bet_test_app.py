@@ -376,6 +376,51 @@ def append_verdict_row(
             pass
 
 
+def pop_last_verdict_row() -> dict[str, str] | None:
+    """Remove the last verdict row from the on-disk CSV and return it.
+
+    Used by the "Undo last verdict" button to back the queue up by one
+    step. Re-writes the CSV without the popped row + fsyncs so the
+    in-memory session state can be reloaded from disk and the queue
+    position re-derived via ``_select_current_index``.
+
+    If the popped row was overwriting an earlier verdict for the same
+    ``(run, candidate_id)`` pair (e.g., a substantive verdict that
+    overrode a prior skip), the CSV's earlier row remains; reloading
+    via ``load_existing_verdicts`` will surface that earlier verdict
+    (last-write-wins on the now-shorter CSV). This means undo correctly
+    steps back through any verdict-stack history per candidate.
+
+    Returns:
+        Dict of the popped row's columns (run, candidate_id, verdict,
+        note, timestamp, is_calibration), or None if the CSV is absent
+        or empty.
+    """
+    if not VERDICTS_CSV_PATH.is_file():
+        return None
+    rows: list[dict[str, str]] = []
+    with open(VERDICTS_CSV_PATH, newline="", encoding="utf-8") as fh:
+        reader = csv.DictReader(fh)
+        rows = list(reader)
+    if not rows:
+        return None
+    last_row = rows[-1]
+    remaining = rows[:-1]
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    with open(VERDICTS_CSV_PATH, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=VERDICTS_CSV_HEADER)
+        writer.writeheader()
+        for row in remaining:
+            writer.writerow(row)
+        fh.flush()
+        try:
+            import os
+            os.fsync(fh.fileno())
+        except OSError:
+            pass
+    return last_row
+
+
 # =========================================================================
 # Crop rendering
 # =========================================================================
@@ -754,6 +799,53 @@ def main() -> None:
                 use_container_width=True,
             ):
                 button_pressed = verdict_name
+
+    # ---- Undo last verdict ----
+    # Secondary action: pops the most recent row from verdicts.csv and
+    # re-loads session state from disk so the queue position steps back.
+    # If multi-undo is needed, the operator clicks again — each click
+    # pops one more row.  Disabled when there are no rows to undo.
+    n_csv_rows = (
+        sum(1 for _ in open(VERDICTS_CSV_PATH, encoding="utf-8")) - 1
+        if VERDICTS_CSV_PATH.is_file()
+        else 0
+    )
+    n_csv_rows = max(n_csv_rows, 0)  # subtract the header line; clamp to 0
+    undo_col, info_col = st.columns([2, 5])
+    with undo_col:
+        if st.button(
+            "↶ Undo last verdict",
+            key="btn_undo_last",
+            disabled=(n_csv_rows == 0),
+            help=(
+                "Remove the most recent verdict from the CSV and step "
+                "the queue back by one. Click again to undo further. "
+                "Disabled when there are no verdicts to undo."
+            ),
+            use_container_width=True,
+        ):
+            popped = pop_last_verdict_row()
+            if popped is None:
+                st.warning("No verdicts to undo.")
+            else:
+                # Reload session state from the now-shorter CSV.
+                st.session_state.verdicts = load_existing_verdicts()
+                st.session_state.skipped_once = {
+                    k for k, v in st.session_state.verdicts.items()
+                    if v.get("verdict") == "skip"
+                }
+                st.toast(
+                    f"Undid {popped.get('verdict', '?')} verdict for "
+                    f"run={popped.get('run', '?')}, "
+                    f"candidate_id={popped.get('candidate_id', '?')}.",
+                    icon="↶",
+                )
+                st.rerun()
+    with info_col:
+        st.caption(
+            f"Verdicts on disk: {n_csv_rows}. "
+            "Undo pops the latest row each click; multi-undo by repeating."
+        )
 
     # Keyboard-shortcut listener — adapted from review_candidates.py.
     # The handler is attached in the capture phase to the parent
