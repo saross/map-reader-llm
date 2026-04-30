@@ -15434,3 +15434,51 @@ Search terms: daylight sweep N=10K close-out, 162 of 165 cells, 2 timed-out cell
 - **Plan**: `planning/daylight-followup-sweep-plan-2026-04-29.md` (commit `b5a5309a`); status: `planning/daylight-sweep-status-2026-04-29.md`.
 - **Audit**: `planning/input-expansion-audit-2026-04-29.md` (commit `29b8cc64`).
 - **Commits**: `b5a5309a` (plan), `b774238b..6b611174` (4 per-group sweep commits), `89a5ad67` + `9bc45766` (scaffolding + status update), `f1cf5086` (pro-n10 recovery), `29b8cc64` (input-expansion audit), `3822645a` (§7.5 verifier patch). Pre-sweep tag: `pre-bootstrap-10k-followup-2026-04-29` at HEAD `ee4f18cb`.
+
+## Observation 311: Mit-3 sparse-coverage flag fires on 21.7 % of paper-cited cells (114/526), not just 5 — bug scope remains contained; flag scope is broader (2026-04-29)
+
+### The finding
+
+The BCa migration (commits `66272391..4eea8768d`, 2026-04-29) regenerated all 526 paper-cited evaluation cells under the new bootstrap method. Post-migration audit: **114 of 526 cells (21.7 %) carry `coverage_status = "sparse_cross_grid"` and `ci_unreliable = True`** — far broader than the 5 pairwise cells that Obs 309 framed as "bug scope contained".
+
+The Mit-3 flag fires whenever `ci_zero_fraction > 0.50` (strict `>`), regardless of cause. Three distinct causes contribute:
+
+| Cause | Cells affected | Zero-tile rate | Notes |
+|---|---|---|---|
+| Cross-grid eval | 5 (pairwise/tile-size-30m/) | 74.5–83.4 % | 512 px detections on 384 px bounds; original Obs 309 case |
+| Small-buffer eval on sparse mound maps | ~50–60 (small-buffer paper-eval cells) | > 50 % at 5 m, 10 m buffers | Legitimate sparsity — mound density low relative to tile count; flag disappears at larger buffers for same cell |
+| Per-run subsets in aggregated cells | ~50–60 (paper-eval/n1/\*-all-buffers/, phase3a-matrix/, paper-eval/mcc/384px/) | > 50 % per run | Each per-run F1 sees a subset of detections; per-run zero-tile rate exceeds the aggregate's; aggregate may be dense but per-run rows are flagged |
+
+### Distinction between bug scope and flag scope
+
+These are two separate things and must not be conflated in the paper:
+
+- **The bug** (Obs 309): F1 point estimate falls *outside* bootstrap CI bounds — a mathematical impossibility under a correct procedure. This pathology is **contained to the 5 cross-grid cells** under the percentile method. It does not appear in any other flagged cells under either percentile or BCa.
+- **The flag** (`ci_unreliable = True`): honest reporting that a cell's CI bounds sit on sparse-coverage data; point estimates remain deterministic and reliable. The flag fires on **114 cells (21.7 %)** for any of the three causes above.
+
+The fix (BCa + Mit-3) resolved the bug and correctly expanded the flag to all cells where it is warranted. Both outcomes are correct.
+
+### What this means for the paper
+
+Methods footnote should be written to cover all flagged cells, not only the pairwise case:
+
+> "Cells where > 50 % of evaluation tiles contribute zero TP/FP/FN to the F1 calculation are flagged `ci_unreliable`; point estimates for these cells are deterministic and reliable, but bootstrap CI bounds sit on small effective sample sizes and should be interpreted with caution. Paper tables suppress numeric CIs for flagged cells with a footnote."
+
+Concretely: the 5 cross-grid cells should be mentioned as the case where the *percentile* CI was actually invalid (Obs 309); the remaining ~109 flagged cells are methodologically honest — the flag is informative, not a bug indicator.
+
+### Caveats
+
+- Per-run-aggregated cells (the third cause above) present an additional wrinkle: the aggregate-level `ci_unreliable` may be `False` while individual per-run rows within the same cell are flagged. The §7.3 verifier's strict-mode flag-consistency check needs to account for this asymmetry before being used as a gate on paper-readiness.
+- The 114-cell count is from the post-BCa-migration audit report (2026-04-29 session); individual sub-counts per cause are approximations from the report's narrative, not a separate script tabulation. Treat the three-cause breakdown as directionally correct pending a direct `grep` against committed eval.csv files.
+- Pre-migration tag: `pre-bca-migration-2026-04-29`.
+
+### Findable later
+
+Search terms: Mit-3 sparse-coverage flag 114 cells 21.7 percent, ci_unreliable broader than 5 pairwise cells, bug scope contained flag scope broader, cross-grid eval 512 px on 384 px tile bounds, small-buffer sparse mound maps zero-tile rate, per-run aggregated cells flagged aggregate dense, BCa migration 526 paper-cited cells, coverage_status sparse_cross_grid, ci_zero_fraction 50 percent threshold, point estimate deterministic reliable flag not a bug, paper table suppress numeric CIs footnote, Obs 309 refine bug scope claim, pairwise tile-size-30m 5 cells 74.5 to 83.4 percent zero-tile rate, verifier strict-mode asymmetry per-run vs aggregate.
+
+### Related observations and artefacts
+
+- **Obs 309** (this Obs refines): pairwise CI bug + BCa + Mit-3 fix. Obs 309 framed the bug scope as 5 cells; that remains accurate. This Obs clarifies that the *flag* scope is broader.
+- **Obs 310** (BCa migration context): daylight sweep close-out; the "114 cells flagged" sub-finding emerged from the migration agent's post-run report in the same session.
+- **Schema 1.1 metadata fields**: `_metadata.bootstrap.method`, `coverage_status`, `ci_unreliable`, `ci_zero_fraction`, `ci_n_tiles` (introduced commit `2026999a`).
+- **Artefacts**: BCa migration commits `66272391..4eea8768d` (9 commits, 526 cells); pre-migration tag `pre-bca-migration-2026-04-29`.
