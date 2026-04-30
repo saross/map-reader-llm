@@ -838,7 +838,6 @@ def main() -> None:
                     f"Undid {popped.get('verdict', '?')} verdict for "
                     f"run={popped.get('run', '?')}, "
                     f"candidate_id={popped.get('candidate_id', '?')}.",
-                    icon="↶",
                 )
                 st.rerun()
     with info_col:
