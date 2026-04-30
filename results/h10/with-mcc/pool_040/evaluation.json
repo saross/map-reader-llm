@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-28T13:37:18.516283+00:00",
+  "timestamp": "2026-04-30T06:52:25.205260+00:00",
   "summary": {
     "label": "h10v2-pool040",
     "n_detections": 242,
@@ -8,16 +8,33 @@
       {
         "buffer_metres": 20,
         "f1": 0.6809,
-        "f1_ci_lower": 0.6231,
-        "f1_ci_upper": 0.7352,
+        "f1_point": 0.6809,
+        "f1_ci_lower": 0.6709,
+        "f1_ci_upper": 0.6914,
+        "f1_ci_method": "BCa",
         "precision": 0.7893,
-        "p_ci_lower": 0.735,
-        "p_ci_upper": 0.8398,
+        "p_point": 0.7893,
+        "p_ci_lower": 0.7791,
+        "p_ci_upper": 0.7983,
+        "p_ci_method": "BCa",
         "recall": 0.5987,
-        "r_ci_lower": 0.5302,
-        "r_ci_upper": 0.6689
+        "r_point": 0.5987,
+        "r_ci_lower": 0.587,
+        "r_ci_upper": 0.6102,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 327,
+          "n_zero_count_tiles": 176,
+          "zero_fraction": 0.5382262996941896,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       }
     ],
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "sparse_cross_grid",
     "tile_classification": {
       "confusion": {
         "tp": 117,
@@ -26,28 +43,34 @@
         "fn": 38
       },
       "mcc": {
+        "point": 0.6999,
         "mean": 0.6997,
-        "ci_lower": 0.6237,
-        "ci_upper": 0.771
+        "ci_lower": 0.6871,
+        "ci_upper": 0.7153,
+        "method": "BCa"
       },
       "sensitivity": {
-        "mean": 0.7549,
-        "ci_lower": 0.6867,
-        "ci_upper": 0.8217
+        "point": 0.7548,
+        "mean": 0.755,
+        "ci_lower": 0.7429,
+        "ci_upper": 0.7678,
+        "method": "BCa"
       },
       "specificity": {
+        "point": 0.9302,
         "mean": 0.93,
-        "ci_lower": 0.8896,
-        "ci_upper": 0.9651
+        "ci_lower": 0.9228,
+        "ci_upper": 0.9376,
+        "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "5040f5b4",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-28T13:36:38.774075+00:00",
+    "generated_at_utc": "2026-04-30T06:52:23.790484+00:00",
     "cli_args": {
       "detections": [
         "outputs/h10/evaluation-v2/pool_040_hp4hn4/consensus/consensus_t4.geojson"
@@ -69,7 +92,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [

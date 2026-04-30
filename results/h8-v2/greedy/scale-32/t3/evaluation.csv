@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper
-scale-32-greedy-t3,20,0.5852,0.5269,0.6398,0.6737,0.6179,0.7257,0.5172,0.449,0.5856
-scale-32-greedy-t3,30,0.6372,0.5819,0.6894,0.7335,0.6811,0.7813,0.5632,0.4964,0.6304
-scale-32-greedy-t3,40,0.6606,0.6047,0.7121,0.7605,0.709,0.808,0.5839,0.515,0.6522
-scale-32-greedy-t3,50,0.671,0.6162,0.7214,0.7725,0.7217,0.819,0.5931,0.5241,0.6606
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
+scale-32-greedy-t3,20,0.5852,0.5722,0.5961,0.6737,0.6606,0.684,0.5172,0.5013,0.5314,sparse_cross_grid,True,0.5236139630390144,487
+scale-32-greedy-t3,30,0.6372,0.6241,0.6484,0.7335,0.7211,0.7432,0.5632,0.5472,0.5779,sparse_cross_grid,True,0.5236139630390144,487
+scale-32-greedy-t3,40,0.6606,0.648,0.6713,0.7605,0.7488,0.7703,0.5839,0.5666,0.598,sparse_cross_grid,True,0.5236139630390144,487
+scale-32-greedy-t3,50,0.671,0.6586,0.6818,0.7725,0.761,0.7819,0.5931,0.5766,0.6071,sparse_cross_grid,True,0.5256673511293635,487

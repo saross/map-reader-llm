@@ -1,12 +1,14 @@
 # Evaluation: scale-16-greedy-t3
 
-**Generated**: 2026-04-28T15:17:00.586659+00:00  
+**Generated**: 2026-04-30T06:53:14.214231+00:00  
 **Detections**: 333  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
 |---|---|---|---|---|---|---|
-| 20m | 0.602 | [0.545, 0.655] | 0.694 | [0.637, 0.748] | 0.531 | [0.465, 0.598] |
-| 30m | 0.646 | [0.589, 0.699] | 0.745 | [0.691, 0.796] | 0.570 | [0.501, 0.638] |
-| 40m | 0.672 | [0.616, 0.723] | 0.775 | [0.723, 0.823] | 0.593 | [0.523, 0.662] |
-| 50m | 0.682 | [0.626, 0.734] | 0.787 | [0.736, 0.834] | 0.602 | [0.532, 0.671] |
+| 20m | 0.602 | N/A * | 0.694 | N/A * | 0.531 | N/A * |
+| 30m | 0.646 | N/A * | 0.745 | N/A * | 0.570 | N/A * |
+| 40m | 0.672 | N/A * | 0.775 | N/A * | 0.593 | N/A * |
+| 50m | 0.682 | N/A * | 0.787 | N/A * | 0.602 | N/A * |
+
+\* Bootstrap CI suppressed for sparse-coverage buffers (54.0%, 54.0%, 54.0%, 54.2% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
 

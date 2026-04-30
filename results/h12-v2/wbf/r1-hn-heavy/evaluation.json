@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-28T15:28:43.297312+00:00",
+  "timestamp": "2026-04-30T06:52:56.337922+00:00",
   "summary": {
     "label": "r1-hn-heavy-wbf",
     "n_detections": 1171,
@@ -8,59 +8,121 @@
       {
         "buffer_metres": 20,
         "f1": 0.2914,
-        "f1_ci_lower": 0.2439,
-        "f1_ci_upper": 0.34,
+        "f1_point": 0.2914,
+        "f1_ci_lower": 0.2807,
+        "f1_ci_upper": 0.3019,
+        "f1_ci_method": "BCa",
         "precision": 0.1998,
-        "p_ci_lower": 0.1613,
-        "p_ci_upper": 0.2421,
+        "p_point": 0.1998,
+        "p_ci_lower": 0.1906,
+        "p_ci_upper": 0.2082,
+        "p_ci_method": "BCa",
         "recall": 0.5379,
-        "r_ci_lower": 0.4697,
-        "r_ci_upper": 0.6051
+        "r_point": 0.5379,
+        "r_ci_lower": 0.5214,
+        "r_ci_upper": 0.5523,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 132,
+          "zero_fraction": 0.27104722792607805,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 30,
         "f1": 0.3387,
-        "f1_ci_lower": 0.2867,
-        "f1_ci_upper": 0.3918,
+        "f1_point": 0.3387,
+        "f1_ci_lower": 0.3273,
+        "f1_ci_upper": 0.3504,
+        "f1_ci_method": "BCa",
         "precision": 0.2323,
-        "p_ci_lower": 0.1898,
-        "p_ci_upper": 0.2793,
+        "p_point": 0.2323,
+        "p_ci_lower": 0.222,
+        "p_ci_upper": 0.2416,
+        "p_ci_method": "BCa",
         "recall": 0.6253,
-        "r_ci_lower": 0.5553,
-        "r_ci_upper": 0.6944
+        "r_point": 0.6253,
+        "r_ci_lower": 0.6093,
+        "r_ci_upper": 0.6392,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 133,
+          "zero_fraction": 0.2731006160164271,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 40,
         "f1": 0.3599,
-        "f1_ci_lower": 0.3066,
-        "f1_ci_upper": 0.4132,
+        "f1_point": 0.3599,
+        "f1_ci_lower": 0.3479,
+        "f1_ci_upper": 0.3711,
+        "f1_ci_method": "BCa",
         "precision": 0.2468,
-        "p_ci_lower": 0.203,
-        "p_ci_upper": 0.2954,
+        "p_point": 0.2468,
+        "p_ci_lower": 0.2368,
+        "p_ci_upper": 0.2563,
+        "p_ci_method": "BCa",
         "recall": 0.6644,
-        "r_ci_lower": 0.5952,
-        "r_ci_upper": 0.7322
+        "r_point": 0.6644,
+        "r_ci_lower": 0.6483,
+        "r_ci_upper": 0.6778,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 133,
+          "zero_fraction": 0.2731006160164271,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 50,
         "f1": 0.3649,
-        "f1_ci_lower": 0.3113,
-        "f1_ci_upper": 0.4189,
+        "f1_point": 0.3649,
+        "f1_ci_lower": 0.3527,
+        "f1_ci_upper": 0.3765,
+        "f1_ci_method": "BCa",
         "precision": 0.2502,
-        "p_ci_lower": 0.2061,
-        "p_ci_upper": 0.2991,
+        "p_point": 0.2502,
+        "p_ci_lower": 0.2396,
+        "p_ci_upper": 0.2598,
+        "p_ci_method": "BCa",
         "recall": 0.6736,
-        "r_ci_lower": 0.6037,
-        "r_ci_upper": 0.7413
+        "r_point": 0.6736,
+        "r_ci_lower": 0.6561,
+        "r_ci_upper": 0.6869,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 133,
+          "zero_fraction": 0.2731006160164271,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal"
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "5040f5b4",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-28T15:24:55.593740+00:00",
+    "generated_at_utc": "2026-04-30T06:52:41.772724+00:00",
     "cli_args": {
       "detections": [
         "outputs/h12-v2/wbf/r1-hn-heavy/wbf_candidates.geojson"
@@ -85,7 +147,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [

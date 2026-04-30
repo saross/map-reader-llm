@@ -1,9 +1,11 @@
 # Evaluation: h12v2-r3-hp-heavy
 
-**Generated**: 2026-04-28T13:37:31.558942+00:00  
+**Generated**: 2026-04-30T06:52:49.438681+00:00  
 **Detections**: 254  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 20m | 0.688 | [0.634, 0.740] | 0.776 | [0.723, 0.826] | 0.618 | [0.555, 0.682] | 0.717 | [0.641, 0.789] | 0.774 | 0.930 |
+| 20m | 0.688 | N/A * | 0.776 | N/A * | 0.618 | N/A * | 0.717 | N/A * | 0.774 | 0.930 |
+
+\* Bootstrap CI suppressed for sparse-coverage buffers (53.5% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
 
