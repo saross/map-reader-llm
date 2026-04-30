@@ -8,7 +8,7 @@ categories (``burial-mound``, ``settlement-mound``,
 that a per-candidate verdict can be recorded to settle the 2026-04-29 bet
 over the true review-error rate.
 
-Default crop view is the **exact 150 m / 768 px window the v2 classifier
+Default crop view is the **exact 150 m window the v2 classifier
 saw** (no rings) so that the reviewer adjudicates the same image the model
 adjudicated. A sidebar toggle exposes the richer 400 m ringed view from
 ``scripts/review_candidates.py`` when extra spatial context aids a
@@ -148,7 +148,11 @@ CALIBRATION_SAMPLE_SIZE: int = 20
 CALIBRATION_SEED: int = 20260429
 
 # Crop-view defaults.
-CLASSIFIER_VIEW_PX: int = 768
+# CLASSIFIER_VIEW_PX is capped at 300 to avoid the heavy upscaling artefacts
+# the user observed at 768 px (Soviet 1:50,000 raster source resolution is
+# only ~70-150 px per 150 m crop; doubling to 300 px stays close to native
+# while remaining inspectable).
+CLASSIFIER_VIEW_PX: int = 300
 RINGED_VIEW_PX: int = 600
 RINGED_VIEW_CONTEXT_M: float = 400.0
 
@@ -381,8 +385,10 @@ def append_verdict_row(
 def render_classifier_crop_cached(x: float, y: float) -> Image.Image | None:
     """Cache wrapper around the v2 FP-classifier's exact crop.
 
-    The 150 m / 768 px crop the v2 classifier actually saw — no rings,
-    no centre cross. This is the headline view per plan §3.3.
+    The underlying crop is the 150 m / 768 px window the v2 classifier
+    actually saw — no rings, no centre cross. Streamlit displays it at
+    `CLASSIFIER_VIEW_PX` (300 px) to avoid upscale-pixelation artefacts.
+    This is the headline view per plan §3.3.
     """
     return render_classifier_crop(centroid_x=x, centroid_y=y)
 
@@ -558,10 +564,11 @@ def main() -> None:
             "400 m ringed context view",
             value=False,
             help=(
-                "OFF (default): show the exact 150 m / 768 px crop the "
-                "v2 classifier saw, no rings. ON: switch to the 400 m "
-                "context view with magenta concentric rings at 50/75/"
-                "100/125/150 m used in the regular review UI."
+                "OFF (default): show the exact 150 m crop the v2 "
+                "classifier saw (displayed at 300 px), no rings. "
+                "ON: switch to the 400 m context view with magenta "
+                "concentric rings at 50/75/100/125/150 m used in the "
+                "regular review UI."
             ),
         )
         st.markdown("---")
@@ -674,7 +681,7 @@ def main() -> None:
     )
 
     # ---- Crop rendering ----
-    # Default: exact classifier view (150 m, 768 px, no rings). Sidebar
+    # Default: exact classifier view (150 m, displayed at 300 px, no rings). Sidebar
     # toggle flips to the 400 m ringed view used in the regular review
     # UI. Per plan §3.3, the default pins the review to "what could the
     # model see?" — keep this as the headline view.
@@ -698,8 +705,10 @@ def main() -> None:
             else:
                 st.image(img, width=CLASSIFIER_VIEW_PX)
                 st.caption(
-                    "Exact 150 m / 768 px crop the v2 classifier saw — "
-                    "no rings, no centre cross."
+                    "Exact 150 m crop the v2 classifier saw — "
+                    "no rings, no centre cross. Displayed at 300 px to "
+                    "avoid upscale-pixelation artefacts (underlying "
+                    "classifier crop is 768 px)."
                 )
     except Exception as exc:  # noqa: BLE001
         st.error(
