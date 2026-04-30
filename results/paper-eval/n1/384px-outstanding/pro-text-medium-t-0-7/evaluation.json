@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:55:07.395683+00:00",
+  "timestamp": "2026-04-30T06:55:36.020302+00:00",
   "summary": {
     "label": "Pro Text MEDIUM T=0.7",
     "n_detections": 1445,
@@ -8,23 +8,40 @@
       {
         "buffer_metres": 30,
         "f1": 0.4277,
-        "f1_ci_lower": 0.3716,
-        "f1_ci_upper": 0.4836,
+        "f1_point": 0.4277,
+        "f1_ci_lower": 0.4173,
+        "f1_ci_upper": 0.4409,
+        "f1_ci_method": "BCa",
         "precision": 0.2782,
-        "p_ci_lower": 0.2329,
-        "p_ci_upper": 0.3266,
+        "p_point": 0.2782,
+        "p_ci_lower": 0.2691,
+        "p_ci_upper": 0.2889,
+        "p_ci_method": "BCa",
         "recall": 0.9241,
-        "r_ci_lower": 0.8971,
-        "r_ci_upper": 0.9478
+        "r_point": 0.9241,
+        "r_ci_lower": 0.9183,
+        "r_ci_upper": 0.9294,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 60,
+          "zero_fraction": 0.12320328542094455,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal"
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:53:38.586035+00:00",
+    "generated_at_utc": "2026-04-30T06:55:32.789427+00:00",
     "cli_args": {
       "detections": [
         "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson"
@@ -46,7 +63,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [

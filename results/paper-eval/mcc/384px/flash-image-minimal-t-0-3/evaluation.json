@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:42:52.225939+00:00",
+  "timestamp": "2026-04-30T06:53:52.789792+00:00",
   "summary": {
     "label": "Flash Image MINIMAL T=0.3",
     "n_runs": 3,
@@ -8,31 +8,31 @@
       {
         "buffer_metres": 30,
         "f1": 0.6528,
-        "f1_ci_lower": 0.6119,
-        "f1_ci_upper": 0.6888,
+        "f1_ci_lower": 0.6447,
+        "f1_ci_upper": 0.6617,
         "precision": 0.516,
-        "p_ci_lower": 0.4705,
-        "p_ci_upper": 0.5578,
+        "p_ci_lower": 0.5071,
+        "p_ci_upper": 0.5261,
         "recall": 0.8882,
-        "r_ci_lower": 0.8556,
-        "r_ci_upper": 0.9185
+        "r_ci_lower": 0.8811,
+        "r_ci_upper": 0.8951
       }
     ],
     "tile_classification": {
       "mcc": {
-        "mean": 0.3049,
-        "ci_lower": 0.2489,
-        "ci_upper": 0.3584
+        "mean": 0.3053,
+        "ci_lower": 0.293,
+        "ci_upper": 0.316
       },
       "sensitivity": {
         "mean": 0.9912,
-        "ci_lower": 0.9779,
-        "ci_upper": 1.0
+        "ci_lower": 0.9886,
+        "ci_upper": 0.9937
       },
       "specificity": {
         "mean": 0.2005,
-        "ci_lower": 0.1528,
-        "ci_upper": 0.2506
+        "ci_lower": 0.1901,
+        "ci_upper": 0.2106
       },
       "confusion": {
         "tp": 227,
@@ -43,11 +43,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:39:23.327621+00:00",
+    "generated_at_utc": "2026-04-30T06:53:40.321805+00:00",
     "cli_args": {
       "detections": null,
       "detections_dir": "outputs/h11/n1-outstanding-384/image-t03",
@@ -67,7 +67,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": "outputs/h11/n1-outstanding-384/image-t03",
@@ -83,16 +85,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.6481,
-          "f1_ci_lower": 0.6077,
-          "f1_ci_upper": 0.6845,
+          "f1_point": 0.6481,
+          "f1_ci_lower": 0.6401,
+          "f1_ci_upper": 0.6573,
+          "f1_ci_method": "BCa",
           "precision": 0.5113,
-          "p_ci_lower": 0.4661,
-          "p_ci_upper": 0.553,
+          "p_point": 0.5113,
+          "p_ci_lower": 0.5022,
+          "p_ci_upper": 0.5217,
+          "p_ci_method": "BCa",
           "recall": 0.8851,
-          "r_ci_lower": 0.852,
-          "r_ci_upper": 0.9159
+          "r_point": 0.8851,
+          "r_ci_lower": 0.8779,
+          "r_ci_upper": 0.8918,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 53,
+            "zero_fraction": 0.10882956878850103,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
       ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal",
       "tile_classification": {
         "confusion": {
           "tp": 227,
@@ -101,19 +120,25 @@
           "fn": 2
         },
         "mcc": {
-          "mean": 0.3061,
-          "ci_lower": 0.2504,
-          "ci_upper": 0.3597
+          "point": 0.3065,
+          "mean": 0.3065,
+          "ci_lower": 0.2941,
+          "ci_upper": 0.3171,
+          "method": "BCa"
         },
         "sensitivity": {
+          "point": 0.9913,
           "mean": 0.9912,
-          "ci_lower": 0.9775,
-          "ci_upper": 1.0
+          "ci_lower": 0.9887,
+          "ci_upper": 0.9938,
+          "method": "BCa"
         },
         "specificity": {
+          "point": 0.2016,
           "mean": 0.2017,
-          "ci_lower": 0.1541,
-          "ci_upper": 0.2519
+          "ci_lower": 0.1911,
+          "ci_upper": 0.2119,
+          "method": "BCa"
         }
       }
     },
@@ -124,16 +149,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.6588,
-          "f1_ci_lower": 0.6159,
-          "f1_ci_upper": 0.6958,
+          "f1_point": 0.6588,
+          "f1_ci_lower": 0.6506,
+          "f1_ci_upper": 0.6682,
+          "f1_ci_method": "BCa",
           "precision": 0.5214,
-          "p_ci_lower": 0.4738,
-          "p_ci_upper": 0.5647,
+          "p_point": 0.5214,
+          "p_ci_lower": 0.513,
+          "p_ci_upper": 0.5324,
+          "p_ci_method": "BCa",
           "recall": 0.8943,
-          "r_ci_lower": 0.861,
-          "r_ci_upper": 0.9247
+          "r_point": 0.8943,
+          "r_ci_lower": 0.8874,
+          "r_ci_upper": 0.9014,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 53,
+            "zero_fraction": 0.10882956878850103,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
       ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal",
       "tile_classification": {
         "confusion": {
           "tp": 226,
@@ -142,19 +184,25 @@
           "fn": 3
         },
         "mcc": {
-          "mean": 0.293,
-          "ci_lower": 0.233,
-          "ci_upper": 0.3501
+          "point": 0.2934,
+          "mean": 0.2934,
+          "ci_lower": 0.2806,
+          "ci_upper": 0.3052,
+          "method": "BCa"
         },
         "sensitivity": {
+          "point": 0.9869,
           "mean": 0.9869,
-          "ci_lower": 0.9702,
-          "ci_upper": 1.0
+          "ci_lower": 0.9837,
+          "ci_upper": 0.99,
+          "method": "BCa"
         },
         "specificity": {
+          "point": 0.1977,
           "mean": 0.1979,
-          "ci_lower": 0.15,
-          "ci_upper": 0.2489
+          "ci_lower": 0.1876,
+          "ci_upper": 0.208,
+          "method": "BCa"
         }
       }
     },
@@ -165,16 +213,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.6514,
-          "f1_ci_lower": 0.612,
-          "f1_ci_upper": 0.6862,
+          "f1_point": 0.6514,
+          "f1_ci_lower": 0.6433,
+          "f1_ci_upper": 0.6597,
+          "f1_ci_method": "BCa",
           "precision": 0.5154,
-          "p_ci_lower": 0.4715,
-          "p_ci_upper": 0.5558,
+          "p_point": 0.5154,
+          "p_ci_lower": 0.506,
+          "p_ci_upper": 0.5242,
+          "p_ci_method": "BCa",
           "recall": 0.8851,
-          "r_ci_lower": 0.8538,
-          "r_ci_upper": 0.9149
+          "r_point": 0.8851,
+          "r_ci_lower": 0.878,
+          "r_ci_upper": 0.892,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 53,
+            "zero_fraction": 0.10882956878850103,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
       ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal",
       "tile_classification": {
         "confusion": {
           "tp": 228,
@@ -183,19 +248,25 @@
           "fn": 1
         },
         "mcc": {
-          "mean": 0.3156,
-          "ci_lower": 0.2634,
-          "ci_upper": 0.3654
+          "point": 0.316,
+          "mean": 0.3161,
+          "ci_lower": 0.3043,
+          "ci_upper": 0.3256,
+          "method": "BCa"
         },
         "sensitivity": {
+          "point": 0.9956,
           "mean": 0.9956,
-          "ci_lower": 0.9861,
-          "ci_upper": 1.0
+          "ci_lower": 0.9934,
+          "ci_upper": 0.9972,
+          "method": "BCa"
         },
         "specificity": {
+          "point": 0.2016,
           "mean": 0.2018,
-          "ci_lower": 0.1542,
-          "ci_upper": 0.251
+          "ci_lower": 0.1916,
+          "ci_upper": 0.2119,
+          "method": "BCa"
         }
       }
     }

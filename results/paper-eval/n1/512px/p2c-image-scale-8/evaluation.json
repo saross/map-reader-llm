@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:38:54.773159+00:00",
+  "timestamp": "2026-04-30T06:56:03.286821+00:00",
   "summary": {
     "label": "P2c Image scale-8",
     "n_detections": 770,
@@ -8,23 +8,40 @@
       {
         "buffer_metres": 30,
         "f1": 0.6555,
-        "f1_ci_lower": 0.613,
-        "f1_ci_upper": 0.6951,
+        "f1_point": 0.6555,
+        "f1_ci_lower": 0.6491,
+        "f1_ci_upper": 0.6624,
+        "f1_ci_method": "BCa",
         "precision": 0.5571,
-        "p_ci_lower": 0.5097,
-        "p_ci_upper": 0.6027,
+        "p_point": 0.5571,
+        "p_ci_lower": 0.5489,
+        "p_ci_upper": 0.5648,
+        "p_ci_method": "BCa",
         "recall": 0.7959,
-        "r_ci_lower": 0.7537,
-        "r_ci_upper": 0.8383
+        "r_point": 0.7959,
+        "r_ci_lower": 0.7883,
+        "r_ci_upper": 0.8022,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 340,
+          "n_zero_count_tiles": 5,
+          "zero_fraction": 0.014705882352941176,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal"
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:37:58.150892+00:00",
+    "generated_at_utc": "2026-04-30T06:56:00.842776+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.geojson"
@@ -46,7 +63,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [

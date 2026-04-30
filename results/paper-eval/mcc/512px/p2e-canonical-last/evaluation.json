@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:52:50.157438+00:00",
+  "timestamp": "2026-04-30T06:54:31.023085+00:00",
   "summary": {
     "label": "P2e Canonical last",
     "n_detections": 785,
@@ -8,16 +8,33 @@
       {
         "buffer_metres": 30,
         "f1": 0.6858,
-        "f1_ci_lower": 0.6412,
-        "f1_ci_upper": 0.7259,
+        "f1_point": 0.6858,
+        "f1_ci_lower": 0.6784,
+        "f1_ci_upper": 0.6934,
+        "f1_ci_method": "BCa",
         "precision": 0.5783,
-        "p_ci_lower": 0.5282,
-        "p_ci_upper": 0.6244,
+        "p_point": 0.5783,
+        "p_ci_lower": 0.5691,
+        "p_ci_upper": 0.5873,
+        "p_ci_method": "BCa",
         "recall": 0.8423,
-        "r_ci_lower": 0.7952,
-        "r_ci_upper": 0.8834
+        "r_point": 0.8423,
+        "r_ci_lower": 0.8348,
+        "r_ci_upper": 0.8506,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 340,
+          "n_zero_count_tiles": 10,
+          "zero_fraction": 0.029411764705882353,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       }
     ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal",
     "tile_classification": {
       "confusion": {
         "tp": 204,
@@ -26,28 +43,34 @@
         "fn": 0
       },
       "mcc": {
-        "mean": 0.2105,
-        "ci_lower": 0.1422,
-        "ci_upper": 0.2765
+        "point": 0.2132,
+        "mean": 0.2129,
+        "ci_lower": 0.1992,
+        "ci_upper": 0.2238,
+        "method": "BCa"
       },
       "sensitivity": {
+        "point": 1.0,
         "mean": 1.0,
         "ci_lower": 1.0,
-        "ci_upper": 1.0
+        "ci_upper": 1.0,
+        "method": "BCa"
       },
       "specificity": {
-        "mean": 0.0733,
-        "ci_lower": 0.0331,
-        "ci_upper": 0.1212
+        "point": 0.0735,
+        "mean": 0.0734,
+        "ci_lower": 0.0648,
+        "ci_upper": 0.0813,
+        "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:51:52.133898+00:00",
+    "generated_at_utc": "2026-04-30T06:54:27.274903+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.geojson"
@@ -69,7 +92,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [

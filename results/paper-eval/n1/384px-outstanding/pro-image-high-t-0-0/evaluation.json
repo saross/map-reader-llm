@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:57:53.237074+00:00",
+  "timestamp": "2026-04-30T06:55:37.288771+00:00",
   "summary": {
     "label": "Pro Image HIGH T=0.0",
     "n_runs": 3,
@@ -8,23 +8,23 @@
       {
         "buffer_metres": 30,
         "f1": 0.5902,
-        "f1_ci_lower": 0.5414,
-        "f1_ci_upper": 0.6349,
+        "f1_ci_lower": 0.5796,
+        "f1_ci_upper": 0.5994,
         "precision": 0.4829,
-        "p_ci_lower": 0.4342,
-        "p_ci_upper": 0.5298,
+        "p_ci_lower": 0.473,
+        "p_ci_upper": 0.4925,
         "recall": 0.7586,
-        "r_ci_lower": 0.6895,
-        "r_ci_upper": 0.8249
+        "r_ci_lower": 0.7429,
+        "r_ci_upper": 0.7735
       }
     ]
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:55:08.336546+00:00",
+    "generated_at_utc": "2026-04-30T06:55:28.320847+00:00",
     "cli_args": {
       "detections": null,
       "detections_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
@@ -44,7 +44,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
@@ -60,16 +62,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.5892,
-          "f1_ci_lower": 0.5412,
-          "f1_ci_upper": 0.6335,
+          "f1_point": 0.5892,
+          "f1_ci_lower": 0.5787,
+          "f1_ci_upper": 0.5978,
+          "f1_ci_method": "BCa",
           "precision": 0.4798,
-          "p_ci_lower": 0.4314,
-          "p_ci_upper": 0.5258,
+          "p_point": 0.4798,
+          "p_ci_lower": 0.47,
+          "p_ci_upper": 0.4889,
+          "p_ci_method": "BCa",
           "recall": 0.7632,
-          "r_ci_lower": 0.6959,
-          "r_ci_upper": 0.8274
+          "r_point": 0.7632,
+          "r_ci_lower": 0.7474,
+          "r_ci_upper": 0.7767,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 167,
+            "zero_fraction": 0.34291581108829566,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     },
     {
       "label": "detections_pro-image-high-t0_run02",
@@ -78,16 +97,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.595,
-          "f1_ci_lower": 0.5466,
-          "f1_ci_upper": 0.6396,
+          "f1_point": 0.595,
+          "f1_ci_lower": 0.5845,
+          "f1_ci_upper": 0.6044,
+          "f1_ci_method": "BCa",
           "precision": 0.4875,
-          "p_ci_lower": 0.4386,
-          "p_ci_upper": 0.5342,
+          "p_point": 0.4875,
+          "p_ci_lower": 0.4776,
+          "p_ci_upper": 0.4968,
+          "p_ci_method": "BCa",
           "recall": 0.7632,
-          "r_ci_lower": 0.6948,
-          "r_ci_upper": 0.8296
+          "r_point": 0.7632,
+          "r_ci_lower": 0.7477,
+          "r_ci_upper": 0.7782,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 168,
+            "zero_fraction": 0.34496919917864477,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     },
     {
       "label": "detections_pro-image-high-t0_run03",
@@ -96,16 +132,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.5863,
-          "f1_ci_lower": 0.5365,
-          "f1_ci_upper": 0.6316,
+          "f1_point": 0.5863,
+          "f1_ci_lower": 0.5756,
+          "f1_ci_upper": 0.596,
+          "f1_ci_method": "BCa",
           "precision": 0.4815,
-          "p_ci_lower": 0.4325,
-          "p_ci_upper": 0.5294,
+          "p_point": 0.4815,
+          "p_ci_lower": 0.4715,
+          "p_ci_upper": 0.4917,
+          "p_ci_method": "BCa",
           "recall": 0.7494,
-          "r_ci_lower": 0.6779,
-          "r_ci_upper": 0.8176
+          "r_point": 0.7494,
+          "r_ci_lower": 0.7335,
+          "r_ci_upper": 0.7655,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 168,
+            "zero_fraction": 0.34496919917864477,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     }
   ]
 }

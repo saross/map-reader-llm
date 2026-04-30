@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:46:03.521234+00:00",
+  "timestamp": "2026-04-30T06:54:11.557487+00:00",
   "summary": {
     "label": "P2a Image only",
     "n_runs": 3,
@@ -8,31 +8,31 @@
       {
         "buffer_metres": 30,
         "f1": 0.574,
-        "f1_ci_lower": 0.5232,
-        "f1_ci_upper": 0.621,
+        "f1_ci_lower": 0.5654,
+        "f1_ci_upper": 0.5824,
         "precision": 0.4683,
-        "p_ci_lower": 0.4128,
-        "p_ci_upper": 0.5219,
+        "p_ci_lower": 0.4587,
+        "p_ci_upper": 0.4781,
         "recall": 0.7415,
-        "r_ci_lower": 0.6916,
-        "r_ci_upper": 0.7884
+        "r_ci_lower": 0.7332,
+        "r_ci_upper": 0.75
       }
     ],
     "tile_classification": {
       "mcc": {
-        "mean": 0.1073,
-        "ci_lower": 0.0283,
-        "ci_upper": 0.1782
+        "mean": 0.1067,
+        "ci_lower": 0.0592,
+        "ci_upper": 0.1375
       },
       "sensitivity": {
         "mean": 0.9984,
-        "ci_lower": 0.9948,
-        "ci_upper": 1.0
+        "ci_lower": 0.9976,
+        "ci_upper": 0.9989
       },
       "specificity": {
         "mean": 0.0244,
-        "ci_lower": 0.0023,
-        "ci_upper": 0.0536
+        "ci_lower": 0.0193,
+        "ci_upper": 0.0288
       },
       "confusion": {
         "tp": 203,
@@ -43,11 +43,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:43:27.921891+00:00",
+    "generated_at_utc": "2026-04-30T06:53:59.978575+00:00",
     "cli_args": {
       "detections": null,
       "detections_dir": "outputs/retest/phase2a/image-only",
@@ -67,7 +67,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": "outputs/retest/phase2a/image-only",
@@ -83,16 +85,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.5598,
-          "f1_ci_lower": 0.5087,
-          "f1_ci_upper": 0.6069,
+          "f1_point": 0.5598,
+          "f1_ci_lower": 0.5507,
+          "f1_ci_upper": 0.5678,
+          "f1_ci_method": "BCa",
           "precision": 0.4543,
-          "p_ci_lower": 0.3982,
-          "p_ci_upper": 0.5078,
+          "p_point": 0.4543,
+          "p_ci_lower": 0.4445,
+          "p_ci_upper": 0.4639,
+          "p_ci_method": "BCa",
           "recall": 0.7291,
-          "r_ci_lower": 0.6816,
-          "r_ci_upper": 0.7742
+          "r_point": 0.7291,
+          "r_ci_lower": 0.7212,
+          "r_ci_upper": 0.7375,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 340,
+            "n_zero_count_tiles": 3,
+            "zero_fraction": 0.008823529411764706,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
       ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal",
       "tile_classification": {
         "confusion": {
           "tp": 203,
@@ -101,19 +120,25 @@
           "fn": 1
         },
         "mcc": {
-          "mean": 0.0769,
-          "ci_lower": -0.0441,
-          "ci_upper": 0.1633
+          "point": 0.078,
+          "mean": 0.0781,
+          "ci_lower": 0.0573,
+          "ci_upper": 0.0926,
+          "method": "BCa"
         },
         "sensitivity": {
+          "point": 0.9951,
           "mean": 0.9952,
-          "ci_lower": 0.9845,
-          "ci_upper": 1.0
+          "ci_lower": 0.9929,
+          "ci_upper": 0.9966,
+          "method": "BCa"
         },
         "specificity": {
+          "point": 0.0221,
           "mean": 0.022,
-          "ci_lower": 0.0,
-          "ci_upper": 0.0496
+          "ci_lower": 0.0163,
+          "ci_upper": 0.0258,
+          "method": "BCa"
         }
       }
     },
@@ -124,16 +149,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.5741,
-          "f1_ci_lower": 0.5217,
-          "f1_ci_upper": 0.6228,
+          "f1_point": 0.5741,
+          "f1_ci_lower": 0.5657,
+          "f1_ci_upper": 0.5833,
+          "f1_ci_method": "BCa",
           "precision": 0.4689,
-          "p_ci_lower": 0.4127,
-          "p_ci_upper": 0.5239,
+          "p_point": 0.4689,
+          "p_ci_lower": 0.4583,
+          "p_ci_upper": 0.4793,
+          "p_ci_method": "BCa",
           "recall": 0.7403,
-          "r_ci_lower": 0.686,
-          "r_ci_upper": 0.7909
+          "r_point": 0.7403,
+          "r_ci_lower": 0.7319,
+          "r_ci_upper": 0.7492,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 340,
+            "n_zero_count_tiles": 4,
+            "zero_fraction": 0.011764705882352941,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
       ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal",
       "tile_classification": {
         "confusion": {
           "tp": 204,
@@ -142,19 +184,25 @@
           "fn": 0
         },
         "mcc": {
-          "mean": 0.1306,
-          "ci_lower": 0.0657,
-          "ci_upper": 0.1947
+          "point": 0.1336,
+          "mean": 0.1332,
+          "ci_lower": 0.1204,
+          "ci_upper": 0.1442,
+          "method": "BCa"
         },
         "sensitivity": {
+          "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
-          "ci_upper": 1.0
+          "ci_upper": 1.0,
+          "method": "BCa"
         },
         "specificity": {
+          "point": 0.0294,
           "mean": 0.0293,
-          "ci_lower": 0.0069,
-          "ci_upper": 0.0608
+          "ci_lower": 0.0244,
+          "ci_upper": 0.0345,
+          "method": "BCa"
         }
       }
     },
@@ -165,16 +213,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.5882,
-          "f1_ci_lower": 0.5392,
-          "f1_ci_upper": 0.6334,
+          "f1_point": 0.5882,
+          "f1_ci_lower": 0.5799,
+          "f1_ci_upper": 0.5961,
+          "f1_ci_method": "BCa",
           "precision": 0.4817,
-          "p_ci_lower": 0.4274,
-          "p_ci_upper": 0.5339,
+          "p_point": 0.4817,
+          "p_ci_lower": 0.4732,
+          "p_ci_upper": 0.4911,
+          "p_ci_method": "BCa",
           "recall": 0.7551,
-          "r_ci_lower": 0.7071,
-          "r_ci_upper": 0.8
+          "r_point": 0.7551,
+          "r_ci_lower": 0.7464,
+          "r_ci_upper": 0.7632,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 340,
+            "n_zero_count_tiles": 3,
+            "zero_fraction": 0.008823529411764706,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
       ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal",
       "tile_classification": {
         "confusion": {
           "tp": 204,
@@ -183,19 +248,25 @@
           "fn": 0
         },
         "mcc": {
-          "mean": 0.1144,
-          "ci_lower": 0.0634,
-          "ci_upper": 0.1766
+          "point": 0.1156,
+          "mean": 0.1087,
+          "ci_lower": 0.0,
+          "ci_upper": 0.1758,
+          "method": "percentile_fallback"
         },
         "sensitivity": {
+          "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
-          "ci_upper": 1.0
+          "ci_upper": 1.0,
+          "method": "BCa"
         },
         "specificity": {
+          "point": 0.0221,
           "mean": 0.022,
-          "ci_lower": 0.0,
-          "ci_upper": 0.0504
+          "ci_lower": 0.0172,
+          "ci_upper": 0.0262,
+          "method": "BCa"
         }
       }
     }

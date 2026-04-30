@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:57:58.547508+00:00",
+  "timestamp": "2026-04-30T06:54:40.732392+00:00",
   "summary": {
     "label": "Pro Image HIGH T=0.7",
     "n_runs": 5,
@@ -8,23 +8,23 @@
       {
         "buffer_metres": 30,
         "f1": 0.7412,
-        "f1_ci_lower": 0.7026,
-        "f1_ci_upper": 0.7771,
+        "f1_ci_lower": 0.7331,
+        "f1_ci_upper": 0.749,
         "precision": 0.6532,
-        "p_ci_lower": 0.6084,
-        "p_ci_upper": 0.6962,
+        "p_ci_lower": 0.6442,
+        "p_ci_upper": 0.6627,
         "recall": 0.8566,
-        "r_ci_lower": 0.8191,
-        "r_ci_upper": 0.8917
+        "r_ci_lower": 0.8488,
+        "r_ci_upper": 0.8645
       }
     ]
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:52:40.549895+00:00",
+    "generated_at_utc": "2026-04-30T06:54:31.336505+00:00",
     "cli_args": {
       "detections": null,
       "detections_dir": "outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7",
@@ -44,7 +44,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": "outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7",
@@ -60,16 +62,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.7311,
-          "f1_ci_lower": 0.6914,
-          "f1_ci_upper": 0.7678,
+          "f1_point": 0.7311,
+          "f1_ci_lower": 0.7222,
+          "f1_ci_upper": 0.7388,
+          "f1_ci_method": "BCa",
           "precision": 0.645,
-          "p_ci_lower": 0.5992,
-          "p_ci_upper": 0.6882,
+          "p_point": 0.645,
+          "p_ci_lower": 0.635,
+          "p_ci_upper": 0.6542,
+          "p_ci_method": "BCa",
           "recall": 0.8437,
-          "r_ci_lower": 0.8039,
-          "r_ci_upper": 0.8805
+          "r_point": 0.8437,
+          "r_ci_lower": 0.8354,
+          "r_ci_upper": 0.8525,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 236,
+            "zero_fraction": 0.48459958932238195,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     },
     {
       "label": "detections_image-t0.7_run02",
@@ -78,16 +97,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.7446,
-          "f1_ci_lower": 0.7048,
-          "f1_ci_upper": 0.781,
+          "f1_point": 0.7446,
+          "f1_ci_lower": 0.7361,
+          "f1_ci_upper": 0.7523,
+          "f1_ci_method": "BCa",
           "precision": 0.6539,
-          "p_ci_lower": 0.6075,
-          "p_ci_upper": 0.6983,
+          "p_point": 0.6539,
+          "p_ci_lower": 0.6451,
+          "p_ci_upper": 0.6635,
+          "p_ci_method": "BCa",
           "recall": 0.8644,
-          "r_ci_lower": 0.8267,
-          "r_ci_upper": 0.8993
+          "r_point": 0.8644,
+          "r_ci_lower": 0.8563,
+          "r_ci_upper": 0.8713,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 239,
+            "zero_fraction": 0.49075975359342916,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     },
     {
       "label": "detections_image-t0.7_run03",
@@ -96,16 +132,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.7341,
-          "f1_ci_lower": 0.6965,
-          "f1_ci_upper": 0.7686,
+          "f1_point": 0.7341,
+          "f1_ci_lower": 0.7273,
+          "f1_ci_upper": 0.7421,
+          "f1_ci_method": "BCa",
           "precision": 0.6457,
-          "p_ci_lower": 0.6021,
-          "p_ci_upper": 0.687,
+          "p_point": 0.6457,
+          "p_ci_lower": 0.6377,
+          "p_ci_upper": 0.6555,
+          "p_ci_method": "BCa",
           "recall": 0.8506,
-          "r_ci_lower": 0.8135,
-          "r_ci_upper": 0.8845
+          "r_point": 0.8506,
+          "r_ci_lower": 0.8434,
+          "r_ci_upper": 0.8587,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 237,
+            "zero_fraction": 0.486652977412731,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     },
     {
       "label": "detections_image-t0.7_run04",
@@ -114,16 +167,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.74,
-          "f1_ci_lower": 0.7012,
-          "f1_ci_upper": 0.7771,
+          "f1_point": 0.74,
+          "f1_ci_lower": 0.732,
+          "f1_ci_upper": 0.7479,
+          "f1_ci_method": "BCa",
           "precision": 0.6549,
-          "p_ci_lower": 0.6112,
-          "p_ci_upper": 0.6975,
+          "p_point": 0.6549,
+          "p_ci_lower": 0.6464,
+          "p_ci_upper": 0.6648,
+          "p_ci_method": "BCa",
           "recall": 0.8506,
-          "r_ci_lower": 0.8111,
-          "r_ci_upper": 0.8889
+          "r_point": 0.8506,
+          "r_ci_lower": 0.8428,
+          "r_ci_upper": 0.8595,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 240,
+            "zero_fraction": 0.4928131416837782,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     },
     {
       "label": "detections_image-t0.7_run05",
@@ -132,16 +202,33 @@
         {
           "buffer_metres": 30,
           "f1": 0.7562,
-          "f1_ci_lower": 0.7191,
-          "f1_ci_upper": 0.7909,
+          "f1_point": 0.7562,
+          "f1_ci_lower": 0.7481,
+          "f1_ci_upper": 0.7637,
+          "f1_ci_method": "BCa",
           "precision": 0.6667,
-          "p_ci_lower": 0.6219,
-          "p_ci_upper": 0.7101,
+          "p_point": 0.6667,
+          "p_ci_lower": 0.6567,
+          "p_ci_upper": 0.6756,
+          "p_ci_method": "BCa",
           "recall": 0.8736,
-          "r_ci_lower": 0.8404,
-          "r_ci_upper": 0.9051
+          "r_point": 0.8736,
+          "r_ci_lower": 0.8663,
+          "r_ci_upper": 0.8807,
+          "r_ci_method": "BCa",
+          "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 242,
+            "zero_fraction": 0.49691991786447637,
+            "threshold": 0.5,
+            "coverage_status": "normal"
+          },
+          "coverage_status": "normal",
+          "ci_unreliable": false
         }
-      ]
+      ],
+      "ci_unreliable_any_buffer": false,
+      "coverage_status": "normal"
     }
   ]
 }

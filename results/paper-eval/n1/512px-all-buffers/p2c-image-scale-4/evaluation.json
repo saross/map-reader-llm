@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-29T14:32:10.106705+00:00",
+  "timestamp": "2026-04-30T06:56:59.457745+00:00",
   "summary": {
     "label": "P2c Image scale-4",
     "n_detections": 811,
@@ -8,59 +8,121 @@
       {
         "buffer_metres": 20,
         "f1": 0.5837,
-        "f1_ci_lower": 0.5322,
-        "f1_ci_upper": 0.6325,
+        "f1_point": 0.5837,
+        "f1_ci_lower": 0.5743,
+        "f1_ci_upper": 0.5934,
+        "f1_ci_method": "BCa",
         "precision": 0.4858,
-        "p_ci_lower": 0.4284,
-        "p_ci_upper": 0.5429,
+        "p_point": 0.4858,
+        "p_ci_lower": 0.474,
+        "p_ci_upper": 0.4972,
+        "p_ci_method": "BCa",
         "recall": 0.731,
-        "r_ci_lower": 0.6773,
-        "r_ci_upper": 0.782
+        "r_point": 0.731,
+        "r_ci_lower": 0.723,
+        "r_ci_upper": 0.7396,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 340,
+          "n_zero_count_tiles": 4,
+          "zero_fraction": 0.011764705882352941,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 30,
         "f1": 0.637,
-        "f1_ci_lower": 0.5852,
-        "f1_ci_upper": 0.6857,
+        "f1_point": 0.637,
+        "f1_ci_lower": 0.628,
+        "f1_ci_upper": 0.6476,
+        "f1_ci_method": "BCa",
         "precision": 0.5302,
-        "p_ci_lower": 0.469,
-        "p_ci_upper": 0.5893,
+        "p_point": 0.5302,
+        "p_ci_lower": 0.5185,
+        "p_ci_upper": 0.5417,
+        "p_ci_method": "BCa",
         "recall": 0.7978,
-        "r_ci_lower": 0.75,
-        "r_ci_upper": 0.8436
+        "r_point": 0.7978,
+        "r_ci_lower": 0.7901,
+        "r_ci_upper": 0.8049,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 340,
+          "n_zero_count_tiles": 4,
+          "zero_fraction": 0.011764705882352941,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 40,
         "f1": 0.6696,
-        "f1_ci_lower": 0.617,
-        "f1_ci_upper": 0.7183,
+        "f1_point": 0.6696,
+        "f1_ci_lower": 0.6606,
+        "f1_ci_upper": 0.6796,
+        "f1_ci_method": "BCa",
         "precision": 0.5573,
-        "p_ci_lower": 0.4941,
-        "p_ci_upper": 0.6172,
+        "p_point": 0.5573,
+        "p_ci_lower": 0.5461,
+        "p_ci_upper": 0.5695,
+        "p_ci_method": "BCa",
         "recall": 0.8386,
-        "r_ci_lower": 0.7946,
-        "r_ci_upper": 0.8814
+        "r_point": 0.8386,
+        "r_ci_lower": 0.8311,
+        "r_ci_upper": 0.8463,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 340,
+          "n_zero_count_tiles": 4,
+          "zero_fraction": 0.011764705882352941,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       },
       {
         "buffer_metres": 50,
         "f1": 0.6904,
-        "f1_ci_lower": 0.6383,
-        "f1_ci_upper": 0.7381,
+        "f1_point": 0.6904,
+        "f1_ci_lower": 0.6813,
+        "f1_ci_upper": 0.6995,
+        "f1_ci_method": "BCa",
         "precision": 0.5746,
-        "p_ci_lower": 0.5091,
-        "p_ci_upper": 0.6355,
+        "p_point": 0.5746,
+        "p_ci_lower": 0.5627,
+        "p_ci_upper": 0.5867,
+        "p_ci_method": "BCa",
         "recall": 0.8646,
-        "r_ci_lower": 0.826,
-        "r_ci_upper": 0.9019
+        "r_point": 0.8646,
+        "r_ci_lower": 0.8578,
+        "r_ci_upper": 0.8704,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 340,
+          "n_zero_count_tiles": 4,
+          "zero_fraction": 0.011764705882352941,
+          "threshold": 0.5,
+          "coverage_status": "normal"
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal"
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "89a5ad67",
+    "script_git_commit": "66272391",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-29T14:28:28.350450+00:00",
+    "generated_at_utc": "2026-04-30T06:56:45.538701+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson"
@@ -85,7 +147,9 @@
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [

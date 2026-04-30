@@ -1,12 +1,14 @@
 # Evaluation: pro-high-text-consensus-pool-t6
 
-**Generated**: 2026-04-29T22:55:21.373785+00:00  
+**Generated**: 2026-04-30T06:57:16.201372+00:00  
 **Detections**: 357  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 20m | 0.836 | [0.797, 0.871] | 0.927 | [0.897, 0.954] | 0.761 | [0.706, 0.813] | 0.726 | [0.671, 0.781] | 0.729 | 0.969 |
-| 30m | 0.851 | [0.813, 0.884] | 0.944 | [0.916, 0.968] | 0.775 | [0.721, 0.826] | 0.726 | [0.671, 0.781] | 0.729 | 0.969 |
-| 40m | 0.854 | [0.817, 0.886] | 0.947 | [0.920, 0.970] | 0.777 | [0.723, 0.828] | 0.726 | [0.671, 0.781] | 0.729 | 0.969 |
-| 50m | 0.854 | [0.817, 0.886] | 0.947 | [0.920, 0.970] | 0.777 | [0.723, 0.828] | 0.726 | [0.671, 0.781] | 0.729 | 0.969 |
+| 20m | 0.836 | N/A * | 0.927 | N/A * | 0.761 | N/A * | 0.727 | N/A * | 0.729 | 0.969 |
+| 30m | 0.851 | N/A * | 0.944 | N/A * | 0.775 | N/A * | 0.727 | N/A * | 0.729 | 0.969 |
+| 40m | 0.854 | N/A * | 0.947 | N/A * | 0.777 | N/A * | 0.727 | N/A * | 0.729 | 0.969 |
+| 50m | 0.854 | N/A * | 0.947 | N/A * | 0.777 | N/A * | 0.727 | N/A * | 0.729 | 0.969 |
+
+\* Bootstrap CI suppressed for sparse-coverage buffers (58.1%, 58.1%, 58.1%, 58.1% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
 
