@@ -15715,3 +15715,98 @@ Search terms: Cat 2 symbol identity resolved, tailings pile отвал поро�
 - **Memory** `2026-04-29-d5a6332b0788` (GS curator GT precision history): user's domain expertise as curator of the GS maps underpins the colour-artefact ruling.
 - **Artefacts**: `inputs/examples/SovietTopoSymbols.pdf` p. 53; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 313 commit `1a56f35b`; bet-test commit `c4585f60`.
 - **Artefacts**: `scripts/v2_settlement_mound_mode2_app.py` commit `d75a483e`; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 312 commit `c4585f60`.
+
+## Observation 315: Symbol-identification thread closed — Cat 2 negative result, Mechanism C (mud-geyser crater), Item 83 vocabulary confirmation, TM 30-548 colour-reliability caveat (2026-04-30)
+
+### The finding
+
+This Obs closes the symbol-identification thread opened by Obs 313's Cat 2 caveat ("symbol identity in flight") and corrected by Obs 314's Item 473 identification (now itself superseded here). Two separate agent searches of `inputs/examples/SovietTopoSymbols.pdf` (US Army TM 30-548, 1958) produced contradictory Cat 2 identifications; a second exhaustive search across pages 11–50 (symbols 1–425, the ≤1:50,000-scale-relevant range) found **no clean match for the Cat 2 pattern**. The Item 473 "Tailings pile" identification from Obs 314 is superseded.
+
+Three additional findings emerge from the same review session:
+
+1. **Item 285 "Crater of mud geyser"** is confirmed as the paper's canonical Mechanism C exemplar — source-domain ambiguity that is irresolvable at the cartographic level.
+2. **Item 83 "Trigonometrical point on burial mound"** (and adjacent items 81–84) confirms that the proposer prompt's four burial-mound subtypes map to canonical Soviet 1:50,000 symbols.
+3. **TM 30-548 is unreliable for colour information** in its B&W-printed sections; shape, number, Russian/English labels, and hachure direction remain trustworthy.
+
+### Cat 2 search — negative result
+
+The Obs 313 caveat ("Cat 2 symbol identity in flight") triggered a first agent search that returned Item 472 "Burial mound" (primary) and Item 473 "Tailings pile" (secondary). Obs 314 reported Item 473 as confirmed.
+
+A second exhaustive search — conducted after the user clarified that symbol numbers ≤425 correspond to the 1:50,000 scale-set relevant to this project — found **no clean match** for the Cat 2 visual pattern (circular black perimeter + outward-radiating hachures, ~10–15 rays, no distinguishing central glyph) within that range:
+
+| Symbol searched | Result |
+|---|---|
+| Item 62 "Burial mound" (курган) | Visual shape match; renders orange-brown, not black — **rules out** |
+| Items 63–64 (mound subtypes) | Same colour ruling; no black-rendered variant found |
+| Item 473 "Tailings pile" | Falls at page 53, within the ≤425 range — plausible structurally, but not a confirmed clean match under exhaustive review |
+| All other rounded-with-hachures symbols (pages 11–50) | No unambiguous match for "circular black + outward hachures, no central glyph" |
+
+**Resolution**: Cat 2 has no canonical Soviet 1:50,000 symbol identity findable in TM 30-548. Three explanations remain viable:
+
+- Cat 2 is **heterogeneous** at the classifier's resolution — a mix of feature classes that share the rounded-black-hachured gestalt;
+- The symbol class is **absent from TM 30-548** (the US Army guide may have omitted less common feature types or regions-specific conventions);
+- The symbol belongs to a **different scale-set** that bleeds visually onto 1:50,000 sheets in the project corpus.
+
+The user will consult colleagues for a Russian-language primary Soviet topo guide to resolve this definitively. For the present paper, the **failure-mode catalogue uses mechanism-level framing** (Mechanism A — colour-veto failure) rather than symbol-identity-level framing for Cat 2. The paper can note that the specific symbol class remains unresolved without weakening the mechanistic argument.
+
+### Item 285 — Mechanism C exemplar (source-domain ambiguity)
+
+TM 30-548 Item 285 "Crater of mud geyser" (кратер грязевого вулкана) is confirmed as a canonical Soviet 1:50,000 symbol within the ≤425 range. Its visual signature — an orange-brown sunburst pattern with a small central circle — is strikingly similar to a real burial mound, though not quite identical. The user noted they "fell for it" during curator review before catching the distinction.
+
+This is the paper's canonical exemplar for **Mechanism C — source-domain ambiguity**: a feature that is correctly rendered in canonical Soviet cartographic convention, yet visually aliases with the target class because Soviet topographic convention applies similar graphic vocabulary (raised feature + outward hachures) to topographically similar phenomena regardless of geological origin. Unlike Mechanism A (colour-veto failure — the symbol is the wrong colour) and Mechanism B (central-glyph anchor — the classifier is anchored on a co-located geodetic glyph), Mechanism C cannot be resolved by any prompt-engineering or post-classification filter:
+
+> The disambiguation is lost at the cartographic-source level. A prompt that says "orange-brown, outward hachures, raised circular feature" correctly describes both Item 62 (burial mound) and Item 285 (mud-geyser crater). No additional lexical instruction can separate them; only spatial context, corpus priors, or ground-truth inspection can do so.
+
+Mud-geyser craters are luckily rare in the project corpus (the GS maps cover semi-arid steppe with no known active mud volcanism), so Mechanism C contributes a small fraction of the observed FP rate. Its value to the paper is as a conceptual boundary-case, not a numerical driver.
+
+### Item 83 — proposer-prompt vocabulary confirmation
+
+TM 30-548 Item 83 "Trigonometrical point on burial mound" (тригонометрический пункт на кургане) is confirmed within the ≤425 range (approximately page 17, "Orientation Points and Local Features" section). The adjacent items 81–84 cover the burial-mound subtypes as a coherent group.
+
+This confirms that the four burial-mound subtypes named in `prompts/system-instructions/detect_brief-text.md` — `burial-mound`, `settlement-mound`, `triangulation-point-on-burial-mound`, `benchmark-on-burial-mound` — each map to a canonical Soviet 1:50,000 symbol. The proposer prompt's vocabulary is **cartographically grounded**, not invented. When the v2 classifier returns "triangulation-point-on-burial-mound" or any subtype, it has a real cartographic referent.
+
+This closes a small residual ambiguity from Obs 306, where the user had clarified that the Soviet legend contains the four subtypes but the framing of "Soviet topo has a burial-mound category" had remained slightly imprecise.
+
+### TM 30-548 partial reliability
+
+The user's domain diagnosis: "I think they chose to simply print part of the guide in black-and-white." TM 30-548 is the canonical US Army Soviet topographic map reference, but sections of the guide were reproduced in B&W for the 1958 printing, losing the original colour information for those pages.
+
+Methodological implication for future symbol-identification tasks:
+
+- **Trust**: symbol shape, hachure direction, central-glyph presence, item number, Russian-language name, English translation.
+- **Do not trust**: colour claims derived from TM 30-548 in sections that appear to be B&W reproductions; cross-check colour against the user's domain expertise or a primary Russian-language Soviet topo guide.
+
+This partially explains why the first agent search (Obs 314) accepted Item 472 as a colour match: if the burial-mound entry on that page happened to be in a B&W-rendered section, the agent had no colour ground truth from the PDF and defaulted to context-biasing (Obs 314's methodological note stands unchanged).
+
+### What this means for the paper
+
+The failure-mode catalogue for the Discussion is now complete at three mechanisms:
+
+| Mechanism | Share of 117 settlement-mound confounds | Paper fix |
+|---|---|---|
+| A — Colour-veto failure | ~75 % | Hard colour-rejection rule or RGB post-filter |
+| B — Central-glyph anchor | ~25 % | Remove `benchmark-on-mound` / `triangulation-on-mound` subtypes; spatial-join post-step |
+| C — Source-domain ambiguity | Small but real; Item 285 as canonical example | No prompt fix; flag in Discussion as fundamental limit |
+
+No symbol-identity dependence in the paper's Mechanism A claim. The Discussion can say: "approximately 75 % of confounds are colour-veto failures — the classifier fires on shape and hachure pattern regardless of colour, across multiple Soviet 1:50,000 feature classes whose precise cartographic identity is currently unresolved for the bulk of Cat 2 cases." Item 285 (Mechanism C) and items 62–64 / 81–84 (canonical burial-mound subtypes) can be cited as named exemplars; Cat 2's specific identity is noted as deferred for future work.
+
+### Caveats
+
+- **Cat 2 identity may be resolvable** via a primary Russian-language Soviet topographic guide (1:50,000 Условные знаки, 1983 or similar). The user has indicated they will consult colleagues. This Obs should be cited as "Cat 2 identity unresolved in TM 30-548; primary-source resolution deferred to future work."
+- **Obs 314's Item 473 identification is superseded** by this negative result. The agent context-biasing methodological note in Obs 314 (`### Why Item 472 was wrong — agent context-biasing`) stands unchanged and is not affected by the supersession.
+- **The Cat 1 / Cat 2 split within the 87 `not_orange_brown` verdicts** remains unquantified (see Obs 313 caveats). This Obs does not change that caveat; mechanism-level framing does not require a precise split.
+- **Mechanism C frequency** is not formally measured in this corpus. The mud-geyser crater exemplar is included in the Discussion as a conceptual case, not a numerical contributor.
+
+### Findable later
+
+Search terms: Cat 2 symbol identity negative result, no clean match ≤425 range, TM 30-548 exhaustive search pages 11–50, Item 473 tailings pile superseded, Cat 2 unresolved primary source deferred, Russian language Soviet topo guide, Условные знаки 1983, symbol-identification thread closed, Item 285 mud geyser crater source-domain ambiguity, Mechanism C exemplar irresolvable visual aliasing, sunburst orange-brown burial mound alias, cartographic-source level disambiguation lost, Item 83 trigonometrical point on burial mound, Items 81–84 burial mound subtypes canonical, proposer prompt vocabulary cartographically grounded, TM 30-548 B&W sections colour unreliable, colour cross-check domain expertise, three-mechanism framework complete, Mechanism A B C paper Discussion, hard colour-rejection rule, spatial-join post-step benchmark, source-domain ambiguity fundamental limit, Soviet topo visual aliasing, SovietTopoSymbols partial reliability, cat2 heterogeneous feature class, colour-veto failure mechanism A dominant, Item 285 kратер грязевого вулкана.
+
+### Related observations and artefacts
+
+- **Obs 313** (three-category bet-test taxonomy + two-mechanism framework, commit `1a56f35b`): superseded in part — Mechanism C is now added as a third mechanism, and Cat 2's symbol identity remains open per this Obs. Mechanism A and B descriptions and all quantitative results in Obs 313 are unchanged.
+- **Obs 314** (Cat 2 = Item 473 tailings pile + agent context-biasing note, commit `c4432978`): the Item 473 identification is **superseded** by this Obs's negative result from the exhaustive ≤425 search. The agent context-biasing methodological note (`### Why Item 472 was wrong — agent context-biasing`) and the mitigation guidance stand unchanged and are not affected.
+- **Obs 312** (bet-test resolved 0/177 + initial Mode 1–7 catalogue, commit `c4585f60`): Mode 7 "spot-height" → Mechanism B; Modes 4/5/6 → Mechanism A; Mode 1/2 → Mechanism B (central glyph); Mode 3 → Mechanism A. No quantitative changes.
+- **Obs 306** (Soviet legend four burial-mound subtypes clarification): Item 83 confirmation here closes the residual vocabulary ambiguity flagged in that Obs.
+- **`inputs/examples/SovietTopoSymbols.pdf`** (TM 30-548, US Army, 1958): partial-reliability note — colour information not trustworthy in B&W-printed sections; shape, number, labels, and hachure direction reliable. Pages 11–50 searched exhaustively for Cat 2 match, 2026-04-30. Item 285 at page 53; Items 81–84 at approximately page 17.
+- **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): confirms orange-brown colour requirement; four burial-mound subtypes confirmed canonical against items 81–84.
+- **Artefacts**: `inputs/examples/SovietTopoSymbols.pdf`; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 313 commit `1a56f35b`; Obs 314 commit `c4432978`; Obs 312 commit `c4585f60`.
