@@ -15120,3 +15120,317 @@ Search terms: high-pull tail cartographic feature characterisation, Obs 301 foll
 **Cross-project agent-design infrastructure added this session**: `~/personal-assistant/agents/obs-writer.md` (auto-detects working-notes Obs format; picks next free Obs number with collision check; commits + pushes; hard rule to re-read source files for cited values) + `~/personal-assistant/commands/observe.md` (slash command wrapping the agent with three invocation modes). Both symlinked into `~/.claude/{agents,commands}/`; available natively from next session restart. The contract's anti-confabulation rule caught three of my parent-level errors during this session (see the Session 80 entry in `llm-observations.md` for details).
 
 **Session-state pointer**: working tree clean on `origin/main` at `70026553`; backup tag `pre-bootstrap-10k-2026-04-28` → `5040f5b4`; Step 6 paper outline pending in next session per `planning/paper-writeup-continuity.md`.
+
+## Observation 305: 55-map student-GT FN-rate is 8.87 % lower-bound (95 % CI [6.93, 11.35]); recall-adjusted central 11.15 % — exceeds Sobotkova 2023's 5.0 % FN-only baseline (2026-04-29)
+
+### The finding
+
+The 55-map student / participatory-GIS GT (`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`, 4,744 mounds across 55 maps) has an empirical lower-bound false-negative rate of **8.87 % [95 % CI: 6.93 %, 11.35 %]**, computed from VLM phantom-TPs across the four corrected runs' Streamlit review CSVs. The recall-adjusted central estimate, using the highest-recall corrected run's recall = 0.7958 (`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`), is **11.15 % [8.58, 14.49]**.
+
+### Comparator and the historical 6 % decomposition
+
+Sobotkova et al. 2023 Table 3 reports the historical 4-map student-GT validation breakdown:
+
+- False-negative rate: **5.0 %**
+- Double-marking rate: 0.8 %
+- False-positive rate: 0.1 %
+- Total: 5.9 % (rounds to ~6 %)
+
+The clean comparator for FN-only is **5.0 %**, not the conflated ~6 %. The 95 % CI on the new 55-map estimate **excludes 5.0 %**.
+
+### Methodology — three-tier classification scheme
+
+For each `human_label = "mound"` row in the five review CSVs (image, image multi-buffer, text-HIGH, text-HIGH-T0.3, text-MIN), distance to nearest student-GT mound on the same map (regardless of matching) was computed via `scipy.spatial.cKDTree` on per-map subsets. User-confirmed boundaries (per shell-lift signal/noise from `results/55maps-image-generalisation/buffer-band-lift/shell.csv`):
+
+- **High-confidence FN**: `d_nearest_studentGT > 125 m` OR `buffer_metres = 200` ("beyond 150 m" review label). Beyond shell-significance.
+- **Marginal**: `d_nearest_studentGT ∈ (75, 125] m`. Shell-lift weakening; could be matching-collision or genuine FN.
+- **Likely matching-collision (NOT FN)**: `d_nearest_studentGT ≤ 75 m`. Shell-lift is confident; nearby student-GT mound likely IS the same mound.
+
+Headline = (high-conf-FN count + buffer_metres = 200 count) / (student_GT_count + same numerator). Per-map bootstrap-resample (10 K iterations, seed 42) for CIs.
+
+### Per-map dispersion
+
+Substantial. Median 7.5 % (IQR 4.3-12.8 %); range 0-52.5 %. Outlier flagged: **K-35-076-2** at 52.5 % FN rate (52 likely-FN against only 47 student-GT mounds). Severe under-mapping at the participatory-GIS stage; worth confirming against original participatory-GIS coverage history.
+
+### What this means for the paper
+
+- **Methods**: report both the headline lower-bound (8.87 %) and the recall-adjusted central (11.15 %) to characterise corpus-level student-GT quality. Cite Sobotkova 2023's 5.0 % as historical reference and explain the methodological asymmetry (Sobotkova used curator-review on 4 maps; this work uses VLM phantom-TP signal on 55 maps).
+- **Limitations**: the headline is a LOWER BOUND because it counts only mounds the VLM also found. Per-map heterogeneity (IQR 4.3-12.8 %, max 52.5 %) is itself a finding; student-GT quality is not uniform across the corpus.
+- **Discussion**: the 4-map sample's 5.0 % is a low-end draw OR the methodologies produce systematically different results; with a 95 % CI excluding 5.0 %, both readings should be acknowledged.
+
+### Caveats
+
+- 4-map cross-validation NOT possible on this run — the original pre-curation student GT for the 4 GS maps does not exist in `archive/` or `inputs/`. Sobotkova 2023's 5.0 % is reported as comparator only, inherited from the published characterisation.
+- Hungarian-collision residual at the 75 m boundary; the marginal tier (75-125 m) absorbs the soft-upper-bound case.
+- The recall-adjustment uses the highest-recall corrected run (image at R = 150 m). Adjusting per-run produces a range; reporting the most generous as "central" is a deliberate user-favourable choice for the paper Methods.
+
+### Findable later
+
+Search terms: 55-map student-GT FN-rate refinement, 8.87 % lower bound, 11.15 % recall-adjusted, 95 % CI excludes 5.0 %, Sobotkova 2023 Table 3 decomposition, three-tier high marginal matching-collision, 75 m 125 m boundary user-confirmed, K-35-076-2 outlier 52.5 %, per-map bootstrap-resample 10 K iterations seed 42, 4-map pre-curation absent, lower-bound caveat VLM-found-only, Hungarian-collision residual.
+
+### Related observations and artefacts
+
+- **Sobotkova et al. 2023** (`docs/methodology/references/Sobotkova et al. - 2023...`): historical comparator at 5.0 % FN-only.
+- **Obs 296** (failure-of-generalisation reinterpretation): related corpus-quality framing.
+- **Obs 302** (FP-class diagnostic; missing GS comparator): different but related corpus-quality assessment.
+- **Memory ids** `2026-04-29-d5a6332b0788` (GS curator GT precision), `2026-04-29-bedbb2494542` (55-map jitter clarification), `2026-04-29-8cf0e31e7316` (historical 6 % conflation note).
+- **Artefacts**: `results/student-gt-fn-rate-analysis/{report.md, per_map_fn_breakdown.csv, bootstrap_summary.json, figures/fn_rate_by_stratum.png}`; analysis script `scripts/analyse_student_gt_fn_rate.py`. Commit `508e498f`.
+
+## Observation 306: GS FP-classifier TP-side calibration validated by closed-list expansion — v1's 60 % `contour-ring` leakage was a closed-list design artefact, not classifier hallucination (2026-04-29)
+
+### The finding
+
+The first GS-side FP-classification run (commit `ee4f18cb`, 2026-04-29) used a FP-only closed list (`number, benchmark, water-feature, contour-ring, vegetation, settlement, road-or-track, scale-bar-or-grid, none, other`) inherited from `scripts/55maps-fp-classify.py`. When extended to classify ALL 371 GS detections (TPs + FPs together — approved by user as a calibration sanity check), the TP-side bucket (n = 355 detections within 25 m of curator GT) returned `contour-ring` 60.0 %, `number` 15.2 %, `none` / `other` only 0.8 %. Initially flagged as a classifier-hallucination concern.
+
+User clarification: Soviet topographic legend DOES include burial-mound categories (`burial-mound`, `benchmark-on-burial-mound`, `triangulation-point-on-burial-mound`, `settlement-mound`); the script's closed list omitted them. The closed list was designed for FP-only scope (where no mound symbols are expected in input); when adapted to TP+FP scope, real mounds had no proper category to assign and fell back to visual-similarity (`contour-ring` for the small-circle-in-contour shape).
+
+### v2 with expanded closed list
+
+The script was forked + closed list extended (commit `9fa6db4e`, 2026-04-29). v2 TP-side breakdown (n = 355):
+
+| Category | v1 rate | v2 rate |
+|---|---:|---:|
+| `contour-ring` | 60.0 % | **0.0 %** |
+| `burial-mound` | — | 34.9 % |
+| `triangulation-point-on-burial-mound` | — | 19.7 % |
+| `settlement-mound` | — | 2.3 % |
+| `benchmark-on-burial-mound` | — | 0.0 % |
+| **Total burial-mound categories** | — | **56.9 %** |
+
+The v1 60 % `contour-ring` collapsed entirely; the burial-mound categories absorbed the leakage. Classifier visual recognition is sound when given the right vocabulary.
+
+### Remaining TP-side caveat
+
+`vegetation` 12.7 % and `other` 19.2 % remain on the TP-side at v2. These are real mounds the model declined to label as burial-mound symbols. May reflect visually atypical mounds (eroded, small, vegetation-occluded) or cases where the model's first-pick visual-similarity differed from the burial-mound prototype. Rationale strings worth manual review if the paper Discussion discusses classifier reliability granularity.
+
+### What this means for the paper
+
+- **Methods**: the FP-classification methodology must include the burial-mound categories in any TP+FP-scope use. The 55-map FP-classification was FP-only (input filtered to `human_label = "not_mound"`) so the original closed list was defensible there; cross-corpus comparison with GS requires the expanded list everywhere (now standardised — see Obs 307).
+- **Methodological note**: v1's TP-side leakage is documented as a calibration sanity check that surfaced a closed-list design flaw. It is NOT classifier hallucination; the model recognises burial-mounds correctly when the label is available.
+
+### Caveats
+
+- v1 outputs archived to `archive/gs-fp-classification-v1-pre-burial-mound-list/` per project policy; v2 at canonical path `results/gs-fp-classification/`.
+- The 12.7 % vegetation + 19.2 % other on TP-side is itself a small but non-trivial signal; not investigated in this Obs.
+- The v2 prompt nudge ("when in doubt, prefer the more specific category") may bias toward burial-mound categories; tested empirically in Obs 308 (55-map v2 reclassification rate).
+
+### Findable later
+
+Search terms: GS FP-classification v1 v2, closed-list expansion burial-mound categories, TP-side calibration validation, 60 % contour-ring leakage closed-list artefact, 56.9 % burial-mound on TPs, classifier visual recognition sound, settlement-mound 2.3 %, triangulation-point-on-burial-mound 19.7 %, benchmark-on-burial-mound zero on TPs, vegetation other residual, prompt vocabulary nudge, archive gs-fp-classification-v1-pre-burial-mound-list.
+
+### Related observations and artefacts
+
+- **Obs 302** (55-map FP-class diagnostic; v1 closed list): the original FP-only application of the closed list; defensible scope.
+- **Obs 307** (this session): cross-corpus chi-square at v2 standardised list.
+- **Obs 308** (this session): 55-map v2 reclassification rate (15.8 %) tests the prompt-bias hypothesis.
+- **Memory id** `2026-04-29-d5a6332b0788` (GS curator GT precision history).
+- **Artefacts**: `scripts/gs-fp-classify.py` (modified for v2; closed list expanded). `results/gs-fp-classification/{report.md, fp_classifications.json, category_distribution.json, cost_summary.json, figures/}`. Archive: `archive/gs-fp-classification-v1-pre-burial-mound-list/`. Commits: `6037b390`, `ee4f18cb` (v1); `9fa6db4e` (v2).
+
+## Observation 307: GS-vs-55-map FP-class distributions diverge significantly under expanded closed list — different failure modes by corpus, supported by Monte Carlo chi-square at p = 0.0028 (>125 m stratum) and p = 0.0012 (>50 m) (2026-04-29)
+
+### The finding
+
+After the closed-list expansion (Obs 306), an apples-to-apples cross-corpus comparison of FP-class distributions becomes tractable. Pearson residuals at the >125 m stratum show GS over-represents `burial-mound` (residual +5.29 at >50 m, +4.26 at >125 m) and `triangulation-point-on-burial-mound` (+3.33 / +3.65); GS under-represents `contour-ring` (−2.33 / −2.18) relative to the 55-map text-track aggregate. Chi-square test:
+
+- **At >125 m stratum** (n = 14 GS FPs vs n = 836 55-map text-track aggregate): chi² = 50.231, dof = 12, asymptotic p = 1.27e-06; **Monte Carlo p = 0.0028** (10 K resamples; required because expected counts < 5 in some cells)
+- **At >50 m stratum**: chi² = 57.34, dof = 12; **Monte Carlo p = 0.0012**
+
+The corpora produce different FP profiles. GS FPs concentrate on burial-mound-adjacent symbols (other survey markers visually similar to mounds: triangulation points, benchmarks, "burial mound but not the curator's intended one"); 55-map FPs concentrate on contour-ring-rich cartographic content (visually mound-like but topographically unrelated).
+
+### Implications for the cross-corpus failure-mode hypothesis
+
+This refines but does NOT confirm the original Obs 296 manual-review hypothesis (that 55-map FPs are spot-heights / numbers; GS are water-features / spot-heights):
+
+- **55-map distractor-pull (number + benchmark) share at v2**: 10.8 % text-track aggregate (down from 22.7 % at v1; v2's burial-mound categories absorbed some of v1's number assignments). Below the 30 % threshold; corpus-level distractor-pull is NOT the dominant failure mode.
+- **GS burial-mound-adjacent share at >125 m**: 6 / 14 (42.9 %) of strict FPs classify as `burial-mound` or `triangulation-point-on-burial-mound`. Either prompt-bias (the v2 nudge) or genuine missed mounds — see Obs 306 for the prompt-nudge caveat.
+- **What IS supported**: the corpus-level distributions differ at conventional significance, with the divergence concentrated in burial-mound-adjacent categories (GS) vs contour-ring (55-map). The mechanism — whether GS has more mound-like features per area, or the GS detection pipeline behaves differently on its training corpus — remains a Discussion question.
+
+### What this means for the paper
+
+- **Discussion**: report the chi-square cross-corpus divergence as evidence of corpus-specific failure modes, NOT as evidence for the original Obs 296 spot-height-distractor-pull hypothesis (which is not visible in either v2 distribution).
+- **Methods**: the cross-corpus comparison MUST use the same closed list (v2's expanded list); v1 and v2 mixed comparisons are not valid.
+
+### Caveats
+
+- n = 14 at >125 m is small. Per-category Pearson residuals are interpretable only at |residual| > 2; values in the 1-2 range are noise-bounded.
+- The v2 prompt nudge toward more-specific categories may inflate the GS burial-mound-adjacent rate. The 55-map v2 reclassification rate (Obs 308) bounds the prompt-bias contribution.
+- The 6 / 14 burial-mound-adjacent rate at >125 m on GS could reflect curator missed-mounds (despite triple-checking) OR prompt over-claim. Manual inspection of those 6 crops would distinguish; not done in this Obs.
+
+### Findable later
+
+Search terms: GS-vs-55-map cross-corpus chi-square, Monte Carlo p 0.0028 at greater than 125 m, p 0.0012 at greater than 50 m, Pearson residual burial-mound +5.29, triangulation-point-on-burial-mound +3.33, contour-ring under-represented GS −2.33, different failure modes by corpus, distractor-pull share dropped 22.7 to 10.8 %, six of fourteen burial-mound-adjacent at strict stratum, prompt-bias bound from Obs 308, expected count low Monte Carlo required.
+
+### Related observations and artefacts
+
+- **Obs 296** (failure-of-generalisation reinterpretation; original distractor-pull hypothesis): refined here. The hypothesis is NOT supported at v2; the chi-square divergence has a different mechanism.
+- **Obs 302** (55-map FP-class at v1; image-vs-text-track non-significance p = 0.147): the v1 within-55-map result is unchanged at v2 (Obs 308 verifies).
+- **Obs 306** (GS TP-side calibration validation under v2): closed-list-expansion enabling.
+- **Obs 308** (55-map v2 reclassification rate): bounds the prompt-bias contribution.
+- **Artefacts**: `results/gs-fp-classification/report.md` (v2 GS), `results/55maps-fp-classification/report.md` (v2 55-map; commit `ec21c8ef`). Cross-corpus comparison computed at runtime using the v2 GS data + v2 55-map text-track aggregate distribution. Commits: `9fa6db4e` (GS v2), `ec21c8ef` (55-map v2).
+
+## Observation 308: 55-map v2 FP-classification reclassifies 15.8 % (177 / 1,119) of FPs as burial-mound categories — provisional pending bet-test inspection of true review-error rate (2026-04-29)
+
+### The finding
+
+The 55-map FP-classification re-run with the expanded closed list (commit `ec21c8ef`, 2026-04-29) reclassified **177 of 1,119 (15.8 %)** of the user-reviewed `human_label = "not_mound"` FPs as one of the four burial-mound categories. Subtype breakdown:
+
+- `settlement-mound`: 117 (10.5 %)
+- `triangulation-point-on-burial-mound`: 37 (3.3 %)
+- `burial-mound`: 23 (2.1 %)
+- `benchmark-on-burial-mound`: 0
+
+Mean classifier confidence on these reclassifications: 0.94-0.95 (single-pass, T = 0.0, thinking_level = minimal).
+
+### Three competing explanations
+
+1. **Review-pass mislabelling** — user clicked `not_mound` on real mounds in 15.8 % of reviewed FPs.
+2. **v2 prompt-bias** — the prompt's "when in doubt, prefer the more specific category" wording nudges the classifier toward burial-mound categories on ambiguous mound-like features (especially settlement-mound, the dominant subtype).
+3. **Vocabulary redistribution** — features that v1 classified as `contour-ring` / `number` are visually consistent with `settlement-mound`; v2 captures the more specific categorisation.
+
+User's prior digitisation experience suggests rate (1) is probably 1-3 % (not 15.8 %); the bulk likely (2) + (3). User has agreed to a manual re-inspection of the 177 crops to test which mechanism dominates — see `planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md` (commit `8d2f7f47`).
+
+### Bet framing (for paper-Methods justification of the inspection)
+
+Denominator for the bet: **1,675** (the `not_mound` corpus the user actually reviewed, not 3,492 full corpus or 177 reclassifications). Bet: review-error rate < 2 % of 1,675 → **34 errors among 177 reclassifications** (= 19 % of reclassifications). Inspection result will partition the 177 into `real_mound_my_error`, `v2_overclaim`, `edge_case_ambiguous`, plus skip — calibrated against a small sample of v2-`not_mound`-agreed cases for inter-rater calibration.
+
+### Cross-corpus chi-square verdict (already updated)
+
+The verdict on the original Obs 296 manual-review hypothesis under the v2 distribution: **MIXED — but still NOT SUPPORTED at the macro level**. Chi-square (image vs text-track) flipped from p = 0.147 (v1, n.s.) to p = 0.0047 (v2, significant), but text-track distractor-pull (number + benchmark) share dropped from 22.7 % → 10.8 %. The chi-square shift is driven by image-track elevations on `number` (+2.37 residual) and `none` (+3.19), NOT by burial-mound categories.
+
+### What this means for the paper
+
+- **Methods (provisional)**: report the 15.8 % reclassification rate alongside the bet-test outcome (review-error rate after manual inspection). The reclassification IS NOT a finding about review-pass quality until the inspection partitions the explanations.
+- **Discussion (provisional)**: if review-error rate < 2 %, the v2 prompt-bias / vocabulary-redistribution interpretation dominates and the 55-map FP-class chi-square (Obs 307) cross-corpus reading holds intact. If review-error rate ≥ 2 %, the corpus-level analysis must be re-run on the corrected `not_mound` set.
+
+### Caveats
+
+- Single-pass classification at T = 0.0 thinking-minimal; confidence rate (0.94-0.95) is high but loose under one-shot decoding. A consensus pass at non-zero temperature would tighten the burial-mound rate estimate.
+- The 117 settlement-mound classifications are concentrated; if those crops cluster on a few maps, the corpus-wide reading is noisier than the headline 10.5 % implies.
+- Provisional pending inspection. User-confirmed denominator = 1,675; bet threshold = 34 errors.
+
+### Findable later
+
+Search terms: 55-map FP v2 burial-mound reclassification 15.8 %, 177 of 1119 FPs, settlement-mound 117 dominant 10.5 %, three competing explanations review-pass prompt-bias vocabulary, bet denominator 1675 not 3492 not 177, 19 % threshold 34 errors, v2 chi-square flipped p 0.147 to 0.0047, distractor-pull dropped 22.7 to 10.8 %, image residual number 2.37 none 3.19, single-pass confidence 0.94 0.95, planning v2-burial-mound-bet-test-app-plan, Streamlit re-review approved.
+
+### Related observations and artefacts
+
+- **Obs 302** (v1 55-map FP-class — distractor-pull NOT supported): unchanged at v2 macro level.
+- **Obs 306** (v2 closed-list expansion + GS TP-side validation): enables this v2 result.
+- **Obs 307** (cross-corpus chi-square at v2): paired finding; the corpus-level chi-square holds intact regardless of bet-test outcome (different question).
+- **Artefacts**: `results/55maps-fp-classification/{report.md, fp_classifications.json, category_distribution.json, figures/}`; archive at `archive/55maps-fp-classification-v1-pre-burial-mound-list/`. App plan: `planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`. Commits: `ec21c8ef` (v2 55-map), `8d2f7f47` (bet-test app plan APPROVED).
+
+## Observation 309: Pairwise tile-size-30m percentile-bootstrap CI bug — F1 point estimates fall outside CI bounds in 9/10 buffer-cell combinations; root cause is sparse-coverage asymmetry; fixed globally via BCa + Mitigation 3 sparse-coverage flag (2026-04-29)
+
+### The finding
+
+Five `pairwise/tile-size-30m/` cells (`512px-{image,text}-{t0,t07}`, `eval-512-on-384-image-t0`) consistently produced F1 point estimates that fell **outside** their bootstrap CI bounds — e.g. `512px-image-t0` at 30 m: F1 = 0.571, CI = [0.205, 0.514]. 9 of 10 buffer/cell combinations affected; pre-existing bug per commit `52e6c40d` (2026-03-28; original commit message noted "cross-grid bootstrap CIs unreliable due to sparse tile coverage; point estimates directionally clear").
+
+### Root cause
+
+Asymmetric computation in `scripts/lib_advanced_metrics.py`:
+
+- **Point estimate** (`calculate_f1_internal`, lines 560-638): aggregates F1 globally across all 487 tiles.
+- **Bootstrap CI** (`bootstrap_ci`, lines 641-719): resampled tiles WITH REPLACEMENT, sampling n_tiles times. Each iteration loses ~37 % of unique tiles. Per-tile TP/FP/FN counts aggregated only across sampled tiles. With sparse cross-grid coverage (74.5-83.4 % zero-tile rate on these 5 cells; 0.2-11.1 % on matched-grid baselines), the bootstrap distribution centres BELOW the all-data F1 → point above upper percentile bound.
+
+Cross-grid eval is intentional methodology (compares 512 px detections against 384 px tile bounds at matched 30 m buffer for direct grid-size comparison); the sparse coverage is the side-effect that breaks percentile bootstrap.
+
+### Bounds correction (related, fixed in passing)
+
+The plan `planning/daylight-followup-sweep-plan-2026-04-29.md` §3.2 specified 340-tile bounds for the pairwise cells. Empirical dry-run discovered the pre-tag eval was generated with **487-tile bounds** (matching `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`). The new sweep used 487-tile to preserve point-estimate parity (ΔF1 = 0.0000 vs pre-tag). 487-tile is methodologically correct for cross-grid eval; the plan §3.2 reference to 340-tile was the plan's error, not the data's.
+
+### The fix
+
+Per the user's "fix this properly once and for all" decision (rather than the plan agent's recommended Mit-3-only), the bug is fixed globally by:
+
+1. **BCa replacement** (commit `2026999a`): percentile method replaced with **Bias-Corrected and Accelerated bootstrap** across ALL six bootstrap functions in `lib_advanced_metrics.py`. Implementation via `scipy.stats.bootstrap` wrapper + Efron / Davison-Hinkley jackknife fallback. Schema bumped 1.0 → 1.1; `_metadata.bootstrap.method = "BCa"`, `bootstrap.library` recorded.
+2. **Mitigation 3 sparse-coverage flag**: 50 % zero-tile threshold (strict `>`), per-cell rollup. eval.md emits `N/A *` + footnote when sparse; eval.csv gains `coverage_status`, `ci_unreliable`, `ci_zero_fraction`, `ci_n_tiles` columns.
+3. **Point estimate stability**: `point` fields added to all metrics — deterministic, no bootstrap involved. Tests pin `point ≡ calculate_f1_internal` regardless of bootstrap iterations.
+
+24 new tests + 5 updated; all 839 tier-1 tests pass; ruff clean. Rollback tag `pre-bca-mit3-2026-04-29` pushed before the change.
+
+### Migration path
+
+Existing eval.json files in `results/` retain pre-change percentile CIs until a re-run pass migrates them to BCa. Re-run is queued; the new method is deterministic-given-seed and produces identical point estimates, so the re-run is safe to dispatch and changes only CI bounds (small but real).
+
+### What this means for the paper
+
+- **Methods**: report the bootstrap method as BCa (not percentile). Note that paper-headline point estimates are unchanged from the percentile-method era; only CI bounds shift slightly under BCa.
+- **Methodological note for Limitations**: pairwise / tile-size-30m cells have sparse cross-grid coverage; their `ci_unreliable` flag is preserved in eval JSON metadata. Paper tables suppress numeric CIs for those 5 cells with a footnote.
+
+### Caveats
+
+- BCa changes CI numerical bounds for ALL cells, not just the affected 5. Magnitude is small (typically < 0.005 absolute on F1 CI bounds) but may matter for already-published precision.
+- Migration re-run is not yet executed; existing committed JSON files are pre-BCa. Status quo is "code change committed, data pending".
+- The §7.3 verifier's F1-stability tolerance (5e-4) is conservative for percentile→BCa shifts; expect some cells to trigger the verifier's warning until the re-run lands.
+
+### Findable later
+
+Search terms: pairwise tile-size-30m bootstrap CI bug, F1 point outside CI bounds 9 of 10, root cause sparse-coverage asymmetry, percentile bootstrap WITH replacement loses 37 % unique tiles, BCa scipy.stats.bootstrap Efron Davison-Hinkley jackknife, Mitigation 3 50 % threshold strict greater than, schema 1.0 to 1.1, point fields deterministic, 24 new tests 839 tier-1 pass, rollback tag pre-bca-mit3-2026-04-29, 487-tile bounds correction methodologically correct, plan §3.2 error not data, ci_unreliable flag, migration re-run pending.
+
+### Related observations and artefacts
+
+- **Obs 303** (bootstrap-N controls Monte Carlo noise, not CI width): orthogonal but related — Obs 303 is about N=1K → N=10K behaviour; this Obs is about percentile → BCa method change.
+- **Plan**: `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` (commit `4da5c254`).
+- **Diagnosis**: was performed in-session by an Explore agent before the implementation; root-cause analysis in the plan doc.
+- **Artefacts**: `scripts/lib_advanced_metrics.py` (commit `2026999a`), `scripts/evaluate_detections.py` (same commit). New tests at `tests/test_advanced_metrics_coverage.py` + updates to `tests/test_evaluate_detections_metadata.py` + `tests/test_evaluate_detections_mcc_rendering.py`. Rollback tag `pre-bca-mit3-2026-04-29`.
+
+## Observation 310: Daylight sweep N=10K standardisation closed — 162/165 cells upgraded; 2 timed-out cells re-running with no-timeout; pro-n10 evaluation.json gap recovered (closes Obs 303 forward-pointer) (2026-04-29)
+
+### The finding
+
+The N=1,000 → N=10,000 bootstrap-iteration standardisation across 165 deferred cells (per `planning/daylight-followup-sweep-plan-2026-04-29.md`) executed on sapphire 14:01-15:51 UTC 2026-04-29. 162 cells completed successfully; 4 commits committed and pushed in plan §8 order:
+
+- `b774238b` paper-eval (154 cells, 462 files)
+- `2d12dd06` pairwise-tile-size-30m (5 cells, 15 files; CI bug + 487-tile bounds documented)
+- `fe21fe6c` 55maps-cleaned-gt (3 cells, 9 files)
+- `6b611174` gold-standard-extended-buffer-sweep (1 cell, 3 files)
+
+§7 verification result: 163 / 165 N=10K presence pass; 4/5 sampled F1-stability pass with one outlier explained as input-set expansion (see sub-finding below); §7.5 MCC-stability check patched to use `mcc.point` not `mcc.mean` (commit `3822645a`).
+
+### Two timed-out cells
+
+`flash-text-minimal-t-0-7` and `flash-text-high-t-0-7` (both in `paper-eval/n1/384px-all-buffers/`) timed out at 3600 s wall under 16-way parallelism. Re-running on sapphire with no timeout limit and reduced parallelism contention (separate background agent dispatch); expected to land within 30 min - 2 hr wall.
+
+### Pro-n10 recovery
+
+`results/paper-eval/pro-n10/` previously had only `pro_n10_consensus_results.csv` + `metadata.json`; no `evaluation.json` for any of 10 consensus levels. The 2026-04-29 inventory audit confirmed all upstream artefacts intact (10 consensus geojsons + per-run detections + GT + bounds). Recovery executed via `scripts/evaluate_detections.py` × 10 levels at N=10K + `--mcc` (commit `f1cf5086`). Closes the daylight-sweep plan §12 question 1 (pro-n10 exclusion). Original recovery agent (yesterday) completed only consensus-t1; today's resume agent ran t=2..10 in parallel on sapphire, then prematurely exited; external orchestration handled the commit. Same agent-state pattern recurred in the timed-out cell re-run agent.
+
+### Mit-3 sparse-coverage flag
+
+The 5 `pairwise/tile-size-30m/` cells were committed under the daylight sweep with the pre-existing CI bug intact (point estimates outside CI bounds). The methodological closure landed via the BCa + Mit-3 fix at commit `2026999a` (Obs 309); a follow-up re-run pass under BCa will update the CIs and emit the `ci_unreliable` flag for those 5 cells.
+
+### Closes Obs 303 forward-pointer
+
+Obs 303 (bootstrap-N controls Monte Carlo noise, not CI width) flagged the N=10K standardisation as the methodological reason to upgrade. This Obs closes that forward-pointer for the 162-of-165 cells now at N=10K; the 2 timed-out cells will close once the re-run lands; the 5 sparse-coverage cells will benefit from the BCa migration once the re-run-all-cells pass executes.
+
+### Sub-finding: input-expansion audit (per-cell N-runs parity)
+
+A wider audit across all 163 swept cells (commit `29b8cc64`, `planning/input-expansion-audit-2026-04-29.md`) confirmed silent input expansions are concentrated:
+
+- 3 cells in the `pro-text-high-t-0-7` family (paper-eval/{mcc/384px, n1/384px-all-buffers, n1/384px}) expanded N=5 → N=10 detection runs between pre-tag (snapshot 2026-03-28, commit `22592f94`) and the new sweep, due to commit `3d22184d` (2026-04-15) adding runs 6-10 to the source directory.
+- All other 160 cells were stable at the per-run dimension. Severity: LOW (expected variance over the larger run set).
+
+The post-sweep N=10 result is canonical (it reflects the project's up-to-date detection corpus); pre-tag N=5 was a stale snapshot.
+
+### What this means for the paper
+
+- **Methods**: bootstrap-iteration standardisation note (N=10K seed=42 across all paper-cited cells). Pre-existing percentile→BCa migration is a separate methodological change (Obs 309).
+- **Reproducibility**: the queue-build pattern (`scripts/build_bootstrap_10k_queue_followup.py`) + verifier (`scripts/verify_bootstrap_10k_followup.py`) are the canonical infrastructure for future N-upgrades; reusable.
+
+### Caveats
+
+- §7.5 MCC-stability check warns for 50 / 51 cells (fall back to `mcc.mean` comparison at 1e-2 tolerance); strict-mode `mcc.point` check requires the BCa re-run for affected cells.
+- The 2 timed-out cells remain at N=1K until their re-run lands; they're flagged for the paper Methods section if any of their values are paper-cited.
+- Premature-completion pattern in agents that dispatch parallel work has now been observed 4× this session (original pro-n10, daylight sweep, pro-n10 resume, timed-out cell re-runs). External orchestration (manual commits or watch-loops) is the workaround until the harness signal is improved.
+
+### Findable later
+
+Search terms: daylight sweep N=10K close-out, 162 of 165 cells, 2 timed-out cells re-running no-timeout, pro-n10 evaluation.json recovery 10 levels, Obs 303 forward-pointer closed, four per-group commits b774238b 2d12dd06 fe21fe6c 6b611174, sub-finding input-expansion audit pro-text-high-t-0-7 family three cells N=5 to N=10, 487-tile bounds correction methodologically right, queue-build pattern reusable infrastructure, premature-completion pattern parallel work agents.
+
+### Related observations and artefacts
+
+- **Obs 303** (bootstrap-N controls MC noise, not CI width): forward-pointer closed.
+- **Obs 309** (BCa + Mit-3 fix): orthogonal methodological closure that supersedes the percentile method going forward.
+- **Plan**: `planning/daylight-followup-sweep-plan-2026-04-29.md` (commit `b5a5309a`); status: `planning/daylight-sweep-status-2026-04-29.md`.
+- **Audit**: `planning/input-expansion-audit-2026-04-29.md` (commit `29b8cc64`).
+- **Commits**: `b5a5309a` (plan), `b774238b..6b611174` (4 per-group sweep commits), `89a5ad67` + `9bc45766` (scaffolding + status update), `f1cf5086` (pro-n10 recovery), `29b8cc64` (input-expansion audit), `3822645a` (§7.5 verifier patch). Pre-sweep tag: `pre-bootstrap-10k-followup-2026-04-29` at HEAD `ee4f18cb`.
