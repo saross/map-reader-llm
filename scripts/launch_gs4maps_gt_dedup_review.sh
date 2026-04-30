@@ -36,7 +36,13 @@
 # changes.
 #
 # Usage:
-#   bash scripts/launch_gs4maps_gt_dedup_review.sh
+#   bash scripts/launch_gs4maps_gt_dedup_review.sh                # default 50 m
+#   bash scripts/launch_gs4maps_gt_dedup_review.sh 100            # widen to 100 m
+#
+# Per the multi-threshold workflow documented in
+# scripts/review_gt_duplicates.py, decisions persist across threshold
+# changes, so re-launching at a wider threshold respects existing
+# merge decisions and only surfaces additional candidates.
 #
 # To apply decisions after review is complete:
 #   .venv/bin/python scripts/review_gt_duplicates.py --apply \
@@ -52,10 +58,15 @@ cd "$(dirname "$0")/.."
 
 mkdir -p results/gt-duplicate-review-gs4
 
+# First positional arg overrides the cluster threshold (metres). Default
+# 50 m matches the canonical 55-map review pass; 100 m is the wider
+# safety-net pass.
+THRESHOLD_M="${1:-50}"
+
 exec .venv/bin/streamlit run scripts/review_gt_duplicates.py -- \
     --ground-truth inputs/vectors/references/student-mounds-gs-4maps.geojson \
     --rasters-dir inputs/rasters \
-    --threshold-m 50 \
+    --threshold-m "${THRESHOLD_M}" \
     --output results/gt-duplicate-review-gs4/gt-duplicate-decisions.csv \
     --clean-output inputs/vectors/references/student-mounds-gs-4maps-reviewed.geojson \
     --diff-output results/gt-duplicate-review-gs4/gt-duplicate-diff.md
