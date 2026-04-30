@@ -223,7 +223,12 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
     bounds = getattr(args, "bounds", None)
 
     metadata: dict[str, Any] = {
-        "metadata_version": "1.0",
+        # ``metadata_version`` bumped to 1.1 on 2026-04-29 with the
+        # introduction of the BCa bootstrap method and Mitigation 3
+        # sparse-coverage flag (commit feat(bootstrap): replace percentile
+        # method with BCa). Downstream consumers should treat 1.0 outputs
+        # as percentile-method and 1.1+ as BCa.
+        "metadata_version": "1.1",
         "script_path": _SCRIPT_RELATIVE_PATH,
         "script_git_commit": _git_short_hash(PROJECT_ROOT),
         "script_git_status": _git_status(PROJECT_ROOT),
@@ -233,6 +238,11 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
             "n_iterations": int(getattr(args, "bootstrap", DEFAULT_BOOTSTRAP)),
             "seed": int(getattr(args, "seed", DEFAULT_SEED)),
             "resampling_unit": "tile_level",
+            # Bootstrap method recorded so that downstream consumers can
+            # distinguish BCa-from-1.1 outputs from the legacy percentile
+            # outputs without having to read the script source.
+            "method": "BCa",
+            "library": "scipy.stats.bootstrap",
         },
         "input_files": {
             "detections": detections_value,
@@ -342,32 +352,68 @@ def evaluate_single_run(
             buffer_metres=buffer_m,
         )
 
+        # Mitigation 3 (sparse-coverage transparency): surface the coverage
+        # block on each buffer entry so MD/CSV writers can suppress
+        # numerically-misleading CIs while keeping the JSON copy intact for
+        # downstream tooling. ``coverage_status`` is the canonical
+        # human-readable flag; ``ci`` retains all numeric bounds.
+        coverage = ci.get("coverage", {})
+        coverage_status = coverage.get("coverage_status", "normal")
+        ci_unreliable = coverage_status == "sparse_cross_grid"
         buffer_results.append({
             "buffer_metres": buffer_m,
             "f1": round(f1, 4),
+            "f1_point": round(f1, 4),  # Same as ``f1`` — alias for clarity
             "f1_ci_lower": round(ci["f1"]["ci_lower"], 4),
             "f1_ci_upper": round(ci["f1"]["ci_upper"], 4),
+            "f1_ci_method": ci["f1"].get("method", "BCa"),
             "precision": round(precision, 4),
+            "p_point": round(precision, 4),
             "p_ci_lower": round(ci["precision"]["ci_lower"], 4),
             "p_ci_upper": round(ci["precision"]["ci_upper"], 4),
+            "p_ci_method": ci["precision"].get("method", "BCa"),
             "recall": round(recall, 4),
+            "r_point": round(recall, 4),
             "r_ci_lower": round(ci["recall"]["ci_lower"], 4),
             "r_ci_upper": round(ci["recall"]["ci_upper"], 4),
+            "r_ci_method": ci["recall"].get("method", "BCa"),
+            "coverage": coverage,
+            "coverage_status": coverage_status,
+            "ci_unreliable": ci_unreliable,
         })
 
         logger.info(
             "  %dm: F1=%.3f [%.3f, %.3f], P=%.3f [%.3f, %.3f], "
-            "R=%.3f [%.3f, %.3f]",
+            "R=%.3f [%.3f, %.3f]%s",
             buffer_m, f1, ci["f1"]["ci_lower"], ci["f1"]["ci_upper"],
             precision, ci["precision"]["ci_lower"],
             ci["precision"]["ci_upper"],
             recall, ci["recall"]["ci_lower"], ci["recall"]["ci_upper"],
+            (
+                f" [sparse coverage: {coverage.get('zero_fraction', 0):.1%} zero-tiles]"
+                if ci_unreliable else ""
+            ),
         )
+
+    # Cell-level rollup (Mitigation 3, per-cell flag): if ANY buffer's
+    # bootstrap distribution flagged sparse coverage, flag the whole cell.
+    # This gives consumers a one-shot boolean per cell without scanning
+    # individual buffer entries; useful for paper tables and analysis
+    # notebooks. The 20 m and 30 m buffers can in principle differ; the
+    # any-buffer rule treats the worst case as the cell's status.
+    cell_ci_unreliable = any(
+        buf.get("ci_unreliable", False) for buf in buffer_results
+    )
+    cell_coverage_status = (
+        "sparse_cross_grid" if cell_ci_unreliable else "normal"
+    )
 
     result = {
         "label": label,
         "n_detections": n_det,
         "buffers": buffer_results,
+        "ci_unreliable_any_buffer": cell_ci_unreliable,
+        "coverage_status": cell_coverage_status,
     }
 
     # Tile-level MCC (optional)
@@ -383,6 +429,11 @@ def evaluate_single_run(
             """Round a value, returning 0.0 for None (undefined MCC)."""
             return round(val, digits) if val is not None else 0.0
 
+        # ``point`` fields carry the deterministic estimate computed
+        # across all tiles (no bootstrap). The §7.5 verifier fix needs a
+        # named field that is invariant to bootstrap iteration count;
+        # ``mean`` is the bootstrap distribution mean and is not
+        # deterministic across seed changes.
         result["tile_classification"] = {
             "confusion": {
                 "tp": tile_class["tp"],
@@ -391,11 +442,14 @@ def evaluate_single_run(
                 "fn": tile_class["fn"],
             },
             "mcc": {
+                "point": _safe_round(tile_class.get("mcc")),
                 "mean": _safe_round(tile_ci["mcc"]["mean"]),
                 "ci_lower": _safe_round(tile_ci["mcc"]["ci_lower"]),
                 "ci_upper": _safe_round(tile_ci["mcc"]["ci_upper"]),
+                "method": tile_ci["mcc"].get("method", "BCa"),
             },
             "sensitivity": {
+                "point": _safe_round(tile_class.get("sensitivity")),
                 "mean": _safe_round(tile_ci["sensitivity"]["mean"]),
                 "ci_lower": _safe_round(
                     tile_ci["sensitivity"]["ci_lower"],
@@ -403,8 +457,10 @@ def evaluate_single_run(
                 "ci_upper": _safe_round(
                     tile_ci["sensitivity"]["ci_upper"],
                 ),
+                "method": tile_ci["sensitivity"].get("method", "BCa"),
             },
             "specificity": {
+                "point": _safe_round(tile_class.get("specificity")),
                 "mean": _safe_round(tile_ci["specificity"]["mean"]),
                 "ci_lower": _safe_round(
                     tile_ci["specificity"]["ci_lower"],
@@ -412,6 +468,7 @@ def evaluate_single_run(
                 "ci_upper": _safe_round(
                     tile_ci["specificity"]["ci_upper"],
                 ),
+                "method": tile_ci["specificity"].get("method", "BCa"),
             },
         }
         logger.info(
@@ -566,6 +623,15 @@ def write_outputs(
     tc = results.get("tile_classification") or {}
     has_mcc = bool(tc)
 
+    # Mitigation 3 (sparse coverage): emit machine-readable diagnostics
+    # columns alongside the numeric CI bounds. Downstream consumers that
+    # only read the numeric columns continue to work; consumers that
+    # respect the flag can hide unreliable bounds at render time. The
+    # boolean is the contract: "do you trust these CIs?".
+    has_coverage = any(
+        "coverage_status" in buf for buf in results["buffers"]
+    )
+
     csv_path = output_dir / "evaluation.csv"
     fieldnames = [
         "label", "buffer_metres",
@@ -577,6 +643,11 @@ def write_outputs(
         fieldnames.extend([
             "mcc", "mcc_ci_lower", "mcc_ci_upper",
             "sensitivity", "specificity",
+        ])
+    if has_coverage:
+        fieldnames.extend([
+            "coverage_status", "ci_unreliable",
+            "ci_zero_fraction", "ci_n_tiles",
         ])
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -595,6 +666,16 @@ def write_outputs(
                     "mcc_ci_upper": mcc.get("ci_upper", 0),
                     "sensitivity": sens.get("mean", 0),
                     "specificity": spec.get("mean", 0),
+                })
+            if has_coverage:
+                cov = buf.get("coverage", {}) or {}
+                row.update({
+                    "coverage_status": buf.get(
+                        "coverage_status", "normal",
+                    ),
+                    "ci_unreliable": bool(buf.get("ci_unreliable", False)),
+                    "ci_zero_fraction": cov.get("zero_fraction", 0.0),
+                    "ci_n_tiles": cov.get("n_tiles", 0),
                 })
             writer.writerow({k: row.get(k, "") for k in fieldnames})
     logger.info("CSV written: %s", csv_path)
@@ -626,30 +707,64 @@ def write_outputs(
         else:
             f.write("| Buffer | F1 | F1 CI | P | P CI | R | R CI |\n")
             f.write("|---|---|---|---|---|---|---|\n")
+        # Mitigation 3 (sparse coverage): when a buffer's
+        # ``ci_unreliable`` flag is set, replace the numeric CI cells with
+        # ``N/A *`` and emit a footnote at the bottom of the table. The
+        # point estimate is preserved in the F1/P/R columns; the
+        # numerically-misleading bounds are hidden from human-readable
+        # output. The JSON copy retains the bounds for downstream tooling.
+        any_sparse = False
         for buf in results["buffers"]:
+            ci_unreliable = bool(buf.get("ci_unreliable", False))
+            if ci_unreliable:
+                any_sparse = True
+
+            def _ci(lo: float, hi: float, suppress: bool) -> str:
+                """Format a CI cell as ``[lo, hi]`` or ``N/A *`` when sparse."""
+                if suppress:
+                    return "N/A *"
+                return f"[{lo:.3f}, {hi:.3f}]"
+
             row_body = (
                 f"| {buf['buffer_metres']}m "
                 f"| {buf['f1']:.3f} "
-                f"| [{buf.get('f1_ci_lower', 0):.3f}, "
-                f"{buf.get('f1_ci_upper', 0):.3f}] "
+                f"| {_ci(buf.get('f1_ci_lower', 0), buf.get('f1_ci_upper', 0), ci_unreliable)} "
                 f"| {buf['precision']:.3f} "
-                f"| [{buf.get('p_ci_lower', 0):.3f}, "
-                f"{buf.get('p_ci_upper', 0):.3f}] "
+                f"| {_ci(buf.get('p_ci_lower', 0), buf.get('p_ci_upper', 0), ci_unreliable)} "
                 f"| {buf['recall']:.3f} "
-                f"| [{buf.get('r_ci_lower', 0):.3f}, "
-                f"{buf.get('r_ci_upper', 0):.3f}] "
+                f"| {_ci(buf.get('r_ci_lower', 0), buf.get('r_ci_upper', 0), ci_unreliable)} "
             )
             if has_mcc:
+                # MCC CI is buffer-invariant; suppression for tabular
+                # MCC follows the same rule because the same tile pool
+                # underlies all CIs.
                 mcc_cells = (
                     f"| {mcc.get('mean', 0):.3f} "
-                    f"| [{mcc.get('ci_lower', 0):.3f}, "
-                    f"{mcc.get('ci_upper', 0):.3f}] "
+                    f"| {_ci(mcc.get('ci_lower', 0), mcc.get('ci_upper', 0), ci_unreliable)} "
                     f"| {sens.get('mean', 0):.3f} "
                     f"| {spec.get('mean', 0):.3f} "
                 )
                 f.write(row_body + mcc_cells + "|\n")
             else:
                 f.write(row_body + "|\n")
+
+        # Footnote: only emit when at least one row is suppressed.
+        if any_sparse:
+            zero_pcts = [
+                f"{buf.get('coverage', {}).get('zero_fraction', 0):.1%}"
+                for buf in results["buffers"]
+                if buf.get("ci_unreliable", False)
+            ]
+            f.write(
+                "\n\\* Bootstrap CI suppressed for sparse-coverage buffers "
+                f"({', '.join(zero_pcts)} of evaluation tiles have zero "
+                "TP/FP/FN counts; threshold > 50 %). "
+                "Numeric bounds remain in `evaluation.json` and "
+                "`evaluation.csv` for downstream tooling. The point "
+                "estimate (F1, P, R, MCC) is unaffected. See "
+                "`planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` "
+                "for the underlying methodology decision.\n",
+            )
         f.write("\n")
     logger.info("Markdown written: %s", md_path)
 

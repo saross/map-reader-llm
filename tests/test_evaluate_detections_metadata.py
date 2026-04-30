@@ -87,9 +87,16 @@ class TestBuildMetadataSchema:
         assert expected.issubset(meta.keys())
 
     def test_metadata_version_literal(self) -> None:
-        """Schema version is pinned at 1.0 for downstream consumers."""
+        """Schema version is pinned at 1.1 for downstream consumers.
+
+        Bumped 2026-04-29 with the introduction of the BCa bootstrap
+        method and the Mitigation 3 sparse-coverage flag (commit
+        ``feat(bootstrap): replace percentile method with BCa``).
+        Downstream consumers should treat 1.0 outputs as percentile-method
+        and 1.1+ as BCa.
+        """
         meta = _build_metadata(_make_args())
-        assert meta["metadata_version"] == "1.0"
+        assert meta["metadata_version"] == "1.1"
 
     def test_script_path_is_relative(self) -> None:
         """Script path is the stable repo-relative location."""
@@ -97,13 +104,19 @@ class TestBuildMetadataSchema:
         assert meta["script_path"] == "scripts/evaluate_detections.py"
 
     def test_bootstrap_block(self) -> None:
-        """Bootstrap block records iteration count, seed, and unit."""
+        """Bootstrap block records iteration count, seed, unit, and method.
+
+        Schema 1.1 adds ``method`` and ``library`` keys recording the
+        BCa upgrade from the legacy percentile method.
+        """
         args = _make_args(bootstrap=500, seed=7)
         meta = _build_metadata(args)
         assert meta["bootstrap"] == {
             "n_iterations": 500,
             "seed": 7,
             "resampling_unit": "tile_level",
+            "method": "BCa",
+            "library": "scipy.stats.bootstrap",
         }
 
     def test_input_files_single_mode(self) -> None:

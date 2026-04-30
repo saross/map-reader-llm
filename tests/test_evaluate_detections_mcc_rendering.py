@@ -111,6 +111,43 @@ def _results_without_mcc() -> dict:
 # =========================================================================
 
 
+def _buffer_block_with_sparse_coverage(buffer_metres: int = 30) -> dict:
+    """Build a buffer block flagged as sparse (Mitigation 3 trigger).
+
+    Mirrors the shape produced by ``evaluate_single_run`` for a buffer
+    where the coverage check fired (zero-fraction > 50 %). Used to test
+    the CI-suppression rendering pathway in
+    :func:`scripts.evaluate_detections.write_outputs`.
+    """
+    return {
+        "buffer_metres": buffer_metres,
+        "f1": 0.571,
+        "f1_point": 0.571,
+        "f1_ci_lower": 0.205,
+        "f1_ci_upper": 0.514,
+        "f1_ci_method": "BCa",
+        "precision": 0.445,
+        "p_point": 0.445,
+        "p_ci_lower": 0.150,
+        "p_ci_upper": 0.450,
+        "p_ci_method": "BCa",
+        "recall": 0.795,
+        "r_point": 0.795,
+        "r_ci_lower": 0.300,
+        "r_ci_upper": 0.700,
+        "r_ci_method": "BCa",
+        "coverage": {
+            "n_tiles": 487,
+            "n_zero_count_tiles": 393,
+            "zero_fraction": 0.807,
+            "threshold": 0.5,
+            "coverage_status": "sparse_cross_grid",
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": True,
+    }
+
+
 @pytest.mark.tier1
 class TestSingleModeMccRendering:
     """``write_outputs`` emits MCC columns iff ``tile_classification``."""
@@ -149,6 +186,98 @@ class TestSingleModeMccRendering:
         assert "| Spec |" in md_text
         # Body row carries the .3f-formatted MCC mean.
         assert "0.715" in md_text
+
+    def test_sparse_coverage_suppresses_md_ci(
+        self,
+        tmp_path: Path,
+    ) -> None:
+        """Sparse-coverage rows get ``N/A *`` in MD; footnote is emitted.
+
+        Mitigation 3 (commit ``feat(bootstrap): replace percentile method
+        with BCa``): when ``ci_unreliable=True`` the Markdown writer
+        replaces the numeric CI cells with ``N/A *`` and appends a
+        footnote at the bottom of the table. The point estimate
+        (``f1``, ``precision``, ``recall``) is preserved.
+        """
+        results = {
+            "label": "sparse-cell-512px-image-t0",
+            "n_runs": 1,
+            "n_detections": 50,
+            "buffers": [_buffer_block_with_sparse_coverage(30)],
+        }
+        write_outputs(
+            results=results,
+            run_results=None,
+            output_dir=tmp_path,
+        )
+
+        md_text = (tmp_path / "evaluation.md").read_text(encoding="utf-8")
+        # CI cells suppressed.
+        assert "N/A *" in md_text
+        # Numeric bounds NOT in the rendered table (they are still in JSON).
+        assert "[0.205, 0.514]" not in md_text
+        # Point estimate preserved (rendered to .3f).
+        assert "0.571" in md_text
+        # Footnote present.
+        assert "Bootstrap CI suppressed" in md_text
+        assert "80.7%" in md_text or "80.7 %" in md_text
+
+    def test_sparse_coverage_csv_keeps_numeric_bounds(
+        self,
+        tmp_path: Path,
+    ) -> None:
+        """Sparse-coverage rows keep numeric CI bounds in CSV.
+
+        The CSV is the machine-readable contract for downstream tooling;
+        we add a ``ci_unreliable`` boolean column so consumers can
+        filter, but we do NOT remove the numeric CI bounds (some
+        consumers may want them despite the warning). The header gains
+        the new diagnostics columns.
+        """
+        results = {
+            "label": "sparse-cell-512px-image-t0",
+            "n_runs": 1,
+            "n_detections": 50,
+            "buffers": [_buffer_block_with_sparse_coverage(30)],
+        }
+        write_outputs(
+            results=results,
+            run_results=None,
+            output_dir=tmp_path,
+        )
+
+        csv_text = (tmp_path / "evaluation.csv").read_text(encoding="utf-8")
+        first_line = csv_text.splitlines()[0]
+        # New diagnostics columns appended.
+        assert "coverage_status" in first_line
+        assert "ci_unreliable" in first_line
+        assert "ci_zero_fraction" in first_line
+        assert "ci_n_tiles" in first_line
+        # Numeric CI bounds still present in the body.
+        assert "0.205" in csv_text
+        # Status flag value present in the body.
+        assert "sparse_cross_grid" in csv_text
+
+    def test_dense_coverage_no_md_footnote(
+        self,
+        tmp_path: Path,
+    ) -> None:
+        """Dense (non-sparse) buffers => no footnote, no ``N/A *``.
+
+        Regression guard for the legacy rendering path: a result dict
+        without the ``ci_unreliable`` flag must render exactly as it did
+        before the commit. The footnote is only emitted when at least
+        one row trips the flag.
+        """
+        # Use the legacy block (no coverage_status / ci_unreliable keys).
+        write_outputs(
+            results=_results_with_mcc(),
+            run_results=None,
+            output_dir=tmp_path,
+        )
+        md_text = (tmp_path / "evaluation.md").read_text(encoding="utf-8")
+        assert "N/A *" not in md_text
+        assert "Bootstrap CI suppressed" not in md_text
 
     def test_single_mode_no_mcc_unchanged(
         self,
