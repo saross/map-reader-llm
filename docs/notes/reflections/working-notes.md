@@ -15649,4 +15649,69 @@ Search terms: settlement-mound mode2 re-inspection 117 verdicts, not_orange_brow
 - **`results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`**: source data — 117 verdicts, no `closed_topo_line_with_hachures` returned.
 - **TM 30-548 Item 706 "Fortification (ancient)"**: identified by prior PDF-agent (commit `c4585f60`) as the cartographic label for the rectangular-fortification subset of Category 1.
 - **Memory** `2026-04-29-d5a6332b0788` (GS curator GT precision history) and `2026-04-29-bedbb2494542` (55-map jitter clarification): context for the broader precision landscape in which this Obs sits.
+
+## Observation 314: Cat 2 = TM 30-548 Item 473 "Tailings pile" confirmed; agent context-biasing as a distinct reasoning failure mode (2026-04-30)
+
+### The finding
+
+The Obs 313 Cat 2 symbol identity — "rounded black features with hachures, visually identical to settlement mounds except black" — is now confirmed as **TM 30-548 Item 473 "Tailings pile" (отвал породы)**.
+
+A PDF-agent tasked with identifying the symbol against `inputs/examples/SovietTopoSymbols.pdf` returned two candidates:
+
+| Candidate | Page 53 item | Agent's verdict | Correct? |
+|---|---|---|---|
+| Item 472 "Burial mound" (курган) | Primary | "black due to scanning artefacts" | **No** |
+| Item 473 "Tailings pile" (отвал породы) | Secondary | Dismissed — "burial-mound context" | **Yes** |
+
+Item 473 is the correct identification. Item 472 was wrong on three independent grounds:
+
+1. **Colour signature**: burial mounds on Soviet 1:50,000 sheets are orange-brown (stated explicitly in `prompts/system-instructions/detect_brief-text.md` and confirmed by the user as curator of the GS maps). Scanning colour artefacts produce tonal shifts *within* the orange-brown family; they do not produce full-black inversions.
+2. **Bet-test ground truth**: Obs 312 confirmed 0/177 review errors — none of the Cat 2 crops are real burial mounds, ruling out the "discoloured burial mound" hypothesis empirically.
+3. **Item 473 fits cleanly**: tailings piles are mining-waste heaps elevated above surrounding terrain, rendered black on Soviet topographic maps with a rounded perimeter and outward-radiating hachures — exactly matching all three of Cat 2's defining visual attributes.
+
+**Functional implication**: Obs 313's Mechanism A (colour-veto failure) can now name its dominant Cat 2 confound precisely. The paper Discussion can cite "tailings piles (TM 30-548 Item 473)" rather than "rounded black features of unknown type", sharpening the failure-mode catalogue.
+
+### Why Item 472 was wrong — agent context-biasing
+
+The misidentification is itself a methodological observation worth recording. The agent's reasoning chain was:
+
+1. Visual evidence: the symbol has a circular perimeter + outward hachures. Item 473 is an equally or better visual match.
+2. Context pressure: the agent was briefed that this is a burial-mound detection project; the user is inspecting confounds.
+3. Context override: facing a symbol that visually resembles a burial mound *except* for colour, the agent rationalised toward the project narrative — inventing a plausible-sounding mechanism ("scanning artefacts cause colour distortion") to fit the observation into the expected category.
+
+This is a **non-confabulation failure mode**. The agent did not fabricate data; it reasoned from real data toward a wrong conclusion because project context biased it against reporting the objective visual match. The "scanning artefacts" rationale is plausible in isolation but is unsupported and contradicted by both domain expertise and the bet-test data.
+
+The failure mode is distinct from hallucination and distinct from straightforward error. It is context-biasing: the agent's framing of what counts as a credible answer was shaped by the research narrative rather than the evidence.
+
+### Methodological mitigation
+
+For agents performing **domain-objective tasks** — cartographic symbol identification, cross-corpus comparison, catalogue lookup, methodological audit — the prompt should include an explicit instruction:
+
+> "Identify based on visual properties and objective evidence only. Do not bias your reasoning toward the project's research context. The data may include features outside the project's primary feature class; treat each candidate symbol agnostically and report what its visual properties actually match in the source reference, not what the project context might predict."
+
+This mitigation is most critical for:
+
+- **Identification agents** (symbol lookup, artefact type matching)
+- **Explore / audit agents** (confound classification, GT review)
+- **Cross-corpus comparison agents** (ground-truth checking against an independent reference)
+
+It is less applicable to plan agents, implementation agents, or analysis agents whose explicit task is to operate *within* the project context.
+
+### Caveats
+
+- **Cat 2 may be heterogeneous.** Item 473 is the confirmed dominant type, but the 87 `not_orange_brown` verdicts were not individually sub-labelled between Cat 1 and Cat 2 during the Obs 313 re-inspection. A small fraction of Cat 2 crops may belong to other black-hachured symbol classes. The Item 473 identification is correct for the central visual pattern; the share within Cat 2 is not formally measured.
+- **Context-biasing frequency is unknown.** This is a single documented instance. Whether the pattern is common across identification tasks in this project is not established — but the mechanism is structurally general.
+
+### Findable later
+
+Search terms: Cat 2 symbol identity resolved, tailings pile отвал породы, TM 30-548 Item 473, Item 472 burial mound wrong identification, Item 473 tailings pile correct, scanning artefacts colour distortion false rationale, agent context-biasing reasoning failure mode, non-confabulation failure mode, context override visual evidence, domain-objective task prompt mitigation, colour inversion full-black orange-brown scanning artefacts, rounded black hachures mining waste heap, Mechanism A colour-veto tailings pile, Cat 2 confound named, SovietTopoSymbols page 53, burial mound detection confound specific symbol class, agnostic identification prompt instruction.
+
+### Related observations and artefacts
+
+- **Obs 313** (three-category taxonomy + two-mechanism framework, commit `1a56f35b`): Cat 2 identity was flagged as in flight; this Obs resolves it. Mechanism A can now cite "tailings piles (Item 473)" as the dominant Cat 2 confound.
+- **Obs 312** (bet-test 0/177 + initial Mode 1–7 catalogue, commit `c4585f60`): bet-test ground truth independently rules out Item 472; further refined by Obs 313 and this Obs.
+- **`inputs/examples/SovietTopoSymbols.pdf`** (TM 30-548, US Army, 1958): page 53 contains both Item 472 (burial mound, курган) and Item 473 (tailings pile, отвал породы); the PDF-agent inspection was run 2026-04-30.
+- **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): states the orange-brown colour signature for burial mounds explicitly; the colour requirement is the primary reason Item 472 is ruled out.
+- **Memory** `2026-04-29-d5a6332b0788` (GS curator GT precision history): user's domain expertise as curator of the GS maps underpins the colour-artefact ruling.
+- **Artefacts**: `inputs/examples/SovietTopoSymbols.pdf` p. 53; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 313 commit `1a56f35b`; bet-test commit `c4585f60`.
 - **Artefacts**: `scripts/v2_settlement_mound_mode2_app.py` commit `d75a483e`; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 312 commit `c4585f60`.
