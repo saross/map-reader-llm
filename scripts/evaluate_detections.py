@@ -490,12 +490,46 @@ def evaluate_multi_run_mean(
     For each buffer distance, averages the point estimates and CIs
     across runs. This gives the expected single-run performance.
 
+    Schema 1.1 parity (added 2026-04-29, Obs 311 follow-up): the
+    summary's per-buffer dicts now also carry the deterministic
+    ``*_point`` aliases, ``coverage_status``, ``ci_unreliable``,
+    ``ci_zero_fraction``, and ``ci_n_tiles`` fields that
+    non-aggregated (single-pass) cells already expose. These are
+    additive — existing callers that read ``f1`` / ``f1_ci_lower`` /
+    etc. continue to work unchanged. The new fields use a
+    conservative "worst-case across runs" rollup so that downstream
+    consumers can apply a single per-cell or per-buffer flag-check
+    without scanning ``per_run[*]``.
+
+    Rollup rules:
+
+    - ``f1_point`` / ``p_point`` / ``r_point``: arithmetic mean of
+      per-run ``*_point`` values (equals ``f1`` / ``precision`` /
+      ``recall`` since those are themselves averaged from per-run
+      points; the alias exists for schema parity).
+    - ``coverage_status``: ``"sparse_cross_grid"`` if **any** per-run
+      buffer entry has that status, else ``"normal"``.
+    - ``ci_unreliable``: ``True`` if **any** per-run buffer entry is
+      flagged unreliable, else ``False``.
+    - ``ci_zero_fraction``: maximum across per-run entries
+      (worst-case zero-tile fraction).
+    - ``ci_n_tiles``: minimum across per-run entries (worst-case
+      effective sample size).
+
+    The cell-level summary additionally carries
+    ``ci_unreliable_any_buffer`` and ``coverage_status`` (any-buffer
+    rollup) for one-shot per-cell flag checks. For tile-level MCC,
+    the existing ``tile_classification`` block now also includes
+    ``point`` keys for ``mcc`` / ``sensitivity`` / ``specificity``,
+    averaged across per-run point estimates.
+
     Args:
         run_results: List of per-run result dicts from evaluate_single_run().
         label: Human-readable label for the averaged condition.
 
     Returns:
-        Dict with averaged metrics per buffer distance.
+        Dict with averaged metrics per buffer distance plus the
+        schema-parity flag fields described above.
     """
     n_runs = len(run_results)
     if n_runs == 0:
@@ -509,32 +543,105 @@ def evaluate_multi_run_mean(
             by_buffer[buf_entry["buffer_metres"]].append(buf_entry)
 
     avg_buffers = []
+    # Numeric metric keys averaged across runs. ``*_point`` aliases
+    # are appended here so the summary's per-buffer dict mirrors the
+    # non-aggregated schema introduced for the BCa migration. The
+    # mean of per-run point estimates equals the canonical ``f1`` /
+    # ``precision`` / ``recall`` values (which are themselves means of
+    # per-run F1/P/R), but exposing the named alias avoids forcing
+    # downstream code to special-case aggregated vs single-run cells.
     metric_keys = [
-        "f1", "f1_ci_lower", "f1_ci_upper",
-        "precision", "p_ci_lower", "p_ci_upper",
-        "recall", "r_ci_lower", "r_ci_upper",
+        "f1", "f1_point", "f1_ci_lower", "f1_ci_upper",
+        "precision", "p_point", "p_ci_lower", "p_ci_upper",
+        "recall", "r_point", "r_ci_lower", "r_ci_upper",
     ]
 
     for buffer_m in sorted(by_buffer.keys()):
         entries = by_buffer[buffer_m]
-        avg = {"buffer_metres": buffer_m}
+        avg: dict[str, Any] = {"buffer_metres": buffer_m}
         for key in metric_keys:
             values = [e[key] for e in entries if key in e]
             avg[key] = round(float(np.mean(values)), 4) if values else 0.0
+
+        # Mitigation 3 (sparse-coverage transparency) rollups for
+        # aggregated cells. The contract: a single per-buffer
+        # ``ci_unreliable`` boolean answers "do you trust these CIs?"
+        # for the summary, regardless of how many runs were averaged.
+        # The any-true rule is conservative — one flagged run flags
+        # the aggregate, mirroring how single-run cells flag the
+        # whole cell when any buffer is unreliable.
+        coverage_statuses = [
+            e.get("coverage_status", "normal") for e in entries
+        ]
+        any_sparse = any(
+            cs == "sparse_cross_grid" for cs in coverage_statuses
+        )
+        avg["coverage_status"] = (
+            "sparse_cross_grid" if any_sparse else "normal"
+        )
+        avg["ci_unreliable"] = any(
+            bool(e.get("ci_unreliable", False)) for e in entries
+        )
+
+        # Worst-case coverage diagnostics across runs: max
+        # zero-fraction (highest sparsity), min n_tiles (smallest
+        # effective sample). Both are read from the per-run
+        # ``coverage`` sub-dict produced by ``bootstrap_ci`` — we
+        # default to the buffer-level ``ci_zero_fraction`` /
+        # ``ci_n_tiles`` keys that ``write_outputs`` already
+        # populates for non-aggregated cells if ``coverage`` is
+        # absent.
+        zero_fractions: list[float] = []
+        n_tiles_values: list[int] = []
+        for e in entries:
+            cov = e.get("coverage", {}) or {}
+            zf = cov.get(
+                "zero_fraction",
+                e.get("ci_zero_fraction", 0.0),
+            )
+            nt = cov.get("n_tiles", e.get("ci_n_tiles", 0))
+            if zf is not None:
+                zero_fractions.append(float(zf))
+            if nt is not None:
+                n_tiles_values.append(int(nt))
+        avg["ci_zero_fraction"] = (
+            round(max(zero_fractions), 6) if zero_fractions else 0.0
+        )
+        avg["ci_n_tiles"] = (
+            min(n_tiles_values) if n_tiles_values else 0
+        )
+
         avg_buffers.append(avg)
 
         logger.info(
             "  Mean across %d runs @ %dm: F1=%.3f [%.3f, %.3f], "
-            "P=%.3f, R=%.3f",
+            "P=%.3f, R=%.3f%s",
             n_runs, buffer_m,
             avg["f1"], avg["f1_ci_lower"], avg["f1_ci_upper"],
             avg["precision"], avg["recall"],
+            (
+                f" [sparse coverage: max zero-fraction "
+                f"{avg['ci_zero_fraction']:.1%}]"
+                if avg["ci_unreliable"] else ""
+            ),
         )
 
-    result = {
+    # Cell-level rollup: a single boolean answers "does this cell
+    # carry any unreliable buffer?" — same any-buffer rule used for
+    # non-aggregated cells in ``evaluate_single_run``.
+    cell_ci_unreliable = any(
+        bool(buf.get("ci_unreliable", False)) for buf in avg_buffers
+    )
+    cell_coverage_status = (
+        "sparse_cross_grid" if cell_ci_unreliable else "normal"
+    )
+
+    result: dict[str, Any] = {
         "label": label,
         "n_runs": n_runs,
         "buffers": avg_buffers,
+        "ci_unreliable_any_buffer": cell_ci_unreliable,
+        "coverage_status": cell_coverage_status,
     }
 
     # Average tile-level MCC across runs (if computed)
@@ -547,7 +654,15 @@ def evaluate_multi_run_mean(
         for metric in ["mcc", "sensitivity", "specificity"]:
             values = [m[metric] for m in mcc_results if metric in m]
             if values:
-                avg_mcc[metric] = {
+                # ``point`` is the deterministic per-run estimate
+                # computed across all tiles (no bootstrap). Averaging
+                # per-run points gives the aggregated cell's
+                # deterministic estimate; this mirrors the schema of
+                # non-aggregated tile_classification blocks.
+                point_values = [
+                    v["point"] for v in values if "point" in v
+                ]
+                metric_block: dict[str, Any] = {
                     "mean": round(float(np.mean(
                         [v["mean"] for v in values],
                     )), 4),
@@ -558,6 +673,11 @@ def evaluate_multi_run_mean(
                         [v["ci_upper"] for v in values],
                     )), 4),
                 }
+                if point_values:
+                    metric_block["point"] = round(
+                        float(np.mean(point_values)), 4,
+                    )
+                avg_mcc[metric] = metric_block
         # Use first run's confusion matrix as representative
         avg_mcc["confusion"] = mcc_results[0].get("confusion", {})
         result["tile_classification"] = avg_mcc
