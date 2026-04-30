@@ -5639,3 +5639,83 @@ The investment was ~25 minutes; the within-session payoff was ≥4 cleaner invoc
 ### Cross-cutting
 
 Where Session 79 surfaced agents-as-error-sources, Session 80 surfaced agents-as-error-catchers — and the catching mechanism was a discipline I'd encoded into the agent definitions in response to Session 79's lessons. The pattern is recursive: every agent-design discipline that protects sub-agents from THEIR confabulations also protects parent agents from theirs, because the agent's report-back trace exposes the parent's spec assumptions to verification. **The implication for AI-as-tool research is non-obvious**: agent-orchestration quality scales with the quality of the agent-definition contract more than with the quality of any individual prompt. Once a discipline is in the contract, it's permanent and operates below the prompt level. This is the strongest single observation from Session 80.
+
+## Session 81 Observations (2026-04-29 evening / 2026-04-30 morning, map-reader-llm)
+
+Continuation session producing 6 new Obs entries (305-310), ~25 commits, ~$0.75 API spend, ~3 hr sapphire compute. The defining collaboration-pattern observation from this session is **the dispatch-vs-completion gap in agents that orchestrate parallel work** — observed four times, eventually requiring external watch-loops to bridge. Three secondary observations cluster around how findings move from analysis to durable artefacts: shorthand explanations of domain-specific issues need domain checks, plan-agent recommendations are proposals not decisions, and consolidating findings to working-notes after-the-fact has scope-loss risk that closer-to-source writing prevents.
+
+### Premature-completion in agents that dispatch parallel background work
+
+Observed four times across this session:
+
+1. **Original pro-n10 patch (yesterday):** dispatched a `for t in 1..10; do ... ` loop, completed t=1 only, reported "Sweep is on t=2" while marked completed. Only t=1 actually committed.
+2. **Daylight sweep executor:** checkpointed at 8/162 cells with a handoff `planning/daylight-sweep-status-2026-04-29.md`, agent returned with that as final report; the work continued autonomously on sapphire and finished, but the agent itself returned mid-work.
+3. **Pro-n10 resume:** dispatched 9 parallel `nohup .venv/bin/python3 evaluate_detections.py & wait` jobs on sapphire. Reported "Now I'll wait for monitor events" while marked completed. The 9 processes ran for ~10 min more after the agent reported done.
+4. **Two-cell timed-out re-run:** "After both jobs finish, I'll run [the verifier] to confirm N=10K presence." Agent already gone; the 2 jobs ran for 30+ min more.
+
+Pattern: agent dispatches background work, transitions to a wait-state (or to a final-report-and-monitor state), the harness reads the wait-state as completion. The dispatch ≠ completion gap. From the harness's perspective the agent has emitted its final message; from the work's perspective the work just started. Currently both signal as "completed".
+
+What works as a workaround: **external orchestration**. The pattern that landed cleanly for the daylight sweep close-out and the pro-n10 commit:
+
+1. Agent does setup (queue building, validation, dry-run on a small sample) and commits the scaffolding.
+2. Agent dispatches the long-running parallel work via `nohup ... &` on sapphire.
+3. Agent's final report says "DISPATCHED, here's the watch command and the post-completion commit recipe".
+4. Parent (me) sets up a Bash `run_in_background` watch-loop with an `until [...] ; do sleep 30; done` condition that exits when outputs land.
+5. Parent commits the artefacts when the watch fires.
+
+This pattern is reliable but requires the parent to know it. The lesson: **for agents that orchestrate parallel work, treat the agent's dispatch as a setup phase, not a completion phase, and design the parent's role for explicit watch-and-commit downstream of dispatch**. Agent definitions for parallel-dispatch agents should include a hard rule: "your final report must say DISPATCHED with the parent's resume recipe; never say COMPLETED for work that's still running".
+
+A fix at the harness level would be: detect when an agent's last message references in-flight processes (`pgrep`, `wait`, "background", PIDs in the report) and prompt the agent for an explicit DISPATCHED-vs-COMPLETED disambiguation before marking the agent done. Until then, parent-level care is the discipline.
+
+### Domain-knowledge shorthand can confabulate when the user is the domain expert
+
+When the user surfaced that the v2 FP-classifier had 60 % `contour-ring` on TP-side (a calibration sanity-check failure), I framed the cause as "the closed list doesn't include burial-mound, so the classifier can't say 'this is a mound'". In compressing this further to chat, I wrote: "Soviet topographic maps have no burial-mound category in the legend that maps to the closed-list." The user — a domain expert — caught this immediately: Soviet topographic legends DO include burial mound categories (`burial-mound`, `benchmark-on-burial-mound`, `triangulation-point-on-burial-mound`, `settlement-mound`).
+
+The error was a conflation of two adjacent but importantly different statements:
+
+- **TRUE**: the *script's controlled vocabulary* (the closed list passed to the classifier) does not include burial-mound categories.
+- **FALSE**: the *map legend / cartographic source domain* does not include burial-mound categories.
+
+The first is a script-design issue (closed list was built for FP-only scope where mounds shouldn't appear in input; broke under TP+FP scope). The second is a claim about the underlying cartographic vocabulary. Both could plausibly explain the observed leakage; the script-design version is correct. By compressing to "Soviet topo has no burial-mound category", I produced a confident-sounding statement that was wrong on the dimension a domain expert would naturally read first. User caught it within minutes; v2 with expanded closed list validated the script-design diagnosis (TP-side burial-mound rate 56.9 %; v1's 60 % `contour-ring` collapsed to 0 %).
+
+The lesson: **when explaining a domain-adjacent issue to a domain expert, state the script / system claim explicitly and avoid the shorthand that conflates it with a domain claim**. The corrected framing — "the *closed list* doesn't include burial-mound categories" — is unambiguous; the shorthand "Soviet topo has no burial-mound category" picks up an extra (wrong) claim about cartography. For agent-collaboration generally: **when summarising for the user, prefer claim-types that the user can verify in their own knowledge (which generates fast corrections like this) over claim-types whose framing makes verification ambiguous**.
+
+The error didn't propagate into committed analysis (we caught it before the v2 re-run), but it would have biased my own framing of the GS-vs-55-map cross-corpus chi-square (Obs 307) if uncorrected — I might have written "Soviet maps don't have a vocabulary for the most-detected feature" when the actual fact is "the script's vocabulary was scoped wrongly". Different paper-Discussion implication entirely.
+
+### A plan agent's recommendation is a proposal, not a decision
+
+The pairwise tile-size-30m bootstrap-CI bug (Obs 309) had two solution paths. The diagnosis agent recommended Mitigation 3 + BCa. The follow-up plan agent re-evaluated and recommended **Mit-3 only**, arguing BCa was overkill given the 5 affected cells use paired McNemar tests (not per-cell percentile bootstrap) for their primary inference. I relayed the plan agent's recommendation to the user verbatim with my own slight lean toward "Mit-3 now, BCa as future-proofing".
+
+The user overrode: "*Implement Mitigation 3 + BCa now, let's fix this properly once and for all, I finally understand the issue of mismatched tiles and I recall when we did that.*" The override reasoning was methodological standardisation: ALL bootstrap CIs should use a method robust to sparse coverage, not just the 5 affected cells flagged via Mitigation 3.
+
+Both arguments are valid; they prioritise different criteria. The plan agent optimised for "minimum cost given current scope"; the user optimised for "consistent methodology going forward". The plan agent's brief didn't include "and the user values methodological standardisation across all cells" — that priority lives in the user's head, not the plan doc. So the plan agent's recommendation was correct given its inputs, but the user had additional inputs.
+
+The lesson for plan-then-implement workflows: **a plan agent's recommendation is a proposal that surfaces options + a default; the user's decision overrides based on criteria the plan agent didn't consider**. The user's override is itself useful information — it reveals which criteria the user prioritises. The override decision was substantive (BCa is a real methodological upgrade, not an aesthetic preference) and produced a better paper outcome (consistent bootstrap method across all paper-cited cells).
+
+This is complementary to Session 80's Plan-first principle. Session 80 said "Plan-first should be the default for autonomous work". This session says: "AND the plan's recommendation is a proposal; the user's override based on out-of-band priorities is part of the loop, not a defect of the plan." Together: Plan-first surfaces options; user decides; both useful.
+
+For implementing this in agent prompts: when relaying a plan agent's recommendation to the user, also surface the criteria the plan agent used (e.g., "the plan recommends X under criterion Y; if criterion Z matters, consider W instead"). This makes the override conversation explicit rather than implicit.
+
+### Consolidating findings to working-notes after-the-fact has scope-loss risk
+
+Six findings landed during this session (FN-rate refinement, GS TP-side calibration, GS-vs-55-map chi-square, 55-map v2 reclassification, BCa fix, daylight sweep close-out). I deliberately deferred writing Obs entries until the cleanup agents had landed — partly because some findings were provisional (Obs 308 still pending bet-test inspection) and partly because writing six Obs entries serially during the analytical work would have eaten context.
+
+When I came to write them as a batch (this last 30-minute pass), I had to dig back through chat for some specific values: the exact chi-square Monte Carlo p-values, the per-subtype counts on the 55-map v2 reclassification, the 487-tile bounds confirmation. None of these were lost — they were all in chat or in the agents' final reports — but consolidating after-the-fact required re-finding them rather than capturing them in the moment. Some nuances likely WERE lost (e.g., the precise wording the user used to clarify the 55-map jitter point — I had to recover it from memory + the captured `/remember` entry).
+
+The lesson: **for paper-relevant findings, write the Obs entry within the same conversation turn that the finding lands**, even if the surrounding analysis is provisional. The Obs can be marked "provisional pending X" (Obs 308 is). Closer-to-source writing reduces reconstruction load and preserves nuance that compresses out under context pressure.
+
+Operationally: the obs-writer agent (encoded in Session 80) is the right tool for this. It auto-handles formatting + cross-references + commit, so the marginal cost of writing each Obs in-flow is lower than writing them in batch. I chose batched writing for context-budget reasons; the right tradeoff is probably **one obs-writer call per finding as it lands, then a final-pass cleanup at session-close**.
+
+### Cross-cutting
+
+This session was about the ladder from analysis findings to durable artefacts: from VLM API calls → eval JSONs → review CSVs → Obs entries → paper Methods text. Each rung introduces new failure modes and needs its own discipline:
+
+- **API calls**: rate-limited and cost-budgeted (worked well; no overruns).
+- **Eval JSONs**: silently miscalibrated under sparse-cross-grid coverage (the 5 pairwise cells, fixed via BCa + Mit-3).
+- **Review CSVs**: have user-error confounds whose magnitude is testable but unknown until tested (the 15.8 % v2 reclassification → bet-test inspection app).
+- **Obs entries**: risk confabulation, lose nuance, get written too late (this session's batched 6-entry pass was a near-miss; closer-to-source writing is the discipline).
+- **Paper Methods text**: risk wrong domain claims via shorthand (the "Soviet topo has no burial-mound category" framing the user caught; user-as-domain-expert is the discipline).
+
+The compounding effect: errors at lower rungs cascade up if not caught; errors at higher rungs (Methods text) are typically caught by external review (peer review for paper, user review here for Obs entries). Session 81's lesson is that **the discipline at each rung is distinct, and the orchestration value-add is identifying which discipline applies to which rung at the moment the failure mode first surfaces**.
+
+The strongest single observation: **dispatch is not completion — for agents that orchestrate parallel work, the parent must explicitly own the wait-and-commit downstream phase**. This generalises to any system where agents delegate to external processes (sapphire compute, batch APIs, scheduled jobs); the agent's "I'm done" is reliably a "setup is done", not "the work is done".

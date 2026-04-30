@@ -1533,6 +1533,103 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 ---
 
+## Session 81 closure roll-up (2026-04-29)
+
+### Items 1-11 status reference (after Session 81 closures)
+
+| # | Title | Status |
+|---|---|---|
+| 1 | GS-side FP classification | ✅ **DONE Session 81** |
+| 2 | `with-mcc/` citation audit | ✅ **DONE Session 81** — clean (zero surviving off-matrix citations) |
+| 3 | High-pull FP map characterisation | ✅ **DONE 2026-04-29** (Obs 304 — strong shared-feature hypothesis REJECTED) |
+| 4 | Detector-confidence calibration pilot | Pending; conditional |
+| 5 | Broader MCC citation audit | ✅ **DONE Session 81** — clean (0 of 6 spot-checked diverged) |
+| 6 | Multi-condition vote-fraction calibration | Pending; conditional |
+| 7 | K-consensus SD heterogeneity footnote | Pending |
+| 8 | Durable metadata mitigation | Pending; partly superseded (BCa fix added schema 1.1 with `_metadata.bootstrap.method`, `coverage_status`, etc.) |
+| 9 | TP-only localisation bias check | Pending |
+| 10 | Niculiță citation fix | Pending |
+| 11 | Guyot citation fix | Pending |
+
+### Items closed this session — Session 81 detail
+
+- **#1 GS-side FP classification** — Commits `ee4f18cb` (v1, FP-only closed list) → `9fa6db4e` (v2 with burial-mound categories added after the v1 TP-side calibration check surfaced the FP-only-list design issue). Findings: Obs 306 (TP-side calibration validation; v1's 60 % `contour-ring` leakage was a closed-list design artefact, not classifier hallucination), Obs 307 (cross-corpus chi-square Monte Carlo p = 0.0028 at >125 m; different failure modes by corpus), Obs 308 (55-map v2 reclassification 15.8 %, provisional pending bet-test). v1 archived to `archive/gs-fp-classification-v1-pre-burial-mound-list/`. 55-map FP-classification also re-run with v2 closed list at commit `ec21c8ef`; v1 archived to `archive/55maps-fp-classification-v1-pre-burial-mound-list/`. Total cost ~$0.78 ($0.17 GS v1 + $0.19 GS v2 + $0.58 55-map v2).
+- **#2 `with-mcc/` citation audit** — Audit-only Explore agent found zero surviving off-matrix citations; all narratives cite matrix-canonical values (image HIGH-T0.7 K=10 t=7 at MCC 0.678; text HIGH-T0.7 K=30 t=26 at MCC 0.620). The archival in commit `f052a92a` was clean.
+- **#3 High-pull FP map characterisation** — Commit `6d798e83`, Obs 304. Strong form of shared-cartographic-feature hypothesis REJECTED via qualitative inspection of 9 high-pull + 3 low-pull control maps. Parsimonious explanation: small-denominator arithmetic + reference-point density variance. Paper Discussion implication: report per-map distribution shape (median + IQR) without attributing right-skew to identifiable features.
+- **#5 Broader MCC citation audit** — Audit-only Explore agent found 0 of 6 spot-checked MCC citations divergent from matrix-canonical (≥0.005 threshold). One off-matrix value flagged but correctly framed in source as a single-cell library-variant probe (SCALE4-T0.7 in `secondary-effects.md:19`).
+
+### New items added this session — Session 81
+
+#### 12. BCa re-run all evaluation cells (migration pass under new bootstrap method)
+
+- **Source**: Obs 309 (BCa + Mit-3 fix, commit `2026999a`).
+- **Description**: The bootstrap method change from percentile to BCa is committed as code, but existing eval.json files retain pre-change percentile CIs. For methodological consistency, all paper-cited evaluation cells need re-running under BCa. Point estimates are deterministic-given-seed (unchanged); only CI bounds shift (typically <0.005 absolute on F1). The new method also populates the Mit-3 sparse-coverage flag (`coverage_status`, `ci_unreliable`) in eval.json metadata, suppresses CI display in eval.md/csv for the 5 cross-grid pairwise cells.
+- **Cost**: zero API; estimated 30-60 min sapphire CPU at 16-way parallelism for ~540 cells.
+- **Approach**: extend `scripts/build_bootstrap_10k_queue_followup.py` (or write a sibling) to enumerate ALL committed eval.json files; re-run via the standard pipeline; per-group commits mirroring the daylight sweep structure (`b774238b..6b611174`).
+- **Sequencing**: dispatch after the 2 timed-out cells (item #16) finish; or include them in the migration if they haven't landed.
+- **Unblocks**: methodological consistency; closes the "code change committed, data pending" status from Obs 309.
+
+#### 13. Bet-test inspection app implementation (177 v2-burial-mound crops)
+
+- **Source**: Plan APPROVED at commit `8d2f7f47` (`planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`).
+- **Description**: Implement the Streamlit re-review app for the 177 v2-burial-mound reclassifications (Obs 308). Bet: review-error rate < 2 % of 1,675 (the `not_mound` corpus reviewed) → < 34 errors among 177 (= 19 % of reclassifications). Three verdicts (`real_mound_my_error`, `v2_overclaim`, `edge_case_ambiguous`) + skip; calibration-sample blinding sample default ON; re-review at exact classifier view (~150 m / 768 px); persist verdicts to CSV; resume support.
+- **Cost**: zero API; ~2-3 hours dev (per plan §8 effort estimate). User wall time: 60-90 min for 177 candidates.
+- **Sequencing**: implement then run; result resolves Obs 308's "provisional" status into a definitive review-error rate finding for the paper.
+
+#### 14. Investigate K-35-076-2 participatory-GIS coverage history (FN-rate outlier)
+
+- **Source**: Obs 305 outlier flag (52.5 % FN rate; 52 likely-FN against only 47 student-GT mounds).
+- **Description**: Confirm whether K-35-076-2 was severely under-mapped at the participatory-GIS stage. If so, document the cause (e.g., partial student coverage, lost session); if not, investigate the alternative explanation (e.g., a genuine dense cluster of mounds the student missed, or a coverage error during digitisation). The map dominates the FN-rate corpus tail and would benefit from a one-off investigation.
+- **Cost**: depends on what records of participatory-GIS coverage exist; ~30 min if records are accessible.
+- **Conditional**: only execute if the paper Methods section will discuss per-map FN-rate dispersion.
+
+#### 15. Manual inspection of GS >125 m FP-side burial-mound classifications (6 of 14)
+
+- **Source**: Obs 307 caveat (6 / 14 = 42.9 % of strict GS FPs classified as `burial-mound` or `triangulation-point-on-burial-mound`).
+- **Description**: Could reflect curator missed-mounds (despite triple-checking) OR v2 prompt over-claim. Manual inspection of those 6 crops would distinguish. Each crop is a single 150 m-window image, fast to assess.
+- **Cost**: zero compute; user wall time ~20 min for 6 crops.
+- **Conditional**: if any of the 6 are genuine missed mounds, this becomes a paper Limitations note about the inherent fallibility of even triple-checked curator GT. If all 6 are v2 over-claims, the prompt-bias caveat in Obs 307 strengthens.
+
+#### 16. Two timed-out cells N=10K re-run
+
+- **Source**: Obs 310 (daylight sweep close-out).
+- **Description**: `flash-text-minimal-t-0-7` and `flash-text-high-t-0-7` (in `paper-eval/n1/384px-all-buffers/`) timed out at 3600 s wall under 16-way parallelism. Currently re-running on sapphire with no-timeout; expected to land 30 min - 2 hr from dispatch (started ~16:00 UTC 2026-04-29). May be subsumed by the BCa re-run-all-cells migration (item #12) if it doesn't land first.
+- **Cost**: zero API; in-flight already.
+- **Status**: in flight at end-of-session.
+
+### Updated recommendation: priority sequencing for next session
+
+Now that the GS classification + v2 work landed, the new sequencing reflects what's left:
+
+1. **Step 6 paper outline** — the original deliverable; further unblocked by cross-corpus chi-square evidence (Obs 307) and FN-rate refinement (Obs 305).
+2. **Item #12 BCa re-run all cells** — methodological consistency before paper-Methods text claims any specific CI numbers.
+3. **Item #16 two timed-out cells** — likely landed already by then; verify, otherwise re-dispatch.
+4. **Item #13 bet-test app** — concrete user-time activity (60-90 min); resolves Obs 308 from provisional to definitive.
+5. **Items #10 + #11 citation fixes** (~10 min) — research-integrity hygiene.
+6. **Item #15 GS 6-crop manual inspection** (~20 min) — strengthens or weakens Obs 307's curator-missed-mounds vs prompt-bias question.
+7. **Item #14 K-35-076-2 history** — conditional on per-map FN-rate dispersion being a paper Methods topic.
+8. **Items #4, #6, #7, #8, #9** — defer per original priority.
+
+### Session 81 deliverables roll-up
+
+- **6 new Obs entries (305-310)** committed at `73b21b6b`.
+- **~25 commits** total (range `dd0693c4..73b21b6b`); ~$0.78 API spend ($0.36 GS FP-class v1+v2, $0.58 55-map FP-class v2, near-zero on plans/audits).
+- **Major code change**: BCa + Mit-3 sparse-coverage flag in `scripts/lib_advanced_metrics.py` (commit `2026999a`); rollback tag `pre-bca-mit3-2026-04-29` pushed; 24 new tests added; all 839 tier-1 tests pass.
+- **Daylight sweep N=10K standardisation completed** (162 of 165 cells; 2 timed out, re-running): 4 per-group commits `b774238b..6b611174`; pro-n10 evaluation.json gap recovered at commit `f1cf5086`; closes Obs 303 forward-pointer (Obs 310).
+- **Plans approved this session**: bet-test app plan (`8d2f7f47`); pairwise CI fix plan (`4da5c254`); GS FP-classification plan revised (`edd2ecce`).
+- **Three citation-related artefacts**: Niculiță + Guyot misattributions confirmed (added to to-do as items #10 + #11, commit `dd0693c4`); audit reports for input-expansion (`29b8cc64`) and Sobotkova 2023 historical decomposition (in Obs 305).
+- **Working-notes updated**: Obs entries 305-310 (`73b21b6b`); llm-observations.md Session 81 entry (this commit).
+
+### Things to NOT redo in next session
+
+- The GS FP-classification is COMPLETE at v2 with burial-mound categories; do NOT re-run unless adding new conditions.
+- The 55-map FP-classification is COMPLETE at v2; do NOT re-run.
+- The BCa code change is COMPLETE; the migration re-run (item #12) is the only remaining work in that loop.
+- The pairwise CI bug is METHODOLOGICALLY CLOSED; the 5 sparse-coverage cells will get the `ci_unreliable` flag automatically when item #12 runs.
+- The Sobotkova 2023 reference has been read; do NOT re-fetch unless the paper Methods needs more from it.
+
+---
+
 ## Session 78 entry-point queue (approved mid-Session 77 2026-04-24)
 
 Paste these into the next session; all are approved and scoped.
