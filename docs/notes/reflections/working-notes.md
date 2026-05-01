@@ -15810,3 +15810,66 @@ Search terms: Cat 2 symbol identity negative result, no clean match ≤425 range
 - **`inputs/examples/SovietTopoSymbols.pdf`** (TM 30-548, US Army, 1958): partial-reliability note — colour information not trustworthy in B&W-printed sections; shape, number, labels, and hachure direction reliable. Pages 11–50 searched exhaustively for Cat 2 match, 2026-04-30. Item 285 at page 53; Items 81–84 at approximately page 17.
 - **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): confirms orange-brown colour requirement; four burial-mound subtypes confirmed canonical against items 81–84.
 - **Artefacts**: `inputs/examples/SovietTopoSymbols.pdf`; `results/55maps-fp-classification/v2-burial-mound-bet-test/settlement-mound-mode2-verdicts.csv`; Obs 313 commit `1a56f35b`; Obs 314 commit `c4432978`; Obs 312 commit `c4585f60`.
+
+## Observation 316: Trapezoidal active-area correction resolves 17 spurious FPs in the 4-GS student-vs-curator analysis — corrected result (5.27 % FN, 0.00 % FP) vindicates Sobotkova 2023 (2026-04-30)
+
+### The finding
+
+The 4-GS direct curator-vs-student confusion-matrix analysis, when student digitisations are clipped to the **trapezoidal graticule quadrangle** of each sheet rather than the rectangular GeoTIFF raster envelope, yields:
+
+| Metric | Pre-fix (rectangular) | Corrected (trapezoidal) | Sobotkova 2023 |
+|---|---:|---:|---:|
+| TP | 539 | 539 | — |
+| FP | 17 | **0** | — |
+| FN | 30 | 30 | — |
+| FP rate | 3.06 % | **0.00 %** | 0.1 % |
+| FN rate | 5.27 % | 5.27 % (95 % CI 2.92–8.80 %) | 5.0 % |
+| Precision | 0.9694 | **1.0000** | — |
+| Recall | 0.9473 | 0.9473 | — |
+| F1 | 0.9582 | **0.9729** | — |
+
+All 17 pre-fix FPs were located in the **black collar** outside the cartographic neat-line — artefacts of students digitising over the tilted-corner padding of the printed sheet, not legitimate mound identifications. Per-sheet FP drops: K-35-052-4 (4), K-35-053-3 (2), K-35-062-2 (9), K-35-078-1 (2) = 17 total.
+
+Bootstrap-by-sheet, 10,000 iterations, seed 42.
+
+### The test
+
+The trapezoidal active area for each sheet is computed deterministically from the sheet ID using Russian 1:50,000 numbering arithmetic, referenced to **Pulkovo-1942 / S-42 (EPSG:4284)** and re-projected to UTM-35N (EPSG:32635). The ~5–8 m alignment accuracy is sufficient; interpreting the same corners in WGS84 (EPSG:4326) produces a ~130 m offset that leaves 6 of the 17 collar features inside the clipping boundary (i.e., WGS84 misclassifies 6 genuine FP artefacts as valid), confirming that datum choice is material at the 50 m matching tolerance.
+
+Sanity check: 569/569 curator-GT features lie inside the trapezoid; 0 were dropped by clipping, confirming the curator dataset is already restricted to cartographic content.
+
+Script: `scripts/generate_gs4maps_active_area_bounds.py` → `inputs/vectors/bounds/gs-4maps-active-area-bounds.geojson`; analysis: `scripts/analyse_student_gt_fn_rate_gs4.py` → `results/student-gt-fn-rate-analysis-gs4/`.
+
+### Why this matters
+
+**Sobotkova 2023 is vindicated, not contradicted.** The Session 82 continuity queue in `planning/paper-writeup-continuity.md` framed this thread as "Sobotkova correction (5.0 → 9.1 %)" and the Session 81 framing held that "Sobotkova's 5.0 % was likely a calculation issue in the original paper." Both framings are now **retracted**. Sobotkova 2023's published 5.0 % FN / 0.1 % FP figures are correct; the 4-GS corrected analysis at 5.27 % FN / 0.00 % FP is consistent with them (delta +0.3 pp FN, delta −0.1 pp FP).
+
+**The 55-map 9.7 % FN divergence is genuine cross-corpus variation**, not a methodology gap. Two structural reasons explain why the 4-GS estimate is lower:
+
+1. The 4 GS sheets carry a complete expert curator review that covers even mounds missed by both students and the VLM. The 55-map estimate counts only VLM-detected student misses and is therefore a lower bound; actual 55-map FN is likely higher than 9.7 %.
+2. The 4 GS sheets were selected for fieldwork-grade reference quality and may be among the best-mapped sheets in the wider corpus. Small-sample random variation across the 4 chosen sheets adds further downward bias.
+
+**Paper Methods implication**: the 5.27 % / 0.00 % result belongs in the Methods as a direct replication of Sobotkova 2023, establishing that the 4-GS student-GT is of comparable precision to the historically published figure. The 9.7 % figure from the 55-map analysis should be presented as a lower-bound corpus-wide estimate, not as a contradiction of the 4-GS result.
+
+### Caveats / methodological notes
+
+- **Datum is non-negotiable** for Soviet 1:50,000 maps. The graticule corners must be interpreted in Pulkovo-1942 (S-42, EPSG:4284), not WGS84. The ~130 m datum offset is large relative to the 50 m match radius; using WGS84 would allow 6 collar artefacts to remain in the analysis.
+- **Rectangular raster envelope ≠ cartographic active area.** This artefact is structural for any historical-map vector product derived from Soviet (or similar) topographic sheets. The trapezoidal neat-line must be reconstructed from sheet-ID arithmetic; the GeoTIFF bounding box is not a substitute.
+- **4-GS bootstrap CI is wide** (2.92–8.80 %) because N = 4 sheets; dominated by between-sheet variance, especially the K-35-062-2 outlier (9.18 % FN on that sheet alone). The CI should be read as sensitivity to which 4 sheets were selected, not as a population-level FN-rate CI.
+- **Pre-fix archive preserved** at `archive/student-gt-fn-rate-analysis-gs4-rectangular-bounds-pre-fix/` for transparency. Any reference to the 3.06 % / 17-FP figure should cite that archive and note it is superseded.
+- **Planning file superseded**: `planning/paper-writeup-continuity.md` line 1650 ("5.0 % was likely a calculation issue in the original paper") and line 1684 ("Sobotkova 2023 correction") should be updated before the paper Methods draft is finalised.
+
+### Findable later
+
+Search terms: trapezoidal active area correction, rectangular raster envelope black collar artefact, Pulkovo-1942 S-42 EPSG:4284 datum offset 130 m, neat-line clipping Soviet 1:50k, gs-4maps-active-area-bounds.geojson, generate_gs4maps_active_area_bounds.py, analyse_student_gt_fn_rate_gs4.py, 17 spurious FPs collar artefact, 3.06 % FP rate pre-fix retracted, 0.00 % FP rate corrected, 5.27 % FN rate GS 4-map, Sobotkova 2023 vindicated not contradicted, 5.0 % calculation issue retracted, Session 81 framing retracted, trapezoidal graticule quadrangle sheet-ID arithmetic, bootstrap-by-sheet 10K seed 42, per-sheet FP drop K-35-052-4 K-35-053-3 K-35-062-2 K-35-078-1, 4+2+9+2=17, 569 curator inside trapezoid sanity check, WGS84 misses 6 of 17, datum choice material at 50 m tolerance, 55-map 9.7 % lower bound cross-corpus variation, student-mounds-gs-4maps-reviewed.geojson, Hungarian matching 50 m radius, rectangular bounds pre-fix archive, paper-writeup-continuity superseded framing.
+
+### Related observations and artefacts
+
+- **Obs 305** (55-map FN-rate lower-bound 8.87 % / recall-adjusted 11.15 %, commit `508e498f`): the 4-GS estimate here is NOT a contradiction of the 55-map figure; they measure different populations with different methodologies. The 55-map estimate is a lower bound; the 4-GS estimate is a direct curator-anchored measurement on high-quality sheets. The framing in Obs 305 that "the 4-map sample's 5.0 % is a low-end draw OR the methodologies produce systematically different results" is now resolved: the 4-GS corrected 5.27 % and Sobotkova 5.0 % are consistent; the ~4.4 pp gap with the 55-map estimate is genuine cross-corpus variation.
+- **Obs 306** (GS FP-classifier TP-side calibration, commit `~15179`): adjacent thread; not affected.
+- **Obs 312 / 313 / 314 / 315** (FP-classification + failure-mode work): these concern VLM FPs on the 55-map corpus, not student-GT FPs on the 4-GS sheets; contextually related but analytically independent. The collar-artefact FPs resolved here are a distinct category.
+- **`scripts/generate_gs4maps_active_area_bounds.py`**: trapezoid generator; outputs `inputs/vectors/bounds/gs-4maps-active-area-bounds.geojson`. Datum choice (EPSG:4284 vs EPSG:4326) is documented in the script header.
+- **`scripts/analyse_student_gt_fn_rate_gs4.py`**: confusion-matrix analysis; clipping logic documented in `### Active-area clipping` section of `results/student-gt-fn-rate-analysis-gs4/report.md`.
+- **`archive/student-gt-fn-rate-analysis-gs4-rectangular-bounds-pre-fix/`**: preserved pre-fix outputs (17 FPs, 3.06 % FP rate); the `bootstrap_summary.json` and `per_sheet_confusion.csv` in that archive are the authoritative source for the pre-correction numbers.
+- **`planning/paper-writeup-continuity.md`** lines ~1650 and ~1684: "Sobotkova correction" framing — superseded by this Obs; update before paper Methods draft.
+- **Artefacts**: `results/student-gt-fn-rate-analysis-gs4/{bootstrap_summary.json, per_sheet_confusion.csv, report.md}`; `inputs/vectors/bounds/gs-4maps-active-area-bounds.geojson`; commits `0bb7c448` (trapezoidal correction), `794ac446` (FP review tooling), `01f57133` (rectangular-bounds analysis, retracted), `a8b576d5` (student-GT dedup review applied), `983aac5e` (100 m threshold), `a0ee28c6` (Hairy filter + Streamlit dedup).
