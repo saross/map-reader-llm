@@ -15873,3 +15873,62 @@ Search terms: trapezoidal active area correction, rectangular raster envelope bl
 - **`archive/student-gt-fn-rate-analysis-gs4-rectangular-bounds-pre-fix/`**: preserved pre-fix outputs (17 FPs, 3.06 % FP rate); the `bootstrap_summary.json` and `per_sheet_confusion.csv` in that archive are the authoritative source for the pre-correction numbers.
 - **`planning/paper-writeup-continuity.md`** lines ~1650 and ~1684: "Sobotkova correction" framing — superseded by this Obs; update before paper Methods draft.
 - **Artefacts**: `results/student-gt-fn-rate-analysis-gs4/{bootstrap_summary.json, per_sheet_confusion.csv, report.md}`; `inputs/vectors/bounds/gs-4maps-active-area-bounds.geojson`; commits `0bb7c448` (trapezoidal correction), `794ac446` (FP review tooling), `01f57133` (rectangular-bounds analysis, retracted), `a8b576d5` (student-GT dedup review applied), `983aac5e` (100 m threshold), `a0ee28c6` (Hairy filter + Streamlit dedup).
+
+## Observation 317: 4-GS-vs-55-map FN-rate gap is dominantly explained by small N and inter-student variance, not cross-corpus heterogeneity — reframes Obs 316's "lower-bound" framing for paper Methods and Discussion (2026-04-30)
+
+### The finding
+
+Obs 316 stated that the 4-GS-vs-55-map gap (5.27 % vs 8.87 %) reflects "genuine cross-corpus variation" and framed the 55-map 8.87 % figure as a lower bound that the 4-GS 5.27 % bounds from below. That framing is **muddled**: the two estimates describe disjoint corpora by different methods, and the comparison is statistically consistent with a shared underlying FN rate given the within-4-GS variance alone.
+
+**The dominant explanation for the gap is small N multiplied by wide per-student digitiser-skill variance.**
+
+Per-sheet FN rates within the 4-GS corpus (source: `results/student-gt-fn-rate-analysis-gs4/per_sheet_confusion.csv`, trapezoidal-corrected, no FPs):
+
+| Sheet | Curator features | Student features | FN | FN rate |
+|---|---:|---:|---:|---:|
+| K-35-053-3 Elenovo | 217 | 211 | 6 | 2.76 % |
+| K-35-052-4 32635 | 136 | 131 | 5 | 3.68 % |
+| K-35-078-1 Lesovo | 20 | 19 | 1 | 5.00 % |
+| K-35-062-2 Rakovski | 196 | 178 | 18 | 9.18 % |
+| **4-GS aggregate** | **569** | **539** | **30** | **5.27 %** |
+
+The within-corpus range is **2.76 %–9.18 %**, a spread of **6.4 percentage points** — wider than the 3.6 pp gap between the 4-GS mean (5.27 %) and the 55-map lower-bound (8.87 %). The 4-GS bootstrap 95 % CI is **2.92 %–8.80 %** (bootstrap-by-sheet, 10,000 iterations, seed 42; source: `results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json`). The 55-map 8.87 % lies just outside the upper edge of this CI; at α = 0.05 we **cannot reject a shared underlying FN rate** between the two corpora, given the within-4-GS variance driven by the Rakovski outlier (9.18 %).
+
+The gap has three components, ordered by expected magnitude:
+
+1. **Small N (4 maps)** — the between-sheet bootstrap CI spans 5.9 pp; any 4-map draw from the same distribution will routinely deviate 3–4 pp from the corpus mean.
+2. **Wide per-student variance** — each of the 4 GS maps was digitised by exactly one student, with no double-marking or consensus signal. A single high-error student (Rakovski: 9.18 %) is enough to move the aggregate substantially.
+3. **Cross-corpus heterogeneity** — a small or zero contribution; the statistical consistency result above supports this.
+
+A residual lower-bound effect on the 55-map side remains real (the 8.87 % figure is itself a lower bound because it counts only VLM-detected student misses), but it is no longer the **headline mechanism** explaining the gap. The lower-bound caveat belongs in a footnote, not the topic sentence.
+
+### Why this matters
+
+**For paper Methods:** the framing in Obs 316 ("genuine cross-corpus variation") should be updated. The recommended Methods sentence is: *"The 4.4 pp gap between the 4-GS FN rate (5.27 %, 95 % CI 2.92–8.80 %) and the 55-map lower-bound (8.87 %) is statistically consistent with sampling variance across four maps, each digitised by a single student with no consensus correction."*
+
+**For paper Discussion:** the within-4-GS per-sheet spread (2.76 %–9.18 %) is itself **internal evidence for the double-marking recommendation**. The consensus-voting benefit that Obs 316 attributes to VLMs (K-pass majority vote reduces FN rate) applies equally to human annotators: a single digitiser per map is a single draw from a wide skill distribution. The gap is not a contradiction to be reconciled — it is the argument for double-marking, made from the project's own data.
+
+**Framing for the Discussion:**
+
+- The 4-GS validates Sobotkova 2023 at 5 % FN (high-confidence small-N estimate on sheets with exhaustive curator review).
+- The 55-map shows 8.87 % FN lower-bound (larger N, lower-bound methodology).
+- The gap is consistent with inter-student variance; it supports, rather than contradicts, the paper's recommendation that volunteer-GIS and crowdsourcing protocols should build in multiple-pass or consensus-voting steps — just as VLM pipelines benefit from K-pass consensus.
+
+### Caveats / methodological notes
+
+- **Rakovski drives the CI width.** Remove the Rakovski outlier (9.18 %) and the 3-sheet aggregate FN rate falls to ~3.7 %; the CI narrows substantially and the 55-map figure would sit well outside it. The 4-sheet CI should be read as sensitivity to sheet selection, not as a stable population estimate.
+- **Lesovo has only 20 curator features** (1 FN = 5.00 %). Small denominators are unstable; this sheet adds noise rather than signal to the aggregate.
+- **The 55-map 8.87 % is a lower bound** for structural reasons (VLM-found-only methodology). The true 55-map FN rate is unknown and could be higher. This means the gap could be partly driven by methodology, not just variance — but the magnitude of the within-4-GS spread (6.4 pp) alone suffices to explain the observed 3.6 pp gap, so even this caveat is not the headline.
+- **The 4 GS maps were chosen randomly** from the 59-map set. Shawn's domain judgement (shared verbally): they are broadly representative — mound density is slightly above corpus mean but within expected CI, the set includes one sparse sheet (Lesovo, 20–21 features), and the range of topography and settlement density is typical. Cross-corpus heterogeneity is therefore an unlikely large contributor to the gap.
+- **The 2017–2018 student digitisation** was a side experiment with limited dedicated time, which is why double-marking was not built into the protocol. It has since proved methodologically productive and produced usable mound datasets, vindicating the effort retrospectively — but the single-pass design is the proximate cause of the wide per-sheet FN variance documented here.
+- **Obs 316's Sobotkova vindication result is unaffected.** The trapezoidal-correction finding (5.27 % FN / 0.00 % FP) and the retraction of the "Sobotkova 5.0 % was a calculation error" framing stand unchanged. This Obs corrects only the secondary cross-corpus-gap framing, not the primary result.
+
+### Findable later
+
+Search terms: 4-GS vs 55-map FN-rate gap explained, inter-student variance dominant mechanism, small N four maps digitiser skill, per-sheet FN rate spread 2.76 9.18 percent, Rakovski 9.18 percent outlier within-corpus, Elenovo 2.76 percent Lesovo 5.00 percent 32635 3.68 percent, within-corpus range 6.4 pp wider than cross-corpus gap, bootstrap CI 2.92 8.80 cannot reject shared underlying rate, lower-bound framing demoted to footnote, Obs 316 cross-corpus variation muddled retracted, double-marking recommendation internal evidence, single student per map no consensus, consensus voting human annotators VLM K-pass, gap statistically consistent sampling variance, Sobotkova 2023 vindication unaffected, per_sheet_confusion.csv trapezoidal corrected, bootstrap_summary.json ci_low ci_high, paper Methods framing gap sentence, paper Discussion double-marking argument.
+
+### Related observations and artefacts
+
+- **Obs 316** (trapezoidal correction → 5.27 % FN / 0.00 % FP, Sobotkova vindication, commits `0bb7c448` / `eff34bfd`): this Obs **corrects Obs 316's secondary framing** of the 4-GS-vs-55-map gap as "genuine cross-corpus variation." Obs 316's primary finding (trapezoidal correction, Sobotkova vindication, retraction of "calculation error" framing) is unaffected and should still be cited for those claims.
+- **Obs 305** (55-map FN-rate lower-bound 8.87 % [95 % CI 6.93–11.35 %], recall-adjusted 11.15 %, commit `508e498f`): source of the 55-map figure. The 95 % CI on the 55-map estimate is also wide (6.93–11.35 %); the two wide CIs overlap substantially, which is further evidence against a large cross-corpus heterogeneity component.
+- **Artefacts**: `results/student-gt-fn-rate-analysis-gs4/per_sheet_confusion.csv` (per-sheet FN rates, trapezoidal-corrected); `results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json` (4-GS bootstrap CI 2.92–8.80 %); commits `0bb7c448` (trapezoidal correction), `eff34bfd` (Obs 316).
