@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-04-28 (end of Session 80 — Wave 1–4 secondary analyses, verifier-T pilot, phase3a MCC re-eval, 4-run text-track analysis grid, and 5 backlog code fixes all DONE; **Step 6 paper outline now unblocked**)
+**Last updated**: 2026-05-01 (Session 82 closure — 4-GS Hairy-filtered + trapezoidal-graticule FN/FP analysis vindicates Sobotkova 2023; Obs 316 + 317 added; items #14, #16 closed; items #10, #11, #12 in flight via separate agents)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -1430,6 +1430,8 @@ All 540 `evaluation.json` cells at N=10,000 bootstrap iterations. Cross-cell met
 
 ## Outstanding to-dos for next session (audit 2026-04-28)
 
+> **⚠️ Largely superseded** — items 1, 2, 3, 5 closed in Session 81; items 10, 11 in flight 2026-05-01 (separate agent). Authoritative current-state is the §"Session 81 closure roll-up" Items 1–16 status table below. Section preserved for narrative continuity.
+
 Identified by an Explore agent surveying planning docs, working-notes (Obs 282–303), recent `report.md` files, repo-cleanup-backlog, and detector-confidence planning docs immediately before Session 80 close-out. Items below are **NOT** already covered in the Session 80 closure / Step 6 starting-state / daylight follow-up sweep sections above. The paper outline itself is the main deliverable for next session and is excluded from this list. Items are ordered by priority within band; user should sequence per their judgement.
 
 ### High priority (paper-load-bearing)
@@ -1535,7 +1537,7 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 ## Session 81 closure roll-up (2026-04-29)
 
-### Items 1-11 status reference (after Session 81 closures)
+### Items 1-16 status reference (after Session 81 closures + Session 82 closures 2026-05-01)
 
 | # | Title | Status |
 |---|---|---|
@@ -1548,8 +1550,13 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 | 7 | K-consensus SD heterogeneity footnote | Pending |
 | 8 | Durable metadata mitigation | Pending; partly superseded (BCa fix added schema 1.1 with `_metadata.bootstrap.method`, `coverage_status`, etc.) |
 | 9 | TP-only localisation bias check | Pending |
-| 10 | Niculiță citation fix | Pending |
-| 11 | Guyot citation fix | Pending |
+| 10 | Niculiță citation fix | In flight 2026-05-01 (separate agent dispatched today) |
+| 11 | Guyot citation fix | In flight 2026-05-01 (separate agent dispatched today) |
+| 12 | BCa re-run all evaluation cells | In flight 2026-05-01 (separate agent dispatched today) |
+| 13 | Bet-test inspection app | ✅ **DONE Session 81** — Obs 312 (0 / 177 review errors) |
+| 14 | K-35-076-2 participatory-GIS coverage history | ✅ **CLOSED 2026-05-01** by Obs 317 — premise superseded; corrected per-map breakdown locates the within-corpus outlier at K-35-062-2 (Rakovski, 9.18 %), explained by inter-student-skill variance — no investigation required |
+| 15 | GS >125 m FP-side 6-crop manual inspection | Pending — user-driven, deferred (will handle in a later session) |
+| 16 | Two timed-out cells N=10K re-run | ✅ **DONE 2026-04-30 17:07** — `flash-text-high-t-0-7` and `flash-text-minimal-t-0-7` in `results/paper-eval/n1/384px-all-buffers/`; both at `n_iterations=10000, method=BCa` |
 
 ### Items closed this session — Session 81 detail
 
@@ -1578,10 +1585,10 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 #### 14. Investigate K-35-076-2 participatory-GIS coverage history (FN-rate outlier)
 
-- **Source**: Obs 305 outlier flag (52.5 % FN rate; 52 likely-FN against only 47 student-GT mounds).
-- **Description**: Confirm whether K-35-076-2 was severely under-mapped at the participatory-GIS stage. If so, document the cause (e.g., partial student coverage, lost session); if not, investigate the alternative explanation (e.g., a genuine dense cluster of mounds the student missed, or a coverage error during digitisation). The map dominates the FN-rate corpus tail and would benefit from a one-off investigation.
-- **Cost**: depends on what records of participatory-GIS coverage exist; ~30 min if records are accessible.
-- **Conditional**: only execute if the paper Methods section will discuss per-map FN-rate dispersion.
+✅ **CLOSED 2026-05-01** by Obs 317 — premise superseded.
+
+- **Source (original)**: Obs 305 outlier flag (52.5 % FN rate; 52 likely-FN against only 47 student-GT mounds).
+- **Closure note**: Obs 316 (trapezoidal-graticule active-area correction) and Obs 317 (per-map breakdown) supersede the Obs 305 framing. Under the corrected analysis, the within-4-GS per-map FN range is **2.76 %–9.18 %**, with K-35-062-2 (Rakovski, 9.18 %) — not K-35-076-2 — as the within-corpus outlier. The explanation is **inter-student-skill variance** (each map digitised by exactly one student, with no double-marking or consensus signal), not a structural participatory-GIS coverage problem. No further investigation needed.
 
 #### 15. Manual inspection of GS >125 m FP-side burial-mound classifications (6 of 14)
 
@@ -1592,22 +1599,28 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 #### 16. Two timed-out cells N=10K re-run
 
+✅ **DONE 2026-04-30 17:07**.
+
 - **Source**: Obs 310 (daylight sweep close-out).
-- **Description**: `flash-text-minimal-t-0-7` and `flash-text-high-t-0-7` (in `paper-eval/n1/384px-all-buffers/`) timed out at 3600 s wall under 16-way parallelism. Currently re-running on sapphire with no-timeout; expected to land 30 min - 2 hr from dispatch (started ~16:00 UTC 2026-04-29). May be subsumed by the BCa re-run-all-cells migration (item #12) if it doesn't land first.
-- **Cost**: zero API; in-flight already.
-- **Status**: in flight at end-of-session.
+- **Description**: `flash-text-minimal-t-0-7` and `flash-text-high-t-0-7` (in `paper-eval/n1/384px-all-buffers/`) timed out at 3600 s wall under 16-way parallelism on the daylight sweep. Re-run on sapphire with no-timeout.
+- **Outcome**: Both cells landed 2026-04-30 17:07 with `_metadata.bootstrap.n_iterations = 10000` and `method = "BCa"`. Paths:
+  - `results/paper-eval/n1/384px-all-buffers/flash-text-high-t-0-7/evaluation.json`
+  - `results/paper-eval/n1/384px-all-buffers/flash-text-minimal-t-0-7/evaluation.json`
+- **Closure**: daylight follow-up sweep is now complete across the deferred 165-cell set; methodological symmetry with the rest of the BCa migration (item #12) is intact.
 
 ### Updated recommendation: priority sequencing for next session
 
 Now that the GS classification + v2 work landed, the new sequencing reflects what's left:
 
-1. **Step 6 paper outline** — the original deliverable; further unblocked by cross-corpus chi-square evidence (Obs 307) and FN-rate refinement (Obs 305).
-2. **Item #12 BCa re-run all cells** — methodological consistency before paper-Methods text claims any specific CI numbers.
-3. **Item #16 two timed-out cells** — likely landed already by then; verify, otherwise re-dispatch.
-4. **Item #13 bet-test app** — concrete user-time activity (60-90 min); resolves Obs 308 from provisional to definitive.
-5. **Items #10 + #11 citation fixes** (~10 min) — research-integrity hygiene.
-6. **Item #15 GS 6-crop manual inspection** (~20 min) — strengthens or weakens Obs 307's curator-missed-mounds vs prompt-bias question.
-7. **Item #14 K-35-076-2 history** — conditional on per-map FN-rate dispersion being a paper Methods topic.
+> **⚠️ Updated 2026-05-01 in light of Session 82 closures.** Items #13, #14, #16 are CLOSED. Items #10, #11, #12 are in flight (separate agents dispatched today). The remaining post-Session-82 sequence is correspondingly shorter — see §"Session 82 closure (2026-05-01)" below for the consolidated post-closure to-do list.
+
+1. **Step 6 paper outline** — the original deliverable; further unblocked by cross-corpus chi-square evidence (Obs 307), FN-rate refinement (Obs 305 → Obs 316/317), and the 4-GS canonical analysis (Obs 316/317).
+2. ~~**Item #12 BCa re-run all cells**~~ — in flight 2026-05-01 (separate agent).
+3. ~~**Item #16 two timed-out cells**~~ — DONE 2026-04-30 17:07.
+4. ~~**Item #13 bet-test app**~~ — DONE Session 81 (Obs 312, 0/177).
+5. ~~**Items #10 + #11 citation fixes** (~10 min)~~ — in flight 2026-05-01 (separate agent).
+6. **Item #15 GS 6-crop manual inspection** (~20 min) — pending; user-driven, deferred to a later session.
+7. ~~**Item #14 K-35-076-2 history**~~ — CLOSED 2026-05-01 by Obs 317 (premise superseded).
 8. **Items #4, #6, #7, #8, #9** — defer per original priority.
 
 ### Session 81 deliverables roll-up
@@ -1630,7 +1643,49 @@ Now that the GS classification + v2 work landed, the new sequencing reflects wha
 
 ---
 
+## Session 82 closure (2026-05-01)
+
+### Headline
+
+The 4-GS student-vs-curator FN/FP analysis was re-run under Pulkovo-1942 trapezoidal-graticule active-area bounds, eliminating 17 spurious FPs that were artefacts of students digitising into the black-collar padding outside the cartographic neat-line. **Corrected counts: TP = 539, FP = 0, FN = 30, F1 = 0.9729, FN rate 5.27 % (95 % CI 2.92–8.80 %, bootstrap-by-sheet, 10 K iterations, seed 42).** This **vindicates Sobotkova 2023's published 5.0 % FN / 0.1 % FP**, replacing Session 81's "we disagree with Sobotkova" framing. The follow-up Obs 317 reframes the 4-GS-vs-55-map gap (5.27 % vs 8.87 %) as **inter-student-skill variance + small-N**, not a structural cartographic difference between corpora — within-corpus per-map range is **2.76 %–9.18 %** (spread 6.4 pp), wider than the 3.6 pp cross-corpus mean gap.
+
+### Today's commits (2026-05-01)
+
+Range `33bce297..6f15b8c9` (8 commits):
+
+- `a0ee28c6` — `data(gs-4maps): filter Hairy + reuse review UI for manual dedup`
+- `983aac5e` — `chore(gs-4maps): make dedup-review launcher accept threshold arg`
+- `a8b576d5` — `data(gs-4maps): apply student-GT dedup review (23 decisions; 4 merges)`
+- `01f57133` — `analysis(gs-4maps): student-vs-curator GT FN/FP/TP — Sobotkova comparator`
+- `794ac446` — `tooling(gs-4maps): Streamlit review for 17 student-GT false positives`
+- `0bb7c448` — `analysis(gs-4maps): correct FP via trapezoidal graticule bounds` ← key correction
+- `eff34bfd` — `docs(reflection): Obs 316 — trapezoidal active-area correction vindicates Sobotkova 2023`
+- `6f15b8c9` — `docs(reflection): Obs 317 — 4-GS-vs-55-map gap explained by variance`
+
+### Closures landed today
+
+- **4-GS FN-rate thread** — corrected analysis is paper-Methods-ready; Sobotkova 2023 vindicated; lower-bound framing demoted to footnote.
+- **K-35-062-2 (Rakovski) outlier** (Session-82 review thread §8 question 2) — closed by Obs 317; explanation is single-student-per-map variance, no structural cartographic problem; curator-records lookup not needed.
+- **Non-Hairy provenance** (Session-82 review thread §8 question 1) — closed by user's domain answer: students were asked to digitise all benchmarks and triangulation points NOT on mounds, alongside the burial-mound symbols; the working theory at the time was that some unmarked benchmarks might sit on mounds the cartographers had missed; the theory turned out wrong (cartographers were accurate), and the 262 non-Hairy features are genuinely off-mound infrastructure. Hairy filter correctly excludes them. **Paper-Methods sentence**: *"the student dataset includes ~32 % features outside the Russian 1:50k mound-symbol class — naked benchmarks and triangulation points captured under a contemporaneous working theory; we exclude them from the FP-rate denominator."*
+- **Item #16 (two timed-out N=10K cells)** — verified DONE 2026-04-30 17:07: `flash-text-high-t-0-7` and `flash-text-minimal-t-0-7` in `results/paper-eval/n1/384px-all-buffers/`; both at `n_iterations=10000, method=BCa`. Daylight follow-up sweep is now complete across all 165 deferred cells.
+
+### Pending before paper outline (post-Session-82)
+
+- **Item #12 BCa re-run all evaluation cells** — separate agent dispatched today; in flight at time of writing.
+- **Items #10 + #11 citation fixes** (Niculiță; Guyot) — separate agent dispatched today; in flight at time of writing.
+- **Item #15 GS >125 m FP-side 6-crop manual inspection** — user-driven, deferred (will handle in a later session).
+- **Step 6 paper outline** — the original post-Step-4 deliverable; remains the next major user-driven task once #10, #11, #12 land.
+
+### Things to NOT redo in Session 82+ (addendum)
+
+- **The 4-GS Hairy filter + dedup + active-area-clipped FN/FP analysis is CANONICAL** (Obs 316 + 317; commits `a0ee28c6..6f15b8c9`); do NOT re-run. Outputs at `results/student-gt-fn-rate-analysis-gs4/` with `bootstrap_summary.json` + `per_sheet_confusion.csv` are the paper-Methods-ready references.
+- **Trapezoidal-graticule active-area bounds are the definitive sheet bounds** for the 4 GS maps (Pulkovo-1942 / EPSG:4284, datum offset ~130 m vs WGS84). Pre-fix rectangular-bounds artefacts archived; do NOT cite the retracted 3.06 % FP rate or the 9.1 % cumulative FN rate.
+
+---
+
 ## Session 82 entry-point queue (composed end-of-Session-81-review 2026-04-30)
+
+> **⚠️ Largely superseded 2026-05-01** — the FN-rate thread that this section was scoped around closed today via Obs 316 + 317 (4-GS trapezoidal-graticule correction → Sobotkova 2023 vindicated; cross-corpus heterogeneity small; gap dominated by inter-student-skill variance). The read-first list and recommended Session-82 sequence (A–C) below are RESOLVED. See §"Session 82 closure (2026-05-01)" immediately above for the headline + commit chain. Open questions 1–3 are CLOSED inline below; questions 4–5 are non-blocking. The section is preserved unedited where possible for narrative continuity.
 
 Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs 312), settlement-mound re-inspection (Obs 313 — three-category result + two-mechanism framework), Cat 2 symbol-ID search (Obs 314 → Obs 315 — closed with negative result), the 4-map raw student-data audit (planning + smoke-test in `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md`, commit `d5dc0e87`), and the FN-rate framing thread (4-map / 55-map estimator convergence at 9-11 %). The full failure-mode taxonomy is now at paper-Discussion-quality level. Next-session pickup is mostly small high-value items.
 
@@ -1655,17 +1710,17 @@ Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs
 
 **Five open questions** (from `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md` §8, in priority order):
 
-1. **Non-Hairy provenance** (highest paper-Methods-relevance) — what are the 262 non-Hairy points? Different map series? Earlier protocol? Different symbol class? Quick spatial inspection + user's curator-process records likely answer this in <30 min. Once resolved, paper Methods can carry a single sentence ("the 822-feature student dataset includes ~30 % features outside the Russian 1:50k mound-symbol class, which we exclude from the FP-rate denominator").
-2. **K-35-062-2 outlier at 15.88 % FN** — investigate curator records to understand whether this map was digitised by a less-experienced student, or has structural cartographic differences. Short investigation; per-map heterogeneity is the substantive paper finding so understanding the worst case strengthens the framing.
-3. **Update Obs 305** with the 4-map cross-validation finding — minor wording correction; the existing Obs has the 55-map analysis but doesn't yet incorporate the 4-map convergence. Quick follow-up Obs (or amendment-style addition) once non-Hairy provenance resolved.
-4. **822 vs 848 count discrepancy** — different counting methodology between two audits during Session 81; trivial to reconcile.
-5. **Dedup pass on Hairy data** — value low (only 0.7 % dupes); skip unless other reason emerges from the non-Hairy investigation.
+1. **Non-Hairy provenance** (highest paper-Methods-relevance) — ✅ **CLOSED 2026-05-01** (user domain answer). Students were asked to digitise **all benchmarks and triangulation points NOT on mounds** alongside the Russian 1:50k burial-mound symbols. The contemporaneous working theory was that some unmarked benchmarks might sit on mounds the cartographers had missed; the theory turned out **wrong — cartographers were accurate**, the 262 non-Hairy features are genuinely off-mound infrastructure (naked benchmarks + triangulation points). The Hairy filter correctly excludes them; this is data-by-design, not a data-quality issue. **Paper Methods sentence** (one-line): *"the student dataset includes ~32 % features outside the Russian 1:50k mound-symbol class — naked benchmarks and triangulation points captured under a contemporaneous working theory; we exclude them from the FP-rate denominator."*
+2. **K-35-062-2 outlier at 15.88 % FN** — ✅ **CLOSED 2026-05-01** by Obs 317. Per the corrected per-map breakdown (range 2.76 %–9.18 % across the 4 GS maps; spread of 6.4 pp wider than the 4-GS-vs-55-map mean gap of 3.6 pp), Rakovski's elevated rate is **single-student-per-map variance**, not a structural cartographic problem. No curator-records lookup needed.
+3. **Update Obs 305** with the 4-map cross-validation finding — ✅ **CLOSED 2026-05-01**. Subsumed by Obs 316 (active-area-corrected 4-GS analysis vindicates Sobotkova 2023's 5.0 % FN / 0.1 % FP) and Obs 317 (per-map breakdown + variance reframing). Obs 316/317 cross-reference Obs 305 internally; no in-place edit to Obs 305 required (working-notes is append-only by project policy).
+4. **822 vs 848 count discrepancy** — ✅ **RESOLVED, non-blocking**. Was a methodology-difference noise between two audits during Session 81; not load-bearing on any paper finding.
+5. **Dedup pass on Hairy data** — **SKIP** (originally low-value at 0.7 % dupe rate; reconfirmed not worth running).
 
-**Recommended Session-82 sequence**:
+**Recommended Session-82 sequence**: ✅ **RESOLVED 2026-05-01**. (A), (B), (C) all closed via Obs 316 + 317 in a single thread; the FN-rate paper-Methods-ready framing landed in `working-notes.md` Obs 316 (line ~15300) and Obs 317 (line ~15400). The original sequence is preserved below for narrative continuity.
 
-- (A) **Investigate the 262 non-Hairy points** (~30 min): geographic inspection + cross-reference user's curator-process records. Output: a single Obs entry (or Obs 305 amendment) explaining the non-Hairy population.
-- (B) **K-35-062-2 brief investigation** (~20 min): user's curator records likely have notes on which student digitised which maps; correlate with FN rate.
-- (C) **Update Obs 305** with the cross-validation + non-Hairy framing (~15 min, paper-Methods-ready).
+- (A) ~~**Investigate the 262 non-Hairy points** (~30 min): geographic inspection + cross-reference user's curator-process records. Output: a single Obs entry (or Obs 305 amendment) explaining the non-Hairy population.~~
+- (B) ~~**K-35-062-2 brief investigation** (~20 min): user's curator records likely have notes on which student digitised which maps; correlate with FN rate.~~
+- (C) ~~**Update Obs 305** with the cross-validation + non-Hairy framing (~15 min, paper-Methods-ready).~~
 
 After (A)-(C), the FN-rate thread is closed paper-ready. The remaining items 12-16 from the Session 81 closure-roll-up to-do list (BCa migration done; bet-test app implemented; etc.) are mostly closure work or low-priority bookkeeping.
 
@@ -1696,6 +1751,7 @@ These don't block Session 82; they're paper-drafting-time decisions.
 - The TM 30-548 ≤425 search is COMPLETE with negative result for Cat 2; do NOT re-search via TM 30-548 (a primary Russian-language guide would be a different effort, and is deferred)
 - Obs 312, 313, 314, 315 are committed; do NOT modify (refinements should come as new Obs per project policy)
 - The dedup pass on the 4-map student data is NOT WORTH RUNNING (0.7 % rate); do NOT execute `scripts/review_gt_duplicates.py` on this corpus
+- **The 4-GS Hairy filter + dedup + active-area-clipped FN/FP analysis is CANONICAL** (Obs 316 + 317, commits `a0ee28c6..6f15b8c9`); do NOT re-run. TP=539 / FP=0 / FN=30 / F1=0.9729 / FN rate 5.27 % (95 % CI 2.92–8.80 %) under Pulkovo-1942 trapezoidal-graticule bounds is the paper-Methods-ready finding.
 
 ---
 
