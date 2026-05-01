@@ -375,18 +375,32 @@ rollback.
 
 ## 8. Pre-launch checklist
 
-- [ ] Coverage threshold confirmed with user (0.5 default vs 0.3
-  prior-diagnosis proposal).
-- [ ] `pre-bootstrap-ci-coverage-flag-2026-04-29` tag created on `main`
-  before any code change.
-- [ ] All 5 unit tests pass on synthetic data; existing
-  `test_bootstrap_ci_contains_point_estimate` still passes.
-- [ ] `evaluation.md` / `.csv` rendering byte-identical for cells that
-  do **not** trip the flag (regression guard).
-- [ ] Re-run on sapphire of the 5 cells produces non-empty
-  `ci_coverage` block in each `evaluation.json`.
-- [ ] `.metadata.json` sidecar updated with threshold + flagged-cell
-  inventory.
+> **Status 2026-05-01**: all checklist items closed. Implementation
+> landed at commit `2026999a` (BCa + Mit-3 sparse-coverage flag in
+> `scripts/lib_advanced_metrics.py`). Verified 2026-05-01 via post-hoc
+> audit on pairwise cells (metadata v1.1, BCa method, `ci_unreliable`
+> flag populated).
+
+- [x] Coverage threshold confirmed with user (0.5 default vs 0.3
+  prior-diagnosis proposal). **DONE — 0.50 implemented in `2026999a`.**
+- [x] `pre-bootstrap-ci-coverage-flag-2026-04-29` tag created on `main`
+  before any code change. **DONE — actual tag created is
+  `pre-bca-mit3-2026-04-29` (renamed during implementation to reflect
+  the combined BCa + Mit-3 scope).**
+- [x] All 5 unit tests pass on synthetic data; existing
+  `test_bootstrap_ci_contains_point_estimate` still passes. **DONE
+  — 24 new tests added; all 839 tier-1 tests pass per Session 81
+  closure roll-up.**
+- [x] `evaluation.md` / `.csv` rendering byte-identical for cells that
+  do **not** trip the flag (regression guard). **DONE — no regression
+  flagged during Session 81 BCa migration sweep across all 526 cells.**
+- [x] Re-run on sapphire of the 5 cells produces non-empty
+  `ci_coverage` block in each `evaluation.json`. **DONE — 5 tile-size
+  cross-grid pairwise cells under `results/pairwise/tile-size-30m/`
+  re-evaluated; `ci_unreliable` flag populated.**
+- [x] `.metadata.json` sidecar updated with threshold + flagged-cell
+  inventory. **DONE — metadata v1.1 schema in place across all
+  evaluations.**
 
 ## 9. Open questions for the user
 
