@@ -1430,7 +1430,7 @@ All 540 `evaluation.json` cells at N=10,000 bootstrap iterations. Cross-cell met
 
 ## Outstanding to-dos for next session (audit 2026-04-28)
 
-> **⚠️ Largely superseded** — items 1, 2, 3, 5 closed in Session 81; items 10, 11 in flight 2026-05-01 (separate agent). Authoritative current-state is the §"Session 81 closure roll-up" Items 1–16 status table below. Section preserved for narrative continuity.
+> **⚠️ Largely superseded** — items 1, 2, 3, 5 closed in Session 81; items 10, 11 closed in Session 82 (commit `10bcf376`). Authoritative current-state is the §"Session 81 closure roll-up" Items 1–16 status table below. Section preserved for narrative continuity.
 
 Identified by an Explore agent surveying planning docs, working-notes (Obs 282–303), recent `report.md` files, repo-cleanup-backlog, and detector-confidence planning docs immediately before Session 80 close-out. Items below are **NOT** already covered in the Session 80 closure / Step 6 starting-state / daylight follow-up sweep sections above. The paper outline itself is the main deliverable for next session and is excluded from this list. Items are ordered by priority within band; user should sequence per their judgement.
 
@@ -1550,9 +1550,9 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 | 7 | K-consensus SD heterogeneity footnote | Pending |
 | 8 | Durable metadata mitigation | Pending; partly superseded (BCa fix added schema 1.1 with `_metadata.bootstrap.method`, `coverage_status`, etc.) |
 | 9 | TP-only localisation bias check | Pending |
-| 10 | Niculiță citation fix | In flight 2026-05-01 (separate agent dispatched today) |
-| 11 | Guyot citation fix | In flight 2026-05-01 (separate agent dispatched today) |
-| 12 | BCa re-run all evaluation cells | In flight 2026-05-01 (separate agent dispatched today) |
+| 10 | Niculiță citation fix | ✅ **DONE Session 82** — commit `10bcf376` |
+| 11 | Guyot citation fix | ✅ **DONE Session 82** — commit `10bcf376` |
+| 12 | BCa re-run all evaluation cells | ✅ **DONE Session 81 close-out** — commits `014d6248..4eea8768` (2026-04-30); doc was stale, audit confirmed 526/526 in-scope cells at BCa N=10K |
 | 13 | Bet-test inspection app | ✅ **DONE Session 81** — Obs 312 (0 / 177 review errors) |
 | 14 | K-35-076-2 participatory-GIS coverage history | ✅ **CLOSED 2026-05-01** by Obs 317 — premise superseded; corrected per-map breakdown locates the within-corpus outlier at K-35-062-2 (Rakovski, 9.18 %), explained by inter-student-skill variance — no investigation required |
 | 15 | GS >125 m FP-side 6-crop manual inspection | Pending — user-driven, deferred (will handle in a later session) |
@@ -1615,10 +1615,10 @@ Now that the GS classification + v2 work landed, the new sequencing reflects wha
 > **⚠️ Updated 2026-05-01 in light of Session 82 closures.** Items #13, #14, #16 are CLOSED. Items #10, #11, #12 are in flight (separate agents dispatched today). The remaining post-Session-82 sequence is correspondingly shorter — see §"Session 82 closure (2026-05-01)" below for the consolidated post-closure to-do list.
 
 1. **Step 6 paper outline** — the original deliverable; further unblocked by cross-corpus chi-square evidence (Obs 307), FN-rate refinement (Obs 305 → Obs 316/317), and the 4-GS canonical analysis (Obs 316/317).
-2. ~~**Item #12 BCa re-run all cells**~~ — in flight 2026-05-01 (separate agent).
+2. ~~**Item #12 BCa re-run all cells**~~ — ✅ DONE in Session 81 close-out (commits `014d6248..4eea8768`); audit confirmed 2026-05-01.
 3. ~~**Item #16 two timed-out cells**~~ — DONE 2026-04-30 17:07.
 4. ~~**Item #13 bet-test app**~~ — DONE Session 81 (Obs 312, 0/177).
-5. ~~**Items #10 + #11 citation fixes** (~10 min)~~ — in flight 2026-05-01 (separate agent).
+5. ~~**Items #10 + #11 citation fixes** (~10 min)~~ — ✅ DONE Session 82 (commit `10bcf376`).
 6. **Item #15 GS 6-crop manual inspection** (~20 min) — pending; user-driven, deferred to a later session.
 7. ~~**Item #14 K-35-076-2 history**~~ — CLOSED 2026-05-01 by Obs 317 (premise superseded).
 8. **Items #4, #6, #7, #8, #9** — defer per original priority.
@@ -1671,10 +1671,10 @@ Range `33bce297..6f15b8c9` (8 commits):
 
 ### Pending before paper outline (post-Session-82)
 
-- **Item #12 BCa re-run all evaluation cells** — separate agent dispatched today; in flight at time of writing.
-- **Items #10 + #11 citation fixes** (Niculiță; Guyot) — separate agent dispatched today; in flight at time of writing.
+- **Item #12 BCa re-run all evaluation cells** — ✅ DONE in Session 81 close-out (`014d6248..4eea8768`, 2026-04-30); audit run on 2026-05-01 confirmed 526/526 in-scope cells at BCa N=10K. Continuity-doc roll-up was simply stale.
+- **Items #10 + #11 citation fixes** (Niculiță; Guyot) — ✅ DONE Session 82 (commit `10bcf376`).
 - **Item #15 GS >125 m FP-side 6-crop manual inspection** — user-driven, deferred (will handle in a later session).
-- **Step 6 paper outline** — the original post-Step-4 deliverable; remains the next major user-driven task once #10, #11, #12 land.
+- **Step 6 paper outline** — the original post-Step-4 deliverable; **NOW UNBLOCKED**. The next major user-driven task.
 
 ### Things to NOT redo in Session 82+ (addendum)
 
