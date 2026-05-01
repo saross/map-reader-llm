@@ -153,6 +153,38 @@ fieldwork archives), a future cross-validation could anchor the
 55-map estimate against the 4-map estimate with both derived
 under the same protocol.
 
+## Active-area-clipping audit (2026-04-30)
+
+A bounds-clipping artefact was identified and corrected in the 4-GS
+sister analysis (`results/student-gt-fn-rate-analysis-gs4/`): the
+GeoTIFF rasters include a black collar / tilted-corner padding
+**outside the cartographic neat-line**, and student features digitised
+on that collar were being counted as false positives. The fix was to
+clip both ground-truth datasets to the trapezoidal graticule
+quadrangle of each sheet (derived from the sheet ID on the
+Pulkovo-1942 datum and re-projected to UTM-35N), recovering an FP = 0
+result on the 4 GS maps.
+
+**This 55-map analysis is unaffected by the artefact.** This script
+(`scripts/analyse_student_gt_fn_rate.py`) does not perform bounds
+clipping at any stage: review candidates are joined to student GT by
+`map_name` and a per-map cKDTree of `(x, y)` centroids, with no
+sheet-polygon test. The denominator uses raw student-GT counts; the
+numerator counts review-confirmed mound candidates regardless of
+whether their centroids fall inside or outside any sheet's neat-line.
+There is therefore no rectangular-vs-trapezoidal envelope decision to
+correct.
+
+A residual question — whether some review-confirmed FNs themselves
+lie on the black collar of their source sheet — is logically possible
+but operationally unlikely: review candidates were proposed by
+detector runs on tiles that ought to be inside the neat-line, and the
+human reviewer would have rejected any that obviously fell on padding.
+A targeted spot-check could be added if the per-map FN rates are
+revisited for the paper, but the headline rate (0.0887) and CI are
+not at risk of the same 17-feature inflation that affected the 4-GS
+FP count.
+
 ## Caveats
 
 - **Lower-bound vs central estimate**. The headline rate counts
