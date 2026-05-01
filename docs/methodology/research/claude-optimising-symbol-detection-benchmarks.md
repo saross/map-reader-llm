@@ -65,8 +65,10 @@ The following metrics provide benchmarking context for your VLM approach:
 | U-Net | Wetland symbols | **0.908** | — | — | Manual annotation | ~8 hours |
 | U-Net + ResNet34 | Kenya road extraction | **0.84** | — | — | 500+ maps | 1500 hrs annotation |
 | CNN (pre-trained) | Burial mound detection | 0.62-0.87 | 12.8% validated | 4.9% detected | 773 mounds | Variable |
-| Random Forest + U-Net | Neolithic mounds (LiDAR) | — | 98% | 98% | LiDAR derived | ~2 hours |
+| MSTP + Random Forest[^kappa] | Neolithic mounds (LiDAR) | — | — | — | LiDAR derived | ~2 hours |
 | **Your VLM approach** | Burial mound symbols | **0.75** | — | — | 12 examples | 0 training |
+
+[^kappa]: Headline metric is Cohen's kappa = 0.98 (Guyot et al. 2018); not decomposable into separate precision/recall.
 
 The stark disparity between model-reported metrics and field validation (CNN burial mound study: F1=0.87 model vs. 12.8% validated true positives) suggests your VLM F1=0.75 may be more competitive in practice than raw numbers indicate.
 

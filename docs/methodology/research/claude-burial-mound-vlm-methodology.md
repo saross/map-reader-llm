@@ -42,7 +42,7 @@ Studies report different metrics (mAP, detection rate, accuracy, F1) that are no
 
 #### 3. Validation Rigor Varies Dramatically
 
-Only the Romanian Random Forest study (Meylemans et al.) meets gold-standard validation criteria:
+Only the Romanian Random Forest study (Niculiță, 2020) meets gold-standard validation criteria:
 - External geographic test areas (separate 100 km² regions)
 - Field-verified ground truth
 - Explicit reporting of both false positives and false negatives
@@ -295,7 +295,7 @@ Frame all results against:
 ### CV Benchmarks (Verified)
 - YOLOv3 map symbols: MDPI 2022, mAP=98%, validation unclear
 - YOLOv3 burial mounds (LiDAR): MDPI 2021, F1=0.77 (calculated), against known mounds
-- Random Forest burial mounds: MDPI 2020, 93% detection, external geographic validation
+- Niculiță, M. (2020). "Geomorphometric Methods for Burial Mound Recognition and Extraction from High-Resolution LiDAR DEMs". *Sensors* 20(4): 1192. doi:10.3390/s20041192
 - U-Net wetlands: ScienceDirect 2022, F1=0.886, 10-fold CV
 
 ### VLM Methodology (from prior evidence review)
