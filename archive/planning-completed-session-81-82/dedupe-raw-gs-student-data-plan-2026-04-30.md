@@ -708,6 +708,6 @@ inspection if the user wants a fully-characterised student-FP rate.
   for the broader paper context the GS-side student-FP narrative
   feeds into.
 - **Sister plan (FP classification)**:
-  `planning/gs-fp-classification-plan-2026-04-29.md` for the
+  `archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md` for the
   detection-side FP analysis that this dedup pass should integrate
   with cleanly.

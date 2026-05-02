@@ -17,7 +17,7 @@ none, other`. There is no `burial-mound` category.
 
 When the same script was repurposed to classify all 371 GS detections
 (true positives (TPs) and false positives (FPs) together — see
-`planning/gs-fp-classification-plan-2026-04-29.md` §6.5 for the TP-side
+`archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md` §6.5 for the TP-side
 reliability rationale), real mounds had no proper category to assign. The
 v1 TP-side fell back to visual-similarity proxies: `contour-ring` 60.0 %
 and `number` 15.2 %, failing the > 10 % vocabulary-leakage warning the
@@ -35,7 +35,7 @@ categories so the closed list correctly covers TP+FP scope.
 - v2 outputs: `results/gs-fp-classification/`
 - v2 commit: see `data(gs-fp-classification): re-run with burial-mound
   categories added to closed list` (2026-04-29)
-- Planning context: `planning/gs-fp-classification-plan-2026-04-29.md`
+- Planning context: `archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md`
   §2 (framing), §6.5 (TP-side reporting expectation)
 
 ## v1 result snapshot (preserved here for cross-version comparison)

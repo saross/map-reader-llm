@@ -9,7 +9,7 @@ N=10,000. The queue is consumed by the existing
 at the CLI.
 
 Implements the four metadata-recovery patterns documented in
-``planning/daylight-followup-sweep-plan-2026-04-29.md`` §3:
+``archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md`` §3:
 
 * Pattern A — parent batch-YAML lookup (143 paper-eval cells)
 * Pattern B — pairwise YAML lookup (5 cells)

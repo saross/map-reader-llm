@@ -10,5 +10,5 @@
 | 40m | 0.792 | N/A * | 0.840 | N/A * | 0.749 | N/A * | 0.662 | N/A * | 0.777 | 0.880 |
 | 50m | 0.792 | N/A * | 0.840 | N/A * | 0.749 | N/A * | 0.662 | N/A * | 0.777 | 0.880 |
 
-\* Bootstrap CI suppressed for sparse-coverage buffers (51.7%, 52.0%, 52.0%, 52.0% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
+\* Bootstrap CI suppressed for sparse-coverage buffers (51.7%, 52.0%, 52.0%, 52.0% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
 

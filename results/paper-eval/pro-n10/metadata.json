@@ -20,7 +20,7 @@
   "recovery_notes": {
     "audit": "2026-04-29 inventory audit identified missing evaluation.json under results/paper-eval/pro-n10/.",
     "scope": "Recovered 10 evaluation.json files (consensus-t1 through consensus-t10) by re-evaluating the existing consensus geojsons under outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/consensus/.",
-    "bootstrap_upgrade": "Original CSV used N=1000 bootstrap (see legacy bootstrap field above documents the historical run). Recovery uses N=10000 from the start, matching the daylight-sweep plan's standardisation goal (planning/daylight-followup-sweep-plan-2026-04-29.md §7.1).",
+    "bootstrap_upgrade": "Original CSV used N=1000 bootstrap (see legacy bootstrap field above documents the historical run). Recovery uses N=10000 from the start, matching the daylight-sweep plan's standardisation goal (archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md §7.1).",
     "mcc": "Recovery includes --mcc flag because the existing pro_n10_consensus_results.csv records MCC values; the new evaluation.json files preserve tile_classification (MCC, sensitivity, specificity, confusion) alongside F1/P/R buffer rows.",
     "scope_note": "The 10 recovered evaluation.json files cover the N=10 voting series (1-of-10 through 10-of-10) materialised in the consensus directory. The original CSV's pool_size=5 rows derive from a separate sub-pool computation not present as standalone consensus geojsons, so are not regenerated in this recovery.",
     "daylight_sweep_status": "Closes daylight-sweep plan §12 question 1: pro-n10/ is no longer excluded — the 10 new evaluation.json files all record _metadata.bootstrap.n_iterations == 10000, consistent with the §7.1 N=10K presence query."

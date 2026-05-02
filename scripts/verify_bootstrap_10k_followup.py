@@ -3,7 +3,7 @@
 Bootstrap-CI N=10K follow-up sweep verification.
 
 Runs the §7.1–7.5 verification queries from
-``planning/daylight-followup-sweep-plan-2026-04-29.md`` against the 165 cells
+``archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md`` against the 165 cells
 produced by the daylight follow-up sweep.
 
 * §7.1 — N=10K presence query (binding pass/fail)

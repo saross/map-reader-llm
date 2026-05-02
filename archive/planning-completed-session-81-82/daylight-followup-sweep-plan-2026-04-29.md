@@ -588,7 +588,7 @@ audit reads diffs by group anyway.
 
 ## 10. Pre-launch checklist (user must confirm before approving execution)
 
-- [ ] Plan document `planning/daylight-followup-sweep-plan-2026-04-29.md` reviewed and approved
+- [ ] Plan document `archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md` reviewed and approved
 - [ ] Builder script approach (`build_bootstrap_10k_queue_followup.py`) preferred over runtime
       recovery
 - [ ] Per-group commit strategy (4 commits) preferred over single-commit

@@ -103,7 +103,7 @@ BCa unconditionally for *all* `bootstrap_ci` callers, not just the 5
 affected cells. That is a global methodology change touching every
 paper-cited cell — a much larger blast radius requiring re-running the
 N=10K sweep on all 165 / 540 cells (per
-`planning/daylight-followup-sweep-plan-2026-04-29.md` §7.3 – §7.5).
+`archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md` §7.3 – §7.5).
 Out of scope for this fix.
 
 ## 4. Implementation design

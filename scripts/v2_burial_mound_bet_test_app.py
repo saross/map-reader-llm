@@ -46,7 +46,7 @@ Or directly::
 
     .venv/bin/streamlit run scripts/v2_burial_mound_bet_test_app.py
 
-See ``planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`` (commit
+See ``archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md`` (commit
 ``8d2f7f47``) for the binding design specification, and Obs 308 in
 ``docs/notes/reflections/working-notes.md`` for the bet's empirical
 motivation.
@@ -654,7 +654,7 @@ def main() -> None:
     st.caption(
         "Re-review of the 177 v2 burial-mound reclassifications from the "
         "55-map FP-classification. See "
-        "`planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md` "
+        "`archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md` "
         "(commit 8d2f7f47) for the binding spec."
     )
 

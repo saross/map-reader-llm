@@ -38,7 +38,7 @@
 # automatically picks up from the last reviewed candidate.
 #
 # References:
-#   - Plan: planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md
+#   - Plan: archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md
 #           (commit 8d2f7f47)
 #   - Bet motivation: docs/notes/reflections/working-notes.md (Obs 308,
 #                     committed at 73b21b6b)

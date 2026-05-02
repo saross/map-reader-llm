@@ -20,7 +20,7 @@ Closed-list change (v2, 2026-04-29) — addition of burial-mound classes
 The v1 closed list (commit ``ee4f18cb``) was copied verbatim from the
 55-map sibling driver, which targets FP-only classification. When v1
 was repurposed to classify all 371 GS detections — TP-side included,
-per ``planning/gs-fp-classification-plan-2026-04-29.md`` §6.5's
+per ``archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md`` §6.5's
 reliability sanity check — real mounds had no proper category to map
 onto and fell back to visual proxies (``contour-ring`` 60.0 %,
 ``number`` 15.2 % on the TP side; the script's own > 10 %
@@ -52,7 +52,7 @@ mound's true centre during Sobotkova 2022 + this project's reverify
 pass — sub-metre positional precision. Distance-from-curator-GT is
 therefore not a proxy on the GS corpus; it is a high-precision
 geometric filter equivalent in rigour to the 55-map's per-detection
-human review. See ``planning/gs-fp-classification-plan-2026-04-29.md``
+human review. See ``archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md``
 §2 for the full framing.
 
 Methodology — cartographic-naming approach (v2 closed list)
@@ -180,7 +180,7 @@ import config  # noqa: E402  — must follow sys.path mutation
 
 # Verified-v1 detections (371 features, EPSG:32635). Path is the canonical
 # operating-point output described in
-# ``planning/gs-fp-classification-plan-2026-04-29.md`` §1.
+# ``archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md`` §1.
 DETECTIONS_PATH: Path = REPO_ROOT / (
     "outputs/h11/gold-standard-v2/verified-v1/"
     "verified_detections_full-scope.geojson"
@@ -1717,7 +1717,7 @@ def write_report_md(
         "verified_detections_full-scope.geojson`), partitioning into "
         "TP-side (<= 50 m from a curator GT mound) and FP-side (> 50 m) "
         "post-classification. Plan reference: "
-        "`planning/gs-fp-classification-plan-2026-04-29.md` "
+        "`archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md` "
         "(commit `edd2ecce`). v2 expands the closed list to include four "
         "burial-mound categories (see the Methodology change section "
         "below); v1 outputs are archived at "

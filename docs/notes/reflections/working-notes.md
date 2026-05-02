@@ -12480,7 +12480,7 @@ candidate against the 50 m tolerance circle and did not record symbol
 positions within the circle. Corrected F1/P/R at 20 m, 30 m, 40 m cannot be
 derived from this output — answering that requires either (a) a full-map
 gold-standard digitisation pass (the next-generation review-app work in
-`planning/candidate-review-app.md` backlog) or (b) re-reviewing the set with
+`archive/planning-completed-session-81-82/candidate-review-app.md` backlog) or (b) re-reviewing the set with
 a tighter tolerance circle.
 
 ### Paper-implication summary
@@ -15287,7 +15287,7 @@ Mean classifier confidence on these reclassifications: 0.94-0.95 (single-pass, T
 2. **v2 prompt-bias** — the prompt's "when in doubt, prefer the more specific category" wording nudges the classifier toward burial-mound categories on ambiguous mound-like features (especially settlement-mound, the dominant subtype).
 3. **Vocabulary redistribution** — features that v1 classified as `contour-ring` / `number` are visually consistent with `settlement-mound`; v2 captures the more specific categorisation.
 
-User's prior digitisation experience suggests rate (1) is probably 1-3 % (not 15.8 %); the bulk likely (2) + (3). User has agreed to a manual re-inspection of the 177 crops to test which mechanism dominates — see `planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md` (commit `8d2f7f47`).
+User's prior digitisation experience suggests rate (1) is probably 1-3 % (not 15.8 %); the bulk likely (2) + (3). User has agreed to a manual re-inspection of the 177 crops to test which mechanism dominates — see `archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md` (commit `8d2f7f47`).
 
 ### Bet framing (for paper-Methods justification of the inspection)
 
@@ -15317,7 +15317,7 @@ Search terms: 55-map FP v2 burial-mound reclassification 15.8 %, 177 of 1119 FPs
 - **Obs 302** (v1 55-map FP-class — distractor-pull NOT supported): unchanged at v2 macro level.
 - **Obs 306** (v2 closed-list expansion + GS TP-side validation): enables this v2 result.
 - **Obs 307** (cross-corpus chi-square at v2): paired finding; the corpus-level chi-square holds intact regardless of bet-test outcome (different question).
-- **Artefacts**: `results/55maps-fp-classification/{report.md, fp_classifications.json, category_distribution.json, figures/}`; archive at `archive/55maps-fp-classification-v1-pre-burial-mound-list/`. App plan: `planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`. Commits: `ec21c8ef` (v2 55-map), `8d2f7f47` (bet-test app plan APPROVED).
+- **Artefacts**: `results/55maps-fp-classification/{report.md, fp_classifications.json, category_distribution.json, figures/}`; archive at `archive/55maps-fp-classification-v1-pre-burial-mound-list/`. App plan: `archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md`. Commits: `ec21c8ef` (v2 55-map), `8d2f7f47` (bet-test app plan APPROVED).
 
 ## Observation 309: Pairwise tile-size-30m percentile-bootstrap CI bug — F1 point estimates fall outside CI bounds in 9/10 buffer-cell combinations; root cause is sparse-coverage asymmetry; fixed globally via BCa + Mitigation 3 sparse-coverage flag (2026-04-29)
 
@@ -15336,7 +15336,7 @@ Cross-grid eval is intentional methodology (compares 512 px detections against 3
 
 ### Bounds correction (related, fixed in passing)
 
-The plan `planning/daylight-followup-sweep-plan-2026-04-29.md` §3.2 specified 340-tile bounds for the pairwise cells. Empirical dry-run discovered the pre-tag eval was generated with **487-tile bounds** (matching `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`). The new sweep used 487-tile to preserve point-estimate parity (ΔF1 = 0.0000 vs pre-tag). 487-tile is methodologically correct for cross-grid eval; the plan §3.2 reference to 340-tile was the plan's error, not the data's.
+The plan `archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md` §3.2 specified 340-tile bounds for the pairwise cells. Empirical dry-run discovered the pre-tag eval was generated with **487-tile bounds** (matching `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`). The new sweep used 487-tile to preserve point-estimate parity (ΔF1 = 0.0000 vs pre-tag). 487-tile is methodologically correct for cross-grid eval; the plan §3.2 reference to 340-tile was the plan's error, not the data's.
 
 ### The fix
 
@@ -15370,7 +15370,7 @@ Search terms: pairwise tile-size-30m bootstrap CI bug, F1 point outside CI bound
 ### Related observations and artefacts
 
 - **Obs 303** (bootstrap-N controls Monte Carlo noise, not CI width): orthogonal but related — Obs 303 is about N=1K → N=10K behaviour; this Obs is about percentile → BCa method change.
-- **Plan**: `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` (commit `4da5c254`).
+- **Plan**: `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` (commit `4da5c254`).
 - **Diagnosis**: was performed in-session by an Explore agent before the implementation; root-cause analysis in the plan doc.
 - **Artefacts**: `scripts/lib_advanced_metrics.py` (commit `2026999a`), `scripts/evaluate_detections.py` (same commit). New tests at `tests/test_advanced_metrics_coverage.py` + updates to `tests/test_evaluate_detections_metadata.py` + `tests/test_evaluate_detections_mcc_rendering.py`. Rollback tag `pre-bca-mit3-2026-04-29`.
 
@@ -15378,7 +15378,7 @@ Search terms: pairwise tile-size-30m bootstrap CI bug, F1 point outside CI bound
 
 ### The finding
 
-The N=1,000 → N=10,000 bootstrap-iteration standardisation across 165 deferred cells (per `planning/daylight-followup-sweep-plan-2026-04-29.md`) executed on sapphire 14:01-15:51 UTC 2026-04-29. 162 cells completed successfully; 4 commits committed and pushed in plan §8 order:
+The N=1,000 → N=10,000 bootstrap-iteration standardisation across 165 deferred cells (per `archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md`) executed on sapphire 14:01-15:51 UTC 2026-04-29. 162 cells completed successfully; 4 commits committed and pushed in plan §8 order:
 
 - `b774238b` paper-eval (154 cells, 462 files)
 - `2d12dd06` pairwise-tile-size-30m (5 cells, 15 files; CI bug + 487-tile bounds documented)
@@ -15405,7 +15405,7 @@ Obs 303 (bootstrap-N controls Monte Carlo noise, not CI width) flagged the N=10K
 
 ### Sub-finding: input-expansion audit (per-cell N-runs parity)
 
-A wider audit across all 163 swept cells (commit `29b8cc64`, `planning/input-expansion-audit-2026-04-29.md`) confirmed silent input expansions are concentrated:
+A wider audit across all 163 swept cells (commit `29b8cc64`, `archive/planning-completed-session-81-82/input-expansion-audit-2026-04-29.md`) confirmed silent input expansions are concentrated:
 
 - 3 cells in the `pro-text-high-t-0-7` family (paper-eval/{mcc/384px, n1/384px-all-buffers, n1/384px}) expanded N=5 → N=10 detection runs between pre-tag (snapshot 2026-03-28, commit `22592f94`) and the new sweep, due to commit `3d22184d` (2026-04-15) adding runs 6-10 to the source directory.
 - All other 160 cells were stable at the per-run dimension. Severity: LOW (expected variance over the larger run set).
@@ -15431,8 +15431,8 @@ Search terms: daylight sweep N=10K close-out, 162 of 165 cells, 2 timed-out cell
 
 - **Obs 303** (bootstrap-N controls MC noise, not CI width): forward-pointer closed.
 - **Obs 309** (BCa + Mit-3 fix): orthogonal methodological closure that supersedes the percentile method going forward.
-- **Plan**: `planning/daylight-followup-sweep-plan-2026-04-29.md` (commit `b5a5309a`); status: `planning/daylight-sweep-status-2026-04-29.md`.
-- **Audit**: `planning/input-expansion-audit-2026-04-29.md` (commit `29b8cc64`).
+- **Plan**: `archive/planning-completed-session-81-82/daylight-followup-sweep-plan-2026-04-29.md` (commit `b5a5309a`); status: `archive/planning-completed-session-81-82/daylight-sweep-status-2026-04-29.md`.
+- **Audit**: `archive/planning-completed-session-81-82/input-expansion-audit-2026-04-29.md` (commit `29b8cc64`).
 - **Commits**: `b5a5309a` (plan), `b774238b..6b611174` (4 per-group sweep commits), `89a5ad67` + `9bc45766` (scaffolding + status update), `f1cf5086` (pro-n10 recovery), `29b8cc64` (input-expansion audit), `3822645a` (§7.5 verifier patch). Pre-sweep tag: `pre-bootstrap-10k-followup-2026-04-29` at HEAD `ee4f18cb`.
 
 ## Observation 311: Mit-3 sparse-coverage flag fires on 21.7 % of paper-cited cells (114/526), not just 5 — bug scope remains contained; flag scope is broader (2026-04-29)
@@ -15561,7 +15561,7 @@ Search terms: bet-test resolved 0 of 177 review errors, v2 overclaim all 177, re
 - **Obs 307** (cross-corpus chi-square): interpretation stands intact — the 55-map FP-class distribution is accurately a distribution of v2 overclaims that differs from the GS corpus's v2-overclaim profile. The failure-mode taxonomy supplied here is the mechanism that makes that divergence interpretable.
 - **Obs 308** (provisional 15.8 % reclassification): provisional status **closed** by this Obs. Explanation (1) rejected; explanations (2) + (3) confirmed as dominant.
 - **Obs 306** (v2 closed-list expansion and GS TP-side calibration): supplies context for why the expanded closed list enabled the burial-mound overclaims.
-- **`planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`** (commit `8d2f7f47`): the bet protocol — denominator, threshold, verdict categories, calibration design.
+- **`archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md`** (commit `8d2f7f47`): the bet protocol — denominator, threshold, verdict categories, calibration design.
 - **`scripts/v2_burial_mound_bet_test_app.py`**: the Streamlit inspection app used for all 177 + 20 calibration verdicts.
 - **`results/55maps-fp-classification/v2-burial-mound-bet-test/verdicts.csv`**: 197 data rows (177 non-calibration + 20 calibration); all `verdict = v2_overclaim`.
 - **`prompts/system-instructions/detect_brief-text.md`** (proposer prompt): confirms the rays/hachures disambiguation is stated explicitly in the detection instruction ("The **rays pointing outward** are essential. Symbols without visible rays are not mounds."); the FP-classifier's closed-list burial-mound subtypes mirror the four proposer subtypes (`burial-mound`, `settlement-mound`, `triangulation-point-on-burial-mound`, `benchmark-on-burial-mound`).

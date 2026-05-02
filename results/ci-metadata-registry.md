@@ -28,7 +28,7 @@ Four completeness states are used:
   table; entries previously marked `INFERABLE` are now `YES_SIDECAR`
   except where noted.
 - `NO` — One or more fields cannot be reliably recovered. Listed in
-  `planning/ci-rerun-todo.md`.
+  `archive/planning-completed-session-81-82/ci-rerun-todo.md`.
 
 ## Default bootstrap configuration across the codebase
 
@@ -73,7 +73,7 @@ and related trees. They are all produced with the defaults above
 unless overridden on the Command Line Interface (CLI); no override is
 known to have occurred. Adding explicit metadata writes to
 `evaluate_detections.py` is captured as a standing recommendation in
-`planning/ci-rerun-todo.md` but does not mandate re-running the files.
+`archive/planning-completed-session-81-82/ci-rerun-todo.md` but does not mandate re-running the files.
 
 ## Registry table
 
@@ -317,5 +317,5 @@ not write its bootstrap parameters into `evaluation.json`. A one-line
 metadata block added to the output dict — `"_metadata": {"n_bootstrap":
 n_bootstrap, "seed": seed, "resampling_unit": "tile", "git_commit":
 <sha>}` — would move every INFERABLE entry to YES without re-running
-any experiments. See `planning/ci-rerun-todo.md` §§ "Durable
+any experiments. See `archive/planning-completed-session-81-82/ci-rerun-todo.md` §§ "Durable
 mitigation" for the proposed patch.

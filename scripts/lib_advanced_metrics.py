@@ -48,7 +48,7 @@ DEFAULT_CRS = "EPSG:32635"  # UTM Zone 35N (Bulgaria)
 # the underlying statistic via a jackknife acceleration term. It produces
 # better-calibrated confidence intervals on skewed or biased distributions
 # where the percentile method systematically excludes the point estimate
-# (cf. ``planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md``).
+# (cf. ``archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md``).
 #
 # When BCa cannot be computed (degenerate bootstrap distribution — e.g.
 # every resample yields the same statistic), the helper falls back to the

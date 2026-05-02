@@ -1493,7 +1493,7 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 #### 8. Durable metadata mitigation for `evaluate_detections.py` + `build_tiered_leaderboard.py`
 
-- **Source**: `planning/repo-cleanup-backlog.md` and `planning/ci-rerun-todo.md` lines 96–116.
+- **Source**: `planning/repo-cleanup-backlog.md` and `archive/planning-completed-session-81-82/ci-rerun-todo.md` lines 96–116.
 - **Description**: Add a `_metadata` block embedding to `scripts/evaluate_detections.py` `evaluate_single_condition()` and `build_tiered_leaderboard.py` so that future `evaluation.json` outputs auto-include bootstrap parameters + CLI args. Prevents recurrence of the metadata-recovery work the daylight follow-up sweep needed.
 - **Cost**: 15 min dev + smoke test.
 - **Defer unless**: significant new evaluations are anticipated post-paper.
@@ -1578,7 +1578,7 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 #### 13. Bet-test inspection app implementation (177 v2-burial-mound crops)
 
-- **Source**: Plan APPROVED at commit `8d2f7f47` (`planning/v2-burial-mound-bet-test-app-plan-2026-04-29.md`).
+- **Source**: Plan APPROVED at commit `8d2f7f47` (`archive/planning-completed-session-81-82/v2-burial-mound-bet-test-app-plan-2026-04-29.md`).
 - **Description**: Implement the Streamlit re-review app for the 177 v2-burial-mound reclassifications (Obs 308). Bet: review-error rate < 2 % of 1,675 (the `not_mound` corpus reviewed) → < 34 errors among 177 (= 19 % of reclassifications). Three verdicts (`real_mound_my_error`, `v2_overclaim`, `edge_case_ambiguous`) + skip; calibration-sample blinding sample default ON; re-review at exact classifier view (~150 m / 768 px); persist verdicts to CSV; resume support.
 - **Cost**: zero API; ~2-3 hours dev (per plan §8 effort estimate). User wall time: 60-90 min for 177 candidates.
 - **Sequencing**: implement then run; result resolves Obs 308's "provisional" status into a definitive review-error rate finding for the paper.
@@ -1687,13 +1687,13 @@ Range `33bce297..6f15b8c9` (8 commits):
 
 > **⚠️ Largely superseded 2026-05-01** — the FN-rate thread that this section was scoped around closed today via Obs 316 + 317 (4-GS trapezoidal-graticule correction → Sobotkova 2023 vindicated; cross-corpus heterogeneity small; gap dominated by inter-student-skill variance). The read-first list and recommended Session-82 sequence (A–C) below are RESOLVED. See §"Session 82 closure (2026-05-01)" immediately above for the headline + commit chain. Open questions 1–3 are CLOSED inline below; questions 4–5 are non-blocking. The section is preserved unedited where possible for narrative continuity.
 
-Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs 312), settlement-mound re-inspection (Obs 313 — three-category result + two-mechanism framework), Cat 2 symbol-ID search (Obs 314 → Obs 315 — closed with negative result), the 4-map raw student-data audit (planning + smoke-test in `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md`, commit `d5dc0e87`), and the FN-rate framing thread (4-map / 55-map estimator convergence at 9-11 %). The full failure-mode taxonomy is now at paper-Discussion-quality level. Next-session pickup is mostly small high-value items.
+Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs 312), settlement-mound re-inspection (Obs 313 — three-category result + two-mechanism framework), Cat 2 symbol-ID search (Obs 314 → Obs 315 — closed with negative result), the 4-map raw student-data audit (planning + smoke-test in `archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md`, commit `d5dc0e87`), and the FN-rate framing thread (4-map / 55-map estimator convergence at 9-11 %). The full failure-mode taxonomy is now at paper-Discussion-quality level. Next-session pickup is mostly small high-value items.
 
 ### Read-first for Session 82
 
 1. **This file's `## Session 81 closure roll-up`** above (current state of the to-do list)
 2. **Obs 312-315** (`docs/notes/reflections/working-notes.md`) — bet-test resolution + failure-mode taxonomy + symbol-ID closure
-3. **`planning/dedupe-raw-gs-student-data-plan-2026-04-30.md`** (commit `d5dc0e87`) — the dedup plan + the §8 open questions on the 4 GS maps' raw student data
+3. **`archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md`** (commit `d5dc0e87`) — the dedup plan + the §8 open questions on the 4 GS maps' raw student data
 4. **GS student-maps review thread** (this section, immediately below)
 
 ### GS student-maps review thread — status + next-session approach
@@ -1708,7 +1708,7 @@ Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs
 - **The 4-map and 55-map FN-rate estimators converge at 9-11 %** — strong cross-validation. The 55-map analysis (Obs 305): 8.87 % lower-bound, 11.15 % recall-adjusted central; the 4-map re-derivation: 9.1 % cumulative. This is a much cleaner paper-Methods finding than the original "we disagree with Sobotkova" framing.
 - **TM 30-548's published 0.1 % FP rate** for student data is consistent with the Hairy-only subset; the 38.7 % apparent FP rate from earlier audits was an artefact of including non-Hairy features in the FP denominator.
 
-**Five open questions** (from `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md` §8, in priority order):
+**Five open questions** (from `archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md` §8, in priority order):
 
 1. **Non-Hairy provenance** (highest paper-Methods-relevance) — ✅ **CLOSED 2026-05-01** (user domain answer). Students were asked to digitise **all benchmarks and triangulation points NOT on mounds** alongside the Russian 1:50k burial-mound symbols. The contemporaneous working theory was that some unmarked benchmarks might sit on mounds the cartographers had missed; the theory turned out **wrong — cartographers were accurate**, the 262 non-Hairy features are genuinely off-mound infrastructure (naked benchmarks + triangulation points). The Hairy filter correctly excludes them; this is data-by-design, not a data-quality issue. **Paper Methods sentence** (one-line): *"the student dataset includes ~32 % features outside the Russian 1:50k mound-symbol class — naked benchmarks and triangulation points captured under a contemporaneous working theory; we exclude them from the FP-rate denominator."*
 2. **K-35-062-2 outlier at 15.88 % FN** — ✅ **CLOSED 2026-05-01** by Obs 317. Per the corrected per-map breakdown (range 2.76 %–9.18 % across the 4 GS maps; spread of 6.4 pp wider than the 4-GS-vs-55-map mean gap of 3.6 pp), Rakovski's elevated rate is **single-student-per-map variance**, not a structural cartographic problem. No curator-records lookup needed.

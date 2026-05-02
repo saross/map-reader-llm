@@ -26,5 +26,5 @@
   "buffers_metres": [20, 30, 40, 50],
   "ci_count": 12,
   "ci_count_derivation": "3 metrics (F1, precision, recall) x 4 buffers",
-  "notes": "Trigger file for the CI-metadata audit (2026-04-20). Headline paper result: F1 = 0.771 at 50 m. The evaluation.json itself omits bootstrap metadata; that limitation is the root cause of the audit. See results/ci-metadata-registry.md and planning/ci-rerun-todo.md for the durable mitigation (patch evaluate_detections.py to embed metadata directly)."
+  "notes": "Trigger file for the CI-metadata audit (2026-04-20). Headline paper result: F1 = 0.771 at 50 m. The evaluation.json itself omits bootstrap metadata; that limitation is the root cause of the audit. See results/ci-metadata-registry.md and archive/planning-completed-session-81-82/ci-rerun-todo.md for the durable mitigation (patch evaluate_detections.py to embed metadata directly)."
 }

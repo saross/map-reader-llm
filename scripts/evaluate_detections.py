@@ -882,7 +882,7 @@ def write_outputs(
                 "Numeric bounds remain in `evaluation.json` and "
                 "`evaluation.csv` for downstream tooling. The point "
                 "estimate (F1, P, R, MCC) is unaffected. See "
-                "`planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` "
+                "`archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` "
                 "for the underlying methodology decision.\n",
             )
         f.write("\n")

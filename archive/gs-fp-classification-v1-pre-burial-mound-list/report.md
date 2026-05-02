@@ -2,7 +2,7 @@
 
 _Generated 2026-04-29 08:04 UTC_
 
-Closes the comparator gap flagged in `results/55maps-fp-classification/report.md` Caveats - the 55-map driver tested Shawn's hypothesis (Obs 296) on one corpus but lacked the GS-side measurement to make a clean cross-corpus claim. This run applies the same Soviet-1980s closed-list classifier to all 371 detections in the GS verified-v1 full-scope set (`outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson`), partitioning into TP-side (<= 50 m from a curator GT mound) and FP-side (> 50 m) post-classification. Plan reference: `planning/gs-fp-classification-plan-2026-04-29.md` (commit `edd2ecce`).
+Closes the comparator gap flagged in `results/55maps-fp-classification/report.md` Caveats - the 55-map driver tested Shawn's hypothesis (Obs 296) on one corpus but lacked the GS-side measurement to make a clean cross-corpus claim. This run applies the same Soviet-1980s closed-list classifier to all 371 detections in the GS verified-v1 full-scope set (`outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson`), partitioning into TP-side (<= 50 m from a curator GT mound) and FP-side (> 50 m) post-classification. Plan reference: `archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md` (commit `edd2ecce`).
 
 ## Methodology - different mechanisms, comparable rigour
 

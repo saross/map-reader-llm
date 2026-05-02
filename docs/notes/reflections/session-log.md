@@ -3768,7 +3768,7 @@ hardening, and statistical correction framework.
 ### Plans externalised
 
 - `planning/dawid-skene-latent-truth.md` — latent class model
-- `planning/candidate-review-app.md` — Streamlit review app
+- `archive/planning-completed-session-81-82/candidate-review-app.md` — Streamlit review app
 - `planning/verifier-cleanup-subcommand.md` — implemented this session
 
 ### Status
@@ -5764,7 +5764,7 @@ Phases (numbered for cross-reference; each landed before the next started):
 8. **Settlement-mound re-inspection app + inspection**: `scripts/v2_settlement_mound_mode2_app.py` (786 LOC), commit `d75a483e`. 117-crop queue. Result: 87 / 117 (74.4 %) `not_orange_brown` + 29 (24.8 %) `closed_topo_line_no_hachures` + 1 + 0.
 9. **Failure-mode taxonomy** (Obs 312-315): three-category bet-test result + two-mechanism unification. Mechanism A = colour-veto failure (~75 %); Mechanism B = central-glyph anchor (~25 %); Mechanism C = source-domain ambiguity (mud-geyser crater item 285).
 10. **Symbol-identification thread** (closed with negative result): two SovietTopoSymbols.pdf agents searched for Cat 2; first identified Items 472 + 473 (1:10k, wrong scale); second searched ≤425 (1:50k-relevant) and came up empty. Resolution: paper-Discussion uses mechanism-level framing, not symbol-identity-level. Plus Obs 314's agent context-biasing methodological note.
-11. **GS student-data audit + dedup plan**: 822 features within 4 GS sheets; dedup smoke-test 0.7 % on Hairy-only at 50 m. Major reframing: 560 Hairy (97 % match curator GT) + 262 non-Hairy (3 % match, spatially disjoint median 1.2 km). Plan-doc `planning/dedupe-raw-gs-student-data-plan-2026-04-30.md` (commit `d5dc0e87`). 4-map FN re-derivation: 9.1 % cumulative (per-map 3.55 / 3.56 / 9.09 / 15.88 %); converges with 55-map estimate.
+11. **GS student-data audit + dedup plan**: 822 features within 4 GS sheets; dedup smoke-test 0.7 % on Hairy-only at 50 m. Major reframing: 560 Hairy (97 % match curator GT) + 262 non-Hairy (3 % match, spatially disjoint median 1.2 km). Plan-doc `archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md` (commit `d5dc0e87`). 4-map FN re-derivation: 9.1 % cumulative (per-map 3.55 / 3.56 / 9.09 / 15.88 %); converges with 55-map estimate.
 12. **Continuity-doc updates**: Session 81 closure roll-up (commit `3a8d3cf8`) + Session 82 entry-point queue with GS student-maps review thread (commit `8066599d`). Audit verdict: EXCELLENT COVERAGE.
 
 ### Major artefacts produced

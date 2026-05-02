@@ -5011,7 +5011,7 @@ probability to 0 or 1. The only reason we captured the 70% figure is
 that Shawn typed it in chat, not in the review tool.
 
 The derivative recommendation — a continuous-confidence review scheme
-for the next-generation app — is in `planning/candidate-review-app.md`
+for the next-generation app — is in `archive/planning-completed-session-81-82/candidate-review-app.md`
 backlog. But the meta-observation for collaboration patterns: when the
 human expresses something in chat that the tool doesn't capture, that's
 often a signal that the tool is collapsing information worth preserving.
@@ -5649,7 +5649,7 @@ Continuation session producing 6 new Obs entries (305-310), ~25 commits, ~$0.75 
 Observed four times across this session:
 
 1. **Original pro-n10 patch (yesterday):** dispatched a `for t in 1..10; do ... ` loop, completed t=1 only, reported "Sweep is on t=2" while marked completed. Only t=1 actually committed.
-2. **Daylight sweep executor:** checkpointed at 8/162 cells with a handoff `planning/daylight-sweep-status-2026-04-29.md`, agent returned with that as final report; the work continued autonomously on sapphire and finished, but the agent itself returned mid-work.
+2. **Daylight sweep executor:** checkpointed at 8/162 cells with a handoff `archive/planning-completed-session-81-82/daylight-sweep-status-2026-04-29.md`, agent returned with that as final report; the work continued autonomously on sapphire and finished, but the agent itself returned mid-work.
 3. **Pro-n10 resume:** dispatched 9 parallel `nohup .venv/bin/python3 evaluate_detections.py & wait` jobs on sapphire. Reported "Now I'll wait for monitor events" while marked completed. The 9 processes ran for ~10 min more after the agent reported done.
 4. **Two-cell timed-out re-run:** "After both jobs finish, I'll run [the verifier] to confirm N=10K presence." Agent already gone; the 2 jobs ran for 30+ min more.
 
