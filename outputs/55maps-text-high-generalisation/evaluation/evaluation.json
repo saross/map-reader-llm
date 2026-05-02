@@ -1,58 +1,191 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-18T17:48:23.840769+00:00",
+  "timestamp": "2026-05-02T23:52:40.837972+00:00",
   "summary": {
     "label": "55maps-text-high-generalisation",
-    "n_detections": 4143,
+    "n_detections": 4164,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.6227,
-        "f1_ci_lower": 0.6078,
-        "f1_ci_upper": 0.6379,
-        "precision": 0.6698,
-        "p_ci_lower": 0.6549,
-        "p_ci_upper": 0.6852,
-        "recall": 0.5818,
-        "r_ci_lower": 0.5652,
-        "r_ci_upper": 0.5986
+        "f1": 0.6237,
+        "f1_point": 0.6237,
+        "f1_ci_lower": 0.6098,
+        "f1_ci_upper": 0.6371,
+        "f1_ci_method": "BCa",
+        "precision": 0.6691,
+        "p_point": 0.6691,
+        "p_ci_lower": 0.6536,
+        "p_ci_upper": 0.6832,
+        "p_ci_method": "BCa",
+        "recall": 0.5841,
+        "r_point": 0.5841,
+        "r_ci_lower": 0.5689,
+        "r_ci_upper": 0.5991,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5603,
+          "zero_fraction": 0.6560121765601218,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       },
       {
         "buffer_metres": 30,
-        "f1": 0.7533,
-        "f1_ci_lower": 0.741,
-        "f1_ci_upper": 0.7658,
-        "precision": 0.8103,
-        "p_ci_lower": 0.7961,
-        "p_ci_upper": 0.8238,
-        "recall": 0.7038,
-        "r_ci_lower": 0.6877,
-        "r_ci_upper": 0.7204
+        "f1": 0.7544,
+        "f1_point": 0.7544,
+        "f1_ci_lower": 0.7433,
+        "f1_ci_upper": 0.7653,
+        "f1_ci_method": "BCa",
+        "precision": 0.8093,
+        "p_point": 0.8093,
+        "p_ci_lower": 0.7964,
+        "p_ci_upper": 0.8212,
+        "p_ci_method": "BCa",
+        "recall": 0.7065,
+        "r_point": 0.7065,
+        "r_ci_lower": 0.6927,
+        "r_ci_upper": 0.721,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5647,
+          "zero_fraction": 0.6611637981500995,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       },
       {
         "buffer_metres": 40,
-        "f1": 0.7829,
-        "f1_ci_lower": 0.7717,
-        "f1_ci_upper": 0.7946,
-        "precision": 0.8421,
-        "p_ci_lower": 0.8296,
-        "p_ci_upper": 0.8548,
-        "recall": 0.7314,
-        "r_ci_lower": 0.717,
-        "r_ci_upper": 0.7475
+        "f1": 0.7842,
+        "f1_point": 0.7842,
+        "f1_ci_lower": 0.774,
+        "f1_ci_upper": 0.7942,
+        "f1_ci_method": "BCa",
+        "precision": 0.8413,
+        "p_point": 0.8413,
+        "p_ci_lower": 0.8295,
+        "p_ci_upper": 0.8527,
+        "p_ci_method": "BCa",
+        "recall": 0.7344,
+        "r_point": 0.7344,
+        "r_ci_lower": 0.721,
+        "r_ci_upper": 0.7482,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5657,
+          "zero_fraction": 0.6623346212387309,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       },
       {
         "buffer_metres": 50,
-        "f1": 0.7883,
-        "f1_ci_lower": 0.7773,
-        "f1_ci_upper": 0.8,
-        "precision": 0.8479,
-        "p_ci_lower": 0.8357,
-        "p_ci_upper": 0.8598,
-        "recall": 0.7365,
-        "r_ci_lower": 0.7217,
-        "r_ci_upper": 0.7519
+        "f1": 0.7896,
+        "f1_point": 0.7896,
+        "f1_ci_lower": 0.7795,
+        "f1_ci_upper": 0.7993,
+        "f1_ci_method": "BCa",
+        "precision": 0.847,
+        "p_point": 0.847,
+        "p_ci_lower": 0.8355,
+        "p_ci_upper": 0.8583,
+        "p_ci_method": "BCa",
+        "recall": 0.7394,
+        "r_point": 0.7394,
+        "r_ci_lower": 0.726,
+        "r_ci_upper": 0.753,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5658,
+          "zero_fraction": 0.662451703547594,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "sparse_cross_grid",
+    "tile_classification": {
+      "confusion": {
+        "tp": 2176,
+        "tn": 4918,
+        "fp": 243,
+        "fn": 1204
+      },
+      "mcc": {
+        "point": 0.6476,
+        "mean": 0.6475,
+        "ci_lower": 0.6331,
+        "ci_upper": 0.662,
+        "method": "BCa"
+      },
+      "sensitivity": {
+        "point": 0.6438,
+        "mean": 0.6437,
+        "ci_lower": 0.6286,
+        "ci_upper": 0.6586,
+        "method": "BCa"
+      },
+      "specificity": {
+        "point": 0.9529,
+        "mean": 0.9529,
+        "ci_lower": 0.9475,
+        "ci_upper": 0.958,
+        "method": "BCa"
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.1",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "d7f85978d",
+    "script_git_status": "clean",
+    "generated_at_utc": "2026-05-02T23:51:44.640627+00:00",
+    "cli_args": {
+      "detections": [
+        "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/evaluation",
+      "label": "55maps-text-high-generalisation",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
+    },
+    "input_files": {
+      "detections": [
+        "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+      ],
+      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    }
   }
 }

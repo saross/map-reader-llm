@@ -1,57 +1,133 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-23T21:56:35.467442+00:00",
+  "timestamp": "2026-05-02T23:54:47.984236+00:00",
   "summary": {
-    "label": "text-high-K5-PV-extended",
-    "n_detections": 4143,
+    "label": "55maps-text-high-generalisation-extended-buffer",
+    "n_detections": 4164,
     "buffers": [
       {
         "buffer_metres": 75,
-        "f1": 0.7926,
-        "f1_ci_lower": 0.7817,
-        "f1_ci_upper": 0.8039,
-        "precision": 0.8501,
+        "f1": 0.7918,
+        "f1_point": 0.7918,
+        "f1_ci_lower": 0.7818,
+        "f1_ci_upper": 0.8014,
+        "f1_ci_method": "BCa",
+        "precision": 0.8494,
+        "p_point": 0.8494,
         "p_ci_lower": 0.838,
-        "p_ci_upper": 0.8622,
-        "recall": 0.7424,
-        "r_ci_lower": 0.7281,
-        "r_ci_upper": 0.7579
+        "p_ci_upper": 0.8607,
+        "p_ci_method": "BCa",
+        "recall": 0.7415,
+        "r_point": 0.7415,
+        "r_ci_lower": 0.7282,
+        "r_ci_upper": 0.755,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5659,
+          "zero_fraction": 0.6625687858564571,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       },
       {
         "buffer_metres": 100,
-        "f1": 0.7937,
-        "f1_ci_lower": 0.7827,
-        "f1_ci_upper": 0.8049,
-        "precision": 0.8513,
-        "p_ci_lower": 0.8391,
-        "p_ci_upper": 0.8636,
-        "recall": 0.7435,
-        "r_ci_lower": 0.729,
-        "r_ci_upper": 0.759
+        "f1": 0.7931,
+        "f1_point": 0.7931,
+        "f1_ci_lower": 0.7833,
+        "f1_ci_upper": 0.8028,
+        "f1_ci_method": "BCa",
+        "precision": 0.8509,
+        "p_point": 0.8509,
+        "p_ci_lower": 0.8393,
+        "p_ci_upper": 0.8621,
+        "p_ci_method": "BCa",
+        "recall": 0.7428,
+        "r_point": 0.7428,
+        "r_ci_lower": 0.7294,
+        "r_ci_upper": 0.7563,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5660,
+          "zero_fraction": 0.6626858681653203,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       },
       {
         "buffer_metres": 125,
-        "f1": 0.7949,
-        "f1_ci_lower": 0.7837,
-        "f1_ci_upper": 0.806,
-        "precision": 0.8525,
-        "p_ci_lower": 0.8403,
-        "p_ci_upper": 0.8645,
-        "recall": 0.7445,
-        "r_ci_lower": 0.7297,
-        "r_ci_upper": 0.7602
+        "f1": 0.7943,
+        "f1_point": 0.7943,
+        "f1_ci_lower": 0.7845,
+        "f1_ci_upper": 0.8039,
+        "f1_ci_method": "BCa",
+        "precision": 0.8521,
+        "p_point": 0.8521,
+        "p_ci_lower": 0.8406,
+        "p_ci_upper": 0.8632,
+        "p_ci_method": "BCa",
+        "recall": 0.7438,
+        "r_point": 0.7438,
+        "r_ci_lower": 0.7305,
+        "r_ci_upper": 0.7573,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5661,
+          "zero_fraction": 0.6628029504741834,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "sparse_cross_grid",
+    "tile_classification": {
+      "confusion": {
+        "tp": 2176,
+        "tn": 4918,
+        "fp": 243,
+        "fn": 1204
+      },
+      "mcc": {
+        "point": 0.6476,
+        "mean": 0.6475,
+        "ci_lower": 0.6331,
+        "ci_upper": 0.662,
+        "method": "BCa"
+      },
+      "sensitivity": {
+        "point": 0.6438,
+        "mean": 0.6437,
+        "ci_lower": 0.6286,
+        "ci_upper": 0.6586,
+        "method": "BCa"
+      },
+      "specificity": {
+        "point": 0.9529,
+        "mean": 0.9529,
+        "ci_lower": 0.9475,
+        "ci_upper": 0.958,
+        "method": "BCa"
+      }
+    }
   },
   "_metadata": {
-    "metadata_version": "1.0",
+    "metadata_version": "1.1",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "ad3695a0",
+    "script_git_commit": "d7f85978d",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-23T21:52:54.383709+00:00",
+    "generated_at_utc": "2026-05-02T23:54:00.795627+00:00",
     "cli_args": {
       "detections": [
-        "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+        "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
       ],
       "detections_dir": null,
       "batch": null,
@@ -61,25 +137,27 @@
         100,
         125
       ],
-      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-      "bootstrap": 1000,
+      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "outputs/55maps-text-high-generalisation/extended-buffer-eval",
-      "label": "text-high-K5-PV-extended",
-      "mcc": false
+      "output_dir": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/extended-buffer-eval",
+      "label": "55maps-text-high-generalisation-extended-buffer",
+      "mcc": true
     },
     "bootstrap": {
-      "n_iterations": 1000,
+      "n_iterations": 10000,
       "seed": 42,
-      "resampling_unit": "tile_level"
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [
-        "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+        "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
       ],
-      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps.geojson",
+      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
     }
   }
 }
