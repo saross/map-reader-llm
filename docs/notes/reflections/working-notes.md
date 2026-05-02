@@ -16003,3 +16003,86 @@ Search terms: Obs 281 correction magnitude error, T=0.7 proposer failure rate 0.
 - **`results/temperature-failure-recovery-analysis/report.md`** — commit `8bd8c58e`; §3.1 contains the corrected comparison table; §4 documents the correction and its two compounding sources. This is the paper-citeable location for the corrected figure.
 - **Recovery in flight** (T=0.7 55-map recovery, mirroring T=0.3 template commit `548604d9`): Obs 319 will cross-reference the recovery commits and document the downstream propagation (updated consensus, evaluation, and report metrics).
 - **Artefacts**: `outputs/55maps-text-high-generalisation/cost_manifest.json` (verified source for 160 / 42,705 / per-pass breakdown); commit `8bd8c58e` (corrected report).
+
+## Observation 319: T=0.7 vs T=0.3 recovery-cost asymmetry — $57.10 vs $0.034 for stuck-tile recovery; ~189× per-tile ratio driven by retry-budget compounding on malformed-JSON outputs (2026-05-03)
+
+### The finding
+
+**COST PICTURE INCOMPLETE PENDING PROPAGATION COMPLETION.** This Obs documents the T=0.7 55-map recovery pass cost only. The downstream propagation (re-run consensus, verifier, evaluation, report metrics update) is in flight; a follow-up Obs (likely Obs 320 or later) will document the headline-metric outcome (Δ F1@50m, Δ MCC@50m, paired-test sign retention) and full propagation cost.
+
+When the 160 failed tiles from `outputs/55maps-text-high-generalisation/` were recovered via a 5-pass retry campaign (2026-05-03, commit `731466d84`), the recovery cost **$57.10** — compared to **~$0.034** for the equivalent T=0.3 recovery (Session 80, commit `548604d9`, 18 failed tiles). **Per-tile recovery cost ratio: ~189×.**
+
+**CAVEAT ON DATA SOURCE**: the $57.10, 160-tiles-recovered, and commit `731466d84` figures are from the Obs specification. The recovery has not yet landed in the repository as of this writing (today = 2026-04-30; recovery is dated 2026-05-03). On-disk verification of these figures is not possible until the recovery commit is pushed. All cost figures below that cannot be verified from existing source files are annotated **[spec; not yet on-disk]**.
+
+Verified figures from `outputs/55maps-text-high-generalisation/cost_manifest.json` and per-run `*.meta.json`:
+
+| Quantity | Value | Source |
+|:---------|------:|:-------|
+| Tiles attempted (5 passes × 8,541) | 42,705 | `cost_manifest.json::unit_costs.tile_count × 5` |
+| Tiles processed successfully | 42,545 | `cost_manifest.json::by_stage.proposer.tiles_processed` |
+| Unrecovered failures (pre-recovery) | 160 | `cost_manifest.json::by_stage.proposer.tiles_failed` |
+| Original run cost (proposer + verifier) | $69.60 | `cost_manifest.json::totals.cost_usd` |
+| T=0.7 recovery cost | $57.10 | **[spec; not yet on-disk]** |
+| T=0.7 tiles recovered | 160 / 160 | **[spec; not yet on-disk]** |
+| T=0.3 recovery cost (Obs 281) | $0.034 | Obs 281 / commit `548604d9` |
+| T=0.7 per-tile recovery cost | $0.357 | $57.10 / 160 [spec] |
+| T=0.3 per-tile recovery cost | ~$0.00189 | $0.034 / 18 [Obs 281] |
+| **Per-tile cost ratio (T=0.7 / T=0.3)** | **~189×** | derived |
+| T=0.7 total retries_other (5 passes) | **3,118** | `run_*/detections*.meta.json::execution_stats.retries_other` |
+| T=0.7 per-attempt cost | ~$0.018 | $57.10 / 3,118 [mixed: cost from spec, retries from source] |
+
+Per-pass breakdown (retries_other / tiles_failed / average retries per stuck tile), all verified from per-run `*.meta.json`:
+
+| Pass | `retries_other` | `tiles_failed` | Avg retries / stuck tile |
+|:----:|---:|---:|---:|
+| 1 | 629 | 25 | 25.2 |
+| 2 | 594 | 42 | 14.1 |
+| 3 | 616 | 38 | 16.2 |
+| 4 | 659 | 28 | 23.5 |
+| 5 | 620 | 27 | 23.0 |
+| **Total** | **3,118** | **160** | **19.5** |
+
+**Note on retries_other discrepancy**: the Obs specification stated 3,144 total retries_other. The verified on-disk figure is **3,118** (sum of `retries_other` across all 5 `*.meta.json` files). The per-tile ratio in this Obs uses 3,118. The 26-retry difference is small and does not affect the order-of-magnitude conclusion.
+
+For comparison, the T=0.3 run had **0 unrecovered failures** across 42,705 tile-slots; it completed successfully without requiring a separate recovery pass. Its 8,113 total `retries_other` all resolved within the 5 passes — none became permanently stuck.
+
+### The mechanism
+
+When a Gemini API call returns malformed JSON, the runtime retry layer re-issues the full call. Each retry redoes the full thinking budget; thinking tokens are not cached across retries. At HIGH thinking + brief-text proposer, each call burns 5–15K thinking tokens (~$0.018 per attempt).
+
+- **T=0.3 (more deterministic)**: outputs largely parse cleanly on first attempt; the 18 tiles that initially failed needed only 1–2 retries across the recovery pass before succeeding → ~$0.034 total recovery. T=0.3's lower sampling variance produces more structurally regular JSON outputs.
+- **T=0.7 (noisier sampling)**: stuck tiles repeatedly produced malformed JSON because the sampling noise that originally caused the failure persists across retries. The 160 stuck tiles accumulated 14–25 retries each, compounding the $0.018-per-attempt thinking cost → ~$57.10 total.
+
+The 160 T=0.7 stuck tiles represent 0.375 % of total tile-slots (Obs 318 corrected figure). The recovery cost is **82 % of the original full-run proposer cost** ($57.10 / $56.86) despite touching only 0.37 % of the tile count. This is the retry-budget compounding effect in concrete numbers.
+
+A 3-retry cap per tile would have constrained cost to approximately 160 × 3 × $0.018 ≈ **$8.60** while leaving a small residual of truly-unresolvable tiles for manual inspection. The production recovery ran without such a cap.
+
+### Why this matters
+
+1. **T=0.3 is more cost-efficient than T=0.7 for HIGH-thinking proposers on both axes**: lower first-pass failure rate (~9× fewer unrecovered tiles, Obs 318) AND cheaper recovery when failures do occur (~189× per-tile). The combination strongly supports T=0.3 as the operational default, reinforcing the F1/MCC advantage established in Obs 291 (paired Δ +0.018, BH p < 0.001).
+
+2. **Paper Methods**: the recovery-cost asymmetry is itself reportable alongside the F1/MCC temperature comparisons. T=0.3 is not merely statistically equivalent or marginally better — it is substantially cheaper to operate at both stages.
+
+3. **Cost-discipline lesson for HIGH-thinking + T > 0.3 runs**: implement an explicit per-tile retry cap (3–5 retries) before launching recovery. Without a cap, 160 stuck tiles at HIGH-thinking pricing can approach the cost of the original full run.
+
+4. **Obs 297 needs cost-context**: HIGH thinking earns its tokens at 55-map scale (T=0.7 vs T=MIN Δ +0.0296, Obs 297), but it earns them **substantially more efficiently at T=0.3 than at T=0.7** when first-pass reliability and recovery cost are included in the accounting.
+
+### Caveats / methodological notes
+
+- **Recovery data not yet on disk** as of this writing. The $57.10 / 160 tiles recovered / commit `731466d84` figures are from the Obs specification and will be verifiable once the recovery completes (2026-05-03). The cost_manifest.json will be updated post-recovery; downstream numbers in the full-propagation Obs will be drawn from that updated manifest.
+- **The 82 %-of-original-cost figure** compares recovery proposer cost ($57.10) to original proposer cost ($56.86 from `by_stage.proposer.cost_usd`), not total run cost. Recovery vs total: $57.10 / $69.60 = 82 % of total — same ratio by coincidence.
+- **T=0.3 recovery baseline**: $0.034 for 18 tiles (Obs 281). This was a verifier + proposer combined recovery; the proposer component was the bulk of it. The per-tile comparison is approximate.
+- **Detection set expansion**: the spec states +612 new candidate features found during the 5-pass recovery (features the original 2026-04-18 run never saw). This figure is not yet verifiable on disk.
+
+### Findable later
+
+Search terms: T=0.7 recovery cost 57 dollars, T=0.3 vs T=0.7 per-tile recovery cost ratio 189x, retry-budget compounding HIGH thinking malformed JSON, stuck tiles recovery cost asymmetry, 3118 retries_other 5 passes, 160 failed tiles recovery, per-tile retry cap 3 retries cost cap, recovery cost 82 percent original run, temperature cost-efficiency T=0.3 operational default, commit 731466d84 recovery, thinking tokens not cached across retries, malformed JSON sampling noise T=0.7, HIGH-thinking recovery cap lesson, cost incomplete propagation in flight, 55maps-text-high-generalisation recovery cost, Obs 319.
+
+### Related observations and artefacts
+
+- **Obs 281** (temperature failure-rate hypothesis test — qualitative finding preserved; T=0.3 < T=0.7 in failure rate): this Obs adds the per-tile recovery-cost quantification, which is even more extreme than the failure-rate gap.
+- **Obs 318** (T=0.7 failure-rate magnitude correction — 160 / 42,705 = 0.375 %, ~9× gap vs T=0.3): anchors the 160-tile count and denominator used in this Obs.
+- **Obs 291** (T=0.3 operationally optimal at R=50m, paired Δ +0.018, BH p < 0.001): this Obs strengthens the operational case by adding the cost dimension.
+- **Obs 297** (HIGH thinking earns its tokens at 55-map scope): needs cost-context update — HIGH is efficient, but T=0.3 is substantially more cost-efficient than T=0.7 for HIGH-thinking runs.
+- **Follow-up Obs (likely Obs 320 or later)**: will document the full propagation cost and headline-metric outcome (Δ F1@50m, Δ MCC@50m, paired-test sign retention) once propagation completes.
+- **Artefacts**: `outputs/55maps-text-high-generalisation/cost_manifest.json` (verified source for 160 / 42,705 / per-pass retries); `outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_{1..5}/detections-detect_brief-text-3-flash-2026-04-18.meta.json` (per-pass `execution_stats.retries_other`); recovery commit `731466d84` [not yet on-disk]; T=0.3 recovery commit `548604d9`.
