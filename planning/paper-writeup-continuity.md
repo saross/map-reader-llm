@@ -1685,9 +1685,11 @@ Range `33bce297..6f15b8c9` (8 commits):
 
 ## Session 82 entry-point queue (composed end-of-Session-81-review 2026-04-30)
 
-> **⚠️ Largely superseded 2026-05-01** — the FN-rate thread that this section was scoped around closed today via Obs 316 + 317 (4-GS trapezoidal-graticule correction → Sobotkova 2023 vindicated; cross-corpus heterogeneity small; gap dominated by inter-student-skill variance). The read-first list and recommended Session-82 sequence (A–C) below are RESOLVED. See §"Session 82 closure (2026-05-01)" immediately above for the headline + commit chain. Open questions 1–3 are CLOSED inline below; questions 4–5 are non-blocking. The section is preserved unedited where possible for narrative continuity.
+> **⚠️ Largely superseded 2026-05-01** — the FN-rate thread that this section was scoped around closed today via Obs 316 + 317 (4-GS trapezoidal-graticule correction → Sobotkova 2023 vindicated; cross-corpus heterogeneity small; gap dominated by inter-student-skill variance). The read-first list and recommended Session-82 sequence (A–C) below are RESOLVED. See §"Session 82 closure (2026-05-01)" immediately above for the headline + commit chain. Open questions 1–3 are CLOSED inline below; questions 4–5 are non-blocking.
+>
+> *Original Session-82 plan-state preserved below for the audit trail. The plan was executed and the FN-rate thread closed via Obs 316 + 317; see §"Session 82 closure" above for canonical current state. Sobotkova 2023's 5.0 % was vindicated, not contradicted — the 4-GS estimator under proper trapezoidal-graticule bounds is **5.27 % FN / 0.00 % FP**, matching Sobotkova's published 5.0 % / 0.1 %. Stale Session-81 framings ("calculation issue", "estimators converge at 9–11 %", "we disagree with Sobotkova") have been pruned from the prose below.*
 
-Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs 312), settlement-mound re-inspection (Obs 313 — three-category result + two-mechanism framework), Cat 2 symbol-ID search (Obs 314 → Obs 315 — closed with negative result), the 4-map raw student-data audit (planning + smoke-test in `archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md`, commit `d5dc0e87`), and the FN-rate framing thread (4-map / 55-map estimator convergence at 9-11 %). The full failure-mode taxonomy is now at paper-Discussion-quality level. Next-session pickup is mostly small high-value items.
+Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs 312), settlement-mound re-inspection (Obs 313 — three-category result + two-mechanism framework), Cat 2 symbol-ID search (Obs 314 → Obs 315 — closed with negative result), the 4-map raw student-data audit (planning + smoke-test in `archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md`, commit `d5dc0e87`), and the FN-rate framing thread (closed Session 82 by Obs 316 + 317; see banner above). The full failure-mode taxonomy is now at paper-Discussion-quality level. Next-session pickup is mostly small high-value items.
 
 ### Read-first for Session 82
 
@@ -1700,13 +1702,13 @@ Session 81 ran a long follow-up review thread covering: bet-test inspection (Obs
 
 **Where we are**: the **raw pre-curation student data** for the 4 GS maps lives at `inputs/raw-student-review-production-maps/Mapmounds/` (dual-projection shapefiles; ~10,825 features total across the 55-map and 4-map work). Within the 4 GS sheet bounds: **822 student-marked features**.
 
-**Audit findings from Session 81**:
+**Audit findings from Session 81** (see §"Session 82 closure" above for the corrected canonical numbers; bullets below preserved as historical plan-state with stale FN-rate framings pruned):
 
-- **Cumulative FN rate across the 4 GS maps: 9.1 %** (cf. Sobotkova 2023's published 5.0 %; per the user's concession, the 5.0 % was likely a calculation issue in the original paper). Per-map: 3.55 % / 3.56 % / 9.09 % / **15.88 % (K-35-062-2 outlier)** — substantial student-digitiser variation, not random sampling bias.
 - **Two student-feature populations** in the 822: **560 "Hairy" (Russian 1:50k mound symbols)** with 97 % match to curator GT; **262 non-Hairy** with 3 % match, spatially disjoint (median 1.2 km from any Hairy point) — different feature class entirely, NOT duplicates.
 - **Dedup smoke-test (50 m radius, Hairy-only)**: 4 / 560 = 0.7 % — minimal duplication, contradicting the user's recall of "lots of duplicates". The `scripts/review_gt_duplicates.py` (commit `dea1155f`) prior dedup methodology is preserved as reference but is unnecessary on this corpus.
-- **The 4-map and 55-map FN-rate estimators converge at 9-11 %** — strong cross-validation. The 55-map analysis (Obs 305): 8.87 % lower-bound, 11.15 % recall-adjusted central; the 4-map re-derivation: 9.1 % cumulative. This is a much cleaner paper-Methods finding than the original "we disagree with Sobotkova" framing.
 - **TM 30-548's published 0.1 % FP rate** for student data is consistent with the Hairy-only subset; the 38.7 % apparent FP rate from earlier audits was an artefact of including non-Hairy features in the FP denominator.
+- ~~**Cumulative FN rate across the 4 GS maps: 9.1 %**~~ — **SUPERSEDED 2026-05-01**: Session 81's 9.1 % was an artefact of rectangular-bounds clipping that included the black-collar padding outside the cartographic neat-line. Re-run under Pulkovo-1942 trapezoidal-graticule active-area bounds gives **FN = 5.27 %, FP = 0.00 %** (Obs 316), vindicating Sobotkova 2023's published 5.0 % / 0.1 %.
+- ~~**4-map and 55-map FN-rate estimators converge at 9-11 %**~~ — **SUPERSEDED 2026-05-01**: under the corrected 4-GS estimator (5.27 %), the 55-map estimator (8.87 %) is now ~3.6 pp higher; Obs 317 reframes the gap as inter-student-skill variance + small-N (within-corpus per-map range 2.76–9.18 %, spread 6.4 pp, wider than the cross-corpus mean gap), not a structural cartographic difference between corpora.
 
 **Five open questions** (from `archive/planning-completed-session-81-82/dedupe-raw-gs-student-data-plan-2026-04-30.md` §8, in priority order):
 
@@ -1736,9 +1738,9 @@ No symbol-identity dependence; the paper writes the catalogue mechanically. **Me
 
 ### Outstanding paper-text decisions (for drafting time, not Session 82)
 
-- **Sobotkova 2023 correction**: explicit (note the 5.0 % vs re-derived 9.1 %) or soft-pedal? My read: explicit, since the convergence with 55-map is a stronger story than disagreement.
-- **K-35-062-2 by name**: name in paper, or anonymise as "one map at 15.88 %"? Specificity vs discretion call.
-- **Recall-anchor**: image-track / R = 150 m for the 11.15 % central, or a more conservative anchor? Currently the most-generous; happy to revisit.
+- ~~**Sobotkova 2023 correction**~~: **DROPPED 2026-05-01** — Obs 316 vindicated Sobotkova's 5.0 % FN / 0.1 % FP; the 4-GS estimator at 5.27 % FN / 0.00 % FP matches. No correction story needed; paper Methods can cite Sobotkova as a converging independent estimate.
+- **K-35-062-2 by name**: name in paper, or anonymise as e.g. "one map with elevated FN"? Specificity vs discretion call. (Note: under the corrected per-map breakdown the spread is 2.76–9.18 %, not the originally-cited 15.88 % outlier — see Obs 317.)
+- **Recall-anchor**: image-track / R = 150 m or a more conservative anchor? Currently the most-generous; happy to revisit. (The 11.15 % recall-adjusted central from Obs 305 is unaffected on the 55-map side, but cross-corpus framing now uses the 4-GS 5.27 % vs 55-map 8.87 % gap per Obs 317.)
 - **Dedup mention in Methods**: include the "0.7 % dedup rate" as a corpus-quality statistic, or omit?
 - **Hairy / non-Hairy framing**: how prominently to flag in Methods? Single sentence vs supplementary table.
 
