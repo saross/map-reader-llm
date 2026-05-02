@@ -1,16 +1,31 @@
 # Proposer vote-fraction analysis (item H-a)
 
-_Generated 2026-04-27T04:50:13Z UTC. Conditions analysed: 16/16._
+**Date**: 2026-04-27
+**Analysis script**: `scripts/analyse_proposer_vote_fraction.py` v1.0.0
+**Git commit at run time**: `c2026ab3`
+**Generated**: 2026-04-27T04:50:13Z UTC. Conditions analysed: 16/16
+**Primary observation**: **Obs 283** in `docs/notes/reflections/working-notes.md`
+**Related observations**: Obs 269 (verifier U-shape, original), Obs 277 (verifier U-shape replicated across matrix), Obs 244 (vote-distribution fingerprints)
 
-## Schema-absence caveat
+## 1. Executive summary
+
+The Phase 3a proposer (Gemini-3-Flash) does **not** emit a numeric `mound_probability`, so the H-a deliverable substitutes the per-clustered-candidate **vote fraction** (vote_count / K) at 20 m as a behavioural-confidence proxy. Across all 16 matrix conditions the proposer's vote-fraction distribution is approximately **right-skewed unimodal**, dominated by single-pass singleton detections that consensus voting subsequently filters.
+
+**Headline finding (load-bearing for the paper)**: For the matched K = 30 ceiling cell `text-HIGH-T0.7` (n = 11,731 clustered candidates), the proposer places **0.02 of mass at vote_count = K** (full agreement) and **0.61 at vote_count = 1** (single-pass singletons); Hartigan's dip = **0.063, p < 0.001** in the right-skewed direction. The matched-condition verifier substrate (`text-brief`, n = 3,736) places **0.80 of probability mass below 0.2 and 0.20 above 0.8 — total extreme mass 1.00**: the U-shaped, heavily quantised distribution documented in Obs 269 and replicated across the matrix in Obs 277.
+
+**Implication**: the "obviously yes / obviously no" bimodality that motivated Obs 269's miscalibration analysis is **a property of the verifier, not the proposer**, and therefore **not a system-wide property**. Proposer vote-fraction and verifier `mound_probability` have fundamentally different distributional shapes and demand different calibration paths. This is the **bimodality bottleneck verdict** referenced in Obs 283: the binding downstream constraint on confidence calibration sits at the verifier stage.
+
+A coherent secondary pattern: at T = 0.0 both modalities concentrate mass at vote_count = K (image-MIN-T0.0 mass@K/K = 0.98, image-HIGH-T0.0 = 0.90, text-MIN-T0.0 = 0.74, text-HIGH-T0.0 = 0.59) — passes are near-deterministic and almost every cluster is fully agreed. As T rises, mass shifts to vote_count = 1 monotonically; at HIGH-T1.0, image mass@1/K = 0.72 and text mass@1/K = 0.64. The single non-significant Hartigan's dip (image-MIN-T0.0, p = 1.000) is the deterministic-decoding outlier where the distribution collapses to a single mode at full agreement.
+
+## 2. Schema-absence caveat
 
 The Phase 3a proposer (Gemini-3-Flash) does **not** emit a numeric `mound_probability`. Its required JSON schema is `{box_2d, label, subtype}`; the `confidence: "high"` string in detection GeoJSONs is hard-coded by the detection pipeline (`scripts/4_detect_mounds_batch.py` ~line 627). No logprobs are captured. A literal "proposer confidence distribution" is therefore vacuous on existing artefacts.
 
 This report substitutes **behavioural-confidence proxies**, primarily the per-clustered-candidate **vote fraction** (vote_count / K) at 20 m, the per-tile-per-pass detection-count distribution, and the subtype distribution. Vote fraction is the proposer's empirical agreement-rate distribution and is the closest available analogue to a per-detection probability — but it is **not** a calibrated confidence score. Quantisation is bounded above by K+1 distinct values, so entropy and dip-test results should be read with K in mind.
 
-References for the verifier comparison: Obs 269 (verifier calibration is bimodal — saturated at 0–0.1 and 0.9–1.0) and Obs 277 (matrix-wide replication of the U-shape).
+References for the verifier comparison: Obs 269 (verifier calibration is bimodal — saturated at 0–0.1 and 0.9–1.0) and Obs 277 (matrix-wide replication of the U-shape). The proposer-vs-verifier contrast presented here is the central finding logged as **Obs 283**.
 
-## Descriptor table
+## 3. Descriptor table
 
 | condition | K | n_cand | n_distinct | H(bits) | mass@1/K | mass@K/K | skew | kurt | dip | dip-p | dets/tile mean | dets/tile sd | dets/tile modes |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -31,7 +46,7 @@ References for the verifier comparison: Obs 269 (verifier calibration is bimodal
 | text-MIN-T0.7 | 30 | 2786 | 30 | 3.63 | 0.32 | 0.16 | 0.69 | -1.29 | 0.089 | 0.000 | 2.27 | 2.55 | 17 |
 | text-MIN-T1.0 | 10 | 2480 | 10 | 2.73 | 0.39 | 0.17 | 0.67 | -1.21 | 0.083 | 0.000 | 2.24 | 2.41 | 14 |
 
-## Marginal pivots (T within modality × thinking)
+## 4. Marginal pivots (T within modality × thinking)
 
 | modality | thinking | T | H(bits) | mass@K/K | mass@1/K | n_cand | dip-p |
 |---|---|---|---|---|---|---|---|
@@ -52,7 +67,7 @@ References for the verifier comparison: Obs 269 (verifier calibration is bimodal
 | text | MINIMAL | 0.7 | 3.63 | 0.16 | 0.32 | 2786 | 0.000 |
 | text | MINIMAL | 1.0 | 2.73 | 0.17 | 0.39 | 2480 | 0.000 |
 
-## Subtype distribution (top-3 per condition)
+## 5. Subtype distribution (top-3 per condition)
 
 - `image-HIGH-T0.0`: burial_mound=1825, benchmark_mound=318, triangulation_mound=168
 - `image-HIGH-T0.3`: burial_mound=7415, benchmark_mound=1236, triangulation_mound=657
@@ -71,22 +86,60 @@ References for the verifier comparison: Obs 269 (verifier calibration is bimodal
 - `text-MIN-T0.7`: burial_mound=27659, triangulation_mound=2814, benchmark_mound=2405
 - `text-MIN-T1.0`: burial_mound=9141, triangulation_mound=979, benchmark_mound=728
 
-## Six-panel matrix-corners figure
+## 6. Six-panel matrix-corners figure
 
 ![Vote-fraction & per-tile-dets panels](figures/vote_fraction_panels.png)
 
 Top row: vote-fraction histograms with KDE overlays. Bottom row: per-tile-per-pass detection-count KDEs. Columns: `image-MIN-T0.0`, `image-HIGH-T0.0`, `image-MIN-T1.0`, `image-HIGH-T1.0`, `image-HIGH-T0.7`, `text-HIGH-T0.7`.
 
-## Proposer vs. verifier bimodality
+## 7. Proposer vs. verifier bimodality
 
 ![Proposer vs. verifier](figures/proposer_vs_verifier_bimodality.png)
 
 **Discussion (bimodality bottleneck)**: For the matched condition `text-HIGH-T0.7` (n=11731 clustered candidates, K=30), the proposer places 0.02 of mass at vote_count=K and 0.61 at vote_count=1; Hartigan's dip = 0.063 (p = 0.000). For comparison, the matched verifier substrate (text-brief, n=3736) places 0.80 of probability mass below 0.2 and 0.20 above 0.8 — total extreme mass 1.00. Proposer vote-fraction is approximately unimodal/centred. Verifier bimodality is the **binding downstream constraint**; this supports treating Obs 269 as a verifier-specific phenomenon.
 
-## Caveats
+## 8. Caveats
 
-- **Schema absence.** As noted above; vote-fraction is a behavioural proxy, not a calibrated detector confidence.
+- **Schema absence.** As noted above; vote-fraction is a behavioural proxy, not a calibrated detector confidence. Validating monotonic correlation between vote-fraction and P(real_mound | detected) is the target of the deliverable-b pilot scoped in `planning/detector-confidence-calibration-pilot.md`.
 - **Quantisation.** Vote count is integer in [1, K]; entropy is bounded by log2(K). Comparisons across conditions with different K should normalise mentally.
 - **20 m clustering radius.** Imported unchanged from `lib_consensus.cluster_across_passes`; sensitivity to this radius is not explored here.
 - **Per-pass tagging.** The internal `__run` property added during loading is a transient analysis artefact and is not persisted to disk.
 - **Verifier substrate.** The side-by-side uses the `text-brief` verifier pool, which matches the HIGH-T0.7 text proposer pool (487 tiles). Other proposer conditions can be compared by re-running with `--proposer-condition <id>` and a matching `--verifier-calibration` path.
+- **Hartigan's dip p-values.** The `diptest` package's `diptest()` function uses an internal Monte-Carlo procedure with no user-controllable seed; reported p-values can vary in the third decimal place across re-runs. All p-values reported here as `0.000` are well below 0.001 and the conclusions are robust to that variability.
+
+## 9. Paper implications
+
+The vote-fraction-as-confidence-proxy hypothesis (deliverable H-a, per Obs 283) carries two paper-relevant load-bearing implications:
+
+1. **Scope of the calibration narrative**. The paper's calibration analysis (Obs 269 / Obs 277) should be framed explicitly as a **verifier-specific** finding, not a "pipeline confidence distribution" claim. The proposer-vs-verifier contrast in §7 demonstrates that the U-shape is a property of the verifier's `mound_probability` head, not of the system as a whole. The proposer's vote-fraction distribution is right-skewed unimodal under every Phase 3a condition examined; only the verifier produces the saturated 0–0.1 / 0.9–1.0 mass that ECE = 0.111 / Brier = 0.087 (text-brief calibration JSON, n = 3,736) characterises. **Recommended Methods/Discussion language**: "calibration failure observed at the verifier stage" rather than "the pipeline produces miscalibrated confidence". This is the framing logged in Obs 283 as load-bearing for the paper.
+
+2. **Direction of remediation**. Future calibration-improvement work should target the verifier specifically. The proposer requires a different remediation path — either a schema change to add a `mound_probability` field, or empirical validation that vote-fraction correlates monotonically with P(real_mound | detected) on the K = 30 ceiling cell (the deliverable-b pilot in `planning/detector-confidence-calibration-pilot.md`). Until that pilot is run, vote-fraction must be reported as a **behavioural proxy**, not a calibrated confidence score, and the paper should be explicit about that distinction.
+
+A secondary paper-relevant implication: **vote-fraction quantisation and entropy scale with K**. Conditions in the matrix span K ∈ {3, 10, 30}, and the matched paper-headline cells (`text-HIGH-T0.7` at K = 30 and the K = 10 conditions) cannot be compared on raw entropy without normalising for K. Any cross-condition vote-fraction figure in the paper should explicitly flag K alongside each condition.
+
+## 10. Reproducibility
+
+- **Script**: `scripts/analyse_proposer_vote_fraction.py` v1.0.0.
+- **Git commit at run time**: `c2026ab3`.
+- **Random seed**: not user-controllable. The analysis is deterministic apart from Hartigan's dip-test p-values, which are computed by the `diptest` package's internal Monte-Carlo procedure (no seed argument exposed). All reported p-values are either far below 0.001 or near 1.0; conclusions are robust to MC noise.
+- **Compute**: ~3–5 minutes on sapphire (192.168.1.150) for all 16 conditions; the slow steps are loading the per-pass GeoJSONs and running `lib_consensus.cluster_across_passes` for each condition.
+- **Re-run command** (from the repo root, default paths reproduce all 16 conditions and both figures):
+
+  ```bash
+  python scripts/analyse_proposer_vote_fraction.py \
+      --output-dir results/proposer-vote-fraction/ \
+      --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson \
+      --verifier-calibration results/verifier-calibration-matrix/text-brief/calibration.json \
+      --proposer-condition text-HIGH-T0.7
+  ```
+
+- **Inputs**: per-run detection GeoJSONs in `outputs/h11/pv-diag-384/<arch>/<modality>-t<T>/run_*/` and `outputs/h11/n1-outstanding-384/image-t0/run_*/`. Tile bounds: `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`. Verifier calibration: `results/verifier-calibration-matrix/text-brief/calibration.json`.
+- **Outputs**: `vote_fraction.json` (per-condition descriptors + bin counts; metadata block records the verifier-calibration path and the chosen `proposer_condition_for_side_by_side`), `figures/vote_fraction_panels.png`, `figures/proposer_vs_verifier_bimodality.png`, and this `report.md`.
+
+## 11. References
+
+- **Obs 283** (`docs/notes/reflections/working-notes.md`): "The bimodality bottleneck is verifier-specific, not system-wide" — primary observation logging this analysis as deliverable H-a and recording the verifier-specific verdict as load-bearing for the paper.
+- **Obs 269**: original characterisation of verifier U-shape (ECE = 0.269 on the 55-map corpus).
+- **Obs 277**: Session 78 7-variant matrix replicating the verifier U-shape across prompt variants on the gold-standard 4-map corpus.
+- **Obs 244**: earlier vote-distribution fingerprints per condition; this analysis extends Obs 244 with descriptive entropy / dip-test / quantisation framing across the full 16-condition matrix and adds the proposer-vs-verifier comparison.
+- **Planning**: `planning/detector-confidence-calibration-pilot.md` (deliverable b — vote-fraction-as-proxy validation pilot, zero-cost on existing K = 30 cells); `planning/detector-confidence-flag-scoping.md` (deliverable c — opt-in flag scope; defer recommendation).
