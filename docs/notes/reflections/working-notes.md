@@ -15933,3 +15933,73 @@ Search terms: 4-GS vs 55-map FN-rate gap explained, inter-student variance domin
 - **Obs 316** (trapezoidal correction → 5.27 % FN / 0.00 % FP, Sobotkova vindication, commits `0bb7c448` / `eff34bfd`): this Obs **corrects Obs 316's secondary framing** of the 4-GS-vs-55-map gap as "genuine cross-corpus variation." Obs 316's primary finding (trapezoidal correction, Sobotkova vindication, retraction of "calculation error" framing) is unaffected and should still be cited for those claims.
 - **Obs 305** (55-map FN-rate lower-bound 8.87 % [95 % CI 6.93–11.35 %], recall-adjusted 11.15 %, commit `508e498f`): source of the 55-map figure. The 95 % CI on the 55-map estimate is also wide (6.93–11.35 %); the two wide CIs overlap substantially, which is further evidence against a large cross-corpus heterogeneity component.
 - **Artefacts**: `results/student-gt-fn-rate-analysis-gs4/per_sheet_confusion.csv` (per-sheet FN rates, trapezoidal-corrected); `results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json` (4-GS bootstrap CI 2.92–8.80 %); commits `0bb7c448` (trapezoidal correction), `eff34bfd` (Obs 316).
+
+## Observation 318: Obs 281's T=0.7 proposer failure-rate row corrected — 0.059 % was pass-1-only numerator over successful-tiles-only denominator; verified figure is 160 / 42,705 = 0.375 %, ~6× higher; magnitude of T=0.3 vs T=0.7 reliability gap shifts from ~1.4× to ~9× (2026-04-30)
+
+### The finding
+
+Obs 281's proposer comparison table cited T=0.7 unrecovered failures as **25 / 42,545 = 0.059 %**. Both the numerator and the denominator were wrong.
+
+**Verified figures from `outputs/55maps-text-high-generalisation/cost_manifest.json`:**
+
+| Field | Obs 281 value | Verified value | Source |
+|:------|:---:|:---:|:---|
+| T=0.7 unrecovered failures (numerator) | 25 | **160** | `by_stage.proposer.tiles_failed` |
+| Denominator (total attempts) | 42,545 | **42,705** | `tiles_processed + tiles_failed` |
+| T=0.7 failure rate | 0.059 % | **0.375 %** | 160 / 42,705 |
+
+Per-pass breakdown (verified from `by_stage.proposer.per_pass[]`):
+
+| Pass | `tiles_processed` | `tiles_failed` |
+|:----:|---:|---:|
+| 1 | 8,516 | **25** |
+| 2 | 8,499 | 42 |
+| 3 | 8,503 | 38 |
+| 4 | 8,513 | 28 |
+| 5 | 8,514 | 27 |
+| **Total** | **42,545** | **160** |
+
+Two compounding errors produced the original figure:
+
+1. **Numerator error**: 25 is `per_pass[0].tiles_failed` — the pass-1 count only. The parent `tiles_failed = 160` is the cross-pass aggregate. Obs 281 read `per_pass[0]` as if it were the total.
+2. **Denominator error**: 42,545 is `tiles_processed` (successful tiles only). The correct failure-rate denominator is total attempts = `tiles_processed + tiles_failed` = 42,545 + 160 = 42,705.
+
+The corrected comparison table (replacing Obs 281's table):
+
+| Run | T | Unrecovered failures / Total attempts | Rate |
+|:----|:--:|:---:|:---:|
+| `55maps-text-high-generalisation` | 0.7 | 160 / 42,705 | **0.375 %** |
+| `55maps-text-high-t0.3-generalisation` | 0.3 | 18 / 42,705 | 0.042 % |
+
+Note: the T=0.3 denominator (42,705) was already correct in Obs 281 because that run's failure count (18) was not misread; the denominator normalisation was inconsistently applied. The T=0.3 numerator and rate are unchanged.
+
+### Why this matters
+
+**Qualitative finding preserved, magnitude reframed.** Obs 281's headline claim — T=0.3 unrecovered failures are lower than T=0.7 — still holds. But the **magnitude** shifts substantially:
+
+- Obs 281 implied: T=0.7 / T=0.3 = 0.059 % / 0.042 % ≈ **~1.4×** (marginal, barely worth reporting)
+- Corrected: T=0.7 / T=0.3 = 0.375 % / 0.042 % ≈ **~9×**
+
+A 9× proposer-reliability gap meaningfully **strengthens** the claim that lower-temperature proposer configurations are more robust at production scale. The gap between T=0.3 (fully recovered, 0 unrecovered after the recovery pass) and T=0.7 (160 unrecovered, recovery in flight as of writing) is unbounded on the T=0.3 side once recovery completes.
+
+**For paper Methods:** cite **0.375 %** for T=0.7 proposer unrecovered failure rate (pre-recovery). The corrected figure is already in `results/temperature-failure-recovery-analysis/report.md` §3.1 and §4 (commit `8bd8c58e`). Do not cite 0.059 %; it is provably wrong.
+
+**Observational anchor for recovery.** This Obs is being written *before* the T=0.7 55-map recovery commences. Once the recovery re-runs the 160 failed tiles, `cost_manifest.json` will be updated, overwriting the current evidence. This entry preserves the pre-recovery state — in particular the per-pass breakdown — as the documentary anchor for the correction.
+
+### Caveats / methodological notes
+
+- **No recovery applied to T=0.7 run as of writing.** The 160 failures are unrecovered; the T=0.7 run's detection outputs (consensus, evaluation) were produced from 42,545 successful tiles only. Recovery is in flight (mirroring T=0.3 template, commit `548604d9`); Obs 319 will document the outcome.
+- **The `cost_manifest.json` `failure_rate` field** (= 0.0037) is computed as `tiles_failed / (tiles_processed + tiles_failed)` = 160 / 42,705 = 0.374 %, consistent with the corrected figure. This field was not read in the original Obs 281 tabulation — reading it would have surfaced the error immediately.
+- **Lesson for future audits:** when reading `cost_manifest.json::by_stage.<stage>.per_pass[]`, each array element is per-pass data; the cross-pass total lives at the parent `tiles_failed` field. Never promote `per_pass[0].tiles_failed` to a run-level total without summing all passes.
+
+### Findable later
+
+Search terms: Obs 281 correction magnitude error, T=0.7 proposer failure rate 0.375 percent 160 failures corrected, pass-1-only numerator error cost_manifest per_pass, tiles_processed denominator wrong successful-only, 42705 total attempts 42545 successful, per-pass breakdown 25 42 38 28 27 sum 160, T=0.3 vs T=0.7 proposer reliability gap 9x not 1.4x, temperature failure rate magnitude reframe, pre-recovery observational anchor 160 unrecovered, cost_manifest failure_rate field 0.0037, tiles_failed parent field vs per_pass array, paper Methods 0.375 percent T=0.7, temperature-failure-recovery-analysis report 8bd8c58e.
+
+### Related observations and artefacts
+
+- **Obs 281** (temperature failure-rate hypothesis test, T=0.3 vs T=0.7 cross-run, proposer comparison table): this Obs corrects the T=0.7 row. Obs 281's qualitative conclusion (T=0.3 < T=0.7 unrecovered failures) is preserved; the magnitude is ~9× not ~1.4×. Obs 281's T=0.3 row (18 / 42,705 = 0.042 %) is unchanged.
+- **Obs 286 + 287** (verifier-T pilot studies, closing the verifier limb of the temperature hypothesis): not affected by this correction.
+- **`results/temperature-failure-recovery-analysis/report.md`** — commit `8bd8c58e`; §3.1 contains the corrected comparison table; §4 documents the correction and its two compounding sources. This is the paper-citeable location for the corrected figure.
+- **Recovery in flight** (T=0.7 55-map recovery, mirroring T=0.3 template commit `548604d9`): Obs 319 will cross-reference the recovery commits and document the downstream propagation (updated consensus, evaluation, and report metrics).
+- **Artefacts**: `outputs/55maps-text-high-generalisation/cost_manifest.json` (verified source for 160 / 42,705 / per-pass breakdown); commit `8bd8c58e` (corrected report).
