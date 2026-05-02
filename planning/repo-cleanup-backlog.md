@@ -40,6 +40,13 @@ evaluation pipelines. Needs rationalisation.
   `results/leaderboard/era{1,2,3}/` outputs. Archive once new
   leaderboards are validated.
 
+> **Note 2026-05-01**: the per-architecture leaderboard tree at
+> `results/leaderboard/per-architecture/` (built in Sessions 79-80,
+> continuity doc §"Session 80 closure") is the canonical future
+> leaderboard path. Old `results/paper-tables/leaderboard_tiers_20m.md`
+> and similar single-buffer / single-architecture leaderboards should
+> be archived in the dedicated cleanup session.
+
 ### Mixed naming conventions
 
 - Some files use `leaderboard_tiers_20m.md`, others `sweep_2d.json`,
