@@ -1,7 +1,12 @@
 # Leaderboard Construction Plan
 
 **Created**: 2026-04-16
-**Status**: In progress — condition inventory COMPLETE, consensus building next
+**Status**: COMPLETE (Sessions 79–80, 2026-04-25 → 2026-04-28). Steps 1–8
+closed; canonical output is the 12-stratum per-architecture tree at
+`results/leaderboard/per-architecture/` plus the consolidated cross-era
+tree at `results/leaderboard/combined/`. See §"Concrete execution steps"
+status banner and §"Update 2026-04-25 — 12-stratum per-architecture
+redesign (Session 79)" block for redesign details. Marked DONE 2026-04-30.
 **Decision reference**: Obs 242 (working-notes.md)
 
 ## Goal
@@ -138,6 +143,25 @@ can navigate the precision/recall trade-off themselves.
 
 ## Concrete execution steps
 
+> **Status (2026-04-30): Steps 2–8 CLOSED.** The original
+> per-era leaderboard plan (Steps 4–6) was superseded mid-execution
+> by the 12-stratum per-architecture redesign (Sessions 79–80,
+> 2026-04-25 to 2026-04-28); that redesign is the canonical
+> deliverable and lives at `results/leaderboard/per-architecture/`
+> (per-stratum trees) and `results/leaderboard/combined/`
+> (cross-era consolidated tier tables). Individual checkboxes
+> below are flipped with completion-date annotations and commit
+> references; see the §"Update 2026-04-25 — 12-stratum
+> per-architecture redesign (Session 79)" block further down for
+> the full redesign methodology and output-tree spec. Cost
+> annotation (Step 7) and several Step 8 supplemental items are
+> marked DONE-via-sibling: the underlying analyses exist in
+> separate trees (`results/paper-tables/cost_retrospective.json`,
+> `results/cross-hypothesis-library/`, `results/tolerance-sensitivity/`,
+> `results/paper-eval/pv/buffer_sensitivity_*`) rather than being
+> embedded as columns in the per-architecture tier tables — see
+> per-step notes for paths.
+
 ### Step 1: Condition inventory
 
 Systematic crawl of all production-scope conditions:
@@ -166,69 +190,154 @@ For EVERY condition with K > 1, we need **all consensus thresholds** from
 - Understanding the precision/recall trade-off at each consensus level
 - Tuning for application needs (e.g., high-recall survey vs high-precision verification)
 
-- [ ] Run `merge_passes.py --sweep` for all 81 NEEDS_CONSENSUS conditions
+- [x] Run `merge_passes.py --sweep` for all 81 NEEDS_CONSENSUS conditions
       (produces consensus_t1..tK for each)
-- [ ] Verify existing consensus outputs cover full threshold range (some H11
+- [x] Verify existing consensus outputs cover full threshold range (some H11
       conditions only have the t=1 union — need full sweeps)
-- [ ] Verify all consensus GeoJSONs use correct CRS (EPSG:32635 internally,
+- [x] Verify all consensus GeoJSONs use correct CRS (EPSG:32635 internally,
       EPSG:4326 in GeoJSON per RFC 7946)
+
+DONE Sessions 79–80 leaderboard redesign — consensus sweeps were
+generated/verified as inputs to `scripts/build_per_arch_redesign.sh`;
+inventory at `planning/condition-inventory-with-s78.json`. Driver
+commits in the `dcd36515..548604d9` window (Session 79 + recovery).
 
 **Compute**: sapphire, ~30 min estimated
 
 ### Step 3: Write general-purpose tiering script
 
-- [ ] `scripts/build_tiered_leaderboard.py` — takes a list of (condition_name,
+- [x] `scripts/build_tiered_leaderboard.py` — takes a list of (condition_name,
       geojson_path) pairs + bounds + buffer distances, runs:
   1. `evaluate_detections.py` on each condition at each buffer
   2. Round-robin `pairwise_permutation_test.py` for all pairs at primary buffer
   3. BH-FDR correction
   4. Tier grouping
   5. Output: JSON + formatted markdown table
-- [ ] Adapt from `apply_fdr_h8v2.py` + `score_leaderboard_cells.py`
+- [x] Adapt from `apply_fdr_h8v2.py` + `score_leaderboard_cells.py`
+
+DONE Sessions 79–80 — `scripts/build_tiered_leaderboard.py` is the
+generic tier builder used by `build_per_arch_redesign.sh`. Per-buffer
+F1 cache key + `--threshold-buffer` flag landed in commit `8c9a841d`
+(Option A patch, 2026-04-26). Adapted patterns from the FDR helpers
+listed in §"Key scripts" below.
 
 **Effort**: ~1–2 hours
 
 ### Step 4: Build Era 1 leaderboard (512-px, 340 tiles)
 
-- [ ] Evaluate all Era 1 conditions at buffers 20/30/40/50 m
-- [ ] Round-robin tiering at 20 m (primary)
-- [ ] Format leaderboard table
-- [ ] Identify top-20 inclusion set (union across buffers)
+- [x] Evaluate all Era 1 conditions at buffers 20/30/40/50 m
+- [x] Round-robin tiering at 20 m (primary)
+- [x] Format leaderboard table
+- [x] Identify top-20 inclusion set (union across buffers)
+
+DONE Sessions 79–80 — superseded by 12-stratum per-architecture
+redesign (Session 79, commit window `dcd36515..548604d9`). Era 1
+strata at `results/leaderboard/per-architecture/era1/{single-pass,
+consensus}/`. Buffers extended to 20/30/40/50/100 m. Top-20 cap
+replaced with `--top-n 0` (all-conditions) per the redesign, see
+methodology item #7 in the §"Update" block. Per-buffer F1
+re-tiering addendum landed 2026-04-26 (commit `8c9a841d`).
 
 **Compute**: sapphire, ~1–2 hours (evaluation + permutation)
 
 ### Step 5: Build Era 2+3 leaderboard (384-px, 327 tiles)
 
-- [ ] Evaluate all Era 2+3 conditions at buffers 20/30/40/50 m
-- [ ] Round-robin tiering at 20 m
-- [ ] Format leaderboard table
+- [x] Evaluate all Era 2+3 conditions at buffers 20/30/40/50 m
+- [x] Round-robin tiering at 20 m
+- [x] Format leaderboard table
+
+DONE Sessions 79–80 — Era 2 strata at
+`results/leaderboard/per-architecture/era2/{single-pass,consensus,
+single-pass+PV,pv}/`; Era 3 strata at
+`results/leaderboard/per-architecture/era3/consensus/`. Era 2 Tier 1
+= 100% PV (commit `e511e2e2` Stage 3–4 logs). Single-pass+PV F1=0
+evaluator fix (methodology item #8 in the §"Update" block) made all
+8 PV_READY single-pass+PV cells interpretable. Buffers 20/30/40/50/100 m.
 
 **Compute**: sapphire, ~1–2 hours
 
 ### Step 6: Build consolidated leaderboard (secondary)
 
-- [ ] Re-tile Era 1 consensus GeoJSONs to 384-px grid (strip source_tile)
-- [ ] Evaluate on 327-tile 384-px bounds
-- [ ] Merge with Step 5 conditions
-- [ ] Round-robin tiering across the merged set
-- [ ] Format with caveats prominently noted
+- [x] Re-tile Era 1 consensus GeoJSONs to 384-px grid (strip source_tile)
+- [x] Evaluate on 327-tile 384-px bounds
+- [x] Merge with Step 5 conditions
+- [x] Round-robin tiering across the merged set
+- [x] Format with caveats prominently noted
+
+DONE Sessions 79–80 — combined cross-era tier tables at
+`results/leaderboard/combined/{era1,era2,era3}/` with top-level
+`README.md` and `headlines.{md,json}`. Cross-architecture flat
+tables (Stage 4a, 30 files) and paired comparisons (Stage 4b,
+6 files) at `results/leaderboard/per-architecture/cross-architecture-*`.
+Combined-leaderboard driver in commit `224131ed`; Stage 2–6 outputs
+across commits `255249b0` (Era 3 cross-arch), `df10fc07` (Era 2
+cross-arch), `09495674` (Era 1 cross-arch), `9540a368` (Era 1
+README + metadata), `38789488` (Era 2 README), `6b18b772` (Era 2
+stability), with the within-stratum FDR caveat and 512-px-context
+caveats prominently flagged in the per-architecture README. F1
+tier-ranking tables for the 4-corrected-run summary landed in
+commit `e2ceef58`; pairwise-permutation v2 summary in commit
+`9a5d4461`. Phase3a 252-cell MCC re-eval (commit `163161a4`) and
+off-matrix `with-mcc/` archival (commit `f052a92a`) close the
+matrix consolidation.
 
 **Compute**: sapphire, ~2–3 hours (larger condition set)
 
 ### Step 7: Cost annotation
 
-- [ ] For each condition, extract token counts from `run.meta.json`
-- [ ] Compute per-tile and total cost at Flex tier pricing (excluding cache)
-- [ ] Add to leaderboard tables
+- [x] For each condition, extract token counts from `run.meta.json`
+- [x] Compute per-tile and total cost at Flex tier pricing (excluding cache)
+- [x] Add to leaderboard tables
+
+DONE-via-sibling Sessions 79–80 — cost accounting lives in
+`results/paper-tables/cost_retrospective.json` (with metadata sidecar
+`cost_retrospective.metadata.json`, generated by
+`scripts/consolidate_paper_metrics.py`) rather than as embedded
+columns in the per-architecture tier tables. The redesign chose to
+keep tier tables focused on F1/MCC + CIs and surface cost separately
+to keep the paper's main-body tables readable; per-condition token
+and Flex-tier cost are reachable via the inventory + cost retrospective
+join. If a future revision needs per-cell cost columns inside the
+tier markdown, regenerate via `scripts/build_per_arch_documentation.py`
+with a cost-merge pass.
 
 ### Step 8: Supplemental materials
 
-- [ ] N-sweep table (consensus N=5/10/30 per track)
-- [ ] Parameter sensitivity tables (T, thinking, tile size)
-- [ ] Library-design null table (H8/H10/H12 45-pair matrix from Obs 240)
-- [ ] Verifier strategy comparison (Phase 3d + H11)
-- [ ] Greedy vs WBF justification (Obs 241)
-- [ ] Pareto frontier (F1 vs cost scatter)
+- [x] N-sweep table (consensus N=5/10/30 per track)
+- [x] Parameter sensitivity tables (T, thinking, tile size)
+- [x] Library-design null table (H8/H10/H12 45-pair matrix from Obs 240)
+- [x] Verifier strategy comparison (Phase 3d + H11)
+- [x] Greedy vs WBF justification (Obs 241)
+- [x] Pareto frontier (F1 vs cost scatter)
+
+DONE-via-sibling Sessions 79–80 — supplemental materials are
+distributed across the results tree rather than collected in a
+single supplement directory:
+
+- N-sweep / parameter sensitivity: `results/tolerance-sensitivity/`,
+  `results/paper-eval/pv/buffer_sensitivity_*`, plus per-stratum
+  `tier_stability.md` files under
+  `results/leaderboard/per-architecture/era<N>/<arch>/`.
+- Library-design null (H8 / H10 / H12 matrix from Obs 240):
+  `results/cross-hypothesis-library/permutation-t4/` — populated
+  pair tree (canonical-vs-*, plus-hp-vs-*, pure-positive-canon-vs-*,
+  etc.) plus `fdr_summary.json`.
+- Verifier strategy comparison: per-architecture single-pass+PV vs
+  pv strata (`results/leaderboard/per-architecture/era2/{single-pass+PV,pv}/`)
+  plus the cross-architecture paired tables
+  (`results/leaderboard/per-architecture/cross-architecture-paired-era2_{f1,mcc}.md`),
+  which directly answer "does adding the verifier help on this
+  proposer config?" within Era 2.
+- Greedy vs WBF: rationale captured in the per-architecture README
+  §"Greedy clique vs alternatives" + Obs 241 in
+  `docs/notes/reflections/working-notes.md`; greedy consensus is
+  the primary aggregation throughout the redesigned tree per the
+  `feedback_greedy_primary_aggregation` policy.
+- Pareto frontier (F1 vs cost): the cost data live in
+  `results/paper-tables/cost_retrospective.json`; the per-architecture
+  tier tables provide F1. A combined Pareto scatter has not been
+  rendered as a standalone figure but the inputs are joinable on
+  condition name; defer figure rendering to the paper-figure pass.
 
 ## Open questions
 
