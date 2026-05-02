@@ -5,7 +5,17 @@
 **Theoretical i.i.d. log-log slope**: beta_1 = -0.5
 **Slower-than-i.i.d. flag**: beta_1 > -0.3 (asterisked rows below)
 
-## Per-stratum log-log slope and SD shrinkage
+## 1. Executive summary
+
+**Headline (v2 genuine test, supersedes v1)**: K-consensus F1 SD shrinkage is **heterogeneous across the Phase 3a matrix**. Five of thirteen strata depart detectably from the i.i.d. log-log reference of beta_1 = -0.5; the **strongest shared-mode signal is image-MINIMAL-T1.0 with beta_1 = -0.118 [-0.227, +0.061]** — meaning SD shrinks roughly five times slower than the i.i.d. ceiling predicts. Two further shared-mode flags (image-HIGH-T0.3 at beta_1 = -0.222; text-HIGH-T0.7 at beta_1 = -0.387) sit on the same shallow side of the reference; one anti-i.i.d. flag (image-HIGH-T1.0 at beta_1 = -0.731) and one marginal steep-side text flag (text-MINIMAL-T0.7 at beta_1 = -0.558) round out the five departures. The remaining eight strata are i.i.d.-consistent. Both shared-mode flags concentrate on the **image track**, consistent with image inputs sharing visual confounds (label-pull effects, contour-ring confounds) that K passes consistently miss in the same way.
+
+**Canonical synthesis Obs**: see **Obs 289** (`docs/notes/reflections/working-notes.md`) — "K-consensus SD shrinkage IS heterogeneous across the matrix — v2 genuine test reveals shared-mode signal in 5 of 13 strata; overrides Obs 285's proxy-bound i.i.d. consistency". The v2 test rebuilds the actual greedy-vote consensus on K-subsamples drawn from per-pass detection geometries and re-evaluates F1 against the canonical reference, eliminating the mean-of-K-i.i.d.-samples proxy that forced v1 slopes toward -0.5 by construction.
+
+**Superseded methodology (Obs 285)**: the v1 result reported in §2 below (per-stratum slopes clustered at -0.52 / -0.52 across image / text) is a **mean-of-K-passes proxy** that mathematically returns -0.5 under any stable per-pass distribution and is therefore incapable of detecting shared-mode departures. **Obs 285's v1 finding is preserved here as a sanity check on the i.i.d. expectation**; for any shared-mode test claim cite Obs 289 / §3 instead.
+
+**Paper implications**: K=N consensus is broadly effective as a noise-reduction strategy on this corpus (8 of 13 strata are i.i.d.-consistent), but it has **identifiable failure regions** where shared per-pass error modes substantially limit the variance reduction the strategy can deliver. If the paper cites K=N consensus as a noise-reduction strategy that delivers ~sqrt(K) variance shrinkage, the image-MINIMAL-T1.0 and image-HIGH-T0.3 strata should be **flagged as exceptions**: at these cells, the i.i.d. assumption underwriting the sqrt(K) ceiling fails, and downstream tier-stability claims that lean on √K shrinkage need a footnote naming these regions. The image-track concentration of failure is itself a paper-worthy nuance — it converges with Obs 244 (vote-distribution fingerprints differ by track) and Obs 252 (image elasticity ~4× text) to argue that image inputs carry more correlated per-pass error structure than text inputs.
+
+## 2. Per-stratum log-log slope and SD shrinkage (v1 — proxy-bound)
 
 > **v1 methodology note** (added 2026-04-27 alongside v2): the per-K SD values in this section are computed under the **mean-of-K-i.i.d.-passes proxy**, which by construction yields ``SD = sigma / sqrt(K)`` and a log-log slope of -0.5 regardless of any shared-mode signal in the underlying detection geometries. The slopes reported below are therefore best read as a **sanity check on the i.i.d. expectation**, not as an independent test of departure from i.i.d. See Section 3 for the v2 genuine test based on rebuilt greedy-vote consensus.
 
@@ -48,7 +58,6 @@ The Phase 3a evaluation outputs (`{thinking}-t{T}/n{K}/{rolldir}/evaluation.json
 - `report.md` -- this file.
 
 *Generated: 2026-04-27T04:48:11.946090+00:00*
-
 
 ---
 
@@ -100,3 +109,43 @@ Across 13 strata, the v2 K-consensus F1 SD shrinks with K' at a mean log-log slo
 
 *Section 3 added: 2026-04-27T05:57:30.140246+00:00*
 
+## 4. Paper implications
+
+The five-of-thirteen heterogeneity result reframes the methodological argument the paper can make about K-consensus voting as a variance-reduction strategy.
+
+1. **Headline framing for the methods section**. The paper-worthy claim is **not** "K-consensus reduces variance like i.i.d." (the proxy-tautological story from v1, Obs 285). The v2-corrected claim is: "K-consensus delivers near-i.i.d. variance reduction in 8 of 13 Phase 3a strata; in the image-MINIMAL-T1.0 and image-HIGH-T0.3 cells, shared per-pass error modes substantially limit the variance reduction K-consensus can deliver." This nuance is load-bearing for any methodological argument that motivates K=N consensus as a default noise-reduction strategy on this corpus.
+2. **Flag regions for the K=N defence**. If the paper cites K=N (e.g. K=10 or K=30) consensus as a noise-reduction strategy with implicit ~sqrt(K) shrinkage, the **flag regions** are image-MINIMAL-T1.0 (strongest shared-mode failure, beta_1 = -0.118) and image-HIGH-T0.3 (beta_1 = -0.222). At these cells the i.i.d. assumption underwriting sqrt(K) shrinkage fails — moving from K=1 to K=K_max delivers far less variance reduction than the i.i.d. ceiling promises, and downstream tier-stability claims that assume √K shrinkage at every cell should carry a footnote naming these strata.
+3. **Image-track concentration is itself a finding**. Both shared-mode flags are image-track; both anti-i.i.d. flags (image-HIGH-T1.0; the marginal text-MINIMAL-T0.7) sit on the image-or-marginal boundary. This **converges with Obs 244** (vote-distribution fingerprints differ between image and text tracks) and **Obs 252** (image-track buffer elasticity ~4× text) to argue that image inputs carry more correlated per-pass error modes — plausibly visual confounds (label-pull effects, contour-ring confounds) that K passes consistently miss in the same way. Consensus voting cannot fix what every pass got wrong.
+4. **Operational tier-stability footnote**. Any paper claim that benefits from "K-consensus collapses run-to-run variance" — for example, when justifying the choice of K=N consensus as the production aggregation rule, or when interpreting tier-stability across re-runs — should explicitly name image-MINIMAL-T1.0 as the regime where the variance-reduction promise is weakest. Operationally, doubling K at this stratum buys far less variance reduction than at i.i.d.-consistent strata.
+5. **Future-work pointer**. The image-HIGH-T1.0 anti-i.i.d. result (beta_1 = -0.731, steeper than -0.5) is structurally surprising and **should not be cited in the paper without replication** at a larger K_max. Possible explanations include small-sample artefact (K_max = 10 with bootstrap noise), sub-Poisson behaviour from systematic correction at higher K (unlikely for VLM ensembles), or stratification accident. A focused replication on a larger K pool is flagged in Obs 289 as a v3 follow-up.
+
+## 5. Reproducibility
+
+- **v2 script**: `scripts/analyse_consensus_sd_shrinkage_v2.py` v1.0.0
+- **Git commit at run time**: `c6c277b3` (per Obs 289)
+- **Random seed**: `42` (per-stratum offset = `(42 + abs(hash(stratum_label))) % 2**31`; distinct draw per K')
+- **Bootstrap iterations on beta_1 CI**: 1000 (within-K' subsample F1 lists with replacement)
+- **Subsample budget per K'**: exhaustive `C(K_max, K')` if ≤ 200, otherwise random 200 distinct subsets
+- **Voting rule**: uniform majority `vote_t = max(1, round(K' * 0.5))` (invariant under K' rescaling for cross-K comparability)
+- **Cluster radius**: 20 m (canonical)
+- **F1 evaluation buffer**: 20 m vs `inputs/vectors/references/mounds-reference.geojson`
+- **Compute**: sapphire (192.168.1.150), wall-clock 50.9 min at `--max-workers 4` (per Obs 289)
+- **v1 script (superseded for shared-mode test, retained as i.i.d. sanity check)**: `scripts/analyse_consensus_sd_shrinkage.py`; 1000 percentile bootstrap iterations seed = 42 for SD CIs; 1000 nested-bootstrap iterations for slope CIs
+- **Re-run command (v2, from the repo root on sapphire)**:
+
+  ```bash
+  python scripts/analyse_consensus_sd_shrinkage_v2.py \
+      --output-dir results/secondary-effects-consensus-sd/ \
+      --max-workers 4
+  ```
+
+  Defaults: `--ground-truth inputs/vectors/references/mounds-reference.geojson`, `--max-subsamples 200`, `--radius 20.0`, `--buffer 20`. Override `--max-workers` for the local concurrency envelope.
+
+## 6. Cross-references
+
+- **Obs 289** (canonical synthesis, supersedes Obs 285 for shared-mode test claim): `docs/notes/reflections/working-notes.md` — "K-consensus SD shrinkage IS heterogeneous across the matrix — v2 genuine test reveals shared-mode signal in 5 of 13 strata".
+- **Obs 285** (superseded for shared-mode test; v1 result preserved as i.i.d. sanity check in §2 above): `docs/notes/reflections/working-notes.md` — "K-consensus F1 SD shrinks with K at the i.i.d. log-log slope (-0.5) across all 13 strata — but the proxy is tautological by construction; v2 follow-up scoped".
+- **Obs 245** (Levene W = 3.192, p = 0.004 — image-track between-cell variance heterogeneity): orthogonal to the present within-cell shrinkage analysis; per-condition K=1 SDs in §2 reproduce this heterogeneity.
+- **Obs 244** (vote-distribution fingerprints by track): companion finding — image and text differ in pass-level variability structure; v2 corroborates with image-track concentration of shared-mode signal.
+- **Obs 252** (image-track buffer elasticity ~4× text): companion finding — both v2 and Obs 252 point to image-track having more correlated per-pass error modes than text.
+- **Obs 282** (kappa fragility corroborates variance hypothesis at matched K): consistent with v2 — variance hypothesis is corroborated at the per-stratum level via fragility, and v2 quantifies the consensus-shrinkage failure where it matters most.
