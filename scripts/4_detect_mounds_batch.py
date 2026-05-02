@@ -68,6 +68,11 @@ from scripts.lib_llm_metadata import (
 # TPMGovernor — see lib_token_bucket.py for design rationale)
 from scripts.lib_token_bucket import TokenBucketGovernor
 
+# Import three-tier JSON repair pipeline shared with the batch parser.
+# Recovers ~92 % of historical realtime proposer parse failures
+# (Tier 1 trailing-comma, Tier 2 json5, Tier 3 longest-valid-prefix).
+from scripts.lib_batch_api import parse_response_with_repair
+
 
 # Script Version
 __version__ = "6.0.0"  # TPM governor, jittered backoff, tile manifests, early warnings
@@ -565,10 +570,14 @@ def process_single_tile(
         if response_metadata:
             metadata_tracker.log_response(tile_filename, response_metadata)
 
-        # Parse detections
+        # Parse detections.
+        # parse_response_with_repair() applies a three-tier malformed-JSON
+        # repair pipeline (trailing-comma → json5 → longest-valid-prefix
+        # scan) before falling back to ValueError. See
+        # scripts/lib_batch_api.py:parse_response_with_repair for details.
         detections = []
         try:
-            json_response = json.loads(response.text)
+            json_response = parse_response_with_repair(response.text)
             if isinstance(json_response, list):
                 # Handle case where model returns [ { "detections": [...] } ]
                 if (

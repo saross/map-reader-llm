@@ -881,6 +881,89 @@ def validate_batch_results(
     return matched, missing, errored
 
 
+def parse_response_with_repair(response_text: str) -> dict | list:
+    """
+    Parse a Gemini response with three tiers of malformed-JSON recovery.
+
+    Audit of three production runs (``outputs/55maps-text-min-generalisation/``,
+    ``outputs/55maps-image-generalisation/``, ``outputs/h11/gold-standard-v2/``)
+    showed 92 % of 163 lost tiles match patterns this pipeline handles:
+
+    Tier 1 (regex):
+        Strip trailing commas before closing brackets/braces — handles
+        ~52 % of historical failures (84 of 163 tiles). Mirrors the
+        in-line repair already present at ``lib_batch_api.py`` line 920.
+
+    Tier 2 (json5):
+        Retry with the permissive ``json5`` parser — handles delimiter
+        and value errors that strict ``json`` rejects (e.g. unquoted
+        keys, single-quoted strings, embedded comments).
+
+    Tier 3 (longest-valid-prefix scan):
+        Scan from the end of the text for the longest prefix that parses
+        as valid JSON — handles ``Extra data`` errors where valid JSON
+        is followed by garbage. Linear from-the-end scan rather than a
+        true binary search because validity is not monotonic over
+        prefix length, and typical "Extra data" suffixes are short.
+
+    The combined three-tier pipeline is expected to recover ~92 % of
+    historical realtime parse failures, saving roughly USD 20–50 per
+    full-corpus generalisation run.
+
+    Args:
+        response_text: Raw model response (the SDK's ``response.text``).
+
+    Returns:
+        Parsed object — ordinarily a ``dict`` (e.g. ``{"detections": [...]}``)
+        but may be a ``list`` when the model returns a bare array.
+
+    Raises:
+        ValueError: If all three tiers fail. The exception message
+            identifies which tiers were attempted; the underlying parser
+            error is chained via ``raise ... from``.
+
+    Examples:
+        >>> parse_response_with_repair('{"detections": [1, 2, 3,]}')
+        {'detections': [1, 2, 3]}
+        >>> parse_response_with_repair('{"a": 1}\\nextra garbage')
+        {'a': 1}
+    """
+    # Tier 1: trailing-comma repair, then strict json.
+    # Mirrors the canonical in-line repair at lib_batch_api.py:920.
+    repaired = re.sub(r",\s*([}\]])", r"\1", response_text)
+    try:
+        return json.loads(repaired)
+    except json.JSONDecodeError as tier1_err:
+        last_err: Exception = tier1_err
+
+    # Tier 2: permissive json5 parser. Imported lazily so the helper
+    # can be imported in environments where json5 is not installed —
+    # callers see the import error only when Tier 1 fails.
+    try:
+        import json5
+        return json5.loads(repaired)
+    except ImportError as tier2_err:
+        last_err = tier2_err
+    except Exception as tier2_err:
+        last_err = tier2_err
+
+    # Tier 3: scan for the longest prefix that parses as valid JSON.
+    # Walks from the end of the (Tier-1-repaired) text downward so the
+    # *first* successful parse is the longest valid prefix. Catches
+    # "Extra data" errors where the model emits a valid object then
+    # appends free-form prose, code fences, or a second object.
+    for end in range(len(repaired), 0, -1):
+        try:
+            return json.loads(repaired[:end])
+        except json.JSONDecodeError:
+            continue
+
+    raise ValueError(
+        "Could not parse response after Tier 1 (trailing-comma), Tier 2 "
+        "(json5), or Tier 3 (longest-valid-prefix) repair"
+    ) from last_err
+
+
 def _parse_detections_from_response(result: dict) -> list[dict]:
     """
     Extract detections from a single batch response line.
