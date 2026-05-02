@@ -31,7 +31,7 @@ Pick **one** condition with a high-K cell already on disk on the 4-map 487-tile 
 
 Reuse the existing per-pass detection geojsons. **Zero API spend.**
 
-Ground truth: curator-reviewed expert mounds in `inputs/vectors/references/mounds-reference.geojson` (the 569-feature 4-map gold-standard reference; matched at 20 m tolerance per the project standard and the same protocol used in `planning/session-78-matrix-calibration-summary.md`).
+Ground truth: curator-reviewed expert mounds in `inputs/vectors/references/mounds-reference.geojson` (the 569-feature 4-map gold-standard reference; matched at 20 m tolerance per the project standard and the same protocol used in `archive/planning-historical-session-78/session-78-matrix-calibration-summary.md`, archived 2026-05-01).
 
 Tile scope: `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` (487 tiles, Era 2). This matches the Session 78 verifier matrix scope so the detector-confidence proxy and the verifier's `mound_probability` are directly comparable on the same corpus.
 

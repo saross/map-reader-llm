@@ -13384,7 +13384,8 @@ ceiling.
   calibration on the same verifier prompt, which motivated this
   prompt-invariance test.
 - Artefacts: `results/verifier-calibration-matrix/<pool>-<variant>/calibration.json`
-  (14 cells); `planning/session-78-matrix-calibration-summary.md`;
+  (14 cells); `archive/planning-historical-session-78/session-78-matrix-calibration-summary.md`
+  (archived 2026-05-01; originally `planning/session-78-matrix-calibration-summary.md`);
   `scripts/compute_session78_calibration_matrix.py`.
 - Commits: matrix data `6d1cad27`; calibration crosstab `88d6b55b`.
 

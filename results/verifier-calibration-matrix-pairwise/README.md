@@ -308,8 +308,9 @@ bootstrap CIs executed in parallel).
 
 ## Related artefacts
 
-- `planning/session-78-matrix-calibration-summary.md` — AUC/Brier/ECE
-  crosstab across the 14 cells (from `compute_session78_calibration_matrix.py`).
+- `archive/planning-historical-session-78/session-78-matrix-calibration-summary.md` —
+  AUC/Brier/ECE crosstab across the 14 cells (from
+  `compute_session78_calibration_matrix.py`; archived 2026-05-01).
 - `docs/notes/reflections/working-notes.md` — Observation 277
   (canonical Pareto-dominance in calibration) and Obs 278+ (if authored).
 - `results/leaderboard/cells/session-78-*.json` — per-cell threshold

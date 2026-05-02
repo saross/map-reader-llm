@@ -1055,10 +1055,10 @@ prerequisites before the outline.
    (motivating image-track miscalibration finding; Obs 277
    falsifies the prompt-specificity hypothesis).
 4. This file — §"Step 6 polish-pass backlog" starts at line 741.
-5. `planning/session-78-verifier-calibration-matrix-summary.md`
-   (F1/P/R/MCC for 14 cells at 20 m optimum).
-6. `planning/session-78-matrix-calibration-summary.md`
-   (AUC/Brier/ECE for 14 cells).
+5. `archive/planning-historical-session-78/session-78-verifier-calibration-matrix-summary.md`
+   (F1/P/R/MCC for 14 cells at 20 m optimum; archived 2026-05-01 — see file's SUPERSEDED banner).
+6. `archive/planning-historical-session-78/session-78-matrix-calibration-summary.md`
+   (AUC/Brier/ECE for 14 cells; archived 2026-05-01 — see file's SUPERSEDED banner).
 
 ### Session 78 headline findings
 

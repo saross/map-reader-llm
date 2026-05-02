@@ -5587,7 +5587,7 @@ Secondary observation awaiting pairwise-permutation significance testing (Step 6
 - Deep evaluations: `results/verifier-calibration-matrix/<pool>-<variant>/evaluation.json` (F1/P/R/MCC + 10k-bootstrap CIs, 14 files)
 - Calibration crosstabs: `results/verifier-calibration-matrix/<pool>-<variant>/calibration.json` (AUC/Brier/ECE, 14 files)
 - Materialised PV geojsons: `results/verifier-calibration-matrix/<pool>-<variant>-opt-20m.geojson` (14 files; UTM coords after the CRS fix)
-- Two summary docs: `planning/session-78-verifier-calibration-matrix-summary.md` + `planning/session-78-matrix-calibration-summary.md`
+- Two summary docs: `archive/planning-historical-session-78/session-78-verifier-calibration-matrix-summary.md` + `archive/planning-historical-session-78/session-78-matrix-calibration-summary.md` (archived 2026-05-01; originally lived under `planning/`)
 
 ### Step 6 backlog net additions this session
 
