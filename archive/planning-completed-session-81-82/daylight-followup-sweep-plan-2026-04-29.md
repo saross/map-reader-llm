@@ -1,5 +1,13 @@
 # Daylight follow-up sweep — 165-cell N=10K standardisation plan
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The work it describes was executed in
+> Session 81 (full 165-cell sweep landed; methodological symmetry
+> with the rest of the BCa migration is intact); see
+> `planning/paper-writeup-continuity.md` §"Session 81 closure roll-up"
+> (closure note on the daylight follow-up sweep) for the current
+> state. Do not act on items in this file as if they are pending.
+
 **Created**: 2026-04-29
 **Author**: Claude Code (Opus 4.7, 1M context) — Plan agent
 **Status**: DRAFT — awaits user review and explicit approval before any execution

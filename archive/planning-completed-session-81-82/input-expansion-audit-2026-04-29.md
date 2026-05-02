@@ -1,5 +1,13 @@
 # Input expansion audit: daylight follow-up sweep (163 cells)
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The audit it documents is complete
+> (commit `29b8cc64`; Obs 305); the daylight follow-up sweep itself
+> finished in Session 81. See `planning/paper-writeup-continuity.md`
+> §"Session 81 closure roll-up" and Obs 305 in
+> `docs/notes/reflections/working-notes.md` for the current state.
+> Do not act on items in this file as if they are pending.
+
 **Audit date**: 2026-04-29  
 **Auditor**: Claude Code (Haiku 4.5)  
 **Pre-tag**: `pre-bootstrap-10k-followup-2026-04-29` (HEAD `ee4f18cb`)  

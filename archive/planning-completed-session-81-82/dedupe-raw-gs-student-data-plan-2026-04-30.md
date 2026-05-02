@@ -1,5 +1,17 @@
 # Deduplication plan: raw gold-standard (GS) student-review data
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The work it describes was executed in
+> Session 82 (commits `a0ee28c6..6f15b8c9`); see Obs 316
+> (trapezoidal-graticule active-area correction → Sobotkova 2023
+> 5.0 % FN / 0.1 % FP vindicated) and Obs 317 (per-map breakdown +
+> inter-student-skill variance reframing) in
+> `docs/notes/reflections/working-notes.md`, plus
+> `planning/paper-writeup-continuity.md` §"Session 82 closure
+> (2026-05-01)" for the current state. The full §8 open-questions
+> list is closed inline in that continuity-doc section.
+> Do not act on items in this file as if they are pending.
+
 **Date**: 2026-04-30.
 **Author**: Claude Code (Opus 4.7) for Shawn Ross.
 **Status**: PLAN ONLY — needs user approval before any execution.

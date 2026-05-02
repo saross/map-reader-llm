@@ -1,5 +1,14 @@
 # Gold-standard FP-classification plan (Item #1, Obs 302 follow-up)
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The work it describes was executed in
+> Session 81 (commits `ee4f18cb`, `9fa6db4e`, `ec21c8ef`; Obs 306–308);
+> see `planning/paper-writeup-continuity.md` §"Session 81 closure
+> roll-up" (Item 1 row in the Items 1–16 status table) and the run
+> output at `results/55maps-fp-classification/report.md` for the
+> current state. Do not act on items in this file as if they are
+> pending.
+
 **Date**: 2026-04-29 (revised 2026-04-29 with corrected framing + four user-confirmed decisions).
 **Author**: Claude Code (Opus 4.7) for Shawn Ross.
 **Status**: APPROVED — ready for execution by a fresh executor agent (see §14).

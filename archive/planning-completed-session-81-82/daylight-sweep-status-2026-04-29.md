@@ -1,5 +1,14 @@
 # Daylight follow-up sweep — in-progress status (2026-04-29)
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. It is a mid-flight status snapshot of
+> the daylight follow-up sweep, which completed in Session 81; see
+> `planning/paper-writeup-continuity.md` §"Session 81 closure roll-up"
+> (closure note on the daylight follow-up sweep) and the companion
+> plan in this same archive subdirectory
+> (`daylight-followup-sweep-plan-2026-04-29.md`) for the current
+> state. Do not act on items in this file as if they are pending.
+
 **Status as of 2026-04-29 14:10 UTC**: full sweep launched on sapphire at 14:01 UTC; running.
 
 This document is a checkpoint in case I (the implementing agent) am

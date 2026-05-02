@@ -1,5 +1,16 @@
 # Pairwise tile-size-30m bootstrap-CI fix — implementation plan
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The work it describes was executed in
+> Session 81 (sparse-coverage suppression patch landed at commit
+> `2026999a`; in-plan checklist marked DONE at commit `2ac81876` on
+> 2026-05-01); see `planning/paper-writeup-continuity.md`
+> §"Session 81 closure roll-up" for the current state, and the
+> codified mitigation in `scripts/evaluate_detections.py`
+> (sparse-coverage suppression block) plus
+> `scripts/lib_advanced_metrics.py` for the canonical implementation.
+> Do not act on items in this file as if they are pending.
+
 **Date**: 2026-04-29  
 **Author**: Claude Opus 4.7 (1M context), via Plan agent  
 **Status**: Plan-only, not yet executed  

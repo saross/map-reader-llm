@@ -1,5 +1,15 @@
 # Confidence Interval (CI) Re-run TODO
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. Its own executive summary records the
+> outcome: **0 files require a re-run** to recover missing bootstrap
+> metadata. The durable mitigation (a `_metadata` block embedded
+> directly into evaluation outputs) is documented as Item #8 in
+> `planning/paper-writeup-continuity.md` §"Session 81 closure
+> roll-up" (Items 1–16 status table); the active companion document
+> is `results/ci-metadata-registry.md`.
+> Do not act on items in this file as if they are pending.
+
 Companion to `results/ci-metadata-registry.md`.
 Generated: 2026-04-20. Maintainer: `shawn@faims.edu.au`.
 

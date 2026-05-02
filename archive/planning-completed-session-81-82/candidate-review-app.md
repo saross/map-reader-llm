@@ -1,5 +1,15 @@
 # Plan: Candidate Review App (Streamlit)
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The app it specifies was built as
+> `scripts/review_candidates.py` and has been in active use across
+> several downstream review workflows (the GS-FP review and the v2
+> burial-mound bet-test app among them). The "Future Extensions"
+> list was implemented selectively per design judgement, and the
+> design ceiling has been reached. See `scripts/review_candidates.py`
+> for the current implementation. Do not act on items in this file
+> as if they are pending.
+
 ## Purpose
 
 A lightweight Streamlit app for rapid human review of VLM verifier

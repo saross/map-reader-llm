@@ -1,5 +1,14 @@
 # Inspection-app plan — v2 burial-mound reclassification bet test
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning document is preserved
+> for historical reference. The work it describes was executed in
+> Session 81 (bet-test app built and run end-to-end; final tally
+> 0/177 review errors; Obs 312); see
+> `planning/paper-writeup-continuity.md` §"Session 81 closure roll-up"
+> (Item 13 row in the Items 1–16 status table) and Obs 312 in
+> `docs/notes/reflections/working-notes.md` for the current state.
+> Do not act on items in this file as if they are pending.
+
 _Created 2026-04-29 — Claude Code (Opus 4.7) for Shawn Ross._
 _Status: **APPROVED — ready for implementation** (open questions resolved 2026-04-29; see §10)._
 
