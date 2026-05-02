@@ -7,8 +7,10 @@
 > burial-mound bet-test app among them). The "Future Extensions"
 > list was implemented selectively per design judgement, and the
 > design ceiling has been reached. See `scripts/review_candidates.py`
-> for the current implementation. Do not act on items in this file
-> as if they are pending.
+> for the current implementation. The not-built "Future extensions"
+> items and the next-generation whole-map editor backlog have been
+> migrated to `planning/deferred-extensions.md` § "Candidate review
+> app". Do not act on items in this file as if they are pending.
 
 ## Purpose
 
