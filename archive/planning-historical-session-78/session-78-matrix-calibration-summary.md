@@ -1,5 +1,14 @@
 # Session 78 Verifier Calibration Matrix — Summary
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning summary is preserved for
+> historical reference. The metrics it tabulates were refreshed in Phase D
+> (commit `c0eb61f9`, 2026-04-27, shared-crops parity), re-confirmed in
+> Session 80 Wave 3 (commit `2a928cf7`), upgraded to N=10K bootstrap at
+> `e1955ddf`, and migrated to BCa CIs at `28e7de84`. Current authoritative
+> values live under `results/verifier-calibration-matrix/<pool>-<variant>/calibration.json`;
+> see Obs 290 Theme 8 in `docs/notes/reflections/working-notes.md`. Do not
+> act on items in this file as if they are pending.
+
 Per-cell calibration metrics (AUC, Brier, ECE) for the Session 78 verifier prompt variant matrix. Fourteen cells = seven verifier variants (six novel alternatives + the canonical `adversarial-text`) across two candidate pools (image track, text track). Ground truth: spatial matching at 20 m buffer vs. curator reference mounds (`inputs/vectors/references/mounds-reference.geojson`, 569 features). Candidates filtered to the 487-tile Era 2 evaluation scope.
 
 ## Main table

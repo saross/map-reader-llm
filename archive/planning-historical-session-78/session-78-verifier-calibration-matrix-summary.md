@@ -1,5 +1,15 @@
 # Session 78 — Verifier Calibration Matrix Summary
 
+> **⚠️ SUPERSEDED 2026-05-01.** This planning summary is preserved for
+> historical reference. The F1/precision/recall/MCC metrics it captures
+> were refreshed in Phase D (commit `c0eb61f9`, 2026-04-27, shared-crops
+> parity) and extended with pairwise permutation tests in Session 79
+> (commit `fffecb7d`). Current authoritative values are in
+> `results/verifier-calibration-matrix/<pool>-<variant>/evaluation.json`
+> and the pairwise narrative at `results/verifier-calibration-matrix-pairwise/README.md`;
+> see Obs 277 and Obs 290 Theme 8 in `docs/notes/reflections/working-notes.md`.
+> Do not act on items in this file as if they are pending.
+
 Generated: 2026-04-24T16:01:18.642939Z
 
 ## Scope
